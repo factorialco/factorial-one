@@ -1,0 +1,41 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
+import { CheckboxField } from "./";
+import { ComponentProps, useState } from "react";
+
+const meta = {
+  component: CheckboxField,
+  parameters: {
+    layout: "centered",
+  },
+  tags: ["autodocs"],
+  args: {
+    label: "This is a nice checkbox",
+    checked: false,
+    onChange: fn(),
+  } satisfies ComponentProps<typeof CheckboxField>,
+} satisfies Meta<typeof CheckboxField>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Primary: Story = {};
+
+export const Interactive: Story = {
+  render: (props) => {
+    const [checked, setChecked] = useState(props.checked);
+
+    const handleChange = (value: boolean) => {
+      setChecked(value);
+      props.onChange?.(value);
+    };
+
+    return (
+      <CheckboxField
+        {...props}
+        checked={checked}
+        onChange={(value) => handleChange(value)}
+      />
+    );
+  },
+};
