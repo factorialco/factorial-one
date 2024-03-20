@@ -2,7 +2,7 @@ import { create } from "@storybook/theming/create";
 
 export default create({
   base: "light",
-  brandTitle: `<img src="/one.svg" width="36px" />`,
+  brandTitle: `<img src="one.svg" width="36px" />`,
   brandTarget: "_self",
 
   //
