@@ -2,9 +2,7 @@ import { create } from "@storybook/theming/create";
 
 export default create({
   base: "light",
-  brandTitle: "Factorial One",
-  brandUrl: "https://example.com",
-  brandImage: "/one-small.png",
+  brandTitle: `<img src="/one.svg" width="36px" />`,
   brandTarget: "_self",
 
   //
