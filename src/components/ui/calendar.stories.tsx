@@ -1,19 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
-import { Button } from "./button";
+import { Calendar } from "./calendar";
 
 const meta = {
-  component: Button,
+  component: Calendar,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
-  args: { onClick: fn() },
-} satisfies Meta<typeof Button>;
+  args: {},
+} satisfies Meta<typeof Calendar>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-  args: { children: "A test button" },
+  args: {
+    mode: "single",
+    selected: new Date(),
+  },
 };
