@@ -9,10 +9,11 @@
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	"forwardPorts": [6006],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "npm install && npm run storybook",
+	"postCreateCommand": "npm install",
+	"postStartCommand": "npm run storybook",
 
     "customizations": {
         "vscode": {"extensions": ["bradlc.vscode-tailwindcss", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]}
