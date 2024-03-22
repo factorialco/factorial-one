@@ -1,4 +1,4 @@
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/foundations/checkbox";
 import { useId } from "react";
 
 interface Props {
