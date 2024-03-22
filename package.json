@@ -9,7 +9,8 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test-storybook": "test-storybook"
   },
   "dependencies": {
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -35,6 +36,7 @@
     "@storybook/react": "^8.0.2",
     "@storybook/react-vite": "^8.0.2",
     "@storybook/test": "^8.0.2",
+    "@storybook/test-runner": "^0.17.0",
     "@types/node": "^20.11.30",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
