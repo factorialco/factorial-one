@@ -22,9 +22,6 @@ interface Props {
 const meta: Meta<Props> = {
   title: "Examples / Forms",
   tags: ["autodocs"],
-  parameters: {
-    layout: "centered",
-  },
   args: {
     onSubmit: fn(),
   },
