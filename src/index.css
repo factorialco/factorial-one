@@ -5,7 +5,8 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+    --intermediate: 234 5% 40%;
+    --foreground: 230 9% 13%;
 
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -13,11 +14,13 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
  
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 357 100% 96%;
+    --primary-intermediate: 356 77% 75%;
+    --primary-foreground: 342 100% 42%;
  
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
+    --secondary: 225 14% 95%;
+    --secondary-intermediate: 233 11% 86%;
+    --secondary-foreground: 234 5% 40%;
  
     --muted: 0 0% 96.1%;
     --muted-foreground: 0 0% 45.1%;
@@ -25,11 +28,16 @@
     --accent: 0 0% 96.1%;
     --accent-foreground: 0 0% 9%;
  
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --critical: 10 92% 95%;
+    --critical-intermediate: 11 75% 70%;
+    --critical-foreground: 8 50% 24%;
+
+    --positive: 124 44% 94%;
+    --positive-intermediate: 131 38% 56%;
+    --positive-foreground: 129 29% 18%;
 
     --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
+    --input: 233 11% 86%;
     --ring: 0 0% 3.9%;
  
     --radius: 0.5rem;
@@ -37,7 +45,8 @@
  
   .dark {
     --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --intermediate: 235 8% 72%;
+    --foreground: 240 6% 94%;
  
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
@@ -45,11 +54,13 @@
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
  
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 352 59% 15%;
+    --primary-intermediate: 351 56% 48%;
+    --primary-foreground: 352 100% 75%;
  
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 220 4% 14%;
+    --secondary-intermediate: 235 5% 39%;
+    --secondary-foreground: 235 8% 72%;
  
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 63.9%;
@@ -57,11 +68,16 @@
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
  
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --critical: 0 62.8% 30.6%;
+    --critical-intermediate: 10 50% 45%;
+    --critical-foreground: 8 89% 89%;
+
+    --positive: 161 38% 13%;
+    --positive-intermediate: 131 32% 36%;
+    --positive-foreground: 151 64% 54%;
  
     --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
+    --input: 230 5% 24%;
     --ring: 0 0% 83.1%;
   }
 }
