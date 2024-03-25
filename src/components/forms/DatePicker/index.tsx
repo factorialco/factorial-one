@@ -17,7 +17,7 @@ export const DatePicker: React.FC<Props> = ({ date, onSelect }) => {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant={"secondary"}
+          variant={"outline"}
           className={cn(
             "w-[280px] justify-start text-left font-normal",
             !date && "text-muted-foreground"
