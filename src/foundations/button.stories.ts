@@ -23,7 +23,7 @@ const meta = {
     },
   },
   args: {
-    variant: "primary",
+    variant: "default",
     size: "default",
     onClick: fn(),
   },

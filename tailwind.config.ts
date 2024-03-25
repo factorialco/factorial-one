@@ -35,10 +35,10 @@ export default {
           foreground: "hsl(var(--secondary-foreground))",
           intermediate: "hsl(var(--secondary-intermediate))",
         },
-        critical: {
-          DEFAULT: "hsl(var(--critical))",
-          foreground: "hsl(var(--critical-foreground))",
-          intermediate: "hsl(var(--critical-intermediate))",
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+          intermediate: "hsl(var(--destructive-intermediate))",
         },
         positive: {
           DEFAULT: "hsl(var(--positive))",

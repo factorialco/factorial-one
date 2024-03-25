@@ -5,9 +5,10 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 export const variants = [
-  "primary",
+  "default",
   "secondary",
-  "critical",
+  "outline",
+  "destructive",
   "positive",
   "ghost",
 ] as const;
@@ -19,12 +20,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary:
+        default:
           "bg-background text-primary-foreground hover:bg-primary border-2 border-primary-intermediate",
         secondary:
           "bg-background text-secondary-foreground hover:bg-secondary border-2 border-secondary-intermediate",
-        critical:
-          "bg-critical text-critical-foreground hover:bg-critical/70 border-2 border-critical-intermediate",
+        outline:
+          "bg-background text-secondary-foreground hover:bg-secondary border-2 border-secondary-intermediate",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/70 border-2 border-destructive-intermediate",
         positive:
           "bg-positive text-positive-foreground hover:bg-positive/70 border-2 border-positive-intermediate",
         ghost:
@@ -37,7 +40,7 @@ const buttonVariants = cva(
       } satisfies Record<(typeof sizes)[number], string>,
     },
     defaultVariants: {
-      variant: "primary",
+      variant: "default",
       size: "default",
     },
   }
