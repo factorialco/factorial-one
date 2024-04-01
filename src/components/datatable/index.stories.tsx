@@ -2,14 +2,26 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { DataTable } from "./";
 
 const meta: Meta = {
-    component: DataTable,
-    title: "Components / DataTable",
-    parameters: {
-        tags: ["autodocs"],
-    },
+  component: DataTable,
+  title: "Components / DataTable",
+  parameters: {
+    tags: ["autodocs"],
+  },
 }
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {};
+export const Primary: Story = {
+  args: {
+    search: true,
+    pageLimit: 3,
+  }
+};
+
+export const NoSearch: Story = {
+  args: {
+    search: false,
+    pageLimit: 3,
+  }
+};
