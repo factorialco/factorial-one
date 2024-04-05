@@ -1,9 +1,8 @@
-import { ThemeSwitcher } from "@/examples/themes/theme-switcher"
+import { ThemeSwitcher } from "@/experiments/themes/theme-switcher"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta: Meta = {
   component: ThemeSwitcher,
-  title: "Examples / Theme Switcher",
   parameters: {
     layout: "centered",
   },
