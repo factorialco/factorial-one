@@ -1,5 +1,4 @@
 import type { StorybookConfig } from "@storybook/react-vite";
-
 const config: StorybookConfig = {
   stories: [
     "../docs/**/*.mdx",
@@ -13,6 +12,7 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/addon-a11y",
+    "@storybook/addon-themes",
   ],
   framework: {
     name: "@storybook/react-vite",
