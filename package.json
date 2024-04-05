@@ -13,7 +13,8 @@
     "build-storybook": "storybook build",
     "test-storybook": "test-storybook",
     "prettier:format": "prettier --write \"**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
-    "prettier:check:ci": "prettier --check \"**/*.{ts,tsx,js,md,mdx,css,yaml}\""
+    "prettier:check:ci": "prettier --check \"**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
+    "storybook-docs": "storybook dev --docs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",

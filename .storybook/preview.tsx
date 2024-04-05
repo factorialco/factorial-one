@@ -34,9 +34,9 @@ const preview: Preview = {
   parameters: {
     docs: {
       page: DocumentationTemplate,
-      canvas: {
-        sourceState: "shown",
-      },
+      //   canvas: {
+      //     sourceState: "shown",
+      //   },
     },
     actions: { argTypesRegex: "^on.*" },
     controls: {
