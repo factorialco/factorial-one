@@ -1,13 +1,14 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react"
+
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
-  SelectGroup,
-  SelectLabel,
-} from "@/foundations/select";
+} from "@/foundations/select"
 
 const meta: Meta = {
   component: Select,
@@ -19,10 +20,10 @@ const meta: Meta = {
     },
   },
   tags: ["autodocs"],
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
   render: () => {
@@ -37,9 +38,9 @@ export const Basic: Story = {
           <SelectItem value="system">System</SelectItem>
         </SelectContent>
       </Select>
-    );
+    )
   },
-};
+}
 
 export const Scrollable: Story = {
   render: () => {
@@ -105,6 +106,6 @@ export const Scrollable: Story = {
           </SelectGroup>
         </SelectContent>
       </Select>
-    );
+    )
   },
-};
+}

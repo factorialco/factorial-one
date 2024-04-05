@@ -1,15 +1,15 @@
-import * as React from "react";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
+import * as React from "react"
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/foundations/button";
-import { Calendar } from "@/foundations/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/foundations/popover";
+import { cn } from "@/lib/utils"
+import { Button } from "@/foundations/button"
+import { Calendar } from "@/foundations/calendar"
+import { Popover, PopoverContent, PopoverTrigger } from "@/foundations/popover"
 
 interface Props {
-  date: Date;
-  onSelect: (date: Date | undefined) => void;
+  date: Date
+  onSelect: (date: Date | undefined) => void
 }
 
 export const DatePicker: React.FC<Props> = ({ date, onSelect }) => {
@@ -36,5 +36,5 @@ export const DatePicker: React.FC<Props> = ({ date, onSelect }) => {
         />
       </PopoverContent>
     </Popover>
-  );
-};
+  )
+}

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
- 
+
 function Skeleton({
   className,
   ...props
@@ -11,5 +11,5 @@ function Skeleton({
     />
   )
 }
- 
+
 export { Skeleton }
