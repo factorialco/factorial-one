@@ -29,28 +29,32 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Basic: Story = ({ size }) => {
-  return (
-    <Avatar size={size}>
-      <AvatarImage
-        src="https://github.com/dani-moreno.png"
-        alt="@dani-moreno"
-      />
-      <AvatarFallback>DM</AvatarFallback>
-    </Avatar>
-  )
+export const Basic: Story = {
+  render({ size }) {
+    return (
+      <Avatar size={size}>
+        <AvatarImage
+          src="https://github.com/dani-moreno.png"
+          alt="@dani-moreno"
+        />
+        <AvatarFallback>DM</AvatarFallback>
+      </Avatar>
+    )
+  },
 }
 
 Basic.args = {
   size: "medium",
 }
 
-export const Fallback: Story = ({ size }) => {
-  return (
-    <Avatar size={size}>
-      <AvatarFallback>DM</AvatarFallback>
-    </Avatar>
-  )
+export const Fallback: Story = {
+  render({ size }) {
+    return (
+      <Avatar size={size}>
+        <AvatarFallback>DM</AvatarFallback>
+      </Avatar>
+    )
+  },
 }
 
 Fallback.args = {

@@ -15,7 +15,7 @@ const config: TestRunnerConfig = {
     const storyContext = await getStoryContext(page, context)
 
     // Do not run a11y tests on disabled stories.
-    if (storyContext.parameters?.a11y?.disable) {
+    if (storyContext.parameters?.a11y?.skipCi) {
       return
     }
 

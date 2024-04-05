@@ -1,4 +1,5 @@
 import { DecoratorHelpers } from "@storybook/addon-themes"
+import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
 
 import DocumentationTemplate from "./DocumentationTemplate.mdx"
@@ -32,14 +33,17 @@ export const withTheme = (themes: string[], defaultTheme: string) => {
 const preview: Preview = {
   decorators: [withTheme(["light", "dark", "system"], "system")],
   parameters: {
+    viewport: {
+      viewports: {
+        ...INITIAL_VIEWPORTS,
+      },
+    },
     docs: {
       page: DocumentationTemplate,
-      //   canvas: {
-      //     sourceState: "shown",
-      //   },
     },
     actions: { argTypesRegex: "^on.*" },
     controls: {
+      expanded: true,
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,

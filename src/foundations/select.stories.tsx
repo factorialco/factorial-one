@@ -16,7 +16,7 @@ const meta: Meta = {
   parameters: {
     layout: "centered",
     a11y: {
-      disable: true,
+      skipCi: true,
     },
   },
   tags: ["autodocs"],
