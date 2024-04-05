@@ -1,10 +1,11 @@
-import { Checkbox } from "@/foundations/checkbox";
-import { useId } from "react";
+import { useId } from "react"
+
+import { Checkbox } from "@/foundations/checkbox"
 
 interface Props {
-  label: string;
-  checked?: boolean;
-  onChange?: (value: boolean) => void;
+  label: string
+  checked?: boolean
+  onChange?: (value: boolean) => void
 }
 
 export const CheckboxField: React.FC<Props> = ({
@@ -12,7 +13,7 @@ export const CheckboxField: React.FC<Props> = ({
   checked,
   onChange,
 }) => {
-  const id = useId();
+  const id = useId()
 
   return (
     <div className="flex items-center space-x-2">
@@ -28,5 +29,5 @@ export const CheckboxField: React.FC<Props> = ({
         {label}
       </label>
     </div>
-  );
-};
+  )
+}

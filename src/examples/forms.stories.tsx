@@ -1,4 +1,10 @@
-import { Button } from "@/foundations/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import type { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
+import { Button } from "@/foundations/button"
 import {
   Form,
   FormControl,
@@ -7,16 +13,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/foundations/form";
-import { Input } from "@/foundations/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+} from "@/foundations/form"
+import { Input } from "@/foundations/input"
 
 interface Props {
-  onSubmit: (data: z.infer<typeof formSchema>) => void;
+  onSubmit: (data: z.infer<typeof formSchema>) => void
 }
 
 const meta: Meta<Props> = {
@@ -25,16 +26,16 @@ const meta: Meta<Props> = {
   args: {
     onSubmit: fn(),
   },
-};
+}
 
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-});
+})
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
@@ -46,7 +47,7 @@ export const Primary: Story = {
       defaultValues: {
         username: "",
       },
-    });
+    })
 
     return (
       <Form {...form}>
@@ -73,6 +74,6 @@ export const Primary: Story = {
           <Button type="submit">Submit</Button>
         </form>
       </Form>
-    );
+    )
   },
-};
+}

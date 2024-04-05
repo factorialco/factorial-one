@@ -3,7 +3,7 @@ name: Build and Publish Storybook to GitHub Pages
 on:
   push:
     branches:
-      - 'main'
+      - "main"
 
 permissions:
   contents: read
@@ -18,7 +18,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '21.x'
+          node-version: "21.x"
 
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:

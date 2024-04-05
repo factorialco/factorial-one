@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
-import { CheckboxField } from "./";
-import { ComponentProps, useState } from "react";
+import { ComponentProps, useState } from "react"
+import type { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
+
+import { CheckboxField } from "./"
 
 const meta = {
   component: CheckboxField,
@@ -17,21 +18,21 @@ const meta = {
     checked: false,
     onChange: fn(),
   } satisfies ComponentProps<typeof CheckboxField>,
-} satisfies Meta<typeof CheckboxField>;
+} satisfies Meta<typeof CheckboxField>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {};
+export const Primary: Story = {}
 
 export const Interactive: Story = {
   render: (props) => {
-    const [checked, setChecked] = useState(props.checked);
+    const [checked, setChecked] = useState(props.checked)
 
     const handleChange = (value: boolean) => {
-      setChecked(value);
-      props.onChange?.(value);
-    };
+      setChecked(value)
+      props.onChange?.(value)
+    }
 
     return (
       <CheckboxField
@@ -39,6 +40,6 @@ export const Interactive: Story = {
         checked={checked}
         onChange={(value) => handleChange(value)}
       />
-    );
+    )
   },
-};
+}

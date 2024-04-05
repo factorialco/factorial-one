@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { ThemeSwitcher } from "@/examples/themes/theme-switcher";
+import { ThemeSwitcher } from "@/examples/themes/theme-switcher"
+import type { Meta, StoryObj } from "@storybook/react"
 
 const meta: Meta = {
   component: ThemeSwitcher,
@@ -8,10 +8,10 @@ const meta: Meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
   render: () => {
@@ -30,6 +30,6 @@ export const Basic: Story = {
           </p>
         </div>
       </div>
-    );
+    )
   },
-};
+}

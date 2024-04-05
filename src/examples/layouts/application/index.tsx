@@ -1,38 +1,37 @@
-import React from "react";
-import { Button } from "@/foundations/button";
-import { ScrollArea } from "@/foundations/scrollarea";
-import { Popover, PopoverContent, PopoverTrigger } from "@/foundations/popover";
-
-import * as Accordion from "@radix-ui/react-accordion";
-
+import React from "react"
+import * as Accordion from "@radix-ui/react-accordion"
 import {
-  EllipsisVertical,
-  Target,
-  Home,
-  Inbox,
-  Store,
-  UserRound,
-  Clock,
-  TreePalm,
   BookCheck,
-  UsersRound,
   Calendar,
   ChevronDown,
-  Folders,
+  Clock,
+  EllipsisVertical,
   Folder,
-  Upload,
+  Folders,
+  Home,
+  Inbox,
   Menu,
-} from "lucide-react";
+  Store,
+  Target,
+  TreePalm,
+  Upload,
+  UserRound,
+  UsersRound,
+} from "lucide-react"
+
+import { Button } from "@/foundations/button"
+import { Popover, PopoverContent, PopoverTrigger } from "@/foundations/popover"
+import { ScrollArea } from "@/foundations/scrollarea"
 
 const Title: React.FC<{ title: string }> = ({ title }) => (
   <div className="flex h-14 items-center gap-2 text-secondary-foreground font-medium px-3">
     <Target size="20" />
     {title}
   </div>
-);
+)
 
 const Layout: React.FC = () => {
-  const [activeSection, setActiveSection] = React.useState("dashboard");
+  const [activeSection, setActiveSection] = React.useState("dashboard")
 
   return (
     <div className="-m-4 bg-secondary/60 min-h-screen h-screen p-3 grid grid-cols-1 md:grid-cols-[264px_1fr]">
@@ -161,7 +160,7 @@ const Layout: React.FC = () => {
         </div>
       </ScrollArea>
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

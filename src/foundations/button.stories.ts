@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { fn } from "@storybook/test";
-import { Button, sizes, variants } from "./button";
+import type { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
+
+import { Button, sizes, variants } from "./button"
 
 const meta = {
   component: Button,
@@ -27,11 +28,11 @@ const meta = {
     size: "default",
     onClick: fn(),
   },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof Button>
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: { children: "A test button" },
-};
+}

@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import Layout from ".";
+import type { Meta, StoryObj } from "@storybook/react"
+
+import Layout from "."
 
 const meta: Meta = {
   component: Layout,
@@ -9,9 +10,9 @@ const meta: Meta = {
       disable: true,
     },
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof meta>;
+export default meta
+type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {};
+export const Primary: Story = {}

@@ -1,29 +1,31 @@
-import type { Preview } from "@storybook/react";
+import { DecoratorHelpers } from "@storybook/addon-themes"
+import type { Preview } from "@storybook/react"
 
-import { DecoratorHelpers } from "@storybook/addon-themes";
+import "../src/index.css"
+
+import React from "react"
+
+import { Theme, ThemeProvider } from "../src/lib/theme-provider"
+
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
-  DecoratorHelpers;
-
-import "../src/index.css";
-import { Theme, ThemeProvider } from "../src/lib/theme-provider";
-import React from "react";
+  DecoratorHelpers
 
 export const withTheme = (themes: string[], defaultTheme: string) => {
-  initializeThemeState(themes, defaultTheme);
+  initializeThemeState(themes, defaultTheme)
 
   return (Story, context) => {
-    const selectedTheme = pluckThemeFromContext(context);
-    const { themeOverride } = useThemeParameters();
+    const selectedTheme = pluckThemeFromContext(context)
+    const { themeOverride } = useThemeParameters()
 
-    const selected = themeOverride || selectedTheme || defaultTheme;
+    const selected = themeOverride || selectedTheme || defaultTheme
 
     return (
       <ThemeProvider defaultTheme={selected as Theme}>
         <Story />
       </ThemeProvider>
-    );
-  };
-};
+    )
+  }
+}
 
 const preview: Preview = {
   decorators: [withTheme(["light", "dark", "system"], "system")],
@@ -35,6 +37,6 @@ const preview: Preview = {
       },
     },
   },
-};
+}
 
-export default preview;
+export default preview
