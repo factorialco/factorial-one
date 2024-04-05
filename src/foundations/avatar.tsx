@@ -7,36 +7,35 @@ import { cva } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 export const sizes = [
-    "xsmall",
-    "small",
-    "medium",
-    "large",
-    "xlarge",
-    "xxlarge",
+  "xsmall",
+  "small",
+  "medium",
+  "large",
+  "xlarge",
+  "xxlarge",
 ] as const
 
-const avatarVariants = cva(
-    "relative flex shrink-0 overflow-hidden",
-    {
-      variants: {
-        size: {
-          xsmall: "w-8 h-8 rounded-xl text-xs",
-          small: "w-10 h-10 rounded-xl text-sm",
-          medium: "w-12 h-12 rounded-xl",
-          large: "w-16 h-16 rounded-2xl text-xl",
-          xlarge: "w-20 h-20 rounded-2xl text-2xl",
-          xxlarge: "w-32 h-32 rounded-3xl text-3xl",
-        } satisfies Record<(typeof sizes)[number], string>,
-      },
-      defaultVariants: {
-        size: "medium",
-      },
-    }
-  )
+const avatarVariants = cva("relative flex shrink-0 overflow-hidden", {
+  variants: {
+    size: {
+      xsmall: "w-8 h-8 rounded-xl text-xs",
+      small: "w-10 h-10 rounded-xl text-sm",
+      medium: "w-12 h-12 rounded-xl",
+      large: "w-16 h-16 rounded-2xl text-xl",
+      xlarge: "w-20 h-20 rounded-2xl text-2xl",
+      xxlarge: "w-32 h-32 rounded-3xl text-3xl",
+    } satisfies Record<(typeof sizes)[number], string>,
+  },
+  defaultVariants: {
+    size: "medium",
+  },
+})
 
-type AvatarProps = React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> & {
-    size?: (typeof sizes)[number];
-};
+type AvatarProps = React.ComponentPropsWithoutRef<
+  typeof AvatarPrimitive.Root
+> & {
+  size?: (typeof sizes)[number]
+}
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
