@@ -7,7 +7,7 @@ const meta: Meta = {
   parameters: {
     tags: ["autodocs"],
     a11y: {
-      disable: true,
+      skipCi: true,
     },
   },
 }
