@@ -1,6 +1,8 @@
 import { DecoratorHelpers } from "@storybook/addon-themes"
 import type { Preview } from "@storybook/react"
 
+import DocumentationTemplate from "./DocumentationTemplate.mdx"
+
 import "../src/index.css"
 
 import React from "react"
@@ -30,6 +32,12 @@ export const withTheme = (themes: string[], defaultTheme: string) => {
 const preview: Preview = {
   decorators: [withTheme(["light", "dark", "system"], "system")],
   parameters: {
+    docs: {
+      page: DocumentationTemplate,
+      canvas: {
+        sourceState: "shown",
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
