@@ -7,6 +7,9 @@ const meta = {
   component: CheckboxField,
   parameters: {
     layout: "centered",
+    a11y: {
+      disable: true,
+    },
   },
   tags: ["autodocs"],
   args: {

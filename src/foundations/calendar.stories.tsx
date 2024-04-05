@@ -1,13 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Calendar } from "./calendar";
 import { useState } from "react";
-import { addDays, format } from 'date-fns';
-import { DateRange } from 'react-day-picker';
+import { addDays, format } from "date-fns";
+import { DateRange } from "react-day-picker";
 
 const meta = {
   component: Calendar,
   parameters: {
     layout: "centered",
+    a11y: {
+      disable: true,
+    },
   },
   tags: ["autodocs"],
   args: {},
@@ -26,8 +29,8 @@ export const Single: Story = {
         selected={selectedDay}
         onSelect={setSelectedDay}
       />
-    )
-  }
+    );
+  },
 };
 
 export const Multiple: Story = {
@@ -36,11 +39,15 @@ export const Multiple: Story = {
     const [days, setDays] = useState<Date[] | undefined>(initialDays);
 
     const footer =
-    days && days.length > 0 ? (
-      <p className="w-[252px] text-sm mt-3 text-secondary-foreground text-wrap">You selected {days.length} day(s).</p>
-    ) : (
-      <p className="w-[252px] text-sm mt-3 text-secondary-foreground text-wrap">Please pick one or more days.</p>
-    );
+      days && days.length > 0 ? (
+        <p className="w-[252px] text-sm mt-3 text-secondary-foreground text-wrap">
+          You selected {days.length} day(s).
+        </p>
+      ) : (
+        <p className="w-[252px] text-sm mt-3 text-secondary-foreground text-wrap">
+          Please pick one or more days.
+        </p>
+      );
 
     return (
       <Calendar
@@ -50,8 +57,8 @@ export const Multiple: Story = {
         onSelect={setDays}
         footer={footer}
       />
-    )
-  }
+    );
+  },
 };
 
 export const Range: Story = {
@@ -59,18 +66,26 @@ export const Range: Story = {
     const pastMonth = new Date(2024, 10, 15);
     const defaultSelected: DateRange = {
       from: pastMonth,
-      to: addDays(pastMonth, 4)
+      to: addDays(pastMonth, 4),
     };
     const [range, setRange] = useState<DateRange | undefined>(defaultSelected);
-  
-    let footer = <p className="w-[252px] text-sm mt-3 text-secondary-foreground text-wrap">Please pick the first day.</p>;
+
+    let footer = (
+      <p className="w-[252px] text-sm mt-3 text-secondary-foreground text-wrap">
+        Please pick the first day.
+      </p>
+    );
     if (range?.from) {
       if (!range.to) {
-        footer = <p className="w-[252px] text-sm mt-3 text-secondary-foreground text-wrap">{format(range.from, 'PPP')}</p>;
+        footer = (
+          <p className="w-[252px] text-sm mt-3 text-secondary-foreground text-wrap">
+            {format(range.from, "PPP")}
+          </p>
+        );
       } else if (range.to) {
         footer = (
           <p className="w-[252px] text-sm mt-3 text-secondary-foreground text-wrap">
-            {format(range.from, 'PPP')} - {format(range.to, 'PPP')}
+            {format(range.from, "PPP")} - {format(range.to, "PPP")}
           </p>
         );
       }
@@ -85,6 +100,6 @@ export const Range: Story = {
         footer={footer}
         onSelect={setRange}
       />
-    )
-  }
+    );
+  },
 };

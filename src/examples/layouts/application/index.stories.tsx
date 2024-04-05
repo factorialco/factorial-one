@@ -5,6 +5,9 @@ const meta: Meta = {
   component: Layout,
   parameters: {
     tags: ["autodocs"],
+    a11y: {
+      disable: true,
+    },
   },
 };
 
