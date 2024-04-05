@@ -31,7 +31,7 @@ export const withTheme = (themes: string[], defaultTheme: string) => {
 }
 
 const preview: Preview = {
-  decorators: [withTheme(["light", "dark", "system"], "system")],
+  decorators: [withTheme(["light", "dark"], "light")],
   parameters: {
     viewport: {
       viewports: {
