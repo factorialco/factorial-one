@@ -38,6 +38,7 @@ const preview: Preview = {
         sourceState: "shown",
       },
     },
+    actions: { argTypesRegex: "^on.*" },
     controls: {
       matchers: {
         color: /(background|color)$/i,
