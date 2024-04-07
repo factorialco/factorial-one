@@ -5,23 +5,17 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Button } from "@/foundations/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/foundations/form"
+import { Form } from "@/foundations/form"
 import { Input } from "@/foundations/input"
+
+import { DatePicker } from "./DatePicker"
+import { Field } from "./Field"
 
 interface Props {
   onSubmit: (data: z.infer<typeof formSchema>) => void
 }
 
 const meta: Meta<Props> = {
-  tags: ["autodocs"],
   args: {
     onSubmit: fn(),
   },
@@ -31,6 +25,8 @@ const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
+  acceptTerms: z.boolean(),
+  startDate: z.date(),
 })
 
 export default meta
@@ -45,6 +41,7 @@ export const Primary: Story = {
       resolver: zodResolver(formSchema),
       defaultValues: {
         username: "",
+        acceptTerms: false,
       },
     })
 
@@ -54,22 +51,20 @@ export const Primary: Story = {
           onSubmit={form.handleSubmit((values) => onSubmit(values))}
           className="space-y-8"
         >
-          <FormField
+          <Field
             control={form.control}
-            name="username"
+            name="startDate"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
+              <DatePicker {...field} value={field.value} />
             )}
           />
+
+          <Field
+            control={form.control}
+            name="username"
+            render={({ field }) => <Input placeholder="shadcn" {...field} />}
+          />
+
           <Button type="submit">Submit</Button>
         </form>
       </Form>

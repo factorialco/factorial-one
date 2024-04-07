@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useState } from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
@@ -8,13 +9,20 @@ import { Calendar } from "@/foundations/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/foundations/popover"
 
 interface Props {
-  date: Date
-  onSelect: (date: Date | undefined) => void
+  value: Date | undefined
+  onChange: (date: Date | undefined) => void
 }
 
-export const DatePicker: React.FC<Props> = ({ date, onSelect }) => {
+export const DatePicker: React.FC<Props> = ({ value: date, onChange }) => {
+  const [open, setOpen] = useState(false)
+
+  const handleSelect = (date: Date | undefined) => {
+    onChange(date)
+    setOpen(false)
+  }
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -31,7 +39,7 @@ export const DatePicker: React.FC<Props> = ({ date, onSelect }) => {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={onSelect}
+          onSelect={(date) => handleSelect(date)}
           initialFocus
         />
       </PopoverContent>

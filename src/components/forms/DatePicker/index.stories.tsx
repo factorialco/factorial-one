@@ -2,7 +2,7 @@ import { ComponentProps } from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
-import { DatePicker } from "./"
+import { DatePicker } from "."
 
 const meta = {
   component: DatePicker,
@@ -11,8 +11,8 @@ const meta = {
   },
   tags: ["autodocs"],
   args: {
-    date: new Date(),
-    onSelect: fn(),
+    value: new Date(),
+    onChange: fn(),
   } satisfies ComponentProps<typeof DatePicker>,
 } satisfies Meta<typeof DatePicker>
 
