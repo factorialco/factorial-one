@@ -21,15 +21,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-background text-primary-foreground hover:bg-primary border-2 border-primary-intermediate",
+          "border-2 border-primary-intermediate bg-background text-primary-foreground hover:bg-primary",
         secondary:
-          "bg-background text-secondary-foreground hover:bg-secondary border-2 border-secondary-intermediate",
+          "border-2 border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
         outline:
-          "bg-background text-secondary-foreground hover:bg-secondary border-2 border-secondary-intermediate",
+          "border-2 border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
         destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/70 border-2 border-destructive-intermediate",
+          "border-2 border-destructive-intermediate bg-destructive text-destructive-foreground hover:bg-destructive/70",
         positive:
-          "bg-positive text-positive-foreground hover:bg-positive/70 border-2 border-positive-intermediate",
+          "border-2 border-positive-intermediate bg-positive text-positive-foreground hover:bg-positive/70",
         ghost: "text-intermediate hover:bg-accent hover:text-accent-foreground",
       } satisfies Record<(typeof variants)[number], string>,
       size: {

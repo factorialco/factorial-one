@@ -15,9 +15,9 @@ type Story = StoryObj<typeof meta>
 export const Basic: Story = {
   render: () => {
     return (
-      <div className="bg-background max-w-96 p-10">
-        <div className="flex flex-col gap-3 rounded-lg bg-card p-6 border">
-          <div className="flex gap-3 items-center">
+      <div className="max-w-96 bg-background p-10">
+        <div className="flex flex-col gap-3 rounded-lg border bg-card p-6">
+          <div className="flex items-center gap-3">
             <h1 className="text-xl font-medium">Theme Switcher example</h1>
             <div className="flex-shrink-0">
               <ThemeSwitcher />

@@ -18,12 +18,12 @@ export const sizes = [
 const avatarVariants = cva("relative flex shrink-0 overflow-hidden", {
   variants: {
     size: {
-      xsmall: "w-8 h-8 rounded-xl text-xs",
-      small: "w-10 h-10 rounded-xl text-sm",
-      medium: "w-12 h-12 rounded-xl",
-      large: "w-16 h-16 rounded-2xl text-xl",
-      xlarge: "w-20 h-20 rounded-2xl text-2xl",
-      xxlarge: "w-32 h-32 rounded-3xl text-3xl",
+      xsmall: "h-8 w-8 rounded-xl text-xs",
+      small: "h-10 w-10 rounded-xl text-sm",
+      medium: "h-12 w-12 rounded-xl",
+      large: "h-16 w-16 rounded-2xl text-xl",
+      xlarge: "h-20 w-20 rounded-2xl text-2xl",
+      xxlarge: "h-32 w-32 rounded-3xl text-3xl",
     } satisfies Record<(typeof sizes)[number], string>,
   },
   defaultVariants: {
