@@ -44,7 +44,7 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className="absolute right-3 top-3 p-2 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+      <DialogPrimitive.Close className="absolute right-3 top-3 rounded-sm p-2 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
@@ -59,7 +59,7 @@ const DialogIcon = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "absolute left-8 top-0 translate-y-[-50%] bg-background shadow-md p-4 rounded-2xl text-primary-foreground",
+      "absolute left-8 top-0 translate-y-[-50%] rounded-2xl bg-background p-4 text-primary-foreground shadow-md",
       className
     )}
     {...props}
@@ -72,7 +72,7 @@ const DialogHeader = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={cn("flex flex-col space-y-1.5 mt-6 text-left", className)}
+    className={cn("mt-6 flex flex-col space-y-1.5 text-left", className)}
     {...props}
   />
 )
@@ -84,7 +84,7 @@ const DialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "flex flex-col-reverse gap-1 bg-secondary/50 border-t px-8 py-4 -mx-8 -mb-8 mt-4 rounded-bl-2xl rounded-br-2xl sm:flex-row sm:justify-end sm:space-x-2",
+      "-mx-8 -mb-8 mt-4 flex flex-col-reverse gap-1 rounded-bl-2xl rounded-br-2xl border-t bg-secondary/50 px-8 py-4 sm:flex-row sm:justify-end sm:space-x-2",
       className
     )}
     {...props}

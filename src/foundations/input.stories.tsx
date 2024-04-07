@@ -34,7 +34,7 @@ export const Primary: Story = {
   },
   render: (props) => {
     return (
-      <div className="w-full flex flex-col gap-1.5">
+      <div className="flex w-full flex-col gap-1.5">
         <Label htmlFor="input">Label</Label>
         <Input id="input" {...props} />
       </div>

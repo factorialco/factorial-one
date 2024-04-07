@@ -20,7 +20,11 @@ let config = {
     "",
     "^[./]",
   ],
-  plugins: ["@ianvs/prettier-plugin-sort-imports"],
+  plugins: [
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss",
+  ],
+  tailwindFunctions: ["cva"],
 }
 
 export default config
