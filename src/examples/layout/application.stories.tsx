@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import Layout from "."
+import Layout from "./application"
 
 const meta: Meta = {
   component: Layout,

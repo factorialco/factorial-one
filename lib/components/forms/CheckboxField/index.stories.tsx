@@ -2,7 +2,7 @@ import { ComponentProps, useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
-import { CheckboxField } from "./"
+import { CheckboxField } from "."
 
 const meta = {
   component: CheckboxField,

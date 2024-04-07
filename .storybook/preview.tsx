@@ -4,11 +4,11 @@ import type { Preview } from "@storybook/react"
 
 import DocumentationTemplate from "./DocumentationTemplate.mdx"
 
-import "../src/index.css"
+import "../lib/styles.css"
 
 import React from "react"
 
-import { Theme, ThemeProvider } from "../src/lib/theme-provider"
+import { Theme, ThemeProvider } from "../lib/utils/theme-provider"
 
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
   DecoratorHelpers
