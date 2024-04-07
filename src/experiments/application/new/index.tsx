@@ -1,50 +1,12 @@
 import React, { useState } from "react"
-import {
-  CircleHelp,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  Store,
-  Target,
-  UserRound,
-} from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const navItems = [
-  {
-    title: "Home",
-    icon: Home,
-    component: "Home Component content",
-    subItems: [],
-  },
-  {
-    title: "Profile",
-    icon: UserRound,
-    component: "Profile Component content",
-    subItems: [
-      {
-        title: "Profile SubMenu one",
-        component: "Profile SubMenu one component content",
-      },
-      {
-        title: "Profile SubMenu two",
-        component: "Profile SubMenu two component content",
-      },
-    ],
-  },
-  {
-    title: "Settings",
-    icon: Settings,
-    component: "Settings Component content",
-    subItems: [],
-  },
-]
+import { Pages } from "./pages"
 
 const Navigation = ({ activeItem, setActiveItem }) => (
   <div className="flex flex-col gap-1">
-    {navItems.map((item) => (
+    {Pages.map((item) => (
       <div
         className={cn(
           "flex justify-center items-center w-12 h-12 text-secondary-foreground rounded-2xl transition-colors hover:cursor-pointer",
@@ -63,7 +25,7 @@ const Navigation = ({ activeItem, setActiveItem }) => (
 
 const Layout = () => {
   const [activeItem, setActiveItem] = useState(
-    navItems.find((item) => item.title === "Home")
+    Pages.find((item) => item.title === "Home")
   )
   const [activeSubItem, setActiveSubItem] = useState(null)
 
@@ -81,10 +43,10 @@ const Layout = () => {
   }
 
   return (
-    <div className="-m-4 bg-secondary/60 min-h-screen h-screen p-4 grid grid-cols-1 md:grid-cols-[80px_1fr]">
+    <div className="-m-4 bg-secondary/60 min-h-screen h-screen py-4 pr-4 grid grid-cols-1 md:grid-cols-[80px_1fr]">
       <div className="flex flex-col gap-1 mx-4 pt-3">
         <div className="flex justify-center items-center w-12 h-12 text-secondary-foreground">
-          <Target size="20" />
+          A
         </div>
         <Navigation
           activeItem={activeItem}
