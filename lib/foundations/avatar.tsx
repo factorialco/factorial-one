@@ -1,9 +1,9 @@
 "use client"
 
-import * as React from "react"
 import { cn } from "@/utils/utils"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 import { cva } from "class-variance-authority"
+import * as React from "react"
 
 export const sizes = [
   "xsmall",
@@ -75,4 +75,4 @@ const AvatarFallback = React.forwardRef<
 ))
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 
-export { Avatar, AvatarImage, AvatarFallback }
+export { Avatar, AvatarFallback, AvatarImage }

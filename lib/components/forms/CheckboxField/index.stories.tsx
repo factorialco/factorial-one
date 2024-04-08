@@ -1,6 +1,6 @@
-import { ComponentProps, useState } from "react"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
+import { ComponentProps, useState } from "react"
 
 import { CheckboxField } from "."
 

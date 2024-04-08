@@ -1,4 +1,3 @@
-import React from "react"
 import * as Accordion from "@radix-ui/react-accordion"
 import {
   BookCheck,
@@ -18,6 +17,7 @@ import {
   UserRound,
   UsersRound,
 } from "lucide-react"
+import React from "react"
 
 import { Button } from "@/foundations/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/foundations/popover"
