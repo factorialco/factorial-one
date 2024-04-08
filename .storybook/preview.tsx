@@ -6,7 +6,7 @@ import DocumentationTemplate from "./DocumentationTemplate.mdx"
 
 import "../lib/styles.css"
 
-import { Theme, ThemeProvider } from "../lib/utils/theme-provider"
+import { Theme, ThemeProvider } from "../lib/lib/theme-provider"
 
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
   DecoratorHelpers
