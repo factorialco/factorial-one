@@ -1,19 +1,22 @@
 import { useState } from "react"
 
+import { LayoutTypeContext } from './layout-type';
+
+import { cn } from "@/lib/utils"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/foundations/tooltip"
-import { cn } from "@/lib/utils"
 
 import { Page, Pages, SubItem } from "./pages"
 
 const Navigation: React.FC<{
   activeItem: Page
   setActiveItem: (activeItem: Page) => void
-}> = ({ activeItem, setActiveItem }) => (
+  setLayoutType: React.Dispatch<React.SetStateAction<string>>
+}> = ({ activeItem, setActiveItem, setLayoutType }) => (
   <div className="flex flex-col gap-1">
     {Pages.map((item, index) => (
       <Tooltip key={index} delayDuration={200}>
@@ -26,7 +29,10 @@ const Navigation: React.FC<{
                 : "hover:bg-secondary"
             )}
             key={item.title}
-            onClick={() => setActiveItem(item)}
+            onClick={() => {
+              setActiveItem(item);
+              setLayoutType!("Regular")
+            }}
           >
             <item.icon size={20} />
             {item.title === "Inbox" && (
@@ -66,11 +72,12 @@ const Layout = () => {
     }
   }
 
-  const [layoutType] = useState("Regular")
+  const [layoutType, setLayoutType] = useState("Regular")
 
   if (!activeItem) return null
 
   return (
+    <LayoutTypeContext.Provider value={{ layoutType, setLayoutType }}>
     <TooltipProvider>
       <div
         className={cn(
@@ -87,6 +94,7 @@ const Layout = () => {
           <Navigation
             activeItem={activeItem}
             setActiveItem={handleSetActiveItem}
+            setLayoutType={setLayoutType}
           />
         </div>
         <div
@@ -110,7 +118,10 @@ const Layout = () => {
                         : "hover:bg-secondary"
                     )}
                     key={subItem.title}
-                    onClick={() => setActiveSubItem(subItem)}
+                    onClick={() => {
+                      setActiveSubItem(subItem)
+                      setLayoutType!("Regular")
+                    }}
                   >
                     {subItem.title}
                   </div>
@@ -129,6 +140,7 @@ const Layout = () => {
         )}
       </div>
     </TooltipProvider>
+    </LayoutTypeContext.Provider>
   )
 }
 

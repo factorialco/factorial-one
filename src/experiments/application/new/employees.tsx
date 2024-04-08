@@ -1,3 +1,5 @@
+import { useLayoutType } from './layout-type'
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/foundations/avatar"
 import {
   Table,
@@ -38,6 +40,8 @@ const Employees = [
 ]
 
 export const PageEmployees: React.FC = () => {
+    const { setLayoutType } = useLayoutType()
+
   return (
     <div>
       <PageTitle title="Employees" />
@@ -53,7 +57,7 @@ export const PageEmployees: React.FC = () => {
           </TableHeader>
           <TableBody>
             {Employees.map((employee, index) => (
-              <TableRow key={index} className="hover:cursor-pointer">
+              <TableRow key={index} className="hover:cursor-pointer" onClick={() => setLayoutType!("Split")}>
                 <TableCell className="font-medium">
                   <div className="flex flex-row items-center gap-3">
                     <Avatar size="small">
