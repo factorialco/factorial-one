@@ -25,12 +25,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./src/*"
+        "./lib/*"
       ]
     }
   },
   "include": [
-    "src"
+    "src",
+    "lib"
   ],
   "references": [
     {

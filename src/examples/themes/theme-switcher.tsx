@@ -1,6 +1,6 @@
+import { useTheme } from "@/utils/theme-provider"
 import { Moon, Sun } from "lucide-react"
 
-import { useTheme } from "@/lib/theme-provider"
 import { Button } from "@/foundations/button"
 import {
   DropdownMenu,

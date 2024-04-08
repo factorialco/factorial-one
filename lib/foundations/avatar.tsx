@@ -1,10 +1,9 @@
 "use client"
 
 import * as React from "react"
+import { cn } from "@/utils/utils"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 import { cva } from "class-variance-authority"
-
-import { cn } from "@/lib/utils"
 
 export const sizes = [
   "xsmall",
