@@ -1,5 +1,10 @@
 import { useLayoutType } from "./layout-type"
 
+import { cn } from "@/lib/utils"
+import { useState } from "react"
+
+import { Badge } from "@/foundations/badge"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/foundations/avatar"
 import {
   Table,
@@ -78,7 +83,8 @@ export const Employees = [
 ]
 
 export const PageEmployees: React.FC = () => {
-  const { setLayoutType } = useLayoutType()
+  const { setLayoutType, setEmployeeId } = useLayoutType()
+  const [activeEmployee, setActiveEmployee] = useState(-1)
 
   return (
     <div>
@@ -95,8 +101,15 @@ export const PageEmployees: React.FC = () => {
           {Employees.map((employee, index) => (
             <TableRow
               key={index}
-              className="hover:cursor-pointer"
-              onClick={() => setLayoutType!("Split")}
+              className={cn(
+                "hover:cursor-pointer",
+                activeEmployee === index ? "bg-accent" : ""
+              )}
+              onClick={() => {
+                setLayoutType!("Split")
+                setActiveEmployee(index)
+                setEmployeeId?.(index)
+              }}
             >
               <TableCell className="font-medium">
                 <div className="flex flex-row items-center gap-3">
@@ -111,7 +124,9 @@ export const PageEmployees: React.FC = () => {
               </TableCell>
               <TableCell>{employee.lastName}</TableCell>
               <TableCell>{employee.job}</TableCell>
-              <TableCell>{employee.status}</TableCell>
+              <TableCell>
+                <Badge>{employee.status}</Badge>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
