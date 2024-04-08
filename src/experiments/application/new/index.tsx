@@ -92,7 +92,7 @@ const Layout = () => {
       <TooltipProvider>
         <div
           className={cn(
-            "bg-layout -m-4 grid h-screen grid-cols-1 gap-4 py-4 pr-4",
+            "-m-4 grid h-screen grid-cols-1 gap-4 bg-layout py-4 pr-4",
             layoutType === "Regular"
               ? "md:grid-cols-[64px_1fr]"
               : "md:grid-cols-[64px_1fr_1fr]"
