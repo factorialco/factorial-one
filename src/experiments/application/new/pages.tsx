@@ -11,7 +11,7 @@ import { PageEmployees } from "./employees"
 
 export const PageTitle: React.FC<{ title: string }> = ({ title }) => {
   return (
-    <div className="flex h-[72px] w-full items-center px-6 text-xl text-secondary-foreground">
+    <div className="flex h-[72px] w-full items-center bg-card px-6 text-xl text-secondary-foreground">
       {title}
     </div>
   )

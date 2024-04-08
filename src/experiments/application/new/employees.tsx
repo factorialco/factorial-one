@@ -1,4 +1,4 @@
-import { useLayoutType } from './layout-type'
+import { useLayoutType } from "./layout-type"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/foundations/avatar"
 import {
@@ -12,7 +12,7 @@ import {
 
 import { PageTitle } from "./pages"
 
-const Employees = [
+export const Employees = [
   {
     firstName: "Arthur",
     lastName: "McCoy",
@@ -37,10 +37,34 @@ const Employees = [
     job: "Sales Director",
     status: "Active",
   },
+  {
+    firstName: "Courtney",
+    lastName: "Lane",
+    avatar: 9,
+    avatarFallback: "CL",
+    job: "Sales Development Representative",
+    status: "Invited",
+  },
+  {
+    firstName: "Dianne",
+    lastName: "Edwards",
+    avatar: 23,
+    avatarFallback: "DE",
+    job: "Account Executive",
+    status: "Active",
+  },
+  {
+    firstName: "Marjorie",
+    lastName: "Black",
+    avatar: 26,
+    avatarFallback: "MB",
+    job: "Key Account Manager",
+    status: "Terminated",
+  },
 ]
 
 export const PageEmployees: React.FC = () => {
-    const { setLayoutType } = useLayoutType()
+  const { setLayoutType } = useLayoutType()
 
   return (
     <div>
@@ -57,7 +81,11 @@ export const PageEmployees: React.FC = () => {
           </TableHeader>
           <TableBody>
             {Employees.map((employee, index) => (
-              <TableRow key={index} className="hover:cursor-pointer" onClick={() => setLayoutType!("Split")}>
+              <TableRow
+                key={index}
+                className="hover:cursor-pointer"
+                onClick={() => setLayoutType!("Split")}
+              >
                 <TableCell className="font-medium">
                   <div className="flex flex-row items-center gap-3">
                     <Avatar size="small">
