@@ -63,10 +63,19 @@ const Layout = () => {
     }
   }
 
+  const [layoutType, setLayoutType] = useState("Regular")
+
   return (
     <TooltipProvider>
-      <div className="-m-4 bg-secondary/60 min-h-screen h-screen py-4 pr-4 grid grid-cols-1 md:grid-cols-[80px_1fr]">
-        <div className="flex flex-col gap-1 mx-4 pt-3">
+      <div
+        className={cn(
+          "-m-4 bg-secondary/60 min-h-screen h-screen py-4 pr-4 grid grid-cols-1 gap-4",
+          layoutType === "Regular"
+            ? "md:grid-cols-[64px_1fr]"
+            : "md:grid-cols-[64px_1fr_2fr]"
+        )}
+      >
+        <div className="w-12 flex flex-col gap-1 ml-4 pt-3">
           <div className="flex justify-center items-center w-12 h-12 text-secondary-foreground">
             A
           </div>
@@ -108,6 +117,11 @@ const Layout = () => {
             {activeSubItem?.component || activeItem?.component}
           </div>
         </div>
+        {layoutType === "Split" && (
+          <div className="bg-card rounded-2xl shadow-sm border">
+            Here it is a split layout.
+          </div>
+        )}
       </div>
     </TooltipProvider>
   )

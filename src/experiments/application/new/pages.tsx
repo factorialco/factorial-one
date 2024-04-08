@@ -1,16 +1,8 @@
-import {
-  CircleHelp,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  Store,
-  Target,
-  UserRound,
-  UsersRound,
-} from "lucide-react"
+import { Home, Inbox, Settings, UserRound, UsersRound } from "lucide-react"
 
-const PageTitle: React.FC<{ title: string }> = ({ title }) => {
+import { PageEmployees } from "./employees"
+
+export const PageTitle: React.FC<{ title: string }> = ({ title }) => {
   return (
     <div className="w-full h-[72px] flex items-center px-6 text-xl text-secondary-foreground">
       {title}
@@ -32,15 +24,6 @@ const PageInbox: React.FC = () => {
     <div>
       <PageTitle title="Inbox" />
       <p>This is the inbox!</p>
-    </div>
-  )
-}
-
-const PageEmployees: React.FC = () => {
-  return (
-    <div>
-      <PageTitle title="Employees" />
-      <p>These are the employees...</p>
     </div>
   )
 }
