@@ -1,3 +1,5 @@
+// organize-imports-ignore
+import React from "react"
 import { DecoratorHelpers } from "@storybook/addon-themes"
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
@@ -6,7 +8,7 @@ import DocumentationTemplate from "./DocumentationTemplate.mdx"
 
 import "../lib/styles.css"
 
-import { Theme, ThemeProvider } from "../lib/utils/theme-provider"
+import { Theme, ThemeProvider } from "../lib/lib/theme-provider"
 
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
   DecoratorHelpers

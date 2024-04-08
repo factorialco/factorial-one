@@ -1,4 +1,4 @@
-import { useTheme } from "@/utils/theme-provider"
+import { useTheme } from "@/lib/theme-provider"
 import { Moon, Sun } from "lucide-react"
 
 import { Button } from "@/foundations/button"

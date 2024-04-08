@@ -1,4 +1,4 @@
-import { cn } from "@/utils/utils"
+import { cn } from "@/lib/utils"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 import * as React from "react"
