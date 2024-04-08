@@ -55,7 +55,7 @@ export const PageEmployees: React.FC = () => {
             {Employees.map((employee, index) => (
               <TableRow key={index} className="hover:cursor-pointer">
                 <TableCell className="font-medium">
-                  <div className="flex flex-row gap-3 items-center">
+                  <div className="flex flex-row items-center gap-3">
                     <Avatar size="small">
                       <AvatarImage
                         src={`https://i.pravatar.cc/150?img=${employee.avatar}`}
