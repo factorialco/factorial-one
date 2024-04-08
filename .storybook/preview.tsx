@@ -6,8 +6,6 @@ import DocumentationTemplate from "./DocumentationTemplate.mdx"
 
 import "../lib/styles.css"
 
-import React from "react"
-
 import { Theme, ThemeProvider } from "../lib/utils/theme-provider"
 
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
