@@ -135,10 +135,15 @@ const Layout = () => {
                 </ScrollArea>
               </div>
             )}
-            <ScrollArea className="h-[calc(100vh-2rem)] min-w-80 rounded-2xl bg-card">
-              {activeSubItem?.component || activeItem?.component}
-              <ScrollBar orientation="horizontal" />
-            </ScrollArea>
+            <div className="h-[calc(100vh-2rem)] w-full rounded-2xl bg-card">
+              <div className="flex h-[72px] w-full items-center px-6 text-xl text-secondary-foreground">
+                Title
+              </div>
+              <ScrollArea className="h-[calc(100vh-106px)]">
+                {activeSubItem?.component || activeItem?.component}
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
+            </div>
           </div>
           <ScrollArea
             className={cn(

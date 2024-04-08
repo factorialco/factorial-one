@@ -9,28 +9,19 @@ import {
 
 import { PageEmployees } from "./employees"
 
-export const PageTitle: React.FC<{ title: string }> = ({ title }) => {
-  return (
-    <div className="flex h-[72px] w-full items-center bg-card px-6 text-xl text-secondary-foreground">
-      {title}
-    </div>
-  )
-}
+import { Skeleton } from "@/foundations/skeleton"
 
-const PageHome: React.FC = () => {
+const PageDummy: React.FC = () => {
   return (
     <div>
-      <PageTitle title="Home" />
-      <p>This is the homepage!</p>
-    </div>
-  )
-}
-
-const PageInbox: React.FC = () => {
-  return (
-    <div>
-      <PageTitle title="Inbox" />
-      <p>This is the inbox!</p>
+      <div className="px-6">
+        {Array.from({ length: 30 }, (_, index) => (
+          <Skeleton
+            key={index}
+            className={`mb-5 h-[20px] rounded-full ${["w-96", "w-80", "w-72", "w-64", "w-60", "w-56"][Math.floor(Math.random() * 6)]}`}
+          />
+        ))}
+      </div>
     </div>
   )
 }
@@ -51,13 +42,13 @@ export const Pages: Page[] = [
   {
     title: "Home",
     icon: Home,
-    component: <PageHome />,
+    component: <PageDummy />,
     subItems: [],
   },
   {
     title: "Inbox",
     icon: Inbox,
-    component: <PageInbox />,
+    component: <PageDummy />,
     subItems: [],
   },
   {
@@ -67,11 +58,11 @@ export const Pages: Page[] = [
     subItems: [
       {
         title: "Profile",
-        component: "Profile SubMenu one component content",
+        component: <PageDummy />,
       },
       {
         title: "Personal",
-        component: "Profile SubMenu two component content",
+        component: <PageDummy />,
       },
     ],
   },
@@ -86,18 +77,18 @@ export const Pages: Page[] = [
       },
       {
         title: "Teams",
-        component: "These are the teams...",
+        component: <PageDummy />,
       },
       {
         title: "Jobs",
-        component: "These are the jobs...",
+        component: <PageDummy />,
       },
     ],
   },
   {
     title: "Settings",
     icon: Settings,
-    component: "Settings Component content",
+    component: <PageDummy />,
     subItems: [],
   },
 ]

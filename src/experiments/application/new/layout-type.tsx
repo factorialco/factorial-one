@@ -1,12 +1,15 @@
-import { createContext, useContext, useState, Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, createContext, useContext } from "react"
 
 type LayoutTypeContextProps = {
-  layoutType: string,
+  layoutType: string
   setLayoutType: Dispatch<SetStateAction<string>> | null
 }
 
-export const LayoutTypeContext = createContext<LayoutTypeContextProps>({ layoutType: 'Regular', setLayoutType: null });
+export const LayoutTypeContext = createContext<LayoutTypeContextProps>({
+  layoutType: "Regular",
+  setLayoutType: null,
+})
 
-export function useLayoutType() : LayoutTypeContextProps {
-  return useContext(LayoutTypeContext);
+export function useLayoutType(): LayoutTypeContextProps {
+  return useContext(LayoutTypeContext)
 }

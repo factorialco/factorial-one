@@ -10,8 +10,6 @@ import {
   TableRow,
 } from "@/foundations/table"
 
-import { PageTitle } from "./pages"
-
 export const Employees = [
   {
     firstName: "Arthur",
@@ -61,6 +59,22 @@ export const Employees = [
     job: "Key Account Manager",
     status: "Terminated",
   },
+  {
+    firstName: "Maxwell",
+    lastName: "Fox",
+    avatar: 53,
+    avatarFallback: "MB",
+    job: "Sales Operations Manager",
+    status: "Active",
+  },
+  {
+    firstName: "Phillip",
+    lastName: "Hawkins",
+    avatar: 52,
+    avatarFallback: "MB",
+    job: "Sales Development Representative",
+    status: "Onboarding",
+  },
 ]
 
 export const PageEmployees: React.FC = () => {
@@ -68,43 +82,40 @@ export const PageEmployees: React.FC = () => {
 
   return (
     <div>
-      <PageTitle title="Employees" />
-      <div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>First name</TableHead>
-              <TableHead>Last name</TableHead>
-              <TableHead>Job</TableHead>
-              <TableHead>Status</TableHead>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>First name</TableHead>
+            <TableHead>Last name</TableHead>
+            <TableHead>Job</TableHead>
+            <TableHead>Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {Employees.map((employee, index) => (
+            <TableRow
+              key={index}
+              className="hover:cursor-pointer"
+              onClick={() => setLayoutType!("Split")}
+            >
+              <TableCell className="font-medium">
+                <div className="flex flex-row items-center gap-3">
+                  <Avatar size="small">
+                    <AvatarImage
+                      src={`https://i.pravatar.cc/150?img=${employee.avatar}`}
+                    />
+                    <AvatarFallback>{employee.avatarFallback}</AvatarFallback>
+                  </Avatar>
+                  <div>{employee.firstName}</div>
+                </div>
+              </TableCell>
+              <TableCell>{employee.lastName}</TableCell>
+              <TableCell>{employee.job}</TableCell>
+              <TableCell>{employee.status}</TableCell>
             </TableRow>
-          </TableHeader>
-          <TableBody>
-            {Employees.map((employee, index) => (
-              <TableRow
-                key={index}
-                className="hover:cursor-pointer"
-                onClick={() => setLayoutType!("Split")}
-              >
-                <TableCell className="font-medium">
-                  <div className="flex flex-row items-center gap-3">
-                    <Avatar size="small">
-                      <AvatarImage
-                        src={`https://i.pravatar.cc/150?img=${employee.avatar}`}
-                      />
-                      <AvatarFallback>{employee.avatarFallback}</AvatarFallback>
-                    </Avatar>
-                    <div>{employee.firstName}</div>
-                  </div>
-                </TableCell>
-                <TableCell>{employee.lastName}</TableCell>
-                <TableCell>{employee.job}</TableCell>
-                <TableCell>{employee.status}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   )
 }
