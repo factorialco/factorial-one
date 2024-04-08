@@ -1,4 +1,11 @@
-import { Home, Inbox, Settings, UserRound, UsersRound } from "lucide-react"
+import {
+  Home,
+  Inbox,
+  LucideIcon,
+  Settings,
+  UserRound,
+  UsersRound,
+} from "lucide-react"
 
 import { PageEmployees } from "./employees"
 
@@ -30,7 +37,7 @@ const PageInbox: React.FC = () => {
 
 export type Page = {
   title: string
-  icon: React.FC
+  icon: LucideIcon
   component: React.ReactNode | string
   subItems: SubItem[]
 }
