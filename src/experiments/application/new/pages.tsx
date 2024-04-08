@@ -4,7 +4,7 @@ import { PageEmployees } from "./employees"
 
 export const PageTitle: React.FC<{ title: string }> = ({ title }) => {
   return (
-    <div className="w-full h-[72px] flex items-center px-6 text-xl text-secondary-foreground">
+    <div className="flex h-[72px] w-full items-center px-6 text-xl text-secondary-foreground">
       {title}
     </div>
   )
@@ -28,7 +28,19 @@ const PageInbox: React.FC = () => {
   )
 }
 
-export const Pages = [
+export type Page = {
+  title: string
+  icon: React.FC
+  component: React.ReactNode | string
+  subItems: SubItem[]
+}
+
+export type SubItem = {
+  title: string
+  component: React.ReactNode | string
+}
+
+export const Pages: Page[] = [
   {
     title: "Home",
     icon: Home,

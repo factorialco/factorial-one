@@ -3,10 +3,19 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "dist/factorial-one.js",
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite",
     "start": "npm run storybook",
-    "build": "tsc && vite build",
+    "build": "tsc --p ./tsconfig-build.json && vite build && npm run build-tailwind",
+    "build-tailwind": "NODE_ENV=production tailwindcss -i ./lib/styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -32,7 +41,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
-    "lucide-react": "^0.364.0",
+    "lucide-react": "^0.365.0",
     "react": "^18.2.0",
     "react-day-picker": "^8.10.0",
     "react-dom": "^18.2.0",
@@ -42,7 +51,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@storybook/addon-a11y": "^8.0.2",
     "@storybook/addon-essentials": "^8.0.5",
     "@storybook/addon-interactions": "^8.0.5",
@@ -54,7 +62,7 @@
     "@storybook/react-vite": "^8.0.5",
     "@storybook/test": "^8.0.2",
     "@storybook/test-runner": "^0.17.0",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.12.5",
     "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.5.0",
@@ -68,10 +76,13 @@
     "eslint-plugin-storybook": "^0.8.0",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.13",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "storybook": "^8.0.5",
-    "storybook-addon-themes": "^6.1.0",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.4",
-    "vite": "^5.2.8"
+    "vite": "^5.2.8",
+    "vite-plugin-dts": "^3.8.1",
+    "vite-plugin-lib-inject-css": "^2.0.1"
   }
 }
