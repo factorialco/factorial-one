@@ -5,26 +5,9 @@ let config = {
   singleQuote: false,
   tabWidth: 2,
   trailingComma: "es5",
-  importOrder: [
-    "^(react/(.*)$)|^(react$)",
-    "^(next/(.*)$)|^(next$)",
-    "<THIRD_PARTY_MODULES>",
-    "",
-    "^types$",
-    "^@/types/(.*)$",
-    "^@/config/(.*)$",
-    "^@/lib/(.*)$",
-    "^@/hooks/(.*)$",
-    "^@/foundations/(.*)$",
-    "^@/components/(.*)$",
-    "",
-    "^[./]",
-  ],
-  plugins: [
-    "@ianvs/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss",
-  ],
+  plugins: ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
   tailwindFunctions: ["cva"],
+  organizeImportsSkipDestructiveCodeActions: false,
 }
 
 export default config

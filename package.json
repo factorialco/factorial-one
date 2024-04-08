@@ -50,7 +50,6 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "@storybook/addon-a11y": "^8.0.2",
     "@storybook/addon-essentials": "^8.0.5",
     "@storybook/addon-interactions": "^8.0.5",
@@ -77,6 +76,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.13",
+    "prettier-plugin-organize-imports": "^3.2.4",
     "storybook": "^8.0.5",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.4.4",
