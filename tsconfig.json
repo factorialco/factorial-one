@@ -31,7 +31,8 @@
   },
   "include": [
     "src",
-    "lib"
+    "lib",
+    ".storybook"
   ],
   "references": [
     {
