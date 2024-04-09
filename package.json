@@ -6,8 +6,8 @@
   "types": "dist/main.d.ts",
   "files": [
     "dist",
-    "tailwind.config.js",
-    "lib/styles.css",
+    "tailwind.css",
+    "tailwind.config.ts",
     "postcss.config.js"
   ],
   "sideEffects": [
@@ -16,9 +16,8 @@
   "scripts": {
     "dev": "vite",
     "start": "npm run storybook",
-    "build": "tsc --p ./tsconfig-build.json && vite build && npm run build:tailwind && npm run build:copy",
-    "build:tailwind": "NODE_ENV=production tailwindcss -i ./lib/tailwind.css -o ./dist/styles.css --postcss --minify",
-    "build:copy": "cp lib/tailwind.css dist/",
+    "build": "tsc --p ./tsconfig-build.json && vite build && npm run build:tailwind",
+    "build:tailwind": "NODE_ENV=production tailwindcss -i ./tailwind.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
