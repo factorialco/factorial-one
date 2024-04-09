@@ -5,7 +5,10 @@
   "main": "dist/factorial-one.js",
   "types": "dist/main.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "tailwind.config.js",
+    "lib/styles.css",
+    "postcss.config.js"
   ],
   "sideEffects": [
     "**/*.css"
@@ -13,8 +16,9 @@
   "scripts": {
     "dev": "vite",
     "start": "npm run storybook",
-    "build": "tsc --p ./tsconfig-build.json && vite build && npm run build-tailwind",
-    "build-tailwind": "NODE_ENV=production tailwindcss -i ./lib/styles.css -o ./dist/styles.css --postcss --minify",
+    "build": "tsc --p ./tsconfig-build.json && vite build && npm run build:tailwind && npm run build:copy",
+    "build:tailwind": "NODE_ENV=production tailwindcss -i ./lib/tailwind.css -o ./dist/styles.css --postcss --minify",
+    "build:copy": "cp lib/tailwind.css dist/",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
@@ -37,6 +41,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "autoprefixer": "^10.4.18",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.6.0",
@@ -47,6 +52,8 @@
     "react-hook-form": "^7.51.2",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
+    "tailwindcss": "^3.4.3",
+    "postcss": "^8.4.38",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -67,18 +74,15 @@
     "@typescript-eslint/eslint-plugin": "^7.5.0",
     "@typescript-eslint/parser": "^7.5.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "autoprefixer": "^10.4.18",
     "axe-playwright": "^2.0.1",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "eslint-plugin-storybook": "^0.8.0",
-    "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.13",
     "prettier-plugin-organize-imports": "^3.2.4",
     "storybook": "^8.0.5",
-    "tailwindcss": "^3.4.3",
     "typescript": "^5.4.4",
     "vite": "^5.2.8",
     "vite-plugin-dts": "^3.8.1",
