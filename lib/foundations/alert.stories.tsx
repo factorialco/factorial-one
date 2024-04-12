@@ -8,9 +8,6 @@ const meta = {
   component: Alert,
   parameters: {
     layout: "centered",
-    a11y: {
-      skipCi: true,
-    },
   },
   tags: ["autodocs"],
   args: {},
