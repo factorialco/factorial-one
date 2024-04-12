@@ -49,6 +49,16 @@ export default {
           foreground: "hsl(var(--positive-foreground))",
           intermediate: "hsl(var(--positive-intermediate))",
         },
+        warning: {
+          DEFAULT: "hsl(var(--warning))",
+          foreground: "hsl(var(--warning-foreground))",
+          intermediate: "hsl(var(--warning-intermediate))",
+        },
+        info: {
+          DEFAULT: "hsl(var(--info))",
+          foreground: "hsl(var(--info-foreground))",
+          intermediate: "hsl(var(--info-intermediate))",
+        },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
