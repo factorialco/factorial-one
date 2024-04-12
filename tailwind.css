@@ -29,7 +29,7 @@
     --accent-foreground: 0 0% 9%;
 
     --destructive: 10 92% 95%;
-    --destructive-intermediate: 11 75% 70%;
+    --destructive-intermediate: 10 75% 70%;
     --destructive-foreground: 8 50% 24%;
 
     --positive: 124 44% 94%;
@@ -81,9 +81,9 @@
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 5 48% 15%;
     --destructive-intermediate: 10 50% 45%;
-    --destructive-foreground: 8 89% 89%;
+    --destructive-foreground: 10 86% 89%;
 
     --positive: 161 38% 13%;
     --positive-intermediate: 131 32% 36%;
