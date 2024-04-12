@@ -36,6 +36,14 @@
     --positive-intermediate: 131 38% 56%;
     --positive-foreground: 129 29% 18%;
 
+    --warning: 37 100% 92%;
+    --warning-intermediate: 25 80% 63%;
+    --warning-foreground: 16 50% 23%;
+
+    --info: 205 92% 95%;
+    --info-intermediate: 206 82% 65%;
+    --info-foreground: 216 71% 23%;
+
     --border: 0 0% 89.8%;
     --input: 233 11% 86%;
     --input-hover: 231 10% 75%;
@@ -80,6 +88,14 @@
     --positive: 161 38% 13%;
     --positive-intermediate: 131 32% 36%;
     --positive-foreground: 151 64% 54%;
+
+    --warning: 28 65% 12%;
+    --warning-intermediate: 23 60% 40%;
+    --warning-foreground: 30 100% 88%;
+
+    --info: 212 69% 16%;
+    --info-intermediate: 211 65% 45%;
+    --info-foreground: 205 100% 88%;
 
     --border: 0 0% 14.9%;
     --input: 230 5% 24%;
