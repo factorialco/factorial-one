@@ -12,7 +12,6 @@ export default defineConfig({
     dts({
       include: ["lib"],
       exclude: ["**/*.stories.tsx"],
-      staticImport: true,
     }),
   ],
   resolve: {
@@ -25,6 +24,7 @@ export default defineConfig({
       entry: resolve(__dirname, "lib/main.ts"),
       formats: ["es"],
     },
+    minify: "terser",
     copyPublicDir: false,
     rollupOptions: {
       external: ["react", "react/jsx-runtime"],
