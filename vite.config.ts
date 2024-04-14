@@ -9,7 +9,12 @@ export default defineConfig({
   plugins: [
     react(),
     libInjectCss(),
-    dts({ include: ["lib"], exclude: ["**/*.stories.tsx"] }),
+    dts({
+      include: ["lib"],
+      exclude: ["**/*.stories.tsx"],
+      rollupTypes: true,
+      staticImport: true,
+    }),
   ],
   resolve: {
     alias: {
