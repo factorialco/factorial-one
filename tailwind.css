@@ -107,12 +107,3 @@
     --layout-foreground: 352 100% 75%;
   }
 }
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
