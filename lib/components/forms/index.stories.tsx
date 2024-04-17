@@ -1,78 +1,52 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import type { Meta, StoryObj } from "@storybook/react"
-import { fn } from "@storybook/test"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
+import { Meta } from "@storybook/react"
+import { FC } from "react"
+import Form from "./Form"
+import DayPickerField from "./fields/DayPickerField"
+import TextField from "./fields/TextField"
 
-import { Button } from "@/foundations/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/foundations/form"
-import { Input } from "@/foundations/input"
-
-interface Props {
-  onSubmit: (data: z.infer<typeof formSchema>) => void
-}
-
-const meta: Meta<Props> = {
+const meta: Meta = {
   tags: ["autodocs"],
-  args: {
-    onSubmit: fn(),
-  },
 }
-
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-})
 
 export default meta
-type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
-  args: {
-    onSubmit: fn(),
-  },
-  render: ({ onSubmit }) => {
-    const form = useForm<z.infer<typeof formSchema>>({
-      resolver: zodResolver(formSchema),
-      defaultValues: {
-        username: "",
-      },
-    })
+interface FormFields {
+  name: string
+  lastname: string
+  date: Date
+}
 
-    return (
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit((values) => onSubmit(values))}
-          className="space-y-8"
-        >
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Submit</Button>
-        </form>
-      </Form>
-    )
-  },
+export const PageWithPage: FC = () => {
+  const handleSubmit = ({ name, lastname, date }: FormFields) => {
+    console.log(name, lastname, date)
+  }
+
+  return (
+    <Form<FormFields>
+      defaultValues={{ name: "", lastname: "" }}
+      onSubmit={handleSubmit}
+    >
+      <TextField
+        name="name"
+        label="Name"
+        placeholder="Type something"
+        description="This will be your public name."
+        min={2}
+        message="Name must be at least 2 characters."
+      />
+      <TextField
+        name="lastname"
+        label="Lastname"
+        placeholder="Type something"
+        description="This will be your public lastname."
+        min={4}
+        message="Lastname must be at least 4 characters."
+      />
+      <DayPickerField
+        name="date"
+        label="Date"
+        description="This will be your birth date"
+      />
+    </Form>
+  )
 }

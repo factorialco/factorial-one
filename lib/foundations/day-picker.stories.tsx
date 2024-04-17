@@ -2,10 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { ComponentProps } from "react"
 
-import { DatePicker } from "."
+import { DayPicker } from "./day-picker"
 
 const meta = {
-  component: DatePicker,
+  component: DayPicker,
   parameters: {
     layout: "centered",
   },
@@ -13,8 +13,8 @@ const meta = {
   args: {
     date: new Date(),
     onSelect: fn(),
-  } satisfies ComponentProps<typeof DatePicker>,
-} satisfies Meta<typeof DatePicker>
+  } satisfies ComponentProps<typeof DayPicker>,
+} satisfies Meta<typeof DayPicker>
 
 export default meta
 type Story = StoryObj<typeof meta>
