@@ -22,7 +22,6 @@ const SelectField: FC<Props> = ({ name, label, description, placeholder }) => (
       <FormItem>
         <FormLabel>{label}</FormLabel>
         <Select onValueChange={field.onChange} defaultValue={field.value} />
-
         <Select onValueChange={field.onChange} defaultValue={field.value}>
           <SelectTrigger className="w-[180px]">
             <SelectValue placeholder={placeholder} />

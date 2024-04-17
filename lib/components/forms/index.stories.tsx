@@ -22,13 +22,11 @@ export const PageWithPage: FC = () => {
   }
 
   return (
-    <Form<FormFields>
-      defaultValues={{ name: "", lastname: "" }}
-      onSubmit={handleSubmit}
-    >
+    <Form<FormFields> onSubmit={handleSubmit}>
       <TextField
         name="name"
         label="Name"
+        defaultValue="Test"
         placeholder="Type something"
         description="This will be your public name."
         min={2}

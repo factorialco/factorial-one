@@ -2,23 +2,21 @@ import { Button } from "@/foundations/button"
 import { Form as FormProvider } from "@/foundations/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { PropsWithChildren } from "react"
-import { DefaultValues, SubmitHandler, useForm } from "react-hook-form"
+import { SubmitHandler, useForm } from "react-hook-form"
 import useFormSchema from "../hooks/useFormSchema"
 
 interface Props<T extends object> {
-  defaultValues: DefaultValues<T>
   onSubmit: SubmitHandler<T>
 }
 
 function Form<T extends object>({
   children,
-  defaultValues,
   onSubmit,
 }: PropsWithChildren<Props<T>>) {
-  const formSchema = useFormSchema(children)
+  const { schema, defaultValues } = useFormSchema<T>(children)
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(schema),
     defaultValues,
   })
 
