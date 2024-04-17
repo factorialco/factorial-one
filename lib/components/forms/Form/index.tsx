@@ -13,7 +13,7 @@ function Form<T extends object>({
   children,
   onSubmit,
 }: PropsWithChildren<Props<T>>) {
-  const { schema, defaultValues } = useFormSchema<T>(children)
+  const { schema, defaultValues } = useFormSchema(children)
 
   const form = useForm({
     resolver: zodResolver(schema),
