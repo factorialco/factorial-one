@@ -13,6 +13,8 @@ import { FieldProps } from "../types"
 interface Props extends FieldProps {
   label: string
   description: string
+  from: Date
+  to: Date
 }
 
 const DayPickerField: FC<Props> = ({ name, label, description }) => (
