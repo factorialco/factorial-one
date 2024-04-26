@@ -21,11 +21,15 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Single: Story = {
-  render: () => {
+  args: {
+    mode: "single",
+  },
+  render(props) {
     const [selectedDay, setSelectedDay] = useState<Date>()
 
     return (
       <Calendar
+        {...props}
         mode="single"
         selected={selectedDay}
         onSelect={setSelectedDay}
@@ -35,7 +39,11 @@ export const Single: Story = {
 }
 
 export const Multiple: Story = {
-  render: () => {
+  args: {
+    mode: "multiple",
+    min: 1,
+  },
+  render(props) {
     const initialDays: Date[] = []
     const [days, setDays] = useState<Date[] | undefined>(initialDays)
 
@@ -52,6 +60,7 @@ export const Multiple: Story = {
 
     return (
       <Calendar
+        {...props}
         mode="multiple"
         min={1}
         selected={days}
@@ -63,7 +72,7 @@ export const Multiple: Story = {
 }
 
 export const Range: Story = {
-  render: () => {
+  render(props) {
     const pastMonth = new Date(2024, 10, 15)
     const defaultSelected: DateRange = {
       from: pastMonth,
@@ -94,6 +103,7 @@ export const Range: Story = {
 
     return (
       <Calendar
+        {...props}
         id="test"
         mode="range"
         defaultMonth={pastMonth}

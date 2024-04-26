@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
-import { Button, sizes, variants } from "./button"
+import { Button } from "./button"
 
 const meta = {
   component: Button,
@@ -9,20 +9,6 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  argTypes: {
-    variant: {
-      control: {
-        type: "select",
-      },
-      options: [...variants],
-    },
-    size: {
-      control: {
-        type: "select",
-      },
-      options: [...sizes],
-    },
-  },
   args: {
     variant: "default",
     size: "default",

@@ -14,7 +14,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render: () => {
+  render(props) {
     return (
       <div className="max-w-96 bg-background p-10">
         <div className="flex flex-col gap-3 rounded-lg border bg-card p-6">

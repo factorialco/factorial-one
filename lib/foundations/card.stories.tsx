@@ -24,9 +24,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render: () => {
+  render(props) {
     return (
-      <Card>
+      <Card {...props}>
         <CardContent>This is a basic card</CardContent>
       </Card>
     )
@@ -34,9 +34,9 @@ export const Basic: Story = {
 }
 
 export const WithTitle: Story = {
-  render: () => {
+  render(props) {
     return (
-      <Card>
+      <Card {...props}>
         <CardHeader>
           <CardTitle>Card title</CardTitle>
           <CardDescription>Description of the title</CardDescription>
@@ -48,9 +48,9 @@ export const WithTitle: Story = {
 }
 
 export const WithFooter: Story = {
-  render: () => {
+  render(props) {
     return (
-      <Card>
+      <Card {...props}>
         <CardContent>This is a card with a footer</CardContent>
         <CardFooter>
           <Button className="w-full">Clock in</Button>

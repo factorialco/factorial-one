@@ -26,9 +26,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render: () => {
+  render(props) {
     return (
-      <Select>
+      <Select {...props}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Theme" />
         </SelectTrigger>
@@ -43,9 +43,9 @@ export const Basic: Story = {
 }
 
 export const Scrollable: Story = {
-  render: () => {
+  render(props) {
     return (
-      <Select>
+      <Select {...props}>
         <SelectTrigger className="w-[280px]">
           <SelectValue placeholder="Select a timezone" />
         </SelectTrigger>

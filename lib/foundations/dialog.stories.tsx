@@ -32,9 +32,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render: () => {
+  render(props) {
     return (
-      <Dialog>
+      <Dialog {...props}>
         <DialogTrigger asChild>
           <Button variant="secondary">Edit Profile</Button>
         </DialogTrigger>
@@ -76,9 +76,9 @@ export const Basic: Story = {
 }
 
 export const WithCloseButton: Story = {
-  render: () => {
+  render(props) {
     return (
-      <Dialog>
+      <Dialog {...props}>
         <DialogTrigger asChild>
           <Button variant="secondary">Share</Button>
         </DialogTrigger>

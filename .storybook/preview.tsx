@@ -40,6 +40,7 @@ const preview: Preview = {
     },
     docs: {
       page: DocumentationTemplate,
+      toc: true,
     },
     actions: { argTypesRegex: "^on.*" },
     controls: {

@@ -15,37 +15,42 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  render: () => {
-    return <Badge>Home</Badge>
+  render(props) {
+    return <Badge {...props}>Home</Badge>
   },
 }
 
 export const Neutral: Story = {
-  render: () => {
-    return <Badge variant="neutral">Rejected</Badge>
+  args: {
+    variant: "neutral",
+    children: "Neutral",
   },
 }
 
 export const Destructive: Story = {
-  render: () => {
-    return <Badge variant="destructive">Rejected</Badge>
+  args: {
+    variant: "destructive",
+    children: "Destructive",
   },
 }
 
 export const Positive: Story = {
-  render: () => {
-    return <Badge variant="positive">Completed</Badge>
+  args: {
+    variant: "positive",
+    children: "Positive",
   },
 }
 
 export const Warning: Story = {
-  render: () => {
-    return <Badge variant="warning">Review</Badge>
+  args: {
+    variant: "warning",
+    children: "Warning",
   },
 }
 
 export const Info: Story = {
-  render: () => {
-    return <Badge variant="info">In progress</Badge>
+  args: {
+    variant: "info",
+    children: "Info",
   },
 }
