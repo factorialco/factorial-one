@@ -21,7 +21,7 @@ const meta = {
       control: {
         type: "select",
       },
-      options: sizes,
+      options: [...sizes],
     },
   },
 } satisfies Meta<typeof Avatar>

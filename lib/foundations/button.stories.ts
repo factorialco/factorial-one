@@ -14,13 +14,13 @@ const meta = {
       control: {
         type: "select",
       },
-      options: variants,
+      options: [...variants],
     },
     size: {
       control: {
         type: "select",
       },
-      options: sizes,
+      options: [...sizes],
     },
   },
   args: {
