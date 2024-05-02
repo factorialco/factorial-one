@@ -8,6 +8,7 @@ let config = {
   plugins: ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
   tailwindFunctions: ["cva"],
   organizeImportsSkipDestructiveCodeActions: false,
+  proseWrap: "always",
 }
 
 export default config

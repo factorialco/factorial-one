@@ -1,57 +1,99 @@
-# Why do this?
+# Introduction
 
-**Context and problem:** How did we get here?
+Factorial One is a reboot of the visual language of the Factorial platform. It's
+main goal is to provide consistency and coherence to Factorial's user interface,
+while enabling a fast, efficient and enjoyable user experience.
 
-- Our current product has a huge surface area. Designers have created ad-hoc components to solve the problem at hand, without much consideration of how it affects the platform as a whole.
-- This has created a never-ending series of bugs, inconsistencies and poor user experience for everyone involved (customers, designers, developers).
-- Our product feels slow, chaotic, inconsistent and disconnected.
+## Why Factorial One?
 
-It’s time to do something about it!
+Over the years, Factorial has grown into a complex platform with a wide range of
+features and functionalities. This complexity has led to a fragmented user
+experience, with different parts of the platform having different visual styles
+and interactions.
 
-**Business case:** What will be the outcome for the business?
+This complexity has made it increasingly difficult to maintain and scale both
+our user experience and our codebase. This is holding us back and we find
+ourselves spending an un reasonable amount of time time fixing bugs and
+inconsistencies when we should be focusing on fixing our user's pains and
+improving the platform.
 
-1. **Upselling:** By unifying the pieces, the products are easier to connect. Users find familiarity as each product works and looks exactly the same.
-2. **Mobile ready**: Younger generations of business owners operate from their mobile phones. By being responsive by default, we can tap into a whole new customer segment.
-3. **Integrations:** We can expose the same UI toolkit that we use internally to partners than need to extend Factorial for local compliance. Or even external products that want to tap into our ecosystem (e.g. [Stripe external apps](https://docs.stripe.com/stripe-apps/design?locale=es-ES)).
+## Why rebooting our design system?
 
-# Principles
+Our current design system, also known as "Gamma", is built on top of a very
+informally set of constraints, which hasn't stood the test of time. We keep
+adding new components and styles, bout our foundations are rotten.
 
-- As little choice as possible
-- As little design as possible
-- Get out of the way - don’t create more work for our users
-- As abstract as possible. Navigation patterns and components are reusable and interchangeable. We rarely create anything ad-hoc.
+After many attempts, we've come to the conclusion that we need to start from
+scratch and draw a clear line in the sand that separates our old design rules
+and patterns from the new ones.
 
-# Scope
+These are some of the opportunities we see in rebooting our design system:
 
-What is the scope?
+- **Establish a clear vision**: A design system is only useful if we see it as a
+  system of constraints. Over time, we've been adding more and more components
+  and styles, without a clear vision of what we want to achieve, to the point
+  where the added complexity has rendered it unusable.
+- **Fully responsive**: By providing the right set of abstractions, we want to
+  make it easy to build responsive interfaces that work well on any device. This
+  should help us build a responsive web application that complements our mobile
+  application and provides a consistent experience, without having to do the
+  same work twice (unless we want to!).
+- **Usable by external developers**: We want to make it easy for external
+  developers to build applications on top of Factorial. By providing a set of
+  well-documented and easy-to-use components, we can make it easier for them to
+  build applications that live within Factorial's ecosystem, seamlessly.
+- **Accessible**: We want to make sure that our platform is usable by everyone,
+  regardless of their abilities. This means making sure that our components are
+  accessible and that our platform is usable by everyone.
+- **Robust**: We want to make sure everything in Factorial One is top notch and
+  a pleasure to use. This means making sure our components are well-tested and
+  that our user experience stays consistent and coherent.
 
-- UI Foundations (e.g. Tailwind UI, [Shadcn/UI](https://ui.shadcn.com/)) — 100%
-- Abstractions (e.g. data collections) — 80%/20%
-  - Rendering (list, table, grid, etc…)
-  - Filterting
-  - Loading
-- Navigation and Information Architecture
-  - Access points
-  - UX metaphors (e.g. My stuff vs. My company)
+## Principles
 
-# Plan
+- **Consistent**: Factorial's enormous feature set can be overwhelming. By
+  providing a consistent visual language, we can help users navigate the
+  platform more easily and translate previous experiences to into future ones.
+- **Efficient**: Factorial One is designed to be efficient. It should help users
+  complete their tasks quickly and without friction.
+- **Enjoyable**: We want users to enjoy using Factorial. Factorial One should
+  make the platform pleasant to use.
 
-1. Put together a small task force
-   - Core: Josep Jauma, Dani Moreno, Mark MacKay, René Galindo
-   - Close collaborators: TBD
-2. Define the core foundations, abstractions and navigation that solve most of the current use-cases (aiming for 80%)
-3. Gradually share and involve PDs and FE to redesign (or fit) their current product into the new foundation.
-   - Work with them to find edge cases and things that don’t fit.
-   - Iterate until we get 80% of the use-cases covered.
-   - Seriously question the remaining 20%, then create ad-hoc components for valuable use cases for users and businesses.
-4. Adoption and deployment: TBD
+## Technical choices
 
-# Resources
+Factorial One is built on top of the following technologies:
 
-- [JJs primer on our design system →](https://factorialteam.slack.com/archives/C03RA7K1XNU/p1710840973202519)
-- Slack message from René:
-  **Our product is chaotic, inconsistent, and disconnected.** The hard truth is that the origin of the problem is a lack of strong product design foundations. We have to radically change how we understand product design at Factorial.Note that product design is a collaboration between (primarily) designers and engineers, so we're both just as responsible for the current state of things.**We have to:**
-  - Stop designing ad-hoc components for every single product and start thinking holistically across the whole system. Design for our platform, not for your product!
-  - Stop reinventing the wheel every time and start embracing constraints as a driver of creativity and consistent design.
-  - Stop thinking in only visual dimensions and start thinking in module components, data collections, paths, and everything that lies behind the screen.
-  - Stop using Figma as the source of truth and start using it as a *rough* reference for what will be implemented. Storybook is a much better source of truth of what actually can get built!
+- **[React](https://react.dev/)**: Factorial One is a collection of React
+  components that can be used to build Factorial's user interface.
+- **[TypeScript](https://www.typescriptlang.org/)**: We believe in the power of
+  typescript to ensure our code is robust and maintainable, and also as a way to
+  provide a better developer experience through its language server and
+  auto-completion.
+- **[Tailwind](https://tailwindcss.com/)**: We use Tailwind as our utility-first
+  CSS framework. This allows us to build interfaces quickly and consistently,
+  while leverating top-notch developer tooling and staying future-proof.
+- **[Shadcn](https://ui.shadcn.com/)**: We use shadcn as the basis for our
+  components to make sure our baseline of components is powerful and accessible.
+- **[Radix](https://www.radix-ui.com/primitives)**: We use Radix as the basis
+  for our interaction primitives to make sure our components are accessible and
+  consistent.
+
+## How to use Factorial One?
+
+Install Factorial one as a depencency:
+
+```bash
+$ npm install git+https://github.com/factorialco/factorial-one#release
+```
+
+Then, import its styles in your application (usually in `main.tsx` or similar):
+
+```jsx
+import "@factorialco/factorial-one/dist/styles.css"
+```
+
+Then, use any of its components:
+
+```jsx
+import { Button } from "@factorialco/factorial-one"
+```
