@@ -9,7 +9,7 @@ import {
 
 import { PageEmployees } from "./employees"
 
-import { Skeleton } from "@/foundations/skeleton"
+import { Skeleton } from "@/shadcn/skeleton"
 
 const PageDummy: React.FC = () => {
   return (

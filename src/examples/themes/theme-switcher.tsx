@@ -1,13 +1,13 @@
 import { useTheme } from "@/lib/theme-provider"
 import { Moon, Sun } from "lucide-react"
 
-import { Button } from "@/foundations/button"
+import { Button } from "@/shadcn/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/foundations/dropdown-menu"
+} from "@/shadcn/dropdown-menu"
 
 export function ThemeSwitcher() {
   const { setTheme } = useTheme()

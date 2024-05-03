@@ -19,9 +19,9 @@ import {
 } from "lucide-react"
 import React from "react"
 
-import { Button } from "@/foundations/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/foundations/popover"
-import { ScrollArea } from "@/foundations/scrollarea"
+import { Button } from "@/shadcn/button"
+import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/popover"
+import { ScrollArea } from "@/shadcn/scrollarea"
 
 const Title: React.FC<{ title: string }> = ({ title }) => (
   <div className="flex h-14 items-center gap-2 px-3 font-medium text-secondary-foreground">

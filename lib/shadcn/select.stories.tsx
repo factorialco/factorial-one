@@ -8,11 +8,10 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/foundations/select"
+} from "@/shadcn/select"
 
 const meta: Meta = {
   component: Select,
-  title: "Foundations / select",
   parameters: {
     layout: "centered",
     a11y: {

@@ -2,21 +2,21 @@ import { useState } from "react"
 
 import { LayoutTypeContext } from "./layout-type"
 
-import { ScrollArea, ScrollBar } from "@/foundations/scrollarea"
+import { ScrollArea, ScrollBar } from "@/shadcn/scrollarea"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/foundations/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/shadcn/avatar"
 
-import { Skeleton } from "@/foundations/skeleton"
+import { Skeleton } from "@/shadcn/skeleton"
 
 import { Employees } from "./employees"
 
+import { cn } from "@/lib/utils"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/foundations/tooltip"
-import { cn } from "@/lib/utils"
+} from "@/shadcn/tooltip"
 
 import { Page, Pages, SubItem } from "./pages"
 

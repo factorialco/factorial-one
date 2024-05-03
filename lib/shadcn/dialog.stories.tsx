@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Folder } from "lucide-react"
 
-import { Button } from "@/foundations/button"
+import { Button } from "@/shadcn/button"
 import {
   Dialog,
   DialogClose,
@@ -12,13 +12,12 @@ import {
   DialogIcon,
   DialogTitle,
   DialogTrigger,
-} from "@/foundations/dialog"
-import { Input } from "@/foundations/input"
-import { Label } from "@/foundations/label"
+} from "@/shadcn/dialog"
+import { Input } from "@/shadcn/input"
+import { Label } from "@/shadcn/label"
 
 const meta: Meta = {
   component: Dialog,
-  title: "Foundations / dialog",
   parameters: {
     layout: "centered",
     a11y: {

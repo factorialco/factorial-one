@@ -1,13 +1,23 @@
 import type { StorybookConfig } from "@storybook/react-vite"
 
+const isProduction = process.env.NODE_ENV == "production"
+
 const config: StorybookConfig = {
   stories: [
     "../docs/Introduction.mdx",
     "../docs/**/*.mdx",
-    "../lib/**/*.mdx",
-    "../lib/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    "../src/**/*.mdx",
-    "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    {
+      directory: "../lib/components",
+      titlePrefix: "Components",
+    },
+    ...(isProduction
+      ? []
+      : [
+          {
+            directory: "../lib/shadcn",
+            titlePrefix: "ShadCN",
+          },
+        ]),
   ],
   staticDirs: ["../public"],
   addons: [
