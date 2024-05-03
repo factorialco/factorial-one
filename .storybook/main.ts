@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-vite"
 
-const isProduction = process.env.NODE_ENV == "production"
+const publicBuild = process.env.PUBLIC_BUILD == "true"
 
 const config: StorybookConfig = {
   stories: [
@@ -10,7 +10,7 @@ const config: StorybookConfig = {
       directory: "../lib/components",
       titlePrefix: "Components",
     },
-    ...(isProduction
+    ...(publicBuild
       ? []
       : [
           {

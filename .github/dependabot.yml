@@ -6,14 +6,11 @@
 
 version: 2
 updates:
- - package-ecosystem: "devcontainers"
-   directory: "/"
-   schedule:
-     interval: weekly
-
-version: 2
-updates:
- - package-ecosystem: "npm"
-   directory: "/"
-   schedule:
-     interval: daily
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: weekly
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: daily
