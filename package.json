@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "vite",
     "start": "npm run storybook",
-    "build": "tsc --p ./tsconfig-build.json && vite build && npm run build:tailwind",
+    "build": "tsc --p ./tsconfig-build.json && BUILD_TYPES=true vite build && npm run build:tailwind",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./tailwind.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",

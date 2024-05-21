@@ -9,12 +9,16 @@ export default defineConfig({
   plugins: [
     react(),
     libInjectCss(),
-    dts({
-      include: ["lib"],
-      exclude: ["**/*.stories.tsx"],
-      rollupTypes: true,
-      bundledPackages: ["class-variance-authority"],
-    }),
+    ...(process.env.BUILD_TYPES
+      ? [
+          dts({
+            include: ["lib"],
+            exclude: ["**/*.stories.tsx"],
+            rollupTypes: true,
+            bundledPackages: ["class-variance-authority"],
+          }),
+        ]
+      : []),
   ],
   resolve: {
     alias: {
