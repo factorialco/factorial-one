@@ -12,6 +12,7 @@ export default defineConfig({
     dts({
       include: ["lib"],
       exclude: ["**/*.stories.tsx"],
+      staticImport: true,
     }),
   ],
   resolve: {
