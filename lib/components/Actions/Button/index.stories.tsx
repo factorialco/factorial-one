@@ -32,6 +32,12 @@ export const Secondary: Story = {
   },
 }
 
+export const Positive: Story = {
+  args: {
+    variant: "positive",
+  },
+}
+
 export const Destructive: Story = {
   args: {
     variant: "destructive",
