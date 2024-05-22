@@ -1,42 +1,30 @@
-import { cn } from "@/lib/utils"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 
-export const variants = [
-  "default",
-  "secondary",
-  "outline",
-  "destructive",
-  "positive",
-  "ghost",
-] as const
-
-export const sizes = ["default", "sm", "icon", "icon-sm"] as const
+import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-full border-solid text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "f-inline-flex f-outline-none f-items-center f-justify-center f-whitespace-nowrap f-rounded-md f-text-sm f-font-medium f-ring-offset-background f-transition-colors focus-visible:f-outline-none focus-visible:f-ring-2 focus-visible:f-ring-ring focus-visible:f-ring-offset-2 disabled:f-pointer-events-none disabled:f-opacity-50",
   {
     variants: {
       variant: {
-        default:
-          "border-2 border-primary-intermediate bg-background text-primary-foreground hover:bg-primary",
-        secondary:
-          "border-2 border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
-        outline:
-          "border-2 border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
+        default: "f-bg-primary f-text-primary-foreground hover:f-bg-primary/90",
         destructive:
-          "border-2 border-destructive-intermediate bg-destructive text-destructive-foreground hover:bg-destructive/70",
-        positive:
-          "border-2 border-positive-intermediate bg-positive text-positive-foreground hover:bg-positive/70",
-        ghost: "text-intermediate hover:bg-accent hover:text-accent-foreground",
-      } satisfies Record<(typeof variants)[number], string>,
+          "f-bg-destructive f-text-destructive-foreground hover:f-bg-destructive/90",
+        outline:
+          "f-border f-border-input f-bg-background hover:f-bg-accent hover:f-text-accent-foreground",
+        secondary:
+          "f-bg-secondary f-text-secondary-foreground hover:f-bg-secondary/80",
+        ghost: "hover:f-bg-accent hover:f-text-accent-foreground",
+        link: "f-text-primary f-underline-offset-4 hover:f-underline",
+      },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-8 px-3",
-        icon: "h-10 w-10",
-        "icon-sm": "h-8 w-8",
-      } satisfies Record<(typeof sizes)[number], string>,
+        default: "f-h-10 f-px-4 f-py-2",
+        sm: "f-h-9 f-rounded-md f-px-3",
+        lg: "f-h-11 f-rounded-md f-px-8",
+        icon: "f-h-10 f-w-10",
+      },
     },
     defaultVariants: {
       variant: "default",

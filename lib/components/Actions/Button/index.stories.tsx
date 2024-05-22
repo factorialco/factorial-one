@@ -13,7 +13,7 @@ const meta = {
     variant: "default",
     size: "default",
     onClick: fn(),
-    label: "Click me",
+    children: <>Click me</>,
   },
 } satisfies Meta<typeof Button>
 
@@ -29,12 +29,6 @@ export const Default: Story = {
 export const Secondary: Story = {
   args: {
     variant: "secondary",
-  },
-}
-
-export const Positive: Story = {
-  args: {
-    variant: "positive",
   },
 }
 
