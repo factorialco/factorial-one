@@ -43,3 +43,9 @@ export const Ghost: Story = {
     variant: "ghost",
   },
 }
+
+export const Outline: Story = {
+  args: {
+    variant: "outline",
+  },
+}
