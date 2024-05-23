@@ -7,8 +7,10 @@ import type { Preview } from "@storybook/react"
 import DocumentationTemplate from "./DocumentationTemplate.mdx"
 
 import "../tailwind.css"
+import "ress/dist/ress.min.css"
 
 import { Theme, ThemeProvider } from "../lib/lib/theme-provider"
+import { FactorialOneProvider } from "../lib/lib/one-provider"
 
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
   DecoratorHelpers
@@ -30,8 +32,16 @@ export const withTheme = (themes: string[], defaultTheme: string) => {
   }
 }
 
+export const FactorialOne = (Story) => {
+  return (
+    <FactorialOneProvider>
+      <Story />
+    </FactorialOneProvider>
+  )
+}
+
 const preview: Preview = {
-  decorators: [withTheme(["light", "dark"], "light")],
+  decorators: [FactorialOne, withTheme(["light", "dark"], "light")],
   parameters: {
     viewport: {
       viewports: {
