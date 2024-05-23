@@ -87,7 +87,7 @@
     "@storybook/addon-themes": "^8.0.9",
     "@storybook/blocks": "^8.1.2",
     "@storybook/react": "^8.1.2",
-    "@storybook/react-vite": "^8.0.9",
+    "@storybook/react-vite": "^8.1.2",
     "@storybook/test": "^8.1.2",
     "@storybook/test-runner": "^0.18.1",
     "@types/node": "^20.12.8",
