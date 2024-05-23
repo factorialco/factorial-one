@@ -51,7 +51,6 @@ const preview: Preview = {
       page: DocumentationTemplate,
       toc: true,
     },
-    actions: { argTypesRegex: "^on.*" },
     controls: {
       expanded: true,
       matchers: {
