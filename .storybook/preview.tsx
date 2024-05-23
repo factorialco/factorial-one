@@ -6,8 +6,7 @@ import type { Preview } from "@storybook/react"
 
 import DocumentationTemplate from "./DocumentationTemplate.mdx"
 
-import "../tailwind.css"
-import "ress/dist/ress.min.css"
+import "../styles.css"
 
 import { Theme, ThemeProvider } from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
