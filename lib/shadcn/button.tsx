@@ -29,7 +29,8 @@ const buttonVariants = cva(
           "border-2 border-destructive-intermediate bg-destructive text-destructive-foreground hover:bg-destructive/70",
         positive:
           "border-2 border-positive-intermediate bg-positive text-positive-foreground hover:bg-positive/70",
-        ghost: "text-intermediate hover:bg-accent hover:text-accent-foreground",
+        ghost:
+          "border-none text-intermediate hover:bg-accent hover:text-accent-foreground",
       } satisfies Record<(typeof variants)[number], string>,
       size: {
         default: "h-10 px-4 py-2",
