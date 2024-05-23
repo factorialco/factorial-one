@@ -1,8 +1,14 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 
-import { IconName, icons } from "@/lib/icons"
 import { cn } from "@/lib/utils"
+import {
+  BookOpen,
+  CircleCheck,
+  LucideProps,
+  OctagonX,
+  TriangleAlert,
+} from "lucide-react"
 
 const variants = ["destructive", "positive", "warning", "info"] as const
 type Variants = (typeof variants)[number]
@@ -27,18 +33,18 @@ const alertVariants = cva(
   }
 )
 
-const variantIcons: Record<Variants, IconName> = {
-  destructive: "OctagonX",
-  positive: "CircleCheck",
-  warning: "TriangleAlert",
-  info: "BookOpen",
+const variantIcons: Record<Variants, React.FC<LucideProps>> = {
+  destructive: OctagonX,
+  positive: CircleCheck,
+  warning: TriangleAlert,
+  info: BookOpen,
 }
 
 const Alert = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
 >(({ className, variant = "info", children, ...props }, ref) => {
-  const IconComponent = variant ? icons[variantIcons[variant]] : null
+  const IconComponent = variant ? variantIcons[variant] : null
 
   return (
     <div
