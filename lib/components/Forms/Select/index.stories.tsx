@@ -8,7 +8,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/shadcn/select"
+} from "."
 
 const meta: Meta = {
   component: Select,

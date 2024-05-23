@@ -10,14 +10,10 @@ const config: StorybookConfig = {
       directory: "../lib/components",
       titlePrefix: "Components",
     },
-    ...(publicBuild
-      ? []
-      : [
-          {
-            directory: "../lib/shadcn",
-            titlePrefix: "ShadCN",
-          },
-        ]),
+    {
+      directory: "../lib/primitives",
+      titlePrefix: "Primitives",
+    },
   ],
   staticDirs: ["../public"],
   addons: [

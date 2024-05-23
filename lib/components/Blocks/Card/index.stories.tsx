@@ -9,7 +9,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./card"
+} from "."
 
 const meta = {
   component: Card,
