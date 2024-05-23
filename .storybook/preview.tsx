@@ -8,7 +8,11 @@ import DocumentationTemplate from "./DocumentationTemplate.mdx"
 
 import "../styles.css"
 
-import { Theme, ThemeProvider } from "../lib/lib/theme-provider"
+import {
+  availableThemes,
+  Theme,
+  ThemeProvider,
+} from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
 
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
@@ -40,7 +44,7 @@ export const FactorialOne = (Story) => {
 }
 
 const preview: Preview = {
-  decorators: [FactorialOne, withTheme(["light", "dark"], "light")],
+  decorators: [FactorialOne, withTheme(availableThemes, "light")],
   parameters: {
     viewport: {
       viewports: {

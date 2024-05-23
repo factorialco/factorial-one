@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { Placeholder } from "@/lib/storybook-utils"
-import { Stack } from "."
+import { Grid } from "."
 
 const meta = {
-  component: Stack,
+  component: Grid,
   tags: ["autodocs"],
   args: {
     children: (
@@ -15,13 +15,29 @@ const meta = {
       </>
     ),
   },
-} satisfies Meta<typeof Stack>
+} satisfies Meta<typeof Grid>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  args: {},
+}
+
+export const Small: Story = {
   args: {
-    gap: "md",
+    size: "sm",
+  },
+}
+
+export const Medium: Story = {
+  args: {
+    size: "md",
+  },
+}
+
+export const Large: Story = {
+  args: {
+    size: "lg",
   },
 }

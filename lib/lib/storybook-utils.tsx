@@ -8,7 +8,7 @@ export const Placeholder = React.forwardRef<
   <div
     className={cn(
       className,
-      "flex items-center justify-center border-2 border-dashed border-border p-16"
+      "flex items-center justify-center rounded-md border-2 border-dashed border-border bg-muted p-16"
     )}
     ref={ref}
     {...props}

@@ -108,4 +108,10 @@
     --layout-intermediate: 351 56% 48%;
     --layout-foreground: 352 100% 75%;
   }
+
+  .blue {
+    --primary: 240 100% 96%;
+    --primary-intermediate: 220 77% 75%;
+    --primary-foreground: 210 100% 42%;
+  }
 }
