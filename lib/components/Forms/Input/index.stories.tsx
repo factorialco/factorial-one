@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Input } from "./input"
-import { Label } from "./label"
+import { Input } from "."
 
 const meta = {
   component: Input,
@@ -31,13 +30,5 @@ type Story = StoryObj<typeof meta>
 export const Primary: Story = {
   args: {
     placeholder: "Placeholder text here",
-  },
-  render: (props) => {
-    return (
-      <div className="flex w-full flex-col gap-1.5">
-        <Label htmlFor="input">Label</Label>
-        <Input id="input" {...props} />
-      </div>
-    )
   },
 }

@@ -3,7 +3,7 @@ import { addDays, format } from "date-fns"
 import { useState } from "react"
 import { DateRange } from "react-day-picker"
 
-import { Calendar } from "./calendar"
+import { Calendar } from "."
 
 const meta = {
   component: Calendar,

@@ -1,7 +1,11 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 
+import { IconName, icons } from "@/lib/icons"
 import { cn } from "@/lib/utils"
+
+const variants = ["destructive", "positive", "warning", "info"] as const
+type Variants = (typeof variants)[number]
 
 const alertVariants = cva(
   "relative w-full rounded-2xl bg-secondary p-6 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg]:text-foreground [&>svg~*]:pl-8",
@@ -15,7 +19,7 @@ const alertVariants = cva(
         warning:
           "bg-warning text-warning-foreground dark:border-warning-intermediate [&>svg]:text-warning-intermediate",
         info: "bg-info text-info-foreground dark:border-info-intermediate [&>svg]:text-info-intermediate",
-      },
+      } satisfies Record<Variants, string>,
     },
     defaultVariants: {
       variant: "info",
@@ -23,17 +27,37 @@ const alertVariants = cva(
   }
 )
 
+const variantIcons: Record<Variants, IconName> = {
+  destructive: "OctagonX",
+  positive: "CircleCheck",
+  warning: "TriangleAlert",
+  info: "BookOpen",
+}
+
 const Alert = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="alert"
-    className={cn(alertVariants({ variant }), className)}
-    {...props}
-  />
-))
+>(({ className, variant = "info", children, ...props }, ref) => {
+  const IconComponent = variant ? icons[variantIcons[variant]] : null
+
+  return (
+    <div
+      ref={ref}
+      role="alert"
+      className={cn(alertVariants({ variant }), className)}
+      {...props}
+    >
+      <div className="flex flex-row">
+        {IconComponent && (
+          <div className="mr-2 flex h-6 items-center">
+            <IconComponent size={20} />
+          </div>
+        )}
+        <div>{children}</div>
+      </div>
+    </div>
+  )
+})
 Alert.displayName = "Alert"
 
 const AlertTitle = React.forwardRef<
@@ -42,7 +66,7 @@ const AlertTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h5
     ref={ref}
-    className={cn("mb-1 font-medium tracking-tight", className)}
+    className={cn("mb-1 text-base font-medium tracking-tight", className)}
     {...props}
   />
 ))
