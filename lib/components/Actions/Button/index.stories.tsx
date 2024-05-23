@@ -13,7 +13,7 @@ const meta = {
     variant: "default",
     size: "default",
     onClick: fn(),
-    children: <>Click me</>,
+    children: "Click me",
   },
 } satisfies Meta<typeof Button>
 
