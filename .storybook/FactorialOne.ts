@@ -3,7 +3,6 @@ import { create } from "@storybook/theming/create"
 export default create({
   base: "light",
   brandTitle: `<img src="one.svg" width="36px" />`,
-  brandTarget: "_self",
 
   //
   colorPrimary: "#E5103A",
