@@ -1,2 +1,2 @@
-export * from "./Grid"
+export * from "./AutoGrid"
 export * from "./Stack"
