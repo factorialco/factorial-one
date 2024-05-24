@@ -4,7 +4,7 @@ export const FactorialOneProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   useLayoutEffect(() => {
-    const classNames = "font-sans text-foreground bg-background".split(" ")
+    const classNames = "font-sans text-foreground".split(" ")
 
     document.body.classList.add(...classNames)
 
