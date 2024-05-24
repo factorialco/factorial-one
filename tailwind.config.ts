@@ -30,6 +30,9 @@ export default {
         },
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
+        page: {
+          background: "hsl(var(--page-background))",
+        },
         intermediate: "hsl(var(--intermediate))",
         foreground: "hsl(var(--foreground))",
         primary: {

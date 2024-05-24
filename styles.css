@@ -10,6 +10,8 @@
     --intermediate: 234 5% 40%;
     --foreground: 230 9% 13%;
 
+    --page-background: 240 4.8% 95.9%;
+
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
 
@@ -62,6 +64,8 @@
     --background: 0 0% 3.9%;
     --intermediate: 235 8% 72%;
     --foreground: 240 6% 94%;
+
+    --page-background: 0 0% 3.9%;
 
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
