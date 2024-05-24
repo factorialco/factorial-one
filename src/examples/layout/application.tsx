@@ -19,7 +19,13 @@ import {
 } from "lucide-react"
 import React from "react"
 
-import { Card, CardContent, CardHeader, CardTitle, Grid } from "@/components"
+import {
+  AutoGrid,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components"
 import { Button } from "@/shadcn/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/popover"
 import { ScrollArea } from "@/shadcn/scrollarea"
@@ -150,7 +156,7 @@ const Layout: React.FC = () => {
               </span>
             </div>
           </div>
-          <Grid size={"lg"}>
+          <AutoGrid tileSize={"lg"}>
             {[...Array(6)].map((_, i) => (
               <Card>
                 <CardHeader>
@@ -165,7 +171,7 @@ const Layout: React.FC = () => {
                 </CardContent>
               </Card>
             ))}
-          </Grid>
+          </AutoGrid>
         </div>
       </ScrollArea>
     </div>

@@ -4,7 +4,7 @@ import React from "react"
 
 const stackVariants = cva("grid", {
   variants: {
-    size: {
+    tileSize: {
       sm: "grid-cols-[repeat(auto-fill,minmax(theme(spacing.48),_1fr))]",
       md: "grid-cols-[repeat(auto-fill,minmax(theme(spacing.64),_1fr))]",
       lg: "grid-cols-[repeat(auto-fill,minmax(theme(spacing.96),_1fr))]",
@@ -16,17 +16,17 @@ const stackVariants = cva("grid", {
     },
   },
   defaultVariants: {
-    size: "md",
+    tileSize: "md",
     gap: "md",
   },
 })
 
-export const Grid = React.forwardRef<
+export const AutoGrid = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof stackVariants>
->(({ className, gap, size, ...props }, ref) => (
+>(({ className, gap, tileSize: size, ...props }, ref) => (
   <div
-    className={cn(stackVariants({ gap, size }), className)}
+    className={cn(stackVariants({ gap, tileSize: size }), className)}
     ref={ref}
     {...props}
   />
