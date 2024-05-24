@@ -16,7 +16,6 @@ const meta = {
   argTypes: {
     type: {
       control: { type: "radio" },
-      options: ["text", "email", "password", "number", "file"],
     },
     value: {
       control: { type: "text" },
@@ -29,6 +28,30 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
+    placeholder: "Placeholder text here",
+  },
+}
+
+export const File: Story = {
+  args: {
+    type: "file",
+    disabled: false,
+    placeholder: "Placeholder text here",
+  },
+}
+
+export const Password: Story = {
+  args: {
+    type: "password",
+    disabled: false,
+    placeholder: "Placeholder text here",
+  },
+}
+
+export const Disabled: Story = {
+  args: {
+    type: "text",
+    disabled: true,
     placeholder: "Placeholder text here",
   },
 }

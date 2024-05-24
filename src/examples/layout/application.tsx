@@ -19,6 +19,7 @@ import {
 } from "lucide-react"
 import React from "react"
 
+import { Card, CardContent, CardHeader, CardTitle, Grid } from "@/components"
 import { Button } from "@/shadcn/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/popover"
 import { ScrollArea } from "@/shadcn/scrollarea"
@@ -149,14 +150,22 @@ const Layout: React.FC = () => {
               </span>
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+          <Grid size={"lg"}>
             {[...Array(6)].map((_, i) => (
-              <div className="flex flex-col rounded-lg border p-4 font-medium transition-colors hover:cursor-pointer hover:bg-muted/50">
-                <Folder size="16" className="mb-1 text-secondary-foreground" />
-                Folder {++i}
-              </div>
+              <Card>
+                <CardHeader>
+                  <Folder
+                    size="16"
+                    className="mb-1 text-secondary-foreground"
+                  />
+                  <CardTitle>Folder {i + 1}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  Summary of the contents of the folder.
+                </CardContent>
+              </Card>
             ))}
-          </div>
+          </Grid>
         </div>
       </ScrollArea>
     </div>
