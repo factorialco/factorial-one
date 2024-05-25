@@ -11,6 +11,10 @@ const config: StorybookConfig = {
       titlePrefix: "Components",
     },
     {
+      directory: "../lib/primitives",
+      titlePrefix: "Primitives",
+    },
+    {
       directory: "../src/examples",
       titlePrefix: "Examples",
     },

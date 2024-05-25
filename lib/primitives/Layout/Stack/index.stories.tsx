@@ -7,6 +7,7 @@ const meta = {
   component: Stack,
   tags: ["autodocs"],
   args: {
+    gap: "md",
     children: (
       <>
         {Array.from({ length: 10 }).map((_, i) => (

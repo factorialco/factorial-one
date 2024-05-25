@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import React from "react"
+import { gaps } from "../shared"
 
 const contentVariants = cva("grid grid-cols-1", {
   variants: {
@@ -16,9 +17,7 @@ const contentVariants = cva("grid grid-cols-1", {
       lg: "@12xl:grid-cols-8 @10xl:grid-cols-6 @9xl:grid-cols-4 @xl:grid-cols-2 @7xl:grid-cols-3",
     },
     gap: {
-      sm: "gap-2",
-      md: "gap-4",
-      lg: "gap-8",
+      ...gaps,
     },
   },
   defaultVariants: {

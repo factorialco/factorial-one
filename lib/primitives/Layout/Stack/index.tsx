@@ -1,13 +1,12 @@
 import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import React from "react"
+import { gaps } from "../shared"
 
 const stackVariants = cva("flex flex-col", {
   variants: {
     gap: {
-      sm: "gap-4",
-      md: "gap-8",
-      lg: "gap-12",
+      ...gaps,
     },
   },
   defaultVariants: {
