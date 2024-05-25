@@ -1,1 +1,1 @@
-export * from "@/shadcn/select"
+export * from "@/ui/select"

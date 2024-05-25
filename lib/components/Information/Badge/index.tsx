@@ -1,1 +1,1 @@
-export * from "@/shadcn/badge"
+export * from "@/ui/badge"

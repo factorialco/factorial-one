@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Button } from "@/shadcn/button"
+import { Button } from "@/ui/button"
 
 import {
   Card,

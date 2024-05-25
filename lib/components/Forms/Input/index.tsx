@@ -1,1 +1,1 @@
-export * from "@/shadcn/input"
+export * from "@/ui/input"

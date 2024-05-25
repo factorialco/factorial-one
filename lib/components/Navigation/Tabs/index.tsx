@@ -1,1 +1,1 @@
-export * from "@/shadcn/tabs"
+export * from "@/ui/tabs"

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Avatar, AvatarFallback, AvatarImage, sizes } from "@/shadcn/avatar"
+import { Avatar, AvatarFallback, AvatarImage, sizes } from "@/ui/avatar"
 
 const meta = {
   component: Avatar,

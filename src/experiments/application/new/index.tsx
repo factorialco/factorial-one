@@ -2,11 +2,11 @@ import { useState } from "react"
 
 import { LayoutTypeContext } from "./layout-type"
 
-import { ScrollArea, ScrollBar } from "@/shadcn/scrollarea"
+import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/shadcn/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/ui/avatar"
 
-import { Skeleton } from "@/shadcn/skeleton"
+import { Skeleton } from "@/ui/skeleton"
 
 import { Employees } from "./employees"
 
@@ -16,7 +16,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/shadcn/tooltip"
+} from "@/ui/tooltip"
 
 import { Page, Pages, SubItem } from "./pages"
 

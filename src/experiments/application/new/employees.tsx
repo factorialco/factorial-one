@@ -3,9 +3,9 @@ import { useLayoutType } from "./layout-type"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 
-import { Badge } from "@/shadcn/badge"
+import { Badge } from "@/ui/badge"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/shadcn/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/ui/avatar"
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/shadcn/table"
+} from "@/ui/table"
 
 export const Employees = [
   {

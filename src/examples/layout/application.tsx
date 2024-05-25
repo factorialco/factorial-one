@@ -21,9 +21,9 @@ import React from "react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components"
 import { AutoGrid } from "@/primitives"
-import { Button } from "@/shadcn/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/popover"
-import { ScrollArea } from "@/shadcn/scrollarea"
+import { Button } from "@/ui/button"
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
+import { ScrollArea } from "@/ui/scrollarea"
 
 const Title: React.FC<{ title: string }> = ({ title }) => (
   <div className="flex h-14 items-center gap-2 px-3 font-medium text-secondary-foreground">

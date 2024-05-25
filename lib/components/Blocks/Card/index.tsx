@@ -1,1 +1,1 @@
-export * from "@/shadcn/card"
+export * from "@/ui/card"
