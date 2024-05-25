@@ -2,17 +2,23 @@ import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import React from "react"
 
-const stackVariants = cva("grid", {
+const contentVariants = cva("grid grid-cols-1", {
   variants: {
     tileSize: {
-      sm: "grid-cols-[repeat(auto-fill,minmax(theme(spacing.48),_1fr))]",
-      md: "grid-cols-[repeat(auto-fill,minmax(theme(spacing.64),_1fr))]",
-      lg: "grid-cols-[repeat(auto-fill,minmax(theme(spacing.96),_1fr))]",
+      // The amount of columns and autoflow when paginating is an issue if we
+      // want to prevent orphan elments. Say, we have 10 elements, we can't just
+      // render 3 rows of 3 elements and then an orphan one in the end.
+      //
+      // This makes sure that everything will look nice when using pages of 48
+      // elements, it will always result in even rows.
+      sm: "@10xl:grid-cols-8 @11xl:grid-cols-12 @12xl:grid-cols-16 @8xl:grid-cols-6 @md:grid-cols-2 @2xl:grid-cols-3 @4xl:grid-cols-4",
+      md: "@10xl:grid-cols-8 @12xl:grid-cols-12 @9xl:grid-cols-6 @lg:grid-cols-2 @4xl:grid-cols-3 @7xl:grid-cols-4",
+      lg: "@12xl:grid-cols-8 @10xl:grid-cols-6 @9xl:grid-cols-4 @xl:grid-cols-2 @7xl:grid-cols-3",
     },
     gap: {
-      sm: "gap-4",
-      md: "gap-8",
-      lg: "gap-12",
+      sm: "gap-2",
+      md: "gap-4",
+      lg: "gap-8",
     },
   },
   defaultVariants: {
@@ -23,11 +29,15 @@ const stackVariants = cva("grid", {
 
 export const AutoGrid = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof stackVariants>
->(({ className, gap, tileSize: size, ...props }, ref) => (
-  <div
-    className={cn(stackVariants({ gap, tileSize: size }), className)}
-    ref={ref}
-    {...props}
-  />
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof contentVariants>
+>(({ className, gap, children, tileSize, ...props }, ref) => (
+  <div className={cn("@container")} ref={ref} {...props}>
+    <div
+      className={cn(contentVariants({ gap, tileSize }), className)}
+      ref={ref}
+      {...props}
+    >
+      {children}
+    </div>
+  </div>
 ))

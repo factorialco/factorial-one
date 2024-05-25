@@ -11,7 +11,7 @@ const meta = {
     gap: "md",
     children: (
       <>
-        {Array.from({ length: 10 }).map((_, i) => (
+        {Array.from({ length: 48 }).map((_, i) => (
           <Placeholder key={i}>{i + 1}</Placeholder>
         ))}
       </>

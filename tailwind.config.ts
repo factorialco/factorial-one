@@ -106,6 +106,13 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      containers: {
+        "8xl": "96rem",
+        "9xl": "120rem",
+        "10xl": "152rem",
+        "11xl": "192rem",
+        "12xl": "240rem",
+      },
     },
   },
   plugins: [
