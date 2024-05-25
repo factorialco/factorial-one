@@ -19,13 +19,8 @@ import {
 } from "lucide-react"
 import React from "react"
 
-import {
-  AutoGrid,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components"
+import { AutoGrid } from "@/primitives"
 import { Button } from "@/shadcn/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/popover"
 import { ScrollArea } from "@/shadcn/scrollarea"
