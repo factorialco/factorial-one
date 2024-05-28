@@ -13,4 +13,9 @@ export const flexItemVariants = {
     true: "shrink",
     false: "shrink-0",
   },
+  padding: {
+    sm: "p-2",
+    md: "p-4",
+    lg: "p-8",
+  },
 } as const

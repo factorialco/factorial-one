@@ -18,8 +18,17 @@ const splitVariants = cva("flex h-full w-full flex-row", {
   },
 })
 
-const splitColumnVariants = cva("grid place-items-stretch", {
-  variants: { ...flexItemVariants },
+const splitColumnVariants = cva("grid", {
+  variants: {
+    ...flexItemVariants,
+    verticalAlign: {
+      center: "items-center justify-start",
+      stretch: "place-items-stretch",
+    },
+  },
+  defaultVariants: {
+    verticalAlign: "stretch",
+  },
 })
 
 export const Split = React.forwardRef<
