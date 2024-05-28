@@ -8,11 +8,11 @@ export const Placeholder = React.forwardRef<
   <div
     className={cn(
       className,
-      "flex items-center justify-center rounded-md border-2 border-dashed border-border bg-background p-16"
+      "flex place-content-center rounded-md border-2 border-dashed border-border bg-background p-16"
     )}
     ref={ref}
     {...props}
   >
-    <div className="w-min text-lg text-muted-foreground">{children}</div>
+    <div className="text-lg text-muted-foreground">{children}</div>
   </div>
 ))
