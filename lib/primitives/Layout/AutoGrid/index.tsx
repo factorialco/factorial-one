@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import React from "react"
-import { Box, BoxProps, BoxRef } from "../Box"
 import { gaps } from "../shared"
 
 const contentVariants = cva("grid grid-cols-1", {
@@ -23,15 +22,15 @@ const contentVariants = cva("grid grid-cols-1", {
   },
   defaultVariants: {
     tileSize: "md",
-    gap: "md",
+    gap: "4",
   },
 })
 
 export const AutoGrid = React.forwardRef<
-  BoxRef,
-  BoxProps & VariantProps<typeof contentVariants>
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof contentVariants>
 >(({ className, gap, children, tileSize, ...props }, ref) => (
-  <Box className={cn("@container")} ref={ref} {...props}>
+  <div className={cn("@container")} ref={ref} {...props}>
     <div
       className={cn(contentVariants({ gap, tileSize }), className)}
       ref={ref}
@@ -39,5 +38,5 @@ export const AutoGrid = React.forwardRef<
     >
       {children}
     </div>
-  </Box>
+  </div>
 ))

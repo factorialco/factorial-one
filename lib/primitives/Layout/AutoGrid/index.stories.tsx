@@ -8,7 +8,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     tileSize: "md",
-    gap: "md",
+    gap: "4",
     children: (
       <>
         {Array.from({ length: 48 }).map((_, i) => (

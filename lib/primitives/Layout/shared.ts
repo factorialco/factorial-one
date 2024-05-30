@@ -1,7 +1,7 @@
 export const gaps = {
-  sm: "gap-2",
-  md: "gap-4",
-  lg: "gap-8",
+  "2": "gap-2",
+  "4": "gap-4",
+  "8": "gap-8",
 } as const
 
 export const flexItemVariants = {

@@ -1,19 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { Placeholder } from "@/lib/storybook-utils"
-import { Stack, StackRow } from "."
+import { Stack } from "."
 
 const meta = {
   component: Stack,
   tags: ["autodocs"],
-  args: {
-    gap: "md",
-    children: Array.from({ length: 10 }).map((_, i) => (
-      <StackRow>
+  render: (args) => (
+    <Stack {...args}>
+      {Array.from({ length: 10 }).map((_, i) => (
         <Placeholder key={i}>{i + 1}</Placeholder>
-      </StackRow>
-    )),
-  },
+      ))}
+    </Stack>
+  ),
 } satisfies Meta<typeof Stack>
 
 export default meta

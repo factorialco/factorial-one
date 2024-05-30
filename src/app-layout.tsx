@@ -18,7 +18,7 @@ import {
 } from "lucide-react"
 import React from "react"
 
-import { Split, SplitColumn, Stack, StackRow } from "@/primitives"
+import { Split, Stack } from "@/primitives"
 import { Button } from "@/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea } from "@/ui/scrollarea"
@@ -114,42 +114,36 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
       </ScrollArea>
       <div className="h-full overflow-hidden rounded-lg bg-background shadow">
         <Stack gap={null} className="h-full overflow-hidden">
-          <StackRow>
-            <Split paddingX="p-4" paddingY="p-4" verticalAlign="center">
-              <SplitColumn flex="grow" paddingX="p-2">
-                <div className="text-sm font-medium text-secondary-foreground">
-                  My documents
-                </div>
-              </SplitColumn>
-              <SplitColumn flex="shrink">
-                <Split gap="sm">
-                  <SplitColumn>
-                    <Button
-                      size="icon-sm"
-                      className="flex gap-1.5 md:w-auto md:px-3"
-                    >
-                      <Upload size="16" />
-                      <span className="hidden md:block">Upload files</span>
-                    </Button>
-                  </SplitColumn>
+          <Split paddingX="p-4" paddingY="p-4" verticalAlign="center" shrink>
+            <Stack grow paddingX="p-2">
+              <div className="text-sm font-medium text-secondary-foreground">
+                My documents
+              </div>
+            </Stack>
+            <Stack shrink>
+              <Split gap="2">
+                <Button
+                  size="icon-sm"
+                  className="flex gap-1.5 md:w-auto md:px-3"
+                >
+                  <Upload size="16" />
+                  <span className="hidden md:block">Upload files</span>
+                </Button>
 
-                  <SplitColumn>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button variant="secondary" size="icon-sm">
-                          <EllipsisVertical size="20" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-60">Menu!</PopoverContent>
-                    </Popover>
-                  </SplitColumn>
-                </Split>
-              </SplitColumn>
-            </Split>
-          </StackRow>
-          <StackRow flex="grow" className="overflow-hidden">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="secondary" size="icon-sm">
+                      <EllipsisVertical size="20" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-60">Menu!</PopoverContent>
+                </Popover>
+              </Split>
+            </Stack>
+          </Split>
+          <Stack grow className="overflow-hidden">
             {children}
-          </StackRow>
+          </Stack>
         </Stack>
       </div>
     </div>
