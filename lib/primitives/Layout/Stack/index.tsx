@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import React from "react"
+import { Box, BoxProps, BoxRef } from "../Box"
 import { flexItemVariants, gaps } from "../shared"
 
-const stackVariants = cva("flex h-full w-full flex-col", {
+const stackVariants = cva("flex flex-col", {
   variants: {
     gap: {
       ...gaps,
@@ -22,19 +23,19 @@ const stackRowVariants = cva("grid place-items-stretch", {
 })
 
 export const Stack = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof stackVariants>
+  BoxRef,
+  BoxProps & VariantProps<typeof stackVariants>
 >(({ className, gap, children, ...props }, ref) => (
-  <div className={cn(stackVariants({ gap }), className)} ref={ref} {...props}>
+  <Box className={cn(stackVariants({ gap }), className)} ref={ref} {...props}>
     {children}
-  </div>
+  </Box>
 ))
 
 export const StackRow = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof stackRowVariants>
+  BoxRef,
+  BoxProps & VariantProps<typeof stackRowVariants>
 >(({ className, ...props }, ref) => (
-  <div
+  <Box
     className={cn(stackRowVariants(props), className)}
     ref={ref}
     {...props}

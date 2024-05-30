@@ -114,14 +114,14 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
       </ScrollArea>
       <div className="h-full overflow-hidden rounded-lg bg-background shadow">
         <Stack gap={null} className="h-full overflow-hidden">
-          <StackRow padding="md">
-            <Split>
-              <SplitColumn grow verticalAlign="center">
+          <StackRow>
+            <Split paddingX="p-4" paddingY="p-4" verticalAlign="center">
+              <SplitColumn flex="grow" paddingX="p-2">
                 <div className="text-sm font-medium text-secondary-foreground">
                   My documents
                 </div>
               </SplitColumn>
-              <SplitColumn>
+              <SplitColumn flex="shrink">
                 <Split gap="sm">
                   <SplitColumn>
                     <Button
@@ -147,7 +147,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               </SplitColumn>
             </Split>
           </StackRow>
-          <StackRow grow className="overflow-hidden">
+          <StackRow flex="grow" className="overflow-hidden">
             {children}
           </StackRow>
         </Stack>

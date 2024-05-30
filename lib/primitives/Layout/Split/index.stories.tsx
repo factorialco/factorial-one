@@ -8,7 +8,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     gap: "md",
-    children: Array.from({ length: 20 }).map((_, i) => (
+    children: Array.from({ length: 30 }).map((_, i) => (
       <SplitColumn>
         <Placeholder>{i + 1}</Placeholder>
       </SplitColumn>
@@ -36,7 +36,7 @@ export const Grow: Story = {
         <SplitColumn>
           <Placeholder>1</Placeholder>
         </SplitColumn>
-        <SplitColumn grow>
+        <SplitColumn flex="grow">
           <Placeholder>Grow (2)</Placeholder>
         </SplitColumn>
         <SplitColumn>
@@ -50,10 +50,34 @@ export const Grow: Story = {
 export const WrapGrow: Story = {
   args: {
     wrap: true,
-    children: Array.from({ length: 10 }).map((_, i) => (
-      <SplitColumn grow>
+    children: Array.from({ length: 30 }).map((_, i) => (
+      <SplitColumn flex="grow">
         <Placeholder>{i + 1}</Placeholder>
       </SplitColumn>
     )),
+  },
+}
+
+export const VerticalAlign: Story = {
+  args: {
+    verticalAlign: "center",
+    children: (
+      <>
+        <SplitColumn>
+          <Placeholder>Single line content</Placeholder>
+        </SplitColumn>
+        <SplitColumn>
+          <Placeholder>
+            Content with <br /> multiple lines <br /> of text <br /> to showcase
+            how elements <br /> with different <br /> height will be aligned
+          </Placeholder>
+        </SplitColumn>
+        <SplitColumn>
+          <Placeholder>
+            Content with <br /> two lines
+          </Placeholder>
+        </SplitColumn>
+      </>
+    ),
   },
 }
