@@ -1,4 +1,5 @@
 import { useLayoutEffect } from "react"
+import { XRayProvider } from "./xray"
 
 export const FactorialOneProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -13,5 +14,5 @@ export const FactorialOneProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [])
 
-  return children
+  return <XRayProvider>{children}</XRayProvider>
 }

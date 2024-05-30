@@ -1,3 +1,4 @@
+import { Component } from "@/lib/component"
 import { Button as ShadcnButton } from "@/ui/button"
 import { ComponentProps } from "react"
 
@@ -6,6 +7,12 @@ const Button: React.FC<
     ComponentProps<typeof ShadcnButton>,
     "variant" | "size" | "onClick" | "children"
   >
-> = ShadcnButton
+> = Component(
+  {
+    name: "Button",
+    type: "layout",
+  },
+  ShadcnButton
+)
 
 export { Button }
