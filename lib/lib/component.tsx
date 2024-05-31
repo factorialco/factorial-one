@@ -10,16 +10,23 @@ import {
 } from "react"
 import { XRayContext } from "./xray"
 
+export const componentTypes = ["layout", "info"] as const
+type ComponentTypes = (typeof componentTypes)[number]
+
 interface ComponentMetadata {
   name: string
-  type: "layout"
+  type: ComponentTypes
+  internal?: boolean
 }
+
+type TypeVariant = Record<ComponentTypes, string>
 
 const variants = cva("outline-dashed outline-1 outline-red-500", {
   variants: {
     type: {
       layout: "outline-red-500",
-    },
+      info: "outline-blue-500",
+    } satisfies TypeVariant,
   },
 })
 
@@ -27,7 +34,8 @@ const tagVariants = cva("px-2 py-1 text-xs uppercase", {
   variants: {
     type: {
       layout: "bg-red-500  text-white",
-    },
+      info: "bg-blue-500  text-white",
+    } satisfies TypeVariant,
   },
 })
 
@@ -47,8 +55,10 @@ export const Component = <
 
     useImperativeHandle(forwardedRef, () => ref.current as R)
 
+    const showXray = enabled && !meta.internal
+
     useEffect(() => {
-      if (!enabled || !ref.current) return
+      if (!showXray || !ref.current) return
 
       const element = ref.current
       element.dataset.componentName = meta.name
@@ -73,9 +83,9 @@ export const Component = <
         if (element) element.dataset.componentName
         if (div) body?.removeChild(div)
       }
-    }, [enabled])
+    }, [showXray])
 
-    if (!enabled) return <Component {...props} ref={ref} />
+    if (!showXray) return <Component {...props} ref={ref} />
 
     return (
       <>
