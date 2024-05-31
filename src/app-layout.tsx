@@ -17,6 +17,7 @@ import {
   UsersRound,
 } from "lucide-react"
 import React from "react"
+import { useXRay } from "../lib/lib/xray"
 
 import { Split, Stack } from "@/primitives"
 import { Button } from "@/ui/button"
@@ -33,6 +34,8 @@ const Title: React.FC<{ title: string }> = ({ title }) => (
 export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const { enabled: xRayEnabled, setEnabled: setEnabledXray } = useXRay()
+
   return (
     <div className="-m-4 grid h-screen min-h-screen grid-cols-1 bg-secondary/60 p-3 md:grid-cols-[264px_1fr]">
       <div className="block pb-2 md:hidden">
@@ -43,7 +46,10 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
       <ScrollArea className="hidden flex-col pr-3 md:flex">
         <Title title="A Cool Company 2" />
         <nav className="flex flex-col pt-3">
-          <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary">
+          <div
+            onClick={() => setEnabledXray(!xRayEnabled)}
+            className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary"
+          >
             <Home size="16" /> Dashboard
           </div>
 

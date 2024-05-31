@@ -1,3 +1,4 @@
+import { Component } from "@/lib/component"
 import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import React from "react"
@@ -23,13 +24,18 @@ const splitVariants = cva("flex flex-row", {
   },
 })
 
-export const Split = React.forwardRef<
-  BoxRef,
-  BoxProps & VariantProps<typeof splitVariants>
->(({ className, gap, wrap, verticalAlign, ...props }, ref) => (
-  <Box
-    className={cn(splitVariants({ gap, wrap, verticalAlign }), className)}
-    ref={ref}
-    {...props}
-  />
-))
+export const Split = Component(
+  {
+    name: "Split",
+    type: "layout",
+  },
+  React.forwardRef<BoxRef, BoxProps & VariantProps<typeof splitVariants>>(
+    ({ className, gap, wrap, verticalAlign, ...props }, ref) => (
+      <Box
+        className={cn(splitVariants({ gap, wrap, verticalAlign }), className)}
+        ref={ref}
+        {...props}
+      />
+    )
+  )
+)
