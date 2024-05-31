@@ -10,7 +10,7 @@ const Button: React.FC<
 > = Component(
   {
     name: "Button",
-    type: "layout",
+    type: "action",
   },
   ShadcnButton
 )

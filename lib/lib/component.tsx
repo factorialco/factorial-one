@@ -10,7 +10,7 @@ import {
 } from "react"
 import { XRayContext } from "./xray"
 
-export const componentTypes = ["layout", "info"] as const
+export const componentTypes = ["layout", "info", "action"] as const
 type ComponentTypes = (typeof componentTypes)[number]
 
 interface ComponentMetadata {
@@ -26,6 +26,7 @@ const variants = cva("outline-dashed outline-1 outline-red-500", {
     type: {
       layout: "outline-red-500",
       info: "outline-blue-500",
+      action: "outline-green-600",
     } satisfies TypeVariant,
   },
 })
@@ -35,6 +36,7 @@ const tagVariants = cva("px-2 py-1 text-xs uppercase", {
     type: {
       layout: "bg-red-500  text-white",
       info: "bg-blue-500  text-white",
+      action: "bg-green-600  text-white",
     } satisfies TypeVariant,
   },
 })
