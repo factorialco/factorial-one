@@ -7,10 +7,17 @@
   "[mdx]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
   "tailwindCSS.experimental.classRegex": [
     [
-      "cva\\(\\s*\"[^\"]*\"\\s*,\\s*({(?:[^{}]|\\{(?:[^{}]|\\{[^{}]*\\})*\\})*})\\s*\\)",
+      "cva\\(([^)]*)\\)",
       "[\"'`]([^\"'`]*).*?[\"'`]"
     ],
+    [
+      "cx\\(([^)]*)\\)",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ]
   ]
 }
