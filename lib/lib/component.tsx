@@ -19,6 +19,8 @@ export const Component = <
   meta: ComponentMetadata,
   Component: React.FC<P>
 ) => {
+  Component.displayName = meta.name
+
   return forwardRef<R, P>((props: P, forwardedRef) => {
     const { enabled, className, ref } = useComponentXRay(meta, forwardedRef)
 

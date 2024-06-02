@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import * as React from "react"
 
+import { Component } from "@/lib/component"
 import { cn } from "@/lib/utils"
 import {
   BookOpen,
@@ -40,31 +41,36 @@ const variantIcons: Record<Variants, React.FC<LucideProps>> = {
   info: BookOpen,
 }
 
-const Alert = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
->(({ className, variant = "info", children, ...props }, ref) => {
-  const IconComponent = variant ? variantIcons[variant] : null
+const Alert = Component(
+  {
+    name: "Alert",
+    type: "info",
+  },
+  React.forwardRef<
+    HTMLDivElement,
+    React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>
+  >(({ className, variant = "info", children, ...props }, ref) => {
+    const IconComponent = variant ? variantIcons[variant] : null
 
-  return (
-    <div
-      ref={ref}
-      role="alert"
-      className={cn(alertVariants({ variant }), className)}
-      {...props}
-    >
-      <div className="flex flex-row">
-        {IconComponent && (
-          <div className="mr-2 flex h-6 items-center">
-            <IconComponent size={20} />
-          </div>
-        )}
-        <div>{children}</div>
+    return (
+      <div
+        ref={ref}
+        role="alert"
+        className={cn(alertVariants({ variant }), className)}
+        {...props}
+      >
+        <div className="flex flex-row">
+          {IconComponent && (
+            <div className="mr-2 flex h-6 items-center">
+              <IconComponent size={20} />
+            </div>
+          )}
+          <div>{children}</div>
+        </div>
       </div>
-    </div>
-  )
-})
-Alert.displayName = "Alert"
+    )
+  })
+)
 
 const AlertTitle = React.forwardRef<
   HTMLParagraphElement,
