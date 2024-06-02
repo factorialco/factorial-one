@@ -3,7 +3,9 @@ import { Component } from "@/lib/component"
 import { AutoGrid } from "@/primitives"
 import { ComponentProps, forwardRef, LegacyRef } from "react"
 
-type Props<T> = {
+type ElementWithId = { id: unknown }
+
+type Props<T extends ElementWithId> = {
   elements: Array<T>
   tileSize?: ComponentProps<typeof AutoGrid>["tileSize"]
   children: (element: T, index: number) => React.ReactNode
@@ -15,17 +17,19 @@ export const CardList = Component(
     type: "info",
   },
   forwardRef(
-    <T,>(
+    <T extends ElementWithId>(
       { elements, children, tileSize }: Props<T>,
       ref: LegacyRef<HTMLElement>
     ) => {
       return (
         <AutoGrid tileSize={tileSize} ref={ref}>
           {elements.map((element, i) => (
-            <Card>{children(element, i)}</Card>
+            <Card key={String(element.id)}>{children(element, i)}</Card>
           ))}
         </AutoGrid>
       )
     }
   )
-) as <T>(props: Props<T> & { ref?: LegacyRef<HTMLElement> }) => JSX.Element
+) as <T extends ElementWithId>(
+  props: Props<T> & { ref?: LegacyRef<HTMLElement> }
+) => JSX.Element

@@ -68,11 +68,8 @@ export const useComponentXRay = <R extends HTMLElement>(
   forwardedRef: React.ForwardedRef<R>
 ) => {
   const { enabled } = useContext(XRayContext)
-
   const ref = useRef<R | null>(null)
-
   useImperativeHandle(forwardedRef, () => ref.current as R)
-
   const showXray = enabled && !meta.internal
 
   useEffect(() => {

@@ -5,11 +5,13 @@ import { faker } from "@faker-js/faker"
 import { CardList } from "."
 
 interface Element {
+  id: number
   title: string
   description: string
 }
 
-const elements: Element[] = Array.from({ length: 12 }, () => ({
+const elements: Element[] = Array.from({ length: 12 }, (elem, index) => ({
+  id: index,
   title: faker.commerce.productName(),
   description: faker.commerce.productDescription(),
 }))
