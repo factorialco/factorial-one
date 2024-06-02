@@ -1,5 +1,6 @@
 export * from "./Actions"
 export * from "./Blocks"
+export * from "./Collections"
 export * from "./Forms"
 export * from "./Information"
 export * from "./Navigation"
