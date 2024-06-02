@@ -126,26 +126,21 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                 My documents
               </div>
             </Stack>
-            <Stack shrink>
-              <Split gap="2">
-                <Button
-                  size="icon-sm"
-                  className="flex gap-1.5 md:w-auto md:px-3"
-                >
-                  <Upload size="16" />
-                  <span className="hidden md:block">Upload files</span>
-                </Button>
+            <Split gap="2">
+              <Button size="icon-sm" className="flex gap-1.5 md:w-auto md:px-3">
+                <Upload size="16" />
+                <span className="hidden md:block">Upload files</span>
+              </Button>
 
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="secondary" size="icon-sm">
-                      <EllipsisVertical size="20" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-60">Menu!</PopoverContent>
-                </Popover>
-              </Split>
-            </Stack>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="secondary" size="icon-sm">
+                    <EllipsisVertical size="20" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-60">Menu!</PopoverContent>
+              </Popover>
+            </Split>
           </Split>
           <Stack grow className="overflow-hidden">
             {children}
