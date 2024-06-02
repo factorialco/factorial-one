@@ -10,7 +10,7 @@ interface Element {
   description: string
 }
 
-const elements: Element[] = Array.from({ length: 12 }, (elem, index) => ({
+const elements: Element[] = Array.from({ length: 12 }, (_elem, index) => ({
   id: index,
   title: faker.commerce.productName(),
   description: faker.commerce.productDescription(),
