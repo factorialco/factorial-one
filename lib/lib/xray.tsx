@@ -92,6 +92,7 @@ export const useComponentXRay = <R extends HTMLElement>(
       div.style.position = "absolute"
       div.style.top = `${top}px`
       div.style.left = `${left}px`
+      div.style.zIndex = "9999"
       div.className = tagVariants({ type: meta.type })
       div.innerText = meta.name
       body.appendChild(div)
