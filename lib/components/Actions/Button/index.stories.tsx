@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
+import { BellRing } from "@/lib/icons"
 import { Button } from "."
 
 const meta = {
@@ -13,7 +14,7 @@ const meta = {
     variant: "default",
     size: "default",
     onClick: fn(),
-    children: "Click me",
+    label: "Click me",
   },
 } satisfies Meta<typeof Button>
 
@@ -53,5 +54,11 @@ export const Ghost: Story = {
 export const Outline: Story = {
   args: {
     variant: "outline",
+  },
+}
+
+export const WithIcon: Story = {
+  args: {
+    icon: BellRing,
   },
 }

@@ -13,6 +13,9 @@ const meta = {
       ))}
     </Stack>
   ),
+  args: {
+    gap: "4",
+  },
 } satisfies Meta<typeof Stack>
 
 export default meta
