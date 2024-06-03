@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import React from "react"
 
-const boxVariants = cva("flex", {
+const boxVariants = cva("", {
   variants: {
     overflow: {
       hidden: "overflow-hidden",
@@ -25,12 +25,11 @@ const boxVariants = cva("flex", {
       "p-16": "py-16",
     },
     basis: {
-      "1/2": "basis-1/2",
-      "1/4": "basis-1/4",
-      "1/3": "basis-1/3",
+      "0": "basis-0",
     },
     inline: {
       true: "inline-flex",
+      false: "flex",
     },
     grow: {
       true: "flex-grow",
@@ -44,6 +43,7 @@ const boxVariants = cva("flex", {
   defaultVariants: {
     paddingX: "none",
     paddingY: "none",
+    inline: false,
   },
 })
 

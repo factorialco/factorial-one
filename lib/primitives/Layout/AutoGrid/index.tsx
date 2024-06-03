@@ -36,7 +36,7 @@ export const AutoGrid = Component(
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof contentVariants>
   >(({ className, gap, children, tileSize, ...props }, ref) => (
-    <div className={cn("@container")} ref={ref} {...props}>
+    <div className={cn("@container", "grow")} ref={ref} {...props}>
       <div
         className={cn(contentVariants({ gap, tileSize }), className)}
         ref={ref}

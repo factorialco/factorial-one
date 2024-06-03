@@ -26,9 +26,6 @@ export const Default: Story = {
 }
 
 export const Wrap: Story = {
-  args: {
-    wrap: true,
-  },
   render: (args) => {
     return (
       <Split {...args}>
@@ -42,7 +39,7 @@ export const Wrap: Story = {
 
 export const Grow: Story = {
   render: (args) => (
-    <Split {...args}>
+    <Split {...args} grow>
       <Placeholder shrink>1</Placeholder>
       <Placeholder grow>Grow (2)</Placeholder>
       <Placeholder shrink>3</Placeholder>
@@ -52,7 +49,6 @@ export const Grow: Story = {
 
 export const WrapGrow: Story = {
   args: {
-    wrap: true,
     gap: "4",
   },
   render: (args) => (
@@ -64,48 +60,37 @@ export const WrapGrow: Story = {
   ),
 }
 
-export const Basis: Story = {
-  args: {
-    wrap: true,
-  },
-  render: (args) => (
-    <Split {...args}>
-      <Placeholder basis="1/4" shrink={false} grow>
-        1/4
-      </Placeholder>
-      <Placeholder basis="1/4" shrink={false} grow>
-        1/4
-      </Placeholder>
-      <Placeholder basis="1/2" shrink={false} grow>
-        <pre>A big piece of content that will wrap</pre>
-      </Placeholder>
-      <Placeholder basis="1/2" shrink={false} grow>
-        Rest
-      </Placeholder>
-      <Placeholder basis="1/4" shrink={false} grow>
-        1/4
-      </Placeholder>
-      <Placeholder basis="1/4" shrink={false} grow>
-        1/4
-      </Placeholder>
-    </Split>
-  ),
-}
-
 export const VerticalAlign: Story = {
   args: {
     verticalAlign: "center",
   },
   render: (args) => (
     <Split {...args}>
-      <Placeholder basis="1/4">Single line content</Placeholder>
+      <Placeholder>Single line content</Placeholder>
       <Placeholder grow>
         Content with <br /> multiple lines <br /> of text <br /> to showcase how
         elements <br /> with different <br /> height will be aligned
       </Placeholder>
-      <Placeholder basis="1/4">
+      <Placeholder>
         Content with <br /> two lines
       </Placeholder>
     </Split>
+  ),
+}
+
+export const Inline: Story = {
+  args: {
+    inline: true,
+    gap: "4",
+  },
+  render: (args) => (
+    <div>
+      This is some
+      <Split {...args}>
+        <Placeholder>Inline</Placeholder>
+        <Placeholder>Content</Placeholder>
+      </Split>
+      that plays well with text.
+    </div>
   ),
 }

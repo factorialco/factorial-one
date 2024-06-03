@@ -5,7 +5,7 @@ import React from "react"
 import { Box, BoxProps, BoxRef } from "../Box"
 import { gaps } from "../shared"
 
-const splitVariants = cva("flex flex-row", {
+const splitVariants = cva("relative flex-row", {
   variants: {
     gap: {
       ...gaps,
@@ -21,6 +21,7 @@ const splitVariants = cva("flex flex-row", {
 
   defaultVariants: {
     verticalAlign: "stretch",
+    wrap: true,
   },
 })
 
@@ -30,12 +31,20 @@ export const Split = Component(
     type: "layout",
   },
   React.forwardRef<BoxRef, BoxProps & VariantProps<typeof splitVariants>>(
-    ({ className, gap, wrap, verticalAlign, ...props }, ref) => (
+    ({ className, gap, verticalAlign, wrap, ...props }, ref) => (
       <Box
-        className={cn(splitVariants({ gap, wrap, verticalAlign }), className)}
+        className={cn(splitVariants({ gap, verticalAlign, wrap }), className)}
         ref={ref}
         {...props}
       />
     )
+  )
+)
+
+export const SplitCol = React.forwardRef<BoxRef, BoxProps>(
+  ({ className, children, ...props }, ref) => (
+    <Box className={cn(className)} ref={ref} {...props}>
+      {children}
+    </Box>
   )
 )

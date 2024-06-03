@@ -31,3 +31,11 @@ export const Stack = Component(
     )
   )
 )
+
+export const StackRow = React.forwardRef<BoxRef, BoxProps>(
+  ({ className, children, ...props }, ref) => (
+    <Box className={cn(className)} ref={ref} {...props}>
+      {children}
+    </Box>
+  )
+)
