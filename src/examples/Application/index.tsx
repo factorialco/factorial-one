@@ -1,12 +1,18 @@
 import { Folder, Folders } from "lucide-react"
 import React from "react"
 
-import { CardContent, CardHeader, CardList, CardTitle } from "@/components"
-import { Stack } from "@/primitives"
+import {
+  AutoGrid,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Stack,
+} from "@/main"
 import { ScrollArea } from "@/ui/scrollarea"
 import { AppLayout } from "../../app-layout"
 
-const Layout: React.FC = () => {
+export const Application: React.FC = () => {
   return (
     <AppLayout>
       <ScrollArea>
@@ -20,26 +26,24 @@ const Layout: React.FC = () => {
               </span>
             </Stack>
           </Stack>
-          <CardList elements={[...Array(6)].map((_e, i) => ({ id: i }))}>
-            {({ id }) => (
-              <>
+          <AutoGrid tileSize="md">
+            {[...Array(6)].map((_e, i) => (
+              <Card>
                 <CardHeader>
                   <Folder
                     size="16"
                     className="mb-1 text-secondary-foreground"
                   />
-                  <CardTitle>Folder {id + 1}</CardTitle>
+                  <CardTitle>Folder {i + 1}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   Summary of the contents of the folder.
                 </CardContent>
-              </>
-            )}
-          </CardList>
+              </Card>
+            ))}
+          </AutoGrid>
         </Stack>
       </ScrollArea>
     </AppLayout>
   )
 }
-
-export default Layout

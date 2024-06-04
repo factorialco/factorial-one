@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import Layout from "./application"
+import { Application } from "."
 
 const meta: Meta = {
-  component: Layout,
+  component: Application,
   parameters: {
     tags: ["autodocs"],
     a11y: {

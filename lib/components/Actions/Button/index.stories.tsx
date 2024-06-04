@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
-import { BellRing } from "@/lib/icons"
+import { BellRing } from "lucide-react"
 import { Button } from "."
 
 const meta = {
@@ -22,9 +22,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    variant: "default",
-  },
+  args: {},
 }
 
 export const Secondary: Story = {

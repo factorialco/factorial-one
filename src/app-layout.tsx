@@ -19,8 +19,7 @@ import {
 import React from "react"
 import { useXRay } from "../lib/lib/xray"
 
-import { Split, Stack, StackRow } from "@/primitives"
-import { Button } from "@/ui/button"
+import { Button, Split, Stack, StackRow } from "@/main"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea } from "@/ui/scrollarea"
 
@@ -40,9 +39,13 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
     <div className="grid w-full grid-cols-1 bg-secondary/60 md:grid-cols-[264px_1fr]">
       <Stack gap="4">
         <StackRow className="md:hidden">
-          <Button size="icon-sm" variant="ghost">
-            <Menu size="16" />
-          </Button>
+          <Button
+            size="sm"
+            hideLabel
+            label="Menu"
+            icon={Menu}
+            variant="ghost"
+          />
         </StackRow>
         <ScrollArea className="hidden flex-col pr-3 md:flex">
           <Stack gap="4">
@@ -136,16 +139,16 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               </div>
             </Stack>
             <Split gap="2">
-              <Button size="icon-sm" className="flex gap-1.5 md:w-auto md:px-3">
-                <Upload size="16" />
-                <span className="hidden md:block">Upload files</span>
-              </Button>
-
+              <Button label="Upload files" icon={Upload} size="sm" />
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button variant="secondary" size="icon-sm">
-                    <EllipsisVertical size="20" />
-                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    hideLabel
+                    label="Submenu"
+                    icon={EllipsisVertical}
+                  />
                 </PopoverTrigger>
                 <PopoverContent className="w-60">Menu!</PopoverContent>
               </Popover>
