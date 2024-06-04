@@ -49,6 +49,7 @@ const variants = cva("outline-dashed outline-1 outline-red-500", {
       layout: "outline-red-500",
       info: "outline-blue-500",
       action: "outline-green-600",
+      form: "outline-purple-500",
     } satisfies TypeVariant,
   },
 })
@@ -59,6 +60,7 @@ const tagVariants = cva("px-2 py-1 text-xs uppercase", {
       layout: "bg-red-500  text-white",
       info: "bg-blue-500  text-white",
       action: "bg-green-600  text-white",
+      form: "bg-purple-600 text-white",
     } satisfies TypeVariant,
   },
 })
