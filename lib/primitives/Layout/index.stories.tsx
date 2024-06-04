@@ -1,8 +1,8 @@
 // Replace your-framework with the name of your framework
-import { Button } from "@/components"
-import { Ellipsis, Plus } from "@/lib/icons"
+import { Button } from "@/components/Actions/Button"
 import { Placeholder } from "@/lib/storybook-utils"
 import type { Meta, StoryObj } from "@storybook/react"
+import { Ellipsis, Plus } from "lucide-react"
 import { Split } from "./Split"
 import { Stack } from "./Stack"
 
