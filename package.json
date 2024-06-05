@@ -14,13 +14,12 @@
     "**/*.css"
   ],
   "scripts": {
-    "dev": "vite",
-    "start": "npm run storybook",
+    "dev": "storybook dev -p 6006",
+    "start": "npm run dev",
     "build": "tsc --p ./tsconfig-build.json && BUILD_TYPES=true vite build && npm run build:tailwind",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-storybook:public": "PUBLIC_BUILD=true storybook build",
     "test-storybook": "test-storybook",

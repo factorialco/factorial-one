@@ -1,3 +1,4 @@
+import { Stack } from "@/primitives/Layout/Stack"
 import { cn } from "./utils"
 import { XRayProvider } from "./xray"
 
@@ -9,13 +10,13 @@ export const LayoutProvider: React.FC<
   { children: React.ReactNode } & LayoutProps
 > = ({ children, fullScreen = true }) => {
   return (
-    <div
-      className={cn("flex font-sans text-foreground", {
+    <Stack
+      className={cn("font-sans text-foreground", {
         "h-screen w-screen bg-page-background": fullScreen,
       })}
     >
       {children}
-    </div>
+    </Stack>
   )
 }
 
