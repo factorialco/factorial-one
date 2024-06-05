@@ -35,9 +35,13 @@ export const withTheme = (themes: string[], defaultTheme: string) => {
   }
 }
 
-export const FactorialOne = (Story) => {
+export const FactorialOne = (Story, { parameters }) => {
   return (
-    <FactorialOneProvider>
+    <FactorialOneProvider
+      layout={{
+        fullScreen: parameters.layout === "fullscreen",
+      }}
+    >
       <Story />
     </FactorialOneProvider>
   )
@@ -46,6 +50,9 @@ export const FactorialOne = (Story) => {
 const preview: Preview = {
   decorators: [FactorialOne, withTheme(availableThemes, "light")],
   parameters: {
+    backgrounds: {
+      default: "light",
+    },
     viewport: {
       viewports: {
         ...INITIAL_VIEWPORTS,

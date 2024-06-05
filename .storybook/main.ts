@@ -1,7 +1,5 @@
 import type { StorybookConfig } from "@storybook/react-vite"
 
-const publicBuild = process.env.PUBLIC_BUILD == "true"
-
 const config: StorybookConfig = {
   stories: [
     "../docs/Introduction.mdx",

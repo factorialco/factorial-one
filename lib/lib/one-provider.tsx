@@ -1,20 +1,30 @@
+import { cn } from "./utils"
 import { XRayProvider } from "./xray"
 
-export const LayoutProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+interface LayoutProps {
+  fullScreen?: boolean
+}
+
+export const LayoutProvider: React.FC<
+  { children: React.ReactNode } & LayoutProps
+> = ({ children, fullScreen = true }) => {
   return (
-    <div className="h-screen w-screen bg-page-background font-sans text-foreground">
+    <div
+      className={cn("flex font-sans text-foreground", {
+        "h-screen w-screen bg-page-background": fullScreen,
+      })}
+    >
       {children}
     </div>
   )
 }
 
-export const FactorialOneProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const FactorialOneProvider: React.FC<{
+  children: React.ReactNode
+  layout?: LayoutProps
+}> = ({ children, layout }) => {
   return (
-    <LayoutProvider>
+    <LayoutProvider {...layout}>
       <XRayProvider>{children}</XRayProvider>
     </LayoutProvider>
   )

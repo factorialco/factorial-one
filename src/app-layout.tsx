@@ -40,8 +40,8 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
   } = useXRay()
 
   return (
-    <div className="grid h-screen w-screen grid-cols-1 bg-secondary/60 p-4 md:grid-cols-[264px_1fr]">
-      <Stack gap="4">
+    <div className="grid h-full grow grid-cols-1 bg-secondary/60 p-4 md:grid-cols-[264px_1fr]">
+      <Stack gap="4" overflow="hidden">
         <StackRow className="md:hidden">
           <Button
             size="sm"
@@ -51,7 +51,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
             variant="ghost"
           />
         </StackRow>
-        <ScrollArea className="hidden flex-col pr-3 md:flex">
+        <ScrollArea className="hidden h-full flex-col overflow-hidden pr-3 md:flex">
           <Stack gap="4">
             <Title title="A Cool Company 2" />
             <Stack gap="4">
@@ -134,7 +134,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
           </Stack>
         </ScrollArea>
       </Stack>
-      <div className="h-full overflow-hidden rounded-lg bg-background shadow">
+      <Stack overflow="hidden" className="rounded-lg bg-background shadow">
         <Stack gap={null} className="h-full overflow-hidden">
           <Split paddingX="p-4" paddingY="p-4" verticalAlign="center" shrink>
             <Stack grow paddingX="p-2">
@@ -162,7 +162,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
             {children}
           </Stack>
         </Stack>
-      </div>
+      </Stack>
     </div>
   )
 }
