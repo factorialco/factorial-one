@@ -33,10 +33,14 @@ const Title: React.FC<{ title: string }> = ({ title }) => (
 export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const { enabled: xRayEnabled, setEnabled: setEnabledXray } = useXRay()
+  const {
+    enabled: xRayEnabled,
+    disable: disableXRay,
+    enable: enableXRay,
+  } = useXRay()
 
   return (
-    <div className="grid w-full grid-cols-1 bg-secondary/60 md:grid-cols-[264px_1fr]">
+    <div className="grid h-screen w-screen grid-cols-1 bg-secondary/60 p-4 md:grid-cols-[264px_1fr]">
       <Stack gap="4">
         <StackRow className="md:hidden">
           <Button
@@ -53,7 +57,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
             <Stack gap="4">
               <Stack>
                 <div
-                  onClick={() => setEnabledXray(!xRayEnabled)}
+                  onClick={() => (xRayEnabled ? disableXRay() : enableXRay())}
                   className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary"
                 >
                   <Home size="16" /> Dashboard

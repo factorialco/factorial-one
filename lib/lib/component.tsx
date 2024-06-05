@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 import { useComponentXRay } from "./xray"
 
@@ -14,21 +13,15 @@ export interface ComponentMetadata {
 
 export const Component = <
   R extends HTMLElement,
-  P extends { className?: string } & React.RefAttributes<R>,
+  P extends React.RefAttributes<R>,
 >(
   meta: ComponentMetadata,
   Component: React.FC<P>
 ) => {
   const Forwarded = forwardRef<R, P>((props: P, forwardedRef) => {
-    const { enabled, className, ref } = useComponentXRay(meta, forwardedRef)
+    const { ref } = useComponentXRay(meta, forwardedRef)
 
-    return (
-      <Component
-        ref={ref}
-        className={cn(props.className, enabled ? className : null)}
-        {...props}
-      />
-    )
+    return <Component ref={ref} {...props} />
   })
   Forwarded.displayName = `${meta.name}`
   return Forwarded

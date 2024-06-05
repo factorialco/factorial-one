@@ -6,6 +6,7 @@ const meta: Meta = {
   component: Application,
   parameters: {
     tags: ["autodocs"],
+    layout: "fullscreen",
     a11y: {
       skipCi: true,
     },
