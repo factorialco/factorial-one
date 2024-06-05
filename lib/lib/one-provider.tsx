@@ -1,18 +1,21 @@
-import { useLayoutEffect } from "react"
 import { XRayProvider } from "./xray"
+
+export const LayoutProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  return (
+    <div className="h-screen w-screen bg-page-background font-sans text-foreground">
+      {children}
+    </div>
+  )
+}
 
 export const FactorialOneProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  useLayoutEffect(() => {
-    const classNames = "font-sans text-foreground bg-page-background".split(" ")
-
-    document.body.classList.add(...classNames)
-
-    return () => {
-      document.body.classList.remove(...classNames)
-    }
-  }, [])
-
-  return <XRayProvider>{children}</XRayProvider>
+  return (
+    <LayoutProvider>
+      <XRayProvider>{children}</XRayProvider>
+    </LayoutProvider>
+  )
 }

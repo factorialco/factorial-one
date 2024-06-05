@@ -1,5 +1,6 @@
 import { Stack } from "@/primitives/Layout/Stack"
 import { cva } from "class-variance-authority"
+import * as React from "react"
 import {
   createContext,
   ReactNode,
@@ -123,7 +124,7 @@ export const useComponentXRay = <R extends HTMLElement>(
   meta: ComponentMetadata,
   forwardedRef: React.ForwardedRef<R>
 ) => {
-  const { enabled, filter } = useContext(XRayContext)
+  const { enabled, filter } = React.useContext(XRayContext)
   const ref = useRef<R | null>(null)
   useImperativeHandle(forwardedRef, () => ref.current as R)
   const showXray = enabled && !meta.internal

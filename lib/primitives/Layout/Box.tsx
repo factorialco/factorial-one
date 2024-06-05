@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
-import React from "react"
+import { forwardRef } from "react"
 
 const boxVariants = cva("", {
   variants: {
@@ -51,7 +51,7 @@ export type BoxRef = HTMLDivElement
 export type BoxProps = React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof boxVariants>
 
-export const Box = React.forwardRef<
+export const Box = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof boxVariants>
 >(
