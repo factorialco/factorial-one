@@ -136,7 +136,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
       </Stack>
       <Stack overflow="hidden" className="rounded-lg bg-background shadow">
         <Stack gap={null} className="h-full overflow-hidden">
-          <Split paddingX="p-4" paddingY="p-4" verticalAlign="center" shrink>
+          <Split paddingX="p-4" paddingY="p-4" alignItems="center" shrink>
             <Stack grow paddingX="p-2">
               <div className="text-sm font-medium text-secondary-foreground">
                 My documents

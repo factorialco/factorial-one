@@ -62,7 +62,7 @@ export const WrapGrow: Story = {
 
 export const VerticalAlign: Story = {
   args: {
-    verticalAlign: "center",
+    alignItems: "center",
   },
   render: (args) => (
     <Split {...args}>

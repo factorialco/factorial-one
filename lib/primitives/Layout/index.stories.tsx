@@ -26,7 +26,7 @@ export const Example: Story = {
     <Split grow gap="4">
       <Placeholder>Sidebar</Placeholder>
       <Stack grow gap="4">
-        <Split gap="4" verticalAlign={"center"}>
+        <Split gap="4" alignItems={"center"}>
           <Placeholder grow>Header</Placeholder>
           <Split gap="2">
             <Button label="Create" icon={Plus} variant="default" />

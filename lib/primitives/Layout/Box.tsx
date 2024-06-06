@@ -46,6 +46,10 @@ const boxVariants = cva("", {
       center: "justify-center",
       "space-between": "justify-between",
     },
+    alignItems: {
+      center: "items-center",
+      stretch: "items-stretch",
+    },
     grow: {
       true: "flex-grow",
       false: "flex-grow-0",
@@ -82,6 +86,7 @@ export const Box = forwardRef<
       overflow,
       maxWidth,
       justifyContent,
+      alignItems,
       ...props
     },
     ref
@@ -98,6 +103,7 @@ export const Box = forwardRef<
           overflow,
           maxWidth,
           justifyContent,
+          alignItems,
         }),
         className
       )}
