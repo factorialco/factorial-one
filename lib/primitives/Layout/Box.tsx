@@ -42,6 +42,10 @@ const boxVariants = cva("", {
       true: "inline-flex",
       false: "flex",
     },
+    justifyContent: {
+      center: "justify-center",
+      "space-between": "justify-between",
+    },
     grow: {
       true: "flex-grow",
       false: "flex-grow-0",
@@ -77,6 +81,7 @@ export const Box = forwardRef<
       inline,
       overflow,
       maxWidth,
+      justifyContent,
       ...props
     },
     ref
@@ -92,6 +97,7 @@ export const Box = forwardRef<
           inline,
           overflow,
           maxWidth,
+          justifyContent,
         }),
         className
       )}
