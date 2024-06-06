@@ -16,6 +16,17 @@ const boxVariants = cva("", {
       "p-12": "px-12",
       "p-16": "px-16",
     },
+    maxWidth: {
+      xs: "max-w-xs",
+      sm: "max-w-sm",
+      md: "max-w-md",
+      xl: "max-w-xl",
+      "screen-sm": "max-w-screen-sm",
+      "screen-md": "max-w-screen-md",
+      "screen-lg": "max-w-screen-lg",
+      "screen-xl": "max-w-screen-xl",
+      "screen-2xl": "max-w-screen-2xl",
+    },
     paddingY: {
       none: "py-0",
       "p-2": "py-2",
@@ -65,6 +76,7 @@ export const Box = forwardRef<
       paddingY,
       inline,
       overflow,
+      maxWidth,
       ...props
     },
     ref
@@ -79,6 +91,7 @@ export const Box = forwardRef<
           shrink,
           inline,
           overflow,
+          maxWidth,
         }),
         className
       )}
