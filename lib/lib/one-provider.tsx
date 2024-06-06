@@ -1,11 +1,5 @@
 import { Stack } from "@/primitives/Layout/Stack"
-import {
-  createContext,
-  useContext,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react"
+import { createContext, useContext, useEffect, useRef, useState } from "react"
 import { cn } from "./utils"
 import { XRayProvider } from "./xray"
 
@@ -30,7 +24,7 @@ export const LayoutProvider: React.FC<
   const ref = useRef<HTMLDivElement>(null)
   const [element, setElement] = useState(ref.current)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setElement(ref.current)
   }, [])
 
