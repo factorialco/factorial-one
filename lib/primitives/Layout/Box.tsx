@@ -8,6 +8,10 @@ const boxVariants = cva("", {
       hidden: "overflow-hidden",
       auto: "overflow-auto",
     },
+    justify: {
+      center: "justify-center",
+      spaceBetween: "justify-between",
+    },
     paddingX: {
       none: "px-0",
       "p-2": "px-2",
@@ -65,6 +69,7 @@ export const Box = forwardRef<
       paddingY,
       inline,
       overflow,
+      justify,
       ...props
     },
     ref
@@ -79,6 +84,7 @@ export const Box = forwardRef<
           shrink,
           inline,
           overflow,
+          justify,
         }),
         className
       )}
