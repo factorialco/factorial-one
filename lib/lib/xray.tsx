@@ -115,9 +115,9 @@ const wrapperVariants = cva(
 const tagVariants = cva("bg-opacity-50 px-2 py-1 text-xs uppercase", {
   variants: {
     type: {
-      layout: "bg-red-500  text-white",
-      info: "bg-blue-500  text-white",
-      action: "bg-green-600  text-white",
+      layout: "bg-red-500 text-white",
+      info: "bg-blue-500 text-white",
+      action: "bg-green-600 text-white",
       form: "bg-purple-600 text-white",
     } satisfies TypeVariant,
   },
