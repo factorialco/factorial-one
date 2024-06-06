@@ -17,6 +17,7 @@ import {
   type ComponentMetadata,
   type ComponentTypes,
 } from "./component"
+import { useLayout } from "./one-provider"
 
 declare global {
   interface Window {
@@ -37,6 +38,7 @@ export const XRayContext = createContext<{
 export const XRayProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const { element: layoutElement } = useLayout()
   const [enabled, setEnabled] = useState(false)
   const [filter, setFilter] = useState<ComponentTypes[]>([])
 
@@ -63,6 +65,7 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
     <XRayContext.Provider value={{ enabled, enable, disable, filter }}>
       {children}
       {enabled &&
+        layoutElement &&
         createPortal(
           <Stack
             gap="2"
@@ -87,7 +90,7 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
               ))}
             </Stack>
           </Stack>,
-          document.body
+          layoutElement
         )}
     </XRayContext.Provider>
   )
@@ -124,6 +127,7 @@ export const useComponentXRay = <R extends HTMLElement>(
   meta: ComponentMetadata,
   forwardedRef: React.ForwardedRef<R>
 ) => {
+  const { element: layoutElement } = useLayout()
   const { enabled, filter } = React.useContext(XRayContext)
   const ref = useRef<R | null>(null)
   useImperativeHandle(forwardedRef, () => ref.current as R)
@@ -135,12 +139,10 @@ export const useComponentXRay = <R extends HTMLElement>(
     const element = ref.current
     element.dataset.componentName = meta.name
 
-    const body = document.querySelector("body")
-
     let wrapper: HTMLDivElement | null = null
     let tag: HTMLDivElement | null = null
 
-    if (body) {
+    if (layoutElement) {
       const elementRect = element.getBoundingClientRect()
       const { top, left, width, height } = elementRect
 
@@ -159,15 +161,15 @@ export const useComponentXRay = <R extends HTMLElement>(
       tag.style.left = `${left}px`
       tag.innerText = meta.name
 
-      body.appendChild(tag)
-      body.appendChild(wrapper)
+      layoutElement.appendChild(tag)
+      layoutElement.appendChild(wrapper)
     }
 
     return () => {
-      if (wrapper) body?.removeChild(wrapper)
-      if (tag) body?.removeChild(tag)
+      if (wrapper) layoutElement?.removeChild(wrapper)
+      if (tag) layoutElement?.removeChild(tag)
     }
-  }, [showXray, meta.name, meta.type, filter])
+  }, [showXray, meta.name, meta.type, filter, layoutElement])
 
   return {
     ref,
