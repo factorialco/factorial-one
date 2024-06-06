@@ -112,16 +112,19 @@ const wrapperVariants = cva(
   }
 )
 
-const tagVariants = cva("bg-opacity-50 px-2 py-1 text-xs uppercase", {
-  variants: {
-    type: {
-      layout: "bg-red-500 text-white",
-      info: "bg-blue-500 text-white",
-      action: "bg-green-600 text-white",
-      form: "bg-purple-600 text-white",
-    } satisfies TypeVariant,
-  },
-})
+const tagVariants = cva(
+  "absolute z-40 bg-opacity-50 px-2 py-1 text-xs uppercase",
+  {
+    variants: {
+      type: {
+        layout: "bg-red-500 text-white",
+        info: "bg-blue-500 text-white",
+        action: "bg-green-600 text-white",
+        form: "bg-purple-600 text-white",
+      } satisfies TypeVariant,
+    },
+  }
+)
 
 export const useComponentXRay = <R extends HTMLElement>(
   meta: ComponentMetadata,
@@ -156,7 +159,6 @@ export const useComponentXRay = <R extends HTMLElement>(
 
       tag = document.createElement("div")
       tag.className = tagVariants({ type: meta.type })
-      tag.style.position = "absolute"
       tag.style.top = `${top}px`
       tag.style.left = `${left}px`
       tag.innerText = meta.name
