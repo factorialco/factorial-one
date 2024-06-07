@@ -1,8 +1,8 @@
 import { Button } from "@/components/Actions/Button"
 import { ScrollArea } from "."
 
+import { Stack } from "@/components/Layout/Layout/Stack"
 import { Placeholder } from "@/lib/storybook-utils"
-import { Stack } from "@/primitives/Layout/Stack"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
