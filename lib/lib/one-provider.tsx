@@ -1,4 +1,4 @@
-import { Stack } from "@/components/Layout/Layout/Stack"
+import { Stack } from "@/components/Layout/Stack"
 import { createContext, useContext, useEffect, useRef, useState } from "react"
 import { cn } from "./utils"
 import { XRayProvider } from "./xray"

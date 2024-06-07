@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { ScrollArea } from "."
 
-import { Stack } from "@/components/Layout/Layout/Stack"
+import { Stack } from "@/components/Layout/Stack"
 import { Placeholder } from "@/lib/storybook-utils"
 import type { Meta, StoryObj } from "@storybook/react"
 

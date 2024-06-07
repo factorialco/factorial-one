@@ -1,4 +1,4 @@
-import { Stack } from "@/components/Layout/Layout/Stack"
+import { Stack } from "@/components/Layout/Stack"
 import { cva } from "class-variance-authority"
 import * as React from "react"
 import {

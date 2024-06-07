@@ -1,4 +1,4 @@
-import { Box, BoxProps, BoxRef } from "@/components/Layout/Layout/Box"
+import { Box, BoxProps, BoxRef } from "@/components/Layout/_Box"
 import React from "react"
 import { cn } from "./utils"
 
