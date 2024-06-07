@@ -1,3 +1,4 @@
+import { Button } from "@/components/Actions/Button"
 import { ScrollArea } from "."
 
 import { Placeholder } from "@/lib/storybook-utils"
@@ -22,6 +23,14 @@ export const Default: Story = {
     <Stack overflow="hidden" className="h-96">
       <ScrollArea {...props}>
         <Stack gap="4">
+          <Button
+            label="Some button"
+            onClick={() =>
+              alert(
+                "This button is needed so the content can be focused for accessibility purposes."
+              )
+            }
+          />
           {Array.from({ length: 20 }).map((_, i) => (
             <Placeholder key={i}>
               Element {i + 1} in a scrollable placeholder
