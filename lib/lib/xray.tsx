@@ -131,13 +131,20 @@ export const useComponentXRay = <R extends HTMLElement>(
   forwardedRef: React.ForwardedRef<R>
 ) => {
   const { element: layoutElement } = useLayout()
+
   const { enabled, filter } = React.useContext(XRayContext)
   const ref = useRef<R | null>(null)
   useImperativeHandle(forwardedRef, () => ref.current as R)
   const showXray = enabled && !meta.internal
 
   useEffect(() => {
-    if (!showXray || !ref.current || !filter.includes(meta.type)) return
+    if (
+      !layoutElement ||
+      !showXray ||
+      !ref.current ||
+      !filter.includes(meta.type)
+    )
+      return
 
     const element = ref.current
     element.dataset.componentName = meta.name

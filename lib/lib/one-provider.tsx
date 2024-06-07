@@ -7,15 +7,17 @@ interface LayoutProps {
   fullScreen?: boolean
 }
 
-const LayoutContext = createContext<{ element: HTMLDivElement | null } | null>(
+const LayoutContext = createContext<{ element: HTMLElement | null } | null>(
   null
 )
 
 export const useLayout = () => {
   const context = useContext(LayoutContext)
-  if (!context)
-    throw new Error("useLayout must be used within a LayoutProvider")
-  return context
+
+  return {
+    inLayoutContext: context !== null,
+    element: context?.element || null,
+  }
 }
 
 export const LayoutProvider: React.FC<
