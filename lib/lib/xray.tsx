@@ -17,7 +17,6 @@ import {
   type ComponentMetadata,
   type ComponentTypes,
 } from "./component"
-import { useLayout } from "./one-provider"
 
 declare global {
   interface Window {
@@ -38,7 +37,6 @@ export const XRayContext = createContext<{
 export const XRayProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { element: layoutElement } = useLayout()
   const [enabled, setEnabled] = useState(false)
   const [filter, setFilter] = useState<ComponentTypes[]>([])
 
@@ -65,7 +63,6 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
     <XRayContext.Provider value={{ enabled, enable, disable, filter }}>
       {children}
       {enabled &&
-        layoutElement &&
         createPortal(
           <Stack
             gap="2"
@@ -90,7 +87,7 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
               ))}
             </Stack>
           </Stack>,
-          layoutElement
+          document.body
         )}
     </XRayContext.Provider>
   )
@@ -130,21 +127,14 @@ export const useComponentXRay = <R extends HTMLElement>(
   meta: ComponentMetadata,
   forwardedRef: React.ForwardedRef<R>
 ) => {
-  const { element: layoutElement } = useLayout()
-
   const { enabled, filter } = React.useContext(XRayContext)
   const ref = useRef<R | null>(null)
   useImperativeHandle(forwardedRef, () => ref.current as R)
   const showXray = enabled && !meta.internal
+  const layoutElement = document.body
 
   useEffect(() => {
-    if (
-      !layoutElement ||
-      !showXray ||
-      !ref.current ||
-      !filter.includes(meta.type)
-    )
-      return
+    if (!showXray || !ref.current || !filter.includes(meta.type)) return
 
     const element = ref.current
     element.dataset.componentName = meta.name

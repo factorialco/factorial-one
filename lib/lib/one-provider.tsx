@@ -1,10 +1,12 @@
 import { Stack } from "@/components/Layout/Stack"
-import { createContext, useContext, useEffect, useRef, useState } from "react"
+import { createContext, useContext, useRef, useState } from "react"
+import { useIsomorphicLayoutEffect } from "usehooks-ts"
 import { cn } from "./utils"
 import { XRayProvider } from "./xray"
 
 interface LayoutProps {
   fullScreen?: boolean
+  addBodyClasses?: boolean
 }
 
 const LayoutContext = createContext<{ element: HTMLElement | null } | null>(
@@ -22,13 +24,22 @@ export const useLayout = () => {
 
 export const LayoutProvider: React.FC<
   { children: React.ReactNode } & LayoutProps
-> = ({ children, fullScreen = true }) => {
+> = ({ children, fullScreen = true, addBodyClasses = true }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [element, setElement] = useState(ref.current)
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setElement(ref.current)
   }, [])
+
+  useIsomorphicLayoutEffect(() => {
+    if (!addBodyClasses) return
+
+    const classNames = cn("font-sans text-foreground").split(" ")
+    document.body.classList.add(...classNames)
+
+    return () => document.body.classList.remove(...classNames)
+  }, [addBodyClasses])
 
   return (
     <LayoutContext.Provider value={{ element }}>
