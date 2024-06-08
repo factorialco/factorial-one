@@ -23,8 +23,8 @@
     "build-storybook": "storybook build",
     "build-storybook:public": "PUBLIC_BUILD=true storybook build",
     "test-storybook": "test-storybook",
-    "prettier:format": "prettier --write \"**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
-    "prettier:check:ci": "prettier --check \"**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
+    "prettier:format": "prettier !pnpm-lock.yaml --write \"**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
+    "prettier:check:ci": "prettier !pnpm-lock.yaml --check \"**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "storybook-docs": "storybook dev --docs"
   },
   "peerDependencies": {
@@ -47,8 +47,8 @@
     "date-fns": "^3.6.0",
     "lucide-react": "^0.383.0",
     "react": "18.3.1",
-    "react-dom": "18.3.1",
     "react-day-picker": "^8.10.1",
+    "react-dom": "18.3.1",
     "react-hook-form": "^7.51.5",
     "ress": "^5.0.2",
     "tailwind-merge": "^2.3.0",
@@ -64,6 +64,7 @@
     "@storybook/addon-interactions": "^8.1.6",
     "@storybook/addon-links": "^8.1.6",
     "@storybook/addon-themes": "^8.1.6",
+    "@storybook/addon-viewport": "^8.1.6",
     "@storybook/blocks": "^8.1.6",
     "@storybook/manager-api": "^8.1.6",
     "@storybook/react": "^8.1.6",
