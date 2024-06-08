@@ -13,7 +13,7 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "npm install",
-	"postStartCommand": "npm run storybook",
+	"postStartCommand": "npm run dev",
 
     "customizations": {
         "vscode": {"extensions": ["bradlc.vscode-tailwindcss", "dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]}
