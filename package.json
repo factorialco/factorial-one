@@ -89,7 +89,7 @@
     "postcss-import": "^16.1.0",
     "prettier": "^3.3.1",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "prettier-plugin-tailwindcss": "^0.6.1",
+    "prettier-plugin-tailwindcss": "^0.6.2",
     "storybook": "^8.1.6",
     "typescript": "^5.4.5",
     "vite": "^5.2.13",
