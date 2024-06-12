@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import type { Meta, StoryObj } from "@storybook/react"
-import { Activity, useActivity } from "."
+import { Activity, ActivityDefinitionType, useActivity } from "."
 
 const meta: Meta = {
   parameters: {
@@ -15,18 +15,24 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const AsyncActivity: Activity<{ body: string }, { body: string }> = {
-  title: () => "Activity title",
+const AsyncActivity: ActivityDefinitionType<
+  { body: string },
+  { body: string }
+> = {
   loader: async ({ body }) =>
     new Promise((resolve) => setTimeout(() => resolve({ body }), 1000)),
-  component: ({ data }) => <div>{data.body}</div>,
+  component: (data) => (
+    <Activity title={data.body}>Data fetched: {data.body}</Activity>
+  ),
 }
 
-const ErrorActivity: Activity<{ body: string }, { body: string }> = {
-  title: () => "Activity title",
+const ErrorActivity: ActivityDefinitionType<
+  { body: string },
+  { body: string }
+> = {
   loader: async () =>
     new Promise((_resolve, reject) => setTimeout(() => reject(), 1000)),
-  component: ({ data }) => <div>{data.body}</div>,
+  component: (data) => <Activity title={data.body}>{data.body}</Activity>,
 }
 
 export const Primary: Story = {
