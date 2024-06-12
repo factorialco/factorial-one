@@ -64,8 +64,8 @@ export const LayoutProvider: React.FC<
 
 export const FactorialOneProvider: React.FC<{
   children: React.ReactNode
-  layout?: LayoutProps
-  activity?: ComponentProps<typeof ActivityProvider>
+  layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">
+  activity?: Omit<ComponentProps<typeof ActivityProvider>, "children">
 }> = ({ children, layout, activity }) => {
   return (
     <LayoutProvider {...layout}>
