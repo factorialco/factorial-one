@@ -5,7 +5,6 @@ import {
   RenderedActivity,
   SerializableProps,
 } from "./types"
-export { Activity } from "./Renderer"
 
 type OpenActivityCallback = <Data extends SerializableProps>(
   ...options: [
@@ -85,3 +84,6 @@ export const useActivity = () => {
 
   return activityContext
 }
+
+export { Activity } from "./Renderer"
+export type { ActivityDefinition } from "./types"
