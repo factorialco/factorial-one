@@ -2,31 +2,35 @@ import { createContext, ReactElement, useContext, useState } from "react"
 import { Dialog, DialogContent } from "../Dialog"
 export { Activity } from "./Renderer"
 
-export type ActivityDefinitionType<Arguments, Data> = {
-  component: (data: Data) => ReactElement
-  loader: (args: Arguments) => Promise<Data>
+type SerializableProps = Record<string, string>
+
+export type ActivityDefinition<Data extends SerializableProps> = {
+  id?: string
+  component: React.FC<{ data: Data }>
 }
 
-type OpenActivityOptions<Arguments, Data> = [
-  activity: ActivityDefinitionType<Arguments, Data>,
-  args: Arguments,
+type OpenActivityOptions<Data extends SerializableProps> = [
+  activity: ActivityDefinition<Data>,
+  args: Data,
   options?: {
     onClose?: () => void
   },
 ]
 
-type OpenActivityCallback = <Arguments, Data>(
-  ...options: OpenActivityOptions<Arguments, Data>
+type OpenActivityCallback = <Data extends SerializableProps>(
+  ...options: OpenActivityOptions<Data>
 ) => void
 
-type CurrentActivity = {
+type RenderedActivity = {
+  id?: ActivityDefinition<SerializableProps>["id"]
   element: ReactElement
+  data: SerializableProps
   onClose?: () => void
 }
 
 const ActivityContext = createContext<{
   openActivity: OpenActivityCallback
-  currentActivity: CurrentActivity | null
+  currentActivity: RenderedActivity | null
 } | null>(null)
 
 export const ActivityProvider: React.FC<{ children: ReactElement }> = ({
@@ -34,21 +38,26 @@ export const ActivityProvider: React.FC<{ children: ReactElement }> = ({
 }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [currentActivity, setCurrentActivity] =
-    useState<CurrentActivity | null>(null)
+    useState<RenderedActivity | null>(null)
 
-  const openActivity = async <Arguments, Data>(
-    ...[activity, args, options]: OpenActivityOptions<Arguments, Data>
+  const openActivity = async <Data extends SerializableProps>(
+    ...[activity, data, options]: OpenActivityOptions<Data>
   ) => {
-    const onClose = options?.onClose ?? (() => {})
     setDialogOpen(true)
+    const onClose = options?.onClose ?? (() => {})
+    const Component = activity.component
+    setCurrentActivity({
+      id: activity.id,
+      data: data,
+      element: <Component data={data} />,
+      onClose,
+    })
+  }
 
-    try {
-      setCurrentActivity({ element: <>Loading...</> })
-      const data = await activity.loader(args)
-      setCurrentActivity({ element: activity.component(data), onClose })
-    } catch {
-      setCurrentActivity({ element: <>Error loading activity</> })
-    }
+  const closeActivity = () => {
+    setDialogOpen(false)
+    currentActivity?.onClose?.()
+    setTimeout(() => setCurrentActivity(null), 200)
   }
 
   return (
@@ -62,9 +71,8 @@ export const ActivityProvider: React.FC<{ children: ReactElement }> = ({
       <Dialog
         open={dialogOpen}
         onOpenChange={(value) => {
-          if (value === true) return
-          setDialogOpen(false)
-          setTimeout(() => setCurrentActivity(null), 200)
+          setDialogOpen(value)
+          if (value === false) closeActivity()
         }}
       >
         <DialogContent>{currentActivity?.element}</DialogContent>

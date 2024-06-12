@@ -1,6 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import type { Meta, StoryObj } from "@storybook/react"
-import { Activity, ActivityDefinitionType, useActivity } from "."
+import { useEffect, useState } from "react"
+import { Activity, ActivityDefinition, useActivity } from "."
 
 const meta: Meta = {
   parameters: {
@@ -15,27 +16,52 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const AsyncActivity: ActivityDefinitionType<
-  { body: string },
-  { body: string }
-> = {
-  loader: async ({ body }) =>
-    new Promise((resolve) => setTimeout(() => resolve({ body }), 1000)),
-  component: (data) => (
+const RegularActivity: ActivityDefinition<{ body: string }> = {
+  component: ({ data }) => (
     <Activity title={data.body}>Data fetched: {data.body}</Activity>
   ),
 }
 
-const ErrorActivity: ActivityDefinitionType<
-  { body: string },
-  { body: string }
-> = {
-  loader: async () =>
-    new Promise((_resolve, reject) => setTimeout(() => reject(), 1000)),
-  component: (data) => <Activity title={data.body}>{data.body}</Activity>,
+const AsyncActivity: ActivityDefinition<{ body: string }> = {
+  component: ({ data }) => {
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+      setTimeout(() => setLoading(false), 1000)
+    }, [setLoading])
+
+    return (
+      <Activity title={data.body} loading={loading}>
+        asdasd Data fetched: {data.body}
+      </Activity>
+    )
+  },
 }
 
-export const Primary: Story = {
+const ErrorActivity: ActivityDefinition<{ body: string }> = {
+  component: ({ data }) => {
+    return (
+      <Activity error={"Error!"} title={data.body}>
+        {data.body}
+      </Activity>
+    )
+  },
+}
+
+export const Regular: Story = {
+  render: () => {
+    const { openActivity } = useActivity()
+
+    return (
+      <Button
+        label="Open Activity"
+        onClick={() => openActivity(RegularActivity, { body: "Hello, World!" })}
+      />
+    )
+  },
+}
+
+export const Async: Story = {
   render: () => {
     const { openActivity } = useActivity()
 
