@@ -18,13 +18,13 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const RegularActivity: ActivityDefinition<{ body: string }> = {
-  component: ({ data }) => (
-    <Activity title={data.body}>Data fetched: {data.body}</Activity>
+  component: ({ body }) => (
+    <Activity title={body}>Data fetched: {body}</Activity>
   ),
 }
 
 const AsyncActivity: ActivityDefinition<{ body: string }> = {
-  component: ({ data }) => {
+  component: ({ body }) => {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -32,18 +32,18 @@ const AsyncActivity: ActivityDefinition<{ body: string }> = {
     }, [setLoading])
 
     return (
-      <Activity title={data.body} loading={loading}>
-        asdasd Data fetched: {data.body}
+      <Activity title={body} loading={loading}>
+        asdasd Data fetched: {body}
       </Activity>
     )
   },
 }
 
 const ErrorActivity: ActivityDefinition<{ body: string }> = {
-  component: ({ data }) => {
+  component: ({ body }) => {
     return (
-      <Activity error={"Error!"} title={data.body}>
-        {data.body}
+      <Activity error={"Error!"} title={body}>
+        {body}
       </Activity>
     )
   },

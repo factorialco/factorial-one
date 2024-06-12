@@ -31,7 +31,7 @@ const renderActivity = <Data extends SerializableProps>(
   return {
     id: activity.id,
     data: data,
-    element: <Component data={data} />,
+    element: <Component {...data} />,
     onClose: options?.onClose ?? (() => {}),
   }
 }
@@ -86,4 +86,4 @@ export const useActivity = () => {
 }
 
 export { Activity } from "./Renderer"
-export type { ActivityDefinition } from "./types"
+export type * from "./types"

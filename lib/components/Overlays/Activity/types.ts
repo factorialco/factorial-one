@@ -4,7 +4,7 @@ export type SerializableProps = Record<string, string>
 
 export type ActivityDefinition<Data extends SerializableProps> = {
   id?: string
-  component: React.FC<{ data: Data }>
+  component: React.FC<Data>
 }
 
 export type RenderedActivity = {
