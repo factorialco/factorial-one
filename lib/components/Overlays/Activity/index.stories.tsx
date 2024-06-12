@@ -1,7 +1,8 @@
 import { Button } from "@/components/Actions/Button"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useEffect, useState } from "react"
-import { Activity, ActivityDefinition, useActivity } from "."
+import { Activity, useActivity } from "."
+import { ActivityDefinition } from "./types"
 
 const meta: Meta = {
   parameters: {

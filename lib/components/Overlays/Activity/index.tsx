@@ -1,63 +1,54 @@
 import { createContext, ReactElement, useContext, useState } from "react"
-import { Dialog, DialogContent } from "../Dialog"
+import { ActivityContainer } from "./Renderer"
+import {
+  ActivityDefinition,
+  RenderedActivity,
+  SerializableProps,
+} from "./types"
 export { Activity } from "./Renderer"
 
-type SerializableProps = Record<string, string>
-
-export type ActivityDefinition<Data extends SerializableProps> = {
-  id?: string
-  component: React.FC<{ data: Data }>
-}
-
-type OpenActivityOptions<Data extends SerializableProps> = [
-  activity: ActivityDefinition<Data>,
-  args: Data,
-  options?: {
-    onClose?: () => void
-  },
-]
-
 type OpenActivityCallback = <Data extends SerializableProps>(
-  ...options: OpenActivityOptions<Data>
+  ...options: [
+    activity: ActivityDefinition<Data>,
+    args: Data,
+    options?: {
+      onClose?: () => void
+    },
+  ]
 ) => void
-
-type RenderedActivity = {
-  id?: ActivityDefinition<SerializableProps>["id"]
-  element: ReactElement
-  data: SerializableProps
-  onClose?: () => void
-}
 
 const ActivityContext = createContext<{
   openActivity: OpenActivityCallback
   currentActivity: RenderedActivity | null
 } | null>(null)
 
+const renderActivity = <Data extends SerializableProps>(
+  activity: ActivityDefinition<Data>,
+  data: Data,
+  options: { onClose?: () => void } = {}
+): RenderedActivity => {
+  const Component = activity.component
+
+  return {
+    id: activity.id,
+    data: data,
+    element: <Component data={data} />,
+    onClose: options?.onClose ?? (() => {}),
+  }
+}
+
 export const ActivityProvider: React.FC<{ children: ReactElement }> = ({
   children,
 }) => {
-  const [dialogOpen, setDialogOpen] = useState(false)
   const [currentActivity, setCurrentActivity] =
     useState<RenderedActivity | null>(null)
 
-  const openActivity = async <Data extends SerializableProps>(
-    ...[activity, data, options]: OpenActivityOptions<Data>
+  const openActivity: OpenActivityCallback = async (
+    activity,
+    data,
+    options
   ) => {
-    setDialogOpen(true)
-    const onClose = options?.onClose ?? (() => {})
-    const Component = activity.component
-    setCurrentActivity({
-      id: activity.id,
-      data: data,
-      element: <Component data={data} />,
-      onClose,
-    })
-  }
-
-  const closeActivity = () => {
-    setDialogOpen(false)
-    currentActivity?.onClose?.()
-    setTimeout(() => setCurrentActivity(null), 200)
+    setCurrentActivity(renderActivity(activity, data, options))
   }
 
   return (
@@ -68,21 +59,17 @@ export const ActivityProvider: React.FC<{ children: ReactElement }> = ({
       }}
     >
       {children}
-      <Dialog
-        open={dialogOpen}
-        onOpenChange={(value) => {
-          setDialogOpen(value)
-          if (value === false) closeActivity()
-        }}
-      >
-        <DialogContent>{currentActivity?.element}</DialogContent>
-      </Dialog>
+      <ActivityContainer
+        activity={currentActivity}
+        onClose={() => setCurrentActivity(null)}
+      />
     </ActivityContext.Provider>
   )
 }
 
 export const useActivity = () => {
   const activityContext = useContext(ActivityContext)
+
   if (!activityContext)
     throw new Error("useActivity must be used within an ActivityProvider")
 
