@@ -1,4 +1,5 @@
 import { Stack } from "@/components/Layout/Stack"
+import { ActivityProvider } from "@/components/Overlays/Activity"
 import { createContext, useContext, useRef, useState } from "react"
 import { useIsomorphicLayoutEffect } from "usehooks-ts"
 import { cn } from "./utils"
@@ -61,7 +62,9 @@ export const FactorialOneProvider: React.FC<{
 }> = ({ children, layout }) => {
   return (
     <LayoutProvider {...layout}>
-      <XRayProvider>{children}</XRayProvider>
+      <ActivityProvider>
+        <XRayProvider>{children}</XRayProvider>
+      </ActivityProvider>
     </LayoutProvider>
   )
 }
