@@ -113,8 +113,8 @@ devDependencies:
     specifier: ^8.1.6
     version: 8.1.6
   '@storybook/blocks':
-    specifier: ^8.1.6
-    version: 8.1.6(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
+    specifier: ^8.1.8
+    version: 8.1.8(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1)
   '@storybook/manager-api':
     specifier: ^8.1.6
     version: 8.1.6(react-dom@18.3.1)(react@18.3.1)
@@ -3656,6 +3656,51 @@ packages:
       - supports-color
     dev: true
 
+  /@storybook/blocks@8.1.8(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-nx18ism4YCuLFOmI6mQ+EJD1XABcbDdAyeheZPwkwB+fKkseNiOy7C/Mqio7ReYIncvlML6CCUyFm/OSEZkHkQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      '@storybook/channels': 8.1.8
+      '@storybook/client-logger': 8.1.8
+      '@storybook/components': 8.1.8(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/core-events': 8.1.8
+      '@storybook/csf': 0.1.8
+      '@storybook/docs-tools': 8.1.8(prettier@3.3.2)
+      '@storybook/global': 5.0.0
+      '@storybook/icons': 1.2.9(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/manager-api': 8.1.8(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/preview-api': 8.1.8
+      '@storybook/theming': 8.1.8(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/types': 8.1.8
+      '@types/lodash': 4.17.5
+      color-convert: 2.0.1
+      dequal: 2.0.3
+      lodash: 4.17.21
+      markdown-to-jsx: 7.3.2(react@18.3.1)
+      memoizerific: 1.11.3
+      polished: 4.3.1
+      react: 18.3.1
+      react-colorful: 5.6.1(react-dom@18.3.1)(react@18.3.1)
+      react-dom: 18.3.1(react@18.3.1)
+      telejson: 7.2.0
+      tocbot: 4.28.2
+      ts-dedent: 2.2.0
+      util-deprecate: 1.0.2
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+      - encoding
+      - prettier
+      - supports-color
+    dev: true
+
   /@storybook/builder-manager@8.1.8(prettier@3.3.2):
     resolution: {integrity: sha512-M4qpETmQNUTg6KEt4nVONjF2dXlVV1V+Mxf9saiinoj+PCyHdz+BmYYmiGtopUPxJ2YGvTL1nGykkyH57HutrQ==}
     dependencies:
@@ -3837,6 +3882,29 @@ packages:
       '@storybook/icons': 1.2.9(react-dom@18.3.1)(react@18.3.1)
       '@storybook/theming': 8.1.6(react-dom@18.3.1)(react@18.3.1)
       '@storybook/types': 8.1.6
+      memoizerific: 1.11.3
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      util-deprecate: 1.0.2
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+    dev: true
+
+  /@storybook/components@8.1.8(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-DEfAtDEeISkic8jFm/rFQeVGdA0evVkbiOof+insJxzh6KnIfnZVmJysX02xoUhOCIMjo59c7x0nmUf7NlYsMw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
+    dependencies:
+      '@radix-ui/react-dialog': 1.0.5(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
+      '@radix-ui/react-slot': 1.0.2(@types/react@18.3.3)(react@18.3.1)
+      '@storybook/client-logger': 8.1.8
+      '@storybook/csf': 0.1.8
+      '@storybook/global': 5.0.0
+      '@storybook/icons': 1.2.9(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/theming': 8.1.8(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/types': 8.1.8
       memoizerific: 1.11.3
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
