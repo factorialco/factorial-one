@@ -1,6 +1,8 @@
 import { ReactElement } from "react"
 
-export type SerializableProps = Record<string, string>
+export type SerializableProps<
+  T extends Record<string, string> = Record<string, string>,
+> = T
 
 export type ActivityDefinition<Data extends SerializableProps> = {
   id?: string
