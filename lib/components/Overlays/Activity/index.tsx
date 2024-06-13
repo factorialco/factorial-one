@@ -39,7 +39,7 @@ const renderActivity = <Data extends SerializableProps>(
 export const ActivityProvider: React.FC<{
   children: ReactElement
   activity?: RenderedActivity | null
-  setActivity?: (activity: RenderedActivity) => void
+  setActivity?: (activity: RenderedActivity | null) => void
 }> = ({
   children,
   activity: overridenActivity,
@@ -48,6 +48,7 @@ export const ActivityProvider: React.FC<{
   const [activity, setActivity] = useState<RenderedActivity | null>(null)
 
   const currentActivity = overridenActivity || activity
+  const activitySetter = overridenSetActivity || setActivity
 
   const openActivity: OpenActivityCallback = async (
     activity,
@@ -56,9 +57,7 @@ export const ActivityProvider: React.FC<{
   ) => {
     const renderedActivity = renderActivity(activity, data, options)
 
-    overridenSetActivity
-      ? overridenSetActivity(renderedActivity)
-      : setActivity(renderedActivity)
+    activitySetter(renderedActivity)
   }
 
   return (
@@ -71,7 +70,7 @@ export const ActivityProvider: React.FC<{
       {children}
       <ActivityContainer
         activity={currentActivity}
-        onClose={() => setActivity(null)}
+        onClose={() => activitySetter(null)}
       />
     </ActivityContext.Provider>
   )
