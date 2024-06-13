@@ -27,7 +27,6 @@ const renderActivity = <Data extends SerializableProps>(
   const Component = activity.component
 
   return {
-    id: activity.id,
     data: data,
     element: <Component {...data} />,
     onClose: options?.onClose ?? (() => {}),
