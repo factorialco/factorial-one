@@ -55,6 +55,7 @@ export const ActivityProvider: React.FC<{
     options
   ) => {
     const renderedActivity = renderActivity(activity, data, options)
+
     overridenSetActivity
       ? overridenSetActivity(renderedActivity)
       : setActivity(renderedActivity)
@@ -69,7 +70,7 @@ export const ActivityProvider: React.FC<{
     >
       {children}
       <ActivityContainer
-        activity={activity}
+        activity={currentActivity}
         onClose={() => setActivity(null)}
       />
     </ActivityContext.Provider>
