@@ -6,14 +6,12 @@ import {
   SerializableProps,
 } from "./types"
 
-type OpenActivityCallback = <Data extends SerializableProps>(
-  ...options: [
-    activity: ActivityDefinition<Data>,
-    args: Data,
-    options?: {
-      onClose?: () => void
-    },
-  ]
+export type OpenActivityCallback = <Data extends SerializableProps>(
+  activity: ActivityDefinition<Data>,
+  args: Data,
+  options?: {
+    onClose?: () => void
+  }
 ) => void
 
 const ActivityContext = createContext<{
