@@ -91,3 +91,24 @@ export const Error: Story = {
     )
   },
 }
+
+export const WithCloseCallback: Story = {
+  render: () => {
+    const { openActivity } = useActivity()
+
+    return (
+      <Button
+        label="Open Activity"
+        onClick={() =>
+          openActivity(
+            RegularActivity,
+            { body: "Hello, World!" },
+            {
+              onClose: () => alert("Closed!"),
+            }
+          )
+        }
+      />
+    )
+  },
+}
