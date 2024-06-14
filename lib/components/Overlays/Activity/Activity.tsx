@@ -1,4 +1,10 @@
-import React, { ReactElement, ReactNode, useEffect, useState } from "react"
+import React, {
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react"
 import {
   Dialog,
   DialogContent,
@@ -41,20 +47,32 @@ export const ActivityContainer: React.FC<{
   onClose: () => void
 }> = ({ onClose, activity }) => {
   const [open, setOpen] = useState(true)
+
   useEffect(() => {
     if (activity) {
       setOpen(true)
     }
   }, [activity])
 
+  const closeActivity = useCallback(() => {
+    setTimeout(() => onClose(), 200)
+  }, [onClose])
+
   return (
     activity && (
-      <ActivityContext.Provider value={{ closeActivity: () => setOpen(false) }}>
+      <ActivityContext.Provider
+        value={{
+          closeActivity: () => {
+            setOpen(false)
+            closeActivity()
+          },
+        }}
+      >
         <Dialog
           open={open}
-          onOpenChange={(open) => {
+          onOpenChange={() => {
             setOpen(open)
-            !open && setTimeout(() => onClose(), 200)
+            !open && closeActivity()
           }}
         >
           <DialogContent>{activity.element}</DialogContent>
