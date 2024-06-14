@@ -107,8 +107,8 @@ devDependencies:
     specifier: ^8.1.8
     version: 8.1.8(react@18.3.1)
   '@storybook/addon-themes':
-    specifier: ^8.1.8
-    version: 8.1.8
+    specifier: ^8.1.9
+    version: 8.1.9
   '@storybook/addon-viewport':
     specifier: ^8.1.6
     version: 8.1.6
@@ -3601,8 +3601,8 @@ packages:
       ts-dedent: 2.2.0
     dev: true
 
-  /@storybook/addon-themes@8.1.8:
-    resolution: {integrity: sha512-VV0nQ8YUT7Jn22Bm+o8EaaLFf/BRoFc5bSkSVkoHOAWFBTvUaec0BDShise+dRnANTfEl44O/kxeY5S/Ie9X6A==}
+  /@storybook/addon-themes@8.1.9:
+    resolution: {integrity: sha512-xM7bdUPWPIOp1VLFRS45ih/ta/bhwp2GATU2LqA/clMPSyzBBaiR4y+89Vd5AY46qq7LRjhPa/c0ZoU1xt4FNw==}
     dependencies:
       ts-dedent: 2.2.0
     dev: true
