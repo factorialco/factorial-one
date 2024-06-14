@@ -1,7 +1,8 @@
 import { Button } from "@/components/Actions/Button"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useEffect, useState } from "react"
-import { Activity, useActivity } from "."
+import { Activity, useActivities } from "."
+import { useActivity } from "./Activity"
 import { ActivityDefinition } from "./types"
 
 const meta: Meta = {
@@ -19,7 +20,12 @@ type Story = StoryObj<typeof meta>
 
 const RegularActivity: ActivityDefinition<{ body: string }> = {
   component: ({ body }) => (
-    <Activity title={body}>Data fetched: {body}</Activity>
+    <Activity
+      title={body}
+      description="Mandatory description for accessibility purposes."
+    >
+      Data fetched: {body}
+    </Activity>
   ),
 }
 
@@ -32,7 +38,11 @@ const AsyncActivity: ActivityDefinition<{ body: string }> = {
     }, [setLoading])
 
     return (
-      <Activity title={body} loading={loading}>
+      <Activity
+        title={body}
+        description="Mandatory description for accessibility purposes."
+        loading={loading}
+      >
         asdasd Data fetched: {body}
       </Activity>
     )
@@ -42,7 +52,11 @@ const AsyncActivity: ActivityDefinition<{ body: string }> = {
 const ErrorActivity: ActivityDefinition<{ body: string }> = {
   component: ({ body }) => {
     return (
-      <Activity error={"Error!"} title={body}>
+      <Activity
+        error={"Error!"}
+        title={body}
+        description="Mandatory description for accessibility purposes."
+      >
         {body}
       </Activity>
     )
@@ -51,7 +65,7 @@ const ErrorActivity: ActivityDefinition<{ body: string }> = {
 
 export const Regular: Story = {
   render: () => {
-    const { openActivity } = useActivity()
+    const { openActivity } = useActivities()
 
     return (
       <Button
@@ -64,7 +78,7 @@ export const Regular: Story = {
 
 export const Async: Story = {
   render: () => {
-    const { openActivity } = useActivity()
+    const { openActivity } = useActivities()
 
     return (
       <Button
@@ -77,7 +91,7 @@ export const Async: Story = {
 
 export const Error: Story = {
   render: () => {
-    const { openActivity } = useActivity()
+    const { openActivity } = useActivities()
 
     return (
       <Button
@@ -94,7 +108,7 @@ export const Error: Story = {
 
 export const WithCloseCallback: Story = {
   render: () => {
-    const { openActivity } = useActivity()
+    const { openActivity } = useActivities()
 
     return (
       <Button
@@ -102,6 +116,48 @@ export const WithCloseCallback: Story = {
         onClick={() =>
           openActivity(
             RegularActivity,
+            { body: "Hello, World!" },
+            {
+              onClose: () => alert("Closed!"),
+            }
+          )
+        }
+      />
+    )
+  },
+}
+
+const UsingContextActivity: ActivityDefinition<{ body: string }> = {
+  component: ({ body }) => {
+    const { closeActivity } = useActivity()
+
+    return (
+      <Activity
+        title={body}
+        description="Mandatory description for accessibility purposes."
+        actions={{
+          primary: {
+            label: "Close",
+            onClick: closeActivity,
+          },
+        }}
+      >
+        {body}
+      </Activity>
+    )
+  },
+}
+
+export const UsingContext: Story = {
+  render: () => {
+    const { openActivity } = useActivities()
+
+    return (
+      <Button
+        label="Open Activity"
+        onClick={() =>
+          openActivity(
+            UsingContextActivity,
             { body: "Hello, World!" },
             {
               onClose: () => alert("Closed!"),
