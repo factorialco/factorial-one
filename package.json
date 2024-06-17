@@ -70,7 +70,7 @@
     "@storybook/manager-api": "^8.1.9",
     "@storybook/react": "^8.1.8",
     "@storybook/react-vite": "^8.1.9",
-    "@storybook/test": "^8.1.6",
+    "@storybook/test": "^8.1.9",
     "@storybook/test-runner": "^0.18.2",
     "@storybook/theming": "^8.1.9",
     "@types/node": "^20.14.2",
