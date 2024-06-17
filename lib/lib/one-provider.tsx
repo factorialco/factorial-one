@@ -42,10 +42,12 @@ export const LayoutProvider: React.FC<
   useIsomorphicLayoutEffect(() => {
     if (!addBodyClasses) return
 
-    const classNames = cn("font-sans text-foreground").split(" ")
-    document.body.classList.add(...classNames)
+    if (typeof document !== "undefined") {
+      const classNames = cn("font-sans text-foreground").split(" ")
+      document.body.classList.add(...classNames)
 
-    return () => document.body.classList.remove(...classNames)
+      return () => document.body.classList.remove(...classNames)
+    }
   }, [addBodyClasses])
 
   return (

@@ -63,6 +63,7 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
     <XRayContext.Provider value={{ enabled, enable, disable, filter }}>
       {children}
       {enabled &&
+        typeof document !== "undefined" &&
         createPortal(
           <Stack
             gap="2"
@@ -87,7 +88,7 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
               ))}
             </Stack>
           </Stack>,
-          document.body
+          document?.body
         )}
     </XRayContext.Provider>
   )
@@ -131,7 +132,7 @@ export const useComponentXRay = <R extends HTMLElement>(
   const ref = useRef<R | null>(null)
   useImperativeHandle(forwardedRef, () => ref.current as R)
   const showXray = enabled && !meta.internal
-  const layoutElement = document.body
+  const layoutElement = typeof document !== "undefined" ? document.body : null
 
   useEffect(() => {
     if (!showXray || !ref.current || !filter.includes(meta.type)) return
