@@ -9,6 +9,7 @@ export const Placeholder = React.forwardRef<BoxRef, BoxProps>(
         className,
         "flex place-content-center rounded-md border-2 border-dashed border-border bg-background p-4"
       )}
+      tabIndex={0}
       ref={ref}
       {...props}
     >
