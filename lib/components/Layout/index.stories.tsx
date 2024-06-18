@@ -25,10 +25,10 @@ export const Example: Story = {
   render: () => (
     <Split grow gap="4">
       <Placeholder>Sidebar</Placeholder>
-      <Stack grow gap="4">
+      <Stack grow gap="4" className="h-full overflow-hidden">
         <Split gap="4" alignItems={"center"}>
           <Placeholder grow>Header</Placeholder>
-          <Split gap="2">
+          <Split gap="2" justifyContent="center" alignItems={"center"}>
             <Button label="Create" icon={Plus} variant="default" />
             <Button
               hideLabel
@@ -38,7 +38,11 @@ export const Example: Story = {
             />
           </Split>
         </Split>
-        <Placeholder grow>Content</Placeholder>
+        <Placeholder grow overflow="auto" className="h-full">
+          {Array.from({ length: 100 }, (_, i) => (
+            <div key={i}>Content</div>
+          ))}
+        </Placeholder>
       </Stack>
     </Split>
   ),

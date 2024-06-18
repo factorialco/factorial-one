@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import { forwardRef } from "react"
 
-const boxVariants = cva("", {
+const boxVariants = cva("flex", {
   variants: {
     overflow: {
       hidden: "overflow-hidden",
@@ -27,6 +27,14 @@ const boxVariants = cva("", {
       "screen-xl": "max-w-screen-xl",
       "screen-2xl": "max-w-screen-2xl",
     },
+    height: {
+      auto: "h-auto",
+      full: "h-full",
+    },
+    width: {
+      auto: "w-auto",
+      full: "w-full",
+    },
     paddingY: {
       none: "py-0",
       "p-2": "py-2",
@@ -44,10 +52,16 @@ const boxVariants = cva("", {
     },
     justifyContent: {
       center: "justify-center",
+      end: "justify-end",
       "space-between": "justify-between",
+      start: "justify-start",
+      stretch: "justify-stretch",
     },
     alignItems: {
       center: "items-center",
+      end: "items-end",
+      "space-between": "items-between",
+      start: "items-start",
       stretch: "items-stretch",
     },
     grow: {
@@ -70,7 +84,7 @@ export type BoxRef = HTMLDivElement
 export type BoxProps = React.HTMLAttributes<HTMLDivElement> &
   VariantProps<typeof boxVariants>
 
-export const Box = forwardRef<
+export const FlexBox = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof boxVariants>
 >(
@@ -87,6 +101,8 @@ export const Box = forwardRef<
       maxWidth,
       justifyContent,
       alignItems,
+      height,
+      width,
       ...props
     },
     ref
@@ -104,6 +120,8 @@ export const Box = forwardRef<
           maxWidth,
           justifyContent,
           alignItems,
+          height,
+          width,
         }),
         className
       )}

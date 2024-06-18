@@ -70,9 +70,9 @@ export const ActivityContainer: React.FC<{
       >
         <Dialog
           open={open}
-          onOpenChange={() => {
-            setOpen(open)
-            !open && closeActivity()
+          onOpenChange={(value) => {
+            setOpen(value)
+            !value && closeActivity()
           }}
         >
           <DialogContent>{activity.element}</DialogContent>

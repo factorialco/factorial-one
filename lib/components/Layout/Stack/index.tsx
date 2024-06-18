@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
 import { forwardRef } from "react"
-import { Box, BoxProps, BoxRef } from "../_Box"
+import { BoxProps, BoxRef, FlexBox } from "../_FlexBox"
 import { gaps } from "../shared"
 
-const stackVariants = cva("flex flex-col", {
+const stackVariants = cva("flex-col", {
   variants: {
     gap: {
       ...gaps,
@@ -17,15 +17,11 @@ export const Stack = forwardRef<
   BoxRef,
   BoxProps & VariantProps<typeof stackVariants>
 >(({ className, gap, children, ...props }, ref) => (
-  <Box className={cn(stackVariants({ gap }), className)} ref={ref} {...props}>
+  <FlexBox
+    className={cn(stackVariants({ gap }), className)}
+    ref={ref}
+    {...props}
+  >
     {children}
-  </Box>
+  </FlexBox>
 ))
-
-export const StackRow = forwardRef<BoxRef, BoxProps>(
-  ({ className, children, ...props }, ref) => (
-    <Box className={cn(className)} ref={ref} {...props}>
-      {children}
-    </Box>
-  )
-)

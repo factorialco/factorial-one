@@ -19,7 +19,7 @@ import {
 import React from "react"
 import { useXRay } from "../lib/lib/xray"
 
-import { Button, Split, Stack, StackRow } from "@/main"
+import { Button, Split, Stack } from "@/main"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea } from "@/ui/scrollarea"
 
@@ -42,7 +42,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div className="grid h-full grow grid-cols-1 bg-secondary/60 p-4 md:grid-cols-[264px_1fr]">
       <Stack gap="4" overflow="hidden">
-        <StackRow className="md:hidden">
+        <Stack className="md:hidden" alignItems="start">
           <Button
             size="sm"
             hideLabel
@@ -50,7 +50,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
             icon={Menu}
             variant="ghost"
           />
-        </StackRow>
+        </Stack>
         <ScrollArea className="hidden h-full flex-col overflow-hidden pr-3 md:flex">
           <Stack gap="4">
             <Title title="A Cool Company 2" />

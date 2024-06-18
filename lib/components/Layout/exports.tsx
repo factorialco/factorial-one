@@ -3,9 +3,6 @@ import { AutoGrid as AutoGridComponent } from "./AutoGrid"
 import { Split as SplitComponent } from "./Split"
 import { Stack as StackComponent } from "./Stack"
 
-export { SplitCol } from "./Split"
-export { StackRow } from "./Stack"
-
 export const Stack = Component(
   {
     name: "Stack",
