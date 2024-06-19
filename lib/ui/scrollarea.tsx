@@ -37,7 +37,7 @@ const ScrollBar = React.forwardRef<
     forceMount
     className={cn(
       "z-50 flex touch-none select-none p-[1px]",
-      "transition-opacity data-[state=hidden]:pointer-events-none data-[state=visible]:pointer-events-auto data-[state=hidden]:opacity-0 data-[state=visible]:opacity-100",
+      "transition-opacity data-[state=hidden]:pointer-events-none data-[state=visible]:pointer-events-auto data-[state=hidden]:opacity-50 data-[state=visible]:opacity-100",
       orientation === "vertical" && "mr-[2px] h-full w-2.5",
       orientation === "horizontal" && "mt-[2px] h-2.5 flex-col",
       className
