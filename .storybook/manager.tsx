@@ -1,7 +1,7 @@
 import { addons } from "@storybook/manager-api"
 
-import factorialOne from "./FactorialOne"
+import { darkTheme } from "./FactorialOne"
 
 addons.setConfig({
-  theme: factorialOne,
+  theme: darkTheme,
 })

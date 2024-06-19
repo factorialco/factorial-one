@@ -9,11 +9,7 @@ import DocumentationTemplate from "./DocumentationTemplate.mdx"
 import "../styles.css"
 import "../fonts"
 
-import {
-  availableThemes,
-  Theme,
-  ThemeProvider,
-} from "../lib/lib/theme-provider"
+import { availableThemes, ThemeProvider } from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
 
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
