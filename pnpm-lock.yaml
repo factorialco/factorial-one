@@ -95,7 +95,7 @@ devDependencies:
     specifier: ^8.4.1
     version: 8.4.1
   '@storybook/addon-a11y':
-    specifier: ^8.1.9
+    specifier: ^8.1.10
     version: 8.1.10
   '@storybook/addon-essentials':
     specifier: ^8.1.10
