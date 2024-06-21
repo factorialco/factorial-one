@@ -8,11 +8,7 @@ import DocumentationTemplate from "./DocumentationTemplate.mdx"
 
 import "../styles.css"
 
-import {
-  availableThemes,
-  Theme,
-  ThemeProvider,
-} from "../lib/lib/theme-provider"
+import { availableThemes, ThemeProvider } from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
 
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
@@ -28,7 +24,7 @@ export const withTheme = (themes: string[], defaultTheme: string) => {
     const selected = themeOverride || selectedTheme || defaultTheme
 
     return (
-      <ThemeProvider defaultTheme={selected as Theme}>
+      <ThemeProvider defaultTheme={selected}>
         <Story />
       </ThemeProvider>
     )
