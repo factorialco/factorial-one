@@ -146,7 +146,7 @@ devDependencies:
     specifier: ^7.13.1
     version: 7.13.1(@typescript-eslint/parser@7.13.1)(eslint@8.57.0)(typescript@5.5.2)
   '@typescript-eslint/parser':
-    specifier: ^7.13.0
+    specifier: ^7.13.1
     version: 7.13.1(eslint@8.57.0)(typescript@5.5.2)
   '@vitejs/plugin-react':
     specifier: ^4.3.1
