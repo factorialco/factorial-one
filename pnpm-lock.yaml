@@ -109,8 +109,8 @@ importers:
         specifier: ^8.1.11
         version: 8.1.11(react@18.3.1)
       '@storybook/addon-themes':
-        specifier: ^8.1.10
-        version: 8.1.10
+        specifier: ^8.1.11
+        version: 8.1.11
       '@storybook/addon-viewport':
         specifier: ^8.1.11
         version: 8.1.11
@@ -2017,8 +2017,8 @@ packages:
   '@storybook/addon-outline@8.1.10':
     resolution: {integrity: sha512-Edn5TWpV1DcumOjx0qG9bBKja6vz210ip7O47JbRDu7IDR8lguaM2X9xbmhXhBQq4fmqvobZmfRnrSeCtSYeyQ==}
 
-  '@storybook/addon-themes@8.1.10':
-    resolution: {integrity: sha512-3LdIa0T5OdPCpnZpZVktUAKFEjohOnggewInNDzfouMNk7k9Y7Qjc98wosri3LW6vEQYZGaoXS3F/XvMELkbTw==}
+  '@storybook/addon-themes@8.1.11':
+    resolution: {integrity: sha512-tEOzNiLSAz0/kQKkqV85V7olkJpinCaKpxRpUQpFYut/yQVl+fUchgkfCKrQZuQuvSrebhMmQQ8fbqZq8nf2pw==}
 
   '@storybook/addon-toolbars@8.1.10':
     resolution: {integrity: sha512-5bRcCWrhaTX5Y91EWmHilPZ7kZaneaY414Gn5a6gsaNgaVPkSx9KD9j8M9DyXJ4yQNs265TiPWQqWrPB3Q2VgA==}
@@ -8283,7 +8283,7 @@ snapshots:
       '@storybook/global': 5.0.0
       ts-dedent: 2.2.0
 
-  '@storybook/addon-themes@8.1.10':
+  '@storybook/addon-themes@8.1.11':
     dependencies:
       ts-dedent: 2.2.0
 
