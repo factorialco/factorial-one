@@ -112,8 +112,8 @@ importers:
         specifier: ^8.1.10
         version: 8.1.10
       '@storybook/addon-viewport':
-        specifier: ^8.1.9
-        version: 8.1.10
+        specifier: ^8.1.11
+        version: 8.1.11
       '@storybook/blocks':
         specifier: ^8.1.9
         version: 8.1.10(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2022,6 +2022,9 @@ packages:
 
   '@storybook/addon-viewport@8.1.10':
     resolution: {integrity: sha512-rJpyAwTVQa+6yqjdMDeqNKoW5aPoSzBAtMywtNMP5lHwF6NpJUvm67c/ox0//d5dPPPjlJDz2QC2COWqjviQyw==}
+
+  '@storybook/addon-viewport@8.1.11':
+    resolution: {integrity: sha512-qk4IcGnAgiAUQxt8l5PIQ293Za+w6wxlJQIpxr7+QM8OVkADPzXY0MmQfYWU9EQplrxAC2MSx3/C1gZeq+MDOQ==}
 
   '@storybook/blocks@8.1.10':
     resolution: {integrity: sha512-8ZGgLIUBdSafcyaKR5Zs0CFisFCPoxZBVt3GMUCZtN+G17YhEg4+OnZs5aMZknfnh28BUnZS2STjWTGStAE5Rw==}
@@ -8232,6 +8235,10 @@ snapshots:
   '@storybook/addon-toolbars@8.1.10': {}
 
   '@storybook/addon-viewport@8.1.10':
+    dependencies:
+      memoizerific: 1.11.3
+
+  '@storybook/addon-viewport@8.1.11':
     dependencies:
       memoizerific: 1.11.3
 
