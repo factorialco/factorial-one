@@ -118,8 +118,8 @@ importers:
         specifier: ^8.1.9
         version: 8.1.10(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/manager-api':
-        specifier: ^8.1.9
-        version: 8.1.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^8.1.11
+        version: 8.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@storybook/react':
         specifier: ^8.1.10
         version: 8.1.10(prettier@3.3.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.2)
@@ -2154,6 +2154,9 @@ packages:
   '@storybook/manager-api@8.1.10':
     resolution: {integrity: sha512-9aZ+zoNrTo1BJskVmCKE/yqlBXmWaKVZh1W/+/xu3WL9wdm/tBlozRvQwegIZlRVvUOxtjOg28Vd2hySYL58zg==}
 
+  '@storybook/manager-api@8.1.11':
+    resolution: {integrity: sha512-QSgwKfAw01K9YvvZj30iGBMgQ4YaCT3vojmttuqdH5ukyXkiO7pENLJj4Y+alwUeSi0g+SJeadCI3PXySBHOGg==}
+
   '@storybook/manager@8.1.10':
     resolution: {integrity: sha512-dQmRBfT4CABIPhv0kL25qKcQk2SiU5mIZ1DuVzckIbZW+iYEOAusyJ/0HExM9leCrymaW3BgZGlHbIXL7EvZtw==}
 
@@ -2216,6 +2219,9 @@ packages:
 
   '@storybook/router@8.1.10':
     resolution: {integrity: sha512-JDEgZ0vVDx0GLz+dKD+R1xqWwjqsCdA2F+s3/si7upHqkFRWU5ocextZ63oKsRnCoaeUh6OavAU4EdkrKiQtQw==}
+
+  '@storybook/router@8.1.11':
+    resolution: {integrity: sha512-nU5lsBvy0L8wBYOkjagh29ztZicDATpZNYrHuavlhQ2jznmmHdJvXKYk+VrMAbthjQ6ZBqfeeMNPR1UlnqR5Rw==}
 
   '@storybook/telemetry@8.1.10':
     resolution: {integrity: sha512-pwiMWrq85D0AnaAgYNfB2w2BDgqnetQ+tXwsUAw4fUEFwA4oPU6r0uqekRbNNE6wmSSYjiiFP3JgknBFqjd2hg==}
@@ -8760,6 +8766,27 @@ snapshots:
       - react
       - react-dom
 
+  '@storybook/manager-api@8.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@storybook/channels': 8.1.11
+      '@storybook/client-logger': 8.1.11
+      '@storybook/core-events': 8.1.11
+      '@storybook/csf': 0.1.8
+      '@storybook/global': 5.0.0
+      '@storybook/icons': 1.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@storybook/router': 8.1.11
+      '@storybook/theming': 8.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@storybook/types': 8.1.11
+      dequal: 2.0.3
+      lodash: 4.17.21
+      memoizerific: 1.11.3
+      store2: 2.14.3
+      telejson: 7.2.0
+      ts-dedent: 2.2.0
+    transitivePeerDependencies:
+      - react
+      - react-dom
+
   '@storybook/manager@8.1.10': {}
 
   '@storybook/node-logger@8.1.10': {}
@@ -8904,6 +8931,12 @@ snapshots:
   '@storybook/router@8.1.10':
     dependencies:
       '@storybook/client-logger': 8.1.10
+      memoizerific: 1.11.3
+      qs: 6.12.1
+
+  '@storybook/router@8.1.11':
+    dependencies:
+      '@storybook/client-logger': 8.1.11
       memoizerific: 1.11.3
       qs: 6.12.1
 
