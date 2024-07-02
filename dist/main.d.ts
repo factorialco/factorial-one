@@ -1,5 +1,3 @@
-/// <reference types="react" />
-
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import type * as CLSX from 'clsx';
 import { ComponentProps } from 'react';
@@ -62,7 +60,7 @@ gap?: "2" | "4" | "8" | null | undefined;
 } & ClassProp) | undefined) => string> & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement>>;
 
 export declare const Avatar: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.AvatarProps & React_2.RefAttributes<HTMLSpanElement>, "ref"> & {
-    size?: "small" | "xsmall" | "medium" | "large" | "xlarge" | "xxlarge" | undefined;
+    size?: (typeof sizes)[number];
 } & React_2.RefAttributes<HTMLSpanElement>>;
 
 export declare const AvatarFallback: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.AvatarFallbackProps & React_2.RefAttributes<HTMLSpanElement>, "ref"> & React_2.RefAttributes<HTMLSpanElement>>;
@@ -228,11 +226,13 @@ export declare const Split: ForwardRefExoticComponent<Omit<HTMLAttributes<HTMLDi
 overflow?: "hidden" | "auto" | null | undefined;
 paddingX?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | null | undefined;
 maxWidth?: "sm" | "xs" | "md" | "xl" | "screen-sm" | "screen-md" | "screen-lg" | "screen-xl" | "screen-2xl" | null | undefined;
+height?: "auto" | "full" | null | undefined;
+width?: "auto" | "full" | null | undefined;
 paddingY?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | null | undefined;
 basis?: "0" | null | undefined;
 inline?: boolean | null | undefined;
-justifyContent?: "center" | "space-between" | null | undefined;
-alignItems?: "center" | "stretch" | null | undefined;
+justifyContent?: "center" | "end" | "space-between" | "start" | "stretch" | null | undefined;
+alignItems?: "center" | "end" | "space-between" | "start" | "stretch" | null | undefined;
 grow?: boolean | null | undefined;
 shrink?: boolean | null | undefined;
 } & ClassProp) | undefined) => string> & VariantProps<(props?: ({
@@ -240,46 +240,22 @@ gap?: "2" | "4" | "8" | null | undefined;
 wrap?: boolean | null | undefined;
 } & ClassProp) | undefined) => string> & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement>>;
 
-export declare const SplitCol: default_2.ForwardRefExoticComponent<default_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
-    overflow?: "hidden" | "auto" | null | undefined;
-    paddingX?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | null | undefined;
-    maxWidth?: "sm" | "xs" | "md" | "xl" | "screen-sm" | "screen-md" | "screen-lg" | "screen-xl" | "screen-2xl" | null | undefined;
-    paddingY?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | null | undefined;
-    basis?: "0" | null | undefined;
-    inline?: boolean | null | undefined;
-    justifyContent?: "center" | "space-between" | null | undefined;
-    alignItems?: "center" | "stretch" | null | undefined;
-    grow?: boolean | null | undefined;
-    shrink?: boolean | null | undefined;
-} & ClassProp) | undefined) => string> & default_2.RefAttributes<HTMLDivElement>>;
-
 export declare const Stack: ForwardRefExoticComponent<Omit<HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
 overflow?: "hidden" | "auto" | null | undefined;
 paddingX?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | null | undefined;
 maxWidth?: "sm" | "xs" | "md" | "xl" | "screen-sm" | "screen-md" | "screen-lg" | "screen-xl" | "screen-2xl" | null | undefined;
+height?: "auto" | "full" | null | undefined;
+width?: "auto" | "full" | null | undefined;
 paddingY?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | null | undefined;
 basis?: "0" | null | undefined;
 inline?: boolean | null | undefined;
-justifyContent?: "center" | "space-between" | null | undefined;
-alignItems?: "center" | "stretch" | null | undefined;
+justifyContent?: "center" | "end" | "space-between" | "start" | "stretch" | null | undefined;
+alignItems?: "center" | "end" | "space-between" | "start" | "stretch" | null | undefined;
 grow?: boolean | null | undefined;
 shrink?: boolean | null | undefined;
 } & ClassProp) | undefined) => string> & VariantProps<(props?: ({
 gap?: "2" | "4" | "8" | null | undefined;
 } & ClassProp) | undefined) => string> & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement>>;
-
-export declare const StackRow: ForwardRefExoticComponent<HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
-overflow?: "hidden" | "auto" | null | undefined;
-paddingX?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | null | undefined;
-maxWidth?: "sm" | "xs" | "md" | "xl" | "screen-sm" | "screen-md" | "screen-lg" | "screen-xl" | "screen-2xl" | null | undefined;
-paddingY?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | null | undefined;
-basis?: "0" | null | undefined;
-inline?: boolean | null | undefined;
-justifyContent?: "center" | "space-between" | null | undefined;
-alignItems?: "center" | "stretch" | null | undefined;
-grow?: boolean | null | undefined;
-shrink?: boolean | null | undefined;
-} & ClassProp) | undefined) => string> & RefAttributes<HTMLDivElement>>;
 
 export declare const Tabs: React_2.ForwardRefExoticComponent<TabsPrimitive.TabsProps & React_2.RefAttributes<HTMLDivElement>>;
 
