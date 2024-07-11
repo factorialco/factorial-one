@@ -1,5 +1,4 @@
 import { Stack } from "@/components/Layout/Stack"
-import { ActivitiesProvider } from "@/components/Overlays/Activity"
 import {
   ComponentProps,
   createContext,
@@ -67,13 +66,10 @@ export const LayoutProvider: React.FC<
 export const FactorialOneProvider: React.FC<{
   children: React.ReactNode
   layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">
-  activity?: Omit<ComponentProps<typeof ActivitiesProvider>, "children">
-}> = ({ children, layout, activity }) => {
+}> = ({ children, layout }) => {
   return (
     <LayoutProvider {...layout}>
-      <ActivitiesProvider {...activity}>
-        <XRayProvider>{children}</XRayProvider>
-      </ActivitiesProvider>
+      <XRayProvider>{children}</XRayProvider>
     </LayoutProvider>
   )
 }
