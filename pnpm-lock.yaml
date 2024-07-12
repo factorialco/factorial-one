@@ -133,8 +133,8 @@ importers:
         specifier: ^0.19.0
         version: 0.19.0(@types/node@20.14.10)(prettier@3.3.2)
       '@storybook/theming':
-        specifier: ^8.1.11
-        version: 8.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^8.2.2
+        version: 8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@types/node':
         specifier: ^20.14.10
         version: 20.14.10
@@ -2247,6 +2247,11 @@ packages:
         optional: true
       react-dom:
         optional: true
+
+  '@storybook/theming@8.2.2':
+    resolution: {integrity: sha512-byjEORePZyUDsGuGlZ8qamZPXmkM6rNMWaMaTxsp7XaQJc7J6fcb9n96R3JjU0vzqS8QpsxJSS+VJ2ur2zS7Sw==}
+    peerDependencies:
+      storybook: ^8.2.2
 
   '@storybook/types@8.1.10':
     resolution: {integrity: sha512-UJ97iqI+0Mk13I6ayd3TaBfSFBkWnEauwTnFMQe1dN/L3wTh8laOBaLa0Vr3utRSnt2b5hpcw/nq7azB/Gx4Yw==}
@@ -8714,6 +8719,10 @@ snapshots:
     optionalDependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  '@storybook/theming@8.2.2(storybook@8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
+    dependencies:
+      storybook: 8.2.2(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
   '@storybook/types@8.1.10':
     dependencies:
