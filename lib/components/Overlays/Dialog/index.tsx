@@ -1,1 +1,92 @@
-export * from "@/ui/dialog"
+import { Button } from "@/components/Actions/Button"
+import { Stack } from "@/components/Layout/Stack"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogIcon,
+  DialogTitle,
+} from "@/ui/dialog"
+import { LucideIcon } from "lucide-react"
+import { forwardRef, ReactNode, useCallback, useState } from "react"
+
+type Action = {
+  label: string
+  onClick: () => void
+}
+
+type DialogProps = {
+  header?: {
+    icon?: LucideIcon
+    title: string
+    description: string
+  }
+  actions?: {
+    primary: Action
+    secondary?: Action
+  }
+  children: ReactNode
+  open?: boolean
+  onClose?: () => void
+}
+
+const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
+  ({ header, children, actions, open, onClose }, ref) => {
+    // We do this in order to give the illusion of a controlled state via `open`, but in reality
+    // we're taking control and closing the dialog after a few milliseconds to give the closing
+    // animation time to play out.
+    const [closing, setIsClosing] = useState(false)
+
+    const handleClose = useCallback(() => {
+      setIsClosing(true)
+
+      const timeout = setTimeout(() => {
+        onClose?.()
+        setIsClosing(false)
+      }, 200)
+
+      return () => clearTimeout(timeout)
+    }, [onClose])
+
+    return (
+      <Dialog
+        open={open && !closing}
+        onOpenChange={(open) => !open && handleClose?.()}
+      >
+        <DialogContent ref={ref}>
+          {header && (
+            <DialogHeader>
+              {header.icon && (
+                <DialogIcon>
+                  <header.icon size={24} />
+                </DialogIcon>
+              )}
+              <DialogTitle>{header.title}</DialogTitle>
+              <DialogDescription>{header.description}</DialogDescription>
+            </DialogHeader>
+          )}
+          <Stack grow>{children}</Stack>
+          {actions && (
+            <DialogFooter>
+              {actions.secondary && (
+                <Button
+                  variant="secondary"
+                  onClick={actions.secondary.onClick}
+                  label={actions.secondary.label}
+                />
+              )}
+              <Button
+                onClick={actions.primary.onClick}
+                label={actions.primary.label}
+              />
+            </DialogFooter>
+          )}
+        </DialogContent>
+      </Dialog>
+    )
+  }
+)
+
+export { OneDialog as Dialog }
