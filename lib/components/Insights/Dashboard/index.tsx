@@ -24,6 +24,6 @@ export const InsightsDashboard = forwardRef<
         )}
       </div>
     )}
-    <AutoGrid ref={ref}>{children}</AutoGrid>)
+    <AutoGrid ref={ref}>{children}</AutoGrid>
   </div>
 ))

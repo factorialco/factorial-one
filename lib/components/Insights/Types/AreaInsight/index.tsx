@@ -43,7 +43,7 @@ function fixedForwardRef<T, P>(
   ) => React.ReactNode
 }
 
-export const _AreaInsights = <
+export const _AreaInsight = <
   DataConfig extends AreaConfig,
   Keys extends Key = string,
 >(
@@ -104,4 +104,4 @@ export const _AreaInsights = <
   )
 }
 
-export const AreaInsight = fixedForwardRef(_AreaInsights)
+export const AreaInsight = fixedForwardRef(_AreaInsight)

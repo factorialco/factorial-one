@@ -1,1 +1,0 @@
-export { AreaInsight } from "./Area"
