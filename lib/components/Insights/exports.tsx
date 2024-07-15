@@ -1,5 +1,5 @@
 import { Component } from "@/lib/component"
-import { AreaInsight as AreaInsightComponent } from "./Insight"
+import { AreaInsight as AreaInsightComponent } from "./Insights"
 
 export const AreaInsight = Component(
   {
