@@ -1,10 +1,19 @@
 import { Component } from "@/lib/component"
-import { AreaInsight as AreaInsightComponent } from "./Insights"
+import { InsightsDashboard as InsightsDashboardComponent } from "./Dashboard"
+import { AreaInsight as AreaInsightComponent } from "./Types"
 
 export const AreaInsight = Component(
   {
-    name: "Stack",
+    name: "AreaInsight",
     type: "info",
   },
   AreaInsightComponent
+)
+
+export const InsightsDashboard = Component(
+  {
+    name: "InsightsDashboard",
+    type: "info",
+  },
+  InsightsDashboardComponent
 )
