@@ -36,13 +36,21 @@ export const withTheme = (themes: string[], defaultTheme: string) => {
 }
 
 export const FactorialOne = (Story, { parameters }) => {
+  const { pageLayout } = parameters
+
   return (
     <FactorialOneProvider
       layout={{
         fullScreen: parameters.layout === "fullscreen",
       }}
     >
-      <Story />
+      {pageLayout ? (
+        <div className="bg-background p-8">
+          <Story />
+        </div>
+      ) : (
+        <Story />
+      )}
     </FactorialOneProvider>
   )
 }
