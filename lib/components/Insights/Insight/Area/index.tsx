@@ -4,59 +4,104 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/ui/chart"
-import { forwardRef } from "react"
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { ForwardedRef, forwardRef } from "react"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { InsightsBase, InsightsContainer } from "../Container"
+import { autoColor } from "../utils/colors"
 
-type AreaType = InsightsBase & {
-  chartData: Array<unknown>
-  config: ChartConfig
+type Key = string
+
+type ChartItem<AreaKeys extends Key> = {
+  label: string
+  values: Record<AreaKeys, number>
 }
 
-export const AreaInsight = forwardRef<HTMLDivElement, AreaType>(
-  ({ chartData, config, ...containerProps }, ref) => {
-    return (
-      <InsightsContainer {...containerProps} ref={ref}>
-        <ChartContainer config={config}>
-          <AreaChart
-            accessibilityLayer
-            data={chartData}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
-          >
-            <CartesianGrid vertical={false} />
+type AxisConfig = {
+  hide?: boolean
+  tickFormatter?: (value: string) => string
+}
+
+type AreaConfig<Keys extends Key = string> = Record<Keys, ChartConfig[string]>
+
+type InferAreaKeys<T> = T extends AreaConfig<infer K> ? K : never
+
+export type AreaProps<
+  DataConfig extends AreaConfig = AreaConfig,
+  AreaKeys extends Key = InferAreaKeys<DataConfig>,
+> = InsightsBase & {
+  dataConfig: AreaConfig<AreaKeys>
+  data: ChartItem<AreaKeys>[]
+  xAxis?: AxisConfig
+  yAxis?: AxisConfig
+}
+
+function fixedForwardRef<T, P>(
+  render: (props: P, ref: React.Ref<T>) => React.ReactNode
+) {
+  return forwardRef(render) as (
+    props: P & React.RefAttributes<T>
+  ) => React.ReactNode
+}
+
+export const _AreaInsights = <
+  DataConfig extends AreaConfig,
+  Keys extends Key = string,
+>(
+  {
+    data,
+    dataConfig,
+    xAxis,
+    yAxis,
+    ...containerProps
+  }: AreaProps<DataConfig, Keys>,
+  ref: ForwardedRef<HTMLDivElement>
+) => {
+  const areas = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
+
+  return (
+    <InsightsContainer {...containerProps} ref={ref}>
+      <ChartContainer config={dataConfig}>
+        <AreaChart
+          accessibilityLayer
+          data={data.map((item) => ({ x: item.label, ...item.values }))}
+          margin={{ left: 12, right: 12 }}
+        >
+          <CartesianGrid vertical={false} />
+          {!xAxis?.hide && (
             <XAxis
-              dataKey="month"
+              dataKey="x"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={xAxis?.tickFormatter}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dot" />}
+          )}
+          {!yAxis?.hide && (
+            <YAxis
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={yAxis?.tickFormatter}
             />
+          )}
+          <ChartTooltip
+            cursor
+            content={<ChartTooltipContent indicator="dot" />}
+          />
+          {areas.map((area, index) => (
             <Area
-              dataKey="mobile"
+              key={area}
+              dataKey={area}
               type="natural"
-              fill="var(--color-mobile)"
+              fill={dataConfig[area].color || autoColor(index)}
               fillOpacity={0.4}
-              stroke="var(--color-mobile)"
-              stackId="a"
+              stroke={dataConfig[area].color || autoColor(index)}
             />
-            <Area
-              dataKey="desktop"
-              type="natural"
-              fill="var(--color-desktop)"
-              fillOpacity={0.4}
-              stroke="var(--color-desktop)"
-              stackId="a"
-            />
-          </AreaChart>
-        </ChartContainer>
-      </InsightsContainer>
-    )
-  }
-)
+          ))}
+        </AreaChart>
+      </ChartContainer>
+    </InsightsContainer>
+  )
+}
+
+export const AreaInsight = fixedForwardRef(_AreaInsights)

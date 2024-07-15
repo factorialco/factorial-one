@@ -1,9 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { AreaInsight } from "."
+import { AreaInsight, AreaProps } from "."
+
+const Component = AreaInsight
+
+const dataConfig = {
+  desktop: {
+    label: "Desktop",
+  },
+  mobile: {
+    label: "Mobile",
+  },
+}
 
 const meta = {
-  component: AreaInsight,
+  component: Component,
   parameters: {
     layout: "centered",
   },
@@ -17,32 +28,30 @@ const meta = {
       trend: "Increased by 12%",
       time: "Since last month",
     },
-    chartData: [
-      { month: "Jan", mobile: 4000, desktop: 2400 },
-      { month: "Feb", mobile: 3000, desktop: 1398 },
-      { month: "Mar", mobile: 2000, desktop: 9800 },
-      { month: "Apr", mobile: 2780, desktop: 3908 },
-      { month: "May", mobile: 1890, desktop: 4800 },
-      { month: "Jun", mobile: 2390, desktop: 3800 },
-      { month: "Jul", mobile: 3490, desktop: 4300 },
-      { month: "Aug", mobile: 3490, desktop: 4300 },
-      { month: "Sep", mobile: 3490, desktop: 4300 },
-      { month: "Oct", mobile: 3490, desktop: 4300 },
-      { month: "Nov", mobile: 3490, desktop: 4300 },
-      { month: "Dec", mobile: 3490, desktop: 4300 },
-    ],
-    config: {
-      desktop: {
-        label: "Desktop",
-        color: "hsl(var(--chart-1))",
-      },
-      mobile: {
-        label: "Mobile",
-        color: "hsl(var(--chart-2))",
-      },
+    xAxis: {
+      hide: false,
+      tickFormatter: (value: string) => value.slice(0, 3),
     },
-  },
-} satisfies Meta<typeof AreaInsight>
+    yAxis: {
+      hide: true,
+    },
+    data: [
+      { label: "Jan", values: { mobile: 4000, desktop: 2400 } },
+      { label: "Feb", values: { mobile: 3000, desktop: 1398 } },
+      { label: "Mar", values: { mobile: 2000, desktop: 4000 } },
+      { label: "Apr", values: { mobile: 1500, desktop: 8000 } },
+      { label: "May", values: { mobile: 2000, desktop: 6000 } },
+      { label: "Jun", values: { mobile: 3500, desktop: 4000 } },
+      { label: "Jul", values: { mobile: 4500, desktop: 2000 } },
+      { label: "Aug", values: { mobile: 5500, desktop: 1000 } },
+      { label: "Sep", values: { mobile: 6500, desktop: 500 } },
+      { label: "Oct", values: { mobile: 7500, desktop: 300 } },
+      { label: "Nov", values: { mobile: 8500, desktop: 200 } },
+      { label: "Dec", values: { mobile: 9500, desktop: 500 } },
+    ],
+    dataConfig,
+  } satisfies AreaProps<typeof dataConfig>,
+} satisfies Meta<typeof Component>
 
 export default meta
 type Story = StoryObj<typeof meta>
