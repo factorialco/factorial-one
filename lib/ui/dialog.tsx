@@ -34,11 +34,11 @@ const DialogContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => {
   return (
     <DialogPortal>
-      <DialogOverlay className="grid place-items-center overflow-y-auto p-8">
+      <DialogOverlay className="grid place-items-center overflow-y-auto sm:p-8">
         <DialogPrimitive.Content
           ref={ref}
           className={cn(
-            "relative z-50 grid w-full max-w-lg origin-center gap-4 border bg-background p-8 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:rounded-2xl",
+            "relative z-50 grid w-full origin-center gap-4 border bg-background p-8 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:w-fit sm:min-w-[400px] sm:rounded-2xl md:min-w-[600px]",
             className
           )}
           {...props}
