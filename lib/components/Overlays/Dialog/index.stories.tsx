@@ -73,3 +73,10 @@ export const Overflow: Story = {
     ),
   },
 }
+
+export const Loading: Story = {
+  args: {
+    ...WithActions.args,
+    loading: true,
+  },
+}

@@ -9,6 +9,7 @@ import {
   DialogIcon,
   DialogTitle,
 } from "@/ui/dialog"
+import { Skeleton } from "@/ui/skeleton"
 import { LucideIcon } from "lucide-react"
 import { forwardRef, ReactNode, useCallback, useState } from "react"
 
@@ -27,13 +28,14 @@ type DialogProps = {
     primary: Action
     secondary?: Action
   }
+  loading?: boolean
   children: ReactNode
   open?: boolean
   onClose?: () => void
 }
 
 const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
-  ({ header, children, actions, open, onClose }, ref) => {
+  ({ header, children, loading, actions, open, onClose }, ref) => {
     // We do this in order to give the illusion of a controlled state via `open`, but in reality
     // we're taking control and closing the dialog after a few milliseconds to give the closing
     // animation time to play out.
@@ -67,7 +69,16 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
               <DialogDescription>{header.description}</DialogDescription>
             </DialogHeader>
           )}
-          <Stack grow>{children}</Stack>
+          <Stack grow>
+            {loading ? (
+              <Stack gap="4">
+                <Skeleton className="h-6 w-full rounded-full" />
+                <Skeleton className="h-6 w-full rounded-full" />
+              </Stack>
+            ) : (
+              children
+            )}
+          </Stack>
           {actions && (
             <DialogFooter>
               {actions.secondary && (
