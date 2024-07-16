@@ -1,18 +1,19 @@
 import { AutoGrid } from "@/main"
-import { forwardRef, ReactNode } from "react"
+import { ComponentProps, forwardRef, ReactNode } from "react"
 
 type InsightsDashboardProps = {
   header?: {
     title: string
     description?: string
   }
+  tileSize?: ComponentProps<typeof AutoGrid>["tileSize"]
   children?: ReactNode
 }
 
 export const InsightsDashboard = forwardRef<
   HTMLDivElement,
   InsightsDashboardProps
->(({ header, children }, ref) => (
+>(({ header, children, tileSize }, ref) => (
   <div>
     {header && (
       <div className="flex flex-col gap-1 pb-6 leading-normal">
@@ -24,6 +25,8 @@ export const InsightsDashboard = forwardRef<
         )}
       </div>
     )}
-    <AutoGrid ref={ref}>{children}</AutoGrid>
+    <AutoGrid ref={ref} tileSize={tileSize}>
+      {children}
+    </AutoGrid>
   </div>
 ))

@@ -9,7 +9,7 @@ import {
 import { TrendingUp } from "lucide-react"
 import { forwardRef, ReactNode } from "react"
 
-export interface InsightsBase {
+export interface InsightsContainerProps {
   header: {
     title: string
     description: string
@@ -22,7 +22,7 @@ export interface InsightsBase {
 
 export const InsightsContainer = forwardRef<
   HTMLDivElement,
-  InsightsBase & { children: ReactNode }
+  InsightsContainerProps & { children: ReactNode }
 >(({ header, footer, children }, ref) => (
   <Card ref={ref}>
     <CardHeader>
