@@ -61,3 +61,15 @@ export const WithActions: Story = {
     },
   },
 }
+
+export const Overflow: Story = {
+  args: {
+    children: (
+      <>
+        {Array.from({ length: 100 }).map((_, i) => (
+          <p key={i}>Content</p>
+        ))}
+      </>
+    ),
+  },
+}
