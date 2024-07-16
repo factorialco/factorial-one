@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { AreaInsight, AreaProps } from "."
-import { InsightsContainer } from "../../Container"
 
 const Component = AreaInsight
 
@@ -52,20 +51,6 @@ const meta = {
       time: "Since last month",
     },
   } satisfies AreaProps<typeof dataConfig>,
-  render: (props) => (
-    <InsightsContainer
-      header={{
-        title: "Area Insight",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      }}
-      footer={{
-        trend: "Increased by 12%",
-        time: "Since last month",
-      }}
-    >
-      <AreaInsight {...props} />
-    </InsightsContainer>
-  ),
 } satisfies Meta<typeof Component>
 
 export default meta
