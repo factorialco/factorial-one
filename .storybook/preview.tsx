@@ -57,6 +57,7 @@ export const FactorialOne = (Story, { parameters }) => {
 
 const preview: Preview = {
   decorators: [FactorialOne, withTheme(availableThemes, "light")],
+
   parameters: {
     backgrounds: {
       default: "light",
@@ -78,6 +79,8 @@ const preview: Preview = {
       },
     },
   },
+
+  tags: ["autodocs"]
 }
 
 export default preview
