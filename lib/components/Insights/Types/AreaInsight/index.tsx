@@ -6,7 +6,10 @@ import {
 } from "@/ui/chart"
 import { ForwardedRef, forwardRef } from "react"
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+<<<<<<< Updated upstream
 import { InsightsContainer, InsightsContainerProps } from "../../Container"
+=======
+>>>>>>> Stashed changes
 import { autoColor } from "../utils/colors"
 
 type Key = string
@@ -28,7 +31,11 @@ type InferAreaKeys<T> = T extends AreaConfig<infer K> ? K : never
 export type AreaProps<
   DataConfig extends AreaConfig = AreaConfig,
   AreaKeys extends Key = InferAreaKeys<DataConfig>,
+<<<<<<< Updated upstream
 > = InsightsContainerProps & {
+=======
+> = {
+>>>>>>> Stashed changes
   dataConfig: AreaConfig<AreaKeys>
   data: ChartItem<AreaKeys>[]
   xAxis?: AxisConfig
@@ -47,18 +54,13 @@ export const _AreaInsight = <
   DataConfig extends AreaConfig,
   Keys extends Key = string,
 >(
-  {
-    data,
-    dataConfig,
-    xAxis,
-    yAxis,
-    ...containerProps
-  }: AreaProps<DataConfig, Keys>,
+  { data, dataConfig, xAxis, yAxis }: AreaProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const areas = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
 
   return (
+<<<<<<< Updated upstream
     <InsightsContainer {...containerProps}>
       <ChartContainer config={dataConfig} ref={ref}>
         <AreaChart
@@ -87,20 +89,48 @@ export const _AreaInsight = <
           <ChartTooltip
             cursor
             content={<ChartTooltipContent indicator="dot" />}
+=======
+    <ChartContainer config={dataConfig} ref={ref}>
+      <AreaChart
+        accessibilityLayer
+        data={data.map((item) => ({ x: item.label, ...item.values }))}
+        margin={{ left: 12, right: 12 }}
+      >
+        <CartesianGrid vertical={false} />
+        {!xAxis?.hide && (
+          <XAxis
+            dataKey="x"
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+            tickFormatter={xAxis?.tickFormatter}
+>>>>>>> Stashed changes
           />
-          {areas.map((area, index) => (
-            <Area
-              key={area}
-              dataKey={area}
-              type="natural"
-              fill={dataConfig[area].color || autoColor(index)}
-              fillOpacity={0.4}
-              stroke={dataConfig[area].color || autoColor(index)}
-            />
-          ))}
-        </AreaChart>
-      </ChartContainer>
-    </InsightsContainer>
+        )}
+        {!yAxis?.hide && (
+          <YAxis
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+            tickFormatter={yAxis?.tickFormatter}
+          />
+        )}
+        <ChartTooltip
+          cursor
+          content={<ChartTooltipContent indicator="dot" />}
+        />
+        {areas.map((area, index) => (
+          <Area
+            key={area}
+            dataKey={area}
+            type="natural"
+            fill={dataConfig[area].color || autoColor(index)}
+            fillOpacity={0.4}
+            stroke={dataConfig[area].color || autoColor(index)}
+          />
+        ))}
+      </AreaChart>
+    </ChartContainer>
   )
 }
 

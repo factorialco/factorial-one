@@ -3,6 +3,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { InsightsDashboard } from "."
 import { AreaInsight } from "../Types/AreaInsight"
 
+import { InsightsContainer } from "../Container"
+import InsightsContainerStoriesMeta from "../Container/index.stories"
 import AreaInsightsStoriesMeta from "../Types/AreaInsight/index.stories"
 
 const meta = {
@@ -12,7 +14,9 @@ const meta = {
     children: (
       <>
         {Array.from({ length: 9 }).map((_, i) => (
-          <AreaInsight {...AreaInsightsStoriesMeta.args} key={i} />
+          <InsightsContainer {...InsightsContainerStoriesMeta.args}>
+            <AreaInsight {...AreaInsightsStoriesMeta.args} key={i} />
+          </InsightsContainer>
         ))}
       </>
     ),
