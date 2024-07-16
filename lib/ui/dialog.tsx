@@ -34,21 +34,22 @@ const DialogContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => {
   return (
     <DialogPortal>
-      <DialogOverlay />
-      <DialogPrimitive.Content
-        ref={ref}
-        className={cn(
-          "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-8 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-2xl",
-          className
-        )}
-        {...props}
-      >
-        {children}
-        <DialogPrimitive.Close className="absolute right-3 top-3 rounded-sm p-2 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
-      </DialogPrimitive.Content>
+      <DialogOverlay className="grid place-items-center overflow-y-auto sm:p-8">
+        <DialogPrimitive.Content
+          ref={ref}
+          className={cn(
+            "relative z-50 grid w-full origin-center gap-4 border bg-background p-8 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:w-fit sm:min-w-[400px] sm:rounded-2xl md:min-w-[600px]",
+            className
+          )}
+          {...props}
+        >
+          {children}
+          <DialogPrimitive.Close className="absolute right-3 top-3 rounded-sm p-2 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </DialogPrimitive.Close>
+        </DialogPrimitive.Content>
+      </DialogOverlay>
     </DialogPortal>
   )
 })
