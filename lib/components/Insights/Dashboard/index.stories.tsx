@@ -39,3 +39,15 @@ export const WithTitle: Story = {
     },
   },
 }
+
+export const Small: Story = {
+  args: {
+    tileSize: "sm",
+  },
+}
+
+export const Large: Story = {
+  args: {
+    tileSize: "lg",
+  },
+}
