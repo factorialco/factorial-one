@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react"
 
-export const availableThemes = ["light", "dark", "blue", "system"]
+export const availableThemes = ["light", "dark", "system"] as const
 export type Theme = (typeof availableThemes)[number]
 
 type ThemeProviderProps = {
@@ -32,20 +32,26 @@ export function ThemeProvider({
 
   useEffect(() => {
     const root = window.document.documentElement
-
-    root.classList.remove(...availableThemes)
+    const resetThemes = () => root.classList.remove(...availableThemes)
 
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light"
+      const darkModePreference = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      )
 
-      root.classList.add(systemTheme)
-      return
+      const setTheme = (darkModePreference: { matches: boolean }) => {
+        const theme: Theme = darkModePreference.matches ? "dark" : "light"
+        root.classList.remove(...availableThemes)
+        root.classList.add(theme)
+      }
+
+      darkModePreference.addEventListener("change", (e) => setTheme(e))
+
+      setTheme(darkModePreference)
+    } else {
+      root.classList.add(theme)
     }
-
-    root.classList.add(theme)
+    return () => resetThemes()
   }, [theme])
 
   const value = {

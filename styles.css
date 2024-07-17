@@ -124,10 +124,4 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-
-  .blue {
-    --primary: 240 100% 96%;
-    --primary-intermediate: 220 77% 75%;
-    --primary-foreground: 210 100% 42%;
-  }
 }

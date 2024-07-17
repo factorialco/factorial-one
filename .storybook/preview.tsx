@@ -52,10 +52,10 @@ const preview: Preview = {
 
   parameters: {
     backgrounds: {
-      default: "light",
+      default: "content",
       values: [
-        { name: "light", value: "hsl(var(--background))" },
-        { name: "dark", value: "hsl(var(--background))" },
+        { name: "content", value: "hsl(var(--background))" },
+        { name: "page", value: "hsl(var(--page-background))" },
       ],
     },
     viewport: {
