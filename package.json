@@ -50,6 +50,7 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "18.3.1",
     "react-hook-form": "^7.51.5",
+    "recharts": "^2.12.7",
     "ress": "^5.0.2",
     "tailwind-merge": "^2.3.0",
     "tailwindcss": "^3.4.3",
@@ -95,8 +96,5 @@
     "vite": "^5.3.4",
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-lib-inject-css": "^2.1.1"
-  },
-  "dependencies": {
-    "recharts": "^2.12.7"
   }
 }
