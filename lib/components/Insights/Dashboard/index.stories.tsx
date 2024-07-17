@@ -17,9 +17,6 @@ const meta = {
       </>
     ),
   },
-  parameters: {
-    pageLayout: true,
-  },
 } satisfies Meta<typeof InsightsDashboard>
 
 export default meta

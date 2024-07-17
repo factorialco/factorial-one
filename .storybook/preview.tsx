@@ -36,21 +36,13 @@ export const withTheme = (themes: string[], defaultTheme: string) => {
 }
 
 export const FactorialOne = (Story, { parameters }) => {
-  const { pageLayout } = parameters
-
   return (
     <FactorialOneProvider
       layout={{
         fullScreen: parameters.layout === "fullscreen",
       }}
     >
-      {pageLayout ? (
-        <div className="rounded-md bg-background p-8 shadow-lg">
-          <Story />
-        </div>
-      ) : (
-        <Story />
-      )}
+      <Story />
     </FactorialOneProvider>
   )
 }
@@ -61,6 +53,10 @@ const preview: Preview = {
   parameters: {
     backgrounds: {
       default: "light",
+      values: [
+        { name: "light", value: "hsl(var(--background))" },
+        { name: "dark", value: "hsl(var(--background))" },
+      ],
     },
     viewport: {
       viewports: {
