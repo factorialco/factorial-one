@@ -60,3 +60,26 @@ export const WithIcon: Story = {
     icon: BellRing,
   },
 }
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+}
+
+export const LoadingState: Story = {
+  args: {
+    label: "Async button with a promise",
+  },
+  render: (args) => {
+    const onClick = async (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+      args.onClick?.(event)
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      alert("Done!")
+    }
+
+    return <Button {...args} onClick={onClick} />
+  },
+}
