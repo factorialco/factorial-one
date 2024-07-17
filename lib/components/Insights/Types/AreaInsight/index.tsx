@@ -25,14 +25,16 @@ type AreaConfig<Keys extends Key = string> = Record<Keys, ChartConfig[string]>
 
 type InferAreaKeys<T> = T extends AreaConfig<infer K> ? K : never
 
-export type AreaProps<
+export type AreaInsightProps<
   DataConfig extends AreaConfig = AreaConfig,
   AreaKeys extends Key = InferAreaKeys<DataConfig>,
 > = InsightsContainerProps & {
-  dataConfig: AreaConfig<AreaKeys>
-  data: ChartItem<AreaKeys>[]
-  xAxis?: AxisConfig
-  yAxis?: AxisConfig
+  chart: {
+    dataConfig: AreaConfig<AreaKeys>
+    data: ChartItem<AreaKeys>[]
+    xAxis?: AxisConfig
+    yAxis?: AxisConfig
+  }
 }
 
 function fixedForwardRef<T, P>(
@@ -48,12 +50,9 @@ export const _AreaInsight = <
   Keys extends Key = string,
 >(
   {
-    data,
-    dataConfig,
-    xAxis,
-    yAxis,
+    chart: { data, dataConfig, xAxis, yAxis },
     ...containerProps
-  }: AreaProps<DataConfig, Keys>,
+  }: AreaInsightProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const areas = Object.keys(dataConfig) as Array<keyof typeof dataConfig>

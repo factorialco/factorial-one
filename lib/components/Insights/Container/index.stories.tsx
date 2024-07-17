@@ -12,7 +12,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     header: {
-      title: "Area Insight",
+      title: "An insight",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     },
     footer: {
