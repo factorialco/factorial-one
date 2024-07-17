@@ -45,7 +45,7 @@ export const FactorialOne = (Story, { parameters }) => {
       }}
     >
       {pageLayout ? (
-        <div className="bg-background p-8">
+        <div className="rounded-md bg-background p-8 shadow-lg">
           <Story />
         </div>
       ) : (
@@ -80,7 +80,7 @@ const preview: Preview = {
     },
   },
 
-  tags: ["autodocs"]
+  tags: ["autodocs"],
 }
 
 export default preview
