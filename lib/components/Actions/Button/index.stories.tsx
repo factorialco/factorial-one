@@ -61,7 +61,16 @@ export const WithIcon: Story = {
   },
 }
 
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+}
+
 export const LoadingState: Story = {
+  args: {
+    label: "Async button with a promise",
+  },
   render: (args) => {
     const onClick = async (
       event: React.MouseEvent<HTMLButtonElement, MouseEvent>
