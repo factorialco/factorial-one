@@ -25,7 +25,9 @@
     "test-storybook": "test-storybook",
     "prettier:format": "prettier --write \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
-    "storybook-docs": "storybook dev --docs"
+    "storybook-docs": "storybook dev --docs",
+    "vitest": "vitest dev",
+    "vitest:ci": "vitest run"
   },
   "peerDependencies": {
     "@hookform/resolvers": "^3.5.0",
@@ -74,6 +76,7 @@
     "@storybook/test": "^8.2.4",
     "@storybook/test-runner": "^0.19.1",
     "@storybook/theming": "^8.2.4",
+    "@testing-library/react": "^16.0.0",
     "@types/node": "^20.14.11",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -86,6 +89,7 @@
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.8",
     "eslint-plugin-storybook": "^0.8.0",
+    "jsdom": "^24.1.0",
     "postcss": "^8.4.39",
     "postcss-import": "^16.1.0",
     "prettier": "^3.3.3",
@@ -95,6 +99,7 @@
     "typescript": "^5.5.3",
     "vite": "^5.3.4",
     "vite-plugin-dts": "^3.9.1",
-    "vite-plugin-lib-inject-css": "^2.1.1"
+    "vite-plugin-lib-inject-css": "^2.1.1",
+    "vitest": "^2.0.3"
   }
 }
