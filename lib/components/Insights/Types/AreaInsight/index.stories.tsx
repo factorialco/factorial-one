@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import AreaChartStory from "@/components/Charts/Area/index.stories"
+import AreaChartStory from "@/components/Charts/AreaChart/index.stories"
 import { AreaInsight } from "."
 import ContainerStory from "../../Container/index.stories"
 

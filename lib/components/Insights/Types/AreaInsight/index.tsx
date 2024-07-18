@@ -3,7 +3,7 @@ import {
   AreaChartConfig,
   AreaChartProps,
   InferAreaKeys,
-} from "@/components/Charts/Area"
+} from "@/components/Charts/AreaChart"
 import { ForwardedRef, forwardRef } from "react"
 import { InsightsContainer, InsightsContainerProps } from "../../Container"
 
