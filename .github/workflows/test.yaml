@@ -17,5 +17,7 @@ jobs:
           cache: "npm"
       - name: Install dependencies
         run: npm install
+      - name: Run type checking
+        run: npm run tsc
       - name: Run tests
         run: npm run vitest:ci

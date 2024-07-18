@@ -26,6 +26,7 @@
     "prettier:format": "prettier --write \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "storybook-docs": "storybook dev --docs",
+    "tsc": "tsc --noEmit",
     "vitest": "vitest dev",
     "vitest:ci": "vitest run"
   },
