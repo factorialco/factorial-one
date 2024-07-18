@@ -1,5 +1,5 @@
 import { ComponentProps, FC, RefAttributes, RefObject } from "react"
-import { InsightsContainer, InsightsContainerProps } from "../Container"
+import { InsightsContainer, InsightsContainerProps } from "../InsightsContainer"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type WrapChartType<Component extends FC<RefAttributes<HTMLElement>>> =

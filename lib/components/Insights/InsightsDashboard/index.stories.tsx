@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { InsightsDashboard } from "."
-import { AreaChartInsight } from "../Types/AreaChartInsight"
+import { AreaChartInsight } from "../Charts/AreaChartInsight"
 
-import AreaInsightsStoriesMeta from "../Types/AreaChartInsight/index.stories"
+import AreaInsightsStoriesMeta from "../Charts/AreaChartInsight/index.stories"
 
 const meta = {
   component: InsightsDashboard,
