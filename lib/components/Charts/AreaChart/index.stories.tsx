@@ -2,8 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { AreaChart, AreaChartProps } from "."
 
-const Component = AreaChart
-
 const dataConfig = {
   desktop: {
     label: "Desktop",
@@ -12,6 +10,8 @@ const dataConfig = {
     label: "Mobile",
   },
 }
+
+const Component = AreaChart<typeof dataConfig>
 
 const meta = {
   component: Component,
