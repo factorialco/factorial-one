@@ -1,10 +1,10 @@
 import { Component } from "@/lib/component"
-import { AreaInsight as AreaInsightComponent } from "./AreaInsight"
+import { AreaChartInsight as AreaChartInsightComponent } from "./AreaChartInsight"
 
-export const AreaInsight = Component(
+export const AreaChartInsight = Component(
   {
-    name: "AreaInsight",
+    name: "AreaChartInsight",
     type: "info",
   },
-  AreaInsightComponent
+  AreaChartInsightComponent
 )
