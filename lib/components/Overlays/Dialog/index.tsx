@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Stack } from "@/components/Layout/Stack"
 import {
   Dialog,
@@ -13,10 +13,7 @@ import { Skeleton } from "@/ui/skeleton"
 import { LucideIcon } from "lucide-react"
 import { forwardRef, ReactNode, useCallback, useState } from "react"
 
-type Action = {
-  label: string
-  onClick: () => void
-}
+type Action = Pick<ButtonProps, "label" | "onClick" | "disabled">
 
 type DialogProps = {
   header?: {
@@ -82,16 +79,9 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
           {actions && (
             <DialogFooter>
               {actions.secondary && (
-                <Button
-                  variant="secondary"
-                  onClick={actions.secondary.onClick}
-                  label={actions.secondary.label}
-                />
+                <Button variant="secondary" {...actions.secondary} />
               )}
-              <Button
-                onClick={actions.primary.onClick}
-                label={actions.primary.label}
-              />
+              <Button variant={"default"} {...actions.primary} />
             </DialogFooter>
           )}
         </DialogContent>

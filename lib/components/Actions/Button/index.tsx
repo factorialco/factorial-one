@@ -2,7 +2,7 @@ import { Button as ShadcnButton } from "@/ui/button"
 import { LucideIcon } from "lucide-react"
 import { ComponentProps, forwardRef, useState } from "react"
 
-type Props = Pick<
+export type ButtonProps = Pick<
   ComponentProps<typeof ShadcnButton>,
   "variant" | "size" | "disabled"
 > & {
@@ -14,7 +14,7 @@ type Props = Pick<
   hideLabel?: boolean
 }
 
-const Button: React.FC<Props> = forwardRef<HTMLButtonElement, Props>(
+const Button: React.FC<ButtonProps> = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ label, hideLabel, onClick, disabled, icon, ...props }, ref) => {
     const Icon = icon
     const [loading, setLoading] = useState(false)
