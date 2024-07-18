@@ -2,7 +2,7 @@ import { Button as ShadcnButton } from "@/ui/button"
 import { LucideIcon } from "lucide-react"
 import { ComponentProps, forwardRef, useState } from "react"
 
-type Props = Pick<
+export type ButtonProps = Pick<
   ComponentProps<typeof ShadcnButton>,
   "variant" | "size" | "disabled"
 > & {
@@ -14,41 +14,42 @@ type Props = Pick<
   hideLabel?: boolean
 }
 
-const Button: React.FC<Props> = forwardRef<HTMLButtonElement, Props>(
-  ({ label, hideLabel, onClick, disabled, icon, ...props }, ref) => {
-    const Icon = icon
-    const [loading, setLoading] = useState(false)
+const Button: React.FC<ButtonProps> = forwardRef<
+  HTMLButtonElement,
+  ButtonProps
+>(({ label, hideLabel, onClick, disabled, icon, ...props }, ref) => {
+  const Icon = icon
+  const [loading, setLoading] = useState(false)
 
-    const handleClick = async (
-      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
-      const result = onClick?.(event)
+  const handleClick = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    const result = onClick?.(event)
 
-      if (result instanceof Promise) {
-        setLoading(true)
+    if (result instanceof Promise) {
+      setLoading(true)
 
-        try {
-          await result
-        } finally {
-          setLoading(false)
-        }
+      try {
+        await result
+      } finally {
+        setLoading(false)
       }
     }
-
-    return (
-      <ShadcnButton
-        title={hideLabel ? label : undefined}
-        onClick={handleClick}
-        disabled={disabled || loading}
-        rounded={hideLabel}
-        ref={ref}
-        {...props}
-      >
-        {Icon && <Icon size={16} />}
-        {!hideLabel && label}
-      </ShadcnButton>
-    )
   }
-)
+
+  return (
+    <ShadcnButton
+      title={hideLabel ? label : undefined}
+      onClick={handleClick}
+      disabled={disabled || loading}
+      rounded={hideLabel}
+      ref={ref}
+      {...props}
+    >
+      {Icon && <Icon size={16} />}
+      {!hideLabel && label}
+    </ShadcnButton>
+  )
+})
 
 export { Button }
