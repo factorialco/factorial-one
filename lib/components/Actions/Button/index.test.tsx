@@ -10,6 +10,5 @@ test("Button calls the `onClick` handler when clicked", async () => {
 
   const button = screen.getByRole("button")
   await userEvent.click(button)
-
   expect(onClick).toHaveBeenCalled()
 })
