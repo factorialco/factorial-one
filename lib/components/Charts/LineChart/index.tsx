@@ -1,61 +1,34 @@
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/ui/chart"
-import { ForwardedRef, forwardRef } from "react"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
+import { ForwardedRef } from "react"
 import {
   CartesianGrid,
   Line,
   LineChart as LineChartPrimitive,
   XAxis,
+  YAxis,
 } from "recharts"
 import { autoColor } from "../utils/colors"
-
-type ChartItem<LineKeys extends string> = {
-  label: string
-  values: Record<LineKeys, number>
-}
-
-type AxisConfig = {
-  hide?: boolean
-  tickFormatter?: (value: string) => string
-}
-
-export type LineChartConfig<Keys extends string = string> = Record<
-  Keys,
-  ChartConfig[string]
->
-
-export type InferLineKeys<T> = T extends LineChartConfig<infer K> ? K : never
+import { cartesianGridProps, xAxisProps, yAxisProps } from "../utils/elements"
+import { fixedForwardRef } from "../utils/forwardRef"
+import { prepareData } from "../utils/lines"
+import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
 export type LineChartProps<
-  DataConfig extends LineChartConfig = LineChartConfig,
-  LineKeys extends string = InferLineKeys<DataConfig>,
-> = {
-  dataConfig: LineChartConfig<LineKeys>
-  data: ChartItem<LineKeys>[]
-  xAxis?: AxisConfig
+  DataConfig extends ChartConfig = ChartConfig,
+  Keys extends string = InferChartKeys<DataConfig>,
+> = ChartPropsBase<DataConfig, Keys> & {
   lineType?: "natural" | "linear" | "step"
 }
 
-function fixedForwardRef<T, P>(
-  render: (props: P, ref: React.Ref<T>) => React.ReactNode
-) {
-  return forwardRef(render) as (
-    props: P & React.RefAttributes<T>
-  ) => React.ReactNode
-}
-
 export const _LineChart = <
-  DataConfig extends LineChartConfig,
+  DataConfig extends ChartConfig,
   Keys extends string = string,
 >(
   {
     data,
     dataConfig,
     xAxis,
+    yAxis,
     lineType = "natural",
   }: LineChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
@@ -66,19 +39,12 @@ export const _LineChart = <
     <ChartContainer config={dataConfig} ref={ref}>
       <LineChartPrimitive
         accessibilityLayer
-        data={data.map((item) => ({ x: item.label, ...item.values }))}
+        data={prepareData(data)}
         margin={{ left: 12, right: 12 }}
       >
-        <CartesianGrid vertical={false} />
-        {!xAxis?.hide && (
-          <XAxis
-            dataKey="x"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            tickFormatter={xAxis?.tickFormatter}
-          />
-        )}
+        <CartesianGrid {...cartesianGridProps()} />
+        {!xAxis?.hide && <XAxis {...xAxisProps(xAxis)} />}
+        {!yAxis?.hide && <YAxis {...yAxisProps(yAxis)} />}
         <ChartTooltip cursor content={<ChartTooltipContent hideLabel />} />
         {lines.map((line, index) => (
           <Line

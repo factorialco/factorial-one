@@ -1,10 +1,5 @@
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/ui/chart"
-import { ForwardedRef, forwardRef } from "react"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
+import { ForwardedRef } from "react"
 import {
   Area,
   AreaChart as AreaChartPrimitive,
@@ -13,47 +8,29 @@ import {
   YAxis,
 } from "recharts"
 import { autoColor } from "../utils/colors"
-
-type ChartItem<AreaKeys extends string> = {
-  label: string
-  values: Record<AreaKeys, number>
-}
-
-type AxisConfig = {
-  hide?: boolean
-  tickFormatter?: (value: string) => string
-}
-
-export type AreaChartConfig<Keys extends string = string> = Record<
-  Keys,
-  ChartConfig[string]
->
-
-export type InferAreaKeys<T> = T extends AreaChartConfig<infer K> ? K : never
+import { cartesianGridProps, xAxisProps, yAxisProps } from "../utils/elements"
+import { fixedForwardRef } from "../utils/forwardRef"
+import { prepareData } from "../utils/lines"
+import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
 export type AreaChartProps<
-  DataConfig extends AreaChartConfig = AreaChartConfig,
-  AreaKeys extends string = InferAreaKeys<DataConfig>,
-> = {
-  dataConfig: AreaChartConfig<AreaKeys>
-  data: ChartItem<AreaKeys>[]
-  xAxis?: AxisConfig
-  yAxis?: AxisConfig
-}
-
-function fixedForwardRef<T, P>(
-  render: (props: P, ref: React.Ref<T>) => React.ReactNode
-) {
-  return forwardRef(render) as (
-    props: P & React.RefAttributes<T>
-  ) => React.ReactNode
+  DataConfig extends ChartConfig = ChartConfig,
+  Keys extends string = InferChartKeys<DataConfig>,
+> = ChartPropsBase<DataConfig, Keys> & {
+  lineType?: "natural" | "linear" | "step"
 }
 
 export const _AreaChart = <
-  DataConfig extends AreaChartConfig,
+  DataConfig extends ChartConfig,
   Keys extends string = string,
 >(
-  { data, dataConfig, xAxis, yAxis }: AreaChartProps<DataConfig, Keys>,
+  {
+    data,
+    dataConfig,
+    xAxis,
+    yAxis,
+    lineType,
+  }: AreaChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const areas = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
@@ -62,27 +39,12 @@ export const _AreaChart = <
     <ChartContainer config={dataConfig} ref={ref}>
       <AreaChartPrimitive
         accessibilityLayer
-        data={data.map((item) => ({ x: item.label, ...item.values }))}
+        data={prepareData(data)}
         margin={{ left: 12, right: 12 }}
       >
-        <CartesianGrid vertical={false} />
-        {!xAxis?.hide && (
-          <XAxis
-            dataKey="x"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            tickFormatter={xAxis?.tickFormatter}
-          />
-        )}
-        {!yAxis?.hide && (
-          <YAxis
-            tickLine={false}
-            axisLine={false}
-            tickMargin={8}
-            tickFormatter={yAxis?.tickFormatter}
-          />
-        )}
+        <CartesianGrid {...cartesianGridProps()} />
+        {!xAxis?.hide && <XAxis {...xAxisProps(xAxis)} />}
+        {!yAxis?.hide && <YAxis {...yAxisProps(yAxis)} />}
         <ChartTooltip
           cursor
           content={<ChartTooltipContent indicator="dot" />}
@@ -91,7 +53,7 @@ export const _AreaChart = <
           <Area
             key={area}
             dataKey={area}
-            type="natural"
+            type={lineType}
             fill={dataConfig[area].color || autoColor(index)}
             fillOpacity={0.4}
             stroke={dataConfig[area].color || autoColor(index)}

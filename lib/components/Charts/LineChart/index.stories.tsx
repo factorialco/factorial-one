@@ -38,8 +38,10 @@ export const Default: Story = {
       },
     },
     xAxis: {
-      hide: false,
       tickFormatter: (value: string) => value.slice(0, 3),
+    },
+    yAxis: {
+      hide: true,
     },
     data: [
       { label: "January", values: { desktop: 186 } },

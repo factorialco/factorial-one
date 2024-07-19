@@ -12,6 +12,10 @@ const meta = {
   tags: ["autodocs"],
   args: {
     ...containerStoryArgs,
+    header: {
+      ...containerStoryArgs.header,
+      title: "An area chart",
+    },
     chart: AreaChartStory.args,
   },
 } satisfies Meta<typeof AreaChartInsight>
