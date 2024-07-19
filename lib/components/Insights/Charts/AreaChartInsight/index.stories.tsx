@@ -1,20 +1,20 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import AreaChartStory from "@/components/Charts/AreaChart/index.stories"
-import { AreaInsight } from "."
-import ContainerStory from "../../Container/index.stories"
+import { AreaChartInsight } from "."
+import { containerStoryArgs } from "../storybook-utils"
 
 const meta = {
-  component: AreaInsight,
+  component: AreaChartInsight,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
   args: {
-    ...ContainerStory.args,
+    ...containerStoryArgs,
     chart: AreaChartStory.args,
   },
-} satisfies Meta<typeof AreaInsight>
+} satisfies Meta<typeof AreaChartInsight>
 
 export default meta
 type Story = StoryObj<typeof meta>

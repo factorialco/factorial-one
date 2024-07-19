@@ -1,3 +1,3 @@
-export * from "./Dashboard"
-
-export * from "./Types/exports"
+export * from "./Charts/exports"
+export * from "./InsightsContainer"
+export * from "./InsightsDashboard"
