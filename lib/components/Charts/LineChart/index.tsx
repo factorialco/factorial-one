@@ -1,4 +1,9 @@
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/ui/chart"
 import { ForwardedRef, forwardRef } from "react"
 import {
   CartesianGrid,
@@ -7,7 +12,6 @@ import {
   XAxis,
 } from "recharts"
 import { autoColor } from "../utils/colors"
-import { ChartConfigType } from "../utils/types"
 
 type ChartItem<LineKeys extends string> = {
   label: string
@@ -19,13 +23,18 @@ type AxisConfig = {
   tickFormatter?: (value: string) => string
 }
 
-export type InferLineKeys<T> = T extends ChartConfigType<infer K> ? K : never
+export type LineChartConfig<Keys extends string = string> = Record<
+  Keys,
+  ChartConfig[string]
+>
+
+export type InferLineKeys<T> = T extends LineChartConfig<infer K> ? K : never
 
 export type LineChartProps<
-  DataConfig extends ChartConfigType = ChartConfigType,
+  DataConfig extends LineChartConfig = LineChartConfig,
   LineKeys extends string = InferLineKeys<DataConfig>,
 > = {
-  dataConfig: ChartConfigType<LineKeys>
+  dataConfig: LineChartConfig<LineKeys>
   data: ChartItem<LineKeys>[]
   xAxis?: AxisConfig
   lineType?: "natural" | "linear" | "step"
@@ -40,7 +49,7 @@ function fixedForwardRef<T, P>(
 }
 
 export const _LineChart = <
-  DataConfig extends ChartConfigType,
+  DataConfig extends LineChartConfig,
   Keys extends string = string,
 >(
   {

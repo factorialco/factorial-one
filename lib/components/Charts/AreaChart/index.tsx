@@ -1,4 +1,9 @@
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/ui/chart"
 import { ForwardedRef, forwardRef } from "react"
 import {
   Area,
@@ -8,7 +13,6 @@ import {
   YAxis,
 } from "recharts"
 import { autoColor } from "../utils/colors"
-import { ChartConfigType } from "../utils/types"
 
 type ChartItem<AreaKeys extends string> = {
   label: string
@@ -20,13 +24,18 @@ type AxisConfig = {
   tickFormatter?: (value: string) => string
 }
 
-export type InferAreaKeys<T> = T extends ChartConfigType<infer K> ? K : never
+export type AreaChartConfig<Keys extends string = string> = Record<
+  Keys,
+  ChartConfig[string]
+>
+
+export type InferAreaKeys<T> = T extends AreaChartConfig<infer K> ? K : never
 
 export type AreaChartProps<
-  DataConfig extends ChartConfigType = ChartConfigType,
+  DataConfig extends AreaChartConfig = AreaChartConfig,
   AreaKeys extends string = InferAreaKeys<DataConfig>,
 > = {
-  dataConfig: ChartConfigType<AreaKeys>
+  dataConfig: AreaChartConfig<AreaKeys>
   data: ChartItem<AreaKeys>[]
   xAxis?: AxisConfig
   yAxis?: AxisConfig
@@ -41,7 +50,7 @@ function fixedForwardRef<T, P>(
 }
 
 export const _AreaChart = <
-  DataConfig extends ChartConfigType,
+  DataConfig extends AreaChartConfig,
   Keys extends string = string,
 >(
   { data, dataConfig, xAxis, yAxis }: AreaChartProps<DataConfig, Keys>,
