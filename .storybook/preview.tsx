@@ -7,6 +7,7 @@ import type { Preview } from "@storybook/react"
 import DocumentationTemplate from "./DocumentationTemplate.mdx"
 
 import "../styles.css"
+import "../fonts"
 
 import {
   availableThemes,
