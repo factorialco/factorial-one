@@ -5,6 +5,8 @@ export default create({
   brandTitle: `<img src="one.svg" width="36px" />`,
   brandTarget: "_self",
 
+  fontBase: '"Inter", sans-serif',
+
   //
   colorPrimary: "#E5103A",
   colorSecondary: "#585858",

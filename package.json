@@ -7,6 +7,7 @@
   "files": [
     "dist",
     "styles.css",
+    "fonts.js",
     "tailwind.config.ts",
     "postcss.config.js"
   ],
@@ -102,5 +103,8 @@
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-lib-inject-css": "^2.1.1",
     "vitest": "^2.0.3"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.0.19"
   }
 }
