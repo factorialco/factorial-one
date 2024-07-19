@@ -16,8 +16,7 @@ import { autoColor } from "../utils/colors"
 
 type ChartItem<AreaKeys extends string> = {
   label: string
-} & {
-  [K in AreaKeys]: string | number
+  values: Record<AreaKeys, number>
 }
 
 type AxisConfig = {
@@ -36,7 +35,7 @@ export type AreaChartProps<
   DataConfig extends AreaChartConfig = AreaChartConfig,
   AreaKeys extends string = InferAreaKeys<DataConfig>,
 > = {
-  config: AreaChartConfig<AreaKeys>
+  dataConfig: AreaChartConfig<AreaKeys>
   data: ChartItem<AreaKeys>[]
   xAxis?: AxisConfig
   yAxis?: AxisConfig
@@ -54,7 +53,7 @@ export const _AreaChart = <
   DataConfig extends AreaChartConfig,
   Keys extends string = string,
 >(
-  { data, config: dataConfig, xAxis, yAxis }: AreaChartProps<DataConfig, Keys>,
+  { data, dataConfig, xAxis, yAxis }: AreaChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const areas = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
@@ -63,13 +62,13 @@ export const _AreaChart = <
     <ChartContainer config={dataConfig} ref={ref}>
       <AreaChartPrimitive
         accessibilityLayer
-        data={data}
+        data={data.map((item) => ({ x: item.label, ...item.values }))}
         margin={{ left: 12, right: 12 }}
       >
         <CartesianGrid vertical={false} />
         {!xAxis?.hide && (
           <XAxis
-            dataKey="label"
+            dataKey="x"
             tickLine={false}
             axisLine={false}
             tickMargin={8}

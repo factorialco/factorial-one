@@ -1,4 +1,4 @@
 import { AreaChart } from "@/components/Charts/AreaChart"
-import { wrapChart } from "../utils"
+import { wrap } from "../../InsightsContainer"
 
-export const AreaChartInsight = wrapChart(AreaChart)
+export const AreaChartInsight = wrap(AreaChart, "chart")
