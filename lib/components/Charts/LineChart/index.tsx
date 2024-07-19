@@ -1,9 +1,9 @@
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
 import { ForwardedRef } from "react"
 import {
-  Area,
-  AreaChart as AreaChartPrimitive,
   CartesianGrid,
+  Line,
+  LineChart as LineChartPrimitive,
   XAxis,
   YAxis,
 } from "recharts"
@@ -13,14 +13,14 @@ import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/lines"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
-export type AreaChartProps<
+export type LineChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
 > = ChartPropsBase<DataConfig, Keys> & {
   lineType?: "natural" | "linear" | "step"
 }
 
-export const _AreaChart = <
+export const _LineChart = <
   DataConfig extends ChartConfig,
   Keys extends string = string,
 >(
@@ -29,15 +29,15 @@ export const _AreaChart = <
     dataConfig,
     xAxis,
     yAxis,
-    lineType,
-  }: AreaChartProps<DataConfig, Keys>,
+    lineType = "natural",
+  }: LineChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
-  const areas = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
+  const lines = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
 
   return (
     <ChartContainer config={dataConfig} ref={ref}>
-      <AreaChartPrimitive
+      <LineChartPrimitive
         accessibilityLayer
         data={prepareData(data)}
         margin={{ left: 12, right: 12 }}
@@ -45,23 +45,20 @@ export const _AreaChart = <
         <CartesianGrid {...cartesianGridProps()} />
         {!xAxis?.hide && <XAxis {...xAxisProps(xAxis)} />}
         {!yAxis?.hide && <YAxis {...yAxisProps(yAxis)} />}
-        <ChartTooltip
-          cursor
-          content={<ChartTooltipContent indicator="dot" />}
-        />
-        {areas.map((area, index) => (
-          <Area
-            key={area}
-            dataKey={area}
+        <ChartTooltip cursor content={<ChartTooltipContent hideLabel />} />
+        {lines.map((line, index) => (
+          <Line
+            key={line}
+            dataKey={line}
             type={lineType}
-            fill={dataConfig[area].color || autoColor(index)}
-            fillOpacity={0.4}
-            stroke={dataConfig[area].color || autoColor(index)}
+            stroke={dataConfig[line].color || autoColor(index)}
+            strokeWidth={2}
+            dot={false}
           />
         ))}
-      </AreaChartPrimitive>
+      </LineChartPrimitive>
     </ChartContainer>
   )
 }
 
-export const AreaChart = fixedForwardRef(_AreaChart)
+export const LineChart = fixedForwardRef(_LineChart)
