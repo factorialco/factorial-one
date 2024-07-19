@@ -18,17 +18,17 @@ import { FactorialOneProvider } from "../lib/lib/one-provider"
 const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
   DecoratorHelpers
 
-export const withTheme = (themes: string[], defaultTheme: string) => {
+export const withTheme = (themes: Theme[], defaultTheme: Theme) => {
   initializeThemeState(themes, defaultTheme)
 
   return (Story, context) => {
-    const selectedTheme = pluckThemeFromContext(context)
-    const { themeOverride } = useThemeParameters()
+    const selectedTheme = pluckThemeFromContext(context) as Theme
+    const { themeOverride } = useThemeParameters() as { themeOverride: Theme }
 
     const selected = themeOverride || selectedTheme || defaultTheme
 
     return (
-      <ThemeProvider defaultTheme={selected as Theme}>
+      <ThemeProvider defaultTheme={selected}>
         <Story />
       </ThemeProvider>
     )

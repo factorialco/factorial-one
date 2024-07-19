@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react"
 
-export const availableThemes = ["light", "dark", "system"] as const
-export type Theme = (typeof availableThemes)[number]
+const themes = ["light", "dark", "system"] as const
+export type Theme = (typeof themes)[number]
+export const availableThemes: Theme[] = [...themes] // Convert readonly array to mutable array
 
 type ThemeProviderProps = {
   children: React.ReactNode
