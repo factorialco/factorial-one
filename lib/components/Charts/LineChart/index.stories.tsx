@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { LineChart, LineChartProps } from "."
 
-// Configuring data for multiple lines
 const dataConfig = {
   desktop: {
     label: "Desktop",
@@ -30,7 +29,6 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-// Default story with single line
 export const Default: Story = {
   args: {
     dataConfig: {
@@ -54,7 +52,6 @@ export const Default: Story = {
   } as LineChartProps<typeof dataConfig>,
 }
 
-// New story with multiple lines
 export const MultipleLines: Story = {
   args: {
     dataConfig,
