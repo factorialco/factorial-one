@@ -7,7 +7,14 @@ import {
   CardTitle,
 } from "@/ui/card"
 import { TrendingUp } from "lucide-react"
-import { forwardRef, ReactNode } from "react"
+import {
+  ComponentProps,
+  FC,
+  forwardRef,
+  ReactNode,
+  RefAttributes,
+  RefObject,
+} from "react"
 
 export interface InsightsContainerProps {
   header: {
@@ -44,3 +51,29 @@ export const InsightsContainer = forwardRef<
     </CardFooter>
   </Card>
 ))
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ContainerWrapType<
+  Component extends FC<RefAttributes<HTMLElement>>,
+  ChartKey extends string,
+> = React.FC<
+  RefAttributes<HTMLElement> &
+    Omit<InsightsContainerProps, "children"> & {
+      [key in ChartKey]: ComponentProps<Component>
+    }
+>
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function wrap<Component extends FC<any>, NestedKey extends string>(
+  Component: Component,
+  nestedKey: NestedKey
+): ContainerWrapType<Component, NestedKey> {
+  return ({ [nestedKey]: chart, ref, ...containerProps }) => (
+    <InsightsContainer
+      ref={ref as RefObject<HTMLDivElement>}
+      {...(containerProps as InsightsContainerProps)}
+    >
+      <Component {...chart} />
+    </InsightsContainer>
+  )
+}
