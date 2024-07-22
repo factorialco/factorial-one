@@ -1,5 +1,6 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Stack } from "@/components/Layout/Stack"
+import { Icon, Icons } from "@/icons"
 import {
   Dialog,
   DialogContent,
@@ -10,14 +11,13 @@ import {
   DialogTitle,
 } from "@/ui/dialog"
 import { Skeleton } from "@/ui/skeleton"
-import { LucideIcon } from "lucide-react"
 import { forwardRef, ReactNode, useCallback, useState } from "react"
 
 type Action = Pick<ButtonProps, "label" | "onClick" | "disabled">
 
 type DialogProps = {
   header?: {
-    icon?: LucideIcon
+    icon?: Icons["large"]
     title: string
     description: string
   }
@@ -59,7 +59,7 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
             <DialogHeader>
               {header.icon && (
                 <DialogIcon>
-                  <header.icon size={32} strokeWidth={1.5} />
+                  <Icon size="large" name={header.icon} />
                 </DialogIcon>
               )}
               <DialogTitle>{header.title}</DialogTitle>

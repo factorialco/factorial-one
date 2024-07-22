@@ -1,5 +1,5 @@
+import { Icon, Icons } from "@/icons"
 import { Button as ShadcnButton } from "@/ui/button"
-import { LucideIcon } from "lucide-react"
 import { ComponentProps, forwardRef, useState } from "react"
 
 export type ButtonProps = Pick<
@@ -10,7 +10,7 @@ export type ButtonProps = Pick<
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void | Promise<unknown>
   label: string
-  icon?: LucideIcon
+  icon?: Icons["small"]
   hideLabel?: boolean
 }
 
@@ -18,7 +18,6 @@ const Button: React.FC<ButtonProps> = forwardRef<
   HTMLButtonElement,
   ButtonProps
 >(({ label, hideLabel, onClick, disabled, icon, ...props }, ref) => {
-  const Icon = icon
   const [loading, setLoading] = useState(false)
 
   const handleClick = async (
@@ -46,7 +45,7 @@ const Button: React.FC<ButtonProps> = forwardRef<
       ref={ref}
       {...props}
     >
-      {Icon && <Icon size={16} />}
+      {icon && <Icon size="small" name={icon} />}
       {!hideLabel && label}
     </ShadcnButton>
   )

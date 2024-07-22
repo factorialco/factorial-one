@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { Button } from "@/ui/button"
-import { AlertCircle } from "lucide-react"
 import { useState } from "react"
 import { Dialog } from "."
 
@@ -41,7 +40,7 @@ export const Header: Story = {
     header: {
       title: "Dialog title",
       description: "Dialog description",
-      icon: AlertCircle,
+      icon: "surveys",
     },
   },
 }

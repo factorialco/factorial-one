@@ -1,14 +1,6 @@
-import {
-  Home,
-  Inbox,
-  LucideIcon,
-  Settings,
-  UserRound,
-  UsersRound,
-} from "lucide-react"
-
 import { PageEmployees } from "./employees"
 
+import { Icons } from "@/icons"
 import { Skeleton } from "@/ui/skeleton"
 
 const PageDummy: React.FC = () => {
@@ -28,7 +20,7 @@ const PageDummy: React.FC = () => {
 
 export type Page = {
   title: string
-  icon: LucideIcon
+  icon: Icons["medium"]
   component: React.ReactNode | string
   subItems: SubItem[]
 }
@@ -41,19 +33,19 @@ export type SubItem = {
 export const Pages: Page[] = [
   {
     title: "Home",
-    icon: Home,
+    icon: "home",
     component: <PageDummy />,
     subItems: [],
   },
   {
     title: "Inbox",
-    icon: Inbox,
+    icon: "inbox",
     component: <PageDummy />,
     subItems: [],
   },
   {
     title: "Profile",
-    icon: UserRound,
+    icon: "users",
     component: "",
     subItems: [
       {
@@ -68,7 +60,7 @@ export const Pages: Page[] = [
   },
   {
     title: "People",
-    icon: UsersRound,
+    icon: "users",
     component: "",
     subItems: [
       {
@@ -87,7 +79,7 @@ export const Pages: Page[] = [
   },
   {
     title: "Settings",
-    icon: Settings,
+    icon: "settings",
     component: <PageDummy />,
     subItems: [],
   },
