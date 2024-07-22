@@ -1,9 +1,12 @@
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/ui/chart"
+
 import { ForwardedRef, forwardRef } from "react"
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 import { InsightsContainer, InsightsContainerProps } from "../../Container"
@@ -19,6 +22,7 @@ type ChartItem<AreaKeys extends Key> = {
 type AxisConfig = {
   hide?: boolean
   tickFormatter?: (value: string) => string
+  tickCount?: number
 }
 
 type AreaConfig<Keys extends Key = string> = Record<Keys, ChartConfig[string]>
@@ -33,6 +37,7 @@ export type AreaProps<
   data: ChartItem<AreaKeys>[]
   xAxis?: AxisConfig
   yAxis?: AxisConfig
+  showLegend?: boolean
 }
 
 function fixedForwardRef<T, P>(
@@ -52,6 +57,7 @@ export const _AreaInsight = <
     dataConfig,
     xAxis,
     yAxis,
+    showLegend,
     ...containerProps
   }: AreaProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
@@ -81,23 +87,48 @@ export const _AreaInsight = <
               tickLine={false}
               axisLine={false}
               tickMargin={8}
+              tickCount={yAxis?.tickCount}
               tickFormatter={yAxis?.tickFormatter}
             />
           )}
           <ChartTooltip
             cursor
-            content={<ChartTooltipContent indicator="dot" />}
+            content={<ChartTooltipContent indicator="line" />}
           />
+          <defs>
+            {areas.map((area, index) => (
+              <linearGradient id={`fill${area}`} x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor={dataConfig[area].color || autoColor(index)}
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor={dataConfig[area].color || autoColor(index)}
+                  stopOpacity={0.1}
+                />
+              </linearGradient>
+            ))}
+          </defs>
           {areas.map((area, index) => (
             <Area
               key={area}
               dataKey={area}
               type="natural"
-              fill={dataConfig[area].color || autoColor(index)}
+              fill={`url(#fill${area})`}
               fillOpacity={0.4}
+              dot={true}
               stroke={dataConfig[area].color || autoColor(index)}
             />
           ))}
+          {showLegend && (
+            <ChartLegend
+              className="flex justify-start"
+              iconType="star"
+              content={<ChartLegendContent />}
+            />
+          )}
         </AreaChart>
       </ChartContainer>
     </InsightsContainer>
