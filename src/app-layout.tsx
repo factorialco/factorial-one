@@ -4,15 +4,12 @@ import {
   Calendar,
   ChevronDown,
   Clock,
-  EllipsisVertical,
   Folders,
   Home,
   Inbox,
-  Menu,
   Store,
   Target,
   TreePalm,
-  Upload,
   UserRound,
   UsersRound,
 } from "lucide-react"
@@ -47,7 +44,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
             size="sm"
             hideLabel
             label="Menu"
-            icon={Menu}
+            icon="home"
             variant="ghost"
           />
         </Stack>
@@ -143,7 +140,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               </div>
             </Stack>
             <Split gap="2">
-              <Button label="Upload files" icon={Upload} size="sm" />
+              <Button label="Upload files" icon="add" size="sm" />
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -151,7 +148,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                     size="sm"
                     hideLabel
                     label="Submenu"
-                    icon={EllipsisVertical}
+                    icon="ellipsis"
                   />
                 </PopoverTrigger>
                 <PopoverContent className="w-60">Menu!</PopoverContent>

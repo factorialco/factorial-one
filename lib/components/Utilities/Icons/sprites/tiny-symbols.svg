@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <symbol id="alert" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M6 2a.75.75 0 0 0-.75.75v3.5c0 .4.336.75.75.75a.76.76 0 0 0 .75-.75v-3.5A.75.75 0 0 0 6 2Z" clip-rule="evenodd"/><path d="M6.75 9a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/></symbol>
+
+<symbol id="caret-down" viewBox="0 0 12 12"><path d="M5.6 8.3a.5.5 0 0 0 .8 0l3-4a.5.5 0 0 0-.4-.8H3a.5.5 0 0 0-.4.8l3 4Z"/></symbol>
+
+<symbol id="caret-up" viewBox="0 0 12 12"><path d="M6.4 3.7a.5.5 0 0 0-.8 0l-3 4a.5.5 0 0 0 .4.8h6a.5.5 0 0 0 .4-.8l-3-4Z"/></symbol>
+
+<symbol id="check" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M9.53 3.47a.75.75 0 0 1 0 1.06l-4 4a.75.75 0 0 1-1.06 0l-1.5-1.5a.75.75 0 0 1 1.06-1.06l.97.97 3.47-3.47a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></symbol>
+
+<symbol id="chevron-down" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M2.47 3.97a.75.75 0 0 1 1.06 0L6 6.44l2.47-2.47a.75.75 0 0 1 1.06 1.06l-3 3a.75.75 0 0 1-1.06 0l-3-3a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/></symbol>
+
+<symbol id="chevron-left" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M8.03 2.47a.75.75 0 0 1 0 1.06L5.56 6l2.47 2.47a.75.75 0 0 1-1.06 1.06l-3-3a.75.75 0 0 1 0-1.06l3-3a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd"/></symbol>
+
+<symbol id="chevron-right" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M3.97 9.53a.75.75 0 0 1 0-1.06L6.44 6 3.97 3.53a.75.75 0 0 1 1.06-1.06l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 0 1-1.06 0Z" clip-rule="evenodd"/></symbol>
+
+<symbol id="chevron-up" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M9.53 8.03a.75.75 0 0 1-1.06 0L6 5.56 3.53 8.03a.75.75 0 0 1-1.06-1.06l3-3a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd"/></symbol>
+
+<symbol id="circle" viewBox="0 0 12 12"><path d="M9 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></symbol>
+
+<symbol id="clock" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M2.75 6a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0ZM6 1.25a4.75 4.75 0 1 0 0 9.5 4.75 4.75 0 0 0 0-9.5Zm.75 3.25a.75.75 0 0 0-1.5 0V6c0 .199.079.39.22.53l1 1a.75.75 0 0 0 1.06-1.06l-.78-.78V4.5Z" clip-rule="evenodd"/></symbol>
+
+<symbol id="cross" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M7.47 8.53a.75.75 0 0 0 1.06-1.06L7.06 6l1.47-1.47a.75.75 0 0 0-1.06-1.06L6 4.94 4.53 3.47a.75.75 0 0 0-1.06 1.06L4.94 6 3.47 7.47a.75.75 0 0 0 1.06 1.06L6 7.06l1.47 1.47Z" clip-rule="evenodd"/></symbol>
+
+<symbol id="person" viewBox="0 0 12 12"><path fill-rule="evenodd" d="M6 1.25A3.75 3.75 0 0 0 3.75 8a6.384 6.384 0 0 0-2.28 1.47.75.75 0 1 0 1.06 1.06 4.907 4.907 0 0 1 6.94 0 .75.75 0 1 0 1.06-1.06A6.383 6.383 0 0 0 8.25 8 3.75 3.75 0 0 0 6 1.25ZM3.75 5a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0Z" clip-rule="evenodd"/></symbol>
+
+<symbol id="question" viewBox="0 0 12 12"><path d="M5 2.25A1.75 1.75 0 0 0 3.25 4a.75.75 0 0 0 1.5 0A.25.25 0 0 1 5 3.75h1.5a.75.75 0 0 1 0 1.5H6A1.75 1.75 0 0 0 4.25 7a.75.75 0 0 0 1.5 0A.25.25 0 0 1 6 6.75h.5a2.25 2.25 0 0 0 0-4.5H5ZM5.75 9a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"/></symbol>
+</svg>

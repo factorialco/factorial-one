@@ -2,7 +2,6 @@
 import { Button } from "@/components/Actions/Button"
 import { Placeholder } from "@/lib/storybook-utils"
 import type { Meta, StoryObj } from "@storybook/react"
-import { Ellipsis, Plus } from "lucide-react"
 import { Split } from "./Split"
 import { Stack } from "./Stack"
 
@@ -29,11 +28,11 @@ export const Example: Story = {
         <Split gap="4" alignItems={"center"}>
           <Placeholder grow>Header</Placeholder>
           <Split gap="2" justifyContent="center" alignItems={"center"}>
-            <Button label="Create" icon={Plus} variant="default" />
+            <Button label="Create" icon="add" variant="default" />
             <Button
               hideLabel
               label="Options"
-              icon={Ellipsis}
+              icon="ellipsis"
               variant="secondary"
             />
           </Split>

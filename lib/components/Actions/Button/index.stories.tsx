@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
-import { BellRing } from "lucide-react"
 import { Button } from "."
 
 const meta = {
@@ -57,7 +56,7 @@ export const Outline: Story = {
 
 export const WithIcon: Story = {
   args: {
-    icon: BellRing,
+    icon: "small-bell",
   },
 }
 
@@ -81,5 +80,12 @@ export const LoadingState: Story = {
     }
 
     return <Button {...args} onClick={onClick} />
+  },
+}
+
+export const Small: Story = {
+  args: {
+    size: "sm",
+    icon: "add",
   },
 }
