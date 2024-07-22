@@ -41,6 +41,6 @@ export const Small: Story = {
 export const Tiny: Story = {
   args: {
     size: "tiny",
-    name: "clock" satisfies Icons["tiny"],
+    name: "person" satisfies Icons["tiny"],
   },
 }
