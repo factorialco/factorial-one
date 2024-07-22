@@ -1,0 +1,49 @@
+import { Meta, Title, IconGallery, IconItem, Canvas } from "@storybook/blocks"
+
+import { Icon as IconExample } from "./"
+import { large, medium, small, tiny } from "./types/index"
+import * as IconStories from "./index.stories"
+
+# Icons
+
+<Canvas of={IconStories.Large} sourceState="shown" />
+
+## large
+
+<IconGallery>
+  {large.map((name) => (
+    <IconItem key={name} name={name}>
+      <IconExample size="large" name={name} />
+    </IconItem>
+  ))}
+</IconGallery>
+
+## medium
+
+<IconGallery>
+  {medium.map((name) => (
+    <IconItem key={name} name={name}>
+      <IconExample size="medium" name={name} />
+    </IconItem>
+  ))}
+</IconGallery>
+
+## small
+
+<IconGallery>
+  {small.map((name) => (
+    <IconItem key={name} name={name}>
+      <IconExample size="small" name={name} />
+    </IconItem>
+  ))}
+</IconGallery>
+
+## tiny
+
+<IconGallery>
+  {tiny.map((name) => (
+    <IconItem key={name} name={name}>
+      <IconExample size="tiny" name={name} />
+    </IconItem>
+  ))}
+</IconGallery>

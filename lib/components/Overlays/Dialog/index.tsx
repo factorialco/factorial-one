@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Stack } from "@/components/Layout/Stack"
-import { Icon, Icons } from "@/icons"
+import { Icon, Icons } from "@/components/Utilities/Icons"
 import {
   Dialog,
   DialogContent,

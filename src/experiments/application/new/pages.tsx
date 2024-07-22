@@ -1,6 +1,6 @@
 import { PageEmployees } from "./employees"
 
-import { Icons } from "@/icons"
+import { Icons } from "@/components/Utilities/Icons"
 import { Skeleton } from "@/ui/skeleton"
 
 const PageDummy: React.FC = () => {
