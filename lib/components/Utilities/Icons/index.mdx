@@ -1,53 +1,57 @@
 import { Meta, Title, IconGallery, IconItem, Canvas } from "@storybook/blocks"
 
 import { Icon as IconExample } from "./"
-import { large, medium, small, tiny } from "./types/index"
+import { large } from "./sprites/large"
+import { medium } from "./sprites/medium"
+import { small } from "./sprites/small"
+import { tiny } from "./sprites/tiny"
+
 import * as IconStories from "./index.stories"
 
 # Icons
 
-## large
+## Large
 
 <Canvas of={IconStories.Large} sourceState="shown" />
 
 <IconGallery>
-  {large.map((name) => (
+  {Object.keys(large).map((name) => (
     <IconItem key={name} name={name}>
       <IconExample size="large" name={name} />
     </IconItem>
   ))}
 </IconGallery>
 
-## medium
+## Medium
 
 <Canvas of={IconStories.Medium} sourceState="shown" />
 
 <IconGallery>
-  {medium.map((name) => (
+  {Object.keys(medium).map((name) => (
     <IconItem key={name} name={name}>
       <IconExample size="medium" name={name} />
     </IconItem>
   ))}
 </IconGallery>
 
-## small
+## Small
 
 <Canvas of={IconStories.Small} sourceState="shown" />
 
 <IconGallery>
-  {small.map((name) => (
+  {Object.keys(small).map((name) => (
     <IconItem key={name} name={name}>
       <IconExample size="small" name={name} />
     </IconItem>
   ))}
 </IconGallery>
 
-## tiny
+## Tiny
 
 <Canvas of={IconStories.Tiny} sourceState="shown" />
 
 <IconGallery>
-  {tiny.map((name) => (
+  {Object.keys(tiny).map((name) => (
     <IconItem key={name} name={name}>
       <IconExample size="tiny" name={name} />
     </IconItem>

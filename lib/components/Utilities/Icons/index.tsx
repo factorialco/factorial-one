@@ -1,26 +1,20 @@
-import { Large, Medium, Small, Tiny } from "./types"
+import { large } from "./sprites/large"
+import { medium } from "./sprites/medium"
+import { small } from "./sprites/small"
+import { tiny } from "./sprites/tiny"
 
 import { cva, VariantProps } from "class-variance-authority"
-import large from "./sprites/large-symbols.svg"
-import medium from "./sprites/medium-symbols.svg"
-import small from "./sprites/small-symbols.svg"
-import tiny from "./sprites/tiny-symbols.svg"
 
-export type Icons = {
-  small: Small
-  medium: Medium
-  tiny: Tiny
-  large: Large
-}
-
-export type IconTypes = keyof Icons
-
-const sprites: Record<IconTypes, string> = {
-  small,
-  medium,
-  tiny,
+const icons = {
   large,
+  medium,
+  small,
+  tiny,
 }
+
+export type IconTypes = keyof typeof icons
+export type IconName<Key extends IconTypes> = keyof Icons[Key]
+export type Icons = typeof icons
 
 const iconVariants = cva("inline-block fill-current", {
   variants: {
@@ -33,16 +27,16 @@ const iconVariants = cva("inline-block fill-current", {
   },
 })
 
-interface IconProps<Size extends IconTypes = IconTypes>
+export interface IconProps<Size extends IconTypes = IconTypes>
   extends VariantProps<typeof iconVariants> {
   size: Size
-  name: Icons[Size]
+  name: IconName<Size>
 }
 
 export function Icon<Size extends IconTypes>({ size, name }: IconProps<Size>) {
-  return (
-    <svg aria-hidden="true" className={iconVariants({ size })}>
-      <use xlinkHref={`${sprites[size]}#${name}`} />
-    </svg>
-  )
+  const Component = icons[size][name] as React.ComponentType<
+    React.SVGProps<SVGSVGElement>
+  >
+
+  return <Component className={iconVariants({ size })} />
 }

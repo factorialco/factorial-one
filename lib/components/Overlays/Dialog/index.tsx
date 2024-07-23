@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Stack } from "@/components/Layout/Stack"
-import { Icon, Icons } from "@/components/Utilities/Icons"
+import { Icon, IconName } from "@/components/Utilities/Icons"
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ type Action = Pick<ButtonProps, "label" | "onClick" | "disabled">
 
 type DialogProps = {
   header?: {
-    icon?: Icons["large"]
+    icon?: IconName<"large">
     title: string
     description: string
   }

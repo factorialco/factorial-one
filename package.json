@@ -1,9 +1,9 @@
 {
   "name": "@factorialco/factorial-one",
   "version": "0.0.1",
-  "type": "module",
   "main": "dist/factorial-one.js",
   "types": "dist/main.d.ts",
+  "type": "module",
   "files": [
     "dist",
     "styles.css",
@@ -21,6 +21,7 @@
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "generate-icons": "node ./lib/components/Utilities/Icons/sprites/generate-icons.cjs",
     "build-storybook": "storybook build",
     "build-storybook:public": "PUBLIC_BUILD=true storybook build",
     "test-storybook": "test-storybook",
@@ -102,6 +103,7 @@
     "vite": "^5.3.4",
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-lib-inject-css": "^2.1.1",
+    "vite-plugin-svgr": "^4.2.0",
     "vitest": "^2.0.4"
   },
   "dependencies": {

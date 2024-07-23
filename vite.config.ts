@@ -4,12 +4,24 @@ import path, { resolve } from "path"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
 import { libInjectCss } from "vite-plugin-lib-inject-css"
+import svgr from "vite-plugin-svgr"
 import { peerDependencies } from "./package.json"
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    svgr({
+      svgrOptions: {
+        ref: true,
+        memo: true,
+        svgo: true,
+        replaceAttrValues: {
+          "#FF355E": "currentColor",
+          "#515164": "currentColor",
+        },
+      },
+    }),
     libInjectCss(),
     ...(process.env.BUILD_TYPES
       ? [

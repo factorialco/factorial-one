@@ -1,6 +1,6 @@
 import { PageEmployees } from "./employees"
 
-import { Icons } from "@/components/Utilities/Icons"
+import { IconName } from "@/components/Utilities/Icons"
 import { Skeleton } from "@/ui/skeleton"
 
 const PageDummy: React.FC = () => {
@@ -20,7 +20,7 @@ const PageDummy: React.FC = () => {
 
 export type Page = {
   title: string
-  icon: Icons["medium"]
+  icon: IconName<"medium">
   component: React.ReactNode | string
   subItems: SubItem[]
 }
