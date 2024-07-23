@@ -33,10 +33,17 @@ export interface IconProps<Size extends IconTypes = IconTypes>
   name: IconName<Size>
 }
 
-export function Icon<Size extends IconTypes>({ size, name }: IconProps<Size>) {
-  const Component = icons[size][name] as React.ComponentType<
-    React.SVGProps<SVGSVGElement>
-  >
+// a type that is an enum of all the possible values of `icons` two levels deep (i.e. the actual React components)
+export type IconComponent = Icons[keyof Icons][keyof Icons[keyof Icons]]
 
+function getComponent<Size extends keyof Icons>(
+  size: Size,
+  name: IconName<Size>
+): IconComponent {
+  return icons[size][name] as IconComponent
+}
+
+export function Icon<Size extends IconTypes>({ size, name }: IconProps<Size>) {
+  const Component = getComponent(size, name)
   return <Component className={iconVariants({ size })} />
 }
