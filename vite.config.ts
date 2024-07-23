@@ -13,6 +13,9 @@ export default defineConfig({
     react(),
     svgr({
       svgrOptions: {
+        ref: true,
+        memo: true,
+        svgo: true,
         replaceAttrValues: {
           "#FF355E": "currentColor",
           "#515164": "currentColor",
