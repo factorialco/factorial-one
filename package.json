@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "dist/factorial-one.js",
   "types": "dist/main.d.ts",
+  "type": "module",
   "files": [
     "dist",
     "styles.css",
@@ -20,6 +21,7 @@
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "generate-icons": "node lib/components/Utils/Icons/sprites/generate-icons.cjs",
     "build-storybook": "storybook build",
     "build-storybook:public": "PUBLIC_BUILD=true storybook build",
     "test-storybook": "test-storybook",
@@ -97,7 +99,6 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "storybook": "^8.2.5",
-    "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
     "vite": "^5.3.4",
     "vite-plugin-dts": "^3.9.1",
