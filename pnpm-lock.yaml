@@ -124,8 +124,8 @@ importers:
         specifier: ^8.2.4
         version: 8.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/manager-api':
-        specifier: ^8.2.4
-        version: 8.2.4(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+        specifier: ^8.2.5
+        version: 8.2.5(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/react':
         specifier: ^8.2.4
         version: 8.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))(typescript@5.5.3)
@@ -2045,11 +2045,6 @@ packages:
     peerDependencies:
       storybook: ^8.2.5
 
-  '@storybook/addon-viewport@8.2.4':
-    resolution: {integrity: sha512-58DcoX0xGpWlJfc0iLDjggkVPYzT4JdCZA2ioK9SQXQMsUzGFwR5PAAJv1tivYp7467tNkXvcM3QTb3Q3g8p4g==}
-    peerDependencies:
-      storybook: ^8.2.4
-
   '@storybook/addon-viewport@8.2.5':
     resolution: {integrity: sha512-QH2A+rzoMf8dcREOUpAsx1vvP7w3MQ8HbZCawk7KdkW/KS0L8zhkHfsNL9cfLcgCJA0wtOmRPD25ZVGoxUAHSA==}
     peerDependencies:
@@ -2162,10 +2157,10 @@ packages:
     peerDependencies:
       storybook: ^8.2.5
 
-  '@storybook/manager-api@8.2.4':
-    resolution: {integrity: sha512-ayiOtcGupSeLCi2doEsRpALNPo4MBWYruc+e3jjkeVJQIg9A1ipSogNQh8unuOmq9rezO4/vcNBd6MxLs3xLWg==}
+  '@storybook/manager-api@8.2.5':
+    resolution: {integrity: sha512-4UHRlpcbYF2UiO9tonafnJMC2wJXWjTXivHjuf3ehbJXmopkNe/4zLtNTRyf3Hozf4CuYtNotw0tXflBrGlIlw==}
     peerDependencies:
-      storybook: ^8.2.4
+      storybook: ^8.2.5
 
   '@storybook/node-logger@8.1.11':
     resolution: {integrity: sha512-wdzFo7B2naGhS52L3n1qBkt5BfvQjs8uax6B741yKRpiGgeAN8nz8+qelkD25MbSukxvbPgDot7WJvsMU/iCzg==}
@@ -8099,11 +8094,6 @@ snapshots:
     dependencies:
       storybook: 8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
-  '@storybook/addon-viewport@8.2.4(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
-    dependencies:
-      memoizerific: 1.11.3
-      storybook: 8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7))
-
   '@storybook/addon-viewport@8.2.5(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       memoizerific: 1.11.3
@@ -8318,7 +8308,7 @@ snapshots:
       storybook: 8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7))
       util: 0.12.5
 
-  '@storybook/manager-api@8.2.4(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
+  '@storybook/manager-api@8.2.5(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))':
     dependencies:
       storybook: 8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7))
 
@@ -8383,7 +8373,7 @@ snapshots:
     dependencies:
       '@storybook/components': 8.2.4(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/global': 5.0.0
-      '@storybook/manager-api': 8.2.4(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
+      '@storybook/manager-api': 8.2.5(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/preview-api': 8.2.4(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/react-dom-shim': 8.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
       '@storybook/theming': 8.2.4(storybook@8.2.5(@babel/preset-env@7.24.7(@babel/core@7.24.7)))
