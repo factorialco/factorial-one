@@ -1,46 +1,29 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { StoryObj } from "@storybook/react"
 
-import { Icon, Icons } from "."
+import { Icon } from "."
 
 const meta = {
-  component: Icon,
   parameters: {
     layout: "centered",
   },
-  args: {
-    size: "large",
-    name: "files" satisfies Icons["large"],
-  },
   tags: ["autodocs"],
-} satisfies Meta<typeof Icon>
+}
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Large: Story = {
-  args: {
-    size: "large",
-    name: "files" satisfies Icons["large"],
-  },
+  render: () => <Icon size="large" name="replace" />,
 }
 
 export const Medium: Story = {
-  args: {
-    size: "medium",
-    name: "calculator" satisfies Icons["medium"],
-  },
+  render: () => <Icon size="medium" name="ai" />,
 }
 
 export const Small: Story = {
-  args: {
-    size: "small",
-    name: "calendar" satisfies Icons["small"],
-  },
+  render: () => <Icon size="small" name="calendar" />,
 }
 
 export const Tiny: Story = {
-  args: {
-    size: "tiny",
-    name: "person" satisfies Icons["tiny"],
-  },
+  render: () => <Icon size="tiny" name="person" />,
 }

@@ -1,7 +1,6 @@
 {
   "name": "@factorialco/factorial-one",
   "version": "0.0.1",
-  "type": "module",
   "main": "dist/factorial-one.js",
   "types": "dist/main.d.ts",
   "files": [
@@ -98,10 +97,12 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "storybook": "^8.2.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.5.3",
     "vite": "^5.3.4",
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-lib-inject-css": "^2.1.1",
+    "vite-plugin-svgr": "^4.2.0",
     "vitest": "^2.0.4"
   },
   "dependencies": {
