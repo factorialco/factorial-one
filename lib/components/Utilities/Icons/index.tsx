@@ -13,6 +13,7 @@ const icons = {
 }
 
 export type IconTypes = keyof typeof icons
+export type IconName<Key extends IconTypes> = keyof Icons[Key]
 export type Icons = typeof icons
 
 const iconVariants = cva("inline-block fill-current", {
@@ -29,7 +30,7 @@ const iconVariants = cva("inline-block fill-current", {
 export interface IconProps<Size extends IconTypes = IconTypes>
   extends VariantProps<typeof iconVariants> {
   size: Size
-  name: keyof Icons[Size]
+  name: IconName<Size>
 }
 
 export function Icon<Size extends IconTypes>({ size, name }: IconProps<Size>) {

@@ -1,4 +1,4 @@
-import { Icon, Icons } from "@/components/Utilities/Icons"
+import { Icon, IconName } from "@/components/Utilities/Icons"
 import { Button as ShadcnButton } from "@/ui/button"
 import { ComponentProps, forwardRef, useState } from "react"
 
@@ -10,7 +10,7 @@ export type ButtonProps = Pick<
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void | Promise<unknown>
   label: string
-  icon?: Icons["small"]
+  icon?: IconName<"small">
   hideLabel?: boolean
 }
 

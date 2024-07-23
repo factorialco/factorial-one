@@ -56,7 +56,7 @@ export const Outline: Story = {
 
 export const WithIcon: Story = {
   args: {
-    icon: "small-bell",
+    icon: "smallBell",
   },
 }
 

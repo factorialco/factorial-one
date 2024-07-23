@@ -40,7 +40,7 @@ export const Header: Story = {
     header: {
       title: "Dialog title",
       description: "Dialog description",
-      icon: "surveys",
+      icon: "addAvatar",
     },
   },
 }
