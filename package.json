@@ -21,7 +21,7 @@
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "generate-icons": "node lib/components/Utils/Icons/sprites/generate-icons.cjs",
+    "generate-icons": "node ./lib/components/Utilities/Icons/sprites/generate-icons.cjs",
     "build-storybook": "storybook build",
     "build-storybook:public": "PUBLIC_BUILD=true storybook build",
     "test-storybook": "test-storybook",
