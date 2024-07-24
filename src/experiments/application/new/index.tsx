@@ -18,7 +18,7 @@ import {
   TooltipTrigger,
 } from "@/ui/tooltip"
 
-import { Icon } from "@/components/Utilities/Icons"
+import { Icon } from "@/components/Utilities/Icon"
 import { Page, Pages, SubItem } from "./pages"
 
 const Navigation: React.FC<{

@@ -1,6 +1,7 @@
 import { Component } from "@/lib/component"
+import { Icon as IconComponent } from "./Icon"
+
 import { ScrollArea as ScrollAreaComponent } from "./ScrollArea"
-export * from "./Icons"
 
 export const ScrollArea = Component(
   {
@@ -8,4 +9,12 @@ export const ScrollArea = Component(
     type: "layout",
   },
   ScrollAreaComponent
+)
+
+export const Icon = Component(
+  {
+    name: "Icon",
+    type: "info",
+  },
+  IconComponent
 )

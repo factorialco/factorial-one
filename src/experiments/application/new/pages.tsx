@@ -1,6 +1,6 @@
 import { PageEmployees } from "./employees"
 
-import { IconType } from "@/components/Utilities/Icons"
+import { IconType } from "@/components/Utilities/Icon"
 import { Skeleton } from "@/ui/skeleton"
 
 import Home from "@/icons/Home"

@@ -1,4 +1,4 @@
-import { Icon, IconType } from "@/components/Utilities/Icons"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Button as ShadcnButton } from "@/ui/button"
 import { ComponentProps, forwardRef, useState } from "react"
 
