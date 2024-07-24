@@ -21,6 +21,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           registry: "https://npm.pkg.github.com"
+      - run: echo node_modules > .gitignore
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Commit Build

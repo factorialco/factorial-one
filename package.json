@@ -5,6 +5,8 @@
   "typings": "dist/factorial-one.rollup.d.ts",
   "type": "module",
   "files": [
+    "assets",
+    "icons",
     "dist",
     "styles.css",
     "fonts.js",
@@ -17,9 +19,8 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "start": "npm run dev",
-    "build": "tsc --p ./tsconfig-build.json && BUILD_TYPES=true vite build && npm run build:tailwind && run-p build-icons copy-assets",
+    "build": "tsc --p ./tsconfig-build.json && BUILD_TYPES=true vite build && npm run build:tailwind && run-p build-icons",
     "build-icons": "tsc --p ./tsconfig-build-icons.json",
-    "copy-assets": "cp -r assets dist",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
