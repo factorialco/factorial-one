@@ -24,8 +24,7 @@
     /* Shadcn */
     "baseUrl": ".",
     "types": [
-      "vite/client",
-      "vite-plugin-svgr/client"
+      "vite/client"
     ],
     "paths": {
       "@/*": [

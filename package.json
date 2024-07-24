@@ -17,8 +17,8 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "start": "npm run dev",
-    "build": "tsc --p ./tsconfig-build.json && BUILD_TYPES=true vite build && npm run build:tailwind && run-p extract-types copy-assets",
-    "extract-types": "npx api-extractor run --local --typescript-compiler node_modules/typescript",
+    "build": "tsc --p ./tsconfig-build.json && BUILD_TYPES=true vite build && npm run build:tailwind && run-p build-icons copy-assets",
+    "build-icons": "tsc --p ./tsconfig-build-icons.json",
     "copy-assets": "cp -r assets dist",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -108,7 +108,6 @@
     "vite": "^5.3.4",
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-lib-inject-css": "^2.1.1",
-    "vite-plugin-svgr": "^4.2.0",
     "vitest": "^2.0.4"
   },
   "dependencies": {
