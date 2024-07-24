@@ -1,32 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import AddAvatar from "@/icons/AddAvatar"
-import { Button } from "@/ui/button"
-import { useState } from "react"
 import { Dialog } from "."
 
 const meta = {
   component: Dialog,
-  decorators: [
-    (Story, { args }) => {
-      const [open, setOpen] = useState(false)
-
-      return (
-        <>
-          <Button onClick={() => setOpen(true)}>Click me</Button>
-          <Story args={{ ...args, open, onClose: () => setOpen(false) }} />
-        </>
-      )
-    },
-  ],
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
     a11y: {
       skipCi: true,
+    },
+    docs: {
+      story: { inline: false, height: "800px" },
     },
   },
   args: {
     children: <span>Dialog Content</span>,
+    open: true,
   },
   tags: ["autodocs"],
 } satisfies Meta<typeof Dialog>
