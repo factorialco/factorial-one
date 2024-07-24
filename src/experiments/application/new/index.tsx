@@ -43,7 +43,7 @@ const Navigation: React.FC<{
               setLayoutType!("Regular")
             }}
           >
-            <Icon size="medium" icon={item.icon} />
+            <Icon size="md" icon={item.icon} />
             {item.title === "Inbox" && (
               <div className="absolute right-0 top-0 flex h-5 min-w-5 items-center justify-center rounded-md bg-destructive-intermediate px-1 text-xs text-background">
                 3
