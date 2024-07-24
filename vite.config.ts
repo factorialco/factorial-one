@@ -47,6 +47,12 @@ export default defineConfig({
     copyPublicDir: false,
     rollupOptions: {
       external: [...Object.keys(peerDependencies), "react/jsx-runtime"],
+      input: [
+        path.resolve(
+          __dirname,
+          "lib/components/Utilities/Icons/components/*.tsx"
+        ),
+      ],
       output: {
         globals: {
           react: "React",

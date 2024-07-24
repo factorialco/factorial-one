@@ -1,0 +1,6 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+import { Ref, forwardRef } from "react";
+const SvgStarCircleLine = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" d="M12 6a6 6 0 1 0 0 12 6 6 0 0 0 0-12m-8 6a8 8 0 1 1 16 0 8 8 0 0 1-16 0" /><path fill="currentColor" d="M11.697 8.072a.68.68 0 0 1 .607 0 .7.7 0 0 1 .29.289c.04.068.081.154.118.233l.774 1.645 1.723.264c.082.013.175.027.252.046.076.02.234.065.36.204.138.153.199.358.174.557a.7.7 0 0 1-.168.365c-.05.062-.117.13-.177.19l-1.26 1.287.299 1.823c.014.086.03.18.036.26a.73.73 0 0 1-.07.395.69.69 0 0 1-.478.359.7.7 0 0 1-.414-.057c-.073-.032-.156-.078-.229-.118L12 14.968l-1.534.846c-.073.04-.156.086-.229.118a.7.7 0 0 1-.414.057.69.69 0 0 1-.478-.36.73.73 0 0 1-.07-.394c.006-.08.022-.174.036-.26l.298-1.823-1.26-1.287a3 3 0 0 1-.176-.19.7.7 0 0 1-.167-.365.7.7 0 0 1 .174-.557.7.7 0 0 1 .359-.204c.077-.02.17-.033.252-.046l1.723-.264.774-1.645c.037-.079.077-.165.117-.233a.7.7 0 0 1 .292-.29" /></svg>;
+const ForwardRef = forwardRef(SvgStarCircleLine);
+export default ForwardRef;

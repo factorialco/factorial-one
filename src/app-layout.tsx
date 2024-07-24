@@ -16,6 +16,8 @@ import {
 import React from "react"
 import { useXRay } from "../lib/lib/xray"
 
+import Add from "@/icons/Add"
+import Ellipsis from "@/icons/Ellipsis"
 import { Button, Split, Stack } from "@/main"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea } from "@/ui/scrollarea"
@@ -44,7 +46,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
             size="sm"
             hideLabel
             label="Menu"
-            icon="home"
+            icon={Home}
             variant="ghost"
           />
         </Stack>
@@ -140,7 +142,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               </div>
             </Stack>
             <Split gap="2">
-              <Button label="Upload files" icon="add" size="sm" />
+              <Button label="Upload files" icon={Add} size="sm" />
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -148,7 +150,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                     size="sm"
                     hideLabel
                     label="Submenu"
-                    icon="ellipsis"
+                    icon={Ellipsis}
                   />
                 </PopoverTrigger>
                 <PopoverContent className="w-60">Menu!</PopoverContent>
