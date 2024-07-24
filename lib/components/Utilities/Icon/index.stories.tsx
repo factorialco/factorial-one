@@ -19,4 +19,10 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Large: Story = {}
+export const Example: Story = {}
+
+export const Large: Story = {
+  args: {
+    size: "lg",
+  },
+}

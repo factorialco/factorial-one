@@ -6,9 +6,20 @@ import AddAvatar from "@/icons/AddAvatar"
 import * as IconStories from "./index.stories"
 import * as AllIcons from "@/icons"
 
+<Meta of={IconStories} />
+
 # Icons
 
-<Canvas of={IconStories.Large} sourceState="shown" />
+<Canvas
+  of={IconStories.Example}
+  sourceState="shown"
+  source={{
+    transform: (code) => {
+      return `
+import AddAvatar from "@factorial-one/icons/AddAvatar"
+
+${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={AddAvatar")}` }}}
+/>
 
 <IconGallery>
   {Object.keys(AllIcons).map((iconName) => (
