@@ -16,6 +16,7 @@ export default defineConfig({
           dts({
             include: ["lib"],
             exclude: ["**/*.stories.tsx"],
+            rollupTypes: true,
             bundledPackages: ["class-variance-authority"],
           }),
         ]
