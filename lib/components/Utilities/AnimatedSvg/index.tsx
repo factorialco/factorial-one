@@ -25,7 +25,7 @@ export const AnimatedSvg: React.FC<{ svg: SvgType; className?: string }> = ({
         "path",
         {
           stroke: "currentColor",
-          strokeWidth: [0.25],
+          strokeWidth: [0.5, 0],
           pathLength: [0, 1],
           fillOpacity: [0, 1],
         },
