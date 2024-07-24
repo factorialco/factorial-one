@@ -2,7 +2,7 @@
   "name": "@factorialco/factorial-one",
   "version": "0.0.1",
   "main": "dist/factorial-one.js",
-  "types": "dist/main.d.ts",
+  "typings": "dist/factorial-one.rollup.d.ts",
   "type": "module",
   "files": [
     "dist",
@@ -17,7 +17,8 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "start": "npm run dev",
-    "build": "tsc --p ./tsconfig-build.json && BUILD_TYPES=true vite build && npm run build:tailwind",
+    "build": "tsc --p ./tsconfig-build.json && BUILD_TYPES=true vite build && npm run build:tailwind && npm run extract-types",
+    "extract-types": "npx api-extractor run --typescript-compiler node_modules/typescript",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -66,6 +67,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
+    "@microsoft/api-extractor": "^7.47.3",
     "@storybook/addon-a11y": "^8.2.5",
     "@storybook/addon-essentials": "^8.2.5",
     "@storybook/addon-interactions": "^8.2.5",

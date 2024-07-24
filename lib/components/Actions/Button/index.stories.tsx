@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
+import Add from "@/icons/Add"
+import Bell from "@/icons/Bell"
 import { Button } from "."
 
 const meta = {
@@ -56,7 +58,7 @@ export const Outline: Story = {
 
 export const WithIcon: Story = {
   args: {
-    icon: "smallBell",
+    icon: Bell,
   },
 }
 
@@ -86,6 +88,6 @@ export const LoadingState: Story = {
 export const Small: Story = {
   args: {
     size: "sm",
-    icon: "add",
+    icon: Add,
   },
 }

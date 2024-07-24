@@ -1,11 +1,21 @@
 /// <reference types="vitest" />
 import react from "@vitejs/plugin-react"
+import { readdirSync } from "fs"
 import path, { resolve } from "path"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
 import { libInjectCss } from "vite-plugin-lib-inject-css"
 import svgr from "vite-plugin-svgr"
 import { peerDependencies } from "./package.json"
+
+const iconsPath = path.resolve(__dirname, "lib/icons")
+const iconFiles = readdirSync(iconsPath).filter((file) => file.endsWith(".tsx"))
+
+const iconPaths = iconFiles.reduce((paths, file) => {
+  const fullPath = path.join(iconsPath, file)
+  const iconName = `icons/${path.basename(file, ".tsx")}`
+  return { ...paths, [iconName]: fullPath }
+}, {})
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -28,7 +38,6 @@ export default defineConfig({
           dts({
             include: ["lib"],
             exclude: ["**/*.stories.tsx"],
-            rollupTypes: true,
             bundledPackages: ["class-variance-authority"],
           }),
         ]
@@ -41,18 +50,18 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: resolve(__dirname, "lib/main.ts"),
+      entry: {
+        ["factorial-one"]: resolve(__dirname, "lib/factorial-one.ts"),
+        ...iconPaths,
+      },
+      fileName: (_, entryName) => {
+        return `${entryName}.js`
+      },
       formats: ["es"],
     },
     copyPublicDir: false,
     rollupOptions: {
       external: [...Object.keys(peerDependencies), "react/jsx-runtime"],
-      input: [
-        path.resolve(
-          __dirname,
-          "lib/components/Utilities/Icons/components/*.tsx"
-        ),
-      ],
       output: {
         globals: {
           react: "React",

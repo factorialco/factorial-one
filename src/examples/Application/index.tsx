@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
   Stack,
-} from "@/main"
+} from "@/factorial-one"
 import { ScrollArea } from "@/ui/scrollarea"
 import { AppLayout } from "../../app-layout"
 

@@ -16,9 +16,9 @@ import {
 import React from "react"
 import { useXRay } from "../lib/lib/xray"
 
+import { Button, Split, Stack } from "@/factorial-one"
 import Add from "@/icons/Add"
 import Ellipsis from "@/icons/Ellipsis"
-import { Button, Split, Stack } from "@/main"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea } from "@/ui/scrollarea"
 

@@ -1,5 +1,7 @@
 // Replace your-framework with the name of your framework
 import { Button } from "@/components/Actions/Button"
+import Add from "@/icons/Add"
+import Ellipsis from "@/icons/Ellipsis"
 import { Placeholder } from "@/lib/storybook-utils"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Split } from "./Split"
@@ -28,11 +30,11 @@ export const Example: Story = {
         <Split gap="4" alignItems={"center"}>
           <Placeholder grow>Header</Placeholder>
           <Split gap="2" justifyContent="center" alignItems={"center"}>
-            <Button label="Create" icon="add" variant="default" />
+            <Button label="Create" icon={Add} variant="default" />
             <Button
               hideLabel
               label="Options"
-              icon="ellipsis"
+              icon={Ellipsis}
               variant="secondary"
             />
           </Split>

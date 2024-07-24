@@ -1,0 +1,1 @@
+export declare const ScrollArea: import('react').ForwardRefExoticComponent<Omit<Omit<import('@radix-ui/react-scroll-area').ScrollAreaProps & import('react').RefAttributes<HTMLDivElement>, "ref"> & import('react').RefAttributes<HTMLDivElement>, "ref"> & import('react').RefAttributes<HTMLElement>>;

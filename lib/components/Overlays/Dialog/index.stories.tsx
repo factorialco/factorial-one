@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import AddAvatar from "@/icons/AddAvatar"
 import { Button } from "@/ui/button"
 import { useState } from "react"
 import { Dialog } from "."
@@ -40,7 +41,7 @@ export const Header: Story = {
     header: {
       title: "Dialog title",
       description: "Dialog description",
-      icon: "addAvatar",
+      icon: AddAvatar,
     },
   },
 }
