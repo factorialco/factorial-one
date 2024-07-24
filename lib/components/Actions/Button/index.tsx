@@ -1,4 +1,4 @@
-import { Icon, IconName } from "@/components/Utilities/Icons"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Button as ShadcnButton } from "@/ui/button"
 import { ComponentProps, forwardRef, useState } from "react"
 
@@ -10,7 +10,7 @@ export type ButtonProps = Pick<
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void | Promise<unknown>
   label: string
-  icon?: IconName<"small">
+  icon?: IconType
   hideLabel?: boolean
 }
 
@@ -45,7 +45,7 @@ const Button: React.FC<ButtonProps> = forwardRef<
       ref={ref}
       {...props}
     >
-      {icon && <Icon size="small" name={icon} />}
+      {icon && <Icon size="sm" icon={icon} />}
       {!hideLabel && label}
     </ShadcnButton>
   )

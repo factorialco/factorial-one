@@ -124,7 +124,7 @@ const tagVariants = cva(
   }
 )
 
-export const useComponentXRay = <R extends HTMLElement>(
+export const useComponentXRay = <R extends HTMLElement | SVGElement>(
   meta: ComponentMetadata,
   forwardedRef: React.ForwardedRef<R>
 ) => {
@@ -140,8 +140,8 @@ export const useComponentXRay = <R extends HTMLElement>(
     const element = ref.current
     element.dataset.componentName = meta.name
 
-    let wrapper: HTMLDivElement | null = null
-    let tag: HTMLDivElement | null = null
+    let wrapper: HTMLElement | null = null
+    let tag: HTMLElement | null = null
 
     if (layoutElement) {
       const elementRect = element.getBoundingClientRect()

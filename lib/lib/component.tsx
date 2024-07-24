@@ -13,7 +13,7 @@ export interface ComponentMetadata {
 }
 
 export const Component = <
-  R extends HTMLElement,
+  R extends HTMLElement | SVGElement,
   P extends React.RefAttributes<R>,
 >(
   meta: ComponentMetadata,

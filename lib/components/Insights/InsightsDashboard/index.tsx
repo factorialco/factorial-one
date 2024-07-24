@@ -1,4 +1,4 @@
-import { AutoGrid } from "@/main"
+import { AutoGrid } from "@/factorial-one"
 import { ComponentProps, forwardRef, ReactNode } from "react"
 
 type InsightsDashboardProps = {

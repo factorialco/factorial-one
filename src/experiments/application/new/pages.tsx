@@ -1,7 +1,12 @@
 import { PageEmployees } from "./employees"
 
-import { IconName } from "@/components/Utilities/Icons"
+import { IconType } from "@/components/Utilities/Icon"
 import { Skeleton } from "@/ui/skeleton"
+
+import Home from "@/icons/Home"
+import Inbox from "@/icons/Inbox"
+import Settings from "@/icons/Settings"
+import Users from "@/icons/Users"
 
 const PageDummy: React.FC = () => {
   return (
@@ -20,7 +25,7 @@ const PageDummy: React.FC = () => {
 
 export type Page = {
   title: string
-  icon: IconName<"medium">
+  icon: IconType
   component: React.ReactNode | string
   subItems: SubItem[]
 }
@@ -33,19 +38,19 @@ export type SubItem = {
 export const Pages: Page[] = [
   {
     title: "Home",
-    icon: "home",
+    icon: Home,
     component: <PageDummy />,
     subItems: [],
   },
   {
     title: "Inbox",
-    icon: "inbox",
+    icon: Inbox,
     component: <PageDummy />,
     subItems: [],
   },
   {
     title: "Profile",
-    icon: "users",
+    icon: Users,
     component: "",
     subItems: [
       {
@@ -60,7 +65,7 @@ export const Pages: Page[] = [
   },
   {
     title: "People",
-    icon: "users",
+    icon: Users,
     component: "",
     subItems: [
       {
@@ -79,7 +84,7 @@ export const Pages: Page[] = [
   },
   {
     title: "Settings",
-    icon: "settings",
+    icon: Settings,
     component: <PageDummy />,
     subItems: [],
   },

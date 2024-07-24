@@ -18,7 +18,7 @@ import {
   TooltipTrigger,
 } from "@/ui/tooltip"
 
-import { Icon } from "@/components/Utilities/Icons"
+import { Icon } from "@/components/Utilities/Icon"
 import { Page, Pages, SubItem } from "./pages"
 
 const Navigation: React.FC<{
@@ -43,7 +43,7 @@ const Navigation: React.FC<{
               setLayoutType!("Regular")
             }}
           >
-            <Icon size="medium" name={item.icon} />
+            <Icon size="md" icon={item.icon} />
             {item.title === "Inbox" && (
               <div className="absolute right-0 top-0 flex h-5 min-w-5 items-center justify-center rounded-md bg-destructive-intermediate px-1 text-xs text-background">
                 3

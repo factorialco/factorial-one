@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Stack } from "@/components/Layout/Stack"
-import { Icon, IconName } from "@/components/Utilities/Icons"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import {
   Dialog,
   DialogContent,
@@ -17,7 +17,7 @@ type Action = Pick<ButtonProps, "label" | "onClick" | "disabled">
 
 type DialogProps = {
   header?: {
-    icon?: IconName<"large">
+    icon?: IconType
     title: string
     description: string
   }
@@ -59,7 +59,7 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
             <DialogHeader>
               {header.icon && (
                 <DialogIcon>
-                  <Icon size="large" name={header.icon} />
+                  <Icon size="md" icon={header.icon} />
                 </DialogIcon>
               )}
               <DialogTitle>{header.title}</DialogTitle>
