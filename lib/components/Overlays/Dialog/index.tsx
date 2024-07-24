@@ -59,7 +59,7 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
             <DialogHeader>
               {header.icon && (
                 <DialogIcon>
-                  <Icon size="large" icon={header.icon} />
+                  <Icon size="md" icon={header.icon} />
                 </DialogIcon>
               )}
               <DialogTitle>{header.title}</DialogTitle>

@@ -9,14 +9,15 @@ import {
 const iconVariants = cva("inline-block fill-current", {
   variants: {
     size: {
-      large: "h-8 w-8",
-      medium: "h-6 w-6",
-      small: "h-4 w-4",
-      tiny: "h-3 w-3",
+      xl: "h-12 w-12",
+      lg: "h-8 w-8",
+      md: "h-6 w-6",
+      sm: "h-4 w-4",
+      xs: "h-3 w-3",
     },
   },
   defaultVariants: {
-    size: "medium",
+    size: "xl",
   },
 })
 

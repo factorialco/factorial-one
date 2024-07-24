@@ -10,6 +10,7 @@ const meta = {
     layout: "centered",
   },
   args: {
+    size: "xl",
     icon: AddAvatar,
   },
   tags: ["autodocs"],

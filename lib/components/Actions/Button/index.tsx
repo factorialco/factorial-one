@@ -45,7 +45,7 @@ const Button: React.FC<ButtonProps> = forwardRef<
       ref={ref}
       {...props}
     >
-      {icon && <Icon size="small" icon={icon} />}
+      {icon && <Icon size="sm" icon={icon} />}
       {!hideLabel && label}
     </ShadcnButton>
   )
