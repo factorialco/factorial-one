@@ -53,6 +53,7 @@ export const LayoutProvider: React.FC<
     <LayoutContext.Provider value={{ element }}>
       <Stack
         ref={ref}
+        id="factorial-one-layout"
         className={cn("font-sans text-foreground", {
           "h-screen w-screen bg-page-background": fullScreen,
         })}
