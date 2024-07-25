@@ -12,6 +12,10 @@ const config: StorybookConfig = {
       directory: "../src/examples",
       titlePrefix: "Examples",
     },
+    {
+      directory: "../src/experiments",
+      titlePrefix: "Experiments",
+    },
   ],
   staticDirs: ["../public"],
   addons: [
