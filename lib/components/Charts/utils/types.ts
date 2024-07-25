@@ -5,8 +5,12 @@ export type ChartItem<LineKeys extends string> = {
   values: Record<LineKeys, number>
 }
 
+export type typeAxisType = "category" | "number"
+
 export type AxisConfig = {
+  dataKey?: string
   hide?: boolean
+  type?: typeAxisType
   tickFormatter?: (value: string) => string
 }
 
