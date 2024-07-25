@@ -74,12 +74,11 @@ export const _Bar = <
           )
         })}
 
-        {lines ? (
+        {lines &&
           bars.map((l, lt) => {
             return (
               <>
                 <Line
-                  layout="vertical"
                   key={lt}
                   type="monotone"
                   dataKey={l}
@@ -88,10 +87,7 @@ export const _Bar = <
                 />
               </>
             )
-          })
-        ) : (
-          <></>
-        )}
+          })}
       </ComposedChart>
     </ChartContainer>
   )
