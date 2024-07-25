@@ -34,6 +34,10 @@ export const Default: Story = {
         color: "hsl(var(--chart-2))",
       },
     },
+    label: true,
+    yAxis: {
+      hide: false,
+    },
     xAxis: {
       hide: false,
     },

@@ -3,20 +3,40 @@ import { ForwardedRef } from "react"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
-import { Bar, CartesianGrid, ComposedChart, Line, XAxis, YAxis } from "recharts"
+import {
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  LabelList,
+  Line,
+  XAxis,
+  YAxis,
+} from "recharts"
 import { prepareData } from "../utils/bar"
 import { xAxisProps, yAxisProps } from "../utils/elements"
+
+type BarChartConfigProps = {
+  label: boolean
+  lines?: boolean
+}
 
 export type BarChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
-> = ChartPropsBase<DataConfig, Keys> & { lines?: boolean }
+> = ChartPropsBase<DataConfig, Keys> & BarChartConfigProps
 
 export const _Bar = <
   DataConfig extends ChartConfig,
   Keys extends string = string,
 >(
-  { dataConfig, xAxis, yAxis, data, lines }: BarChartProps<DataConfig, Keys>,
+  {
+    dataConfig,
+    xAxis,
+    yAxis,
+    data,
+    lines,
+    label,
+  }: BarChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const bars = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
@@ -40,7 +60,16 @@ export const _Bar = <
                 dataKey={l}
                 fill={dataConfig[l].color}
                 radius={4}
-              />
+              >
+                {label && (
+                  <LabelList
+                    position="top"
+                    offset={10}
+                    className="fill-foreground"
+                    fontSize={12}
+                  />
+                )}
+              </Bar>
             </>
           )
         })}
@@ -50,6 +79,7 @@ export const _Bar = <
             return (
               <>
                 <Line
+                  layout="vertical"
                   key={lt}
                   type="monotone"
                   dataKey={l}
