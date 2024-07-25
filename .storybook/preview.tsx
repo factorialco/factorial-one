@@ -52,6 +52,13 @@ const preview: Preview = {
   decorators: [FactorialOne, withTheme(availableThemes, "light")],
 
   parameters: {
+    html: {
+      root: "#factorial-one-layout",
+      highlighter: {
+        showLineNumbers: true, // default: false
+        wrapLines: true, // default: true
+      },
+    },
     backgrounds: {
       default: "content",
       values: [
