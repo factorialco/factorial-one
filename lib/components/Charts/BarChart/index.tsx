@@ -84,8 +84,8 @@ export const _Bar = <
     ? { type: "number", dataKey: getMaxValueByKey(munchedData) }
     : undefined
 
-  // NOTE: When the chart is vertical, the Y axis uses the label rather than the
-  // numeric values.
+  // NOTE: When the chart is vertical, the Y axis uses the label rather
+  // than the numeric values.
   const internalYAxis: axisLayout = isVertical
     ? { type: "category", dataKey: "x" }
     : undefined
