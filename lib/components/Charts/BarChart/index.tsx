@@ -12,8 +12,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
-import { prepareData } from "../utils/bar"
 import { xAxisProps, yAxisProps } from "../utils/elements"
+import { prepareData } from "../utils/muncher"
 
 type BarChartConfigProps = {
   label: boolean
