@@ -14,7 +14,7 @@ const meta = {
     ...containerStoryArgs,
     header: {
       ...containerStoryArgs.header,
-      title: "A line chart",
+      title: "A bar chart",
     },
     chart: BarChartStory.args,
   },
