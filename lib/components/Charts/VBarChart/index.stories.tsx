@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { BarChart, BarChartProps } from "."
+import { VBarChart, VBarChartProps } from "."
 
 const dataConfig = {
   desktop: {
@@ -12,18 +12,17 @@ const dataConfig = {
   },
 }
 
-const Component = BarChart<typeof dataConfig>
+const Component = VBarChart<typeof dataConfig>
 
 const meta = {
   component: Component,
   tags: ["autodocs"],
   args: {
     dataConfig,
-    xAxis: {
-      hide: false,
-      tickFormatter: (value: string) => value.slice(0, 3),
-    },
     yAxis: {
+      hide: false,
+    },
+    xAxis: {
       hide: false,
     },
     label: true,
@@ -34,7 +33,7 @@ const meta = {
       { label: "April", values: { mobile: 1500, desktop: 8000 } },
       { label: "May", values: { mobile: 2000, desktop: 6000 } },
     ],
-  } satisfies BarChartProps<typeof dataConfig>,
+  } satisfies VBarChartProps<typeof dataConfig>,
 } satisfies Meta<typeof Component>
 
 export default meta

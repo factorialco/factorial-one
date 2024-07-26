@@ -1,72 +1,42 @@
-import { ChartContainer } from "@/ui/chart"
 import { ForwardedRef } from "react"
-import { fixedForwardRef } from "../utils/forwardRef"
-import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
-
+import { CartesianGrid, XAxis, YAxis } from "recharts"
 import {
-  Bar,
-  BarChart as BarChartPrimitive,
-  CartesianGrid,
-  LabelList,
-  XAxis,
-  YAxis,
-} from "recharts"
+  BarChart as BarCharPrimitive,
+  BaseBarChartProps,
+} from "../BaseBarChart"
 import { xAxisProps, yAxisProps } from "../utils/elements"
-import { prepareData } from "../utils/muncher"
-
-type BarChartConfigProps = {
-  label: boolean
-}
+import { fixedForwardRef } from "../utils/forwardRef"
+import { ChartConfig, InferChartKeys } from "../utils/types"
 
 export type BarChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
-> = ChartPropsBase<DataConfig, Keys> & BarChartConfigProps
+> = BaseBarChartProps<DataConfig, Keys>
 
-export const _Bar = <
+const _BarChart = <
   DataConfig extends ChartConfig,
   Keys extends string = string,
 >(
-  { dataConfig, xAxis, yAxis, data, label }: BarChartProps<DataConfig, Keys>,
+  config: BarChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
-  const bars = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
-
   return (
-    <ChartContainer config={dataConfig} ref={ref}>
-      <BarChartPrimitive
-        accessibilityLayer
-        data={prepareData(data)}
-        margin={{ left: 12, right: 12 }}
-      >
-        <CartesianGrid vertical={false} />
-        {<XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />}
-        {<YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />}
-
-        {bars.map((l, lt) => {
-          return (
-            <>
-              <Bar
-                key={`line-${lt}`}
-                dataKey={l}
-                fill={dataConfig[l].color}
-                radius={4}
-              >
-                {label && (
-                  <LabelList
-                    position="top"
-                    offset={10}
-                    className="fill-foreground"
-                    fontSize={12}
-                  />
-                )}
-              </Bar>
-            </>
-          )
-        })}
-      </BarChartPrimitive>
-    </ChartContainer>
+    <BarCharPrimitive
+      gridComponent={<CartesianGrid vertical={false} />}
+      xAxisComponent={
+        !config.xAxis?.hide ? (
+          <XAxis {...xAxisProps(config.xAxis)} />
+        ) : undefined
+      }
+      yAxisComponent={
+        !config.yAxis?.hide ? (
+          <YAxis {...yAxisProps(config.yAxis)} />
+        ) : undefined
+      }
+      ref={ref}
+      {...config}
+    />
   )
 }
 
-export const BarChart = fixedForwardRef(_Bar)
+export const BarChart = fixedForwardRef(_BarChart)
