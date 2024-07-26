@@ -10,7 +10,7 @@ import {
 import { autoColor } from "../utils/colors"
 import { cartesianGridProps, xAxisProps, yAxisProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
-import { prepareData } from "../utils/lines"
+import { prepareData } from "../utils/muncher"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
 export type LineChartProps<
