@@ -5,10 +5,9 @@ import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
 import {
   Bar,
+  BarChart as BarChartPrimitive,
   CartesianGrid,
-  ComposedChart,
   LabelList,
-  Line,
   XAxis,
   YAxis,
 } from "recharts"
@@ -17,7 +16,6 @@ import { prepareData } from "../utils/muncher"
 
 type BarChartConfigProps = {
   label: boolean
-  lines?: boolean
 }
 
 export type BarChartProps<
@@ -29,21 +27,14 @@ export const _Bar = <
   DataConfig extends ChartConfig,
   Keys extends string = string,
 >(
-  {
-    dataConfig,
-    xAxis,
-    yAxis,
-    data,
-    lines,
-    label,
-  }: BarChartProps<DataConfig, Keys>,
+  { dataConfig, xAxis, yAxis, data, label }: BarChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const bars = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
 
   return (
     <ChartContainer config={dataConfig} ref={ref}>
-      <ComposedChart
+      <BarChartPrimitive
         accessibilityLayer
         data={prepareData(data)}
         margin={{ left: 12, right: 12 }}
@@ -73,22 +64,7 @@ export const _Bar = <
             </>
           )
         })}
-
-        {lines &&
-          bars.map((l, lt) => {
-            return (
-              <>
-                <Line
-                  key={lt}
-                  type="monotone"
-                  dataKey={l}
-                  fill={dataConfig[l].color}
-                  stroke={dataConfig[l].color}
-                />
-              </>
-            )
-          })}
-      </ComposedChart>
+      </BarChartPrimitive>
     </ChartContainer>
   )
 }
