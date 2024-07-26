@@ -24,7 +24,10 @@ export function useFormSchema<
   })
 
   return {
-    form,
-    onSubmit: form.handleSubmit(onSubmit),
+    form: {
+      provider: form,
+      onSubmit: form.handleSubmit(onSubmit),
+    },
+    control: form.control,
   }
 }
