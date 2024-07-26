@@ -1,54 +1,42 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { BarChart } from "."
+import { BarChart, BarChartProps } from "."
 
 const dataConfig = {
   desktop: {
     label: "Desktop",
+    color: "hsl(var(--chart-1))",
   },
   mobile: {
     label: "Mobile",
+    color: "hsl(var(--chart-2))",
   },
 }
 
 const Component = BarChart<typeof dataConfig>
 
-const meta: Meta<typeof Component> = {
+const meta = {
   component: Component,
-  title: "Charts/BarChart",
-  args: {},
+  tags: ["autodocs"],
+  args: {
+    dataConfig,
+    xAxis: {
+      tickFormatter: (value: string) => value.slice(0, 3),
+    },
+    yAxis: {
+      hide: true,
+    },
+    label: false,
+    data: [
+      { label: "January", values: { mobile: 4000, desktop: 2400 } },
+      { label: "February", values: { mobile: 3000, desktop: 1398 } },
+      { label: "March", values: { mobile: 2000, desktop: 4000 } },
+      { label: "April", values: { mobile: 1500, desktop: 8000 } },
+      { label: "May", values: { mobile: 2000, desktop: 6000 } },
+    ],
+  } satisfies BarChartProps<typeof dataConfig>,
 } satisfies Meta<typeof Component>
 
 export default meta
-
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
-  args: {
-    dataConfig: {
-      desktop: {
-        label: "Desktop",
-        color: "hsl(var(--chart-1))",
-      },
-      mobile: {
-        label: "Mobile",
-        color: "hsl(var(--chart-2))",
-      },
-    },
-    label: true,
-    yAxis: {
-      hide: false,
-    },
-    xAxis: {
-      hide: false,
-    },
-    lines: true,
-    data: [
-      { label: "January", values: { desktop: 186, mobile: 80 } },
-      { label: "February", values: { desktop: 305, mobile: 200 } },
-      { label: "March", values: { desktop: 237, mobile: 120 } },
-      { label: "April", values: { desktop: 73, mobile: 190 } },
-      { label: "May", values: { desktop: 209, mobile: 130 } },
-      { label: "June", values: { desktop: 214, mobile: 140 } },
-    ],
-  },
-}
+export const Default: Story = {}
