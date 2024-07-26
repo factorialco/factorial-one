@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { Textarea } from "@/ui/textarea"
 import { Form, FormActions } from "."
-import { FormFields } from "../FormFields"
+import { Input } from "../Fields/Input"
+import { FormField } from "../FormField"
 import { buildFormSchema, stringField, useFormSchema } from "../lib/useForm"
 
 const meta = {
@@ -17,6 +19,7 @@ const schema = buildFormSchema({
   fullName: stringField().min(6).max(50),
   email: stringField().email(),
   password: stringField().min(8).max(50),
+  bio: stringField().max(500).optional(),
 })
 
 export const Default: Story = {
@@ -37,35 +40,53 @@ export const Default: Story = {
 
     return (
       <Form {...form}>
-        <FormFields.Input
+        <FormField
           label="Username"
           description="Write your username"
-          placeholder="A username must be all letters"
           control={control}
           name="username"
-        />
-        <FormFields.Input
+        >
+          {(field) => (
+            <Input placeholder="A username must be all letters" {...field} />
+          )}
+        </FormField>
+
+        <FormField
           label="Full name"
           description="Write your full name"
-          placeholder="Write whatever you want"
           control={control}
           name="fullName"
-        />
-        <FormFields.Input
+        >
+          {(field) => <Input {...field} />}
+        </FormField>
+
+        <FormField
           label="Email"
           description="Write your email"
-          placeholder="bob@foo.bar"
           control={control}
-          type="email"
           name="email"
-        />
-        <FormFields.Input
+        >
+          {(field) => <Input type="email" {...field} />}
+        </FormField>
+
+        <FormField
           label="Password"
           description="Write your password"
           control={control}
-          type="password"
           name="password"
-        />
+        >
+          {(field) => <Input type="password" {...field} />}
+        </FormField>
+
+        <FormField
+          label="Biography"
+          description="Write something about you"
+          control={control}
+          name="bio"
+        >
+          {(field) => <Textarea {...field} />}
+        </FormField>
+
         <FormActions submitLabel="Create" />
       </Form>
     )
