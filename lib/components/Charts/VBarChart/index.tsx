@@ -8,7 +8,7 @@ import {
 import { prepareData } from "../utils/bar"
 import { xAxisProps, yAxisProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
-import { AxisConfig, ChartConfig, InferChartKeys } from "../utils/types"
+import { ChartConfig, InferChartKeys } from "../utils/types"
 
 const getMaxValueByKey = (
   data: ({ x: unknown } & Record<string, number>)[]
@@ -34,14 +34,10 @@ const getMaxValueByKey = (
   return label
 }
 
-type AxisWithoutFormatter = Omit<AxisConfig, "tickFormatter">
-
 export type VBarChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
-> = Omit<BaseBarChartProps<DataConfig, Keys>, "xAxis"> & {
-  xAxis?: AxisWithoutFormatter
-}
+> = BaseBarChartProps<DataConfig, Keys>
 
 const _VBarChart = <
   DataConfig extends ChartConfig,
