@@ -24,14 +24,10 @@ const _BarChart = <
     <BarCharPrimitive
       gridComponent={<CartesianGrid vertical={false} />}
       xAxisComponent={
-        !config.xAxis?.hide ? (
-          <XAxis {...xAxisProps(config.xAxis)} />
-        ) : undefined
+        <XAxis {...xAxisProps(config.xAxis)} hide={config.xAxis?.hide} />
       }
       yAxisComponent={
-        !config.yAxis?.hide ? (
-          <YAxis {...yAxisProps(config.yAxis)} />
-        ) : undefined
+        <YAxis {...yAxisProps(config.yAxis)} hide={config.yAxis?.hide} />
       }
       ref={ref}
       {...config}
