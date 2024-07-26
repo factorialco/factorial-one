@@ -13,7 +13,7 @@ import {
   FieldValues,
 } from "react-hook-form"
 
-export type FormFieldBaseProps<
+export type FormFieldProps<
   TFieldValues extends FieldValues,
   TName extends FieldPath<TFieldValues>,
 > = Pick<ControllerProps<TFieldValues, TName>, "name" | "control"> & {
@@ -29,7 +29,7 @@ export const FormField = <
   description,
   children,
   ...props
-}: FormFieldBaseProps<TFieldValues, TName> & {
+}: FormFieldProps<TFieldValues, TName> & {
   children: (field: ControllerRenderProps<TFieldValues>) => JSX.Element
 }) => {
   return (

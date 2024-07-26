@@ -1,7 +1,6 @@
 import { FieldPath, FieldValues } from "react-hook-form"
 import { Input } from "../../Fields/Input"
-import { FormField } from "../FormField"
-import { FormFieldProps } from "../types"
+import { FormField, FormFieldProps } from "../FormField"
 
 export const InputFormField = <
   TFieldValues extends FieldValues = FieldValues,
