@@ -4,7 +4,7 @@ import { ComponentProps, forwardRef, useState } from "react"
 
 export type ButtonProps = Pick<
   ComponentProps<typeof ShadcnButton>,
-  "variant" | "size" | "disabled"
+  "variant" | "size" | "disabled" | "type"
 > & {
   onClick?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
