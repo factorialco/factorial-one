@@ -40,8 +40,8 @@ export const _Bar = <
         margin={{ left: 12, right: 12 }}
       >
         <CartesianGrid vertical={false} />
-        {!xAxis?.hide && <XAxis {...xAxisProps(xAxis)} />}
-        {!yAxis?.hide && <YAxis {...yAxisProps(xAxis)} />}
+        {<XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />}
+        {<YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />}
 
         {bars.map((l, lt) => {
           return (
