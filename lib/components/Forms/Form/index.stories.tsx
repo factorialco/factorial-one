@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Form, FormActions } from "."
+import { Form, FormActions, FormProvider } from "."
 import { InputFormField } from "../FormFields"
 import { buildFormSchema, stringField, useFormSchema } from "../lib/useForm"
 
@@ -28,13 +28,13 @@ export const Default: Story = {
         },
       },
       (data) => {
-        console.log(data)
+        alert(`Form has been submitted: ${JSON.stringify(data)}`)
       }
     )
 
     return (
-      <Form {...{ ...props, ...form }}>
-        <form onSubmit={onSubmit} className="flex flex-col gap-8">
+      <FormProvider {...{ ...props, ...form }}>
+        <Form onSubmit={onSubmit}>
           <InputFormField
             label="Username"
             description="Write your username"
@@ -50,8 +50,8 @@ export const Default: Story = {
             name="fullName"
           />
           <FormActions />
-        </form>
-      </Form>
+        </Form>
+      </FormProvider>
     )
   },
 }
