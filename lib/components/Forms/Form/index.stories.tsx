@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Textarea } from "@/ui/textarea"
 import { Form, FormActions } from "."
 import { Input } from "../Fields/Input"
+import { Select } from "../Fields/Select"
 import { FormField } from "../FormField"
 import { buildFormSchema, stringField, useFormSchema } from "../lib/useForm"
 
@@ -19,7 +20,8 @@ const schema = buildFormSchema({
   fullName: stringField().min(6).max(50),
   email: stringField().email(),
   password: stringField().min(8).max(50),
-  bio: stringField().max(500).optional(),
+  bio: stringField().max(500),
+  tag: stringField(),
 })
 
 export const Default: Story = {
@@ -85,6 +87,24 @@ export const Default: Story = {
           name="bio"
         >
           {(field) => <Textarea {...field} />}
+        </FormField>
+
+        <FormField
+          label="Tag"
+          description="Select a tag"
+          control={control}
+          name="tag"
+        >
+          {(field) => (
+            <Select
+              {...field}
+              placeholder="Select something"
+              options={[
+                { label: "Foo", value: "foo" },
+                { label: "Bar", value: "bar" },
+              ]}
+            />
+          )}
         </FormField>
 
         <FormActions submitLabel="Create" />

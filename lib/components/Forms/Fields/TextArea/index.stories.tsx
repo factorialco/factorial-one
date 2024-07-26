@@ -3,20 +3,10 @@ import { Textarea } from "."
 
 const meta = {
   component: Textarea,
-  parameters: {
-    layout: "centered",
-  },
   tags: ["autodocs"],
   args: {
     disabled: false,
     placeholder: "Placeholder text here",
-    rows: 10,
-    cols: 50,
-  },
-  argTypes: {
-    value: {
-      control: { rows: 20, cols: 50 },
-    },
   },
 } satisfies Meta<typeof Textarea>
 
