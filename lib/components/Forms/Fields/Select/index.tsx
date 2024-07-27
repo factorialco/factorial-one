@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/ui/select"
+import { forwardRef } from "react"
 
 type SelectProps<T> = {
   placeholder: string
@@ -13,15 +14,10 @@ type SelectProps<T> = {
   options: { value: T; label: string }[]
 }
 
-export function Select<T extends string>({
-  placeholder,
-  options,
-  onChange,
-  ...props
-}: SelectProps<T>) {
-  return (
+export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
+  ({ placeholder, options, onChange, ...props }, ref) => (
     <SelectPrimitive onValueChange={onChange} {...props}>
-      <SelectTrigger>
+      <SelectTrigger ref={ref}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
@@ -33,4 +29,4 @@ export function Select<T extends string>({
       </SelectContent>
     </SelectPrimitive>
   )
-}
+)

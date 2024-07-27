@@ -37,10 +37,7 @@ export const FormField = <
   return (
     <FormFieldPrimitive
       {...props}
-      render={({ field: fieldProps }) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { ref, ...field } = fieldProps
-
+      render={({ field }) => {
         return (
           <FormItem>
             <FormLabel>{label}</FormLabel>

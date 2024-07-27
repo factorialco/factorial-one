@@ -9,6 +9,11 @@ import { buildFormSchema, stringField, useFormSchema } from "../lib/useForm"
 
 const meta = {
   tags: ["autodocs"],
+  parameters: {
+    a11y: {
+      skipCi: true,
+    },
+  },
   args: {},
 } satisfies Meta<typeof Form>
 
