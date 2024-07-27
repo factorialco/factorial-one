@@ -30,19 +30,23 @@ export const FormField = <
   children,
   ...props
 }: FormFieldProps<TFieldValues, TName> & {
-  children: (field: ControllerRenderProps<TFieldValues>) => JSX.Element
+  children: (
+    field: Omit<ControllerRenderProps<TFieldValues>, "ref">
+  ) => JSX.Element
 }) => {
   return (
     <FormFieldPrimitive
       {...props}
-      render={({ field: fieldProps }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
-          <FormControl>{children(fieldProps)}</FormControl>
-          <FormDescription>{description}</FormDescription>
-          <FormMessage />
-        </FormItem>
-      )}
+      render={({ field }) => {
+        return (
+          <FormItem>
+            <FormLabel>{label}</FormLabel>
+            <FormControl>{children(field)}</FormControl>
+            <FormDescription>{description}</FormDescription>
+            <FormMessage />
+          </FormItem>
+        )
+      }}
     />
   )
 }
