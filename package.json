@@ -115,5 +115,8 @@
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-lib-inject-css": "^2.1.1",
     "vitest": "^2.0.4"
+  },
+  "dependencies": {
+    "@tanstack/react-table": "^8.19.3"
   }
 }
