@@ -1,33 +1,51 @@
 import { Button } from "@/components/Actions/Button"
-import { FC } from "react"
-import { FieldValues, UseFormReturn } from "react-hook-form"
 
 import { Form as FormProvider } from "@/ui/form"
+import { FormType, InferSchema, SchemaType } from "../lib/useForm"
 
 export function Form<
-  TFieldValues extends FieldValues,
-  TContext = unknown,
-  TTransformedValues extends FieldValues | undefined = undefined,
+  Schema extends SchemaType,
+  FormData extends InferSchema<Schema>,
 >({
-  children,
   onSubmit,
-  provider,
+  children,
+  ...form
 }: {
-  onSubmit: () => void
   children: React.ReactNode
-  provider: UseFormReturn<TFieldValues, TContext, TTransformedValues>
-}) {
+} & FormType<Schema, FormData>) {
+  const rootError = form.formState.errors.root
+
   return (
-    <FormProvider {...provider}>
+    <FormProvider {...form}>
       <form onSubmit={onSubmit} className={"flex flex-col gap-4"}>
+        {rootError && (
+          <p className="text-sm font-medium text-destructive-intermediate">
+            {rootError.message}
+          </p>
+        )}
         {children}
       </form>
     </FormProvider>
   )
 }
 
-export const FormActions: FC<{ submitLabel: string }> = ({ submitLabel }) => (
-  <div>
-    <Button type="submit" label={submitLabel} />
-  </div>
-)
+export function FormActions<
+  Schema extends SchemaType,
+  FormData extends InferSchema<Schema>,
+>({
+  submitLabel,
+  form,
+}: {
+  submitLabel: string
+  form: FormType<Schema, FormData>
+}) {
+  return (
+    <div>
+      <Button
+        type="submit"
+        label={submitLabel}
+        loading={form.formState.isSubmitting}
+      />
+    </div>
+  )
+}
