@@ -10,6 +10,7 @@ export type ButtonProps = Pick<
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => void | Promise<unknown>
   label: string
+  loading?: boolean
   icon?: IconType
   hideLabel?: boolean
 }
@@ -17,38 +18,51 @@ export type ButtonProps = Pick<
 const Button: React.FC<ButtonProps> = forwardRef<
   HTMLButtonElement,
   ButtonProps
->(({ label, hideLabel, onClick, disabled, icon, ...props }, ref) => {
-  const [loading, setLoading] = useState(false)
-
-  const handleClick = async (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+>(
+  (
+    {
+      label,
+      hideLabel,
+      onClick,
+      disabled,
+      loading: forceLoading,
+      icon,
+      ...props
+    },
+    ref
   ) => {
-    const result = onClick?.(event)
+    const [loading, setLoading] = useState(false)
 
-    if (result instanceof Promise) {
-      setLoading(true)
+    const handleClick = async (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+      const result = onClick?.(event)
 
-      try {
-        await result
-      } finally {
-        setLoading(false)
+      if (result instanceof Promise) {
+        setLoading(true)
+
+        try {
+          await result
+        } finally {
+          setLoading(false)
+        }
       }
     }
-  }
 
-  return (
-    <ShadcnButton
-      title={hideLabel ? label : undefined}
-      onClick={handleClick}
-      disabled={disabled || loading}
-      rounded={hideLabel}
-      ref={ref}
-      {...props}
-    >
-      {icon && <Icon size="sm" icon={icon} />}
-      {!hideLabel && label}
-    </ShadcnButton>
-  )
-})
+    return (
+      <ShadcnButton
+        title={hideLabel ? label : undefined}
+        onClick={handleClick}
+        disabled={disabled || loading || forceLoading}
+        rounded={hideLabel}
+        ref={ref}
+        {...props}
+      >
+        {icon && <Icon size="sm" icon={icon} />}
+        {!hideLabel && label}
+      </ShadcnButton>
+    )
+  }
+)
 
 export { Button }

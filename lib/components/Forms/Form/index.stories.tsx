@@ -7,6 +7,8 @@ import { Select } from "../Fields/Select"
 import { FormField } from "../FormField"
 import { buildFormSchema, stringField, useFormSchema } from "../lib/useForm"
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 const meta = {
   tags: ["autodocs"],
   parameters: {
@@ -20,18 +22,27 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const schema = buildFormSchema({
-  username: stringField().min(2).max(10),
-  fullName: stringField().min(6).max(50),
-  email: stringField().email(),
-  password: stringField().min(8).max(50),
-  bio: stringField().max(500),
-  tag: stringField(),
-})
-
 export const Default: Story = {
   render() {
-    const { form, control } = useFormSchema(
+    const schema = buildFormSchema({
+      username: stringField()
+        .min(2)
+        .max(10)
+        .refine((username) => username !== "admin", {
+          message: "Username cannot be admin",
+        }),
+      fullName: stringField().min(6).max(50),
+      email: stringField().email(),
+      password: stringField().min(8).max(50),
+      passwordConfirmation: stringField(),
+      bio: stringField().max(500),
+      tag: stringField(),
+    }).refine((data) => data.password === data.passwordConfirmation, {
+      message: "Passwords do not match",
+      path: ["passwordConfirmation"],
+    })
+
+    const form = useFormSchema(
       schema,
       {
         defaultValues: {
@@ -42,6 +53,10 @@ export const Default: Story = {
       },
       (data) => {
         alert(`Form has been submitted: ${JSON.stringify(data)}`)
+
+        return {
+          success: true,
+        }
       }
     )
 
@@ -50,7 +65,7 @@ export const Default: Story = {
         <FormField
           label="Username"
           description="Write your username"
-          control={control}
+          control={form.control}
           name="username"
         >
           {(field) => (
@@ -61,7 +76,7 @@ export const Default: Story = {
         <FormField
           label="Full name"
           description="Write your full name"
-          control={control}
+          control={form.control}
           name="fullName"
         >
           {(field) => <Input {...field} />}
@@ -70,7 +85,7 @@ export const Default: Story = {
         <FormField
           label="Email"
           description="Write your email"
-          control={control}
+          control={form.control}
           name="email"
         >
           {(field) => <Input type="email" {...field} />}
@@ -79,8 +94,17 @@ export const Default: Story = {
         <FormField
           label="Password"
           description="Write your password"
-          control={control}
+          control={form.control}
           name="password"
+        >
+          {(field) => <Input type="password" {...field} />}
+        </FormField>
+
+        <FormField
+          label="Password Confirmation"
+          description="Confirm your password"
+          control={form.control}
+          name="passwordConfirmation"
         >
           {(field) => <Input type="password" {...field} />}
         </FormField>
@@ -88,7 +112,7 @@ export const Default: Story = {
         <FormField
           label="Biography"
           description="Write something about you"
-          control={control}
+          control={form.control}
           name="bio"
         >
           {(field) => <Textarea {...field} />}
@@ -97,7 +121,7 @@ export const Default: Story = {
         <FormField
           label="Tag"
           description="Select a tag"
-          control={control}
+          control={form.control}
           name="tag"
         >
           {(field) => (
@@ -112,7 +136,82 @@ export const Default: Story = {
           )}
         </FormField>
 
-        <FormActions submitLabel="Create" />
+        <FormActions submitLabel="Create" form={form} />
+      </Form>
+    )
+  },
+}
+
+export const AsyncFieldValidation: Story = {
+  render() {
+    const schema = buildFormSchema({
+      username: stringField().refine(
+        async (username) => {
+          await sleep(200)
+          return username !== "taken"
+        },
+        { message: "already taken" }
+      ),
+    })
+
+    const form = useFormSchema(schema, {}, async () => {
+      await sleep(1000)
+      alert("Form has been submitted")
+
+      return {
+        success: true,
+      }
+    })
+
+    return (
+      <Form {...form}>
+        <FormField
+          label="Username"
+          description="Write your username"
+          control={form.control}
+          name="username"
+        >
+          {(field) => (
+            <Input placeholder="Try 'taken' as a username" {...field} />
+          )}
+        </FormField>
+
+        <FormActions form={form} submitLabel="Create" />
+      </Form>
+    )
+  },
+}
+
+export const AsyncSubmit: Story = {
+  render() {
+    const schema = buildFormSchema({
+      comment: stringField(),
+    })
+
+    const form = useFormSchema(schema, {}, async () => {
+      await sleep(2000)
+
+      return {
+        success: false,
+        rootMessage: "Server error",
+        errors: {
+          comment: "Couln't create comment",
+        },
+      }
+    })
+
+    return (
+      <Form {...form}>
+        <FormField
+          label="Comment"
+          description="Write your username"
+          control={form.control}
+          name="comment"
+        >
+          {(field) => <Textarea placeholder="Add your comment" {...field} />}
+        </FormField>
+
+        <FormActions form={form} submitLabel="Create" />
       </Form>
     )
   },
