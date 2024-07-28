@@ -142,31 +142,24 @@ export const Default: Story = {
   },
 }
 
-export const Async: Story = {
+export const AsyncFieldValidation: Story = {
   render() {
     const schema = buildFormSchema({
-      username: stringField()
-        .min(1)
-        .refine(
-          (username) => username !== "admin",
-          () => ({
-            message: "Admin is not allowed",
-          })
-        )
-        .refine(
-          async (username) => (await sleep(1000)) && username !== "taken",
-          { message: "already taken" }
-        ),
+      username: stringField().refine(
+        async (username) => {
+          await sleep(200)
+          return username !== "taken"
+        },
+        { message: "already taken" }
+      ),
     })
 
     const form = useFormSchema(schema, {}, async () => {
-      await sleep(2000)
+      await sleep(1000)
+      alert("Form has been submitted")
 
       return {
-        success: false,
-        errors: {
-          username: "Username is already taken",
-        },
+        success: true,
       }
     })
 
@@ -179,11 +172,43 @@ export const Async: Story = {
           name="username"
         >
           {(field) => (
-            <Input
-              placeholder="Try using 'admin' or 'taken' as a username"
-              {...field}
-            />
+            <Input placeholder="Try 'taken' as a username" {...field} />
           )}
+        </FormField>
+
+        <FormActions form={form} submitLabel="Create" />
+      </Form>
+    )
+  },
+}
+
+export const AsyncSubmit: Story = {
+  render() {
+    const schema = buildFormSchema({
+      comment: stringField(),
+    })
+
+    const form = useFormSchema(schema, {}, async () => {
+      await sleep(2000)
+
+      return {
+        success: false,
+        rootMessage: "Server error",
+        errors: {
+          comment: "Couln't create comment",
+        },
+      }
+    })
+
+    return (
+      <Form {...form}>
+        <FormField
+          label="Comment"
+          description="Write your username"
+          control={form.control}
+          name="comment"
+        >
+          {(field) => <Textarea placeholder="Add your comment" {...field} />}
         </FormField>
 
         <FormActions form={form} submitLabel="Create" />
