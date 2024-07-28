@@ -51,7 +51,8 @@ export const Default: Story = {
           email: "",
         },
       },
-      (data) => {
+      async (data) => {
+        await sleep(2000)
         alert(`Form has been submitted: ${JSON.stringify(data)}`)
 
         return {

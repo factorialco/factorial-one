@@ -32,9 +32,11 @@ const FormField = <
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
+  const { formState } = useFormContext()
+
   return (
     <FormFieldContext.Provider value={{ name: props.name }}>
-      <Controller {...props} />
+      <Controller {...props} disabled={formState.isSubmitting} />
     </FormFieldContext.Provider>
   )
 }

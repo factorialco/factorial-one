@@ -30,9 +30,7 @@ export const FormField = <
   children,
   ...props
 }: FormFieldProps<TFieldValues, TName> & {
-  children: (
-    field: Omit<ControllerRenderProps<TFieldValues>, "ref">
-  ) => JSX.Element
+  children: (field: ControllerRenderProps<TFieldValues>) => JSX.Element
 }) => {
   return (
     <FormFieldPrimitive
