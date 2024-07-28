@@ -1,4 +1,11 @@
 import { Button } from "@/components/Actions/Button"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/Blocks/Card"
+import { AutoGrid } from "@/components/Layout/AutoGrid"
 import { ArrowLeft, ArrowRight, ChevronDown } from "@/icons"
 import {
   Table,
@@ -30,12 +37,14 @@ interface DataTableProps<TData> {
   columns: ExtendedColumnDef<TData>[]
   data: TData[]
   filterColumn?: keyof TData
+  listType?: "default" | "cards"
 }
 
 const DataTable = <TData,>({
   columns,
   data,
-  filterColumn = null,
+  filterColumn,
+  listType = "default",
 }: DataTableProps<TData>) => {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -62,69 +71,95 @@ const DataTable = <TData,>({
       {filterColumn && (
         <TableFiltering table={table} filterColumn={filterColumn} />
       )}
+
       <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  const column = header.column
-                    .columnDef as ExtendedColumnDef<TData>
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder ? null : (
-                        <div
-                          className={`flex items-center ${column.sortable ? "cursor-pointer select-none" : ""}`}
-                          onClick={
-                            column.sortable
-                              ? () => header.column.toggleSorting()
-                              : undefined
-                          }
-                        >
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                          {column.sortable && (
-                            <ChevronDown className="ml-2 h-4 w-4" />
-                          )}
-                        </div>
-                      )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+        {listType === "default" && (
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    const column = header.column
+                      .columnDef as ExtendedColumnDef<TData>
+                    return (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder ? null : (
+                          <div
+                            className={`flex items-center ${column.sortable ? "cursor-pointer select-none" : ""}`}
+                            onClick={
+                              column.sortable
+                                ? () => header.column.toggleSorting()
+                                : undefined
+                            }
+                          >
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                            {column.sortable && (
+                              <ChevronDown className="ml-2 h-4 w-4" />
+                            )}
+                          </div>
+                        )}
+                      </TableHead>
+                    )
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        )}
+        {listType === "cards" && (
+          <AutoGrid tileSize="md" gap="4">
+            {table.getRowModel().rows.map((row) => (
+              <Card key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <React.Fragment key={cell.id}>
+                    <CardHeader>
+                      <CardTitle>
+                        {cell.column.columnDef.header as React.ReactNode}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+                    </CardContent>
+                  </React.Fragment>
+                ))}
+              </Card>
+            ))}
+          </AutoGrid>
+        )}
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <Button

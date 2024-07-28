@@ -12,9 +12,7 @@ interface Expense {
 
 const meta: Meta<typeof DataTable<Expense>> = {
   component: DataTable,
-  parameters: {
-    layout: "centered",
-  },
+  parameters: {},
   tags: ["autodocs"],
   args: {},
 }
@@ -77,6 +75,7 @@ const BasicColumns: ExtendedColumnDef<Expense>[] = [
   },
   { accessorKey: "category", header: "Category" },
 ]
+
 const columns: ExtendedColumnDef<Expense>[] = [
   { accessorKey: "owner", header: "Owner", sortable: true },
   { accessorKey: "status", header: "Status" },
@@ -126,6 +125,18 @@ export const Sortable: Story = {
     columns: columns,
     data,
     filterColumn: "owner",
+  },
+  render(props) {
+    return <DataTable<Expense> {...props} />
+  },
+}
+
+export const Cards: Story = {
+  args: {
+    columns: columns,
+    data,
+    filterColumn: "owner",
+    listType: "cards",
   },
   render(props) {
     return <DataTable<Expense> {...props} />
