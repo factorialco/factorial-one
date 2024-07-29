@@ -26,6 +26,7 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           autoAcceptChanges: "main"
+          exitOnceUploaded: true
 
       - name: Publish Storybook Link in the comments
         if: github.event_name == 'pull_request'
