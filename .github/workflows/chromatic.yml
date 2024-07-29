@@ -6,13 +6,9 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-  issues: write
-  discussions: write
-
 jobs:
   chromatic:
+    permissions: write-all
     name: Run Chromatic
     runs-on: ubuntu-latest
     steps:
