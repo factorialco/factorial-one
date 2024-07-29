@@ -54,6 +54,7 @@ export const darkTheme = create({
   // Text colors
   textColor: "#E0E0E0",
   textInverseColor: "#121212",
+  textMutedColor: "#A0A0A0",
 
   // Toolbar default and active colors
   barTextColor: "#BBBBBB",
@@ -66,6 +67,12 @@ export const darkTheme = create({
   inputBorder: "#444444",
   inputTextColor: "#E0E0E0",
   inputBorderRadius: 2,
+
+  // Buttons
+  buttonBg: "#444444", // Gris medio para fondo de botones
+  buttonBorder: "#03DAC6", // Aqua para borde de botones
+  booleanBg: "#292929", // Gris oscuro para fondo de botones booleanos
+  booleanSelectedBg: "#03DAC6", // Aqua para fondo de botones booleanos seleccionados
 })
 
 export const blueTheme = create({

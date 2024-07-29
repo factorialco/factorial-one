@@ -1,6 +1,5 @@
 // organize-imports-ignore
 import React from "react"
-import { DecoratorHelpers } from "@storybook/addon-themes"
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
 
@@ -9,23 +8,16 @@ import DocumentationTemplate from "./DocumentationTemplate.mdx"
 import "../styles.css"
 import "../fonts"
 
-import { availableThemes, ThemeProvider } from "../lib/lib/theme-provider"
+import { ThemeProvider } from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
+import lightTheme, { darkTheme } from "./FactorialOne"
+import { DocsContainer } from "./DocsContainer"
+import { useDarkMode } from "storybook-dark-mode"
 
-const { initializeThemeState, pluckThemeFromContext, useThemeParameters } =
-  DecoratorHelpers
-
-export const withTheme = (themes: Theme[], defaultTheme: Theme) => {
-  initializeThemeState(themes, defaultTheme)
-
-  return (Story, context) => {
-    const selectedTheme = pluckThemeFromContext(context) as Theme
-    const { themeOverride } = useThemeParameters() as { themeOverride: Theme }
-
-    const selected = themeOverride || selectedTheme || defaultTheme
-
+export const withTheme = () => {
+  return (Story) => {
     return (
-      <ThemeProvider defaultTheme={selected}>
+      <ThemeProvider defaultTheme={useDarkMode() ? "dark" : "light"}>
         <Story />
       </ThemeProvider>
     )
@@ -45,7 +37,7 @@ export const FactorialOne = (Story, { parameters }) => {
 }
 
 const preview: Preview = {
-  decorators: [FactorialOne, withTheme(availableThemes, "light")],
+  decorators: [FactorialOne, withTheme()],
 
   parameters: {
     html: {
@@ -68,6 +60,7 @@ const preview: Preview = {
       },
     },
     docs: {
+      container: DocsContainer,
       page: DocumentationTemplate,
       toc: true,
     },
@@ -77,6 +70,11 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
+    },
+
+    darkMode: {
+      dark: darkTheme,
+      light: lightTheme,
     },
   },
 
