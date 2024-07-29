@@ -1,7 +1,7 @@
 import { ForwardedRef } from "react"
 import { CartesianGrid, XAxis, YAxis } from "recharts"
 import {
-  BarChart as BarCharPrimitive,
+  BarChart as BarChartPrimitive,
   BaseBarChartProps,
 } from "../BaseBarChart"
 import { xAxisProps, yAxisProps } from "../utils/elements"
@@ -21,7 +21,7 @@ const _BarChart = <
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   return (
-    <BarCharPrimitive
+    <BarChartPrimitive
       gridComponent={<CartesianGrid vertical={false} />}
       xAxisComponent={
         <XAxis {...xAxisProps(config.xAxis)} hide={config.xAxis?.hide} />

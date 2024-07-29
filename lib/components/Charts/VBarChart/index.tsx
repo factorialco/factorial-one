@@ -2,7 +2,7 @@ import { cloneDeep } from "lodash"
 import { ForwardedRef } from "react"
 import { XAxis, XAxisProps, YAxis, YAxisProps } from "recharts"
 import {
-  BarChart as BarCharPrimitive,
+  BarChart as BarChartPrimitive,
   BaseBarChartProps,
 } from "../BaseBarChart"
 import { prepareData } from "../utils/bar"
@@ -61,7 +61,7 @@ const _VBarChart = <
   }
 
   return (
-    <BarCharPrimitive
+    <BarChartPrimitive
       layout="vertical"
       xAxisComponent={<XAxis {...xAxis} hide={config.xAxis?.hide} />}
       yAxisComponent={<YAxis {...yAxis} hide={config.yAxis?.hide} />}
