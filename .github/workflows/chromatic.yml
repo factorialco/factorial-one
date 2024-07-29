@@ -2,6 +2,7 @@ name: "Chromatic"
 
 on:
   pull_request:
+  push:
 
 jobs:
   chromatic:
@@ -24,6 +25,7 @@ jobs:
           autoAcceptChanges: "main"
 
       - name: Publish Storybook Link in the comments
+        if: github.event_name == 'pull_request'
         uses: dannyhw/storybook-chromatic-link-comment@v0.10
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
