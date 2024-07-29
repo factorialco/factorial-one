@@ -74,36 +74,3 @@ export const darkTheme = create({
   booleanBg: "#292929", // Gris oscuro para fondo de botones booleanos
   booleanSelectedBg: "#03DAC6", // Aqua para fondo de botones booleanos seleccionados
 })
-
-export const blueTheme = create({
-  base: "light",
-  brandTitle: `<img src="one.svg" width="36px" />`,
-  brandTarget: "_self",
-
-  //
-  colorPrimary: "#007BFF",
-  colorSecondary: "#6610F2",
-
-  // UI
-  appBg: "#F8F9FA",
-  appContentBg: "#FFFFFF",
-  appPreviewBg: "#F8F9FA",
-  appBorderColor: "#DEE2E6",
-  appBorderRadius: 4,
-
-  // Text colors
-  textColor: "#212529",
-  textInverseColor: "#FFFFFF",
-
-  // Toolbar default and active colors
-  barTextColor: "#6C757D",
-  barSelectedColor: "#007BFF",
-  barHoverColor: "#0056B3",
-  barBg: "#FFFFFF",
-
-  // Form colors
-  inputBg: "#FFFFFF",
-  inputBorder: "#CED4DA",
-  inputTextColor: "#495057",
-  inputBorderRadius: 2,
-})

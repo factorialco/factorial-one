@@ -17,7 +17,7 @@ import { useDarkMode } from "storybook-dark-mode"
 export const withTheme = () => {
   return (Story) => {
     return (
-      <ThemeProvider defaultTheme={useDarkMode() ? "dark" : "light"}>
+      <ThemeProvider theme={useDarkMode() ? "dark" : "light"}>
         <Story />
       </ThemeProvider>
     )
@@ -75,6 +75,7 @@ const preview: Preview = {
     darkMode: {
       dark: darkTheme,
       light: lightTheme,
+      stylePreview: true,
     },
   },
 
