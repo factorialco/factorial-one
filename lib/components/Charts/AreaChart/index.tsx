@@ -24,7 +24,6 @@ export type AreaChartProps<
   Keys extends string = InferChartKeys<DataConfig>,
 > = ChartPropsBase<DataConfig, Keys> & {
   lineType?: "natural" | "linear" | "step"
-  showLegend?: boolean
 }
 
 export const _AreaChart = <
@@ -37,7 +36,6 @@ export const _AreaChart = <
     xAxis,
     yAxis,
     lineType,
-    showLegend,
   }: AreaChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -100,13 +98,11 @@ export const _AreaChart = <
             stroke={dataConfig[area].color || autoColor(index)}
           />
         ))}
-        {showLegend && (
-          <ChartLegend
-            className="flex justify-start"
-            iconType="star"
-            content={<ChartLegendContent />}
-          />
-        )}
+        <ChartLegend
+          className="flex justify-start"
+          iconType="star"
+          content={<ChartLegendContent />}
+        />
       </AreaChartPrimitive>
     </ChartContainer>
   )
