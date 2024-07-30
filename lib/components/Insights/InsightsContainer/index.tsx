@@ -33,8 +33,8 @@ export const InsightsContainer = forwardRef<
 >(({ header, footer, children }, ref) => (
   <Card ref={ref}>
     <CardHeader>
-      <CardDescription>{header.description}</CardDescription>
       <CardTitle>{header.title}</CardTitle>
+      <CardDescription>{header.description}</CardDescription>
     </CardHeader>
     <CardContent>{children}</CardContent>
     {footer && (
