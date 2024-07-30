@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { VBarChart, VBarChartProps } from "."
+import { VerticalBarChart, VerticalBarChartProps } from "."
 
 const dataConfig = {
   desktop: {
@@ -12,7 +12,7 @@ const dataConfig = {
   },
 }
 
-const Component = VBarChart<typeof dataConfig>
+const Component = VerticalBarChart<typeof dataConfig>
 
 const meta = {
   component: Component,
@@ -33,7 +33,7 @@ const meta = {
       { label: "April", values: { mobile: 1500, desktop: 8000 } },
       { label: "May", values: { mobile: 2000, desktop: 6000 } },
     ],
-  } satisfies VBarChartProps<typeof dataConfig>,
+  } satisfies VerticalBarChartProps<typeof dataConfig>,
 } satisfies Meta<typeof Component>
 
 export default meta

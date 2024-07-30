@@ -1,4 +1,4 @@
-import { VBarChart } from "@/components/Charts/VBarChart"
+import { VerticalBarChart } from "@/components/Charts/VerticalBarChart"
 import { wrap } from "../../InsightsContainer"
 
-export const VBarChartInsight = wrap(VBarChart, "chart")
+export const VerticalBarChartInsight = wrap(VerticalBarChart, "chart")
