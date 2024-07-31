@@ -12,7 +12,7 @@ const meta = {
   args: {
     size: "xl",
     icon: AddAvatar,
-    color: "black",
+    color: "primary",
   },
   tags: ["autodocs"],
 } satisfies Meta<ComponentProps<typeof Icon>>
@@ -25,5 +25,11 @@ export const Example: Story = {}
 export const Large: Story = {
   args: {
     size: "lg",
+  },
+}
+
+export const Tertiary: Story = {
+  args: {
+    color: "tertiary",
   },
 }
