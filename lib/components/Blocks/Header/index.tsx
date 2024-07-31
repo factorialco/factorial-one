@@ -21,10 +21,10 @@ export const Header: React.FC<HeaderProps> = ({
         <AvatarFallback>{alt}</AvatarFallback>
       </Avatar>
       <FlexBox className="flex-col gap-4 pl-5">
-        <h1 className="pt-2 text-[1.69rem]/[1.6rem] font-medium text-grey-700">
+        <h1 className="pt-2 text-[1.69rem]/[1.6rem] font-medium text-foreground">
           {title}
         </h1>
-        <h2 className="text-[1.19rem]/4 font-normal text-grey-500">
+        <h2 className="text-[1.19rem]/4 font-normal text-intermediate">
           {subtitle}
         </h2>
       </FlexBox>

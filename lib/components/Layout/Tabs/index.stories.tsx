@@ -13,7 +13,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const Overview = () => (
-  <div className="grid grid-cols-[2fr_1fr] divide-x divide-y-0 divide-dashed divide-grey-200">
+  <div className="grid grid-cols-[2fr_1fr] divide-x divide-y-0 divide-dashed divide-muted">
     <AutoGrid tileSize="md" className="col-span-2 pl-10 pr-8 pt-6">
       {Array.from({ length: 6 }).map((_, i) => (
         <AreaChartInsight
