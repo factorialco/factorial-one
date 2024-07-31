@@ -12,6 +12,7 @@ const meta = {
   args: {
     size: "xl",
     icon: AddAvatar,
+    color: "black",
   },
   tags: ["autodocs"],
 } satisfies Meta<ComponentProps<typeof Icon>>

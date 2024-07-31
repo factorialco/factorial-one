@@ -23,6 +23,7 @@ const iconVariants = cva("inline-block fill-current", {
 
 export interface IconProps extends VariantProps<typeof iconVariants> {
   icon: IconType
+  color?: string
 }
 
 export type IconType = ForwardRefExoticComponent<
@@ -30,9 +31,11 @@ export type IconType = ForwardRefExoticComponent<
 >
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(
-  ({ size, icon }, ref) => {
+  ({ size, icon, color }, ref) => {
     if (!icon) return null
     const Component = icon
-    return <Component ref={ref} className={iconVariants({ size })} />
+    return (
+      <Component ref={ref} className={iconVariants({ size })} color={color} />
+    )
   }
 )
