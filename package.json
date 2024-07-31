@@ -111,6 +111,7 @@
     "prettier-plugin-tailwindcss": "^0.6.5",
     "react-syntax-highlighter": "^15.5.0",
     "storybook": "^8.2.6",
+    "storybook-dark-mode": "^4.0.2",
     "typescript": "^5.5.3",
     "vite": "^5.3.5",
     "vite-plugin-dts": "^3.9.1",
