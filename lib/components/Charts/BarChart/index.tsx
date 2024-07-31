@@ -1,5 +1,8 @@
 import { ChartContainer } from "@/ui/chart"
 import { ForwardedRef } from "react"
+import { fixedForwardRef } from "../utils/forwardRef"
+import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
+
 import {
   Bar,
   BarChart as BarChartPrimitive,
@@ -8,22 +11,23 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
-
 import { xAxisProps, yAxisProps } from "../utils/elements"
-import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
-import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
+
+type BarChartConfigProps = {
+  label: boolean
+}
 
 export type BarChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
-> = ChartPropsBase<DataConfig, Keys> & { label: boolean }
+> = ChartPropsBase<DataConfig, Keys> & BarChartConfigProps
 
-const _BarChart = <
+export const _Bar = <
   DataConfig extends ChartConfig,
   Keys extends string = string,
 >(
-  { dataConfig, data, xAxis, yAxis, label }: BarChartProps<DataConfig, Keys>,
+  { dataConfig, xAxis, yAxis, data, label }: BarChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const bars = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
@@ -36,21 +40,20 @@ const _BarChart = <
         margin={{ left: 12, right: 12 }}
       >
         <CartesianGrid vertical={false} />
-        <YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />
-        <XAxis {...xAxisProps(yAxis)} hide={xAxis?.hide} />
+        {<XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />}
+        {<YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />}
 
-        {bars.map((key) => {
+        {bars.map((l, lt) => {
           return (
             <>
               <Bar
-                key={`bar-${key}`}
-                dataKey={key}
-                fill={dataConfig[key].color}
+                key={`line-${lt}`}
+                dataKey={l}
+                fill={dataConfig[l].color}
                 radius={4}
               >
                 {label && (
                   <LabelList
-                    key={`label-{${key}}`}
                     position="top"
                     offset={10}
                     className="fill-foreground"
@@ -66,4 +69,4 @@ const _BarChart = <
   )
 }
 
-export const BarChart = fixedForwardRef(_BarChart)
+export const BarChart = fixedForwardRef(_Bar)

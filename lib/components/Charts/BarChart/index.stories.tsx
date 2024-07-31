@@ -20,13 +20,12 @@ const meta = {
   args: {
     dataConfig,
     xAxis: {
-      hide: false,
       tickFormatter: (value: string) => value.slice(0, 3),
     },
     yAxis: {
-      hide: false,
+      hide: true,
     },
-    label: true,
+    label: false,
     data: [
       { label: "January", values: { mobile: 4000, desktop: 2400 } },
       { label: "February", values: { mobile: 3000, desktop: 1398 } },
