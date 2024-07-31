@@ -1,4 +1,10 @@
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/ui/chart"
 import { ForwardedRef } from "react"
 import {
   Area,
@@ -8,7 +14,7 @@ import {
   YAxis,
 } from "recharts"
 import { autoColor } from "../utils/colors"
-import { cartesianGridProps, xAxisProps, yAxisProps } from "../utils/elements"
+import { cartesianGridProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
@@ -43,22 +49,60 @@ export const _AreaChart = <
         margin={{ left: 12, right: 12 }}
       >
         <CartesianGrid {...cartesianGridProps()} />
-        {!xAxis?.hide && <XAxis {...xAxisProps(xAxis)} />}
-        {!yAxis?.hide && <YAxis {...yAxisProps(yAxis)} />}
+        {!xAxis?.hide && (
+          <XAxis
+            dataKey="x"
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+            tickFormatter={xAxis?.tickFormatter}
+          />
+        )}
+        {!yAxis?.hide && (
+          <YAxis
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+            tickCount={yAxis?.tickCount}
+            tickFormatter={yAxis?.tickFormatter}
+          />
+        )}
         <ChartTooltip
           cursor
-          content={<ChartTooltipContent indicator="dot" />}
+          content={<ChartTooltipContent indicator="line" />}
         />
+        <defs>
+          {areas.map((area, index) => (
+            <linearGradient id={`fill${area}`} x1="0" y1="0" x2="0" y2="1">
+              <stop
+                offset="5%"
+                stopColor={dataConfig[area].color || autoColor(index)}
+                stopOpacity={0.8}
+              />
+              <stop
+                offset="95%"
+                stopColor={dataConfig[area].color || autoColor(index)}
+                stopOpacity={0.1}
+              />
+            </linearGradient>
+          ))}
+        </defs>
         {areas.map((area, index) => (
           <Area
             key={area}
             dataKey={area}
             type={lineType}
-            fill={dataConfig[area].color || autoColor(index)}
+            fill={`url(#fill${area})`}
             fillOpacity={0.4}
+            dot={true}
             stroke={dataConfig[area].color || autoColor(index)}
           />
         ))}
+        <ChartLegend
+          className="flex justify-start"
+          iconType="star"
+          content={<ChartLegendContent />}
+        />
       </AreaChartPrimitive>
     </ChartContainer>
   )
