@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>
 const Overview = () => (
   <div
     className={cn(
-      "divide-grey-200 grid grid-cols-3 divide-x divide-y-0 divide-dashed",
+      "grid grid-cols-3 divide-x divide-y-0 divide-dashed divide-grey-200",
       "grid-cols-[2fr_1fr]"
     )}
   >

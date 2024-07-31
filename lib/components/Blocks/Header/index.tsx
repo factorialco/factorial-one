@@ -24,12 +24,12 @@ export const Header: React.FC<HeaderProps> = ({
       <FlexBox className={cn("flex-col gap-4 pl-5")}>
         <h1
           className={cn(
-            "text-grey-700 pt-2 text-[1.69rem]/[1.6rem] font-semibold"
+            "pt-2 text-[1.69rem]/[1.6rem] font-semibold text-grey-700"
           )}
         >
           {title}
         </h1>
-        <h2 className={cn("text-grey-500 text-[1.19rem]/4 font-normal")}>
+        <h2 className={cn("text-[1.19rem]/4 font-normal text-grey-500")}>
           {subtitle}
         </h2>
       </FlexBox>
