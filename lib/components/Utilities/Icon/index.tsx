@@ -6,7 +6,7 @@ import {
   SVGProps,
 } from "react"
 
-const iconVariants = cva("inline-block fill-current", {
+const iconVariants = cva("inline-block", {
   variants: {
     size: {
       xl: "h-12 w-12",
