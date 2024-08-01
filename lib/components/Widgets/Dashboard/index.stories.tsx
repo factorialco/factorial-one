@@ -34,7 +34,7 @@ const renderWidget = (index: number) => {
           description: "This widget contains some data",
         }}
       >
-        <Calendar />
+        <Calendar defaultMonth={new Date(2024, 10, 15)} />
       </WidgetContainer>
     ),
     () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,

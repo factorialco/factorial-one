@@ -14,7 +14,9 @@ const meta = {
     },
   },
   tags: ["autodocs"],
-  args: {},
+  args: {
+    defaultMonth: new Date(2024, 10, 15),
+  },
 } satisfies Meta<typeof Calendar>
 
 export default meta
