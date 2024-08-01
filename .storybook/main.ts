@@ -24,7 +24,6 @@ const config: StorybookConfig = {
     "@storybook/addon-interactions",
     "@storybook/addon-a11y",
     "@storybook/addon-themes",
-    "@whitespace/storybook-addon-html",
     "storybook-dark-mode",
   ],
   framework: {
