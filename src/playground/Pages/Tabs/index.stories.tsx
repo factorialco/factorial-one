@@ -1,6 +1,12 @@
-// import AreaChartStory from "@/components/Charts/AreaChart/index.stories"
-// import { AreaChartInsight } from "@/components/Insights/Charts/AreaChartInsight"
-import { AutoGrid } from "@/components/Layout/AutoGrid"
+import { AreaChartWidget } from "@/components/Widgets/Charts/AreaChartWidget"
+import AreaChartWidgetStoriesMeta from "@/components/Widgets/Charts/AreaChartWidget/index.stories"
+import { LineChartWidget } from "@/components/Widgets/Charts/LineChartWidget"
+import LineChartWidgetStoriesMeta from "@/components/Widgets/Charts/LineChartWidget/index.stories"
+import { PieChartWidget } from "@/components/Widgets/Charts/PieChartWidget"
+import PieChartWidgetStoriesMeta from "@/components/Widgets/Charts/PieChartWidget/index.stories"
+import { VerticalBarChartWidget } from "@/components/Widgets/Charts/VerticalBarChartWidget"
+import VerticalBarChartWidgetStoriesMeta from "@/components/Widgets/Charts/VerticalBarChartWidget/index.stories"
+import { Dashboard } from "@/components/Widgets/Dashboard"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Tabs } from "."
 
@@ -12,25 +18,28 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+const renderWidget = (index: number) => {
+  const Widgets = [
+    () => <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} />,
+    () => <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
+    () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
+    () => (
+      <VerticalBarChartWidget {...VerticalBarChartWidgetStoriesMeta.args} />
+    ),
+  ]
+
+  const Component = Widgets[index % Widgets.length]
+  return <Component />
+}
+
 const Overview = () => (
   <div className="grid grid-cols-[2fr_1fr] divide-x divide-y-0 divide-dashed divide-muted">
-    <AutoGrid tileSize="md" className="col-span-2 pl-10 pr-8 pt-6">
-      {/* {Array.from({ length: 6 }).map((_, i) => (
-        <AreaChartInsight
-          key={i}
-          header={{
-            title: "An area chart",
-            description: "This an awesome chart, enjoy",
-          }}
-          footer={{
-            trend: "Going up",
-            time: "5 months",
-          }}
-          chart={AreaChartStory.args}
-        />
-      ))} */}
-    </AutoGrid>
-    <div className="col-span-1 pl-8 pr-10 pt-6">
+    <div className="pl-10 pr-8 pt-6">
+      <Dashboard>
+        <>{Array.from({ length: 6 }).map((_, i) => renderWidget(i))}</>
+      </Dashboard>
+    </div>
+    <div className="pl-8 pr-10 pt-6">
       Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
       Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
       Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
