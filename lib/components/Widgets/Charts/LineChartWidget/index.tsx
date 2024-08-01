@@ -1,10 +1,10 @@
 import { LineChart, LineChartProps } from "@/components/Charts/LineChart"
 import { forwardRef } from "react"
-import { ChartContainer, ChartContainerProps } from "../ChartContainer"
+import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
 export const LineChartWidget = forwardRef<
   HTMLDivElement,
-  ChartContainerProps<LineChartProps>
+  ComposeChartContainerProps<LineChartProps>
 >((props, ref) => (
   <ChartContainer ref={ref} {...props} chart={<LineChart {...props.chart} />} />
 ))

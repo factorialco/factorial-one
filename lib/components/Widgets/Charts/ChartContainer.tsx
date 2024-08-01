@@ -1,16 +1,13 @@
 import { forwardRef, ReactNode } from "react"
 import { WidgetContainer, WidgetContainerProps } from "../WidgetContainer"
 
-export type ChartContainerProps<T extends object | undefined = undefined> =
-  T extends undefined
-    ? WidgetContainerProps
-    : WidgetContainerProps & {
-        chart: T
-      }
+type ChartContainerPropsBase = WidgetContainerProps & {
+  summaries?: Array<{ label: string; value: string }>
+}
 
 export const ChartContainer = forwardRef<
   HTMLDivElement,
-  ChartContainerProps & {
+  ChartContainerPropsBase & {
     chart: ReactNode
   }
 >(({ chart, ...props }, ref) => (
@@ -18,3 +15,8 @@ export const ChartContainer = forwardRef<
     {chart}
   </WidgetContainer>
 ))
+
+export type ComposeChartContainerProps<T extends object> =
+  ChartContainerPropsBase & {
+    chart: T
+  }

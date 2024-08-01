@@ -1,10 +1,10 @@
 import { PieChart, PieChartProps } from "@/components/Charts/PieChart"
 import { forwardRef } from "react"
-import { ChartContainer, ChartContainerProps } from "../ChartContainer"
+import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
 export const PieChartWidget = forwardRef<
   HTMLDivElement,
-  ChartContainerProps<PieChartProps>
+  ComposeChartContainerProps<PieChartProps>
 >((props, ref) => (
   <ChartContainer ref={ref} {...props} chart={<PieChart {...props.chart} />} />
 ))
