@@ -50,6 +50,7 @@ export const _LineChart = <
           <Line
             key={line}
             dataKey={line}
+            isAnimationActive={false}
             type={lineType}
             stroke={dataConfig[line].color || autoColor(index)}
             strokeWidth={2}
