@@ -71,6 +71,6 @@ export const Default: Story = {
     title: "Alba Horneros",
     subtitle: "Product Designer",
     src: "https://github.com/dani-moreno.png",
-    alt: "@dani-moreno",
+    alt: "DM",
   },
 }
