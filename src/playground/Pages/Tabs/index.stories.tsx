@@ -36,7 +36,7 @@ const Overview = () => (
   <div className="grid grid-cols-[2fr_1fr] divide-x divide-y-0 divide-dashed divide-muted">
     <div className="pl-10 pr-8 pt-6">
       <Dashboard>
-        <>{Array.from({ length: 6 }).map((_, i) => renderWidget(i))}</>
+        {Array.from({ length: 6 }).map((_, i) => renderWidget(i))}
       </Dashboard>
     </div>
     <div className="pl-8 pr-10 pt-6">
