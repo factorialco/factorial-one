@@ -15,21 +15,14 @@ const iconVariants = cva("inline-block", {
       sm: "h-4 w-4",
       xs: "h-3 w-3",
     },
-    color: {
-      primary: "text-foreground",
-      secondary: "text-secondary-foreground",
-      tertiary: "text-primary-foreground",
-    },
   },
   defaultVariants: {
     size: "xl",
-    color: "primary",
   },
 })
 
 export interface IconProps extends VariantProps<typeof iconVariants> {
   icon: IconType
-  color?: "primary" | "secondary" | "tertiary"
 }
 
 export type IconType = ForwardRefExoticComponent<
@@ -37,9 +30,9 @@ export type IconType = ForwardRefExoticComponent<
 >
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(
-  ({ size, icon, color }, ref) => {
+  ({ size, icon }, ref) => {
     if (!icon) return null
     const Component = icon
-    return <Component ref={ref} className={iconVariants({ size, color })} />
+    return <Component ref={ref} className={iconVariants({ size })} />
   }
 )

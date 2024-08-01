@@ -15,9 +15,13 @@ export const Breadcrumb = forwardRef<HTMLDivElement, BreadcrumbsType>(
         ref={ref}
         className="flex items-center gap-1 px-5 py-3 text-[0.81rem]/5"
       >
-        <Icon size="md" icon={icon} color="tertiary" />
+        <span className="flex items-center text-primary-foreground">
+          <Icon size="md" icon={icon} />
+        </span>
         <p className="text-foreground">{route}</p>
-        <Icon size="sm" icon={ChevronRight} color="secondary" />
+        <span className="flex items-center text-secondary-foreground">
+          <Icon size="sm" icon={ChevronRight} />
+        </span>
         <p className="text-intermediate">{title}</p>
       </div>
     )
