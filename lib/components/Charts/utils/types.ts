@@ -8,6 +8,7 @@ export type ChartItem<LineKeys extends string> = {
 export type AxisConfig = {
   hide?: boolean
   tickFormatter?: (value: string) => string
+  tickCount?: number
 }
 
 export type ChartConfig<Keys extends string = string> = Record<

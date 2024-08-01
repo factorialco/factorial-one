@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import BarChartStory from "@/components/Charts/BarChart/index.stories"
-import { BarChartInsight } from "."
+import { BarChartWidget } from "."
 import { containerStoryArgs } from "../storybook-utils"
 
 const meta = {
-  component: BarChartInsight,
+  component: BarChartWidget,
   parameters: {
     layout: "centered",
   },
@@ -18,7 +18,7 @@ const meta = {
     },
     chart: BarChartStory.args,
   },
-} satisfies Meta<typeof BarChartInsight>
+} satisfies Meta<typeof BarChartWidget>
 
 export default meta
 type Story = StoryObj<typeof meta>

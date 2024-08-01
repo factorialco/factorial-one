@@ -9,6 +9,7 @@ export const xAxisProps = (
   tickLine: false,
   axisLine: false,
   tickMargin: 8,
+  tickCount: config?.tickCount,
   tickFormatter: config?.tickFormatter,
 })
 
@@ -18,6 +19,7 @@ export const yAxisProps = (
   tickLine: false,
   axisLine: false,
   tickMargin: 8,
+  tickCount: config?.tickCount,
   tickFormatter: config?.tickFormatter,
 })
 
