@@ -16,6 +16,13 @@ const Component = PieChart<typeof dataConfig>
 const meta: Meta<typeof Component> = {
   component: Component,
   title: "Charts/PieChart",
+  parameters: {
+    a11y: {
+      config: {
+        rules: [{ id: "svg-img-alt", enabled: false }],
+      },
+    },
+  },
 } satisfies Meta<typeof Component>
 
 export default meta

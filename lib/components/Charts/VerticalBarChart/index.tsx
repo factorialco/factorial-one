@@ -90,6 +90,7 @@ const _VBarChart = <
           return (
             <>
               <Bar
+                isAnimationActive={false}
                 layout="vertical"
                 key={`bar-${key}`}
                 dataKey={key}

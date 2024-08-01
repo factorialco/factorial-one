@@ -42,6 +42,7 @@ const _BarChart = <
         {bars.map((key) => (
           <Bar
             key={`bar-${key}`}
+            isAnimationActive={false}
             dataKey={key}
             fill={dataConfig[key].color}
             radius={4}
