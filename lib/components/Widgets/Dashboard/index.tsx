@@ -18,7 +18,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
     const onResize = useCallback(
       ({ width }: Size) => {
         if (width) {
-          setColumns(Math.floor(width / 300))
+          setColumns(Math.floor(width / 340))
         }
       },
       [setColumns]
