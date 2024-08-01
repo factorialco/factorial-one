@@ -39,28 +39,24 @@ const _BarChart = <
         <YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />
         <XAxis {...xAxisProps(yAxis)} hide={xAxis?.hide} />
 
-        {bars.map((key) => {
-          return (
-            <>
-              <Bar
-                key={`bar-${key}`}
-                dataKey={key}
-                fill={dataConfig[key].color}
-                radius={4}
-              >
-                {label && (
-                  <LabelList
-                    key={`label-{${key}}`}
-                    position="top"
-                    offset={10}
-                    className="fill-foreground"
-                    fontSize={12}
-                  />
-                )}
-              </Bar>
-            </>
-          )
-        })}
+        {bars.map((key) => (
+          <Bar
+            key={`bar-${key}`}
+            dataKey={key}
+            fill={dataConfig[key].color}
+            radius={4}
+          >
+            {label && (
+              <LabelList
+                key={`label-{${key}}`}
+                position="top"
+                offset={10}
+                className="fill-foreground"
+                fontSize={12}
+              />
+            )}
+          </Bar>
+        ))}
       </BarChartPrimitive>
     </ChartContainer>
   )

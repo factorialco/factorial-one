@@ -73,7 +73,14 @@ export const _AreaChart = <
         />
         <defs>
           {areas.map((area, index) => (
-            <linearGradient id={`fill${area}`} x1="0" y1="0" x2="0" y2="1">
+            <linearGradient
+              key={index}
+              id={`fill${area}`}
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
               <stop
                 offset="5%"
                 stopColor={dataConfig[area].color || autoColor(index)}

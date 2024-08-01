@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { PieChartInsight } from "."
+import { PieChartWidget } from "."
 import { containerStoryArgs } from "../storybook-utils"
 
 const meta = {
-  component: PieChartInsight,
+  component: PieChartWidget,
   parameters: {
     layout: "centered",
   },
@@ -52,7 +52,7 @@ const meta = {
       ],
     },
   },
-} satisfies Meta<typeof PieChartInsight>
+} satisfies Meta<typeof PieChartWidget>
 
 export default meta
 type Story = StoryObj<typeof meta>
