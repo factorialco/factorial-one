@@ -1,5 +1,5 @@
-import AreaChartStory from "@/components/Charts/AreaChart/index.stories"
-import { AreaChartInsight } from "@/components/Insights/Charts/AreaChartInsight"
+// import AreaChartStory from "@/components/Charts/AreaChart/index.stories"
+// import { AreaChartInsight } from "@/components/Insights/Charts/AreaChartInsight"
 import { AutoGrid } from "@/components/Layout/AutoGrid"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Tabs } from "."
@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>
 const Overview = () => (
   <div className="grid grid-cols-[2fr_1fr] divide-x divide-y-0 divide-dashed divide-muted">
     <AutoGrid tileSize="md" className="col-span-2 pl-10 pr-8 pt-6">
-      {Array.from({ length: 6 }).map((_, i) => (
+      {/* {Array.from({ length: 6 }).map((_, i) => (
         <AreaChartInsight
           key={i}
           header={{
@@ -28,7 +28,7 @@ const Overview = () => (
           }}
           chart={AreaChartStory.args}
         />
-      ))}
+      ))} */}
     </AutoGrid>
     <div className="col-span-1 pl-8 pr-10 pt-6">
       Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
