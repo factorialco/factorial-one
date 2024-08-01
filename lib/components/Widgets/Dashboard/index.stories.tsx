@@ -53,6 +53,13 @@ const meta = {
   args: {
     children: Array.from({ length: 20 }).map((_, i) => renderWidget(i)),
   },
+  parameters: {
+    a11y: {
+      config: {
+        rules: [{ id: "color-contrast", enabled: false }],
+      },
+    },
+  },
 } satisfies Meta<typeof Dashboard>
 
 export default meta

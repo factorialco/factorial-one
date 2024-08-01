@@ -10,7 +10,9 @@ const meta = {
   parameters: {
     layout: "centered",
     a11y: {
-      skipCi: true,
+      config: {
+        rules: [{ id: "color-contrast", enabled: false }],
+      },
     },
   },
   tags: ["autodocs"],
