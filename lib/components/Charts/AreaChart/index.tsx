@@ -35,7 +35,7 @@ export const _AreaChart = <
     dataConfig,
     xAxis,
     yAxis,
-    lineType,
+    lineType = "natural",
   }: AreaChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -96,12 +96,12 @@ export const _AreaChart = <
         </defs>
         {areas.map((area, index) => (
           <Area
+            isAnimationActive={false}
             key={area}
             dataKey={area}
             type={lineType}
             fill={`url(#fill${area})`}
             fillOpacity={0.4}
-            dot={true}
             stroke={dataConfig[area].color || autoColor(index)}
           />
         ))}
