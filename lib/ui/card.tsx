@@ -2,6 +2,7 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+import ArrowRight from "@/icons/ArrowRight"
 import InfoCircleLine from "@/icons/InfoCircleLine"
 
 import { Icon } from "@/components/Utilities/Icon"
@@ -79,6 +80,27 @@ const CardInfo = React.forwardRef<
 ))
 CardInfo.displayName = "CardInfo"
 
+const CardLink = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentPropsWithoutRef<"a"> & {
+    asChild?: boolean
+  }
+>(({ asChild, className, ...props }, ref) => {
+  return (
+    <a
+      ref={ref}
+      className={cn(
+        "h-6 w-6 text-muted-foreground transition-colors hover:text-foreground",
+        className
+      )}
+      {...props}
+    >
+      <Icon icon={ArrowRight} size="md" />
+    </a>
+  )
+})
+CardLink.displayName = "CardLink"
+
 const CardDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -118,6 +140,7 @@ export {
   CardFooter,
   CardHeader,
   CardInfo,
+  CardLink,
   CardSubtitle,
   CardTitle,
 }
