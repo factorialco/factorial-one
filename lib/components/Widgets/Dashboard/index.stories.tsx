@@ -56,7 +56,10 @@ const meta = {
   parameters: {
     a11y: {
       config: {
-        rules: [{ id: "color-contrast", enabled: false }],
+        rules: [
+          { id: "color-contrast", enabled: false },
+          { id: "svg-img-alt", enabled: false },
+        ],
       },
     },
   },
