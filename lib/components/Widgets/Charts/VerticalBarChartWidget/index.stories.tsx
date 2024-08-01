@@ -14,7 +14,7 @@ const meta = {
     ...containerStoryArgs,
     header: {
       ...containerStoryArgs.header,
-      title: "A VBar chart",
+      title: "A Vertical Bar Chart",
     },
     chart: BarChartStory.args,
   },
