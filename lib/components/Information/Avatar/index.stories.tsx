@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Avatar, AvatarFallback, AvatarImage, sizes } from "@/ui/avatar"
+import { Avatar } from "."
 
 const meta = {
   component: Avatar,
@@ -10,13 +10,14 @@ const meta = {
   tags: ["autodocs"],
   args: {
     size: "medium",
+    src: "https://github.com/dani-moreno.png",
+    alt: "DM",
   },
   argTypes: {
     size: {
       control: {
         type: "select",
       },
-      options: [...sizes],
     },
   },
 } satisfies Meta<typeof Avatar>
@@ -25,33 +26,13 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {
-  render({ size }) {
-    return (
-      <Avatar size={size}>
-        <AvatarImage
-          src="https://github.com/dani-moreno.png"
-          alt="@dani-moreno"
-        />
-        <AvatarFallback>DM</AvatarFallback>
-      </Avatar>
-    )
+  render({ size, src, alt }) {
+    return <Avatar size={size} src={src} alt={alt} />
   },
-}
-
-Basic.args = {
-  size: "medium",
 }
 
 export const Fallback: Story = {
-  render({ size }) {
-    return (
-      <Avatar size={size}>
-        <AvatarFallback>DM</AvatarFallback>
-      </Avatar>
-    )
+  render({ size, alt }) {
+    return <Avatar size={size} alt={alt} />
   },
-}
-
-Fallback.args = {
-  size: "medium",
 }
