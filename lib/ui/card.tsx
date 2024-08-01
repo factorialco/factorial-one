@@ -2,6 +2,16 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
+import InfoCircleLine from "@/icons/InfoCircleLine"
+
+import { Icon } from "@/components/Utilities/Icon"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/ui/tooltip"
+
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -9,7 +19,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-2xl border border-solid border-border bg-card text-card-foreground shadow-sm",
+      "min-w-60 rounded-2xl border border-solid border-border bg-card text-card-foreground",
       className
     )}
     {...props}
@@ -24,7 +34,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6 pb-0", className)}
+    className={cn("flex flex-row gap-1.5 p-4 pb-0", className)}
     {...props}
   />
 ))
@@ -34,16 +44,40 @@ const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
+  <h3 ref={ref} className={cn("text-base font-medium", className)} {...props} />
+))
+CardTitle.displayName = "CardTitle"
+
+const CardSubtitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn(
-      "text-2xl font-semibold leading-none tracking-tight",
-      className
-    )}
+    className={cn("text-base font-normal text-muted-foreground", className)}
     {...props}
   />
 ))
-CardTitle.displayName = "CardTitle"
+CardSubtitle.displayName = "CardSubtitle"
+
+const CardInfo = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("-ml-1 h-6 w-6", className)}>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger className="cursor-default text-muted-foreground">
+          <Icon icon={InfoCircleLine} size="md" />
+        </TooltipTrigger>
+        <TooltipContent>
+          <p {...props} />
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  </div>
+))
+CardInfo.displayName = "CardInfo"
 
 const CardDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -51,7 +85,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <p
     ref={ref}
-    className={cn("text-sm text-muted-foreground", className)}
+    className={cn("px-4 text-sm text-muted-foreground", className)}
     {...props}
   />
 ))
@@ -71,10 +105,19 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex items-center px-6 pb-6 pt-0", className)}
+    className={cn("flex items-center px-4 pb-4 pt-0", className)}
     {...props}
   />
 ))
 CardFooter.displayName = "CardFooter"
 
-export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
+export {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardInfo,
+  CardSubtitle,
+  CardTitle,
+}

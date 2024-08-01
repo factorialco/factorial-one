@@ -39,8 +39,8 @@ export const WithTitle: Story = {
       <Card {...props}>
         <CardHeader>
           <CardTitle>Card title</CardTitle>
-          <CardDescription>Description of the title</CardDescription>
         </CardHeader>
+        <CardDescription>Description of the title</CardDescription>
         <CardContent>This is a card with a title</CardContent>
       </Card>
     )

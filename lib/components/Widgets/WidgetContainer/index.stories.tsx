@@ -13,11 +13,8 @@ const meta = {
   args: {
     header: {
       title: "A widget",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    },
-    footer: {
-      trend: "Increased by 12%",
-      time: "Since last month",
+      subtitle: "2024",
+      info: "Lorem ipsum dolor",
     },
     children: <Placeholder>Put your content in there</Placeholder>,
   } satisfies ComponentProps<typeof WidgetContainer>,
