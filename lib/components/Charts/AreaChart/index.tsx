@@ -101,7 +101,6 @@ export const _AreaChart = <
             type={lineType}
             fill={`url(#fill${area})`}
             fillOpacity={0.4}
-            dot={false}
             stroke={dataConfig[area].color || autoColor(index)}
           />
         ))}
