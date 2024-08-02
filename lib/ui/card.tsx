@@ -68,7 +68,10 @@ const CardInfo = React.forwardRef<
   <div ref={ref} className={cn("-ml-1 h-6 w-6", className)}>
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger className="cursor-default text-muted-foreground">
+        <TooltipTrigger
+          className="cursor-default text-muted-foreground"
+          title="Info"
+        >
           <Icon icon={InfoCircleLine} size="md" />
         </TooltipTrigger>
         <TooltipContent>
@@ -90,6 +93,7 @@ const CardLink = React.forwardRef<
         "h-6 w-6 text-muted-foreground transition-colors hover:text-foreground",
         className
       )}
+      aria-label="Link"
       {...props}
     >
       <Icon icon={ArrowRight} size="md" />
