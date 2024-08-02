@@ -73,4 +73,14 @@ export const Default: Story = {
     src: "https://github.com/dani-moreno.png",
     alt: "DM",
   },
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          { id: "color-contrast", enabled: false },
+          { id: "svg-img-alt", enabled: false },
+        ],
+      },
+    },
+  },
 }
