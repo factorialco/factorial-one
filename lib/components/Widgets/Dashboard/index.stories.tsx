@@ -106,10 +106,20 @@ export const EmployeesList: Story = {
           {...AreaChartWidgetStoriesMeta.args}
           header={{
             title: "Headcount",
-            subtitle: "June 2024",
+            subtitle: undefined,
             info: "This is additional information for the headcount",
-            link: "/",
+            link: undefined,
           }}
+          summaries={[
+            {
+              label: "Now",
+              value: "250",
+            },
+            {
+              label: "Last month",
+              value: "230",
+            },
+          ]}
           chart={{
             lineType: "natural",
             dataConfig: headcountDataConfig,
@@ -126,6 +136,12 @@ export const EmployeesList: Story = {
             info: "This is additional information for the promotion rate",
             link: undefined,
           }}
+          summaries={[
+            {
+              label: "Rate",
+              value: "20",
+            },
+          ]}
           chart={{
             lineType: "natural",
             dataConfig: promotionDataConfig,
@@ -142,6 +158,12 @@ export const EmployeesList: Story = {
             info: "This is additional information for the turnover rate",
             link: undefined,
           }}
+          summaries={[
+            {
+              label: "Rate",
+              value: "16%",
+            },
+          ]}
           chart={{
             lineType: "natural",
             dataConfig: turnoverDataConfig,
