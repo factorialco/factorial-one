@@ -13,7 +13,6 @@ import { FactorialOneProvider } from "../lib/lib/one-provider"
 import lightTheme, { darkTheme } from "./FactorialOne"
 import { DocsContainer } from "./DocsContainer"
 import { useDarkMode } from "storybook-dark-mode"
-import { fn } from "@storybook/test"
 import { action } from "@storybook/addon-actions"
 
 export const withTheme = () => {
