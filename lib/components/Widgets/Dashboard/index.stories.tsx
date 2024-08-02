@@ -18,7 +18,8 @@ const renderWidget = (index: number) => {
     () => <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} />,
     () => (
       <WidgetContainer
-        header={{ title: "A form widget", description: "Enter your data" }}
+        header={{ title: "A form widget" }}
+        description="Enter your data"
       >
         <p>
           Never gonna give you up. Never gonna let you down. Never gonna turn
@@ -31,8 +32,8 @@ const renderWidget = (index: number) => {
       <WidgetContainer
         header={{
           title: "A widget",
-          description: "This widget contains some data",
         }}
+        description="This widget contains some data"
       >
         <div className="flex justify-center">
           <Calendar defaultMonth={new Date(2024, 10, 15)} />
@@ -135,79 +136,77 @@ const turnoverData = [
 
 export const EmployeesList: Story = {
   args: {
-    children: (
-      <>
-        <AreaChartWidget
-          {...AreaChartWidgetStoriesMeta.args}
-          header={{
-            title: "Headcount",
-            subtitle: undefined,
-            info: "This is additional information for the headcount",
-            link: undefined,
-          }}
-          summaries={[
-            {
-              label: "Now",
-              value: "250",
-            },
-            {
-              label: "Last month",
-              value: "230",
-            },
-          ]}
-          chart={{
-            lineType: "natural",
-            dataConfig: headcountDataConfig,
-            data: headcountData,
-            xAxis: AreaChartWidgetStoriesMeta.args.chart.xAxis,
-            yAxis: { hide: true },
-          }}
-        />
-        <AreaChartWidget
-          {...AreaChartWidgetStoriesMeta.args}
-          header={{
-            title: "Promotion rate",
-            subtitle: undefined,
-            info: "This is additional information for the promotion rate",
-            link: undefined,
-          }}
-          summaries={[
-            {
-              label: "Rate",
-              value: "20",
-            },
-          ]}
-          chart={{
-            lineType: "natural",
-            dataConfig: promotionDataConfig,
-            data: promotionData,
-            xAxis: AreaChartWidgetStoriesMeta.args.chart.xAxis,
-            yAxis: { hide: true },
-          }}
-        />
-        <AreaChartWidget
-          {...AreaChartWidgetStoriesMeta.args}
-          header={{
-            title: "Turnover rate",
-            subtitle: undefined,
-            info: "This is additional information for the turnover rate",
-            link: undefined,
-          }}
-          summaries={[
-            {
-              label: "Rate",
-              value: "16%",
-            },
-          ]}
-          chart={{
-            lineType: "natural",
-            dataConfig: turnoverDataConfig,
-            data: turnoverData,
-            xAxis: AreaChartWidgetStoriesMeta.args.chart.xAxis,
-            yAxis: { hide: true },
-          }}
-        />
-      </>
-    ),
+    children: [
+      <AreaChartWidget
+        {...AreaChartWidgetStoriesMeta.args}
+        header={{
+          title: "Headcount",
+          subtitle: undefined,
+          info: "This is additional information for the headcount",
+          link: undefined,
+        }}
+        summaries={[
+          {
+            label: "Now",
+            value: "250",
+          },
+          {
+            label: "Last month",
+            value: "230",
+          },
+        ]}
+        chart={{
+          lineType: "natural",
+          dataConfig: headcountDataConfig,
+          data: headcountData,
+          xAxis: AreaChartWidgetStoriesMeta.args.chart.xAxis,
+          yAxis: { hide: true },
+        }}
+      />,
+      <AreaChartWidget
+        {...AreaChartWidgetStoriesMeta.args}
+        header={{
+          title: "Promotion rate",
+          subtitle: undefined,
+          info: "This is additional information for the promotion rate",
+          link: undefined,
+        }}
+        summaries={[
+          {
+            label: "Rate",
+            value: "20",
+          },
+        ]}
+        chart={{
+          lineType: "natural",
+          dataConfig: promotionDataConfig,
+          data: promotionData,
+          xAxis: AreaChartWidgetStoriesMeta.args.chart.xAxis,
+          yAxis: { hide: true },
+        }}
+      />,
+      <AreaChartWidget
+        {...AreaChartWidgetStoriesMeta.args}
+        header={{
+          title: "Turnover rate",
+          subtitle: undefined,
+          info: "This is additional information for the turnover rate",
+          link: undefined,
+        }}
+        summaries={[
+          {
+            label: "Rate",
+            value: "16%",
+          },
+        ]}
+        chart={{
+          lineType: "natural",
+          dataConfig: turnoverDataConfig,
+          data: turnoverData,
+          xAxis: AreaChartWidgetStoriesMeta.args.chart.xAxis,
+          yAxis: { hide: true },
+        }}
+      />,
+    ],
   },
 }
