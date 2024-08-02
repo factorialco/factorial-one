@@ -1,8 +1,14 @@
-import type { LinkProps } from "@/components/Actions/Link"
-import { createContext, HTMLAttributes, ReactNode, useContext } from "react"
+import {
+  AnchorHTMLAttributes,
+  createContext,
+  ReactNode,
+  useContext,
+} from "react"
 
-type LinkContextValue = {
-  controller?: (props: LinkProps) => HTMLAttributes<HTMLAnchorElement>
+export type LinkContextValue = {
+  controller?: (
+    props: AnchorHTMLAttributes<HTMLAnchorElement>
+  ) => AnchorHTMLAttributes<HTMLAnchorElement>
 }
 
 const LinkContext = createContext<LinkContextValue | undefined>(undefined)

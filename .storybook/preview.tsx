@@ -13,6 +13,8 @@ import { FactorialOneProvider } from "../lib/lib/one-provider"
 import lightTheme, { darkTheme } from "./FactorialOne"
 import { DocsContainer } from "./DocsContainer"
 import { useDarkMode } from "storybook-dark-mode"
+import { fn } from "@storybook/test"
+import { action } from "@storybook/addon-actions"
 
 export const withTheme = () => {
   return (Story) => {
@@ -29,6 +31,19 @@ export const FactorialOne = (Story, { parameters }) => {
     <FactorialOneProvider
       layout={{
         fullScreen: parameters.layout === "fullscreen",
+      }}
+      link={{
+        controller: (props) => ({
+          onClick: (...args) => {
+            const e = args[0]
+            action("Link clicked")({
+              href: props.href,
+              e,
+              props,
+            })
+            e.preventDefault()
+          },
+        }),
       }}
     >
       <Story />

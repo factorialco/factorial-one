@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { LinkProvider } from "@/lib/linkHandler"
 import { Link } from "."
 
 const meta = {
@@ -20,19 +19,3 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Basic: Story = {}
-export const WithProvider: Story = {
-  decorators: [
-    (Story) => (
-      <LinkProvider
-        controller={({ href }) => ({
-          onClick: (event) => {
-            alert(`Cicked: ${href}`)
-            event.preventDefault()
-          },
-        })}
-      >
-        <Story />
-      </LinkProvider>
-    ),
-  ],
-}
