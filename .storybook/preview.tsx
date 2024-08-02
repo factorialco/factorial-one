@@ -32,17 +32,17 @@ export const FactorialOne = (Story, { parameters }) => {
         fullScreen: parameters.layout === "fullscreen",
       }}
       link={{
-        controller: (props) => ({
-          onClick: (...args) => {
-            const e = args[0]
-            action("Link clicked")({
-              href: props.href,
-              e,
-              props,
-            })
-            e.preventDefault()
-          },
-        }),
+        component: (props, ref) => (
+          <a
+            ref={ref}
+            {...props}
+            onClick={(event, ...args) => {
+              action("Link clicked")(event, ...args)
+              props?.onClick?.(event, ...args)
+              event.preventDefault()
+            }}
+          />
+        ),
       }}
     >
       <Story />

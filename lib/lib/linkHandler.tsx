@@ -1,14 +1,16 @@
 import {
   AnchorHTMLAttributes,
   createContext,
+  ForwardedRef,
   ReactNode,
   useContext,
 } from "react"
 
 export type LinkContextValue = {
-  controller?: (
-    props: AnchorHTMLAttributes<HTMLAnchorElement>
-  ) => AnchorHTMLAttributes<HTMLAnchorElement>
+  component?: (
+    props: AnchorHTMLAttributes<HTMLAnchorElement>,
+    ref: ForwardedRef<HTMLAnchorElement>
+  ) => JSX.Element
 }
 
 const LinkContext = createContext<LinkContextValue | undefined>(undefined)
@@ -17,9 +19,9 @@ export const LinkProvider: React.FC<
   {
     children: ReactNode
   } & LinkContextValue
-> = ({ children, controller }) => {
+> = ({ children, component }) => {
   return (
-    <LinkContext.Provider value={{ controller }}>
+    <LinkContext.Provider value={{ component }}>
       {children}
     </LinkContext.Provider>
   )
