@@ -34,7 +34,9 @@ const renderWidget = (index: number) => {
           description: "This widget contains some data",
         }}
       >
-        <Calendar defaultMonth={new Date(2024, 10, 15)} />
+        <div className="flex justify-center">
+          <Calendar defaultMonth={new Date(2024, 10, 15)} />
+        </div>
       </WidgetContainer>
     ),
     () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
@@ -68,4 +70,26 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: "reset",
+    },
+  },
+}
+
+export const Mobile: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: "iphonex",
+    },
+  },
+}
+
+export const Tablet: Story = {
+  parameters: {
+    viewport: {
+      defaultViewport: "ipad",
+    },
+  },
+}

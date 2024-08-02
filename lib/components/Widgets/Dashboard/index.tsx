@@ -18,7 +18,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
     const onResize = useCallback(
       ({ width }: Size) => {
         if (width) {
-          setColumns(Math.floor(width / 340))
+          setColumns(Math.floor(width / 340) || 1)
         }
       },
       [setColumns]
@@ -30,13 +30,18 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
     return (
       <div ref={ref}>
         <div ref={containerRef}>
-          {columns && (
-            <Layout
-              key={columns}
-              colCount={columns}
-              items={children}
-              gap={16}
-            />
+          {columns === 1 ? (
+            <div className="flex flex-col gap-4">{children}</div>
+          ) : (
+            columns &&
+            columns > 1 && (
+              <Layout
+                key={columns}
+                colCount={columns}
+                items={children}
+                gap={16}
+              />
+            )
           )}
         </div>
       </div>
