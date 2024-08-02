@@ -7,6 +7,7 @@ import PieChartWidgetStoriesMeta from "@/components/Widgets/Charts/PieChartWidge
 import { VerticalBarChartWidget } from "@/components/Widgets/Charts/VerticalBarChartWidget"
 import VerticalBarChartWidgetStoriesMeta from "@/components/Widgets/Charts/VerticalBarChartWidget/index.stories"
 import { Dashboard } from "@/components/Widgets/Dashboard"
+import { User } from "@/icons"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Tabs } from "."
 
@@ -72,8 +73,12 @@ export const Default: Story = {
     subtitle: "Product Designer",
     src: "https://github.com/dani-moreno.png",
     alt: "DM",
+    routes: [{ title: "Employees", url: "/employees" }],
+    breadcrumbTitle: "Alba Horneros",
+    icon: User,
   },
   parameters: {
+    layout: "fullscreen",
     a11y: {
       config: {
         rules: [

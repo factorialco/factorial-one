@@ -13,7 +13,10 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    route: "Employees",
+    routes: [
+      { title: "Employees", url: "/employees" },
+      { title: "Engineers", url: "/engineers" },
+    ],
     title: "Alba Horneros",
     icon: User,
   },

@@ -6,16 +6,18 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/Navigation/Tabs"
-import { User } from "@/icons"
-import React, { forwardRef } from "react"
+import React, { ComponentProps, forwardRef } from "react"
 
 interface TabsProps {
   tabs: TabType[]
-  title: string
-  subtitle: string
-  src: string
-  alt: string
-  defaultTab?: string
+  title: ComponentProps<typeof Header>["title"]
+  subtitle: ComponentProps<typeof Header>["subtitle"]
+  src: ComponentProps<typeof Header>["src"]
+  alt: ComponentProps<typeof Header>["alt"]
+  defaultTab?: ComponentProps<typeof TabsComponent>["defaultValue"]
+  breadcrumbTitle: ComponentProps<typeof Breadcrumb>["title"]
+  routes: ComponentProps<typeof Breadcrumb>["routes"]
+  icon: ComponentProps<typeof Breadcrumb>["icon"]
 }
 
 interface TabType {
@@ -25,9 +27,22 @@ interface TabType {
 }
 
 export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
-  ({ tabs, title, subtitle, src, alt, defaultTab = tabs[0].key }, ref) => (
-    <main ref={ref}>
-      <Breadcrumb icon={User} route={"Employees"} title={"Alba Horneros"} />
+  (
+    {
+      tabs,
+      title,
+      subtitle,
+      src,
+      alt,
+      breadcrumbTitle,
+      routes,
+      icon,
+      defaultTab = tabs[0].key,
+    },
+    ref
+  ) => (
+    <main ref={ref} className="h-full bg-white">
+      <Breadcrumb icon={icon} routes={routes} title={breadcrumbTitle} />
       <Header title={title} subtitle={subtitle} src={src} alt={alt}></Header>
       <TabsComponent defaultValue={defaultTab}>
         <TabsList className="h-auto w-full justify-start rounded-none border-b border-l-0 border-r-0 border-t-0 border-solid border-b-muted bg-transparent px-10 py-3">
