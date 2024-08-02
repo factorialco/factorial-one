@@ -29,7 +29,7 @@ export const WidgetContainer = forwardRef<
       <CardTitle>{header.title}</CardTitle>
       <CardDescription>{header.description}</CardDescription>
     </CardHeader>
-    <CardContent className="flex justify-center">{children}</CardContent>
+    <CardContent>{children}</CardContent>
     {footer && (
       <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
