@@ -36,6 +36,7 @@ export const _PieChart = <DataConfig extends ChartConfig>(
       <PieChartPrimitive accessibilityLayer margin={{ left: 12, right: 12 }}>
         <ChartTooltip cursor content={<ChartTooltipContent hideLabel />} />
         <Pie
+          isAnimationActive={false}
           nameKey={"label"}
           dataKey={"value"}
           data={preparedData}

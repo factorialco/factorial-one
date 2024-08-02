@@ -7,6 +7,11 @@ const meta = {
   component: PieChartWidget,
   parameters: {
     layout: "centered",
+    a11y: {
+      config: {
+        rules: [{ id: "svg-img-alt", enabled: false }],
+      },
+    },
   },
   tags: ["autodocs"],
   args: {

@@ -1,31 +1,50 @@
-import { AutoGrid } from "@/factorial-one"
-import { ComponentProps, forwardRef, ReactNode } from "react"
+import { forwardRef, ReactNode, useCallback, useRef, useState } from "react"
+import Layout from "react-masonry-list"
+import { useResizeObserver } from "usehooks-ts"
 
 type DashboardProps = {
-  header?: {
-    title: string
-    description?: string
-  }
-  tileSize?: ComponentProps<typeof AutoGrid>["tileSize"]
-  children?: ReactNode
+  children?: ReactNode[]
+}
+
+type Size = {
+  width?: number
+  height?: number
 }
 
 export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
-  ({ header, children, tileSize }, ref) => (
-    <div>
-      {header && (
-        <div className="flex flex-col gap-1 pb-6 leading-normal">
-          <h2 className="text-xl font-semibold">{header.title}</h2>
-          {header.description && (
-            <div className="max-w-screen-md text-muted-foreground">
-              {header.description}
-            </div>
+  ({ children }, ref) => {
+    const [columns, setColumns] = useState<number | undefined>()
+
+    const onResize = useCallback(
+      ({ width }: Size) => {
+        if (width) {
+          setColumns(Math.floor(width / 340) || 1)
+        }
+      },
+      [setColumns]
+    )
+
+    const containerRef = useRef<HTMLDivElement>(null)
+    useResizeObserver({ ref: containerRef, onResize })
+
+    return (
+      <div ref={ref}>
+        <div ref={containerRef}>
+          {columns === 1 ? (
+            <div className="flex flex-col gap-4">{children}</div>
+          ) : (
+            columns &&
+            columns > 1 && (
+              <Layout
+                key={columns}
+                colCount={columns}
+                items={children}
+                gap={16}
+              />
+            )
           )}
         </div>
-      )}
-      <AutoGrid ref={ref} tileSize={tileSize}>
-        {children}
-      </AutoGrid>
-    </div>
-  )
+      </div>
+    )
+  }
 )

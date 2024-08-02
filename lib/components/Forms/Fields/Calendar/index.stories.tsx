@@ -10,11 +10,15 @@ const meta = {
   parameters: {
     layout: "centered",
     a11y: {
-      skipCi: true,
+      config: {
+        rules: [{ id: "color-contrast", enabled: false }],
+      },
     },
   },
   tags: ["autodocs"],
-  args: {},
+  args: {
+    defaultMonth: new Date(2024, 10, 15),
+  },
 } satisfies Meta<typeof Calendar>
 
 export default meta

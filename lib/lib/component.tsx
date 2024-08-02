@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-
 import { forwardRef } from "react"
 import { useComponentXRay } from "./xray"
 
