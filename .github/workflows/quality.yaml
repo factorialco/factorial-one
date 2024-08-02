@@ -20,5 +20,16 @@ jobs:
         run: npm install
       - name: Check formatting with Prettier
         run: npm run prettier:check:ci
+  eslint:
+    name: Prettier
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "21.x"
+          cache: npm
+      - name: Install dependencies
+        run: npm install
       - name: Check linting with eslint
         run: npm run lint
