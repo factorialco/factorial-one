@@ -69,7 +69,7 @@ export const _AreaChart = <
         )}
         <ChartTooltip
           cursor
-          content={<ChartTooltipContent indicator="line" />}
+          content={<ChartTooltipContent indicator="dot" />}
         />
         <defs>
           {areas.map((area, index) => (
@@ -101,15 +101,17 @@ export const _AreaChart = <
             type={lineType}
             fill={`url(#fill${area})`}
             fillOpacity={0.4}
-            dot={true}
+            dot={false}
             stroke={dataConfig[area].color || autoColor(index)}
           />
         ))}
-        <ChartLegend
-          className="flex justify-start"
-          iconType="star"
-          content={<ChartLegendContent />}
-        />
+        {areas.length > 1 && (
+          <ChartLegend
+            className="flex justify-start"
+            iconType="star"
+            content={<ChartLegendContent />}
+          />
+        )}
       </AreaChartPrimitive>
     </ChartContainer>
   )
