@@ -1,14 +1,9 @@
-import {
-  AnchorHTMLAttributes,
-  createContext,
-  ForwardedRef,
-  ReactNode,
-  useContext,
-} from "react"
+import { LinkProps } from "@/components/Actions/Link"
+import { createContext, ForwardedRef, ReactNode, useContext } from "react"
 
 export type LinkContextValue = {
   component?: (
-    props: AnchorHTMLAttributes<HTMLAnchorElement>,
+    props: LinkProps,
     ref: ForwardedRef<HTMLAnchorElement>
   ) => JSX.Element
 }
