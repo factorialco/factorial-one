@@ -37,15 +37,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
-export const WithTitle: Story = {
-  args: {
-    header: {
-      title: "Some data you can see below",
-      description:
-        "One can write a small description to further clarify what you're seeing. If the description is long enough, it will wrap before hitting the end of the container.",
-    },
-  },
-}
 
 export const Small: Story = {
   args: {
