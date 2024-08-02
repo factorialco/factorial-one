@@ -82,13 +82,10 @@ CardInfo.displayName = "CardInfo"
 
 const CardLink = React.forwardRef<
   HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<"a"> & {
-    asChild?: boolean
-  }
->(({ asChild, className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, ...props }) => {
   return (
     <a
-      ref={ref}
       className={cn(
         "h-6 w-6 text-muted-foreground transition-colors hover:text-foreground",
         className
