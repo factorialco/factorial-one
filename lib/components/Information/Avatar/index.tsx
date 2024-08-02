@@ -3,12 +3,12 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/ui/avatar"
-import { forwardRef } from "react"
+import { ComponentProps, forwardRef } from "react"
 
 interface AvatarType {
   alt: string
   src?: string
-  size?: "medium" | "small" | "xsmall" | "large" | "xlarge" | "xxlarge"
+  size?: ComponentProps<typeof AvatarComponent>["size"]
 }
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarType>(
