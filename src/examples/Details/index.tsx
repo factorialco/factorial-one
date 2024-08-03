@@ -1,18 +1,22 @@
 import React, { ComponentProps } from "react"
+import { Badge } from "../../../lib/factorial-one"
 import { DetailsItem, DetailsItemType } from "../DetailsItem"
 import { Weekdays } from "../Weekdays"
 
 interface DetailsType {
   details: DetailsItemType[]
   activatedDays?: ComponentProps<typeof Weekdays>["activatedDays"]
+  manager?: string
+  teams?: string[]
 }
 
-export const Details: React.FC<DetailsType> = ({ details, activatedDays }) => {
+export const Details: React.FC<DetailsType> = ({
+  details,
+  activatedDays,
+  manager,
+  teams,
+}) => {
   return (
-    //data
-    //days
-    //manager
-    //team
     <div className="flex flex-col gap-4">
       {details.map((item, index) => (
         <DetailsItem
@@ -23,9 +27,29 @@ export const Details: React.FC<DetailsType> = ({ details, activatedDays }) => {
       ))}
       <DetailsItem
         title="Workable days"
-        hasSeparation
+        className="gap-2"
         content={<Weekdays activatedDays={activatedDays} />}
       />
+      {!!manager && (
+        <DetailsItem
+          title="Manager"
+          className="gap-2"
+          content={<Badge variant="name">{manager}</Badge>}
+        />
+      )}
+      {!!teams?.length && (
+        <DetailsItem
+          title="Team"
+          className="flex flex-col gap-2"
+          content={
+            <div className="flex flex-row flex-wrap gap-2">
+              {teams.map((team) => (
+                <Badge variant="name">{team}</Badge>
+              ))}
+            </div>
+          }
+        />
+      )}
     </div>
   )
 }

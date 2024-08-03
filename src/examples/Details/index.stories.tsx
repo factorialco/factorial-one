@@ -31,6 +31,8 @@ const meta: Meta = {
       },
     ],
     activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    manager: "Isabella González",
+    teams: ["Design", "Product", "Foundations Squad"],
   },
 }
 
