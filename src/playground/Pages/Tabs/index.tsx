@@ -1,4 +1,3 @@
-import { Header } from "@/components/Blocks/Header"
 import { Breadcrumb } from "@/components/Navigation/Breadcrumb"
 import {
   Tabs as TabsComponent,
@@ -7,6 +6,7 @@ import {
   TabsTrigger,
 } from "@/components/Navigation/Tabs"
 import React, { ComponentProps, forwardRef } from "react"
+import { Header } from "../Header"
 
 interface TabsProps {
   tabs: TabType[]
