@@ -5,7 +5,7 @@ type DashboardProps = {
   children: ReactNode[]
 }
 
-export const WidgetRow = forwardRef<HTMLDivElement, DashboardProps>(
+export const WidgetStrip = forwardRef<HTMLDivElement, DashboardProps>(
   ({ children }, ref) => {
     return (
       <ScrollArea ref={ref}>

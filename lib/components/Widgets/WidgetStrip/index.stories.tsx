@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { WidgetRow } from "."
+import { WidgetStrip } from "."
 import { AreaChartWidget } from "../Charts/AreaChartWidget"
 
 import AreaChartWidgetStoriesMeta from "../Charts/AreaChartWidget/index.stories"
@@ -35,7 +35,7 @@ const renderWidgets = (length: number) =>
   Array.from({ length }).map((_, i) => renderWidget(i))
 
 const meta = {
-  component: WidgetRow,
+  component: WidgetStrip,
   tags: ["autodocs"],
   args: {
     children: renderWidgets(3),
@@ -50,7 +50,7 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof WidgetRow>
+} satisfies Meta<typeof WidgetStrip>
 
 export default meta
 type Story = StoryObj<typeof meta>
