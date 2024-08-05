@@ -24,6 +24,16 @@ export default {
     fontFamily: {
       sans: ["Inter", "sans-serif"],
     },
+    fontSize: {
+      xs: ["11px", "16px"],
+      sm: ["13px", "20px"],
+      base: ["15px", "24px"],
+      lg: ["17px", "24px"], // Not really used but we keep it for scale
+      xl: ["19px", "28px"],
+      "2xl": ["21px", "28px"], // Same
+      "3xl": ["24x", "32px"], // Same
+      "4xl": ["27x", "32px"],
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
