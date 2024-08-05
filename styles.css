@@ -125,3 +125,7 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+body {
+  @apply font-sans text-base text-foreground;
+}

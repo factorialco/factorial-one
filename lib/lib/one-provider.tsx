@@ -31,7 +31,7 @@ export const useLayout = () => {
 
 export const LayoutProvider: React.FC<
   { children: React.ReactNode } & LayoutProps
-> = ({ children, fullScreen = true, addBodyClasses = true }) => {
+> = ({ children, fullScreen = true }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [element, setElement] = useState(ref.current)
 
@@ -39,23 +39,12 @@ export const LayoutProvider: React.FC<
     setElement(ref.current)
   }, [])
 
-  useIsomorphicLayoutEffect(() => {
-    if (!addBodyClasses) return
-
-    if (typeof document !== "undefined") {
-      const classNames = cn("font-sans text-foreground").split(" ")
-      document.body.classList.add(...classNames)
-
-      return () => document.body.classList.remove(...classNames)
-    }
-  }, [addBodyClasses])
-
   return (
     <LayoutContext.Provider value={{ element }}>
       <Stack
         ref={ref}
         id="factorial-one-layout"
-        className={cn("font-sans text-foreground", {
+        className={cn({
           "h-screen w-screen bg-page-background": fullScreen,
         })}
       >
