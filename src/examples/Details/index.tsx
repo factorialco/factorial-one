@@ -34,7 +34,13 @@ export const Details: React.FC<DetailsType> = ({
         <DetailsItem
           title="Manager"
           className="gap-2"
-          content={<Badge variant="name">{manager}</Badge>}
+          content={
+            <Badge
+              hasAvatar
+              text={manager}
+              imageSrc="https://github.com/dani-moreno.png"
+            />
+          }
         />
       )}
       {!!teams?.length && (
@@ -44,7 +50,7 @@ export const Details: React.FC<DetailsType> = ({
           content={
             <div className="flex flex-row flex-wrap gap-2">
               {teams.map((team) => (
-                <Badge variant="name">{team}</Badge>
+                <Badge hasAvatar text={team} />
               ))}
             </div>
           }

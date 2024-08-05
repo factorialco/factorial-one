@@ -8,7 +8,11 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  args: {},
+  args: {
+    text: "Foundations Squad",
+    variant: "name",
+    hasAvatar: true,
+  },
 } satisfies Meta<typeof Badge>
 
 export default meta
@@ -23,34 +27,39 @@ export const Default: Story = {
 export const Neutral: Story = {
   args: {
     variant: "neutral",
-    children: "Neutral",
+    text: "Neutral",
+    hasAvatar: false,
   },
 }
 
 export const Destructive: Story = {
   args: {
     variant: "destructive",
-    children: "Destructive",
+    text: "Destructive",
+    hasAvatar: false,
   },
 }
 
 export const Positive: Story = {
   args: {
     variant: "positive",
-    children: "Positive",
+    text: "Positive",
+    hasAvatar: false,
   },
 }
 
 export const Warning: Story = {
   args: {
     variant: "warning",
-    children: "Warning",
+    text: "Warning",
+    hasAvatar: false,
   },
 }
 
 export const Info: Story = {
   args: {
     variant: "info",
-    children: "Info",
+    text: "Info",
+    hasAvatar: false,
   },
 }
