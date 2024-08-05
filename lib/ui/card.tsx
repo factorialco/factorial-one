@@ -69,7 +69,7 @@ const CardInfo = React.forwardRef<
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger
-          className="cursor-default text-muted-foreground"
+          className="cursor-help text-muted-foreground"
           title="Info"
         >
           <Icon icon={InfoCircleLine} size="md" />
