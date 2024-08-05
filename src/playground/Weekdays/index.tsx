@@ -1,5 +1,5 @@
+import { ToggleGroup, ToggleGroupItem } from "@/ui/toggleGroup"
 import { forwardRef } from "react"
-import { ToggleGroup, ToggleGroupItem } from "../../../lib/ui/toggleGroup"
 
 interface WeekdaysProps {
   activatedDays?: string[]

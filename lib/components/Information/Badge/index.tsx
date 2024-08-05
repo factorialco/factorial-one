@@ -1,11 +1,11 @@
+import { Avatar } from "@/components/Information/Avatar"
+import { cn } from "@/lib/utils"
 import { Badge as BadgeComponent } from "@/ui/badge"
 import { ComponentProps, forwardRef } from "react"
-import { cn } from "../../../lib/utils"
-import { Avatar } from "../Avatar"
 
 interface BadgeProps {
   text: string
-  hasAvatar: boolean
+  hasAvatar?: boolean
   variant?: ComponentProps<typeof BadgeComponent>["variant"]
   imageSrc?: ComponentProps<typeof Avatar>["src"]
   alt?: ComponentProps<typeof Avatar>["alt"]

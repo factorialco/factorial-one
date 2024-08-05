@@ -1,5 +1,5 @@
+import { Badge } from "@/components/Information/Badge"
 import { ComponentProps, forwardRef } from "react"
-import { Badge } from "../../../lib/factorial-one"
 import { DetailsItem, DetailsItemType } from "../DetailsItem"
 import { Weekdays } from "../Weekdays"
 
