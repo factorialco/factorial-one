@@ -42,13 +42,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
     <div className="grid h-full grow grid-cols-1 bg-secondary/60 p-4 md:grid-cols-[264px_1fr]">
       <Stack gap="4" overflow="hidden">
         <Stack className="md:hidden" alignItems="start">
-          <Button
-            size="sm"
-            hideLabel
-            label="Menu"
-            icon={Home}
-            variant="ghost"
-          />
+          <Button hideLabel label="Menu" icon={Home} variant="ghost" />
         </Stack>
         <ScrollArea className="hidden h-full flex-col overflow-hidden pr-3 md:flex">
           <Stack gap="4">
@@ -142,12 +136,11 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               </div>
             </Stack>
             <Split gap="2">
-              <Button label="Upload files" icon={Add} size="sm" />
+              <Button label="Upload files" icon={Add} />
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant="secondary"
-                    size="sm"
                     hideLabel
                     label="Submenu"
                     icon={Ellipsis}
