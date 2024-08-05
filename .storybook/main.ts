@@ -9,8 +9,8 @@ const config: StorybookConfig = {
       titlePrefix: "Components",
     },
     {
-      directory: "../src/examples",
-      titlePrefix: "Examples",
+      directory: "../src/playground",
+      titlePrefix: "Playground",
     },
     {
       directory: "../src/experiments",
