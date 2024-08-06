@@ -25,14 +25,14 @@ export default {
       sans: ["Inter", "sans-serif"],
     },
     fontSize: {
-      xs: ["11px", "16px"],
-      sm: ["13px", "20px"],
-      base: ["15px", "24px"],
-      lg: ["17px", "24px"], // Not really used but we keep it for scale
-      xl: ["19px", "28px"],
-      "2xl": ["21px", "28px"], // Same
-      "3xl": ["24x", "32px"], // Same
-      "4xl": ["27x", "32px"],
+      xs: ["0.6875rem", "1rem"],
+      sm: ["0.8125rem", "1.25rem"],
+      base: ["0.9375rem", "1.5rem"],
+      lg: ["1.0625rem", "1.5rem"], // Not really used but we keep it for scale
+      xl: ["1.1875rem", "1.75rem"],
+      "2xl": ["1.3125rem", "1.75rem"], // Same
+      "3xl": ["1.5rem", "2rem"], // Same
+      "4xl": ["1.6875rem", "2rem"],
     },
     extend: {
       colors: {
