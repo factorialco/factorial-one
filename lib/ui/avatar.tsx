@@ -6,7 +6,6 @@ import { cva } from "class-variance-authority"
 import * as React from "react"
 
 export const sizes = [
-  "xxsmall",
   "xsmall",
   "small",
   "medium",
@@ -18,8 +17,7 @@ export const sizes = [
 const avatarVariants = cva("relative flex shrink-0 overflow-hidden", {
   variants: {
     size: {
-      xxsmall: "h-6 w-6 rounded-xl text-base text-white",
-      xsmall: "h-8 w-8 rounded-xl text-xs",
+      xsmall: "h-6 w-6 rounded-xl text-base",
       small: "h-10 w-10 rounded-xl text-sm",
       medium: "h-12 w-12 rounded-xl",
       large: "h-16 w-16 rounded-2xl text-xl",

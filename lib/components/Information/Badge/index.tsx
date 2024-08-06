@@ -22,8 +22,8 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
           <Avatar
             alt={alt || text[0]}
             src={imageSrc}
-            size="xxsmall"
-            className="mr-1 bg-orange-500"
+            size="xsmall"
+            className="mr-1 bg-orange-500 text-background"
           />
         )}
         {text}
