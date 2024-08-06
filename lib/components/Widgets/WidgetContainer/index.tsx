@@ -1,7 +1,7 @@
-import { CardDescription } from "@/factorial-one"
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardInfo,
   CardLink,
