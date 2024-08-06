@@ -7,6 +7,7 @@ import {
   useState,
 } from "react"
 import { useIsomorphicLayoutEffect } from "usehooks-ts"
+import { ImageContextValue, ImageProvider } from "./imageHandler"
 import { LinkContextValue, LinkProvider } from "./linkHandler"
 import { cn } from "./utils"
 import { XRayProvider } from "./xray"
@@ -57,12 +58,15 @@ export const LayoutProvider: React.FC<
 export const FactorialOneProvider: React.FC<{
   children: React.ReactNode
   link?: LinkContextValue
+  image?: ImageContextValue
   layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">
-}> = ({ children, layout, link }) => {
+}> = ({ children, layout, link, image }) => {
   return (
     <LayoutProvider {...layout}>
       <XRayProvider>
-        <LinkProvider {...link}>{children}</LinkProvider>
+        <LinkProvider {...link}>
+          <ImageProvider {...image}>{children}</ImageProvider>
+        </LinkProvider>
       </XRayProvider>
     </LayoutProvider>
   )

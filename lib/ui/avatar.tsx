@@ -1,5 +1,6 @@
 "use client"
 
+import { Image } from "@/components/Utilities/Image"
 import { cn } from "@/lib/utils"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 import { cva } from "class-variance-authority"
@@ -56,7 +57,10 @@ const AvatarImage = React.forwardRef<
     ref={ref}
     className={cn("aspect-square h-full w-full", className)}
     {...props}
-  />
+    asChild
+  >
+    <Image />
+  </AvatarPrimitive.Image>
 ))
 AvatarImage.displayName = AvatarPrimitive.Image.displayName
 
