@@ -17,7 +17,7 @@ const renderWidget = (index: number) => {
     () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
     () => (
       <WidgetContainer
-        header={{ title: "A form widget", description: "Enter your data" }}
+        header={{ title: "A form widget", subtitle: "Enter your data" }}
       >
         <p>
           Never gonna give you up. Never gonna let you down. Never gonna turn
