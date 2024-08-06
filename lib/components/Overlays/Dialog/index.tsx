@@ -79,9 +79,9 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
           {actions && (
             <DialogFooter>
               {actions.secondary && (
-                <Button variant="secondary" size="sm" {...actions.secondary} />
+                <Button variant="secondary" {...actions.secondary} />
               )}
-              <Button variant={"default"} size="sm" {...actions.primary} />
+              <Button variant={"default"} {...actions.primary} />
             </DialogFooter>
           )}
         </DialogContent>
