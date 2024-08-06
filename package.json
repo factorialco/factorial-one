@@ -2,7 +2,7 @@
   "name": "@factorialco/factorial-one",
   "version": "0.0.1",
   "main": "dist/factorial-one.js",
-  "typings": "dist/factorial-one.rollup.d.ts",
+  "typings": "dist/factorial-one.d.ts",
   "type": "module",
   "packageManager": "npm@10.8.2",
   "files": [
