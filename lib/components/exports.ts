@@ -1,4 +1,3 @@
-export * as TabsPage from "../../src/playground/Pages/Tabs"
 export * from "./Actions/exports"
 export * from "./Blocks/exports"
 export * from "./Charts/exports"
