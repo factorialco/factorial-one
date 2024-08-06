@@ -1,7 +1,12 @@
 import { useImageContext } from "@/lib/imageHandler"
 import { forwardRef, ImgHTMLAttributes } from "react"
 
-export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {}
+export type ImageProps = ImgHTMLAttributes<HTMLImageElement>
+
+export type SrcProps = Pick<
+  ImgHTMLAttributes<HTMLImageElement>,
+  "src" | "srcSet" | "sizes"
+>
 
 export const Image = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
   const { src } = useImageContext()

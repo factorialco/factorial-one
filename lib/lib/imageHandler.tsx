@@ -1,10 +1,8 @@
-import type { ImageProps } from "@/components/Utilities/Image"
-import { createContext, ImgHTMLAttributes, ReactNode, useContext } from "react"
+import type { ImageProps, SrcProps } from "@/components/Utilities/Image"
+import { createContext, ReactNode, useContext } from "react"
 
 export type ImageContextValue = {
-  src?: (
-    props: ImageProps
-  ) => Pick<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet" | "sizes">
+  src?: (props: ImageProps) => SrcProps
 }
 
 const ImageContext = createContext<ImageContextValue | undefined>(undefined)
