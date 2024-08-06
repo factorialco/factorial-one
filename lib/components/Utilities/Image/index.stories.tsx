@@ -11,6 +11,9 @@ const meta = {
   tags: ["autodocs"],
   args: {
     src: heart,
+    width: 100,
+    height: 100,
+    alt: "Heart",
   },
 } satisfies Meta<typeof Image>
 
