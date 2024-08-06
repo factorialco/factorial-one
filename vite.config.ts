@@ -14,7 +14,7 @@ export default defineConfig({
     ...(process.env.BUILD_TYPES
       ? [
           dts({
-            include: ["lib"],
+            include: ["lib", "src"],
             exclude: ["**/*.stories.tsx"],
             rollupTypes: true,
             bundledPackages: ["class-variance-authority"],
@@ -31,6 +31,7 @@ export default defineConfig({
     lib: {
       entry: {
         ["factorial-one"]: resolve(__dirname, "lib/factorial-one.ts"),
+        ["playground"]: resolve(__dirname, "src/playground/exports.ts"),
       },
       fileName: (_, entryName) => {
         return `${entryName}.js`

@@ -12,10 +12,8 @@ export const variants = [
   "ghost",
 ] as const
 
-export const sizes = ["default", "sm"] as const
-
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-full border-solid text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex h-8 items-center justify-center gap-1 whitespace-nowrap rounded-full border-solid text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -32,30 +30,14 @@ const buttonVariants = cva(
         ghost:
           "border-none text-intermediate hover:bg-accent hover:text-accent-foreground",
       } satisfies Record<(typeof variants)[number], string>,
-      rounded: {
+      round: {
         true: "aspect-square px-0",
+        false: "px-3",
       },
-      size: {
-        default: "h-10 py-2",
-        sm: "h-8",
-      } satisfies Record<(typeof sizes)[number], string>,
     },
-    compoundVariants: [
-      {
-        size: "default",
-        rounded: false,
-        class: "px-4",
-      },
-      {
-        size: "sm",
-        rounded: false,
-        class: "px-3",
-      },
-    ],
     defaultVariants: {
       variant: "default",
-      size: "default",
-      rounded: false,
+      round: false,
     },
   }
 )
@@ -67,11 +49,11 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, rounded, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, round, variant, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className, rounded }))}
+        className={cn(buttonVariants({ variant, className, round }))}
         ref={ref}
         {...props}
       />

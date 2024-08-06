@@ -4,7 +4,7 @@ import { ComponentProps, forwardRef, useState } from "react"
 
 export type ButtonProps = Pick<
   ComponentProps<typeof ShadcnButton>,
-  "variant" | "size" | "disabled" | "type"
+  "variant" | "disabled" | "type" | "round"
 > & {
   onClick?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -54,11 +54,11 @@ const Button: React.FC<ButtonProps> = forwardRef<
         title={hideLabel ? label : undefined}
         onClick={handleClick}
         disabled={disabled || loading || forceLoading}
-        rounded={hideLabel}
+        round={hideLabel}
         ref={ref}
         {...props}
       >
-        {icon && <Icon size="sm" icon={icon} />}
+        {icon && <Icon size="md" icon={icon} />}
         {!hideLabel && label}
       </ShadcnButton>
     )

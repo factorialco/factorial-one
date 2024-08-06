@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
 import Add from "@/icons/Add"
-import Bell from "@/icons/Bell"
+import Archive from "@/icons/Archive"
 import { Button } from "."
 
 const meta = {
@@ -13,7 +13,6 @@ const meta = {
   tags: ["autodocs"],
   args: {
     variant: "default",
-    size: "default",
     onClick: fn(),
     label: "Click me",
   },
@@ -58,7 +57,7 @@ export const Outline: Story = {
 
 export const WithIcon: Story = {
   args: {
-    icon: Bell,
+    icon: Archive,
   },
 }
 
@@ -85,9 +84,10 @@ export const LoadingState: Story = {
   },
 }
 
-export const Small: Story = {
+export const Round: Story = {
   args: {
-    size: "sm",
+    round: true,
+    hideLabel: true,
     icon: Add,
   },
 }
