@@ -19,7 +19,7 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
         className={cn(hasAvatar ? "pl-[0.15rem] pr-2" : "px-2")}
       >
         {hasAvatar && (
-          <span className="mr-1 rounded-xl bg-orange-500 text-background">
+          <span className="mr-1">
             <Avatar alt={alt || text[0]} src={imageSrc} size="xsmall" />
           </span>
         )}
