@@ -1,11 +1,10 @@
 name: "Chromatic"
 
 on:
-  []
-  # pull_request:
-  # push:
-  #   branches:
-  #    - main
+  pull_request:
+  push:
+    branches:
+      - main
 
 concurrency:
   group:
