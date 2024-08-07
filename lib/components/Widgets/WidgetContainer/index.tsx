@@ -7,6 +7,7 @@ import {
   CardSubtitle,
   CardTitle,
 } from "@/ui/card"
+import { Skeleton } from "@/ui/skeleton"
 import { forwardRef, ReactNode } from "react"
 
 export interface WidgetContainerProps {
@@ -16,23 +17,40 @@ export interface WidgetContainerProps {
     info?: string
     link?: { title: string; url: string }
   }
+  loading?: boolean
 }
 
 export const WidgetContainer = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
->(({ header, children }, ref) => (
-  <Card ref={ref}>
+>(({ header, loading = false, children }, ref) => (
+  <Card ref={ref} aria-live="polite" aria-busy={loading}>
     <CardHeader>
-      <div className="flex grow flex-row items-center gap-1.5 truncate">
-        <CardTitle>{header.title}</CardTitle>
-        {header.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
-        {header.info && <CardInfo content={header.info} />}
-      </div>
-      {header.link && (
-        <CardLink href={header.link.url} title={header.link.title} />
+      {loading ? (
+        <div className="flex h-6 w-full items-center" aria-hidden={true}>
+          <Skeleton className="h-4 w-full max-w-28" />
+        </div>
+      ) : (
+        <>
+          <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
+            <CardTitle>{header.title}</CardTitle>
+            {header.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
+            {header.info && <CardInfo content={header.info} />}
+          </div>
+          {header.link && (
+            <CardLink href={header.link.url} title={header.link.title} />
+          )}
+        </>
       )}
     </CardHeader>
-    <CardContent>{children}</CardContent>
+    <CardContent aria-hidden={loading}>
+      {loading ? (
+        [...Array(4)].map((e, i) => (
+          <Skeleton key={i} className="mb-1 h-6 w-full min-w-12" />
+        ))
+      ) : (
+        <>{children}</>
+      )}
+    </CardContent>
   </Card>
 ))

@@ -10,12 +10,20 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div className="w-full min-w-72 max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     header: {
       title: "A widget",
       subtitle: "2024",
       info: "Lorem ipsum dolor",
     },
+    loading: false,
     children: <Placeholder>Put your content in there</Placeholder>,
   } satisfies ComponentProps<typeof WidgetContainer>,
 } satisfies Meta<typeof WidgetContainer>
@@ -35,11 +43,4 @@ export const WithLink: Story = {
       link: { url: "/", title: "Go to link" },
     },
   },
-  decorators: [
-    (Story) => (
-      <div className="w-full min-w-72 max-w-96">
-        <Story />
-      </div>
-    ),
-  ],
 }
