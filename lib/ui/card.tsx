@@ -45,7 +45,11 @@ const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
-  <h3 ref={ref} className={cn("text-base font-medium", className)} {...props} />
+  <h3
+    ref={ref}
+    className={cn("text-base font-semibold", className)}
+    {...props}
+  />
 ))
 CardTitle.displayName = "CardTitle"
 
@@ -65,11 +69,14 @@ const CardInfo = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("-ml-1 h-6 w-6", className)}>
+  <div
+    ref={ref}
+    className={cn("-ml-1 flex h-6 w-6 items-center justify-center", className)}
+  >
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger
-          className="cursor-help text-muted-foreground"
+          className="h-5 w-5 cursor-help text-muted-foreground"
           title="Info"
         >
           <Icon icon={InfoCircleLine} size="md" />
