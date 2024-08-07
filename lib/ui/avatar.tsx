@@ -18,7 +18,7 @@ export const sizes = [
 const avatarVariants = cva("relative flex shrink-0 overflow-hidden", {
   variants: {
     size: {
-      xsmall: "h-6 w-6 rounded-xl text-base",
+      xsmall: "h-6 w-6 rounded-xl text-sm",
       small: "h-10 w-10 rounded-xl text-sm",
       medium: "h-12 w-12 rounded-xl",
       large: "h-16 w-16 rounded-2xl text-xl",
