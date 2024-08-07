@@ -32,9 +32,11 @@ export const Details = forwardRef<HTMLDivElement, DetailsType>(
             className="gap-2"
             content={
               <Badge
-                hasAvatar
                 text={manager}
-                imageSrc="https://github.com/dani-moreno.png"
+                avatar={{
+                  src: "https://github.com/dani-moreno.png",
+                  alt: manager[0],
+                }}
               />
             }
           />
@@ -45,9 +47,11 @@ export const Details = forwardRef<HTMLDivElement, DetailsType>(
             className="flex flex-col gap-2"
             content={
               <div className="flex flex-row flex-wrap gap-2">
-                {teams.map((team) => (
-                  <Badge hasAvatar text={team} />
-                ))}
+                {teams.map((team) => {
+                  return !team ? null : (
+                    <Badge text={team} avatar={{ alt: team[0] }} />
+                  )
+                })}
               </div>
             }
           />

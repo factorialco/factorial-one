@@ -5,14 +5,13 @@ import { ComponentProps, forwardRef } from "react"
 
 interface BadgeProps {
   text: string
-  hasAvatar?: boolean
+  avatar?: Pick<ComponentProps<typeof Avatar>, "src" | "alt">
   variant?: ComponentProps<typeof BadgeComponent>["variant"]
-  imageSrc?: ComponentProps<typeof Avatar>["src"]
-  alt?: ComponentProps<typeof Avatar>["alt"]
 }
 
 export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
-  ({ text, hasAvatar = false, imageSrc, alt, variant = "name" }) => {
+  ({ text, avatar, variant = "name" }) => {
+    const hasAvatar = avatar?.src || avatar?.alt
     return (
       <BadgeComponent
         variant={variant}
@@ -20,7 +19,11 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
       >
         {hasAvatar && (
           <span className="mr-1">
-            <Avatar alt={alt || text[0]} src={imageSrc} size="xsmall" />
+            <Avatar
+              alt={avatar.alt || text[0]}
+              src={avatar.src}
+              size="xsmall"
+            />
           </span>
         )}
         {text}
