@@ -22,7 +22,7 @@ export const WidgetContainer = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
 >(({ header, children }, ref) => (
-  <Card ref={ref} className="min-h-[200px]">
+  <Card ref={ref}>
     <CardHeader>
       <div className="flex grow flex-row items-center gap-1.5">
         <CardTitle>{header.title}</CardTitle>
