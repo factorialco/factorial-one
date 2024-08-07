@@ -61,16 +61,6 @@ export default {
       80: "320px",
       96: "384px",
     },
-    fontSize: {
-      xs: ["0.6875rem", "1rem"],
-      sm: ["0.8125rem", "1.25rem"],
-      base: ["0.9375rem", "1.5rem"],
-      lg: ["1.0625rem", "1.5rem"], // Not really used but we keep it for scale
-      xl: ["1.1875rem", "1.75rem"],
-      "2xl": ["1.3125rem", "1.75rem"], // Same
-      "3xl": ["1.5rem", "2rem"], // Same
-      "4xl": ["1.6875rem", "2rem"],
-    },
     extend: {
       colors: {
         border: "hsl(var(--border))",
