@@ -15,7 +15,7 @@ const meta = {
       title: "A widget",
       subtitle: "2024",
       info: "Lorem ipsum dolor",
-      link: "/",
+      link: { url: "/", title: "Go to link" },
     },
     children: <Placeholder>Put your content in there</Placeholder>,
   } satisfies ComponentProps<typeof WidgetContainer>,

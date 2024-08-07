@@ -14,7 +14,7 @@ export interface WidgetContainerProps {
     title: string
     subtitle?: string
     info?: string
-    link?: string
+    link?: { title: string; url: string }
   }
 }
 
@@ -29,7 +29,9 @@ export const WidgetContainer = forwardRef<
         {header.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
         {header.info && <CardInfo content={header.info} />}
       </div>
-      {header.link && <CardLink href={header.link} />}
+      {header.link && (
+        <CardLink href={header.link.url} title={header.link.title} />
+      )}
     </CardHeader>
     <CardContent>{children}</CardContent>
   </Card>

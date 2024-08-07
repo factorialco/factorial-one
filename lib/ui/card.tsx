@@ -93,14 +93,14 @@ CardInfo.displayName = "CardInfo"
 const CardLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithoutRef<"a">
->(({ className, ...props }) => {
+>(({ className, title, ...props }) => {
   return (
     <a
       className={cn(
-        "h-6 w-6 text-muted-foreground transition-colors hover:text-foreground",
+        "flex h-6 w-6 items-center justify-center text-muted-foreground transition-colors hover:text-foreground",
         className
       )}
-      aria-label="Link"
+      aria-label={title}
       {...props}
     >
       <Icon icon={ArrowRight} size="md" />
