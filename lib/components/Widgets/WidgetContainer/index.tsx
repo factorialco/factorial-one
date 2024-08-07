@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardInfo,
   CardLink,
@@ -17,13 +16,12 @@ export interface WidgetContainerProps {
     info?: string
     link?: string
   }
-  description?: string
 }
 
 export const WidgetContainer = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
->(({ header, description, children }, ref) => (
+>(({ header, children }, ref) => (
   <Card ref={ref} className="min-h-[200px]">
     <CardHeader>
       <div className="flex grow flex-row items-center gap-1.5">
@@ -33,7 +31,6 @@ export const WidgetContainer = forwardRef<
       </div>
       {header.link && <CardLink href={header.link} />}
     </CardHeader>
-    <CardDescription>{description}</CardDescription>
     <CardContent>{children}</CardContent>
   </Card>
 ))

@@ -5,9 +5,9 @@ import { Button } from "@/ui/button"
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
+  CardSubtitle,
   CardTitle,
 } from "."
 
@@ -39,8 +39,8 @@ export const WithTitle: Story = {
       <Card {...props}>
         <CardHeader>
           <CardTitle>Card title</CardTitle>
+          <CardSubtitle>Subtitle</CardSubtitle>
         </CardHeader>
-        <CardDescription>Description of the title</CardDescription>
         <CardContent>This is a card with a title</CardContent>
       </Card>
     )

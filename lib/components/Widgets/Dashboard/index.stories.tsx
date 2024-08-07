@@ -17,10 +17,7 @@ const renderWidget = (index: number) => {
   const Widgets = [
     () => <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} />,
     () => (
-      <WidgetContainer
-        header={{ title: "A form widget" }}
-        description="Enter your data"
-      >
+      <WidgetContainer header={{ title: "A form widget" }}>
         <p>
           Never gonna give you up. Never gonna let you down. Never gonna turn
           around and desert you.
@@ -33,7 +30,6 @@ const renderWidget = (index: number) => {
         header={{
           title: "A widget",
         }}
-        description="This widget contains some data"
       >
         <div className="flex justify-center">
           <Calendar defaultMonth={new Date(2024, 10, 15)} />
