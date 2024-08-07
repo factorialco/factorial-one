@@ -24,7 +24,7 @@ export const WidgetContainer = forwardRef<
 >(({ header, children }, ref) => (
   <Card ref={ref}>
     <CardHeader>
-      <div className="flex grow flex-row items-center gap-1.5">
+      <div className="flex grow flex-row items-center gap-1.5 truncate">
         <CardTitle>{header.title}</CardTitle>
         {header.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
         {header.info && <CardInfo content={header.info} />}
