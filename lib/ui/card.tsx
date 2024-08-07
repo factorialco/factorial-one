@@ -68,7 +68,7 @@ CardSubtitle.displayName = "CardSubtitle"
 const CardInfo = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+>(({ className, content }, ref) => (
   <div
     ref={ref}
     className={cn("-ml-1 flex h-6 w-6 items-center justify-center", className)}
@@ -77,12 +77,12 @@ const CardInfo = React.forwardRef<
       <Tooltip>
         <TooltipTrigger
           className="h-5 w-5 cursor-help text-muted-foreground"
-          title="Info"
+          aria-label={content}
         >
           <Icon icon={InfoCircleLine} size="md" />
         </TooltipTrigger>
         <TooltipContent>
-          <p {...props} />
+          <p>{content}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
