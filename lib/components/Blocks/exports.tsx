@@ -2,7 +2,6 @@ import { Component } from "@/lib/component"
 
 import {
   Card as RawCard,
-  CardDescription as RawCardDescription,
   CardFooter as RawCardFooter,
   CardHeader as RawCardHeader,
   CardTitle as RawCardTitle,
@@ -24,15 +23,6 @@ export const CardContent = Component(
     internal: true,
   },
   RawContent
-)
-
-export const CardDescription = Component(
-  {
-    name: "CardDescription",
-    type: "info",
-    internal: true,
-  },
-  RawCardDescription
 )
 
 export const CardFooter = Component(

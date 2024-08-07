@@ -18,6 +18,13 @@ const meta = {
     },
     chart: BarChartStory.args,
   },
+  decorators: [
+    (Story) => (
+      <div className="w-full min-w-80">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof VerticalBarChartWidget>
 
 export default meta
