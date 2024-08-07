@@ -1,8 +1,6 @@
 name: Update release branch and create package
 on:
   push:
-    branches:
-      - "main"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,12 +15,14 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+      - run: echo node_modules > .gitignore
       - uses: JS-DevTools/npm-publish@v3
+        if: github.ref == 'refs/heads/main'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           registry: "https://npm.pkg.github.com"
-      - run: echo node_modules > .gitignore
       - uses: stefanzweifel/git-auto-commit-action@v5
+        if: github.ref == 'refs/heads/main'
         with:
           commit_message: Commit Build
           branch: release
