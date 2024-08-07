@@ -6,6 +6,7 @@ import ArrowRight from "@/icons/ArrowRight"
 import InfoCircleLine from "@/icons/InfoCircleLine"
 
 import { Icon } from "@/components/Utilities/Icon"
+import { Link } from "@/lib/linkHandler"
 import {
   Tooltip,
   TooltipContent,
@@ -94,7 +95,7 @@ const CardLink = React.forwardRef<
   React.ComponentPropsWithoutRef<"a">
 >(({ className, title, ...props }) => {
   return (
-    <a
+    <Link
       className={cn(
         "flex h-6 w-6 items-center justify-center text-muted-foreground transition-colors hover:text-foreground",
         className
@@ -103,7 +104,7 @@ const CardLink = React.forwardRef<
       {...props}
     >
       <Icon icon={ArrowRight} size="md" />
-    </a>
+    </Link>
   )
 })
 CardLink.displayName = "CardLink"

@@ -1,5 +1,10 @@
-import type { ImageProps, SrcProps } from "@/components/Utilities/Image"
-import { createContext, ReactNode, useContext } from "react"
+import {
+  createContext,
+  forwardRef,
+  ImgHTMLAttributes,
+  ReactNode,
+  useContext,
+} from "react"
 
 export type ImageContextValue = {
   src?: (props: ImageProps) => SrcProps
@@ -22,3 +27,19 @@ export const useImageContext = () => {
     ...context,
   }
 }
+
+export type ImageProps = ImgHTMLAttributes<HTMLImageElement>
+
+export type SrcProps = Pick<
+  ImgHTMLAttributes<HTMLImageElement>,
+  "src" | "srcSet" | "sizes"
+>
+
+export const Image = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
+  const { src } = useImageContext()
+
+  if (!src) return <img ref={ref} {...props} />
+  const extraProps = src(props)
+
+  return <img ref={ref} {...props} {...extraProps} />
+})

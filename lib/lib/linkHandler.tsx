@@ -1,5 +1,11 @@
-import { LinkProps } from "@/components/Actions/Link"
-import { createContext, ForwardedRef, ReactNode, useContext } from "react"
+import {
+  AnchorHTMLAttributes,
+  createContext,
+  ForwardedRef,
+  forwardRef,
+  ReactNode,
+  useContext,
+} from "react"
 
 export type LinkContextValue = {
   component?: (
@@ -30,3 +36,14 @@ export const useLinkContext = () => {
     ...context,
   }
 }
+
+export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {}
+
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
+  const { component } = useLinkContext()
+
+  if (!component) return <a ref={ref} {...props} />
+  const Component = forwardRef(component)
+
+  return <Component ref={ref} {...props} />
+})
