@@ -45,7 +45,7 @@ export const WidgetContainer = forwardRef<
     </CardHeader>
     <CardContent aria-hidden={loading}>
       {loading ? (
-        [...Array(4)].map((e, i) => (
+        [...Array(4)].map((_, i) => (
           <Skeleton key={i} className="mb-1 h-6 w-full min-w-12" />
         ))
       ) : (
