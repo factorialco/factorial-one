@@ -18,6 +18,13 @@ const meta = {
     },
     chart: AreaChartStory.args,
   },
+  decorators: [
+    (Story) => (
+      <div className="w-full min-w-80">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof LineChartWidget>
 
 export default meta

@@ -1,6 +1,6 @@
 "use client"
 
-import { Image } from "@/components/Utilities/Image"
+import { Image } from "@/lib/imageHandler"
 import { cn } from "@/lib/utils"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 import { cva } from "class-variance-authority"

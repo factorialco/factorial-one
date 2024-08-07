@@ -24,27 +24,18 @@ const meta = {
       dataConfig: {
         january: {
           label: "January",
-          color: "hsl(var(--chart-1))",
         },
         february: {
           label: "February",
-          color: "hsl(var(--chart-2))",
         },
         march: {
           label: "March",
-          color: "hsl(var(--chart-3))",
         },
         april: {
           label: "April",
-          color: "hsl(var(--chart-4))",
         },
         may: {
           label: "May",
-          color: "hsl(var(--chart-5))",
-        },
-        june: {
-          label: "June",
-          color: "hsl(var(--chart-6))",
         },
       },
       data: [
@@ -53,10 +44,16 @@ const meta = {
         { label: "march", value: 237 },
         { label: "april", value: 73 },
         { label: "may", value: 209 },
-        { label: "june", value: 214 },
       ],
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="w-full min-w-80">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof PieChartWidget>
 
 export default meta
