@@ -46,7 +46,7 @@ export const FactorialOne = (Story, { parameters }) => {
       }}
       image={{
         src: ({ src, width, height }) => ({
-          src: `${src}?w=${width}&h=${height}`,
+          src: src?.startsWith("data:") ? src : `${src}?w=${width}&h=${height}`,
         }),
       }}
     >
