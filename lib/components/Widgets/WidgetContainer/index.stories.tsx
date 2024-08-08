@@ -23,7 +23,6 @@ const meta = {
       subtitle: "2024",
       info: "Lorem ipsum dolor",
     },
-    loading: false,
     children: <Placeholder>Put your content in there</Placeholder>,
   } satisfies ComponentProps<typeof WidgetContainer>,
 } satisfies Meta<typeof WidgetContainer>
