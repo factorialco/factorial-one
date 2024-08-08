@@ -3,8 +3,6 @@ import React from "react"
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
 
-import DocumentationTemplate from "./DocumentationTemplate.mdx"
-
 import "../styles.css"
 import "../fonts"
 
@@ -80,7 +78,6 @@ const preview: Preview = {
     },
     docs: {
       container: DocsContainer,
-      page: DocumentationTemplate,
       toc: true,
     },
     controls: {
