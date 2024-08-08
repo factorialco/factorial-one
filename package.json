@@ -74,7 +74,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@microsoft/api-extractor": "^7.47.5",
-    "@storybook/addon-a11y": "^8.2.7",
+    "@storybook/addon-a11y": "^8.2.8",
     "@storybook/addon-essentials": "^8.2.7",
     "@storybook/addon-interactions": "^8.2.7",
     "@storybook/addon-links": "^8.2.7",
