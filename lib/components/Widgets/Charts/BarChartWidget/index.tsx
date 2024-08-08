@@ -6,5 +6,9 @@ export const BarChartWidget = forwardRef<
   HTMLDivElement,
   ComposeChartContainerProps<BarChartProps>
 >((props, ref) => (
-  <ChartContainer ref={ref} {...props} chart={<BarChart {...props.chart} />} />
+  <ChartContainer
+    ref={ref}
+    {...props}
+    chart={<BarChart aspect={null} {...props.chart} />}
+  />
 ))

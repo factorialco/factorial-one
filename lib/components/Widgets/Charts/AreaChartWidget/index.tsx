@@ -6,5 +6,9 @@ export const AreaChartWidget = forwardRef<
   HTMLDivElement,
   ComposeChartContainerProps<AreaChartProps>
 >((props, ref) => (
-  <ChartContainer ref={ref} {...props} chart={<AreaChart {...props.chart} />} />
+  <ChartContainer
+    ref={ref}
+    {...props}
+    chart={<AreaChart aspect={null} {...props.chart} />}
+  />
 ))

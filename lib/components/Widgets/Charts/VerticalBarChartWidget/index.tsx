@@ -12,6 +12,6 @@ export const VerticalBarChartWidget = forwardRef<
   <ChartContainer
     ref={ref}
     {...props}
-    chart={<VerticalBarChart {...props.chart} />}
+    chart={<VerticalBarChart aspect={null} {...props.chart} />}
   />
 ))

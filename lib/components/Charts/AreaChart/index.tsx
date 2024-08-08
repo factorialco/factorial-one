@@ -36,13 +36,14 @@ export const _AreaChart = <
     xAxis,
     yAxis,
     lineType = "natural",
+    aspect,
   }: AreaChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const areas = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
 
   return (
-    <ChartContainer config={dataConfig} ref={ref}>
+    <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <AreaChartPrimitive
         accessibilityLayer
         data={prepareData(data)}

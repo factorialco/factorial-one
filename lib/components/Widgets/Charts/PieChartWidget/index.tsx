@@ -6,5 +6,9 @@ export const PieChartWidget = forwardRef<
   HTMLDivElement,
   ComposeChartContainerProps<PieChartProps>
 >((props, ref) => (
-  <ChartContainer ref={ref} {...props} chart={<PieChart {...props.chart} />} />
+  <ChartContainer
+    ref={ref}
+    {...props}
+    chart={<PieChart aspect={null} {...props.chart} />}
+  />
 ))
