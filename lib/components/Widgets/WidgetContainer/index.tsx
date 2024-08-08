@@ -26,7 +26,7 @@ export interface WidgetSkeletonProps {
   }
 }
 
-const WidgetContainer = forwardRef<
+export const WidgetContainer = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
 >(({ header, children }, ref) => (
@@ -45,7 +45,7 @@ const WidgetContainer = forwardRef<
   </Card>
 ))
 
-const WidgetSkeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
+export const WidgetSkeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   ({ header }, ref) => (
     <Card ref={ref} aria-live="polite" aria-busy={true}>
       <CardHeader>
@@ -73,4 +73,7 @@ const WidgetSkeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   )
 )
 
-export { WidgetContainer, WidgetSkeleton }
+export const Widget = {
+  Container: WidgetContainer,
+  Skeleton: WidgetSkeleton,
+}
