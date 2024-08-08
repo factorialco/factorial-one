@@ -1,5 +1,5 @@
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
-import { ForwardedRef } from "react"
+import { ComponentProps, ForwardedRef } from "react"
 import { Pie, PieChart as PieChartPrimitive } from "recharts"
 import { autoColor } from "../utils/colors"
 import { fixedForwardRef } from "../utils/forwardRef"
@@ -18,10 +18,11 @@ export type PieChartProps<
   dataConfig: ChartConfig<Keys>
   data: PieChartItem[]
   donutPieChart?: boolean
+  aspect?: ComponentProps<typeof ChartContainer>["aspect"]
 }
 
 export const _PieChart = <DataConfig extends ChartConfig>(
-  { data, dataConfig, donutPieChart }: PieChartProps<DataConfig>,
+  { data, dataConfig, donutPieChart, aspect }: PieChartProps<DataConfig>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const preparedData = data.map((item, index) => ({
@@ -32,7 +33,7 @@ export const _PieChart = <DataConfig extends ChartConfig>(
   }))
 
   return (
-    <ChartContainer config={dataConfig} ref={ref}>
+    <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <PieChartPrimitive accessibilityLayer margin={{ left: 12, right: 12 }}>
         <ChartTooltip cursor content={<ChartTooltipContent hideLabel />} />
         <Pie

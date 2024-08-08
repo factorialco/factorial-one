@@ -30,13 +30,14 @@ export const _LineChart = <
     xAxis,
     yAxis,
     lineType = "natural",
+    aspect,
   }: LineChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const lines = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
 
   return (
-    <ChartContainer config={dataConfig} ref={ref}>
+    <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <LineChartPrimitive
         accessibilityLayer
         data={prepareData(data)}

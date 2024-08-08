@@ -31,7 +31,7 @@ export const ChartContainer = forwardRef<
         ))}
       </div>
     )}
-    {chart}
+    <div className="relative flex min-h-40 grow items-stretch">{chart}</div>
   </WidgetContainer>
 ))
 
