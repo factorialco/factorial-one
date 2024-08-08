@@ -32,7 +32,6 @@ export default defineConfig({
       entry: {
         ["factorial-one"]: resolve(__dirname, "lib/factorial-one.ts"),
         ["playground"]: resolve(__dirname, "src/playground/exports.ts"),
-        ["fonts"]: resolve(__dirname, "fonts.ts"),
       },
       fileName: (_, entryName) => {
         return `${entryName}.js`
