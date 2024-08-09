@@ -8,6 +8,7 @@ const meta: Meta = {
     tags: ["autodocs"],
   },
   args: {
+    title: "Details",
     details: [
       {
         title: "Email",

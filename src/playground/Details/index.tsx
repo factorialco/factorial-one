@@ -5,15 +5,19 @@ import { Weekdays } from "../Weekdays"
 
 interface DetailsType {
   details: DetailsItemType[]
+  title?: string
   activatedDays?: ComponentProps<typeof Weekdays>["activatedDays"]
   manager?: string
   teams?: string[]
 }
 
 export const Details = forwardRef<HTMLDivElement, DetailsType>(
-  ({ details, activatedDays, manager, teams }, ref) => {
+  ({ details, activatedDays, manager, teams, title }, ref) => {
     return (
       <div ref={ref} className="flex flex-col gap-4">
+        {!!title && (
+          <p className="mb-1 text-sm font-medium text-foreground">{title}</p>
+        )}
         {details.map((item, index) => (
           <DetailsItem
             title={item.title}
