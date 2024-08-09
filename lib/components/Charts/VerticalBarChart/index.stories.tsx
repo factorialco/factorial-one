@@ -19,12 +19,6 @@ const meta = {
   tags: ["autodocs"],
   args: {
     dataConfig,
-    yAxis: {
-      hide: false,
-    },
-    xAxis: {
-      hide: false,
-    },
     label: true,
     data: [
       { label: "January", values: { mobile: 4000, desktop: 2400 } },

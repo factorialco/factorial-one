@@ -9,7 +9,9 @@ export const AreaChartWidget = withSkeleton(
       <ChartContainer
         ref={ref}
         {...props}
-        chart={<AreaChart aspect={null} {...props.chart} />}
+        chart={
+          <AreaChart aspect={null} yAxis={{ hide: true }} {...props.chart} />
+        }
       />
     )
   ),

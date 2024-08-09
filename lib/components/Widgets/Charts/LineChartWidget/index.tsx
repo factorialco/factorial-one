@@ -9,7 +9,9 @@ export const LineChartWidget = withSkeleton(
       <ChartContainer
         ref={ref}
         {...props}
-        chart={<LineChart aspect={null} {...props.chart} />}
+        chart={
+          <LineChart aspect={null} yAxis={{ hide: true }} {...props.chart} />
+        }
       />
     )
   ),
