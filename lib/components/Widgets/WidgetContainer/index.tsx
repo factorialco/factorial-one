@@ -7,7 +7,7 @@ import {
   CardSubtitle,
   CardTitle,
 } from "@/ui/card"
-import { Skeleton } from "@/ui/skeleton"
+import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { forwardRef, ReactNode } from "react"
 
 export interface WidgetContainerProps {
@@ -26,7 +26,7 @@ export interface WidgetSkeletonProps {
   }
 }
 
-export const WidgetContainer = forwardRef<
+const Container = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
 >(({ header, children }, ref) => (
@@ -45,7 +45,7 @@ export const WidgetContainer = forwardRef<
   </Card>
 ))
 
-export const WidgetSkeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
+const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   ({ header }, ref) => (
     <Card ref={ref} aria-live="polite" aria-busy={true}>
       <CardHeader>
@@ -56,14 +56,14 @@ export const WidgetSkeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
           {header?.title ? (
             <CardTitle>{header.title}</CardTitle>
           ) : (
-            <Skeleton className="h-4 w-full max-w-16" />
+            <SkeletonPrimitive className="h-4 w-full max-w-16" />
           )}
           {header?.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
         </div>
       </CardHeader>
       <CardContent aria-hidden={true}>
         {[...Array(4)].map((_, i) => (
-          <Skeleton
+          <SkeletonPrimitive
             key={i}
             className={`mb-1 h-6 ${["w-full", "w-1/2", "w-3/4", "w-1/4"][i]}`}
           />
@@ -73,7 +73,6 @@ export const WidgetSkeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   )
 )
 
-export const Widget = {
-  Container: WidgetContainer,
-  Skeleton: WidgetSkeleton,
-}
+export const WidgetContainer = Object.assign(Container, {
+  Skeleton: Skeleton,
+})
