@@ -167,13 +167,6 @@ export const EmployeesList: Story = {
           info: "This is additional information for the turnover rate",
           link: undefined,
         }}
-        summaries={[
-          {
-            label: "Rate",
-            value: "16",
-            unit: "%",
-          },
-        ]}
         chart={{
           lineType: "natural",
           dataConfig: turnoverDataConfig,

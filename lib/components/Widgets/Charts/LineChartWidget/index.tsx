@@ -6,5 +6,9 @@ export const LineChartWidget = forwardRef<
   HTMLDivElement,
   ComposeChartContainerProps<LineChartProps>
 >((props, ref) => (
-  <ChartContainer ref={ref} {...props} chart={<LineChart {...props.chart} />} />
+  <ChartContainer
+    ref={ref}
+    {...props}
+    chart={<LineChart aspect={null} {...props.chart} />}
+  />
 ))

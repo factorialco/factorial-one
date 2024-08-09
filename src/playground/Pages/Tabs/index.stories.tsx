@@ -34,28 +34,20 @@ const renderWidget = (index: number) => {
 }
 
 const Overview = () => (
-  <div className="grid grid-cols-[2fr_1fr] divide-x divide-y-0 divide-dashed divide-muted">
-    <div className="pl-10 pr-8 pt-6">
-      <Dashboard>
-        {Array.from({ length: 6 }).map((_, i) => renderWidget(i))}
-      </Dashboard>
-    </div>
-    <div className="pl-8 pr-10 pt-6">
-      Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
-      Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
-      Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
-      Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
-      Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
-      Column 2 Column 2 Column 2 Column 2 Column 2 Column 2
-    </div>
-  </div>
+  <Dashboard>
+    {Array.from({ length: 6 }).map((_, i) => renderWidget(i))}
+  </Dashboard>
 )
 
 const Profile = () => <div>Profile</div>
-const Personal = () => <div>Personal</div>
-const Agreement = () => <div>Agreement</div>
+const Agreements = () => <div>Agreement</div>
+const TimePlanning = () => <div>Time Planning</div>
+const Documents = () => <div>Documents</div>
+
 const TimeOff = () => <div>Time off</div>
-const Competencies = () => <div>Competencies</div>
+const Reviews = () => <div>Reviews</div>
+
+const Goals = () => <div>Goals</div>
 const Activity = () => <div>Activity</div>
 
 export const Default: Story = {
@@ -63,10 +55,16 @@ export const Default: Story = {
     tabs: [
       { name: "Overview", key: "overview", content: <Overview /> },
       { name: "Profile", key: "profile", content: <Profile /> },
-      { name: "Personal", key: "personal", content: <Personal /> },
-      { name: "Agreement", key: "agreement", content: <Agreement /> },
+      { name: "Agreements", key: "agreements", content: <Agreements /> },
+      {
+        name: "Time planning",
+        key: "time-planning",
+        content: <TimePlanning />,
+      },
+      { name: "Documents", key: "documents", content: <Documents /> },
       { name: "Time off", key: "time-off", content: <TimeOff /> },
-      { name: "Competencies", key: "competencies", content: <Competencies /> },
+      { name: "Reviews", key: "reviews", content: <Reviews /> },
+      { name: "Goals", key: "goals", content: <Goals /> },
       { name: "Activity", key: "activity", content: <Activity /> },
     ],
     title: "Alba Horneros",
@@ -76,6 +74,31 @@ export const Default: Story = {
     routes: [{ title: "Employees", url: "/employees" }],
     breadcrumbTitle: "Alba Horneros",
     icon: User,
+    details: [
+      {
+        title: "Email",
+        content: "alicia.keys@factorial.co",
+      },
+      {
+        title: "Phone",
+        content: "(120) 687-3123",
+      },
+      {
+        title: "Legal entity",
+        content: "Everyday Software SL",
+      },
+      {
+        title: "Start date",
+        content: "01/01/2023",
+      },
+      {
+        title: "Contract type",
+        content: "Full time",
+      },
+    ],
+    activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    manager: "Isabella González",
+    teams: ["Design", "Product", "Foundations Squad"],
   },
   parameters: {
     layout: "fullscreen",

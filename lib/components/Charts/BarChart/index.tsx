@@ -23,13 +23,20 @@ const _BarChart = <
   DataConfig extends ChartConfig,
   Keys extends string = string,
 >(
-  { dataConfig, data, xAxis, yAxis, label }: BarChartProps<DataConfig, Keys>,
+  {
+    dataConfig,
+    data,
+    xAxis,
+    yAxis,
+    label,
+    aspect,
+  }: BarChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const bars = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
 
   return (
-    <ChartContainer config={dataConfig} ref={ref}>
+    <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <BarChartPrimitive
         accessibilityLayer
         data={prepareData(data)}

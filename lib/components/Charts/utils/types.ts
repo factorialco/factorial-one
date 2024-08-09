@@ -1,4 +1,8 @@
-import type { ChartConfig as OriginalChartConfig } from "@/ui/chart"
+import type {
+  ChartContainer,
+  ChartConfig as OriginalChartConfig,
+} from "@/ui/chart"
+import { ComponentProps } from "react"
 
 export type ChartItem<LineKeys extends string> = {
   label: string
@@ -26,4 +30,5 @@ export type ChartPropsBase<
   data: ChartItem<Keys>[]
   xAxis?: AxisConfig
   yAxis?: AxisConfig
+  aspect?: ComponentProps<typeof ChartContainer>["aspect"]
 }

@@ -3,10 +3,7 @@ import React from "react"
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
 
-import DocumentationTemplate from "./DocumentationTemplate.mdx"
-
 import "../styles.css"
-import "../fonts"
 
 import { ThemeProvider } from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
@@ -46,7 +43,7 @@ export const FactorialOne = (Story, { parameters }) => {
       }}
       image={{
         src: ({ src, width, height }) => ({
-          src: `${src}?w=${width}&h=${height}`,
+          src: src?.startsWith("data:") ? src : `${src}?w=${width}&h=${height}`,
         }),
       }}
     >
@@ -80,7 +77,6 @@ const preview: Preview = {
     },
     docs: {
       container: DocsContainer,
-      page: DocumentationTemplate,
       toc: true,
     },
     controls: {

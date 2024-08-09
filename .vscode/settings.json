@@ -10,6 +10,7 @@
   "editor.quickSuggestions": {
     "strings": "on"
   },
+  "tailwindCSS.rootFontSize": 15,
   "tailwindCSS.experimental.classRegex": [
     [
       "cva\\(([^)]*)\\)",

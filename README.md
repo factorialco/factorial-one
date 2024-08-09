@@ -20,7 +20,7 @@ Then, in your react files:
 import "@factorialco/factorial-one/dist/styles.css"
 
 // If you want to use the shipped fonts
-import "@factorialco/factorial-one/fonts.js"
+import "@factorialco/factorial-one/dist/fonts.js"
 
 // In any of your components
 import { Button } from "@factorialco/factorial-one"

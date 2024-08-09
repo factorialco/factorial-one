@@ -1,4 +1,5 @@
 @import "./reset.css";
+@import "./assets/fonts/style.css";
 
 @tailwind base;
 @tailwind components;
@@ -124,6 +125,10 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+}
+
+html {
+  font-size: 15px;
 }
 
 body {

@@ -8,7 +8,10 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
-  args: {},
+  args: {
+    text: "Foundations Squad",
+    variant: "neutral",
+  },
 } satisfies Meta<typeof Badge>
 
 export default meta
@@ -20,37 +23,53 @@ export const Default: Story = {
   },
 }
 
+export const Alt: Story = {
+  args: {
+    variant: "name",
+    text: "Foundations Squad",
+    avatar: { alt: "F" },
+  },
+}
+
+export const Avatar: Story = {
+  args: {
+    variant: "name",
+    text: "Foundations Squad",
+    avatar: { src: "https://github.com/dani-moreno.png", alt: "F" },
+  },
+}
+
 export const Neutral: Story = {
   args: {
     variant: "neutral",
-    children: "Neutral",
+    text: "Neutral",
   },
 }
 
 export const Destructive: Story = {
   args: {
     variant: "destructive",
-    children: "Destructive",
+    text: "Destructive",
   },
 }
 
 export const Positive: Story = {
   args: {
     variant: "positive",
-    children: "Positive",
+    text: "Positive",
   },
 }
 
 export const Warning: Story = {
   args: {
     variant: "warning",
-    children: "Warning",
+    text: "Warning",
   },
 }
 
 export const Info: Story = {
   args: {
     variant: "info",
-    children: "Info",
+    text: "Info",
   },
 }
