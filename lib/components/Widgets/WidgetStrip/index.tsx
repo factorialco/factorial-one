@@ -1,18 +1,28 @@
 import { ScrollArea } from "@/components/Utilities/ScrollArea"
+import { withSkeleton } from "@/lib/skeleton"
 import { forwardRef, ReactNode } from "react"
+import { WidgetContainer } from "../WidgetContainer"
 
 type DashboardProps = {
   children: ReactNode[]
 }
 
-export const WidgetStrip = forwardRef<HTMLDivElement, DashboardProps>(
+const WidgetStripComponent = forwardRef<HTMLDivElement, DashboardProps>(
   ({ children }, ref) => {
     return (
       <ScrollArea ref={ref}>
-        <div className="flex flex-row items-stretch gap-4 [&>*]:min-w-80 [&>*]:max-w-md [&>*]:flex-grow [&>*]:basis-0">
+        <div className="flex min-h-72 flex-row items-stretch gap-4 [&>*]:min-w-80 [&>*]:max-w-md [&>*]:flex-grow [&>*]:basis-0">
           {children}
         </div>
       </ScrollArea>
     )
   }
 )
+
+export const WidgetStrip = withSkeleton(WidgetStripComponent, () => (
+  <WidgetStripComponent>
+    <WidgetContainer.Skeleton />
+    <WidgetContainer.Skeleton />
+    <WidgetContainer.Skeleton />
+  </WidgetStripComponent>
+))
