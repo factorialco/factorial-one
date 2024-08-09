@@ -9,7 +9,9 @@ export const BarChartWidget = withSkeleton(
       <ChartContainer
         ref={ref}
         {...props}
-        chart={<BarChart aspect={null} {...props.chart} />}
+        chart={
+          <BarChart aspect={null} yAxis={{ hide: true }} {...props.chart} />
+        }
       />
     )
   ),

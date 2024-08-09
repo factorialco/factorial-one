@@ -12,7 +12,13 @@ export const VerticalBarChartWidget = withSkeleton(
       <ChartContainer
         ref={ref}
         {...props}
-        chart={<VerticalBarChart aspect={null} {...props.chart} />}
+        chart={
+          <VerticalBarChart
+            aspect={null}
+            xAxis={{ hide: true }}
+            {...props.chart}
+          />
+        }
       />
     )
   ),

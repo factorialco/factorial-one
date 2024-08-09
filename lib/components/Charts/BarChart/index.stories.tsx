@@ -23,9 +23,6 @@ const meta = {
       hide: false,
       tickFormatter: (value: string) => value.slice(0, 3),
     },
-    yAxis: {
-      hide: false,
-    },
     label: true,
     data: [
       { label: "January", values: { mobile: 4000, desktop: 2400 } },
