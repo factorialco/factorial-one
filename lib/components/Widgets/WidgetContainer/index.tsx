@@ -1,3 +1,4 @@
+import { withSkeleton } from "@/lib/skeleton"
 import {
   Card,
   CardContent,
@@ -73,6 +74,4 @@ const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   )
 )
 
-export const WidgetContainer = Object.assign(Container, {
-  Skeleton: Skeleton,
-})
+export const WidgetContainer = withSkeleton(Container, Skeleton)

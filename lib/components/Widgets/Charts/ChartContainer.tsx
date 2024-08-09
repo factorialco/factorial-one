@@ -5,7 +5,7 @@ type ChartContainerPropsBase = WidgetContainerProps & {
   summaries?: Array<{ label: string; value: string; unit?: string }>
 }
 
-export const ChartContainer = forwardRef<
+const Container = forwardRef<
   HTMLDivElement,
   ChartContainerPropsBase & {
     chart: ReactNode
@@ -39,3 +39,7 @@ export type ComposeChartContainerProps<T extends object> =
   ChartContainerPropsBase & {
     chart: T
   }
+
+export const ChartContainer = Object.assign(Container, {
+  Skeleton: WidgetContainer.Skeleton,
+})
