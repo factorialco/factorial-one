@@ -2,6 +2,7 @@ import {
   ComponentClass,
   ComponentType,
   ForwardRefExoticComponent,
+  ReactNode,
   RefAttributes,
 } from "react"
 
@@ -18,3 +19,17 @@ export function withSkeleton<
 >(Component: T, Skeleton: U): T & { Skeleton: U } {
   return Object.assign(Component, { Skeleton })
 }
+
+export const Blend: React.FC<{
+  orientation?: "vertical" | "horizontal"
+  limit?: number
+  children: ReactNode
+}> = ({ orientation = "vertical", limit = 600, children }) => (
+  <div
+    style={{
+      maskImage: `linear-gradient(to ${orientation == "vertical" ? "bottom" : "right"}, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) calc(min(100% - ${limit}px, 100%)), rgba(0, 0, 0, 0) 100%)`,
+    }}
+  >
+    {children}
+  </div>
+)

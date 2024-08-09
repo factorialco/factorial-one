@@ -1,4 +1,4 @@
-import { withSkeleton } from "@/lib/skeleton"
+import { Blend, withSkeleton } from "@/lib/skeleton"
 import {
   ComponentProps,
   forwardRef,
@@ -63,9 +63,11 @@ const skeletonHeights: Array<
 > = ["sm", "lg", "md", "md", "lg", "sm", "lg", "lg", "sm", "sm", "md", "md"]
 
 export const Dashboard = withSkeleton(DashboardComponent, () => (
-  <DashboardComponent>
-    {skeletonHeights.map((height, i) => (
-      <WidgetContainer.Skeleton height={height} key={i} />
-    ))}
-  </DashboardComponent>
+  <Blend>
+    <DashboardComponent>
+      {skeletonHeights.map((height, i) => (
+        <WidgetContainer.Skeleton height={height} key={i} />
+      ))}
+    </DashboardComponent>
+  </Blend>
 ))
