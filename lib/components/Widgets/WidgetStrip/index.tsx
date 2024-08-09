@@ -8,14 +8,10 @@ type DashboardProps = {
   children: ReactNode[]
 }
 
-const Container: React.FC<{ children: ReactNode; className?: string }> = ({
-  children,
-  className,
-}) => (
+const Container: React.FC<{ children: ReactNode }> = ({ children }) => (
   <div
     className={cn(
-      "flex min-h-72 w-fit flex-row items-stretch gap-4 [&>*]:min-w-96 [&>*]:max-w-lg [&>*]:flex-grow [&>*]:basis-0",
-      className
+      "flex min-h-72 flex-row items-stretch gap-4 [&>*]:min-w-96 [&>*]:max-w-lg [&>*]:flex-grow [&>*]:basis-0"
     )}
   >
     {children}
@@ -34,7 +30,7 @@ const WidgetStripComponent = forwardRef<HTMLDivElement, DashboardProps>(
 
 export const WidgetStrip = withSkeleton(WidgetStripComponent, () => (
   <Blend orientation="horizontal">
-    <Container className="overflow-hidden">
+    <Container>
       <WidgetContainer.Skeleton />
       <WidgetContainer.Skeleton />
       <WidgetContainer.Skeleton />

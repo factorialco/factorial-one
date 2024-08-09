@@ -1,6 +1,6 @@
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
 import { ComponentProps, ForwardedRef } from "react"
-import { Pie, PieChart as PieChartPrimitive } from "recharts"
+import { LabelList, Pie, PieChart as PieChartPrimitive } from "recharts"
 import { autoColor } from "../utils/colors"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { ChartConfig, InferChartKeys } from "../utils/types"
@@ -39,10 +39,18 @@ export const _PieChart = <DataConfig extends ChartConfig>(
         <Pie
           isAnimationActive={false}
           nameKey={"label"}
+          legendType="circle"
           dataKey={"value"}
           data={preparedData}
           innerRadius={donutPieChart ? 60 : 0}
-        />
+        >
+          <LabelList
+            dataKey="browser"
+            className="fill-background"
+            stroke="none"
+            fontSize={12}
+          />
+        </Pie>
       </PieChartPrimitive>
     </ChartContainer>
   )
