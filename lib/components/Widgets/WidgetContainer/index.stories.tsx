@@ -2,14 +2,21 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { Placeholder } from "@/lib/storybook-utils"
 import { ComponentProps } from "react"
-import { WidgetContainer } from "."
+import { Widget } from "."
 
 const meta = {
-  component: WidgetContainer,
+  component: Widget.Container,
   parameters: {
     layout: "centered",
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div className="w-full min-w-72 max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     header: {
       title: "A widget",
@@ -17,8 +24,8 @@ const meta = {
       info: "Lorem ipsum dolor",
     },
     children: <Placeholder>Put your content in there</Placeholder>,
-  } satisfies ComponentProps<typeof WidgetContainer>,
-} satisfies Meta<typeof WidgetContainer>
+  } satisfies ComponentProps<typeof Widget.Container>,
+} satisfies Meta<typeof Widget.Container>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -35,11 +42,4 @@ export const WithLink: Story = {
       link: { url: "/", title: "Go to link" },
     },
   },
-  decorators: [
-    (Story) => (
-      <div className="w-full min-w-72 max-w-96">
-        <Story />
-      </div>
-    ),
-  ],
 }
