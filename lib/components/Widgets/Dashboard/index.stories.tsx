@@ -90,3 +90,9 @@ export const Tablet: Story = {
     },
   },
 }
+
+export const Skeleton: Story = {
+  render() {
+    return <Dashboard.Skeleton />
+  },
+}

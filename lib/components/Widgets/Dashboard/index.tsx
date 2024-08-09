@@ -1,6 +1,15 @@
-import { forwardRef, ReactNode, useCallback, useRef, useState } from "react"
+import { withSkeleton } from "@/lib/skeleton"
+import {
+  ComponentProps,
+  forwardRef,
+  ReactNode,
+  useCallback,
+  useRef,
+  useState,
+} from "react"
 import Layout from "react-masonry-list"
 import { useResizeObserver } from "usehooks-ts"
+import { WidgetContainer } from "../WidgetContainer"
 
 type DashboardProps = {
   children?: ReactNode[]
@@ -11,7 +20,7 @@ type Size = {
   height?: number
 }
 
-export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
+const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
   ({ children }, ref) => {
     const [columns, setColumns] = useState<number | undefined>()
 
@@ -48,3 +57,15 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
     )
   }
 )
+
+const skeletonHeights: Array<
+  ComponentProps<typeof WidgetContainer.Skeleton>["height"]
+> = ["sm", "lg", "md", "md", "lg", "sm", "lg", "lg", "sm", "sm", "md", "md"]
+
+export const Dashboard = withSkeleton(DashboardComponent, () => (
+  <DashboardComponent>
+    {skeletonHeights.map((height, i) => (
+      <WidgetContainer.Skeleton height={height} key={i} />
+    ))}
+  </DashboardComponent>
+))

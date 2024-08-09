@@ -1,4 +1,5 @@
 import { withSkeleton } from "@/lib/skeleton"
+import { cn } from "@/lib/utils"
 import {
   Card,
   CardContent,
@@ -9,6 +10,7 @@ import {
   CardTitle,
 } from "@/ui/card"
 import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
+import { cva, VariantProps } from "class-variance-authority"
 import { forwardRef, ReactNode } from "react"
 
 export interface WidgetContainerProps {
@@ -17,13 +19,6 @@ export interface WidgetContainerProps {
     subtitle?: string
     info?: string
     link?: { title: string; url: string }
-  }
-}
-
-export interface WidgetSkeletonProps {
-  header: {
-    title?: string
-    subtitle?: string
   }
 }
 
@@ -46,8 +41,25 @@ const Container = forwardRef<
   </Card>
 ))
 
+const skeletonVariants = cva("", {
+  variants: {
+    height: {
+      sm: "h-36",
+      md: "h-48",
+      lg: "h-60",
+    },
+  },
+})
+
+export type WidgetSkeletonProps = {
+  header?: {
+    title?: string
+    subtitle?: string
+  }
+} & VariantProps<typeof skeletonVariants>
+
 const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
-  ({ header }, ref) => (
+  ({ header, height }, ref) => (
     <Card ref={ref} aria-live="polite" aria-busy={true}>
       <CardHeader>
         <div
@@ -62,7 +74,10 @@ const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
           {header?.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
         </div>
       </CardHeader>
-      <CardContent aria-hidden={true}>
+      <CardContent
+        aria-hidden={true}
+        className={cn(skeletonVariants({ height }))}
+      >
         {[...Array(4)].map((_, i) => (
           <SkeletonPrimitive
             key={i}

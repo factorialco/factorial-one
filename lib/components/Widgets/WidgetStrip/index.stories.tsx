@@ -178,3 +178,9 @@ export const EmployeesList: Story = {
     ],
   },
 }
+
+export const Skeleton: Story = {
+  render() {
+    return <WidgetStrip.Skeleton />
+  },
+}
