@@ -6,7 +6,7 @@ import { withSkeleton } from "@/lib/skeleton"
 import { forwardRef } from "react"
 import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
-export const VerticalChartWidget = withSkeleton(
+export const VerticalBarChartWidget = withSkeleton(
   forwardRef<HTMLDivElement, ComposeChartContainerProps<VerticalBarChartProps>>(
     (props, ref) => (
       <ChartContainer

@@ -3,7 +3,7 @@ import { withSkeleton } from "@/lib/skeleton"
 import { forwardRef } from "react"
 import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
-export const BarChartWidget = withSkeleton(
+export const AreaChartWidget = withSkeleton(
   forwardRef<HTMLDivElement, ComposeChartContainerProps<AreaChartProps>>(
     (props, ref) => (
       <ChartContainer
