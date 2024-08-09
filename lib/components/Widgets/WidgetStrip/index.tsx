@@ -14,7 +14,7 @@ const Container: React.FC<{ children: ReactNode; className?: string }> = ({
 }) => (
   <div
     className={cn(
-      "flex min-h-72 flex-row items-stretch gap-4 [&>*]:min-w-96 [&>*]:max-w-lg [&>*]:flex-grow [&>*]:basis-0",
+      "flex min-h-72 w-fit flex-row items-stretch gap-4 [&>*]:min-w-96 [&>*]:max-w-lg [&>*]:flex-grow [&>*]:basis-0",
       className
     )}
   >
