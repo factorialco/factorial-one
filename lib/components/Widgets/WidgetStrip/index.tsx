@@ -11,7 +11,7 @@ const WidgetStripComponent = forwardRef<HTMLDivElement, DashboardProps>(
   ({ children }, ref) => {
     return (
       <ScrollArea ref={ref}>
-        <div className="flex min-h-72 flex-row items-stretch gap-4 [&>*]:min-w-80 [&>*]:max-w-md [&>*]:flex-grow [&>*]:basis-0">
+        <div className="flex min-h-72 flex-row items-stretch gap-4 [&>*]:min-w-96 [&>*]:max-w-lg [&>*]:flex-grow [&>*]:basis-0">
           {children}
         </div>
       </ScrollArea>
