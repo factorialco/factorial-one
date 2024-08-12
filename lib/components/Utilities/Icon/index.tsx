@@ -1,5 +1,10 @@
 import { cva, VariantProps } from "class-variance-authority"
-import { forwardRef, SVGProps } from "react"
+import {
+  forwardRef,
+  ForwardRefExoticComponent,
+  RefAttributes,
+  SVGProps,
+} from "react"
 
 const iconVariants = cva("inline-block", {
   variants: {
@@ -16,8 +21,12 @@ const iconVariants = cva("inline-block", {
   },
 })
 
+export type IconType = ForwardRefExoticComponent<
+  SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>
+>
+
 export interface IconProps extends VariantProps<typeof iconVariants> {
-  icon: React.ComponentType<SVGProps<SVGSVGElement>>
+  icon: IconType
 }
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(
