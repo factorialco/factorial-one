@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import AddAvatarSvg from "@/icons/AddAvatar"
 import EnvelopeSvg from "@/icons/Envelope"
 import FaceIdSvg from "@/icons/FaceId"
 
@@ -20,12 +19,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-export const AddAvatar: Story = {
-  args: {
-    svg: AddAvatarSvg,
-  },
-}
 
 export const FaceId: Story = {
   args: {

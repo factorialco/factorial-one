@@ -1,7 +1,7 @@
 import { Meta, Title, IconGallery, IconItem, Canvas } from "@storybook/blocks"
 
 import { Icon as IconExample } from "./"
-import AddAvatar from "@/icons/AddAvatar"
+import Envelope from "@/icons/Envelope"
 
 import * as IconStories from "./index.stories"
 import * as AllIcons from "@/icons"
@@ -16,15 +16,15 @@ import * as AllIcons from "@/icons"
   source={{
     transform: (code) => {
       return `
-import AddAvatar from "@factorial-one/icons/AddAvatar"
+import Envelope from "@factorial-one/icons/Envelope"
 
-${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={AddAvatar")}` }}}
+${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={Envelope")}` }}}
 />
 
 <IconGallery>
   {Object.keys(AllIcons).map((iconName) => (
     <IconItem key={iconName} name={iconName}>
-      <IconExample size="large" icon={AllIcons[iconName]} />
+      <IconExample size="md" icon={AllIcons[iconName]} />
     </IconItem>
   ))}
 </IconGallery>

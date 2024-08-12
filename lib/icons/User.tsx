@@ -1,6 +1,6 @@
-import * as React from "react";
-import type { SVGProps } from "react";
-import { Ref, forwardRef } from "react";
-const SvgUser = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" d="M4 8a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4zm4-2a2 2 0 0 0-2 2v8a2 2 0 0 0 1.143 1.808 5.01 5.01 0 0 1 2.896-3.409 3.5 3.5 0 1 1 3.922 0 5.01 5.01 0 0 1 2.896 3.409A2 2 0 0 0 18 16V8a2 2 0 0 0-2-2zm6.83 12a3.001 3.001 0 0 0-5.66 0zM12 10a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3" /></svg>;
+import * as React from 'react';
+import { SVGProps, forwardRef } from 'react';
+import { withVectorEffect } from '../lib/vector-icon';
+const SvgUser = (props: SVGProps<SVGSVGElement>, ref: React.Ref<SVGSVGElement>) => <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" vectorEffect="non-scaling-stroke" ref={ref} {...props}><path d="M8 5H16C17.6569 5 19 6.34315 19 8V16C19 17.6569 17.6569 19 16 19H8C6.34315 19 5 17.6569 5 16V8C5 6.34315 6.34315 5 8 5Z" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" /><circle cx={12} cy={11.5} r={2.5} stroke="currentColor" strokeWidth={1.5} /><path d="M16 19C16 16.7909 14.2091 15 12 15C9.79086 15 8 16.7909 8 19" stroke="currentColor" strokeWidth={1.5} /></svg>;
 const ForwardRef = forwardRef(SvgUser);
-export default ForwardRef;
+export default withVectorEffect(ForwardRef);
