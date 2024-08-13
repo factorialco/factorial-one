@@ -108,7 +108,7 @@
     "postcss-import": "^16.1.0",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "prettier-plugin-tailwindcss": "^0.6.5",
+    "prettier-plugin-tailwindcss": "^0.6.6",
     "react-syntax-highlighter": "^15.5.0",
     "storybook": "^8.2.8",
     "storybook-dark-mode": "^4.0.2",
