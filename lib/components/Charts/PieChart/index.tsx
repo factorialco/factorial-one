@@ -41,7 +41,7 @@ export const _PieChart = <DataConfig extends ChartConfig>(
   return (
     <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <PieChartPrimitive accessibilityLayer margin={{ left: 0, right: 0 }}>
-        <ChartTooltip cursor content={<ChartTooltipContent hideLabel />} />
+        <ChartTooltip cursor content={<ChartTooltipContent />} />
         <Pie
           isAnimationActive={false}
           nameKey={"label"}

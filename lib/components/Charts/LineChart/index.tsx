@@ -46,7 +46,7 @@ export const _LineChart = <
         <CartesianGrid {...cartesianGridProps()} />
         {!xAxis?.hide && <XAxis {...xAxisProps(xAxis)} />}
         {!yAxis?.hide && <YAxis {...yAxisProps(yAxis)} />}
-        <ChartTooltip cursor content={<ChartTooltipContent hideLabel />} />
+        <ChartTooltip cursor content={<ChartTooltipContent />} />
         {lines.map((line, index) => (
           <Line
             key={line}
