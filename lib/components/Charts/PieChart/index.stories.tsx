@@ -23,6 +23,13 @@ const meta: Meta<typeof Component> = {
       },
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="max-w-80">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Component>
 
 export default meta
@@ -66,4 +73,14 @@ export const Default: Story = {
       { label: "june", value: 214 },
     ],
   } as PieChartProps<typeof dataConfig>,
+}
+
+export const WithOverview: Story = {
+  args: {
+    ...Default.args,
+    overview: {
+      label: "Total",
+      number: 224,
+    },
+  },
 }
