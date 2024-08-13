@@ -1,4 +1,4 @@
-import { ChartContainer } from "@/ui/chart"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
 import { ForwardedRef } from "react"
 import {
   Bar,
@@ -17,7 +17,7 @@ import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 export type BarChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
-> = ChartPropsBase<DataConfig, Keys> & { label: boolean }
+> = ChartPropsBase<DataConfig, Keys> & { label?: boolean }
 
 const _BarChart = <
   DataConfig extends ChartConfig,
@@ -27,8 +27,8 @@ const _BarChart = <
     dataConfig,
     data,
     xAxis,
-    yAxis,
-    label,
+    yAxis = { hide: true },
+    label = false,
     aspect,
   }: BarChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
@@ -40,11 +40,12 @@ const _BarChart = <
       <BarChartPrimitive
         accessibilityLayer
         data={prepareData(data)}
-        margin={{ left: 12, right: 12 }}
+        margin={{ left: 12, right: 12, top: label ? 24 : 0 }}
       >
+        <ChartTooltip cursor content={<ChartTooltipContent hideLabel />} />
         <CartesianGrid vertical={false} />
         <YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />
-        <XAxis {...xAxisProps(yAxis)} hide={xAxis?.hide} />
+        <XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />
 
         {bars.map((key) => (
           <Bar
@@ -53,6 +54,7 @@ const _BarChart = <
             dataKey={key}
             fill={dataConfig[key].color}
             radius={4}
+            maxBarSize={32}
           >
             {label && (
               <LabelList

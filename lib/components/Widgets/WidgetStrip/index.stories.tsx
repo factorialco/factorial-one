@@ -4,6 +4,8 @@ import { WidgetStrip } from "."
 import { AreaChartWidget } from "../Charts/AreaChartWidget"
 
 import AreaChartWidgetStoriesMeta from "../Charts/AreaChartWidget/index.stories"
+import { BarChartWidget } from "../Charts/BarChartWidget"
+import BarChartWidgetStoriesMeta from "../Charts/BarChartWidget/index.stories"
 import { LineChartWidget } from "../Charts/LineChartWidget"
 import LineChartWidgetStoriesMeta from "../Charts/LineChartWidget/index.stories"
 import { PieChartWidget } from "../Charts/PieChartWidget"
@@ -15,6 +17,7 @@ const renderWidget = (index: number) => {
     () => <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} />,
     () => <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
     () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
+    () => <BarChartWidget {...BarChartWidgetStoriesMeta.args} />,
     () => (
       <WidgetContainer
         header={{ title: "A form widget", subtitle: "Enter your data" }}
