@@ -4,6 +4,9 @@ const availableColors = {
   "chart-3": "hsl(var(--chart-3))",
   "chart-4": "hsl(var(--chart-4))",
   "chart-5": "hsl(var(--chart-5))",
+  "chart-6": "hsl(var(--chart-6))",
+  "chart-7": "hsl(var(--chart-7))",
+  "chart-8": "hsl(var(--chart-8))",
 }
 
 export type ChartColor = keyof typeof availableColors
