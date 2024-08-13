@@ -42,7 +42,7 @@ const _BarChart = <
         data={prepareData(data)}
         margin={{ left: 12, right: 12, top: label ? 24 : 0 }}
       >
-        <ChartTooltip cursor content={<ChartTooltipContent hideLabel />} />
+        <ChartTooltip cursor content={<ChartTooltipContent />} />
         <CartesianGrid vertical={false} />
         <YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />
         <XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />
