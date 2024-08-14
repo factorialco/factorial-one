@@ -25,4 +25,5 @@ export const yAxisProps = (
 
 export const cartesianGridProps = () => ({
   vertical: false,
+  strokeDasharray: "4",
 })

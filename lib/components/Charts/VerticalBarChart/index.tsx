@@ -14,6 +14,7 @@ import {
 import { prepareData } from "../utils/bar"
 import { autoColor } from "../utils/colors"
 import {
+  cartesianGridProps,
   xAxisProps as xAxisConfigureProps,
   yAxisProps as yAxisConfigureProps,
 } from "../utils/elements"
@@ -87,7 +88,11 @@ const _VBarChart = <
         margin={{ left: 24, right: label ? 32 : 0 }}
       >
         <ChartTooltip cursor content={<ChartTooltipContent />} />
-        <CartesianGrid vertical={true} horizontal={false} />
+        <CartesianGrid
+          {...cartesianGridProps()}
+          vertical={true}
+          horizontal={false}
+        />
         <XAxis {...xAxisProps} hide={xAxis?.hide} />
         <YAxis {...yAxisProps} hide={yAxis?.hide} />
 
