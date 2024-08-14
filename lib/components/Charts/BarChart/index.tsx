@@ -10,7 +10,7 @@ import {
 } from "recharts"
 
 import { autoColor } from "../utils/colors"
-import { xAxisProps, yAxisProps } from "../utils/elements"
+import { cartesianGridProps, xAxisProps, yAxisProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
@@ -44,7 +44,7 @@ const _BarChart = <
         margin={{ left: 12, right: 12, top: label ? 24 : 0 }}
       >
         <ChartTooltip cursor content={<ChartTooltipContent />} />
-        <CartesianGrid vertical={false} />
+        <CartesianGrid {...cartesianGridProps()} />
         <YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />
         <XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />
 
