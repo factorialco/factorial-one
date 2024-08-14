@@ -124,11 +124,11 @@ export const EmployeesList: Story = {
         summaries={[
           {
             label: "Now",
-            value: "250",
+            value: 250,
           },
           {
             label: "Last month",
-            value: "230",
+            value: 230,
           },
         ]}
         chart={{
@@ -150,7 +150,7 @@ export const EmployeesList: Story = {
         summaries={[
           {
             label: "Rate",
-            value: "20",
+            value: 20,
             unit: "%",
           },
         ]}
