@@ -17,7 +17,7 @@ export type LineChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
 > = ChartPropsBase<DataConfig, Keys> & {
-  lineType?: "natural" | "linear" | "step"
+  lineType?: "natural" | "linear"
 }
 
 export const _LineChart = <
@@ -28,7 +28,7 @@ export const _LineChart = <
     data,
     dataConfig,
     xAxis,
-    yAxis,
+    yAxis = { hide: true },
     lineType = "natural",
     aspect,
   }: LineChartProps<DataConfig, Keys>,
@@ -54,7 +54,7 @@ export const _LineChart = <
             isAnimationActive={false}
             type={lineType}
             stroke={dataConfig[line].color || autoColor(index)}
-            strokeWidth={2}
+            strokeWidth={1.5}
             dot={false}
           />
         ))}

@@ -104,6 +104,7 @@ export const _AreaChart = <
             fill={`url(#fill${area})`}
             fillOpacity={0.4}
             stroke={dataConfig[area].color || autoColor(index)}
+            strokeWidth={1.5}
           />
         ))}
         {areas.length > 1 && (
