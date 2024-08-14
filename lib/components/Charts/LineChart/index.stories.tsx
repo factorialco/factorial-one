@@ -18,11 +18,18 @@ const meta: Meta<typeof Component> = {
   title: "Charts/LineChart",
   argTypes: {
     lineType: {
-      control: { type: "select", options: ["natural", "linear", "step"] },
+      control: { type: "select", options: ["natural", "linear"] },
       description: "Determines the type of line curve",
       defaultValue: "natural",
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="max-w-80">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Component>
 
 export default meta
