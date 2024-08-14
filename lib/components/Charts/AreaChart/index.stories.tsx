@@ -25,20 +25,21 @@ const meta = {
       hide: true,
     },
     data: [
-      { label: "January", values: { mobile: 4000, desktop: 2400 } },
-      { label: "February", values: { mobile: 3000, desktop: 1398 } },
-      { label: "March", values: { mobile: 2000, desktop: 4000 } },
-      { label: "April", values: { mobile: 1500, desktop: 8000 } },
-      { label: "May", values: { mobile: 2000, desktop: 6000 } },
-      { label: "June", values: { mobile: 3500, desktop: 4000 } },
-      { label: "July", values: { mobile: 4500, desktop: 2000 } },
-      { label: "August", values: { mobile: 5500, desktop: 1000 } },
-      { label: "September", values: { mobile: 6500, desktop: 500 } },
-      { label: "October", values: { mobile: 7500, desktop: 300 } },
-      { label: "November", values: { mobile: 8500, desktop: 200 } },
-      { label: "December", values: { mobile: 9500, desktop: 500 } },
+      { label: "January", values: { mobile: 1200, desktop: 500 } },
+      { label: "February", values: { mobile: 1500, desktop: 1500 } },
+      { label: "March", values: { mobile: 1300, desktop: 3000 } },
+      { label: "April", values: { mobile: 1000, desktop: 4500 } },
+      { label: "May", values: { mobile: 800, desktop: 5000 } },
+      { label: "June", values: { mobile: 600, desktop: 4000 } },
     ],
   } satisfies AreaChartProps<typeof dataConfig>,
+  decorators: [
+    (Story) => (
+      <div className="max-w-80">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof Component>
 
 export default meta
