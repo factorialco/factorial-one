@@ -4,7 +4,6 @@ import { BarChart, BarChartProps } from "."
 const dataConfig = {
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
   },
 }
 
@@ -46,15 +45,12 @@ export const MultipleValues: Story = {
     dataConfig: {
       desktop: {
         label: "Desktop",
-        color: "hsl(var(--chart-1))",
       },
       mobile: {
         label: "Mobile",
-        color: "hsl(var(--chart-2))",
       },
       tablet: {
         label: "Tablet",
-        color: "hsl(var(--chart-3))",
       },
     },
     data: [
