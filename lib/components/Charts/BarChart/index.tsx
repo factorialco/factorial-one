@@ -9,6 +9,7 @@ import {
   YAxis,
 } from "recharts"
 
+import { autoColor } from "../utils/colors"
 import { xAxisProps, yAxisProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
@@ -47,12 +48,12 @@ const _BarChart = <
         <YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />
         <XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />
 
-        {bars.map((key) => (
+        {bars.map((key, index) => (
           <Bar
             key={`bar-${key}`}
             isAnimationActive={false}
             dataKey={key}
-            fill={dataConfig[key].color}
+            fill={dataConfig[key].color || autoColor(index)}
             radius={4}
             maxBarSize={32}
           >
