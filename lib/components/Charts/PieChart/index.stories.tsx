@@ -41,27 +41,21 @@ export const Default: Story = {
     dataConfig: {
       january: {
         label: "January",
-        color: "hsl(var(--chart-1))",
       },
       february: {
         label: "February",
-        color: "hsl(var(--chart-2))",
       },
       march: {
         label: "March",
-        color: "hsl(var(--chart-3))",
       },
       april: {
         label: "April",
-        color: "hsl(var(--chart-4))",
       },
       may: {
         label: "May",
-        color: "hsl(var(--chart-5))",
       },
       june: {
         label: "June",
-        color: "hsl(var(--chart-6))",
       },
     },
     data: [

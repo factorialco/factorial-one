@@ -1,9 +1,10 @@
-import { ChartContainer } from "@/ui/chart"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
 import { cloneDeep } from "lodash"
 import { ForwardedRef } from "react"
 import {
   Bar,
   BarChart as BarChartPrimitive,
+  CartesianGrid,
   LabelList,
   XAxis,
   XAxisProps,
@@ -11,6 +12,7 @@ import {
   YAxisProps,
 } from "recharts"
 import { prepareData } from "../utils/bar"
+import { autoColor } from "../utils/colors"
 import {
   xAxisProps as xAxisConfigureProps,
   yAxisProps as yAxisConfigureProps,
@@ -45,7 +47,7 @@ const getMaxValueByKey = (
 export type VerticalBarChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
-> = ChartPropsBase<DataConfig, Keys> & { label: boolean }
+> = ChartPropsBase<DataConfig, Keys> & { label?: boolean }
 
 const _VBarChart = <
   DataConfig extends ChartConfig,
@@ -54,9 +56,9 @@ const _VBarChart = <
   {
     dataConfig,
     data,
-    xAxis,
+    xAxis = { hide: true },
     yAxis,
-    label,
+    label = false,
     aspect,
   }: VerticalBarChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
@@ -82,12 +84,14 @@ const _VBarChart = <
         layout="vertical"
         accessibilityLayer
         data={prepareData(data)}
-        margin={{ left: 12, right: 12 }}
+        margin={{ left: 24, right: label ? 32 : 0 }}
       >
+        <ChartTooltip cursor content={<ChartTooltipContent />} />
+        <CartesianGrid vertical={true} horizontal={false} />
         <XAxis {...xAxisProps} hide={xAxis?.hide} />
         <YAxis {...yAxisProps} hide={yAxis?.hide} />
 
-        {bars.map((key) => {
+        {bars.map((key, index) => {
           return (
             <>
               <Bar
@@ -95,8 +99,9 @@ const _VBarChart = <
                 layout="vertical"
                 key={`bar-${key}`}
                 dataKey={key}
-                fill={dataConfig[key].color}
+                fill={dataConfig[key].color || autoColor(index)}
                 radius={4}
+                maxBarSize={24}
               >
                 {label && (
                   <LabelList
