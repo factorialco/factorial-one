@@ -108,10 +108,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries<
     | { color?: string; theme?: never }
     | { color?: never; theme: Record<keyof typeof THEMES, string> }
-  >(config).filter(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ([_, config]) => config.theme || config.color
-  )
+  >(config).filter(([_, config]) => config.theme || config.color)
 
   if (!colorConfig.length) {
     return null
