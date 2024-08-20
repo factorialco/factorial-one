@@ -57,6 +57,8 @@ export const _AreaChart = <
             axisLine={false}
             tickMargin={8}
             tickFormatter={xAxis?.tickFormatter}
+            ticks={xAxis?.ticks}
+            domain={xAxis?.domain}
           />
         )}
         {!yAxis?.hide && (
@@ -66,6 +68,8 @@ export const _AreaChart = <
             tickMargin={8}
             tickCount={yAxis?.tickCount}
             tickFormatter={yAxis?.tickFormatter}
+            ticks={yAxis?.ticks}
+            domain={yAxis?.domain}
           />
         )}
         <ChartTooltip
