@@ -6,6 +6,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     value: 75,
+    max: 100,
   },
   decorators: [
     (Story) => (

@@ -2,12 +2,14 @@ import { autoColor } from "../utils/colors"
 
 interface RadialProgressProps {
   value: number
+  max?: number
   color?: string
   overview?: { number: number; label: string }
 }
 
 export function RadialProgressChart({
   value,
+  max = 100,
   color = autoColor(0),
   overview,
 }: RadialProgressProps) {
@@ -15,7 +17,7 @@ export function RadialProgressChart({
   const center = size / 2
   const radius = center - 10 / 2
   const circumference = 2 * Math.PI * radius
-  const progressOffset = ((100 - value) / 100) * circumference
+  const progressOffset = ((max - Math.min(value, max)) / max) * circumference
 
   return (
     <div className="relative inline-flex aspect-video items-center justify-center">
