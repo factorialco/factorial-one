@@ -9,6 +9,18 @@ const dataConfig = {
   february: {
     label: "February",
   },
+  march: {
+    label: "March",
+  },
+  april: {
+    label: "April",
+  },
+  may: {
+    label: "May",
+  },
+  june: {
+    label: "June",
+  },
 }
 
 const Component = PieChart<typeof dataConfig>
@@ -38,26 +50,7 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    dataConfig: {
-      january: {
-        label: "January",
-      },
-      february: {
-        label: "February",
-      },
-      march: {
-        label: "March",
-      },
-      april: {
-        label: "April",
-      },
-      may: {
-        label: "May",
-      },
-      june: {
-        label: "June",
-      },
-    },
+    dataConfig,
     data: [
       { label: "january", value: 186 },
       { label: "february", value: 305 },
