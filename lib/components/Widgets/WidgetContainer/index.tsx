@@ -30,7 +30,7 @@ const Container = forwardRef<
 >(({ header, children }, ref) => (
   <Card ref={ref}>
     <CardHeader>
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col truncate">
         <div className="flex flex-row justify-between">
           <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
             <CardTitle>{header.title}</CardTitle>
@@ -72,7 +72,14 @@ const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
         <div
           className="flex h-6 w-full flex-row items-center gap-1.5"
           aria-hidden={true}
-        ></div>
+        >
+          {header?.title ? (
+            <CardTitle>{header.title}</CardTitle>
+          ) : (
+            <SkeletonPrimitive className="h-4 w-full max-w-16" />
+          )}
+          {header?.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
+        </div>
       </CardHeader>
       <CardContent
         aria-hidden={true}

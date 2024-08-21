@@ -45,11 +45,8 @@ export const PerformanceInsight = forwardRef<
         label: "Performance review results",
         color: "hsl(var(--chart-1))",
       },
-      none: {
-        label: "",
-        color: "transparent",
-      },
     },
+    fullWidth: true,
   }
 
   return (

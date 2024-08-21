@@ -13,6 +13,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
+import { cn } from "../../../lib/utils"
 import { autoColor } from "../utils/colors"
 import { cartesianGridProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
@@ -24,6 +25,8 @@ export type AreaChartProps<
   Keys extends string = InferChartKeys<DataConfig>,
 > = ChartPropsBase<DataConfig, Keys> & {
   lineType?: "natural" | "linear" | "step"
+  fullWidth?: boolean
+  showDots?: boolean
 }
 
 export const _AreaChart = <
@@ -37,6 +40,8 @@ export const _AreaChart = <
     yAxis,
     lineType = "natural",
     aspect,
+    fullWidth = false,
+    showDots = false,
   }: AreaChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -47,7 +52,7 @@ export const _AreaChart = <
       <AreaChartPrimitive
         accessibilityLayer
         data={prepareData(data)}
-        margin={{ left: 12, right: 12 }}
+        margin={{ left: fullWidth ? -38 : 12, right: fullWidth ? 0 : 12 }}
       >
         <CartesianGrid {...cartesianGridProps()} />
         {!xAxis?.hide && (
@@ -109,15 +114,15 @@ export const _AreaChart = <
             fillOpacity={0.4}
             stroke={dataConfig[area].color || autoColor(index)}
             strokeWidth={1.5}
+            dot={showDots}
+            activeDot={showDots}
           />
         ))}
-        {areas.length > 1 && (
-          <ChartLegend
-            className="flex justify-start"
-            iconType="star"
-            content={<ChartLegendContent />}
-          />
-        )}
+        <ChartLegend
+          className={cn("flex justify-start", fullWidth && "ml-10")}
+          iconType="star"
+          content={<ChartLegendContent />}
+        />
       </AreaChartPrimitive>
     </ChartContainer>
   )
