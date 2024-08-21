@@ -23,6 +23,7 @@ const meta: Meta = {
     ],
     name: "Hugo",
     link: "/performance",
+    hasAccess: true,
   },
 }
 
@@ -33,6 +34,6 @@ export const Primary: Story = {}
 
 export const Empty: Story = {
   args: {
-    data: [],
+    hasAccess: false,
   },
 }
