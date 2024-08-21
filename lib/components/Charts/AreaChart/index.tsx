@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import {
   ChartContainer,
   ChartLegend,
@@ -13,7 +14,6 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
-import { cn } from "../../../lib/utils"
 import { autoColor } from "../utils/colors"
 import { cartesianGridProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"

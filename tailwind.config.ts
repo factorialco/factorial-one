@@ -126,9 +126,6 @@ export default {
           foreground: "hsl(var(--layout-foreground))",
           intermediate: "hsl(var(--layout-intermediate))",
         },
-        widget: {
-          background: "hsl(var(--widget-background))",
-        },
       },
       borderRadius: {
         lg: "var(--radius)",

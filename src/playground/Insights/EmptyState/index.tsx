@@ -1,11 +1,11 @@
+import { Button } from "@/components/Actions/Button"
+import { Icon } from "@/components/Utilities/Icon"
 import Performance from "@/icons/Performance"
 import { cn } from "@/lib/utils"
 import { Button as ShadcnButton } from "@/ui/button"
+import { CardLink } from "@/ui/card"
 import { cva } from "class-variance-authority"
 import { ComponentProps, forwardRef } from "react"
-import { Button } from "../../../../lib/components/Actions/Button"
-import { Icon } from "../../../../lib/components/Utilities/Icon"
-import { CardLink } from "../../../../lib/ui/card"
 
 export type Variants = "performance" | "salary"
 

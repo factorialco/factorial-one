@@ -1,6 +1,6 @@
+import { ChartItem } from "@/components/Charts/utils/types"
+import { AreaChartWidget } from "@/components/Widgets/Charts/AreaChartWidget"
 import { ComponentProps, forwardRef } from "react"
-import { ChartItem } from "../../../../lib/components/Charts/utils/types"
-import { AreaChartWidget } from "../../../../lib/components/Widgets/Charts/AreaChartWidget"
 import { EmptyState } from "../EmptyState"
 
 export interface PerformanceInsightType {
