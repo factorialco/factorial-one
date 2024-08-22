@@ -1,6 +1,6 @@
 import { autoColor } from "../utils/colors"
 
-interface RadialProgressProps {
+export interface RadialProgressProps {
   value: number
   max?: number
   color?: string
@@ -13,7 +13,7 @@ export function RadialProgressChart({
   color = autoColor(0),
   overview,
 }: RadialProgressProps) {
-  const strokeWidth = 20
+  const strokeWidth = 16
   const size = 100
   const center = size / 2
   const radius = center - strokeWidth / 2
@@ -21,7 +21,7 @@ export function RadialProgressChart({
   const progressOffset = ((max - Math.min(value, max)) / max) * circumference
 
   return (
-    <div className="relative inline-flex aspect-video items-center justify-center">
+    <div className="relative inline-flex aspect-video items-center justify-center overflow-hidden">
       <svg
         viewBox={`0 0 ${size} ${size}`}
         className="h-full w-full -rotate-90 transform"
