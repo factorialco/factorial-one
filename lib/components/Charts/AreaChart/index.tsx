@@ -6,6 +6,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/ui/chart"
+import { nanoid } from "nanoid"
 import { ForwardedRef } from "react"
 import {
   Area,
@@ -46,6 +47,7 @@ export const _AreaChart = <
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const areas = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
+  const chartId = nanoid(12)
 
   return (
     <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
@@ -85,7 +87,7 @@ export const _AreaChart = <
           {areas.map((area, index) => (
             <linearGradient
               key={index}
-              id={`fill${area}`}
+              id={`fill${area}-${chartId}`}
               x1="0"
               y1="0"
               x2="0"
@@ -110,7 +112,7 @@ export const _AreaChart = <
             key={area}
             dataKey={area}
             type={lineType}
-            fill={`url(#fill${area})`}
+            fill={`url(#fill${area}-${chartId})`}
             fillOpacity={0.4}
             stroke={dataConfig[area].color || autoColor(index)}
             strokeWidth={1.5}
