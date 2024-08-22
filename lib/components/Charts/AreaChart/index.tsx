@@ -26,7 +26,7 @@ export type AreaChartProps<
 > = ChartPropsBase<DataConfig, Keys> & {
   lineType?: "natural" | "linear" | "step"
   fullWidth?: boolean
-  showDots?: boolean
+  marginTop?: number
 }
 
 export const _AreaChart = <
@@ -41,7 +41,7 @@ export const _AreaChart = <
     lineType = "natural",
     aspect,
     fullWidth = false,
-    showDots = false,
+    marginTop = 0,
   }: AreaChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -52,7 +52,7 @@ export const _AreaChart = <
       <AreaChartPrimitive
         accessibilityLayer
         data={prepareData(data)}
-        margin={{ left: fullWidth ? -38 : 12, right: fullWidth ? 0 : 12 }}
+        margin={{ left: fullWidth ? -38 : 12, right: 12, top: marginTop }}
       >
         <CartesianGrid {...cartesianGridProps()} />
         {!xAxis?.hide && (
@@ -114,8 +114,6 @@ export const _AreaChart = <
             fillOpacity={0.4}
             stroke={dataConfig[area].color || autoColor(index)}
             strokeWidth={1.5}
-            dot={showDots}
-            activeDot={showDots}
           />
         ))}
         <ChartLegend

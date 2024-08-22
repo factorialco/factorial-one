@@ -47,6 +47,7 @@ export const PerformanceInsight = forwardRef<
       },
     },
     fullWidth: true,
+    marginTop: 12,
   }
 
   return (
