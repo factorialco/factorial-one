@@ -13,7 +13,7 @@ export function RadialProgressChart({
   color = autoColor(0),
   overview,
 }: RadialProgressProps) {
-  const strokeWidth = 16
+  const strokeWidth = 12
   const size = 100
   const center = size / 2
   const radius = center - strokeWidth / 2
@@ -43,6 +43,7 @@ export function RadialProgressChart({
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           strokeDashoffset={progressOffset}
+          strokeLinecap="round"
         />
       </svg>
       {overview && (
