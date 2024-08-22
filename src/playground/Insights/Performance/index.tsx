@@ -25,7 +25,7 @@ export const PerformanceInsight = forwardRef<
         link={link}
         variant={"performance"}
         buttons={[
-          { label: "Try it for free", variant: "destructive" },
+          { label: "Try it for free", variant: "neutral" },
           { label: "Book a demo", variant: "outline" },
         ]}
       />

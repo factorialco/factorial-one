@@ -1,6 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { Icon } from "@/components/Utilities/Icon"
-import Performance from "@/icons/Performance"
+import AreaGraph from "@/icons/AreaGraph"
 import { cn } from "@/lib/utils"
 import { Button as ShadcnButton } from "@/ui/button"
 import { CardLink } from "@/ui/card"
@@ -34,23 +33,22 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateType>(
     return (
       <div
         className={cn(
-          "relative flex h-48 max-w-96 flex-col justify-between rounded-xl pb-6 pl-5 pr-5 pt-4",
+          "relative flex h-52 max-w-96 flex-col justify-between rounded-xl pb-6 pl-5 pr-5 pt-4",
           emptyStateVariants({ background: variant })
         )}
         ref={ref}
       >
+        <AreaGraph className="absolute -bottom-6 -right-7 z-10 h-64" />
+
         <div className="flex flex-row justify-between">
           <p className="text-lg font-semibold">{title}</p>
           <CardLink href={link} />
         </div>
-        <p className="flex text-xl font-semibold">{content}</p>
-        <div className="flex flex-row gap-3">
+        <p className="flex w-3/4 text-xl font-semibold">{content}</p>
+        <div className="z-10 flex flex-row gap-3">
           {buttons.map((button) => (
             <Button label={button.label} variant={button.variant} />
           ))}
-        </div>
-        <div className="absolute bottom-0 right-0 z-0 text-orange-300">
-          <Icon icon={Performance} size="xl" />
         </div>
       </div>
     )

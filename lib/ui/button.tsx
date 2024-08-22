@@ -8,6 +8,7 @@ export const variants = [
   "secondary",
   "outline",
   "destructive",
+  "neutral",
   "positive",
   "ghost",
 ] as const
@@ -25,6 +26,8 @@ const buttonVariants = cva(
           "border-2 border-solid border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
         destructive:
           "border-2 border-destructive-intermediate bg-destructive text-destructive-foreground hover:bg-destructive/70",
+        neutral:
+          "border-2 border-warning-intermediate bg-warning text-destructive-foreground hover:bg-warning/70",
         positive:
           "border-2 border-positive-intermediate bg-positive text-positive-foreground hover:bg-positive/70",
         ghost:

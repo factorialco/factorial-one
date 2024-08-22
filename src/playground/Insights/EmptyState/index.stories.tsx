@@ -11,10 +11,11 @@ const meta: Meta = {
     title: "Performance",
     content: "See how Hugo's performance evolved over time",
     buttons: [
-      { label: "Try it for free", variant: "destructive" },
+      { label: "Try it for free", variant: "neutral" },
       { label: "Book a demo", variant: "outline" },
     ],
     variant: "performance",
+    link: "/performance",
   },
 }
 

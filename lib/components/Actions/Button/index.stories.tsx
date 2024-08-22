@@ -43,6 +43,12 @@ export const Destructive: Story = {
   },
 }
 
+export const Neutral: Story = {
+  args: {
+    variant: "neutral",
+  },
+}
+
 export const Ghost: Story = {
   args: {
     variant: "ghost",
