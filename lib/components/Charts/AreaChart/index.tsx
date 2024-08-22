@@ -5,6 +5,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/ui/chart"
+import { nanoid } from "nanoid"
 import { ForwardedRef } from "react"
 import {
   Area,
@@ -17,7 +18,6 @@ import { autoColor } from "../utils/colors"
 import { cartesianGridProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
-import { nanoid } from "nanoid"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
 export type AreaChartProps<
