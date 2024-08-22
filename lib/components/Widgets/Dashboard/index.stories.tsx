@@ -9,6 +9,8 @@ import { LineChartWidget } from "../Charts/LineChartWidget"
 import LineChartWidgetStoriesMeta from "../Charts/LineChartWidget/index.stories"
 import { PieChartWidget } from "../Charts/PieChartWidget"
 import PieChartWidgetStoriesMeta from "../Charts/PieChartWidget/index.stories"
+import { RadialProgressWidget } from "../Charts/RadialProgressWidget"
+import RadialProgressWidgetStoriesMeta from "../Charts/RadialProgressWidget/index.stories"
 import { VerticalBarChartWidget } from "../Charts/VerticalBarChartWidget"
 import VerticalBarChartWidgetStoriesMeta from "../Charts/VerticalBarChartWidget/index.stories"
 import { WidgetContainer } from "../WidgetContainer"
@@ -40,6 +42,7 @@ const renderWidget = (index: number) => {
     () => (
       <VerticalBarChartWidget {...VerticalBarChartWidgetStoriesMeta.args} />
     ),
+    () => <RadialProgressWidget {...RadialProgressWidgetStoriesMeta.args} />,
   ]
 
   const Component = Widgets[index % Widgets.length]
