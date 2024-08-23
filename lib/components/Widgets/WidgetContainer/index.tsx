@@ -2,6 +2,7 @@ import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import {
   Card,
+  CardComment,
   CardContent,
   CardHeader,
   CardInfo,
@@ -17,6 +18,7 @@ export interface WidgetContainerProps {
   header: {
     title: string
     subtitle?: string
+    comment?: string
     info?: string
     link?: { title: string; url: string }
   }
@@ -28,14 +30,19 @@ const Container = forwardRef<
 >(({ header, children }, ref) => (
   <Card ref={ref}>
     <CardHeader>
-      <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
-        <CardTitle>{header.title}</CardTitle>
-        {header.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
-        {header.info && <CardInfo content={header.info} />}
+      <div className="flex flex-1 flex-col truncate">
+        <div className="flex flex-row justify-between">
+          <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
+            <CardTitle>{header.title}</CardTitle>
+            {header.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
+            {header.info && <CardInfo content={header.info} />}
+          </div>
+          {header.link && (
+            <CardLink href={header.link.url} title={header.link.title} />
+          )}
+        </div>
+        {header.comment && <CardComment>{header.comment}</CardComment>}
       </div>
-      {header.link && (
-        <CardLink href={header.link.url} title={header.link.title} />
-      )}
     </CardHeader>
     <CardContent>{children}</CardContent>
   </Card>

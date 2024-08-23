@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import {
   ChartContainer,
   ChartLegend,
@@ -25,6 +26,8 @@ export type AreaChartProps<
   Keys extends string = InferChartKeys<DataConfig>,
 > = ChartPropsBase<DataConfig, Keys> & {
   lineType?: "natural" | "linear" | "step"
+  fullWidth?: boolean
+  marginTop?: number
 }
 
 export const _AreaChart = <
@@ -38,6 +41,8 @@ export const _AreaChart = <
     yAxis,
     lineType = "natural",
     aspect,
+    fullWidth = false,
+    marginTop = 0,
   }: AreaChartProps<DataConfig, Keys>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -49,7 +54,7 @@ export const _AreaChart = <
       <AreaChartPrimitive
         accessibilityLayer
         data={prepareData(data)}
-        margin={{ left: 12, right: 12 }}
+        margin={{ left: fullWidth ? -38 : 12, right: 12, top: marginTop }}
       >
         <CartesianGrid {...cartesianGridProps()} />
         {!xAxis?.hide && (
@@ -59,6 +64,8 @@ export const _AreaChart = <
             axisLine={false}
             tickMargin={8}
             tickFormatter={xAxis?.tickFormatter}
+            ticks={xAxis?.ticks}
+            domain={xAxis?.domain}
           />
         )}
         {!yAxis?.hide && (
@@ -68,6 +75,8 @@ export const _AreaChart = <
             tickMargin={8}
             tickCount={yAxis?.tickCount}
             tickFormatter={yAxis?.tickFormatter}
+            ticks={yAxis?.ticks}
+            domain={yAxis?.domain}
           />
         )}
         <ChartTooltip
@@ -109,13 +118,11 @@ export const _AreaChart = <
             strokeWidth={1.5}
           />
         ))}
-        {areas.length > 1 && (
-          <ChartLegend
-            className="flex justify-start"
-            iconType="star"
-            content={<ChartLegendContent />}
-          />
-        )}
+        <ChartLegend
+          className={cn("flex justify-start", fullWidth && "ml-10")}
+          iconType="star"
+          content={<ChartLegendContent />}
+        />
       </AreaChartPrimitive>
     </ChartContainer>
   )

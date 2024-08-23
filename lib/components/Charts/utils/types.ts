@@ -13,6 +13,8 @@ export type AxisConfig = {
   hide?: boolean
   tickFormatter?: (value: string) => string
   tickCount?: number
+  ticks?: number[]
+  domain?: number[]
 }
 
 export type ChartConfig<Keys extends string = string> = Record<
