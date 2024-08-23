@@ -23,7 +23,7 @@ export const PerformanceInsight = forwardRef<
         title={title}
         content={`See how ${name}'s performance evolved over time`}
         link={link}
-        variant={"performance"}
+        variant="performance"
         buttons={[
           { label: "Try it for free", variant: "neutral" },
           { label: "Book a demo", variant: "outline" },

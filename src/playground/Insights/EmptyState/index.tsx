@@ -39,10 +39,9 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateType>(
         ref={ref}
       >
         <AreaGraph className="absolute -bottom-6 -right-7 z-10 h-64" />
-
-        <div className="flex flex-row justify-between">
+        <div className="z-20 flex flex-row justify-between">
           <p className="text-lg font-semibold">{title}</p>
-          <CardLink href={link} />
+          <CardLink href={link} title={title} />
         </div>
         <p className="flex w-3/4 text-xl font-semibold">{content}</p>
         <div className="z-10 flex flex-row gap-3">
