@@ -90,8 +90,8 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
                   key={`${task} ${i}`}
                   className="flex flex-row items-center gap-3"
                 >
-                  <div className="h-5 w-5 rounded-md border border-solid border-secondary-intermediate" />
-                  <p className="font-medium">{task}</p>
+                  <div className="h-5 min-w-5 rounded-md border border-solid border-secondary-intermediate" />
+                  <p className="truncate font-medium">{task}</p>
                 </div>
               ))}
             </div>

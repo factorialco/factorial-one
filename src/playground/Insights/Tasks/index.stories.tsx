@@ -15,7 +15,7 @@ const meta: Meta = {
         "Connect to Slack",
         "Write changelog",
         "Product review",
-        "Final conclusions",
+        "Final conclusions for a very long text that doesnt fit",
       ],
       overdueLabel: "Overdue",
       overdueTasks: 1,
