@@ -15,8 +15,8 @@ import { cva, VariantProps } from "class-variance-authority"
 import { forwardRef, ReactNode } from "react"
 
 export interface WidgetContainerProps {
-  header: {
-    title: string
+  header?: {
+    title?: string
     subtitle?: string
     comment?: string
     info?: string
@@ -29,21 +29,25 @@ const Container = forwardRef<
   WidgetContainerProps & { children: ReactNode }
 >(({ header, children }, ref) => (
   <Card ref={ref}>
-    <CardHeader>
-      <div className="flex flex-1 flex-col truncate">
-        <div className="flex flex-row justify-between">
-          <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
-            <CardTitle>{header.title}</CardTitle>
-            {header.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
-            {header.info && <CardInfo content={header.info} />}
+    {header && (
+      <CardHeader>
+        <div className="flex flex-1 flex-col truncate">
+          <div className="flex flex-row justify-between">
+            <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
+              {header?.title && <CardTitle>{header?.title}</CardTitle>}
+              {header?.subtitle && (
+                <CardSubtitle>{header?.subtitle}</CardSubtitle>
+              )}
+              {header?.info && <CardInfo content={header?.info} />}
+            </div>
+            {header?.link && (
+              <CardLink href={header.link.url} title={header.link.title} />
+            )}
           </div>
-          {header.link && (
-            <CardLink href={header.link.url} title={header.link.title} />
-          )}
+          {header?.comment && <CardComment>{header.comment}</CardComment>}
         </div>
-        {header.comment && <CardComment>{header.comment}</CardComment>}
-      </div>
-    </CardHeader>
+      </CardHeader>
+    )}
     <CardContent>{children}</CardContent>
   </Card>
 ))

@@ -2,14 +2,14 @@ import { forwardRef, ReactNode } from "react"
 import { WidgetContainer, WidgetContainerProps } from "../WidgetContainer"
 import ChartCounter from "./chart-counter"
 
-type ChartContainerPropsBase = WidgetContainerProps & {
+export type ChartContainerPropsBase = WidgetContainerProps & {
   summaries?: Array<{ label: string; value: number; unit?: string }>
 }
 
 const Container = forwardRef<
   HTMLDivElement,
   ChartContainerPropsBase & {
-    chart: ReactNode
+    chart?: ReactNode
   }
 >(({ chart, summaries, ...props }, ref) => (
   <WidgetContainer ref={ref} {...props}>
@@ -30,7 +30,9 @@ const Container = forwardRef<
         ))}
       </div>
     )}
-    <div className="relative flex min-h-40 grow items-stretch">{chart}</div>
+    {chart && (
+      <div className="relative flex min-h-40 grow items-stretch">{chart}</div>
+    )}
   </WidgetContainer>
 ))
 
