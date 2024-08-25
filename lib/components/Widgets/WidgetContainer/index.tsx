@@ -34,17 +34,17 @@ const Container = forwardRef<
         <div className="flex flex-1 flex-col truncate">
           <div className="flex flex-row justify-between">
             <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
-              {header?.title && <CardTitle>{header?.title}</CardTitle>}
-              {header?.subtitle && (
-                <CardSubtitle>{header?.subtitle}</CardSubtitle>
+              {header.title && <CardTitle>{header.title}</CardTitle>}
+              {header.subtitle && (
+                <CardSubtitle>{header.subtitle}</CardSubtitle>
               )}
-              {header?.info && <CardInfo content={header?.info} />}
+              {header.info && <CardInfo content={header.info} />}
             </div>
-            {header?.link && (
+            {header.link && (
               <CardLink href={header.link.url} title={header.link.title} />
             )}
           </div>
-          {header?.comment && <CardComment>{header.comment}</CardComment>}
+          {header.comment && <CardComment>{header.comment}</CardComment>}
         </div>
       </CardHeader>
     )}
