@@ -18,7 +18,8 @@ export interface TasksInsightData {
   noDueTasks: number
   linkUrl: string
   linkTitle: string
-  buttonLabel: string
+  buttonLabel?: string
+  emptyStateText?: string
 }
 
 export interface TasksInsightProps {
@@ -39,6 +40,7 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
       overdueLabel,
       dueLabel,
       noDueLabel,
+      emptyStateText,
     } = data
 
     const taskCategories = [
@@ -84,20 +86,26 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
               ))}
             </div>
             <Separator />
-            <div className="mb-4 flex flex-col gap-3">
-              {tasks.map((task, i) => (
-                <div
-                  key={`${task} ${i}`}
-                  className="flex flex-row items-center gap-3"
-                >
-                  <div className="h-5 min-w-5 rounded-md border border-solid border-secondary-intermediate" />
-                  <p className="truncate font-medium">{task}</p>
-                </div>
-              ))}
+            <div className="flex flex-col gap-3">
+              {!tasks?.length ? (
+                <p>{emptyStateText ?? "No tasks"}</p>
+              ) : (
+                tasks.map((task, i) => (
+                  <div
+                    key={`${task} ${i}`}
+                    className="flex flex-row items-center gap-3"
+                  >
+                    <div className="h-5 min-w-5 rounded-md border border-solid border-secondary-intermediate" />
+                    <p className="truncate font-medium">{task}</p>
+                  </div>
+                ))
+              )}
             </div>
-            <span className="max-w-20">
-              <Button variant="outline" label={buttonLabel} />
-            </span>
+            {buttonLabel && (
+              <span className="mt-4 max-w-20">
+                <Button variant="outline" label={buttonLabel} />
+              </span>
+            )}
           </CardContent>
         </Card>
       </div>

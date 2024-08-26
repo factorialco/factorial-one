@@ -34,3 +34,25 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+export const NoMoreTasks: Story = {
+  args: {
+    data: {
+      ...meta?.args?.data,
+      buttonLabel: undefined,
+    },
+  },
+}
+
+export const EmptyState: Story = {
+  args: {
+    data: {
+      ...meta?.args?.data,
+      tasks: [],
+      buttonLabel: undefined,
+      overdueTasks: 0,
+      dueTasks: 0,
+      noDueTasks: 0,
+    },
+  },
+}
