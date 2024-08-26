@@ -32,7 +32,7 @@ const Container = forwardRef<
     <CardHeader>
       <div className="flex flex-1 flex-col truncate">
         <div className="flex flex-row justify-between">
-          <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
+          <div className="flex min-h-6 grow flex-row items-start gap-1.5 truncate">
             <CardTitle>{header.title}</CardTitle>
             {header.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
             {header.info && <CardInfo content={header.info} />}
