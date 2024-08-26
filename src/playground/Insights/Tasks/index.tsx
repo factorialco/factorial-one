@@ -1,10 +1,9 @@
 import { Button } from "@/components/Actions/Button"
-import { Icon } from "@/components/Utilities/Icon"
 import { Circle } from "@/icons"
 import AlertCircle from "@/icons/AlertCircle"
-import { cn } from "@/lib/utils"
 import { Card, CardContent, CardHeader, CardLink, CardTitle } from "@/ui/card"
 import { forwardRef } from "react"
+import { Indicator } from "../ui/indicator"
 import { Separator } from "../ui/separator"
 
 export interface TasksInsightData {
@@ -20,6 +19,7 @@ export interface TasksInsightData {
   linkTitle: string
   buttonLabel?: string
   emptyStateText?: string
+  handleNavigate: () => void
 }
 
 export interface TasksInsightProps {
@@ -41,6 +41,7 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
       dueLabel,
       noDueLabel,
       emptyStateText,
+      handleNavigate,
     } = data
 
     const taskCategories = [
@@ -74,15 +75,12 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
           <CardContent>
             <div className="grid grid-cols-3">
               {taskCategories.map(({ label, count, icon, color }) => (
-                <div key={label} className="grid-row-2 col-span-1 grid">
-                  <p className="font-medium text-intermediate">{label}</p>
-                  <div className="flex items-center gap-1">
-                    <p className="text-2xl font-semibold">{count}</p>
-                    <span className={cn("flex", color)}>
-                      <Icon icon={icon} size="md" />
-                    </span>
-                  </div>
-                </div>
+                <Indicator
+                  label={label}
+                  count={count}
+                  icon={icon}
+                  color={color}
+                />
               ))}
             </div>
             <Separator />
@@ -103,7 +101,11 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
             </div>
             {buttonLabel && (
               <span className="mt-4 max-w-20">
-                <Button variant="outline" label={buttonLabel} />
+                <Button
+                  variant="outline"
+                  label={buttonLabel}
+                  onClick={handleNavigate}
+                />
               </span>
             )}
           </CardContent>

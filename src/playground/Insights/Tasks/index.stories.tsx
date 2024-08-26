@@ -26,6 +26,7 @@ const meta: Meta = {
       buttonLabel: "See 16 more",
       linkUrl: "/tasks",
       linkTitle: "Tasks",
+      handleNavigate: () => {},
     },
   },
 }
