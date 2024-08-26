@@ -2,19 +2,19 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Gallery } from "."
 import { AreaChartWidget } from "../Charts/AreaChartWidget"
 import { LineChartWidget } from "../Charts/LineChartWidget"
-import { PieChartWidget } from "../Charts/PieChartWidget"
+import { RadialProgressWidget } from "../Charts/RadialProgressWidget"
 import { VerticalBarChartWidget } from "../Charts/VerticalBarChartWidget"
 
 import AreaChartWidgetStoriesMeta from "../Charts/AreaChartWidget/index.stories"
 import LineChartWidgetStoriesMeta from "../Charts/LineChartWidget/index.stories"
-import PieChartWidgetStoriesMeta from "../Charts/PieChartWidget/index.stories"
+import RadialProgressWidgetStoriesMeta from "../Charts/RadialProgressWidget/index.stories"
 import VerticalBarChartWidgetStoriesMeta from "../Charts/VerticalBarChartWidget/index.stories"
 
 const renderWidget = (index: number) => {
   const Widgets = [
     () => <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} />,
     () => <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
-    () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
+    () => <RadialProgressWidget {...RadialProgressWidgetStoriesMeta.args} />,
     () => (
       <VerticalBarChartWidget {...VerticalBarChartWidgetStoriesMeta.args} />
     ),
@@ -49,7 +49,7 @@ export const FullWidth: Story = {
     children: [
       <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} data-full-width />,
       <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
-      <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
+      <RadialProgressWidget {...RadialProgressWidgetStoriesMeta.args} />,
       <VerticalBarChartWidget {...VerticalBarChartWidgetStoriesMeta.args} />,
       <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} />,
     ],
