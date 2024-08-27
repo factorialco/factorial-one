@@ -37,7 +37,7 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
             return (
               <Tooltip key={category.name}>
                 <TooltipTrigger
-                  className="h-full cursor-default overflow-hidden rounded-[2px]"
+                  className="h-full cursor-default overflow-hidden rounded-sm"
                   style={{ width: `${percentage}%` }}
                   title={category.name}
                   asChild
@@ -67,7 +67,7 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                 </TooltipTrigger>
                 <TooltipContent className="flex items-center gap-1 text-sm">
                   <div
-                    className="h-2.5 w-2.5 shrink-0 translate-y-[1px] rounded-full"
+                    className="h-2.5 w-2.5 shrink-0 translate-y-px rounded-full"
                     style={{ backgroundColor: color }}
                   />
                   <span className="pl-0.5 pr-2 text-muted-foreground">
@@ -97,7 +97,7 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                 role="listitem"
               >
                 <div
-                  className="h-2 w-2 shrink-0 translate-y-[1px] rounded-full"
+                  className="h-2 w-2 shrink-0 translate-y-px rounded-full"
                   style={{ backgroundColor: color }}
                 />
                 <span className="text-sm tracking-wide text-muted-foreground">
