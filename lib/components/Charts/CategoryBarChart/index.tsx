@@ -40,10 +40,14 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                   className="h-full cursor-default overflow-hidden rounded-[2px]"
                   style={{ width: `${percentage}%` }}
                   title={category.name}
+                  asChild
                 >
                   <div
                     className="relative h-full w-full"
                     style={{ backgroundColor: color }}
+                    role="img"
+                    title={category.name}
+                    tabIndex={0}
                   >
                     {category.muted && (
                       <div
@@ -51,8 +55,8 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                         style={{
                           backgroundImage: `repeating-linear-gradient(
                           135deg,
-                          rgba(255,255,255,0.1),
-                          rgba(255,255,255,0.1) 2px,
+                          rgba(255,255,255,0.2),
+                          rgba(255,255,255,0.2) 2px,
                           transparent 2px,
                           transparent 6px
                         )`,
@@ -63,7 +67,7 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                 </TooltipTrigger>
                 <TooltipContent className="flex items-center gap-1 text-sm">
                   <div
-                    className="h-2.5 w-2.5 shrink-0 translate-y-[1px] rounded-[2px]"
+                    className="h-2.5 w-2.5 shrink-0 translate-y-[1px] rounded-full"
                     style={{ backgroundColor: color }}
                   />
                   <span className="pl-0.5 pr-2 text-muted-foreground">
@@ -79,14 +83,21 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
         </div>
       </div>
       {legend && (
-        <div className="mt-1 flex w-full gap-2">
+        <div
+          className="mt-1 flex w-full flex-wrap gap-x-2.5 gap-y-0.5"
+          role="list"
+        >
           {data.map((category, index) => {
             const color = category.color || autoColor(index)
 
             return (
-              <div key={category.name} className="flex items-center gap-1">
+              <div
+                key={category.name}
+                className="flex items-center gap-1"
+                role="listitem"
+              >
                 <div
-                  className="h-2.5 w-2.5 shrink-0 translate-y-[1px] rounded-full"
+                  className="h-2 w-2 shrink-0 translate-y-[1px] rounded-full"
                   style={{ backgroundColor: color }}
                 />
                 <span className="text-sm tracking-wide text-muted-foreground">

@@ -38,3 +38,15 @@ export const WithMutedCategory: Story = {
     ],
   },
 }
+
+export const MultipleValues: Story = {
+  args: {
+    data: [
+      { name: "Employee Eng.", value: 42 },
+      { name: "Time Off Req.", value: 91 },
+      { name: "New Hires", value: 13 },
+      { name: "Training Sess.", value: 67, muted: true },
+      { name: "Performance Rev.", value: 85 },
+    ],
+  },
+}
