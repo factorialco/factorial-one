@@ -1,6 +1,5 @@
 import { forwardRef, ReactNode } from "react"
 import { WidgetContainer, WidgetContainerProps } from "../WidgetContainer"
-import ChartCounter from "./chart-counter"
 
 export type ChartContainerPropsBase = WidgetContainerProps & {
   summaries?: Array<{ label: string; value: number; unit?: string }>
@@ -20,18 +19,16 @@ const Container = forwardRef<
             <div className="mb-0.5 text-sm text-muted-foreground">
               {summary.label}
             </div>
-            <div className="flex flex-row items-end gap-0.5">
-              <ChartCounter value={summary.value} />
-              {summary.unit && (
-                <div className="text-sm leading-tight">{summary.unit}</div>
-              )}
+            <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
+              {summary.unit}
+              {summary.value}
             </div>
           </div>
         ))}
       </div>
     )}
     {chart && (
-      <div className="relative flex min-h-40 grow items-stretch">{chart}</div>
+      <div className="relative flex grow items-stretch pt-6">{chart}</div>
     )}
   </WidgetContainer>
 ))
