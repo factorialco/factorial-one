@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
+import { WidgetContainer } from "@/components/Widgets/WidgetContainer"
 import { Circle } from "@/icons"
 import AlertCircle from "@/icons/AlertCircle"
-import { Card, CardContent, CardHeader, CardLink, CardTitle } from "@/ui/card"
 import { forwardRef } from "react"
 import { Indicator } from "../ui/indicator"
 import { Separator } from "../ui/separator"
@@ -67,49 +67,48 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
 
     return (
       <div className="max-w-96" ref={ref}>
-        <Card>
-          <CardHeader className="flex flex-row justify-between">
-            <CardTitle>{title}</CardTitle>
-            <CardLink href={linkUrl} title={linkTitle} />
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-3">
-              {taskCategories.map(({ label, count, icon, color }) => (
-                <Indicator
-                  label={label}
-                  count={count}
-                  icon={icon}
-                  color={color}
-                />
-              ))}
-            </div>
-            <Separator />
-            <div className="flex flex-col gap-3">
-              {!tasks?.length ? (
-                <p>{emptyStateText ?? "No tasks"}</p>
-              ) : (
-                tasks.map((task, i) => (
-                  <div
-                    key={`${task} ${i}`}
-                    className="flex flex-row items-center gap-3"
-                  >
-                    <div className="h-5 min-w-5 rounded-md border border-solid border-secondary-intermediate" />
-                    <p className="truncate font-medium">{task}</p>
-                  </div>
-                ))
-              )}
-            </div>
-            {buttonLabel && (
-              <span className="mt-4 max-w-20">
-                <Button
-                  variant="outline"
-                  label={buttonLabel}
-                  onClick={handleNavigate}
-                />
-              </span>
+        <WidgetContainer
+          header={{
+            title,
+            link: { title: linkTitle, url: linkUrl },
+          }}
+        >
+          <div className="grid grid-cols-3">
+            {taskCategories.map(({ label, count, icon, color }) => (
+              <Indicator
+                label={label}
+                count={count}
+                icon={icon}
+                color={color}
+              />
+            ))}
+          </div>
+          <Separator />
+          <div className="flex flex-col gap-3">
+            {!tasks?.length ? (
+              <p>{emptyStateText ?? "No tasks"}</p>
+            ) : (
+              tasks.map((task, i) => (
+                <div
+                  key={`${task} ${i}`}
+                  className="flex flex-row items-center gap-3"
+                >
+                  <div className="h-5 min-w-5 rounded-md border border-solid border-secondary-intermediate" />
+                  <p className="truncate font-medium">{task}</p>
+                </div>
+              ))
             )}
-          </CardContent>
-        </Card>
+          </div>
+          {buttonLabel && (
+            <span className="mt-4 max-w-20">
+              <Button
+                variant="outline"
+                label={buttonLabel}
+                onClick={handleNavigate}
+              />
+            </span>
+          )}
+        </WidgetContainer>
       </div>
     )
   }
