@@ -11,6 +11,8 @@ const meta: Meta = {
     data: {
       title: "Time off",
       subtitle: "2024",
+      requestedTitle: "Requested",
+      currentAndUpcomingTitle: "Current and upcoming",
       requested: [
         {
           title: "Time off",

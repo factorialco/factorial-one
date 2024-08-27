@@ -17,9 +17,9 @@ export interface TasksInsightData {
   noDueTasks: number
   linkUrl: string
   linkTitle: string
-  buttonLabel?: string
-  emptyStateText?: string
+  emptyStateText: string
   handleNavigate: () => void
+  buttonLabel?: string
 }
 
 export interface TasksInsightProps {
@@ -76,6 +76,7 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
           <div className="grid grid-cols-3">
             {taskCategories.map(({ label, count, icon, color }) => (
               <Indicator
+                key={label}
                 label={label}
                 count={count}
                 icon={icon}
@@ -86,9 +87,9 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
           <Separator />
           <div className="flex flex-col gap-3">
             {!tasks?.length ? (
-              <p>{emptyStateText ?? "No tasks"}</p>
+              <p>{emptyStateText}</p>
             ) : (
-              tasks.map((task, i) => (
+              tasks.slice(0, 5).map((task, i) => (
                 <div
                   key={`${task} ${i}`}
                   className="flex flex-row items-center gap-3"

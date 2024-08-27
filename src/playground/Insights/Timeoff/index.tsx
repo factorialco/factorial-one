@@ -19,9 +19,11 @@ interface TimeOffInsightData {
   currentAndUpcoming: TimeOffData[]
   cta: string
   link: string
+  requestedTitle: string
+  currentAndUpcomingTitle: string
   onNavigate: () => void
-  noRequestedText?: string
-  noCurrentText?: string
+  noRequestedText: string
+  noCurrentText: string
 }
 
 interface TimeOffInsightProps {
@@ -40,6 +42,8 @@ export const TimeOffInsight = forwardRef<HTMLDivElement, TimeOffInsightProps>(
       onNavigate,
       noRequestedText,
       noCurrentText,
+      requestedTitle,
+      currentAndUpcomingTitle,
     } = data
     return (
       <div className="max-w-96" ref={ref}>
@@ -50,7 +54,9 @@ export const TimeOffInsight = forwardRef<HTMLDivElement, TimeOffInsightProps>(
             link: { title, url: link },
           }}
         >
-          <p className="mb-4 font-medium text-muted-foreground">Requested</p>
+          <p className="mb-4 font-medium text-muted-foreground">
+            {requestedTitle}
+          </p>
           <div className="flex flex-col gap-4">
             {!requested?.length ? (
               <p>{noRequestedText ?? "No time off requested"}</p>
@@ -72,7 +78,7 @@ export const TimeOffInsight = forwardRef<HTMLDivElement, TimeOffInsightProps>(
           </div>
           <Separator />
           <p className="mb-4 font-medium text-muted-foreground">
-            Current and upcoming
+            {currentAndUpcomingTitle}
           </p>
           <div className="flex flex-col gap-4">
             {!currentAndUpcoming.length ? (
