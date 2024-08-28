@@ -1,0 +1,36 @@
+import { Event, EventProps } from "../ui/event"
+
+export interface EventsListProps {
+  events: EventProps[]
+  title: string
+  limit?: 1 | 2 | 3 | 4 | 5
+}
+
+export const EventsList: React.FC<EventsListProps> = ({
+  events,
+  title,
+  limit = 3,
+}) => {
+  if (!events.length) {
+    return null
+  }
+
+  return (
+    <div>
+      <p className="mb-4 font-medium text-muted-foreground">{title}</p>
+      <div className="flex flex-col gap-4">
+        {events.slice(0, limit).map((item) => (
+          <Event
+            title={item.title}
+            length={item.length}
+            lengthUnit={item.lengthUnit}
+            from={item.from}
+            until={item.until}
+            color={item.color}
+            isPending={item.isPending}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}

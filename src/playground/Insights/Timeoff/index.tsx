@@ -1,17 +1,11 @@
 import { Button } from "@/components/Actions/Button"
 import { WidgetContainer } from "@/components/Widgets/WidgetContainer"
 import { forwardRef } from "react"
-import { Event } from "../ui/event"
-import { Separator } from "../ui/separator"
+import { EventsListGroup } from "../EventsListGroup"
+import { EventProps } from "../ui/event"
 
-interface TimeOffData {
-  title: string
-  length: number
-  lengthUnit: string
-  color: string
-  from: string
-  until: string
-}
+type TimeOffData = Omit<EventProps, "isPending">
+
 interface TimeOffInsightData {
   title: string
   subtitle: string
@@ -40,8 +34,6 @@ export const TimeOffInsight = forwardRef<HTMLDivElement, TimeOffInsightProps>(
       cta,
       link,
       onNavigate,
-      noRequestedText,
-      noCurrentText,
       requestedTitle,
       currentAndUpcomingTitle,
     } = data
@@ -54,51 +46,24 @@ export const TimeOffInsight = forwardRef<HTMLDivElement, TimeOffInsightProps>(
             link: { title, url: link },
           }}
         >
-          <p className="mb-4 font-medium text-muted-foreground">
-            {requestedTitle}
-          </p>
-          <div className="flex flex-col gap-4">
-            {!requested?.length ? (
-              <p>{noRequestedText ?? "No time off requested"}</p>
-            ) : (
-              requested
-                .slice(0, 3)
-                .map((item) => (
-                  <Event
-                    title={item.title}
-                    length={item.length}
-                    lengthUnit={item.lengthUnit}
-                    from={item.from}
-                    until={item.until}
-                    color={item.color}
-                    isPending={true}
-                  />
-                ))
-            )}
-          </div>
-          <Separator />
-          <p className="mb-4 font-medium text-muted-foreground">
-            {currentAndUpcomingTitle}
-          </p>
-          <div className="flex flex-col gap-4">
-            {!currentAndUpcoming.length ? (
-              <p>{noCurrentText ?? "No current and upcoming time off"}</p>
-            ) : (
-              currentAndUpcoming
-                .slice(0, 3)
-                .map((item) => (
-                  <Event
-                    title={item.title}
-                    length={item.length}
-                    lengthUnit={item.lengthUnit}
-                    from={item.from}
-                    until={item.until}
-                    color={item.color}
-                    isPending={false}
-                  />
-                ))
-            )}
-          </div>
+          <EventsListGroup
+            eventsGroup={[
+              {
+                title: requestedTitle,
+                events: requested.map((event) => ({
+                  ...event,
+                  isPending: true,
+                })),
+              },
+              {
+                title: currentAndUpcomingTitle,
+                events: currentAndUpcoming.map((event) => ({
+                  ...event,
+                  isPending: false,
+                })),
+              },
+            ]}
+          />
           {cta && (
             <span className="mb-2 mt-4 max-w-20">
               <Button variant="outline" label={cta} onClick={onNavigate} />

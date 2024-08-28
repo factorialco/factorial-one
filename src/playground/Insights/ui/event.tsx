@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
-interface EventProps {
+export interface EventProps {
   title: string
   length: number
   lengthUnit: string
