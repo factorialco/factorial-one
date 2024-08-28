@@ -9,7 +9,7 @@ const variants = cva("", {
     aspect: {
       square: "aspect-square",
       wide: "aspect-video",
-      small: "h-20",
+      small: "h-40",
     },
   },
 })

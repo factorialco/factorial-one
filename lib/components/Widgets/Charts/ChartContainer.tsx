@@ -28,7 +28,9 @@ const Container = forwardRef<
       </div>
     )}
     {chart && (
-      <div className="relative flex grow items-stretch pt-6">{chart}</div>
+      <div className="relative flex min-h-40 grow items-stretch pt-6">
+        {chart}
+      </div>
     )}
   </WidgetContainer>
 ))

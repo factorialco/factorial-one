@@ -1,4 +1,11 @@
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
+import { cn } from "@/lib/utils"
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/ui/chart"
 import { nanoid } from "nanoid"
 import { ForwardedRef } from "react"
 import {
@@ -14,26 +21,28 @@ import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
+type allowedLineTypes =
+  | "basis"
+  | "basisClosed"
+  | "basisOpen"
+  | "bumpX"
+  | "bumpY"
+  | "bump"
+  | "linear"
+  | "linearClosed"
+  | "natural"
+  | "monotoneX"
+  | "monotoneY"
+  | "monotone"
+  | "step"
+  | "stepBefore"
+  | "stepAfter"
+
 export type AreaChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
 > = ChartPropsBase<DataConfig, Keys> & {
-  lineType?:
-    | "basis"
-    | "basisClosed"
-    | "basisOpen"
-    | "bumpX"
-    | "bumpY"
-    | "bump"
-    | "linear"
-    | "linearClosed"
-    | "natural"
-    | "monotoneX"
-    | "monotoneY"
-    | "monotone"
-    | "step"
-    | "stepBefore"
-    | "stepAfter"
+  lineType?: allowedLineTypes
   fullWidth?: boolean
   marginTop?: number
 }
@@ -127,6 +136,13 @@ export const _AreaChart = <
             strokeWidth={1.5}
           />
         ))}
+        {Object.keys(dataConfig).length > 1 && (
+          <ChartLegend
+            className={cn("flex justify-start", fullWidth && "ml-10")}
+            iconType="star"
+            content={<ChartLegendContent />}
+          />
+        )}
       </AreaChartPrimitive>
     </ChartContainer>
   )
