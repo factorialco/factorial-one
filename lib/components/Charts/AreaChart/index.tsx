@@ -21,22 +21,7 @@ import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
-type allowedLineTypes =
-  | "basis"
-  | "basisClosed"
-  | "basisOpen"
-  | "bumpX"
-  | "bumpY"
-  | "bump"
-  | "linear"
-  | "linearClosed"
-  | "natural"
-  | "monotoneX"
-  | "monotoneY"
-  | "monotone"
-  | "step"
-  | "stepBefore"
-  | "stepAfter"
+type allowedLineTypes = "natural" | "linear" | "step" | "monotoneX"
 
 export type AreaChartProps<
   DataConfig extends ChartConfig = ChartConfig,
