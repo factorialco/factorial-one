@@ -1,8 +1,14 @@
 import { forwardRef, ReactNode } from "react"
 import { WidgetContainer, WidgetContainerProps } from "../WidgetContainer"
+import ChartCounter from "./chart-counter"
 
 export type ChartContainerPropsBase = WidgetContainerProps & {
-  summaries?: Array<{ label: string; value: number; unit?: string }>
+  summaries?: Array<{
+    label: string
+    value: number
+    prefixUnit?: string
+    postfixUnit?: string
+  }>
 }
 
 const Container = forwardRef<
@@ -20,8 +26,9 @@ const Container = forwardRef<
               {summary.label}
             </div>
             <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
-              {summary.unit}
-              {summary.value}
+              {summary.prefixUnit && summary.prefixUnit}
+              <ChartCounter value={summary.value} />
+              {summary.postfixUnit && summary.postfixUnit}
             </div>
           </div>
         ))}

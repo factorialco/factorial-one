@@ -25,14 +25,14 @@ export default function ChartCounter({ value }: { value: number }) {
       springValue.on("change", (latest) => {
         if (ref.current) {
           ref.current.textContent = Intl.NumberFormat("en-US").format(
-            Math.round(latest)
+            parseFloat(latest.toFixed(2))
           )
         }
       }),
     [springValue]
   )
   return (
-    <div className="relative text-2xl font-medium tabular-nums leading-none">
+    <div className="relative pl-2">
       <div className="invisible" aria-hidden="true">
         {value}
       </div>

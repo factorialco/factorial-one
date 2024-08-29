@@ -151,7 +151,7 @@ export const EmployeesList: Story = {
           {
             label: "Rate",
             value: 20,
-            unit: "%",
+            postfixUnit: "%",
           },
         ]}
         chart={{
