@@ -1,4 +1,5 @@
 import { Badge } from "@/components/Information/Badge"
+import { forwardRef } from "react"
 
 interface TimeStatusProps {
   time: string
@@ -6,23 +7,21 @@ interface TimeStatusProps {
   statusText: string
 }
 
-export const TimeStatus: React.FC<TimeStatusProps> = ({
-  time,
-  status,
-  statusText,
-}) => {
-  const variant = {
-    in: "positive",
-    out: "destructive",
-    break: "neutral",
-  } as const
+export const TimeStatus = forwardRef<HTMLDivElement, TimeStatusProps>(
+  ({ time, status, statusText }, ref) => {
+    const variant = {
+      in: "positive",
+      out: "destructive",
+      break: "neutral",
+    } as const
 
-  return (
-    <div className="flex flex-row items-center gap-3">
-      <p className="text-4xl font-medium">{time}</p>
-      <span>
-        <Badge text={statusText} hasDot={true} variant={variant[status]} />
-      </span>
-    </div>
-  )
-}
+    return (
+      <div ref={ref} className="flex flex-row items-center gap-3">
+        <p className="text-4xl font-medium">{time}</p>
+        <span>
+          <Badge text={statusText} hasDot={true} variant={variant[status]} />
+        </span>
+      </div>
+    )
+  }
+)
