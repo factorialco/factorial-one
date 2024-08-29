@@ -6,12 +6,24 @@ import { ComponentProps, forwardRef } from "react"
 interface BadgeProps {
   text: string
   avatar?: Pick<ComponentProps<typeof Avatar>, "src" | "alt">
+  hasDot: boolean
   variant?: ComponentProps<typeof BadgeComponent>["variant"]
 }
 
 export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
-  ({ text, avatar, variant = "name" }) => {
+  ({ text, avatar, hasDot, variant = "name" }) => {
     const hasAvatar = avatar?.src || avatar?.alt
+
+    const dotColor = {
+      name: "bg-page-background",
+      default: "bg-secondary",
+      neutral: "bg-intermediate",
+      destructive: "bg-primary-foreground",
+      positive: "bg-positive-intermediate",
+      warning: "bg-warning-intermediate",
+      info: "bg-info-foreground",
+    }
+
     return (
       <BadgeComponent
         variant={variant}
@@ -25,6 +37,14 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
               size="xsmall"
             />
           </span>
+        )}
+        {hasDot && (
+          <span
+            className={cn(
+              "mr-1 h-2 w-2 rounded-full",
+              variant && dotColor[variant]
+            )}
+          />
         )}
         {text}
       </BadgeComponent>
