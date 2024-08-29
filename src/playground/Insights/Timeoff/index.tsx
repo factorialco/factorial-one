@@ -37,6 +37,10 @@ export const TimeOffInsight = forwardRef<HTMLDivElement, TimeOffInsightProps>(
       requestedTitle,
       currentAndUpcomingTitle,
     } = data
+    if (!requested?.length && !currentAndUpcoming?.length) {
+      return null
+    }
+
     return (
       <div className="max-w-96" ref={ref}>
         <WidgetContainer

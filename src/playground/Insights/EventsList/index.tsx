@@ -21,11 +21,10 @@ export const EventsList: React.FC<EventsListProps> = ({
       <div className="flex flex-col gap-4">
         {events.slice(0, limit).map((item) => (
           <Event
+            key={item.title}
             title={item.title}
-            length={item.length}
-            lengthUnit={item.lengthUnit}
-            from={item.from}
-            until={item.until}
+            subtitle={item.subtitle}
+            description={item.description}
             color={item.color}
             isPending={item.isPending}
           />

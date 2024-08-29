@@ -16,36 +16,28 @@ const meta: Meta = {
       requested: [
         {
           title: "Time off",
-          length: 5,
-          lengthUnit: "days",
-          from: "15-07",
-          until: "22-07",
+          subtitle: "(5 days)",
+          description: "15/07 - 22/07",
           color: "royalblue",
         },
       ],
       currentAndUpcoming: [
         {
           title: "Medical leave",
-          length: 5,
-          lengthUnit: "days",
-          from: "15-07",
-          until: "22-07",
+          subtitle: "(5 days)",
+          description: "15/07 - 22/07",
           color: "pink",
         },
         {
           title: "Parental leave",
-          length: 43,
-          lengthUnit: "days",
-          from: "15-07",
-          until: "22-09",
+          subtitle: "(43 days)",
+          description: "15/07 - 22/09",
           color: "violet",
         },
         {
           title: "Time off",
-          length: 5,
-          lengthUnit: "days",
-          from: "15-07",
-          until: "22-07",
+          subtitle: "(5 days)",
+          description: "15/07 - 22/07",
           color: "royalblue",
         },
       ],
@@ -60,17 +52,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
-
-export const Empty: Story = {
-  args: {
-    data: {
-      ...meta?.args?.data,
-      requested: [],
-      currentAndUpcoming: [],
-      cta: undefined,
-    },
-  },
-}
 
 export const NoExtraEvents: Story = {
   args: {
