@@ -6,7 +6,7 @@ import { ComponentProps, forwardRef } from "react"
 interface BadgeProps {
   text: string
   avatar?: Pick<ComponentProps<typeof Avatar>, "src" | "alt">
-  hasDot: boolean
+  hasDot?: boolean
   variant?: ComponentProps<typeof BadgeComponent>["variant"]
 }
 
