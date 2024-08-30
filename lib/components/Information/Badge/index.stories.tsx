@@ -11,6 +11,7 @@ const meta = {
   args: {
     text: "Foundations Squad",
     variant: "neutral",
+    hasDot: false,
   },
 } satisfies Meta<typeof Badge>
 
