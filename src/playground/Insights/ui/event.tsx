@@ -1,21 +1,16 @@
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
-interface EventProps {
+export interface EventProps {
   title: string
-  length: number
-  lengthUnit: string
-  from: string
-  until: string
+  subtitle: string
+  description: string
   color: string
   isPending: boolean
 }
 
 export const Event = forwardRef<HTMLDivElement, EventProps>(
-  ({ title, length, lengthUnit, from, until, color, isPending }, ref) => {
-    const subtitle = `(${length} ${lengthUnit})`
-    const timePeriod = `${from} - ${until}`
-
+  ({ title, subtitle, description, color, isPending }, ref) => {
     return (
       <div ref={ref} className="flex flex-row items-center gap-3">
         <div
@@ -41,7 +36,7 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
             <p>{title}</p>
             <p className="text-muted-foreground">{subtitle}</p>
           </div>
-          <p className="text-sm text-muted-foreground">{timePeriod}</p>
+          <p className="text-sm text-muted-foreground">{description}</p>
         </div>
       </div>
     )
