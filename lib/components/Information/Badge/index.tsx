@@ -11,7 +11,7 @@ interface BadgeProps {
 }
 
 export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
-  ({ text, avatar, hasDot, variant = "name" }) => {
+  ({ text, avatar, hasDot = false, variant = "name" }) => {
     const hasAvatar = avatar?.src || avatar?.alt
 
     const dotColor = {
