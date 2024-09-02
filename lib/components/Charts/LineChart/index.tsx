@@ -55,6 +55,7 @@ export const _LineChart = <
             type={lineType}
             stroke={dataConfig[line].color || autoColor(index)}
             strokeWidth={1.5}
+            strokeDasharray={dataConfig[line].dashed ? "4 4" : undefined}
             dot={false}
           />
         ))}

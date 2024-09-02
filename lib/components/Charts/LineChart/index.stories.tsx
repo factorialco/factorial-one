@@ -8,6 +8,7 @@ const dataConfig = {
   },
   mobile: {
     label: "Mobile",
+    dashed: true,
   },
 }
 
@@ -42,6 +43,7 @@ export const Default: Story = {
       desktop: {
         label: "Desktop",
         color: "hsl(var(--chart-1))",
+        dashed: false,
       },
     },
     xAxis: {
