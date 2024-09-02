@@ -25,12 +25,18 @@ export interface WidgetContainerProps {
     link?: { title: string; url: string }
   }
   action?: ButtonProps
+  summaries?: Array<{
+    label: string
+    value: number
+    prefixUnit?: string
+    postfixUnit?: string
+  }>
 }
 
 const Container = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
->(({ header, children, action }, ref) => (
+>(({ header, children, action, summaries }, ref) => (
   <Card ref={ref}>
     {header && (
       <CardHeader>
@@ -50,6 +56,26 @@ const Container = forwardRef<
           {header.comment && <CardComment>{header.comment}</CardComment>}
         </div>
       </CardHeader>
+    )}
+    {summaries && (
+      <div className="flex flex-row p-4 pb-1">
+        {summaries.map((summary, index) => (
+          <div key={index} className="grow">
+            <div className="mb-0.5 text-sm text-muted-foreground">
+              {summary.label}
+            </div>
+            <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
+              <div className="text-lg font-medium">
+                {summary.prefixUnit && summary.prefixUnit}
+              </div>
+              {summary.value}
+              <div className="text-lg font-medium">
+                {summary.postfixUnit && summary.postfixUnit}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     )}
     <CardContent>{children}</CardContent>
     {action && (
