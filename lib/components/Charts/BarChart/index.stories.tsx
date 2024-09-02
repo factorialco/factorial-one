@@ -48,6 +48,7 @@ export const MultipleValues: Story = {
       },
       mobile: {
         label: "Mobile",
+        dashed: true,
       },
       tablet: {
         label: "Tablet",

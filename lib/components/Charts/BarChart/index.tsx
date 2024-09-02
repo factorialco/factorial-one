@@ -14,6 +14,7 @@ import { cartesianGridProps, xAxisProps, yAxisProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
+import { DashedBar } from "./DashedBar"
 
 export type BarChartProps<
   DataConfig extends ChartConfig = ChartConfig,
@@ -54,6 +55,11 @@ const _BarChart = <
             isAnimationActive={false}
             dataKey={key}
             fill={dataConfig[key].color || autoColor(index)}
+            shape={
+              dataConfig[key].dashed ? (
+                <DashedBar fill={dataConfig[key].color || autoColor(index)} />
+              ) : undefined
+            }
             radius={4}
             maxBarSize={32}
           >
