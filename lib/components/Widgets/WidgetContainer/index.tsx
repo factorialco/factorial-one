@@ -57,27 +57,29 @@ const Container = forwardRef<
         </div>
       </CardHeader>
     )}
-    {summaries && (
-      <div className="flex flex-row p-4 pb-1">
-        {summaries.map((summary, index) => (
-          <div key={index} className="grow">
-            <div className="mb-0.5 text-sm text-muted-foreground">
-              {summary.label}
-            </div>
-            <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
-              <div className="text-lg font-medium">
-                {summary.prefixUnit && summary.prefixUnit}
+    <CardContent>
+      {summaries && (
+        <div className="-mt-2 flex flex-row">
+          {summaries.map((summary, index) => (
+            <div key={index} className="grow">
+              <div className="mb-0.5 text-sm text-muted-foreground">
+                {summary.label}
               </div>
-              {summary.value}
-              <div className="text-lg font-medium">
-                {summary.postfixUnit && summary.postfixUnit}
+              <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
+                <div className="text-lg font-medium">
+                  {summary.prefixUnit && summary.prefixUnit}
+                </div>
+                {summary.value}
+                <div className="text-lg font-medium">
+                  {summary.postfixUnit && summary.postfixUnit}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-    )}
-    <CardContent>{children}</CardContent>
+          ))}
+        </div>
+      )}
+      {children}
+    </CardContent>
     {action && (
       <CardFooter>
         <Button variant="secondary" {...action} />
