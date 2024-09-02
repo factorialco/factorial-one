@@ -10,7 +10,7 @@ export const AreaChartWidget = withSkeleton(
         ref={ref}
         {...props}
         chart={
-          <AreaChart aspect={null} yAxis={{ hide: true }} {...props.chart} />
+          <AreaChart aspect={"small"} yAxis={{ hide: true }} {...props.chart} />
         }
       />
     )

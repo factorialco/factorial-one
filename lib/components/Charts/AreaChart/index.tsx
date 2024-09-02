@@ -21,11 +21,13 @@ import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
 
+type allowedLineTypes = "natural" | "linear" | "step" | "monotoneX"
+
 export type AreaChartProps<
   DataConfig extends ChartConfig = ChartConfig,
   Keys extends string = InferChartKeys<DataConfig>,
 > = ChartPropsBase<DataConfig, Keys> & {
-  lineType?: "natural" | "linear" | "step"
+  lineType?: allowedLineTypes
   fullWidth?: boolean
   marginTop?: number
 }
@@ -39,7 +41,7 @@ export const _AreaChart = <
     dataConfig,
     xAxis,
     yAxis,
-    lineType = "natural",
+    lineType = "monotoneX",
     aspect,
     fullWidth = false,
     marginTop = 0,
@@ -66,6 +68,7 @@ export const _AreaChart = <
             tickFormatter={xAxis?.tickFormatter}
             ticks={xAxis?.ticks}
             domain={xAxis?.domain}
+            interval={0}
           />
         )}
         {!yAxis?.hide && (
@@ -118,11 +121,13 @@ export const _AreaChart = <
             strokeWidth={1.5}
           />
         ))}
-        <ChartLegend
-          className={cn("flex justify-start", fullWidth && "ml-10")}
-          iconType="star"
-          content={<ChartLegendContent />}
-        />
+        {Object.keys(dataConfig).length > 1 && (
+          <ChartLegend
+            className={cn("flex justify-start", fullWidth && "ml-10")}
+            iconType="star"
+            content={<ChartLegendContent />}
+          />
+        )}
       </AreaChartPrimitive>
     </ChartContainer>
   )
