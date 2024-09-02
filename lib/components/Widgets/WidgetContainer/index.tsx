@@ -1,9 +1,11 @@
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import {
   Card,
   CardComment,
   CardContent,
+  CardFooter,
   CardHeader,
   CardInfo,
   CardLink,
@@ -22,12 +24,13 @@ export interface WidgetContainerProps {
     info?: string
     link?: { title: string; url: string }
   }
+  action?: ButtonProps
 }
 
 const Container = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
->(({ header, children }, ref) => (
+>(({ header, children, action }, ref) => (
   <Card ref={ref}>
     {header && (
       <CardHeader>
@@ -49,6 +52,11 @@ const Container = forwardRef<
       </CardHeader>
     )}
     <CardContent>{children}</CardContent>
+    {action && (
+      <CardFooter>
+        <Button variant="secondary" {...action} />
+      </CardFooter>
+    )}
   </Card>
 ))
 
