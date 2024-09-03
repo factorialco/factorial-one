@@ -1,5 +1,6 @@
 import { ChartItem } from "@/components/Charts/utils/types"
 import { AreaChartWidget } from "@/components/Widgets/Charts/AreaChartWidget"
+import { ChartConfig } from "@/ui/chart"
 import { ComponentProps, forwardRef } from "react"
 import { EmptyState } from "../EmptyState"
 
@@ -8,7 +9,7 @@ export interface PerformanceInsightType {
   name: string
   performanceValue?: string
   comment?: string
-  data?: ChartItem<string>[]
+  data?: ChartItem<ChartConfig>[]
   link: string
   hasAccess: boolean
 }
