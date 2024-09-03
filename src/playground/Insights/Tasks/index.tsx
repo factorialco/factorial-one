@@ -4,7 +4,6 @@ import { Circle } from "@/icons"
 import AlertCircle from "@/icons/AlertCircle"
 import { forwardRef } from "react"
 import { Indicator } from "../ui/indicator"
-import { Separator } from "../ui/separator"
 
 export interface TasksInsightData {
   title: string
@@ -84,7 +83,6 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
               />
             ))}
           </div>
-          <Separator />
           <div className="flex flex-col gap-3">
             {!tasks?.length ? (
               <p>{emptyStateText}</p>

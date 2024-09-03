@@ -1,5 +1,5 @@
+import { Separator } from "@/ui/separator"
 import { EventsList, EventsListProps } from "../EventsList"
-import { Separator } from "../ui/separator"
 
 interface EventsListGroupProps {
   eventsGroup: EventsListProps[]
