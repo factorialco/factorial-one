@@ -1,9 +1,7 @@
 import { forwardRef, ReactNode } from "react"
 import { WidgetContainer, WidgetContainerProps } from "../WidgetContainer"
 
-export type ChartContainerPropsBase = WidgetContainerProps & {
-  summaries?: WidgetContainerProps["summaries"]
-}
+export type ChartContainerPropsBase = WidgetContainerProps
 
 const Container = forwardRef<
   HTMLDivElement,
