@@ -2,7 +2,6 @@ import { Button } from "@/components/Actions/Button"
 import { WidgetContainer } from "@/components/Widgets/WidgetContainer"
 import { Circle } from "@/icons"
 import AlertCircle from "@/icons/AlertCircle"
-import { Separator } from "@/ui/separator"
 import { forwardRef } from "react"
 import { Indicator } from "../ui/indicator"
 
@@ -84,7 +83,6 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
               />
             ))}
           </div>
-          <Separator />
           <div className="flex flex-col gap-3">
             {!tasks?.length ? (
               <p>{emptyStateText}</p>
