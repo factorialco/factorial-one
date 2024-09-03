@@ -25,8 +25,8 @@ export function ProgressBar({
           value={percentage}
           className="w-full"
           aria-valuemin={0}
-          aria-valuemax={100}
-          aria-valuenow={percentage}
+          aria-valuemax={max}
+          aria-valuenow={value}
           aria-label={`${percentage.toFixed(1)}%`}
         />
       </div>
