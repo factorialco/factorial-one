@@ -55,6 +55,7 @@
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.17",
     "lucide-react": "^0.383.0",
+    "nanoid": "^5.0.7",
     "react": "18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "18.3.1",
@@ -67,8 +68,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.5.3",
     "usehooks-ts": "^3.1.0",
-    "zod": "^3.23.8",
-    "nanoid": "^5.0.7"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
@@ -120,6 +120,7 @@
     "vitest": "^2.0.5"
   },
   "dependencies": {
+    "@radix-ui/react-progress": "^1.1.0",
     "@radix-ui/react-toggle": "^1.1.0",
     "@radix-ui/react-toggle-group": "^1.1.0"
   }
