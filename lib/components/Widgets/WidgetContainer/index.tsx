@@ -66,13 +66,17 @@ const Container = forwardRef<
                 {summary.label}
               </div>
               <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
-                <div className="text-lg font-medium">
-                  {summary.prefixUnit && summary.prefixUnit}
-                </div>
+                {!!summary.prefixUnit && (
+                  <div className="text-lg font-medium">
+                    {summary.prefixUnit}
+                  </div>
+                )}
                 {summary.value}
-                <div className="text-lg font-medium">
-                  {summary.postfixUnit && summary.postfixUnit}
-                </div>
+                {!!summary.postfixUnit && (
+                  <div className="text-lg font-medium">
+                    {summary.postfixUnit}
+                  </div>
+                )}
               </div>
             </div>
           ))}
