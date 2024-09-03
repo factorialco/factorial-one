@@ -9,7 +9,7 @@ import { ComponentProps, ForwardedRef } from "react"
 import { Label, Pie, PieChart as PieChartPrimitive } from "recharts"
 import { autoColor } from "../utils/colors"
 import { fixedForwardRef } from "../utils/forwardRef"
-import { ChartConfig, InferChartKeys } from "../utils/types"
+import { ChartConfig } from "../utils/types"
 
 export type PieChartItem = {
   label: string
@@ -17,18 +17,15 @@ export type PieChartItem = {
   color?: string
 }
 
-export type PieChartProps<
-  DataConfig extends ChartConfig = ChartConfig,
-  Keys extends string = InferChartKeys<DataConfig>,
-> = {
-  dataConfig: ChartConfig<Keys>
+export type PieChartProps = {
+  dataConfig: ChartConfig
   data: PieChartItem[]
   overview?: { number: number; label: string }
   aspect?: ComponentProps<typeof ChartContainer>["aspect"]
 }
 
-export const _PieChart = <DataConfig extends ChartConfig>(
-  { data, dataConfig, overview, aspect }: PieChartProps<DataConfig>,
+export const _PieChart = (
+  { data, dataConfig, overview, aspect }: PieChartProps,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const preparedData = data.map((item, index) => ({

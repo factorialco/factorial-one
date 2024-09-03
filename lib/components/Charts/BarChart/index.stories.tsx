@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from "@storybook/react"
-import { BarChart, BarChartProps } from "."
+import { Meta } from "@storybook/react"
+import { BarChart } from "."
 
 const dataConfig = {
   desktop: {
@@ -7,10 +7,8 @@ const dataConfig = {
   },
 }
 
-const Component = BarChart<typeof dataConfig>
-
-const meta = {
-  component: Component,
+const meta: Meta<typeof BarChart<typeof dataConfig>> = {
+  component: BarChart,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
@@ -32,28 +30,28 @@ const meta = {
       { label: "April", values: { desktop: 1500 } },
       { label: "May", values: { desktop: 2000 } },
     ],
-  } satisfies BarChartProps<typeof dataConfig>,
-} satisfies Meta<typeof Component>
+  },
+}
 
 export default meta
-type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Meta<typeof BarChart> = {}
 
-export const MultipleValues: Story = {
+const dataMultiConfig = {
+  desktop: {
+    label: "Desktop",
+  },
+  mobile: {
+    label: "Mobile",
+  },
+  tablet: {
+    label: "Tablet",
+  },
+}
+
+export const MultipleValues: Meta<typeof BarChart<typeof dataMultiConfig>> = {
   args: {
-    dataConfig: {
-      desktop: {
-        label: "Desktop",
-      },
-      mobile: {
-        label: "Mobile",
-        dashed: true,
-      },
-      tablet: {
-        label: "Tablet",
-      },
-    },
+    dataConfig: dataMultiConfig,
     data: [
       {
         label: "January",

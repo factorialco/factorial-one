@@ -3,9 +3,11 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { WidgetStrip } from "."
 import { AreaChartWidget } from "../Charts/AreaChartWidget"
 
+import { AreaChartProps } from "@/components/Charts/AreaChart"
 import AreaChartWidgetStoriesMeta from "../Charts/AreaChartWidget/index.stories"
 import { BarChartWidget } from "../Charts/BarChartWidget"
 import BarChartWidgetStoriesMeta from "../Charts/BarChartWidget/index.stories"
+import { ComposeChartContainerProps } from "../Charts/ChartContainer"
 import { LineChartWidget } from "../Charts/LineChartWidget"
 import LineChartWidgetStoriesMeta from "../Charts/LineChartWidget/index.stories"
 import { PieChartWidget } from "../Charts/PieChartWidget"
@@ -14,7 +16,11 @@ import { WidgetContainer } from "../WidgetContainer"
 
 const renderWidget = (index: number) => {
   const Widgets = [
-    () => <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} />,
+    () => (
+      <AreaChartWidget
+        {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
+      />
+    ),
     () => <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
     () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
     () => <BarChartWidget {...BarChartWidgetStoriesMeta.args} />,
@@ -135,7 +141,7 @@ export const EmployeesList: Story = {
           lineType: "natural",
           dataConfig: headcountDataConfig,
           data: headcountData,
-          xAxis: AreaChartWidgetStoriesMeta.args.chart.xAxis,
+          xAxis: AreaChartWidgetStoriesMeta.args!.chart!.xAxis,
           yAxis: { hide: true },
         }}
       />,
@@ -158,7 +164,7 @@ export const EmployeesList: Story = {
           lineType: "natural",
           dataConfig: promotionDataConfig,
           data: promotionData,
-          xAxis: AreaChartWidgetStoriesMeta.args.chart.xAxis,
+          xAxis: AreaChartWidgetStoriesMeta.args!.chart!.xAxis,
           yAxis: { hide: true },
         }}
       />,
@@ -174,7 +180,7 @@ export const EmployeesList: Story = {
           lineType: "natural",
           dataConfig: turnoverDataConfig,
           data: turnoverData,
-          xAxis: AreaChartWidgetStoriesMeta.args.chart.xAxis,
+          xAxis: AreaChartWidgetStoriesMeta.args!.chart!.xAxis,
           yAxis: { hide: true },
         }}
       />,

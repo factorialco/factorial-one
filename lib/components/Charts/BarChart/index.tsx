@@ -1,4 +1,9 @@
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/ui/chart"
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/ui/chart"
 import { ForwardedRef } from "react"
 import {
   Bar,
@@ -13,18 +18,14 @@ import { autoColor } from "../utils/colors"
 import { cartesianGridProps, xAxisProps, yAxisProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
-import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
-import { DashedBar } from "./DashedBar"
+import { ChartPropsBase } from "../utils/types"
 
-export type BarChartProps<
-  DataConfig extends ChartConfig = ChartConfig,
-  Keys extends string = InferChartKeys<DataConfig>,
-> = ChartPropsBase<DataConfig, Keys> & { label?: boolean }
+export type BarChartProps<K extends ChartConfig = ChartConfig> =
+  ChartPropsBase<K> & {
+    label?: boolean
+  }
 
-const _BarChart = <
-  DataConfig extends ChartConfig,
-  Keys extends string = string,
->(
+const _BarChart = <K extends ChartConfig>(
   {
     dataConfig,
     data,
@@ -32,10 +33,10 @@ const _BarChart = <
     yAxis = { hide: true },
     label = false,
     aspect,
-  }: BarChartProps<DataConfig, Keys>,
+  }: BarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
-  const bars = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
+  const bars = Object.keys(dataConfig) as (keyof ChartConfig)[]
 
   return (
     <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
@@ -55,17 +56,12 @@ const _BarChart = <
             isAnimationActive={false}
             dataKey={key}
             fill={dataConfig[key].color || autoColor(index)}
-            shape={
-              dataConfig[key].dashed ? (
-                <DashedBar fill={dataConfig[key].color || autoColor(index)} />
-              ) : undefined
-            }
             radius={4}
             maxBarSize={32}
           >
             {label && (
               <LabelList
-                key={`label-{${key}}`}
+                key={`label-${key}`}
                 position="top"
                 offset={10}
                 className="fill-foreground"
