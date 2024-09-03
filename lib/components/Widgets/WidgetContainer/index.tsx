@@ -10,9 +10,10 @@ import {
   CardSubtitle,
   CardTitle,
 } from "@/ui/card"
+import { Separator } from "@/ui/separator"
 import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { cva, VariantProps } from "class-variance-authority"
-import { forwardRef, ReactNode } from "react"
+import React, { forwardRef, ReactNode } from "react"
 
 export interface WidgetContainerProps {
   header?: {
@@ -22,6 +23,7 @@ export interface WidgetContainerProps {
     info?: string
     link?: { title: string; url: string }
   }
+  children: ReactNode | ReactNode[]
 }
 
 const Container = forwardRef<
@@ -48,7 +50,14 @@ const Container = forwardRef<
         </div>
       </CardHeader>
     )}
-    <CardContent>{children}</CardContent>
+    <CardContent className="flex flex-col gap-1">
+      {React.Children.toArray(children).map((child, index) => (
+        <>
+          <div>{child}</div>
+          {index < React.Children.toArray(children).length - 1 && <Separator />}
+        </>
+      ))}
+    </CardContent>
   </Card>
 ))
 
