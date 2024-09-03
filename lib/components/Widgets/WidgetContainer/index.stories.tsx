@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { Placeholder } from "@/lib/storybook-utils"
+import { fn } from "@storybook/test"
 import { ComponentProps } from "react"
 import { WidgetContainer } from "."
 
@@ -40,6 +41,16 @@ export const WithLink: Story = {
       subtitle: "Boosting workplace health",
       info: "Explore initiatives for physical, mental, and emotional well-being, including health screenings and fitness challenges.",
       link: { url: "/", title: "Go to link" },
+    },
+  },
+}
+
+export const WithAction: Story = {
+  args: {
+    ...meta.args,
+    action: {
+      label: "Show more",
+      onClick: fn(),
     },
   },
 }
