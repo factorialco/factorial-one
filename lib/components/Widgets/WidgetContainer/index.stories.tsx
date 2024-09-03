@@ -54,3 +54,17 @@ export const WithAction: Story = {
     },
   },
 }
+
+export const MultipleContent: Story = {
+  args: {
+    ...meta.args,
+    children: Array.from({ length: 3 }).map((_, index) => (
+      <div
+        key={index}
+        className="rounded-lg bg-muted p-3 text-center text-foreground"
+      >
+        Content {index + 1}
+      </div>
+    )),
+  },
+}
