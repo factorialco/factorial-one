@@ -3,26 +3,35 @@ import { autoColor } from "../utils/colors"
 
 export interface ProgressBarProps {
   value: number
+  max?: number
   label?: string
   color?: string
 }
 
-export function ProgressBar({ value, label, color }: ProgressBarProps) {
+export function ProgressBar({
+  value,
+  max = 100,
+  label,
+  color,
+}: ProgressBarProps) {
   const barColor = color || autoColor(0)
+  const percentage = (value / max) * 100
+
   return (
-    <div className={`flex items-center space-x-2`}>
+    <div className="flex items-center space-x-2" aria-live="polite">
       <div className="flex-grow">
         <Progress
           color={barColor}
-          value={value}
+          value={percentage}
           className="w-full"
-          aria-label={`${value}%`}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={percentage}
+          aria-label={`${percentage.toFixed(1)}%`}
         />
       </div>
       {label && (
-        <div className="flex-shrink-0 text-sm font-medium" aria-live="polite">
-          {label}
-        </div>
+        <div className="flex-shrink-0 text-sm font-medium">{label}</div>
       )}
     </div>
   )
