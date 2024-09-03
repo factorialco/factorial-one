@@ -23,7 +23,7 @@ export interface WidgetContainerProps {
     info?: string
     link?: { title: string; url: string }
   }
-  children: ReactNode | ReactNode[]
+  children: ReactNode
 }
 
 const Container = forwardRef<
@@ -51,10 +51,10 @@ const Container = forwardRef<
       </CardHeader>
     )}
     <CardContent className="flex flex-col gap-1">
-      {React.Children.toArray(children).map((child, index) => (
+      {React.Children.toArray(children).map((child, index, array) => (
         <>
-          <div>{child}</div>
-          {index < React.Children.toArray(children).length - 1 && <Separator />}
+          {child}
+          {index < array.length - 1 && <Separator />}
         </>
       ))}
     </CardContent>
