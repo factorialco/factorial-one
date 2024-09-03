@@ -23,7 +23,6 @@ export interface WidgetContainerProps {
     info?: string
     link?: { title: string; url: string }
   }
-  children: ReactNode
 }
 
 const Container = forwardRef<
