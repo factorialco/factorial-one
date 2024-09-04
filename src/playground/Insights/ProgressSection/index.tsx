@@ -44,10 +44,8 @@ export function ProgressSection({
           <span className="text-2xl font-bold text-foreground">
             {value}
             {unit}
+            {showMax && ` / ${max}${unit}`}
           </span>
-          {showMax && (
-            <span className="text-lg font-medium text-muted-foreground">{` / ${max}${unit}`}</span>
-          )}
         </div>
       </div>
       <CategoryBar data={data} {...categoryBarProps} />
