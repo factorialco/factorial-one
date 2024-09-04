@@ -113,5 +113,9 @@ export const FinancialValues: Meta<
       hide: false,
       tickFormatter: (value: string) => value.slice(0, 3),
     },
+    yAxis: {
+      hide: false,
+      tickFormatter: (value: string) => value + " €",
+    },
   },
 }

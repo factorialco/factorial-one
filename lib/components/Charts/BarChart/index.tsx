@@ -48,7 +48,10 @@ const _BarChart = <K extends ChartConfig>(
         margin={{ left: 12, right: 12, top: label ? 24 : 0 }}
         stackOffset={type === "stacked-by-sign" ? "sign" : undefined}
       >
-        <ChartTooltip cursor content={<ChartTooltipContent />} />
+        <ChartTooltip
+          cursor
+          content={<ChartTooltipContent yAxisFormatter={yAxis.tickFormatter} />}
+        />
         <CartesianGrid {...cartesianGridProps()} />
         <YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />
         <XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />

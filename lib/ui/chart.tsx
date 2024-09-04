@@ -150,6 +150,7 @@ const ChartTooltipContent = React.forwardRef<
       indicator?: "line" | "dot" | "dashed"
       nameKey?: string
       labelKey?: string
+      yAxisFormatter?: (value: string) => string
     }
 >(
   (
@@ -164,6 +165,7 @@ const ChartTooltipContent = React.forwardRef<
       labelFormatter,
       labelClassName,
       formatter,
+      yAxisFormatter,
       color,
       nameKey,
       labelKey,
@@ -171,6 +173,11 @@ const ChartTooltipContent = React.forwardRef<
     ref
   ) => {
     const { config } = useChart()
+
+    console.log("config", config)
+    console.log("nameKey", nameKey)
+    console.log("payload", payload)
+    console.log("labelKey", labelKey)
 
     const tooltipLabel = React.useMemo(() => {
       if (hideLabel || !payload?.length) {
@@ -279,7 +286,9 @@ const ChartTooltipContent = React.forwardRef<
                       </div>
                       {item.value && (
                         <span className="font-mono font-medium tabular-nums text-f1-foreground">
-                          {item.value.toLocaleString()}
+                          {yAxisFormatter
+                            ? yAxisFormatter(String(item.value))
+                            : item.value.toLocaleString()}
                         </span>
                       )}
                     </div>
