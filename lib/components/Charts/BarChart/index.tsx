@@ -22,6 +22,7 @@ import { ChartPropsBase } from "../utils/types"
 
 export type BarChartProps<K extends ChartConfig = ChartConfig> =
   ChartPropsBase<K> & {
+    type?: "simple" | "stacked" | "stacked-by-sign"
     label?: boolean
   }
 
@@ -32,6 +33,7 @@ const _BarChart = <K extends ChartConfig>(
     xAxis,
     yAxis = { hide: true },
     label = false,
+    type = "simple",
     aspect,
   }: BarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
@@ -44,6 +46,7 @@ const _BarChart = <K extends ChartConfig>(
         accessibilityLayer
         data={prepareData(data)}
         margin={{ left: 12, right: 12, top: label ? 24 : 0 }}
+        stackOffset={type === "stacked-by-sign" ? "sign" : undefined}
       >
         <ChartTooltip cursor content={<ChartTooltipContent />} />
         <CartesianGrid {...cartesianGridProps()} />
@@ -55,6 +58,11 @@ const _BarChart = <K extends ChartConfig>(
             key={`bar-${key}`}
             isAnimationActive={false}
             dataKey={key}
+            stackId={
+              type === "stacked" || type === "stacked-by-sign"
+                ? "stack"
+                : undefined
+            }
             fill={dataConfig[key].color || autoColor(index)}
             radius={4}
             maxBarSize={32}
