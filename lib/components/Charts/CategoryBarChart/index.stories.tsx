@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta } from "@storybook/react"
 import { CategoryBar } from "."
 
 const meta = {
@@ -21,11 +21,10 @@ const meta = {
 } satisfies Meta<typeof CategoryBar>
 
 export default meta
-type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default = {}
 
-export const WithMutedCategory: Story = {
+export const WithMutedCategory: Meta<typeof CategoryBar> = {
   args: {
     data: [
       { name: "Worked hours", value: 79 },
@@ -39,7 +38,7 @@ export const WithMutedCategory: Story = {
   },
 }
 
-export const MultipleValues: Story = {
+export const MultipleValues: Meta<typeof CategoryBar> = {
   args: {
     data: [
       { name: "Employee Eng.", value: 42 },

@@ -1,10 +1,11 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta } from "@storybook/react"
 
+import { AreaChartProps } from "@/components/Charts/AreaChart"
 import AreaChartStory from "@/components/Charts/AreaChart/index.stories"
 import { AreaChartWidget } from "."
 import { containerStoryArgs } from "../storybook-utils"
 
-const meta = {
+const meta: Meta<typeof AreaChartWidget> = {
   component: AreaChartWidget,
   parameters: {
     layout: "centered",
@@ -16,7 +17,7 @@ const meta = {
       ...containerStoryArgs.header,
       title: "An area chart",
     },
-    chart: AreaChartStory.args,
+    chart: AreaChartStory.args as AreaChartProps,
   },
   decorators: [
     (Story) => (
@@ -25,9 +26,8 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof AreaChartWidget>
+}
 
 export default meta
-type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default = {}

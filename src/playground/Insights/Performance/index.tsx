@@ -1,5 +1,6 @@
 import { ChartItem } from "@/components/Charts/utils/types"
 import { AreaChartWidget } from "@/components/Widgets/Charts/AreaChartWidget"
+import { ChartConfig } from "@/ui/chart"
 import { ComponentProps, forwardRef } from "react"
 import { EmptyState } from "../EmptyState"
 
@@ -8,7 +9,7 @@ export interface PerformanceInsightType {
   name: string
   performanceValue?: string
   comment?: string
-  data?: ChartItem<string>[]
+  data?: ChartItem<ChartConfig>[]
   link: string
   hasAccess: boolean
 }
@@ -51,15 +52,14 @@ export const PerformanceInsight = forwardRef<
   }
 
   return (
-    <div className="max-w-96" ref={ref}>
-      <AreaChartWidget
-        header={{
-          title,
-          comment: `${performanceValue} - ${comment}`,
-          link: { title: "Go", url: link },
-        }}
-        chart={chart}
-      />
-    </div>
+    <AreaChartWidget
+      ref={ref}
+      header={{
+        title,
+        comment: `${performanceValue} - ${comment}`,
+        link: { title: "Go", url: link },
+      }}
+      chart={chart}
+    />
   )
 })

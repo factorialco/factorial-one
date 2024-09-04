@@ -5,6 +5,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
+  LineChartConfig,
 } from "@/ui/chart"
 import { nanoid } from "nanoid"
 import { ForwardedRef } from "react"
@@ -19,23 +20,18 @@ import { autoColor } from "../utils/colors"
 import { cartesianGridProps } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
-import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
+import { LineChartPropsBase } from "../utils/types"
 
 type allowedLineTypes = "natural" | "linear" | "step" | "monotoneX"
 
-export type AreaChartProps<
-  DataConfig extends ChartConfig = ChartConfig,
-  Keys extends string = InferChartKeys<DataConfig>,
-> = ChartPropsBase<DataConfig, Keys> & {
-  lineType?: allowedLineTypes
-  fullWidth?: boolean
-  marginTop?: number
-}
+export type AreaChartProps<K extends LineChartConfig = LineChartConfig> =
+  LineChartPropsBase<K> & {
+    lineType?: allowedLineTypes
+    fullWidth?: boolean
+    marginTop?: number
+  }
 
-export const _AreaChart = <
-  DataConfig extends ChartConfig,
-  Keys extends string = string,
->(
+export const _AreaChart = <K extends LineChartConfig>(
   {
     data,
     dataConfig,
@@ -45,10 +41,10 @@ export const _AreaChart = <
     aspect,
     fullWidth = false,
     marginTop = 0,
-  }: AreaChartProps<DataConfig, Keys>,
+  }: AreaChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
-  const areas = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
+  const areas = Object.keys(dataConfig) as (keyof LineChartConfig)[]
   const chartId = nanoid(12)
 
   return (
@@ -90,7 +86,7 @@ export const _AreaChart = <
           {areas.map((area, index) => (
             <linearGradient
               key={index}
-              id={`fill${area}-${chartId}`}
+              id={`fill${String(area)}-${chartId}`}
               x1="0"
               y1="0"
               x2="0"
@@ -119,6 +115,7 @@ export const _AreaChart = <
             fillOpacity={0.4}
             stroke={dataConfig[area].color || autoColor(index)}
             strokeWidth={1.5}
+            strokeDasharray={dataConfig[area].dashed ? "4 4" : undefined}
           />
         ))}
         {Object.keys(dataConfig).length > 1 && (
