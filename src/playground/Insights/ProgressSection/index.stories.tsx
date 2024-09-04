@@ -26,7 +26,7 @@ export const Default: Story = {
     max: 40,
     showMax: true,
     unit: "h",
-    valueLabel: "Worked",
-    remainingLabel: "Remaining",
+    primaryLabel: "Worked",
+    secondaryLabel: "Remaining",
   },
 }

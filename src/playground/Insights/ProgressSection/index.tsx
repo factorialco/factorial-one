@@ -9,8 +9,8 @@ interface ProgressSectionProps extends Omit<CategoryBarProps, "data"> {
   max: number
   showMax?: boolean
   unit?: string
-  valueLabel?: string
-  remainingLabel?: string
+  primaryLabel?: string
+  secondaryLabel?: string
 }
 
 export function ProgressSection({
@@ -19,20 +19,19 @@ export function ProgressSection({
   max,
   showMax = false,
   unit = "h",
-  valueLabel = "Value",
-  remainingLabel = "Remaining",
+  primaryLabel = "Primary",
+  secondaryLabel = "Secondary",
   ...categoryBarProps
 }: ProgressSectionProps) {
   const isOverMax = value > max
   const remainingColor = isOverMax
     ? "hsl(var(--primary-foreground))"
     : "hsl(var(--muted))"
-  const remainingValue = isOverMax ? value - max : Math.max(0, max - value)
-  const remainingName = isOverMax ? "Overtime" : remainingLabel
+  const secondaryValue = isOverMax ? value - max : Math.max(0, max - value)
 
   const data = [
-    { name: valueLabel, value: isOverMax ? max : value },
-    { name: remainingName, value: remainingValue, color: remainingColor },
+    { name: primaryLabel, value: isOverMax ? max : value },
+    { name: secondaryLabel, value: secondaryValue, color: remainingColor },
   ]
 
   return (
