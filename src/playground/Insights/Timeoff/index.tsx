@@ -42,39 +42,38 @@ export const TimeOffInsight = forwardRef<HTMLDivElement, TimeOffInsightProps>(
     }
 
     return (
-      <div className="max-w-96" ref={ref}>
-        <WidgetContainer
-          header={{
-            title,
-            subtitle: "| " + subtitle,
-            link: { title, url: link },
-          }}
-        >
-          <EventsListGroup
-            eventsGroup={[
-              {
-                title: requestedTitle,
-                events: requested.map((event) => ({
-                  ...event,
-                  isPending: true,
-                })),
-              },
-              {
-                title: currentAndUpcomingTitle,
-                events: currentAndUpcoming.map((event) => ({
-                  ...event,
-                  isPending: false,
-                })),
-              },
-            ]}
-          />
-          {cta && (
-            <span className="mb-2 mt-4 max-w-20">
-              <Button variant="outline" label={cta} onClick={onNavigate} />
-            </span>
-          )}
-        </WidgetContainer>
-      </div>
+      <WidgetContainer
+        ref={ref}
+        header={{
+          title,
+          subtitle: "| " + subtitle,
+          link: { title, url: link },
+        }}
+      >
+        <EventsListGroup
+          eventsGroup={[
+            {
+              title: requestedTitle,
+              events: requested.map((event) => ({
+                ...event,
+                isPending: true,
+              })),
+            },
+            {
+              title: currentAndUpcomingTitle,
+              events: currentAndUpcoming.map((event) => ({
+                ...event,
+                isPending: false,
+              })),
+            },
+          ]}
+        />
+        {cta && (
+          <span className="mb-2 mt-4 max-w-20">
+            <Button variant="outline" label={cta} onClick={onNavigate} />
+          </span>
+        )}
+      </WidgetContainer>
     )
   }
 )
