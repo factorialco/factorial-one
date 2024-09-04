@@ -1,6 +1,5 @@
-export * from "./EventsListGroup"
+export * from "./EventsList"
 export * from "./IconText"
 export * from "./Performance"
 export * from "./Tasks"
-export * from "./Timeoff"
 export * from "./TimeStatus"
