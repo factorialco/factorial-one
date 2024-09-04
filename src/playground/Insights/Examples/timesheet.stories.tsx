@@ -40,8 +40,8 @@ export const Timesheet: Story = {
           max={100}
           showMax={true}
           unit="h"
-          valueLabel="Worked"
-          remainingLabel="Remaining"
+          primaryLabel="Worked"
+          secondaryLabel="Remaining"
           legend={false}
         />
         <ProgressSection
@@ -50,8 +50,8 @@ export const Timesheet: Story = {
           max={50}
           showMax={true}
           unit="h"
-          valueLabel="Worked"
-          remainingLabel="Remaining"
+          primaryLabel="Worked"
+          secondaryLabel="Remaining"
           legend={false}
         />
       </WidgetContainer>
@@ -79,8 +79,8 @@ export const TimesheetOvertime: Story = {
           max={100}
           showMax={true}
           unit="h"
-          valueLabel="Regular"
-          remainingLabel="Overtime"
+          primaryLabel="Regular"
+          secondaryLabel="Overtime"
           legend={true}
         />
         <ProgressSection
@@ -89,8 +89,8 @@ export const TimesheetOvertime: Story = {
           max={50}
           showMax={true}
           unit="h"
-          valueLabel="Worked"
-          remainingLabel="Remaining"
+          primaryLabel="Worked"
+          secondaryLabel="Remaining"
           legend={false}
         />
       </WidgetContainer>

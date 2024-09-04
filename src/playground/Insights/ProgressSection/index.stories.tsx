@@ -21,8 +21,8 @@ type Story = StoryObj<typeof ProgressSection>
 
 export const Default: Story = {
   args: {
-    label: "Weekly Progress",
-    value: 32,
+    label: "Weekly progress",
+    value: 30,
     max: 40,
     showMax: true,
     unit: "h",
