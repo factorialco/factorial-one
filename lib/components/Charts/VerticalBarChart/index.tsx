@@ -19,7 +19,7 @@ import {
   yAxisProps as yAxisConfigureProps,
 } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
-import { ChartConfig, ChartPropsBase, InferChartKeys } from "../utils/types"
+import { ChartConfig, ChartPropsBase } from "../utils/types"
 
 const getMaxValueByKey = (
   data: ({ x: unknown } & Record<string, number>)[]
@@ -45,15 +45,12 @@ const getMaxValueByKey = (
   return label
 }
 
-export type VerticalBarChartProps<
-  DataConfig extends ChartConfig = ChartConfig,
-  Keys extends string = InferChartKeys<DataConfig>,
-> = ChartPropsBase<DataConfig, Keys> & { label?: boolean }
+export type VerticalBarChartProps<K extends ChartConfig = ChartConfig> =
+  ChartPropsBase<K> & {
+    label?: boolean
+  }
 
-const _VBarChart = <
-  DataConfig extends ChartConfig,
-  Keys extends string = string,
->(
+const _VBarChart = <K extends ChartConfig>(
   {
     dataConfig,
     data,
@@ -61,11 +58,11 @@ const _VBarChart = <
     yAxis,
     label = false,
     aspect,
-  }: VerticalBarChartProps<DataConfig, Keys>,
+  }: VerticalBarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
-  const bars = Object.keys(dataConfig) as Array<keyof typeof dataConfig>
-  const munchedData = prepareData(data)
+  const bars = Object.keys(dataConfig) as (keyof ChartConfig)[]
+  const munchedData = prepareData<K>(data)
 
   const xAxisProps: XAxisProps = {
     ...xAxisConfigureProps(xAxis),

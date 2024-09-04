@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta } from "@storybook/react"
 import { RadialProgressChart } from "."
 
-const meta = {
+const meta: Meta<typeof RadialProgressChart> = {
   component: RadialProgressChart,
   tags: ["autodocs"],
   args: {
@@ -15,14 +15,13 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof RadialProgressChart>
+}
 
 export default meta
-type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default = {}
 
-export const WithOverview: Story = {
+export const WithOverview: Meta<typeof RadialProgressChart> = {
   args: {
     value: 75,
     overview: { number: 75, label: "Completed" },

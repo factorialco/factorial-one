@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta } from "@storybook/react"
 
-import { AreaChart, AreaChartProps } from "."
+import { AreaChart } from "."
 
 const dataConfig = {
   desktop: {
@@ -11,10 +11,8 @@ const dataConfig = {
   },
 }
 
-const Component = AreaChart<typeof dataConfig>
-
-const meta = {
-  component: Component,
+const meta: Meta<typeof AreaChart<typeof dataConfig>> = {
+  component: AreaChart,
   tags: ["autodocs"],
   args: {
     dataConfig,
@@ -32,7 +30,7 @@ const meta = {
       { label: "May", values: { mobile: 800, desktop: 5000 } },
       { label: "June", values: { mobile: 600, desktop: 4000 } },
     ],
-  } satisfies AreaChartProps<typeof dataConfig>,
+  },
   decorators: [
     (Story) => (
       <div className="max-w-80">
@@ -40,9 +38,8 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Component>
+}
 
 export default meta
-type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default = {}

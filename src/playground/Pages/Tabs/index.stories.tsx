@@ -1,5 +1,7 @@
+import { AreaChartProps } from "@/components/Charts/AreaChart"
 import { AreaChartWidget } from "@/components/Widgets/Charts/AreaChartWidget"
 import AreaChartWidgetStoriesMeta from "@/components/Widgets/Charts/AreaChartWidget/index.stories"
+import { ComposeChartContainerProps } from "@/components/Widgets/Charts/ChartContainer"
 import { LineChartWidget } from "@/components/Widgets/Charts/LineChartWidget"
 import LineChartWidgetStoriesMeta from "@/components/Widgets/Charts/LineChartWidget/index.stories"
 import { PieChartWidget } from "@/components/Widgets/Charts/PieChartWidget"
@@ -21,7 +23,11 @@ type Story = StoryObj<typeof meta>
 
 const renderWidget = (index: number) => {
   const Widgets = [
-    () => <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} />,
+    () => (
+      <AreaChartWidget
+        {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
+      />
+    ),
     () => <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
     () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
     () => (

@@ -1,20 +1,16 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta } from "@storybook/react"
 
-import { LineChart, LineChartProps } from "."
+import { LineChart } from "."
 
-const dataConfig = {
+const singleDataConfig = {
   desktop: {
     label: "Desktop",
-  },
-  mobile: {
-    label: "Mobile",
+    color: "hsl(var(--chart-1))",
   },
 }
 
-const Component = LineChart<typeof dataConfig>
-
-const meta: Meta<typeof Component> = {
-  component: Component,
+const meta: Meta<typeof LineChart<typeof singleDataConfig>> = {
+  component: LineChart,
   title: "Charts/LineChart",
   argTypes: {
     lineType: {
@@ -30,20 +26,13 @@ const meta: Meta<typeof Component> = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Component>
+}
 
 export default meta
 
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const Default: Meta<typeof LineChart<typeof singleDataConfig>> = {
   args: {
-    dataConfig: {
-      desktop: {
-        label: "Desktop",
-        color: "hsl(var(--chart-1))",
-      },
-    },
+    dataConfig: singleDataConfig,
     xAxis: {
       tickFormatter: (value: string) => value.slice(0, 3),
     },
@@ -58,12 +47,22 @@ export const Default: Story = {
       { label: "May", values: { desktop: 209 } },
       { label: "June", values: { desktop: 214 } },
     ],
-  } as LineChartProps<typeof dataConfig>,
+  },
 }
 
-export const MultipleLines: Story = {
+const multiDataConfig = {
+  desktop: {
+    label: "Desktop",
+  },
+  mobile: {
+    label: "Mobile",
+    dashed: true,
+  },
+}
+
+export const MultipleLines: Meta<typeof LineChart<typeof multiDataConfig>> = {
   args: {
-    dataConfig,
+    dataConfig: multiDataConfig,
     xAxis: {
       hide: false,
       tickFormatter: (value: string) => value.slice(0, 3),
@@ -76,5 +75,5 @@ export const MultipleLines: Story = {
       { label: "May", values: { desktop: 209, mobile: 160 } },
       { label: "June", values: { desktop: 214, mobile: 200 } },
     ],
-  } as LineChartProps<typeof dataConfig>,
+  },
 }
