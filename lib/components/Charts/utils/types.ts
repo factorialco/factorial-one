@@ -1,12 +1,15 @@
 import type {
   ChartContainer,
+  LineChartConfig,
   ChartConfig as OriginalChartConfig,
 } from "@/ui/chart"
 import { ComponentProps } from "react"
 
-export type ChartItem<LineKeys extends string> = {
+export type ChartItem<K extends ChartConfig> = {
   label: string
-  values: Record<LineKeys, number>
+  values: {
+    [key in keyof K]: number
+  }
 }
 
 export type AxisConfig = {
@@ -17,19 +20,24 @@ export type AxisConfig = {
   domain?: number[]
 }
 
-export type ChartConfig<Keys extends string = string> = Record<
-  Keys,
-  OriginalChartConfig[string]
+export type ChartConfig = Record<
+  string,
+  OriginalChartConfig[keyof OriginalChartConfig]
 >
 
-export type InferChartKeys<T> = T extends ChartConfig<infer K> ? K : never
-
 export type ChartPropsBase<
-  DataConfig extends ChartConfig = ChartConfig,
-  Keys extends string = InferChartKeys<DataConfig>,
+  K extends OriginalChartConfig = OriginalChartConfig,
 > = {
-  dataConfig: ChartConfig<Keys>
-  data: ChartItem<Keys>[]
+  dataConfig: K
+  data: ChartItem<K>[]
+  xAxis?: AxisConfig
+  yAxis?: AxisConfig
+  aspect?: ComponentProps<typeof ChartContainer>["aspect"]
+}
+
+export type LineChartPropsBase<K extends LineChartConfig = LineChartConfig> = {
+  dataConfig: K
+  data: ChartItem<K>[]
   xAxis?: AxisConfig
   yAxis?: AxisConfig
   aspect?: ComponentProps<typeof ChartContainer>["aspect"]

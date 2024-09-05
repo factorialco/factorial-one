@@ -3,8 +3,10 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Dashboard } from "."
 import { AreaChartWidget } from "../Charts/AreaChartWidget"
 
+import { AreaChartProps } from "@/components/Charts/AreaChart"
 import { Calendar } from "@/components/Forms/Fields/Calendar"
 import AreaChartWidgetStoriesMeta from "../Charts/AreaChartWidget/index.stories"
+import { ComposeChartContainerProps } from "../Charts/ChartContainer"
 import { LineChartWidget } from "../Charts/LineChartWidget"
 import LineChartWidgetStoriesMeta from "../Charts/LineChartWidget/index.stories"
 import { PieChartWidget } from "../Charts/PieChartWidget"
@@ -17,7 +19,11 @@ import { WidgetContainer } from "../WidgetContainer"
 
 const renderWidget = (index: number) => {
   const Widgets = [
-    () => <AreaChartWidget {...AreaChartWidgetStoriesMeta.args} />,
+    () => (
+      <AreaChartWidget
+        {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
+      />
+    ),
     () => (
       <WidgetContainer header={{ title: "A form widget" }}>
         <p>

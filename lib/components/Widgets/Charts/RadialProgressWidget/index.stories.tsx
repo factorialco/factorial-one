@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta } from "@storybook/react"
 import { RadialProgressWidget } from "."
 
 const meta = {
@@ -30,11 +30,10 @@ const meta = {
 } satisfies Meta<typeof RadialProgressWidget>
 
 export default meta
-type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default = {}
 
-export const CustomColor: Story = {
+export const CustomColor: Meta<typeof RadialProgressWidget> = {
   args: {
     chart: {
       value: 60,

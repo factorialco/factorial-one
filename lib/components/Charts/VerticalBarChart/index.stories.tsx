@@ -1,5 +1,5 @@
-import { Meta, StoryObj } from "@storybook/react"
-import { VerticalBarChart, VerticalBarChartProps } from "."
+import { Meta } from "@storybook/react"
+import { VerticalBarChart } from "."
 
 const dataConfig = {
   value: {
@@ -7,10 +7,8 @@ const dataConfig = {
   },
 }
 
-const Component = VerticalBarChart<typeof dataConfig>
-
-const meta = {
-  component: Component,
+const meta: Meta<typeof VerticalBarChart<typeof dataConfig>> = {
+  component: VerticalBarChart,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
@@ -28,24 +26,27 @@ const meta = {
       { label: "Performance Score", values: { value: 88 } },
       { label: "Recruitment Efficiency", values: { value: 100 } },
     ],
-  } satisfies VerticalBarChartProps<typeof dataConfig>,
-} satisfies Meta<typeof Component>
+  },
+}
 
 export default meta
-type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default = {}
 
-export const MultipleValues: Story = {
+const multiDataConfig = {
+  desktop: {
+    label: "Desktop",
+  },
+  mobile: {
+    label: "Mobile",
+  },
+}
+
+export const MultipleValues: Meta<
+  typeof VerticalBarChart<typeof multiDataConfig>
+> = {
   args: {
-    dataConfig: {
-      desktop: {
-        label: "Desktop",
-      },
-      mobile: {
-        label: "Mobile",
-      },
-    },
+    dataConfig: multiDataConfig,
     data: [
       { label: "January", values: { mobile: 4000, desktop: 2400 } },
       { label: "February", values: { mobile: 3000, desktop: 1398 } },

@@ -1,18 +1,21 @@
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import {
   Card,
   CardComment,
   CardContent,
+  CardFooter,
   CardHeader,
   CardInfo,
   CardLink,
   CardSubtitle,
   CardTitle,
 } from "@/ui/card"
+import { Separator } from "@/ui/separator"
 import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { cva, VariantProps } from "class-variance-authority"
-import { forwardRef, ReactNode } from "react"
+import React, { forwardRef, ReactNode } from "react"
 
 export interface WidgetContainerProps {
   header?: {
@@ -22,12 +25,19 @@ export interface WidgetContainerProps {
     info?: string
     link?: { title: string; url: string }
   }
+  action?: ButtonProps
+  summaries?: Array<{
+    label: string
+    value: number
+    prefixUnit?: string
+    postfixUnit?: string
+  }>
 }
 
 const Container = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
->(({ header, children }, ref) => (
+>(({ header, children, action, summaries }, ref) => (
   <Card ref={ref}>
     {header && (
       <CardHeader>
@@ -48,7 +58,43 @@ const Container = forwardRef<
         </div>
       </CardHeader>
     )}
-    <CardContent>{children}</CardContent>
+    <CardContent className="flex flex-col gap-1">
+      {summaries && (
+        <div className="-mt-2 flex flex-row">
+          {summaries.map((summary, index) => (
+            <div key={index} className="grow">
+              <div className="mb-0.5 text-sm text-muted-foreground">
+                {summary.label}
+              </div>
+              <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
+                {!!summary.prefixUnit && (
+                  <div className="text-lg font-medium">
+                    {summary.prefixUnit}
+                  </div>
+                )}
+                {summary.value}
+                {!!summary.postfixUnit && (
+                  <div className="text-lg font-medium">
+                    {summary.postfixUnit}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {React.Children.toArray(children).map((child, index, array) => (
+        <>
+          {child}
+          {index < array.length - 1 && <Separator />}
+        </>
+      ))}
+    </CardContent>
+    {action && (
+      <CardFooter>
+        <Button variant="secondary" {...action} />
+      </CardFooter>
+    )}
   </Card>
 ))
 

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react"
+import type { Meta } from "@storybook/react"
 
-import { PieChart, PieChartProps } from "."
+import { PieChart } from "."
 
 const dataConfig = {
   january: {
@@ -23,10 +23,8 @@ const dataConfig = {
   },
 }
 
-const Component = PieChart<typeof dataConfig>
-
-const meta: Meta<typeof Component> = {
-  component: Component,
+const meta: Meta<typeof PieChart> = {
+  component: PieChart,
   title: "Charts/PieChart",
   parameters: {
     a11y: {
@@ -42,13 +40,11 @@ const meta: Meta<typeof Component> = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Component>
+} satisfies Meta<typeof PieChart>
 
 export default meta
 
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
+export const Default: Meta<typeof PieChart> = {
   args: {
     dataConfig,
     data: [
@@ -59,10 +55,10 @@ export const Default: Story = {
       { label: "may", value: 209 },
       { label: "june", value: 214 },
     ],
-  } as PieChartProps<typeof dataConfig>,
+  },
 }
 
-export const WithOverview: Story = {
+export const WithOverview: Meta<typeof PieChart> = {
   args: {
     ...Default.args,
     overview: {

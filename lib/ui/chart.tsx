@@ -27,6 +27,19 @@ export type ChartConfig = {
   )
 }
 
+type ChartConfigValue = {
+  label?: React.ReactNode
+  icon?: React.ComponentType
+  dashed?: boolean
+} & (
+  | { color?: string; theme?: never }
+  | { color?: never; theme: Record<keyof typeof THEMES, string> }
+)
+
+export type LineChartConfig = {
+  [key: string]: ChartConfigValue
+}
+
 type ChartContextProps = {
   config: ChartConfig
 }
@@ -43,16 +56,26 @@ function useChart() {
   return context
 }
 
-const ChartContainer = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"div"> &
-    VariantProps<typeof variants> & {
-      config: ChartConfig
-      children: React.ComponentProps<
-        typeof RechartsPrimitive.ResponsiveContainer
-      >["children"]
-    }
->(({ id, className, children, aspect = "wide", config, ...props }, ref) => {
+interface ChartContainerComponentProps
+  extends React.ComponentProps<"div">,
+    VariantProps<typeof variants> {
+  config: ChartConfig
+  children: React.ComponentProps<
+    typeof RechartsPrimitive.ResponsiveContainer
+  >["children"]
+}
+
+const ChartContainerComponent = (
+  {
+    id,
+    className,
+    children,
+    aspect = "wide",
+    config,
+    ...props
+  }: ChartContainerComponentProps,
+  ref: React.ForwardedRef<HTMLDivElement>
+) => {
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`
 
@@ -75,11 +98,17 @@ const ChartContainer = React.forwardRef<
       </div>
     </ChartContext.Provider>
   )
-})
+}
+
+const ChartContainer = React.forwardRef(ChartContainerComponent)
+
 ChartContainer.displayName = "Chart"
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(
+  const colorConfig = Object.entries<
+    | { color?: string; theme?: never }
+    | { color?: never; theme: Record<keyof typeof THEMES, string> }
+  >(config).filter(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ([_, config]) => config.theme || config.color
   )
@@ -264,6 +293,7 @@ const ChartTooltipContent = React.forwardRef<
     )
   }
 )
+
 ChartTooltipContent.displayName = "ChartTooltip"
 
 const ChartLegend = RechartsPrimitive.Legend
@@ -345,21 +375,19 @@ function getPayloadConfigFromPayload(
       ? payload.payload
       : undefined
 
-  let configLabelKey: string = key
+  let configLabelKey = key
 
   if (
     key in payload &&
     typeof payload[key as keyof typeof payload] === "string"
   ) {
-    configLabelKey = payload[key as keyof typeof payload] as string
+    configLabelKey = payload[key as keyof typeof payload]
   } else if (
     payloadPayload &&
     key in payloadPayload &&
     typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
   ) {
-    configLabelKey = payloadPayload[
-      key as keyof typeof payloadPayload
-    ] as string
+    configLabelKey = payloadPayload[key as keyof typeof payloadPayload]
   }
 
   return configLabelKey in config
