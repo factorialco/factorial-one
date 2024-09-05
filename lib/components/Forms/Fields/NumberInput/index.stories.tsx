@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { useState } from "react"
 import { NumberInput } from "."
 
 const meta = {
@@ -34,6 +35,18 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {},
+}
+
+export const WithStep: Story = {
+  args: {
+    min: 1,
+    max: 5,
+    step: 1,
+  },
+  render: (props) => {
+    const [value, setValue] = useState<number | null>(1)
+    return <NumberInput {...props} value={value} onChange={setValue} />
+  },
 }
 
 export const Disabled: Story = {
