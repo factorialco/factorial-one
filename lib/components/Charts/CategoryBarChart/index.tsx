@@ -11,7 +11,6 @@ export interface CategoryBarProps {
     name: string
     value: number
     color?: string
-    muted?: boolean
   }[]
   legend: boolean
 }
@@ -43,27 +42,12 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                   asChild
                 >
                   <div
-                    className="relative h-full w-full"
+                    className="h-full w-full"
                     style={{ backgroundColor: color }}
                     role="img"
                     title={category.name}
                     tabIndex={0}
-                  >
-                    {category.muted && (
-                      <div
-                        className="absolute inset-0"
-                        style={{
-                          backgroundImage: `repeating-linear-gradient(
-                          135deg,
-                          rgba(255,255,255,0.2),
-                          rgba(255,255,255,0.2) 2px,
-                          transparent 2px,
-                          transparent 6px
-                        )`,
-                        }}
-                      />
-                    )}
-                  </div>
+                  />
                 </TooltipTrigger>
                 <TooltipContent className="flex items-center gap-1 text-sm">
                   <div
