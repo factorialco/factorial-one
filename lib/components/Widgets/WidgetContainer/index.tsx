@@ -1,4 +1,5 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
+import { Badge } from "@/components/Information/Badge"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import {
@@ -26,6 +27,7 @@ export interface WidgetContainerProps {
     link?: { title: string; url: string }
   }
   action?: ButtonProps
+  alert?: string
   summaries?: Array<{
     label: string
     value: number
@@ -37,7 +39,7 @@ export interface WidgetContainerProps {
 const Container = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
->(({ header, children, action, summaries }, ref) => (
+>(({ header, alert, children, action, summaries }, ref) => (
   <Card ref={ref}>
     {header && (
       <CardHeader>
@@ -90,9 +92,10 @@ const Container = forwardRef<
         </>
       ))}
     </CardContent>
-    {action && (
+    {(action || alert) && (
       <CardFooter>
-        <Button variant="secondary" {...action} />
+        {alert && <Badge text={alert} variant="destructive" hasDot />}
+        {action && <Button variant="secondary" {...action} />}
       </CardFooter>
     )}
   </Card>
