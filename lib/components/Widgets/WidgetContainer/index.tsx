@@ -85,6 +85,7 @@ const Container = forwardRef<
       )}
       {React.Children.toArray(children).map((child, index, array) => (
         <>
+          {summaries && <Separator />}
           {child}
           {index < array.length - 1 && <Separator />}
         </>

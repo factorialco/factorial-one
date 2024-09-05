@@ -31,7 +31,9 @@ export function ProgressBar({
         />
       </div>
       {label && (
-        <div className="flex-shrink-0 text-sm font-medium">{label}</div>
+        <div className="flex-shrink-0 text-sm font-medium tabular-nums">
+          {label}
+        </div>
       )}
     </div>
   )
