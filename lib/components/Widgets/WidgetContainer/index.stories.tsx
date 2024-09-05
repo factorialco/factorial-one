@@ -55,6 +55,13 @@ export const WithAction: Story = {
   },
 }
 
+export const WithAlert: Story = {
+  args: {
+    ...meta.args,
+    alert: "12 alerts in this period",
+  },
+}
+
 export const MultipleContent: Story = {
   args: {
     ...meta.args,
