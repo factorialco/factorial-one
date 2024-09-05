@@ -10,6 +10,12 @@ const FORMAT_WITH_DECIMALS = /^([0-9]+)(?:[\.,]([0-9]+)?)?$/
 
 const parseValue = (value: string) => parseFloat(value.replace(",", "."))
 
+const formatValue = (value: number, locale: string, maxDecimals?: number) =>
+  new Intl.NumberFormat(locale, {
+    maximumFractionDigits: maxDecimals,
+    useGrouping: false,
+  }).format(value)
+
 type NumberInputProps = Omit<InputProps, "value" | "type" | "onChange"> & {
   locale: string
   value?: number | null
@@ -22,14 +28,8 @@ type NumberInputProps = Omit<InputProps, "value" | "type" | "onChange"> & {
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
   ({ locale, value, maxDecimals, step, min, max, onChange, ...props }, ref) => {
-    const formatValue = (value: number, maxDecimals?: number) =>
-      new Intl.NumberFormat(locale, {
-        maximumFractionDigits: maxDecimals,
-        useGrouping: false,
-      }).format(value)
-
     const [fieldValue, setFieldValue] = useState<string>(() =>
-      value != null ? formatValue(value, maxDecimals) : ""
+      value != null ? formatValue(value, locale, maxDecimals) : ""
     )
 
     const handleChange = (value: string) => {
@@ -60,7 +60,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
       if (!step) return
       if (value == null) {
         const initialValue = step ?? min ?? 0
-        return handleChange(formatValue(initialValue, maxDecimals))
+        return handleChange(formatValue(initialValue, locale, maxDecimals))
       }
 
       const newValue = type === "increase" ? value + step : value - step
@@ -68,7 +68,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
         return
       }
 
-      handleChange(formatValue(newValue, maxDecimals))
+      handleChange(formatValue(newValue, locale, maxDecimals))
     }
 
     const Arrows = () => {
@@ -76,7 +76,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
 
       return (
         <div
-          className="absolute right-2 top-0.5 flex h-full flex-col group-focus-within:flex group-hover:flex"
+          className="absolute right-2 top-0.5 hidden h-full flex-col group-focus-within:flex group-hover:flex"
           onClick={(e) => e.preventDefault()}
         >
           <div onClick={handleStep("increase")} className="h-4 cursor-pointer">
@@ -97,7 +97,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     useEffect(() => {
       if (value === null) return setFieldValue("")
       if (value != null && parseValue(fieldValue) !== value)
-        setFieldValue(formatValue(value, maxDecimals))
+        setFieldValue(formatValue(value, locale, maxDecimals))
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fieldValue, value])
 
