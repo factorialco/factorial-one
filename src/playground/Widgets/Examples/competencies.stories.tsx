@@ -36,19 +36,23 @@ export const Competencies: Story = {
         <List
           title="Soft skills"
           items={[
-            { name: "Research & Analysis", value: 60 },
-            { name: "Ideation & Planning", value: 80 },
+            { name: "Research & Analysis", value: 60, type: "progress" },
+            { name: "Ideation & Planning", value: 80, type: "progress" },
           ]}
         />
         <List
           title="Soft skills"
-          items={[{ name: "Design & Craft", value: 70 }]}
+          items={[{ name: "Design & Craft", value: 70, type: "progress" }]}
         />
         <List
           title="Soft skills"
           items={[
-            { name: "Learning & Sharing", value: 30 },
-            { name: "Communication & Collaboration", value: 50 },
+            { name: "Learning & Sharing", value: 30, type: "progress" },
+            {
+              name: "Communication & Collaboration",
+              value: 50,
+              type: "progress",
+            },
           ]}
         />
       </WidgetContainer>
