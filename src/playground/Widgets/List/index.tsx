@@ -20,16 +20,14 @@ type ListProps = {
 }
 
 const ListItem = ({ item }: { item: ListItem }) => (
-  <div className="mb-2 flex w-full items-center gap-4 last:mb-0">
-    <span className="flex-grow truncate text-muted-foreground">
-      {item.name}
-    </span>
+  <div className="mb-2 flex w-full gap-4 last:mb-0">
+    <span className="flex-grow text-muted-foreground">{item.name}</span>
     {typeof item.value === "number" ? (
-      <div className="w-24 shrink-0">
+      <div className="w-24 flex-shrink-0">
         <ProgressBar value={item.value} label={`${item.value}%`} />
       </div>
     ) : (
-      <span className="flex-shrink-0 text-sm font-medium">{item.value}</span>
+      <span className="flex-shrink-0 font-medium">{item.value}</span>
     )}
   </div>
 )
