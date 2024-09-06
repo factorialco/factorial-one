@@ -20,7 +20,7 @@ type ListProps = {
 }
 
 const ListItem = ({ item }: { item: ListItem }) => (
-  <div className="mb-2 flex w-full gap-4 last:mb-0">
+  <div className="flex w-full gap-4">
     <span className="flex-grow text-muted-foreground">{item.name}</span>
     {typeof item.value === "number" ? (
       <div className="w-24 flex-shrink-0">
@@ -34,13 +34,11 @@ const ListItem = ({ item }: { item: ListItem }) => (
 
 function List({ items, title }: ListProps) {
   return (
-    <div className="w-full">
-      {title && <h2 className="mb-2 text-base font-medium">{title}</h2>}
-      <div className="w-full">
-        {items.map((item) => (
-          <ListItem key={item.name} item={item} />
-        ))}
-      </div>
+    <div className="flex w-full flex-col gap-2">
+      {title && <h2 className="text-base font-medium">{title}</h2>}
+      {items.map((item) => (
+        <ListItem key={item.name} item={item} />
+      ))}
     </div>
   )
 }
