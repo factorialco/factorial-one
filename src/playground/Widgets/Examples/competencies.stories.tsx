@@ -33,18 +33,18 @@ export const Competencies: Story = {
           },
         }}
       >
-        <List.Progress
+        <List
           title="Soft skills"
           items={[
             { name: "Research & Analysis", value: 60 },
             { name: "Ideation & Planning", value: 80 },
           ]}
         />
-        <List.Progress
+        <List
           title="Soft skills"
           items={[{ name: "Design & Craft", value: 70 }]}
         />
-        <List.Progress
+        <List
           title="Soft skills"
           items={[
             { name: "Learning & Sharing", value: 30 },

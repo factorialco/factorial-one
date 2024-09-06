@@ -22,9 +22,9 @@ type Story = StoryObj<typeof List>
 export const Default: Story = {
   args: {
     items: [
-      { name: "Project 1", value: 115 },
-      { name: "Project 2", value: 112 },
-      { name: "Project 3", value: 111 },
+      { name: "Project 1", value: "115" },
+      { name: "Project 2", value: "112" },
+      { name: "Project 3", value: "111" },
     ],
   },
 }
@@ -33,10 +33,10 @@ export const LongNames: Story = {
   args: {
     title: "Course Progress",
     items: [
-      { name: "Introduction to Computer Science", value: 100 },
-      { name: "Data Structures and Algorithms", value: 75 },
-      { name: "Object-Oriented Programming Concepts", value: 50 },
-      { name: "Database Management Systems", value: 25 },
+      { name: "Introduction to Computer Science", value: "Completed" },
+      { name: "Data Structures and Algorithms", value: "In Progress" },
+      { name: "Object-Oriented Programming Concepts", value: "Started" },
+      { name: "Database Management Systems", value: "Planned" },
     ],
   },
 }
@@ -52,5 +52,4 @@ export const Progress: Story = {
       { name: "CSS", value: 85 },
     ],
   },
-  render: (args) => <List.Progress {...args} />,
 }
