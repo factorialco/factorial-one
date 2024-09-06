@@ -5,10 +5,12 @@ interface BaseListItem {
 }
 
 interface DefaultListItem extends BaseListItem {
+  type?: "default"
   value: number | string
 }
 
 interface ProgressListItem extends BaseListItem {
+  type: "progress"
   value: number
 }
 
@@ -22,7 +24,7 @@ type ListProps = {
 const ListItem = ({ item }: { item: ListItem }) => (
   <div className="flex w-full gap-4">
     <span className="flex-grow text-muted-foreground">{item.name}</span>
-    {typeof item.value === "number" ? (
+    {item.type === "progress" ? (
       <div className="w-24 flex-shrink-0">
         <ProgressBar value={item.value} label={`${item.value}%`} />
       </div>

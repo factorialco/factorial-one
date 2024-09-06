@@ -22,9 +22,9 @@ type Story = StoryObj<typeof List>
 export const Default: Story = {
   args: {
     items: [
-      { name: "Project 1", value: "115" },
-      { name: "Project 2", value: "112" },
-      { name: "Project 3", value: "111" },
+      { name: "Project 1", value: 115 },
+      { name: "Project 2", value: 112 },
+      { name: "Project 3", value: 111 },
     ],
   },
 }
@@ -45,11 +45,11 @@ export const Progress: Story = {
   args: {
     title: "Skill Progress",
     items: [
-      { name: "JavaScript", value: 80 },
-      { name: "React", value: 75 },
-      { name: "TypeScript", value: 70 },
-      { name: "Node.js", value: 65 },
-      { name: "CSS", value: 85 },
+      { name: "JavaScript", value: 80, type: "progress" },
+      { name: "React", value: 75, type: "progress" },
+      { name: "TypeScript", value: 70, type: "progress" },
+      { name: "Node.js", value: 65, type: "progress" },
+      { name: "CSS", value: 85, type: "progress" },
     ],
   },
 }
