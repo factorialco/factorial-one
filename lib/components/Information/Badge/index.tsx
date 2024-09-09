@@ -15,13 +15,13 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
     const hasAvatar = avatar?.src || avatar?.alt
 
     const dotColor = {
-      name: "bg-page-background",
-      default: "bg-secondary",
-      neutral: "bg-intermediate",
-      destructive: "bg-primary-foreground",
-      positive: "bg-positive-intermediate",
-      warning: "bg-warning-intermediate",
-      info: "bg-info-foreground",
+      name: "bg-neutral-40",
+      default: "bg-neutral-40",
+      neutral: "bg-neutral-40",
+      critical: "bg-critical-50",
+      positive: "bg-positive-50",
+      warning: "bg-warning-50",
+      info: "bg-info-50",
     }
 
     return (

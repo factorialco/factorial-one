@@ -23,7 +23,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea } from "@/ui/scrollarea"
 
 const Title: React.FC<{ title: string }> = ({ title }) => (
-  <div className="flex h-14 items-center gap-2 px-3 font-medium text-secondary-foreground">
+  <div className="flex h-14 items-center gap-2 px-3 font-medium text-neutral-100">
     <Target size="20" />
     {title}
   </div>
@@ -51,28 +51,28 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               <Stack>
                 <div
                   onClick={() => (xRayEnabled ? disableXRay() : enableXRay())}
-                  className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary"
+                  className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary"
                 >
                   <Home size="16" /> Dashboard
                 </div>
 
-                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary">
+                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary">
                   <Inbox size="16" /> Inbox
                 </div>
 
-                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary">
+                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary">
                   <Store size="16" /> Marketplace
                 </div>
               </Stack>
 
               <Stack>
-                <div className="my-2 px-1.5 pb-1 text-xs font-medium uppercase text-secondary-foreground/70">
+                <div className="my-2 px-1.5 pb-1 text-xs font-medium uppercase text-neutral-100/70">
                   You
                 </div>
 
                 <Accordion.Root type="single" collapsible>
                   <Accordion.Item value="item-1">
-                    <Accordion.Trigger className="group flex h-9 w-full items-center rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary">
+                    <Accordion.Trigger className="group flex h-9 w-full items-center rounded-lg p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary">
                       <div className="flex flex-1 items-center gap-2">
                         <UserRound size="16" />
                         Me
@@ -83,10 +83,10 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                     </Accordion.Trigger>
                     <Accordion.Content className="mb-2 overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                       <div className="ml-3 flex flex-col border-l-2">
-                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-secondary-foreground hover:cursor-pointer hover:text-neutral-100">
+                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-neutral-100 hover:cursor-pointer hover:text-neutral-100">
                           Profile
                         </div>
-                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-secondary-foreground hover:cursor-pointer hover:text-neutral-100">
+                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-neutral-100 hover:cursor-pointer hover:text-neutral-100">
                           Personal
                         </div>
                       </div>
@@ -94,32 +94,32 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                   </Accordion.Item>
                 </Accordion.Root>
 
-                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary">
+                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary">
                   <Clock size="16" /> Clock in
                 </div>
 
-                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary">
+                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary">
                   <TreePalm size="16" /> Time off
                 </div>
 
-                <div className="flex h-9 items-center gap-2 rounded-lg bg-secondary p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary-intermediate/50">
+                <div className="hover:bg-neutral-20/50 flex h-9 items-center gap-2 rounded-lg bg-secondary p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer">
                   <Folders size="16" /> My documents
                 </div>
 
-                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary">
+                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary">
                   <BookCheck size="16" /> Tasks
                 </div>
               </Stack>
               <Stack>
-                <div className="my-2 px-1.5 pb-1 text-xs font-medium uppercase text-secondary-foreground/70">
+                <div className="my-2 px-1.5 pb-1 text-xs font-medium uppercase text-neutral-100/70">
                   Your company
                 </div>
 
-                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary">
+                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary">
                   <UsersRound size="16" /> Employees
                 </div>
 
-                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-secondary-foreground transition-colors hover:cursor-pointer hover:bg-secondary">
+                <div className="flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary">
                   <Calendar size="16" /> Calendar
                 </div>
               </Stack>
@@ -131,7 +131,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
         <Stack gap={null} className="h-full overflow-hidden">
           <Split paddingX="p-4" paddingY="p-4" alignItems="center" shrink>
             <Stack grow paddingX="p-2">
-              <div className="text-sm font-medium text-secondary-foreground">
+              <div className="text-sm font-medium text-neutral-100">
                 My documents
               </div>
             </Stack>

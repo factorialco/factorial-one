@@ -20,7 +20,7 @@ const alertVariants = cva(
     variants: {
       variant: {
         destructive:
-          "bg-destructive text-destructive-foreground dark:border-destructive-intermediate [&>svg]:text-destructive-intermediate",
+          "text-critical-70 bg-critical-50/75 [&>svg]:text-critical-70 dark:border-destructive-intermediate",
         positive:
           "bg-positive text-positive-foreground dark:border-positive-intermediate [&>svg]:text-positive-intermediate",
         warning:

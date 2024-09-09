@@ -17,7 +17,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
           <h1 className="pt-2 text-2xl font-medium text-neutral-100">
             {title}
           </h1>
-          <h2 className="text-lg font-normal text-intermediate">{subtitle}</h2>
+          <h2 className="text-neutral-80 text-lg font-normal">{subtitle}</h2>
         </div>
       </div>
     )

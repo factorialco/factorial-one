@@ -53,11 +53,11 @@ export const Multiple: Story = {
 
     const footer =
       days && days.length > 0 ? (
-        <p className="mt-3 w-[252px] text-wrap text-sm text-secondary-foreground">
+        <p className="mt-3 w-[252px] text-wrap text-sm text-neutral-100">
           You selected {days.length} day(s).
         </p>
       ) : (
-        <p className="mt-3 w-[252px] text-wrap text-sm text-secondary-foreground">
+        <p className="mt-3 w-[252px] text-wrap text-sm text-neutral-100">
           Please pick one or more days.
         </p>
       )
@@ -85,20 +85,20 @@ export const Range: Story = {
     const [range, setRange] = useState<DateRange | undefined>(defaultSelected)
 
     let footer = (
-      <p className="mt-3 w-[252px] text-wrap text-sm text-secondary-foreground">
+      <p className="mt-3 w-[252px] text-wrap text-sm text-neutral-100">
         Please pick the first day.
       </p>
     )
     if (range?.from) {
       if (!range.to) {
         footer = (
-          <p className="mt-3 w-[252px] text-wrap text-sm text-secondary-foreground">
+          <p className="mt-3 w-[252px] text-wrap text-sm text-neutral-100">
             {format(range.from, "PPP")}
           </p>
         )
       } else if (range.to) {
         footer = (
-          <p className="mt-3 w-[252px] text-wrap text-sm text-secondary-foreground">
+          <p className="mt-3 w-[252px] text-wrap text-sm text-neutral-100">
             {format(range.from, "PPP")} - {format(range.to, "PPP")}
           </p>
         )
