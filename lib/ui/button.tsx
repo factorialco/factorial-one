@@ -14,12 +14,11 @@ export const variants = [
 ] as const
 
 const buttonVariants = cva(
-  "inline-flex h-8 items-center justify-center gap-1 whitespace-nowrap rounded-full border-solid text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-xl text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        default:
-          "border-2 border-primary-intermediate bg-background text-primary-foreground hover:bg-primary",
+        default: "hover:bg-accent-60 text-neutral-0 bg-accent",
         secondary:
           "border-2 border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
         outline:
@@ -35,7 +34,7 @@ const buttonVariants = cva(
       } satisfies Record<(typeof variants)[number], string>,
       round: {
         true: "aspect-square px-0",
-        false: "px-3",
+        false: "px-4",
       },
     },
     defaultVariants: {

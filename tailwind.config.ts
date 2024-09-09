@@ -24,6 +24,60 @@ export default {
     fontFamily: {
       sans: ["Inter", "sans-serif"],
     },
+    colors: {
+      white: "0 0% 100%",
+      current: "currentColor",
+      transparent: "transparent",
+      grey: {
+        2: "210 25% 98%",
+        5: "220 18% 97%",
+        10: "216 20% 95%",
+        20: "214 17% 92%",
+        30: "213 15% 88%",
+        40: "219 18% 69%",
+        50: "218 14% 45%",
+        60: "219 28% 26%",
+        70: "219 35% 19%",
+        80: "219 36% 16%",
+        90: "219 37% 14%",
+        100: "218 48% 10%",
+      },
+      radical: {
+        50: "348 80% 50%",
+        60: "348 80% 42%",
+        70: "347 80% 34%",
+      },
+      viridian: {
+        50: "184 92% 35%",
+        60: "184 92% 30%",
+        70: "184 92% 24%",
+      },
+      orange: {
+        50: "25 95% 53%",
+        60: "24 69% 49%",
+        70: "24 69% 40%",
+      },
+      red: {
+        50: "5 69% 56%",
+        60: "4 61% 49%",
+        70: "3 71% 41%",
+      },
+      grass: {
+        50: "160 84% 39%",
+        60: "160 85% 33%",
+        70: "161 84% 27%",
+      },
+      malibu: {
+        50: "216 90% 65%",
+        60: "216 59% 55%",
+        70: "216 48% 44%",
+      },
+      yellow: {
+        50: "38 92% 54%",
+        60: "38 79% 45%",
+        70: "38 80% 36%",
+      },
+    },
     spacing: {
       px: "1px",
       0: "0px",
@@ -63,68 +117,56 @@ export default {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: {
-          DEFAULT: "hsl(var(--input))",
-          hover: "hsl(var(--input-hover))",
-        },
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        page: {
-          background: "hsl(var(--page-background))",
-        },
-        intermediate: "hsl(var(--intermediate))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-          intermediate: "hsl(var(--primary-intermediate))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-          intermediate: "hsl(var(--secondary-intermediate))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-          intermediate: "hsl(var(--destructive-intermediate))",
-        },
-        positive: {
-          DEFAULT: "hsl(var(--positive))",
-          foreground: "hsl(var(--positive-foreground))",
-          intermediate: "hsl(var(--positive-intermediate))",
-        },
-        warning: {
-          DEFAULT: "hsl(var(--warning))",
-          foreground: "hsl(var(--warning-foreground))",
-          intermediate: "hsl(var(--warning-intermediate))",
-        },
-        info: {
-          DEFAULT: "hsl(var(--info))",
-          foreground: "hsl(var(--info-foreground))",
-          intermediate: "hsl(var(--info-intermediate))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+        neutral: {
+          0: "hsl(var(--neutral-0))",
+          2: "hsl(var(--neutral-2))",
+          5: "hsl(var(--neutral-5))",
+          10: "hsl(var(--neutral-10))",
+          20: "hsl(var(--neutral-20))",
+          30: "hsl(var(--neutral-30))",
+          40: "hsl(var(--neutral-40))",
+          50: "hsl(var(--neutral-50))",
+          60: "hsl(var(--neutral-60))",
+          70: "hsl(var(--neutral-70))",
+          80: "hsl(var(--neutral-80))",
+          90: "hsl(var(--neutral-90))",
+          100: "hsl(var(--neutral-100))",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          50: "hsl(var(--accent-50))",
+          60: "hsl(var(--accent-60))",
+          70: "hsl(var(--accent-70))",
+          DEFAULT: "hsl(var(--accent-50))",
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+        selected: {
+          50: "hsl(var(--selected-50))",
+          60: "hsl(var(--selected-60))",
+          70: "hsl(var(--selected-70))",
+          DEFAULT: "hsl(var(--selected-50))",
         },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+        warning: {
+          50: "hsl(var(--warning-50))",
+          60: "hsl(var(--warning-60))",
+          70: "hsl(var(--warning-70))",
+          DEFAULT: "hsl(var(--warning-50))",
         },
-        layout: {
-          DEFAULT: "hsl(var(--layout))",
-          foreground: "hsl(var(--layout-foreground))",
-          intermediate: "hsl(var(--layout-intermediate))",
+        critical: {
+          50: "hsl(var(--critical-50))",
+          60: "hsl(var(--critical-60))",
+          70: "hsl(var(--critical-70))",
+          DEFAULT: "hsl(var(--critical-50))",
+        },
+        positive: {
+          50: "hsl(var(--positive-50))",
+          60: "hsl(var(--positive-60))",
+          70: "hsl(var(--positive-70))",
+          DEFAULT: "hsl(var(--positive-50))",
+        },
+        info: {
+          50: "hsl(var(--info-50))",
+          60: "hsl(var(--info-60))",
+          70: "hsl(var(--info-70))",
+          DEFAULT: "hsl(var(--info-50))",
         },
       },
       borderRadius: {
