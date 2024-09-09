@@ -121,10 +121,6 @@
   }
 }
 
-html {
-  font-size: 15px;
-}
-
 body {
   @apply font-sans text-base text-neutral-100;
 }

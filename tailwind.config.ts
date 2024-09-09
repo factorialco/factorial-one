@@ -11,6 +11,7 @@ export default {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
     "./lib/**/*.{ts,tsx}",
+    "./docs/**/*.mdx",
   ],
   prefix: "",
   theme: {
@@ -77,6 +78,41 @@ export default {
         60: "38 79% 45%",
         70: "38 80% 36%",
       },
+    fontSize: {
+      sm: [
+        ".75rem",
+        {
+          lineHeight: "1rem",
+        },
+      ],
+      base: [
+        ".875rem",
+        {
+          lineHeight: "1.25rem",
+          letterSpacing: "-0.005em",
+        },
+      ],
+      lg: [
+        "1rem",
+        {
+          lineHeight: "1.5rem",
+          letterSpacing: "-0.01em",
+        },
+      ],
+      xl: [
+        "1.375rem",
+        {
+          lineHeight: "1.75rem",
+          letterSpacing: "-0.01em",
+        },
+      ],
+      "2xl": [
+        "1.625rem",
+        {
+          lineHeight: "2rem",
+          letterSpacing: "-0.01em",
+        },
+      ],
     },
     spacing: {
       px: "1px",

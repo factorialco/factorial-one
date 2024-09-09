@@ -15,7 +15,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
       <div key={label} className="grid-row-2 col-span-1 grid" ref={ref}>
         <p className="text-neutral-80 font-medium">{label}</p>
         <div className="flex items-center gap-1">
-          <p className="text-2xl font-semibold">{count}</p>
+          <p className="text-xl font-semibold">{count}</p>
           {icon && (
             <span className={cn("flex", color)}>
               <Icon icon={icon} size="md" />

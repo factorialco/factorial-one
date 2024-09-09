@@ -1,0 +1,33 @@
+import { Meta, Unstyled } from "@storybook/blocks"
+
+<Meta title="essentials/Typography" />
+
+# Typography
+
+The typography comprises five predefined font sizes. The base font size of the
+app is 14px when used with the default browser settings.
+
+<Unstyled>
+  <div className="grid grid-cols-[auto_minmax(0,1fr)] items-baseline gap-4">
+    <p className="text-right text-sm text-gray-600">
+      <pre className="inline">text-2xl</pre>, 26px
+    </p>
+    <p className="text-2xl">The quick brown fox jumped over the lazy dog.</p>
+    <p className="text-right text-sm text-gray-600">
+      <pre className="inline">text-xl</pre>, 22px
+    </p>
+    <p className="text-xl">The quick brown fox jumped over the lazy dog.</p>
+    <p className="text-right text-sm text-gray-600">
+      <pre className="inline">text-lg</pre>, 16px
+    </p>
+    <p className="text-lg">The quick brown fox jumped over the lazy dog.</p>
+    <p className="text-right text-sm text-gray-600">
+      <pre className="inline">text-base</pre>, 14px
+    </p>
+    <p>The quick brown fox jumped over the lazy dog.</p>
+    <p className="text-right text-sm text-gray-600">
+      <pre className="inline">text-sm</pre>, 12px
+    </p>
+    <p className="text-sm">The quick brown fox jumped over the lazy dog.</p>
+  </div>
+</Unstyled>

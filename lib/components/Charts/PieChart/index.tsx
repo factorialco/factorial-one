@@ -61,7 +61,7 @@ export const _PieChart = (
                     <tspan
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + 8}
-                      className="fill-neutral-100 text-3xl font-semibold"
+                      className="fill-neutral-100 text-2xl font-semibold"
                     >
                       {overview?.number}
                     </tspan>

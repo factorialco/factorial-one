@@ -111,7 +111,7 @@ const wrapperVariants = cva(
 )
 
 const tagVariants = cva(
-  "absolute z-40 bg-opacity-50 px-2 py-1 text-xs uppercase",
+  "absolute z-40 bg-opacity-50 px-2 py-1 text-sm uppercase",
   {
     variants: {
       type: {

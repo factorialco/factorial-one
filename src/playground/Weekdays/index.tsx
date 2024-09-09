@@ -32,7 +32,7 @@ export const Weekdays = forwardRef<HTMLDivElement, WeekdaysProps>(
             value={day}
             className="disabled:text-neutral-70 disabled:bg-neutral-5 h-6 w-6 disabled:opacity-100 disabled:data-[state=on]:bg-neutral-100 disabled:data-[state=on]:text-card"
           >
-            <p className="h-auto text-xs">{day[0]}</p>
+            <p className="h-auto text-sm">{day[0]}</p>
           </ToggleGroupItem>
         ))}
       </ToggleGroup>

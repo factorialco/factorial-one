@@ -39,7 +39,7 @@ export function ProgressSection({
       <div className="space-y-0.5">
         <span className="text-base leading-none text-neutral-50">{label}</span>
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-neutral-100">
+          <span className="text-xl font-bold text-neutral-100">
             {value}
             {unit}
             {showMax && ` / ${max}${unit}`}
