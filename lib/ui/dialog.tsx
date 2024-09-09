@@ -39,13 +39,13 @@ const DialogContent = React.forwardRef<
           ref={ref}
           onInteractOutside={(event) => event.preventDefault()}
           className={cn(
-            "relative z-50 grid w-full origin-center gap-4 border bg-background p-8 shadow-2xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:w-fit sm:min-w-[400px] sm:rounded-2xl md:min-w-[456px]",
+            "bg-neutral-0 relative z-50 grid w-full origin-center gap-4 border p-8 shadow-2xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:w-fit sm:min-w-[400px] sm:rounded-2xl md:min-w-[456px]",
             className
           )}
           {...props}
         >
           {children}
-          <DialogPrimitive.Close className="absolute right-2 top-2 rounded-sm p-2 text-secondary-foreground opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+          <DialogPrimitive.Close className="data-[state=open]:bg-neutral-5 absolute right-2 top-2 rounded-sm p-2 text-secondary-foreground opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:text-neutral-50">
             <X className="h-5 w-5" />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
@@ -62,7 +62,7 @@ const DialogIcon = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "absolute left-8 top-0 h-16 w-16 translate-y-[-50%] rounded-2xl bg-background p-4 text-primary-foreground shadow-md",
+      "bg-neutral-0 absolute left-8 top-0 h-16 w-16 translate-y-[-50%] rounded-2xl p-4 text-primary-foreground shadow-md",
       className
     )}
     {...props}
@@ -110,7 +110,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn("mt-2 text-base text-muted-foreground", className)}
+    className={cn("mt-2 text-base text-neutral-50", className)}
     {...props}
   />
 ))

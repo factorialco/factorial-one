@@ -50,14 +50,14 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
     },
     ref
   ) => (
-    <main ref={ref} className="h-full bg-background">
+    <main ref={ref} className="bg-neutral-0 h-full">
       <Breadcrumb icon={icon} routes={routes} title={breadcrumbTitle} />
       <Header title={title} subtitle={subtitle} src={src} alt={alt}></Header>
       <TabsComponent defaultValue={defaultTab}>
-        <TabsList className="h-auto w-full justify-start rounded-none border-b border-l-0 border-r-0 border-t-0 border-solid border-b-muted bg-transparent px-10 py-3">
+        <TabsList className="border-b-neutral-5 h-auto w-full justify-start rounded-none border-b border-l-0 border-r-0 border-t-0 border-solid bg-transparent px-10 py-3">
           {tabs.map((tab: TabType) => (
             <TabsTrigger
-              className="flex text-intermediate data-[state=active]:rounded-lg data-[state=active]:bg-muted data-[state=active]:text-foreground data-[state=active]:underline data-[state=active]:underline-offset-[1.4rem] data-[state=active]:shadow-none"
+              className="data-[state=active]:bg-neutral-5 flex text-intermediate data-[state=active]:rounded-lg data-[state=active]:text-neutral-100 data-[state=active]:underline data-[state=active]:underline-offset-[1.4rem] data-[state=active]:shadow-none"
               value={tab.key}
               key={tab.key}
             >
@@ -65,7 +65,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
             </TabsTrigger>
           ))}
         </TabsList>
-        <div className="grid grid-cols-1 divide-x divide-y-0 divide-dashed divide-muted sm:grid-cols-[2fr_1fr]">
+        <div className="divide-neutral-5 grid grid-cols-1 divide-x divide-y-0 divide-dashed sm:grid-cols-[2fr_1fr]">
           <div className="order-2 pl-10 pr-8 pt-6 sm:order-1">
             {tabs.map((tab: TabType) => (
               <TabsContent value={tab.key} key={tab.key}>

@@ -26,7 +26,7 @@ export function ProgressSection({
   const isOverMax = value > max
   const remainingColor = isOverMax
     ? "hsl(var(--primary-foreground))"
-    : "hsl(var(--muted))"
+    : "hsl(var(--neutral-5))"
   const secondaryValue = isOverMax ? value - max : Math.max(0, max - value)
 
   const data = [
@@ -37,11 +37,9 @@ export function ProgressSection({
   return (
     <div className="space-y-2">
       <div className="space-y-0.5">
-        <span className="text-base leading-none text-muted-foreground">
-          {label}
-        </span>
+        <span className="text-base leading-none text-neutral-50">{label}</span>
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-foreground">
+          <span className="text-2xl font-bold text-neutral-100">
             {value}
             {unit}
             {showMax && ` / ${max}${unit}`}

@@ -12,7 +12,7 @@ export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
     return (
       <div ref={ref} className={cn("flex flex-col gap-[0.15rem]", className)}>
         <p className="text-sm text-secondary-foreground">{title}</p>
-        <p className="text-sm font-medium text-foreground">{content}</p>
+        <p className="text-sm font-medium text-neutral-100">{content}</p>
       </div>
     )
   }

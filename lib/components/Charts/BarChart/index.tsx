@@ -64,7 +64,7 @@ const _BarChart = <K extends ChartConfig>(
                 key={`label-${key}`}
                 position="top"
                 offset={10}
-                className="fill-foreground"
+                className="fill-neutral-100"
                 fontSize={12}
               />
             )}

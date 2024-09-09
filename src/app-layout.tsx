@@ -83,10 +83,10 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                     </Accordion.Trigger>
                     <Accordion.Content className="mb-2 overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                       <div className="ml-3 flex flex-col border-l-2">
-                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-secondary-foreground hover:cursor-pointer hover:text-foreground">
+                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-secondary-foreground hover:cursor-pointer hover:text-neutral-100">
                           Profile
                         </div>
-                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-secondary-foreground hover:cursor-pointer hover:text-foreground">
+                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-secondary-foreground hover:cursor-pointer hover:text-neutral-100">
                           Personal
                         </div>
                       </div>
@@ -102,7 +102,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                   <TreePalm size="16" /> Time off
                 </div>
 
-                <div className="flex h-9 items-center gap-2 rounded-lg bg-secondary p-1.5 text-sm font-medium text-foreground transition-colors hover:cursor-pointer hover:bg-secondary-intermediate/50">
+                <div className="flex h-9 items-center gap-2 rounded-lg bg-secondary p-1.5 text-sm font-medium text-neutral-100 transition-colors hover:cursor-pointer hover:bg-secondary-intermediate/50">
                   <Folders size="16" /> My documents
                 </div>
 
@@ -127,7 +127,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
           </Stack>
         </ScrollArea>
       </Stack>
-      <Stack overflow="hidden" className="rounded-lg bg-background shadow">
+      <Stack overflow="hidden" className="bg-neutral-0 rounded-lg shadow">
         <Stack gap={null} className="h-full overflow-hidden">
           <Split paddingX="p-4" paddingY="p-4" alignItems="center" shrink>
             <Stack grow paddingX="p-2">
