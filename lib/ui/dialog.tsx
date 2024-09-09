@@ -20,7 +20,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-black/40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-neutral-100/40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className
     )}
     {...props}
@@ -62,7 +62,7 @@ const DialogIcon = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "bg-neutral-0 absolute left-8 top-0 h-16 w-16 translate-y-[-50%] rounded-2xl p-4 text-primary-foreground shadow-md",
+      "bg-neutral-0 text-accent-50 absolute left-8 top-0 h-16 w-16 translate-y-[-50%] rounded-2xl p-4 shadow-md",
       className
     )}
     {...props}
@@ -84,7 +84,7 @@ const DialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "-mx-8 -mb-8 mt-4 flex flex-col-reverse gap-0 rounded-bl-2xl rounded-br-2xl border-0 border-t border-solid border-secondary-intermediate/50 bg-secondary/25 px-8 py-4 sm:flex-row sm:justify-end sm:space-x-2",
+      "bg-neutral-2 border-neutral-20 -mx-8 -mb-8 mt-4 flex flex-col-reverse gap-0 rounded-bl-2xl rounded-br-2xl border-0 border-t border-solid px-8 py-4 sm:flex-row sm:justify-end sm:space-x-2",
       className
     )}
     {...props}
