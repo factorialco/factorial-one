@@ -67,7 +67,7 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
         createPortal(
           <Stack
             gap="2"
-            className="fixed right-2 top-2 z-50 rounded-sm border-solid border-gray-300 bg-white p-4 opacity-80 shadow-md"
+            className="border-gray-300 fixed right-2 top-2 z-50 rounded-sm border-solid bg-white p-4 opacity-80 shadow-md"
           >
             <div className="text-md z-50 font-bold">XRay</div>
             <Stack gap="2">

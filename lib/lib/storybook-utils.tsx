@@ -7,7 +7,7 @@ export const Placeholder = React.forwardRef<BoxRef, BoxProps>(
     <FlexBox
       className={cn(
         className,
-        "border-neutral-20 bg-neutral-0 flex place-content-center rounded-md border-2 border-dashed p-4"
+        "flex place-content-center rounded-md border-2 border-dashed border-neutral-20 bg-neutral-0 p-4"
       )}
       tabIndex={0}
       ref={ref}

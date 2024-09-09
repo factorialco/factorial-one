@@ -85,7 +85,8 @@ const ChartContainerComponent = (
         data-chart={chartId}
         ref={ref}
         className={cn(
-          "[&_.recharts-cartesian-axis-tick_text]:fill-neutral-80 [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-neutral-30 [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-neutral-10 [&_.recharts-cartesian-grid_line]:stroke-neutral-20 flex w-full justify-center text-xs [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-radial-bar-background-sector]:fill-neutral-50 [&_.recharts-reference-line-line]:stroke-neutral-50 [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none", aspect ? variants({ aspect }) : "aspect-auto h-full",
+          "[&_.recharts-curve.recharts-tooltip-cursor]:stroke-border flex w-full justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-neutral-80 [&_.recharts-cartesian-grid_line]:stroke-neutral-20 [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-neutral-30 [&_.recharts-radial-bar-background-sector]:fill-neutral-50 [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-neutral-10 [&_.recharts-reference-line-line]:stroke-neutral-50 [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+          aspect ? variants({ aspect }) : "aspect-auto h-full",
           className
         )}
         {...props}
@@ -217,7 +218,7 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "border-neutral-20 bg-neutral-0 grid min-w-[8rem] items-start gap-2 rounded-lg border border-solid px-3 py-2.5 text-sm shadow-xl",
+          "grid min-w-[8rem] items-start gap-2 rounded-lg border border-solid border-neutral-20 bg-neutral-0 px-3 py-2.5 text-sm shadow-xl",
           className
         )}
       >
@@ -232,7 +233,7 @@ const ChartTooltipContent = React.forwardRef<
               <div
                 key={item.dataKey}
                 className={cn(
-                  "[&>svg]:text-neutral-80 flex w-full items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5",
+                  "flex w-full items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-neutral-80",
                   indicator === "dot" && "items-center"
                 )}
               >
@@ -272,7 +273,7 @@ const ChartTooltipContent = React.forwardRef<
                     >
                       <div className="grid gap-2">
                         {nestLabel ? tooltipLabel : null}
-                        <span className="text-neutral-80 pr-2">
+                        <span className="pr-2 text-neutral-80">
                           {itemConfig?.label || item.name}
                         </span>
                       </div>
@@ -332,7 +333,7 @@ const ChartLegendContent = React.forwardRef<
             <div
               key={item.value}
               className={cn(
-                "[&>svg]:text-neutral-80 flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3"
+                "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-neutral-80"
               )}
             >
               {itemConfig?.icon && !hideIcon ? (

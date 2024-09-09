@@ -39,13 +39,13 @@ const DialogContent = React.forwardRef<
           ref={ref}
           onInteractOutside={(event) => event.preventDefault()}
           className={cn(
-            "bg-neutral-0 relative z-50 grid w-full origin-center gap-4 border p-8 shadow-2xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:w-fit sm:min-w-[400px] sm:rounded-2xl md:min-w-[456px]",
+            "relative z-50 grid w-full origin-center gap-4 border bg-neutral-0 p-8 shadow-2xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:w-fit sm:min-w-[400px] sm:rounded-2xl md:min-w-[456px]",
             className
           )}
           {...props}
         >
           {children}
-          <DialogPrimitive.Close className="data-[state=open]:bg-neutral-5 absolute right-2 top-2 rounded-sm p-2 text-neutral-100 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:text-neutral-50">
+          <DialogPrimitive.Close className="ring-offset-background absolute right-2 top-2 rounded-sm p-2 text-neutral-100 opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-neutral-5 data-[state=open]:text-neutral-50">
             <X className="h-5 w-5" />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
@@ -62,7 +62,7 @@ const DialogIcon = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "bg-neutral-0 text-accent-50 absolute left-8 top-0 h-16 w-16 translate-y-[-50%] rounded-2xl p-4 shadow-md",
+      "absolute left-8 top-0 h-16 w-16 translate-y-[-50%] rounded-2xl bg-neutral-0 p-4 text-accent-50 shadow-md",
       className
     )}
     {...props}
@@ -84,7 +84,7 @@ const DialogFooter = ({
 }: React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
-      "bg-neutral-2 border-neutral-20 -mx-8 -mb-8 mt-4 flex flex-col-reverse gap-0 rounded-bl-2xl rounded-br-2xl border-0 border-t border-solid px-8 py-4 sm:flex-row sm:justify-end sm:space-x-2",
+      "-mx-8 -mb-8 mt-4 flex flex-col-reverse gap-0 rounded-bl-2xl rounded-br-2xl border-0 border-t border-solid border-neutral-20 bg-neutral-2 px-8 py-4 sm:flex-row sm:justify-end sm:space-x-2",
       className
     )}
     {...props}

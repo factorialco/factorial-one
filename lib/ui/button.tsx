@@ -17,15 +17,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "hover:bg-accent-60 text-neutral-0 bg-accent",
+        default: "bg-accent text-neutral-0 hover:bg-accent-60",
         outline:
-          "border-neutral-30 bg-neutral-0 hover:border-neutral-40 border border-solid text-neutral-100",
-        neutral: "bg-neutral-10 hover:bg-neutral-20 text-neutral-100",
+          "border border-solid border-neutral-30 bg-neutral-0 text-neutral-100 hover:border-neutral-40",
+        neutral: "bg-neutral-10 text-neutral-100 hover:bg-neutral-20",
         critical:
-          "border-neutral-20 bg-neutral-5 text-critical-70 hover:bg-critical-70 hover:text-neutral-0 border border-solid hover:border-none",
-        ghost: "hover:bg-neutral-10 bg-transparent text-neutral-100",
+          "border border-solid border-neutral-20 bg-neutral-5 text-critical-70 hover:border-none hover:bg-critical-70 hover:text-neutral-0",
+        ghost: "bg-transparent text-neutral-100 hover:bg-neutral-10",
         promote:
-          "bg-promote-50/20 border-promote-50/40 hover:bg-promote-50/40 border border-solid text-neutral-100",
+          "border border-solid border-promote-50/40 bg-promote-50/20 text-neutral-100 hover:bg-promote-50/40",
       } satisfies Record<(typeof variants)[number], string>,
       round: {
         true: "aspect-square px-0",

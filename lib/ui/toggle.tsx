@@ -5,13 +5,13 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const toggleVariants = cva(
-  "hover:bg-neutral-5 data-[state=on]:bg-neutral-5 inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors hover:text-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:text-neutral-100",
+  "ring-offset-background inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-neutral-5 hover:text-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-neutral-5 data-[state=on]:text-neutral-100",
   {
     variants: {
       variant: {
         default: "bg-transparent",
         outline:
-          "hover:bg-neutral-5 border-neutral-20 border bg-transparent hover:text-neutral-100",
+          "border border-neutral-20 bg-transparent hover:bg-neutral-5 hover:text-neutral-100",
       },
       size: {
         default: "h-10 px-3",
