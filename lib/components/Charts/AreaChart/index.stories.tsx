@@ -33,7 +33,7 @@ const meta: Meta<typeof AreaChart<typeof dataConfig>> = {
   },
   decorators: [
     (Story) => (
-      <div className="max-w-80">
+      <div className="h-52 w-full">
         <Story />
       </div>
     ),

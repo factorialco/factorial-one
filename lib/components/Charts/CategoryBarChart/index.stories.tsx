@@ -13,7 +13,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className="max-w-80">
+      <div className="w-100 h-12">
         <Story />
       </div>
     ),
