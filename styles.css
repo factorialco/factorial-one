@@ -45,6 +45,10 @@
     --info-60: theme("colors.malibu.60");
     --info-70: theme("colors.malibu.70");
 
+    --promote-50: theme("colors.yellow.50");
+    --promote-60: theme("colors.yellow.60");
+    --promote-70: theme("colors.yellow.70");
+
     --ring: var(--selected-50);
     --radius: 0.5rem;
 
@@ -96,6 +100,10 @@
     --info-50: theme("colors.malibu.50");
     --info-60: theme("colors.malibu.60");
     --info-70: theme("colors.malibu.70");
+
+    --promote-50: theme("colors.yellow.50");
+    --promote-60: theme("colors.yellow.60");
+    --promote-70: theme("colors.yellow.70");
 
     --ring: var(--selected-50);
     --radius: 0.5rem;

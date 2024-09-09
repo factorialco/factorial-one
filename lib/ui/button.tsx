@@ -5,32 +5,27 @@ import * as React from "react"
 
 export const variants = [
   "default",
-  "secondary",
   "outline",
-  "destructive",
+  "critical",
   "neutral",
-  "positive",
   "ghost",
+  "promote",
 ] as const
 
 const buttonVariants = cva(
-  "inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-xl text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-xl border-none text-base font-medium ring-offset-ring transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default: "hover:bg-accent-60 text-neutral-0 bg-accent",
-        secondary:
-          "border-2 border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
         outline:
-          "border-2 border-solid border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
-        destructive:
-          "border-2 border-destructive-intermediate bg-destructive text-destructive-foreground hover:bg-destructive/70",
-        neutral:
-          "border-2 border-warning-intermediate bg-warning text-destructive-foreground hover:bg-warning/70",
-        positive:
-          "border-2 border-positive-intermediate bg-positive text-positive-foreground hover:bg-positive/70",
-        ghost:
-          "border-none text-intermediate hover:bg-accent hover:text-accent-foreground",
+          "border-neutral-30 bg-neutral-0 hover:border-neutral-40 border border-solid text-neutral-100",
+        neutral: "bg-neutral-10 hover:bg-neutral-20 text-neutral-100",
+        critical:
+          "border-neutral-20 bg-neutral-5 text-critical-70 hover:bg-critical-70 hover:text-neutral-0 border border-solid hover:border-none",
+        ghost: "hover:bg-neutral-10 bg-transparent text-neutral-100",
+        promote:
+          "bg-promote-50/20 border-promote-50/40 hover:bg-promote-50/40 border border-solid text-neutral-100",
       } satisfies Record<(typeof variants)[number], string>,
       round: {
         true: "aspect-square px-0",

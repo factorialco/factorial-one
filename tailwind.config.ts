@@ -168,6 +168,13 @@ export default {
           70: "hsl(var(--info-70))",
           DEFAULT: "hsl(var(--info-50))",
         },
+        promote: {
+          50: "hsl(var(--promote-50))",
+          60: "hsl(var(--promote-60))",
+          70: "hsl(var(--promote-70))",
+          DEFAULT: "hsl(var(--promote-50))",
+        },
+        ring: "hsl(var(--ring))",
       },
       borderRadius: {
         lg: "var(--radius)",
