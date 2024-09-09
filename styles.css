@@ -54,8 +54,9 @@
     --input-hover: 231 10% 75%;
     --ring: 172 42% 52%;
 
-    --radius: 0.5rem;
+    --link: 184, 92%, 29%;
 
+    --radius: 0.5rem;
     --layout: 357 100% 96%;
     --layout-intermediate: 356 77% 75%;
     --layout-foreground: 342 100% 42%;
@@ -117,6 +118,8 @@
     --input: 230 5% 24%;
     --input-hover: 235 5% 39%;
     --ring: 173 62% 31%;
+
+    --link: 184, 92%, 29%;
 
     --layout: 352 59% 15%;
     --layout-intermediate: 351 56% 48%;
