@@ -140,7 +140,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
-                    variant="secondary"
+                    variant="outline"
                     hideLabel
                     label="Submenu"
                     icon={Ellipsis}
