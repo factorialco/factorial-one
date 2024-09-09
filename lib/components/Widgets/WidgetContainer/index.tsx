@@ -94,8 +94,8 @@ const Container = forwardRef<
     </CardContent>
     {(action || alert) && (
       <CardFooter>
-        {alert && <Badge text={alert} variant="destructive" hasDot />}
-        {action && <Button variant="secondary" {...action} />}
+        {alert && <Badge text={alert} variant="critical" hasDot />}
+        {action && <Button variant="outline" {...action} />}
       </CardFooter>
     )}
   </Card>
