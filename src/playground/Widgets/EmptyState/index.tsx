@@ -22,8 +22,8 @@ export interface EmptyStateType {
 const emptyStateVariants = cva("", {
   variants: {
     background: {
-      performance: "bg-warning",
-      salary: "bg-red-200",
+      performance: "bg-warning-50/25",
+      salary: "bg-critical-50/25",
     },
   },
 })
