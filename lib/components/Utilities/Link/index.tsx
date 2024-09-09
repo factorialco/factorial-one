@@ -5,20 +5,24 @@ import { cva, VariantProps } from "class-variance-authority"
 import { forwardRef } from "react"
 import { Icon } from "../Icon"
 
-const linkVariants = cva(
-  "inline-flex items-baseline text-base text-link underline",
-  {
-    variants: {},
-    defaultVariants: {},
-  }
-)
+const linkVariants = cva("inline-flex items-baseline text-base", {
+  variants: {
+    variant: {
+      text: "text-inherit no-underline",
+      link: "text-link underline",
+    },
+  },
+  defaultVariants: {
+    variant: "link",
+  },
+})
 
 export interface LinkProps
   extends BaseLinkProps,
     VariantProps<typeof linkVariants> {}
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ className, children, ...props }, ref) => {
+  ({ className, children, variant, ...props }, ref) => {
     const { target } = props
     const external = target === "_blank"
 
@@ -26,7 +30,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       <BaseLink
         ref={ref}
         {...props}
-        className={cn(linkVariants({}), className)}
+        className={cn(linkVariants({ variant }), className)}
       >
         {children}
         {external && <Icon className="ml-1" icon={ExternalLink} size="sm" />}

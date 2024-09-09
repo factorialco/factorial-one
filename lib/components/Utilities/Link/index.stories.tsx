@@ -25,3 +25,9 @@ export const TargetBlank: Story = {
     children: "This link opens in a new tab",
   },
 }
+
+export const AsText: Story = {
+  args: {
+    variant: "text",
+  },
+}
