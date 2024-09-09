@@ -78,6 +78,7 @@ export default {
         60: "38 79% 45%",
         70: "38 80% 36%",
       },
+    },
     fontSize: {
       sm: [
         ".75rem",
