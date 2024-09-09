@@ -12,7 +12,7 @@ const meta: Meta<typeof VerticalBarChart<typeof dataConfig>> = {
   tags: ["autodocs"],
   decorators: [
     (Story) => (
-      <div className="max-w-96">
+      <div className="h-52 w-full">
         <Story />
       </div>
     ),

@@ -163,6 +163,7 @@ export default {
           foreground: "hsl(var(--layout-foreground))",
           intermediate: "hsl(var(--layout-intermediate))",
         },
+        link: "hsl(var(--link))",
       },
       borderRadius: {
         lg: "var(--radius)",

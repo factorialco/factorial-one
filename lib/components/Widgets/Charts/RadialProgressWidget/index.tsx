@@ -20,7 +20,7 @@ export const RadialProgressWidget = withSkeleton(
   forwardRef<HTMLDivElement, RadialProgressWidgetProps>(
     ({ header, chart }, ref) => (
       <WidgetContainer ref={ref} header={header}>
-        <div className="flex h-full items-center justify-center">
+        <div className="flex h-40 items-center justify-center">
           <RadialProgressChart {...chart} />
         </div>
       </WidgetContainer>
