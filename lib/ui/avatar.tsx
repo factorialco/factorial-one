@@ -22,8 +22,8 @@ const avatarVariants = cva("relative flex shrink-0 overflow-hidden", {
       small: "h-10 w-10 rounded-xl text-sm",
       medium: "h-12 w-12 rounded-xl",
       large: "h-16 w-16 rounded-2xl text-xl",
-      xlarge: "h-20 w-20 rounded-2xl text-2xl",
-      xxlarge: "h-32 w-32 rounded-3xl text-3xl",
+      xlarge: "h-20 w-20 rounded-2xl text-xl",
+      xxlarge: "h-32 w-32 rounded-3xl text-2xl",
     } satisfies Record<(typeof sizes)[number], string>,
   },
   defaultVariants: {
