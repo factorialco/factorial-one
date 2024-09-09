@@ -175,6 +175,7 @@ export default {
           DEFAULT: "hsl(var(--promote-50))",
         },
         ring: "hsl(var(--ring))",
+        link: "hsl(var(--link))",
       },
       borderRadius: {
         lg: "var(--radius)",

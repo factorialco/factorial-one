@@ -12,7 +12,7 @@ const meta: Meta<typeof BarChart<typeof dataConfig>> = {
   tags: ["autodocs"],
   decorators: [
     (Story) => (
-      <div className="max-w-96">
+      <div className="w-100 h-52">
         <Story />
       </div>
     ),

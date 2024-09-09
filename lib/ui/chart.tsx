@@ -70,7 +70,7 @@ const ChartContainerComponent = (
     id,
     className,
     children,
-    aspect = "wide",
+    aspect,
     config,
     ...props
   }: ChartContainerComponentProps,
@@ -85,8 +85,7 @@ const ChartContainerComponent = (
         data-chart={chartId}
         ref={ref}
         className={cn(
-          "[&_.recharts-cartesian-axis-tick_text]:fill-neutral-80 [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-neutral-30 [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-neutral-10 [&_.recharts-cartesian-grid_line]:stroke-neutral-20 flex w-full justify-center text-xs [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-radial-bar-background-sector]:fill-neutral-50 [&_.recharts-reference-line-line]:stroke-neutral-50 [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
-          variants({ aspect }),
+          "[&_.recharts-cartesian-axis-tick_text]:fill-neutral-80 [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-neutral-30 [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-neutral-10 [&_.recharts-cartesian-grid_line]:stroke-neutral-20 flex w-full justify-center text-xs [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-radial-bar-background-sector]:fill-neutral-50 [&_.recharts-reference-line-line]:stroke-neutral-50 [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none", aspect ? variants({ aspect }) : "aspect-auto h-full",
           className
         )}
         {...props}
