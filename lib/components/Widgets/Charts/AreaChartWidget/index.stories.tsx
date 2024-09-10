@@ -31,3 +31,37 @@ const meta: Meta<typeof AreaChartWidget> = {
 export default meta
 
 export const Default = {}
+
+export const WithComment = {
+  args: {
+    header: {
+      ...containerStoryArgs.header,
+      title: "An area chart",
+      comment: "A comment",
+    },
+    chart: {
+      ...(AreaChartStory.args as AreaChartProps),
+      yAxis: {
+        hide: false,
+      },
+    },
+  },
+}
+
+export const WithBlur = {
+  args: {
+    hasBlur: true,
+    header: {
+      ...containerStoryArgs.header,
+      title: "An area chart",
+      comment: "A comment",
+      isBlur: true,
+    },
+    chart: {
+      ...(AreaChartStory.args as AreaChartProps),
+      yAxis: {
+        hide: false,
+      },
+    },
+  },
+}
