@@ -33,7 +33,7 @@ const meta: Meta<typeof AreaChart<typeof dataConfig>> = {
   },
   decorators: [
     (Story) => (
-      <div className="max-w-80">
+      <div className="h-52 w-full">
         <Story />
       </div>
     ),
@@ -43,3 +43,17 @@ const meta: Meta<typeof AreaChart<typeof dataConfig>> = {
 export default meta
 
 export const Default = {}
+
+export const Dashed = {
+  args: {
+    dataConfig: {
+      desktop: {
+        label: "Desktop",
+        dashed: true,
+      },
+      mobile: {
+        label: "Mobile",
+      },
+    },
+  },
+}

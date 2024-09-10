@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss"
 
 import { spacing } from "./tailwind/spacing"
@@ -129,6 +130,7 @@ export default {
           foreground: "hsl(var(--layout-foreground))",
           intermediate: "hsl(var(--layout-intermediate))",
         },
+        link: "hsl(var(--link))",
       },
       borderRadius: {
         lg: "var(--radius)",
