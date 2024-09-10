@@ -76,6 +76,7 @@ export const _AreaChart = <K extends LineChartConfig>(
             tickFormatter={yAxis?.tickFormatter}
             ticks={yAxis?.ticks}
             domain={yAxis?.domain}
+            className={cn(yAxis?.isBlur && "blur-sm")}
           />
         )}
         <ChartTooltip
