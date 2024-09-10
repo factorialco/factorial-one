@@ -44,8 +44,8 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
     (filter?: ComponentTypes[]) => {
       setFilter(
         filter || [...componentTypes].filter((type) => type !== "layout")
-      ),
-        setEnabled(true)
+      )
+      setEnabled(true)
     },
     [setFilter, setEnabled]
   )
