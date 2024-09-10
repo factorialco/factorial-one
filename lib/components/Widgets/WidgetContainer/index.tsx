@@ -62,7 +62,7 @@ const Container = forwardRef<
               )}
             </div>
             {header.comment && (
-              <div className="flex flex-row items-center gap-3 align-middle">
+              <div className="mt-2 flex flex-row items-center gap-3">
                 <CardComment className={cn(!isShow && "blur-md")}>
                   {header.comment}
                 </CardComment>
@@ -73,6 +73,7 @@ const Container = forwardRef<
                       hideLabel
                       label="hide/show"
                       variant="secondary"
+                      round
                       onClick={toggleBlur}
                     />
                   </span>
