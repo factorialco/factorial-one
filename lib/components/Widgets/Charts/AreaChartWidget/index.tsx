@@ -3,7 +3,7 @@ import { withSkeleton } from "@/lib/skeleton"
 import { forwardRef, useState } from "react"
 import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
-interface AreaChartWidgetProps
+export interface AreaChartWidgetProps
   extends ComposeChartContainerProps<AreaChartProps> {
   hasBlur?: boolean
 }
