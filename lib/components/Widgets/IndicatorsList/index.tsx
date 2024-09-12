@@ -1,14 +1,8 @@
 import { Indicator } from "@/ui/indicator"
-import { forwardRef } from "react"
-import { IconType } from "../Icon"
+import { ComponentProps, forwardRef } from "react"
 
 export interface IndicatorsListProps {
-  items: {
-    label: string
-    count: number
-    icon?: IconType
-    color: string
-  }[]
+  items: ComponentProps<typeof Indicator>[]
 }
 
 export const IndicatorsList = forwardRef<HTMLDivElement, IndicatorsListProps>(
