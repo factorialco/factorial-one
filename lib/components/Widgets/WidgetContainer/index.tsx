@@ -121,21 +121,9 @@ const Container = forwardRef<
           {action && <Button variant="secondary" {...action} />}
         </CardFooter>
       )}
-      {React.Children.toArray(children).map((child, index, array) => (
-        <>
-          {summaries && <Separator />}
-          {child}
-          {index < array.length - 1 && <Separator />}
-        </>
-      ))}
-    </CardContent>
-    {action && (
-      <CardFooter>
-        <Button variant="secondary" {...action} />
-      </CardFooter>
-    )}
-  </Card>
-))
+    </Card>
+  )
+})
 
 const skeletonVariants = cva("", {
   variants: {
