@@ -1,7 +1,6 @@
 import { Component } from "@/lib/component"
 import { Icon as IconComponent } from "./Icon"
 import { Link as LinkComponent } from "./Link"
-
 import { ScrollArea as ScrollAreaComponent } from "./ScrollArea"
 
 export const ScrollArea = Component(
