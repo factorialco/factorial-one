@@ -27,7 +27,6 @@ type allowedLineTypes = "natural" | "linear" | "step" | "monotoneX"
 export type AreaChartProps<K extends LineChartConfig = LineChartConfig> =
   LineChartPropsBase<K> & {
     lineType?: allowedLineTypes
-    fullWidth?: boolean
     marginTop?: number
   }
 
@@ -39,7 +38,6 @@ export const _AreaChart = <K extends LineChartConfig>(
     yAxis,
     lineType = "monotoneX",
     aspect,
-    fullWidth = false,
     marginTop = 0,
   }: AreaChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
@@ -52,7 +50,7 @@ export const _AreaChart = <K extends LineChartConfig>(
       <AreaChartPrimitive
         accessibilityLayer
         data={prepareData(data)}
-        margin={{ left: fullWidth ? -38 : 12, right: 12, top: marginTop }}
+        margin={{ left: 12, right: 12, top: marginTop }}
       >
         <CartesianGrid {...cartesianGridProps()} />
         {!xAxis?.hide && (
@@ -69,6 +67,7 @@ export const _AreaChart = <K extends LineChartConfig>(
         )}
         {!yAxis?.hide && (
           <YAxis
+            width={32} // TODO fix width so its dynamic based on the max width of the yAxis labels
             tickLine={false}
             axisLine={false}
             tickMargin={8}
@@ -121,7 +120,7 @@ export const _AreaChart = <K extends LineChartConfig>(
         ))}
         {Object.keys(dataConfig).length > 1 && (
           <ChartLegend
-            className={cn("flex justify-start", fullWidth && "ml-10")}
+            className={"flex justify-start"}
             iconType="star"
             content={<ChartLegendContent />}
           />

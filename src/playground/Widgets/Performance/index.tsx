@@ -47,7 +47,6 @@ export const PerformanceInsight = forwardRef<
         color: "hsl(var(--chart-1))",
       },
     },
-    fullWidth: true,
     marginTop: 12,
   }
 
