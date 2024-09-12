@@ -21,7 +21,7 @@ export function RadialProgressChart({
   const progressOffset = ((max - Math.min(value, max)) / max) * circumference
 
   return (
-    <div className="relative inline-flex aspect-video items-center justify-center overflow-hidden">
+    <div className="relative inline-flex aspect-auto h-full w-full items-center justify-center overflow-hidden">
       <svg
         viewBox={`0 0 ${size} ${size}`}
         className="h-full w-full -rotate-90 transform"
@@ -48,10 +48,10 @@ export function RadialProgressChart({
       </svg>
       {overview && (
         <div className="absolute inset-0 flex translate-y-0.5 flex-col items-center justify-center">
-          <span className="text-xs text-muted-foreground">
+          <span className="text-sm text-muted-foreground">
             {overview.label}
           </span>
-          <span className="text-3xl font-semibold leading-none text-foreground">
+          <span className="text-2xl font-semibold leading-none text-foreground">
             {overview.number}
           </span>
         </div>

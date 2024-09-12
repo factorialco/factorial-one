@@ -66,7 +66,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               </Stack>
 
               <Stack>
-                <div className="my-2 px-1.5 pb-1 text-xs font-medium uppercase text-secondary-foreground/70">
+                <div className="my-2 px-1.5 pb-1 text-sm font-medium uppercase text-secondary-foreground/70">
                   You
                 </div>
 
@@ -111,7 +111,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                 </div>
               </Stack>
               <Stack>
-                <div className="my-2 px-1.5 pb-1 text-xs font-medium uppercase text-secondary-foreground/70">
+                <div className="my-2 px-1.5 pb-1 text-sm font-medium uppercase text-secondary-foreground/70">
                   Your company
                 </div>
 

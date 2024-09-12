@@ -44,8 +44,8 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
     (filter?: ComponentTypes[]) => {
       setFilter(
         filter || [...componentTypes].filter((type) => type !== "layout")
-      ),
-        setEnabled(true)
+      )
+      setEnabled(true)
     },
     [setFilter, setEnabled]
   )
@@ -111,7 +111,7 @@ const wrapperVariants = cva(
 )
 
 const tagVariants = cva(
-  "absolute z-40 bg-opacity-50 px-2 py-1 text-xs uppercase",
+  "absolute z-40 bg-opacity-50 px-2 py-1 text-sm uppercase",
   {
     variants: {
       type: {

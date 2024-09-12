@@ -137,7 +137,7 @@ const CardComment = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("mt-2 flex text-2xl", className)} {...props} />
+  <div ref={ref} className={cn("flex text-xl", className)} {...props} />
 ))
 CardFooter.displayName = "CardComment"
 

@@ -76,6 +76,7 @@ export const _AreaChart = <K extends LineChartConfig>(
             tickFormatter={yAxis?.tickFormatter}
             ticks={yAxis?.ticks}
             domain={yAxis?.domain}
+            className={cn(yAxis?.isBlur && "blur-sm")}
           />
         )}
         <ChartTooltip
@@ -112,7 +113,7 @@ export const _AreaChart = <K extends LineChartConfig>(
             dataKey={area}
             type={lineType}
             fill={`url(#fill${area}-${chartId})`}
-            fillOpacity={0.4}
+            fillOpacity={dataConfig[area].dashed ? 0 : 0.4}
             stroke={dataConfig[area].color || autoColor(index)}
             strokeWidth={1.5}
             strokeDasharray={dataConfig[area].dashed ? "4 4" : undefined}

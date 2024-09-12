@@ -10,7 +10,7 @@ const meta: Meta<typeof RadialProgressChart> = {
   },
   decorators: [
     (Story) => (
-      <div className="max-w-80">
+      <div className="h-52 w-full">
         <Story />
       </div>
     ),
