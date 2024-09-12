@@ -42,12 +42,27 @@ export default meta
 
 export const Default = {}
 
+export const WithYAxis = {
+  args: {
+    header: {
+      ...containerStoryArgs.header,
+      title: "An area chart",
+    },
+    chart: {
+      ...(AreaChartStory.args as AreaChartProps),
+      yAxis: {
+        hide: false,
+      },
+    },
+  },
+}
+
 export const WithComment = {
   args: {
     header: {
       ...containerStoryArgs.header,
-      title: "44.000 $",
-      comment: "A comment",
+      title: "An area chart",
+      comment: "44.000 $",
     },
     chart: {
       ...(AreaChartStory.args as AreaChartProps),
@@ -65,7 +80,6 @@ export const WithBlur = {
       ...containerStoryArgs.header,
       title: "An area chart",
       comment: "44.000 $",
-      isBlur: true,
     },
     chart: {
       ...(AreaChartStory.args as AreaChartProps),

@@ -9,27 +9,37 @@ export interface AreaChartWidgetProps
 }
 
 export const AreaChartWidget = withSkeleton(
-  forwardRef<HTMLDivElement, AreaChartWidgetProps>((props, ref) => {
-    const [isShow, setIsShow] = useState(false)
-    const toggleBlur = () => setIsShow((prev) => !prev)
+  forwardRef<HTMLDivElement, AreaChartWidgetProps>(
+    ({ hasBlur, ...props }, ref) => {
+      const [isBlur, setIsBlur] = useState<boolean>(!!hasBlur)
 
-    const isBlur = props.hasBlur ? !isShow : false
+      const toggleBlur = () => setIsBlur((prev) => !prev)
 
-    const newPropsChart = {
-      ...props.chart,
-      yAxis: props.chart.yAxis
-        ? { ...props.chart.yAxis, isBlur }
-        : { hide: true },
+      const newContainerProps = {
+        ...props,
+        header: {
+          ...props.header,
+          hasBlur,
+          isBlur,
+          toggleBlur,
+        },
+      }
+
+      const newPropsChart = {
+        ...props.chart,
+        yAxis: props.chart.yAxis
+          ? { ...props.chart.yAxis, isBlur }
+          : { hide: true },
+      }
+
+      return (
+        <ChartContainer
+          ref={ref}
+          {...newContainerProps}
+          chart={<AreaChart aspect={"small"} {...newPropsChart} />}
+        />
+      )
     }
-    return (
-      <ChartContainer
-        ref={ref}
-        isShow={!isBlur}
-        toggleBlur={toggleBlur}
-        {...props}
-        chart={<AreaChart aspect={"small"} {...newPropsChart} />}
-      />
-    )
-  }),
+  ),
   ChartContainer.Skeleton
 )

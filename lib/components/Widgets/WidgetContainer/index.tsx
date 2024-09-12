@@ -20,13 +20,13 @@ import { cva, VariantProps } from "class-variance-authority"
 import React, { forwardRef, ReactNode } from "react"
 
 export interface WidgetContainerProps {
-  toggleBlur?: () => void
-  isShow?: boolean
   header?: {
     title?: string
     subtitle?: string
     comment?: string
+    hasBlur?: boolean
     isBlur?: boolean
+    toggleBlur?: () => void
     info?: string
     link?: { title: string; url: string }
   }
@@ -43,7 +43,7 @@ export interface WidgetContainerProps {
 const Container = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
->(({ header, alert, isShow, toggleBlur, children, action, summaries }, ref) => {
+>(({ header, alert, children, action, summaries }, ref) => {
   return (
     <Card ref={ref}>
       {header && (
@@ -63,18 +63,18 @@ const Container = forwardRef<
             </div>
             {header.comment && (
               <div className="mt-2 flex flex-row items-center gap-3">
-                <CardComment className={cn(!isShow && "blur-md")}>
+                <CardComment className={cn(!!header.isBlur && "blur-md")}>
                   {header.comment}
                 </CardComment>
-                {header.isBlur && (
+                {!!header.hasBlur && (
                   <span>
                     <Button
-                      icon={isShow ? EyeVisible : EyeInvisible}
+                      icon={header.isBlur ? EyeInvisible : EyeVisible}
                       hideLabel
                       label="hide/show"
                       variant="secondary"
                       round
-                      onClick={toggleBlur}
+                      onClick={header.toggleBlur}
                     />
                   </span>
                 )}
