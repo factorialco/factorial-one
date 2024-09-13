@@ -14,7 +14,7 @@ import {
 type Variants = "destructive" | "positive" | "warning" | "info"
 
 const alertVariants = cva(
-  "bg-f1-background-secondary relative w-full rounded-2xl p-6 text-f1-foreground [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg]:text-f1-foreground [&>svg~*]:pl-8",
+  "relative w-full rounded-2xl bg-f1-background-secondary p-6 text-f1-foreground [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg]:text-f1-foreground [&>svg~*]:pl-8",
   {
     variants: {
       variant: {

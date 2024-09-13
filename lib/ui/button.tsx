@@ -18,15 +18,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "text-f1-foreground-inverse bg-f1-background-accent-bold hover:bg-f1-background-accent-bold-hover",
+          "bg-f1-background-accent-bold text-f1-foreground-inverse hover:bg-f1-background-accent-bold-hover",
         outline:
-          "hover:border-f1-border-hover border border-solid border-f1-border bg-f1-background text-f1-foreground",
+          "border border-solid border-f1-border bg-f1-background text-f1-foreground hover:border-f1-border-hover",
         neutral:
-          "bg-f1-background-secondary hover:bg-f1-background-secondary-hover text-f1-foreground",
+          "bg-f1-background-secondary text-f1-foreground hover:bg-f1-background-secondary-hover",
         critical:
-          "bg-f1-background-secondary hover:text-f1-foreground-inverse border border-solid border-f1-border text-f1-foreground-critical hover:border-none hover:bg-f1-background-critical-bold",
+          "border border-solid border-f1-border bg-f1-background-secondary text-f1-foreground-critical hover:border-none hover:bg-f1-background-critical-bold hover:text-f1-foreground-inverse",
         ghost:
-          "hover:bg-f1-background-secondary-hover bg-transparent text-f1-foreground",
+          "bg-transparent text-f1-foreground hover:bg-f1-background-secondary-hover",
         promote:
           "border border-solid border-f1-border-promote bg-f1-background-promote text-f1-foreground hover:bg-f1-background-promote-hover",
       } satisfies Record<(typeof variants)[number], string>,

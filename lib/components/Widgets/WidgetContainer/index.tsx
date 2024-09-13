@@ -88,7 +88,7 @@ const Container = forwardRef<
           <div className="-mt-2 flex flex-row">
             {summaries.map((summary, index) => (
               <div key={index} className="grow">
-                <div className="text-f1-foreground-secondary mb-0.5 text-sm">
+                <div className="mb-0.5 text-sm text-f1-foreground-secondary">
                   {summary.label}
                 </div>
                 <div className="flex flex-row items-end gap-0.5 text-xl font-semibold">

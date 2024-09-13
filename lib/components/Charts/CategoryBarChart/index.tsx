@@ -54,7 +54,7 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                     className="h-2.5 w-2.5 shrink-0 translate-y-px rounded-full"
                     style={{ backgroundColor: color }}
                   />
-                  <span className="text-f1-foreground-secondary pl-0.5 pr-2">
+                  <span className="pl-0.5 pr-2 text-f1-foreground-secondary">
                     {category.name}
                   </span>
                   <span className="font-mono font-medium tabular-nums text-f1-foreground">
@@ -84,7 +84,7 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                   className="h-2 w-2 shrink-0 translate-y-px rounded-full"
                   style={{ backgroundColor: color }}
                 />
-                <span className="text-f1-foreground-secondary text-sm tracking-wide">
+                <span className="text-sm tracking-wide text-f1-foreground-secondary">
                   {category.name}
                 </span>
               </div>

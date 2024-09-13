@@ -13,7 +13,7 @@ export const Placeholder = React.forwardRef<BoxRef, BoxProps>(
       ref={ref}
       {...props}
     >
-      <div className="text-f1-foreground-secondary text-lg">{children}</div>
+      <div className="text-lg text-f1-foreground-secondary">{children}</div>
     </FlexBox>
   )
 )

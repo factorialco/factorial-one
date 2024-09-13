@@ -31,7 +31,7 @@ export function RadialProgressChart({
           cy={center}
           r={radius}
           fill="none"
-          stroke="hsl(var(--f1-border))"
+          stroke="hsl(var(--neutral-20))"
           strokeWidth={strokeWidth}
         />
         <circle

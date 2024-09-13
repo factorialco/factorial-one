@@ -10,7 +10,7 @@ const badgeVariants = cva(
       variant: {
         default: "border-f1-border bg-transparent text-f1-foreground",
         neutral:
-          "bg-f1-background-secondary border-transparent text-f1-foreground",
+          "border-transparent bg-f1-background-secondary text-f1-foreground",
         critical:
           "border-transparent bg-f1-background-critical text-f1-foreground-critical",
         positive:
@@ -18,7 +18,7 @@ const badgeVariants = cva(
         warning:
           "border-transparent bg-f1-background-warning text-f1-foreground-warning",
         info: "border-transparent bg-f1-background-info text-f1-foreground-info",
-        name: "bg-f1-background-secondary border-f1-border text-sm font-medium text-f1-foreground",
+        name: "border-f1-border bg-f1-background-secondary text-sm font-medium text-f1-foreground",
       },
     },
     defaultVariants: {

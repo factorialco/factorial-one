@@ -157,12 +157,10 @@ export default {
       colors: {
         f1: {
           foreground: {
-            DEFAULT: {
-              DEFAULT: "hsl(var(--neutral-100))",
-              secondary: "hsl(var(--neutral-50))",
-              inverse: "hsl(var(--neutral-0))",
-              disabled: "hsl(var(--neutral-30))",
-            },
+            DEFAULT: "hsl(var(--neutral-100))",
+            secondary: "hsl(var(--neutral-50))",
+            inverse: "hsl(var(--neutral-0))",
+            disabled: "hsl(var(--neutral-30))",
             accent: {
               DEFAULT: "hsl(var(--accent-70))",
             },
@@ -180,14 +178,12 @@ export default {
             },
           },
           background: {
-            DEFAULT: {
-              DEFAULT: "hsl(var(--neutral-0))",
-              secondary: {
-                DEFAULT: "hsl(var(--neutral-10))",
-                hover: "hsl(var(--neutral-20))",
-              },
-              bold: "hsl(var(--neutral-100))",
+            DEFAULT: "hsl(var(--neutral-0))",
+            secondary: {
+              DEFAULT: "hsl(var(--neutral-10))",
+              hover: "hsl(var(--neutral-20))",
             },
+            bold: "hsl(var(--neutral-100))",
             accent: {
               DEFAULT: "hsl(var(--accent-50) / 0.1)",
               bold: {
@@ -218,21 +214,17 @@ export default {
             },
           },
           border: {
-            DEFAULT: {
-              DEFAULT: "hsl(var(--neutral-30))",
-              hover: "hsl(var(--neutral-40))",
-            },
+            DEFAULT: "hsl(var(--neutral-30))",
+            hover: "hsl(var(--neutral-40))",
             promote: {
               DEFAULT: "hsl(var(--promote-50) / 0.4)",
             },
           },
           icon: {
-            DEFAULT: {
-              DEFAULT: "hsl(var(--neutral-50))",
-              secondary: "hsl(var(--neutral-40))",
-              inverse: "hsl(var(--neutral-0))",
-              bold: "hsl(var(--neutral-100))",
-            },
+            DEFAULT: "hsl(var(--neutral-50))",
+            secondary: "hsl(var(--neutral-40))",
+            inverse: "hsl(var(--neutral-0))",
+            bold: "hsl(var(--neutral-100))",
             critical: {
               DEFAULT: "hsl(var(--critical-50))",
             },

@@ -18,7 +18,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "placeholder:text-f1-foreground-secondary hover:border-f1-border-hover focus-visible:border-f1-border-hover disabled:bg-f1-background-secondary ring-offset-background focus:ring-ring flex h-10 w-full items-center justify-between rounded-lg border-2 border-solid border-f1-border bg-f1-background px-3 py-2 text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+      "ring-offset-background focus:ring-ring flex h-10 w-full items-center justify-between rounded-lg border-2 border-solid border-f1-border bg-f1-background px-3 py-2 text-sm transition-colors placeholder:text-f1-foreground-secondary hover:border-f1-border-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus-visible:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1",
       className
     )}
     {...props}
@@ -117,7 +117,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "focus:bg-f1-background-secondary relative flex w-full cursor-default select-none items-center rounded-md py-2 pl-2 pr-8 text-sm outline-none focus:text-f1-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "relative flex w-full cursor-default select-none items-center rounded-md py-2 pl-2 pr-8 text-sm outline-none focus:bg-f1-background-secondary focus:text-f1-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     {...props}
@@ -139,7 +139,7 @@ const SelectSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn("bg-f1-background-secondary -mx-1 my-1 h-px", className)}
+    className={cn("-mx-1 my-1 h-px bg-f1-background-secondary", className)}
     {...props}
   />
 ))
