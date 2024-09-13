@@ -3,12 +3,7 @@ import { ChevronDown, ChevronUp } from "@/icons"
 import { Input } from "@/ui/input"
 import { forwardRef, useEffect, useState } from "react"
 import { InputProps } from "../Input"
-
-const FORMAT = /^([0-9]+)$/
-// eslint-disable-next-line no-useless-escape
-const FORMAT_WITH_DECIMALS = /^([0-9]+)(?:[\.,]([0-9]+)?)?$/
-
-const parseValue = (value: string) => parseFloat(value.replace(",", "."))
+import { extractNumber } from "./extractNumber"
 
 const formatValue = (value: number, locale: string, maxDecimals?: number) =>
   new Intl.NumberFormat(locale, {
@@ -33,27 +28,13 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     )
 
     const handleChange = (value: string) => {
-      if (!value) {
-        setFieldValue("")
-        return onChange?.(null)
-      }
+      const extractedData = extractNumber(value, { maxDecimals })
+      if (!extractedData) return
 
-      const match = value.match(
-        maxDecimals !== 0 ? FORMAT_WITH_DECIMALS : FORMAT
-      )
-      if (!match) return
+      const { formattedValue, value: parsedValue } = extractedData
 
-      const [_, integers, decimals] = match
-      if (maxDecimals && decimals && decimals.length > maxDecimals) return
-
-      const valueWithNoLeadingZero = value.match(/^0\d$/)
-        ? value.slice(1)
-        : value
-
-      const valueAsNumber = parseFloat(`${integers}.${decimals ?? 0}`)
-
-      setFieldValue(valueWithNoLeadingZero)
-      onChange?.(valueAsNumber)
+      setFieldValue(formattedValue)
+      onChange?.(parsedValue)
     }
 
     const handleStep = (type: "increase" | "decrease") => () => {
@@ -79,27 +60,31 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           className="absolute right-2 top-0.5 hidden h-full flex-col group-focus-within:flex group-hover:flex"
           onClick={(e) => e.preventDefault()}
         >
-          <div onClick={handleStep("increase")} className="h-4 cursor-pointer">
+          <div
+            onClick={handleStep("increase")}
+            className="h-4 cursor-pointer"
+            role="button"
+          >
             <Icon size="sm" icon={ChevronUp} />
           </div>
-          <div onClick={handleStep("decrease")} className="h-4 cursor-pointer">
+          <div
+            onClick={handleStep("decrease")}
+            className="h-4 cursor-pointer"
+            role="button"
+          >
             <Icon size="sm" icon={ChevronDown} />
           </div>
         </div>
       )
     }
 
-    // We need the logic "parseValue(fieldValue) !== value" below to ensure we don't remove the decimal separator while the user is modifying the decimals.
-    // For example, if the input value is 18,3 and I want to change it to 18,5. I'll delete the last digit and the input will become "18,"
-    // At this point, we have fired the "onChange" callback with the value 18 because it's the most precise valid value ("18," isn't a valid one),
-    // then the useEffect below will be triggered, since the "value" changed from "18,3" to "18", and it'll not modify the "fieldValue" to keep the decimal separator
-    // unless if the value really changed.
     useEffect(() => {
-      if (value === null) return setFieldValue("")
-      if (value != null && parseValue(fieldValue) !== value)
-        setFieldValue(formatValue(value, locale, maxDecimals))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fieldValue, value])
+      // This reconciles the fieldValue when `value` changes external to this component
+      const extractedData = extractNumber(fieldValue, { maxDecimals })
+      if (value === undefined || value == extractedData?.value) return
+
+      setFieldValue(value ? formatValue(value, locale, maxDecimals) : "")
+    }, [fieldValue, maxDecimals, value, locale])
 
     return (
       <div className="group relative">
@@ -107,6 +92,7 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
           type="text"
           ref={ref}
           value={fieldValue}
+          inputMode="decimal"
           className="group-focus-within:pr-5 group-hover:pr-5"
           onChange={(e) => handleChange(e.target.value)}
           {...props}
