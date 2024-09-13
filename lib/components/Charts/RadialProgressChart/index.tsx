@@ -48,10 +48,10 @@ export function RadialProgressChart({
       </svg>
       {overview && (
         <div className="absolute inset-0 flex translate-y-0.5 flex-col items-center justify-center">
-          <span className="text-f1-foreground-neutral text-sm">
+          <span className="text-sm text-f1-foreground-neutral">
             {overview.label}
           </span>
-          <span className="text-f1-foreground-neutral text-2xl font-semibold leading-none">
+          <span className="text-2xl font-semibold leading-none text-f1-foreground-neutral">
             {overview.number}
           </span>
         </div>

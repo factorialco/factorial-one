@@ -13,22 +13,22 @@ export const variants = [
 ] as const
 
 const buttonVariants = cva(
-  "focus-visible:ring-offset inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-xl border-none text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
+  "focus-visible:ring-offset focus-visible:ring-ring inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-xl border-none text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
           "bg-f1-background-accent-bold text-f1-foreground-neutral-inverse hover:bg-f1-background-accent-bold-hover",
         outline:
-          "border-f1-border-neutral bg-f1-background-neutral text-f1-foreground-neutral hover:border-f1-border-neutral-hover border border-solid",
+          "border border-solid border-f1-border-neutral bg-f1-background-neutral text-f1-foreground-neutral hover:border-f1-border-neutral-hover",
         neutral:
           "bg-f1-background-neutral-secondary text-f1-foreground-neutral hover:bg-f1-background-neutral-secondary-hover",
         critical:
-          "border-f1-border-neutral bg-f1-background-neutral-secondary text-f1-foreground-critical hover:bg-f1-background-critical-bold hover:text-f1-foreground-neutral-inverse border border-solid hover:border-none",
+          "border border-solid border-f1-border-neutral bg-f1-background-neutral-secondary text-f1-foreground-critical hover:border-none hover:bg-f1-background-critical-bold hover:text-f1-foreground-neutral-inverse",
         ghost:
-          "text-f1-foreground-neutral hover:bg-f1-background-neutral-secondary-hover bg-transparent",
+          "bg-transparent text-f1-foreground-neutral hover:bg-f1-background-neutral-secondary-hover",
         promote:
-          "border-f1-border-promote bg-f1-background-promote text-f1-foreground-neutral hover:bg-f1-background-promote-hover border border-solid",
+          "border border-solid border-f1-border-promote bg-f1-background-promote text-f1-foreground-neutral hover:bg-f1-background-promote-hover",
       } satisfies Record<(typeof variants)[number], string>,
       round: {
         true: "aspect-square px-0",

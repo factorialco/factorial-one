@@ -21,7 +21,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "border-f1-border-neutral bg-f1-background-neutral text-f1-foreground-neutral-secondary flex flex-col items-stretch rounded-2xl border border-solid",
+      "flex flex-col items-stretch rounded-2xl border border-solid border-f1-border-neutral bg-f1-background-neutral text-f1-foreground-neutral-secondary",
       className
     )}
     {...props}
@@ -57,7 +57,7 @@ const CardSubtitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "text-f1-foreground-neutral-secondary truncate text-base font-normal",
+      "truncate text-base font-normal text-f1-foreground-neutral-secondary",
       className
     )}
     {...props}
@@ -76,7 +76,7 @@ const CardInfo = React.forwardRef<
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger
-          className="text-f1-foreground-neutral-secondary h-5 w-5 cursor-help"
+          className="h-5 w-5 cursor-help text-f1-foreground-neutral-secondary"
           aria-label={content}
         >
           <Icon icon={InfoCircleLine} size="md" />
@@ -97,7 +97,7 @@ const CardLink = React.forwardRef<
   return (
     <Link
       className={cn(
-        "hover:text-f1-foreground-neutral text-f1-foreground-neutral-secondary flex h-6 w-6 items-center justify-center transition-colors",
+        "flex h-6 w-6 items-center justify-center text-f1-foreground-neutral-secondary transition-colors hover:text-f1-foreground-neutral",
         className
       )}
       aria-label={title}

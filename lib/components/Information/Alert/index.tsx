@@ -15,7 +15,7 @@ const variants = ["destructive", "positive", "warning", "info"] as const
 type Variants = (typeof variants)[number]
 
 const alertVariants = cva(
-  "text-f1-foreground-neutral [&>svg]:text-f1-foreground-neutral bg-f1-background-neutral-secondary relative w-full rounded-2xl p-6 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg~*]:pl-8",
+  "relative w-full rounded-2xl bg-f1-background-neutral-secondary p-6 text-f1-foreground-neutral [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg]:text-f1-foreground-neutral [&>svg~*]:pl-8",
   {
     variants: {
       variant: {

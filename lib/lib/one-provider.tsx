@@ -46,7 +46,7 @@ export const LayoutProvider: React.FC<
         ref={ref}
         id="factorial-one-layout"
         className={cn({
-          "bg-f1-background-neutral-secondary h-screen w-screen": fullScreen,
+          "h-screen w-screen bg-f1-background-neutral-secondary": fullScreen,
         })}
       >
         {children}
