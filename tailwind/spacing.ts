@@ -85,14 +85,3 @@ export const relativeSpacing: ThemeConfig["spacing"] = {
   80: "20rem",
   96: "24rem",
 }
-
-export const getRelativeSpacingOverride = (fields: Array<keyof ThemeConfig>) =>
-  fields.reduce<
-    Partial<ThemeConfig> & { relativeSpacing: ThemeConfig["spacing"] }
-  >(
-    (acc, field) => {
-      acc[field] = ({ theme }) => ({ ...theme("relativeSpacing") })
-      return acc
-    },
-    { relativeSpacing }
-  )
