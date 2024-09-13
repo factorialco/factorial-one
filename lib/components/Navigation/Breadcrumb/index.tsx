@@ -24,10 +24,10 @@ export const Breadcrumb = forwardRef<HTMLDivElement, BreadcrumbsType>(
   ({ icon, routes, title }, ref) => {
     return (
       <BreadcrumbComponent
-        className="flex min-h-6 flex-row border-x-0 border-t-0 border-dashed border-b-neutral-5 px-5 py-3"
+        className="border-b-f1-border-neutral flex min-h-6 flex-row border-x-0 border-t-0 border-dashed px-5 py-3"
         ref={ref}
       >
-        <span className="flex items-center pr-1 text-neutral-100">
+        <span className="text-f1-foreground-neutral flex items-center pr-1">
           <Icon size="md" icon={icon} />
         </span>
         <BreadcrumbList>

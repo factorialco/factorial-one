@@ -14,10 +14,12 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
       <div className="flex px-10 py-6" ref={ref}>
         <Avatar size="xlarge" src={src} alt={alt} />
         <div className="flex flex-col gap-2 pl-5">
-          <h1 className="pt-2 text-xl font-medium text-neutral-100">
+          <h1 className="text-f1-foreground-neutral pt-2 text-xl font-medium">
             {title}
           </h1>
-          <h2 className="text-neutral-80 text-lg font-normal">{subtitle}</h2>
+          <h2 className="text-f1-foreground-neutral text-lg font-normal">
+            {subtitle}
+          </h2>
         </div>
       </div>
     )

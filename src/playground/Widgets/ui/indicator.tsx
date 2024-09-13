@@ -13,7 +13,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
   ({ count, label, icon, color }, ref) => {
     return (
       <div key={label} className="grid-row-2 col-span-1 grid" ref={ref}>
-        <p className="text-neutral-80 font-medium">{label}</p>
+        <p className="text-f1-foreground-neutral font-medium">{label}</p>
         <div className="flex items-center gap-1">
           <p className="text-xl font-semibold">{count}</p>
           {icon && (

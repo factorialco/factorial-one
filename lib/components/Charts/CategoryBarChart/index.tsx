@@ -54,10 +54,10 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                     className="h-2.5 w-2.5 shrink-0 translate-y-px rounded-full"
                     style={{ backgroundColor: color }}
                   />
-                  <span className="pl-0.5 pr-2 text-neutral-50">
+                  <span className="text-f1-foreground-neutral-secondary pl-0.5 pr-2">
                     {category.name}
                   </span>
-                  <span className="font-mono font-medium tabular-nums text-neutral-100">
+                  <span className="font-mono text-f1-foreground-neutral font-medium tabular-nums">
                     {category.value} ({formatPercentage(category.value)}%)
                   </span>
                 </TooltipContent>
@@ -84,7 +84,7 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                   className="h-2 w-2 shrink-0 translate-y-px rounded-full"
                   style={{ backgroundColor: color }}
                 />
-                <span className="text-sm tracking-wide text-neutral-50">
+                <span className="text-f1-foreground-neutral-secondary text-sm tracking-wide">
                   {category.name}
                 </span>
               </div>

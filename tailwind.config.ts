@@ -154,65 +154,100 @@ export default {
     },
     extend: {
       colors: {
-        neutral: {
-          0: "hsl(var(--neutral-0))",
-          2: "hsl(var(--neutral-2))",
-          5: "hsl(var(--neutral-5))",
-          10: "hsl(var(--neutral-10))",
-          20: "hsl(var(--neutral-20))",
-          30: "hsl(var(--neutral-30))",
-          40: "hsl(var(--neutral-40))",
-          50: "hsl(var(--neutral-50))",
-          60: "hsl(var(--neutral-60))",
-          70: "hsl(var(--neutral-70))",
-          80: "hsl(var(--neutral-80))",
-          90: "hsl(var(--neutral-90))",
-          100: "hsl(var(--neutral-100))",
+        f1: {
+          foreground: {
+            neutral: {
+              DEFAULT: "hsl(var(--neutral-100))",
+              secondary: "hsl(var(--neutral-50))",
+              inverse: "hsl(var(--neutral-0))",
+              disabled: "hsl(var(--neutral-30))",
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent-70))",
+            },
+            critical: {
+              DEFAULT: "hsl(var(--critical-70))",
+            },
+            info: {
+              DEFAULT: "hsl(var(--info-70))",
+            },
+            warning: {
+              DEFAULT: "hsl(var(--warning-70))",
+            },
+            positive: {
+              DEFAULT: "hsl(var(--positive-70))",
+            },
+          },
+          background: {
+            neutral: {
+              DEFAULT: "hsl(var(--neutral-0))",
+              secondary: {
+                DEFAULT: "hsl(var(--neutral-10))",
+                hover: "hsl(var(--neutral-20))",
+              },
+              bold: "hsl(var(--neutral-100))",
+            },
+            accent: {
+              DEFAULT: "hsl(var(--accent-50) / 0.1)",
+              bold: {
+                DEFAULT: "hsl(var(--accent-50))",
+                hover: "hsl(var(--accent-60))",
+              },
+            },
+            promote: {
+              DEFAULT: "hsl(var(--promote-50) / 0.2)",
+              hover: "hsl(var(--promote-50) / 0.4)",
+            },
+            critical: {
+              DEFAULT: "hsl(var(--critical-50) / 0.1)",
+              bold: "hsl(var(--critical-70))",
+            },
+            info: {
+              DEFAULT: "hsl(var(--info-50) / 0.1)",
+            },
+            warning: {
+              DEFAULT: "hsl(var(--warning-50) / 0.1)",
+            },
+            positive: {
+              DEFAULT: "hsl(var(--positive-50) / 0.1)",
+            },
+            selected: {
+              DEFAULT: "hsl(var(--selected-50) / 0.1)",
+              bold: "hsl(var(--selected-50))",
+            },
+          },
+          border: {
+            neutral: {
+              DEFAULT: "hsl(var(--neutral-30))",
+              hover: "hsl(var(--neutral-40))",
+            },
+            promote: {
+              DEFAULT: "hsl(var(--promote-50) / 0.4)",
+            },
+          },
+          icon: {
+            neutral: {
+              DEFAULT: "hsl(var(--neutral-50))",
+              secondary: "hsl(var(--neutral-40))",
+              inverse: "hsl(var(--neutral-0))",
+              bold: "hsl(var(--neutral-100))",
+            },
+            critical: {
+              DEFAULT: "hsl(var(--critical-50))",
+            },
+            info: {
+              DEFAULT: "hsl(var(--info-50))",
+            },
+            warning: {
+              DEFAULT: "hsl(var(--warning-50))",
+            },
+            positive: {
+              DEFAULT: "hsl(var(--positive-50))",
+            },
+          },
+          ring: "hsl(var(--ring))",
+          link: "hsl(var(--link))",
         },
-        accent: {
-          50: "hsl(var(--accent-50))",
-          60: "hsl(var(--accent-60))",
-          70: "hsl(var(--accent-70))",
-          DEFAULT: "hsl(var(--accent-50))",
-        },
-        selected: {
-          50: "hsl(var(--selected-50))",
-          60: "hsl(var(--selected-60))",
-          70: "hsl(var(--selected-70))",
-          DEFAULT: "hsl(var(--selected-50))",
-        },
-        warning: {
-          50: "hsl(var(--warning-50))",
-          60: "hsl(var(--warning-60))",
-          70: "hsl(var(--warning-70))",
-          DEFAULT: "hsl(var(--warning-50))",
-        },
-        critical: {
-          50: "hsl(var(--critical-50))",
-          60: "hsl(var(--critical-60))",
-          70: "hsl(var(--critical-70))",
-          DEFAULT: "hsl(var(--critical-50))",
-        },
-        positive: {
-          50: "hsl(var(--positive-50))",
-          60: "hsl(var(--positive-60))",
-          70: "hsl(var(--positive-70))",
-          DEFAULT: "hsl(var(--positive-50))",
-        },
-        info: {
-          50: "hsl(var(--info-50))",
-          60: "hsl(var(--info-60))",
-          70: "hsl(var(--info-70))",
-          DEFAULT: "hsl(var(--info-50))",
-        },
-        promote: {
-          50: "hsl(var(--promote-50))",
-          60: "hsl(var(--promote-60))",
-          70: "hsl(var(--promote-70))",
-          DEFAULT: "hsl(var(--promote-50))",
-        },
-        ring: "hsl(var(--ring))",
-        link: "hsl(var(--link))",
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -15,14 +15,14 @@ const variants = ["destructive", "positive", "warning", "info"] as const
 type Variants = (typeof variants)[number]
 
 const alertVariants = cva(
-  "bg-secondary relative w-full rounded-2xl p-6 text-neutral-100 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg]:text-neutral-100 [&>svg~*]:pl-8",
+  "text-f1-foreground-neutral [&>svg]:text-f1-foreground-neutral bg-f1-background-neutral-secondary relative w-full rounded-2xl p-6 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg~*]:pl-8",
   {
     variants: {
       variant: {
-        destructive: "bg-critical-50/25 [&>svg]:text-critical-70",
-        positive: "bg-positive-50/25 [&>svg]:text-positive-70",
-        warning: "bg-warning-50/25 [&>svg]:text-warning-70",
-        info: "bg-info-50/25 [&>svg]:text-info-70",
+        destructive: "bg-f1-background-critical [&>svg]:text-f1-icon-critical",
+        positive: "bg-f1-background-positive [&>svg]:text-f1-icon-positive",
+        warning: "bg-f1-background-warning [&>svg]:text-f1-icon-warning",
+        info: "bg-f1-background-info [&>svg]:text-f1-icon-info",
       } satisfies Record<Variants, string>,
     },
     defaultVariants: {

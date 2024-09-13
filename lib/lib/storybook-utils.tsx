@@ -7,13 +7,15 @@ export const Placeholder = React.forwardRef<BoxRef, BoxProps>(
     <FlexBox
       className={cn(
         className,
-        "flex place-content-center rounded-md border-2 border-dashed border-neutral-20 bg-neutral-0 p-4"
+        "border-f1-border-neutral bg-f1-background-neutral flex place-content-center rounded-md border-2 border-dashed p-4"
       )}
       tabIndex={0}
       ref={ref}
       {...props}
     >
-      <div className="text-lg text-neutral-50">{children}</div>
+      <div className="text-f1-foreground-neutral-secondary text-lg">
+        {children}
+      </div>
     </FlexBox>
   )
 )

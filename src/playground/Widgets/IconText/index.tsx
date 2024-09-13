@@ -11,7 +11,7 @@ export const IconText = forwardRef<HTMLDivElement, IconTextProps>(
     return (
       <div
         ref={ref}
-        className="text-neutral-80 flex flex-row items-center gap-1"
+        className="text-f1-foreground-neutral flex flex-row items-center gap-1"
       >
         <Icon icon={icon} size={"md"} />
         <p className="font-medium">{text}</p>

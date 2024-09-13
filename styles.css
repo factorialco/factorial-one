@@ -122,5 +122,5 @@
 }
 
 body {
-  @apply font-sans text-base text-neutral-100;
+  @apply text-f1-foreground-neutral font-sans text-base;
 }
