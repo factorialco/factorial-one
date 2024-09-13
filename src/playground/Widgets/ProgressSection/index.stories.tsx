@@ -26,7 +26,31 @@ export const Default: Story = {
     max: 40,
     showMax: true,
     unit: "h",
+    legend: false,
+  },
+}
+
+export const WithLegend: Story = {
+  args: {
+    label: "Weekly progress",
+    value: 30,
+    max: 40,
+    showMax: true,
+    unit: "h",
+    legend: true,
     primaryLabel: "Worked",
     secondaryLabel: "Remaining",
+  },
+}
+
+export const WithComment: Story = {
+  args: {
+    label: "Weekly progress",
+    value: 30,
+    max: 40,
+    showMax: true,
+    legend: false,
+    unit: "h",
+    bottomComment: "This is a comment",
   },
 }
