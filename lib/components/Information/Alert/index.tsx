@@ -11,8 +11,7 @@ import {
   TriangleAlert,
 } from "lucide-react"
 
-const variants = ["destructive", "positive", "warning", "info"] as const
-type Variants = (typeof variants)[number]
+type Variants = "destructive" | "positive" | "warning" | "info"
 
 const alertVariants = cva(
   "text-f1-foreground-neutral [&>svg]:text-f1-foreground-neutral bg-f1-background-neutral-secondary relative w-full rounded-2xl p-6 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg~*]:pl-8",
