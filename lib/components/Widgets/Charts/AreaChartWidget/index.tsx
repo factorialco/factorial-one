@@ -1,19 +1,45 @@
 import { AreaChart, AreaChartProps } from "@/components/Charts/AreaChart"
 import { withSkeleton } from "@/lib/skeleton"
-import { forwardRef } from "react"
+import { forwardRef, useState } from "react"
 import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
+export interface AreaChartWidgetProps
+  extends ComposeChartContainerProps<AreaChartProps> {
+  hasBlur?: boolean
+}
+
 export const AreaChartWidget = withSkeleton(
-  forwardRef<HTMLDivElement, ComposeChartContainerProps<AreaChartProps>>(
-    (props, ref) => (
-      <ChartContainer
-        ref={ref}
-        {...props}
-        chart={
-          <AreaChart aspect={"small"} yAxis={{ hide: true }} {...props.chart} />
-        }
-      />
-    )
+  forwardRef<HTMLDivElement, AreaChartWidgetProps>(
+    ({ hasBlur, ...props }, ref) => {
+      const [isBlur, setIsBlur] = useState<boolean>(!!hasBlur)
+
+      const toggleBlur = () => setIsBlur((prev) => !prev)
+
+      const newContainerProps = {
+        ...props,
+        header: {
+          ...props.header,
+          hasBlur,
+          isBlur,
+          toggleBlur,
+        },
+      }
+
+      const newPropsChart = {
+        ...props.chart,
+        yAxis: props.chart.yAxis
+          ? { ...props.chart.yAxis, isBlur }
+          : { hide: true },
+      }
+
+      return (
+        <ChartContainer
+          ref={ref}
+          {...newContainerProps}
+          chart={<AreaChart aspect={"small"} {...newPropsChart} />}
+        />
+      )
+    }
   ),
   ChartContainer.Skeleton
 )

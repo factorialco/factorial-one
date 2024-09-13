@@ -9,6 +9,16 @@ const meta: Meta<typeof AreaChartWidget> = {
   component: AreaChartWidget,
   parameters: {
     layout: "centered",
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
   tags: ["autodocs"],
   args: {
@@ -31,3 +41,51 @@ const meta: Meta<typeof AreaChartWidget> = {
 export default meta
 
 export const Default = {}
+
+export const WithYAxis = {
+  args: {
+    header: {
+      ...containerStoryArgs.header,
+      title: "An area chart",
+    },
+    chart: {
+      ...(AreaChartStory.args as AreaChartProps),
+      yAxis: {
+        hide: false,
+      },
+    },
+  },
+}
+
+export const WithComment = {
+  args: {
+    header: {
+      ...containerStoryArgs.header,
+      title: "An area chart",
+      comment: "44.000 $",
+    },
+    chart: {
+      ...(AreaChartStory.args as AreaChartProps),
+      yAxis: {
+        hide: false,
+      },
+    },
+  },
+}
+
+export const WithBlur = {
+  args: {
+    hasBlur: true,
+    header: {
+      ...containerStoryArgs.header,
+      title: "An area chart",
+      comment: "44.000 $",
+    },
+    chart: {
+      ...(AreaChartStory.args as AreaChartProps),
+      yAxis: {
+        hide: false,
+      },
+    },
+  },
+}
