@@ -7,6 +7,7 @@ export const Separator = forwardRef<
   return (
     <div
       ref={ref}
+      role="separator"
       className="my-4 h-[1px] w-full"
       style={{
         backgroundImage:
