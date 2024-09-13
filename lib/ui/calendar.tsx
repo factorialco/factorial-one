@@ -32,7 +32,7 @@ function Calendar({
         table: "w-full border-collapse space-y-1",
         head_row: "flex",
         head_cell:
-          "text-f1-foreground-neutral-secondary rounded-md w-9 font-normal text-[0.8rem]",
+          "text-f1-foreground-secondary rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: "rounded-full h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-outside)]:bg-f1-background-selected focus-within:relative focus-within:z-20 [&:has([aria-selected].day-range-middle)]:rounded-none first:[&:has([aria-selected].day-range-middle)]:rounded-l-lg last:[&:has([aria-selected].day-range-middle)]:rounded-r-lg [&:has([aria-selected].day-range-start)]:rounded-r-none [&:has([aria-selected].day-range-end)]:rounded-l-none first:[&:has([aria-selected].day-range-end)]:rounded-r-[24px] first:[&:has([aria-selected].day-range-end)]:rounded-l-md last:[&:has([aria-selected].day-range-start)]:rounded-l-[24px] last:[&:has([aria-selected].day-range-start)]:rounded-r-md [&:has([aria-selected].day-range-start.day-range-end)]:rounded-full",
         day: cn(
@@ -42,12 +42,11 @@ function Calendar({
         day_range_start: "day-range-start",
         day_range_end: "day-range-end",
         day_selected:
-          "bg-f1-background-selected-bold text-f1-foreground-neutral-inverse",
-        day_today:
-          "bg-f1-background-neutral-secondary text-f1-foreground-neutral",
+          "bg-f1-background-selected-bold text-f1-foreground-inverse",
+        day_today: "bg-f1-background-secondary text-f1-foreground",
         day_outside:
-          "day-outside text-f1-foreground-neutral-secondary opacity-50 aria-selected:bg-f1-background-selected aria-selected:text-f1-foreground-neutral",
-        day_disabled: "text-f1-foreground-neutral-secondary opacity-50",
+          "day-outside text-f1-foreground-secondary opacity-50 aria-selected:bg-f1-background-selected aria-selected:text-f1-foreground",
+        day_disabled: "text-f1-foreground-secondary opacity-50",
         day_range_middle: "day-range-middle",
         day_hidden: "invisible",
         ...classNames,

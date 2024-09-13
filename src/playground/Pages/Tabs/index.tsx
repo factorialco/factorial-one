@@ -50,14 +50,14 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
     },
     ref
   ) => (
-    <main ref={ref} className="bg-f1-background-neutral h-full">
+    <main ref={ref} className="bg-f1-background h-full">
       <Breadcrumb icon={icon} routes={routes} title={breadcrumbTitle} />
       <Header title={title} subtitle={subtitle} src={src} alt={alt}></Header>
       <TabsComponent defaultValue={defaultTab}>
-        <TabsList className="border-b-f1-border-neutral h-auto w-full justify-start rounded-none border-b border-l-0 border-r-0 border-t-0 border-solid bg-transparent px-10 py-3">
+        <TabsList className="border-b-f1-border h-auto w-full justify-start rounded-none border-b border-l-0 border-r-0 border-t-0 border-solid bg-transparent px-10 py-3">
           {tabs.map((tab: TabType) => (
             <TabsTrigger
-              className="data-[state=active]:bg-f1-background-neutral-secondary text-f1-foreground-neutral data-[state=active]:text-f1-foreground-neutral flex data-[state=active]:rounded-lg data-[state=active]:underline data-[state=active]:underline-offset-[1.4rem] data-[state=active]:shadow-none"
+              className="data-[state=active]:bg-f1-background-secondary text-f1-foreground data-[state=active]:text-f1-foreground flex data-[state=active]:rounded-lg data-[state=active]:underline data-[state=active]:underline-offset-[1.4rem] data-[state=active]:shadow-none"
               value={tab.key}
               key={tab.key}
             >
@@ -65,7 +65,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
             </TabsTrigger>
           ))}
         </TabsList>
-        <div className="divide-f1-border-neutral grid grid-cols-1 divide-x divide-y-0 divide-dashed sm:grid-cols-[2fr_1fr]">
+        <div className="divide-f1-border grid grid-cols-1 divide-x divide-y-0 divide-dashed sm:grid-cols-[2fr_1fr]">
           <div className="order-2 pl-10 pr-8 pt-6 sm:order-1">
             {tabs.map((tab: TabType) => (
               <TabsContent value={tab.key} key={tab.key}>

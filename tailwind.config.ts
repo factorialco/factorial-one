@@ -157,7 +157,7 @@ export default {
       colors: {
         f1: {
           foreground: {
-            neutral: {
+            DEFAULT: {
               DEFAULT: "hsl(var(--neutral-100))",
               secondary: "hsl(var(--neutral-50))",
               inverse: "hsl(var(--neutral-0))",
@@ -180,7 +180,7 @@ export default {
             },
           },
           background: {
-            neutral: {
+            DEFAULT: {
               DEFAULT: "hsl(var(--neutral-0))",
               secondary: {
                 DEFAULT: "hsl(var(--neutral-10))",
@@ -218,7 +218,7 @@ export default {
             },
           },
           border: {
-            neutral: {
+            DEFAULT: {
               DEFAULT: "hsl(var(--neutral-30))",
               hover: "hsl(var(--neutral-40))",
             },
@@ -227,7 +227,7 @@ export default {
             },
           },
           icon: {
-            neutral: {
+            DEFAULT: {
               DEFAULT: "hsl(var(--neutral-50))",
               secondary: "hsl(var(--neutral-40))",
               inverse: "hsl(var(--neutral-0))",

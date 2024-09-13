@@ -31,7 +31,7 @@ export function RadialProgressChart({
           cy={center}
           r={radius}
           fill="none"
-          stroke="hsl(var(--f1-border-neutral))"
+          stroke="hsl(var(--f1-border))"
           strokeWidth={strokeWidth}
         />
         <circle
@@ -48,10 +48,8 @@ export function RadialProgressChart({
       </svg>
       {overview && (
         <div className="absolute inset-0 flex translate-y-0.5 flex-col items-center justify-center">
-          <span className="text-sm text-f1-foreground-neutral">
-            {overview.label}
-          </span>
-          <span className="text-2xl font-semibold leading-none text-f1-foreground-neutral">
+          <span className="text-f1-foreground text-sm">{overview.label}</span>
+          <span className="text-f1-foreground text-2xl font-semibold leading-none">
             {overview.number}
           </span>
         </div>

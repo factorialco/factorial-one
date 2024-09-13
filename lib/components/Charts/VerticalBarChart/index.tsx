@@ -110,7 +110,7 @@ const _VBarChart = <K extends ChartConfig>(
                     key={`label-{${key}}`}
                     position="right"
                     offset={10}
-                    className="fill-f1-foreground-neutral"
+                    className="fill-f1-foreground"
                     fontSize={12}
                   />
                 )}
