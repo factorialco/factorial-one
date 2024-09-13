@@ -8,13 +8,17 @@ const Container = forwardRef<
   ChartContainerPropsBase & {
     chart?: ReactNode
   }
->(({ chart, summaries, ...props }, ref) => (
-  <WidgetContainer ref={ref} {...props} summaries={summaries}>
-    {chart && (
-      <div className="relative flex h-52 grow items-stretch pt-6">{chart}</div>
-    )}
-  </WidgetContainer>
-))
+>(({ chart, summaries, ...props }, ref) => {
+  return (
+    <WidgetContainer ref={ref} {...props} summaries={summaries}>
+      {chart && (
+        <div className="relative flex h-52 grow items-stretch pt-6">
+          {chart}
+        </div>
+      )}
+    </WidgetContainer>
+  )
+})
 
 export type ComposeChartContainerProps<T extends object> =
   ChartContainerPropsBase & {
