@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { Placeholder } from "@/lib/storybook-utils"
 import { fn } from "@storybook/test"
-import { ComponentProps, Fragment } from "react"
+import { ComponentProps } from "react"
 import { WidgetContainer } from "."
 
 const meta = {
@@ -74,32 +74,6 @@ export const MultipleContent: Story = {
           Content {index + 1}
         </div>
       )),
-    ],
-  },
-}
-
-export const MultipleContentWihNulls: Story = {
-  args: {
-    ...meta.args,
-    children: [
-      undefined,
-      null,
-      false,
-      <Fragment></Fragment>,
-      <></>,
-      Array.from({ length: 3 }).map((_, index) => (
-        <div
-          key={index}
-          className="rounded-lg bg-muted p-3 text-center text-foreground"
-        >
-          Content {index + 1}
-        </div>
-      )),
-      undefined,
-      null,
-      false,
-      <Fragment></Fragment>,
-      <></>,
     ],
   },
 }
