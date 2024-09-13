@@ -51,7 +51,7 @@ const BreadcrumbLink = React.forwardRef<
     <Comp
       ref={ref}
       className={cn(
-        "text-f1-foreground hover:text-f1-foreground no-underline transition-colors",
+        "text-f1-foreground no-underline transition-colors hover:text-f1-foreground",
         className
       )}
       {...props}
@@ -84,7 +84,7 @@ const BreadcrumbSeparator = ({
     role="presentation"
     aria-hidden="true"
     className={cn(
-      "text-f1-foreground flex align-bottom [&>svg]:size-3.5",
+      "flex align-bottom text-f1-foreground [&>svg]:size-3.5",
       className
     )}
     {...props}

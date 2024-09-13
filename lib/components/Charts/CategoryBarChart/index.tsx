@@ -57,7 +57,7 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
                   <span className="text-f1-foreground-secondary pl-0.5 pr-2">
                     {category.name}
                   </span>
-                  <span className="font-mono text-f1-foreground font-medium tabular-nums">
+                  <span className="font-mono font-medium tabular-nums text-f1-foreground">
                     {category.value} ({formatPercentage(category.value)}%)
                   </span>
                 </TooltipContent>

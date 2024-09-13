@@ -21,7 +21,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "border-f1-border bg-f1-background text-f1-foreground-secondary flex flex-col items-stretch rounded-2xl border border-solid",
+      "text-f1-foreground-secondary flex flex-col items-stretch rounded-2xl border border-solid border-f1-border bg-f1-background",
       className
     )}
     {...props}
@@ -97,7 +97,7 @@ const CardLink = React.forwardRef<
   return (
     <Link
       className={cn(
-        "text-f1-foreground-secondary hover:text-f1-foreground flex h-6 w-6 items-center justify-center transition-colors",
+        "text-f1-foreground-secondary flex h-6 w-6 items-center justify-center transition-colors hover:text-f1-foreground",
         className
       )}
       aria-label={title}
