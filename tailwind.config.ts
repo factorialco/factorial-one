@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss"
 
-import { spacing } from "./tailwind/spacing"
+import { absoluteSpacing, getRelativeSpacingOverride } from "./tailwind/spacing"
 
 export default {
   darkMode: ["class"],
@@ -64,8 +64,19 @@ export default {
         },
       ],
     },
-    ...spacing,
+    // use pixel scale by default
+    spacing: absoluteSpacing,
     extend: {
+      ...getRelativeSpacingOverride([
+        "flexBasis",
+        "height",
+        "maxHeight",
+        "maxWidth",
+        "minHeight",
+        "minWidth",
+        "textIndent",
+        "width",
+      ]),
       colors: {
         border: "hsl(var(--border))",
         input: {
