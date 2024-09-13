@@ -9,13 +9,13 @@ const taskCategories = [
     label: "Overdue",
     count: 1,
     icon: AlertCircle,
-    color: "text-layout-foreground",
+    color: "text-f1-icon-critical",
   },
   {
     label: "Due",
     count: 3,
     icon: Circle,
-    color: "text-intermediate",
+    color: "text-f1-icon",
   },
 ]
 
@@ -48,7 +48,7 @@ export const ThreeElements: Story = {
       label: "No due",
       count: 5,
       icon: Circle,
-      color: "text-input-hover",
+      color: "text-f1-icon-secondary",
     }),
   },
 }

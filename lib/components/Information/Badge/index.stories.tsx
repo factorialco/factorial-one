@@ -47,10 +47,10 @@ export const Neutral: Story = {
   },
 }
 
-export const Destructive: Story = {
+export const Critical: Story = {
   args: {
-    variant: "destructive",
-    text: "Destructive",
+    variant: "critical",
+    text: "Critical",
   },
 }
 

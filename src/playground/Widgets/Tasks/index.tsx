@@ -48,19 +48,19 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
         label: overdueLabel,
         count: overdueTasks,
         icon: AlertCircle,
-        color: "text-layout-foreground",
+        color: "text-critical-50",
       },
       {
         label: dueLabel,
         count: dueTasks,
         icon: Circle,
-        color: "text-intermediate",
+        color: "text-f1-foreground-secondary",
       },
       {
         label: noDueLabel,
         count: noDueTasks,
         icon: Circle,
-        color: "text-input-hover",
+        color: "text-f1-foreground-secondary",
       },
     ]
 
@@ -92,7 +92,7 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
                 key={`${task} ${i}`}
                 className="flex flex-row items-center gap-3"
               >
-                <div className="h-5 min-w-5 rounded-md border border-solid border-secondary-intermediate" />
+                <div className="border-f1-border h-5 min-w-5 rounded-md border border-solid" />
                 <p className="truncate font-medium">{task}</p>
               </div>
             ))

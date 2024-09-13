@@ -85,7 +85,7 @@ const ChartContainerComponent = (
         data-chart={chartId}
         ref={ref}
         className={cn(
-          "flex w-full justify-center align-middle text-sm [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-cartesian-grid_line]:stroke-border/50 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-muted [&_.recharts-reference-line-line]:stroke-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+          "flex w-full justify-center text-sm [&_.recharts-cartesian-axis-tick_text]:fill-f1-foreground-secondary [&_.recharts-cartesian-grid_line]:stroke-f1-border [&_.recharts-curve.recharts-tooltip-cursor]:stroke-f1-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-f1-border [&_.recharts-radial-bar-background-sector]:fill-f1-background-secondary [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-f1-background-secondary [&_.recharts-reference-line-line]:stroke-f1-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
           aspect ? variants({ aspect }) : "aspect-auto h-full",
           className
         )}
@@ -218,7 +218,7 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid min-w-[8rem] items-start gap-2 rounded-lg border border-border bg-background px-3 py-2.5 text-sm shadow-xl",
+          "grid min-w-[8rem] items-start gap-2 rounded-lg border border-solid border-f1-border bg-f1-background px-3 py-2.5 text-sm shadow-xl",
           className
         )}
       >
@@ -233,7 +233,7 @@ const ChartTooltipContent = React.forwardRef<
               <div
                 key={item.dataKey}
                 className={cn(
-                  "flex w-full items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-muted-foreground",
+                  "flex w-full items-stretch gap-2 [&>svg]:h-2.5 [&>svg]:w-2.5 [&>svg]:text-f1-foreground",
                   indicator === "dot" && "items-center"
                 )}
               >
@@ -273,12 +273,12 @@ const ChartTooltipContent = React.forwardRef<
                     >
                       <div className="grid gap-2">
                         {nestLabel ? tooltipLabel : null}
-                        <span className="pr-2 text-muted-foreground">
+                        <span className="pr-2 text-f1-foreground">
                           {itemConfig?.label || item.name}
                         </span>
                       </div>
                       {item.value && (
-                        <span className="font-mono font-medium tabular-nums text-foreground">
+                        <span className="font-mono font-medium tabular-nums text-f1-foreground">
                           {item.value.toLocaleString()}
                         </span>
                       )}
@@ -320,7 +320,7 @@ const ChartLegendContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "-ml-2 flex items-center justify-center gap-4",
+          "-ml-2 flex items-center justify-center gap-4 text-f1-foreground-secondary",
           verticalAlign === "top" ? "pb-2" : "pt-2",
           className
         )}
@@ -333,7 +333,7 @@ const ChartLegendContent = React.forwardRef<
             <div
               key={item.value}
               className={cn(
-                "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-muted-foreground"
+                "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-f1-foreground"
               )}
             >
               {itemConfig?.icon && !hideIcon ? (
@@ -346,7 +346,7 @@ const ChartLegendContent = React.forwardRef<
                   }}
                 />
               )}
-              <span className="text-sm tracking-wide text-muted-foreground">
+              <span className="text-sm tracking-wide text-f1-foreground-secondary">
                 {itemConfig?.label}
               </span>
             </div>

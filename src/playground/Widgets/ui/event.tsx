@@ -34,9 +34,9 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
         <div className="flex flex-col">
           <div className="flex flex-row gap-1">
             <p>{title}</p>
-            <p className="text-muted-foreground">{subtitle}</p>
+            <p className="text-f1-foreground-secondary">{subtitle}</p>
           </div>
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-f1-foreground-secondary text-sm">{description}</p>
         </div>
       </div>
     )

@@ -22,24 +22,14 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {},
-}
-
-export const Secondary: Story = {
   args: {
-    variant: "secondary",
+    variant: "default",
   },
 }
 
-export const Positive: Story = {
+export const Critical: Story = {
   args: {
-    variant: "positive",
-  },
-}
-
-export const Destructive: Story = {
-  args: {
-    variant: "destructive",
+    variant: "critical",
   },
 }
 
@@ -58,6 +48,12 @@ export const Ghost: Story = {
 export const Outline: Story = {
   args: {
     variant: "outline",
+  },
+}
+
+export const Promote: Story = {
+  args: {
+    variant: "promote",
   },
 }
 
