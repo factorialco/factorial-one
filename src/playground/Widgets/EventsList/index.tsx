@@ -18,7 +18,7 @@ export const EventsList: React.FC<EventsListProps> = ({
   return (
     <div>
       {title && (
-        <p className="mb-4 font-medium text-muted-foreground">{title}</p>
+        <p className="text-f1-foreground-secondary mb-4 font-medium">{title}</p>
       )}
       <div className="flex flex-col gap-4">
         {events.slice(0, limit).map((item) => (

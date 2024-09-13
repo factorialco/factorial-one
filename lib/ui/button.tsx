@@ -5,37 +5,34 @@ import * as React from "react"
 
 export const variants = [
   "default",
-  "secondary",
   "outline",
-  "destructive",
+  "critical",
   "neutral",
-  "positive",
   "ghost",
+  "promote",
 ] as const
 
 const buttonVariants = cva(
-  "inline-flex h-8 items-center justify-center gap-1 whitespace-nowrap rounded-full border-solid text-base font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "focus-visible:ring-offset focus-visible:ring-ring inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-xl border-none text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default:
-          "border-2 border-primary-intermediate bg-background text-primary-foreground hover:bg-primary",
-        secondary:
-          "border-2 border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
+          "bg-f1-background-accent-bold text-f1-foreground-inverse hover:bg-f1-background-accent-bold-hover",
         outline:
-          "border-2 border-solid border-secondary-intermediate bg-background text-secondary-foreground hover:bg-secondary",
-        destructive:
-          "border-2 border-destructive-intermediate bg-destructive text-destructive-foreground hover:bg-destructive/70",
+          "border border-solid border-f1-border bg-f1-background text-f1-foreground hover:border-f1-border-hover",
         neutral:
-          "border-2 border-warning-intermediate bg-warning text-destructive-foreground hover:bg-warning/70",
-        positive:
-          "border-2 border-positive-intermediate bg-positive text-positive-foreground hover:bg-positive/70",
+          "bg-f1-background-secondary text-f1-foreground hover:bg-f1-background-secondary-hover",
+        critical:
+          "border border-solid border-f1-border bg-f1-background-secondary text-f1-foreground-critical hover:border-none hover:bg-f1-background-critical-bold hover:text-f1-foreground-inverse",
         ghost:
-          "border-none text-intermediate hover:bg-accent hover:text-accent-foreground",
+          "bg-transparent text-f1-foreground hover:bg-f1-background-secondary-hover",
+        promote:
+          "border border-solid border-f1-border-promote bg-f1-background-promote text-f1-foreground hover:bg-f1-background-promote-hover",
       } satisfies Record<(typeof variants)[number], string>,
       round: {
         true: "aspect-square px-0",
-        false: "px-3",
+        false: "px-4",
       },
     },
     defaultVariants: {

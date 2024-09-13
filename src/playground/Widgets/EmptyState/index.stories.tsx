@@ -11,7 +11,7 @@ const meta: Meta = {
     title: "Performance",
     content: "See how Hugo's performance evolved over time",
     buttons: [
-      { label: "Try it for free", variant: "neutral" },
+      { label: "Try it for free", variant: "promote" },
       { label: "Book a demo", variant: "outline" },
     ],
     variant: "performance",

@@ -16,7 +16,7 @@ export const Details = forwardRef<HTMLDivElement, DetailsType>(
     return (
       <div ref={ref} className="flex flex-col gap-4">
         {!!title && (
-          <p className="mb-1 text-sm font-medium text-foreground">{title}</p>
+          <p className="text-f1-foreground mb-1 text-sm font-medium">{title}</p>
         )}
         {details.map((item, index) => (
           <DetailsItem

@@ -13,7 +13,7 @@ const meta = {
     layout: "centered",
   },
   args: {
-    className: "text-primary-foreground",
+    className: "text-f1-foreground",
   },
   tags: ["autodocs"],
 } satisfies Meta<ComponentProps<typeof AnimatedSvg>>

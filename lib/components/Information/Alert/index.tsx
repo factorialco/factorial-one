@@ -14,17 +14,14 @@ import {
 type Variants = "destructive" | "positive" | "warning" | "info"
 
 const alertVariants = cva(
-  "relative w-full rounded-2xl bg-secondary p-6 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg]:text-foreground [&>svg~*]:pl-8",
+  "relative w-full rounded-2xl bg-f1-background-secondary p-6 text-f1-foreground [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg]:text-f1-foreground [&>svg~*]:pl-8",
   {
     variants: {
       variant: {
-        destructive:
-          "bg-destructive text-destructive-foreground dark:border-destructive-intermediate [&>svg]:text-destructive-intermediate",
-        positive:
-          "bg-positive text-positive-foreground dark:border-positive-intermediate [&>svg]:text-positive-intermediate",
-        warning:
-          "bg-warning text-warning-foreground dark:border-warning-intermediate [&>svg]:text-warning-intermediate",
-        info: "bg-info text-info-foreground dark:border-info-intermediate [&>svg]:text-info-intermediate",
+        destructive: "bg-f1-background-critical [&>svg]:text-f1-icon-critical",
+        positive: "bg-f1-background-positive [&>svg]:text-f1-icon-positive",
+        warning: "bg-f1-background-warning [&>svg]:text-f1-icon-warning",
+        info: "bg-f1-background-info [&>svg]:text-f1-icon-info",
       } satisfies Record<Variants, string>,
     },
     defaultVariants: {

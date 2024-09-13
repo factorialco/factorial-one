@@ -35,7 +35,7 @@ export const Example: Story = {
               hideLabel
               label="Options"
               icon={Ellipsis}
-              variant="secondary"
+              variant="outline"
             />
           </Split>
         </Split>

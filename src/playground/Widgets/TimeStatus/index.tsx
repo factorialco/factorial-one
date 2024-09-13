@@ -11,7 +11,7 @@ export const TimeStatus = forwardRef<HTMLDivElement, TimeStatusProps>(
   ({ time, status, statusText }, ref) => {
     const variant = {
       in: "positive",
-      out: "destructive",
+      out: "critical",
       break: "neutral",
     } as const
 
