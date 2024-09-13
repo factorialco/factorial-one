@@ -44,6 +44,17 @@ const Container = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
 >(({ header, alert, children, action, summaries }, ref) => {
+  const isRealNode = (node: React.ReactNode): boolean => {
+    return (
+      !!node &&
+      !(
+        React.isValidElement(node) &&
+        node.type === React.Fragment &&
+        React.Children.count(node.props.children) === 0
+      )
+    )
+  }
+
   return (
     <Card ref={ref}>
       {header && (
@@ -108,12 +119,16 @@ const Container = forwardRef<
             ))}
           </div>
         )}
-        {React.Children.toArray(children).map((child, index, array) => (
-          <>
-            {child}
-            {index < array.length - 1 && <Separator />}
-          </>
-        ))}
+        {React.Children.toArray(children)
+          .filter(isRealNode)
+          .map((child, index) => {
+            return (
+              <>
+                {index > 0 && <Separator />}
+                {child}
+              </>
+            )
+          })}
       </CardContent>
       {(action || alert) && (
         <CardFooter>
