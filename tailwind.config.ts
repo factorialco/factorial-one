@@ -25,9 +25,6 @@ export default {
         "2xl": "1400px",
       },
     },
-    fontFamily: {
-      sans: ["Inter", "sans-serif"],
-    },
     colors: {
       white: "0 0% 100%",
       current: "currentColor",
@@ -81,6 +78,14 @@ export default {
         60: "38 79% 45%",
         70: "38 80% 36%",
       },
+    },
+    fontFamily: {
+      sans: ["Inter", "sans-serif"],
+    },
+    fontWeight: {
+      normal: "400",
+      medium: "500",
+      semibold: "600",
     },
     fontSize: {
       sm: [
