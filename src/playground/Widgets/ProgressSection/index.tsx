@@ -25,8 +25,8 @@ export function ProgressSection({
 }: ProgressSectionProps) {
   const isOverMax = value > max
   const remainingColor = isOverMax
-    ? "hsl(var(--f1-foreground))"
-    : "hsl(var(--f1-border))"
+    ? "hsl(var(--critical-50))"
+    : "hsl(var(--neutral-20))"
   const secondaryValue = isOverMax ? value - max : Math.max(0, max - value)
 
   const data = [
