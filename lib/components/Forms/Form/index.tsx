@@ -19,7 +19,7 @@ export function Form<
     <FormProvider {...form}>
       <form onSubmit={onSubmit} className={"flex flex-col gap-4"}>
         {rootError && (
-          <p className="text-sm font-medium text-critical-70">
+          <p className="text-f1-foreground-critical text-sm font-medium">
             {rootError.message}
           </p>
         )}
