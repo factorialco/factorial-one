@@ -1,5 +1,6 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Badge } from "@/components/Information/Badge"
+import { EyeInvisible, EyeVisible } from "@/icons"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import {
@@ -23,6 +24,9 @@ export interface WidgetContainerProps {
     title?: string
     subtitle?: string
     comment?: string
+    hasBlur?: boolean
+    isBlur?: boolean
+    toggleBlur?: () => void
     info?: string
     link?: { title: string; url: string }
   }
@@ -39,67 +43,87 @@ export interface WidgetContainerProps {
 const Container = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
->(({ header, alert, children, action, summaries }, ref) => (
-  <Card ref={ref}>
-    {header && (
-      <CardHeader>
-        <div className="flex flex-1 flex-col truncate">
-          <div className="flex flex-row justify-between">
-            <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
-              {header.title && <CardTitle>{header.title}</CardTitle>}
-              {header.subtitle && (
-                <CardSubtitle>{header.subtitle}</CardSubtitle>
+>(({ header, alert, children, action, summaries }, ref) => {
+  return (
+    <Card ref={ref}>
+      {header && (
+        <CardHeader>
+          <div className="flex flex-1 flex-col truncate">
+            <div className="flex flex-row justify-between">
+              <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
+                {header.title && <CardTitle>{header.title}</CardTitle>}
+                {header.subtitle && (
+                  <CardSubtitle>{header.subtitle}</CardSubtitle>
+                )}
+                {header.info && <CardInfo content={header.info} />}
+              </div>
+              {header.link && (
+                <CardLink href={header.link.url} title={header.link.title} />
               )}
-              {header.info && <CardInfo content={header.info} />}
             </div>
-            {header.link && (
-              <CardLink href={header.link.url} title={header.link.title} />
+            {header.comment && (
+              <div className="mt-2 flex flex-row items-center gap-3">
+                <CardComment className={cn(!!header.isBlur && "blur-md")}>
+                  {header.comment}
+                </CardComment>
+                {!!header.hasBlur && (
+                  <span>
+                    <Button
+                      icon={header.isBlur ? EyeInvisible : EyeVisible}
+                      hideLabel
+                      label="hide/show"
+                      variant="outline"
+                      round
+                      onClick={header.toggleBlur}
+                    />
+                  </span>
+                )}
+              </div>
             )}
           </div>
-          {header.comment && <CardComment>{header.comment}</CardComment>}
-        </div>
-      </CardHeader>
-    )}
-    <CardContent className="flex flex-col gap-1">
-      {summaries && (
-        <div className="-mt-2 flex flex-row">
-          {summaries.map((summary, index) => (
-            <div key={index} className="grow">
-              <div className="text-f1-foreground-neutral-secondary mb-0.5 text-sm">
-                {summary.label}
-              </div>
-              <div className="flex flex-row items-end gap-0.5 text-xl font-semibold">
-                {!!summary.prefixUnit && (
-                  <div className="text-lg font-medium">
-                    {summary.prefixUnit}
-                  </div>
-                )}
-                {summary.value}
-                {!!summary.postfixUnit && (
-                  <div className="text-lg font-medium">
-                    {summary.postfixUnit}
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+        </CardHeader>
       )}
-      {React.Children.toArray(children).map((child, index, array) => (
-        <>
-          {child}
-          {index < array.length - 1 && <Separator />}
-        </>
-      ))}
-    </CardContent>
-    {(action || alert) && (
-      <CardFooter>
-        {alert && <Badge text={alert} variant="critical" hasDot />}
-        {action && <Button variant="outline" {...action} />}
-      </CardFooter>
-    )}
-  </Card>
-))
+      <CardContent className="flex flex-col gap-1">
+        {summaries && (
+          <div className="-mt-2 flex flex-row">
+            {summaries.map((summary, index) => (
+              <div key={index} className="grow">
+                <div className="text-f1-foreground-neutral-secondary mb-0.5 text-sm">
+                  {summary.label}
+                </div>
+                <div className="flex flex-row items-end gap-0.5 text-xl font-semibold">
+                  {!!summary.prefixUnit && (
+                    <div className="text-lg font-medium">
+                      {summary.prefixUnit}
+                    </div>
+                  )}
+                  {summary.value}
+                  {!!summary.postfixUnit && (
+                    <div className="text-lg font-medium">
+                      {summary.postfixUnit}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        {React.Children.toArray(children).map((child, index, array) => (
+          <>
+            {child}
+            {index < array.length - 1 && <Separator />}
+          </>
+        ))}
+      </CardContent>
+      {(action || alert) && (
+        <CardFooter>
+          {alert && <Badge text={alert} variant="critical" hasDot />}
+          {action && <Button variant="outline" {...action} />}
+        </CardFooter>
+      )}
+    </Card>
+  )
+})
 
 const skeletonVariants = cva("", {
   variants: {
