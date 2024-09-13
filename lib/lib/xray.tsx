@@ -69,7 +69,7 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
             gap="2"
             className="fixed right-2 top-2 z-50 rounded-sm border-solid border-f1-border bg-white p-4 opacity-80 shadow-md"
           >
-            <div className="text-md z-50 font-bold">XRay</div>
+            <div className="text-md font-bold z-50">XRay</div>
             <Stack gap="2">
               {componentTypes.map((type) => (
                 <label className="block">
