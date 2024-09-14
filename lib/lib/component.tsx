@@ -1,4 +1,4 @@
-import { forwardRef } from "react"
+import { forwardRef, PropsWithoutRef } from "react"
 import { useComponentXRay } from "./xray"
 
 export const componentTypes = ["layout", "info", "action", "form"] as const
@@ -17,11 +17,13 @@ export const Component = <
   meta: ComponentMetadata,
   Component: React.FC<P>
 ) => {
-  const Forwarded = forwardRef<R, P>((props: P, forwardedRef) => {
-    const { ref } = useComponentXRay(meta, forwardedRef)
+  const Forwarded = forwardRef<R, P>(
+    (props: PropsWithoutRef<P>, forwardedRef) => {
+      const { ref } = useComponentXRay(meta, forwardedRef)
 
-    return <Component ref={ref} {...props} />
-  })
+      return <Component ref={ref} {...(props as P)} />
+    }
+  )
   Forwarded.displayName = `${meta.name}`
   return Forwarded
 }
