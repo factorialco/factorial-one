@@ -1,0 +1,194 @@
+import { Meta, Unstyled } from "@storybook/blocks"
+import { useState } from "react"
+import { Button } from "@/components/Actions/Button"
+import { cn } from "@/lib/utils"
+
+<Meta title="essentials/Colors" />
+
+# Colors
+
+Factorial One uses color tokens to define colors.
+
+export function ColorToken({ name, description }) {
+  const [copied, setCopied] = useState(false)
+
+const copyToClipboard = () => { navigator.clipboard.writeText(name);
+setCopied(true); setTimeout(() => setCopied(false), 1000); };
+
+return (
+
+<div className="bg-f1-background-secondary border-f1-border flex max-w-[600px] flex-row items-center space-x-3 rounded-lg border border-solid px-2 py-1.5">
+  <div className={cn("h-8 w-12 rounded-lg", `bg-${name}`)} />
+  <div className="flex flex-1 flex-col space-y-0">
+    <span className="font-mono text-f1-foreground flex-grow font-semibold">
+      {name}
+    </span>
+    <p className="text-f1-foreground-secondary text-sm">{description}</p>
+  </div>
+  <Button
+    onClick={copyToClipboard}
+    variant="outline"
+    label={copied ? "Copied" : "Copy"}
+  />
+</div>
+) }
+
+## Color Tokens
+
+Here are the main color tokens used in Factorial One:
+
+### Foreground
+
+Use these tokens for texts.
+
+<Unstyled>
+  <div className="space-y-2">
+    <ColorToken
+      name="f1-foreground"
+      description="Primary text color for content"
+    />
+    <ColorToken
+      name="f1-foreground-secondary"
+      description="Secondary text color for content"
+    />
+    <ColorToken
+      name="f1-foreground-inverse"
+      description="Inverted text color in dark backgrounds"
+    />
+    <ColorToken
+      name="f1-foreground-disabled"
+      description="Indicates inactivity or disabled state"
+    />
+    <ColorToken
+      name="f1-foreground-accent"
+      description="Draws attention with a prominent color"
+    />
+    <ColorToken
+      name="f1-foreground-critical"
+      description="Indicates errors, warnings, or critical information"
+    />
+    <ColorToken
+      name="f1-foreground-info"
+      description="Provides contextual information"
+    />
+    <ColorToken
+      name="f1-foreground-warning"
+      description="Alerts users to potential issues"
+    />
+    <ColorToken
+      name="f1-foreground-positive"
+      description="Indicates success, confirmation, or positive outcomes"
+    />
+  </div>
+</Unstyled>
+
+### Background
+
+Use these tokens for backgrounds.
+
+<Unstyled>
+  <div className="space-y-2">
+    <ColorToken
+      name="f1-background"
+      description="Primary background color for content"
+    />
+    <ColorToken
+      name="f1-background-secondary"
+      description="Secondary background color for content"
+    />
+    <ColorToken
+      name="f1-background-secondary-hover"
+      description="Hover state for secondary background color"
+    />
+    <ColorToken
+      name="f1-background-bold"
+      description="Bold background color for emphasis"
+    />
+    <ColorToken
+      name="f1-background-accent"
+      description="Accent background color for highlights"
+    />
+    <ColorToken
+      name="f1-background-critical"
+      description="Critical background color for errors"
+    />
+    <ColorToken
+      name="f1-background-info"
+      description="Info background color for notifications"
+    />
+    <ColorToken
+      name="f1-background-warning"
+      description="Warning background color for alerts"
+    />
+    <ColorToken
+      name="f1-background-positive"
+      description="Positive background color for success"
+    />
+    <ColorToken
+      name="f1-background-promote"
+      description="Promotional background color for highlights"
+    />
+  </div>
+</Unstyled>
+
+### Border
+
+Use these tokens for borders.
+
+<Unstyled>
+  <div className="space-y-2">
+    <ColorToken
+      name="f1-border"
+      description="Primary border color for content separation"
+    />
+    <ColorToken
+      name="f1-border-hover"
+      description="Hover state for primary border color"
+    />
+    <ColorToken
+      name="f1-border-promote"
+      description="Promotional border color for highlights"
+    />
+  </div>
+</Unstyled>
+
+### Icon
+
+Use these tokens for icons.
+
+<Unstyled>
+  <div className="space-y-2">
+    <ColorToken
+      name="f1-icon"
+      description="Default icon color for general use"
+    />
+    <ColorToken
+      name="f1-icon-secondary"
+      description="Secondary icon color for less prominent icons"
+    />
+    <ColorToken
+      name="f1-icon-inverse"
+      description="Inverse icon color for contrast"
+    />
+    <ColorToken
+      name="f1-icon-bold"
+      description="Bold icon color for emphasis"
+    />
+    <ColorToken
+      name="f1-icon-critical"
+      description="Critical icon color for errors"
+    />
+    <ColorToken
+      name="f1-icon-info"
+      description="Info icon color for notifications"
+    />
+    <ColorToken
+      name="f1-icon-warning"
+      description="Warning icon color for alerts"
+    />
+    <ColorToken
+      name="f1-icon-positive"
+      description="Positive icon color for success"
+    />
+  </div>
+</Unstyled>
