@@ -17,7 +17,7 @@ export const TimeStatus = forwardRef<HTMLDivElement, TimeStatusProps>(
 
     return (
       <div ref={ref} className="flex flex-row items-center gap-3">
-        <p className="text-4xl font-medium">{time}</p>
+        <p className="text-2xl font-medium">{time}</p>
         <span>
           <Badge text={statusText} hasDot={true} variant={variant[status]} />
         </span>
