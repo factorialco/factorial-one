@@ -1,3 +1,4 @@
+export * from "./CategoryBarSection"
 export * from "./Charts/exports"
 export * from "./Dashboard"
 export * from "./IndicatorsList"
