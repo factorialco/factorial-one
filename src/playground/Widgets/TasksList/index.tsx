@@ -10,12 +10,12 @@ type TaskItemProps = {
 
 function TaskItem({ title, status }: TaskItemProps) {
   return (
-    <div className="flex flex-row items-center gap-2">
+    <div className="flex flex-row items-start gap-2">
       {(status === "due" || status === "no-due") && (
         <Circle width={24} opacity={status === "no-due" ? 0.4 : 1} />
       )}
       {status === "in-progress" && <InProgressTask />}
-      <p className="flex-1 truncate font-medium">{title}</p>
+      <p className="mt-[2px] line-clamp-2 flex-1 font-medium">{title}</p>
     </div>
   )
 }
