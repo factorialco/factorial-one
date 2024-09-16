@@ -4,10 +4,12 @@ import { Circle } from "@/icons"
 import AlertCircle from "@/icons/AlertCircle"
 import { Indicator } from "@/ui/indicator"
 import { forwardRef } from "react"
+import { TasksList } from "../TasksList"
 
 export interface TasksInsightData {
   title: string
-  tasks: string[]
+  inProgressTasks: string[]
+  pendingTasks: string[]
   overdueLabel: string
   overdueTasks: number
   dueLabel: string
@@ -16,7 +18,6 @@ export interface TasksInsightData {
   noDueTasks: number
   linkUrl: string
   linkTitle: string
-  emptyStateText: string
   handleNavigate: () => void
   buttonLabel?: string
 }
@@ -29,7 +30,8 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
   ({ data }, ref) => {
     const {
       title = "Tasks",
-      tasks,
+      inProgressTasks,
+      pendingTasks,
       overdueTasks,
       dueTasks,
       noDueTasks,
@@ -39,7 +41,6 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
       overdueLabel,
       dueLabel,
       noDueLabel,
-      emptyStateText,
       handleNavigate,
     } = data
 
@@ -83,21 +84,12 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
             />
           ))}
         </div>
-        <div className="flex flex-col gap-3">
-          {!tasks?.length ? (
-            <p>{emptyStateText}</p>
-          ) : (
-            tasks.slice(0, 5).map((task, i) => (
-              <div
-                key={`${task} ${i}`}
-                className="flex flex-row items-center gap-3"
-              >
-                <div className="border-f1-border h-5 min-w-5 rounded-md border border-solid" />
-                <p className="truncate font-medium">{task}</p>
-              </div>
-            ))
-          )}
-        </div>
+        {(inProgressTasks.length || pendingTasks.length) && (
+          <TasksList
+            inProgressTasks={inProgressTasks}
+            pendingTasks={pendingTasks}
+          />
+        )}
         {buttonLabel && (
           <span className="mt-4 max-w-20">
             <Button
