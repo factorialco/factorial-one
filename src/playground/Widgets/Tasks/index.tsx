@@ -9,13 +9,14 @@ import { TasksList } from "../TasksList"
 export interface TasksInsightData {
   title: string
   inProgressTasks: string[]
-  pendingTasks: string[]
+  dueTasks: string[]
+  noDueTasks: string[]
   overdueLabel: string
-  overdueTasks: number
+  overdueTasksCount: number
   dueLabel: string
-  dueTasks: number
+  dueTasksCount: number
   noDueLabel: string
-  noDueTasks: number
+  noDueTasksCount: number
   linkUrl: string
   linkTitle: string
   handleNavigate: () => void
@@ -31,8 +32,9 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
     const {
       title = "Tasks",
       inProgressTasks,
-      pendingTasks,
-      overdueTasks,
+      dueTasksCount,
+      noDueTasksCount,
+      overdueTasksCount,
       dueTasks,
       noDueTasks,
       linkUrl,
@@ -47,19 +49,19 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
     const taskCategories = [
       {
         label: overdueLabel,
-        count: overdueTasks,
+        count: overdueTasksCount,
         icon: AlertCircle,
         color: "text-critical-50",
       },
       {
         label: dueLabel,
-        count: dueTasks,
+        count: dueTasksCount,
         icon: Circle,
         color: "text-f1-foreground-secondary",
       },
       {
         label: noDueLabel,
-        count: noDueTasks,
+        count: noDueTasksCount,
         icon: Circle,
         color: "text-f1-foreground-secondary",
       },
@@ -84,10 +86,11 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
             />
           ))}
         </div>
-        {(inProgressTasks.length || pendingTasks.length) && (
+        {(inProgressTasks.length || dueTasks.length || noDueTasks.length) && (
           <TasksList
             inProgressTasks={inProgressTasks}
-            pendingTasks={pendingTasks}
+            noDueTasks={noDueTasks}
+            dueTasks={dueTasks}
           />
         )}
         {buttonLabel && (

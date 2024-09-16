@@ -22,7 +22,8 @@ type Story = StoryObj<typeof TasksList>
 export const Default: Story = {
   args: {
     inProgressTasks: ["Migrate to new CRM"],
-    pendingTasks: [
+    dueTasks: [],
+    noDueTasks: [
       "Connect to Slack",
       "Write changelog",
       "Product review",

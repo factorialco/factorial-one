@@ -1,7 +1,7 @@
 import { Circle, InProgressTask } from "@/icons"
 import { useMemo } from "react"
 
-type TaskStatus = "in-progress" | "pending"
+type TaskStatus = "in-progress" | "due" | "no-due"
 
 type TaskItemProps = {
   title: string
@@ -11,7 +11,9 @@ type TaskItemProps = {
 function TaskItem({ title, status }: TaskItemProps) {
   return (
     <div className="flex flex-row items-center gap-2">
-      {status === "pending" && <Circle width={24} opacity={0.4} />}
+      {(status === "due" || status === "no-due") && (
+        <Circle width={24} opacity={status === "no-due" ? 0.4 : 1} />
+      )}
       {status === "in-progress" && <InProgressTask />}
       <p className="truncate font-medium">{title}</p>
     </div>
@@ -20,37 +22,42 @@ function TaskItem({ title, status }: TaskItemProps) {
 
 interface Props {
   inProgressTasks: string[]
-  pendingTasks: string[]
+  noDueTasks: string[]
+  dueTasks: string[]
+  maxTasksToShow?: number
 }
 
-const MAX_TASKS_TO_SHOW = 5
-
-export function TasksList({ inProgressTasks, pendingTasks }: Props) {
-  const totalTasks = inProgressTasks.length + pendingTasks.length
-
-  const maxPendingTasks = Math.max(0, 5 - inProgressTasks.length)
-
+export function TasksList({
+  inProgressTasks,
+  dueTasks,
+  noDueTasks,
+  maxTasksToShow = 5,
+}: Props) {
   const tasksToRender = useMemo(
     () => [
-      ...inProgressTasks.slice(0, MAX_TASKS_TO_SHOW).map((t) => ({
+      ...inProgressTasks.map((t) => ({
         title: t,
         status: "in-progress" as TaskStatus,
       })),
-      ...pendingTasks.slice(0, maxPendingTasks).map((t) => ({
+      ...dueTasks.map((t) => ({
         title: t,
-        status: "pending" as TaskStatus,
+        status: "due" as TaskStatus,
+      })),
+      ...noDueTasks.map((t) => ({
+        title: t,
+        status: "no-due" as TaskStatus,
       })),
     ],
-    [inProgressTasks, pendingTasks, maxPendingTasks]
+    [inProgressTasks, dueTasks, noDueTasks]
   )
 
-  if (!totalTasks) {
+  if (!tasksToRender.length) {
     return null
   }
 
   return (
     <div className="flex flex-col gap-3">
-      {tasksToRender.map((task, i) => (
+      {tasksToRender.slice(0, maxTasksToShow).map((task, i) => (
         <TaskItem
           key={`${task} ${i}`}
           title={task.title}
