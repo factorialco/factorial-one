@@ -15,7 +15,7 @@ function TaskItem({ title, status }: TaskItemProps) {
         <Circle width={24} opacity={status === "no-due" ? 0.4 : 1} />
       )}
       {status === "in-progress" && <InProgressTask />}
-      <p className="truncate font-medium">{title}</p>
+      <p className="flex-1 truncate font-medium">{title}</p>
     </div>
   )
 }

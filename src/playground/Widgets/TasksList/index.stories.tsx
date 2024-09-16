@@ -31,3 +31,16 @@ export const Default: Story = {
     ],
   },
 }
+
+export const WithLongTaskTitles: Story = {
+  args: {
+    inProgressTasks: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut sem accumsan ipsum malesuada maximus id vitae libero. Maecenas iaculis felis id massa elementum tristique.",
+    ],
+    dueTasks: [],
+    noDueTasks: [
+      "Nam et dapibus lorem. Sed tristique, metus iaculis viverra accumsan, urna purus auctor purus, quis tempor risus augue nec dui.",
+      "Quisque tellus orci, tincidunt auctor imperdiet ac, molestie non nisl. Aliquam scelerisque lacus turpis, et tempor erat volutpat et.",
+    ],
+  },
+}
