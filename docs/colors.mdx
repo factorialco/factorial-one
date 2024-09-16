@@ -1,41 +1,34 @@
 import { Meta, Unstyled } from "@storybook/blocks"
-import { useState } from "react"
-import { Button } from "@/components/Actions/Button"
-import { cn } from "@/lib/utils"
+import { ColorToken } from "./components/ColorToken"
 
 <Meta title="essentials/Colors" />
 
 # Colors
 
-Factorial One uses color tokens to define colors.
+Factorial One exposes two sets of color tokens: semantic tokens and bare colors.
 
-export function ColorToken({ name, description }) {
-  const [copied, setCopied] = useState(false)
+Bare colors are named color values — for example, `neutral-50` or `warning-70`.
+They are available as CSS variables (e.g. `--neutral-50`). Avoid using bare colors directly. It is an escape hatch in cases where semantic tokens do not fit.
 
-const copyToClipboard = () => { navigator.clipboard.writeText(name);
-setCopied(true); setTimeout(() => setCopied(false), 1000); };
+## Semantic Tokens
 
-return (
+**Semantic tokens are the preferred way of setting colors.** Semantic tokens are
+meaningful names used to describe the purpose or intent of a color, rather than
+specifying a direct value. Instead of defining tokens based on their appearance
+(e.g., blue, green, red), semantic tokens define elements based on their
+function or intent in the UI. For example,
+`text-f1-foreground`,`bg-f1-background-warning`, etc.
 
-<div className="bg-f1-background-secondary border-f1-border flex max-w-[600px] flex-row items-center space-x-3 rounded-lg border border-solid px-2 py-1.5">
-  <div className={cn("h-8 w-12 rounded-lg", `bg-${name}`)} />
-  <div className="flex flex-1 flex-col space-y-0">
-    <span className="font-mono text-f1-foreground flex-grow font-semibold">
-      {name}
-    </span>
-    <p className="text-f1-foreground-secondary text-sm">{description}</p>
-  </div>
-  <Button
-    onClick={copyToClipboard}
-    variant="outline"
-    label={copied ? "Copied" : "Copy"}
-  />
-</div>
-) }
+Factorial one uses TailwindCSS to apply semantic tokens. That means you need to
+assign a CSS class to the component to apply a token. The classes are generated
+automatically and follow the pattern _[property to set]-f1-[token name]_:
 
-## Color Tokens
+- `bg-f1-background-primary` sets `background-color` CSS property to the
+  semantic token `background-primary`.
+- `text-f1-foreground-success` sets `color` CSS property to the
+  `foreground-success` semantic token.
 
-Here are the main color tokens used in Factorial One:
+The full list of tokens:
 
 ### Foreground
 
@@ -157,7 +150,7 @@ Use these tokens for borders.
 Use these tokens for icons.
 
 <Unstyled>
-  <div className="space-y-2">
+  <div className="space-y-2 mb-12">
     <ColorToken
       name="f1-icon"
       description="Default icon color for general use"
@@ -192,3 +185,12 @@ Use these tokens for icons.
     />
   </div>
 </Unstyled>
+
+## Tokens naming convention
+
+Token names are generated using the naming convention:
+
+<img
+  src="/public/semantic-tokens-naming.avif"
+  alt="semantic token naming convention"
+/>
