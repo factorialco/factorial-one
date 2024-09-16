@@ -1,6 +1,5 @@
 export * from "./EmptyState"
 export * from "./EventsList"
-export * from "./IconText"
 export * from "./Performance"
 export * from "./ProgressSection"
 export * from "./Tasks"

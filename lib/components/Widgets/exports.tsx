@@ -1,5 +1,6 @@
 export * from "./Charts/exports"
 export * from "./Dashboard"
 export * from "./IndicatorsList"
+export * from "./Info"
 export * from "./WidgetContainer"
 export * from "./WidgetStrip"
