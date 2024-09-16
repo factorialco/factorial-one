@@ -2,6 +2,8 @@
 import React from "react"
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
+import { action } from "@storybook/addon-actions"
+import { useDarkMode } from "storybook-dark-mode"
 
 import "../styles.css"
 
@@ -9,8 +11,6 @@ import { ThemeProvider } from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
 import lightTheme, { darkTheme } from "./FactorialOne"
 import { DocsContainer } from "./DocsContainer"
-import { useDarkMode } from "storybook-dark-mode"
-import { action } from "@storybook/addon-actions"
 
 export const withTheme = () => {
   return (Story) => {
@@ -86,14 +86,23 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-
+    options: {
+      storySort: {
+        order: [
+          "Foundations",
+          ["Typography", "Spacing"],
+          "Components",
+          "Playground",
+          "Experiments",
+        ],
+      },
+    },
     darkMode: {
       dark: darkTheme,
       light: lightTheme,
       stylePreview: true,
     },
   },
-
   tags: ["autodocs"],
 }
 
