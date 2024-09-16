@@ -51,6 +51,6 @@ export const WithComment: Story = {
     showMax: true,
     legend: false,
     unit: "h",
-    bottomComment: "This is a comment",
+    note: "This is a comment",
   },
 }

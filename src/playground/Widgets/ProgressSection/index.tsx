@@ -11,7 +11,7 @@ interface ProgressSectionProps extends Omit<CategoryBarProps, "data"> {
   unit?: string
   primaryLabel?: string
   secondaryLabel?: string
-  bottomComment?: string
+  note?: string
 }
 
 export function ProgressSection({
@@ -22,7 +22,7 @@ export function ProgressSection({
   unit = "h",
   primaryLabel = "Primary",
   secondaryLabel = "Secondary",
-  bottomComment,
+  note,
   ...categoryBarProps
 }: ProgressSectionProps) {
   const isOverMax = value > max
@@ -39,11 +39,11 @@ export function ProgressSection({
   return (
     <div className="space-y-2">
       <div className="space-y-0.5">
-        <span className="text-f1-foreground-secondary text-base leading-none">
+        <span className="text-base leading-none text-f1-foreground-secondary">
           {label}
         </span>
         <div className="flex items-baseline gap-2">
-          <span className="text-f1-foreground text-xl font-bold">
+          <span className="font-bold text-xl text-f1-foreground">
             {value}
             {unit}
             {showMax && ` / ${max}${unit}`}
@@ -51,7 +51,7 @@ export function ProgressSection({
         </div>
       </div>
       <CategoryBar data={data} {...categoryBarProps} />
-      <p className="text-grey-50">{bottomComment}</p>
+      <p className="text-f1-foreground-secondary">{note}</p>
     </div>
   )
 }
