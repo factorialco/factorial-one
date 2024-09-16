@@ -139,7 +139,10 @@ export default {
           foreground: {
             DEFAULT: "hsl(var(--neutral-100))",
             secondary: "hsl(var(--neutral-50))",
-            inverse: "hsl(var(--neutral-0))",
+            inverse: {
+              DEFAULT: "hsl(var(--neutral-0))",
+              secondary: "hsl(var(--neutral-0) / 0.8)",
+            },
             disabled: "hsl(var(--neutral-30))",
             accent: {
               DEFAULT: "hsl(var(--accent-70))",
@@ -203,10 +206,14 @@ export default {
           icon: {
             DEFAULT: "hsl(var(--neutral-50))",
             secondary: "hsl(var(--neutral-40))",
-            inverse: "hsl(var(--neutral-0))",
+            inverse: {
+              DEFAULT: "hsl(var(--neutral-0))",
+              secondary: "hsl(var(--neutral-0) / 0.8)",
+            },
             bold: "hsl(var(--neutral-100))",
             critical: {
               DEFAULT: "hsl(var(--critical-50))",
+              bold: "hsl(var(--critical-70))",
             },
             info: {
               DEFAULT: "hsl(var(--info-50))",
