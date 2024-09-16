@@ -118,7 +118,7 @@
     "vite": "^5.4.3",
     "vite-plugin-dts": "^4.2.1",
     "vite-plugin-lib-inject-css": "^2.1.1",
-    "vitest": "^2.0.5"
+    "vitest": "^2.1.1"
   },
   "dependencies": {
     "@radix-ui/react-progress": "^1.1.0",
