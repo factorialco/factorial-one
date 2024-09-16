@@ -1,11 +1,13 @@
 export * from "@/ui/input"
 import { Input as ShadcnInput } from "@/ui/input"
-import { ComponentProps } from "react"
+import { ComponentProps, HTMLInputTypeAttribute } from "react"
 
-type InputProps = Pick<
+export type InputProps = Pick<
   ComponentProps<typeof ShadcnInput>,
-  "ref" | "type" | "disabled" | "size" | "onChange" | "value" | "placeholder"
->
+  "ref" | "disabled" | "size" | "onChange" | "value" | "placeholder"
+> & {
+  type?: Exclude<HTMLInputTypeAttribute, "number">
+}
 
 const Input: React.FC<InputProps> = ShadcnInput
 
