@@ -1,6 +1,6 @@
 import { WidgetContainer } from "@/components/Widgets/WidgetContainer"
 import type { Meta, StoryObj } from "@storybook/react"
-import { ProgressSection } from "../ProgressSection"
+import { CategoryBarSection } from "../CategoryBarSection"
 
 const meta = {
   title: "Insights/Examples/Timesheet",
@@ -34,25 +34,37 @@ export const Timesheet: Story = {
           },
         }}
       >
-        <ProgressSection
+        <CategoryBarSection
           label="Worked / Planned hours"
-          value={75}
-          max={100}
-          showMax={true}
-          unit="h"
-          primaryLabel="Worked"
-          secondaryLabel="Remaining"
-          legend={false}
+          title="75h / 100h"
+          data={[
+            {
+              name: "Worked",
+              value: 75,
+            },
+            {
+              name: "Remaining",
+              value: 25,
+              color: "#25253D1A",
+            },
+          ]}
+          legend
         />
-        <ProgressSection
+        <CategoryBarSection
           label="Balance"
-          value={9}
-          max={50}
-          showMax={true}
-          unit="h"
-          primaryLabel="Worked"
-          secondaryLabel="Remaining"
-          legend={false}
+          title="9h / 50h"
+          data={[
+            {
+              name: "Worked",
+              value: 9,
+            },
+            {
+              name: "Remaining",
+              value: 41,
+              color: "#25253D1A",
+            },
+          ]}
+          legend
         />
       </WidgetContainer>
     </>
@@ -73,25 +85,38 @@ export const TimesheetOvertime: Story = {
           },
         }}
       >
-        <ProgressSection
+        <CategoryBarSection
           label="Worked / Planned hours"
-          value={121}
-          max={100}
-          showMax={true}
-          unit="h"
-          primaryLabel="Regular"
-          secondaryLabel="Overtime"
-          legend={true}
+          title="121h / 100h"
+          data={[
+            {
+              name: "Regular",
+              value: 100,
+            },
+            {
+              name: "Overtime",
+              value: 21,
+              color: "#FF9153",
+            },
+          ]}
+          legend
         />
-        <ProgressSection
+        <CategoryBarSection
           label="Balance"
-          value={9}
-          max={50}
-          showMax={true}
-          unit="h"
-          primaryLabel="Worked"
-          secondaryLabel="Remaining"
-          legend={false}
+          title="+9h"
+          helpText="of 50h max"
+          data={[
+            {
+              name: "Regular",
+              value: 9,
+              color: "#FF9153",
+            },
+            {
+              name: "Overtime",
+              value: 41,
+              color: "#FF915333",
+            },
+          ]}
         />
       </WidgetContainer>
     </>
