@@ -67,7 +67,7 @@ const _BarChart = <K extends ChartConfig>(
                 : undefined
             }
             fill={dataConfig[key].color || autoColor(index)}
-            radius={[4, 4, 0, 0]}
+            radius={type === "stacked-by-sign" ? [4, 4, 0, 0] : 4}
             maxBarSize={32}
           >
             {label && (
