@@ -174,11 +174,6 @@ const ChartTooltipContent = React.forwardRef<
   ) => {
     const { config } = useChart()
 
-    console.log("config", config)
-    console.log("nameKey", nameKey)
-    console.log("payload", payload)
-    console.log("labelKey", labelKey)
-
     const tooltipLabel = React.useMemo(() => {
       if (hideLabel || !payload?.length) {
         return null
