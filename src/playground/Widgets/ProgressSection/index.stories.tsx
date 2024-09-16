@@ -43,7 +43,7 @@ export const WithLegend: Story = {
   },
 }
 
-export const WithComment: Story = {
+export const WithNote: Story = {
   args: {
     label: "Weekly progress",
     value: 30,
