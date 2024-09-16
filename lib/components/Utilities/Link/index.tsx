@@ -9,7 +9,7 @@ const linkVariants = cva("inline-flex items-baseline text-base", {
   variants: {
     variant: {
       text: "text-inherit no-underline",
-      link: "text-link underline",
+      link: "text-f1-link underline visited:text-f1-link hover:text-f1-link active:text-f1-link",
     },
   },
   defaultVariants: {
