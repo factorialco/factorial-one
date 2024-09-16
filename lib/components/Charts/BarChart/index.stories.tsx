@@ -71,3 +71,51 @@ export const MultipleValues: Meta<typeof BarChart<typeof dataMultiConfig>> = {
     },
   },
 }
+
+const financialDataConfig = {
+  profit: {
+    label: "Profit",
+  },
+  losses: {
+    label: "Losses",
+  },
+}
+
+export const FinancialValues: Meta<
+  typeof BarChart<typeof financialDataConfig>
+> = {
+  args: {
+    type: "stacked-by-sign",
+    dataConfig: financialDataConfig,
+    data: [
+      {
+        label: "January",
+        values: { profit: 4000, losses: -1200 },
+      },
+      {
+        label: "February",
+        values: { profit: 3200, losses: -800 },
+      },
+      {
+        label: "March",
+        values: { profit: 5000, losses: -3000 },
+      },
+      {
+        label: "April",
+        values: { profit: 7000, losses: -1000 },
+      },
+      {
+        label: "May",
+        values: { profit: 4500, losses: -1500 },
+      },
+    ],
+    xAxis: {
+      hide: false,
+      tickFormatter: (value: string) => value.slice(0, 3),
+    },
+    yAxis: {
+      hide: false,
+      tickFormatter: (value: string) => value + " €",
+    },
+  },
+}
