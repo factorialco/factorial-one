@@ -1,14 +1,13 @@
 import { Meta, Unstyled } from "@storybook/blocks"
+
 import { ColorToken } from "./components/ColorToken"
+import { BareColor } from "./components/BareColor"
 
 <Meta title="Foundations/Colors" />
 
 # Colors
 
 Factorial One exposes two sets of color tokens: semantic tokens and bare colors.
-
-Bare colors are named color values — for example, `neutral-50` or `warning-70`.
-They are available as CSS variables (e.g. `--neutral-50`). Avoid using bare colors directly. It is an escape hatch in cases where semantic tokens do not fit.
 
 ## Semantic Tokens
 
@@ -150,7 +149,7 @@ Use these tokens for borders.
 Use these tokens for icons.
 
 <Unstyled>
-  <div className="space-y-2 mb-12">
+  <div className="mb-12 space-y-2">
     <ColorToken
       name="f1-icon"
       description="Default icon color for general use"
@@ -186,11 +185,71 @@ Use these tokens for icons.
   </div>
 </Unstyled>
 
-## Tokens naming convention
+### Tokens naming convention
 
 Token names are generated using the naming convention:
 
 <img
-  src="/public/semantic-tokens-naming.avif"
+  src="/semantic-tokens-naming.avif"
   alt="semantic token naming convention"
 />
+
+## Bare colors
+
+☝️ Avoid using bare colors directly. It is an escape hatch in cases where
+semantic tokens do not fit.
+
+Bare colors are named color values — for example, `neutral-50` or `warning-70`.
+They are available as HSL triplets in a form of CSS variables (e.g.
+`--neutral-50`). You will have to use `style` property in order to apply them:
+
+```tsx
+const MyButton = () => (
+  <Button
+    style={{ color: "hsl(var(--warning-70))" }}
+    label="Send all my money"
+  />
+)
+```
+
+As you see, they are not convenient. This is by design. Do not use them unless
+there is no other way.
+
+Bare colors available:
+
+<div className="mb-12 space-y-2">
+  <BareColor name="neutral-0" />
+  <BareColor name="neutral-2" />
+  <BareColor name="neutral-5" />
+  <BareColor name="neutral-10" />
+  <BareColor name="neutral-20" />
+  <BareColor name="neutral-30" />
+  <BareColor name="neutral-40" />
+  <BareColor name="neutral-50" />
+  <BareColor name="neutral-60" />
+  <BareColor name="neutral-70" />
+  <BareColor name="neutral-80" />
+  <BareColor name="neutral-90" />
+  <BareColor name="neutral-100" />
+  <BareColor name="accent-50" />
+  <BareColor name="accent-60" />
+  <BareColor name="accent-70" />
+  <BareColor name="warning-50" />
+  <BareColor name="warning-60" />
+  <BareColor name="warning-70" />
+  <BareColor name="selected-50" />
+  <BareColor name="selected-60" />
+  <BareColor name="selected-70" />
+  <BareColor name="critical-50" />
+  <BareColor name="critical-60" />
+  <BareColor name="critical-70" />
+  <BareColor name="positive-50" />
+  <BareColor name="positive-60" />
+  <BareColor name="positive-70" />
+  <BareColor name="info-50" />
+  <BareColor name="info-60" />
+  <BareColor name="info-70" />
+  <BareColor name="promote-50" />
+  <BareColor name="promote-60" />
+  <BareColor name="promote-70" />
+</div>
