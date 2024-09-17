@@ -20,7 +20,7 @@ interface TabsProps {
   routes: ComponentProps<typeof Breadcrumb>["routes"]
   icon: ComponentProps<typeof Breadcrumb>["icon"]
   details?: ComponentProps<typeof Details>["details"]
-  activatedDays?: ComponentProps<typeof Details>["activatedDays"]
+  workableDays?: ComponentProps<typeof Details>["workableDays"]
   manager?: ComponentProps<typeof Details>["manager"]
   teams?: ComponentProps<typeof Details>["teams"]
 }
@@ -44,7 +44,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       icon,
       defaultTab = tabs[0].key,
       details = [],
-      activatedDays = [],
+      workableDays,
       manager,
       teams,
     },
@@ -76,7 +76,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
           <div className="order-1 pl-8 pr-10 pt-6 sm:order-2">
             <Details
               details={details}
-              activatedDays={activatedDays}
+              workableDays={workableDays}
               manager={manager}
               teams={teams}
             />

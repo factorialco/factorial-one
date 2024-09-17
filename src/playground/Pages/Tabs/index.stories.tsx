@@ -102,9 +102,16 @@ export const Default: Story = {
         content: "Full time",
       },
     ],
-    activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    manager: "Isabella González",
-    teams: ["Design", "Product", "Foundations Squad"],
+    manager: {
+      title: "Manager",
+      name: "Isabella González",
+      avatar: "https://github.com/dani-moreno.png",
+    },
+    workableDays: {
+      title: "Workable days",
+      activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    },
+    teams: { title: "Team", list: ["Design", "Product", "Foundations Squad"] },
   },
   parameters: {
     layout: "fullscreen",
