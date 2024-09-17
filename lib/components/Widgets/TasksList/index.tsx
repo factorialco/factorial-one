@@ -1,15 +1,21 @@
 import { Circle, InProgressTask } from "@/icons"
+import { useCallback } from "react"
 
 type TaskStatus = "in-progress" | "due" | "no-due"
 
 type TaskItemProps = {
   title: string
   status: TaskStatus
+  onClick?: (status: TaskStatus) => void
 }
 
-function TaskItem({ title, status }: TaskItemProps) {
+function TaskItem({ title, status, onClick }: TaskItemProps) {
+  const handleClick = useCallback(() => {
+    onClick?.(status)
+  }, [onClick, status])
+
   return (
-    <div className="flex flex-row items-start gap-2">
+    <div className="flex flex-row items-start gap-2" onClick={handleClick}>
       {(status === "due" || status === "no-due") && (
         <Circle
           width={24}
@@ -31,12 +37,14 @@ interface Props {
   noDueTasks: string[]
   dueTasks: string[]
   maxTasksToShow?: number
+  onClickTask?: (status: TaskStatus) => void
 }
 
 export function TasksList({
   inProgressTasks,
   dueTasks,
   noDueTasks,
+  onClickTask,
   maxTasksToShow = 5,
 }: Props) {
   const tasksToRender = [
@@ -65,6 +73,7 @@ export function TasksList({
           key={`${task} ${i}`}
           title={task.title}
           status={task.status}
+          onClick={onClickTask}
         />
       ))}
     </div>
