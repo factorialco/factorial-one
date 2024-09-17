@@ -6,23 +6,32 @@ const meta: Meta = {
   component: TasksInsight,
   parameters: {
     tags: ["autodocs"],
+    layout: "centered",
   },
+  decorators: [
+    (Story) => (
+      <div className="w-[388px]">
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     title: "Tasks",
     data: {
-      tasks: [
-        "Migrate to new CRM",
+      inProgressTasks: ["Migrate to new CRM"],
+      noDueTasks: [
         "Connect to Slack",
         "Write changelog",
         "Product review",
-        "Final conclusions for a very long text that doesnt fit",
+        "Final conclusions",
       ],
+      dueTasks: [],
       overdueLabel: "Overdue",
-      overdueTasks: 1,
+      overdueTasksCount: 1,
       dueLabel: "Due",
-      dueTasks: 3,
+      dueTasksCount: 3,
       noDueLabel: "No due",
-      noDueTasks: 8,
+      noDueTasksCount: 8,
       buttonLabel: "See 16 more",
       linkUrl: "/tasks",
       linkTitle: "Tasks",
@@ -49,11 +58,13 @@ export const EmptyState: Story = {
   args: {
     data: {
       ...meta?.args?.data,
-      tasks: [],
+      inProgressTasks: [],
+      dueTasks: [],
+      noDueTasks: [],
       buttonLabel: undefined,
       overdueTasks: 0,
-      dueTasks: 0,
-      noDueTasks: 0,
+      dueTasksCount: 0,
+      noDueTasksCount: 0,
     },
   },
 }

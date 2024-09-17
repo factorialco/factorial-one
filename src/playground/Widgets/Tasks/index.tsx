@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/Button"
+import { TasksList } from "@/components/Widgets/TasksList"
 import { WidgetContainer } from "@/components/Widgets/WidgetContainer"
 import { Circle } from "@/icons"
 import AlertCircle from "@/icons/AlertCircle"
@@ -7,16 +8,17 @@ import { forwardRef } from "react"
 
 export interface TasksInsightData {
   title: string
-  tasks: string[]
+  inProgressTasks: string[]
+  dueTasks: string[]
+  noDueTasks: string[]
   overdueLabel: string
-  overdueTasks: number
+  overdueTasksCount: number
   dueLabel: string
-  dueTasks: number
+  dueTasksCount: number
   noDueLabel: string
-  noDueTasks: number
+  noDueTasksCount: number
   linkUrl: string
   linkTitle: string
-  emptyStateText: string
   handleNavigate: () => void
   buttonLabel?: string
 }
@@ -29,8 +31,10 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
   ({ data }, ref) => {
     const {
       title = "Tasks",
-      tasks,
-      overdueTasks,
+      inProgressTasks,
+      dueTasksCount,
+      noDueTasksCount,
+      overdueTasksCount,
       dueTasks,
       noDueTasks,
       linkUrl,
@@ -39,26 +43,25 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
       overdueLabel,
       dueLabel,
       noDueLabel,
-      emptyStateText,
       handleNavigate,
     } = data
 
     const taskCategories = [
       {
         label: overdueLabel,
-        count: overdueTasks,
+        count: overdueTasksCount,
         icon: AlertCircle,
         color: "text-critical-50",
       },
       {
         label: dueLabel,
-        count: dueTasks,
+        count: dueTasksCount,
         icon: Circle,
         color: "text-f1-foreground-secondary",
       },
       {
         label: noDueLabel,
-        count: noDueTasks,
+        count: noDueTasksCount,
         icon: Circle,
         color: "text-f1-foreground-secondary",
       },
@@ -83,21 +86,13 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
             />
           ))}
         </div>
-        <div className="flex flex-col gap-3">
-          {!tasks?.length ? (
-            <p>{emptyStateText}</p>
-          ) : (
-            tasks.slice(0, 5).map((task, i) => (
-              <div
-                key={`${task} ${i}`}
-                className="flex flex-row items-center gap-3"
-              >
-                <div className="border-f1-border h-5 min-w-5 rounded-md border border-solid" />
-                <p className="truncate font-medium">{task}</p>
-              </div>
-            ))
-          )}
-        </div>
+        {(inProgressTasks.length || dueTasks.length || noDueTasks.length) && (
+          <TasksList
+            inProgressTasks={inProgressTasks}
+            noDueTasks={noDueTasks}
+            dueTasks={dueTasks}
+          />
+        )}
         {buttonLabel && (
           <span className="mt-4 max-w-20">
             <Button
