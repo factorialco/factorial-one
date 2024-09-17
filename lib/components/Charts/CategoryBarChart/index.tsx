@@ -4,7 +4,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/ui/tooltip"
+import { ForwardedRef } from "react"
+
 import { autoColor } from "../utils/colors"
+import { fixedForwardRef } from "../utils/forwardRef"
 
 export interface CategoryBarProps {
   data: {
@@ -15,12 +18,15 @@ export interface CategoryBarProps {
   legend: boolean
 }
 
-export function CategoryBar({ data, legend = true }: CategoryBarProps) {
+const _CategoryBarChart = (
+  { data, legend = true }: CategoryBarProps,
+  ref: ForwardedRef<HTMLDivElement>
+) => {
   const total = data.reduce((sum, category) => sum + category.value, 0)
 
   return (
     <TooltipProvider>
-      <div className="w-full">
+      <div className="w-full" ref={ref}>
         <div className="flex h-2 gap-1 overflow-hidden">
           {data.map((category, index) => {
             const percentage = (category.value / total) * 100
@@ -95,3 +101,5 @@ export function CategoryBar({ data, legend = true }: CategoryBarProps) {
     </TooltipProvider>
   )
 }
+
+export const CategoryBarChart = fixedForwardRef(_CategoryBarChart)
