@@ -6,7 +6,6 @@ import {
   TabsTrigger,
 } from "@/components/Navigation/Tabs"
 import React, { ComponentProps, forwardRef } from "react"
-import { Details } from "../../../../lib/components/Widgets/Details"
 import { Header } from "../Header"
 
 interface TabsProps {
@@ -19,10 +18,7 @@ interface TabsProps {
   breadcrumbTitle: ComponentProps<typeof Breadcrumb>["title"]
   routes: ComponentProps<typeof Breadcrumb>["routes"]
   icon: ComponentProps<typeof Breadcrumb>["icon"]
-  details?: ComponentProps<typeof Details>["details"]
-  workableDays?: ComponentProps<typeof Details>["workableDays"]
-  manager?: ComponentProps<typeof Details>["manager"]
-  teams?: ComponentProps<typeof Details>["teams"]
+  side: React.ReactNode
 }
 
 interface TabType {
@@ -43,10 +39,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       routes,
       icon,
       defaultTab = tabs[0].key,
-      details = [],
-      workableDays,
-      manager,
-      teams,
+      side,
     },
     ref
   ) => (
@@ -73,14 +66,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
               </TabsContent>
             ))}
           </div>
-          <div className="order-1 pl-8 pr-10 pt-6 sm:order-2">
-            <Details
-              details={details}
-              workableDays={workableDays}
-              manager={manager}
-              teams={teams}
-            />
-          </div>
+          <div className="order-1 pl-8 pr-10 pt-6 sm:order-2">{side}</div>
         </div>
       </TabsComponent>
     </main>
