@@ -26,6 +26,11 @@ const meta: Meta<typeof VerticalBarChart<typeof dataConfig>> = {
       { label: "Performance Score", values: { value: 88 } },
       { label: "Recruitment Efficiency", values: { value: 100 } },
     ],
+    yAxis: {
+      width: 80,
+      tickFormatter: (value: string) =>
+        `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + "€"}`,
+    },
   },
 }
 

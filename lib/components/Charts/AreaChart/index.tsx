@@ -67,7 +67,6 @@ export const _AreaChart = <K extends LineChartConfig>(
         )}
         {!yAxis?.hide && (
           <YAxis
-            width={32} // TODO fix width so its dynamic based on the max width of the yAxis labels
             tickLine={false}
             axisLine={false}
             tickMargin={8}
@@ -80,7 +79,12 @@ export const _AreaChart = <K extends LineChartConfig>(
         )}
         <ChartTooltip
           cursor
-          content={<ChartTooltipContent indicator="dot" />}
+          content={
+            <ChartTooltipContent
+              indicator="dot"
+              yAxisFormatter={yAxis?.tickFormatter}
+            />
+          }
         />
         <defs>
           {areas.map((area, index) => (

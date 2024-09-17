@@ -84,7 +84,12 @@ const _VBarChart = <K extends ChartConfig>(
         data={prepareData(data)}
         margin={{ left: 24, right: label ? 32 : 0 }}
       >
-        <ChartTooltip cursor content={<ChartTooltipContent />} />
+        <ChartTooltip
+          cursor
+          content={
+            <ChartTooltipContent yAxisFormatter={yAxis?.tickFormatter} />
+          }
+        />
         <CartesianGrid
           {...cartesianGridProps()}
           vertical={true}

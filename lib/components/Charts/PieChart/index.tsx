@@ -20,12 +20,13 @@ export type PieChartItem = {
 export type PieChartProps = {
   dataConfig: ChartConfig
   data: PieChartItem[]
+  tickFormatter?: (value: string) => string
   overview?: { number: number; label: string }
   aspect?: ComponentProps<typeof ChartContainer>["aspect"]
 }
 
 export const _PieChart = (
-  { data, dataConfig, overview, aspect }: PieChartProps,
+  { data, dataConfig, overview, aspect, tickFormatter }: PieChartProps,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const preparedData = data.map((item, index) => ({
@@ -38,7 +39,10 @@ export const _PieChart = (
   return (
     <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <PieChartPrimitive accessibilityLayer margin={{ left: 0, right: 0 }}>
-        <ChartTooltip cursor content={<ChartTooltipContent />} />
+        <ChartTooltip
+          cursor
+          content={<ChartTooltipContent yAxisFormatter={tickFormatter} />}
+        />
         <Pie
           isAnimationActive={false}
           nameKey={"label"}

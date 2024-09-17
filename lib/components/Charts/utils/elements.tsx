@@ -11,6 +11,7 @@ export const xAxisProps = (
   tickMargin: 8,
   tickCount: config?.tickCount,
   tickFormatter: config?.tickFormatter,
+  width: config?.width,
 })
 
 export const yAxisProps = (
@@ -21,6 +22,7 @@ export const yAxisProps = (
   tickMargin: 8,
   tickCount: config?.tickCount,
   tickFormatter: config?.tickFormatter,
+  width: config?.width,
 })
 
 export const cartesianGridProps = () => ({
