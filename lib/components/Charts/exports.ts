@@ -31,7 +31,6 @@ export const CategoryBarChart = Component(
   CategoryBarChartComponent
 )
 
-
 export const LineChart = Component(
   {
     name: "LineChart",
