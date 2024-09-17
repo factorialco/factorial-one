@@ -1,6 +1,5 @@
 export * from "./Actions/exports"
 export * from "./Charts/exports"
-export * from "./Forms/exports"
 export * from "./Information/exports"
 export * from "./Layout/exports"
 export * from "./Navigation/exports"

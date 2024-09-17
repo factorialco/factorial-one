@@ -4,7 +4,7 @@ import { Dashboard } from "."
 import { AreaChartWidget } from "../Charts/AreaChartWidget"
 
 import { AreaChartProps } from "@/components/Charts/AreaChart"
-import { Calendar } from "@/components/Forms/Fields/Calendar"
+import { Calendar } from "@/experimental/Forms/Fields/Calendar"
 import AreaChartWidgetStoriesMeta from "../Charts/AreaChartWidget/index.stories"
 import { ComposeChartContainerProps } from "../Charts/ChartContainer"
 import { LineChartWidget } from "../Charts/LineChartWidget"

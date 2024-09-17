@@ -9,12 +9,12 @@ const config: StorybookConfig = {
       titlePrefix: "Components",
     },
     {
-      directory: "../src/playground",
-      titlePrefix: "Playground",
+      directory: "../lib/experimental",
+      titlePrefix: "Experimental",
     },
     {
-      directory: "../src/experiments",
-      titlePrefix: "Experiments",
+      directory: "../src/playground",
+      titlePrefix: "Playground",
     },
   ],
   staticDirs: ["../public"],
