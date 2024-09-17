@@ -267,9 +267,10 @@ export default {
       pattern: /^border-f1-/,
       variants: ["hover", "focus", "active"],
     },
-    {
-      pattern: /^icon-f1-/,
-      variants: ["hover", "focus", "active"],
-    },
+    // Had to comment this out as it was generating a warning that blocked CI because it's not being used, please reimplement when it's used
+    // {
+    //   pattern: /^icon-f1-/,
+    //   variants: ["hover", "focus", "active"],
+    // },
   ],
 } satisfies Config
