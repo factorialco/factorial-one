@@ -3,7 +3,6 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { ProgressSection } from "../ProgressSection"
 
 const meta = {
-  title: "Insights/Examples/Timesheet",
   parameters: {
     layout: "centered",
   },
