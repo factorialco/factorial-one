@@ -12,10 +12,17 @@ function TaskItem({ title, status }: TaskItemProps) {
   return (
     <div className="flex flex-row items-start gap-2">
       {(status === "due" || status === "no-due") && (
-        <Circle width={24} opacity={status === "no-due" ? 0.4 : 1} />
+        <Circle
+          width={24}
+          color={
+            status === "no-due"
+              ? "hsl(var(--neutral-40))"
+              : "hsl(var(--neutral-50))"
+          }
+        />
       )}
       {status === "in-progress" && <InProgressTask />}
-      <p className="mt-[2px] line-clamp-2 flex-1 font-medium">{title}</p>
+      <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{title}</p>
     </div>
   )
 }
