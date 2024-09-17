@@ -1,6 +1,6 @@
 import { WidgetContainer } from "@/components/Widgets/WidgetContainer"
 import type { Meta, StoryObj } from "@storybook/react"
-import { CategoryBarSection } from "../CategoryBarSection"
+import { CategoryBarSection } from "@/components/Widgets/CategoryBarSection"
 
 const meta = {
   title: "Insights/Examples/Timesheet",
