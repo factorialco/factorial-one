@@ -1,10 +1,10 @@
 import { Button } from "@/components/Actions/Button"
+import { TasksList } from "@/components/Widgets/TasksList"
 import { WidgetContainer } from "@/components/Widgets/WidgetContainer"
 import { Circle } from "@/icons"
 import AlertCircle from "@/icons/AlertCircle"
 import { Indicator } from "@/ui/indicator"
 import { forwardRef } from "react"
-import { TasksList } from "../TasksList"
 
 export interface TasksInsightData {
   title: string
