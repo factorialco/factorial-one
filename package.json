@@ -121,5 +121,8 @@
     "vite-plugin-dts": "^4.2.1",
     "vite-plugin-lib-inject-css": "^2.1.1",
     "vitest": "^2.0.5"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.6.1"
   }
 }
