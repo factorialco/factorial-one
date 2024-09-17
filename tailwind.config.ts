@@ -123,6 +123,14 @@ export default {
         },
       ],
     },
+    boxShadow: {
+      soft: "0 2px 20px 0 hsl(var(--neutral-100) / 0.04)",
+      DEFAULT: "0 4px 20px 0 hsl(var(--neutral-100) / 0.08)",
+      intense: "0 8px 30px 0 hsl(var(--neutral-100) / 0.12)",
+      strong: "0 12px 56px 0 hsl(var(--neutral-100) / 0.16)",
+      inner: "inset 0 2px 4px 0 hsl(var(--neutral-100) / 0.04)",
+      none: "none",
+    },
     // use pixel scale by default
     spacing: absoluteSpacing,
     extend: {

@@ -78,7 +78,7 @@ const preview: Preview = {
     docs: {
       container: DocsContainer,
       toc: {
-        headingSelector: 'h2, h3'
+        headingSelector: "h2, h3",
       },
     },
     controls: {
@@ -92,7 +92,7 @@ const preview: Preview = {
       storySort: {
         order: [
           "Foundations",
-          ["Colors", "Typography", "Spacing"],
+          ["Colors", "Typography", "Spacing", "Shadows"],
           "Components",
           "Playground",
           "Experiments",
