@@ -17,7 +17,7 @@ import {
   YAxis,
 } from "recharts"
 import { autoColor } from "../utils/colors"
-import { cartesianGridProps } from "../utils/elements"
+import { cartesianGridProps, measureTextWidth } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { LineChartPropsBase } from "../utils/types"
@@ -45,11 +45,24 @@ export const _AreaChart = <K extends LineChartConfig>(
   const areas = Object.keys(dataConfig) as (keyof LineChartConfig)[]
   const chartId = nanoid(12)
 
+  const preparedData = prepareData(data)
+  const maxLabelWidth = Math.max(
+    ...preparedData.flatMap((el) =>
+      areas.map((key) =>
+        measureTextWidth(
+          yAxis?.tickFormatter
+            ? yAxis.tickFormatter(`${el[key]}`)
+            : `${el[key]}`
+        )
+      )
+    )
+  )
+
   return (
     <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <AreaChartPrimitive
         accessibilityLayer
-        data={prepareData(data)}
+        data={preparedData}
         margin={{ left: 12, right: 12, top: marginTop }}
       >
         <CartesianGrid {...cartesianGridProps()} />
@@ -74,6 +87,7 @@ export const _AreaChart = <K extends LineChartConfig>(
             tickFormatter={yAxis?.tickFormatter}
             ticks={yAxis?.ticks}
             domain={yAxis?.domain}
+            width={yAxis?.width ?? maxLabelWidth + 10}
             className={cn(yAxis?.isBlur && "blur-sm")}
           />
         )}

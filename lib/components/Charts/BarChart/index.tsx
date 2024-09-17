@@ -15,7 +15,12 @@ import {
 } from "recharts"
 
 import { autoColor } from "../utils/colors"
-import { cartesianGridProps, xAxisProps, yAxisProps } from "../utils/elements"
+import {
+  cartesianGridProps,
+  measureTextWidth,
+  xAxisProps,
+  yAxisProps,
+} from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { ChartPropsBase } from "../utils/types"
@@ -39,12 +44,24 @@ const _BarChart = <K extends ChartConfig>(
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const bars = Object.keys(dataConfig) as (keyof ChartConfig)[]
+  const preparedData = prepareData(data)
+  const maxLabelWidth = Math.max(
+    ...preparedData.flatMap((el) =>
+      bars.map((key) =>
+        measureTextWidth(
+          yAxis?.tickFormatter
+            ? yAxis.tickFormatter(`${el[key]}`)
+            : `${el[key]}`
+        )
+      )
+    )
+  )
 
   return (
     <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <BarChartPrimitive
         accessibilityLayer
-        data={prepareData(data)}
+        data={preparedData}
         margin={{ left: 12, right: 12, top: label ? 24 : 0 }}
         stackOffset={type === "stacked-by-sign" ? "sign" : undefined}
       >
@@ -53,7 +70,11 @@ const _BarChart = <K extends ChartConfig>(
           content={<ChartTooltipContent yAxisFormatter={yAxis.tickFormatter} />}
         />
         <CartesianGrid {...cartesianGridProps()} />
-        <YAxis {...yAxisProps(yAxis)} hide={yAxis?.hide} />
+        <YAxis
+          width={maxLabelWidth + 10}
+          {...yAxisProps(yAxis)}
+          hide={yAxis?.hide}
+        />
         <XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />
 
         {bars.map((key, index) => (
