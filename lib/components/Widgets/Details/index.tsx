@@ -7,39 +7,47 @@ interface DetailsType {
   details: DetailsItemType[]
   title?: string
   activatedDays?: ComponentProps<typeof Weekdays>["activatedDays"]
-  manager?: string
+  manager?: { name: string; avatar: string }
   teams?: string[]
+  workableDaysTitle?: string
 }
 
 export const Details = forwardRef<HTMLDivElement, DetailsType>(
-  ({ details, activatedDays, manager, teams, title }, ref) => {
+  (
+    { details, activatedDays, manager, workableDaysTitle, teams, title },
+    ref
+  ) => {
     return (
       <div ref={ref} className="flex flex-col gap-4">
         {!!title && (
-          <p className="text-f1-foreground mb-1 text-sm font-medium">{title}</p>
+          <p className="mb-1 text-sm font-medium text-f1-foreground">{title}</p>
         )}
-        {details.map((item, index) => (
+        {details.map((item, index) => {
+          return !item?.title ? null : (
+            <DetailsItem
+              title={item.title}
+              key={item.title + index}
+              content={item.content}
+            />
+          )
+        })}
+        {workableDaysTitle && (
           <DetailsItem
-            title={item.title}
-            key={item.title + index}
-            content={item.content}
+            title={workableDaysTitle}
+            className="gap-2"
+            content={<Weekdays activatedDays={activatedDays} />}
           />
-        ))}
-        <DetailsItem
-          title="Workable days"
-          className="gap-2"
-          content={<Weekdays activatedDays={activatedDays} />}
-        />
+        )}
         {!!manager && (
           <DetailsItem
             title="Manager"
             className="gap-2"
             content={
               <Badge
-                text={manager}
+                text={manager.name}
                 avatar={{
-                  src: "https://github.com/dani-moreno.png",
-                  alt: manager[0],
+                  src: manager.avatar,
+                  alt: manager.name[0],
                 }}
               />
             }

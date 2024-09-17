@@ -32,7 +32,11 @@ const meta: Meta = {
       },
     ],
     activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    manager: "Isabella González",
+    manager: {
+      name: "Isabella González",
+      avatar: "https://github.com/dani-moreno.png",
+    },
+    workableDaysTitle: "Workable days",
     teams: ["Design", "Product", "Foundations Squad"],
   },
 }
