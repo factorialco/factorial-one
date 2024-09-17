@@ -78,7 +78,7 @@ const preview: Preview = {
     docs: {
       container: DocsContainer,
       toc: {
-        headingSelector: 'h2, h3'
+        headingSelector: "h2, h3",
       },
     },
     controls: {
@@ -94,8 +94,8 @@ const preview: Preview = {
           "Foundations",
           ["Colors", "Typography", "Spacing"],
           "Components",
+          "Experimental",
           "Playground",
-          "Experiments",
         ],
       },
     },
