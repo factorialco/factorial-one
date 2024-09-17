@@ -31,13 +31,16 @@ const meta: Meta = {
         content: "Full time",
       },
     ],
-    activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
     manager: {
+      title: "Manager",
       name: "Isabella González",
       avatar: "https://github.com/dani-moreno.png",
     },
-    workableDaysTitle: "Workable days",
-    teams: ["Design", "Product", "Foundations Squad"],
+    workableDays: {
+      title: "Workable days",
+      activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    },
+    teams: { title: "Team", list: ["Design", "Product", "Foundations Squad"] },
   },
 }
 

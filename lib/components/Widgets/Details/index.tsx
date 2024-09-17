@@ -4,25 +4,24 @@ import { DetailsItem, DetailsItemType } from "../DetailsItem"
 import { Weekdays } from "../Weekdays"
 
 interface DetailsType {
-  details: DetailsItemType[]
   title?: string
-  activatedDays?: ComponentProps<typeof Weekdays>["activatedDays"]
-  manager?: { name: string; avatar: string }
-  teams?: string[]
-  workableDaysTitle?: string
+  details?: DetailsItemType[]
+  manager?: { title: string; name: string; avatar: string }
+  teams?: { title: string; list: string[] }
+  workableDays?: {
+    title: string
+    activatedDays?: ComponentProps<typeof Weekdays>["activatedDays"]
+  }
 }
 
 export const Details = forwardRef<HTMLDivElement, DetailsType>(
-  (
-    { details, activatedDays, manager, workableDaysTitle, teams, title },
-    ref
-  ) => {
+  ({ details, workableDays, manager, teams, title }, ref) => {
     return (
       <div ref={ref} className="flex flex-col gap-4">
         {!!title && (
           <p className="mb-1 text-sm font-medium text-f1-foreground">{title}</p>
         )}
-        {details.map((item, index) => {
+        {details?.map((item, index) => {
           return !item?.title ? null : (
             <DetailsItem
               title={item.title}
@@ -31,16 +30,16 @@ export const Details = forwardRef<HTMLDivElement, DetailsType>(
             />
           )
         })}
-        {workableDaysTitle && (
+        {workableDays?.title && (
           <DetailsItem
-            title={workableDaysTitle}
+            title={workableDays.title}
             className="gap-2"
-            content={<Weekdays activatedDays={activatedDays} />}
+            content={<Weekdays activatedDays={workableDays.activatedDays} />}
           />
         )}
         {!!manager && (
           <DetailsItem
-            title="Manager"
+            title={manager.title}
             className="gap-2"
             content={
               <Badge
@@ -53,13 +52,13 @@ export const Details = forwardRef<HTMLDivElement, DetailsType>(
             }
           />
         )}
-        {!!teams?.length && (
+        {!!teams?.list.length && (
           <DetailsItem
-            title="Team"
+            title={teams.title}
             className="flex flex-col gap-2"
             content={
               <div className="flex flex-row flex-wrap gap-2">
-                {teams.map((team) => {
+                {teams.list.map((team) => {
                   return !team ? null : (
                     <Badge text={team} avatar={{ alt: team[0] }} />
                   )
