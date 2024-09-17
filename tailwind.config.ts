@@ -203,10 +203,7 @@ export default {
           icon: {
             DEFAULT: "hsl(var(--neutral-50))",
             secondary: "hsl(var(--neutral-40))",
-            inverse: {
-              DEFAULT: "hsl(var(--neutral-0))",
-              secondary: "hsl(var(--neutral-0) / 0.8)",
-            },
+            inverse: "hsl(var(--neutral-0))",
             bold: "hsl(var(--neutral-100))",
             critical: {
               DEFAULT: "hsl(var(--critical-50))",
