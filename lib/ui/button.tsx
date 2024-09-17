@@ -13,7 +13,7 @@ export const variants = [
 ] as const
 
 const buttonVariants = cva(
-  "focus-visible:ring-offset focus-visible:ring-ring inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-xl border-none text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
+  "focus-visible:ring-offset focus-visible:ring-ring group inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-xl border-none text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
@@ -42,6 +42,39 @@ const buttonVariants = cva(
   }
 )
 
+const iconVariants = cva("transition-colors", {
+  variants: {
+    variant: {
+      default: "text-f1-icon-inverse/80",
+      outline: "text-f1-icon",
+      neutral: "text-f1-icon",
+      critical:
+        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse/80",
+      ghost: "text-f1-icon",
+      promote: "text-f1-icon",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
+const iconOnlyVariants = cva("transition-colors", {
+  variants: {
+    variant: {
+      default: "text-f1-icon-inverse",
+      outline: "text-f1-icon-bold",
+      neutral: "text-f1-icon-bold",
+      critical: "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse",
+      ghost: "text-f1-icon-bold",
+      promote: "text-f1-icon-bold",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
@@ -62,4 +95,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = "Button"
 
-export { Button, buttonVariants }
+export { Button, buttonVariants, iconOnlyVariants, iconVariants }

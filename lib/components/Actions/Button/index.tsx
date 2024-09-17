@@ -1,5 +1,9 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { Button as ShadcnButton } from "@/ui/button"
+import {
+  Button as ShadcnButton,
+  iconOnlyVariants,
+  iconVariants,
+} from "@/ui/button"
 import { ComponentProps, forwardRef, useState } from "react"
 
 export type ButtonProps = Pick<
@@ -27,6 +31,7 @@ const Button: React.FC<ButtonProps> = forwardRef<
       disabled,
       loading: forceLoading,
       icon,
+      variant = "default",
       ...props
     },
     ref
@@ -54,11 +59,22 @@ const Button: React.FC<ButtonProps> = forwardRef<
         title={hideLabel ? label : undefined}
         onClick={handleClick}
         disabled={disabled || loading || forceLoading}
-        round={hideLabel}
         ref={ref}
+        variant={variant}
+        round={hideLabel}
         {...props}
       >
-        {icon && <Icon size="md" icon={icon} />}
+        {icon && (
+          <Icon
+            size="md"
+            icon={icon}
+            className={
+              hideLabel
+                ? iconOnlyVariants({ variant })
+                : iconVariants({ variant })
+            }
+          />
+        )}
         {!hideLabel && label}
       </ShadcnButton>
     )
