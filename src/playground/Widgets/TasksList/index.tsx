@@ -1,5 +1,4 @@
 import { Circle, InProgressTask } from "@/icons"
-import { useMemo } from "react"
 
 type TaskStatus = "in-progress" | "due" | "no-due"
 
@@ -40,23 +39,20 @@ export function TasksList({
   noDueTasks,
   maxTasksToShow = 5,
 }: Props) {
-  const tasksToRender = useMemo(
-    () => [
-      ...inProgressTasks.map((t) => ({
-        title: t,
-        status: "in-progress" as TaskStatus,
-      })),
-      ...dueTasks.map((t) => ({
-        title: t,
-        status: "due" as TaskStatus,
-      })),
-      ...noDueTasks.map((t) => ({
-        title: t,
-        status: "no-due" as TaskStatus,
-      })),
-    ],
-    [inProgressTasks, dueTasks, noDueTasks]
-  )
+  const tasksToRender = [
+    ...inProgressTasks.map((t) => ({
+      title: t,
+      status: "in-progress" as TaskStatus,
+    })),
+    ...dueTasks.map((t) => ({
+      title: t,
+      status: "due" as TaskStatus,
+    })),
+    ...noDueTasks.map((t) => ({
+      title: t,
+      status: "no-due" as TaskStatus,
+    })),
+  ]
 
   if (!tasksToRender.length) {
     return null
