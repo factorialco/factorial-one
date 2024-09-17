@@ -17,7 +17,7 @@ export const Component = <
   meta: ComponentMetadata,
   Component: React.FC<PropsWithoutRef<P>>
 ) => {
-  const Forwarded = forwardRef<R, PropsWithoutRef<P>>((props, forwardedRef) => {
+  const Forwarded = forwardRef<R, P>((props, forwardedRef) => {
     const { ref } = useComponentXRay(meta, forwardedRef)
 
     return <Component ref={ref} {...props} />
