@@ -139,10 +139,7 @@ export default {
           foreground: {
             DEFAULT: "hsl(var(--neutral-100))",
             secondary: "hsl(var(--neutral-50))",
-            inverse: {
-              DEFAULT: "hsl(var(--neutral-0))",
-              secondary: "hsl(var(--neutral-0) / 0.8)",
-            },
+            inverse: "hsl(var(--neutral-0))",
             disabled: "hsl(var(--neutral-30))",
             accent: {
               DEFAULT: "hsl(var(--accent-70))",

@@ -45,11 +45,11 @@ const buttonVariants = cva(
 const iconVariants = cva("transition-colors", {
   variants: {
     variant: {
-      default: "text-f1-icon-inverse-secondary",
+      default: "text-f1-icon-inverse/80",
       outline: "text-f1-icon",
       neutral: "text-f1-icon",
       critical:
-        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse-secondary",
+        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse/80",
       ghost: "text-f1-icon",
       promote: "text-f1-icon",
     },
