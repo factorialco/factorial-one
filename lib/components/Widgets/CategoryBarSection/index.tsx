@@ -1,5 +1,5 @@
 import {
-  CategoryBar,
+  CategoryBarChart,
   CategoryBarProps,
 } from "@/components/Charts/CategoryBarChart"
 
@@ -29,7 +29,7 @@ export function CategoryBarSection({
         </div>
       </div>
       <div className="mt-2">
-        <CategoryBar data={data} legend={legend} />
+        <CategoryBarChart data={data} legend={legend} />
       </div>
       {!!helpText && (
         <div className="mt-1">

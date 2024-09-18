@@ -215,6 +215,7 @@ export default {
             bold: "hsl(var(--neutral-100))",
             critical: {
               DEFAULT: "hsl(var(--critical-50))",
+              bold: "hsl(var(--critical-70))",
             },
             info: {
               DEFAULT: "hsl(var(--info-50))",

@@ -1,8 +1,8 @@
 import type { Meta } from "@storybook/react"
-import { CategoryBar } from "."
+import { CategoryBarChart } from "."
 
 const meta = {
-  component: CategoryBar,
+  component: CategoryBarChart,
   tags: ["autodocs"],
   args: {
     data: [
@@ -18,13 +18,13 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof CategoryBar>
+} satisfies Meta<typeof CategoryBarChart>
 
 export default meta
 
 export const Default = {}
 
-export const MultipleValues: Meta<typeof CategoryBar> = {
+export const MultipleValues: Meta<typeof CategoryBarChart> = {
   args: {
     data: [
       { name: "Employee Eng.", value: 42 },
