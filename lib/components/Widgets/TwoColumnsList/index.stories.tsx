@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { SheetList } from "."
+import { TwoColumnsList } from "."
 
 const meta: Meta = {
-  component: SheetList,
+  component: TwoColumnsList,
   parameters: {
     layout: "centered",
     tags: ["autodocs"],

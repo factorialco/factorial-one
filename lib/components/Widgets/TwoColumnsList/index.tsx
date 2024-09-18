@@ -1,15 +1,15 @@
 import { forwardRef } from "react"
 
-interface SheetItemType {
+interface TwoColumnsItemType {
   title: string
   info: string
 }
 
-interface SheetListType {
-  list: SheetItemType[]
+interface TwoColumnsListType {
+  list: TwoColumnsItemType[]
 }
 
-const SheetItem = forwardRef<HTMLDivElement, SheetItemType>(
+const TwoColumnsItem = forwardRef<HTMLDivElement, TwoColumnsItemType>(
   ({ title, info }, ref) => {
     return (
       <div ref={ref} className="flex flex-row justify-between">
@@ -20,12 +20,16 @@ const SheetItem = forwardRef<HTMLDivElement, SheetItemType>(
   }
 )
 
-export const SheetList = forwardRef<HTMLDivElement, SheetListType>(
+export const TwoColumnsList = forwardRef<HTMLDivElement, TwoColumnsListType>(
   ({ list }, ref) => {
     return (
       <div ref={ref} className="flex flex-col gap-3">
         {list.map((item) => (
-          <SheetItem key={item.title} title={item.title} info={item.info} />
+          <TwoColumnsItem
+            key={item.title}
+            title={item.title}
+            info={item.info}
+          />
         ))}
       </div>
     )
