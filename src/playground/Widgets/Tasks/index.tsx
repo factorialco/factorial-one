@@ -12,11 +12,11 @@ export interface TasksInsightData {
   dueTasks: string[]
   noDueTasks: string[]
   overdueLabel: string
-  overdueTasksCount: number
+  overdueTasksCount: string
   dueLabel: string
-  dueTasksCount: number
+  dueTasksCount: string
   noDueLabel: string
-  noDueTasksCount: number
+  noDueTasksCount: string
   linkUrl: string
   linkTitle: string
   handleNavigate: () => void
@@ -49,19 +49,19 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
     const taskCategories = [
       {
         label: overdueLabel,
-        count: overdueTasksCount,
+        content: overdueTasksCount,
         icon: AlertCircle,
         color: "text-critical-50",
       },
       {
         label: dueLabel,
-        count: dueTasksCount,
+        content: dueTasksCount,
         icon: Circle,
         color: "text-f1-foreground-secondary",
       },
       {
         label: noDueLabel,
-        count: noDueTasksCount,
+        content: noDueTasksCount,
         icon: Circle,
         color: "text-f1-foreground-secondary",
       },
@@ -76,11 +76,11 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
         }}
       >
         <div className="grid grid-cols-3">
-          {taskCategories.map(({ label, count, icon, color }) => (
+          {taskCategories.map(({ label, content, icon, color }) => (
             <Indicator
               key={label}
               label={label}
-              count={count}
+              content={content}
               icon={icon}
               color={color}
             />
