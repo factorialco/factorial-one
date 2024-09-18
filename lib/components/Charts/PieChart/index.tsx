@@ -36,7 +36,12 @@ export const _PieChart = (
   }))
 
   return (
-    <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
+    <ChartContainer
+      config={dataConfig}
+      ref={ref}
+      aspect={aspect}
+      data-chromatic="ignore"
+    >
       <PieChartPrimitive accessibilityLayer margin={{ left: 0, right: 0 }}>
         <ChartTooltip cursor content={<ChartTooltipContent />} />
         <Pie
