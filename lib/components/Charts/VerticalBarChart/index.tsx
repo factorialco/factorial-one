@@ -15,6 +15,7 @@ import { prepareData } from "../utils/bar"
 import { autoColor } from "../utils/colors"
 import {
   cartesianGridProps,
+  measureTextWidth,
   xAxisProps as xAxisConfigureProps,
   yAxisProps as yAxisConfigureProps,
 } from "../utils/elements"
@@ -62,12 +63,15 @@ const _VBarChart = <K extends ChartConfig>(
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const bars = Object.keys(dataConfig) as (keyof ChartConfig)[]
-  const munchedData = prepareData<K>(data)
+  const preparedData = prepareData<K>(data)
+  const maxLabelWidth = Math.max(
+    ...preparedData.map((el) => measureTextWidth(`${el.x}`))
+  )
 
   const xAxisProps: XAxisProps = {
     ...xAxisConfigureProps(xAxis),
     type: "number",
-    dataKey: getMaxValueByKey(munchedData),
+    dataKey: getMaxValueByKey(preparedData),
   }
 
   const yAxisProps: YAxisProps = {
@@ -81,17 +85,26 @@ const _VBarChart = <K extends ChartConfig>(
       <BarChartPrimitive
         layout="vertical"
         accessibilityLayer
-        data={prepareData(data)}
-        margin={{ left: 24, right: label ? 32 : 0 }}
+        data={preparedData}
+        margin={{ left: yAxis && !yAxis.hide ? 0 : 12, right: label ? 32 : 0 }}
       >
-        <ChartTooltip cursor content={<ChartTooltipContent />} />
+        <ChartTooltip
+          cursor
+          content={
+            <ChartTooltipContent yAxisFormatter={yAxis?.tickFormatter} />
+          }
+        />
         <CartesianGrid
           {...cartesianGridProps()}
           vertical={true}
           horizontal={false}
         />
         <XAxis {...xAxisProps} hide={xAxis?.hide} />
-        <YAxis {...yAxisProps} hide={yAxis?.hide} />
+        <YAxis
+          {...yAxisProps}
+          hide={yAxis?.hide}
+          width={yAxis?.width ?? maxLabelWidth + 20}
+        />
 
         {bars.map((key, index) => {
           return (

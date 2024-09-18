@@ -19,6 +19,7 @@ export type AxisConfig = {
   ticks?: number[]
   domain?: number[]
   isBlur?: boolean
+  width?: number
 }
 
 export type ChartConfig = Record<
