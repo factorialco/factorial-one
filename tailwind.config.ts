@@ -123,6 +123,13 @@ export default {
         },
       ],
     },
+    boxShadow: {
+      DEFAULT: "0 2px 20px 0 hsl(var(--neutral-100) / 0.04)",
+      md: "0 4px 20px 0 hsl(var(--neutral-100) / 0.08)",
+      lg: "0 8px 30px 0 hsl(var(--neutral-100) / 0.12)",
+      xl: "0 12px 56px 0 hsl(var(--neutral-100) / 0.16)",
+      none: "none",
+    },
     // use pixel scale by default
     spacing: absoluteSpacing,
     extend: {
@@ -207,6 +214,7 @@ export default {
             bold: "hsl(var(--neutral-100))",
             critical: {
               DEFAULT: "hsl(var(--critical-50))",
+              bold: "hsl(var(--critical-70))",
             },
             info: {
               DEFAULT: "hsl(var(--info-50))",
@@ -267,10 +275,5 @@ export default {
       pattern: /^border-f1-/,
       variants: ["hover", "focus", "active"],
     },
-    // Had to comment this out as it was generating a warning that blocked CI because it's not being used, please reimplement when it's used
-    // {
-    //   pattern: /^icon-f1-/,
-    //   variants: ["hover", "focus", "active"],
-    // },
   ],
 } satisfies Config

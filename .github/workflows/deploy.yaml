@@ -10,6 +10,9 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  PUBLIC_BUILD: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -22,5 +25,5 @@ jobs:
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
           install_command: npm install
-          build_command: npm run build-storybook:public
+          build_command: npm run build-storybook
           path: storybook-static
