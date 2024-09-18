@@ -268,9 +268,5 @@ export default {
       pattern: /^border-f1-/,
       variants: ["hover", "focus", "active"],
     },
-    {
-      pattern: /^icon-f1-/,
-      variants: ["hover", "focus", "active"],
-    },
   ],
 } satisfies Config
