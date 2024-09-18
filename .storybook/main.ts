@@ -12,10 +12,14 @@ const config: StorybookConfig = {
       directory: "../lib/experimental",
       titlePrefix: "Experimental",
     },
-    {
-      directory: "../src/playground",
-      titlePrefix: "Playground",
-    },
+    ...(process.env.PUBLIC_BUILD
+      ? []
+      : [
+          {
+            directory: "../src/playground",
+            titlePrefix: "Playground",
+          },
+        ]),
   ],
   staticDirs: ["../public"],
   addons: [

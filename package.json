@@ -26,7 +26,6 @@
     "preview": "vite preview",
     "generate-icons": "npx @svgr/cli --out-dir lib/icons assets/icons",
     "build-storybook": "storybook build",
-    "build-storybook:public": "PUBLIC_BUILD=true storybook build",
     "test-storybook": "test-storybook",
     "prettier:format": "prettier --write \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
