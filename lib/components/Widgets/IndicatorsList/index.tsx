@@ -9,9 +9,14 @@ export const IndicatorsList = forwardRef<HTMLDivElement, IndicatorsListProps>(
   ({ items }, ref) => {
     return (
       <div ref={ref} className="flex flex-grow flex-row justify-between">
-        {items.map(({ label, count, icon, color }) => (
+        {items.map(({ label, content, icon, color }) => (
           <div key={label} className="flex-1">
-            <Indicator label={label} count={count} icon={icon} color={color} />
+            <Indicator
+              label={label}
+              content={content}
+              icon={icon}
+              color={color}
+            />
           </div>
         ))}
       </div>
