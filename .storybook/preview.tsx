@@ -92,7 +92,7 @@ const preview: Preview = {
       storySort: {
         order: [
           "Foundations",
-          ["Colors", "Typography", "Spacing"],
+          ["Colors", "Typography", "Spacing", "Shadows"],
           "Components",
           "Experimental",
           "Playground",
