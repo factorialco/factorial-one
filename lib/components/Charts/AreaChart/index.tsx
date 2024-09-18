@@ -63,7 +63,11 @@ export const _AreaChart = <K extends LineChartConfig>(
       <AreaChartPrimitive
         accessibilityLayer
         data={preparedData}
-        margin={{ left: 12, right: 12, top: marginTop }}
+        margin={{
+          left: yAxis && !yAxis.hide ? 0 : 12,
+          right: 12,
+          top: marginTop,
+        }}
       >
         <CartesianGrid {...cartesianGridProps()} />
         {!xAxis?.hide && (
@@ -87,7 +91,7 @@ export const _AreaChart = <K extends LineChartConfig>(
             tickFormatter={yAxis?.tickFormatter}
             ticks={yAxis?.ticks}
             domain={yAxis?.domain}
-            width={yAxis?.width ?? maxLabelWidth + 10}
+            width={yAxis?.width ?? maxLabelWidth + 20}
             className={cn(yAxis?.isBlur && "blur-sm")}
           />
         )}

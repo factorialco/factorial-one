@@ -22,7 +22,7 @@ const meta: Meta<typeof AreaChart<typeof dataConfig>> = {
     yAxis: {
       hide: true,
       tickFormatter: (value: string) =>
-        `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + "€"}`,
+        `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + ",00 Euros"}`,
     },
     data: [
       { label: "January", values: { mobile: 1200, desktop: 500 } },

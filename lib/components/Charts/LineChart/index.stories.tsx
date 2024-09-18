@@ -39,7 +39,7 @@ export const Default: Meta<typeof LineChart<typeof singleDataConfig>> = {
     yAxis: {
       hide: true,
       tickFormatter: (value: string) =>
-        `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + "€"}`,
+        `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + " €"}`,
     },
     data: [
       { label: "January", values: { desktop: 186 } },

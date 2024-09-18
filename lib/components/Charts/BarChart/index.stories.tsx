@@ -115,7 +115,7 @@ export const FinancialValues: Meta<
     },
     yAxis: {
       hide: false,
-      tickFormatter: (value: string) => value + " €fkdlkasldfjklasdfjaklfj",
+      tickFormatter: (value: string) => value + " €",
     },
   },
 }

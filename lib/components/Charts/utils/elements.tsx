@@ -4,13 +4,12 @@ import { AxisConfig } from "./types"
 
 export function measureTextWidth(
   text: string,
-  font = "Inter, sans-serif"
+  font = "12px Inter, sans-serif"
 ): number {
   const canvas = document.createElement("canvas")
   const context = canvas.getContext("2d")
   if (context) {
     context.font = font
-    console.log(`mesurement of ${text}: `, context.measureText(text).width)
     return context.measureText(text).width
   }
   return 0
@@ -25,7 +24,6 @@ export const xAxisProps = (
   tickMargin: 8,
   tickCount: config?.tickCount,
   tickFormatter: config?.tickFormatter,
-  width: config?.width,
 })
 
 export const yAxisProps = (
@@ -36,7 +34,6 @@ export const yAxisProps = (
   tickMargin: 8,
   tickCount: config?.tickCount,
   tickFormatter: config?.tickFormatter,
-  width: config?.width,
 })
 
 export const cartesianGridProps = () => ({

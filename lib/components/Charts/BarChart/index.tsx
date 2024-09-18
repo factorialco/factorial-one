@@ -62,7 +62,11 @@ const _BarChart = <K extends ChartConfig>(
       <BarChartPrimitive
         accessibilityLayer
         data={preparedData}
-        margin={{ left: 12, right: 12, top: label ? 24 : 0 }}
+        margin={{
+          left: yAxis && !yAxis.hide ? 0 : 12,
+          right: 12,
+          top: label ? 24 : 0,
+        }}
         stackOffset={type === "stacked-by-sign" ? "sign" : undefined}
       >
         <ChartTooltip
@@ -71,9 +75,10 @@ const _BarChart = <K extends ChartConfig>(
         />
         <CartesianGrid {...cartesianGridProps()} />
         <YAxis
-          width={maxLabelWidth + 10}
           {...yAxisProps(yAxis)}
-          hide={yAxis?.hide}
+          tick
+          width={yAxis.width ?? maxLabelWidth + 20}
+          hide={yAxis.hide}
         />
         <XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />
 
