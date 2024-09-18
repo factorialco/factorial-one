@@ -7,13 +7,13 @@ import { IndicatorsList } from "."
 const taskCategories = [
   {
     label: "Overdue",
-    count: 1,
+    content: "1",
     icon: AlertCircle,
     color: "text-f1-icon-critical",
   },
   {
     label: "Due",
-    count: 3,
+    content: "3",
     icon: Circle,
     color: "text-f1-icon",
   },
@@ -46,7 +46,7 @@ export const ThreeElements: Story = {
   args: {
     items: taskCategories.concat({
       label: "No due",
-      count: 5,
+      content: "5",
       icon: Circle,
       color: "text-f1-icon-secondary",
     }),
