@@ -42,7 +42,7 @@ export const Horizontal: Story = {
 export const Both: Story = {
   args: {},
   render: (props) => (
-    <div className="h-96 w-48 flex-row gap-4 overflow-hidden">
+    <div className="flex h-96 w-48 flex-row gap-4 overflow-hidden">
       <ScrollArea {...props}>
         <StackWithOverflow />
       </ScrollArea>
