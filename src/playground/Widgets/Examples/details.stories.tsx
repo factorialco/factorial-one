@@ -1,6 +1,9 @@
 import { Badge } from "@/components/Information/Badge"
-import { DetailsItem, DetailsItemType } from "@/components/Widgets/DetailsItem"
-import { Weekdays } from "@/components/Widgets/Weekdays"
+import {
+  DetailsItem,
+  DetailsItemType,
+} from "@/experimental/Widgets/DetailsItem"
+import { Weekdays } from "@/experimental/Widgets/Weekdays"
 import { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps } from "react"
 
