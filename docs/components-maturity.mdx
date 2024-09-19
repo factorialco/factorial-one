@@ -1,0 +1,69 @@
+import { Meta } from "@storybook/blocks"
+
+<Meta title="Components maturity" />
+
+# Maturity Model
+
+Explaining the difference between stable and experimental components
+
+## TLDR
+
+<div className="grid grid-cols-[auto_1fr]">
+  <div className="flex items-center justify-center bg-f1-background-critical p-4">
+    Playground
+  </div>
+  <ul>
+    <li>Internal only, not part of the public API.</li>
+    <li>No stability or rules; for internal experimentation.</li>
+    <li>Use: Internal testing and prototyping only.</li>
+  </ul>
+  <div className="flex items-center justify-center bg-f1-background-warning p-4">
+    Experimental
+  </div>
+  <ul>
+    <li>Unstable API and design, subject to frequent changes.</li>
+    <li>
+      No guarantee of backward compatibility; does not follow semantic
+      versioning.
+    </li>
+    <li>Exported from `@factorialco/factorial-one/experiment`</li>
+    <li>Use: Prototyping and non-critical projects, with caution.</li>
+  </ul>
+  <div className="flex items-center justify-center bg-f1-background-positive p-4">
+    Stable
+  </div>
+  <ul>
+    <li>Production-ready, fully tested.</li>
+    <li>API and design are stable; follows semantic versioning.</li>
+    <li>Backward-compatible; breaking changes occur only in major releases.</li>
+    <li>Exported from the root of `@factorialco/factorial-one`</li>
+    <li>Use: Safe for all production projects.</li>
+  </ul>
+  <div className="flex items-center justify-center bg-f1-background-info p-4">
+    Deprecated
+  </div>
+  <ul>
+    <li>Obsolete; will be removed in the next major version.</li>
+    <li>Has better alternatives; not actively maintained.</li>
+    <li>
+      Use: Avoid in new projects, and migrate existing usage to newer
+      components.
+    </li>
+  </ul>
+</div>
+
+## Experimental → Stable
+
+Experimental components may become stable once tested and feedback is incorporated.
+The Factorial One team provides the migration guide in case of API changes during the promotion.
+
+The promotion happens when an experimental component completes the checklist:
+- The component meets design requirements
+- All features and edge cases implemented
+- Composable API provided
+- The component has screenshot and unit tests
+- The component is responsive
+- Accessibility requirements are met on the AA level
+- Documentation page has description and use cases together with stories
+
+
