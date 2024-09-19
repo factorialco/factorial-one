@@ -31,7 +31,6 @@ export default defineConfig({
     lib: {
       entry: {
         ["factorial-one"]: resolve(__dirname, "lib/factorial-one.ts"),
-        ["playground"]: resolve(__dirname, "src/playground/exports.ts"),
         ["experimental"]: resolve(__dirname, "lib/experimental/exports.ts"),
       },
       fileName: (_, entryName) => {

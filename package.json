@@ -4,6 +4,18 @@
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/factorial-one.js",
+      "types": "./dist/factorial-one.d.ts"
+    },
+    "./experimental": {
+      "import": "./dist/experimental.js",
+      "types": "./dist/experimental.d.ts"
+    },
+    "./dist/styles.css": "./dist/styles.css",
+    "./assets/fonts/*": "./assets/fonts/*"
+  },
   "packageManager": "npm@10.8.2",
   "files": [
     "assets",
