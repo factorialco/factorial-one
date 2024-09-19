@@ -80,31 +80,7 @@ export const Default: Story = {
     routes: [{ title: "Employees", url: "/employees" }],
     breadcrumbTitle: "Alba Horneros",
     icon: User,
-    details: [
-      {
-        title: "Email",
-        content: "alicia.keys@factorial.co",
-      },
-      {
-        title: "Phone",
-        content: "(120) 687-3123",
-      },
-      {
-        title: "Legal entity",
-        content: "Everyday Software SL",
-      },
-      {
-        title: "Start date",
-        content: "01/01/2023",
-      },
-      {
-        title: "Contract type",
-        content: "Full time",
-      },
-    ],
-    activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    manager: "Isabella González",
-    teams: ["Design", "Product", "Foundations Squad"],
+    side: <div>Side</div>,
   },
   parameters: {
     layout: "fullscreen",
