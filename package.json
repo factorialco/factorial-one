@@ -14,7 +14,8 @@
       "types": "./dist/experimental.d.ts"
     },
     "./dist/styles.css": "./dist/styles.css",
-    "./assets/fonts/*": "./assets/fonts/*"
+    "./assets/fonts/*": "./assets/fonts/*",
+    "./icons/*": "./icons/*"
   },
   "packageManager": "npm@10.8.2",
   "files": [
