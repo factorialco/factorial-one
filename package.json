@@ -13,9 +13,12 @@
       "import": "./dist/experimental.js",
       "types": "./dist/experimental.d.ts"
     },
+    "./icons": {
+      "import": "./icons/index.js",
+      "types": "./icons/index.d.ts"
+    },
     "./dist/styles.css": "./dist/styles.css",
-    "./assets/fonts/*": "./assets/fonts/*",
-    "./icons/*": "./icons/*"
+    "./assets/fonts/*": "./assets/fonts/*"
   },
   "packageManager": "npm@10.8.2",
   "files": [
