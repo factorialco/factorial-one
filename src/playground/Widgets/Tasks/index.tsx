@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
-import { TasksList } from "@/components/Widgets/TasksList"
-import { WidgetContainer } from "@/components/Widgets/WidgetContainer"
+import { TasksList } from "@/experimental/Widgets/TasksList"
+import { WidgetContainer } from "@/experimental/Widgets/WidgetContainer"
 import { Circle } from "@/icons"
 import AlertCircle from "@/icons/AlertCircle"
 import { Indicator } from "@/ui/indicator"
