@@ -1,4 +1,3 @@
-import { Stack } from "@/components/Layout/Stack"
 import {
   ComponentProps,
   createContext,
@@ -42,15 +41,16 @@ export const LayoutProvider: React.FC<
 
   return (
     <LayoutContext.Provider value={{ element }}>
-      <Stack
+      <div
         ref={ref}
         id="factorial-one-layout"
         className={cn({
-          "h-screen w-screen bg-f1-background-secondary": fullScreen,
+          "flex h-screen w-screen flex-col bg-f1-background-secondary":
+            fullScreen,
         })}
       >
         {children}
-      </Stack>
+      </div>
     </LayoutContext.Provider>
   )
 }

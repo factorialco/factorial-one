@@ -1,4 +1,3 @@
-import { Stack } from "@/components/Layout/Stack"
 import { cva } from "class-variance-authority"
 import * as React from "react"
 import {
@@ -65,12 +64,9 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
       {enabled &&
         typeof document !== "undefined" &&
         createPortal(
-          <Stack
-            gap="2"
-            className="fixed right-2 top-2 z-50 rounded-sm border-solid border-f1-border bg-white p-4 opacity-80 shadow-md"
-          >
+          <div className="fixed right-2 top-2 z-50 flex flex-col space-y-2 rounded-sm border-solid border-f1-border bg-white p-4 opacity-80 shadow-md">
             <div className="text-md font-bold z-50">XRay</div>
-            <Stack gap="2">
+            <div className="flex flex-col space-y-2">
               {componentTypes.map((type) => (
                 <label className="block">
                   <input
@@ -86,8 +82,8 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
                   {type}
                 </label>
               ))}
-            </Stack>
-          </Stack>,
+            </div>
+          </div>,
           document?.body
         )}
     </XRayContext.Provider>
