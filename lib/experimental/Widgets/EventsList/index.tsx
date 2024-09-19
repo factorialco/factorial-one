@@ -1,4 +1,4 @@
-import { Event, EventProps } from "../ui/event"
+import { Event, EventProps } from "./event"
 
 export interface EventsListProps {
   events: EventProps[]
@@ -18,7 +18,7 @@ export const EventsList: React.FC<EventsListProps> = ({
   return (
     <div>
       {title && (
-        <p className="text-f1-foreground-secondary mb-4 font-medium">{title}</p>
+        <p className="mb-4 font-medium text-f1-foreground-secondary">{title}</p>
       )}
       <div className="flex flex-col gap-4">
         {events.slice(0, limit).map((item) => (
