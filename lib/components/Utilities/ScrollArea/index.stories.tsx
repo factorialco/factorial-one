@@ -2,8 +2,6 @@ import { Button } from "@/components/Actions/Button"
 import { ScrollArea } from "."
 
 import { Alert, AlertTitle } from "@/components/Information/Alert"
-import { Split } from "@/components/Layout/Split"
-import { Stack } from "@/components/Layout/Stack"
 import { Placeholder } from "@/lib/storybook-utils"
 import type { Meta, StoryObj } from "@storybook/react"
 
@@ -22,62 +20,62 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {},
   render: (props) => (
-    <Stack className="h-96" overflow={`hidden`} gap="4">
+    <div className="flex h-96 flex-col gap-4 overflow-hidden">
       <ScrollArea {...props}>
         <StackWithOverflow />
       </ScrollArea>
-    </Stack>
+    </div>
   ),
 }
 
 export const Horizontal: Story = {
   args: {},
   render: (props) => (
-    <Stack className="w-48" overflow={`hidden`} gap="4">
+    <div className="flex w-48 flex-col gap-4 overflow-hidden">
       <ScrollArea {...props}>
         <StackWithOverflow length={4} />
       </ScrollArea>
-    </Stack>
+    </div>
   ),
 }
 
 export const Both: Story = {
   args: {},
   render: (props) => (
-    <Stack className="h-96 w-48" overflow={`hidden`} gap="4">
+    <div className="flex h-96 w-48 flex-row gap-4 overflow-hidden">
       <ScrollArea {...props}>
         <StackWithOverflow />
       </ScrollArea>
-    </Stack>
+    </div>
   ),
 }
 
 export const Comparison: Story = {
   args: {},
   render: (props) => (
-    <Split className="h-96" gap={"8"}>
-      <Stack className="h-full" overflow={`hidden`} gap="4">
+    <div className="h-96 flex-row gap-8">
+      <div className="flex h-full flex-col gap-4 overflow-hidden">
         <Alert variant="positive">
           <AlertTitle>New ScrollArea Component</AlertTitle>
         </Alert>
         <ScrollArea {...props}>
           <StackWithOverflow />
         </ScrollArea>
-      </Stack>
-      <Stack className="h-full" overflow={`hidden`} gap="4">
+      </div>
+      <div className="flex h-full flex-col gap-4 overflow-hidden">
         <Alert variant="warning">
           <AlertTitle>Default ScrollBar</AlertTitle>
         </Alert>
-        <Stack overflow={`auto`}>
+        <div className="flex flex-col gap-4 overflow-auto">
           <StackWithOverflow />
-        </Stack>
-      </Stack>
-    </Split>
+        </div>
+      </div>
+    </div>
   ),
 }
 
 const StackWithOverflow = ({ length = 20 }: { length?: number }) => (
-  <Stack gap="4" className="w-96">
+  <div className="flex w-96 flex-col gap-4">
     <Button
       label="Some button"
       onClick={() =>
@@ -91,5 +89,5 @@ const StackWithOverflow = ({ length = 20 }: { length?: number }) => (
         Element {i + 1} in a scrollable placeholder
       </Placeholder>
     ))}
-  </Stack>
+  </div>
 )

@@ -25,10 +25,10 @@ type Story = StoryObj
 export const Example: Story = {
   render: () => (
     <Split grow gap="4">
-      <Placeholder>Sidebar</Placeholder>
+      <Placeholder className="shrink">Sidebar</Placeholder>
       <Stack grow gap="4" className="h-full overflow-hidden">
         <Split gap="4" alignItems={"center"}>
-          <Placeholder grow>Header</Placeholder>
+          <Placeholder className="grow">Header</Placeholder>
           <Split gap="2" justifyContent="center" alignItems={"center"}>
             <Button label="Create" icon={Add} variant="default" />
             <Button
@@ -39,7 +39,7 @@ export const Example: Story = {
             />
           </Split>
         </Split>
-        <Placeholder grow overflow="auto" className="h-full">
+        <Placeholder className="h-full grow overflow-auto">
           {Array.from({ length: 100 }, (_, i) => (
             <div key={i}>Content</div>
           ))}

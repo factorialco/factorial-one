@@ -12,7 +12,7 @@ const meta = {
   render: (args) => (
     <Split {...args}>
       {Array.from({ length: 10 }).map((_, i) => (
-        <Placeholder shrink>{i + 1}</Placeholder>
+        <Placeholder className="shrink">{i + 1}</Placeholder>
       ))}
     </Split>
   ),
@@ -30,7 +30,7 @@ export const Wrap: Story = {
     return (
       <Split {...args}>
         {Array.from({ length: 30 }).map((_, i) => (
-          <Placeholder shrink>{i + 1}</Placeholder>
+          <Placeholder className="shrink">{i + 1}</Placeholder>
         ))}
       </Split>
     )
@@ -40,9 +40,9 @@ export const Wrap: Story = {
 export const Grow: Story = {
   render: (args) => (
     <Split {...args} grow>
-      <Placeholder shrink>1</Placeholder>
-      <Placeholder grow>Grow (2)</Placeholder>
-      <Placeholder shrink>3</Placeholder>
+      <Placeholder className="shrink">1</Placeholder>
+      <Placeholder className="grow">Grow (2)</Placeholder>
+      <Placeholder className="shrink">3</Placeholder>
     </Split>
   ),
 }
@@ -54,7 +54,7 @@ export const WrapGrow: Story = {
   render: (args) => (
     <Split {...args}>
       {Array.from({ length: 30 }).map((_, i) => (
-        <Placeholder grow>{i + 1}</Placeholder>
+        <Placeholder className="grow">{i + 1}</Placeholder>
       ))}
     </Split>
   ),
@@ -67,7 +67,7 @@ export const VerticalAlign: Story = {
   render: (args) => (
     <Split {...args}>
       <Placeholder>Single line content</Placeholder>
-      <Placeholder grow>
+      <Placeholder className="grow">
         Content with <br /> multiple lines <br /> of text <br /> to showcase how
         elements <br /> with different <br /> height will be aligned
       </Placeholder>
