@@ -36,7 +36,7 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
             <p>{title}</p>
             <p className="text-f1-foreground-secondary">{subtitle}</p>
           </div>
-          <p className="text-f1-foreground-secondary text-sm">{description}</p>
+          <p className="text-sm text-f1-foreground-secondary">{description}</p>
         </div>
       </div>
     )
