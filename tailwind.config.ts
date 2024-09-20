@@ -122,6 +122,13 @@ export default {
           letterSpacing: "-0.01em",
         },
       ],
+      "3xl": [
+        "2.25rem",
+        {
+          lineHeight: "2.5rem",
+          letterSpacing: "-0.02em",
+        },
+      ],
     },
     boxShadow: {
       DEFAULT: "0 2px 20px 0 hsl(var(--neutral-100) / 0.04)",
@@ -231,6 +238,7 @@ export default {
         },
       },
       borderRadius: {
+        // --radius: 0.5rem;
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
