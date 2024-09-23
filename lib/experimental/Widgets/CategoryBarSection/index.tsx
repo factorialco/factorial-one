@@ -25,7 +25,7 @@ export function CategoryBarSection({
           {label}
         </span>
         <div className="flex items-baseline gap-2">
-          <span className="font-bold text-2xl">{title}</span>
+          <span className="text-2xl font-semibold">{title}</span>
         </div>
       </div>
       <div className="mt-2">
