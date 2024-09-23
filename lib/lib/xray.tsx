@@ -65,7 +65,7 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
         typeof document !== "undefined" &&
         createPortal(
           <div className="fixed right-2 top-2 z-50 flex flex-col space-y-2 rounded-sm border-solid border-f1-border bg-white p-4 opacity-80 shadow-md">
-            <div className="text-md font-bold z-50">XRay</div>
+            <div className="text-md z-50 font-semibold">XRay</div>
             <div className="flex flex-col space-y-2">
               {componentTypes.map((type) => (
                 <label className="block">
