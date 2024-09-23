@@ -56,7 +56,7 @@ const Container = forwardRef<
   }
 
   return (
-    <Card ref={ref}>
+    <Card ref={ref} className="min-h-64">
       {header && (
         <CardHeader>
           <div className="flex flex-1 flex-col truncate">
