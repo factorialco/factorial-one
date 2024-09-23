@@ -31,13 +31,13 @@
 @font-face {
   font-family: "Inter";
   font-style: normal;
-  font-weight: 700;
-  src: url("Inter-Bold.woff") format("woff");
+  font-weight: 600;
+  src: url("Inter-SemiBold.woff") format("woff");
 }
 
 @font-face {
   font-family: "Inter";
   font-style: italic;
-  font-weight: 700;
-  src: url("Inter-BoldItalic.woff") format("woff");
+  font-weight: 600;
+  src: url("Inter-SemiBoldItalic.woff") format("woff");
 }
