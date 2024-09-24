@@ -8,7 +8,7 @@ import { ComponentProps, forwardRef, useState } from "react"
 
 export type ButtonProps = Pick<
   ComponentProps<typeof ShadcnButton>,
-  "variant" | "disabled" | "type" | "round"
+  "variant" | "size" | "disabled" | "type" | "round"
 > & {
   onClick?: (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -32,6 +32,7 @@ const Button: React.FC<ButtonProps> = forwardRef<
       loading: forceLoading,
       icon,
       variant = "default",
+      size = "medium",
       ...props
     },
     ref
@@ -61,12 +62,13 @@ const Button: React.FC<ButtonProps> = forwardRef<
         disabled={disabled || loading || forceLoading}
         ref={ref}
         variant={variant}
+        size={size}
         round={hideLabel}
         {...props}
       >
         {icon && (
           <Icon
-            size="md"
+            size={size === "small" ? "sm" : "md"}
             icon={icon}
             className={
               hideLabel
