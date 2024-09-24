@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { ProfileLayout } from "."
+import { InfoPaneLayout } from "."
 
 const meta = {
-  component: ProfileLayout,
+  component: InfoPaneLayout,
   tags: ["autodocs"],
   args: {
     mainContent: (
@@ -17,7 +17,14 @@ const meta = {
       </div>
     ),
   },
-} satisfies Meta<typeof ProfileLayout>
+  decorators: [
+    (Story) => (
+      <div className="h-svh">
+        <Story />
+      </div>
+    ),
+  ],
+} satisfies Meta<typeof InfoPaneLayout>
 
 export default meta
 type Story = StoryObj<typeof meta>
