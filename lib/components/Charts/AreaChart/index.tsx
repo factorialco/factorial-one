@@ -57,7 +57,9 @@ export const _AreaChart = <K extends LineChartConfig>(
       )
     )
   )
-
+  const yAxisWidth = yAxis?.width ?? maxLabelWidth + 20
+  const isYAxisVisible = !yAxis?.hide
+  const isXAxisVisible = !xAxis?.hide
   return (
     <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <AreaChartPrimitive
@@ -70,7 +72,7 @@ export const _AreaChart = <K extends LineChartConfig>(
         }}
       >
         <CartesianGrid {...cartesianGridProps()} />
-        {!xAxis?.hide && (
+        {isXAxisVisible && (
           <XAxis
             dataKey="x"
             tickLine={false}
@@ -82,7 +84,7 @@ export const _AreaChart = <K extends LineChartConfig>(
             interval={0}
           />
         )}
-        {!yAxis?.hide && (
+        {isYAxisVisible && (
           <YAxis
             tickLine={false}
             axisLine={false}
@@ -91,7 +93,7 @@ export const _AreaChart = <K extends LineChartConfig>(
             tickFormatter={yAxis?.tickFormatter}
             ticks={yAxis?.ticks}
             domain={yAxis?.domain}
-            width={yAxis?.width ?? maxLabelWidth + 20}
+            width={yAxisWidth}
             className={cn(yAxis?.isBlur && "blur-sm")}
           />
         )}
@@ -142,9 +144,13 @@ export const _AreaChart = <K extends LineChartConfig>(
         ))}
         {Object.keys(dataConfig).length > 1 && (
           <ChartLegend
-            className={"flex justify-start"}
+            className="flex justify-start"
             iconType="star"
-            content={<ChartLegendContent />}
+            content={
+              <ChartLegendContent
+                leftShift={isYAxisVisible ? Math.round(yAxisWidth) : 0}
+              />
+            }
           />
         )}
       </AreaChartPrimitive>
