@@ -56,7 +56,7 @@ const Container = forwardRef<
   }
 
   return (
-    <Card ref={ref}>
+    <Card className="p-4" ref={ref}>
       {header && (
         <CardHeader>
           <div className="flex flex-1 flex-col truncate">
