@@ -1,8 +1,14 @@
 import { Component } from "@/lib/component"
 import { AutoGrid as AutoGridComponent } from "./AutoGrid"
-import { InfoPaneLayout as InfoPaneLayoutComponent } from "./InfoPaneLayout"
+import {
+  InfoPaneLayout as InfoPaneLayoutComponent,
+  InfoPaneLayoutProps,
+} from "./InfoPaneLayout"
 import { Split as SplitComponent } from "./Split"
 import { Stack as StackComponent } from "./Stack"
+
+export type { InfoPaneLayoutProps }
+
 export const Stack = Component(
   {
     name: "Stack",

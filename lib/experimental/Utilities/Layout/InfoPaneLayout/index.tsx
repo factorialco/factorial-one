@@ -1,12 +1,12 @@
+import { VerticalSeparator } from "@/experimental/Widgets/VerticalSeparator"
 import React, { forwardRef } from "react"
-import { VerticalSeparator } from "../../../Widgets/VerticalSeparator"
 
-interface ProfileLayoutProps {
+export interface InfoPaneLayoutProps {
   mainContent: React.ReactNode
   sideContent: React.ReactNode
 }
 
-export const InfoPaneLayout = forwardRef<HTMLDivElement, ProfileLayoutProps>(
+export const InfoPaneLayout = forwardRef<HTMLDivElement, InfoPaneLayoutProps>(
   ({ mainContent, sideContent }, ref) => {
     return (
       <div
