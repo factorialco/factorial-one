@@ -13,7 +13,7 @@ export const variants = [
 ] as const
 
 const buttonVariants = cva(
-  "focus-visible:ring-offset focus-visible:ring-ring group inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-xl border-none text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
+  "focus-visible:ring-offset focus-visible:ring-ring group inline-flex h-10 items-center justify-center gap-1 whitespace-nowrap rounded-md border-none text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
