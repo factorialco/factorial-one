@@ -3,6 +3,7 @@ import React from "react"
 
 interface CounterProps {
   value: number
+  maxValue?: number
   size?: "base" | "sm"
   type?: "default" | "selected" | "bold"
 }
@@ -33,8 +34,12 @@ const Counter: React.FC<CounterProps> = ({
   size = "base",
   type = "default",
   value,
+  maxValue,
 }) => {
-  return <div className={counterVariants({ size, type })}>{value}</div>
+  const displayValue =
+    maxValue !== undefined && value > maxValue ? `+${maxValue}` : value
+
+  return <div className={counterVariants({ size, type })}>{displayValue}</div>
 }
 
 export { Counter }
