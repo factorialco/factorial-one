@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react"
-import { VerticalSeparator } from "src/playground/Profile/VerticalSeparator"
+import { VerticalSeparator } from "../Utils/VerticalSeparator"
 
 export interface InfoPaneLayoutProps {
   mainContent: React.ReactNode

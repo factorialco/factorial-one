@@ -1,11 +1,11 @@
 import { Badge } from "@/components/Information/Badge"
-import { Weekdays } from "@/experimental/Widgets/Content/Weekdays"
-import { Meta, StoryObj } from "@storybook/react"
-import { ComponentProps } from "react"
 import {
   DetailsItem,
   DetailsItemType,
-} from "src/playground/Profile/DetailsItem"
+} from "@/experimental/Layout/Utils/DetailsItem"
+import { Weekdays } from "@/experimental/Widgets/Content/Weekdays"
+import { Meta, StoryObj } from "@storybook/react"
+import { ComponentProps } from "react"
 
 const meta: Meta = {
   title: "Insights/Examples/Details",
