@@ -33,7 +33,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateType>(
     return (
       <div
         className={cn(
-          "relative flex h-52 max-w-96 flex-col justify-between rounded-xl pb-6 pl-5 pr-5 pt-4",
+          "relative flex h-52 max-w-96 flex-col justify-between rounded-md pb-6 pl-5 pr-5 pt-4",
           emptyStateVariants({ background: variant })
         )}
         ref={ref}

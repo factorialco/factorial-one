@@ -4,14 +4,17 @@ import React, { forwardRef } from "react"
 export interface DetailsItemType {
   title: string
   content: string | React.ReactNode
-  className?: string
 }
 
 export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
-  ({ title, content, className }, ref) => {
+  ({ title, content }, ref) => {
+    const hasBiggerGap = typeof content !== "string"
     return (
-      <div ref={ref} className={cn("flex flex-col gap-[0.15rem]", className)}>
-        <p className="text-sm text-f1-foreground">{title}</p>
+      <div
+        ref={ref}
+        className={cn("flex flex-col", hasBiggerGap ? "gap-2" : "gap-1")}
+      >
+        <p className="text-sm text-f1-foreground-secondary">{title}</p>
         <p className="text-sm font-medium text-f1-foreground">{content}</p>
       </div>
     )

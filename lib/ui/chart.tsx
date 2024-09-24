@@ -217,7 +217,7 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid min-w-[8rem] items-start gap-2 rounded-lg border border-solid border-f1-border bg-f1-background px-3 py-2.5 text-sm shadow-xl",
+          "grid min-w-[8rem] items-start gap-2 rounded-sm border border-solid border-f1-border bg-f1-background px-3 py-2.5 text-sm shadow-xl",
           className
         )}
       >
@@ -305,10 +305,18 @@ const ChartLegendContent = React.forwardRef<
     Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
       hideIcon?: boolean
       nameKey?: string
+      leftShift?: number
     }
 >(
   (
-    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
+    {
+      className,
+      hideIcon = false,
+      payload,
+      verticalAlign = "bottom",
+      nameKey,
+      leftShift = 0,
+    },
     ref
   ) => {
     const { config } = useChart()
@@ -317,14 +325,16 @@ const ChartLegendContent = React.forwardRef<
       return null
     }
 
+    const baseLeftShift = -6
     return (
       <div
         ref={ref}
         className={cn(
-          "-ml-2 flex items-center justify-center gap-4 text-f1-foreground-secondary",
+          "relative flex items-center justify-center gap-4 text-f1-foreground-secondary",
           verticalAlign === "top" ? "pb-2" : "pt-2",
           className
         )}
+        style={{ left: baseLeftShift + leftShift }}
       >
         {payload.map((item) => {
           const key = `${nameKey || item.dataKey || "value"}`
