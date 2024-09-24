@@ -32,7 +32,7 @@ const Button: React.FC<ButtonProps> = forwardRef<
       loading: forceLoading,
       icon,
       variant = "default",
-      size = "medium",
+      size = "md",
       ...props
     },
     ref
@@ -68,7 +68,7 @@ const Button: React.FC<ButtonProps> = forwardRef<
       >
         {icon && (
           <Icon
-            size={size === "small" ? "sm" : "md"}
+            size={size === "sm" ? "sm" : "md"}
             icon={icon}
             className={
               hideLabel

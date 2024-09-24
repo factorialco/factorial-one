@@ -12,7 +12,7 @@ export const variants = [
   "promote",
 ] as const
 
-export const sizes = ["small", "medium", "large"] as const
+export const sizes = ["sm", "md", "lg"] as const
 
 const buttonVariants = cva(
   "group inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md border-none text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50",
@@ -33,9 +33,9 @@ const buttonVariants = cva(
           "border border-solid border-f1-border-promote bg-f1-background-promote text-f1-foreground hover:bg-f1-background-promote-hover",
       } satisfies Record<(typeof variants)[number], string>,
       size: {
-        small: "h-6 rounded-sm px-2",
-        medium: "h-8 rounded-md px-3",
-        large: "h-10 rounded-md px-4",
+        sm: "h-6 rounded-sm px-2",
+        md: "h-8 rounded-md px-3",
+        lg: "h-10 rounded-md px-4",
       } satisfies Record<(typeof sizes)[number], string>,
       round: {
         true: "aspect-square px-0",
@@ -43,7 +43,7 @@ const buttonVariants = cva(
     },
     defaultVariants: {
       variant: "default",
-      size: "medium",
+      size: "md",
       round: false,
     },
   }
