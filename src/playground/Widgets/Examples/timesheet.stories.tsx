@@ -1,5 +1,5 @@
-import { CategoryBarSection } from "@/experimental/Widgets/CategoryBarSection"
-import { WidgetContainer } from "@/experimental/Widgets/WidgetContainer"
+import { CategoryBarSection } from "@/experimental/Widgets/Content/CategoryBarSection"
+import { Widget } from "@/experimental/Widgets/Widget"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
@@ -24,7 +24,7 @@ export const Timesheet: Story = {
   render: () => (
     <>
       <h2 className="mb-4">Timesheet example</h2>
-      <WidgetContainer
+      <Widget
         header={{
           title: "Timesheet",
           subtitle: "July",
@@ -66,7 +66,7 @@ export const Timesheet: Story = {
           ]}
           legend
         />
-      </WidgetContainer>
+      </Widget>
     </>
   ),
 }
@@ -75,7 +75,7 @@ export const TimesheetOvertime: Story = {
   render: () => (
     <>
       <h2 className="mb-4">Timesheet Overtime example</h2>
-      <WidgetContainer
+      <Widget
         header={{
           title: "Timesheet",
           subtitle: "July",
@@ -118,7 +118,7 @@ export const TimesheetOvertime: Story = {
             },
           ]}
         />
-      </WidgetContainer>
+      </Widget>
     </>
   ),
 }

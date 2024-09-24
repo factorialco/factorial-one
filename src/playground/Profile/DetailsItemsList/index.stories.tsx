@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { Badge } from "@/components/Information/Badge"
 import { DetailsItemsList } from "."
+import { Weekdays } from "../../../../lib/experimental/Widgets/Content/Weekdays"
 import { BadgesList } from "../BadgesList"
-import { Weekdays } from "../Weekdays"
 
 const manager = (
   <Badge

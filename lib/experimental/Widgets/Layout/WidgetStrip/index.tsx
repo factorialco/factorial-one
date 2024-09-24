@@ -2,7 +2,7 @@ import { ScrollArea } from "@/components/Utilities/ScrollArea"
 import { Blend, withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { forwardRef, ReactNode } from "react"
-import { WidgetContainer } from "../WidgetContainer"
+import { Widget } from "../../Widget"
 
 type DashboardProps = {
   children: ReactNode[]
@@ -31,9 +31,9 @@ const WidgetStripComponent = forwardRef<HTMLDivElement, DashboardProps>(
 export const WidgetStrip = withSkeleton(WidgetStripComponent, () => (
   <Blend orientation="horizontal">
     <Container>
-      <WidgetContainer.Skeleton />
-      <WidgetContainer.Skeleton />
-      <WidgetContainer.Skeleton />
+      <Widget.Skeleton />
+      <Widget.Skeleton />
+      <Widget.Skeleton />
     </Container>
   </Blend>
 ))

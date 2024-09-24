@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { WidgetStrip } from "."
-import { AreaChartWidget } from "../Charts/AreaChartWidget"
+import { AreaChartWidget } from "../../Charts/AreaChartWidget"
 
 import { AreaChartProps } from "@/components/Charts/AreaChart"
-import AreaChartWidgetStoriesMeta from "../Charts/AreaChartWidget/index.stories"
-import { BarChartWidget } from "../Charts/BarChartWidget"
-import BarChartWidgetStoriesMeta from "../Charts/BarChartWidget/index.stories"
-import { ComposeChartContainerProps } from "../Charts/ChartContainer"
-import { LineChartWidget } from "../Charts/LineChartWidget"
-import LineChartWidgetStoriesMeta from "../Charts/LineChartWidget/index.stories"
-import { PieChartWidget } from "../Charts/PieChartWidget"
-import PieChartWidgetStoriesMeta from "../Charts/PieChartWidget/index.stories"
-import { WidgetContainer } from "../WidgetContainer"
+import AreaChartWidgetStoriesMeta from "../../Charts/AreaChartWidget/index.stories"
+import { BarChartWidget } from "../../Charts/BarChartWidget"
+import BarChartWidgetStoriesMeta from "../../Charts/BarChartWidget/index.stories"
+import { ComposeChartContainerProps } from "../../Charts/ChartContainer"
+import { LineChartWidget } from "../../Charts/LineChartWidget"
+import LineChartWidgetStoriesMeta from "../../Charts/LineChartWidget/index.stories"
+import { PieChartWidget } from "../../Charts/PieChartWidget"
+import PieChartWidgetStoriesMeta from "../../Charts/PieChartWidget/index.stories"
+import { Widget } from "../../Widget"
 
 const renderWidget = (index: number) => {
   const Widgets = [
@@ -25,14 +25,12 @@ const renderWidget = (index: number) => {
     () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
     () => <BarChartWidget {...BarChartWidgetStoriesMeta.args} />,
     () => (
-      <WidgetContainer
-        header={{ title: "A form widget", subtitle: "Enter your data" }}
-      >
+      <Widget header={{ title: "A form widget", subtitle: "Enter your data" }}>
         <p>
           Never gonna give you up. Never gonna let you down. Never gonna turn
           around and desert you.
         </p>
-      </WidgetContainer>
+      </Widget>
     ),
   ]
 

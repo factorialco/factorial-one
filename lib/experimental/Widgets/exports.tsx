@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+export * from "./Charts/exports"
+export * from "./Content/CategoryBarSection"
+export * from "../../../src/playground/Profile/DetailsItem"
+export * from "./Content/IndicatorsList"
+export * from "./Content/Info"
+export * from "./Content/TasksList"
+export * from "./Content/TimeStatus"
+export * from "./Content/TwoColumnsList"
+export * from "./Content/Weekdays"
+export * from "./Layout/exports"
+export * from "./Widget"
+=======
 export * from "./BadgesList"
 export * from "./CategoryBarSection"
 export * from "./Charts/exports"
@@ -14,3 +27,4 @@ export * from "./VerticalSeparator"
 export * from "./Weekdays"
 export * from "./WidgetContainer"
 export * from "./WidgetStrip"
+>>>>>>> origin/main

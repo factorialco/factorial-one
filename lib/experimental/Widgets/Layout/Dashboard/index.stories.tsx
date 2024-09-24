@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { Dashboard } from "."
-import { AreaChartWidget } from "../Charts/AreaChartWidget"
+import { AreaChartWidget } from "../../Charts/AreaChartWidget"
 
 import { AreaChartProps } from "@/components/Charts/AreaChart"
 import { Calendar } from "@/experimental/Forms/Fields/Calendar"
-import AreaChartWidgetStoriesMeta from "../Charts/AreaChartWidget/index.stories"
-import { ComposeChartContainerProps } from "../Charts/ChartContainer"
-import { LineChartWidget } from "../Charts/LineChartWidget"
-import LineChartWidgetStoriesMeta from "../Charts/LineChartWidget/index.stories"
-import { PieChartWidget } from "../Charts/PieChartWidget"
-import PieChartWidgetStoriesMeta from "../Charts/PieChartWidget/index.stories"
-import { RadialProgressWidget } from "../Charts/RadialProgressWidget"
-import RadialProgressWidgetStoriesMeta from "../Charts/RadialProgressWidget/index.stories"
-import { VerticalBarChartWidget } from "../Charts/VerticalBarChartWidget"
-import VerticalBarChartWidgetStoriesMeta from "../Charts/VerticalBarChartWidget/index.stories"
-import { WidgetContainer } from "../WidgetContainer"
+import AreaChartWidgetStoriesMeta from "../../Charts/AreaChartWidget/index.stories"
+import { ComposeChartContainerProps } from "../../Charts/ChartContainer"
+import { LineChartWidget } from "../../Charts/LineChartWidget"
+import LineChartWidgetStoriesMeta from "../../Charts/LineChartWidget/index.stories"
+import { PieChartWidget } from "../../Charts/PieChartWidget"
+import PieChartWidgetStoriesMeta from "../../Charts/PieChartWidget/index.stories"
+import { RadialProgressWidget } from "../../Charts/RadialProgressWidget"
+import RadialProgressWidgetStoriesMeta from "../../Charts/RadialProgressWidget/index.stories"
+import { VerticalBarChartWidget } from "../../Charts/VerticalBarChartWidget"
+import VerticalBarChartWidgetStoriesMeta from "../../Charts/VerticalBarChartWidget/index.stories"
+import { Widget } from "../../Widget"
 
 const renderWidget = (index: number) => {
   const Widgets = [
@@ -25,16 +25,16 @@ const renderWidget = (index: number) => {
       />
     ),
     () => (
-      <WidgetContainer header={{ title: "A form widget" }}>
+      <Widget header={{ title: "A form widget" }}>
         <p>
           Never gonna give you up. Never gonna let you down. Never gonna turn
           around and desert you.
         </p>
-      </WidgetContainer>
+      </Widget>
     ),
     () => <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
     () => (
-      <WidgetContainer
+      <Widget
         header={{
           title: "A widget",
         }}
@@ -42,7 +42,7 @@ const renderWidget = (index: number) => {
         <div className="flex justify-center">
           <Calendar defaultMonth={new Date(2024, 10, 15)} />
         </div>
-      </WidgetContainer>
+      </Widget>
     ),
     () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
     () => (
@@ -81,5 +81,11 @@ export const Default: Story = {}
 export const Skeleton: Story = {
   render() {
     return <Dashboard.Skeleton />
+  },
+}
+
+export const Small: Story = {
+  args: {
+    children: Array.from({ length: 4 }).map((_, i) => renderWidget(i)),
   },
 }

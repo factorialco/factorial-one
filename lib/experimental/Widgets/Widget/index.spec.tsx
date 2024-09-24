@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react"
 import { Fragment } from "react"
 import { expect, test } from "vitest"
-import { WidgetContainer } from "."
+import { Widget } from "."
 
-const renderWidgetContainer = () => {
+const renderWidget = () => {
   return render(
-    <WidgetContainer>
+    <Widget>
       <></>
       <Fragment></Fragment>
       {false && <p>asd</p>}
@@ -19,19 +19,19 @@ const renderWidgetContainer = () => {
       {false && <p>asd</p>}
       {null}
       {undefined}
-    </WidgetContainer>
+    </Widget>
   )
 }
 
 test("only valid elements are rendered", async () => {
-  renderWidgetContainer()
+  renderWidget()
 
   const paragraphs = screen.getAllByText(/.+/)
   expect(paragraphs).toHaveLength(3)
 })
 
 test("there is one separator between each valid element", async () => {
-  renderWidgetContainer()
+  renderWidget()
 
   const separators = screen.queryAllByRole("separator")
   expect(separators).toHaveLength(2)

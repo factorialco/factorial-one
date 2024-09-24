@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps } from "react"
-import { WidgetContainer } from "."
+import { Widget } from "."
 
-const meta: Meta<ComponentProps<typeof WidgetContainer.Skeleton>> = {
-  title: "Widgets/WidgetContainer/Skeleton",
-  component: WidgetContainer.Skeleton,
+const meta: Meta<ComponentProps<typeof Widget.Skeleton>> = {
+  component: Widget.Skeleton,
   parameters: {
     layout: "centered",
   },
@@ -18,7 +17,7 @@ const meta: Meta<ComponentProps<typeof WidgetContainer.Skeleton>> = {
 }
 
 export default meta
-export type Story = StoryObj<typeof WidgetContainer.Skeleton>
+export type Story = StoryObj<typeof Widget.Skeleton>
 
 export const Default: Story = {}
 
@@ -33,7 +32,7 @@ export const WithTitle: Story = {
 export const WithSubtitle: Story = {
   args: {
     header: {
-      title: "I know the title!",
+      title: "I know the titles!",
       subtitle: "Also the subtitle!",
     },
   },

@@ -19,7 +19,7 @@ import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { cva, VariantProps } from "class-variance-authority"
 import React, { forwardRef, ReactNode } from "react"
 
-export interface WidgetContainerProps {
+export interface WidgetProps {
   header?: {
     title?: string
     subtitle?: string
@@ -46,7 +46,7 @@ const InlineDot = () => (
 
 const Container = forwardRef<
   HTMLDivElement,
-  WidgetContainerProps & { children: ReactNode }
+  WidgetProps & { children: ReactNode }
 >(({ header, alert, children, action, summaries }, ref) => {
   const isRealNode = (node: React.ReactNode): boolean => {
     return (
@@ -195,4 +195,4 @@ const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   )
 )
 
-export const WidgetContainer = withSkeleton(Container, Skeleton)
+export const Widget = withSkeleton(Container, Skeleton)
