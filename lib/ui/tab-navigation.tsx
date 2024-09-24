@@ -86,7 +86,7 @@ const TabNavigationLink = React.forwardRef<
         data-active={active ? "true" : undefined}
         aria-disabled={disabled}
         className={cn(
-          "group relative flex shrink-0 select-none items-center justify-center rounded-xl no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1",
+          "group relative flex shrink-0 select-none items-center justify-center rounded-md no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1",
           disabled ? "pointer-events-none" : ""
         )}
         ref={forwardedRef}
@@ -98,7 +98,7 @@ const TabNavigationLink = React.forwardRef<
           <span
             className={cn(
               // base
-              "flex items-center justify-center whitespace-nowrap rounded-xl px-3 py-1.5 font-medium transition-all",
+              "flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 font-medium transition-all",
               // background
               type === "primary"
                 ? "bg-f1-background-transparent"

@@ -37,9 +37,9 @@ const TabsExample = ({
       <Tabs
         tabs={tabItems}
         activeTab={activeTab}
-        onTabChange={(label) => {
-          setActiveTab(label)
-          action("Tab changed")(label)
+        onTabChange={(tab) => {
+          setActiveTab(tab.label)
+          action("Tab changed")(tab)
         }}
         type={type}
       />
