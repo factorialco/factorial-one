@@ -23,7 +23,7 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
           }}
         />
         <div
-          className={cn("h-10 w-1 rounded-sm")}
+          className={cn("h-10 w-1 rounded-2xs")}
           style={
             isPending
               ? {

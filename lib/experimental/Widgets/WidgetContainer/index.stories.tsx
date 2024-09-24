@@ -69,7 +69,7 @@ export const MultipleContent: Story = {
       Array.from({ length: 3 }).map((_, index) => (
         <div
           key={index}
-          className="rounded-lg bg-f1-background-secondary p-3 text-center text-f1-foreground"
+          className="rounded-sm bg-f1-background-secondary p-3 text-center text-f1-foreground"
         >
           Content {index + 1}
         </div>
