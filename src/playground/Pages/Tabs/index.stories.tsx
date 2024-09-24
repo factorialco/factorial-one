@@ -1,14 +1,14 @@
 import { AreaChartProps } from "@/components/Charts/AreaChart"
-import { AreaChartWidget } from "@/components/Widgets/Charts/AreaChartWidget"
-import AreaChartWidgetStoriesMeta from "@/components/Widgets/Charts/AreaChartWidget/index.stories"
-import { ComposeChartContainerProps } from "@/components/Widgets/Charts/ChartContainer"
-import { LineChartWidget } from "@/components/Widgets/Charts/LineChartWidget"
-import LineChartWidgetStoriesMeta from "@/components/Widgets/Charts/LineChartWidget/index.stories"
-import { PieChartWidget } from "@/components/Widgets/Charts/PieChartWidget"
-import PieChartWidgetStoriesMeta from "@/components/Widgets/Charts/PieChartWidget/index.stories"
-import { VerticalBarChartWidget } from "@/components/Widgets/Charts/VerticalBarChartWidget"
-import VerticalBarChartWidgetStoriesMeta from "@/components/Widgets/Charts/VerticalBarChartWidget/index.stories"
-import { Dashboard } from "@/components/Widgets/Dashboard"
+import { AreaChartWidget } from "@/experimental/Widgets/Charts/AreaChartWidget"
+import AreaChartWidgetStoriesMeta from "@/experimental/Widgets/Charts/AreaChartWidget/index.stories"
+import { ComposeChartContainerProps } from "@/experimental/Widgets/Charts/ChartContainer"
+import { LineChartWidget } from "@/experimental/Widgets/Charts/LineChartWidget"
+import LineChartWidgetStoriesMeta from "@/experimental/Widgets/Charts/LineChartWidget/index.stories"
+import { PieChartWidget } from "@/experimental/Widgets/Charts/PieChartWidget"
+import PieChartWidgetStoriesMeta from "@/experimental/Widgets/Charts/PieChartWidget/index.stories"
+import { VerticalBarChartWidget } from "@/experimental/Widgets/Charts/VerticalBarChartWidget"
+import VerticalBarChartWidgetStoriesMeta from "@/experimental/Widgets/Charts/VerticalBarChartWidget/index.stories"
+import { Dashboard } from "@/experimental/Widgets/Dashboard"
 import { User } from "@/icons"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Tabs } from "."
@@ -80,31 +80,7 @@ export const Default: Story = {
     routes: [{ title: "Employees", url: "/employees" }],
     breadcrumbTitle: "Alba Horneros",
     icon: User,
-    details: [
-      {
-        title: "Email",
-        content: "alicia.keys@factorial.co",
-      },
-      {
-        title: "Phone",
-        content: "(120) 687-3123",
-      },
-      {
-        title: "Legal entity",
-        content: "Everyday Software SL",
-      },
-      {
-        title: "Start date",
-        content: "01/01/2023",
-      },
-      {
-        title: "Contract type",
-        content: "Full time",
-      },
-    ],
-    activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    manager: "Isabella González",
-    teams: ["Design", "Product", "Foundations Squad"],
+    side: <div>Side</div>,
   },
   parameters: {
     layout: "fullscreen",

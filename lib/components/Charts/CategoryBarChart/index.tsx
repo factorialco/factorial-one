@@ -42,7 +42,7 @@ const _CategoryBarChart = (
             return (
               <Tooltip key={category.name}>
                 <TooltipTrigger
-                  className="h-full cursor-default overflow-hidden rounded-sm"
+                  className="h-full cursor-default overflow-hidden rounded-2xs"
                   style={{ width: `${percentage}%` }}
                   title={category.name}
                   asChild

@@ -122,6 +122,31 @@ export default {
           letterSpacing: "-0.01em",
         },
       ],
+      "3xl": [
+        "2.25rem",
+        {
+          lineHeight: "2.5rem",
+          letterSpacing: "-0.02em",
+        },
+      ],
+    },
+    borderRadius: {
+      none: "0px",
+      "2xs": "0.25rem",
+      xs: "0.375rem",
+      sm: "0.5rem",
+      DEFAULT: "0.625rem",
+      md: "0.75rem",
+      lg: "0.875rem",
+      xl: "1rem",
+      full: "9999px",
+    },
+    boxShadow: {
+      DEFAULT: "0 2px 20px 0 hsl(var(--neutral-100) / 0.04)",
+      md: "0 4px 20px 0 hsl(var(--neutral-100) / 0.08)",
+      lg: "0 8px 30px 0 hsl(var(--neutral-100) / 0.12)",
+      xl: "0 12px 56px 0 hsl(var(--neutral-100) / 0.16)",
+      none: "none",
     },
     // use pixel scale by default
     spacing: absoluteSpacing,
@@ -224,11 +249,6 @@ export default {
           link: "hsl(var(--link))",
         },
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -267,10 +287,6 @@ export default {
     },
     {
       pattern: /^border-f1-/,
-      variants: ["hover", "focus", "active"],
-    },
-    {
-      pattern: /^icon-f1-/,
       variants: ["hover", "focus", "active"],
     },
   ],

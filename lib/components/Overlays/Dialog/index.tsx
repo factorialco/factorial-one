@@ -1,5 +1,4 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
-import { Stack } from "@/components/Layout/Stack"
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import {
   Dialog,
@@ -66,16 +65,16 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
               <DialogDescription>{header.description}</DialogDescription>
             </DialogHeader>
           )}
-          <Stack grow>
+          <div className="flex-grow flex-col">
             {loading ? (
-              <Stack gap="4">
+              <div className="flex flex-col gap-4">
                 <Skeleton className="h-6 w-full rounded-full" />
                 <Skeleton className="h-6 w-full rounded-full" />
-              </Stack>
+              </div>
             ) : (
               children
             )}
-          </Stack>
+          </div>
           {actions && (
             <DialogFooter>
               {actions.secondary && (

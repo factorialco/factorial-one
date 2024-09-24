@@ -17,7 +17,7 @@ import {
   YAxis,
 } from "recharts"
 import { autoColor } from "../utils/colors"
-import { cartesianGridProps } from "../utils/elements"
+import { cartesianGridProps, measureTextWidth } from "../utils/elements"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { LineChartPropsBase } from "../utils/types"
@@ -45,15 +45,34 @@ export const _AreaChart = <K extends LineChartConfig>(
   const areas = Object.keys(dataConfig) as (keyof LineChartConfig)[]
   const chartId = nanoid(12)
 
+  const preparedData = prepareData(data)
+  const maxLabelWidth = Math.max(
+    ...preparedData.flatMap((el) =>
+      areas.map((key) =>
+        measureTextWidth(
+          yAxis?.tickFormatter
+            ? yAxis.tickFormatter(`${el[key]}`)
+            : `${el[key]}`
+        )
+      )
+    )
+  )
+  const yAxisWidth = yAxis?.width ?? maxLabelWidth + 20
+  const isYAxisVisible = !yAxis?.hide
+  const isXAxisVisible = !xAxis?.hide
   return (
     <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <AreaChartPrimitive
         accessibilityLayer
-        data={prepareData(data)}
-        margin={{ left: 12, right: 12, top: marginTop }}
+        data={preparedData}
+        margin={{
+          left: yAxis && !yAxis.hide ? 0 : 12,
+          right: 12,
+          top: marginTop,
+        }}
       >
         <CartesianGrid {...cartesianGridProps()} />
-        {!xAxis?.hide && (
+        {isXAxisVisible && (
           <XAxis
             dataKey="x"
             tickLine={false}
@@ -65,9 +84,8 @@ export const _AreaChart = <K extends LineChartConfig>(
             interval={0}
           />
         )}
-        {!yAxis?.hide && (
+        {isYAxisVisible && (
           <YAxis
-            width={32} // TODO fix width so its dynamic based on the max width of the yAxis labels
             tickLine={false}
             axisLine={false}
             tickMargin={8}
@@ -75,12 +93,18 @@ export const _AreaChart = <K extends LineChartConfig>(
             tickFormatter={yAxis?.tickFormatter}
             ticks={yAxis?.ticks}
             domain={yAxis?.domain}
+            width={yAxisWidth}
             className={cn(yAxis?.isBlur && "blur-sm")}
           />
         )}
         <ChartTooltip
           cursor
-          content={<ChartTooltipContent indicator="dot" />}
+          content={
+            <ChartTooltipContent
+              indicator="dot"
+              yAxisFormatter={yAxis?.tickFormatter}
+            />
+          }
         />
         <defs>
           {areas.map((area, index) => (
@@ -120,9 +144,13 @@ export const _AreaChart = <K extends LineChartConfig>(
         ))}
         {Object.keys(dataConfig).length > 1 && (
           <ChartLegend
-            className={"flex justify-start"}
+            className="flex justify-start"
             iconType="star"
-            content={<ChartLegendContent />}
+            content={
+              <ChartLegendContent
+                leftShift={isYAxisVisible ? Math.round(yAxisWidth) : 0}
+              />
+            }
           />
         )}
       </AreaChartPrimitive>

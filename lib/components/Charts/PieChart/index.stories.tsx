@@ -55,6 +55,8 @@ export const Default: Meta<typeof PieChart> = {
       { label: "may", value: 209 },
       { label: "june", value: 214 },
     ],
+    tickFormatter: (value: string) =>
+      `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + "€"}`,
   },
 }
 
