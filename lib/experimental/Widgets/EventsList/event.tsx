@@ -14,7 +14,7 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
     return (
       <div ref={ref} className="flex flex-row items-center gap-3">
         <div
-          className={cn("h-10 w-1 rounded-sm")}
+          className={cn("h-10 w-1 rounded-2xs")}
           style={
             isPending
               ? {
