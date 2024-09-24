@@ -2,7 +2,7 @@ import { Badge } from "@/components/Information/Badge"
 import {
   DetailsItem,
   DetailsItemType,
-} from "@/experimental/Layout/Utils/DetailsItem"
+} from "@/experimental/Layouts/Utils/DetailsItem"
 import { Weekdays } from "@/experimental/Widgets/Content/Weekdays"
 import { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps } from "react"
