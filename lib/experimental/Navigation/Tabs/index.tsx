@@ -8,25 +8,25 @@ interface TabItem {
 interface TabsProps {
   tabs: TabItem[]
   activeTab: string
-  onTabChange: (label: TabItem) => void
-  type?: "primary" | "secondary"
+  onTabChange: (tab: TabItem) => void
+  secondary?: boolean
 }
 
 export function Tabs({
   tabs,
   activeTab,
   onTabChange,
-  type = "primary",
+  secondary = false,
 }: TabsProps) {
   return (
-    <TabNavigation type={type}>
+    <TabNavigation secondary={secondary}>
       {tabs.map((tab) => (
         <TabNavigationLink
           key={tab.label}
           active={activeTab === tab.label}
           onClick={() => onTabChange(tab)}
           href={tab.link}
-          type={type}
+          secondary={secondary}
         >
           {tab.label}
         </TabNavigationLink>

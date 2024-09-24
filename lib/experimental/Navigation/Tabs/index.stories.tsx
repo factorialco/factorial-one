@@ -7,9 +7,8 @@ const meta: Meta<typeof Tabs> = {
   component: Tabs,
   tags: ["autodocs"],
   argTypes: {
-    type: {
-      options: ["primary", "secondary"],
-      control: { type: "radio" },
+    secondary: {
+      control: "boolean",
     },
   },
 }
@@ -25,11 +24,7 @@ const tabItems = [
   { label: "Requests", link: "/requests" },
 ]
 
-const TabsExample = ({
-  type = "primary",
-}: {
-  type?: "primary" | "secondary"
-}) => {
+const TabsExample = ({ secondary = false }: { secondary?: boolean }) => {
   const [activeTab, setActiveTab] = useState("Overview")
 
   return (
@@ -41,7 +36,7 @@ const TabsExample = ({
           setActiveTab(tab.label)
           action("Tab changed")(tab)
         }}
-        type={type}
+        secondary={secondary}
       />
       <p className="mt-4 flex h-full min-h-60 items-center justify-center rounded-lg bg-f1-background-secondary/50 p-4 text-f1-foreground-secondary">
         {activeTab}
@@ -50,9 +45,16 @@ const TabsExample = ({
   )
 }
 
-export const Default: Story = {
+export const Primary: Story = {
   args: {
-    type: "primary",
+    secondary: false,
+  },
+  render: (args) => <TabsExample {...args} />,
+}
+
+export const Secondary: Story = {
+  args: {
+    secondary: true,
   },
   render: (args) => <TabsExample {...args} />,
 }
