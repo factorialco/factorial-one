@@ -20,18 +20,27 @@ function getSubtree(
   })
 }
 
-const TabNavigation = React.forwardRef<
-  React.ElementRef<typeof NavigationMenuPrimitives.Root>,
-  Omit<
+interface TabNavigationProps
+  extends Omit<
     React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitives.Root>,
     "orientation" | "defaultValue" | "dir"
-  >
->(({ className, children, ...props }, forwardedRef) => (
+  > {
+  type?: "primary" | "secondary"
+}
+
+const TabNavigation = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitives.Root>,
+  TabNavigationProps
+>(({ className, children, type = "primary", ...props }, forwardedRef) => (
   <NavigationMenuPrimitives.Root ref={forwardedRef} {...props} asChild={false}>
     <NavigationMenuPrimitives.List
       className={cn(
         // base
         "flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap border border-solid px-6 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        // background
+        type === "primary"
+          ? "bg-f1-background-transparent"
+          : "bg-f1-background-secondary/25",
         // border
         "border-b border-transparent",
         // border color
@@ -46,15 +55,30 @@ const TabNavigation = React.forwardRef<
 
 TabNavigation.displayName = "TabNavigation"
 
-const TabNavigationLink = React.forwardRef<
-  React.ElementRef<typeof NavigationMenuPrimitives.Link>,
-  Omit<
+interface TabNavigationLinkProps
+  extends Omit<
     React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitives.Link>,
     "onSelect"
-  > & { disabled?: boolean; active?: boolean }
+  > {
+  disabled?: boolean
+  active?: boolean
+  type?: "primary" | "secondary"
+}
+
+const TabNavigationLink = React.forwardRef<
+  React.ElementRef<typeof NavigationMenuPrimitives.Link>,
+  TabNavigationLinkProps
 >(
   (
-    { asChild, disabled, active, className, children, ...props },
+    {
+      asChild,
+      disabled,
+      active,
+      className,
+      children,
+      type = "primary",
+      ...props
+    },
     forwardedRef
   ) => (
     <NavigationMenuPrimitives.Item className="flex" aria-disabled={disabled}>
@@ -75,19 +99,29 @@ const TabNavigationLink = React.forwardRef<
             className={cn(
               // base
               "flex items-center justify-center whitespace-nowrap rounded-xl px-3 py-1.5 font-medium transition-all",
+              // background
+              type === "primary"
+                ? "bg-f1-background-transparent"
+                : "bg-f1-background/60",
+              // border
+              "border border-solid border-transparent",
               // text color
               "text-f1-foreground-secondary",
               // hover
-              "group-hover:bg-f1-background-secondary group-hover:text-f1-foreground",
+              type === "primary"
+                ? "group-hover:bg-f1-background-secondary group-hover:text-f1-foreground"
+                : "group-hover:border-f1-border",
               // selected
-              "group-data-[active=true]:bg-f1-background-secondary group-data-[active=true]:text-f1-foreground",
+              type === "primary"
+                ? "group-data-[active=true]:bg-f1-background-secondary group-data-[active=true]:text-f1-foreground"
+                : "group-data-[active=true]:border-f1-border group-data-[active=true]:text-f1-foreground",
               // disabled
               disabled ? "pointer-events-none text-f1-foreground-disabled" : "",
               className
             )}
           >
             {children}
-            {active && (
+            {active && type === "primary" && (
               <motion.div
                 layoutId="underline"
                 className="absolute inset-x-0 -bottom-3 h-px bg-f1-background-bold"

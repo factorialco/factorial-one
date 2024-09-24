@@ -6,6 +6,12 @@ import { Tabs } from "."
 const meta: Meta<typeof Tabs> = {
   component: Tabs,
   tags: ["autodocs"],
+  argTypes: {
+    type: {
+      options: ["primary", "secondary"],
+      control: { type: "radio" },
+    },
+  },
 }
 
 export default meta
@@ -19,7 +25,11 @@ const tabItems = [
   { label: "Requests", link: "/requests" },
 ]
 
-const TabsExample = () => {
+const TabsExample = ({
+  type = "primary",
+}: {
+  type?: "primary" | "secondary"
+}) => {
   const [activeTab, setActiveTab] = useState("Overview")
 
   return (
@@ -31,6 +41,7 @@ const TabsExample = () => {
           setActiveTab(label)
           action("Tab changed")(label)
         }}
+        type={type}
       />
       <p className="mt-4 flex h-full min-h-60 items-center justify-center rounded-lg bg-f1-background-secondary/50 p-4 text-f1-foreground-secondary">
         {activeTab}
@@ -40,5 +51,8 @@ const TabsExample = () => {
 }
 
 export const Default: Story = {
-  render: () => <TabsExample />,
+  args: {
+    type: "primary",
+  },
+  render: (args) => <TabsExample {...args} />,
 }

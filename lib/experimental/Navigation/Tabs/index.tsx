@@ -9,17 +9,24 @@ interface TabsProps {
   tabs: TabItem[]
   activeTab: string
   onTabChange: (label: string) => void
+  type?: "primary" | "secondary"
 }
 
-export function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
+export function Tabs({
+  tabs,
+  activeTab,
+  onTabChange,
+  type = "primary",
+}: TabsProps) {
   return (
-    <TabNavigation>
+    <TabNavigation type={type}>
       {tabs.map((tab) => (
         <TabNavigationLink
           key={tab.label}
           active={activeTab === tab.label}
           onClick={() => onTabChange(tab.label)}
           href={tab.link}
+          type={type}
         >
           {tab.label}
         </TabNavigationLink>
