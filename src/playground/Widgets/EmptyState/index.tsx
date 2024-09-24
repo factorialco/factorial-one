@@ -1,8 +1,7 @@
 import { WidgetContainer } from "@/experimental/exports"
 import AreaGraph from "@/icons/AreaGraph"
 import Cash from "@/icons/Cash"
-import { Button as ShadcnButton } from "@/ui/button"
-import { ComponentProps, ExoticComponent, forwardRef } from "react"
+import { ExoticComponent, forwardRef } from "react"
 
 type Icon = "area-graph" | "cash"
 
@@ -11,7 +10,7 @@ export interface EmptyStateType {
   content: string
   icon: Icon
   buttonLabel?: string
-  buttonVariant?: ComponentProps<typeof ShadcnButton>["variant"]
+  promote?: boolean
 }
 
 const Icons: Record<Icon, ExoticComponent<{ className: string }>> = {
@@ -20,7 +19,7 @@ const Icons: Record<Icon, ExoticComponent<{ className: string }>> = {
 }
 
 export const EmptyState = forwardRef<HTMLDivElement, EmptyStateType>(
-  ({ title, content, icon, buttonLabel, buttonVariant }, ref) => {
+  ({ title, content, icon, buttonLabel, promote = false }, ref) => {
     const Icon = Icons[icon]
 
     return (
@@ -32,7 +31,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateType>(
           buttonLabel
             ? {
                 label: buttonLabel,
-                variant: buttonVariant,
+                variant: promote ? "promote" : "default",
               }
             : undefined
         }

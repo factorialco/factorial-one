@@ -11,7 +11,7 @@ const meta: Meta = {
     title: "Performance",
     content: "See how Hugo's performance evolved over time",
     buttonLabel: "Try it for free",
-    buttonVariant: "promote",
+    promote: true,
     icon: "area-graph",
   },
   decorators: [
@@ -33,7 +33,7 @@ export const SalaryEmptyState: Story = {
     title: "Salary",
     content: "See how Hugo’s salary evolved over time",
     buttonLabel: "Add info",
-    buttonVariant: "default",
+    promote: false,
     icon: "cash",
   },
 }

@@ -25,7 +25,7 @@ export const PerformanceInsight = forwardRef<
         content={`See how ${name}'s performance evolved over time`}
         icon="area-graph"
         buttonLabel="Try it for free"
-        buttonVariant="promote"
+        promote
       />
     )
   }
