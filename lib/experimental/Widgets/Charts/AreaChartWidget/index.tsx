@@ -36,7 +36,7 @@ export const AreaChartWidget = withSkeleton(
         <ChartContainer
           ref={ref}
           {...newContainerProps}
-          chart={<AreaChart aspect={"small"} {...newPropsChart} />}
+          chart={<AreaChart {...newPropsChart} />}
         />
       )
     }

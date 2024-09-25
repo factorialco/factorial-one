@@ -13,7 +13,10 @@ import {
   Area,
   AreaChart as AreaChartPrimitive,
   CartesianGrid,
+  Text,
+  TextProps,
   XAxis,
+  XAxisProps,
   YAxis,
 } from "recharts"
 import { autoColor } from "../utils/colors"
@@ -29,6 +32,34 @@ export type AreaChartProps<K extends LineChartConfig = LineChartConfig> =
     lineType?: allowedLineTypes
     marginTop?: number
   }
+
+// Rechart props give any
+type TickProps = TextProps & {
+  tickFormatter: XAxisProps["tickFormatter"]
+  index: number
+  visibleTicksCount: number
+  payload: {
+    value: string | number
+    index: number
+    offset: number
+  }
+}
+
+const ChartAreaBoundedTick = ({
+  index,
+  visibleTicksCount,
+  payload,
+  tickFormatter,
+  ...props
+}: TickProps) => {
+  const isFirst = index === 0
+  const isLast = index === visibleTicksCount - 1
+  return (
+    <Text {...props} textAnchor={isFirst ? "start" : isLast ? "end" : "middle"}>
+      {tickFormatter?.(payload.value, payload.index) ?? payload.value}
+    </Text>
+  )
+}
 
 export const _AreaChart = <K extends LineChartConfig>(
   {
@@ -65,13 +96,66 @@ export const _AreaChart = <K extends LineChartConfig>(
       <AreaChartPrimitive
         accessibilityLayer
         data={preparedData}
+        className="overflow-visible [&_.recharts-surface]:overflow-visible"
         margin={{
-          left: yAxis && !yAxis.hide ? 0 : 12,
-          right: 12,
           top: marginTop,
         }}
       >
-        <CartesianGrid {...cartesianGridProps()} />
+        <defs>
+          <linearGradient
+            id={`${chartId}-fadeGradient`}
+            gradientUnits="userSpaceOnUse"
+            x1={`${isYAxisVisible ? yAxisWidth : 0}`}
+            y1="0"
+            x2="100%"
+            y2="0"
+          >
+            <stop offset="0%" stop-color="black" stop-opacity="0"></stop>
+            <stop offset="1%" stop-color="white" stop-opacity="0.1"></stop>
+            <stop offset="7%" stop-color="white" stop-opacity="1"></stop>
+            <stop offset="93%" stop-color="white" stop-opacity="1"></stop>
+            <stop offset="99%" stop-color="white" stop-opacity="0.1"></stop>
+            <stop offset="100%" stop-color="black" stop-opacity="0"></stop>
+          </linearGradient>
+          <mask
+            id={`${chartId}-transparent-edges`}
+            maskUnits="userSpaceOnUse"
+            maskContentUnits="userSpaceOnUse"
+          >
+            <rect
+              x="0"
+              y="0"
+              width="100%"
+              height="100%"
+              fill={`url(#${chartId}-fadeGradient)`}
+            ></rect>
+          </mask>
+          {areas.map((area, index) => (
+            <linearGradient
+              key={index}
+              id={`fill${String(area)}-${chartId}`}
+              x1="0"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
+              <stop
+                offset="5%"
+                stopColor={dataConfig[area].color || autoColor(index)}
+                stopOpacity={0.8}
+              />
+              <stop
+                offset="95%"
+                stopColor={dataConfig[area].color || autoColor(index)}
+                stopOpacity={0.1}
+              />
+            </linearGradient>
+          ))}
+        </defs>
+        <CartesianGrid
+          {...cartesianGridProps()}
+          mask={`url(#${chartId}-transparent-edges)`}
+        />
         {isXAxisVisible && (
           <XAxis
             dataKey="x"
@@ -82,6 +166,7 @@ export const _AreaChart = <K extends LineChartConfig>(
             ticks={xAxis?.ticks}
             domain={xAxis?.domain}
             interval={0}
+            tick={ChartAreaBoundedTick}
           />
         )}
         {isYAxisVisible && (
@@ -106,35 +191,13 @@ export const _AreaChart = <K extends LineChartConfig>(
             />
           }
         />
-        <defs>
-          {areas.map((area, index) => (
-            <linearGradient
-              key={index}
-              id={`fill${String(area)}-${chartId}`}
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-            >
-              <stop
-                offset="5%"
-                stopColor={dataConfig[area].color || autoColor(index)}
-                stopOpacity={0.8}
-              />
-              <stop
-                offset="95%"
-                stopColor={dataConfig[area].color || autoColor(index)}
-                stopOpacity={0.1}
-              />
-            </linearGradient>
-          ))}
-        </defs>
         {areas.map((area, index) => (
           <Area
             isAnimationActive={false}
             key={area}
             dataKey={area}
             type={lineType}
+            mask={`url(#${chartId}-transparent-edges)`}
             fill={`url(#fill${area}-${chartId})`}
             fillOpacity={dataConfig[area].dashed ? 0 : 0.4}
             stroke={dataConfig[area].color || autoColor(index)}
