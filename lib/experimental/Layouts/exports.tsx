@@ -6,6 +6,8 @@ import {
 
 export type { InfoPaneLayoutProps }
 
+export * from "./Utils/exports"
+
 export const InfoPaneLayout = Component(
   {
     name: "InfoPaneLayout",
