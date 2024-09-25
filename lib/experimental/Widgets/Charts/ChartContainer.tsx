@@ -11,11 +11,7 @@ const Container = forwardRef<
 >(({ chart, summaries, ...props }, ref) => {
   return (
     <Widget ref={ref} {...props} summaries={summaries}>
-      {chart && (
-        <div className="min-h-52 grow pt-2">
-          {chart}
-        </div>
-      )}
+      {chart && <div className="min-h-52 grow pt-2">{chart}</div>}
     </Widget>
   )
 })
