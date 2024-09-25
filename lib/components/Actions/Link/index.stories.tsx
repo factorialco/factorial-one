@@ -9,6 +9,12 @@ const meta = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  argTypes: {
+    target: {
+      control: "select",
+      options: [undefined, "_blank", "_self", "_parent", "_top"],
+    },
+  },
   args: {
     children: "This is a link",
     href: "/",
