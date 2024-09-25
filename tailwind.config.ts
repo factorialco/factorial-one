@@ -188,6 +188,7 @@ export default {
               DEFAULT: "hsl(var(--neutral-10))",
               hover: "hsl(var(--neutral-20))",
             },
+            tertiary: "hsl(var(--neutral-5))",
             bold: "hsl(var(--neutral-100))",
             accent: {
               DEFAULT: "hsl(var(--accent-50) / 0.1)",
@@ -221,6 +222,7 @@ export default {
           border: {
             DEFAULT: "hsl(var(--neutral-30))",
             hover: "hsl(var(--neutral-40))",
+            secondary: "hsl(var(--neutral-10))",
             promote: {
               DEFAULT: "hsl(var(--promote-50) / 0.4)",
             },
