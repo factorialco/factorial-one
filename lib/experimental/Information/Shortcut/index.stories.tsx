@@ -26,4 +26,11 @@ export const MultipleKeys: Story = {
   args: {
     keys: ["↑", "↑", "↓", "↓", "←", "→", "←", "→", "B", "A"],
   },
+  decorators: [
+    (Story) => (
+      <div className="w-32">
+        <Story />
+      </div>
+    ),
+  ],
 }

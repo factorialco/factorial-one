@@ -12,7 +12,7 @@ const iconMap: Record<string, IconProps["icon"]> = {
 
 function Shortcut({ keys }: ShortcutProps) {
   return (
-    <div className="inline-flex items-center space-x-0.5">
+    <div className="flex flex-wrap items-center gap-0.5">
       {keys.map((key, index) => {
         const lowerKey = key.toLowerCase()
         const isIcon = lowerKey in iconMap
@@ -20,7 +20,7 @@ function Shortcut({ keys }: ShortcutProps) {
           <kbd
             key={index}
             className={cn(
-              "flex h-5 items-center justify-center rounded-xs border border-solid border-f1-border bg-f1-background-tertiary py-0.5 text-sm font-semibold uppercase leading-none text-f1-foreground-secondary",
+              "rounded-xs bg-f1-background-tertiary flex h-5 items-center justify-center border border-solid border-f1-border py-0.5 text-sm font-semibold uppercase leading-none text-f1-foreground-secondary",
               isIcon ? "w-5 px-0.5" : "min-w-5 px-1"
             )}
           >
