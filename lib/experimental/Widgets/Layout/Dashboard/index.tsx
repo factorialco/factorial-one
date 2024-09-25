@@ -4,21 +4,15 @@ import {
   ComponentProps,
   forwardRef,
   ReactNode,
-  useCallback,
+  useEffect,
   useRef,
   useState,
 } from "react"
 import { Masonry } from "react-masonry"
-import { useResizeObserver } from "usehooks-ts"
 import { Widget } from "../../Widget"
 
 type DashboardProps = {
   children?: ReactNode[]
-}
-
-type Size = {
-  width?: number
-  height?: number
 }
 
 const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
@@ -27,31 +21,39 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
 
     const arrayChildren = Children.toArray(children)
 
-    const onResize = useCallback(
-      ({ width }: Size) => {
-        if (width) {
-          setColumns(Math.floor(width / 340) || 1)
-        }
-      },
-      [setColumns]
-    )
-
     const containerRef = useRef<HTMLDivElement>(null)
-    useResizeObserver({ ref: containerRef, onResize })
+
+    useEffect(() => {
+      const handleResize = () => {
+        const width = containerRef.current?.offsetWidth
+        if (width) setColumns(Math.floor(width / 340) || 1)
+      }
+
+      handleResize()
+
+      window.addEventListener("resize", handleResize)
+
+      return () => {
+        window.removeEventListener("resize", handleResize)
+      }
+    }, [setColumns])
 
     return (
-      <div ref={ref}>
-        <div ref={containerRef} className="overflow-hidden">
+      <div ref={ref} className="overflow-hidden">
+        <div ref={containerRef}>
           {columns === 1 ? (
             <div className="flex flex-col gap-4">{arrayChildren}</div>
           ) : (
             columns &&
             columns > 1 && (
-              <div className="-mr-4">
+              <div className="relative -mr-4">
                 <Masonry key={columns}>
-                  {arrayChildren.map((child) => (
+                  {arrayChildren.map((child, index) => (
                     <div
-                      style={{ width: `${(1 / columns) * 100}%` }}
+                      key={index}
+                      style={{
+                        width: `${Math.floor((1 / columns) * 10000) / 100}%`,
+                      }}
                       className="pb-4 pr-4"
                     >
                       {child}
