@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Info } from "."
+import { IconText } from "."
 
 const meta: Meta = {
-  component: Info,
+  component: IconText,
   parameters: {
     tags: ["autodocs"],
   },
   args: {
-    text: "Work location",
+    texts: ["Work location"],
     icon: "office",
   },
 }
@@ -19,7 +19,7 @@ export const Primary: Story = {}
 
 export const Long: Story = {
   args: {
-    text: "Project | Subproject",
+    texts: ["Project", "Subproject"],
     icon: "briefcase",
   },
 }
