@@ -1,9 +1,6 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import {
-  Button as ShadcnButton,
-  iconOnlyVariants,
-  iconVariants,
-} from "@/ui/button"
+import { Button as ShadcnButton } from "@/ui/button"
+import { cva } from "class-variance-authority"
 import { ComponentProps, forwardRef, useState } from "react"
 
 export type ButtonProps = Pick<
@@ -18,6 +15,39 @@ export type ButtonProps = Pick<
   icon?: IconType
   hideLabel?: boolean
 }
+
+const iconVariants = cva("-ml-0.5 transition-colors", {
+  variants: {
+    variant: {
+      default: "text-f1-icon-inverse/80",
+      outline: "text-f1-icon",
+      neutral: "text-f1-icon",
+      critical:
+        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse/80",
+      ghost: "text-f1-icon",
+      promote: "text-f1-icon",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
+
+const iconOnlyVariants = cva("transition-colors", {
+  variants: {
+    variant: {
+      default: "text-f1-icon-inverse",
+      outline: "text-f1-icon-bold",
+      neutral: "text-f1-icon-bold",
+      critical: "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse",
+      ghost: "text-f1-icon-bold",
+      promote: "text-f1-icon-bold",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
 
 const Button: React.FC<ButtonProps> = forwardRef<
   HTMLButtonElement,
