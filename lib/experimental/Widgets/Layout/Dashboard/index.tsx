@@ -52,7 +52,7 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
                     <div
                       key={index}
                       style={{
-                        width: `${Math.floor((1 / columns) * 10000) / 100}%`,
+                        width: `${Math.floor((1 / columns) * 10000) / 100 - 0.05}%`,
                       }}
                       className="pb-4 pr-4"
                     >
