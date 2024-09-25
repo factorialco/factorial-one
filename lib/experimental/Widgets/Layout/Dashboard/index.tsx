@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react"
-import Layout from "react-masonry-list"
+import Masonry from "react-responsive-masonry"
 import { useResizeObserver } from "usehooks-ts"
 import { Widget } from "../../Widget"
 
@@ -36,20 +36,19 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
     const containerRef = useRef<HTMLDivElement>(null)
     useResizeObserver({ ref: containerRef, onResize })
 
+    const childrenArray = children?.length ? children : [children]
+
     return (
       <div ref={ref}>
         <div ref={containerRef}>
           {columns === 1 ? (
-            <div className="flex flex-col gap-4">{children}</div>
+            <div className="flex flex-col gap-4">{childrenArray}</div>
           ) : (
             columns &&
             columns > 1 && (
-              <Layout
-                key={columns}
-                colCount={columns}
-                items={children}
-                gap={16}
-              />
+              <Masonry gutter="16px" columnsCount={columns}>
+                {childrenArray}
+              </Masonry>
             )
           )}
         </div>
