@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils"
 import * as NavigationMenuPrimitives from "@radix-ui/react-navigation-menu"
+import { cva, type VariantProps } from "class-variance-authority"
 import { motion } from "framer-motion"
 import * as React from "react"
 
@@ -20,33 +21,32 @@ function getSubtree(
   })
 }
 
+const tabNavigationVariants = cva(
+  "border-b-f1-border-secondary flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap border-b px-6 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+  {
+    variants: {
+      secondary: {
+        true: "bg-f1-background-secondary/25",
+        false: "bg-f1-background-transparent",
+      },
+    },
+    defaultVariants: {
+      secondary: false,
+    },
+  }
+)
+
 interface TabNavigationProps
-  extends Omit<
-    React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitives.Root>,
-    "orientation" | "defaultValue" | "dir"
-  > {
-  secondary?: boolean
-}
+  extends React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitives.Root>,
+    VariantProps<typeof tabNavigationVariants> {}
 
 const TabNavigation = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitives.Root>,
   TabNavigationProps
->(({ className, children, secondary = false, ...props }, forwardedRef) => (
+>(({ className, children, secondary, ...props }, forwardedRef) => (
   <NavigationMenuPrimitives.Root ref={forwardedRef} {...props} asChild={false}>
     <NavigationMenuPrimitives.List
-      className={cn(
-        // base
-        "flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap border border-solid px-6 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-        // background
-        secondary
-          ? "bg-f1-background-secondary/25"
-          : "bg-f1-background-transparent",
-        // border
-        "border-b border-transparent",
-        // border color
-        "border-b-f1-border-secondary",
-        className
-      )}
+      className={cn(tabNavigationVariants({ secondary }), className)}
     >
       {children}
     </NavigationMenuPrimitives.List>
@@ -55,14 +55,33 @@ const TabNavigation = React.forwardRef<
 
 TabNavigation.displayName = "TabNavigation"
 
+const tabNavigationLinkVariants = cva(
+  "flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 font-medium transition-all",
+  {
+    variants: {
+      secondary: {
+        true: "bg-f1-background/60 group-hover:border-f1-border group-data-[active=true]:border-f1-border group-data-[active=true]:text-f1-foreground",
+        false:
+          "bg-f1-background-transparent group-hover:bg-f1-background-secondary group-hover:text-f1-foreground group-data-[active=true]:bg-f1-background-secondary group-data-[active=true]:text-f1-foreground",
+      },
+      disabled: {
+        true: "pointer-events-none text-f1-foreground-disabled",
+      },
+    },
+    defaultVariants: {
+      secondary: false,
+      disabled: false,
+    },
+  }
+)
+
 interface TabNavigationLinkProps
   extends Omit<
-    React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitives.Link>,
-    "onSelect"
-  > {
-  disabled?: boolean
+      React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitives.Link>,
+      "onSelect"
+    >,
+    VariantProps<typeof tabNavigationLinkVariants> {
   active?: boolean
-  secondary?: boolean
 }
 
 const TabNavigationLink = React.forwardRef<
@@ -70,21 +89,13 @@ const TabNavigationLink = React.forwardRef<
   TabNavigationLinkProps
 >(
   (
-    {
-      asChild,
-      disabled,
-      active,
-      className,
-      children,
-      secondary = false,
-      ...props
-    },
+    { asChild, disabled, active, className, children, secondary, ...props },
     forwardedRef
   ) => (
-    <NavigationMenuPrimitives.Item className="flex" aria-disabled={disabled}>
+    <NavigationMenuPrimitives.Item className="flex">
       <NavigationMenuPrimitives.Link
         data-active={active ? "true" : undefined}
-        aria-disabled={disabled}
+        aria-disabled={disabled || undefined}
         className={cn(
           "group relative flex shrink-0 select-none items-center justify-center rounded-md no-underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1",
           disabled ? "pointer-events-none" : ""
@@ -97,26 +108,8 @@ const TabNavigationLink = React.forwardRef<
         {getSubtree({ asChild, children }, (children) => (
           <span
             className={cn(
-              // base
-              "flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 font-medium transition-all",
-              // background
-              secondary
-                ? "bg-f1-background/60"
-                : "bg-f1-background-transparent",
-              // border
-              "border border-solid border-transparent",
-              // text color
-              "text-f1-foreground-secondary",
-              // hover
-              secondary
-                ? "group-hover:border-f1-border"
-                : "group-hover:bg-f1-background-secondary group-hover:text-f1-foreground",
-              // selected
-              secondary
-                ? "group-data-[active=true]:border-f1-border group-data-[active=true]:text-f1-foreground"
-                : "group-data-[active=true]:bg-f1-background-secondary group-data-[active=true]:text-f1-foreground",
-              // disabled
-              disabled ? "pointer-events-none text-f1-foreground-disabled" : "",
+              "border border-solid border-transparent text-f1-foreground-secondary",
+              tabNavigationLinkVariants({ secondary, disabled }),
               className
             )}
           >
