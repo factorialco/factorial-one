@@ -2,10 +2,10 @@ import { cva } from "class-variance-authority"
 import React from "react"
 
 interface CounterProps {
+  size?: "md" | "sm"
+  type?: "default" | "selected" | "bold"
   value: number
   maxValue?: number
-  size?: "base" | "sm"
-  type?: "default" | "selected" | "bold"
 }
 
 const counterVariants = cva(
@@ -13,7 +13,7 @@ const counterVariants = cva(
   {
     variants: {
       size: {
-        base: "min-w-5 p-0.5",
+        md: "min-w-5 p-0.5",
         sm: "min-w-4 px-0.5",
       },
       type: {
@@ -24,14 +24,14 @@ const counterVariants = cva(
       },
     },
     defaultVariants: {
-      size: "base",
+      size: "md",
       type: "default",
     },
   }
 )
 
 const Counter: React.FC<CounterProps> = ({
-  size = "base",
+  size = "md",
   type = "default",
   value,
   maxValue,

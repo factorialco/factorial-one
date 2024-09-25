@@ -14,7 +14,7 @@ const meta = {
   tags: ["autodocs"],
   args: {
     value: 42,
-    size: "base",
+    size: "md",
     type: "default",
     maxValue: undefined,
   } satisfies ComponentProps<typeof Counter>,
