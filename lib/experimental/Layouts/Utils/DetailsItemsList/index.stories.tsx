@@ -1,15 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { Badge } from "@/components/Information/Badge"
+import avatar from "~/storybook-assets/avatar.jpeg"
 import { DetailsItemsList } from "."
 import { Weekdays } from "../../../Widgets/Content/Weekdays"
 import { BadgesList } from "../BadgesList"
 
 const manager = (
-  <Badge
-    text="Isabella González"
-    avatar={{ src: "https://i.pravatar.cc/24", alt: "I" }}
-  />
+  <Badge text="Isabella González" avatar={{ src: avatar, alt: "I" }} />
 )
 
 const weekdays = (
