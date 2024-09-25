@@ -48,8 +48,9 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
             columns > 1 && (
               <div className="relative -mr-4">
                 <Masonry key={columns}>
-                  {arrayChildren.map((child) => (
+                  {arrayChildren.map((child, index) => (
                     <div
+                      key={index}
                       style={{
                         width: `${Math.floor((1 / columns) * 10000) / 100}%`,
                       }}
