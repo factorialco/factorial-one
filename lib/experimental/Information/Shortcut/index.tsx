@@ -20,7 +20,7 @@ function Shortcut({ keys }: ShortcutProps) {
           <kbd
             key={index}
             className={cn(
-              "rounded-xs bg-f1-background-tertiary flex h-5 items-center justify-center border border-solid border-f1-border py-0.5 text-sm font-semibold uppercase leading-none text-f1-foreground-secondary",
+              "flex h-5 items-center justify-center rounded-xs border border-solid border-f1-border bg-f1-background-tertiary py-0.5 text-sm font-semibold uppercase leading-none text-f1-foreground-secondary",
               isIcon ? "w-5 px-0.5" : "min-w-5 px-1"
             )}
           >
