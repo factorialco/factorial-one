@@ -2,7 +2,7 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-import ArrowRight from "@/icons/ArrowRight"
+import ChevronRight from "@/icons/ChevronRight"
 import InfoCircleLine from "@/icons/InfoCircleLine"
 
 import { Icon } from "@/components/Utilities/Icon"
@@ -97,13 +97,13 @@ const CardLink = React.forwardRef<
   return (
     <Link
       className={cn(
-        "flex h-6 w-6 items-center justify-center text-f1-foreground-secondary transition-colors hover:text-f1-foreground",
+        "flex h-6 w-6 items-center justify-center rounded-sm border border-solid border-f1-border text-f1-foreground-secondary transition-colors hover:text-f1-foreground",
         className
       )}
       aria-label={title}
       {...props}
     >
-      <Icon icon={ArrowRight} size="md" />
+      <Icon icon={ChevronRight} size="sm" />
     </Link>
   )
 })

@@ -40,6 +40,10 @@ export interface WidgetContainerProps {
   }>
 }
 
+const InlineDot = () => (
+  <div className="h-[0.15rem] w-[0.15rem] rounded-full bg-f1-foreground-secondary" />
+)
+
 const Container = forwardRef<
   HTMLDivElement,
   WidgetContainerProps & { children: ReactNode }
@@ -64,10 +68,14 @@ const Container = forwardRef<
               <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
                 {header.title && <CardTitle>{header.title}</CardTitle>}
                 {header.subtitle && (
-                  <CardSubtitle>{header.subtitle}</CardSubtitle>
+                  <>
+                    <InlineDot />
+                    <CardSubtitle>{header.subtitle}</CardSubtitle>
+                  </>
                 )}
                 {header.info && <CardInfo content={header.info} />}
               </div>
+              {alert && <Badge text={alert} variant="critical" hasDot />}
               {header.link && (
                 <CardLink href={header.link.url} title={header.link.title} />
               )}
@@ -130,10 +138,9 @@ const Container = forwardRef<
             )
           })}
       </CardContent>
-      {(action || alert) && (
+      {action && (
         <CardFooter>
-          {alert && <Badge text={alert} variant="critical" hasDot />}
-          {action && <Button variant="outline" {...action} />}
+          <Button variant="outline" size="md" {...action} />
         </CardFooter>
       )}
     </Card>
