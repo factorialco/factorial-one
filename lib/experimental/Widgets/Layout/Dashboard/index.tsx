@@ -1,5 +1,6 @@
 import { Blend, withSkeleton } from "@/lib/skeleton"
 import {
+  Children,
   ComponentProps,
   forwardRef,
   ReactNode,
@@ -24,6 +25,8 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
   ({ children }, ref) => {
     const [columns, setColumns] = useState<number | undefined>()
 
+    const arrayChildren = Children.toArray(children)
+
     const onResize = useCallback(
       ({ width }: Size) => {
         if (width) {
@@ -40,14 +43,16 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
       <div ref={ref}>
         <div ref={containerRef}>
           {columns === 1 ? (
-            <div className="flex flex-col gap-4">{children}</div>
+            <div className="flex flex-col gap-4">{arrayChildren}</div>
           ) : (
             columns &&
             columns > 1 && (
               <Layout
                 key={columns}
                 colCount={columns}
-                items={children}
+                items={arrayChildren.map((child) => (
+                  <div className="flex [&>*]:flex-1">{child}</div>
+                ))}
                 gap={16}
               />
             )
