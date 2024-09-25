@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react"
-import Layout from "react-masonry-list"
+import Masonry from "react-layout-masonry"
 import { useResizeObserver } from "usehooks-ts"
 import { Widget } from "../../Widget"
 
@@ -47,14 +47,9 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
           ) : (
             columns &&
             columns > 1 && (
-              <Layout
-                key={columns}
-                colCount={columns}
-                items={arrayChildren.map((child) => (
-                  <div className="flex [&>*]:flex-1">{child}</div>
-                ))}
-                gap={16}
-              />
+              <Masonry key={columns} columns={columns} gap={16}>
+                {arrayChildren}
+              </Masonry>
             )
           )}
         </div>
