@@ -40,27 +40,29 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
 
     return (
       <div ref={ref} className="overflow-hidden">
-        {columns === 1 ? (
-          <div className="flex flex-col gap-4">{arrayChildren}</div>
-        ) : (
-          columns &&
-          columns > 1 && (
-            <div className="relative -mr-4" ref={containerRef}>
-              <Masonry key={columns}>
-                {arrayChildren.map((child) => (
-                  <div
-                    style={{
-                      width: `${Math.floor((1 / columns) * 10000) / 100}%`,
-                    }}
-                    className="pb-4 pr-4"
-                  >
-                    {child}
-                  </div>
-                ))}
-              </Masonry>
-            </div>
-          )
-        )}
+        <div ref={containerRef}>
+          {columns === 1 ? (
+            <div className="flex flex-col gap-4">{arrayChildren}</div>
+          ) : (
+            columns &&
+            columns > 1 && (
+              <div className="relative -mr-4">
+                <Masonry key={columns}>
+                  {arrayChildren.map((child) => (
+                    <div
+                      style={{
+                        width: `${Math.floor((1 / columns) * 10000) / 100}%`,
+                      }}
+                      className="pb-4 pr-4"
+                    >
+                      {child}
+                    </div>
+                  ))}
+                </Masonry>
+              </div>
+            )
+          )}
+        </div>
       </div>
     )
   }
