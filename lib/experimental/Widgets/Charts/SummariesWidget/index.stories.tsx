@@ -1,6 +1,7 @@
 import type { Meta } from "@storybook/react"
 
 import { SummariesWidget } from "."
+import { WidgetDecorator } from "../storybook-utils"
 
 const meta = {
   component: SummariesWidget,
@@ -20,13 +21,7 @@ const meta = {
       },
     ],
   },
-  decorators: [
-    (Story) => (
-      <div className="w-full min-w-80">
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [WidgetDecorator],
 } satisfies Meta<typeof SummariesWidget>
 
 export default meta
