@@ -52,3 +52,31 @@ export const ThreeElements: Story = {
     }),
   },
 }
+
+export const TwoLineLabel: Story = {
+  args: {
+    items: [
+      ...taskCategories,
+      {
+        label: "The most urgent tasks",
+        content: "55",
+        icon: Circle,
+        color: "text-f1-icon-secondary",
+      },
+    ],
+  },
+}
+
+export const WithCrampedLabel: Story = {
+  args: {
+    items: [
+      ...taskCategories,
+      {
+        label: "The most urgent tasks on the planet Earth",
+        content: "55",
+        icon: Circle,
+        color: "text-f1-icon-secondary",
+      },
+    ],
+  },
+}
