@@ -62,7 +62,6 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "18.3.1",
     "react-hook-form": "^7.52.1",
-    "react-layout-masonry": "^1.1.0",
     "react-masonry": "^1.0.7",
     "recharts": "^2.12.7",
     "ress": "^5.0.2",
