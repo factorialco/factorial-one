@@ -49,39 +49,6 @@ const buttonVariants = cva(
   }
 )
 
-const iconVariants = cva("-ml-0.5 transition-colors", {
-  variants: {
-    variant: {
-      default: "text-f1-icon-inverse/80",
-      outline: "text-f1-icon",
-      neutral: "text-f1-icon",
-      critical:
-        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse/80",
-      ghost: "text-f1-icon",
-      promote: "text-f1-icon",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-  },
-})
-
-const iconOnlyVariants = cva("transition-colors", {
-  variants: {
-    variant: {
-      default: "text-f1-icon-inverse",
-      outline: "text-f1-icon-bold",
-      neutral: "text-f1-icon-bold",
-      critical: "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse",
-      ghost: "text-f1-icon-bold",
-      promote: "text-f1-icon-bold",
-    },
-  },
-  defaultVariants: {
-    variant: "default",
-  },
-})
-
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
@@ -102,4 +69,4 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = "Button"
 
-export { Button, buttonVariants, iconOnlyVariants, iconVariants }
+export { Button, buttonVariants }
