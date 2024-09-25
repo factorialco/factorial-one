@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from "react"
-import Layout from "react-masonry-list"
+import { Masonry } from "react-masonry"
 import { useResizeObserver } from "usehooks-ts"
 import { Widget } from "../../Widget"
 
@@ -41,20 +41,24 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
 
     return (
       <div ref={ref}>
-        <div ref={containerRef}>
+        <div ref={containerRef} className="overflow-hidden">
           {columns === 1 ? (
             <div className="flex flex-col gap-4">{arrayChildren}</div>
           ) : (
             columns &&
             columns > 1 && (
-              <Layout
-                key={columns}
-                colCount={columns}
-                items={arrayChildren.map((child) => (
-                  <div className="flex [&>*]:flex-1">{child}</div>
-                ))}
-                gap={16}
-              />
+              <div className="-mr-4">
+                <Masonry key={columns}>
+                  {arrayChildren.map((child) => (
+                    <div
+                      style={{ width: `${(1 / columns) * 100}%` }}
+                      className="pb-4 pr-4"
+                    >
+                      {child}
+                    </div>
+                  ))}
+                </Masonry>
+              </div>
             )
           )}
         </div>
