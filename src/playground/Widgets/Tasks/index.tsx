@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
-import { TasksList } from "@/experimental/Widgets/TasksList"
-import { WidgetContainer } from "@/experimental/Widgets/WidgetContainer"
+import { TasksList } from "@/experimental/Widgets/Content/TasksList"
+import { Widget } from "@/experimental/Widgets/Widget"
 import { Circle } from "@/icons"
 import AlertCircle from "@/icons/AlertCircle"
 import { Indicator } from "@/ui/indicator"
@@ -68,7 +68,7 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
     ]
 
     return (
-      <WidgetContainer
+      <Widget
         ref={ref}
         header={{
           title,
@@ -102,7 +102,7 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
             />
           </span>
         )}
-      </WidgetContainer>
+      </Widget>
     )
   }
 )

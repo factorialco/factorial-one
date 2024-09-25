@@ -9,7 +9,7 @@ import {
 } from "react"
 import Layout from "react-masonry-list"
 import { useResizeObserver } from "usehooks-ts"
-import { WidgetContainer } from "../WidgetContainer"
+import { Widget } from "../../Widget"
 
 type DashboardProps = {
   children?: ReactNode[]
@@ -58,15 +58,14 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
   }
 )
 
-const skeletonHeights: Array<
-  ComponentProps<typeof WidgetContainer.Skeleton>["height"]
-> = ["sm", "lg", "md", "md", "lg", "sm", "lg", "lg", "sm", "sm", "md", "md"]
+const skeletonHeights: Array<ComponentProps<typeof Widget.Skeleton>["height"]> =
+  ["sm", "lg", "md", "md", "lg", "sm", "lg", "lg", "sm", "sm", "md", "md"]
 
 export const Dashboard = withSkeleton(DashboardComponent, () => (
   <Blend>
     <DashboardComponent>
       {skeletonHeights.map((height, i) => (
-        <WidgetContainer.Skeleton height={height} key={i} />
+        <Widget.Skeleton height={height} key={i} />
       ))}
     </DashboardComponent>
   </Blend>
