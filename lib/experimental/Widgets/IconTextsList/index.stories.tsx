@@ -1,14 +1,23 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { IconText } from "."
+import { IconTextsList } from "."
 
 const meta: Meta = {
-  component: IconText,
+  component: IconTextsList,
   parameters: {
     tags: ["autodocs"],
   },
   args: {
     texts: ["Work location"],
-    icon: "office",
+    list: [
+      {
+        icon: "office",
+        texts: ["Work location"],
+      },
+      {
+        icon: "briefcase",
+        texts: ["Project", "Subproject"],
+      },
+    ],
   },
 }
 
@@ -16,10 +25,3 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
-
-export const Long: Story = {
-  args: {
-    texts: ["Project", "Subproject"],
-    icon: "briefcase",
-  },
-}

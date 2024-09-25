@@ -5,6 +5,7 @@ import { EventsList } from "."
 const meta: Meta = {
   component: EventsList,
   parameters: {
+    layout: "centered",
     tags: ["autodocs"],
   },
   args: {
@@ -33,6 +34,13 @@ const meta: Meta = {
       },
     ],
   },
+  decorators: [
+    (Story) => (
+      <div className="w-64">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
