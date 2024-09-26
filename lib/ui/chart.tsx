@@ -1,4 +1,5 @@
 import * as React from "react"
+import { useLayoutEffect, useMemo, useState } from "react"
 import * as RechartsPrimitive from "recharts"
 
 import { cn } from "@/lib/utils"
@@ -78,21 +79,44 @@ const ChartContainerComponent = (
 ) => {
   const uniqueId = React.useId()
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`
+  const anotherRef = React.useRef<HTMLDivElement | null>(null)
+  const [height, setHeight] = useState<number | undefined>()
+  const observer = useMemo(() => {
+    return new ResizeObserver((entries) =>
+      setHeight(entries[0].contentRect.height)
+    )
+  }, [])
+
+  useLayoutEffect(() => {
+    const refToObserve =
+      ref && "current" in ref ? ref.current : anotherRef.current
+
+    if (refToObserve) {
+      observer.observe(refToObserve.parentElement!)
+    }
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [observer, ref, anotherRef])
 
   return (
     <ChartContext.Provider value={{ config }}>
       <div
         data-chart={chartId}
-        ref={ref}
+        ref={ref || anotherRef}
         className={cn(
-          "flex w-full justify-center text-sm [&_.recharts-cartesian-axis-tick_text]:fill-f1-foreground-secondary [&_.recharts-cartesian-grid_line]:stroke-f1-border [&_.recharts-curve.recharts-tooltip-cursor]:stroke-f1-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-f1-border [&_.recharts-radial-bar-background-sector]:fill-f1-background-secondary [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-f1-background-secondary [&_.recharts-reference-line-line]:stroke-f1-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
+          "flex w-full justify-center overflow-visible text-sm [&_.recharts-cartesian-axis-tick_text]:fill-f1-foreground-secondary [&_.recharts-cartesian-grid_line]:stroke-f1-border [&_.recharts-curve.recharts-tooltip-cursor]:stroke-f1-border [&_.recharts-dot[stroke='#fff']]:stroke-transparent [&_.recharts-layer]:outline-none [&_.recharts-polar-grid_[stroke='#ccc']]:stroke-f1-border [&_.recharts-radial-bar-background-sector]:fill-f1-background-secondary [&_.recharts-rectangle.recharts-tooltip-cursor]:fill-f1-background-secondary [&_.recharts-reference-line-line]:stroke-f1-border [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
           aspect ? variants({ aspect }) : "aspect-auto h-full",
           className
         )}
         {...props}
       >
         <ChartStyle id={chartId} config={config} />
-        <RechartsPrimitive.ResponsiveContainer>
+        <RechartsPrimitive.ResponsiveContainer
+          height={height}
+          className="overflow-visible"
+        >
           {children}
         </RechartsPrimitive.ResponsiveContainer>
       </div>
@@ -217,7 +241,7 @@ const ChartTooltipContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "grid min-w-[8rem] items-start gap-2 rounded-lg border border-solid border-f1-border bg-f1-background px-3 py-2.5 text-sm shadow-xl",
+          "grid min-w-[8rem] items-start gap-2 rounded-sm border border-solid border-f1-border bg-f1-background px-3 py-2.5 text-sm shadow-xl",
           className
         )}
       >
@@ -305,10 +329,18 @@ const ChartLegendContent = React.forwardRef<
     Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
       hideIcon?: boolean
       nameKey?: string
+      leftShift?: number
     }
 >(
   (
-    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
+    {
+      className,
+      hideIcon = false,
+      payload,
+      verticalAlign = "bottom",
+      nameKey,
+      leftShift = 0,
+    },
     ref
   ) => {
     const { config } = useChart()
@@ -321,10 +353,11 @@ const ChartLegendContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "-ml-2 flex items-center justify-center gap-4 text-f1-foreground-secondary",
+          "relative flex items-center justify-center gap-4 text-f1-foreground-secondary",
           verticalAlign === "top" ? "pb-2" : "pt-2",
           className
         )}
+        style={{ left: leftShift }}
       >
         {payload.map((item) => {
           const key = `${nameKey || item.dataKey || "value"}`
@@ -347,7 +380,7 @@ const ChartLegendContent = React.forwardRef<
                   }}
                 />
               )}
-              <span className="text-sm tracking-wide text-f1-foreground-secondary">
+              <span className="text font-medium tracking-wide text-f1-foreground">
                 {itemConfig?.label}
               </span>
             </div>

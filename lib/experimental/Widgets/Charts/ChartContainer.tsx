@@ -1,7 +1,7 @@
 import { forwardRef, ReactNode } from "react"
-import { WidgetContainer, WidgetContainerProps } from "../WidgetContainer"
+import { Widget, WidgetProps } from "../Widget"
 
-export type ChartContainerPropsBase = WidgetContainerProps
+export type ChartContainerPropsBase = WidgetProps
 
 const Container = forwardRef<
   HTMLDivElement,
@@ -10,13 +10,9 @@ const Container = forwardRef<
   }
 >(({ chart, summaries, ...props }, ref) => {
   return (
-    <WidgetContainer ref={ref} {...props} summaries={summaries}>
-      {chart && (
-        <div className="relative flex h-52 grow items-stretch pt-6">
-          {chart}
-        </div>
-      )}
-    </WidgetContainer>
+    <Widget ref={ref} {...props} summaries={summaries}>
+      {chart && <div className="min-h-52 grow pt-2">{chart}</div>}
+    </Widget>
   )
 })
 
@@ -26,5 +22,5 @@ export type ComposeChartContainerProps<T extends object> =
   }
 
 export const ChartContainer = Object.assign(Container, {
-  Skeleton: WidgetContainer.Skeleton,
+  Skeleton: Widget.Skeleton,
 })

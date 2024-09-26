@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react"
 
 import { PieChartWidget } from "."
-import { containerStoryArgs } from "../storybook-utils"
+import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
 
 const meta = {
   component: PieChartWidget,
@@ -47,13 +47,7 @@ const meta = {
       ],
     },
   },
-  decorators: [
-    (Story) => (
-      <div className="w-full min-w-80">
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [WidgetDecorator],
 } satisfies Meta<typeof PieChartWidget>
 
 export default meta

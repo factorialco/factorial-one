@@ -51,16 +51,16 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               <Stack>
                 <div
                   onClick={() => (xRayEnabled ? disableXRay() : enableXRay())}
-                  className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer"
+                  className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer"
                 >
                   <Home size="16" /> Dashboard
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
                   <Inbox size="16" /> Inbox
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
                   <Store size="16" /> Marketplace
                 </div>
               </Stack>
@@ -72,7 +72,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
 
                 <Accordion.Root type="single" collapsible>
                   <Accordion.Item value="item-1">
-                    <Accordion.Trigger className="text-f1-foreground hover:bg-f1-background-secondary-hover group flex h-9 w-full items-center rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                    <Accordion.Trigger className="text-f1-foreground hover:bg-f1-background-secondary-hover group flex h-9 w-full items-center rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
                       <div className="flex flex-1 items-center gap-2">
                         <UserRound size="16" />
                         Me
@@ -94,19 +94,19 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                   </Accordion.Item>
                 </Accordion.Root>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
                   <Clock size="16" /> Clock in
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
                   <TreePalm size="16" /> Time off
                 </div>
 
-                <div className="hover:bg-f1-background-secondary/50 text-f1-foreground bg-f1-background-secondary flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="hover:bg-f1-background-secondary/50 text-f1-foreground bg-f1-background-secondary flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
                   <Folders size="16" /> My documents
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
                   <BookCheck size="16" /> Tasks
                 </div>
               </Stack>
@@ -115,11 +115,11 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                   Your company
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
                   <UsersRound size="16" /> Employees
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-lg p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
                   <Calendar size="16" /> Calendar
                 </div>
               </Stack>
@@ -127,7 +127,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
           </Stack>
         </ScrollArea>
       </Stack>
-      <Stack overflow="hidden" className="bg-f1-background rounded-lg shadow">
+      <Stack overflow="hidden" className="bg-f1-background rounded-sm shadow">
         <Stack gap={null} className="h-full overflow-hidden">
           <Split paddingX="p-4" paddingY="p-4" alignItems="center" shrink>
             <Stack grow paddingX="p-2">

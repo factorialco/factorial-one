@@ -62,6 +62,7 @@ const preview: Preview = {
         showLineNumbers: true, // default: false
         wrapLines: true, // default: true
       },
+      chromatic: { diffThreshold: 0.2 },
     },
     backgrounds: {
       default: "content",
@@ -91,8 +92,9 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
+          "Introduction",
           "Foundations",
-          ["Colors", "Typography", "Spacing", "Shadows"],
+          ["Colors", "Typography", "Spacing", "Borders", "Shadows"],
           "Components",
           "Experimental",
           "Playground",

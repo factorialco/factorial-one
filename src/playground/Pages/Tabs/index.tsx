@@ -50,7 +50,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         <TabsList className="h-auto w-full justify-start rounded-none border-b border-l-0 border-r-0 border-t-0 border-solid border-b-f1-border bg-transparent px-10 py-3">
           {tabs.map((tab: TabType) => (
             <TabsTrigger
-              className="flex text-f1-foreground data-[state=active]:rounded-lg data-[state=active]:bg-f1-background-secondary data-[state=active]:text-f1-foreground data-[state=active]:underline data-[state=active]:underline-offset-[1.4rem] data-[state=active]:shadow-none"
+              className="flex text-f1-foreground data-[state=active]:rounded-sm data-[state=active]:bg-f1-background-secondary data-[state=active]:text-f1-foreground data-[state=active]:underline data-[state=active]:underline-offset-[1.4rem] data-[state=active]:shadow-none"
               value={tab.key}
               key={tab.key}
             >

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { Badge as BadgeComponent } from "@/ui/badge"
 import { ComponentProps, forwardRef } from "react"
 
-interface BadgeProps {
+export interface BadgeProps {
   text: string
   avatar?: Pick<ComponentProps<typeof Avatar>, "src" | "alt">
   hasDot?: boolean
@@ -51,3 +51,5 @@ export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
     )
   }
 )
+
+Badge.displayName = "Badge"

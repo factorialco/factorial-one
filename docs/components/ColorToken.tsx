@@ -20,8 +20,8 @@ export function ColorToken({ name, description }: Props) {
   }
 
   return (
-    <div className="bg-f1-background-secondary border-f1-border flex max-w-[600px] flex-row items-center space-x-3 rounded-lg border border-solid px-2 py-1.5">
-      <div className={cn("w-12 h-8 rounded-lg", `bg-${name}`)} />
+    <div className="bg-f1-background-secondary border-f1-border flex max-w-[600px] flex-row items-center space-x-3 rounded-sm border border-solid px-2 py-1.5">
+      <div className={cn("w-12 h-8 rounded-sm", `bg-${name}`)} />
       <div className="flex flex-1 flex-col space-y-0">
         <span className="font-mono text-f1-foreground flex-grow font-semibold">
           {name}

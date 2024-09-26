@@ -2,8 +2,8 @@ import { Badge } from "@/components/Information/Badge"
 import {
   DetailsItem,
   DetailsItemType,
-} from "@/experimental/Widgets/DetailsItem"
-import { Weekdays } from "@/experimental/Widgets/Weekdays"
+} from "@/experimental/Layouts/Utils/DetailsItem"
+import { Weekdays } from "@/experimental/Widgets/Content/Weekdays"
 import { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps } from "react"
 
@@ -90,14 +90,12 @@ export const Details: Story = {
         {workableDays?.title && (
           <DetailsItem
             title={workableDays.title}
-            className="gap-2"
             content={<Weekdays activatedDays={workableDays.activatedDays} />}
           />
         )}
         {!!manager && (
           <DetailsItem
             title={manager.title}
-            className="gap-2"
             content={
               <Badge
                 text={manager.name}
@@ -112,7 +110,6 @@ export const Details: Story = {
         {!!teams?.list?.length && (
           <DetailsItem
             title={teams.title}
-            className="flex flex-col gap-2"
             content={
               <div className="flex flex-row flex-wrap gap-2">
                 {teams.list.map((team, index) => {
