@@ -64,7 +64,7 @@ const Container = forwardRef<
       {header && (
         <CardHeader>
           <div className="flex flex-1 flex-col gap-4 truncate">
-            <div className="flex flex-row justify-between gap-2">
+            <div className="flex flex-row items-center justify-between gap-2">
               <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
                 {header.title && <CardTitle>{header.title}</CardTitle>}
                 {header.subtitle && (
