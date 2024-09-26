@@ -14,10 +14,10 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
     return (
       <div
         ref={ref}
-        className="relative flex flex-row items-center gap-3 overflow-hidden rounded-md px-2 py-1.5"
+        className="relative flex flex-row items-center gap-3 overflow-hidden rounded-sm px-2 py-1.5"
       >
         <div
-          className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-10"
+          className="absolute bottom-0 left-0 right-0 top-0 opacity-10"
           style={{
             background: `linear-gradient(to right, ${color}, transparent)`,
           }}
