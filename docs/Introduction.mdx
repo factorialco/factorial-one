@@ -1,3 +1,37 @@
+import { Meta, Unstyled } from "@storybook/blocks"
+import { FeatureCard } from "./components/FeatureCard"
+import Rocket from "@/icons/Rocket"
+import Dashboard from "@/icons/Dashboard"
+import Folder from "@/icons/Folder"
+
+# Welcome to Factorial One
+
+Here you can find all the guides and resources to design and develop with
+Factorial One.
+
+<Unstyled>
+  <div className="grid grid-cols-1 gap-6 pb-8 md:grid-cols-3">
+    <FeatureCard
+      icon={Rocket}
+      title="Getting Started"
+      description="Explore how to start with tutorials and getting started guides."
+      href="/?path=/docs/components-maturity--docs"
+    />
+    <FeatureCard
+      icon={Dashboard}
+      title="Foundations"
+      description="Explore the foundations like colors, typography, or spacing."
+      href="/?path=/docs/foundations-colors--docs"
+    />
+    <FeatureCard
+      icon={Folder}
+      title="Components"
+      description="Discover our comprehensive collection of UI components."
+      href="/?path=/docs/components-actions-button--docs"
+    />
+  </div>
+</Unstyled>
+
 # Introduction
 
 **Factorial One** represents a transformative reboot of the visual language for
