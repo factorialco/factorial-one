@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority"
 
 const counterVariants = cva(
-  "rounded-xs inline-flex items-center justify-center whitespace-nowrap text-sm font-medium tabular-nums",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums",
   {
     variants: {
       size: {
