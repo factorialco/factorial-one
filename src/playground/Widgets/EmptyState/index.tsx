@@ -1,15 +1,16 @@
-import { WidgetContainer } from "@/experimental/exports"
+import { Widget } from "@/experimental/exports"
 import AreaGraph from "@/icons/AreaGraph"
 import Cash from "@/icons/Cash"
 import { ExoticComponent, forwardRef } from "react"
 
 type Icon = "area-graph" | "cash"
 
-export interface EmptyStateType {
+export interface Props {
   title: string
   content: string
   icon: Icon
   buttonLabel?: string
+  buttonAction?: () => void
   promote?: boolean
 }
 
@@ -18,12 +19,15 @@ const Icons: Record<Icon, ExoticComponent<{ className: string }>> = {
   cash: Cash,
 }
 
-export const EmptyState = forwardRef<HTMLDivElement, EmptyStateType>(
-  ({ title, content, icon, buttonLabel, promote = false }, ref) => {
+export const EmptyState = forwardRef<HTMLDivElement, Props>(
+  (
+    { title, content, icon, buttonLabel, buttonAction, promote = false },
+    ref
+  ) => {
     const Icon = Icons[icon]
 
     return (
-      <WidgetContainer
+      <Widget
         header={{
           title,
         }}
@@ -32,6 +36,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateType>(
             ? {
                 label: buttonLabel,
                 variant: promote ? "promote" : "default",
+                onClick: buttonAction,
               }
             : undefined
         }
@@ -41,7 +46,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateType>(
           <Icon className="absolute -top-8 right-0 z-10" />
           <p className="flex w-3/4 text-xl font-semibold">{content}</p>
         </div>
-      </WidgetContainer>
+      </Widget>
     )
   }
 )
