@@ -22,7 +22,7 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
           }}
         />
         <div
-          className="rounded-2xs min-h-10 min-w-1"
+          className="min-h-10 min-w-1 rounded-2xs"
           style={
             isPending
               ? {
@@ -40,7 +40,7 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
           }
         />
         <div className="flex flex-col gap-0.5">
-          <p className="font-medium line-clamp-3">
+          <p className="line-clamp-3 font-medium">
             {title}
             <span className="pl-1">{subtitle}</span>
           </p>
