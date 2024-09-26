@@ -42,7 +42,7 @@ export const EmptyState = forwardRef<HTMLDivElement, Props>(
         }
         ref={ref}
       >
-        <div className="relative flex flex-1">
+        <div className="relative flex min-h-28 flex-1">
           <Icon className="absolute -top-8 right-0 z-10" />
           <p className="flex w-3/4 text-xl font-semibold">{content}</p>
         </div>
