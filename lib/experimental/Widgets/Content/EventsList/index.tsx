@@ -14,9 +14,9 @@ export const EventsList = forwardRef<HTMLDivElement, EventsListProps>(
     }
 
     return (
-      <div ref={ref}>
+      <div className="flex flex-col gap-3" ref={ref}>
         {title && (
-          <p className="mb-3 text-sm font-semibold uppercase text-f1-foreground-secondary">
+          <p className="text-sm font-semibold uppercase text-f1-foreground-secondary">
             {title}
           </p>
         )}

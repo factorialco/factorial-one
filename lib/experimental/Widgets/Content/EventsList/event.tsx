@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
 export interface EventProps {
@@ -14,7 +13,7 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
     return (
       <div
         ref={ref}
-        className="relative flex flex-row items-center gap-3 overflow-hidden rounded-sm px-2 py-1.5"
+        className="relative flex flex-row items-stretch gap-3 overflow-hidden rounded-sm px-2 py-1.5"
       >
         <div
           className="absolute bottom-0 left-0 right-0 top-0 opacity-10"
@@ -23,7 +22,7 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
           }}
         />
         <div
-          className={cn("h-10 w-1 rounded-2xs")}
+          className="min-h-10 min-w-1 rounded-2xs"
           style={
             isPending
               ? {
@@ -41,10 +40,10 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
           }
         />
         <div className="flex flex-col gap-0.5">
-          <div className="flex flex-row gap-1 font-medium">
-            <p>{title}</p>
-            <p>{subtitle}</p>
-          </div>
+          <p className="line-clamp-3 font-medium">
+            {title}
+            <span className="pl-1">{subtitle}</span>
+          </p>
           <p className="text-f1-foreground-secondary">{description}</p>
         </div>
       </div>

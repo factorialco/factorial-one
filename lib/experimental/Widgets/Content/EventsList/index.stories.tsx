@@ -12,7 +12,7 @@ const meta: Meta = {
     title: "Events",
     events: [
       {
-        title: "Product Review",
+        title: "Birthday of Kyriakos Papadopoulos",
         subtitle: "(2 days)",
         description: "02/07 - 04/07",
         color: "orange",
