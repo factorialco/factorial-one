@@ -21,8 +21,9 @@ type Story = StoryObj<typeof CategoryBarSection>
 
 export const Default: Story = {
   args: {
-    label: "Status",
-    title: "90% / 10%",
+    label: "Worked / Planned hours",
+    title: "121h 04m",
+    subtitle: "+3h 05m",
     data: [
       {
         name: "Achieved",
