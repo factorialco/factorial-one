@@ -1,15 +1,7 @@
-import { cva } from "class-variance-authority"
-import React from "react"
-
-interface CounterProps {
-  size?: "md" | "sm"
-  type?: "default" | "selected" | "bold"
-  value: number
-  maxValue?: number
-}
+import { cva, type VariantProps } from "class-variance-authority"
 
 const counterVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums",
+  "rounded-xs inline-flex items-center justify-center whitespace-nowrap text-sm font-medium tabular-nums",
   {
     variants: {
       size: {
@@ -30,16 +22,13 @@ const counterVariants = cva(
   }
 )
 
-const Counter: React.FC<CounterProps> = ({
-  size = "md",
-  type = "default",
-  value,
-  maxValue,
-}) => {
-  const displayValue =
-    maxValue !== undefined && value > maxValue ? `+${maxValue}` : value
+type CounterProps = {
+  value: number
+  maxValue?: number
+} & VariantProps<typeof counterVariants>
+
+export function Counter({ size, type, value, maxValue }: CounterProps) {
+  const displayValue = maxValue && value > maxValue ? `+${maxValue}` : value
 
   return <div className={counterVariants({ size, type })}>{displayValue}</div>
 }
-
-export { Counter }
