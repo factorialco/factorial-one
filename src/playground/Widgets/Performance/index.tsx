@@ -1,8 +1,8 @@
 import { ChartItem } from "@/components/Charts/utils/types"
 import { AreaChartWidget } from "@/experimental/Widgets/Charts/AreaChartWidget"
+import { WidgetEmptyState } from "@/experimental/Widgets/WidgetEmptyState"
 import { ChartConfig } from "@/ui/chart"
 import { ComponentProps, forwardRef } from "react"
-import { EmptyState } from "../EmptyState"
 
 export interface PerformanceInsightType {
   title: string
@@ -20,7 +20,7 @@ export const PerformanceInsight = forwardRef<
 >(({ title, name, data, performanceValue, comment, link, hasAccess }, ref) => {
   if (!hasAccess) {
     return (
-      <EmptyState
+      <WidgetEmptyState
         title={title}
         content={`See how ${name}'s performance evolved over time`}
         icon="area-graph"

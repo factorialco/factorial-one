@@ -19,7 +19,7 @@ const Icons: Record<Icon, ExoticComponent<{ className: string }>> = {
   cash: Cash,
 }
 
-export const EmptyState = forwardRef<HTMLDivElement, Props>(
+export const WidgetEmptyState = forwardRef<HTMLDivElement, Props>(
   (
     { title, content, icon, buttonLabel, buttonAction, promote = false },
     ref

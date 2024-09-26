@@ -2,7 +2,7 @@ import { create } from "@storybook/theming/create"
 
 export default create({
   base: "light",
-  brandTitle: `<img src="one.svg" width="36px" />`,
+  brandTitle: `<img src="logo.svg" width="32px" />`,
   brandTarget: "_self",
 
   fontBase: '"Inter", sans-serif',
@@ -12,65 +12,67 @@ export default create({
   colorSecondary: "#585858",
 
   // UI
-  appBg: "#ffffff",
+  appBg: "#FAFBFC",
   appContentBg: "#ffffff",
   appPreviewBg: "#ffffff",
   appBorderColor: "#ffffff",
-  appBorderRadius: 4,
+  appBorderRadius: 8,
 
   // Text colors
-  textColor: "#10162F",
+  textColor: "#303D55",
   textInverseColor: "#ffffff",
 
   // Toolbar default and active colors
-  barTextColor: "#9E9E9E",
-  barSelectedColor: "#585858",
-  barHoverColor: "#585858",
+  barTextColor: "#647084",
+  barSelectedColor: "#0D1625",
+  barHoverColor: "#0D1625",
   barBg: "#ffffff",
 
   // Form colors
   inputBg: "#ffffff",
-  inputBorder: "#cccccc",
-  inputTextColor: "#101010",
-  inputBorderRadius: 2,
+  inputBorder: "#DCE0E5",
+  inputTextColor: "#647084",
+  inputBorderRadius: 8,
 })
 
 export const darkTheme = create({
   base: "dark",
-  brandTitle: `<img src="one_dark.svg" width="36px" />`,
+  brandTitle: `<img src="logo.svg" width="32px" />`,
   brandTarget: "_self",
+
+  fontBase: '"Inter", sans-serif',
 
   //
   colorPrimary: "#BB86FC",
-  colorSecondary: "#03DAC6",
+  colorSecondary: "#647084",
 
   // UI
-  appBg: "#121212",
-  appContentBg: "#1E1E1E",
-  appPreviewBg: "#1E1E1E",
-  appBorderColor: "#292929",
-  appBorderRadius: 4,
+  appBg: "#161F30",
+  appContentBg: "#0D1625",
+  appPreviewBg: "#0D1625",
+  appBorderColor: "#202C42",
+  appBorderRadius: 8,
 
   // Text colors
-  textColor: "#E0E0E0",
+  textColor: "#A1ABBD",
   textInverseColor: "#121212",
   textMutedColor: "#A0A0A0",
 
   // Toolbar default and active colors
-  barTextColor: "#BBBBBB",
-  barSelectedColor: "#03DAC6",
-  barHoverColor: "#03DAC6",
-  barBg: "#121212",
+  barTextColor: "#A1ABBD",
+  barSelectedColor: "#A1ABBD",
+  barHoverColor: "#A1ABBD",
+  barBg: "#0D1625",
 
   // Form colors
-  inputBg: "#292929",
-  inputBorder: "#444444",
-  inputTextColor: "#E0E0E0",
-  inputBorderRadius: 2,
+  inputBg: "#161F30",
+  inputBorder: "#202C42",
+  inputTextColor: "#647084",
+  inputBorderRadius: 8,
 
   // Buttons
-  buttonBg: "#444444", // Gris medio para fondo de botones
-  buttonBorder: "#03DAC6", // Aqua para borde de botones
-  booleanBg: "#292929", // Gris oscuro para fondo de botones booleanos
-  booleanSelectedBg: "#03DAC6", // Aqua para fondo de botones booleanos seleccionados
+  buttonBg: "#161F30",
+  buttonBorder: "#202C42",
+  booleanBg: "#161F30",
+  booleanSelectedBg: "#202C42",
 })

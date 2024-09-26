@@ -1,0 +1,121 @@
+<style>
+  #storybook-explorer-tree .sidebar-item {
+    border-radius: 8px;
+    margin-bottom: 2px;
+  }
+
+  #storybook-explorer-tree .sidebar-subheading-action {
+    display: none;
+  }
+
+  #storybook-explorer-tree .sidebar-item > a,
+  #storybook-explorer-tree .sidebar-item button {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+
+  #storybook-explorer-tree .sidebar-item:hover,
+  #storybook-explorer-tree .sidebar-item[aria-expanded="true"] {
+    background-color: #f0f2f5;
+    color: #0d1625;
+  }
+
+  #storybook-explorer-tree .sidebar-item[data-selected="true"],
+  #storybook-explorer-tree .sidebar-item[data-selected="true"]:hover {
+    background-color: #f0f2f5;
+    color: #0d1625;
+    font-weight: 500;
+  }
+
+  #storybook-explorer-tree svg {
+    color: #a1abbd;
+  }
+
+  #storybook-explorer-tree .sidebar-item[data-selected="true"] svg {
+    color: #303d55;
+  }
+
+  #storybook-explorer-tree .sidebar-subheading {
+    margin-top: 32px;
+    position: relative;
+  }
+
+  #storybook-explorer-tree .sidebar-subheading:after {
+    content: "";
+    display: block;
+    height: 1px;
+    border-bottom: 1px dashed #dce0e5;
+    top: -16px;
+    width: 90%;
+    position: absolute;
+    left: 5%;
+  }
+
+  #storybook-explorer-searchfield {
+    background: #fff;
+    border-radius: 8px;
+    height: 32px;
+  }
+
+  div[role="combobox"] code {
+    background: #f5f6f8;
+    color: #647084;
+    border-radius: 6px;
+    padding: 2px 4px;
+    height: auto;
+    right: 6px;
+  }
+
+  .sb-bar {
+    border-bottom: 1px dashed #dce0e5;
+  }
+
+  nav.sidebar-container
+    > div
+    > div[data-radix-scroll-area-viewport]
+    > div[data-radix-scroll-area-content]
+    > div {
+    padding: 24px;
+  }
+
+  /* -- DARK -- */
+
+  body.dark #storybook-explorer-tree .sidebar-item:hover,
+  body.dark #storybook-explorer-tree .sidebar-item[aria-expanded="true"] {
+    background-color: #1a2437;
+    color: #a1abbd;
+  }
+
+  body.dark #storybook-explorer-tree .sidebar-item[data-selected="true"],
+  body.dark #storybook-explorer-tree .sidebar-item[data-selected="true"]:hover {
+    background-color: #1a2437;
+    color: #a1abbd;
+  }
+
+  body.dark #storybook-explorer-tree svg {
+    color: #647084;
+  }
+
+  body.dark #storybook-explorer-tree .sidebar-item[data-selected="true"] svg {
+    color: #a1abbd;
+  }
+
+  body.dark .sb-bar {
+    border-bottom: 1px dashed #202c42;
+  }
+
+  body.dark #storybook-explorer-tree .sidebar-subheading:after {
+    border-bottom: 1px dashed #202c42;
+  }
+
+  body.dark #storybook-explorer-searchfield {
+    background: #161f30;
+  }
+
+  body.dark div[role="combobox"] code {
+    background: #202c42;
+    color: #647084;
+  }
+</style>

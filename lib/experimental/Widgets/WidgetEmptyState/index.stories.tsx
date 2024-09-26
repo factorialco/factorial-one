@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { EmptyState } from "."
+import { WidgetEmptyState } from "."
 
 const meta: Meta = {
-  component: EmptyState,
+  component: WidgetEmptyState,
   parameters: {
     tags: ["autodocs"],
   },
