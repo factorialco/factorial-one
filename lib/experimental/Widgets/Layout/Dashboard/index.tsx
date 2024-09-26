@@ -1,55 +1,66 @@
 import { Blend, withSkeleton } from "@/lib/skeleton"
 import {
+  Children,
   ComponentProps,
   forwardRef,
   ReactNode,
-  useCallback,
+  useEffect,
   useRef,
   useState,
 } from "react"
-import Layout from "react-masonry-list"
-import { useResizeObserver } from "usehooks-ts"
+import { Masonry } from "react-masonry"
 import { Widget } from "../../Widget"
 
 type DashboardProps = {
   children?: ReactNode[]
 }
 
-type Size = {
-  width?: number
-  height?: number
-}
-
 const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
   ({ children }, ref) => {
     const [columns, setColumns] = useState<number | undefined>()
 
-    const onResize = useCallback(
-      ({ width }: Size) => {
-        if (width) {
-          setColumns(Math.floor(width / 340) || 1)
-        }
-      },
-      [setColumns]
-    )
+    const arrayChildren = Children.toArray(children)
 
     const containerRef = useRef<HTMLDivElement>(null)
-    useResizeObserver({ ref: containerRef, onResize })
+
+    useEffect(() => {
+      const handleResize = () => {
+        const width = containerRef.current?.offsetWidth
+        if (width) setColumns(Math.floor(width / 340) || 1)
+      }
+
+      handleResize()
+
+      window.addEventListener("resize", handleResize)
+
+      return () => {
+        window.removeEventListener("resize", handleResize)
+      }
+    }, [setColumns])
 
     return (
-      <div ref={ref}>
+      <div ref={ref} className="overflow-hidden">
         <div ref={containerRef}>
           {columns === 1 ? (
-            <div className="flex flex-col gap-4">{children}</div>
+            <div className="flex flex-col gap-4">{arrayChildren}</div>
           ) : (
             columns &&
             columns > 1 && (
-              <Layout
-                key={columns}
-                colCount={columns}
-                items={children}
-                gap={16}
-              />
+              <div className="relative -mr-4">
+                <Masonry key={columns}>
+                  {arrayChildren.map((child, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        width: `${Math.floor((1 / columns) * 10000) / 100 - 0.05}%`,
+                      }}
+                      className="pb-4 pr-4"
+                    >
+                      {child}
+                    </div>
+                  ))}
+                </Masonry>
+              </div>
             )
           )}
         </div>
