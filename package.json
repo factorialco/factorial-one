@@ -18,6 +18,7 @@
   ],
   "scripts": {
     "dev": "storybook dev -p 6006",
+    "dev:docs": "DOCS_MODE=true npm run dev",
     "start": "npm run dev",
     "build": "tsc --p ./tsconfig-build.json && BUILD_TYPES=true vite build && npm run build:tailwind && run-p build-icons",
     "build-icons": "tsc --p ./tsconfig-build-icons.json",
@@ -29,7 +30,6 @@
     "test-storybook": "test-storybook",
     "prettier:format": "prettier --write \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
-    "storybook-docs": "storybook dev --docs",
     "tsc": "tsc --noEmit",
     "vitest": "vitest dev",
     "vitest:ci": "vitest run"
