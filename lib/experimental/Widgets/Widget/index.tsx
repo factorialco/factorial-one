@@ -60,10 +60,10 @@ const Container = forwardRef<
   }
 
   return (
-    <Card ref={ref}>
+    <Card className="flex gap-4" ref={ref}>
       {header && (
         <CardHeader>
-          <div className="flex flex-1 flex-col truncate">
+          <div className="flex flex-1 flex-col gap-4 truncate">
             <div className="flex flex-row justify-between">
               <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
                 {header.title && <CardTitle>{header.title}</CardTitle>}
@@ -81,7 +81,7 @@ const Container = forwardRef<
               )}
             </div>
             {header.comment && (
-              <div className="mt-2 flex flex-row items-center gap-3">
+              <div className="flex flex-row items-center gap-3">
                 <CardComment className={cn(!!header.isBlur && "blur-md")}>
                   {header.comment}
                 </CardComment>
@@ -94,6 +94,7 @@ const Container = forwardRef<
                       variant="outline"
                       round
                       onClick={header.toggleBlur}
+                      size="sm"
                     />
                   </span>
                 )}
@@ -102,9 +103,9 @@ const Container = forwardRef<
           </div>
         </CardHeader>
       )}
-      <CardContent className="flex flex-col gap-1">
+      <CardContent className="flex flex-col gap-4">
         {summaries && (
-          <div className="-mt-2 flex flex-row">
+          <div className="flex flex-row">
             {summaries.map((summary, index) => (
               <div key={index} className="grow">
                 <div className="mb-0.5 text-sm text-f1-foreground-secondary">
@@ -132,7 +133,7 @@ const Container = forwardRef<
           .map((child, index) => {
             return (
               <>
-                {index > 0 && <Separator />}
+                {index > 0 && <Separator bare />}
                 {child}
               </>
             )
@@ -166,7 +167,7 @@ export type WidgetSkeletonProps = {
 
 const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   ({ header, height }, ref) => (
-    <Card ref={ref} aria-live="polite" aria-busy={true}>
+    <Card className="flex gap-4" ref={ref} aria-live="polite" aria-busy={true}>
       <CardHeader>
         <div
           className="flex h-6 w-full flex-row items-center gap-1.5"
