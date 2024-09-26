@@ -1,0 +1,114 @@
+<style>
+  #storybook-docs h1,
+  #storybook-docs h2,
+  #storybook-docs h3 {
+    font-weight: 500 !important;
+    color: #0d1625 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+  }
+
+  #storybook-docs h1 {
+    font-size: 36px !important;
+    margin-bottom: 12px !important;
+  }
+
+  #storybook-docs h2 {
+    font-size: 26px !important;
+    margin-bottom: 12px !important;
+    margin-top: 48px !important;
+    border-bottom: none !important;
+  }
+
+  #storybook-docs a.sbdocs-a {
+    color: #ff355e !important;
+  }
+
+  .docblock-source {
+    font-family:
+      Menlo,
+      Consolas,
+      Monaco,
+      Liberation Mono,
+      Lucida Console,
+      monospace !important;
+    background: #fafbfc !important;
+    border: #dce0e5 1px solid !important;
+    padding: 8px !important;
+    border-radius: 12px !important;
+    box-shadow: 0px 2px 20px rgba(13, 22, 37, 0.04) !important;
+  }
+
+  .sbdocs-preview {
+    border: #dce0e5 1px solid !important;
+    box-shadow: 0px 2px 20px rgba(13, 22, 37, 0.04) !important;
+    border-radius: 12px !important;
+  }
+
+  /* -- DARK -- */
+  body.dark #storybook-docs h1,
+  body.dark #storybook-docs h2,
+  body.dark #storybook-docs h3 {
+    color: #fff !important;
+  }
+
+  body.dark #storybook-docs h1 > a,
+  body.dark #storybook-docs h2 > a,
+  body.dark #storybook-docs h3 > a {
+    float: left;
+    line-height: inherit;
+    padding-right: 10px;
+    margin-left: -24px;
+    color: #647084;
+  }
+
+  body.dark .toc-list {
+    border-left-color: #202c42 !important;
+  }
+
+  body.dark .docblock-source {
+    background: #161f30 !important;
+    border: rgba(255, 255, 255, 0.1) 1px solid !important;
+    box-shadow: 0px 2px 20px #0d1625 !important;
+  }
+
+  body.dark .toc-list .toc-list-item:before {
+    border-left-color: #647084 !important;
+  }
+
+  body.dark .toc-list .toc-list-item > a.is-active-link {
+    color: #fff !important;
+  }
+
+  body.dark .sbdocs-preview {
+    border: rgba(255, 255, 255, 0.1) 1px solid !important;
+    box-shadow: 0px 2px 20px #0d1625 !important;
+  }
+
+  body.dark input[type="radio"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #202c42;
+    background-color: #161f30;
+    position: relative;
+  }
+
+  body.dark input[type="radio"]::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #fff;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+  }
+
+  body.dark input[type="radio"]:checked::before {
+    transform: scale(1);
+  }
+</style>
