@@ -133,7 +133,7 @@ const Container = forwardRef<
           .map((child, index) => {
             return (
               <>
-                {index > 0 && <Separator />}
+                {index > 0 && <Separator bare />}
                 {child}
               </>
             )
