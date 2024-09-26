@@ -23,12 +23,9 @@ export const PerformanceInsight = forwardRef<
       <EmptyState
         title={title}
         content={`See how ${name}'s performance evolved over time`}
-        link={link}
-        variant="performance"
-        buttons={[
-          { label: "Try it for free", variant: "neutral" },
-          { label: "Book a demo", variant: "outline" },
-        ]}
+        icon="area-graph"
+        buttonLabel="Try it for free"
+        promote
       />
     )
   }
