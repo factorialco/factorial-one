@@ -1,55 +1,52 @@
-import { Button } from "@/components/Actions/Button"
+import { Widget } from "@/experimental/exports"
 import AreaGraph from "@/icons/AreaGraph"
-import { cn } from "@/lib/utils"
-import { Button as ShadcnButton } from "@/ui/button"
-import { CardLink } from "@/ui/card"
-import { cva } from "class-variance-authority"
-import { ComponentProps, forwardRef } from "react"
+import Cash from "@/icons/Cash"
+import { ExoticComponent, forwardRef } from "react"
 
-export type Variants = "performance" | "salary"
+type Icon = "area-graph" | "cash"
 
-export interface EmptyStateType {
+export interface Props {
   title: string
   content: string
-  link: string
-  variant: Variants
-  buttons: {
-    label: string
-    variant: ComponentProps<typeof ShadcnButton>["variant"]
-  }[]
+  icon: Icon
+  buttonLabel?: string
+  buttonAction?: () => void
+  promote?: boolean
 }
 
-const emptyStateVariants = cva("", {
-  variants: {
-    background: {
-      performance: "bg-f1-background-warning",
-      salary: "bg-f1-background-critical",
-    },
-  },
-})
+const Icons: Record<Icon, ExoticComponent<{ className: string }>> = {
+  "area-graph": AreaGraph,
+  cash: Cash,
+}
 
-export const EmptyState = forwardRef<HTMLDivElement, EmptyStateType>(
-  ({ title, link, variant, content, buttons }, ref) => {
+export const EmptyState = forwardRef<HTMLDivElement, Props>(
+  (
+    { title, content, icon, buttonLabel, buttonAction, promote = false },
+    ref
+  ) => {
+    const Icon = Icons[icon]
+
     return (
-      <div
-        className={cn(
-          "relative flex h-52 max-w-96 flex-col justify-between rounded-md pb-6 pl-5 pr-5 pt-4",
-          emptyStateVariants({ background: variant })
-        )}
+      <Widget
+        header={{
+          title,
+        }}
+        action={
+          buttonLabel
+            ? {
+                label: buttonLabel,
+                variant: promote ? "promote" : "default",
+                onClick: buttonAction,
+              }
+            : undefined
+        }
         ref={ref}
       >
-        <AreaGraph className="absolute -bottom-6 -right-7 z-10 h-64" />
-        <div className="z-20 flex flex-row justify-between">
-          <p className="text-lg font-semibold">{title}</p>
-          <CardLink href={link} title={title} />
+        <div className="relative flex min-h-28 flex-1">
+          <Icon className="absolute -top-8 right-0 z-10" />
+          <p className="flex w-3/4 text-xl font-semibold">{content}</p>
         </div>
-        <p className="flex w-3/4 text-xl font-semibold">{content}</p>
-        <div className="z-10 flex flex-row gap-3">
-          {buttons.map((button) => (
-            <Button label={button.label} variant={button.variant} />
-          ))}
-        </div>
-      </div>
+      </Widget>
     )
   }
 )
