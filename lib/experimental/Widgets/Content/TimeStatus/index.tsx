@@ -20,12 +20,10 @@ export const TimeStatus = forwardRef<HTMLDivElement, TimeStatusProps>(
       <div className="flex flex-col gap-2">
         <div
           ref={ref}
-          className="flex flex-row items-center justify-between gap-3 text-sm font-semibold text-f1-foreground-secondary"
+          className="flex flex-row items-center gap-3 text-f1-foreground-secondary"
         >
-          <p className="uppercase">{title}</p>
-          <span>
-            <Badge text={statusText} hasDot={true} variant={variant[status]} />
-          </span>
+          <p className="mr-auto text-sm font-semibold uppercase">{title}</p>
+          <Badge text={statusText} hasDot variant={variant[status]} />
         </div>
         <p className="text-3xl font-semibold">{time}</p>
       </div>
