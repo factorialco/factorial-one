@@ -41,7 +41,7 @@ export interface WidgetProps {
 }
 
 const InlineDot = () => (
-  <div className="h-[0.15rem] w-[0.15rem] rounded-full bg-f1-foreground-secondary" />
+  <div className="min-h-[0.15rem] min-w-[0.15rem] rounded-full bg-f1-foreground-secondary" />
 )
 
 const Container = forwardRef<
