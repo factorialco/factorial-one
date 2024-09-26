@@ -36,7 +36,8 @@ export const Timesheet: Story = {
       >
         <CategoryBarSection
           label="Worked / Planned hours"
-          title="75h / 100h"
+          title="75h"
+          subtitle="100h"
           data={[
             {
               name: "Worked",
@@ -52,7 +53,8 @@ export const Timesheet: Story = {
         />
         <CategoryBarSection
           label="Balance"
-          title="9h / 50h"
+          title="9h"
+          subtitle="50h"
           data={[
             {
               name: "Worked",
@@ -87,7 +89,8 @@ export const TimesheetOvertime: Story = {
       >
         <CategoryBarSection
           label="Worked / Planned hours"
-          title="121h / 100h"
+          title="121h"
+          subtitle="100h"
           data={[
             {
               name: "Regular",
@@ -104,7 +107,7 @@ export const TimesheetOvertime: Story = {
         <CategoryBarSection
           label="Balance"
           title="+9h"
-          helpText="of 50h max"
+          subtitle="50h"
           data={[
             {
               name: "Regular",

@@ -58,13 +58,40 @@ export const WithAction: Story = {
 export const WithAlert: Story = {
   args: {
     ...meta.args,
-    alert: "12 alerts in this period",
+    alert: "12 alerts",
   },
 }
 
 export const MultipleContent: Story = {
   args: {
     ...meta.args,
+    children: [
+      Array.from({ length: 3 }).map((_, index) => (
+        <div
+          key={index}
+          className="rounded-sm bg-f1-background-secondary p-3 text-center text-f1-foreground"
+        >
+          Content {index + 1}
+        </div>
+      )),
+    ],
+  },
+}
+
+export const Full: Story = {
+  args: {
+    ...meta.args,
+    header: {
+      title: "Wellness programs",
+      subtitle: "Boosting workplace health",
+      info: "Explore initiatives for physical, mental, and emotional well-being, including health screenings and fitness challenges.",
+      link: { url: "/", title: "Go to link" },
+    },
+    alert: "12 alerts",
+    action: {
+      label: "Show more",
+      onClick: fn(),
+    },
     children: [
       Array.from({ length: 3 }).map((_, index) => (
         <div
