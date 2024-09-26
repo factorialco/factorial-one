@@ -15,6 +15,7 @@ export default {
     "./src/**/*.{ts,tsx}",
     "./lib/**/*.{ts,tsx}",
     "./docs/**/*.{mdx,ts,tsx}",
+    "./storybook/**/*.{mdx,ts,tsx}",
   ],
   prefix: "",
   theme: {
