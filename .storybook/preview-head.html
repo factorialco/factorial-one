@@ -45,6 +45,77 @@
     border-radius: 12px !important;
   }
 
+  .sb-unstyled table,
+  .docblock-argstable {
+    background: #f5f6f8;
+    border-radius: 12px;
+    border: #f5f6f8 4px solid;
+    border-spacing: 0 !important;
+    width: 100%;
+  }
+
+  .sb-unstyled tbody,
+  .docblock-argstable-body {
+    filter: none !important;
+    outline: rgba(0, 0, 0, 0.1) 1px solid !important;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .sb-unstyled tbody > tr:nth-child(even) > td,
+  .docblock-argstable-body > tr:nth-child(even) > td {
+    background: #fafbfc !important;
+  }
+
+  .sb-unstyled tbody > tr:not(:last-child) > td,
+  .docblock-argstable-body > tr:not(:last-child) > td {
+    border-bottom: #dce0e5 1px solid !important;
+  }
+
+  .sb-unstyled thead > tr > th {
+    padding: 10px 20px;
+    color: #647084;
+    text-align: left;
+  }
+
+  .sb-unstyled tbody > tr > td {
+    padding: 16px 20px;
+  }
+
+  input[type="radio"] {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #dce0e5;
+    background-color: #fff;
+    position: relative;
+    transition: border 0.2s ease-in-out;
+  }
+
+  input[type="radio"]:hover,
+  input[type="radio"]:checked {
+    border: 1px solid #a1abbd;
+  }
+
+  input[type="radio"]::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #ff355e;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+  }
+
+  input[type="radio"]:checked::before {
+    transform: scale(1);
+  }
+
   /* -- DARK -- */
   body.dark #storybook-docs h1,
   body.dark #storybook-docs h2,
@@ -85,31 +156,36 @@
     box-shadow: 0px 2px 20px #0d1625 !important;
   }
 
+  body.dark .sb-unstyled table,
+  body.dark .docblock-argstable {
+    background: #161f30;
+    border: #161f30 4px solid;
+  }
+
+  body.dark .sb-unstyled thead > tr > th,
+  body.dark .docblock-argstable-head > tr > th > span {
+    color: #a1abbd !important;
+  }
+
+  body.dark .sb-unstyled tbody,
+  body.dark .docblock-argstable-body {
+    outline: none !important;
+    background: #0d1625;
+  }
+
+  body.dark .sb-unstyled tbody > tr:nth-child(even) > td,
+  body.dark .docblock-argstable-body > tr:nth-child(even) > td {
+    background: #111a2a !important;
+  }
+
+  body.dark .sb-unstyled tbody > tr:not(:last-child) > td,
+  body.dark .docblock-argstable-body > tr:not(:last-child) > td {
+    border-bottom: #172031 1px solid !important;
+  }
+
   body.dark input[type="radio"] {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
     border: 1px solid #202c42;
     background-color: #161f30;
-    position: relative;
-  }
-
-  body.dark input[type="radio"]::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    transform: scale(0);
-    transition: 120ms transform ease-in-out;
-    box-shadow: inset 1em 1em #fff;
-    position: absolute;
-    left: 3px;
-    top: 3px;
-  }
-
-  body.dark input[type="radio"]:checked::before {
-    transform: scale(1);
   }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/react-render-tracker"></script>
