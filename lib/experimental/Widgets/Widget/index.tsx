@@ -60,7 +60,7 @@ const Container = forwardRef<
   }
 
   return (
-    <Card className="flex gap-4 p-4" ref={ref}>
+    <Card className="flex gap-4" ref={ref}>
       {header && (
         <CardHeader>
           <div className="flex flex-1 flex-col gap-4 truncate">
@@ -167,7 +167,7 @@ export type WidgetSkeletonProps = {
 
 const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   ({ header, height }, ref) => (
-    <Card ref={ref} aria-live="polite" aria-busy={true}>
+    <Card className="flex gap-4" ref={ref} aria-live="polite" aria-busy={true}>
       <CardHeader>
         <div
           className="flex h-6 w-full flex-row items-center gap-1.5"
