@@ -62,6 +62,7 @@ const preview: Preview = {
         showLineNumbers: true, // default: false
         wrapLines: true, // default: true
       },
+      chromatic: { diffThreshold: 0.2 },
     },
     backgrounds: {
       default: "content",
@@ -77,6 +78,9 @@ const preview: Preview = {
     },
     docs: {
       container: DocsContainer,
+      canvas: {
+        sourceState: "shown",
+      },
       toc: {
         headingSelector: "h2, h3",
       },
@@ -91,8 +95,9 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
+          "Introduction",
           "Foundations",
-          ["Colors", "Typography", "Spacing", "Shadows"],
+          ["Colors", "Typography", "Spacing", "Borders", "Shadows"],
           "Components",
           "Experimental",
           "Playground",

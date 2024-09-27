@@ -3,7 +3,7 @@ import type { Meta } from "@storybook/react"
 import AreaChartStory from "@/components/Charts/AreaChart/index.stories"
 import { LineChartProps } from "@/components/Charts/LineChart"
 import { LineChartWidget } from "."
-import { containerStoryArgs } from "../storybook-utils"
+import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
 
 const meta = {
   component: LineChartWidget,
@@ -19,13 +19,7 @@ const meta = {
     },
     chart: AreaChartStory.args as LineChartProps,
   },
-  decorators: [
-    (Story) => (
-      <div className="w-full min-w-80">
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [WidgetDecorator],
 } satisfies Meta<typeof LineChartWidget>
 
 export default meta

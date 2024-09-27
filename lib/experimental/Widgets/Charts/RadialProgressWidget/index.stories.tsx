@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react"
 import { RadialProgressWidget } from "."
+import { WidgetDecorator } from "../storybook-utils"
 
 const meta = {
   component: RadialProgressWidget,
@@ -20,13 +21,7 @@ const meta = {
       overview: { number: 75, label: "Completed" },
     },
   },
-  decorators: [
-    (Story) => (
-      <div className="w-full min-w-80">
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [WidgetDecorator],
 } satisfies Meta<typeof RadialProgressWidget>
 
 export default meta

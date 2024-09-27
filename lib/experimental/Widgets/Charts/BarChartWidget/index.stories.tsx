@@ -3,7 +3,7 @@ import type { Meta } from "@storybook/react"
 import { BarChartProps } from "@/components/Charts/BarChart"
 import BarChartStory from "@/components/Charts/BarChart/index.stories"
 import { BarChartWidget } from "."
-import { containerStoryArgs } from "../storybook-utils"
+import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
 
 const meta = {
   component: BarChartWidget,
@@ -19,13 +19,7 @@ const meta = {
     },
     chart: BarChartStory.args as BarChartProps,
   },
-  decorators: [
-    (Story) => (
-      <div className="w-full min-w-80">
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [WidgetDecorator],
 } satisfies Meta<typeof BarChartWidget>
 
 export default meta

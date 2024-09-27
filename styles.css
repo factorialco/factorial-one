@@ -50,7 +50,6 @@
     --promote-70: theme("colors.yellow.70");
 
     --ring: var(--selected-50);
-    --radius: 0.5rem;
     --link: 184, 92%, 28%;
 
     --chart-1: 181 52% 45%;
@@ -107,7 +106,6 @@
     --promote-70: theme("colors.yellow.70");
 
     --ring: var(--selected-50);
-    --radius: 0.5rem;
     --link: 184, 40%, 55%;
 
     --chart-1: 181 52% 45%;
@@ -122,5 +120,5 @@
 }
 
 body {
-  @apply text-f1-foreground font-sans text-base;
+  @apply font-sans text-base text-f1-foreground antialiased;
 }

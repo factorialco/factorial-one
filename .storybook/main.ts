@@ -36,7 +36,10 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
-  docs: {},
+  docs: {
+    defaultName: "Documentation",
+    docsMode: process.env.PUBLIC_BUILD || process.env.DOCS_MODE ? true : false,
+  },
   typescript: {
     reactDocgen: "react-docgen-typescript",
   },
