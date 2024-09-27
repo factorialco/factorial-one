@@ -8,7 +8,7 @@ interface IconTextsListProps {
 export const IconTextsList = forwardRef<HTMLDivElement, IconTextsListProps>(
   ({ list }, ref) => {
     return (
-      <div ref={ref} className="mt-2 flex flex-col gap-2">
+      <div ref={ref} className="flex flex-col gap-2">
         {list.map((item) => (
           <IconText key={item.texts[0]} icon={item.icon} texts={item.texts} />
         ))}
