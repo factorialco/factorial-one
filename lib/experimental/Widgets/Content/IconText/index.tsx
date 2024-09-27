@@ -23,7 +23,7 @@ export const IconText = forwardRef<HTMLDivElement, IconTextProps>(
         ref={ref}
         className="flex flex-row items-start gap-1 text-f1-foreground-secondary"
       >
-        <div className="pt-0.5">
+        <div className="relative top-0.5">
           <Icon icon={iconSvg} size="sm" />
         </div>
         <p className="font-medium text-f1-foreground">
