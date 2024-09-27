@@ -1,4 +1,6 @@
-import { ChevronDown } from "@/icons"
+import { Counter } from "@/experimental/Information/Counter"
+import * as Icons from "@/icons"
+import { cn } from "@/lib/utils"
 import {
   Collapsible,
   CollapsibleContent,
@@ -7,11 +9,14 @@ import {
 import { AnimatePresence, motion } from "framer-motion"
 import React from "react"
 
+type IconName = keyof typeof Icons
+
 interface MenuItem {
   label: string
-  icon: React.ElementType
-  badge?: number | boolean
+  icon: IconName
+  badge?: number
   href: string
+  isActive?: boolean
 }
 
 interface MenuCategory {
@@ -22,25 +27,37 @@ interface MenuCategory {
 }
 
 interface MenuProps {
-  categories: MenuCategory[]
+  tree: MenuCategory[]
 }
 
-const MenuItemContent: React.FC<{ item: MenuItem }> = ({ item }) => (
-  <div className="flex w-full items-center justify-between">
-    <div className="flex items-center font-medium text-f1-foreground">
-      <item.icon className="mr-1.5 h-4 w-4 text-f1-icon" />
-      <span>{item.label}</span>
+const MenuItemContent: React.FC<{ item: MenuItem }> = ({ item }) => {
+  const IconComponent = Icons[item.icon]
+
+  return (
+    <div className="flex w-full items-center justify-between">
+      <div className="flex items-center gap-1.5 font-medium text-f1-foreground">
+        <IconComponent
+          className={cn(
+            "h-5 w-5",
+            item.isActive ? "text-f1-foreground" : "text-f1-icon"
+          )}
+        />
+        <span>{item.label}</span>
+      </div>
+      {item.badge && <Counter value={item.badge} size="sm" type="bold" />}
     </div>
-    {item.badge && (
-      <div className="h-2 w-2 rounded-full bg-f1-background-critical-bold" />
-    )}
-  </div>
-)
+  )
+}
 
 const MenuItem: React.FC<{ item: MenuItem }> = ({ item }) => (
   <a
     href={item.href}
-    className="flex cursor-pointer items-center rounded-lg py-1.5 pl-1.5 pr-2 no-underline transition-colors hover:bg-f1-background-secondary-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1"
+    className={cn(
+      "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1",
+      item.isActive
+        ? "bg-f1-background-secondary-hover text-f1-foreground"
+        : "hover:bg-f1-background-secondary-hover"
+    )}
   >
     <MenuItemContent item={item} />
   </a>
@@ -61,14 +78,14 @@ const CategoryItem: React.FC<{ category: MenuCategory }> = ({ category }) => {
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between border-t border-dashed border-transparent border-t-f1-border px-1.5 pb-2 pt-4 text-sm font-semibold uppercase tracking-wide text-f1-foreground-secondary focus-visible:rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1">
+      <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between border-t border-dashed border-transparent border-t-f1-border px-1.5 pb-2 pt-4 text-sm font-semibold uppercase tracking-wide text-f1-foreground-secondary focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1">
         {category.title}
         <motion.div
           initial={false}
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.1 }}
         >
-          <ChevronDown className="h-4 w-4" />
+          <Icons.ChevronDown className="h-4 w-4" />
         </motion.div>
       </CollapsibleTrigger>
       <CollapsibleContent
@@ -82,6 +99,7 @@ const CategoryItem: React.FC<{ category: MenuCategory }> = ({ category }) => {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.15, ease: "easeInOut" }}
+              className="flex flex-col gap-1 pb-3"
             >
               {category.items.map((item, index) => (
                 <MenuItem key={index} item={item} />
@@ -94,10 +112,10 @@ const CategoryItem: React.FC<{ category: MenuCategory }> = ({ category }) => {
   )
 }
 
-export function Menu({ categories }: MenuProps) {
+export function Menu({ tree }: MenuProps) {
   return (
     <div className="min-h-screen w-full bg-transparent">
-      {categories.map((category, index) => (
+      {tree.map((category, index) => (
         <CategoryItem key={index} category={category} />
       ))}
     </div>
