@@ -28,15 +28,13 @@ export const IconText = forwardRef<HTMLDivElement, IconTextProps>(
         </div>
         <p className="font-medium text-f1-foreground">
           {texts.map((text, index) => (
-            <>
-              {index > 0 && (
-                <span
-                  key={`dot-${index}`}
-                  className="mx-1 inline-block h-[0.15rem] w-[0.15rem] min-w-[0.15rem] rounded-full bg-f1-foreground align-middle"
-                />
-              )}
+            <span
+              className={
+                index > 0 ? "before:mx-1 before:content-['·']" : undefined
+              }
+            >
               {text}
-            </>
+            </span>
           ))}
         </p>
       </div>
