@@ -39,7 +39,7 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
     }, [setColumns])
 
     return (
-      <div ref={ref} className="overflow-hidden">
+      <div ref={ref}>
         <div ref={containerRef}>
           {columns === 1 ? (
             <div className="flex flex-col gap-4">{children}</div>
