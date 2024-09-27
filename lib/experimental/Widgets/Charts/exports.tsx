@@ -3,7 +3,6 @@ import { AreaChartWidget as AreaChartWidgetComponent } from "./AreaChartWidget"
 import { BarChartWidget as BarChartWidgetComponent } from "./BarChartWidget"
 import { LineChartWidget as LineChartWidgetComponent } from "./LineChartWidget"
 import { PieChartWidget as PieChartWidgetComponent } from "./PieChartWidget"
-import { SummariesWidget as SummariesWidgetComponent } from "./SummariesWidget"
 import { VerticalBarChartWidget as VerticalBarChartWidgetComponent } from "./VerticalBarChartWidget"
 
 export const AreaChartWidget = Component(
@@ -44,12 +43,4 @@ export const VerticalBarChartWidget = Component(
     type: "info",
   },
   VerticalBarChartWidgetComponent
-)
-
-export const SummariesWidget = Component(
-  {
-    name: "SummariesWidget",
-    type: "info",
-  },
-  SummariesWidgetComponent
 )
