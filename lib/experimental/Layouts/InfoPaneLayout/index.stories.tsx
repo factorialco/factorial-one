@@ -1,6 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { Dashboard } from "@/experimental/Widgets/Layout/Dashboard"
+import * as DashboardStories from "@/experimental/Widgets/Layout/Dashboard/index.stories"
+import { ComponentProps } from "react"
 import { InfoPaneLayout } from "."
+import { DetailsItemsList } from "../Utils/DetailsItemsList"
+import * as DetailsItemsListStories from "../Utils/DetailsItemsList/index.stories"
 
 const meta = {
   component: InfoPaneLayout,
@@ -17,16 +22,29 @@ const meta = {
       </div>
     ),
   },
-  decorators: [
-    (Story) => (
-      <div className="h-svh">
-        <Story />
-      </div>
-    ),
-  ],
+  parameters: {
+    a11y: {
+      config: {
+        rules: [{ id: "svg-img-alt", enabled: false }],
+      },
+    },
+  },
 } satisfies Meta<typeof InfoPaneLayout>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+export const Profile: Story = {
+  args: {
+    mainContent: <Dashboard {...DashboardStories.default.args} />,
+    sideContent: (
+      <DetailsItemsList
+        // Storybook doesn't return the correct type for the args
+        {...(DetailsItemsListStories.default.args as ComponentProps<
+          typeof DetailsItemsList
+        >)}
+      />
+    ),
+  },
+}

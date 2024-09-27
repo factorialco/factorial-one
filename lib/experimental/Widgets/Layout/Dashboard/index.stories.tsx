@@ -4,8 +4,9 @@ import { Dashboard } from "."
 import { AreaChartWidget } from "../../Charts/AreaChartWidget"
 
 import { AreaChartProps } from "@/components/Charts/AreaChart"
-import { Calendar } from "@/experimental/Forms/Fields/Calendar"
 import AreaChartWidgetStoriesMeta from "../../Charts/AreaChartWidget/index.stories"
+import { BarChartWidget } from "../../Charts/BarChartWidget"
+import BarChartWidgetStoriesMeta from "../../Charts/BarChartWidget/index.stories"
 import { ComposeChartContainerProps } from "../../Charts/ChartContainer"
 import { LineChartWidget } from "../../Charts/LineChartWidget"
 import LineChartWidgetStoriesMeta from "../../Charts/LineChartWidget/index.stories"
@@ -33,17 +34,7 @@ const renderWidget = (index: number) => {
       </Widget>
     ),
     () => <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
-    () => (
-      <Widget
-        header={{
-          title: "A widget",
-        }}
-      >
-        <div className="flex justify-center">
-          <Calendar defaultMonth={new Date(2024, 10, 15)} />
-        </div>
-      </Widget>
-    ),
+    () => <BarChartWidget {...BarChartWidgetStoriesMeta.args} />,
     () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
     () => (
       <VerticalBarChartWidget {...VerticalBarChartWidgetStoriesMeta.args} />
@@ -64,10 +55,7 @@ const meta = {
   parameters: {
     a11y: {
       config: {
-        rules: [
-          { id: "color-contrast", enabled: false },
-          { id: "svg-img-alt", enabled: false },
-        ],
+        rules: [{ id: "svg-img-alt", enabled: false }],
       },
     },
   },
