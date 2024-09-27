@@ -30,7 +30,7 @@ interface MenuProps {
   tree: MenuCategory[]
 }
 
-const MenuItemContent: React.FC<{ item: MenuItem }> = ({ item }) => {
+const MenuItemContent = ({ item }: { item: MenuItem }) => {
   const IconComponent = Icons[item.icon]
 
   return (
@@ -49,7 +49,7 @@ const MenuItemContent: React.FC<{ item: MenuItem }> = ({ item }) => {
   )
 }
 
-const MenuItem: React.FC<{ item: MenuItem }> = ({ item }) => (
+const MenuItem = ({ item }: { item: MenuItem }) => (
   <a
     href={item.href}
     className={cn(
@@ -63,7 +63,7 @@ const MenuItem: React.FC<{ item: MenuItem }> = ({ item }) => (
   </a>
 )
 
-const CategoryItem: React.FC<{ category: MenuCategory }> = ({ category }) => {
+const CategoryItem = ({ category }: { category: MenuCategory }) => {
   const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
 
   if (category.isRoot) {

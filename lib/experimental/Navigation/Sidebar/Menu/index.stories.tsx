@@ -8,7 +8,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className="w-72 bg-f1-background-secondary/50 p-3">
+      <div className="w-[240px] bg-f1-background-tertiary p-3">
         <Story />
       </div>
     ),
