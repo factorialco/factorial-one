@@ -11,7 +11,7 @@ interface TwoColumnsListType {
 
 const Item = ({ title, info }: TwoColumnsItemType) => (
   <>
-    <div className="text-f1-foreground-secondary line-clamp-2">{title}</div>
+    <div className="line-clamp-2 text-f1-foreground-secondary">{title}</div>
     <div className="font-medium">{info}</div>
   </>
 )
