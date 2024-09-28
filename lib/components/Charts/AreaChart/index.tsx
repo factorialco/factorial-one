@@ -110,12 +110,12 @@ export const _AreaChart = <K extends LineChartConfig>(
             x2="100%"
             y2="0"
           >
-            <stop offset="0%" stop-color="black" stop-opacity="0"></stop>
-            <stop offset="1%" stop-color="white" stop-opacity="0.1"></stop>
-            <stop offset="7%" stop-color="white" stop-opacity="1"></stop>
-            <stop offset="93%" stop-color="white" stop-opacity="1"></stop>
-            <stop offset="99%" stop-color="white" stop-opacity="0.1"></stop>
-            <stop offset="100%" stop-color="black" stop-opacity="0"></stop>
+            <stop offset="0%" stopColor="black" stopOpacity="0"></stop>
+            <stop offset="1%" stopColor="white" stopOpacity="0.1"></stop>
+            <stop offset="7%" stopColor="white" stopOpacity="1"></stop>
+            <stop offset="93%" stopColor="white" stopOpacity="1"></stop>
+            <stop offset="99%" stopColor="white" stopOpacity="0.1"></stop>
+            <stop offset="100%" stopColor="black" stopOpacity="0"></stop>
           </linearGradient>
           <mask
             id={`${chartId}-transparent-edges`}
