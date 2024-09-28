@@ -78,9 +78,6 @@ const preview: Preview = {
     },
     docs: {
       container: DocsContainer,
-      canvas: {
-        sourceState: "shown",
-      },
       toc: {
         headingSelector: "h2, h3",
       },

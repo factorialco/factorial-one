@@ -148,6 +148,8 @@ const Container = forwardRef<
   )
 })
 
+Container.displayName = "Widget"
+
 const skeletonVariants = cva("", {
   variants: {
     height: {
@@ -165,6 +167,7 @@ export type WidgetSkeletonProps = {
   }
 } & VariantProps<typeof skeletonVariants>
 
+// eslint-disable-next-line react/display-name
 const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   ({ header, height }, ref) => (
     <Card className="flex gap-4" ref={ref} aria-live="polite" aria-busy={true}>

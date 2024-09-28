@@ -18,39 +18,28 @@ import { VerticalBarChartWidget } from "../../Charts/VerticalBarChartWidget"
 import VerticalBarChartWidgetStoriesMeta from "../../Charts/VerticalBarChartWidget/index.stories"
 import { Widget } from "../../Widget"
 
-const renderWidget = (index: number) => {
-  const Widgets = [
-    () => (
-      <AreaChartWidget
-        {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
-      />
-    ),
-    () => (
-      <Widget header={{ title: "A form widget" }}>
-        <p>
-          Never gonna give you up. Never gonna let you down. Never gonna turn
-          around and desert you.
-        </p>
-      </Widget>
-    ),
-    () => <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
-    () => <BarChartWidget {...BarChartWidgetStoriesMeta.args} />,
-    () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
-    () => (
-      <VerticalBarChartWidget {...VerticalBarChartWidgetStoriesMeta.args} />
-    ),
-    () => <RadialProgressWidget {...RadialProgressWidgetStoriesMeta.args} />,
-  ]
-
-  const Component = Widgets[index % Widgets.length]
-  return <Component />
-}
+const widgets = [
+  <AreaChartWidget
+    {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
+  />,
+  <Widget header={{ title: "A form widget" }}>
+    <p>
+      Never gonna give you up. Never gonna let you down. Never gonna turn around
+      and desert you.
+    </p>
+  </Widget>,
+  <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
+  <BarChartWidget {...BarChartWidgetStoriesMeta.args} />,
+  <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
+  <VerticalBarChartWidget {...VerticalBarChartWidgetStoriesMeta.args} />,
+  <RadialProgressWidget {...RadialProgressWidgetStoriesMeta.args} />,
+]
 
 const meta = {
   component: Dashboard,
   tags: ["autodocs"],
   args: {
-    children: Array.from({ length: 20 }).map((_, i) => renderWidget(i)),
+    children: Array.from({ length: 20 }, (_, i) => widgets[i % widgets.length]),
   },
   parameters: {
     a11y: {
@@ -74,6 +63,6 @@ export const Skeleton: Story = {
 
 export const Small: Story = {
   args: {
-    children: Array.from({ length: 4 }).map((_, i) => renderWidget(i)),
+    children: Array.from({ length: 4 }, (_, i) => widgets[i % widgets.length]),
   },
 }

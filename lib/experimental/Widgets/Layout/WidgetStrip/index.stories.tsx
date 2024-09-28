@@ -14,38 +14,26 @@ import { PieChartWidget } from "../../Charts/PieChartWidget"
 import PieChartWidgetStoriesMeta from "../../Charts/PieChartWidget/index.stories"
 import { Widget } from "../../Widget"
 
-const renderWidget = (index: number) => {
-  const Widgets = [
-    () => (
-      <AreaChartWidget
-        {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
-      />
-    ),
-    () => <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
-    () => <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
-    () => <BarChartWidget {...BarChartWidgetStoriesMeta.args} />,
-    () => (
-      <Widget header={{ title: "A form widget", subtitle: "Enter your data" }}>
-        <p>
-          Never gonna give you up. Never gonna let you down. Never gonna turn
-          around and desert you.
-        </p>
-      </Widget>
-    ),
-  ]
-
-  const Component = Widgets[index % Widgets.length]
-  return <Component key={index} />
-}
-
-const renderWidgets = (length: number) =>
-  Array.from({ length }).map((_, i) => renderWidget(i))
+const widgets = [
+  <AreaChartWidget
+    {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
+  />,
+  <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
+  <PieChartWidget {...PieChartWidgetStoriesMeta.args} />,
+  <BarChartWidget {...BarChartWidgetStoriesMeta.args} />,
+  <Widget header={{ title: "A form widget", subtitle: "Enter your data" }}>
+    <p>
+      Never gonna give you up. Never gonna let you down. Never gonna turn around
+      and desert you.
+    </p>
+  </Widget>,
+]
 
 const meta = {
   component: WidgetStrip,
   tags: ["autodocs"],
   args: {
-    children: renderWidgets(3),
+    children: Array.from({ length: 4 }, (_, i) => widgets[i % widgets.length]),
   },
   parameters: {
     a11y: {
@@ -62,13 +50,13 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {}
 export const Single: Story = {
   args: {
-    children: renderWidgets(1),
+    children: [widgets[0]],
   },
 }
 
 export const Overflow: Story = {
   args: {
-    children: renderWidgets(10),
+    children: Array.from({ length: 4 }, (_, i) => widgets[i % widgets.length]),
   },
 }
 
