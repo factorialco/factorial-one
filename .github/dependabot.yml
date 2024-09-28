@@ -18,3 +18,4 @@ updates:
       dev-dependencies:
         patterns:
           - "*storybook*"
+          - "*eslint*"
