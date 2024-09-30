@@ -68,7 +68,7 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
             <div className="text-md z-50 font-semibold">XRay</div>
             <div className="flex flex-col space-y-2">
               {componentTypes.map((type) => (
-                <label className="block">
+                <label className="block" key={type}>
                   <input
                     onChange={(event) =>
                       event.target.checked

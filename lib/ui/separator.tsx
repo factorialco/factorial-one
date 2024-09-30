@@ -6,7 +6,7 @@ type SeparatorProps = {
 } & React.HTMLProps<HTMLDivElement>
 
 export const Separator = forwardRef<HTMLDivElement, SeparatorProps>(
-  ({ bare = false, ...rest }, ref) => {
+  function Separator({ bare = false, ...rest }, ref) {
     return (
       <div
         ref={ref}

@@ -13,10 +13,13 @@ type AnyReactComponent<P> =
   | ComponentClass<P>
 
 export function withSkeleton<
-  T extends object,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  T extends AnyReactComponent<any>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   U extends AnyReactComponent<any>,
 >(Component: T, Skeleton: U): T & { Skeleton: U } {
+  const componentName = Component.displayName || Component.name || "Component"
+  Object.assign(Skeleton, { displayName: `${componentName}.Skeleton` })
   return Object.assign(Component, { Skeleton })
 }
 

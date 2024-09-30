@@ -17,7 +17,10 @@ const DAYS_OF_THE_WEEK = [
 ]
 
 export const Weekdays = forwardRef<HTMLDivElement, WeekdaysProps>(
-  ({ daysOfTheWeek = DAYS_OF_THE_WEEK, activatedDays = [] }, ref) => {
+  function WeekDays(
+    { daysOfTheWeek = DAYS_OF_THE_WEEK, activatedDays = [] },
+    ref
+  ) {
     return (
       <ToggleGroup
         type="multiple"

@@ -33,16 +33,17 @@ export type IconType = ForwardRefExoticComponent<
   SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>
 >
 
-export const Icon = forwardRef<SVGSVGElement, IconProps>(
-  ({ size, icon, className, ...props }, ref) => {
-    if (!icon) return null
-    const Component = icon
-    return (
-      <Component
-        ref={ref}
-        {...props}
-        className={cn(iconVariants({ size }), className)}
-      />
-    )
-  }
-)
+export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
+  { size, icon, className, ...props },
+  ref
+) {
+  if (!icon) return null
+  const Component = icon
+  return (
+    <Component
+      ref={ref}
+      {...props}
+      className={cn(iconVariants({ size }), className)}
+    />
+  )
+})

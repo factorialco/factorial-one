@@ -5,15 +5,17 @@ import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
 export const LineChartWidget = withSkeleton(
   forwardRef<HTMLDivElement, ComposeChartContainerProps<LineChartProps>>(
-    (props, ref) => (
-      <ChartContainer
-        ref={ref}
-        {...props}
-        chart={
-          <LineChart aspect={null} yAxis={{ hide: true }} {...props.chart} />
-        }
-      />
-    )
+    function LineChartWidget(props, ref) {
+      return (
+        <ChartContainer
+          ref={ref}
+          {...props}
+          chart={
+            <LineChart aspect={null} yAxis={{ hide: true }} {...props.chart} />
+          }
+        />
+      )
+    }
   ),
   ChartContainer.Skeleton
 )

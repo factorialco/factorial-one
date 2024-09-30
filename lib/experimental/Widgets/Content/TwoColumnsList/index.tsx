@@ -17,7 +17,7 @@ const Item = ({ title, info }: TwoColumnsItemType) => (
 )
 
 export const TwoColumnsList = forwardRef<HTMLDivElement, TwoColumnsListType>(
-  ({ list }, ref) => {
+  function TwoColumnsList({ list }, ref) {
     return (
       <div ref={ref} className="grid grid-cols-[1fr_auto] gap-2">
         {list.map((item) => (

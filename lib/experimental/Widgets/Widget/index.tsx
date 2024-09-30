@@ -47,7 +47,7 @@ const InlineDot = () => (
 const Container = forwardRef<
   HTMLDivElement,
   WidgetProps & { children: ReactNode }
->(({ header, alert, children, action, summaries }, ref) => {
+>(function Container({ header, alert, children, action, summaries }, ref) {
   const isRealNode = (node: React.ReactNode): boolean => {
     return (
       !!node &&
@@ -166,34 +166,41 @@ export type WidgetSkeletonProps = {
 } & VariantProps<typeof skeletonVariants>
 
 const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
-  ({ header, height }, ref) => (
-    <Card className="flex gap-4" ref={ref} aria-live="polite" aria-busy={true}>
-      <CardHeader>
-        <div
-          className="flex h-6 w-full flex-row items-center gap-1.5"
-          aria-hidden={true}
-        >
-          {header?.title ? (
-            <CardTitle>{header.title}</CardTitle>
-          ) : (
-            <SkeletonPrimitive className="h-4 w-full max-w-16" />
-          )}
-          {header?.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
-        </div>
-      </CardHeader>
-      <CardContent
-        aria-hidden={true}
-        className={cn(skeletonVariants({ height }))}
+  function Skeleton({ header, height }, ref) {
+    return (
+      <Card
+        className="flex gap-4"
+        ref={ref}
+        aria-live="polite"
+        aria-busy={true}
       >
-        {[...Array(4)].map((_, i) => (
-          <SkeletonPrimitive
-            key={i}
-            className={`mb-1 h-6 ${["w-full", "w-1/2", "w-3/4", "w-1/4"][i]}`}
-          />
-        ))}
-      </CardContent>
-    </Card>
-  )
+        <CardHeader>
+          <div
+            className="flex h-6 w-full flex-row items-center gap-1.5"
+            aria-hidden={true}
+          >
+            {header?.title ? (
+              <CardTitle>{header.title}</CardTitle>
+            ) : (
+              <SkeletonPrimitive className="h-4 w-full max-w-16" />
+            )}
+            {header?.subtitle && <CardSubtitle>{header.subtitle}</CardSubtitle>}
+          </div>
+        </CardHeader>
+        <CardContent
+          aria-hidden={true}
+          className={cn(skeletonVariants({ height }))}
+        >
+          {[...Array(4)].map((_, i) => (
+            <SkeletonPrimitive
+              key={i}
+              className={`mb-1 h-6 ${["w-full", "w-1/2", "w-3/4", "w-1/4"][i]}`}
+            />
+          ))}
+        </CardContent>
+      </Card>
+    )
+  }
 )
 
 export const Widget = withSkeleton(Container, Skeleton)

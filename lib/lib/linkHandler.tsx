@@ -39,13 +39,17 @@ export const useLinkContext = () => {
 
 export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 
-export const Link = forwardRef<HTMLAnchorElement, LinkProps>((props, ref) => {
-  const { component } = useLinkContext()
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
+  function Link(props, ref) {
+    const { component } = useLinkContext()
 
-  if (!component) return <a ref={ref} {...props} />
-  const Component = forwardRef<HTMLAnchorElement>((props, ref) =>
-    component(props, ref)
-  )
+    if (!component) return <a ref={ref} {...props} />
+    const Component = forwardRef<HTMLAnchorElement>(
+      function Component(props, ref) {
+        return component(props, ref)
+      }
+    )
 
-  return <Component ref={ref} {...props} />
-})
+    return <Component ref={ref} {...props} />
+  }
+)

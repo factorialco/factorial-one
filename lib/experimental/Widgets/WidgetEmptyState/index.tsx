@@ -20,10 +20,10 @@ const Icons: Record<Icon, ExoticComponent<{ className: string }>> = {
 }
 
 export const WidgetEmptyState = forwardRef<HTMLDivElement, Props>(
-  (
+  function WidgetEmptyState(
     { title, content, icon, buttonLabel, buttonAction, promote = false },
     ref
-  ) => {
+  ) {
     const Icon = Icons[icon]
 
     return (

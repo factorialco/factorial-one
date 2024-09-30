@@ -27,22 +27,22 @@ interface TabType {
   content: React.ReactNode
 }
 
-export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
-  (
-    {
-      tabs,
-      title,
-      subtitle,
-      src,
-      alt,
-      breadcrumbTitle,
-      routes,
-      icon,
-      defaultTab = tabs[0].key,
-      side,
-    },
-    ref
-  ) => (
+export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
+  {
+    tabs,
+    title,
+    subtitle,
+    src,
+    alt,
+    breadcrumbTitle,
+    routes,
+    icon,
+    defaultTab = tabs[0].key,
+    side,
+  },
+  ref
+) {
+  return (
     <main ref={ref} className="h-full bg-f1-background">
       <Breadcrumb icon={icon} routes={routes} title={breadcrumbTitle} />
       <Header title={title} subtitle={subtitle} src={src} alt={alt}></Header>
@@ -71,4 +71,4 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       </TabsComponent>
     </main>
   )
-)
+})

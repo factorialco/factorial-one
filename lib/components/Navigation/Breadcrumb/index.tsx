@@ -21,7 +21,7 @@ interface RouteType {
 }
 
 export const Breadcrumb = forwardRef<HTMLDivElement, BreadcrumbsType>(
-  ({ icon, routes, title }, ref) => {
+  function Breadcrumb({ icon, routes, title }, ref) {
     return (
       <BreadcrumbComponent
         className="flex min-h-6 flex-row border-x-0 border-t-0 border-dashed border-b-f1-border px-5 py-3"

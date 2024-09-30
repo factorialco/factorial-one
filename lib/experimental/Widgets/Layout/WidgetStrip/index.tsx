@@ -18,22 +18,24 @@ const Container: React.FC<{ children: ReactNode }> = ({ children }) => (
   </div>
 )
 
-const WidgetStripComponent = forwardRef<HTMLDivElement, DashboardProps>(
-  ({ children }, ref) => {
+export const WidgetStrip = withSkeleton(
+  forwardRef<HTMLDivElement, DashboardProps>(function WidgetStrip(
+    { children },
+    ref
+  ) {
     return (
       <ScrollArea ref={ref}>
         <Container>{children}</Container>
       </ScrollArea>
     )
-  }
+  }),
+  () => (
+    <Blend orientation="horizontal">
+      <Container>
+        <Widget.Skeleton />
+        <Widget.Skeleton />
+        <Widget.Skeleton />
+      </Container>
+    </Blend>
+  )
 )
-
-export const WidgetStrip = withSkeleton(WidgetStripComponent, () => (
-  <Blend orientation="horizontal">
-    <Container>
-      <Widget.Skeleton />
-      <Widget.Skeleton />
-      <Widget.Skeleton />
-    </Container>
-  </Blend>
-))

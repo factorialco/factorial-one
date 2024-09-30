@@ -128,13 +128,15 @@ CardFooter.displayName = "CardFooter"
 const CardComment = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("flex text-2xl font-semibold", className)}
-    {...props}
-  />
-))
+>(function CardComment({ className, ...props }, ref) {
+  return (
+    <div
+      ref={ref}
+      className={cn("flex text-2xl font-semibold", className)}
+      {...props}
+    />
+  )
+})
 CardFooter.displayName = "CardComment"
 
 export {
