@@ -1,6 +1,7 @@
 import { Avatar } from "@/components/Information/Avatar"
 import { cn } from "@/lib/utils"
 import { ComponentProps, forwardRef } from "react"
+import { getColorFromText } from "../helper"
 
 interface TagProps {
   text: string
@@ -29,7 +30,12 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         onClick={onClick}
       >
         <span>
-          <Avatar alt={short} src={avatar?.src} size="xsmall" />
+          <Avatar
+            alt={short}
+            src={avatar?.src}
+            size="xsmall"
+            color={getColorFromText(text)}
+          />
         </span>
         <p>{text}</p>
       </div>
