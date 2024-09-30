@@ -1,5 +1,5 @@
 // organize-imports-ignore
-import React from "react"
+import React, { useState } from "react"
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
@@ -23,12 +23,15 @@ export const withTheme = () => {
 }
 
 export const FactorialOne = (Story, { parameters }) => {
+  const [currentPath, setCurrentPath] = useState("/")
+
   return (
     <FactorialOneProvider
       layout={{
         fullScreen: parameters.layout === "fullscreen",
       }}
       link={{
+        currentPath,
         component: (props, ref) => (
           <a
             ref={ref}
@@ -37,6 +40,7 @@ export const FactorialOne = (Story, { parameters }) => {
               action("Link clicked")(event, ...args)
               props?.onClick?.(event, ...args)
               event.preventDefault()
+              props.href && setCurrentPath(props.href)
             }}
           />
         ),
