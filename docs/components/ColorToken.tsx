@@ -20,21 +20,23 @@ export function ColorToken({ name, description }: Props) {
   }
 
   return (
-    <div className="bg-f1-background-secondary border-f1-border flex max-w-[600px] flex-row items-center space-x-3 rounded-sm border border-solid px-2 py-1.5">
-      <div className={cn("w-12 h-8 rounded-sm", `bg-${name}`)} />
+    <div className="flex max-w-[600px] flex-row items-center space-x-3 rounded-sm border border-solid border-f1-border bg-f1-background-secondary px-2 py-1.5 dark:border-f1-border/10 dark:bg-f1-background-secondary/5">
+      <div className={cn("h-8 w-12 rounded-sm", `bg-${name}`)} />
       <div className="flex flex-1 flex-col space-y-0">
-        <span className="font-mono text-f1-foreground flex-grow font-semibold">
+        <span className="font-mono flex-grow font-semibold text-f1-foreground dark:text-f1-foreground-inverse/80">
           {name}
         </span>
-        <p className="text-f1-foreground-secondary text-sm">{description}</p>
+        <p className="text-sm text-f1-foreground-secondary">{description}</p>
       </div>
-      <Button
-        onClick={copyToClipboard}
-        variant="ghost"
-        disabled={copied}
-        label={copied ? "Copied!" : "Copy"}
-        icon={copied ? undefined : CopyIcon}
-      />
+      <div className="invert-0 filter dark:invert">
+        <Button
+          onClick={copyToClipboard}
+          variant="ghost"
+          disabled={copied}
+          label={copied ? "Copied!" : "Copy"}
+          icon={copied ? undefined : CopyIcon}
+        />
+      </div>
     </div>
   )
 }

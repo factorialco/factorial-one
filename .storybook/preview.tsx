@@ -78,6 +78,9 @@ const preview: Preview = {
     },
     docs: {
       container: DocsContainer,
+      canvas: {
+        sourceState: "shown",
+      },
       toc: {
         headingSelector: "h2, h3",
       },
@@ -92,6 +95,7 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
+          "Introduction",
           "Foundations",
           ["Colors", "Typography", "Spacing", "Borders", "Shadows"],
           "Components",

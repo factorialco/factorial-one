@@ -3,22 +3,12 @@ import type { Meta } from "@storybook/react"
 import { AreaChartProps } from "@/components/Charts/AreaChart"
 import AreaChartStory from "@/components/Charts/AreaChart/index.stories"
 import { AreaChartWidget } from "."
-import { containerStoryArgs } from "../storybook-utils"
+import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
 
 const meta: Meta<typeof AreaChartWidget> = {
   component: AreaChartWidget,
   parameters: {
     layout: "centered",
-    a11y: {
-      config: {
-        rules: [
-          {
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
-    },
   },
   tags: ["autodocs"],
   args: {
@@ -29,13 +19,7 @@ const meta: Meta<typeof AreaChartWidget> = {
     },
     chart: AreaChartStory.args as AreaChartProps,
   },
-  decorators: [
-    (Story) => (
-      <div className="w-full min-w-80">
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [WidgetDecorator],
 }
 
 export default meta

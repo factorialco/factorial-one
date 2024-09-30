@@ -1,5 +1,5 @@
-import { CategoryBarSection } from "@/experimental/Widgets/CategoryBarSection"
-import { WidgetContainer } from "@/experimental/Widgets/WidgetContainer"
+import { CategoryBarSection } from "@/experimental/Widgets/Content/CategoryBarSection"
+import { Widget } from "@/experimental/Widgets/Widget"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
@@ -24,7 +24,7 @@ export const Timesheet: Story = {
   render: () => (
     <>
       <h2 className="mb-4">Timesheet example</h2>
-      <WidgetContainer
+      <Widget
         header={{
           title: "Timesheet",
           subtitle: "July",
@@ -36,7 +36,8 @@ export const Timesheet: Story = {
       >
         <CategoryBarSection
           label="Worked / Planned hours"
-          title="75h / 100h"
+          title="75h"
+          subtitle="100h"
           data={[
             {
               name: "Worked",
@@ -52,7 +53,8 @@ export const Timesheet: Story = {
         />
         <CategoryBarSection
           label="Balance"
-          title="9h / 50h"
+          title="9h"
+          subtitle="50h"
           data={[
             {
               name: "Worked",
@@ -66,7 +68,7 @@ export const Timesheet: Story = {
           ]}
           legend
         />
-      </WidgetContainer>
+      </Widget>
     </>
   ),
 }
@@ -75,7 +77,7 @@ export const TimesheetOvertime: Story = {
   render: () => (
     <>
       <h2 className="mb-4">Timesheet Overtime example</h2>
-      <WidgetContainer
+      <Widget
         header={{
           title: "Timesheet",
           subtitle: "July",
@@ -87,7 +89,8 @@ export const TimesheetOvertime: Story = {
       >
         <CategoryBarSection
           label="Worked / Planned hours"
-          title="121h / 100h"
+          title="121h"
+          subtitle="100h"
           data={[
             {
               name: "Regular",
@@ -104,7 +107,7 @@ export const TimesheetOvertime: Story = {
         <CategoryBarSection
           label="Balance"
           title="+9h"
-          helpText="of 50h max"
+          subtitle="50h"
           data={[
             {
               name: "Regular",
@@ -118,7 +121,7 @@ export const TimesheetOvertime: Story = {
             },
           ]}
         />
-      </WidgetContainer>
+      </Widget>
     </>
   ),
 }

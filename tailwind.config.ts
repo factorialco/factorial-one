@@ -15,6 +15,7 @@ export default {
     "./src/**/*.{ts,tsx}",
     "./lib/**/*.{ts,tsx}",
     "./docs/**/*.{mdx,ts,tsx}",
+    "./storybook/**/*.{mdx,ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -188,6 +189,7 @@ export default {
               DEFAULT: "hsl(var(--neutral-10))",
               hover: "hsl(var(--neutral-20))",
             },
+            tertiary: "hsl(var(--neutral-5))",
             bold: "hsl(var(--neutral-100))",
             accent: {
               DEFAULT: "hsl(var(--accent-50) / 0.1)",

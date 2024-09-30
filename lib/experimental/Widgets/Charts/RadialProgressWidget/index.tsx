@@ -4,7 +4,7 @@ import {
 } from "@/components/Charts/RadialProgressChart"
 import { withSkeleton } from "@/lib/skeleton"
 import { forwardRef } from "react"
-import { WidgetContainer } from "../../WidgetContainer"
+import { Widget } from "../../Widget"
 
 export type RadialProgressWidgetProps = {
   header: {
@@ -19,12 +19,12 @@ export type RadialProgressWidgetProps = {
 export const RadialProgressWidget = withSkeleton(
   forwardRef<HTMLDivElement, RadialProgressWidgetProps>(
     ({ header, chart }, ref) => (
-      <WidgetContainer ref={ref} header={header}>
+      <Widget ref={ref} header={header}>
         <div className="flex h-40 items-center justify-center">
           <RadialProgressChart {...chart} />
         </div>
-      </WidgetContainer>
+      </Widget>
     )
   ),
-  WidgetContainer.Skeleton
+  Widget.Skeleton
 )
