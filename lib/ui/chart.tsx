@@ -353,11 +353,11 @@ const ChartLegendContent = React.forwardRef<
       <div
         ref={ref}
         className={cn(
-          "relative flex items-center justify-center gap-4 text-f1-foreground-secondary",
+          "relative flex flex-wrap items-center justify-center gap-4 text-f1-foreground-secondary",
           verticalAlign === "top" ? "pb-2" : "pt-2",
           className
         )}
-        style={{ left: leftShift }}
+        style={{ marginLeft: leftShift }}
       >
         {payload.map((item) => {
           const key = `${nameKey || item.dataKey || "value"}`
