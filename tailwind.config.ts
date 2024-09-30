@@ -182,6 +182,9 @@ export default {
             positive: {
               DEFAULT: "hsl(var(--positive-70))",
             },
+            selected: {
+              DEFAULT: "hsl(var(--selected-70))",
+            },
           },
           background: {
             DEFAULT: "hsl(var(--neutral-0))",
@@ -216,7 +219,7 @@ export default {
               DEFAULT: "hsl(var(--positive-50) / 0.1)",
             },
             selected: {
-              DEFAULT: "hsl(var(--selected-50) / 0.1)",
+              DEFAULT: "hsl(var(--selected-50) / 0.2)",
               bold: "hsl(var(--selected-50))",
             },
           },
@@ -226,6 +229,9 @@ export default {
             secondary: "hsl(var(--neutral-10))",
             promote: {
               DEFAULT: "hsl(var(--promote-50) / 0.4)",
+            },
+            selected: {
+              DEFAULT: "hsl(var(--selected-50) / 0.2)",
             },
           },
           icon: {
