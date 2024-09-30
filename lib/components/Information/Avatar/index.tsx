@@ -6,6 +6,7 @@ import {
   AvatarImage,
 } from "@/ui/avatar"
 import { ComponentProps, forwardRef } from "react"
+
 interface AvatarType {
   alt: string
   src?: string
