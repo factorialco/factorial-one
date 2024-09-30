@@ -21,22 +21,21 @@ export interface LinkProps
   extends BaseLinkProps,
     VariantProps<typeof linkVariants> {}
 
-export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ className, children, variant, ...props }, ref) => {
-    const { target } = props
-    const external = target === "_blank"
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
+  { className, children, variant, ...props },
+  ref
+) {
+  const { target } = props
+  const external = target === "_blank"
 
-    return (
-      <BaseLink
-        ref={ref}
-        {...props}
-        className={cn(linkVariants({ variant }), className)}
-      >
-        <span>{children}</span>
-        {external && <Icon icon={ExternalLink} size="sm" />}
-      </BaseLink>
-    )
-  }
-)
-
-Link.displayName = "Link"
+  return (
+    <BaseLink
+      ref={ref}
+      {...props}
+      className={cn(linkVariants({ variant }), className)}
+    >
+      <span>{children}</span>
+      {external && <Icon icon={ExternalLink} size="sm" />}
+    </BaseLink>
+  )
+})

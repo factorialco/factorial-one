@@ -6,7 +6,7 @@ interface BadgesListProps {
 }
 
 export const BadgesList = forwardRef<HTMLDivElement, BadgesListProps>(
-  ({ badges }, ref) => {
+  function BadgesList({ badges }, ref) {
     return (
       <div ref={ref} className="flex flex-wrap gap-3">
         {badges.map(({ ...props }, index) => (
@@ -16,5 +16,3 @@ export const BadgesList = forwardRef<HTMLDivElement, BadgesListProps>(
     )
   }
 )
-
-BadgesList.displayName = "BadgesList"

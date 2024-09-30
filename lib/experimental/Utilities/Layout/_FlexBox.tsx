@@ -87,26 +87,26 @@ export type BoxProps = React.HTMLAttributes<HTMLDivElement> &
 export const FlexBox = forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof boxVariants>
->(
-  (
-    {
-      className,
-      grow,
-      basis,
-      shrink,
-      paddingX,
-      paddingY,
-      inline,
-      overflow,
-      maxWidth,
-      justifyContent,
-      alignItems,
-      height,
-      width,
-      ...props
-    },
-    ref
-  ) => (
+>(function FlexBox(
+  {
+    className,
+    grow,
+    basis,
+    shrink,
+    paddingX,
+    paddingY,
+    inline,
+    overflow,
+    maxWidth,
+    justifyContent,
+    alignItems,
+    height,
+    width,
+    ...props
+  },
+  ref
+) {
+  return (
     <div
       className={cn(
         boxVariants({
@@ -129,6 +129,4 @@ export const FlexBox = forwardRef<
       {...props}
     />
   )
-)
-
-FlexBox.displayName = "FlexBox"
+})

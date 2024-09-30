@@ -11,15 +11,14 @@ interface AvatarType {
   size?: ComponentProps<typeof AvatarComponent>["size"]
 }
 
-export const Avatar = forwardRef<HTMLDivElement, AvatarType>(
-  ({ src, alt, size }, ref) => {
-    return (
-      <AvatarComponent size={size} ref={ref}>
-        <AvatarImage src={src} alt={alt} />
-        <AvatarFallback>{alt}</AvatarFallback>
-      </AvatarComponent>
-    )
-  }
-)
-
-Avatar.displayName = "Avatar"
+export const Avatar = forwardRef<HTMLDivElement, AvatarType>(function Avatar(
+  { src, alt, size },
+  ref
+) {
+  return (
+    <AvatarComponent size={size} ref={ref}>
+      <AvatarImage src={src} alt={alt} />
+      <AvatarFallback>{alt}</AvatarFallback>
+    </AvatarComponent>
+  )
+})

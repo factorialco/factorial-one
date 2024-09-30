@@ -16,7 +16,7 @@ interface IconTextProps {
 }
 
 export const IconText = forwardRef<HTMLDivElement, IconTextProps>(
-  ({ icon, texts }, ref) => {
+  function IconText({ icon, texts }, ref) {
     const iconSvg = iconsMap[icon]
     return (
       <div
@@ -42,5 +42,3 @@ export const IconText = forwardRef<HTMLDivElement, IconTextProps>(
     )
   }
 )
-
-IconText.displayName = "IconText"

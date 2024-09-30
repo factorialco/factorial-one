@@ -22,7 +22,10 @@ type NumberInputProps = Omit<InputProps, "value" | "type" | "onChange"> & {
 }
 
 export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
-  ({ locale, value, maxDecimals, step, min, max, onChange, ...props }, ref) => {
+  function NumberInput(
+    { locale, value, maxDecimals, step, min, max, onChange, ...props },
+    ref
+  ) {
     const [fieldValue, setFieldValue] = useState<string>(() =>
       value != null ? formatValue(value, locale, maxDecimals) : ""
     )
@@ -102,5 +105,3 @@ export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
     )
   }
 )
-
-NumberInput.displayName = "NumberInput"

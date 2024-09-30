@@ -7,7 +7,7 @@ export interface DetailsItemType {
 }
 
 export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
-  ({ title, content }, ref) => {
+  function DetailsItem({ title, content }, ref) {
     const hasBiggerGap = typeof content !== "string"
     return (
       <div
@@ -20,5 +20,3 @@ export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
     )
   }
 )
-
-DetailsItem.displayName = "DetailsItem"

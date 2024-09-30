@@ -47,7 +47,7 @@ const InlineDot = () => (
 const Container = forwardRef<
   HTMLDivElement,
   WidgetProps & { children: ReactNode }
->(({ header, alert, children, action, summaries }, ref) => {
+>(function Container({ header, alert, children, action, summaries }, ref) {
   const isRealNode = (node: React.ReactNode): boolean => {
     return (
       !!node &&
@@ -147,8 +147,6 @@ const Container = forwardRef<
     </Card>
   )
 })
-
-Container.displayName = "Widget"
 
 const skeletonVariants = cva("", {
   variants: {

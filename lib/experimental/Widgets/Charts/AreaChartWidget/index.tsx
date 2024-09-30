@@ -8,8 +8,11 @@ export interface AreaChartWidgetProps
   hasBlur?: boolean
 }
 
-const _AreaChartWidget = forwardRef<HTMLDivElement, AreaChartWidgetProps>(
-  ({ hasBlur, ...props }, ref) => {
+export const AreaChartWidget = withSkeleton(
+  forwardRef<HTMLDivElement, AreaChartWidgetProps>(function AreaChartWidget(
+    { hasBlur, ...props },
+    ref
+  ) {
     const [isBlur, setIsBlur] = useState<boolean>(!!hasBlur)
 
     const toggleBlur = () => setIsBlur((prev) => !prev)
@@ -38,12 +41,6 @@ const _AreaChartWidget = forwardRef<HTMLDivElement, AreaChartWidgetProps>(
         chart={<AreaChart {...newPropsChart} />}
       />
     )
-  }
-)
-
-_AreaChartWidget.displayName = "AreaChartWidget"
-
-export const AreaChartWidget = withSkeleton(
-  _AreaChartWidget,
+  }),
   ChartContainer.Skeleton
 )

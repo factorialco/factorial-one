@@ -6,7 +6,7 @@ interface IconTextsListProps {
 }
 
 export const IconTextsList = forwardRef<HTMLDivElement, IconTextsListProps>(
-  ({ list }, ref) => {
+  function IconTextsList({ list }, ref) {
     return (
       <div ref={ref} className="flex flex-col gap-2">
         {list.map((item) => (
@@ -16,5 +16,3 @@ export const IconTextsList = forwardRef<HTMLDivElement, IconTextsListProps>(
     )
   }
 )
-
-IconTextsList.displayName = "IconTextsList"

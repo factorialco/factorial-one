@@ -7,7 +7,7 @@ export interface IndicatorsListProps {
 }
 
 export const IndicatorsList = forwardRef<HTMLDivElement, IndicatorsListProps>(
-  ({ items }, ref) => {
+  function IndicatorsList({ items }, ref) {
     return (
       <div
         ref={ref}
@@ -32,5 +32,3 @@ export const IndicatorsList = forwardRef<HTMLDivElement, IndicatorsListProps>(
     )
   }
 )
-
-IndicatorsList.displayName = "IndicatorsList"

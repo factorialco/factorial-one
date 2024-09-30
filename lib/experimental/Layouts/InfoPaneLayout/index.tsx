@@ -7,7 +7,7 @@ export interface InfoPaneLayoutProps {
 }
 
 export const InfoPaneLayout = forwardRef<HTMLDivElement, InfoPaneLayoutProps>(
-  ({ mainContent, sideContent }, ref) => {
+  function InfoPaneLayout({ mainContent, sideContent }, ref) {
     return (
       <div
         ref={ref}
@@ -20,5 +20,3 @@ export const InfoPaneLayout = forwardRef<HTMLDivElement, InfoPaneLayoutProps>(
     )
   }
 )
-
-InfoPaneLayout.displayName = "InfoPaneLayout"
