@@ -47,6 +47,13 @@ const meta: Meta = {
       },
     ],
   },
+  decorators: [
+    (Story) => (
+      <div className="w-72">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
