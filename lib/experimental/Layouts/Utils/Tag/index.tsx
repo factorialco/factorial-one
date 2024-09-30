@@ -4,12 +4,21 @@ import { ComponentProps, forwardRef } from "react"
 
 interface TagProps {
   text: string
-  avatar: ComponentProps<typeof Avatar>
+  avatar?: ComponentProps<typeof Avatar>
   onClick?: () => void
 }
 
 export const Tag = forwardRef<HTMLDivElement, TagProps>(
   ({ text, avatar, onClick }, ref) => {
+    const short =
+      avatar?.alt ??
+      text
+        .split(/\s+/)
+        .slice(0, 2)
+        .map((e) => e[0])
+        .join("")
+        .toLocaleUpperCase()
+
     return (
       <div
         ref={ref}
@@ -20,7 +29,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         onClick={onClick}
       >
         <span>
-          <Avatar alt={avatar.alt || text[0]} src={avatar.src} size="xsmall" />
+          <Avatar alt={short} src={avatar?.src} size="xsmall" />
         </span>
         <p>{text}</p>
       </div>

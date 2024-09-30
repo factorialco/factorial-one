@@ -36,3 +36,9 @@ export const Clickable: Story = {
     onClick: fn(),
   },
 }
+
+export const Alt: Story = {
+  args: {
+    avatar: undefined,
+  },
+}
