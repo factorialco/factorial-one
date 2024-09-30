@@ -15,7 +15,9 @@ updates:
     schedule:
       interval: daily
     groups:
-      dev-dependencies:
+      storybook:
         patterns:
           - "*storybook*"
+      eslint:
+        patterns:
           - "*eslint*"
