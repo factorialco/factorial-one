@@ -18,6 +18,7 @@ import { VerticalBarChartWidget } from "../../Charts/VerticalBarChartWidget"
 import VerticalBarChartWidgetStoriesMeta from "../../Charts/VerticalBarChartWidget/index.stories"
 import { Widget } from "../../Widget"
 
+/* eslint-disable react/jsx-key */
 const widgets = [
   <AreaChartWidget
     {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
@@ -34,6 +35,7 @@ const widgets = [
   <VerticalBarChartWidget {...VerticalBarChartWidgetStoriesMeta.args} />,
   <RadialProgressWidget {...RadialProgressWidgetStoriesMeta.args} />,
 ]
+/* eslint-enable react/jsx-key */
 
 const meta = {
   component: Dashboard,
