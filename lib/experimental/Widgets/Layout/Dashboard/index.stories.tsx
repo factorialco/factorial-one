@@ -65,6 +65,6 @@ export const Skeleton: Story = {
 
 export const Small: Story = {
   args: {
-    children: Array.from({ length: 20 }, (_, i) => widgets[i % widgets.length]),
+    children: Array.from({ length: 4 }, (_, i) => widgets[i % widgets.length]),
   },
 }
