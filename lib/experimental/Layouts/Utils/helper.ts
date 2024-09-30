@@ -9,7 +9,7 @@ const avatarColors: Record<string, string> = {
   purple: "bg-f1-foreground-info",
 }
 
-type AvailableColors = keyof typeof avatarColors
+export type AvailableColors = keyof typeof avatarColors
 
 export const getColorFromText = (
   label: string | undefined

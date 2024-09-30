@@ -1,3 +1,4 @@
+import { AvailableColors } from "@/experimental/Layouts/Utils/helper"
 import { cn } from "@/lib/utils"
 import {
   Avatar as AvatarComponent,
@@ -9,7 +10,7 @@ interface AvatarType {
   alt: string
   src?: string
   size?: ComponentProps<typeof AvatarComponent>["size"]
-  color?: string
+  color?: AvailableColors
 }
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarType>(
