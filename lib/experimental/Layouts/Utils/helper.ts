@@ -1,4 +1,4 @@
-const avatarColors: Record<string, string> = {
+const avatarColors = {
   grey: "bg-f1-icon",
   radical: "bg-f1-icon-critical",
   tangerine: "bg-f1-icon-warning",
@@ -7,15 +7,16 @@ const avatarColors: Record<string, string> = {
   champagne: "bg-f1-foreground-positive",
   viridian: "bg-f1-foreground-accent",
   purple: "bg-f1-foreground-info",
-}
+} as const
 
-export type AvailableColors = keyof typeof avatarColors
+export type AvailableColors = (typeof avatarColors)[keyof typeof avatarColors]
 
 export const getColorFromText = (
   label: string | undefined
 ): AvailableColors => {
   const colorKeys = Object.keys(avatarColors)
-  const colorVals = avatarColors
+  const colorVals: Record<string, AvailableColors> = avatarColors
+
   let hash = 0
 
   if (label === undefined || label.length === 0) {
