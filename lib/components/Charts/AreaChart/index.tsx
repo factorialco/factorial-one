@@ -209,11 +209,7 @@ export const _AreaChart = <K extends LineChartConfig>(
           <ChartLegend
             className="flex justify-start"
             iconType="star"
-            content={
-              <ChartLegendContent
-                leftShift={isYAxisVisible ? Math.round(yAxisWidth) : 0}
-              />
-            }
+            content={<ChartLegendContent />}
           />
         )}
       </AreaChartPrimitive>
