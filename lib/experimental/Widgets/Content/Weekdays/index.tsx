@@ -28,11 +28,12 @@ export const Weekdays = forwardRef<HTMLDivElement, WeekdaysProps>(
       >
         {daysOfTheWeek.map((day) => (
           <ToggleGroupItem
+            aria-label={day}
             key={day}
             value={day}
-            className="h-6 w-6 disabled:bg-f1-background-secondary disabled:text-f1-foreground disabled:opacity-100 disabled:data-[state=on]:bg-f1-background-bold disabled:data-[state=on]:text-f1-foreground-inverse"
+            className="h-6 w-6 shrink-0 grow-0 basis-6 p-0 text-sm font-medium disabled:select-none disabled:bg-f1-background-tertiary disabled:text-f1-foreground-secondary disabled:opacity-100 disabled:data-[state=on]:border disabled:data-[state=on]:border-solid disabled:data-[state=on]:border-f1-border-selected disabled:data-[state=on]:bg-f1-background-selected disabled:data-[state=on]:text-f1-foreground-selected"
           >
-            <p className="h-auto text-sm">{day[0]}</p>
+            {day[0]}
           </ToggleGroupItem>
         ))}
       </ToggleGroup>
