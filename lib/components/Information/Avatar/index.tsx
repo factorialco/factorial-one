@@ -18,10 +18,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarType>(
       <AvatarComponent size={size} ref={ref}>
         <AvatarImage src={src} alt={alt} />
         <AvatarFallback
-          className={cn(
-            color && `bg-${color}`,
-            color && "text-f1-foreground-inverse"
-          )}
+          className={cn(color, color && "text-f1-foreground-inverse")}
         >
           {alt}
         </AvatarFallback>

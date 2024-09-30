@@ -1,15 +1,19 @@
 const avatarColors: Record<string, string> = {
-  grey: "f1-icon",
-  radical: "f1-icon-critical",
-  tangerine: "f1-icon-warning",
-  malibu: "f1-icon-info",
-  lime: "f1-icon-positive",
-  champagne: "f1-foreground-positive",
-  viridian: "f1-foreground-accent",
-  purple: "f1-foreground-info",
+  grey: "bg-f1-icon",
+  radical: "bg-f1-icon-critical",
+  tangerine: "bg-f1-icon-warning",
+  malibu: "bg-f1-icon-info",
+  lime: "bg-f1-icon-positive",
+  champagne: "bg-f1-foreground-positive",
+  viridian: "bg-f1-foreground-accent",
+  purple: "bg-f1-foreground-info",
 }
 
-export const getColorFromText = (label: string | undefined) => {
+type AvailableColors = keyof typeof avatarColors
+
+export const getColorFromText = (
+  label: string | undefined
+): AvailableColors => {
   const colorKeys = Object.keys(avatarColors)
   const colorVals = avatarColors
   let hash = 0
