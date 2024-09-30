@@ -45,7 +45,7 @@
     border-radius: 12px !important;
   }
 
-  .sb-unstyled table,
+  .sb-unstyled table:not(.docs-story table),
   .docblock-argstable {
     background: #f5f6f8;
     border-radius: 12px;
@@ -54,7 +54,7 @@
     width: 100%;
   }
 
-  .sb-unstyled tbody,
+  .sb-unstyled tbody:not(.docs-story tbody),
   .docblock-argstable-body {
     filter: none !important;
     outline: rgba(0, 0, 0, 0.1) 1px solid !important;
@@ -63,23 +63,23 @@
     background: #fff;
   }
 
-  .sb-unstyled tbody > tr:nth-child(even) > td,
+  .sb-unstyled tbody > tr:nth-child(even) > td:not(.docs-story td),
   .docblock-argstable-body > tr:nth-child(even) > td {
     background: #fafbfc !important;
   }
 
-  .sb-unstyled tbody > tr:not(:last-child) > td,
+  .sb-unstyled tbody > tr:not(:last-child) > td:not(.docs-story td),
   .docblock-argstable-body > tr:not(:last-child) > td {
     border-bottom: #dce0e5 1px solid !important;
   }
 
-  .sb-unstyled thead > tr > th {
+  .sb-unstyled thead > tr > th:not(.docs-story th) {
     padding: 10px 20px;
     color: #647084;
     text-align: left;
   }
 
-  .sb-unstyled tbody > tr > td {
+  .sb-unstyled tbody > tr > td:not(.docs-story td) {
     padding: 16px 20px;
   }
 
