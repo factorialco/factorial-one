@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { fn } from "@storybook/test"
 import { Tag } from "."
 
 const meta: Meta = {
@@ -27,5 +28,11 @@ export const Avatar: Story = {
       src: "https://github.com/dani-moreno.png",
       alt: "I",
     },
+  },
+}
+
+export const Clickable: Story = {
+  args: {
+    onClick: fn(),
   },
 }
