@@ -21,21 +21,23 @@ export const IconText = forwardRef<HTMLDivElement, IconTextProps>(
     return (
       <div
         ref={ref}
-        className="flex flex-row items-center gap-1 text-f1-foreground-secondary"
+        className="flex flex-row items-start gap-1 text-f1-foreground-secondary"
       >
-        <Icon icon={iconSvg} size={"sm"} />
-        {texts.map((text, index) => {
-          return (
-            <div className="flex flex-row items-center justify-center gap-1">
-              {index > 0 && (
-                <div className="h-[0.15rem] w-[0.15rem] rounded-full bg-f1-foreground" />
-              )}
-              <p key={index} className="font-medium text-f1-foreground">
-                {text}
-              </p>
-            </div>
-          )
-        })}
+        <div className="relative top-0.5">
+          <Icon icon={iconSvg} size="sm" />
+        </div>
+        <p className="font-medium text-f1-foreground">
+          {texts.map((text, index) => (
+            <span
+              key={text}
+              className={
+                index > 0 ? "before:mx-1 before:content-['·']" : undefined
+              }
+            >
+              {text}
+            </span>
+          ))}
+        </p>
       </div>
     )
   }

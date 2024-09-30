@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { Badge } from "@/components/Information/Badge"
+import { ComponentProps } from "react"
 import avatar from "~/storybook-assets/avatar.jpeg"
 import { DetailsItemsList } from "."
 import { Weekdays } from "../../../Widgets/Content/Weekdays"
@@ -73,7 +74,7 @@ const meta: Meta = {
         content: teams,
       },
     ],
-  },
+  } satisfies ComponentProps<typeof DetailsItemsList>,
   decorators: [
     (Story) => (
       <div className="w-64">
@@ -81,7 +82,7 @@ const meta: Meta = {
       </div>
     ),
   ],
-}
+} satisfies Meta<typeof DetailsItemsList>
 
 export default meta
 type Story = StoryObj<typeof meta>

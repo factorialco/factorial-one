@@ -14,8 +14,8 @@ export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
         ref={ref}
         className={cn("flex flex-col", hasBiggerGap ? "gap-2" : "gap-1")}
       >
-        <p className="text-sm text-f1-foreground-secondary">{title}</p>
-        <p className="text-sm font-medium text-f1-foreground">{content}</p>
+        <p className="text-f1-foreground-secondary">{title}</p>
+        <p className="font-medium text-f1-foreground">{content}</p>
       </div>
     )
   }

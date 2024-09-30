@@ -9,16 +9,6 @@ const meta: Meta<typeof AreaChartWidget> = {
   component: AreaChartWidget,
   parameters: {
     layout: "centered",
-    a11y: {
-      config: {
-        rules: [
-          {
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
-    },
   },
   tags: ["autodocs"],
   args: {
