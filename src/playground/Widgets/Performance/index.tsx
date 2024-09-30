@@ -17,7 +17,10 @@ export interface PerformanceInsightType {
 export const PerformanceInsight = forwardRef<
   HTMLDivElement,
   PerformanceInsightType
->(({ title, name, data, performanceValue, comment, link, hasAccess }, ref) => {
+>(function PerformanceInsight(
+  { title, name, data, performanceValue, comment, link, hasAccess },
+  ref
+) {
   if (!hasAccess) {
     return (
       <WidgetEmptyState

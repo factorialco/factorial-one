@@ -31,7 +31,7 @@ export const Weekdays = forwardRef<HTMLDivElement, WeekdaysProps>(
             aria-label={day}
             key={day}
             value={day}
-            className="h-6 w-6 shrink-0 grow-0 basis-6 p-0 text-sm font-medium disabled:select-none disabled:bg-f1-background-tertiary disabled:text-f1-foreground-secondary disabled:opacity-100 disabled:data-[state=on]:border disabled:data-[state=on]:border-solid disabled:data-[state=on]:border-f1-border-selected disabled:data-[state=on]:bg-f1-background-selected disabled:data-[state=on]:text-f1-foreground-selected"
+            className="disabled:data-[state=on]:border-f1-border-selected disabled:data-[state=on]:text-f1-foreground-selected h-6 w-6 shrink-0 grow-0 basis-6 p-0 text-sm font-medium disabled:select-none disabled:bg-f1-background-tertiary disabled:text-f1-foreground-secondary disabled:opacity-100 disabled:data-[state=on]:border disabled:data-[state=on]:border-solid disabled:data-[state=on]:bg-f1-background-selected"
           >
             {day[0]}
           </ToggleGroupItem>
@@ -40,3 +40,5 @@ export const Weekdays = forwardRef<HTMLDivElement, WeekdaysProps>(
     )
   }
 )
+
+Weekdays.displayName = "Weekdays"

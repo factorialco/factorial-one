@@ -29,3 +29,5 @@ export const Split = React.forwardRef<
     {...props}
   />
 ))
+
+Split.displayName = "Split"

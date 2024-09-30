@@ -47,3 +47,5 @@ export const Breadcrumb = forwardRef<HTMLDivElement, BreadcrumbsType>(
     )
   }
 )
+
+Breadcrumb.displayName = "Breadcrumb"

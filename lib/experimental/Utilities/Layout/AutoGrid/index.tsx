@@ -40,3 +40,5 @@ export const AutoGrid = React.forwardRef<
     </div>
   </div>
 ))
+
+AutoGrid.displayName = "AutoGrid"

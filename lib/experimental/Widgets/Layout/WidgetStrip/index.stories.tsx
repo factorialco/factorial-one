@@ -14,6 +14,7 @@ import { PieChartWidget } from "../../Charts/PieChartWidget"
 import PieChartWidgetStoriesMeta from "../../Charts/PieChartWidget/index.stories"
 import { Widget } from "../../Widget"
 
+/* eslint-disable react/jsx-key */
 const widgets = [
   <AreaChartWidget
     {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
@@ -28,6 +29,7 @@ const widgets = [
     </p>
   </Widget>,
 ]
+/* eslint-enable react/jsx-key */
 
 const meta = {
   component: WidgetStrip,
@@ -103,6 +105,7 @@ export const EmployeesList: Story = {
   args: {
     children: [
       <AreaChartWidget
+        key="headcount"
         {...AreaChartWidgetStoriesMeta.args}
         header={{
           title: "Headcount",
@@ -130,6 +133,7 @@ export const EmployeesList: Story = {
       />,
       <AreaChartWidget
         {...AreaChartWidgetStoriesMeta.args}
+        key="promotion"
         header={{
           title: "Promotion rate",
           subtitle: undefined,
@@ -152,6 +156,7 @@ export const EmployeesList: Story = {
         }}
       />,
       <AreaChartWidget
+        key="turnover"
         {...AreaChartWidgetStoriesMeta.args}
         header={{
           title: "Turnover rate",

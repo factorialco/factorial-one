@@ -50,3 +50,5 @@ export const Event = forwardRef<HTMLDivElement, EventProps>(
     )
   }
 )
+
+Event.displayName = "Event"

@@ -16,15 +16,20 @@ export type RadialProgressWidgetProps = {
   chart: RadialProgressProps
 }
 
+const _RadialProgressWidget = forwardRef<
+  HTMLDivElement,
+  RadialProgressWidgetProps
+>(({ header, chart }, ref) => (
+  <Widget ref={ref} header={header}>
+    <div className="flex h-40 items-center justify-center">
+      <RadialProgressChart {...chart} />
+    </div>
+  </Widget>
+))
+
+_RadialProgressWidget.displayName = "RadialProgressWidget"
+
 export const RadialProgressWidget = withSkeleton(
-  forwardRef<HTMLDivElement, RadialProgressWidgetProps>(
-    ({ header, chart }, ref) => (
-      <Widget ref={ref} header={header}>
-        <div className="flex h-40 items-center justify-center">
-          <RadialProgressChart {...chart} />
-        </div>
-      </Widget>
-    )
-  ),
+  _RadialProgressWidget,
   Widget.Skeleton
 )

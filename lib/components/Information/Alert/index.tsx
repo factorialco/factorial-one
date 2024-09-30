@@ -42,6 +42,7 @@ const Alert = Component(
     name: "Alert",
     type: "info",
   },
+  // eslint-disable-next-line react/display-name
   React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof alertVariants>

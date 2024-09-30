@@ -69,6 +69,8 @@ const DashboardComponent = forwardRef<HTMLDivElement, DashboardProps>(
   }
 )
 
+DashboardComponent.displayName = "Dashboard"
+
 const skeletonHeights: Array<ComponentProps<typeof Widget.Skeleton>["height"]> =
   ["sm", "lg", "md", "md", "lg", "sm", "lg", "lg", "sm", "sm", "md", "md"]
 

@@ -21,3 +21,5 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarType>(
     )
   }
 )
+
+Avatar.displayName = "Avatar"

@@ -3,7 +3,7 @@ import { Widget, WidgetProps } from "../Widget"
 
 export type ChartContainerPropsBase = WidgetProps
 
-const Container = forwardRef<
+const _ChartContainer = forwardRef<
   HTMLDivElement,
   ChartContainerPropsBase & {
     chart?: ReactNode
@@ -16,11 +16,13 @@ const Container = forwardRef<
   )
 })
 
+_ChartContainer.displayName = "ChartContainer"
+
 export type ComposeChartContainerProps<T extends object> =
   ChartContainerPropsBase & {
     chart: T
   }
 
-export const ChartContainer = Object.assign(Container, {
+export const ChartContainer = Object.assign(_ChartContainer, {
   Skeleton: Widget.Skeleton,
 })

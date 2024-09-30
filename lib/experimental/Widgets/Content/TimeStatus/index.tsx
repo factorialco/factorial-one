@@ -30,3 +30,5 @@ export const TimeStatus = forwardRef<HTMLDivElement, TimeStatusProps>(
     )
   }
 )
+
+TimeStatus.displayName = "TimeStatus"

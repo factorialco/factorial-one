@@ -20,12 +20,7 @@ module.exports = {
     "no-unused-vars": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "react/display-name": [
-      "error",
-      {
-        checkContextObjects: true,
-      },
-    ],
+    "react/display-name": ["error", {}],
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

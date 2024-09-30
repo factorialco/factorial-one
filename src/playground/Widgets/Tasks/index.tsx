@@ -28,7 +28,7 @@ export interface TasksInsightProps {
 }
 
 export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
-  ({ data }, ref) => {
+  function TasksInsight({ data }, ref) {
     const {
       title = "Tasks",
       inProgressTasks,

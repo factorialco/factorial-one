@@ -10,7 +10,7 @@ interface IndicatorProps {
 }
 
 export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
-  ({ content, label, icon, color }, ref) => {
+  function Indicator({ content, label, icon, color }, ref) {
     return (
       <div key={label} className="grid-row-2 col-span-1 grid" ref={ref}>
         <p className="font-medium text-f1-foreground-secondary">{label}</p>

@@ -32,3 +32,5 @@ export const IndicatorsList = forwardRef<HTMLDivElement, IndicatorsListProps>(
     )
   }
 )
+
+IndicatorsList.displayName = "IndicatorsList"

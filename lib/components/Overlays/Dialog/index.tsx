@@ -89,4 +89,6 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
   }
 )
 
+OneDialog.displayName = "Dialog"
+
 export { OneDialog as Dialog }

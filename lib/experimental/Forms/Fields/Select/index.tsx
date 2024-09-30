@@ -30,3 +30,5 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
     </SelectPrimitive>
   )
 )
+
+Select.displayName = "Select"

@@ -27,3 +27,5 @@ export const TwoColumnsList = forwardRef<HTMLDivElement, TwoColumnsListType>(
     )
   }
 )
+
+TwoColumnsList.displayName = "TwoColumnsList"

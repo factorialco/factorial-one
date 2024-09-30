@@ -25,3 +25,5 @@ export const Stack = forwardRef<
     {children}
   </FlexBox>
 ))
+
+Stack.displayName = "Stack"

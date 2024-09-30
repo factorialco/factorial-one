@@ -12,7 +12,9 @@ const meta = {
   render: (args) => (
     <Split {...args}>
       {Array.from({ length: 10 }).map((_, i) => (
-        <Placeholder className="shrink">{i + 1}</Placeholder>
+        <Placeholder key={i} className="shrink">
+          {i + 1}
+        </Placeholder>
       ))}
     </Split>
   ),
@@ -30,7 +32,9 @@ export const Wrap: Story = {
     return (
       <Split {...args}>
         {Array.from({ length: 30 }).map((_, i) => (
-          <Placeholder className="shrink">{i + 1}</Placeholder>
+          <Placeholder key={i} className="shrink">
+            {i + 1}
+          </Placeholder>
         ))}
       </Split>
     )
@@ -54,7 +58,9 @@ export const WrapGrow: Story = {
   render: (args) => (
     <Split {...args}>
       {Array.from({ length: 30 }).map((_, i) => (
-        <Placeholder className="grow">{i + 1}</Placeholder>
+        <Placeholder key={i} className="grow">
+          {i + 1}
+        </Placeholder>
       ))}
     </Split>
   ),

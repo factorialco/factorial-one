@@ -42,3 +42,5 @@ export const IconText = forwardRef<HTMLDivElement, IconTextProps>(
     )
   }
 )
+
+IconText.displayName = "IconText"
