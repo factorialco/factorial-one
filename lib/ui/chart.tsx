@@ -329,10 +329,18 @@ const ChartLegendContent = React.forwardRef<
     Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
       hideIcon?: boolean
       nameKey?: string
+      leftShift?: number
     }
 >(
   (
-    { className, hideIcon = false, payload, verticalAlign = "bottom", nameKey },
+    {
+      className,
+      hideIcon = false,
+      payload,
+      verticalAlign = "bottom",
+      nameKey,
+      leftShift = 0,
+    },
     ref
   ) => {
     const { config } = useChart()
@@ -349,6 +357,7 @@ const ChartLegendContent = React.forwardRef<
           verticalAlign === "top" ? "pb-2" : "pt-2",
           className
         )}
+        style={{ marginLeft: leftShift }}
       >
         {payload.map((item) => {
           const key = `${nameKey || item.dataKey || "value"}`
