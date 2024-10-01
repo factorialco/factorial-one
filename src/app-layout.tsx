@@ -16,14 +16,16 @@ import {
 import React from "react"
 import { useXRay } from "../lib/lib/xray"
 
-import { Button, Split, Stack } from "@/factorial-one"
+import { Button } from "@/components/exports"
+import { Split, Stack } from "@/experimental/exports"
+
 import Add from "@/icons/Add"
 import Ellipsis from "@/icons/Ellipsis"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea } from "@/ui/scrollarea"
 
 const Title: React.FC<{ title: string }> = ({ title }) => (
-  <div className="text-f1-foreground flex h-14 items-center gap-2 px-3 font-medium">
+  <div className="flex h-14 items-center gap-2 px-3 font-medium text-f1-foreground">
     <Target size="20" />
     {title}
   </div>
@@ -39,7 +41,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
   } = useXRay()
 
   return (
-    <div className="bg-f1-background-secondary grid h-full grow grid-cols-1 p-4 md:grid-cols-[264px_1fr]">
+    <div className="grid h-full grow grid-cols-1 bg-f1-background-secondary p-4 md:grid-cols-[264px_1fr]">
       <Stack gap="4" overflow="hidden">
         <Stack className="md:hidden" alignItems="start">
           <Button hideLabel label="Menu" icon={Home} variant="ghost" />
@@ -51,28 +53,28 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
               <Stack>
                 <div
                   onClick={() => (xRayEnabled ? disableXRay() : enableXRay())}
-                  className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer"
+                  className="flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary-hover"
                 >
                   <Home size="16" /> Dashboard
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary-hover">
                   <Inbox size="16" /> Inbox
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary-hover">
                   <Store size="16" /> Marketplace
                 </div>
               </Stack>
 
               <Stack>
-                <div className="text-f1-foreground/70 my-2 px-1.5 pb-1 text-sm font-medium uppercase">
+                <div className="my-2 px-1.5 pb-1 text-sm font-medium uppercase text-f1-foreground/70">
                   You
                 </div>
 
                 <Accordion.Root type="single" collapsible>
                   <Accordion.Item value="item-1">
-                    <Accordion.Trigger className="text-f1-foreground hover:bg-f1-background-secondary-hover group flex h-9 w-full items-center rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                    <Accordion.Trigger className="group flex h-9 w-full items-center rounded-sm p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary-hover">
                       <div className="flex flex-1 items-center gap-2">
                         <UserRound size="16" />
                         Me
@@ -83,10 +85,10 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                     </Accordion.Trigger>
                     <Accordion.Content className="mb-2 overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                       <div className="ml-3 flex flex-col border-l-2">
-                        <div className="text-f1-foreground hover:text-f1-foreground flex h-8 items-center pl-5 text-sm font-normal hover:cursor-pointer">
+                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-f1-foreground hover:cursor-pointer hover:text-f1-foreground">
                           Profile
                         </div>
-                        <div className="text-f1-foreground hover:text-f1-foreground flex h-8 items-center pl-5 text-sm font-normal hover:cursor-pointer">
+                        <div className="flex h-8 items-center pl-5 text-sm font-normal text-f1-foreground hover:cursor-pointer hover:text-f1-foreground">
                           Personal
                         </div>
                       </div>
@@ -94,32 +96,32 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
                   </Accordion.Item>
                 </Accordion.Root>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary-hover">
                   <Clock size="16" /> Clock in
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary-hover">
                   <TreePalm size="16" /> Time off
                 </div>
 
-                <div className="hover:bg-f1-background-secondary/50 text-f1-foreground bg-f1-background-secondary flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="flex h-9 items-center gap-2 rounded-sm bg-f1-background-secondary p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary/50">
                   <Folders size="16" /> My documents
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary-hover">
                   <BookCheck size="16" /> Tasks
                 </div>
               </Stack>
               <Stack>
-                <div className="text-f1-foreground/70 my-2 px-1.5 pb-1 text-sm font-medium uppercase">
+                <div className="my-2 px-1.5 pb-1 text-sm font-medium uppercase text-f1-foreground/70">
                   Your company
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary-hover">
                   <UsersRound size="16" /> Employees
                 </div>
 
-                <div className="text-f1-foreground hover:bg-f1-background-secondary-hover flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium transition-colors hover:cursor-pointer">
+                <div className="flex h-9 items-center gap-2 rounded-sm p-1.5 text-sm font-medium text-f1-foreground transition-colors hover:cursor-pointer hover:bg-f1-background-secondary-hover">
                   <Calendar size="16" /> Calendar
                 </div>
               </Stack>
@@ -127,11 +129,11 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
           </Stack>
         </ScrollArea>
       </Stack>
-      <Stack overflow="hidden" className="bg-f1-background rounded-sm shadow">
+      <Stack overflow="hidden" className="rounded-sm bg-f1-background shadow">
         <Stack gap={null} className="h-full overflow-hidden">
           <Split paddingX="p-4" paddingY="p-4" alignItems="center" shrink>
             <Stack grow paddingX="p-2">
-              <div className="text-f1-foreground text-sm font-medium">
+              <div className="text-sm font-medium text-f1-foreground">
                 My documents
               </div>
             </Stack>
