@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react"
 
+import { formatLargeMoney } from "@/experimental/Information/Money/utils"
 import { PieChart } from "."
 
 const dataConfig = {
@@ -56,7 +57,7 @@ export const Default: Meta<typeof PieChart> = {
       { label: "june", value: 214 },
     ],
     tickFormatter: (value: string) =>
-      `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + "€"}`,
+      `${Number.isNaN(parseFloat(value)) ? value : formatLargeMoney(parseFloat(value), "EUR")}`,
   },
 }
 
@@ -65,7 +66,7 @@ export const WithOverview: Meta<typeof PieChart> = {
     ...Default.args,
     overview: {
       label: "Total",
-      number: 224,
+      number: 224342837423,
     },
   },
 }

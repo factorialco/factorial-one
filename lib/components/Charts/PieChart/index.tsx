@@ -72,7 +72,11 @@ export const _PieChart = (
                       y={(viewBox.cy || 0) + 8}
                       className="fill-f1-foreground text-2xl font-semibold"
                     >
-                      {overview?.number}
+                      {tickFormatter
+                        ? tickFormatter(
+                            overview?.number ? String(overview.number) : ""
+                          )
+                        : overview?.number}
                     </tspan>
                     <tspan
                       x={viewBox.cx}
