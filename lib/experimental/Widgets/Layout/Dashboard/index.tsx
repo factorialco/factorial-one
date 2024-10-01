@@ -44,7 +44,7 @@ const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
           {columns === 1 ? (
             <div className="flex flex-col gap-4">
               {children?.map((child, i) => (
-                <span className="shadow" key={i}>
+                <span className="*:shadow" key={i}>
                   {child}
                 </span>
               ))}
