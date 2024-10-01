@@ -7,7 +7,7 @@ import {
 import { addons } from "@storybook/preview-api"
 import { FC, PropsWithChildren, useEffect, useState } from "react"
 import { DARK_MODE_EVENT_NAME } from "storybook-dark-mode"
-import lightTheme, { darkTheme } from "./FactorialOne"
+import lightTheme from "./FactorialOne"
 import { DOCS_RENDERED } from "@storybook/core-events"
 import {
   Alert,
@@ -36,7 +36,7 @@ export const DocsContainer: FC<PropsWithChildren<DocsContainerProps>> = (
   }, [channel])
 
   return (
-    <BaseContainer theme={isDark ? darkTheme : lightTheme} {...props}>
+    <BaseContainer theme={lightTheme} {...props}>
       {experimental && (
         <div className="sb-unstyled">
           <Alert variant="destructive" className="mb-8">
