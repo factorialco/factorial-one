@@ -1,5 +1,8 @@
 import { Component } from "@/lib/component"
-import { ScrollArea as ScrollAreaComponent } from "./Utilities/ScrollArea"
+import {
+  ScrollArea as ScrollAreaComponent,
+  ScrollBar as ScrollBarComponent,
+} from "./Utilities/ScrollArea"
 
 export * from "./Forms/exports"
 export * from "./Layouts/exports"
@@ -14,4 +17,12 @@ export const ScrollArea = Component(
     type: "layout",
   },
   ScrollAreaComponent
+)
+
+export const ScrollBar = Component(
+  {
+    name: "ScrollBar",
+    type: "layout",
+  },
+  ScrollBarComponent
 )
