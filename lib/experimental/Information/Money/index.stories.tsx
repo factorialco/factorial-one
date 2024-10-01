@@ -49,7 +49,7 @@ const meta = {
     locale: "es-ES",
     totalDigits: 4,
     size: "md",
-    type: "default",
+    type: null,
   } satisfies ComponentProps<typeof Money>,
 } satisfies Meta<typeof Money>
 

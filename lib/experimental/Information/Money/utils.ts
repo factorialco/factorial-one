@@ -28,7 +28,10 @@ export function formatLargeMoney(
   }
 
   // Calculate the maximum decimal digits we can use without exceeding totalDigits
-  const maxDecimalDigits = Math.max(0, totalDigits - integerDigits)
+  const maxDecimalDigits = Math.max(
+    0,
+    Math.min(totalDigits - integerDigits, 20) // Ensure it's within 0-20 range
+  )
 
   // Format the number as a currency string using Intl.NumberFormat
   const formatter = new Intl.NumberFormat(locale, {
