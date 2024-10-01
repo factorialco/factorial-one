@@ -11,7 +11,7 @@ export const InfoPaneLayout = forwardRef<HTMLDivElement, InfoPaneLayoutProps>(
     return (
       <div
         ref={ref}
-        className="flex h-full flex-col-reverse gap-4 sm:flex-row sm:gap-0"
+        className="flex h-full flex-col-reverse gap-4 text-f1-foreground sm:flex-row sm:gap-0"
       >
         <div className="sm:my-6 sm:ms-6 sm:basis-3/4">{mainContent}</div>
         <VerticalSeparator />
