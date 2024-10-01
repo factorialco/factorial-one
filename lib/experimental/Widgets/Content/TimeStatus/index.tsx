@@ -9,7 +9,7 @@ interface TimeStatusProps {
 }
 
 export const TimeStatus = forwardRef<HTMLDivElement, TimeStatusProps>(
-  ({ time, status, statusText, title }, ref) => {
+  function TimeStatus({ time, status, statusText, title }, ref) {
     const variant = {
       in: "positive",
       out: "neutral",

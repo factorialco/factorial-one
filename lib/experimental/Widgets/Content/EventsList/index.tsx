@@ -8,7 +8,7 @@ export interface EventsListProps {
 }
 
 export const EventsList = forwardRef<HTMLDivElement, EventsListProps>(
-  ({ events, title, limit = 3 }, ref) => {
+  function EventsList({ events, title, limit = 3 }, ref) {
     if (!events.length) {
       return null
     }
@@ -36,5 +36,3 @@ export const EventsList = forwardRef<HTMLDivElement, EventsListProps>(
     )
   }
 )
-
-EventsList.displayName = "EventsList"

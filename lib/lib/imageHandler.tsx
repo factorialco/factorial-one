@@ -35,11 +35,13 @@ export type SrcProps = Pick<
   "src" | "srcSet" | "sizes"
 >
 
-export const Image = forwardRef<HTMLImageElement, ImageProps>((props, ref) => {
-  const { src } = useImageContext()
+export const Image = forwardRef<HTMLImageElement, ImageProps>(
+  function Image(props, ref) {
+    const { src } = useImageContext()
 
-  if (!src) return <img ref={ref} {...props} />
-  const extraProps = src(props)
+    if (!src) return <img ref={ref} {...props} />
+    const extraProps = src(props)
 
-  return <img ref={ref} {...props} {...extraProps} />
-})
+    return <img ref={ref} {...props} {...extraProps} />
+  }
+)

@@ -52,65 +52,63 @@ const iconOnlyVariants = cva("transition-colors", {
 const Button: React.FC<ButtonProps> = forwardRef<
   HTMLButtonElement,
   ButtonProps
->(
-  (
-    {
-      label,
-      hideLabel,
-      onClick,
-      disabled,
-      loading: forceLoading,
-      icon,
-      variant = "default",
-      size = "md",
-      ...props
-    },
-    ref
+>(function Button(
+  {
+    label,
+    hideLabel,
+    onClick,
+    disabled,
+    loading: forceLoading,
+    icon,
+    variant = "default",
+    size = "md",
+    ...props
+  },
+  ref
+) {
+  const [loading, setLoading] = useState(false)
+
+  const handleClick = async (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    const [loading, setLoading] = useState(false)
+    const result = onClick?.(event)
 
-    const handleClick = async (
-      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
-      const result = onClick?.(event)
+    if (result instanceof Promise) {
+      setLoading(true)
 
-      if (result instanceof Promise) {
-        setLoading(true)
-
-        try {
-          await result
-        } finally {
-          setLoading(false)
-        }
+      try {
+        await result
+      } finally {
+        setLoading(false)
       }
     }
-
-    return (
-      <ShadcnButton
-        title={hideLabel ? label : undefined}
-        onClick={handleClick}
-        disabled={disabled || loading || forceLoading}
-        ref={ref}
-        variant={variant}
-        size={size}
-        round={hideLabel}
-        {...props}
-      >
-        {icon && (
-          <Icon
-            size={size === "sm" ? "sm" : "md"}
-            icon={icon}
-            className={
-              hideLabel
-                ? iconOnlyVariants({ variant })
-                : iconVariants({ variant })
-            }
-          />
-        )}
-        {!hideLabel && label}
-      </ShadcnButton>
-    )
   }
-)
+
+  return (
+    <ShadcnButton
+      title={hideLabel ? label : undefined}
+      onClick={handleClick}
+      disabled={disabled || loading || forceLoading}
+      ref={ref}
+      variant={variant}
+      size={size}
+      round={hideLabel}
+      {...props}
+    >
+      {icon && (
+        <Icon
+          size={size === "sm" ? "sm" : "md"}
+          icon={icon}
+          className={
+            hideLabel
+              ? iconOnlyVariants({ variant })
+              : iconVariants({ variant })
+          }
+        />
+      )}
+      {!hideLabel && label}
+    </ShadcnButton>
+  )
+})
 
 export { Button }

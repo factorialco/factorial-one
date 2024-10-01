@@ -5,7 +5,7 @@ import { ComponentProps } from "react"
 import avatar from "~/storybook-assets/avatar.jpeg"
 import { DetailsItemsList } from "."
 import { Weekdays } from "../../../Widgets/Content/Weekdays"
-import { BadgesList } from "../BadgesList"
+import { TagsList } from "../TagsList"
 
 const manager = (
   <Badge text="Isabella González" avatar={{ src: avatar, alt: "I" }} />
@@ -17,8 +17,8 @@ const weekdays = (
   />
 )
 const teams = (
-  <BadgesList
-    badges={[
+  <TagsList
+    tags={[
       { text: "Management", avatar: { alt: "M" } },
       { text: "Engineering", avatar: { alt: "E" } },
       { text: "Managers", avatar: { alt: "M" } },

@@ -16,12 +16,14 @@ const stackVariants = cva("flex-col", {
 export const Stack = forwardRef<
   BoxRef,
   BoxProps & VariantProps<typeof stackVariants>
->(({ className, gap, children, ...props }, ref) => (
-  <FlexBox
-    className={cn(stackVariants({ gap }), className)}
-    ref={ref}
-    {...props}
-  >
-    {children}
-  </FlexBox>
-))
+>(function Stack({ className, gap, children, ...props }, ref) {
+  return (
+    <FlexBox
+      className={cn(stackVariants({ gap }), className)}
+      ref={ref}
+      {...props}
+    >
+      {children}
+    </FlexBox>
+  )
+})

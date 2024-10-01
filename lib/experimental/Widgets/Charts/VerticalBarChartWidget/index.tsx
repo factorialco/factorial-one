@@ -8,19 +8,21 @@ import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
 export const VerticalBarChartWidget = withSkeleton(
   forwardRef<HTMLDivElement, ComposeChartContainerProps<VerticalBarChartProps>>(
-    (props, ref) => (
-      <ChartContainer
-        ref={ref}
-        {...props}
-        chart={
-          <VerticalBarChart
-            aspect={null}
-            xAxis={{ hide: true }}
-            {...props.chart}
-          />
-        }
-      />
-    )
+    function VerticalBarChartWidget(props, ref) {
+      return (
+        <ChartContainer
+          ref={ref}
+          {...props}
+          chart={
+            <VerticalBarChart
+              aspect={null}
+              xAxis={{ hide: true }}
+              {...props.chart}
+            />
+          }
+        />
+      )
+    }
   ),
   ChartContainer.Skeleton
 )

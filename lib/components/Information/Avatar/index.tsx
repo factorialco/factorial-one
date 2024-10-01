@@ -1,3 +1,5 @@
+import { AvailableColors } from "@/experimental/Layouts/Utils/helper"
+import { cn } from "@/lib/utils"
 import {
   Avatar as AvatarComponent,
   AvatarFallback,
@@ -9,15 +11,22 @@ interface AvatarType {
   alt: string
   src?: string
   size?: ComponentProps<typeof AvatarComponent>["size"]
+  color?: AvailableColors
 }
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarType>(
-  ({ src, alt, size }, ref) => {
+  ({ src, alt, size, color }, ref) => {
     return (
       <AvatarComponent size={size} ref={ref}>
         <AvatarImage src={src} alt={alt} />
-        <AvatarFallback>{alt}</AvatarFallback>
+        <AvatarFallback
+          className={cn(color, color && "text-f1-foreground-inverse")}
+        >
+          {alt}
+        </AvatarFallback>
       </AvatarComponent>
     )
   }
 )
+
+Avatar.displayName = "Avatar"

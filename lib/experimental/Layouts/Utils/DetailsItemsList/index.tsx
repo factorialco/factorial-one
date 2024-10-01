@@ -9,7 +9,7 @@ interface DetailsItemsListProps {
 export const DetailsItemsList = forwardRef<
   HTMLDivElement,
   DetailsItemsListProps
->(({ title, details }, ref) => {
+>(function DetailsItemList({ title, details }, ref) {
   return (
     <div ref={ref} className="flex flex-col gap-4">
       {!!title && (
@@ -31,5 +31,3 @@ export const DetailsItemsList = forwardRef<
     </div>
   )
 })
-
-DetailsItemsList.displayName = "DetailsItemsList"
