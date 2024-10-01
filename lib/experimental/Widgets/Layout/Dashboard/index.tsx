@@ -39,7 +39,7 @@ const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
     }, [setColumns])
 
     return (
-      <div ref={ref}>
+      <div ref={ref} className="text-f1-foreground">
         <div ref={containerRef}>
           {columns === 1 ? (
             <div className="flex flex-col gap-4">{children}</div>
