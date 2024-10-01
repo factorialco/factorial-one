@@ -13,7 +13,7 @@ import {
   Alert,
   AlertDescription,
   AlertTitle,
-} from "../lib/components/Information/Alert"
+} from "../lib/experimental/Information/Alert"
 
 const channel = addons.getChannel()
 
