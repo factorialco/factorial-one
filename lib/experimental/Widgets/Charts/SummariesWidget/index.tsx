@@ -2,13 +2,11 @@ import { withSkeleton } from "@/lib/skeleton"
 import { forwardRef } from "react"
 import { ChartContainer, ChartContainerPropsBase } from "../ChartContainer"
 
-const _SummariesWidget = forwardRef<HTMLDivElement, ChartContainerPropsBase>(
-  (props, ref) => <ChartContainer ref={ref} {...props} chart={null} />
-)
-
-_SummariesWidget.displayName = "SummariesWidget"
-
 export const SummariesWidget = withSkeleton(
-  _SummariesWidget,
+  forwardRef<HTMLDivElement, ChartContainerPropsBase>(
+    function SummariesWidget(props, ref) {
+      return <ChartContainer ref={ref} {...props} chart={null} />
+    }
+  ),
   ChartContainer.Skeleton
 )
