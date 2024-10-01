@@ -3,19 +3,17 @@ import React, { useState } from "react"
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
-import { useDarkMode } from "storybook-dark-mode"
 
 import "../styles.css"
 
 import { ThemeProvider } from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
-import lightTheme, { darkTheme } from "./FactorialOne"
 import { DocsContainer } from "./DocsContainer"
 
 export const withTheme = () => {
   return (Story) => {
     return (
-      <ThemeProvider theme={useDarkMode() ? "dark" : "light"}>
+      <ThemeProvider theme="light">
         <Story />
       </ThemeProvider>
     )
@@ -106,9 +104,9 @@ const preview: Preview = {
       },
     },
     darkMode: {
-      dark: darkTheme,
-      light: lightTheme,
       stylePreview: true,
+      current: "light",
+      disable: true,
     },
   },
   tags: ["autodocs"],
