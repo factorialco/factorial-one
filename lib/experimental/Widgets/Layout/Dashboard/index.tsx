@@ -42,7 +42,13 @@ const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
       <div ref={ref} className="text-f1-foreground">
         <div ref={containerRef}>
           {columns === 1 ? (
-            <div className="flex flex-col gap-4">{children}</div>
+            <div className="flex flex-col gap-4">
+              {children?.map((child, i) => (
+                <span className="shadow" key={i}>
+                  {child}
+                </span>
+              ))}
+            </div>
           ) : (
             columns &&
             columns > 1 && (
@@ -54,7 +60,7 @@ const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
                       style={{
                         width: `${Math.floor((1 / columns) * 10000) / 100 - 0.05}%`,
                       }}
-                      className="pb-4 pr-4 *:shadow-md"
+                      className="pb-4 pr-4 shadow"
                     >
                       {child}
                     </div>
