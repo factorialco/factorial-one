@@ -1,4 +1,4 @@
-import { Avatar } from "@/components/Information/Avatar"
+import { Avatar } from "@/experimental/Information/Avatar"
 import { cn } from "@/lib/utils"
 import { Badge as BadgeComponent } from "@/ui/badge"
 import { ComponentProps, forwardRef } from "react"
