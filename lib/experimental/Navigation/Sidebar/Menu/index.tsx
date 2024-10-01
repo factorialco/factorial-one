@@ -1,6 +1,6 @@
 import { Counter } from "@/experimental/Information/Counter"
 import * as Icons from "@/icons"
-import { cn } from "@/lib/utils"
+import { cn, focusRing } from "@/lib/utils"
 import {
   Collapsible,
   CollapsibleContent,
@@ -53,7 +53,8 @@ const MenuItem = ({ item }: { item: MenuItem }) => (
   <a
     href={item.href}
     className={cn(
-      "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1",
+      "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
+      focusRing(),
       item.isActive
         ? "bg-f1-background-secondary-hover text-f1-foreground"
         : "hover:bg-f1-background-secondary-hover"
@@ -78,7 +79,12 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <CollapsibleTrigger className="flex w-full cursor-pointer items-center justify-between border-t border-dashed border-transparent border-t-f1-border px-1.5 pb-2 pt-4 text-sm font-semibold uppercase tracking-wide text-f1-foreground-secondary focus-visible:rounded-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1">
+      <CollapsibleTrigger
+        className={cn(
+          "flex w-full cursor-pointer items-center justify-between border-t border-dashed border-transparent border-t-f1-border px-1.5 pb-2 pt-4 text-sm font-semibold uppercase tracking-wide text-f1-foreground-secondary",
+          focusRing("focus-visible:rounded-md")
+        )}
+      >
         {category.title}
         <motion.div
           initial={false}
