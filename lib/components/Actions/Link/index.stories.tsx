@@ -17,7 +17,7 @@ const meta = {
   },
   args: {
     children: "This is a link",
-    href: "/",
+    href: "/foo",
   },
 } satisfies Meta<ComponentProps<typeof Link>>
 

@@ -5,9 +5,11 @@ import {
   forwardRef,
   ReactNode,
   useContext,
+  useMemo,
 } from "react"
 
 export type LinkContextValue = {
+  currentPath?: string
   component?: (
     props: LinkProps,
     ref: ForwardedRef<HTMLAnchorElement>
@@ -20,9 +22,9 @@ export const LinkProvider: React.FC<
   {
     children: ReactNode
   } & LinkContextValue
-> = ({ children, component }) => {
+> = ({ children, component, currentPath }) => {
   return (
-    <LinkContext.Provider value={{ component }}>
+    <LinkContext.Provider value={{ component, currentPath }}>
       {children}
     </LinkContext.Provider>
   )
@@ -39,17 +41,38 @@ export const useLinkContext = () => {
 
 export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 
+export const useLink = () => {
+  const { currentPath } = useLinkContext()
+
+  const isActive = (path: string | undefined) => {
+    if (currentPath === undefined || path === undefined) return false
+    return currentPath.startsWith(path)
+  }
+
+  return {
+    isActive,
+  }
+}
+
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   function Link(props, ref) {
     const { component } = useLinkContext()
+    const { isActive } = useLink()
 
-    if (!component) return <a ref={ref} {...props} />
-    const Component = forwardRef<HTMLAnchorElement>(
-      function Component(props, ref) {
-        return component(props, ref)
-      }
+    const overridenProps = {
+      "data-is-active": isActive(props.href) || undefined,
+      ...props,
+    }
+
+    const Component = useMemo(
+      () =>
+        forwardRef<HTMLAnchorElement>(function Component(props, ref) {
+          if (!component) return <a ref={ref} {...props} />
+          return component(props, ref)
+        }),
+      [component]
     )
 
-    return <Component ref={ref} {...props} />
+    return <Component ref={ref} {...overridenProps} />
   }
 )
