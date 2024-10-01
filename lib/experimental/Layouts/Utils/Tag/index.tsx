@@ -1,4 +1,4 @@
-import { Avatar } from "@/components/Information/Avatar"
+import { Avatar } from "@/experimental/Information/Avatar"
 import { cn } from "@/lib/utils"
 import { ComponentProps, forwardRef } from "react"
 import { getColorFromText } from "../helper"

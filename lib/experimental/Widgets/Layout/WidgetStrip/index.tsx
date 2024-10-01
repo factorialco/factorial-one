@@ -1,4 +1,4 @@
-import { ScrollArea } from "@/components/Utilities/ScrollArea"
+import { ScrollArea } from "@/experimental/Utilities/ScrollArea"
 import { Blend, withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { forwardRef, ReactNode } from "react"

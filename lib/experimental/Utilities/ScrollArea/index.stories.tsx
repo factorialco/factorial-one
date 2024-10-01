@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { ScrollArea } from "."
 
-import { Alert, AlertTitle } from "@/components/Information/Alert"
+import { Alert, AlertTitle } from "@/experimental/Information/Alert"
 import { Placeholder } from "@/lib/storybook-utils"
 import type { Meta, StoryObj } from "@storybook/react"
 
