@@ -266,10 +266,16 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "count-up": {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
+          "50%": { opacity: "0.5", transform: "translateY(-5px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "count-up": "count-up ease-in-out",
       },
       containers: {
         "8xl": "96rem",

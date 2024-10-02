@@ -1,9 +1,8 @@
 import { cva, type VariantProps } from "class-variance-authority"
-import { useEffect, useState } from "react"
 import { formatLargeMoney } from "./utils"
 
 const counterVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-xs font-normal tabular-nums transition-colors duration-300",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-xs font-normal tabular-nums transition-colors duration-300", // Basic styling for positioning and formatting
   {
     variants: {
       size: {
@@ -14,10 +13,20 @@ const counterVariants = cva(
         positive: "bg-f1-background-selected-bold text-f1-foreground-inverse",
         negative: "bg-f1-background-accent-bold text-f1-foreground-inverse",
       },
+      blur: {
+        true: "blur-md",
+        false: "",
+      },
+      animation: {
+        true: "animate-count-up",
+        false: "",
+      },
     },
     defaultVariants: {
       size: "md",
       type: null,
+      blur: false,
+      animation: true,
     },
   }
 )
@@ -28,6 +37,8 @@ type MoneyProps = {
   locale: string
   totalDigits?: number
   duration?: number // Duration of the animation
+  blur?: boolean // Enable or disable blur effect
+  animated?: boolean // Enable or disable the counting animation
 } & VariantProps<typeof counterVariants>
 
 export function Money({
@@ -38,32 +49,22 @@ export function Money({
   size,
   type,
   duration = 500, // Default animation duration
+  blur = false, // Disable blur by default
+  animated = true, // Enable animation by default
 }: MoneyProps) {
-  const [displayValue, setDisplayValue] = useState(0)
+  const formattedValue = formatLargeMoney(amount, currency, locale, totalDigits)
 
-  useEffect(() => {
-    let start = 0
-    const increment = amount / (duration / 16.66) // Calculate increment for 60fps
+  // Generate the style for dynamic animation duration
+  const inlineStyles = {
+    animationDuration: `${duration}ms`, // Use the duration prop dynamically
+  }
 
-    const animateCounter = () => {
-      start += increment
-      if (start < amount) {
-        setDisplayValue(start)
-        requestAnimationFrame(animateCounter)
-      } else {
-        setDisplayValue(amount) // Ensure final value is precise
-      }
-    }
-
-    requestAnimationFrame(animateCounter)
-  }, [amount, duration])
-
-  const formattedValue = formatLargeMoney(
-    displayValue,
-    currency,
-    locale,
-    totalDigits
+  return (
+    <div
+      className={counterVariants({ size, type, blur, animation: animated })}
+      style={animated ? inlineStyles : {}}
+    >
+      {formattedValue}
+    </div>
   )
-
-  return <div className={counterVariants({ size, type })}>{formattedValue}</div>
 }
