@@ -126,6 +126,7 @@
     "@rollup/rollup-linux-x64-gnu": "^4.24"
   },
   "dependencies": {
-    "@radix-ui/react-collapsible": "^1.1.1"
+    "@radix-ui/react-collapsible": "^1.1.1",
+    "@tanstack/react-table": "^8.20.5"
   }
 }
