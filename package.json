@@ -126,6 +126,6 @@
     "@rollup/rollup-linux-x64-gnu": "^4.23"
   },
   "dependencies": {
-    "@radix-ui/react-collapsible": "^1.1.0"
+    "@radix-ui/react-collapsible": "^1.1.1"
   }
 }
