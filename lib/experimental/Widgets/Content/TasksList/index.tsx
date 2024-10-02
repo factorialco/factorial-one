@@ -32,50 +32,56 @@ function TaskItem({ title, status, onClick }: TaskItemProps) {
   )
 }
 
+interface Tasks {
+  inProgress?: string[]
+  noDue?: string[]
+  due?: string[]
+}
+
 interface Props {
-  inProgressTasks: string[]
-  noDueTasks: string[]
-  dueTasks: string[]
+  tasks: Pick<Tasks, "inProgress" | "noDue" | "due">
   maxTasksToShow?: number
   onClickTask?: (status: TaskStatus) => void
+  emptyMessage?: string
 }
 
 export function TasksList({
-  inProgressTasks,
-  dueTasks,
-  noDueTasks,
+  tasks,
   onClickTask,
   maxTasksToShow = 5,
+  emptyMessage = "No tasks assigned",
 }: Props) {
-  const tasksToRender = [
-    ...inProgressTasks.map((t) => ({
-      title: t,
-      status: "in-progress" as TaskStatus,
-    })),
-    ...dueTasks.map((t) => ({
-      title: t,
-      status: "due" as TaskStatus,
-    })),
-    ...noDueTasks.map((t) => ({
-      title: t,
-      status: "no-due" as TaskStatus,
-    })),
-  ]
+  const taskTypes = [
+    { key: "inProgress", status: "in-progress" },
+    { key: "due", status: "due" },
+    { key: "noDue", status: "no-due" },
+  ] as const
 
-  if (!tasksToRender.length) {
-    return null
-  }
+  const tasksToRender = taskTypes.flatMap(({ key, status }) =>
+    (tasks?.[key] || []).map((title) => ({
+      title,
+      status: status as TaskStatus,
+    }))
+  )
+
+  const isEmpty = !tasksToRender.length
 
   return (
     <div className="flex flex-col gap-3">
-      {tasksToRender.slice(0, maxTasksToShow).map((task, i) => (
-        <TaskItem
-          key={`${task} ${i}`}
-          title={task.title}
-          status={task.status}
-          onClick={onClickTask}
-        />
-      ))}
+      {isEmpty ? (
+        <p className="font-medium">{emptyMessage}</p>
+      ) : (
+        tasksToRender
+          .slice(0, maxTasksToShow)
+          .map((task, i) => (
+            <TaskItem
+              key={`${task} ${i}`}
+              title={task.title}
+              status={task.status}
+              onClick={onClickTask}
+            />
+          ))
+      )}
     </div>
   )
 }

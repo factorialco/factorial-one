@@ -88,9 +88,11 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
         </div>
         {(inProgressTasks.length || dueTasks.length || noDueTasks.length) && (
           <TasksList
-            inProgressTasks={inProgressTasks}
-            noDueTasks={noDueTasks}
-            dueTasks={dueTasks}
+            tasks={{
+              inProgress: inProgressTasks,
+              noDue: noDueTasks,
+              due: dueTasks,
+            }}
           />
         )}
         {buttonLabel && (
