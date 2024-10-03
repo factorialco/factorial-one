@@ -123,7 +123,7 @@
     "vitest": "^2.1.2"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.23"
+    "@rollup/rollup-linux-x64-gnu": "^4.24"
   },
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.1.1"
