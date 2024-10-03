@@ -1,8 +1,10 @@
+import { Input } from "@/experimental/Forms/Fields/Input"
 import {
   Cell,
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table"
 import { FocusEvent, useState } from "react"
@@ -23,6 +25,7 @@ export const Table = <TData extends object>({
   isEditable = false,
 }: TableProps<TData>) => {
   const [tableData, setTableData] = useState<TData[]>(data)
+  const [globalFilter, setGlobalFilter] = useState("")
 
   const columns = propColumns
 
@@ -58,35 +61,57 @@ export const Table = <TData extends object>({
     columns,
     data: tableData,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      globalFilter,
+    },
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: (row, columnId, filterValue) => {
+      const cellValue = row.getValue(columnId)
+
+      return String(cellValue)
+        .trim()
+        .toLowerCase()
+        .includes(String(filterValue).trim().toLowerCase())
+    },
   })
 
   return (
-    <table className="border-collapse">
-      <thead className="bg-f1-background-secondary">
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <td key={cell.id}>{renderCell(cell)}</td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <div>
+      <div className="mb-2 w-1/6">
+        <Input
+          onChange={(e) => setGlobalFilter(e.target.value)}
+          placeholder="Search"
+          type="text"
+        />
+      </div>
+      <table className="border-collapse">
+        <thead className="bg-f1-background-secondary">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>{renderCell(cell)}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   )
 }
