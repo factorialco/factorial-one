@@ -1,3 +1,4 @@
+export { default as InProgressTask } from './InProgressTask'
 export { default as ModuleCalendar } from './ModuleCalendar'
 export { default as ModuleClockIn } from './ModuleClockIn'
 export { default as ModuleDocuments } from './ModuleDocuments'
