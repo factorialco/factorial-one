@@ -11,40 +11,46 @@ type RowData = {
   managerId: number
 }
 
-const data: RowData[] = [
-  {
-    id: 1,
-    firstName: "Peter",
-    lastName: "Venkman",
-    legalEntityId: 1,
-    employeeGroupId: 1,
-    managerId: 1,
-  },
-  {
-    id: 2,
-    firstName: "Egon",
-    lastName: "Spemngler",
-    legalEntityId: 1,
-    employeeGroupId: 1,
-    managerId: 1,
-  },
-  {
-    id: 3,
-    firstName: "Ray",
-    lastName: "Stantz",
-    legalEntityId: 1,
-    employeeGroupId: 1,
-    managerId: 1,
-  },
-  {
-    id: 4,
-    firstName: "Winston",
-    lastName: "Zeddemore",
-    legalEntityId: 1,
-    employeeGroupId: 1,
-    managerId: 1,
-  },
-]
+const randomFirstName = () => {
+  const firstNames = [
+    "Peter",
+    "Egon",
+    "Ray",
+    "Winston",
+    "Janine",
+    "Dana",
+    "Louis",
+  ]
+
+  return firstNames[Math.floor(Math.random() * firstNames.length)]
+}
+
+const randomLastName = () => {
+  const lastNames = [
+    "Venkman",
+    "Spengler",
+    "Stantz",
+    "Zeddemore",
+    "Melnitz",
+    "Tully",
+  ]
+
+  return lastNames[Math.floor(Math.random() * lastNames.length)]
+}
+
+const randomNumber = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1)) + min
+
+const generateRowData = (count = 4000): RowData[] => {
+  return Array.from({ length: count }, () => ({
+    id: count + 1,
+    firstName: randomFirstName(),
+    lastName: randomLastName(),
+    legalEntityId: randomNumber(1, 3),
+    employeeGroupId: randomNumber(1, 3),
+    managerId: randomNumber(1, 1),
+  }))
+}
 
 const columns: Column<RowData>[] = [
   {
@@ -90,7 +96,7 @@ const meta: Meta = {
   component: Table,
   args: {
     columns,
-    data,
+    data: generateRowData(),
   },
 }
 
