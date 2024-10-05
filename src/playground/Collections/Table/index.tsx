@@ -3,12 +3,14 @@ import {
   Cell,
   ColumnDef,
   ColumnMeta as ReactTableColumnMeta,
+  Row,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { FocusEvent, useState } from "react"
+import { useVirtualizer } from "@tanstack/react-virtual"
+import React, { useCallback, useMemo, useRef, useState } from "react"
 
 export type ColumnMeta<TData, TValue> = ReactTableColumnMeta<TData, TValue> & {
   options?: Array<{ value: string | number; label: string }>
@@ -33,57 +35,59 @@ export const Table = <TData extends object>({
 }: TableProps<TData>) => {
   const [tableData, setTableData] = useState<TData[]>(data)
   const [globalFilter, setGlobalFilter] = useState("")
+  const tableContainerRef = useRef<HTMLDivElement>(null)
 
-  const updateData = (rowIndex: number, columnId: string, value: unknown) => {
-    const updatedData = tableData.map((row, index) => {
-      if (index === rowIndex) {
-        return {
-          ...row,
-          [columnId]: value,
-        }
-      }
-      return row
-    })
-    setTableData(updatedData)
-    onDataChange?.(updatedData)
-  }
-
-  const renderCell = (cell: Cell<TData, string>) => {
-    if (!isEditable) {
-      return flexRender(cell.column.columnDef.cell, cell.getContext())
-    }
-
-    const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-      const newValue = e.target.value
-
-      updateData(cell.row.index, cell.column.id, newValue)
-    }
-
-    const meta: ColumnMeta<TData, unknown> = cell.column.columnDef.meta || {}
-
-    if (meta.options?.length) {
-      const options = meta.options.map(({ label, value }) => ({
-        label: label,
-        value: value.toString(),
-      }))
-
-      return (
-        <Select
-          placeholder="Select"
-          onChange={(selectedValue) =>
-            updateData(cell.row.index, cell.column.id, selectedValue)
-          }
-          options={options}
-          value={cell.getValue().toString()}
-        />
+  const updateData = useCallback(
+    (rowIndex: number, columnId: string, value: unknown) => {
+      setTableData((prevData) =>
+        prevData.map((row, index) =>
+          index === rowIndex ? { ...row, [columnId]: value } : row
+        )
       )
-    }
+      onDataChange?.(tableData)
+    },
+    [onDataChange, tableData]
+  )
 
-    return <input defaultValue={cell.getValue()} onBlur={handleBlur} />
-  }
+  const renderCell = useCallback(
+    (cell: Cell<TData, string>) => {
+      if (!isEditable) {
+        return flexRender(cell.column.columnDef.cell, cell.getContext())
+      }
+
+      const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+        updateData(cell.row.index, cell.column.id, e.target.value)
+      }
+
+      const meta: ColumnMeta<TData, unknown> = cell.column.columnDef.meta || {}
+
+      if (meta.options?.length) {
+        const options = meta.options.map(({ label, value }) => ({
+          label,
+          value: value.toString(),
+        }))
+
+        return (
+          <Select
+            placeholder="Select"
+            onChange={(selectedValue) =>
+              updateData(cell.row.index, cell.column.id, selectedValue)
+            }
+            options={options}
+            value={cell.getValue().toString()}
+          />
+        )
+      }
+
+      return <input defaultValue={cell.getValue()} onBlur={handleBlur} />
+    },
+    [isEditable, updateData]
+  )
+
+  const memoizedColumns = useMemo(() => columns, [columns])
 
   const table = useReactTable({
-    columns,
+    columns: memoizedColumns,
     data: tableData,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -91,54 +95,92 @@ export const Table = <TData extends object>({
       globalFilter,
     },
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: (row, columnId, filterValue) => {
-      const cellValue = row.getValue(columnId)
-
-      return String(cellValue)
-        .trim()
-        .toLowerCase()
-        .includes(String(filterValue).trim().toLowerCase())
-    },
+    globalFilterFn: useCallback(
+      (row: Row<TData>, columnId: string, filterValue: string) => {
+        const cellValue = row.getValue(columnId)
+        return String(cellValue)
+          .trim()
+          .toLowerCase()
+          .includes(String(filterValue).trim().toLowerCase())
+      },
+      []
+    ),
   })
+
+  const { rows } = table.getRowModel()
+
+  const rowVirtualizer = useVirtualizer({
+    count: rows.length,
+    estimateSize: useCallback(() => 75, []),
+    getScrollElement: useCallback(() => tableContainerRef.current, []),
+    overscan: 5,
+  })
+
+  const virtualRows = rowVirtualizer.getVirtualItems()
+  const totalSize = rowVirtualizer.getTotalSize()
+
+  const handleGlobalFilterChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setGlobalFilter(e.target.value)
+    },
+    []
+  )
 
   return (
     <div>
       <div className="mb-2 w-56">
         <Input
-          onChange={(e) => setGlobalFilter(e.target.value)}
+          onChange={handleGlobalFilterChange}
           placeholder="Search"
           type="text"
         />
       </div>
-      <table className="min-w-full table-fixed border-spacing-0 overflow-hidden rounded-xl border border-solid border-f1-border">
-        <thead className="bg-f1-background-secondary">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id} className="h-12 rounded-xl">
-              {headerGroup.headers.map((header) => (
-                <th key={header.id} className="pl-4 pr-2 text-left font-medium">
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id} className="h-12">
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="pl-4 pr-2 text-left">
-                  {renderCell(cell)}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div ref={tableContainerRef} className="relative h-96 overflow-auto">
+        <table className="w-full border-spacing-0 overflow-hidden rounded-xl border border-solid border-f1-border">
+          <thead className="sticky top-0 z-10 bg-f1-background-secondary">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id} className="h-12 rounded-xl">
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="pl-4 pr-2 text-left font-medium"
+                    style={{ width: `${100 / columns.length}%` }}
+                  >
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody className="relative" style={{ height: `${totalSize}px` }}>
+            {virtualRows.map((virtualRow) => {
+              const row = rows[virtualRow.index]
+              return (
+                <tr
+                  key={row.index}
+                  className="absolute flex h-20 w-full"
+                  style={{ transform: `translateY(${virtualRow.start}px)` }}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <td
+                      key={cell.id}
+                      className="flex items-center pl-4 pr-2 text-left"
+                      style={{ width: `${100 / columns.length}%` }}
+                    >
+                      {renderCell(cell)}
+                    </td>
+                  ))}
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }
