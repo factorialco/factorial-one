@@ -135,35 +135,38 @@ export const Table = <TData extends object>({
           type="text"
         />
       </div>
-      <div ref={tableContainerRef} className="relative h-96 overflow-auto">
-        <table className="w-full border-spacing-0 overflow-hidden rounded-xl border border-solid border-f1-border">
-          <thead className="sticky top-0 z-10 bg-f1-background-secondary">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="h-12 rounded-xl">
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className="pl-4 pr-2 text-left font-medium"
-                    style={{ width: `${100 / columns.length}%` }}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </th>
-                ))}
-              </tr>
+      <div>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <div
+            key={headerGroup.id}
+            className="flex h-12 items-center rounded-tl-xl rounded-tr-xl bg-f1-background-secondary"
+          >
+            {headerGroup.headers.map((header) => (
+              <div
+                key={header.id}
+                className="pl-4 pr-2 text-left font-medium"
+                style={{ width: `${100 / columns.length}%` }}
+              >
+                {header.isPlaceholder
+                  ? null
+                  : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+              </div>
             ))}
-          </thead>
+          </div>
+        ))}
+      </div>
+      <div ref={tableContainerRef} className="relative h-96 overflow-auto">
+        <table className="w-full border-spacing-0 rounded-xl">
           <tbody className="relative" style={{ height: `${totalSize}px` }}>
             {virtualRows.map((virtualRow) => {
               const row = rows[virtualRow.index]
               return (
                 <tr
                   key={row.index}
-                  className="absolute flex h-20 w-full"
+                  className="absolute flex h-20 w-full border-b border-solid border-x-transparent border-b-f1-border border-t-transparent"
                   style={{ transform: `translateY(${virtualRow.start}px)` }}
                 >
                   {row.getVisibleCells().map((cell) => (
