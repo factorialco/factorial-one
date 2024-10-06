@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { Badge } from "@/factorial-one"
 import { Column, Table } from "."
 
 type RowData = {
@@ -11,48 +12,64 @@ type RowData = {
   managerId: number
 }
 
-const randomFirstName = () => {
-  const firstNames = [
-    "Peter",
-    "Egon",
-    "Ray",
-    "Winston",
-    "Janine",
-    "Dana",
-    "Louis",
-  ]
+const firstNames = [
+  "Peter",
+  "Egon",
+  "Ray",
+  "Winston",
+  "Janine",
+  "Dana",
+  "Louis",
+]
 
-  return firstNames[Math.floor(Math.random() * firstNames.length)]
+const lastNames = [
+  "Venkman",
+  "Spengler",
+  "Stantz",
+  "Zeddemore",
+  "Melnitz",
+  "Tully",
+]
+
+const randomElement = <T,>(array: T[]): T => {
+  return array[Math.floor(Math.random() * array.length)]
 }
 
-const randomLastName = () => {
-  const lastNames = [
-    "Venkman",
-    "Spengler",
-    "Stantz",
-    "Zeddemore",
-    "Melnitz",
-    "Tully",
-  ]
-
-  return lastNames[Math.floor(Math.random() * lastNames.length)]
+const randomNumber = (min: number, max: number): number => {
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
-
-const randomNumber = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min + 1)) + min
 
 const generateRowData = (count = 4000): RowData[] => {
-  return Array.from({ length: count }, () => ({
-    id: count + 1,
-    firstName: randomFirstName(),
-    lastName: randomLastName(),
-    legalEntityId: randomNumber(1, 3),
-    employeeGroupId: randomNumber(1, 3),
-    managerId: randomNumber(1, 1),
-  }))
+  return Array.from({ length: count }, (_, index) => {
+    const firstName = randomElement(firstNames)
+    const lastName = randomElement(lastNames)
+
+    return {
+      id: index + 1,
+      firstName,
+      lastName,
+      legalEntityId: randomNumber(1, 3),
+      employeeGroupId: randomNumber(1, 3),
+      managerId: randomNumber(1, 1),
+      employee: () => (
+        <Badge
+          avatar={{
+            alt: `${firstName[0]}${lastName[0]}`,
+            src: "https://github.com/dani-moreno.png",
+          }}
+          text={`${firstName} ${lastName}`}
+          variant="name"
+        />
+      ),
+    }
+  })
 }
 
 const columns: Column<RowData>[] = [
+  {
+    accessorKey: "employee",
+    header: "Employee",
+  },
   {
     accessorKey: "firstName",
     header: "First name",

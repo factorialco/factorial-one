@@ -51,6 +51,14 @@ export const Table = <TData extends object>({
 
   const renderCell = useCallback(
     (cell: Cell<TData, string>) => {
+      const meta: ColumnMeta<TData, unknown> = cell.column.columnDef.meta || {}
+
+      if (typeof cell.getValue() === "function") {
+        const CustomComponent = cell.getValue()
+
+        return <CustomComponent />
+      }
+
       if (!isEditable) {
         return flexRender(cell.column.columnDef.cell, cell.getContext())
       }
@@ -58,8 +66,6 @@ export const Table = <TData extends object>({
       const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
         updateData(cell.row.index, cell.column.id, e.target.value)
       }
-
-      const meta: ColumnMeta<TData, unknown> = cell.column.columnDef.meta || {}
 
       if (meta.options?.length) {
         const options = meta.options.map(({ label, value }) => ({
