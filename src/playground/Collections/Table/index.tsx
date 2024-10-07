@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-table"
 import { useVirtualizer } from "@tanstack/react-virtual"
 import React, { useCallback, useMemo, useRef, useState } from "react"
+import useAvailableHeight from "./lib/useAvailableHeight"
 
 export type ColumnMeta<TData, TValue> = ReactTableColumnMeta<TData, TValue> & {
   options?: Array<{ value: string | number; label: string }>
@@ -36,6 +37,7 @@ export const Table = <TData extends object>({
   const [tableData, setTableData] = useState<TData[]>(data)
   const [globalFilter, setGlobalFilter] = useState("")
   const tableContainerRef = useRef<HTMLDivElement>(null)
+  const availableHeight = useAvailableHeight(tableContainerRef)
 
   const updateData = useCallback(
     (rowIndex: number, columnId: string, value: unknown) => {
@@ -164,7 +166,11 @@ export const Table = <TData extends object>({
           </div>
         ))}
       </div>
-      <div ref={tableContainerRef} className="relative h-96 overflow-auto">
+      <div
+        ref={tableContainerRef}
+        className="relative h-96 overflow-auto"
+        style={{ height: `${availableHeight}px` }}
+      >
         <table className="w-full border-spacing-0 rounded-xl">
           <tbody className="relative" style={{ height: `${totalSize}px` }}>
             {virtualRows.map((virtualRow) => {
