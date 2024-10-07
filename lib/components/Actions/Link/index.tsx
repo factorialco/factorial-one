@@ -3,7 +3,7 @@ import ExternalLink from "@/icons/ExternalLink"
 import {
   Link as BaseLink,
   LinkProps as BaseLinkProps,
-  useLink,
+  useNavigation,
 } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import { cva, VariantProps } from "class-variance-authority"
@@ -35,7 +35,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
 ) {
   const { target } = props
   const external = target === "_blank"
-  const { isActive } = useLink()
+  const { isActive } = useNavigation()
 
   return (
     <BaseLink

@@ -41,15 +41,20 @@ export const useLinkContext = () => {
 
 export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 
-export const useLink = () => {
+export const useNavigation = () => {
   const { currentPath } = useLinkContext()
 
-  const isActive = (path: string | undefined) => {
+  const isActive = (
+    path: string | undefined,
+    { exact }: { exact: boolean } = { exact: false }
+  ) => {
     if (currentPath === undefined || path === undefined) return false
+    if (exact) return currentPath === path
     return currentPath.startsWith(path)
   }
 
   return {
+    currentPath,
     isActive,
   }
 }
@@ -57,7 +62,7 @@ export const useLink = () => {
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   function Link(props, ref) {
     const { component } = useLinkContext()
-    const { isActive } = useLink()
+    const { isActive } = useNavigation()
 
     const overridenProps = {
       "data-is-active": isActive(props.href) || undefined,
