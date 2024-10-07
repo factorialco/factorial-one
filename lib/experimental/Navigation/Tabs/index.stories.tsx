@@ -1,18 +1,6 @@
+import { useNavigation } from "@/lib/linkHandler"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Tabs } from "."
-
-const meta: Meta<typeof Tabs> = {
-  component: Tabs,
-  tags: ["autodocs"],
-  argTypes: {
-    secondary: {
-      control: "boolean",
-    },
-  },
-}
-
-export default meta
-type Story = StoryObj<typeof Tabs>
 
 const tabItems = [
   { label: "Overview", link: "/" },
@@ -22,24 +10,42 @@ const tabItems = [
   { label: "Requests", link: "/requests" },
 ]
 
-const TabsExample = ({ secondary = false }: { secondary?: boolean }) => {
-  return (
-    <div onClick={(e) => e.preventDefault()}>
-      <Tabs tabs={tabItems} secondary={secondary} />
-    </div>
-  )
+const meta: Meta<typeof Tabs> = {
+  component: Tabs,
+  tags: ["autodocs"],
+  argTypes: {
+    secondary: {
+      control: "boolean",
+    },
+  },
+  render: ({ secondary = false }: { secondary?: boolean }) => {
+    const { isActive } = useNavigation()
+    const activeTab = tabItems.find((tab) =>
+      isActive(tab.link, { exact: true })
+    )
+
+    return (
+      <div onClick={(e) => e.preventDefault()}>
+        <Tabs tabs={tabItems} secondary={secondary} />
+        <p className="mt-4 flex h-full min-h-60 items-center justify-center rounded-lg bg-f1-background-secondary/50 p-4 text-f1-foreground-secondary">
+          {activeTab?.label}
+        </p>
+      </div>
+    )
+  },
 }
+
+export default meta
+type Story = StoryObj<typeof Tabs>
 
 export const Primary: Story = {
   args: {
     secondary: false,
   },
-  render: (args) => <TabsExample {...args} />,
 }
 
 export const Secondary: Story = {
   args: {
     secondary: true,
   },
-  render: (args) => <TabsExample {...args} />,
 }
