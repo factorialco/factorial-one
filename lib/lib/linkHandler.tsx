@@ -44,8 +44,12 @@ export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 export const useLink = () => {
   const { currentPath } = useLinkContext()
 
-  const isActive = (path: string | undefined) => {
+  const isActive = (
+    path: string | undefined,
+    { exact }: { exact: boolean } = { exact: false }
+  ) => {
     if (currentPath === undefined || path === undefined) return false
+    if (exact) return currentPath === path
     return currentPath.startsWith(path)
   }
 
