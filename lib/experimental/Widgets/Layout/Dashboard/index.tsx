@@ -54,7 +54,7 @@ const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
                       style={{
                         width: `${Math.floor((1 / columns) * 10000) / 100 - 0.05}%`,
                       }}
-                      className="pb-4 pr-4 *:shadow"
+                      className="pb-[0.01px] pr-4 *:mb-4 *:shadow"
                     >
                       {child}
                     </div>
