@@ -1,3 +1,4 @@
+import { Link, useNavigation } from "@/lib/linkHandler"
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 
 interface TabItem {
@@ -7,28 +8,23 @@ interface TabItem {
 
 interface TabsProps {
   tabs: TabItem[]
-  activeTab: string
-  onTabChange: (tab: TabItem) => void
   secondary?: boolean
 }
 
-export function Tabs({
-  tabs,
-  activeTab,
-  onTabChange,
-  secondary = false,
-}: TabsProps) {
+export function Tabs({ tabs, secondary = false }: TabsProps) {
+  const { isActive } = useNavigation()
+
   return (
     <TabNavigation secondary={secondary}>
       {tabs.map((tab) => (
         <TabNavigationLink
           key={tab.label}
-          active={activeTab === tab.label}
-          onClick={() => onTabChange(tab)}
+          active={isActive(tab.link, { exact: true })}
           href={tab.link}
           secondary={secondary}
+          asChild
         >
-          {tab.label}
+          <Link href={tab.link}>{tab.label}</Link>
         </TabNavigationLink>
       ))}
     </TabNavigation>
