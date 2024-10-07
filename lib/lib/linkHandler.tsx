@@ -41,7 +41,7 @@ export const useLinkContext = () => {
 
 export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 
-export const useLink = () => {
+export const useNavigation = () => {
   const { currentPath } = useLinkContext()
 
   const isActive = (
@@ -54,6 +54,7 @@ export const useLink = () => {
   }
 
   return {
+    currentPath,
     isActive,
   }
 }
@@ -61,7 +62,7 @@ export const useLink = () => {
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   function Link(props, ref) {
     const { component } = useLinkContext()
-    const { isActive } = useLink()
+    const { isActive } = useNavigation()
 
     const overridenProps = {
       "data-is-active": isActive(props.href) || undefined,

@@ -1,4 +1,4 @@
-import { Link, LinkProvider, useLink } from "@/lib/linkHandler"
+import { Link, LinkProvider, useNavigation } from "@/lib/linkHandler"
 import { render, screen } from "@testing-library/react"
 import { describe, expect, test } from "vitest"
 
@@ -17,7 +17,7 @@ describe("LinkProvider", () => {
 
 describe("useLink", () => {
   const Component: React.FC<{ href: string }> = ({ href }) => {
-    const { isActive } = useLink()
+    const { isActive } = useNavigation()
     return <a href={href} data-is-active={isActive(href)} />
   }
 

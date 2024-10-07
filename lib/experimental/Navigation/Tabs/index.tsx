@@ -1,4 +1,4 @@
-import { Link, useLink } from "@/lib/linkHandler"
+import { Link, useNavigation } from "@/lib/linkHandler"
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 
 interface TabItem {
@@ -12,7 +12,7 @@ interface TabsProps {
 }
 
 export function Tabs({ tabs, secondary = false }: TabsProps) {
-  const { isActive } = useLink()
+  const { isActive } = useNavigation()
 
   return (
     <TabNavigation secondary={secondary}>
