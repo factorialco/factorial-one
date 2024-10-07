@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils"
 import * as NavigationMenuPrimitives from "@radix-ui/react-navigation-menu"
 import { cva, type VariantProps } from "class-variance-authority"
-import { motion } from "framer-motion"
+import { LayoutGroup, motion } from "framer-motion"
 import * as React from "react"
+import { useId } from "react"
 
 function getSubtree(
   options: { asChild: boolean | undefined; children: React.ReactNode },
@@ -43,15 +44,25 @@ interface TabNavigationProps
 const TabNavigation = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitives.Root>,
   TabNavigationProps
->(({ className, children, secondary, ...props }, forwardedRef) => (
-  <NavigationMenuPrimitives.Root ref={forwardedRef} {...props} asChild={false}>
-    <NavigationMenuPrimitives.List
-      className={cn(tabNavigationVariants({ secondary }), className)}
+>(({ className, children, secondary, ...props }, forwardedRef) => {
+  const id = useId()
+
+  return (
+    <NavigationMenuPrimitives.Root
+      ref={forwardedRef}
+      {...props}
+      asChild={false}
     >
-      {children}
-    </NavigationMenuPrimitives.List>
-  </NavigationMenuPrimitives.Root>
-))
+      <LayoutGroup id={id}>
+        <NavigationMenuPrimitives.List
+          className={cn(tabNavigationVariants({ secondary }), className)}
+        >
+          {children}
+        </NavigationMenuPrimitives.List>
+      </LayoutGroup>
+    </NavigationMenuPrimitives.Root>
+  )
+})
 
 TabNavigation.displayName = "TabNavigation"
 
