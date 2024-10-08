@@ -1,3 +1,4 @@
+import { Avatar } from "@/experimental/Information/Avatar"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Dropdown } from "."
 
@@ -46,11 +47,11 @@ export const WithCustomTrigger: Story = {
   args: {
     items: [
       {
-        label: "Create",
+        label: "Upload new avatar",
         onClick: () => console.log("Create clicked"),
       },
       {
-        label: "Delete",
+        label: "Delete current avatar",
         onClick: () => console.log("Delete clicked"),
         critical: true,
       },
@@ -58,7 +59,13 @@ export const WithCustomTrigger: Story = {
   },
   render: (args) => (
     <Dropdown {...args}>
-      <span className="cursor-pointer underline">Open dropdown</span>
+      <button>
+        <Avatar
+          src="https://github.com/dani-moreno.png"
+          alt="DM"
+          size="large"
+        />
+      </button>
     </Dropdown>
   ),
 }
