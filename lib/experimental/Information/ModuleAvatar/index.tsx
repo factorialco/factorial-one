@@ -44,20 +44,23 @@ export const iconComponents = moduleIconNames.reduce(
 
 export type IconType = keyof typeof iconComponents
 
-const moduleAvatarVariants = cva("relative flex items-center justify-center", {
-  variants: {
-    size: {
-      sm: "h-5 w-5",
-      md: "h-6 w-6",
-      lg: "h-8 w-8",
+const moduleAvatarVariants = cva(
+  "relative flex shrink-0 items-center justify-center",
+  {
+    variants: {
+      size: {
+        sm: "h-5 w-5",
+        md: "h-6 w-6",
+        lg: "h-8 w-8",
+      },
     },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-})
+    defaultVariants: {
+      size: "md",
+    },
+  }
+)
 
-const iconSizeVariants = cva("relative z-10 text-f1-foreground-inverse", {
+const iconSizeVariants = cva("relative text-f1-foreground-inverse", {
   variants: {
     size: {
       sm: "h-3 w-3",
