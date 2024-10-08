@@ -15,12 +15,13 @@ type Story = StoryObj<typeof Header>
 export const Default: Story = {
   args: {
     module: {
-      name: "Module",
-      href: "/module",
+      name: "Recruitment",
+      href: "/recruitment",
+      icon: "Recruitment",
     },
     tree: [
-      { label: "Submodule", href: "/module/submodule" },
-      { label: "Page", href: "/module/submodule/page" },
+      { label: "Candidates", href: "/recruitment/candidates" },
+      { label: "Dani Moreno" },
     ],
     actions: [
       {
@@ -34,14 +35,23 @@ export const Default: Story = {
         onClick: () => console.log("More clicked"),
       },
     ],
+    menu: {
+      show: true,
+      onClick: () => console.log("Menu clicked"),
+    },
   },
 }
 
 export const FirstLevel: Story = {
   args: {
     module: {
-      name: "Module",
-      href: "/module",
+      name: "Recruitment",
+      href: "/recruitment",
+      icon: "Recruitment",
+    },
+    menu: {
+      show: true,
+      onClick: () => console.log("Menu clicked"),
     },
   },
 }

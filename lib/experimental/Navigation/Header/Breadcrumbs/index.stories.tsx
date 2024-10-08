@@ -13,9 +13,9 @@ type Story = StoryObj<typeof Breadcrumbs>
 export const Default: Story = {
   args: {
     tree: [
-      { label: "Recruitment", href: "/recruitment" },
-      { label: "Candidates", href: "/candidates" },
-      { label: "Juan Pérez" },
+      { label: "Recruitment", href: "/recruitment", icon: "Recruitment" },
+      { label: "Candidates", href: "/recruitment/candidates" },
+      { label: "Dani Moreno" },
     ],
   },
 }

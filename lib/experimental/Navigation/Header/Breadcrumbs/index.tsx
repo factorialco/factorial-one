@@ -7,13 +7,19 @@ import {
   BreadcrumbItem as ShadBreadcrumbItem,
 } from "@/ui/breadcrumb"
 
-import { Link } from "@/lib/linkHandler"
+import {
+  ModuleAvatar,
+  type IconType,
+} from "@/experimental/Information/ModuleAvatar"
 
 import { ChevronRight } from "@/icons"
+import { Link } from "@/lib/linkHandler"
+import { cn, focusRing } from "@/lib/utils"
 
 export type BreadcrumbItemType = {
   label: string
   href?: string
+  icon?: IconType
 }
 
 interface BreadcrumbItemProps {
@@ -26,8 +32,14 @@ function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
     <ShadBreadcrumbItem>
       {!isLast ? (
         <>
-          <BreadcrumbLink asChild>
-            <Link href={item.href}>{item.label}</Link>
+          <BreadcrumbLink className={item.icon && "pl-0.5"} asChild>
+            <Link
+              href={item.href}
+              className={cn("flex items-center gap-1.5", focusRing())}
+            >
+              {item.icon && <ModuleAvatar icon={item.icon} size="sm" />}
+              {item.label}
+            </Link>
           </BreadcrumbLink>
           <BreadcrumbSeparator>
             <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />

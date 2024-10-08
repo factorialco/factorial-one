@@ -1,33 +1,44 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
+import AlignTextJustify from "@/icons/AlignTextJustify"
 import { cn } from "@/lib/utils"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
-type ActionButtonProps = {
-  label: string
-  icon: IconType
-  onClick: () => void
-}
+import {
+  ModuleAvatar,
+  type IconType as ModuleAvatarIconType,
+} from "@/experimental/Information/ModuleAvatar"
 
 type HeaderProps = {
   module: {
     name: string
     href: string
+    icon: ModuleAvatarIconType
   }
   tree?: BreadcrumbItemType[]
-  actions?: ActionButtonProps[]
+  actions?: {
+    label: string
+    icon: IconType
+    onClick: () => void
+  }[]
+  menu: {
+    show: boolean
+    onClick: () => void
+  }
 }
 
 export default function Header({
   module,
   tree = [],
   actions = [],
+  menu,
 }: HeaderProps) {
-  const breadcrumbsTree: BreadcrumbItemType[] = module.name
-    ? [{ label: module.name, href: module.href }, ...tree]
-    : tree
+  const breadcrumbsTree: BreadcrumbItemType[] = [
+    { label: module.name, href: module.href, icon: module.icon },
+    ...tree,
+  ]
 
-  const isFirstLevel = tree.length === 0
+  const isFirstLevel = !tree.length
 
   return (
     <div
@@ -37,7 +48,18 @@ export default function Header({
           "border-b border-dashed border-transparent border-b-f1-border/80"
       )}
     >
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
+        {menu.show && (
+          <Button
+            variant="ghost"
+            hideLabel
+            round
+            onClick={menu.onClick}
+            label="Menu"
+            icon={AlignTextJustify}
+          />
+        )}
+        {isFirstLevel && <ModuleAvatar icon={module.icon} size="lg" />}
         {breadcrumbsTree.length > 1 ? (
           <Breadcrumbs tree={breadcrumbsTree} />
         ) : (
