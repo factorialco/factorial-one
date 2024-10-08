@@ -103,6 +103,7 @@ const ChartContainerComponent = (
   return (
     <ChartContext.Provider value={{ config }}>
       <div
+        data-chromatic="ignore"
         data-chart={chartId}
         ref={ref || anotherRef}
         className={cn(
