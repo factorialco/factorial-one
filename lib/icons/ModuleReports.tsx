@@ -1,0 +1,6 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+import { Ref, forwardRef } from "react";
+const SvgModuleReports = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 25" ref={ref} {...props}><g filter="url(#ModuleReports_svg__a)"><path fill="#fff" fillRule="evenodd" d="M10 5a2 2 0 1 1 4 0v14a2 2 0 1 1-4 0zM4 15a2 2 0 1 1 4 0v4a2 2 0 1 1-4 0zm14-6a2 2 0 0 0-2 2v8a2 2 0 1 0 4 0v-8a2 2 0 0 0-2-2" clipRule="evenodd" /></g><defs><filter id="ModuleReports_svg__a" width={20.184} height={22.184} x={1.908} y={1.954} colorInterpolationFilters="sRGB" filterUnits="userSpaceOnUse"><feFlood floodOpacity={0} result="BackgroundImageFix" /><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" /><feOffset dy={1.046} /><feGaussianBlur stdDeviation={1.046} /><feComposite in2="hardAlpha" operator="out" /><feColorMatrix values="0 0 0 0 0.0352941 0 0 0 0 0.0627451 0 0 0 0 0.109804 0 0 0 0.12 0" /><feBlend in2="BackgroundImageFix" result="effect1_dropShadow_6_239" /><feBlend in="SourceGraphic" in2="effect1_dropShadow_6_239" result="shape" /></filter></defs></svg>;
+const ForwardRef = forwardRef(SvgModuleReports);
+export default ForwardRef;
