@@ -46,7 +46,7 @@ export const useNavigation = () => {
 
   const isActive = (
     path: string | undefined,
-    { exact }: { exact: boolean } = { exact: false }
+    { exact }: { exact: boolean | undefined } = { exact: false }
   ) => {
     if (currentPath === undefined || path === undefined) return false
     if (exact) return currentPath === path
