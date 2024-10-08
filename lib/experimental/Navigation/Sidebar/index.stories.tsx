@@ -9,6 +9,16 @@ import { Sidebar } from "./Sidebar"
 const meta: Meta<typeof Sidebar> = {
   component: Sidebar,
   tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
+  decorators: [
+    (Story) => (
+      <div className="w-[240px] bg-f1-background-tertiary p-3">
+        <Story />
+      </div>
+    ),
+  ],
   args: {
     children: (
       <>
