@@ -39,7 +39,9 @@ export const useLinkContext = () => {
   }
 }
 
-export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
+export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+  exactMatch?: boolean
+}
 
 export const useNavigation = () => {
   const { currentPath } = useLinkContext()
@@ -65,7 +67,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     const { isActive } = useNavigation()
 
     const overridenProps = {
-      "data-is-active": isActive(props.href) || undefined,
+      "data-is-active": isActive(props.href, { exact: props.exactMatch }),
       ...props,
     }
 
