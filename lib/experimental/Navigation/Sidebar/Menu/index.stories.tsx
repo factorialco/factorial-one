@@ -25,7 +25,7 @@ export const Default: Story = {
       {
         title: "Root",
         items: [
-          { label: "Home", icon: "Home", href: "/home", isActive: true },
+          { label: "Home", icon: "Home", href: "/", exactMatch: true },
           {
             label: "Inbox",
             icon: "Envelope",
