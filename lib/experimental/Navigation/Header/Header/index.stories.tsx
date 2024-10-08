@@ -1,6 +1,8 @@
+import EllipsisHorizontal from "@/icons/EllipsisHorizontal"
+import Settings from "@/icons/Settings"
+
 import type { Meta, StoryObj } from "@storybook/react"
-import { BreadcrumbItemType } from "../Breadcrumbs"
-import Header from "./index"
+import Header from "."
 
 const meta: Meta<typeof Header> = {
   component: Header,
@@ -10,23 +12,36 @@ const meta: Meta<typeof Header> = {
 export default meta
 type Story = StoryObj<typeof Header>
 
-const defaultTree: BreadcrumbItemType[] = [
-  { label: "Home", href: "/" },
-  { label: "Candidates", href: "/candidates" },
-  { label: "John Doe", href: "/candidates/john-doe" },
-]
-
 export const Default: Story = {
   args: {
-    tree: defaultTree,
-    moduleName: "Recruitment",
-    moduleHref: "/recruitment",
+    module: {
+      name: "Module",
+      href: "/module",
+    },
+    tree: [
+      { label: "Submodule", href: "/module/submodule" },
+      { label: "Page", href: "/module/submodule/page" },
+    ],
+    actions: [
+      {
+        label: "Settings",
+        icon: Settings,
+        onClick: () => console.log("Settings clicked"),
+      },
+      {
+        label: "More options",
+        icon: EllipsisHorizontal,
+        onClick: () => console.log("More clicked"),
+      },
+    ],
   },
 }
 
-export const WithoutBreadcrumbs: Story = {
+export const FirstLevel: Story = {
   args: {
-    moduleName: "Recruitment",
-    moduleHref: "/recruitment",
+    module: {
+      name: "Module",
+      href: "/module",
+    },
   },
 }

@@ -1,29 +1,64 @@
+import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
+import { cn } from "@/lib/utils"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
+type ActionButtonProps = {
+  label: string
+  icon: IconType
+  onClick: () => void
+}
+
 type HeaderProps = {
-  moduleName: string
-  moduleHref: string
+  module: {
+    name: string
+    href: string
+  }
   tree?: BreadcrumbItemType[]
+  actions?: ActionButtonProps[]
 }
 
 export default function Header({
-  moduleName,
-  moduleHref,
+  module,
   tree = [],
+  actions = [],
 }: HeaderProps) {
-  const breadcrumbsTree: BreadcrumbItemType[] = moduleName
-    ? [{ label: moduleName, href: moduleHref }, ...tree]
+  const breadcrumbsTree: BreadcrumbItemType[] = module.name
+    ? [{ label: module.name, href: module.href }, ...tree]
     : tree
 
+  const isFirstLevel = tree.length === 0
+
   return (
-    <header className="bg-white/80 flex h-16 items-center justify-between border-b border-b-f1-border p-4 backdrop-blur-lg">
+    <div
+      className={cn(
+        "flex h-16 items-center justify-between rounded-t-lg bg-f1-background/80 p-4 backdrop-blur-xl",
+        !isFirstLevel &&
+          "border-b border-dashed border-transparent border-b-f1-border/80"
+      )}
+    >
       <div className="flex items-center">
         {breadcrumbsTree.length > 1 ? (
           <Breadcrumbs tree={breadcrumbsTree} />
         ) : (
-          <h1 className="text-xl font-semibold">{moduleName}</h1>
+          <div className="text-xl font-semibold">{module.name}</div>
         )}
       </div>
-    </header>
+      {actions && (
+        <div className="flex items-center gap-2">
+          {actions.map((action, index) => (
+            <Button
+              hideLabel
+              round
+              key={index}
+              variant="outline"
+              onClick={action.onClick}
+              label={action.label}
+              icon={action.icon}
+            />
+          ))}
+        </div>
+      )}
+    </div>
   )
 }
