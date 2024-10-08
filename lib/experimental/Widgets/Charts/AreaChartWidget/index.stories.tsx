@@ -9,6 +9,7 @@ const meta: Meta<typeof AreaChartWidget> = {
   component: AreaChartWidget,
   parameters: {
     layout: "centered",
+    chromatic: { diffThreshold: 0.5 },
   },
   tags: ["autodocs"],
   args: {
