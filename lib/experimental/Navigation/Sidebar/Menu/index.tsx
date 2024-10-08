@@ -9,15 +9,13 @@ import {
 } from "@/ui/collapsible"
 import { AnimatePresence, motion } from "framer-motion"
 import React from "react"
+import { NavigationItem } from "../../utils"
 
 type IconName = keyof typeof Icons
 
-interface MenuItem {
-  label: string
+interface MenuItem extends NavigationItem {
   icon: IconName
   badge?: number
-  href: string
-  exactMatch?: boolean
 }
 
 interface MenuCategory {
@@ -58,11 +56,14 @@ const MenuItemContent = ({
 
 const MenuItem = ({ item }: { item: MenuItem }) => {
   const { isActive } = useNavigation()
-  const active = isActive(item.href, { exact: item.exactMatch })
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { label, ...props } = item
+
+  const active = isActive(props.href, { exact: props.exactMatch })
 
   return (
     <Link
-      href={item.href}
+      {...props}
       className={cn(
         "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
         focusRing(),

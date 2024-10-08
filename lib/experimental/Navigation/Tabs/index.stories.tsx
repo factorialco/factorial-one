@@ -1,13 +1,13 @@
 import { useNavigation } from "@/lib/linkHandler"
 import type { Meta, StoryObj } from "@storybook/react"
-import { Tabs } from "."
+import { TabItem, Tabs } from "."
 
-const tabItems = [
-  { label: "Overview", link: "/" },
-  { label: "Courses", link: "/courses" },
-  { label: "Categories", link: "/categories" },
-  { label: "Catalog", link: "/catalog" },
-  { label: "Requests", link: "/requests" },
+const tabItems: TabItem[] = [
+  { label: "Overview", href: "/", exactMatch: true },
+  { label: "Courses", href: "/courses" },
+  { label: "Categories", href: "/categories" },
+  { label: "Catalog", href: "/catalog" },
+  { label: "Requests", href: "/requests" },
 ]
 
 const meta: Meta<typeof Tabs> = {
@@ -21,7 +21,7 @@ const meta: Meta<typeof Tabs> = {
   render: ({ secondary = false }: { secondary?: boolean }) => {
     const { isActive } = useNavigation()
     const activeTab = tabItems.find((tab) =>
-      isActive(tab.link, { exact: true })
+      isActive(tab.href, { exact: true })
     )
 
     return (
