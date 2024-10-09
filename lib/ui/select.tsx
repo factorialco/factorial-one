@@ -114,11 +114,11 @@ const SelectItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute right-2 top-2 flex items-center justify-center">
+    <div className="absolute right-2 top-2 flex items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <CheckCircle className="h-5 w-5 text-f1-icon-selected" />
+        <CheckCircle className="text-f1-icon-selected h-5 w-5" />
       </SelectPrimitive.ItemIndicator>
-    </span>
+    </div>
 
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
