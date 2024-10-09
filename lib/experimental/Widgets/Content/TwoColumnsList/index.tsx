@@ -1,25 +1,29 @@
-import { forwardRef } from "react"
+import { forwardRef, ReactNode } from "react"
 
 interface TwoColumnsItemType {
   title: string
-  info: string
+  info: string | ReactNode
 }
 
 interface TwoColumnsListType {
+  title?: string
   list: TwoColumnsItemType[]
 }
 
 const Item = ({ title, info }: TwoColumnsItemType) => (
-  <>
-    <div className="line-clamp-2 text-f1-foreground-secondary">{title}</div>
-    <div className="font-medium">{info}</div>
-  </>
+  <div className="flex items-center justify-between">
+    <p className="flex text-f1-foreground-secondary">{title}</p>
+    <div className="basis-16 justify-self-end text-right font-medium">
+      {info}
+    </div>
+  </div>
 )
 
 export const TwoColumnsList = forwardRef<HTMLDivElement, TwoColumnsListType>(
-  function TwoColumnsList({ list }, ref) {
+  function TwoColumnsList({ title, list }, ref) {
     return (
-      <div ref={ref} className="grid grid-cols-[1fr_auto] gap-2">
+      <div ref={ref} className="flex flex-col gap-2">
+        {title && <div className="font-medium">{title}</div>}
         {list.map((item) => (
           <Item key={item.title} title={item.title} info={item.info} />
         ))}
