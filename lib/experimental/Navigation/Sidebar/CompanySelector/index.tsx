@@ -46,6 +46,7 @@ export function CompanySelector({
           focusRing()
         )}
         tabIndex={0}
+        title={selectedCompany?.name}
       >
         <Avatar alt={selectedCompany?.name?.[0]} size="xsmall" />
         {selectedCompany?.name}
