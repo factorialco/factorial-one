@@ -15,7 +15,7 @@ type HeaderProps = {
     href: string
     icon: ModuleAvatarIconType
   }
-  tree?: BreadcrumbItemType[]
+  breadcrumbs?: BreadcrumbItemType[]
   actions?: {
     label: string
     icon: IconType
@@ -29,16 +29,16 @@ type HeaderProps = {
 
 export default function Header({
   module,
-  tree = [],
+  breadcrumbs = [],
   actions = [],
   menu,
 }: HeaderProps) {
   const breadcrumbsTree: BreadcrumbItemType[] = [
     { label: module.name, href: module.href, icon: module.icon },
-    ...tree,
+    ...breadcrumbs,
   ]
 
-  const hasNavigation = tree.length > 0
+  const hasNavigation = breadcrumbs.length > 0
 
   return (
     <div
@@ -61,7 +61,7 @@ export default function Header({
         )}
         {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
         {breadcrumbsTree.length > 1 ? (
-          <Breadcrumbs tree={breadcrumbsTree} />
+          <Breadcrumbs breadcrumbs={breadcrumbsTree} />
         ) : (
           <div className="text-xl font-semibold">{module.name}</div>
         )}

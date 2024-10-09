@@ -19,7 +19,7 @@ export const Default: Story = {
       href: "/recruitment",
       icon: "Recruitment",
     },
-    tree: [
+    breadcrumbs: [
       { label: "Candidates", href: "/recruitment/candidates" },
       { label: "Dani Moreno" },
     ],

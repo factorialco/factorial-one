@@ -55,18 +55,18 @@ function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
 }
 
 interface BreadcrumbsProps {
-  tree: BreadcrumbItemType[]
+  breadcrumbs: BreadcrumbItemType[]
 }
 
-export default function Breadcrumbs({ tree }: BreadcrumbsProps) {
+export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
-        {tree.map((item, index) => (
+        {breadcrumbs.map((item, index) => (
           <BreadcrumbItem
             key={index}
             item={item}
-            isLast={index === tree.length - 1}
+            isLast={index === breadcrumbs.length - 1}
           />
         ))}
       </BreadcrumbList>
