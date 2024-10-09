@@ -252,6 +252,7 @@ export default {
             positive: {
               DEFAULT: "hsl(var(--positive-50))",
             },
+            selected: "hsl(var(--selected-50))",
           },
           ring: "hsl(var(--ring))",
           link: "hsl(var(--link))",
