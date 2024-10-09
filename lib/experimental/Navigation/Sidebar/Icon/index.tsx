@@ -67,6 +67,7 @@ export function SidebarIcon({ isExpanded, onClick }: SidebarIconProps) {
       round
       onClick={onClick}
       className="group"
+      title="Toggle Sidebar"
     >
       <SidebarIconSvg isExpanded={isExpanded} />
     </Button>
