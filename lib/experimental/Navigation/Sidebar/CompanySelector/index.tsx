@@ -56,7 +56,7 @@ export function CompanySelector({
               transition={{ duration: 0.2 }}
               className="flex h-3 w-3 items-center justify-center"
             >
-              <ChevronDown className="h-3 w-3 text-f1-icon" />
+              <ChevronDown className="h-3 w-3 shrink-0 text-f1-icon" />
             </motion.div>
           </div>
         </div>
