@@ -38,13 +38,13 @@ export default function Header({
     ...tree,
   ]
 
-  const isFirstLevel = !tree.length
+  const hasNavigation = tree.length > 0
 
   return (
     <div
       className={cn(
         "flex h-16 items-center justify-between rounded-t-lg bg-f1-background/80 p-4 backdrop-blur-xl",
-        !isFirstLevel &&
+        !hasNavigation &&
           "border-b border-dashed border-transparent border-b-f1-border/80"
       )}
     >
@@ -59,7 +59,7 @@ export default function Header({
             icon={AlignTextJustify}
           />
         )}
-        {isFirstLevel && <ModuleAvatar icon={module.icon} size="lg" />}
+        {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
         {breadcrumbsTree.length > 1 ? (
           <Breadcrumbs tree={breadcrumbsTree} />
         ) : (
