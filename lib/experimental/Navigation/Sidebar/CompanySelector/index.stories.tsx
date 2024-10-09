@@ -2,24 +2,30 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { CompanySelector } from "./index"
 
 const meta: Meta<typeof CompanySelector> = {
-  title: "Navigation/Sidebar/CompanySelector",
   component: CompanySelector,
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <div className="bg-f1-background-tertiary p-3">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
 
 type Story = StoryObj<typeof CompanySelector>
 
-const mockCompanies = [
-  { id: "1", name: "Acme Corp" },
-  { id: "2", name: "Globex Corporation" },
-  { id: "3", name: "Initech" },
+const exampleCompanies = [
+  { id: "1", name: "Factorial" },
+  { id: "2", name: "Dazlog" },
+  { id: "3", name: "Acme Corp" },
 ]
 
 export const Default: Story = {
   args: {
-    companies: mockCompanies,
-    value: "1",
+    companies: exampleCompanies,
+    selected: "1",
   },
 }
