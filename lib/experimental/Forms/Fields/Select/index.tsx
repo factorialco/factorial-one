@@ -32,7 +32,7 @@ const SelectItem = ({ item }: { item: SelectItemProps<string> }) => {
   return (
     <SelectItemPrimitive value={item.value}>
       <div className="flex items-start gap-1.5">
-        {Icon && <Icon className="h-5 w-5 text-f1-icon" />}
+        {Icon && <Icon className="h-5 w-5 shrink-0 text-f1-icon" />}
         <div className="flex flex-col">
           <span className="font-medium">{item.label}</span>
           {item.description && (
@@ -50,7 +50,7 @@ const SelectValue = ({ item }: { item: SelectItemProps<string> }) => {
   const Icon = item.icon && Icons[item.icon]
   return (
     <div className="flex items-center gap-1.5">
-      {Icon && <Icon className="h-5 w-5 text-f1-icon" />}
+      {Icon && <Icon className="h-5 w-5 shrink-0 text-f1-icon" />}
       {item.label}
     </div>
   )
