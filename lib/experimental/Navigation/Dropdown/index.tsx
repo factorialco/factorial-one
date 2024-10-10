@@ -13,7 +13,7 @@ import { NavigationItem } from "../utils"
 
 type IconName = keyof typeof Icons
 
-type DropdownItem = NavigationItem & {
+export type DropdownItem = NavigationItem & {
   onClick?: () => void
   icon?: IconName
   description?: string

@@ -55,3 +55,47 @@ export const FirstLevel: Story = {
     },
   },
 }
+
+export const LongBreadcrumbs: Story = {
+  args: {
+    module: {
+      name: "Documents",
+      href: "/documents",
+      icon: "Documents",
+    },
+    breadcrumbs: [
+      { label: "Employee Documents", href: "/documents" },
+      { label: "Human Resources", href: "/documents/hr" },
+      { label: "Recruitment", href: "/documents/hr/recruitment" },
+      { label: "Candidates", href: "/documents/hr/recruitment/candidates" },
+      {
+        label: "Dani Moreno",
+        href: "/dani-moreno",
+      },
+      {
+        label: "Applications",
+        href: "/dani-moreno/applications",
+      },
+      {
+        label: "Interviews",
+        href: "/dani-moreno/applications/interviews",
+      },
+    ],
+    actions: [
+      {
+        label: "Settings",
+        icon: Settings,
+        onClick: () => console.log("Settings clicked"),
+      },
+      {
+        label: "More options",
+        icon: EllipsisHorizontal,
+        onClick: () => console.log("More clicked"),
+      },
+    ],
+    menu: {
+      show: true,
+      onClick: () => console.log("Menu clicked"),
+    },
+  },
+}

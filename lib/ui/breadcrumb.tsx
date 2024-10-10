@@ -19,7 +19,7 @@ const BreadcrumbList = React.forwardRef<
   <ol
     ref={ref}
     className={cn(
-      "flex list-none flex-wrap items-center gap-1 break-words text-f1-foreground-secondary",
+      "flex list-none flex-nowrap items-center gap-1 text-f1-foreground-secondary",
       className
     )}
     {...props}
@@ -69,7 +69,7 @@ const BreadcrumbPage = React.forwardRef<
     role="link"
     aria-disabled="true"
     aria-current="page"
-    className={cn("px-1.5 py-0.5 text-f1-foreground", className)}
+    className={cn("truncate px-1.5 py-0.5 text-f1-foreground", className)}
     {...props}
   />
 ))
