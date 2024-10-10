@@ -5,6 +5,8 @@ import * as SidebarMenuStories from "./Menu/index.stories"
 import { SearchBar } from "./Searchbar"
 import * as SearchBarStories from "./Searchbar/index.stories"
 import { Sidebar } from "./Sidebar"
+import { User } from "./User"
+import * as UserStories from "./User/index.stories"
 
 const meta: Meta<typeof Sidebar> = {
   component: Sidebar,
@@ -24,6 +26,7 @@ const meta: Meta<typeof Sidebar> = {
       <>
         <SearchBar {...SearchBarStories.Default.args} />
         <Menu {...SidebarMenuStories.Default.args} />
+        <User {...UserStories.Default.args} />
       </>
     ),
   } satisfies ComponentProps<typeof Sidebar>,
