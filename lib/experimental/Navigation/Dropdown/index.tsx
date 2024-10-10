@@ -26,6 +26,7 @@ type DropdownProps = {
 }
 
 const DropdownItem = ({ item }: { item: DropdownItem }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { label, ...props } = item
   const Icon = item.icon && Icons[item.icon]
 
