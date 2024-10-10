@@ -26,8 +26,8 @@ type DropdownProps = {
 }
 
 const DropdownItem = ({ item }: { item: DropdownItem }) => {
-  const { label, href, onClick, icon, description, critical, ...props } = item
-  const Icon = icon && Icons[icon]
+  const { label, ...props } = item
+  const Icon = item.icon && Icons[item.icon]
 
   const content = (
     <>
@@ -35,20 +35,20 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
         <Icon
           className={cn(
             "h-5 w-5 text-f1-icon",
-            critical && "text-f1-icon-critical"
+            item.critical && "text-f1-icon-critical"
           )}
         />
       )}
       <div className="flex flex-col items-start">
         {label}
-        {description && (
+        {item.description && (
           <div
             className={cn(
               "font-normal text-f1-foreground-secondary",
-              critical && "text-f1-foreground-critical"
+              item.critical && "text-f1-foreground-critical"
             )}
           >
-            {description}
+            {item.description}
           </div>
         )}
       </div>
@@ -57,14 +57,14 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
 
   const itemClass = cn(
     "flex items-start gap-1.5 w-full",
-    critical && "text-f1-foreground-critical"
+    item.critical && "text-f1-foreground-critical"
   )
 
   return (
-    <DropdownMenuItem asChild onClick={onClick} className={itemClass}>
-      {href ? (
+    <DropdownMenuItem asChild onClick={item.onClick} className={itemClass}>
+      {item.href ? (
         <Link
-          href={href}
+          href={item.href}
           className={cn(itemClass, "text-f1-foreground no-underline")}
           {...props}
         >
