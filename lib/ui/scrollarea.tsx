@@ -3,28 +3,64 @@
 import { cn } from "@/lib/utils"
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
 import * as React from "react"
+import { useEffect, useState } from "react"
 
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root
-    ref={ref}
-    className={cn("relative overflow-hidden", className)}
-    scrollHideDelay={200}
-    {...props}
-  >
-    <ScrollAreaPrimitive.Viewport
-      className="h-full w-full rounded-[inherit]"
-      data-scroll-container
+>(({ className, children, ...props }, ref) => {
+  const [isBottom, setIsBottom] = useState(true)
+  const viewportRef = React.useRef<HTMLDivElement | null>(null)
+
+  // Check if user has reached the bottom of the scroll area
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLDivElement
+    const bottomReached =
+      target.scrollHeight - target.scrollTop === target.clientHeight
+    setIsBottom(bottomReached)
+  }
+
+  // Run this when the component mounts to check if scroll is needed
+  useEffect(() => {
+    if (viewportRef.current) {
+      const target = viewportRef.current
+      const bottomReached = target.scrollHeight === target.clientHeight // No scrolling needed
+      setIsBottom(bottomReached)
+    }
+  }, [children]) // Re-run if children change
+
+  return (
+    <ScrollAreaPrimitive.Root
+      ref={ref}
+      className={cn("relative overflow-hidden", className)}
+      scrollHideDelay={200}
+      {...props}
     >
-      {children}
-    </ScrollAreaPrimitive.Viewport>
-    <ScrollBar orientation="vertical" />
-    <ScrollBar orientation="horizontal" />
-    <ScrollAreaPrimitive.Corner />
-  </ScrollAreaPrimitive.Root>
-))
+      <ScrollAreaPrimitive.Viewport
+        className="h-full w-full rounded-[inherit]"
+        ref={viewportRef}
+        onScroll={handleScroll}
+        data-scroll-container
+      >
+        {children}
+        {/* Gradient overlay with opacity transition */}
+        <div
+          className={cn(
+            "pointer-events-none absolute bottom-0 left-0 h-8 w-full transition-opacity duration-500 ease-out",
+            isBottom ? "opacity-0" : "opacity-100"
+          )}
+          style={{
+            backgroundImage: `linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%)`,
+          }}
+        />
+      </ScrollAreaPrimitive.Viewport>
+      <ScrollBar orientation="vertical" />
+      <ScrollBar orientation="horizontal" />
+      <ScrollAreaPrimitive.Corner />
+    </ScrollAreaPrimitive.Root>
+  )
+})
+
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName
 
 const ScrollBar = React.forwardRef<
