@@ -37,8 +37,8 @@ const buttonVariants = cva(
       } satisfies Record<(typeof variants)[number], string>,
       size: {
         sm: "h-6 rounded-sm px-2",
-        md: "h-8 rounded-md px-3",
-        lg: "h-10 rounded-md px-4",
+        md: "h-8 rounded px-3",
+        lg: "h-10 rounded px-4",
       } satisfies Record<(typeof sizes)[number], string>,
       round: {
         true: "aspect-square px-0",

@@ -43,8 +43,8 @@ const MenuItemContent = ({
       <div className="flex items-center gap-1.5 font-medium text-f1-foreground">
         <IconComponent
           className={cn(
-            "h-5 w-5",
-            active ? "text-f1-foreground" : "text-f1-icon"
+            "h-5 w-5 transition-colors",
+            active ? "text-f1-icon-bold" : "text-f1-icon"
           )}
         />
         <span>{item.label}</span>
