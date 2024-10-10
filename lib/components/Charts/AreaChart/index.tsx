@@ -182,15 +182,17 @@ export const _AreaChart = <K extends LineChartConfig>(
             className={cn(yAxis?.isBlur && "blur-sm")}
           />
         )}
-        <ChartTooltip
-          cursor
-          content={
-            <ChartTooltipContent
-              indicator="dot"
-              yAxisFormatter={yAxis?.tickFormatter}
-            />
-          }
-        />
+        {!yAxis?.isBlur && (
+          <ChartTooltip
+            cursor
+            content={
+              <ChartTooltipContent
+                indicator="dot"
+                yAxisFormatter={yAxis?.tickFormatter}
+              />
+            }
+          />
+        )}
         {areas.map((area, index) => (
           <Area
             isAnimationActive={false}
