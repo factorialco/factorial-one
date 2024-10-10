@@ -72,6 +72,9 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
     const updateVisibleBreadcrumb = () => {
       if (!containerRef.current || breadcrumbs.length <= 2) {
         setVisibleCount(breadcrumbs.length)
@@ -104,10 +107,16 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
       setVisibleCount(count)
     }
 
-    updateVisibleBreadcrumb()
-    window.addEventListener("resize", updateVisibleBreadcrumb)
+    const resizeObserver = new ResizeObserver(() => {
+      updateVisibleBreadcrumb()
+    })
 
-    return () => window.removeEventListener("resize", updateVisibleBreadcrumb)
+    resizeObserver.observe(container)
+    updateVisibleBreadcrumb()
+
+    return () => {
+      resizeObserver.disconnect()
+    }
   }, [breadcrumbs])
 
   const firstItem = breadcrumbs[0]

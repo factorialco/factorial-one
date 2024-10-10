@@ -20,15 +20,6 @@ export const Default: Story = {
   },
 }
 
-export const Short: Story = {
-  args: {
-    breadcrumbs: [
-      { label: "Recruitment", href: "/recruitment", icon: "Recruitment" },
-      { label: "Candidates" },
-    ],
-  },
-}
-
 export const LongBreadcrumbs: Story = {
   args: {
     breadcrumbs: [
