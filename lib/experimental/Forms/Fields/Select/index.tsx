@@ -25,6 +25,8 @@ type SelectProps<T> = {
   options: SelectItemProps<T>[]
   children?: React.ReactNode
   disabled?: boolean
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 const SelectItem = ({ item }: { item: SelectItemProps<string> }) => {
@@ -61,7 +63,17 @@ const defaultTrigger =
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
   function Select(
-    { placeholder, options, onChange, value, children, disabled, ...props },
+    {
+      placeholder,
+      options,
+      onChange,
+      value,
+      children,
+      disabled,
+      open,
+      onOpenChange,
+      ...props
+    },
     ref
   ) {
     const selectedOption = options.find((option) => option.value === value)
@@ -71,6 +83,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
         onValueChange={onChange}
         value={value}
         disabled={disabled}
+        open={open}
+        onOpenChange={onOpenChange}
         {...props}
       >
         <SelectTrigger ref={ref} asChild>
