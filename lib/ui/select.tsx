@@ -116,7 +116,7 @@ const SelectItem = React.forwardRef<
   >
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
     <SelectPrimitive.ItemIndicator className="flex">
-      <CheckCircle className="text-f1-icon-selected size-5" />
+      <CheckCircle className="size-5 text-f1-icon-selected" />
     </SelectPrimitive.ItemIndicator>
   </SelectPrimitive.Item>
 ))
