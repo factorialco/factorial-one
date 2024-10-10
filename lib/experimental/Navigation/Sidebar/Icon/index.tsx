@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 
-type SidebarIconProps = {
+export type SidebarIconProps = {
   isExpanded: boolean
   onClick?: () => void
 }
@@ -62,7 +62,7 @@ function SidebarIconSvg({ isExpanded }: { isExpanded: boolean }) {
 export function SidebarIcon({ isExpanded, onClick }: SidebarIconProps) {
   return (
     <Button
-      variant="outline"
+      variant="ghost"
       size="md"
       round
       onClick={onClick}

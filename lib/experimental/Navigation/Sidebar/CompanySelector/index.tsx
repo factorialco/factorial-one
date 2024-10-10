@@ -10,7 +10,7 @@ interface Company {
   name: string
 }
 
-interface CompanySelectorProps {
+export type CompanySelectorProps = {
   companies: Company[]
   selected: string
   onChange: (value: string) => void
@@ -42,15 +42,15 @@ export function CompanySelector({
     >
       <div
         className={cn(
-          "group flex w-fit items-center gap-2 rounded p-1.5 text-lg font-semibold text-f1-foreground transition-colors hover:bg-f1-background-secondary-hover data-[state=open]:bg-f1-background-secondary-hover",
+          "group flex w-fit flex-nowrap items-center gap-2 truncate rounded p-1.5 text-lg font-semibold text-f1-foreground transition-colors hover:bg-f1-background-secondary-hover data-[state=open]:bg-f1-background-secondary-hover",
           focusRing()
         )}
         tabIndex={0}
         title={selectedCompany?.name}
       >
         <Avatar alt={selectedCompany?.name?.[0]} size="xsmall" />
-        {selectedCompany?.name}
-        <div className="h-6 w-6 p-1">
+        <span className="truncate">{selectedCompany?.name}</span>
+        <div className="h-6 w-6 shrink-0 p-1">
           <div className="flex h-4 w-4 items-center justify-center rounded-xs bg-f1-background-secondary-hover transition-all group-hover:brightness-90 group-data-[state=open]:brightness-90">
             <motion.div
               animate={{ rotate: open ? 180 : 0 }}
