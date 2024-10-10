@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { SidebarHeader } from "./index"
 
-const meta: Meta<typeof SidebarHeader> = {
+const meta = {
   component: SidebarHeader,
   tags: ["autodocs"],
 } satisfies Meta<typeof SidebarHeader>

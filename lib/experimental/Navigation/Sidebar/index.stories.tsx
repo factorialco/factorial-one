@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps } from "react"
-import { SidebarHeader, type SidebarHeaderProps } from "./Header"
+import { SidebarHeader } from "./Header"
 import * as SidebarHeaderStories from "./Header/index.stories"
 import { Menu } from "./Menu"
 import * as SidebarMenuStories from "./Menu/index.stories"
@@ -23,9 +23,7 @@ const meta: Meta<typeof Sidebar> = {
   args: {
     children: (
       <>
-        <SidebarHeader
-          {...(SidebarHeaderStories.Default.args as SidebarHeaderProps)}
-        />
+        <SidebarHeader {...SidebarHeaderStories.Default.args} />
         <SearchBar {...SearchBarStories.Default.args} />
         <Menu {...SidebarMenuStories.Default.args} />
       </>
