@@ -130,9 +130,9 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
         {collapsedItems.length > 0 && (
           <>
             <Dropdown items={collapsedItems as DropdownItemWithoutIcon[]}>
-              <div className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
+              <li className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
                 ...
-              </div>
+              </li>
             </Dropdown>
             <BreadcrumbSeparator>
               <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
