@@ -7,11 +7,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
+
+import { Link } from "@/lib/linkHandler"
+import { NavigationItem } from "../utils"
+
 type IconName = keyof typeof Icons
 
-type DropdownItem = {
-  label: string
-  onClick: () => void
+type DropdownItem = NavigationItem & {
+  onClick?: () => void
   icon?: IconName
   description?: string
   critical?: boolean
@@ -23,16 +26,11 @@ type DropdownProps = {
 }
 
 const DropdownItem = ({ item }: { item: DropdownItem }) => {
+  const { label, ...props } = item
   const Icon = item.icon && Icons[item.icon]
 
-  return (
-    <DropdownMenuItem
-      onClick={item.onClick}
-      className={cn(
-        "items-start gap-1.5",
-        item.critical && "text-f1-foreground-critical"
-      )}
-    >
+  const content = (
+    <>
       {Icon && (
         <Icon
           className={cn(
@@ -42,7 +40,7 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
         />
       )}
       <div className="flex flex-col items-start">
-        {item.label}
+        {label}
         {item.description && (
           <div
             className={cn(
@@ -54,6 +52,27 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
           </div>
         )}
       </div>
+    </>
+  )
+
+  const itemClass = cn(
+    "flex items-start gap-1.5 w-full",
+    item.critical && "text-f1-foreground-critical"
+  )
+
+  return (
+    <DropdownMenuItem asChild onClick={item.onClick} className={itemClass}>
+      {item.href ? (
+        <Link
+          href={item.href}
+          className={cn(itemClass, "text-f1-foreground no-underline")}
+          {...props}
+        >
+          {content}
+        </Link>
+      ) : (
+        <div className={itemClass}>{content}</div>
+      )}
     </DropdownMenuItem>
   )
 }
@@ -79,9 +98,7 @@ export function Dropdown({ items, children }: DropdownProps) {
               key={index}
               item={{
                 ...item,
-                onClick: () => {
-                  item.onClick()
-                },
+                onClick: item.onClick,
               }}
             />
           ))}
