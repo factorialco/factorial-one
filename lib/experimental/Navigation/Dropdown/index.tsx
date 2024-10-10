@@ -98,7 +98,7 @@ export function Dropdown({ items, children }: DropdownProps) {
               key={index}
               item={{
                 ...item,
-                onClick: item.onClick ? () => item.onClick?.() : undefined,
+                onClick: item.onClick,
               }}
             />
           ))}
