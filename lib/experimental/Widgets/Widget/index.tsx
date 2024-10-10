@@ -14,6 +14,7 @@ import {
   CardSubtitle,
   CardTitle,
 } from "@/ui/card"
+import { ScrollArea } from "@/ui/scrollarea"
 import { Separator } from "@/ui/separator"
 import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { cva, VariantProps } from "class-variance-authority"
@@ -128,16 +129,20 @@ const Container = forwardRef<
             ))}
           </div>
         )}
-        {React.Children.toArray(children)
-          .filter(isRealNode)
-          .map((child, index) => {
-            return (
-              <>
-                {index > 0 && <Separator bare />}
-                {child}
-              </>
-            )
-          })}
+        <ScrollArea>
+          <div className="max-h-80">
+            {React.Children.toArray(children)
+              .filter(isRealNode)
+              .map((child, index) => {
+                return (
+                  <>
+                    {index > 0 && <Separator />}
+                    {child}
+                  </>
+                )
+              })}
+          </div>
+        </ScrollArea>
       </CardContent>
       {action && (
         <CardFooter>
