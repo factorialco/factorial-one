@@ -7,11 +7,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
+
+import { Link } from "@/lib/linkHandler"
+import { NavigationItem } from "../utils"
+
 type IconName = keyof typeof Icons
 
-type DropdownItem = {
-  label: string
-  onClick: () => void
+type DropdownItem = NavigationItem & {
+  onClick?: () => void
   icon?: IconName
   description?: string
   critical?: boolean
@@ -23,37 +26,53 @@ type DropdownProps = {
 }
 
 const DropdownItem = ({ item }: { item: DropdownItem }) => {
-  const Icon = item.icon && Icons[item.icon]
+  const { label, href, onClick, icon, description, critical, ...props } = item
+  const Icon = icon && Icons[icon]
 
-  return (
-    <DropdownMenuItem
-      onClick={item.onClick}
-      className={cn(
-        "items-start gap-1.5",
-        item.critical && "text-f1-foreground-critical"
-      )}
-    >
+  const content = (
+    <>
       {Icon && (
         <Icon
           className={cn(
             "h-5 w-5 text-f1-icon",
-            item.critical && "text-f1-icon-critical"
+            critical && "text-f1-icon-critical"
           )}
         />
       )}
       <div className="flex flex-col items-start">
-        {item.label}
-        {item.description && (
+        {label}
+        {description && (
           <div
             className={cn(
               "font-normal text-f1-foreground-secondary",
-              item.critical && "text-f1-foreground-critical"
+              critical && "text-f1-foreground-critical"
             )}
           >
-            {item.description}
+            {description}
           </div>
         )}
       </div>
+    </>
+  )
+
+  const itemClass = cn(
+    "flex items-start gap-1.5 w-full",
+    critical && "text-f1-foreground-critical"
+  )
+
+  return (
+    <DropdownMenuItem asChild onClick={onClick} className={itemClass}>
+      {href ? (
+        <Link
+          href={href}
+          className={cn(itemClass, "text-f1-foreground no-underline")}
+          {...props}
+        >
+          {content}
+        </Link>
+      ) : (
+        <div className={itemClass}>{content}</div>
+      )}
     </DropdownMenuItem>
   )
 }
@@ -79,9 +98,7 @@ export function Dropdown({ items, children }: DropdownProps) {
               key={index}
               item={{
                 ...item,
-                onClick: () => {
-                  item.onClick()
-                },
+                onClick: item.onClick ? () => item.onClick?.() : undefined,
               }}
             />
           ))}
