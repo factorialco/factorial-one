@@ -12,7 +12,7 @@ import {
   type IconType,
 } from "@/experimental/Information/ModuleAvatar"
 
-import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { Dropdown, type DropdownItem } from "@/experimental/Navigation/Dropdown"
 
 import { ChevronRight } from "@/icons"
 import { Link } from "@/lib/linkHandler"
@@ -29,6 +29,8 @@ interface BreadcrumbItemProps {
   item: BreadcrumbItemType
   isLast: boolean
 }
+
+type DropdownItemWithoutIcon = Omit<DropdownItem, "icon">
 
 function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -118,7 +120,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
         <BreadcrumbItem item={firstItem} isLast={false} />
         {collapsedItems.length > 0 && (
           <>
-            <Dropdown items={collapsedItems}>
+            <Dropdown items={collapsedItems as DropdownItemWithoutIcon[]}>
               <div className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
                 ...
               </div>
