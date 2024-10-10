@@ -69,3 +69,28 @@ export const WithCustomTrigger: Story = {
     </Dropdown>
   ),
 }
+
+export const WithLinks: Story = {
+  args: {
+    items: [
+      {
+        label: "Dashboard",
+        href: "/dashboard",
+        description: "View your dashboard",
+        icon: "Home",
+      },
+      {
+        label: "Settings",
+        href: "/settings",
+        description: "Adjust your settings",
+        icon: "Settings",
+      },
+      {
+        label: "Help",
+        href: "/help",
+        description: "Get help and support",
+        icon: "Info",
+      },
+    ],
+  },
+}
