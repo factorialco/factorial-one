@@ -48,7 +48,7 @@ export default function Header({
           "border-b border-dashed border-transparent border-b-f1-border/80"
       )}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex flex-grow items-center gap-3">
         {menu.show && (
           <Button
             variant="ghost"
