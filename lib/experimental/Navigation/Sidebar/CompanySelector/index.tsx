@@ -8,6 +8,7 @@ import { useState } from "react"
 interface Company {
   id: string
   name: string
+  logo?: string
 }
 
 export type CompanySelectorProps = {
@@ -48,7 +49,11 @@ export function CompanySelector({
         tabIndex={0}
         title={selectedCompany?.name}
       >
-        <Avatar alt={selectedCompany?.name?.[0]} size="xsmall" />
+        <Avatar
+          alt={selectedCompany?.name?.[0]}
+          src={selectedCompany?.logo}
+          size="xsmall"
+        />
         <span className="truncate">{selectedCompany?.name}</span>
         <div className="h-6 w-6 shrink-0 p-1">
           <div className="flex h-4 w-4 items-center justify-center rounded-xs bg-f1-background-secondary-hover transition-all group-hover:brightness-90 group-data-[state=open]:brightness-90">
