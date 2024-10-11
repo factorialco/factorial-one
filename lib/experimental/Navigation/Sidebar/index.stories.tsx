@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps } from "react"
+import { SidebarHeader } from "./Header"
+import * as SidebarHeaderStories from "./Header/index.stories"
 import { Menu } from "./Menu"
 import * as SidebarMenuStories from "./Menu/index.stories"
 import { SearchBar } from "./Searchbar"
@@ -7,7 +9,6 @@ import * as SearchBarStories from "./Searchbar/index.stories"
 import { Sidebar } from "./Sidebar"
 import { User } from "./User"
 import * as UserStories from "./User/index.stories"
-
 const meta: Meta<typeof Sidebar> = {
   component: Sidebar,
   tags: ["autodocs"],
@@ -16,7 +17,7 @@ const meta: Meta<typeof Sidebar> = {
   },
   decorators: [
     (Story) => (
-      <div className="w-[240px] bg-f1-background-tertiary p-3">
+      <div className="w-[240px] bg-f1-background-tertiary">
         <Story />
       </div>
     ),
@@ -24,6 +25,7 @@ const meta: Meta<typeof Sidebar> = {
   args: {
     children: (
       <>
+        <SidebarHeader {...SidebarHeaderStories.Default.args} />
         <SearchBar {...SearchBarStories.Default.args} />
         <Menu {...SidebarMenuStories.Default.args} />
         <User {...UserStories.Default.args} />
