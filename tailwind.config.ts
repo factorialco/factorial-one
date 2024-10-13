@@ -193,7 +193,7 @@ export default {
               hover: "hsl(var(--neutral-20))",
             },
             tertiary: "hsl(var(--neutral-5))",
-            bold: "hsl(var(--neutral-100))",
+            bold: "hsl(var(--neutral-90))",
             accent: {
               DEFAULT: "hsl(var(--accent-50) / 0.1)",
               bold: {
