@@ -21,19 +21,19 @@ export const DocsContainer: FC<PropsWithChildren<DocsContainerProps>> = (
   props
 ) => {
   const [isDark, setDark] = useState(false)
-  let { context, children } = props
+  const { context, children } = props
   const [storyId, setStoryId] = useState<string | null>(null)
 
   context.channel.on(DOCS_RENDERED, (id) => {
     setStoryId(id)
   })
 
-  let experimental = storyId && storyId.startsWith("experimental-")
+  const experimental = storyId && storyId.startsWith("experimental-")
 
   useEffect(() => {
     channel.on(DARK_MODE_EVENT_NAME, setDark)
     return () => channel.off(DARK_MODE_EVENT_NAME, setDark)
-  }, [channel])
+  }, [])
 
   return (
     <BaseContainer theme={isDark ? darkTheme : lightTheme} {...props}>
@@ -42,9 +42,9 @@ export const DocsContainer: FC<PropsWithChildren<DocsContainerProps>> = (
           <Alert variant="destructive" className="mb-8">
             <AlertTitle>Experimental component</AlertTitle>
             <AlertDescription>
-              Please don't use experimental components in production unless
-              you're part of a testing group. To know more about our testing
-              process please check out our{" "}
+              Please don&apos;t use experimental components in production unless
+              you&apos;re part of a testing group. To know more about our
+              testing process please check out our{" "}
               <a href="/?path=/docs/components-maturity--documentation">
                 Component Maturity Model
               </a>

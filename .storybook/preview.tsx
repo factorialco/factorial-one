@@ -11,6 +11,7 @@ import { FactorialOneProvider } from "../lib/lib/one-provider"
 import { DocsContainer } from "./DocsContainer"
 
 export const withTheme = () => {
+  // eslint-disable-next-line react/display-name
   return (Story) => {
     return (
       <ThemeProvider theme="light">
@@ -38,7 +39,7 @@ export const FactorialOne = (Story, { parameters }) => {
               action("Link clicked")(event, ...args)
               props?.onClick?.(event, ...args)
               event.preventDefault()
-              props.href && setCurrentPath(props.href)
+              if (props.href) setCurrentPath(props.href)
             }}
           />
         ),
