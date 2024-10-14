@@ -8,9 +8,9 @@ export const ApplicationFrame: React.FC<ApplicationFrameProps> = ({
   sidebar,
 }) => {
   return (
-    <div className="flex h-full flex-row gap-4 p-4">
+    <div className="flex h-full flex-row gap-4">
       <div className="w-64">{sidebar}</div>
-      <div className="flex flex-1">{children}</div>
+      <div className="flex flex-1 py-1 pr-1">{children}</div>
     </div>
   )
 }

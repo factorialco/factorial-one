@@ -1,7 +1,8 @@
-import { Placeholder } from "@/lib/storybook-utils"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps } from "react"
 import { ApplicationFrame } from "."
+import { Page } from "../Page"
+import * as PageStories from "../Page/index.stories"
 import * as SidebarStories from "../Sidebar/index.stories"
 import { Sidebar } from "../Sidebar/Sidebar"
 
@@ -13,7 +14,7 @@ const meta: Meta<typeof ApplicationFrame> = {
   },
   args: {
     sidebar: <Sidebar {...SidebarStories.default.args} />,
-    children: <Placeholder className="flex-1">Application Content</Placeholder>,
+    children: <Page {...PageStories.Default.args} />,
   } satisfies ComponentProps<typeof ApplicationFrame>,
 }
 
