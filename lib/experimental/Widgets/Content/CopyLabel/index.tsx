@@ -10,7 +10,9 @@ export const CopyLabel = forwardRef<HTMLDivElement, CopyLabelType>(
     const copyHandler = async () => {
       try {
         await navigator.clipboard.writeText(text)
-      } catch {}
+      } catch (error) {
+        void error
+      }
     }
 
     return (
