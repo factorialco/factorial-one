@@ -101,10 +101,10 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
         {category.title}
         <motion.div
           initial={false}
-          animate={{ rotate: isOpen ? 180 : 0 }}
+          animate={{ rotate: isOpen ? 0 : -90 }}
           transition={{ duration: 0.1 }}
         >
-          <Icons.ChevronDown className="h-4 w-4" />
+          <Icons.ChevronDown className="h-4 w-4 text-f1-icon-secondary" />
         </motion.div>
       </CollapsibleTrigger>
       <CollapsibleContent
