@@ -15,6 +15,13 @@ const meta: Meta = {
       alt: "I",
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="w-64">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
