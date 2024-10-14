@@ -6,13 +6,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/ui/tooltip"
-import React from "react"
+import React, { ComponentProps } from "react"
 
 interface TooltipProps {
   label: string
   description?: string
   children: React.ReactNode
-  shortcut?: string[]
+  shortcut?: ComponentProps<typeof Shortcut>["keys"]
 }
 
 export function Tooltip({
