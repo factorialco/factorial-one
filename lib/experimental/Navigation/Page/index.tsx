@@ -2,7 +2,7 @@ import { Layout } from "./Layouts/"
 import { LayoutType } from "./Layouts/types"
 
 interface PageProps {
-  children: React.ReactNode
+  children?: React.ReactNode
   header?: React.ReactNode
   layout?: LayoutType
 }
