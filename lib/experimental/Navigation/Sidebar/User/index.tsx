@@ -15,16 +15,18 @@ interface UserProps {
 
 export function User({ name, avatarUrl, avatarAlt, options }: UserProps) {
   return (
-    <Dropdown items={options}>
-      <button
-        className={cn(
-          "flex w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary-hover data-[state=open]:bg-f1-background-secondary-hover",
-          focusRing()
-        )}
-      >
-        <Avatar src={avatarUrl} alt={avatarAlt} size="xxsmall" />
-        {name}
-      </button>
-    </Dropdown>
+    <div className="border-t border-dashed border-transparent border-t-f1-border pt-4">
+      <Dropdown items={options}>
+        <button
+          className={cn(
+            "flex w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary-hover data-[state=open]:bg-f1-background-secondary-hover",
+            focusRing()
+          )}
+        >
+          <Avatar src={avatarUrl} alt={avatarAlt} size="xxsmall" />
+          {name}
+        </button>
+      </Dropdown>
+    </div>
   )
 }

@@ -9,6 +9,7 @@ import * as SearchBarStories from "./Searchbar/index.stories"
 import { Sidebar } from "./Sidebar"
 import { User } from "./User"
 import * as UserStories from "./User/index.stories"
+
 const meta: Meta<typeof Sidebar> = {
   component: Sidebar,
   tags: ["autodocs"],
@@ -17,16 +18,20 @@ const meta: Meta<typeof Sidebar> = {
   },
   decorators: [
     (Story) => (
-      <div className="w-[240px] bg-f1-background-tertiary">
+      <div className="h-[500px] w-[240px] bg-f1-background-tertiary">
         <Story />
       </div>
     ),
   ],
   args: {
-    children: (
+    header: (
       <>
         <SidebarHeader {...SidebarHeaderStories.Default.args} />
         <SearchBar {...SearchBarStories.Default.args} />
+      </>
+    ),
+    body: (
+      <>
         <Menu {...SidebarMenuStories.Default.args} />
         <User {...UserStories.Default.args} />
       </>
@@ -36,6 +41,6 @@ const meta: Meta<typeof Sidebar> = {
 
 export default meta
 
-type Story = StoryObj
+type Story = StoryObj<typeof Sidebar>
 
 export const Default: Story = {}
