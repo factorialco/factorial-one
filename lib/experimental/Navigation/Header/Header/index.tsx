@@ -3,6 +3,7 @@ import { IconType } from "@/components/Utilities/Icon"
 import AlignTextJustify from "@/icons/AlignTextJustify"
 import { cn } from "@/lib/utils"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
+import { Navigation, NavigationProps } from "../Navigation"
 
 import {
   ModuleAvatar,
@@ -25,6 +26,7 @@ type HeaderProps = {
     show: boolean
     onClick: () => void
   }
+  navigation?: NavigationProps
 }
 
 export default function Header({
@@ -32,6 +34,7 @@ export default function Header({
   breadcrumbs = [],
   actions = [],
   menu,
+  navigation,
 }: HeaderProps) {
   const breadcrumbsTree: BreadcrumbItemType[] = [
     { label: module.name, href: module.href, icon: module.icon },
@@ -66,21 +69,34 @@ export default function Header({
           <div className="text-xl font-semibold">{module.name}</div>
         )}
       </div>
-      {actions && (
-        <div className="flex items-center gap-2">
-          {actions.map((action, index) => (
-            <Button
-              hideLabel
-              round
-              key={index}
-              variant="outline"
-              onClick={action.onClick}
-              label={action.label}
-              icon={action.icon}
-            />
-          ))}
-        </div>
-      )}
+      <div className="flex items-center gap-3">
+        {navigation && (
+          <Navigation
+            current={navigation.current}
+            total={navigation.total}
+            onPrevious={navigation.onPrevious}
+            onNext={navigation.onNext}
+          />
+        )}
+        {navigation && actions && actions.length > 0 && (
+          <div className="h-4 w-px bg-f1-border-secondary" />
+        )}
+        {actions && actions.length > 0 && (
+          <div className="flex items-center gap-2">
+            {actions.map((action, index) => (
+              <Button
+                hideLabel
+                round
+                key={index}
+                variant="outline"
+                onClick={action.onClick}
+                label={action.label}
+                icon={action.icon}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
