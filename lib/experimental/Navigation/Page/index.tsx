@@ -1,15 +1,17 @@
+import { Layout } from "./Layouts/"
+import { LayoutType } from "./Layouts/types"
+
 interface PageProps {
-  children?: React.ReactNode
+  children: React.ReactNode
   header?: React.ReactNode
+  layout?: LayoutType
 }
 
-export function Page({ children, header }: PageProps) {
+export function Page({ children, header, layout = "standard" }: PageProps) {
   return (
     <div className="flex w-full flex-col overflow-hidden rounded-xl bg-f1-background shadow">
       {header && <div className="flex flex-col">{header}</div>}
-      <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-6 py-5">
-        {children}
-      </div>
+      <Layout layout={layout}>{children}</Layout>
     </div>
   )
 }
