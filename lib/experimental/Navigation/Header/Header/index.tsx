@@ -22,17 +22,12 @@ type HeaderProps = {
     icon: IconType
     onClick: () => void
   }[]
-  menu: {
-    show: boolean
-    onClick: () => void
-  }
 }
 
 export default function Header({
   module,
   breadcrumbs = [],
   actions = [],
-  menu,
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
@@ -46,7 +41,7 @@ export default function Header({
   return (
     <div
       className={cn(
-        "flex h-16 items-center justify-between bg-f1-background/80 px-5 py-4 backdrop-blur-xl xs:px-6",
+        "xs:px-6 flex h-16 items-center justify-between bg-f1-background/80 px-5 py-4 backdrop-blur-xl",
         hasNavigation &&
           "border-b border-dashed border-transparent border-b-f1-border/80"
       )}
