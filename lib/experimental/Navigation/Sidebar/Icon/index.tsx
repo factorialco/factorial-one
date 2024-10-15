@@ -74,10 +74,10 @@ export function SidebarIcon() {
       className="group"
       title="Toggle Sidebar"
     >
-      <div className="xs:flex hidden">
+      <div className="hidden xs:flex">
         <SidebarIconSvg isExpanded={sidebarState === "locked"} />
       </div>
-      <div className="xs:hidden flex">
+      <div className="flex xs:hidden">
         <Icon icon={Cross} size="md" />
       </div>
     </Button>
