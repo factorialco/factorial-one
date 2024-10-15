@@ -32,7 +32,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         )}
         onClick={onClick}
       >
-        <span className="flex flex-row items-center gap-1.5">
+        <div className="flex flex-row items-center gap-1.5">
           <Avatar
             alt={short}
             src={avatar?.src}
@@ -40,7 +40,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
             color={getColorFromText(text)}
           />
           <p>{text}</p>
-        </span>
+        </div>
         {!!onClick && (
           <span className="hidden items-center text-f1-foreground-secondary group-hover:flex">
             <Icon icon={ChevronRight} size="md" />
