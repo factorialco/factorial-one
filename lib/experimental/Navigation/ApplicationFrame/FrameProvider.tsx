@@ -46,13 +46,15 @@ export function FrameProvider({ children }: FrameProviderProps) {
   }, [isSmallScreen, sidebarState])
 
   const toggleSidebar = useCallback(() => {
-    if (isSmallScreen) {
-      setSidebarState((state) => (state === "hidden" ? "unlocked" : "hidden"))
-    } else {
-      setSidebarState((state) =>
-        state === "unlocked" || state === "hidden" ? "locked" : "unlocked"
-      )
-    }
+    setSidebarState((state) =>
+      isSmallScreen
+        ? state === "hidden"
+          ? "unlocked"
+          : "hidden"
+        : state === "unlocked" || state === "hidden"
+          ? "locked"
+          : "unlocked"
+    )
   }, [isSmallScreen])
 
   const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
