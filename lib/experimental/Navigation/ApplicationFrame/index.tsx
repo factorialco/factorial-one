@@ -1,7 +1,5 @@
 import { cn } from "@/lib/utils"
-import { Button } from "@/ui/button"
 import { motion, MotionConfig } from "framer-motion"
-import { Menu } from "lucide-react"
 import { FrameProvider, useSidebar } from "./FrameProvider"
 
 interface ApplicationFrameProps {
@@ -20,7 +18,7 @@ export function ApplicationFrame({ children, sidebar }: ApplicationFrameProps) {
 }
 
 function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
-  const { sidebarState, toggleSidebar } = useSidebar()
+  const { sidebarState } = useSidebar()
 
   return (
     <MotionConfig transition={{ ease: [0.25, 0.1, 0.25, 1], duration: 0.2 }}>
@@ -52,16 +50,6 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
         >
           {children}
         </motion.div>
-        <Button
-          variant="outline"
-          size="md"
-          className="fixed bottom-4 right-4 z-50"
-          onClick={toggleSidebar}
-          aria-label="Toggle Sidebar"
-        >
-          <Menu className="h-4 w-4" />
-          Toggle sidebar
-        </Button>
       </div>
     </MotionConfig>
   )

@@ -1,4 +1,6 @@
+import { Icon } from "@/components/Utilities/Icon"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
+import { Cross } from "@/icons"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 
@@ -72,7 +74,12 @@ export function SidebarIcon() {
       className="group"
       title="Toggle Sidebar"
     >
-      <SidebarIconSvg isExpanded={sidebarState === "locked"} />
+      <div className="xs:flex hidden">
+        <SidebarIconSvg isExpanded={sidebarState === "locked"} />
+      </div>
+      <div className="xs:hidden flex">
+        <Icon icon={Cross} size="md" />
+      </div>
     </Button>
   )
 }

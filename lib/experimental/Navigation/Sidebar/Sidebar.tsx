@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@/lib/useMediaQuery"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { ReactNode } from "react"
@@ -11,11 +12,16 @@ interface SidebarProps {
 
 export function Sidebar({ header, body, footer }: SidebarProps) {
   const { sidebarState } = useSidebar()
+  const isSmallScreen = useMediaQuery("(max-width: 480px)")
 
   const transition = {
     x: {
       ease:
-        sidebarState !== "locked" ? [0.175, 0.885, 0.32, 1.1] : [0, 0, 0.58, 1],
+        sidebarState !== "locked"
+          ? isSmallScreen
+            ? [0, 0, 0.58, 1]
+            : [0.175, 0.885, 0.32, 1.1]
+          : [0, 0, 0.58, 1],
       duration: sidebarState !== "locked" ? 0.3 : 0.1,
     },
     top: { duration: 0.1 },
@@ -30,12 +36,18 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
         "absolute bottom-0 left-0 top-0 flex w-64 flex-col gap-2 px-3 transition-colors",
         sidebarState === "locked"
           ? "h-screen"
-          : "border-f1-border-bold/5 h-[calc(100vh-16px)] bg-f1-background-bold/5 pb-3 backdrop-blur-3xl"
+          : cn(
+              "border-f1-border-bold/5 bg-f1-background-bold/5 pb-3 backdrop-blur-3xl",
+              isSmallScreen
+                ? "h-screen bg-f1-background-secondary"
+                : "border-f1-border-bold/5 h-[calc(100vh-16px)] bg-f1-background-bold/5"
+            )
       )}
       animate={{
-        top: sidebarState === "locked" ? 0 : "8px",
-        borderRadius: sidebarState === "locked" ? "0" : "12px",
-        left: sidebarState === "locked" ? "0" : "8px",
+        top: sidebarState === "locked" ? 0 : isSmallScreen ? 0 : "8px",
+        borderRadius:
+          sidebarState === "locked" ? "0" : isSmallScreen ? "0" : "12px",
+        left: sidebarState === "locked" ? "0" : isSmallScreen ? 0 : "8px",
         x: sidebarState === "hidden" ? -200 : 0,
         opacity: sidebarState === "hidden" ? 0 : 1,
         pointerEvents: sidebarState === "hidden" ? "none" : "auto",

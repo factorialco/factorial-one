@@ -29,7 +29,9 @@ export function SearchBar({
         <Icon icon={Search} size="md" />
         <span>{placeholder}</span>
       </div>
-      <Shortcut keys={shortcut} />
+      <div className="xs:block hidden">
+        <Shortcut keys={shortcut} />
+      </div>
     </button>
   )
 }
