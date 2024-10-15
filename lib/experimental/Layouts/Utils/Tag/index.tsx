@@ -25,7 +25,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
     return (
       <div
         ref={ref}
-        role={!!onClick ? "button" : undefined}
+        role={onClick ? "button" : undefined}
         className={cn(
           "group flex w-full flex-row items-center justify-between gap-1.5 rounded-sm py-1.5 pl-1.5 pr-2 font-medium text-f1-foreground",
           !!onClick && "cursor-pointer hover:bg-f1-background-secondary"
