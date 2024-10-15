@@ -141,7 +141,7 @@ const Container = forwardRef<
       </CardContent>
       {action && (
         <CardFooter>
-          <Button variant="neutral" size="md" {...action} />
+          <Button variant="neutral" size="sm" {...action} />
         </CardFooter>
       )}
     </Card>
