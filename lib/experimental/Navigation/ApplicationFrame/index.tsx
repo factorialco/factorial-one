@@ -27,7 +27,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
         <AnimatePresence>
           {sidebarState === "unlocked" && (
             <motion.div
-              className="xs:hidden fixed inset-0 z-[5] bg-f1-background-bold/60"
+              className="fixed inset-0 z-[5] bg-f1-background-bold/60 xs:hidden"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -46,7 +46,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
         </div>
         <motion.div
           className={cn(
-            "xs:py-1 xs:pr-1 flex max-w-full flex-1 overflow-x-hidden",
+            "flex max-w-full flex-1 overflow-x-hidden xs:py-1 xs:pr-1",
             sidebarState === "locked" ? "pl-0" : "xs:pl-1"
           )}
           layout
