@@ -6,13 +6,15 @@ interface CopyLabelType {
   text: string
 }
 
+const COPIED_SHOWN_MS = 1250
+
 export const CopyLabel = forwardRef<HTMLDivElement, CopyLabelType>(
   ({ text }, ref) => {
     const [copied, setCopied] = useState(false)
 
     useEffect(() => {
       if (copied) {
-        const timer = setTimeout(() => setCopied(false), 1500)
+        const timer = setTimeout(() => setCopied(false), COPIED_SHOWN_MS)
 
         return () => clearTimeout(timer)
       }
