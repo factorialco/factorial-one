@@ -33,14 +33,14 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
     <motion.div
       initial={false}
       className={cn(
-        "absolute bottom-0 left-0 top-0 flex w-64 flex-col gap-2 px-3 transition-colors",
+        "absolute bottom-0 left-0 top-0 z-10 flex w-64 flex-col gap-2 px-3 transition-colors",
         sidebarState === "locked"
           ? "h-screen"
           : cn(
               "border-f1-border-bold/5 bg-f1-background-bold/5 pb-3 backdrop-blur-3xl",
               isSmallScreen
                 ? "h-screen bg-f1-background-secondary"
-                : "border-f1-border-bold/5 h-[calc(100vh-16px)] bg-f1-background-bold/5"
+                : "border-f1-border-bold/10 h-[calc(100vh-16px)] bg-f1-background-bold/5"
             )
       )}
       animate={{

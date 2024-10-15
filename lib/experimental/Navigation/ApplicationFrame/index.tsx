@@ -39,7 +39,10 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
           </motion.div>
         </div>
         <motion.div
-          className="flex flex-1 py-1 pr-1"
+          className={cn(
+            "xs:py-1 xs:pr-1 flex max-w-full flex-1",
+            sidebarState === "locked" ? "pl-0" : "xs:pl-1"
+          )}
           layout
           transition={{
             duration: 0.3,

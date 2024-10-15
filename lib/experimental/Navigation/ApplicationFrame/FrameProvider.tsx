@@ -1,7 +1,10 @@
+import { useMediaQuery } from "@/lib/useMediaQuery"
 import React, {
   createContext,
   PointerEvent,
+  useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react"
@@ -31,24 +34,43 @@ interface FrameProviderProps {
 }
 
 export function FrameProvider({ children }: FrameProviderProps) {
-  const [sidebarState, setSidebarState] = useState<SidebarState>("locked")
+  const isSmallScreen = useMediaQuery("(max-width: 480px)")
+  const [sidebarState, setSidebarState] = useState<SidebarState>(() =>
+    isSmallScreen ? "hidden" : "locked"
+  )
 
-  const toggleSidebar = () =>
-    setSidebarState((state) =>
-      state === "unlocked" || state === "hidden" ? "locked" : "unlocked"
-    )
+  useEffect(() => {
+    if (isSmallScreen && sidebarState === "locked") {
+      setSidebarState("hidden")
+    }
+  }, [isSmallScreen, sidebarState])
+
+  const toggleSidebar = useCallback(() => {
+    if (isSmallScreen) {
+      setSidebarState((state) => (state === "hidden" ? "unlocked" : "hidden"))
+    } else {
+      setSidebarState((state) =>
+        state === "unlocked" || state === "hidden" ? "locked" : "unlocked"
+      )
+    }
+  }, [isSmallScreen])
 
   const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
-    if (e.clientX < 32 && sidebarState === "hidden") {
-      setSidebarState("unlocked")
-    }
+    if (!isSmallScreen) {
+      if (e.clientX < 32 && sidebarState === "hidden") {
+        setSidebarState("unlocked")
+      }
 
-    if (e.clientX > 280 && sidebarState === "unlocked") {
-      setSidebarState("hidden")
+      if (e.clientX > 280 && sidebarState === "unlocked") {
+        setSidebarState("hidden")
+      }
     }
   }
 
-  const value = useMemo(() => ({ sidebarState, toggleSidebar }), [sidebarState])
+  const value = useMemo(
+    () => ({ sidebarState, toggleSidebar }),
+    [sidebarState, toggleSidebar]
+  )
 
   return (
     <FrameContext.Provider value={value}>

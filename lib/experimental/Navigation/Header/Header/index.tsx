@@ -1,5 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
+import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import AlignTextJustify from "@/icons/AlignTextJustify"
 import { cn } from "@/lib/utils"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
@@ -33,6 +34,8 @@ export default function Header({
   actions = [],
   menu,
 }: HeaderProps) {
+  const { sidebarState, toggleSidebar } = useSidebar()
+
   const breadcrumbsTree: BreadcrumbItemType[] = [
     { label: module.name, href: module.href, icon: module.icon },
     ...breadcrumbs,
@@ -43,18 +46,18 @@ export default function Header({
   return (
     <div
       className={cn(
-        "flex h-16 items-center justify-between bg-f1-background/80 px-6 py-4 backdrop-blur-xl",
+        "xs:px-6 flex h-16 items-center justify-between bg-f1-background/80 px-5 py-4 backdrop-blur-xl",
         hasNavigation &&
           "border-b border-dashed border-transparent border-b-f1-border/80"
       )}
     >
       <div className="flex flex-grow items-center gap-3">
-        {menu.show && (
+        {sidebarState !== "locked" && (
           <Button
             variant="ghost"
             hideLabel
             round
-            onClick={menu.onClick}
+            onClick={toggleSidebar}
             label="Menu"
             icon={AlignTextJustify}
           />
