@@ -31,10 +31,7 @@ export const Default: Story = {
   args: {
     header: (
       <>
-        <Header
-          {...HeaderStories.FirstLevel.args}
-          menu={{ show: false, onClick: () => {} }}
-        />
+        <Header {...HeaderStories.FirstLevel.args} />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),
