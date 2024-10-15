@@ -23,7 +23,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
   return (
-    <MotionConfig transition={{ ease: [0.165, 0.84, 0.44, 1], duration: 0.3 }}>
+    <MotionConfig transition={{ ease: [0.25, 0.1, 0.25, 1], duration: 0.2 }}>
       <div className="relative flex h-full flex-row">
         <div
           className={cn(

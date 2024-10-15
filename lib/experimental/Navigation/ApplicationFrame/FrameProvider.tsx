@@ -36,8 +36,6 @@ export function FrameProvider({ children }: FrameProviderProps) {
     )
 
   const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
-    // Add your pointer move logic here
-    // For example, you could check the position and update the sidebar state
     if (e.clientX < 32 && sidebarState === "hidden") {
       setSidebarState("unlocked")
     }
