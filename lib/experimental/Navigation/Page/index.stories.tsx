@@ -7,6 +7,8 @@ import * as HeaderStories from "../Header/Header/index.stories"
 import { Tabs } from "../Tabs"
 import * as TabsStories from "../Tabs/index.stories"
 
+import { StandardLayout } from "@/experimental/Layouts/StandardLayout"
+
 const meta: Meta<typeof Page> = {
   component: Page,
   tags: ["autodocs"],
@@ -37,13 +39,13 @@ export const Default: Story = {
       </>
     ),
     children: (
-      <>
+      <StandardLayout>
         {Array(25)
           .fill(0)
           .map((_, index) => (
             <Placeholder key={index} className="min-h-24" />
           ))}
-      </>
+      </StandardLayout>
     ),
   },
 }
