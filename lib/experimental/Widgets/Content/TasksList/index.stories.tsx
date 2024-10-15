@@ -63,7 +63,7 @@ export const WithCounters: Story = {
         {
           text: "Migrate to new CRM",
           badge: { text: "Due Sep 10", isPastDue: true },
-          counter: 2,
+          counter: "2",
         },
         {
           text: "Connect to Slack",
@@ -71,9 +71,13 @@ export const WithCounters: Story = {
       ],
       due: [],
       noDue: [
-        { text: "Write changelog", badge: { text: "Due Oct 2" }, counter: 4 },
-        { text: "Product review", badge: { text: "Due Oct 21" }, counter: 1 },
-        { text: "Final conclusions", badge: { text: "Due Nov 2" }, counter: 7 },
+        { text: "Write changelog", badge: { text: "Due Oct 2" }, counter: "4" },
+        { text: "Product review", badge: { text: "Due Oct 21" }, counter: "1" },
+        {
+          text: "Final conclusions",
+          badge: { text: "Due Nov 2" },
+          counter: "7",
+        },
       ],
     },
   },
