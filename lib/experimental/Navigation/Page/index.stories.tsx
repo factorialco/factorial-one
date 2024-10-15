@@ -49,27 +49,3 @@ export const Default: Story = {
     ),
   },
 }
-
-export const FullWidth: Story = {
-  args: {
-    header: (
-      <>
-        <Header
-          {...HeaderStories.FirstLevel.args}
-          menu={{ show: false, onClick: () => {} }}
-        />
-        <Tabs {...TabsStories.Primary.args} />
-      </>
-    ),
-    layout: "fullWidth",
-    children: (
-      <>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </>
-    ),
-  },
-}
