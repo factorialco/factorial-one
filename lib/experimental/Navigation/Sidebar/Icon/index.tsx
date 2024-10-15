@@ -1,3 +1,4 @@
+import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 
@@ -6,7 +7,7 @@ export type SidebarIconProps = {
   onClick?: () => void
 }
 
-function SidebarIconSvg({ isExpanded }: { isExpanded: boolean }) {
+function SidebarIconSvg({ isExpanded }: SidebarIconProps) {
   return (
     <svg
       width="20"
@@ -59,17 +60,19 @@ function SidebarIconSvg({ isExpanded }: { isExpanded: boolean }) {
   )
 }
 
-export function SidebarIcon({ isExpanded, onClick }: SidebarIconProps) {
+export function SidebarIcon() {
+  const { sidebarState, toggleSidebar } = useSidebar()
+
   return (
     <Button
       variant="ghost"
       size="md"
       round
-      onClick={onClick}
+      onClick={toggleSidebar}
       className="group"
       title="Toggle Sidebar"
     >
-      <SidebarIconSvg isExpanded={isExpanded} />
+      <SidebarIconSvg isExpanded={sidebarState === "locked"} />
     </Button>
   )
 }

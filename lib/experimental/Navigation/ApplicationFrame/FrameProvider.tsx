@@ -15,10 +15,13 @@ interface FrameContextType {
 
 const FrameContext = createContext<FrameContextType | undefined>(undefined)
 
-export function useSidebar() {
+export function useSidebar(): FrameContextType {
   const context = useContext(FrameContext)
   if (context === undefined) {
-    throw new Error("useSidebar must be used within a FrameProvider")
+    return {
+      sidebarState: "locked",
+      toggleSidebar: () => {},
+    }
   }
   return context
 }
