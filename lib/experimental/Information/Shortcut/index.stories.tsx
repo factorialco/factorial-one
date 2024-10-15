@@ -34,3 +34,17 @@ export const MultipleKeys: Story = {
     ),
   ],
 }
+
+export const InverseVariant: Story = {
+  args: {
+    keys: ["cmd", "K"],
+    variant: "inverse",
+  },
+  decorators: [
+    (Story) => (
+      <div className="bg-f1-background-bold p-4">
+        <Story />
+      </div>
+    ),
+  ],
+}

@@ -1,8 +1,26 @@
 import { Icon, IconProps } from "@/components/Utilities/Icon"
 import { Cmd } from "@/icons"
 import { cn } from "@/lib/utils"
+import { VariantProps, cva } from "class-variance-authority"
 
-interface ShortcutProps {
+const shortcutVariants = cva(
+  "flex h-5 items-center justify-center rounded-xs border border-solid py-0.5 text-sm font-semibold uppercase leading-none",
+  {
+    variants: {
+      variant: {
+        default:
+          "border-f1-border bg-f1-background-tertiary text-f1-foreground-secondary",
+        inverse:
+          "border-f1-border/20 bg-f1-background/10 text-f1-foreground-inverse/70",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+)
+
+interface ShortcutProps extends VariantProps<typeof shortcutVariants> {
   keys: string[]
 }
 
@@ -10,7 +28,7 @@ const iconMap: Record<string, IconProps["icon"]> = {
   cmd: Cmd,
 }
 
-function Shortcut({ keys }: ShortcutProps) {
+function Shortcut({ keys, variant }: ShortcutProps) {
   return (
     <div className="flex flex-wrap items-center gap-0.5">
       {keys.map((key, index) => {
@@ -20,7 +38,7 @@ function Shortcut({ keys }: ShortcutProps) {
           <kbd
             key={index}
             className={cn(
-              "flex h-5 items-center justify-center rounded-xs border border-solid border-f1-border bg-f1-background-tertiary py-0.5 text-sm font-semibold uppercase leading-none text-f1-foreground-secondary",
+              shortcutVariants({ variant }),
               isIcon ? "w-5 px-0.5" : "min-w-5 px-1"
             )}
           >
