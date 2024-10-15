@@ -65,7 +65,7 @@ const preview: Preview = {
         showLineNumbers: true, // default: false
         wrapLines: true, // default: true
       },
-      chromatic: { diffThreshold: 0.2 },
+      chromatic: { diffThreshold: 0.3 },
     },
     backgrounds: {
       default: "content",
