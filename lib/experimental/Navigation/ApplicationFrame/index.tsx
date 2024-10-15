@@ -39,7 +39,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
           </motion.div>
         </div>
         <motion.div
-          className="flex flex-1"
+          className="flex flex-1 py-1 pr-1"
           layout
           transition={{
             duration: 0.3,
