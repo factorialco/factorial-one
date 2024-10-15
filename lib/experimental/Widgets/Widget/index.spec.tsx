@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-binary-expression */
 import { render, screen } from "@testing-library/react"
 import { Fragment } from "react"
 import { expect, test } from "vitest"

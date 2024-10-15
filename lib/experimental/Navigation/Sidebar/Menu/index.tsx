@@ -101,10 +101,10 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
         {category.title}
         <motion.div
           initial={false}
-          animate={{ rotate: isOpen ? 180 : 0 }}
+          animate={{ rotate: isOpen ? 0 : -90 }}
           transition={{ duration: 0.1 }}
         >
-          <Icons.ChevronDown className="h-4 w-4" />
+          <Icons.ChevronDown className="h-4 w-4 text-f1-icon-secondary" />
         </motion.div>
       </CollapsibleTrigger>
       <CollapsibleContent
@@ -114,15 +114,16 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
         <AnimatePresence initial={false}>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.15, ease: "easeInOut" }}
-              className="flex flex-col gap-1 pb-3"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.15, ease: [0.165, 0.84, 0.44, 1] }}
             >
-              {category.items.map((item, index) => (
-                <MenuItem key={index} item={item} />
-              ))}
+              <div className="flex flex-col gap-1 pb-3">
+                {category.items.map((item, index) => (
+                  <MenuItem key={index} item={item} />
+                ))}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

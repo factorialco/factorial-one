@@ -43,12 +43,12 @@ export default function Header({
   return (
     <div
       className={cn(
-        "flex h-16 items-center justify-between rounded-t-lg bg-f1-background/80 p-4 backdrop-blur-xl",
-        !hasNavigation &&
+        "flex h-16 items-center justify-between bg-f1-background/80 px-6 py-4 backdrop-blur-xl",
+        hasNavigation &&
           "border-b border-dashed border-transparent border-b-f1-border/80"
       )}
     >
-      <div className="flex items-center gap-3">
+      <div className="flex flex-grow items-center gap-3">
         {menu.show && (
           <Button
             variant="ghost"
