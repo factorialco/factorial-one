@@ -1,4 +1,5 @@
-import { Circle, InProgressTask } from "@/icons"
+import { Badge } from "@/components/Information/Badge"
+import { DottedCircle, InProgressTask } from "@/icons"
 import { useCallback } from "react"
 
 type TaskStatus = "in-progress" | "due" | "no-due"
@@ -7,9 +8,14 @@ type TaskItemProps = {
   title: string
   status: TaskStatus
   onClick?: (status: TaskStatus) => void
+  badge?: {
+    text: string
+    isPastDue?: boolean
+  }
+  counter?: number
 }
 
-function TaskItem({ title, status, onClick }: TaskItemProps) {
+function TaskItem({ title, status, onClick, badge, counter }: TaskItemProps) {
   const handleClick = useCallback(() => {
     onClick?.(status)
   }, [onClick, status])
@@ -17,7 +23,7 @@ function TaskItem({ title, status, onClick }: TaskItemProps) {
   return (
     <div className="flex flex-row items-start gap-2" onClick={handleClick}>
       {(status === "due" || status === "no-due") && (
-        <Circle
+        <DottedCircle
           width={24}
           color={
             status === "no-due"
@@ -28,14 +34,27 @@ function TaskItem({ title, status, onClick }: TaskItemProps) {
       )}
       {status === "in-progress" && <InProgressTask />}
       <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{title}</p>
+      {!!badge && (
+        <Badge
+          text={badge.text}
+          variant={badge.isPastDue ? "critical" : "neutral"}
+        />
+      )}
+      {!!counter && <Badge text={counter.toString()} />}
     </div>
   )
 }
 
+interface Task {
+  text: string
+  badge?: { text: string; isPastDue?: boolean }
+  counter?: number
+}
+
 interface Tasks {
-  inProgress?: string[]
-  noDue?: string[]
-  due?: string[]
+  inProgress?: Task[]
+  noDue?: Task[]
+  due?: Task[]
 }
 
 interface Props {
@@ -58,8 +77,10 @@ export function TasksList({
   ] as const
 
   const tasksToRender = taskTypes.flatMap(({ key, status }) =>
-    (tasks?.[key] || []).map((title) => ({
-      title,
+    (tasks?.[key] || []).map(({ text, badge, counter }) => ({
+      title: text,
+      badge,
+      counter,
       status: status as TaskStatus,
     }))
   )
@@ -79,6 +100,8 @@ export function TasksList({
               title={task.title}
               status={task.status}
               onClick={onClickTask}
+              badge={task.badge}
+              counter={task.counter}
             />
           ))
       )}
