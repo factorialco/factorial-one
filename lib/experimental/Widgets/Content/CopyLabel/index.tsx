@@ -31,7 +31,7 @@ export const CopyLabel = forwardRef<HTMLDivElement, CopyLabelType>(
       <div
         ref={ref}
         className={cn(
-          "relative flex list-none items-center justify-between rounded-md p-1.5 font-medium text-f1-foreground-secondary transition-colors duration-300 hover:cursor-pointer",
+          "group relative flex h-8 items-center justify-between rounded-md p-1.5 font-medium text-f1-foreground-secondary transition-colors duration-300 hover:cursor-pointer",
           copied
             ? "hover:bg-f1-background-positive"
             : "hover:bg-f1-background-secondary"
@@ -40,21 +40,23 @@ export const CopyLabel = forwardRef<HTMLDivElement, CopyLabelType>(
         role="button"
         aria-label={`Copy ${text} to clipboard`}
       >
-        <p className="truncate pr-6 text-f1-foreground">{text}</p>
+        <p className="flex-1 truncate pr-8 text-f1-foreground" title={text}>
+          {text}
+        </p>
         <Icon
           icon={LayersFront}
           size="md"
           className={cn(
-            "absolute right-1.5 transition-all duration-300",
-            copied ? "scale-75 opacity-0" : "scale-100 opacity-100"
+            "absolute right-1.5 opacity-0 transition-all duration-300",
+            !copied && "group-hover:opacity-100"
           )}
         />
         <Icon
           icon={Check}
           size="md"
           className={cn(
-            "absolute right-1.5 transition-all duration-300",
-            copied ? "scale-100 opacity-100" : "scale-75 opacity-0"
+            "absolute right-1.5 opacity-0 transition-all duration-300",
+            copied && "group-hover:opacity-100"
           )}
         />
       </div>
