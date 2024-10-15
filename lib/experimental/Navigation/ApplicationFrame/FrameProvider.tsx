@@ -1,7 +1,15 @@
-import React, { createContext, useContext, useMemo, useState } from "react"
+import React, {
+  createContext,
+  PointerEvent,
+  useContext,
+  useMemo,
+  useState,
+} from "react"
+
+type SidebarState = "locked" | "unlocked" | "hidden"
 
 interface FrameContextType {
-  isSidebarExpanded: boolean
+  sidebarState: SidebarState
   toggleSidebar: () => void
 }
 
@@ -20,14 +28,32 @@ interface FrameProviderProps {
 }
 
 export function FrameProvider({ children }: FrameProviderProps) {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true)
+  const [sidebarState, setSidebarState] = useState<SidebarState>("locked")
 
-  const toggleSidebar = () => setIsSidebarExpanded((prev) => !prev)
+  const toggleSidebar = () =>
+    setSidebarState((state) =>
+      state === "unlocked" || state === "hidden" ? "locked" : "unlocked"
+    )
 
-  const value = useMemo(
-    () => ({ isSidebarExpanded, toggleSidebar }),
-    [isSidebarExpanded]
+  const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    // Add your pointer move logic here
+    // For example, you could check the position and update the sidebar state
+    if (e.clientX < 32 && sidebarState === "hidden") {
+      setSidebarState("unlocked")
+    }
+
+    if (e.clientX > 280 && sidebarState === "unlocked") {
+      setSidebarState("hidden")
+    }
+  }
+
+  const value = useMemo(() => ({ sidebarState, toggleSidebar }), [sidebarState])
+
+  return (
+    <FrameContext.Provider value={value}>
+      <div onPointerMove={handlePointerMove} className="h-screen w-screen">
+        {children}
+      </div>
+    </FrameContext.Provider>
   )
-
-  return <FrameContext.Provider value={value}>{children}</FrameContext.Provider>
 }

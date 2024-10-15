@@ -20,7 +20,7 @@ export function ApplicationFrame({ children, sidebar }: ApplicationFrameProps) {
 }
 
 function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
-  const { isSidebarExpanded, toggleSidebar } = useSidebar()
+  const { sidebarState, toggleSidebar } = useSidebar()
 
   return (
     <MotionConfig transition={{ ease: [0.165, 0.84, 0.44, 1], duration: 0.3 }}>
@@ -28,7 +28,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
         <div
           className={cn(
             "transition-all",
-            isSidebarExpanded ? "w-64 pl-3" : "w-0"
+            sidebarState === "locked" ? "w-64 pl-3" : "w-0"
           )}
         >
           <motion.div
