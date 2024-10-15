@@ -10,7 +10,7 @@ export const ApplicationFrame: React.FC<ApplicationFrameProps> = ({
   return (
     <div className="flex h-full flex-row gap-3">
       <div className="w-64 pl-3">{sidebar}</div>
-      <div className="flex flex-1">{children}</div>
+      <div className="flex flex-1 py-1 pr-1">{children}</div>
     </div>
   )
 }
