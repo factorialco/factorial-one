@@ -9,7 +9,7 @@ const meta: Meta = {
     tags: ["autodocs"],
   },
   args: {
-    text: "josep.rey@factorial.co",
+    text: "john.doe@factorial.co",
   },
   decorators: [
     (Story) => (
@@ -28,5 +28,11 @@ export const Primary: Story = {}
 export const Phone: Story = {
   args: {
     text: "(120) 687-3123",
+  },
+}
+
+export const TooLong: Story = {
+  args: {
+    text: "the.longest.email.that.you.have.ever.seen@factorial.co",
   },
 }
