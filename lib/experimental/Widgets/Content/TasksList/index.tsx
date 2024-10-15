@@ -12,7 +12,7 @@ type TaskItemProps = {
     text: string
     isPastDue?: boolean
   }
-  counter?: number
+  counter?: string
 }
 
 function TaskItem({ title, status, onClick, badge, counter }: TaskItemProps) {
@@ -40,7 +40,7 @@ function TaskItem({ title, status, onClick, badge, counter }: TaskItemProps) {
           variant={badge.isPastDue ? "critical" : "neutral"}
         />
       )}
-      {!!counter && <Badge text={counter.toString()} />}
+      {!!counter && <Badge variant="neutral" text={counter} />}
     </div>
   )
 }
@@ -48,7 +48,7 @@ function TaskItem({ title, status, onClick, badge, counter }: TaskItemProps) {
 interface Task {
   text: string
   badge?: { text: string; isPastDue?: boolean }
-  counter?: number
+  counter?: string
 }
 
 interface Tasks {
