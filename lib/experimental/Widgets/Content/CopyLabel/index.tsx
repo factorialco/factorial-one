@@ -31,7 +31,7 @@ export const CopyLabel = forwardRef<HTMLDivElement, CopyLabelType>(
       <div
         ref={ref}
         className={cn(
-          "relative flex h-8 list-none items-center justify-between rounded-md p-1.5 font-medium text-f1-foreground-secondary transition-colors duration-300 hover:cursor-pointer",
+          "relative flex list-none items-center justify-between rounded-md bg-f1-background-secondary p-1.5 font-medium text-f1-foreground-secondary transition-colors duration-300 hover:cursor-pointer",
           copied
             ? "hover:bg-f1-background-positive"
             : "hover:bg-f1-background-secondary"
