@@ -1,49 +1,41 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { TagsList } from "."
+import { fn } from "@storybook/test"
+import { DataList } from "."
 
 const meta: Meta = {
-  component: TagsList,
+  component: DataList,
   parameters: {
     layout: "centered",
     tags: ["autodocs"],
   },
   args: {
-    tags: [
+    items: [
       {
-        text: "Management",
-        avatar: {
-          alt: "M",
-        },
+        text: "fake.email@factorial.co",
       },
       {
         text: "Engineering",
         avatar: {
+          src: "https://github.com/dani-moreno.png",
           alt: "E",
         },
+        onClick: fn(),
       },
       {
         text: "Managers",
         avatar: {
           alt: "M",
         },
+        onClick: fn(),
       },
       {
         text: "Office/Spain",
-        avatar: {
-          alt: "O",
-        },
+        avatar: {},
+        onClick: fn(),
       },
       {
         text: "Office/Remote",
-        avatar: {
-          alt: "O",
-        },
-      },
-      {
-        text: "Engineering/Management",
-        avatar: {
-          alt: "E",
-        },
+        onClick: fn(),
       },
     ],
   },

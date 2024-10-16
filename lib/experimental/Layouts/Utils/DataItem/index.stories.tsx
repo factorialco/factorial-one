@@ -1,19 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { fn } from "@storybook/test"
-import { Tag } from "."
+import { DataItem } from "."
 
 const meta: Meta = {
-  component: Tag,
+  component: DataItem,
   parameters: {
     layout: "centered",
     tags: ["autodocs"],
   },
   args: {
-    text: "Isabella González",
-    avatar: {
-      alt: "I",
-    },
+    text: "fake.employee@factorial.co",
   },
   decorators: [
     (Story) => (
@@ -29,23 +26,38 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
 
-export const Avatar: Story = {
+export const Navigable: Story = {
   args: {
-    avatar: {
-      src: "https://github.com/dani-moreno.png",
-      alt: "I",
-    },
-  },
-}
-
-export const Clickable: Story = {
-  args: {
+    text: "Isabella Gonzalez",
     onClick: fn(),
   },
 }
 
-export const Alt: Story = {
+export const NavigableWithAvatar: Story = {
   args: {
-    avatar: undefined,
+    text: "Isabella Gonzalez",
+    avatar: {
+      src: "https://github.com/dani-moreno.png",
+      alt: "I",
+    },
+    onClick: fn(),
+  },
+}
+
+export const NavigableWithAlt: Story = {
+  args: {
+    text: "Isabella Gonzalez",
+    avatar: {
+      alt: "I",
+    },
+    onClick: fn(),
+  },
+}
+
+export const NavigableWithAutoAlt: Story = {
+  args: {
+    text: "Isabella Gonzalez",
+    avatar: {},
+    onClick: fn(),
   },
 }

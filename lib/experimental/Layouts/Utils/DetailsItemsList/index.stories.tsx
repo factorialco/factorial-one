@@ -5,7 +5,7 @@ import { ComponentProps } from "react"
 import avatar from "~/storybook-assets/avatar.jpeg"
 import { DetailsItemsList } from "."
 import { Weekdays } from "../../../Widgets/Content/Weekdays"
-import { TagsList } from "../TagsList"
+import { TagsList } from "../DataList"
 
 const manager = (
   <Badge text="Isabella González" avatar={{ src: avatar, alt: "I" }} />
