@@ -1,5 +1,6 @@
 import EllipsisHorizontal from "@/icons/EllipsisHorizontal"
 import Settings from "@/icons/Settings"
+import { action } from "@storybook/addon-actions"
 
 import type { Meta, StoryObj } from "@storybook/react"
 import Header from "."
@@ -96,6 +97,37 @@ export const LongBreadcrumbs: Story = {
     menu: {
       show: true,
       onClick: () => console.log("Menu clicked"),
+    },
+  },
+}
+
+export const WithNavigation: Story = {
+  args: {
+    module: {
+      name: "Recruitment",
+      href: "/recruitment",
+      icon: "Recruitment",
+    },
+    breadcrumbs: [
+      { label: "Candidates", href: "/recruitment/candidates" },
+      { label: "Dani Moreno" },
+    ],
+    actions: [
+      {
+        label: "More options",
+        icon: EllipsisHorizontal,
+        onClick: action("More clicked"),
+      },
+    ],
+    menu: {
+      show: false,
+      onClick: action("Menu clicked"),
+    },
+    navigation: {
+      current: 3,
+      total: 10,
+      onPrevious: action("Previous clicked"),
+      onNext: action("Next clicked"),
     },
   },
 }
