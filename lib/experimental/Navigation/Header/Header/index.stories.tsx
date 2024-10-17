@@ -35,10 +35,6 @@ export const Default: Story = {
         onClick: () => console.log("More clicked"),
       },
     ],
-    menu: {
-      show: true,
-      onClick: () => console.log("Menu clicked"),
-    },
   },
 }
 
@@ -48,10 +44,6 @@ export const FirstLevel: Story = {
       name: "Recruitment",
       href: "/recruitment",
       icon: "Recruitment",
-    },
-    menu: {
-      show: true,
-      onClick: () => console.log("Menu clicked"),
     },
   },
 }
@@ -93,9 +85,5 @@ export const LongBreadcrumbs: Story = {
         onClick: () => console.log("More clicked"),
       },
     ],
-    menu: {
-      show: true,
-      onClick: () => console.log("Menu clicked"),
-    },
   },
 }
