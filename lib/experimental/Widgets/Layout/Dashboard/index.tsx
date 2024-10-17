@@ -5,6 +5,7 @@ import {
   forwardRef,
   ReactNode,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
@@ -12,11 +13,23 @@ import { Masonry } from "react-masonry"
 import { Widget } from "../../Widget"
 
 type DashboardProps = {
+  widgetWidth?: "sm" | "md" | "lg"
   children?: ReactNode[]
 }
 
 const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
-  function Dashboard({ children }, ref) {
+  function Dashboard({ children, widgetWidth = "sm" }, ref) {
+    const maxWidgetWidth = useMemo(() => {
+      switch (widgetWidth) {
+        case "sm":
+          return 340
+        case "md":
+          return 480
+        case "lg":
+          return 640
+      }
+    }, [widgetWidth])
+
     const [columns, setColumns] = useState<number | undefined>()
 
     const arrayChildren = Children.toArray(children)
@@ -26,7 +39,7 @@ const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
     useEffect(() => {
       const handleResize = () => {
         const width = containerRef.current?.offsetWidth
-        if (width) setColumns(Math.floor(width / 340) || 1)
+        if (width) setColumns(Math.floor(width / maxWidgetWidth) || 1)
       }
 
       handleResize()
@@ -36,7 +49,7 @@ const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
       return () => {
         window.removeEventListener("resize", handleResize)
       }
-    }, [setColumns])
+    }, [setColumns, maxWidgetWidth])
 
     return (
       <div ref={ref} className="text-f1-foreground">
