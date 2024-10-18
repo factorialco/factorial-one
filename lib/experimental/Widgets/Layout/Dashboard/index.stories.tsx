@@ -40,7 +40,14 @@ const widgets = [
 const meta = {
   component: Dashboard,
   tags: ["autodocs"],
+  argTypes: {
+    widgetWidth: {
+      control: "select",
+      options: [undefined, "sm", "md", "lg"],
+    },
+  },
   args: {
+    widgetWidth: "sm",
     children: Array.from({ length: 20 }, (_, i) => widgets[i % widgets.length]),
   },
   parameters: {
