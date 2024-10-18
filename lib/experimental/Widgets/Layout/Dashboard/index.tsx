@@ -5,31 +5,23 @@ import {
   forwardRef,
   ReactNode,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react"
 import { Masonry } from "react-masonry"
 import { Widget } from "../../Widget"
 
+type WidgetWidth = "sm" | "md" | "lg"
+const widths: Record<WidgetWidth, number> = { sm: 340, md: 480, lg: 640 }
+
 type DashboardProps = {
-  widgetWidth?: "sm" | "md" | "lg"
+  widgetWidth?: WidgetWidth
   children?: ReactNode[]
 }
 
 const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
   function Dashboard({ children, widgetWidth = "sm" }, ref) {
-    const maxWidgetWidth = useMemo(() => {
-      switch (widgetWidth) {
-        case "sm":
-          return 340
-        case "md":
-          return 480
-        case "lg":
-          return 640
-      }
-    }, [widgetWidth])
-
+    const maxWidgetWidth = widths[widgetWidth]
     const [columns, setColumns] = useState<number | undefined>()
 
     const arrayChildren = Children.toArray(children)
