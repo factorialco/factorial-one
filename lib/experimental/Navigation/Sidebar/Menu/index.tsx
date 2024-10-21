@@ -7,7 +7,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/ui/collapsible"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import React from "react"
 import { NavigationItem } from "../../utils"
 
@@ -79,6 +79,7 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
 
 const CategoryItem = ({ category }: { category: MenuCategory }) => {
   const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
+  const shouldReduceMotion = useReducedMotion()
 
   if (category.isRoot) {
     return (
@@ -102,7 +103,7 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
         <motion.div
           initial={false}
           animate={{ rotate: isOpen ? 0 : -90 }}
-          transition={{ duration: 0.1 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.1 }}
         >
           <Icons.ChevronDown className="h-4 w-4 text-f1-icon-secondary" />
         </motion.div>
@@ -117,7 +118,10 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.15, ease: [0.165, 0.84, 0.44, 1] }}
+              transition={{
+                duration: shouldReduceMotion ? 0 : 0.15,
+                ease: [0.165, 0.84, 0.44, 1],
+              }}
             >
               <div className="flex flex-col gap-1 pb-3">
                 {category.items.map((item, index) => (
