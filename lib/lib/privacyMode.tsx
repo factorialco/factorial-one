@@ -19,10 +19,11 @@ export const PrivacyModeContext = createContext<{
   toggle: () => null,
 })
 
-export const PrivacyModeProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [enabled, setEnabled] = useState(false)
+export const PrivacyModeProvider: React.FC<{
+  initiallyEnabled?: boolean
+  children: ReactNode
+}> = ({ initiallyEnabled = false, children }) => {
+  const [enabled, setEnabled] = useState(initiallyEnabled)
 
   const enable = useCallback(() => {
     setEnabled(true)

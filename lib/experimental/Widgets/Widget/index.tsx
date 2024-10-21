@@ -1,6 +1,5 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Badge } from "@/components/Information/Badge"
-import { PrivacyModeProvider } from "@/factorial-one"
 import { EyeInvisible, EyeVisible } from "@/icons"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
@@ -61,93 +60,91 @@ const Container = forwardRef<
   }
 
   return (
-    <PrivacyModeProvider>
-      <Card className="flex gap-4" ref={ref}>
-        {header && (
-          <CardHeader>
-            <div className="flex flex-1 flex-col gap-4 truncate">
-              <div className="flex flex-row items-center justify-between gap-2">
-                <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
-                  {header.title && <CardTitle>{header.title}</CardTitle>}
-                  {header.subtitle && (
-                    <>
-                      <InlineDot />
-                      <CardSubtitle>{header.subtitle}</CardSubtitle>
-                    </>
-                  )}
-                  {header.info && <CardInfo content={header.info} />}
-                </div>
-                {alert && <Badge text={alert} variant="critical" hasDot />}
-                {header.link && (
-                  <CardLink href={header.link.url} title={header.link.title} />
+    <Card className="flex gap-4" ref={ref}>
+      {header && (
+        <CardHeader>
+          <div className="flex flex-1 flex-col gap-4 truncate">
+            <div className="flex flex-row items-center justify-between gap-2">
+              <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
+                {header.title && <CardTitle>{header.title}</CardTitle>}
+                {header.subtitle && (
+                  <>
+                    <InlineDot />
+                    <CardSubtitle>{header.subtitle}</CardSubtitle>
+                  </>
                 )}
+                {header.info && <CardInfo content={header.info} />}
               </div>
-              {header.comment && (
-                <div className="flex flex-row items-center gap-3">
-                  <CardComment className={cn(!!header.isBlur && "blur-md")}>
-                    {header.comment}
-                  </CardComment>
-                  {!!header.hasBlur && (
-                    <span>
-                      <Button
-                        icon={header.isBlur ? EyeInvisible : EyeVisible}
-                        hideLabel
-                        label="hide/show"
-                        variant="outline"
-                        round
-                        onClick={header.toggleBlur}
-                        size="sm"
-                      />
-                    </span>
-                  )}
-                </div>
+              {alert && <Badge text={alert} variant="critical" hasDot />}
+              {header.link && (
+                <CardLink href={header.link.url} title={header.link.title} />
               )}
             </div>
-          </CardHeader>
-        )}
-        <CardContent className="flex flex-col gap-4">
-          {summaries && (
-            <div className="flex flex-row">
-              {summaries.map((summary, index) => (
-                <div key={index} className="grow">
-                  <div className="mb-0.5 text-sm text-f1-foreground-secondary">
-                    {summary.label}
-                  </div>
-                  <div className="flex flex-row items-end gap-0.5 text-xl font-semibold">
-                    {!!summary.prefixUnit && (
-                      <div className="text-lg font-medium">
-                        {summary.prefixUnit}
-                      </div>
-                    )}
-                    {summary.value}
-                    {!!summary.postfixUnit && (
-                      <div className="text-lg font-medium">
-                        {summary.postfixUnit}
-                      </div>
-                    )}
-                  </div>
+            {header.comment && (
+              <div className="flex flex-row items-center gap-3">
+                <CardComment className={cn(!!header.isBlur && "blur-md")}>
+                  {header.comment}
+                </CardComment>
+                {!!header.hasBlur && (
+                  <span>
+                    <Button
+                      icon={header.isBlur ? EyeInvisible : EyeVisible}
+                      hideLabel
+                      label="hide/show"
+                      variant="outline"
+                      round
+                      onClick={header.toggleBlur}
+                      size="sm"
+                    />
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+        </CardHeader>
+      )}
+      <CardContent className="flex flex-col gap-4">
+        {summaries && (
+          <div className="flex flex-row">
+            {summaries.map((summary, index) => (
+              <div key={index} className="grow">
+                <div className="mb-0.5 text-sm text-f1-foreground-secondary">
+                  {summary.label}
                 </div>
-              ))}
-            </div>
-          )}
-          {React.Children.toArray(children)
-            .filter(isRealNode)
-            .map((child, index) => {
-              return (
-                <>
-                  {index > 0 && <Separator bare />}
-                  {child}
-                </>
-              )
-            })}
-        </CardContent>
-        {action && (
-          <CardFooter>
-            <Button variant="outline" size="md" {...action} />
-          </CardFooter>
+                <div className="flex flex-row items-end gap-0.5 text-xl font-semibold">
+                  {!!summary.prefixUnit && (
+                    <div className="text-lg font-medium">
+                      {summary.prefixUnit}
+                    </div>
+                  )}
+                  {summary.value}
+                  {!!summary.postfixUnit && (
+                    <div className="text-lg font-medium">
+                      {summary.postfixUnit}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         )}
-      </Card>
-    </PrivacyModeProvider>
+        {React.Children.toArray(children)
+          .filter(isRealNode)
+          .map((child, index) => {
+            return (
+              <>
+                {index > 0 && <Separator bare />}
+                {child}
+              </>
+            )
+          })}
+      </CardContent>
+      {action && (
+        <CardFooter>
+          <Button variant="outline" size="md" {...action} />
+        </CardFooter>
+      )}
+    </Card>
   )
 })
 
