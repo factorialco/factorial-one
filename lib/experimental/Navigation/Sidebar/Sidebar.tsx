@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
+import { motion, useReducedMotion } from "framer-motion"
 import { ReactNode } from "react"
 import { useSidebar } from "../ApplicationFrame/FrameProvider"
 
@@ -11,6 +11,7 @@ interface SidebarProps {
 
 export function Sidebar({ header, body, footer }: SidebarProps) {
   const { sidebarState, isSmallScreen } = useSidebar()
+  const shouldReduceMotion = useReducedMotion()
 
   const transition = {
     x: {
@@ -20,11 +21,15 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
             ? [0.25, 0.46, 0.45, 0.94]
             : [0.175, 0.885, 0.32, 1.1]
           : [0, 0, 0.58, 1],
-      duration: sidebarState !== "locked" && !isSmallScreen ? 0.3 : 0.2,
+      duration: shouldReduceMotion
+        ? 0
+        : sidebarState !== "locked" && !isSmallScreen
+          ? 0.3
+          : 0.2,
     },
-    top: { duration: 0.1 },
-    left: { duration: 0.1 },
-    default: { duration: 0.2 },
+    top: { duration: shouldReduceMotion ? 0 : 0.1 },
+    left: { duration: shouldReduceMotion ? 0 : 0.1 },
+    default: { duration: shouldReduceMotion ? 0 : 0.2 },
   }
 
   return (

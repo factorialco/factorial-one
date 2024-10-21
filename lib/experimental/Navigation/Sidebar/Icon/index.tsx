@@ -40,7 +40,7 @@ function SidebarIconSvg({ isExpanded }: SidebarIconProps) {
         strokeLinecap="round"
         strokeLinejoin="round"
         className={cn(
-          "translate-x-0 stroke-current transition-all duration-200 ease-out",
+          "translate-x-0 stroke-current transition-all duration-200 ease-out motion-reduce:transition-none",
           isExpanded
             ? "opacity-0 group-hover:-translate-x-1 group-hover:opacity-100"
             : "opacity-1 group-hover:translate-x-[3px]"
@@ -52,7 +52,7 @@ function SidebarIconSvg({ isExpanded }: SidebarIconProps) {
         strokeWidth="1.3"
         strokeLinecap="round"
         className={cn(
-          "stroke-current transition-all duration-200 ease-out",
+          "stroke-current transition-all duration-200 ease-out motion-reduce:transition-none",
           isExpanded
             ? "translate-x-0 opacity-100 group-hover:-translate-x-0.5 group-hover:opacity-0"
             : "-translate-x-0.5 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"

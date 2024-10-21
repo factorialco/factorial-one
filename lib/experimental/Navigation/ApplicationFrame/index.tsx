@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import { motion, MotionConfig } from "framer-motion"
+import { motion, MotionConfig, useReducedMotion } from "framer-motion"
 import { FrameProvider, useSidebar } from "./FrameProvider"
 
 import { AnimatePresence } from "framer-motion"
@@ -20,9 +20,15 @@ export function ApplicationFrame({ children, sidebar }: ApplicationFrameProps) {
 
 function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
   const { sidebarState, toggleSidebar, isSmallScreen } = useSidebar()
+  const shouldReduceMotion = useReducedMotion()
 
   return (
-    <MotionConfig transition={{ ease: [0.25, 0.1, 0.25, 1], duration: 0.2 }}>
+    <MotionConfig
+      transition={{
+        ease: [0.25, 0.1, 0.25, 1],
+        duration: shouldReduceMotion ? 0 : 0.2,
+      }}
+    >
       <div className="relative flex h-full flex-row">
         <AnimatePresence>
           {sidebarState === "unlocked" && (
@@ -33,14 +39,14 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
               onClick={toggleSidebar}
             />
           )}
         </AnimatePresence>
         <div
           className={cn(
-            "transition-all",
+            { "transition-all": !shouldReduceMotion },
             sidebarState === "locked" ? "w-64 pl-3" : "w-0"
           )}
         >
@@ -53,7 +59,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
           )}
           layout
           transition={{
-            duration: 0.3,
+            duration: shouldReduceMotion ? 0 : 0.3,
             type: "spring",
             stiffness: 300,
             damping: 30,
