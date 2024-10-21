@@ -1,7 +1,9 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
+import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import AlignTextJustify from "@/icons/AlignTextJustify"
 import { cn } from "@/lib/utils"
+import { AnimatePresence, motion } from "framer-motion"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
 import {
@@ -21,18 +23,15 @@ type HeaderProps = {
     icon: IconType
     onClick: () => void
   }[]
-  menu: {
-    show: boolean
-    onClick: () => void
-  }
 }
 
 export default function Header({
   module,
   breadcrumbs = [],
   actions = [],
-  menu,
 }: HeaderProps) {
+  const { sidebarState, toggleSidebar } = useSidebar()
+
   const breadcrumbsTree: BreadcrumbItemType[] = [
     { label: module.name, href: module.href, icon: module.icon },
     ...breadcrumbs,
@@ -43,28 +42,40 @@ export default function Header({
   return (
     <div
       className={cn(
-        "flex h-16 items-center justify-between bg-f1-background/80 px-6 py-4 backdrop-blur-xl",
+        "flex h-16 items-center justify-between bg-f1-background/80 px-5 py-4 backdrop-blur-xl xs:px-6",
         hasNavigation &&
           "border-b border-dashed border-transparent border-b-f1-border/80"
       )}
     >
-      <div className="flex flex-grow items-center gap-3">
-        {menu.show && (
-          <Button
-            variant="ghost"
-            hideLabel
-            round
-            onClick={menu.onClick}
-            label="Menu"
-            icon={AlignTextJustify}
-          />
-        )}
-        {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
-        {breadcrumbsTree.length > 1 ? (
-          <Breadcrumbs breadcrumbs={breadcrumbsTree} />
-        ) : (
-          <div className="text-xl font-semibold">{module.name}</div>
-        )}
+      <div className="flex flex-grow items-center">
+        <AnimatePresence>
+          {sidebarState !== "locked" && (
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: "auto" }}
+              exit={{ opacity: 0, width: 0 }}
+            >
+              <div className="mr-3">
+                <Button
+                  variant="ghost"
+                  hideLabel
+                  round
+                  onClick={toggleSidebar}
+                  label="Menu"
+                  icon={AlignTextJustify}
+                />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <div className="flex flex-grow items-center gap-3">
+          {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
+          {breadcrumbsTree.length > 1 ? (
+            <Breadcrumbs breadcrumbs={breadcrumbsTree} />
+          ) : (
+            <div className="text-xl font-semibold">{module.name}</div>
+          )}
+        </div>
       </div>
       {actions && (
         <div className="flex items-center gap-2">

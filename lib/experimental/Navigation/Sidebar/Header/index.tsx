@@ -7,7 +7,6 @@ export function SidebarHeader({
   companies,
   selected,
   onChange,
-  isExpanded,
 }: SidebarHeaderProps) {
   return (
     <div className="flex h-[72px] items-center justify-between gap-3">
@@ -16,7 +15,7 @@ export function SidebarHeader({
         selected={selected}
         onChange={onChange}
       />
-      <SidebarIcon isExpanded={isExpanded} />
+      <SidebarIcon />
     </div>
   )
 }
