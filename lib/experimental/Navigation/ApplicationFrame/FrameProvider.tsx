@@ -1,8 +1,10 @@
+import { useNavigation } from "@/lib/linkHandler"
 import React, {
   createContext,
   PointerEvent,
   useCallback,
   useContext,
+  useLayoutEffect,
   useState,
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
@@ -34,6 +36,8 @@ interface FrameProviderProps {
 }
 
 export function FrameProvider({ children }: FrameProviderProps) {
+  const { currentPath } = useNavigation()
+
   const isSmallScreen = useMediaQuery("(max-width: 900px)", {
     initializeWithValue: true,
   })
@@ -70,6 +74,10 @@ export function FrameProvider({ children }: FrameProviderProps) {
     if (!locked && visible) return "unlocked"
     return "locked"
   })()
+
+  useLayoutEffect(() => {
+    setVisible(false)
+  }, [currentPath])
 
   return (
     <FrameContext.Provider

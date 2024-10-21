@@ -72,15 +72,15 @@ export const FactorialOneProvider: React.FC<{
 }> = ({ children, layout, link, privacyModeInitiallyEnabled, image }) => {
   return (
     <MotionProvider>
-      <LayoutProvider {...layout}>
-        <XRayProvider>
-          <PrivacyModeProvider initiallyEnabled={privacyModeInitiallyEnabled}>
-            <LinkProvider {...link}>
+      <LinkProvider {...link}>
+        <LayoutProvider {...layout}>
+          <XRayProvider>
+            <PrivacyModeProvider initiallyEnabled={privacyModeInitiallyEnabled}>
               <ImageProvider {...image}>{children}</ImageProvider>
-            </LinkProvider>
-          </PrivacyModeProvider>
-        </XRayProvider>
-      </LayoutProvider>
+            </PrivacyModeProvider>
+          </XRayProvider>
+        </LayoutProvider>
+      </LinkProvider>
     </MotionProvider>
   )
 }
