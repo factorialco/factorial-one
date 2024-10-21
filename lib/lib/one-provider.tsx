@@ -1,3 +1,4 @@
+import { MotionConfig } from "framer-motion"
 import {
   ComponentProps,
   createContext,
@@ -56,6 +57,12 @@ export const LayoutProvider: React.FC<
   )
 }
 
+const MotionProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>
+}
+
 export const FactorialOneProvider: React.FC<{
   children: React.ReactNode
   link?: LinkContextValue
@@ -64,14 +71,16 @@ export const FactorialOneProvider: React.FC<{
   layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">
 }> = ({ children, layout, link, privacyModeInitiallyEnabled, image }) => {
   return (
-    <LayoutProvider {...layout}>
-      <XRayProvider>
-        <PrivacyModeProvider initiallyEnabled={privacyModeInitiallyEnabled}>
-          <LinkProvider {...link}>
-            <ImageProvider {...image}>{children}</ImageProvider>
-          </LinkProvider>
-        </PrivacyModeProvider>
-      </XRayProvider>
-    </LayoutProvider>
+    <MotionProvider>
+      <LayoutProvider {...layout}>
+        <XRayProvider>
+          <PrivacyModeProvider initiallyEnabled={privacyModeInitiallyEnabled}>
+            <LinkProvider {...link}>
+              <ImageProvider {...image}>{children}</ImageProvider>
+            </LinkProvider>
+          </PrivacyModeProvider>
+        </XRayProvider>
+      </LayoutProvider>
+    </MotionProvider>
   )
 }

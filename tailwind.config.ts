@@ -279,6 +279,9 @@ export default {
         "11xl": "192rem",
         "12xl": "240rem",
       },
+      screens: {
+        xs: "480px",
+      },
     },
   },
   plugins: [
