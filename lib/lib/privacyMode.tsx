@@ -41,5 +41,10 @@ export const PrivacyModeProvider: React.FC<{
 }
 
 export const usePrivacyMode = () => {
-  return useContext(PrivacyModeContext)
+  const context = useContext(PrivacyModeContext)
+
+  if (!context)
+    throw "usePrivacyMode requires wrapping the component in a PrivacyModeProvider"
+
+  return context
 }

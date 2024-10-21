@@ -1,18 +1,10 @@
 // Replace your-framework with the name of your framework
 import { Button } from "@/../lib/components/Actions/Button"
-import { PrivacyModeProvider, usePrivacyMode } from "@/lib/privacyMode"
+import { usePrivacyMode } from "@/lib/privacyMode"
 import type { Meta, StoryObj } from "@storybook/react"
 import { PrivateBox } from "."
 
-const meta: Meta = {
-  decorators: [
-    (Story) => (
-      <PrivacyModeProvider>
-        <Story />
-      </PrivacyModeProvider>
-    ),
-  ],
-}
+const meta: Meta = {}
 
 type Story = StoryObj
 
