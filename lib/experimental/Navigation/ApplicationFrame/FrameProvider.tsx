@@ -4,7 +4,7 @@ import React, {
   PointerEvent,
   useCallback,
   useContext,
-  useLayoutEffect,
+  useEffect,
   useState,
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
@@ -75,7 +75,7 @@ export function FrameProvider({ children }: FrameProviderProps) {
     return "locked"
   })()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setVisible(false)
   }, [currentPath])
 
