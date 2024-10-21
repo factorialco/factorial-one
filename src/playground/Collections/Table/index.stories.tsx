@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Badge } from "@/factorial-one"
+import { PersonAvatar } from "@/experimental/exports"
 import { Column, Table } from "."
 
 type RowData = {
@@ -52,14 +52,10 @@ const generateRowData = (count = 4000): RowData[] => {
       employeeGroupId: randomNumber(1, 3),
       managerId: randomNumber(1, 1),
       employee: () => (
-        <Badge
-          avatar={{
-            alt: `${firstName[0]}${lastName[0]}`,
-            src: "https://github.com/dani-moreno.png",
-          }}
-          text={`${firstName} ${lastName}`}
-          variant="name"
-        />
+        <>
+          <PersonAvatar firstName={firstName} lastName={lastName} />
+          <span className="text-base">{`${firstName} ${lastName}`}</span>
+        </>
       ),
     }
   })
@@ -69,6 +65,9 @@ const columns: Column<RowData>[] = [
   {
     accessorKey: "employee",
     header: "Employee",
+    meta: {
+      hideCheckbox: true,
+    },
   },
   {
     accessorKey: "firstName",
@@ -115,6 +114,13 @@ const meta: Meta = {
     columns,
     data: generateRowData(),
   },
+  decorators: [
+    (Story) => (
+      <div style={{ height: "100vh" }}>
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export default meta
