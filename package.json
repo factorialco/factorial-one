@@ -24,6 +24,7 @@
     "build-icons": "tsc --p ./tsconfig-build-icons.json",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
+    "lint-fix": "npm run lint -- --fix",
     "preview": "vite preview",
     "generate-icons": "npx @svgr/cli --out-dir lib/icons assets/icons",
     "build-storybook": "storybook build",

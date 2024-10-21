@@ -48,7 +48,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
         </div>
         <motion.div
           className={cn(
-            "xs:py-1 xs:pr-1 flex max-w-full flex-1 overflow-x-hidden",
+            "flex max-w-full flex-1 overflow-x-hidden xs:py-1 xs:pr-1",
             sidebarState === "locked" ? "pl-0" : "xs:pl-1"
           )}
           layout
