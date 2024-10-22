@@ -40,7 +40,7 @@ export default defineConfig({
     },
     copyPublicDir: false,
     rollupOptions: {
-      external: ["react/jsx-runtime"],
+      external: ["react/jsx-runtime", "react", "react-dom"],
       output: {
         globals: {
           react: "React",
