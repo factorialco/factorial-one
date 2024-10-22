@@ -1,5 +1,6 @@
 import { Counter } from "@/experimental/Information/Counter"
 import * as Icons from "@/icons"
+import { useReducedMotion } from "@/lib/a11y"
 import { Link, useNavigation } from "@/lib/linkHandler"
 import { cn, focusRing } from "@/lib/utils"
 import {
@@ -79,6 +80,7 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
 
 const CategoryItem = ({ category }: { category: MenuCategory }) => {
   const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
+  const shouldReduceMotion = useReducedMotion()
 
   if (category.isRoot) {
     return (
@@ -102,7 +104,7 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
         <motion.div
           initial={false}
           animate={{ rotate: isOpen ? 0 : -90 }}
-          transition={{ duration: 0.1 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.1 }}
         >
           <Icons.ChevronDown className="h-4 w-4 text-f1-icon-secondary" />
         </motion.div>
@@ -118,7 +120,7 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{
-                duration: 0.15,
+                duration: shouldReduceMotion ? 0 : 0.15,
                 ease: [0.165, 0.84, 0.44, 1],
               }}
             >
