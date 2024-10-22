@@ -78,6 +78,22 @@ export const MultipleContent: Story = {
   },
 }
 
+export const LongContentScrollArea: Story = {
+  args: {
+    ...meta.args,
+    children: [
+      Array.from({ length: 6 }).map((_, index) => (
+        <div
+          key={index}
+          className="rounded-sm bg-f1-background-secondary p-3 text-center text-f1-foreground"
+        >
+          Content {index + 1}
+        </div>
+      )),
+    ],
+  },
+}
+
 export const Full: Story = {
   args: {
     ...meta.args,
