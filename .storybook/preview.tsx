@@ -59,13 +59,13 @@ const preview: Preview = {
   decorators: [FactorialOne, withTheme()],
 
   parameters: {
+    chromatic: { diffThreshold: 0.3 },
     html: {
       root: "#factorial-one-layout",
       highlighter: {
         showLineNumbers: true, // default: false
         wrapLines: true, // default: true
       },
-      chromatic: { diffThreshold: 0.3 },
     },
     backgrounds: {
       default: "content",
