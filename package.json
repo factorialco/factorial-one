@@ -106,7 +106,7 @@
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
     "axe-playwright": "^2.0.3",
-    "chromatic": "^11.12.6",
+    "chromatic": "^11.14.0",
     "eslint": "^9.13.0",
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^5.0.0",
