@@ -4,7 +4,6 @@ import path, { resolve } from "path"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
 import { libInjectCss } from "vite-plugin-lib-inject-css"
-import { peerDependencies } from "./package.json"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -41,7 +40,7 @@ export default defineConfig({
     },
     copyPublicDir: false,
     rollupOptions: {
-      external: [...Object.keys(peerDependencies), "react/jsx-runtime"],
+      external: ["react/jsx-runtime"],
       output: {
         globals: {
           react: "React",
