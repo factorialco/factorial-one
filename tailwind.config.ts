@@ -232,6 +232,7 @@ export default {
             },
             selected: {
               DEFAULT: "hsl(var(--selected-50) / 0.2)",
+              bold: "hsl(var(--selected-50))",
             },
           },
           icon: {
