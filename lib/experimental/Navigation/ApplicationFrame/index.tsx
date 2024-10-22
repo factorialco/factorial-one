@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils"
-import { motion, MotionConfig, useReducedMotion } from "framer-motion"
+import { motion, MotionConfig } from "framer-motion"
 import { FrameProvider, useSidebar } from "./FrameProvider"
 
+import { useReducedMotion } from "@/lib/a11y"
 import { AnimatePresence } from "framer-motion"
 interface ApplicationFrameProps {
   sidebar: React.ReactNode
@@ -24,6 +25,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
 
   return (
     <MotionConfig
+      reducedMotion={shouldReduceMotion ? "always" : "never"}
       transition={{
         ease: [0.25, 0.1, 0.25, 1],
         duration: shouldReduceMotion ? 0 : 0.2,

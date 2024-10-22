@@ -1,5 +1,6 @@
+import { useReducedMotion } from "@/lib/a11y"
 import { cn } from "@/lib/utils"
-import { motion, useReducedMotion } from "framer-motion"
+import { motion } from "framer-motion"
 import { ReactNode } from "react"
 import { useSidebar } from "../ApplicationFrame/FrameProvider"
 

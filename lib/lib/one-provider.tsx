@@ -60,7 +60,7 @@ export const LayoutProvider: React.FC<
 const MotionProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  return <MotionConfig reducedMotion="never">{children}</MotionConfig>
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>
 }
 
 export const FactorialOneProvider: React.FC<{

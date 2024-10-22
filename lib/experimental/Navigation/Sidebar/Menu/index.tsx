@@ -1,5 +1,6 @@
 import { Counter } from "@/experimental/Information/Counter"
 import * as Icons from "@/icons"
+import { useReducedMotion } from "@/lib/a11y"
 import { Link, useNavigation } from "@/lib/linkHandler"
 import { cn, focusRing } from "@/lib/utils"
 import {
@@ -7,7 +8,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/ui/collapsible"
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import React from "react"
 import { NavigationItem } from "../../utils"
 
