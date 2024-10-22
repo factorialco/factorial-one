@@ -39,7 +39,7 @@ export const ItemWithCopyButton = ({
         onClick={copyHandler}
         className={cn(
           "group flex items-center gap-1.5 rounded p-1.5",
-          "focus-visible:outline-f1-border-selected-bold focus-visible:outline focus-visible:outline-2",
+          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-f1-border-selected-bold",
           copied
             ? "transition-colors duration-300 hover:bg-f1-background-positive focus-visible:bg-f1-background-positive"
             : "hover:bg-f1-background-secondary-hover active:bg-f1-background-secondary-hover"

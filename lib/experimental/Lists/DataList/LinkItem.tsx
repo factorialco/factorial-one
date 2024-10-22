@@ -19,7 +19,7 @@ export const LinkItem = ({
     <li className="flex rounded font-medium text-f1-foreground *:flex-1">
       <a
         href={href}
-        className="text-inherit focus-visible:outline-f1-border-selected-bold group flex items-center gap-1.5 rounded p-1.5 text-f1-foreground no-underline hover:bg-f1-background-secondary focus-visible:outline focus-visible:outline-2"
+        className="text-inherit group flex items-center gap-1.5 rounded p-1.5 text-f1-foreground no-underline hover:bg-f1-background-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-f1-border-selected-bold"
         onClick={(e) => {
           if (e.ctrlKey || e.metaKey || e.button === 1) {
             // Let the browser open the link in a new tab, no custom navigation needed
