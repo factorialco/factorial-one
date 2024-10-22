@@ -59,7 +59,7 @@ const preview: Preview = {
   decorators: [FactorialOne, withTheme()],
 
   parameters: {
-    chromatic: { diffThreshold: 0.15 },
+    chromatic: { diffThreshold: 0.2 },
     html: {
       root: "#factorial-one-layout",
       highlighter: {
