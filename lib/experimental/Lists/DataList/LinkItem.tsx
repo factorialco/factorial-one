@@ -25,13 +25,12 @@ export const LinkItem = memo(({ onClick, href, icon, text }: LinkItemProps) => {
         e.preventDefault()
         onClick(e)
       }}
-      className="text-inherit focus-visible:outline-f1-border-selected-bold group flex items-center gap-1.5 rounded p-1.5 text-f1-foreground no-underline hover:bg-f1-background-secondary focus-visible:outline focus-visible:outline-2"
-      actionIcon={() => (
+      actionIcon={({ className }) => (
         <Icon
           aria-hidden={true}
           icon={ChevronRight}
           size="md"
-          className="opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+          className={className}
         />
       )}
     />

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Icon } from "@/components/Utilities/Icon"
 import { ItemProps } from "@/experimental/Lists/DataList"
 import { ItemContainer } from "@/experimental/Lists/DataList/ItemContainer"
-import { Check, LayersFront } from "@/icons"
+import { CheckCircle, LayersFront } from "@/icons"
 import { cn } from "@/lib/utils"
 
 const COPIED_SHOWN_MS = 750
@@ -39,13 +39,11 @@ export const ItemWithCopyButton = ({
       text={text}
       leftIcon={IconComponent}
       onClick={copyHandler}
-      className={cn(
-        "group flex items-center gap-1.5 rounded p-1.5",
-        "focus-visible:outline-f1-border-selected-bold focus-visible:outline focus-visible:outline-2",
+      className={
         copied
           ? "transition-colors duration-300 hover:bg-f1-background-positive focus-visible:bg-f1-background-positive"
-          : "hover:bg-f1-background-secondary-hover active:bg-f1-background-secondary-hover"
-      )}
+          : undefined
+      }
       aria-label={copied ? "Copied!" : `Copy ${text}`}
       actionIcon={() => (
         <>
@@ -61,12 +59,12 @@ export const ItemWithCopyButton = ({
             )}
           />
           <Icon
-            icon={Check}
+            icon={CheckCircle}
             size="md"
             aria-hidden={true}
             className={cn(
               "col-start-1 col-end-2 row-start-1 row-end-2", // place to the same cell
-              "opacity-0 transition-opacity duration-300",
+              "text-f1-icon-positive opacity-0 transition-opacity duration-300",
               copied &&
                 "group-hover:opacity-100 group-focus-visible:opacity-100"
             )}
