@@ -3,6 +3,7 @@ import {
   InfoPaneLayout as InfoPaneLayoutComponent,
   InfoPaneLayoutProps,
 } from "./InfoPaneLayout"
+export * from "./StandardLayout"
 
 export type { InfoPaneLayoutProps }
 
