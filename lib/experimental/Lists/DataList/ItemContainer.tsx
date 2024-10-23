@@ -64,7 +64,7 @@ const SemanticTag = ({
           {...rest}
           className={cn(
             "group flex items-center gap-1.5 rounded p-1.5",
-            "focus-visible:outline-f1-border-selected-bold focus-visible:outline focus-visible:outline-2",
+            "focus-visible:outline focus-visible:outline-2 focus-visible:outline-f1-border-selected-bold",
             "hover:bg-f1-background-hover active:bg-f1-background-secondary-hover",
             rest.className
           )}
@@ -78,7 +78,7 @@ const SemanticTag = ({
           {...rest}
           className={cn(
             rest.className,
-            "text-inherit focus-visible:outline-f1-border-selected-bold hover:bg-f1-background-hover group flex items-center gap-1.5 rounded p-1.5 text-f1-foreground no-underline focus-visible:outline focus-visible:outline-2"
+            "text-inherit group flex items-center gap-1.5 rounded p-1.5 text-f1-foreground no-underline hover:bg-f1-background-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-f1-border-selected-bold"
           )}
         >
           {children}
