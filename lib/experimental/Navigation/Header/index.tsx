@@ -1,2 +1,2 @@
 export * from "./Breadcrumbs"
-export * from "./Header"
+export * from "./PageHeader"

@@ -2,8 +2,8 @@ import { Placeholder } from "@/lib/storybook-utils"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Page } from "."
 
-import Header from "../Header/Header"
-import * as HeaderStories from "../Header/Header/index.stories"
+import { PageHeader } from "../Header/PageHeader"
+import * as HeaderStories from "../Header/PageHeader/index.stories"
 import { Tabs } from "../Tabs"
 import * as TabsStories from "../Tabs/index.stories"
 
@@ -31,7 +31,7 @@ export const Default: Story = {
   args: {
     header: (
       <>
-        <Header {...HeaderStories.FirstLevel.args} />
+        <PageHeader {...HeaderStories.FirstLevel.args} />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),
