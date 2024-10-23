@@ -2,12 +2,12 @@ import EllipsisHorizontal from "@/icons/EllipsisHorizontal"
 import Settings from "@/icons/Settings"
 
 import type { Meta, StoryObj } from "@storybook/react"
-import Header from "."
+import { PageHeader } from "."
 
 const meta = {
-  component: Header,
+  component: PageHeader,
   tags: ["autodocs"],
-} satisfies Meta<typeof Header>
+} satisfies Meta<typeof PageHeader>
 
 export default meta
 type Story = StoryObj<typeof meta>

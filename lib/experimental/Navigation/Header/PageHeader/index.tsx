@@ -25,7 +25,7 @@ type HeaderProps = {
   }[]
 }
 
-export default function Header({
+export function PageHeader({
   module,
   breadcrumbs = [],
   actions = [],
