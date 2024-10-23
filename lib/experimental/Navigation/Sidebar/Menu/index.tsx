@@ -1,3 +1,4 @@
+import { IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
 import * as Icons from "@/icons"
 import { useReducedMotion } from "@/lib/a11y"
@@ -12,10 +13,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import React from "react"
 import { NavigationItem } from "../../utils"
 
-type IconName = keyof typeof Icons
-
 interface MenuItem extends NavigationItem {
-  icon: IconName
+  icon: IconType
   badge?: number
 }
 
@@ -37,7 +36,7 @@ const MenuItemContent = ({
   item: MenuItem
   active: boolean
 }) => {
-  const IconComponent = Icons[item.icon]
+  const IconComponent = item.icon
 
   return (
     <div className="flex w-full items-center justify-between">
