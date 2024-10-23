@@ -13,12 +13,12 @@ import { AnimatePresence, motion } from "framer-motion"
 import React from "react"
 import { NavigationItem } from "../../utils"
 
-interface MenuItem extends NavigationItem {
+export interface MenuItem extends NavigationItem {
   icon: IconType
   badge?: number
 }
 
-interface MenuCategory {
+export interface MenuCategory {
   title: string
   items: MenuItem[]
   isRoot?: boolean
