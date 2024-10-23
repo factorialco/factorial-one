@@ -1,3 +1,4 @@
+import * as Icons from "@/icons"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Menu } from "."
 
@@ -25,16 +26,16 @@ export const Default: Story = {
       {
         title: "Root",
         items: [
-          { label: "Home", icon: "Home", href: "/", exactMatch: true },
+          { label: "Home", icon: Icons.Home, href: "/", exactMatch: true },
           {
             label: "Inbox",
-            icon: "Envelope",
+            icon: Icons.Envelope,
             href: "/inbox",
             badge: 6,
           },
           {
             label: "Discover Factorial",
-            icon: "UpgradePlan",
+            icon: Icons.UpgradePlan,
             href: "/discover",
           },
         ],
@@ -43,17 +44,17 @@ export const Default: Story = {
       {
         title: "You",
         items: [
-          { label: "Me", icon: "Person", href: "/me" },
-          { label: "Clock in", icon: "Clock", href: "/clock-in" },
-          { label: "Time off", icon: "TimeOff", href: "/time-off" },
+          { label: "Me", icon: Icons.Person, href: "/me" },
+          { label: "Clock in", icon: Icons.Clock, href: "/clock-in" },
+          { label: "Time off", icon: Icons.TimeOff, href: "/time-off" },
         ],
         isOpen: true,
       },
       {
         title: "Your company",
         items: [
-          { label: "Organization", icon: "Manager", href: "/organization" },
-          { label: "Calendar", icon: "Calendar", href: "/calendar" },
+          { label: "Organization", icon: Icons.Manager, href: "/organization" },
+          { label: "Calendar", icon: Icons.Calendar, href: "/calendar" },
         ],
         isOpen: true,
       },
