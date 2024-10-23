@@ -1,8 +1,9 @@
 import { FC, forwardRef, ReactElement } from "react"
 
-import { Icon, IconType } from "@/components/Utilities/Icon"
-import { ItemWithCopyButton } from "@/experimental/Lists/DataList/ItemWithCopyButton.tsx"
-import { LinkItem } from "@/experimental/Lists/DataList/LinkItem.tsx"
+import { IconType } from "@/components/Utilities/Icon"
+import { ItemContainer } from "@/experimental/Lists/DataList/ItemContainer"
+import { ItemWithCopyButton } from "@/experimental/Lists/DataList/ItemWithCopyButton"
+import { LinkItem } from "@/experimental/Lists/DataList/LinkItem"
 
 export type DataListProps = {
   children: ReactElement<Items>[] | ReactElement<Items>
@@ -37,21 +38,9 @@ export type ItemProps = {
   icon?: IconType
 }
 
-const Item = forwardRef<HTMLLIElement, ItemProps>(
-  ({ text, icon: IconComponent }, ref) => (
-    <li
-      className="flex rounded font-medium text-f1-foreground *:flex-1"
-      ref={ref}
-    >
-      <div className="flex items-center gap-1.5 p-1.5">
-        {IconComponent && (
-          <Icon icon={IconComponent} size="md" aria-hidden="true" />
-        )}
-        <div className="line-clamp-2">{text}</div>
-      </div>
-    </li>
-  )
-)
+const Item = forwardRef<HTMLLIElement, ItemProps>(({ text, icon }, ref) => (
+  <ItemContainer ref={ref} text={text} leftIcon={icon} />
+))
 
 Item.displayName = "DataList.Item"
 

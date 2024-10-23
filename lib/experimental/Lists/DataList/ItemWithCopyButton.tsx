@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 
 import { Icon } from "@/components/Utilities/Icon"
-import { ItemProps } from "@/experimental/Lists/DataList/index.tsx"
+import { ItemProps } from "@/experimental/Lists/DataList"
+import { ItemContainer } from "@/experimental/Lists/DataList/ItemContainer"
 import { Check, LayersFront } from "@/icons"
 import { cn } from "@/lib/utils"
 
@@ -33,24 +34,21 @@ export const ItemWithCopyButton = ({
   }
 
   return (
-    <li className="flex rounded font-medium text-f1-foreground *:flex-1">
-      <button
-        type="button"
-        onClick={copyHandler}
-        className={cn(
-          "group flex items-center gap-1.5 rounded p-1.5",
-          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-f1-border-selected-bold",
-          copied
-            ? "transition-colors duration-300 hover:bg-f1-background-positive focus-visible:bg-f1-background-positive"
-            : "hover:bg-f1-background-secondary-hover active:bg-f1-background-secondary-hover"
-        )}
-        aria-label={copied ? "Copied!" : `Copy ${text}`}
-      >
-        {IconComponent && (
-          <Icon icon={IconComponent} size="md" aria-hidden={true} />
-        )}
-        <div className="line-clamp-2 flex-1 text-left">{text}</div>
-        <div className="grid">
+    <ItemContainer
+      as="button"
+      text={text}
+      leftIcon={IconComponent}
+      onClick={copyHandler}
+      className={cn(
+        "group flex items-center gap-1.5 rounded p-1.5",
+        "focus-visible:outline-f1-border-selected-bold focus-visible:outline focus-visible:outline-2",
+        copied
+          ? "transition-colors duration-300 hover:bg-f1-background-positive focus-visible:bg-f1-background-positive"
+          : "hover:bg-f1-background-secondary-hover active:bg-f1-background-secondary-hover"
+      )}
+      aria-label={copied ? "Copied!" : `Copy ${text}`}
+      actionIcon={() => (
+        <>
           <Icon
             icon={LayersFront}
             size="md"
@@ -73,9 +71,9 @@ export const ItemWithCopyButton = ({
                 "group-hover:opacity-100 group-focus-visible:opacity-100"
             )}
           />
-        </div>
-      </button>
-    </li>
+        </>
+      )}
+    />
   )
 }
 
