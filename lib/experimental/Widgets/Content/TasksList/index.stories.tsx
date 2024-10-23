@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { TasksList } from "./index"
+import { fn } from "@storybook/test"
+import { TasksList, TasksListProps } from "./index"
 
-const meta: Meta<typeof TasksList> = {
+const meta: Meta<TasksListProps> = {
   component: TasksList,
   tags: ["autodocs"],
   parameters: {
@@ -17,18 +18,18 @@ const meta: Meta<typeof TasksList> = {
 }
 
 export default meta
-type Story = StoryObj<typeof TasksList>
+type Story = StoryObj<TasksListProps>
 
 export const Default: Story = {
   args: {
     tasks: {
-      inProgress: [{ text: "Migrate to new CRM" }],
+      inProgress: [{ id: 1, text: "Migrate to new CRM" }],
       due: [],
       noDue: [
-        { text: "Connect to Slack" },
-        { text: "Write changelog" },
-        { text: "Product review" },
-        { text: "Final conclusions" },
+        { id: 2, text: "Connect to Slack" },
+        { id: 3, text: "Write changelog" },
+        { id: 4, text: "Product review" },
+        { id: 5, text: "Final conclusions" },
       ],
     },
   },
@@ -39,18 +40,17 @@ export const WithLabels: Story = {
     tasks: {
       inProgress: [
         {
+          id: 1,
           text: "Migrate to new CRM",
           badge: { text: "Due Sep 10", isPastDue: true },
         },
-        {
-          text: "Connect to Slack",
-        },
+        { id: 2, text: "Connect to Slack" },
       ],
       due: [],
       noDue: [
-        { text: "Write changelog", badge: { text: "Due Oct 2" } },
-        { text: "Product review", badge: { text: "Due Oct 21" } },
-        { text: "Final conclusions", badge: { text: "Due Nov 2" } },
+        { id: 3, text: "Write changelog", badge: { text: "Due Oct 2" } },
+        { id: 4, text: "Product review", badge: { text: "Due Oct 21" } },
+        { id: 5, text: "Final conclusions", badge: { text: "Due Nov 2" } },
       ],
     },
   },
@@ -58,25 +58,37 @@ export const WithLabels: Story = {
 
 export const WithCounters: Story = {
   args: {
+    onClickTask: fn(),
+    hideIcons: true,
     tasks: {
       inProgress: [
         {
+          id: 1,
           text: "Migrate to new CRM",
           badge: { text: "Due Sep 10", isPastDue: true },
-          counter: "2",
+          counter: 2,
         },
-        {
-          text: "Connect to Slack",
-        },
+        { id: 2, text: "Connect to Slack" },
       ],
       due: [],
       noDue: [
-        { text: "Write changelog", badge: { text: "Due Oct 2" }, counter: "4" },
-        { text: "Product review", badge: { text: "Due Oct 21" }, counter: "1" },
         {
+          id: 1,
+          text: "Write changelog",
+          badge: { text: "Due Oct 2" },
+          counter: 4,
+        },
+        {
+          id: 2,
+          text: "Product review",
+          badge: { text: "Due Oct 21" },
+          counter: 1,
+        },
+        {
+          id: 3,
           text: "Final conclusions",
           badge: { text: "Due Nov 2" },
-          counter: "7",
+          counter: 7,
         },
       ],
     },
@@ -88,15 +100,18 @@ export const WithLongTaskTitles: Story = {
     tasks: {
       inProgress: [
         {
+          id: 1,
           text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut sem accumsan ipsum malesuada maximus id vitae libero. Maecenas iaculis felis id massa elementum tristique.",
         },
       ],
       due: [],
       noDue: [
         {
+          id: 2,
           text: "Nam et dapibus lorem. Sed tristique, metus iaculis viverra accumsan, urna purus auctor purus, quis tempor risus augue nec dui.",
         },
         {
+          id: 3,
           text: "Quisque tellus orci, tincidunt auctor imperdiet ac, molestie non nisl. Aliquam scelerisque lacus turpis, et tempor erat volutpat et.",
         },
       ],

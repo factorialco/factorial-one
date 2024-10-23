@@ -1,107 +1,61 @@
-import { Badge } from "@/components/Information/Badge"
-import { DottedCircle, InProgressTask } from "@/icons"
-import { useCallback } from "react"
+import { Task, TaskItem, TaskStatus } from "./TaskItem"
 
-type TaskStatus = "in-progress" | "due" | "no-due"
-
-type TaskItemProps = {
-  title: string
-  status: TaskStatus
-  onClick?: (status: TaskStatus) => void
-  badge?: {
-    text: string
-    isPastDue?: boolean
-  }
-  counter?: string
-}
-
-function TaskItem({ title, status, onClick, badge, counter }: TaskItemProps) {
-  const handleClick = useCallback(() => {
-    onClick?.(status)
-  }, [onClick, status])
-
-  return (
-    <div className="flex flex-row items-start gap-2" onClick={handleClick}>
-      {(status === "due" || status === "no-due") && (
-        <DottedCircle
-          width={24}
-          color={
-            status === "no-due"
-              ? "hsl(var(--neutral-40))"
-              : "hsl(var(--neutral-50))"
-          }
-        />
-      )}
-      {status === "in-progress" && <InProgressTask />}
-      <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{title}</p>
-      {!!badge && (
-        <Badge
-          text={badge.text}
-          variant={badge.isPastDue ? "critical" : "neutral"}
-        />
-      )}
-      {!!counter && <Badge variant="neutral" text={counter} />}
-    </div>
-  )
-}
-
-interface Task {
-  text: string
-  badge?: { text: string; isPastDue?: boolean }
-  counter?: string
-}
-
-interface Tasks {
+interface TasksList {
   inProgress?: Task[]
   noDue?: Task[]
   due?: Task[]
 }
 
-interface Props {
-  tasks: Pick<Tasks, "inProgress" | "noDue" | "due">
+export interface TasksListProps {
+  tasks: TasksList
   maxTasksToShow?: number
-  onClickTask?: (status: TaskStatus) => void
+  onClickTask?: (task: Task) => void
   emptyMessage?: string
+  hideIcons?: boolean
 }
 
 export function TasksList({
   tasks,
   onClickTask,
+  hideIcons = false,
   maxTasksToShow = 5,
   emptyMessage = "No tasks assigned",
-}: Props) {
-  const taskTypes = [
+}: TasksListProps) {
+  const taskTypes: {
+    key: "inProgress" | "due" | "noDue"
+    status: TaskStatus
+  }[] = [
     { key: "inProgress", status: "in-progress" },
     { key: "due", status: "due" },
     { key: "noDue", status: "no-due" },
-  ] as const
+  ]
 
   const tasksToRender = taskTypes.flatMap(({ key, status }) =>
-    (tasks?.[key] || []).map(({ text, badge, counter }) => ({
-      title: text,
+    (tasks[key] || []).map(({ id, text, badge, counter }) => ({
+      id,
+      text,
       badge,
       counter,
-      status: status as TaskStatus,
+      status: status,
     }))
   )
 
   const isEmpty = !tasksToRender.length
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-0">
       {isEmpty ? (
         <p className="font-medium">{emptyMessage}</p>
       ) : (
         tasksToRender
           .slice(0, maxTasksToShow)
-          .map((task, i) => (
+          .map((task) => (
             <TaskItem
-              key={`${task} ${i}`}
-              title={task.title}
+              key={task.id}
+              task={task}
               status={task.status}
+              hideIcon={hideIcons}
               onClick={onClickTask}
-              badge={task.badge}
-              counter={task.counter}
             />
           ))
       )}
