@@ -89,9 +89,18 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
         {(inProgressTasks.length || dueTasks.length || noDueTasks.length) && (
           <TasksList
             tasks={{
-              inProgress: inProgressTasks,
-              noDue: noDueTasks,
-              due: dueTasks,
+              inProgress: inProgressTasks.map((task) => ({
+                id: 1,
+                text: task,
+              })),
+              noDue: noDueTasks.map((task) => ({
+                id: 2,
+                text: task,
+              })),
+              due: dueTasks.map((task) => ({
+                id: 3,
+                text: task,
+              })),
             }}
           />
         )}
