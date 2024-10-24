@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react"
 
 import { Check } from "@/icons"
-import { action } from "@storybook/addon-actions"
 import { DataList } from "."
 
 const meta: Meta<typeof DataList> = {
@@ -13,17 +12,8 @@ const meta: Meta<typeof DataList> = {
         <DataList.Item text="test" />
         <DataList.Item icon={Check} text="Make coffee" />
         <DataList.ItemWithCopyButton text="hellen@factorial.co" />
+        <DataList.LinkItem href="https://factorialhr.com/" text="Factorial" />
         <DataList.LinkItem
-          onClick={() => {
-            action("on link click")
-          }}
-          href="https://factorialhr.com/"
-          text="Factorial"
-        />
-        <DataList.LinkItem
-          onClick={() => {
-            action("on link click")
-          }}
           href="https://factorialhr.com/"
           text="Banco Bilbao Vizcaya Argentaria"
         />
