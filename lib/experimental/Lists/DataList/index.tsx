@@ -19,15 +19,14 @@ type Items =
 const _DataList = forwardRef<HTMLUListElement, DataListProps>(
   ({ children, label }, ref) => {
     return (
-      <ul
-        className="flex min-w-32 max-w-72 flex-col gap-0.5 px-1.5 py-1"
-        ref={ref}
-      >
+      <div className="min-w-32 max-w-72">
         {label && (
-          <p className="px-1.5 text-f1-foreground-secondary">{label}</p>
+          <p className="mb-0.5 px-1.5 text-f1-foreground-secondary">{label}</p>
         )}
-        {children}
-      </ul>
+        <ul className="flex flex-col gap-0.5" ref={ref}>
+          {children}
+        </ul>
+      </div>
     )
   }
 )
