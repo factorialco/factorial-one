@@ -1,0 +1,31 @@
+import * as React from "react";
+import { forwardRef } from "react";
+const SvgModuleProfile = (props, ref) => React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 24 24", ref: ref, ...props },
+    React.createElement("g", { clipPath: "url(#ModuleProfile_svg__a)" },
+        React.createElement("g", { filter: "url(#ModuleProfile_svg__b)" },
+            React.createElement("circle", { cx: 12, cy: 8, r: 4.5, fill: "#fff" })),
+        React.createElement("g", { filter: "url(#ModuleProfile_svg__c)" },
+            React.createElement("path", { fill: "#fff", d: "M12 14.5c-2.873 0-5.337 1.638-7.035 3.202C3.79 18.784 4.64 20.5 6.237 20.5h11.526c1.597 0 2.447-1.716 1.272-2.798C17.338 16.138 14.874 14.5 12 14.5" }))),
+    React.createElement("defs", null,
+        React.createElement("filter", { id: "ModuleProfile_svg__b", width: 15.896, height: 15.896, x: 4.052, y: 1.776, colorInterpolationFilters: "sRGB", filterUnits: "userSpaceOnUse" },
+            React.createElement("feFlood", { floodOpacity: 0, result: "BackgroundImageFix" }),
+            React.createElement("feColorMatrix", { in: "SourceAlpha", result: "hardAlpha", values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" }),
+            React.createElement("feOffset", { dy: 1.724 }),
+            React.createElement("feGaussianBlur", { stdDeviation: 1.724 }),
+            React.createElement("feComposite", { in2: "hardAlpha", operator: "out" }),
+            React.createElement("feColorMatrix", { values: "0 0 0 0 0.0352941 0 0 0 0 0.0627451 0 0 0 0 0.109804 0 0 0 0.12 0" }),
+            React.createElement("feBlend", { in2: "BackgroundImageFix", result: "effect1_dropShadow_5_37" }),
+            React.createElement("feBlend", { in: "SourceGraphic", in2: "effect1_dropShadow_5_37", result: "shape" })),
+        React.createElement("filter", { id: "ModuleProfile_svg__c", width: 22.062, height: 12.896, x: 0.969, y: 12.776, colorInterpolationFilters: "sRGB", filterUnits: "userSpaceOnUse" },
+            React.createElement("feFlood", { floodOpacity: 0, result: "BackgroundImageFix" }),
+            React.createElement("feColorMatrix", { in: "SourceAlpha", result: "hardAlpha", values: "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" }),
+            React.createElement("feOffset", { dy: 1.724 }),
+            React.createElement("feGaussianBlur", { stdDeviation: 1.724 }),
+            React.createElement("feComposite", { in2: "hardAlpha", operator: "out" }),
+            React.createElement("feColorMatrix", { values: "0 0 0 0 0.0352941 0 0 0 0 0.0627451 0 0 0 0 0.109804 0 0 0 0.12 0" }),
+            React.createElement("feBlend", { in2: "BackgroundImageFix", result: "effect1_dropShadow_5_37" }),
+            React.createElement("feBlend", { in: "SourceGraphic", in2: "effect1_dropShadow_5_37", result: "shape" })),
+        React.createElement("clipPath", { id: "ModuleProfile_svg__a" },
+            React.createElement("path", { fill: "#fff", d: "M0 0h24v24H0z" }))));
+const ForwardRef = forwardRef(SvgModuleProfile);
+export default ForwardRef;
