@@ -1,7 +1,7 @@
 import * as Icons from "@/icons"
 import { cva, type VariantProps } from "class-variance-authority"
 
-const moduleIconNames = [
+export const moduleIconNames = [
   "Calendar",
   "ClockIn",
   "Documents",
