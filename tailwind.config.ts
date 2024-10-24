@@ -188,6 +188,7 @@ export default {
           },
           background: {
             DEFAULT: "hsl(var(--neutral-0))",
+            hover: "hsl(var(--neutral-5))",
             secondary: {
               DEFAULT: "hsl(var(--neutral-10))",
               hover: "hsl(var(--neutral-20))",
@@ -232,6 +233,7 @@ export default {
             },
             selected: {
               DEFAULT: "hsl(var(--selected-50) / 0.2)",
+              bold: "hsl(var(--selected-50))",
             },
           },
           icon: {
