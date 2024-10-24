@@ -1,9 +1,9 @@
 import { Task, TaskItem, TaskStatus } from "./TaskItem"
 
 interface TasksList {
-  inProgress?: Task[]
-  noDue?: Task[]
-  due?: Task[]
+  inProgress?: (Task | string)[]
+  noDue?: (Task | string)[]
+  due?: (Task | string)[]
 }
 
 export interface TasksListProps {
@@ -31,13 +31,22 @@ export function TasksList({
   ]
 
   const tasksToRender = taskTypes.flatMap(({ key, status }) =>
-    (tasks[key] || []).map(({ id, text, badge, counter }) => ({
-      id,
-      text,
-      badge,
-      counter,
-      status: status,
-    }))
+    (tasks[key] || [])
+      .map((task) =>
+        typeof task === "string"
+          ? {
+              id: task,
+              text: task,
+            }
+          : task
+      )
+      .map(({ id, text, badge, counter }) => ({
+        id,
+        text,
+        badge,
+        counter,
+        status: status,
+      }))
   )
 
   const isEmpty = !tasksToRender.length
