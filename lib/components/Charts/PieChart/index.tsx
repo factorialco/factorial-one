@@ -42,6 +42,7 @@ export const _PieChart = (
       ref={ref}
       aspect={aspect}
       data-chromatic="ignore"
+      style={{ height: 380 }}
     >
       <PieChartPrimitive accessibilityLayer margin={{ left: 0, right: 0 }}>
         <ChartTooltip
@@ -54,7 +55,8 @@ export const _PieChart = (
           legendType="circle"
           dataKey={"value"}
           data={preparedData}
-          innerRadius={overview ? 50 : 40}
+          innerRadius={120}
+          outerRadius={135}
           paddingAngle={2.5}
         >
           <Label
@@ -72,7 +74,11 @@ export const _PieChart = (
                       y={(viewBox.cy || 0) + 8}
                       className="fill-f1-foreground text-2xl font-semibold"
                     >
-                      {overview?.number}
+                      {overview?.number
+                        ? tickFormatter
+                          ? tickFormatter(String(overview.number))
+                          : overview.number
+                        : null}
                     </tspan>
                     <tspan
                       x={viewBox.cx}
@@ -89,10 +95,10 @@ export const _PieChart = (
         </Pie>
         <ChartLegend
           content={<ChartLegendContent />}
-          align="right"
-          verticalAlign="middle"
+          align={"center"}
+          verticalAlign={"bottom"}
           layout="vertical"
-          className="flex-col items-start gap-1 pr-3 pt-0"
+          className={"flex-row items-start gap-4 pr-3 pt-2"}
         />
       </PieChartPrimitive>
     </ChartContainer>
