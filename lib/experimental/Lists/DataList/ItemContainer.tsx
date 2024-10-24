@@ -1,4 +1,5 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import {
   AnchorHTMLAttributes,
@@ -74,7 +75,7 @@ const SemanticTag = ({
       )
     case "a":
       return (
-        <a
+        <Link
           {...rest}
           className={cn(
             rest.className,
@@ -82,7 +83,7 @@ const SemanticTag = ({
           )}
         >
           {children}
-        </a>
+        </Link>
       )
     default:
       return <div {...rest}>{children}</div>
