@@ -35,7 +35,7 @@ const meta: Meta<typeof PieChart> = {
   },
   decorators: [
     (Story) => (
-      <div className="h-52 w-full">
+      <div className="h-96 w-full">
         <Story />
       </div>
     ),
