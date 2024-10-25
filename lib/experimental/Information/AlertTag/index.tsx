@@ -1,13 +1,14 @@
 import { IconType } from "@/components/Utilities/Icon"
 import { Icon } from "@/factorial-one"
 import { AlertCircle, InfoCircle, Warning } from "@/icons"
+import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
 type Level = "info" | "warning" | "critical"
 
-interface Props {
-  text: string
+type Props<Text extends string = string> = {
+  text: Text extends "" ? never : Text
   level: Level
 }
 
@@ -19,9 +20,7 @@ const iconMap: Record<Level, IconType> = {
 
 export const AlertTag = forwardRef<HTMLDivElement, Props>(
   ({ text, level }, ref) => {
-    if (!text) {
-      throw Error("You need to provide some text that is not empty")
-    }
+    useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
       <div

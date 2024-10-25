@@ -1,6 +1,7 @@
 import { IconType } from "@/components/Utilities/Icon"
 import { Icon } from "@/factorial-one"
 import { ArrowDown, ArrowUp } from "@/icons"
+import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
@@ -18,9 +19,7 @@ const iconMap: Record<Status, IconType> = {
 
 export const BalanceTag = forwardRef<HTMLDivElement, Props>(
   ({ text, status }, ref) => {
-    if (!text) {
-      throw Error("You need to provide some text that is not empty")
-    }
+    useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
       <div

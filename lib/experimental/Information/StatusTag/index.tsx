@@ -1,3 +1,4 @@
+import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
@@ -10,9 +11,7 @@ interface Props {
 
 export const StatusTag = forwardRef<HTMLDivElement, Props>(
   ({ text, variant }, ref) => {
-    if (!text) {
-      throw Error("You need to provide some text that is not empty")
-    }
+    useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
       <div
