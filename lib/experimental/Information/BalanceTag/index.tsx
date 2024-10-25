@@ -34,7 +34,7 @@ export const BalanceTag = forwardRef<HTMLDivElement, Props>(
       >
         <Icon
           icon={iconMap[status]}
-          size="md"
+          size="sm"
           className={cn(
             {
               positive: "text-f1-icon-positive",
