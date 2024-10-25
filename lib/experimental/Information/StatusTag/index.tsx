@@ -17,7 +17,7 @@ export const StatusTag = forwardRef<HTMLDivElement, Props>(
       <div
         ref={ref}
         className={cn(
-          "flex flex-row items-center justify-start gap-1.5 rounded-md px-2 py-0.5 text-base font-medium",
+          "line-clamp-1 flex flex-row items-center justify-start gap-1.5 rounded-md px-2 py-0.5 text-base font-medium",
           {
             neutral: "bg-f1-background-secondary text-f1-foreground-secondary",
             info: "bg-f1-background-info text-f1-foreground-info",

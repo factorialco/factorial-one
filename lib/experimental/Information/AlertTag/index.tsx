@@ -26,7 +26,7 @@ export const AlertTag = forwardRef<HTMLDivElement, Props>(
       <div
         ref={ref}
         className={cn(
-          "flex flex-row items-center justify-start gap-0.5 rounded-md py-0.5 pl-0.5 pr-2 text-base font-medium",
+          "line-clamp-1 flex flex-row items-center justify-start gap-0.5 rounded-md py-0.5 pl-0.5 pr-2 text-base font-medium",
           {
             info: "bg-f1-background-info text-f1-foreground-info",
             warning: "bg-f1-background-warning text-f1-foreground-warning",
