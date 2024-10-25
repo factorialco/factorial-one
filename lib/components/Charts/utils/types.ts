@@ -18,7 +18,6 @@ export type AxisConfig = {
   tickCount?: number
   ticks?: number[]
   domain?: number[]
-  isBlur?: boolean
   width?: number
 }
 

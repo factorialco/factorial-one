@@ -60,7 +60,7 @@ export const WithComment = {
 
 export const WithBlur = {
   args: {
-    hasBlur: true,
+    canBeBlurred: true,
     header: {
       ...containerStoryArgs.header,
       title: "An area chart",
