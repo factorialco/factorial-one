@@ -60,7 +60,7 @@ const Container = forwardRef<
   }
 
   return (
-    <Card className="flex gap-4" ref={ref}>
+    <Card className="flex gap-4 border-f1-border-secondary" ref={ref}>
       {header && (
         <CardHeader>
           <div className="flex flex-1 flex-col gap-4 truncate">
