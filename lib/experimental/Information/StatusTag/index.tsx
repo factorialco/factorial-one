@@ -38,6 +38,7 @@ export const StatusTag = forwardRef<HTMLDivElement, Props>(
               critical: "bg-f1-icon-critical",
             }[variant]
           )}
+          aria-hidden
         />
         <span>{text}</span>
       </div>

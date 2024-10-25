@@ -37,6 +37,7 @@ export const AlertTag = forwardRef<HTMLDivElement, Props>(
         <Icon
           icon={iconMap[level]}
           size="md"
+          aria-hidden
           className={cn(
             {
               info: "text-f1-icon-info",
@@ -45,6 +46,7 @@ export const AlertTag = forwardRef<HTMLDivElement, Props>(
             }[level]
           )}
         />
+        <span className="sr-only">Information:</span>
         <span>{text}</span>
       </div>
     )
