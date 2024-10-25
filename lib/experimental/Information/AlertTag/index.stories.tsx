@@ -10,7 +10,7 @@ const meta: Meta = {
   },
   args: {
     text: "Info",
-    variant: "info",
+    level: "info",
   },
 }
 
@@ -22,13 +22,13 @@ export const InfoAlertTag: Story = {}
 export const WarningAlertTag: Story = {
   args: {
     text: "Warning",
-    variant: "warning",
+    level: "warning",
   },
 }
 
 export const CriticalAlertTag: Story = {
   args: {
     text: "Critical",
-    variant: "critical",
+    level: "critical",
   },
 }

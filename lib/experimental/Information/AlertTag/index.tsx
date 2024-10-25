@@ -4,21 +4,21 @@ import { AlertCircle, InfoCircle, Warning } from "@/icons"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
-type Variant = "info" | "warning" | "critical"
+type Level = "info" | "warning" | "critical"
 
 interface Props {
   text: string
-  variant: Variant
+  level: Level
 }
 
-const iconMap: Record<Variant, IconType> = {
+const iconMap: Record<Level, IconType> = {
   info: InfoCircle,
   warning: Warning,
   critical: AlertCircle,
 }
 
 export const AlertTag = forwardRef<HTMLDivElement, Props>(
-  ({ text, variant }, ref) => {
+  ({ text, level }, ref) => {
     if (!text) {
       throw Error("You need to provide some text that is not empty")
     }
@@ -32,18 +32,18 @@ export const AlertTag = forwardRef<HTMLDivElement, Props>(
             info: "bg-f1-background-info text-f1-foreground-info",
             warning: "bg-f1-background-warning text-f1-foreground-warning",
             critical: "bg-f1-background-critical text-f1-foreground-critical",
-          }[variant]
+          }[level]
         )}
       >
         <Icon
-          icon={iconMap[variant]}
+          icon={iconMap[level]}
           size="md"
           className={cn(
             {
               info: "text-f1-icon-info",
               warning: "text-f1-icon-warning",
               critical: "text-f1-icon-critical",
-            }[variant]
+            }[level]
           )}
         />
         <span>{text}</span>
