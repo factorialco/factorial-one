@@ -34,7 +34,7 @@ export interface WidgetProps {
   alert?: string
   summaries?: Array<{
     label: string
-    value: number
+    value: string | number
     prefixUnit?: string
     postfixUnit?: string
   }>
