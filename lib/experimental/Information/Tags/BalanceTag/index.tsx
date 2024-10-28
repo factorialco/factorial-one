@@ -44,6 +44,7 @@ export const BalanceTag = forwardRef<HTMLDivElement, Props>(
             )}
           />
         }
+        additionalAccesibleText={`${status} balance`}
         text={text}
       />
     )

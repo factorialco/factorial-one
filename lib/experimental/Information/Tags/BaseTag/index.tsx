@@ -4,11 +4,12 @@ import { forwardRef, ReactNode } from "react"
 type Props = {
   left?: ReactNode
   text: string
+  additionalAccesibleText?: string
   className?: string
 }
 
 export const BaseTag = forwardRef<HTMLDivElement, Props>(
-  ({ left, text, className }, ref) => (
+  ({ left, text, additionalAccesibleText, className }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -17,6 +18,9 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
       )}
     >
       {left}
+      {additionalAccesibleText && (
+        <span className="sr-only">{additionalAccesibleText}</span>
+      )}
       <span>{text}</span>
     </div>
   )

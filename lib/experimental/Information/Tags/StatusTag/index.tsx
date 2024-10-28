@@ -42,6 +42,7 @@ export const StatusTag = forwardRef<HTMLDivElement, Props>(
             aria-hidden
           />
         }
+        additionalAccesibleText="Status"
         text={text}
       />
     )
