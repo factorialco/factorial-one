@@ -63,7 +63,7 @@ const ChartAreaBoundedTick = ({
   )
 }
 
-export const _AreaChart = <K extends LineChartConfig>(
+export const BaseAreaChart = <K extends LineChartConfig>(
   {
     data,
     dataConfig,
@@ -231,4 +231,4 @@ export const _AreaChart = <K extends LineChartConfig>(
   )
 }
 
-export const AreaChart = fixedForwardRef(_AreaChart)
+export const AreaChart = fixedForwardRef(BaseAreaChart)
