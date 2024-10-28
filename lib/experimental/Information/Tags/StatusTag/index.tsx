@@ -1,6 +1,7 @@
 import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
+import { BaseTag } from "../BaseTag"
 
 type Variant = "neutral" | "info" | "positive" | "warning" | "critical"
 
@@ -14,10 +15,10 @@ export const StatusTag = forwardRef<HTMLDivElement, Props>(
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
-      <div
+      <BaseTag
         ref={ref}
         className={cn(
-          "line-clamp-1 flex flex-row items-center justify-start gap-1.5 rounded-md px-2 py-0.5 text-base font-medium",
+          "pl-1",
           {
             neutral: "bg-f1-background-secondary text-f1-foreground-secondary",
             info: "bg-f1-background-info text-f1-foreground-info",
@@ -26,22 +27,23 @@ export const StatusTag = forwardRef<HTMLDivElement, Props>(
             critical: "bg-f1-background-critical text-f1-foreground-critical",
           }[variant]
         )}
-      >
-        <div
-          className={cn(
-            "aspect-square w-2 rounded-full",
-            {
-              neutral: "bg-f1-icon",
-              info: "bg-f1-icon-info",
-              positive: "bg-f1-icon-positive",
-              warning: "bg-f1-icon-warning",
-              critical: "bg-f1-icon-critical",
-            }[variant]
-          )}
-          aria-hidden
-        />
-        <span>{text}</span>
-      </div>
+        left={
+          <div
+            className={cn(
+              "m-1 aspect-square w-2 rounded-full",
+              {
+                neutral: "bg-f1-icon",
+                info: "bg-f1-icon-info",
+                positive: "bg-f1-icon-positive",
+                warning: "bg-f1-icon-warning",
+                critical: "bg-f1-icon-critical",
+              }[variant]
+            )}
+            aria-hidden
+          />
+        }
+        text={text}
+      />
     )
   }
 )
