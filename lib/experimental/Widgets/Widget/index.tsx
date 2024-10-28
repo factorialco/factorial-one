@@ -21,7 +21,7 @@ import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { cva, VariantProps } from "class-variance-authority"
 import React, { forwardRef, ReactNode, useEffect } from "react"
 
-export type WidgetProps = {
+export interface WidgetProps {
   header?: {
     title?: string
     subtitle?: string
@@ -41,16 +41,14 @@ export type WidgetProps = {
     text: string
     variant: StatusVariant
   }
+  children: ReactNode
 }
 
 const InlineDot = () => (
   <div className="min-h-[0.15rem] min-w-[0.15rem] rounded-full bg-f1-foreground-secondary" />
 )
 
-const Container = forwardRef<
-  HTMLDivElement,
-  WidgetProps & { children: ReactNode }
->(function Container(
+const Container = forwardRef<HTMLDivElement, WidgetProps>(function Container(
   { header, children, action, summaries, alert, status },
   ref
 ) {
