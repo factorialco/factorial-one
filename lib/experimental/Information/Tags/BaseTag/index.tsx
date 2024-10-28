@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { forwardRef, ReactNode } from "react"
 
 type Props = {
-  left: ReactNode
+  left?: ReactNode
   text: string
   className?: string
 }
