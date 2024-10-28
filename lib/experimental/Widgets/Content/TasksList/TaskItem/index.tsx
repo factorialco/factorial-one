@@ -1,4 +1,4 @@
-import { Badge } from "@/components/Information/Badge"
+import { AlertTag } from "@/experimental/exports"
 import { Counter } from "@/experimental/Information/Counter"
 import { DottedCircle, InProgressTask } from "@/icons"
 import { cn } from "@/lib/utils"
@@ -68,9 +68,9 @@ export function TaskItem({
       {!hideIcon && status === "in-progress" && <InProgressTask />}
       <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{task.text}</p>
       {!!task.badge && (
-        <Badge
+        <AlertTag
+          level={task.badge.isPastDue ? "critical" : "warning"}
           text={task.badge.text}
-          variant={task.badge.isPastDue ? "critical" : "neutral"}
         />
       )}
       {!!task.counter && <Counter value={task.counter} />}
