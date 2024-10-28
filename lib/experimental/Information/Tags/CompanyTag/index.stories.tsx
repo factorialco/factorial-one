@@ -10,7 +10,8 @@ const meta: Meta = {
   },
   args: {
     companyName: "Factorial",
-    companyImageUrl: "./factorial-logo.png",
+    companyImageUrl:
+      "https://avatars.githubusercontent.com/u/21041797?s=200&v=4",
   },
 }
 
