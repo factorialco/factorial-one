@@ -79,7 +79,7 @@ const Container = forwardRef<
   return (
     <Card className="flex gap-4 border-f1-border-secondary" ref={ref}>
       {header && (
-        <CardHeader>
+        <CardHeader className="-mr-1 -mt-1">
           <div className="flex w-full flex-1 flex-col gap-4">
             <div className="flex flex-1 flex-row flex-nowrap items-center justify-between gap-2">
               <div className="flex min-h-6 grow flex-row items-center gap-1 truncate">
@@ -199,7 +199,7 @@ const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
         aria-live="polite"
         aria-busy={true}
       >
-        <CardHeader>
+        <CardHeader className="-mr-1 -mt-1">
           <div
             className="flex h-6 w-full flex-row items-center gap-1.5"
             aria-hidden={true}
