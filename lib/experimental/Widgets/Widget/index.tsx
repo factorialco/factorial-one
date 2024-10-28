@@ -46,6 +46,7 @@ export type WidgetProps = {
         variant: StatusVariant
       }
     }
+  | {}
 )
 
 const InlineDot = () => (
