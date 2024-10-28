@@ -2,10 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { Placeholder } from "@/lib/storybook-utils"
 import { fn } from "@storybook/test"
-import { ComponentProps } from "react"
 import { Widget } from "."
 
-const meta = {
+const meta: Meta = {
   component: Widget,
   parameters: {
     layout: "centered",
@@ -22,11 +21,10 @@ const meta = {
     header: {
       title: "A widget",
       subtitle: "2024",
-      info: "Lorem ipsum dolor",
     },
     children: <Placeholder>Put your content in there</Placeholder>,
-  } satisfies ComponentProps<typeof Widget>,
-} satisfies Meta<typeof Widget>
+  },
+}
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -39,7 +37,6 @@ export const WithLink: Story = {
     header: {
       title: "Wellness programs",
       subtitle: "Boosting workplace health",
-      info: "Explore initiatives for physical, mental, and emotional well-being, including health screenings and fitness challenges.",
       link: { url: "/", title: "Go to link" },
     },
   },
@@ -55,10 +52,20 @@ export const WithAction: Story = {
   },
 }
 
-export const WithAlert: Story = {
+export const WithCriticalAlert: Story = {
   args: {
     ...meta.args,
     alert: "12 alerts",
+  },
+}
+
+export const WithStatus: Story = {
+  args: {
+    ...meta.args,
+    status: {
+      text: "Clocked in",
+      variant: "positive",
+    },
   },
 }
 
@@ -84,7 +91,6 @@ export const Full: Story = {
     header: {
       title: "Wellness programs",
       subtitle: "Boosting workplace health",
-      info: "Explore initiatives for physical, mental, and emotional well-being, including health screenings and fitness challenges.",
       link: { url: "/", title: "Go to link" },
     },
     alert: "12 alerts",

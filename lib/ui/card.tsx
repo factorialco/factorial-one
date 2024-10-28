@@ -57,7 +57,7 @@ const CardSubtitle = React.forwardRef<
   <h3
     ref={ref}
     className={cn(
-      "truncate text-base font-normal text-f1-foreground-secondary",
+      "line-clamp-1 truncate text-base font-normal text-f1-foreground-secondary",
       className
     )}
     {...props}

@@ -25,7 +25,7 @@ export const BalanceTag = forwardRef<HTMLDivElement, Props>(
       <div
         ref={ref}
         className={cn(
-          "line-clamp-1 flex flex-row items-center justify-start gap-0.5 rounded-md py-0.5 pl-1 pr-2 text-base font-medium",
+          "flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pl-1 pr-2 text-base font-medium",
           {
             positive: "bg-f1-background-positive text-f1-foreground-positive",
             negative: "bg-f1-background-critical text-f1-foreground-critical",
@@ -42,7 +42,7 @@ export const BalanceTag = forwardRef<HTMLDivElement, Props>(
             }[status]
           )}
         />
-        <span>{text}</span>
+        <span className="line-clamp-1">{text}</span>
       </div>
     )
   }

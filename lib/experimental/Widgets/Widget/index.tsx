@@ -1,5 +1,6 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
-import { Badge } from "@/components/Information/Badge"
+import { AlertTag } from "@/experimental/Information/AlertTag"
+import { StatusTag, StatusVariant } from "@/experimental/Information/StatusTag"
 import { PrivateBox } from "@/experimental/Utilities/PrivateBox"
 import { EyeInvisible, EyeVisible } from "@/icons"
 import { usePrivacyMode } from "@/lib/privacyMode"
@@ -11,7 +12,6 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  CardInfo,
   CardLink,
   CardSubtitle,
   CardTitle,
@@ -21,24 +21,32 @@ import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { cva, VariantProps } from "class-variance-authority"
 import React, { forwardRef, ReactNode } from "react"
 
-export interface WidgetProps {
+export type WidgetProps = {
   header?: {
     title?: string
     subtitle?: string
     comment?: string
     canBeBlurred?: boolean
-    info?: string
     link?: { title: string; url: string }
   }
   action?: ButtonProps
-  alert?: string
   summaries?: Array<{
     label: string
     value: number
     prefixUnit?: string
     postfixUnit?: string
   }>
-}
+} & (
+  | {
+      alert: string
+    }
+  | {
+      status: {
+        text: string
+        variant: StatusVariant
+      }
+    }
+)
 
 const InlineDot = () => (
   <div className="min-h-[0.15rem] min-w-[0.15rem] rounded-full bg-f1-foreground-secondary" />
@@ -47,7 +55,7 @@ const InlineDot = () => (
 const Container = forwardRef<
   HTMLDivElement,
   WidgetProps & { children: ReactNode }
->(function Container({ header, alert, children, action, summaries }, ref) {
+>(function Container({ header, children, action, summaries, ...props }, ref) {
   const { enabled: privacyModeEnabled, toggle: togglePrivacyMode } =
     usePrivacyMode()
 
@@ -66,26 +74,35 @@ const Container = forwardRef<
     <Card className="flex gap-4 border-f1-border-secondary" ref={ref}>
       {header && (
         <CardHeader>
-          <div className="flex flex-1 flex-col gap-4">
-            <div className="flex flex-row items-center justify-between gap-2">
-              <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
+          <div className="flex w-full flex-1 flex-col gap-4">
+            <div className="flex flex-1 flex-row flex-nowrap items-center justify-between gap-2">
+              <div className="flex min-h-6 grow flex-row items-center gap-1 truncate">
                 {header.title && (
                   <CardTitle className="truncate">{header.title}</CardTitle>
                 )}
                 {header.subtitle && (
-                  <>
+                  <div className="flex flex-row items-center gap-1">
                     <InlineDot />
                     <CardSubtitle className="truncate">
                       {header.subtitle}
                     </CardSubtitle>
-                  </>
+                  </div>
                 )}
-                {header.info && <CardInfo content={header.info} />}
               </div>
-              {alert && <Badge text={alert} variant="critical" hasDot />}
-              {header.link && (
-                <CardLink href={header.link.url} title={header.link.title} />
-              )}
+              <div className="flex flex-row items-center gap-3">
+                {"alert" in props && (
+                  <AlertTag text={props.alert} level="critical" />
+                )}
+                {"status" in props && (
+                  <StatusTag
+                    text={props.status.text}
+                    variant={props.status.variant}
+                  />
+                )}
+                {header.link && (
+                  <CardLink href={header.link.url} title={header.link.title} />
+                )}
+              </div>
             </div>
             {header.comment && (
               <div className="flex flex-row items-center gap-3 overflow-visible">
@@ -148,7 +165,7 @@ const Container = forwardRef<
       </CardContent>
       {action && (
         <CardFooter>
-          <Button variant="outline" size="md" {...action} />
+          <Button variant="neutral" size="sm" {...action} />
         </CardFooter>
       )}
     </Card>
