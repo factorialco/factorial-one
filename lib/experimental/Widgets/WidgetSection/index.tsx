@@ -11,9 +11,9 @@ export const WidgetSection = forwardRef<HTMLDivElement, Props>(
 
     return (
       <div ref={ref} className="flex flex-col gap-2">
-        <h4 className="text-base font-medium text-f1-foreground-secondary">
+        <p className="text-base font-medium text-f1-foreground-secondary">
           {title}
-        </h4>
+        </p>
         {children}
       </div>
     )
