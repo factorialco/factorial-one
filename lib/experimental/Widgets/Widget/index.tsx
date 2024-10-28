@@ -1,6 +1,8 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Badge } from "@/components/Information/Badge"
+import { PrivateBox } from "@/experimental/Utilities/PrivateBox"
 import { EyeInvisible, EyeVisible } from "@/icons"
+import { usePrivacyMode } from "@/lib/privacyMode"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import {
@@ -24,9 +26,7 @@ export interface WidgetProps {
     title?: string
     subtitle?: string
     comment?: string
-    hasBlur?: boolean
-    isBlur?: boolean
-    toggleBlur?: () => void
+    canBeBlurred?: boolean
     info?: string
     link?: { title: string; url: string }
   }
@@ -48,6 +48,9 @@ const Container = forwardRef<
   HTMLDivElement,
   WidgetProps & { children: ReactNode }
 >(function Container({ header, alert, children, action, summaries }, ref) {
+  const { enabled: privacyModeEnabled, toggle: togglePrivacyMode } =
+    usePrivacyMode()
+
   const isRealNode = (node: React.ReactNode): boolean => {
     return (
       !!node &&
@@ -63,14 +66,18 @@ const Container = forwardRef<
     <Card className="flex gap-4 border-f1-border-secondary" ref={ref}>
       {header && (
         <CardHeader>
-          <div className="flex flex-1 flex-col gap-4 truncate">
+          <div className="flex flex-1 flex-col gap-4">
             <div className="flex flex-row items-center justify-between gap-2">
               <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
-                {header.title && <CardTitle>{header.title}</CardTitle>}
+                {header.title && (
+                  <CardTitle className="truncate">{header.title}</CardTitle>
+                )}
                 {header.subtitle && (
                   <>
                     <InlineDot />
-                    <CardSubtitle>{header.subtitle}</CardSubtitle>
+                    <CardSubtitle className="truncate">
+                      {header.subtitle}
+                    </CardSubtitle>
                   </>
                 )}
                 {header.info && <CardInfo content={header.info} />}
@@ -81,19 +88,19 @@ const Container = forwardRef<
               )}
             </div>
             {header.comment && (
-              <div className="flex flex-row items-center gap-3">
-                <CardComment className={cn(!!header.isBlur && "blur-md")}>
-                  {header.comment}
-                </CardComment>
-                {!!header.hasBlur && (
+              <div className="flex flex-row items-center gap-3 overflow-visible">
+                <PrivateBox>
+                  <CardComment>{header.comment}</CardComment>
+                </PrivateBox>
+                {!!header.canBeBlurred && (
                   <span>
                     <Button
-                      icon={header.isBlur ? EyeInvisible : EyeVisible}
+                      icon={privacyModeEnabled ? EyeInvisible : EyeVisible}
                       hideLabel
                       label="hide/show"
                       variant="outline"
                       round
-                      onClick={header.toggleBlur}
+                      onClick={togglePrivacyMode}
                       size="sm"
                     />
                   </span>

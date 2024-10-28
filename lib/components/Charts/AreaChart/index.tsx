@@ -1,3 +1,4 @@
+import { usePrivacyMode } from "@/lib/privacyMode"
 import { cn } from "@/lib/utils"
 import {
   ChartContainer,
@@ -31,6 +32,7 @@ export type AreaChartProps<K extends LineChartConfig = LineChartConfig> =
   LineChartPropsBase<K> & {
     lineType?: allowedLineTypes
     marginTop?: number
+    canBeBlurred?: boolean
   }
 
 // Rechart props give any
@@ -61,18 +63,21 @@ const ChartAreaBoundedTick = ({
   )
 }
 
-export const _AreaChart = <K extends LineChartConfig>(
+export const BaseAreaChart = <K extends LineChartConfig>(
   {
     data,
     dataConfig,
     xAxis,
     yAxis,
+    canBeBlurred,
     lineType = "monotoneX",
     aspect,
     marginTop = 0,
   }: AreaChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
+  const { enabled: privacyModeEnabled } = usePrivacyMode()
+
   const areas = Object.keys(dataConfig) as (keyof LineChartConfig)[]
   const chartId = nanoid(12)
 
@@ -91,6 +96,9 @@ export const _AreaChart = <K extends LineChartConfig>(
   const yAxisWidth = yAxis?.width ?? maxLabelWidth + 20
   const isYAxisVisible = !yAxis?.hide
   const isXAxisVisible = !xAxis?.hide
+
+  const showTooltip = !canBeBlurred || !privacyModeEnabled
+
   return (
     <ChartContainer config={dataConfig} ref={ref} aspect={aspect}>
       <AreaChartPrimitive
@@ -179,18 +187,20 @@ export const _AreaChart = <K extends LineChartConfig>(
             ticks={yAxis?.ticks}
             domain={yAxis?.domain}
             width={yAxisWidth}
-            className={cn(yAxis?.isBlur && "blur-sm")}
+            className={cn(canBeBlurred && privacyModeEnabled && "blur-md")}
           />
         )}
-        <ChartTooltip
-          cursor
-          content={
-            <ChartTooltipContent
-              indicator="dot"
-              yAxisFormatter={yAxis?.tickFormatter}
-            />
-          }
-        />
+        {showTooltip && (
+          <ChartTooltip
+            cursor
+            content={
+              <ChartTooltipContent
+                indicator="dot"
+                yAxisFormatter={yAxis?.tickFormatter}
+              />
+            }
+          />
+        )}
         {areas.map((area, index) => (
           <Area
             isAnimationActive={false}
@@ -221,4 +231,4 @@ export const _AreaChart = <K extends LineChartConfig>(
   )
 }
 
-export const AreaChart = fixedForwardRef(_AreaChart)
+export const AreaChart = fixedForwardRef(BaseAreaChart)
