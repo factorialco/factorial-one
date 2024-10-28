@@ -22,8 +22,10 @@ const textFormatEnforcer = (text: string, rules: Rules) => {
   }
 }
 
-export const useTextFormatEnforcer = (text: string, rules: Rules) => {
+export const useTextFormatEnforcer = (text?: string, rules?: Rules) => {
   useEffect(() => {
-    textFormatEnforcer(text, rules)
+    if (text !== undefined && rules) {
+      textFormatEnforcer(text, rules)
+    }
   }, [text, rules])
 }
