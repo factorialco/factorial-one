@@ -77,9 +77,9 @@ const _Dashboard = forwardRef<HTMLDivElement, DashboardProps>(
 const skeletonHeights: Array<ComponentProps<typeof Widget.Skeleton>["height"]> =
   ["sm", "lg", "md", "md", "lg", "sm", "lg", "lg", "sm", "sm", "md", "md"]
 
-export const Dashboard = withSkeleton(_Dashboard, () => (
+export const Dashboard = withSkeleton(_Dashboard, (props: DashboardProps) => (
   <Blend>
-    <_Dashboard>
+    <_Dashboard widgetWidth={props.widgetWidth}>
       {skeletonHeights.map((height, i) => (
         <Widget.Skeleton height={height} key={i} />
       ))}
