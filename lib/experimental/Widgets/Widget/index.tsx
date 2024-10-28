@@ -41,14 +41,16 @@ export interface WidgetProps {
     text: string
     variant: StatusVariant
   }
-  children: ReactNode
 }
 
 const InlineDot = () => (
   <div className="min-h-[0.15rem] min-w-[0.15rem] rounded-full bg-f1-foreground-secondary" />
 )
 
-const Container = forwardRef<HTMLDivElement, WidgetProps>(function Container(
+const Container = forwardRef<
+  HTMLDivElement,
+  WidgetProps & { children: ReactNode }
+>(function Container(
   { header, children, action, summaries, alert, status },
   ref
 ) {
