@@ -19,7 +19,7 @@ import {
 import { Separator } from "@/ui/separator"
 import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { cva, VariantProps } from "class-variance-authority"
-import React, { forwardRef, ReactNode } from "react"
+import React, { forwardRef, ReactNode, useEffect } from "react"
 
 export type WidgetProps = {
   header?: {
@@ -36,18 +36,12 @@ export type WidgetProps = {
     prefixUnit?: string
     postfixUnit?: string
   }>
-} & (
-  | {
-      alert: string
-    }
-  | {
-      status: {
-        text: string
-        variant: StatusVariant
-      }
-    }
-  | {}
-)
+  alert?: string
+  status?: {
+    text: string
+    variant: StatusVariant
+  }
+}
 
 const InlineDot = () => (
   <div className="min-h-[0.15rem] min-w-[0.15rem] rounded-full bg-f1-foreground-secondary" />
@@ -56,9 +50,20 @@ const InlineDot = () => (
 const Container = forwardRef<
   HTMLDivElement,
   WidgetProps & { children: ReactNode }
->(function Container({ header, children, action, summaries, ...props }, ref) {
+>(function Container(
+  { header, children, action, summaries, alert, status },
+  ref
+) {
   const { enabled: privacyModeEnabled, toggle: togglePrivacyMode } =
     usePrivacyMode()
+
+  useEffect(() => {
+    if (alert && status) {
+      throw Error(
+        "You cannot pass both alert and status at the same time to this component"
+      )
+    }
+  }, [alert, status])
 
   const isRealNode = (node: React.ReactNode): boolean => {
     return (
@@ -91,14 +96,9 @@ const Container = forwardRef<
                 )}
               </div>
               <div className="flex flex-row items-center gap-3">
-                {"alert" in props && (
-                  <AlertTag text={props.alert} level="critical" />
-                )}
-                {"status" in props && (
-                  <StatusTag
-                    text={props.status.text}
-                    variant={props.status.variant}
-                  />
+                {alert && <AlertTag text={alert} level="critical" />}
+                {status && (
+                  <StatusTag text={status.text} variant={status.variant} />
                 )}
                 {header.link && (
                   <CardLink href={header.link.url} title={header.link.title} />
