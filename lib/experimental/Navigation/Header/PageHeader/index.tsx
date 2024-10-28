@@ -1,5 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
+import type { Variant } from "@/experimental/Information/Tags/StatusTag"
+import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import AlignTextJustify from "@/icons/app/AlignTextJustify"
 import { cn } from "@/lib/utils"
@@ -14,6 +16,10 @@ type HeaderProps = {
     href: string
     icon: IconType
   }
+  statusTag?: {
+    text: string
+    variant: Variant
+  }
   breadcrumbs?: BreadcrumbItemType[]
   actions?: {
     label: string
@@ -24,6 +30,7 @@ type HeaderProps = {
 
 export function PageHeader({
   module,
+  statusTag = undefined,
   breadcrumbs = [],
   actions = [],
 }: HeaderProps) {
@@ -34,6 +41,7 @@ export function PageHeader({
     ...breadcrumbs,
   ]
 
+  const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
 
   return (
@@ -71,6 +79,9 @@ export function PageHeader({
             <Breadcrumbs breadcrumbs={breadcrumbsTree} />
           ) : (
             <div className="text-xl font-semibold">{module.name}</div>
+          )}
+          {!hasNavigation && hasStatus && (
+            <StatusTag text={statusTag.text} variant={statusTag.variant} />
           )}
         </div>
       </div>

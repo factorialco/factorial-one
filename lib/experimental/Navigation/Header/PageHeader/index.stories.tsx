@@ -49,6 +49,20 @@ export const FirstLevel: Story = {
   },
 }
 
+export const FirstLevelWithTag: Story = {
+  args: {
+    module: {
+      name: "Recruitment",
+      href: "/recruitment",
+      icon: "Recruitment",
+    },
+    statusTag: {
+      text: "Published",
+      variant: "positive",
+    },
+  },
+}
+
 export const LongBreadcrumbs: Story = {
   args: {
     module: {
