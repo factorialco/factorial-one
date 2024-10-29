@@ -6,46 +6,75 @@ import * as AvatarPrimitive from "@radix-ui/react-avatar"
 import { cva } from "class-variance-authority"
 import * as React from "react"
 
-export const sizes = [
-  "xxsmall",
-  "xsmall",
-  "small",
-  "medium",
-  "large",
-  "xlarge",
-  "xxlarge",
+export const sizes = ["xsmall", "small", "medium", "large"] as const
+
+export const type = ["base", "rounded"] as const
+
+export const color = [
+  "viridian",
+  "malibu",
+  "yellow",
+  "purple",
+  "lilac",
+  "barbie",
+  "smoke",
+  "army",
+  "flubber",
+  "indigo",
+  "camel",
 ] as const
 
-const avatarVariants = cva("relative flex shrink-0 overflow-hidden", {
-  variants: {
-    size: {
-      xxsmall: "h-5 w-5 rounded-md text-sm",
-      xsmall: "h-6 w-6 rounded-md text-sm",
-      small: "h-10 w-10 rounded-md text-sm",
-      medium: "h-12 w-12 rounded-md",
-      large: "h-16 w-16 rounded-xl text-xl",
-      xlarge: "h-20 w-20 rounded-xl text-xl",
-      xxlarge: "h-32 w-32 rounded-xl text-2xl",
-    } satisfies Record<(typeof sizes)[number], string>,
-  },
-  defaultVariants: {
-    size: "medium",
-  },
-})
+const avatarVariants = cva(
+  "relative flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold",
+  {
+    variants: {
+      size: {
+        xsmall: "h-5 w-5 text-sm",
+        small: "h-6 w-6 text-sm",
+        medium: "h-8 w-8",
+        large: "h-18 w-18 text-2xl",
+      } satisfies Record<(typeof sizes)[number], string>,
+      type: {
+        base: "rounded-md",
+        rounded: "rounded-full",
+      } satisfies Record<(typeof type)[number], string>,
+      color: {
+        viridian: "bg-[hsl(theme(colors.viridian.50))]",
+        malibu: "bg-[hsl(theme(colors.malibu.50))]",
+        yellow: "bg-[hsl(theme(colors.yellow.50))]",
+        purple: "bg-[hsl(theme(colors.purple.50))]",
+        lilac: "bg-[hsl(theme(colors.lilac.50))]",
+        barbie: "bg-[hsl(theme(colors.barbie.50))]",
+        smoke: "bg-[hsl(theme(colors.smoke.50))]",
+        army: "bg-[hsl(theme(colors.army.50))]",
+        flubber: "bg-[hsl(theme(colors.flubber.50))]",
+        indigo: "bg-[hsl(theme(colors.indigo.50))]",
+        camel: "bg-[hsl(theme(colors.camel.50))]",
+      } satisfies Record<(typeof color)[number], string>,
+    },
+    defaultVariants: {
+      size: "medium",
+      type: "base",
+      color: "viridian",
+    },
+  }
+)
 
 type AvatarProps = React.ComponentPropsWithoutRef<
   typeof AvatarPrimitive.Root
 > & {
   size?: (typeof sizes)[number]
+  type?: (typeof type)[number]
+  color?: (typeof color)[number]
 }
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
   AvatarProps
->(({ size, className, ...props }, ref) => (
+>(({ size, type, color, className, ...props }, ref) => (
   <AvatarPrimitive.Root
     ref={ref}
-    className={cn(avatarVariants({ size, className }))}
+    className={cn(avatarVariants({ size, type, color, className }))}
     {...props}
   />
 ))
@@ -73,7 +102,7 @@ const AvatarFallback = React.forwardRef<
   <AvatarPrimitive.Fallback
     ref={ref}
     className={cn(
-      "flex h-full w-full items-center justify-center rounded-md bg-f1-background-promote text-f1-foreground",
+      "flex h-full w-full items-center justify-center text-f1-foreground-inverse/90",
       className
     )}
     {...props}
