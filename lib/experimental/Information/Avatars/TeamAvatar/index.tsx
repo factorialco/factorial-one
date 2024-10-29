@@ -7,12 +7,11 @@ type Props = {
   name: string
   src?: string
   size?: BaseAvatarProps["size"]
-  color?: BaseAvatarProps["color"]
 }
 
-export const TeamAvatar = ({ name, src, size, color }: Props) => {
+export const TeamAvatar = ({ name, src, size }: Props) => {
   return (
-    <BaseAvatar type="base" name={name} src={src} size={size} color={color} />
+    <BaseAvatar type="base" name={name} src={src} size={size} color="random" />
   )
 }
 

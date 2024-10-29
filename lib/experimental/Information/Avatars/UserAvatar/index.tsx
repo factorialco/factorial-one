@@ -8,23 +8,16 @@ type Props = {
   lastName: string
   src?: string
   size?: BaseAvatarProps["size"]
-  color?: BaseAvatarProps["color"]
 }
 
-export const UserAvatar = ({
-  firstName,
-  lastName,
-  src,
-  size,
-  color,
-}: Props) => {
+export const UserAvatar = ({ firstName, lastName, src, size }: Props) => {
   return (
     <BaseAvatar
       type="rounded"
       name={[firstName, lastName]}
       src={src}
       size={size}
-      color={color}
+      color="random"
     />
   )
 }

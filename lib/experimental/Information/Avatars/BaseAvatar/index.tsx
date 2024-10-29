@@ -1,4 +1,5 @@
 import {
+  color as AvatarColors,
   Avatar as AvatarComponent,
   AvatarFallback,
   AvatarImage,
@@ -12,7 +13,7 @@ type Props = {
   name: string | string[]
   src?: string
   size?: ShadAvatarProps["size"]
-  color?: ShadAvatarProps["color"]
+  color?: ShadAvatarProps["color"] | "random"
 }
 
 function getInitials(
@@ -32,12 +33,32 @@ function getInitials(
     .toUpperCase()
 }
 
+function getAvatarColor(text: string): ShadAvatarProps["color"] {
+  if (!text) return "viridian"
+
+  let hash = 0
+
+  for (let i = 0; i < text.length; i++) {
+    hash = text.charCodeAt(i) + ((hash << 5) - hash)
+    hash = hash & hash
+  }
+
+  const index =
+    ((hash % AvatarColors.length) + AvatarColors.length) % AvatarColors.length
+
+  return AvatarColors[index]
+}
+
 export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
   ({ src, name, size, type, color }, ref) => {
     const initials = getInitials(name, size)
+    const avatarColor =
+      color === "random"
+        ? getAvatarColor(Array.isArray(name) ? name.join("") : name)
+        : color
 
     return (
-      <AvatarComponent size={size} type={type} color={color} ref={ref}>
+      <AvatarComponent size={size} type={type} color={avatarColor} ref={ref}>
         <AvatarImage src={src} alt={initials} />
         <AvatarFallback>{initials}</AvatarFallback>
       </AvatarComponent>

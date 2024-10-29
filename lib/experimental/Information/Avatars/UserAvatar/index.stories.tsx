@@ -1,4 +1,4 @@
-import { color, sizes } from "@/ui/avatar"
+import { sizes } from "@/ui/avatar"
 import type { Meta, StoryObj } from "@storybook/react"
 import { UserAvatar } from "."
 
@@ -10,16 +10,11 @@ const meta: Meta<typeof UserAvatar> = {
       control: "select",
       options: sizes,
     },
-    color: {
-      control: "select",
-      options: color,
-    },
   },
   args: {
     firstName: "Dani",
     lastName: "Moreno",
     size: "medium",
-    color: "viridian",
   },
 }
 
