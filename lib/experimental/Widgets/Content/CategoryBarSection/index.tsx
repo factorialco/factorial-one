@@ -13,7 +13,6 @@ interface CategoryBarSectionProps {
 }
 
 export function CategoryBarSection({
-  label,
   title,
   subtitle,
   data,
@@ -22,16 +21,11 @@ export function CategoryBarSection({
 }: CategoryBarSectionProps) {
   return (
     <div>
-      <div className="space-y-2">
-        <span className="text-sm font-semibold uppercase leading-none text-f1-foreground-secondary">
-          {label}
+      <div className="flex items-baseline justify-between">
+        <span className="text-2xl font-semibold">{title}</span>
+        <span className="text-2xl font-semibold text-f1-foreground-secondary">
+          {subtitle}
         </span>
-        <div className="flex items-baseline justify-between">
-          <span className="text-2xl font-semibold">{title}</span>
-          <span className="text-2xl font-semibold text-f1-foreground-secondary">
-            {subtitle}
-          </span>
-        </div>
       </div>
       <div className="mt-2">
         <CategoryBarChart data={data} legend={legend} />
