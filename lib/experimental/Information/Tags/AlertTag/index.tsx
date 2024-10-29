@@ -4,6 +4,7 @@ import { AlertCircle, InfoCircle, Warning } from "@/icons"
 import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
+import { BaseTag } from "../BaseTag"
 
 type Level = "info" | "warning" | "critical"
 
@@ -23,32 +24,31 @@ export const AlertTag = forwardRef<HTMLDivElement, Props>(
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
-      <div
+      <BaseTag
         ref={ref}
-        className={cn(
-          "flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pl-0.5 pr-2 text-base font-medium",
+        className={
           {
             info: "bg-f1-background-info text-f1-foreground-info",
             warning: "bg-f1-background-warning text-f1-foreground-warning",
             critical: "bg-f1-background-critical text-f1-foreground-critical",
           }[level]
-        )}
-      >
-        <Icon
-          icon={iconMap[level]}
-          size="md"
-          aria-hidden
-          className={cn(
-            {
-              info: "text-f1-icon-info",
-              warning: "text-f1-icon-warning",
-              critical: "text-f1-icon-critical",
-            }[level]
-          )}
-        />
-        <span className="sr-only">Information:</span>
-        <span className="line-clamp-1">{text}</span>
-      </div>
+        }
+        left={
+          <Icon
+            icon={iconMap[level]}
+            size="md"
+            aria-hidden
+            className={cn(
+              {
+                info: "text-f1-icon-info",
+                warning: "text-f1-icon-warning",
+                critical: "text-f1-icon-critical",
+              }[level]
+            )}
+          />
+        }
+        text={text}
+      />
     )
   }
 )

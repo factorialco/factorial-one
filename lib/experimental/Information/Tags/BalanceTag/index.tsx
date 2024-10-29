@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUp } from "@/icons"
 import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
+import { BaseTag } from "../BaseTag"
 
 type Status = "positive" | "negative"
 
@@ -22,28 +23,30 @@ export const BalanceTag = forwardRef<HTMLDivElement, Props>(
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
-      <div
+      <BaseTag
         ref={ref}
         className={cn(
-          "flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pl-1 pr-2 text-base font-medium",
+          "pl-1",
           {
             positive: "bg-f1-background-positive text-f1-foreground-positive",
             negative: "bg-f1-background-critical text-f1-foreground-critical",
           }[status]
         )}
-      >
-        <Icon
-          icon={iconMap[status]}
-          size="sm"
-          className={cn(
-            {
-              positive: "text-f1-icon-positive",
-              negative: "text-f1-icon-critical",
-            }[status]
-          )}
-        />
-        <span className="line-clamp-1">{text}</span>
-      </div>
+        left={
+          <Icon
+            icon={iconMap[status]}
+            size="sm"
+            className={cn(
+              {
+                positive: "text-f1-icon-positive",
+                negative: "text-f1-icon-critical",
+              }[status]
+            )}
+          />
+        }
+        additionalAccesibleText={`${status} balance`}
+        text={text}
+      />
     )
   }
 )

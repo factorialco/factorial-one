@@ -32,7 +32,7 @@ export interface WidgetProps {
   action?: ButtonProps
   summaries?: Array<{
     label: string
-    value: number
+    value: string | number
     prefixUnit?: string
     postfixUnit?: string
   }>
