@@ -5,6 +5,8 @@ import { BaseTag } from "../BaseTag"
 
 type Variant = "neutral" | "info" | "positive" | "warning" | "critical"
 
+export type StatusVariant = Variant
+
 interface Props {
   text: string
   variant: Variant

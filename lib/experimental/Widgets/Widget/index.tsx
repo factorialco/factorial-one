@@ -1,5 +1,9 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
-import { Badge } from "@/components/Information/Badge"
+import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
+import {
+  StatusTag,
+  StatusVariant,
+} from "@/experimental/Information/Tags/StatusTag"
 import { PrivateBox } from "@/experimental/Utilities/PrivateBox"
 import { EyeInvisible, EyeVisible } from "@/icons"
 import { usePrivacyMode } from "@/lib/privacyMode"
@@ -11,7 +15,6 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  CardInfo,
   CardLink,
   CardSubtitle,
   CardTitle,
@@ -19,7 +22,7 @@ import {
 import { Separator } from "@/ui/separator"
 import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { cva, VariantProps } from "class-variance-authority"
-import React, { forwardRef, ReactNode } from "react"
+import React, { forwardRef, ReactNode, useEffect } from "react"
 
 export interface WidgetProps {
   header?: {
@@ -27,17 +30,20 @@ export interface WidgetProps {
     subtitle?: string
     comment?: string
     canBeBlurred?: boolean
-    info?: string
     link?: { title: string; url: string }
   }
   action?: ButtonProps
-  alert?: string
   summaries?: Array<{
     label: string
     value: string | number
     prefixUnit?: string
     postfixUnit?: string
   }>
+  alert?: string
+  status?: {
+    text: string
+    variant: StatusVariant
+  }
 }
 
 const InlineDot = () => (
@@ -47,9 +53,20 @@ const InlineDot = () => (
 const Container = forwardRef<
   HTMLDivElement,
   WidgetProps & { children: ReactNode }
->(function Container({ header, alert, children, action, summaries }, ref) {
+>(function Container(
+  { header, children, action, summaries, alert, status },
+  ref
+) {
   const { enabled: privacyModeEnabled, toggle: togglePrivacyMode } =
     usePrivacyMode()
+
+  useEffect(() => {
+    if (alert && status) {
+      throw Error(
+        "You cannot pass both alert and status at the same time to this component"
+      )
+    }
+  }, [alert, status])
 
   const isRealNode = (node: React.ReactNode): boolean => {
     return (
@@ -65,27 +82,31 @@ const Container = forwardRef<
   return (
     <Card className="flex gap-4 border-f1-border-secondary" ref={ref}>
       {header && (
-        <CardHeader>
-          <div className="flex flex-1 flex-col gap-4">
-            <div className="flex flex-row items-center justify-between gap-2">
-              <div className="flex min-h-6 grow flex-row items-center gap-1.5 truncate">
+        <CardHeader className="-mr-1 -mt-1">
+          <div className="flex w-full flex-1 flex-col gap-4">
+            <div className="flex flex-1 flex-row flex-nowrap items-center justify-between gap-2">
+              <div className="flex min-h-6 grow flex-row items-center gap-1 truncate">
                 {header.title && (
                   <CardTitle className="truncate">{header.title}</CardTitle>
                 )}
                 {header.subtitle && (
-                  <>
+                  <div className="flex flex-row items-center gap-1">
                     <InlineDot />
                     <CardSubtitle className="truncate">
                       {header.subtitle}
                     </CardSubtitle>
-                  </>
+                  </div>
                 )}
-                {header.info && <CardInfo content={header.info} />}
               </div>
-              {alert && <Badge text={alert} variant="critical" hasDot />}
-              {header.link && (
-                <CardLink href={header.link.url} title={header.link.title} />
-              )}
+              <div className="flex flex-row items-center gap-3">
+                {alert && <AlertTag text={alert} level="critical" />}
+                {status && (
+                  <StatusTag text={status.text} variant={status.variant} />
+                )}
+                {header.link && (
+                  <CardLink href={header.link.url} title={header.link.title} />
+                )}
+              </div>
             </div>
             {header.comment && (
               <div className="flex flex-row items-center gap-3 overflow-visible">
@@ -148,7 +169,7 @@ const Container = forwardRef<
       </CardContent>
       {action && (
         <CardFooter>
-          <Button variant="outline" size="md" {...action} />
+          <Button variant="neutral" size="sm" {...action} />
         </CardFooter>
       )}
     </Card>
@@ -176,12 +197,12 @@ const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   function Skeleton({ header, height }, ref) {
     return (
       <Card
-        className="flex gap-4"
+        className="flex gap-4 border-f1-border-secondary"
         ref={ref}
         aria-live="polite"
         aria-busy={true}
       >
-        <CardHeader>
+        <CardHeader className="-mr-1 -mt-1">
           <div
             className="flex h-6 w-full flex-row items-center gap-1.5"
             aria-hidden={true}
