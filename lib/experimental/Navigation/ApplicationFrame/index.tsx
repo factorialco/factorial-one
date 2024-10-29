@@ -46,7 +46,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
           duration: shouldReduceMotion ? 0 : 0.2,
         }}
       >
-        <div className="relative flex h-full flex-row isolate">
+        <div className="relative isolate flex h-full flex-row">
           <AnimatePresence>
             {sidebarState === "unlocked" && (
               <motion.div
