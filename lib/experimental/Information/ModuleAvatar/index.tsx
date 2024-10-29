@@ -1,34 +1,9 @@
-import * as Icons from "@/icons/app"
+import * as Icons from "@/icons/modules"
 import { cva, type VariantProps } from "class-variance-authority"
 
-export const moduleIconNames = [
-  "Calendar",
-  "ClockIn",
-  "Documents",
-  "Engagement",
-  "Finance",
-  "Goals",
-  "Home",
-  "Inbox",
-  "Kudos",
-  "MyDocuments",
-  "Organization",
-  "Payroll",
-  "Performance",
-  "Profile",
-  "Projects",
-  "Recruitment",
-  "Reports",
-  "Shifts",
-  "Software",
-  "Spaces",
-  "Spending",
-  "Tasks",
-  "TimeOff",
-  "TimeTracking",
-  "Trainings",
-  "Workflows",
-] as const
+export type ModuleIconName = keyof typeof Icons
+
+export const moduleIconNames = Object.keys(Icons) as ModuleIconName[]
 
 export const iconComponents = moduleIconNames.reduce(
   (acc, name) => {
