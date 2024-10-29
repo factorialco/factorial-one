@@ -11,6 +11,7 @@ const meta: Meta = {
   args: {
     name: "Saul Dominguez",
     avatarUrl: "https://avatars.githubusercontent.com/u/22561733?v=4",
+    onClick: () => {},
   },
 }
 

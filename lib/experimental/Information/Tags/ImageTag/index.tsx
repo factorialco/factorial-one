@@ -7,10 +7,11 @@ type Props = {
   imageUrl: string
   text: string
   rounded?: boolean
+  onClick?: () => void
 }
 
 export const ImageTag = forwardRef<HTMLDivElement, Props>(
-  ({ imageUrl, text, rounded = false }, ref) => {
+  ({ imageUrl, text, rounded = false, onClick }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
@@ -31,6 +32,7 @@ export const ImageTag = forwardRef<HTMLDivElement, Props>(
           />
         }
         text={text}
+        onClick={onClick}
       />
     )
   }

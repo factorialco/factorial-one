@@ -4,11 +4,19 @@ import { ImageTag } from "../ImageTag"
 type Props = {
   companyName: string
   companyImageUrl: string
+  onClick?: () => void
 }
 
 export const CompanyTag = forwardRef<HTMLDivElement, Props>(
-  ({ companyName, companyImageUrl }, ref) => {
-    return <ImageTag ref={ref} imageUrl={companyImageUrl} text={companyName} />
+  ({ companyName, companyImageUrl, onClick }, ref) => {
+    return (
+      <ImageTag
+        ref={ref}
+        imageUrl={companyImageUrl}
+        text={companyName}
+        onClick={onClick}
+      />
+    )
   }
 )
 
