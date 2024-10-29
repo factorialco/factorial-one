@@ -1,6 +1,6 @@
 import { Widget } from "@/experimental/exports"
-import AreaGraph from "@/icons/AreaGraph"
-import Cash from "@/icons/Cash"
+import { MoneyBag } from "@/icons/app"
+import AreaGraph from "@/icons/app/AreaGraph"
 import { ExoticComponent, forwardRef } from "react"
 
 type Icon = "area-graph" | "cash"
@@ -16,7 +16,7 @@ export interface Props {
 
 const Icons: Record<Icon, ExoticComponent<{ className: string }>> = {
   "area-graph": AreaGraph,
-  cash: Cash,
+  cash: MoneyBag,
 }
 
 export const WidgetEmptyState = forwardRef<HTMLDivElement, Props>(

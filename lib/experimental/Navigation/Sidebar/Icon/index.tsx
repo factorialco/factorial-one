@@ -1,6 +1,6 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
-import { Cross } from "@/icons"
+import { Cross } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 

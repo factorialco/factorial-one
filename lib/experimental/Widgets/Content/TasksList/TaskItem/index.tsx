@@ -1,6 +1,6 @@
 import { Badge } from "@/components/Information/Badge"
 import { Counter } from "@/experimental/Information/Counter"
-import { DottedCircle, InProgressTask } from "@/icons"
+import { DottedCircle, InProgressTask } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
 export type TaskStatus = "in-progress" | "due" | "no-due"

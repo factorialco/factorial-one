@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { AlertCircle, Circle } from "@/icons"
+import { AlertCircle, Circle } from "@/icons/app"
 import { ComponentProps } from "react"
 import { IndicatorsList } from "."
 

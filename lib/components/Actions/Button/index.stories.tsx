@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 
-import Add from "@/icons/Add"
-import Archive from "@/icons/Archive"
+import Add from "@/icons/app/Add"
+import Archive from "@/icons/app/Archive"
 import { Button } from "."
 
 const meta = {

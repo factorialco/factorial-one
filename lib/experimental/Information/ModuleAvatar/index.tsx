@@ -1,4 +1,4 @@
-import * as Icons from "@/icons"
+import * as Icons from "@/icons/app"
 import { cva, type VariantProps } from "class-variance-authority"
 
 export const moduleIconNames = [

@@ -5,7 +5,7 @@ import {
   StatusVariant,
 } from "@/experimental/Information/Tags/StatusTag"
 import { PrivateBox } from "@/experimental/Utilities/PrivateBox"
-import { EyeInvisible, EyeVisible } from "@/icons"
+import { EyeInvisible, EyeVisible } from "@/icons/app"
 import { usePrivacyMode } from "@/lib/privacyMode"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"

@@ -19,8 +19,8 @@ import { useXRay } from "../lib/lib/xray"
 import { Button } from "@/components/exports"
 import { Split, Stack } from "@/experimental/exports"
 
-import Add from "@/icons/Add"
-import Ellipsis from "@/icons/Ellipsis"
+import Add from "@/icons/app/Add"
+import Ellipsis from "@/icons/app/Ellipsis"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea } from "@/ui/scrollarea"
 

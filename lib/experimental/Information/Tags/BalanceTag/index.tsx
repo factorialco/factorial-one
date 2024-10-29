@@ -1,6 +1,6 @@
 import { IconType } from "@/components/Utilities/Icon"
 import { Icon } from "@/factorial-one"
-import { ArrowDown, ArrowUp } from "@/icons"
+import { ArrowDown, ArrowUp } from "@/icons/app"
 import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"

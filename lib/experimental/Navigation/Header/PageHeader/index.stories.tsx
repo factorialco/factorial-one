@@ -1,5 +1,5 @@
-import EllipsisHorizontal from "@/icons/EllipsisHorizontal"
-import Settings from "@/icons/Settings"
+import EllipsisHorizontal from "@/icons/app/EllipsisHorizontal"
+import Settings from "@/icons/app/Settings"
 
 import type { Meta, StoryObj } from "@storybook/react"
 import { PageHeader } from "."

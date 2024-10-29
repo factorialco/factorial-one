@@ -1,6 +1,6 @@
 import { IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
-import * as Icons from "@/icons"
+import * as Icons from "@/icons/app"
 import { useReducedMotion } from "@/lib/a11y"
 import { Link, useNavigation } from "@/lib/linkHandler"
 import { cn, focusRing } from "@/lib/utils"

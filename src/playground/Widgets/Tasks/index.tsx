@@ -1,8 +1,8 @@
 import { Button } from "@/components/Actions/Button"
 import { TasksList } from "@/experimental/Widgets/Content/TasksList"
 import { Widget } from "@/experimental/Widgets/Widget"
-import { Circle } from "@/icons"
-import AlertCircle from "@/icons/AlertCircle"
+import { Circle } from "@/icons/app"
+import AlertCircle from "@/icons/app/AlertCircle"
 import { Indicator } from "@/ui/indicator"
 import { forwardRef } from "react"
 
