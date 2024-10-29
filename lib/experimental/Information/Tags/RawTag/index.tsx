@@ -23,7 +23,7 @@ export const RawTag = forwardRef<HTMLDivElement, Props>(
         )}
         left={
           icon ? (
-            <Icon icon={icon} size="md" aria-hidden className="text-f1-icon" />
+            <Icon icon={icon} size="sm" className="text-f1-icon" aria-hidden />
           ) : null
         }
         text={text}
