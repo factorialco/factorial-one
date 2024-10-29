@@ -197,7 +197,7 @@ const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   function Skeleton({ header, height }, ref) {
     return (
       <Card
-        className="flex gap-4"
+        className="flex gap-4 border-f1-border-secondary"
         ref={ref}
         aria-live="polite"
         aria-busy={true}
