@@ -9,7 +9,6 @@ const meta: Meta = {
     tags: ["autodocs"],
   },
   args: {
-    title: "Events",
     events: [
       {
         title: "Birthday of Kyriakos Papadopoulos",
@@ -47,9 +46,3 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
-
-export const NoTitle: Story = {
-  args: {
-    title: undefined,
-  },
-}
