@@ -1,6 +1,9 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
-import { AlertTag } from "@/experimental/Information/AlertTag"
-import { StatusTag, StatusVariant } from "@/experimental/Information/StatusTag"
+import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
+import {
+  StatusTag,
+  StatusVariant,
+} from "@/experimental/Information/Tags/StatusTag"
 import { PrivateBox } from "@/experimental/Utilities/PrivateBox"
 import { EyeInvisible, EyeVisible } from "@/icons"
 import { usePrivacyMode } from "@/lib/privacyMode"
