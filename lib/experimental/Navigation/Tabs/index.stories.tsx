@@ -3,7 +3,7 @@ import { Tabs } from "."
 
 const tabItems = [
   { label: "Overview", href: "/", exactMatch: true },
-  { label: "Courses", href: "/courses", badge: 10 },
+  { label: "Courses", href: "/courses" },
   { label: "Categories", href: "/categories" },
   { label: "Catalog", href: "/catalog" },
   { label: "Requests", href: "/requests" },

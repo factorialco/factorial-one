@@ -1,11 +1,8 @@
-import { Counter } from "@/experimental/Information/Counter"
 import { Link, useNavigation } from "@/lib/linkHandler"
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 import { NavigationItem } from "../utils"
 
-export type TabItem = NavigationItem & {
-  badge?: number
-}
+export type TabItem = NavigationItem
 
 interface TabsProps {
   tabs: TabItem[]
@@ -17,7 +14,7 @@ export function Tabs({ tabs, secondary = false }: TabsProps) {
 
   return (
     <TabNavigation secondary={secondary}>
-      {tabs.map(({ label, badge, ...props }, index) => (
+      {tabs.map(({ label, ...props }, index) => (
         <TabNavigationLink
           key={index}
           active={isActive(props.href, { exact: props.exactMatch })}
@@ -25,10 +22,7 @@ export function Tabs({ tabs, secondary = false }: TabsProps) {
           secondary={secondary}
           asChild
         >
-          <Link {...props}>
-            <span>{label}</span>
-            {badge && <Counter value={badge} size="sm" type="bold" />}
-          </Link>
+          <Link {...props}>{label}</Link>
         </TabNavigationLink>
       ))}
     </TabNavigation>

@@ -124,7 +124,7 @@ const TabNavigationLink = React.forwardRef<
               className
             )}
           >
-            <span className="flex items-center gap-2">{children}</span>
+            {children}
             {active && !secondary && (
               <motion.div
                 layoutId="underline"
