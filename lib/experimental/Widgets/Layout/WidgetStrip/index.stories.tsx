@@ -110,7 +110,6 @@ export const EmployeesList: Story = {
         header={{
           title: "Headcount",
           subtitle: undefined,
-          info: "This is additional information for the headcount",
           link: undefined,
         }}
         summaries={[
@@ -137,7 +136,6 @@ export const EmployeesList: Story = {
         header={{
           title: "Promotion rate",
           subtitle: undefined,
-          info: "This is additional information for the promotion rate",
           link: undefined,
         }}
         summaries={[
@@ -161,7 +159,6 @@ export const EmployeesList: Story = {
         header={{
           title: "Turnover rate",
           subtitle: undefined,
-          info: "This is additional information for the turnover rate",
           link: undefined,
         }}
         chart={{
