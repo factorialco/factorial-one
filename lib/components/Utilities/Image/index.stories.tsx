@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import heart from "../../../../assets/icons/heart.svg"
+import heart from "../../../../assets/icons/app/heart.svg"
 
 import { Image } from "."
 
