@@ -1,19 +1,23 @@
-import { Badge } from "@/factorial-one"
+import { Button } from "@/factorial-one"
 import { AvatarListItem } from "./AvatarListItem"
 
 export interface AvatarListProps {
   items: AvatarListItem[]
   maxItemsToShow?: number
   onClickItem?: (item: AvatarListItem) => void
+  onShowMore?: () => void
   emptyMessage?: string
   hideIcons?: boolean
+  moreElementsLabel: string
 }
 
 export function AvatarList({
   items,
   onClickItem,
+  onShowMore,
   hideIcons = false,
   maxItemsToShow = 5,
+  moreElementsLabel,
   emptyMessage = "No items assigned",
 }: AvatarListProps) {
   const isEmpty = !items.length
@@ -35,10 +39,14 @@ export function AvatarList({
           ))
       )}
       {items.length - maxItemsToShow > 0 && (
-        <Badge
-          text={"+" + (items.length - maxItemsToShow) + "elements"}
-          variant={"neutral"}
-        />
+        <div className="mt-2 pl-2">
+          <Button
+            variant={"neutral"}
+            size={"sm"}
+            label={`+${items.length - maxItemsToShow} ${moreElementsLabel}`}
+            onClick={() => onShowMore?.()}
+          />
+        </div>
       )}
     </div>
   )

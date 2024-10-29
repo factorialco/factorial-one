@@ -119,6 +119,37 @@ export const WithLongTaskTitles: Story = {
   },
 }
 
+export const LongList: Story = {
+  args: {
+    tasks: {
+      inProgress: [{ id: 1, text: "Migrate to new CRM" }],
+      due: [],
+      noDue: [
+        { id: 1, text: "Connect to Slack" },
+        { id: 2, text: "Sync GitHub Repo" },
+        { id: 3, text: "Write Release Notes" },
+        { id: 4, text: "Plan Product Roadmap" },
+        { id: 5, text: "Summarize Key Insights" },
+        { id: 6, text: "Coordinate with Design Team" },
+        { id: 7, text: "Draft User Manual" },
+        { id: 8, text: "Evaluate Competitor Features" },
+        { id: 9, text: "Discuss Closing Remarks" },
+        { id: 10, text: "Organize Files on Drive" },
+        { id: 11, text: "Update README File" },
+        { id: 12, text: "Analyze User Feedback" },
+        { id: 13, text: "Prepare Demo Presentation" },
+        { id: 14, text: "Review Code Quality" },
+        { id: 15, text: "Schedule Team Meeting" },
+        { id: 16, text: "Run Performance Tests" },
+        { id: 17, text: "Define Project Milestones" },
+        { id: 18, text: "Research New Tools" },
+        { id: 19, text: "Set Up Continuous Integration" },
+        { id: 20, text: "Finalize Release Checklist" },
+      ],
+    },
+  },
+}
+
 export const EmptyState: Story = {
   args: {
     emptyMessage: "No tasks assigned",
