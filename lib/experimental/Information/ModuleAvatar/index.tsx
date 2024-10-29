@@ -1,23 +1,5 @@
-import * as Icons from "@/icons/modules"
+import { IconType } from "@/components/Utilities/Icon"
 import { cva, type VariantProps } from "class-variance-authority"
-
-export type ModuleIconName = keyof typeof Icons
-
-export const moduleIconNames = Object.keys(Icons) as ModuleIconName[]
-
-export const iconComponents = moduleIconNames.reduce(
-  (acc, name) => {
-    const value = Icons[`Module${name}` as keyof typeof Icons]
-    if (value) acc[name] = value
-    return acc
-  },
-  {} as Record<
-    (typeof moduleIconNames)[number],
-    React.ComponentType<React.SVGProps<SVGSVGElement>>
-  >
-)
-
-export type IconType = keyof typeof iconComponents
 
 const moduleAvatarVariants = cva(
   "relative flex shrink-0 items-center justify-center",
@@ -57,7 +39,7 @@ const squirclePath =
   "M50,0 C43,0 36,0 30,1 23,2 17,5 12,9 5,16 1,25 0,36 0,43 0,57 0,64 1,75 5,84 12,91 17,95 23,98 30,99 36,100 43,100 50,100 57,100 64,100 70,99 77,98 83,95 88,91 95,84 99,75 100,64 100,57 100,43 100,36 99,25 95,16 88,9 83,5 77,2 70,1 64,0 57,0 50,0"
 
 export function ModuleAvatar({ size = "md", icon }: ModuleAvatarProps) {
-  const IconComponent = iconComponents[icon]
+  const IconComponent = icon
 
   return (
     <div className={moduleAvatarVariants({ size })}>

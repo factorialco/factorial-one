@@ -6,16 +6,13 @@ import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
-import {
-  ModuleAvatar,
-  type IconType as ModuleAvatarIconType,
-} from "@/experimental/Information/ModuleAvatar"
+import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 
 type HeaderProps = {
   module: {
     name: string
     href: string
-    icon: ModuleAvatarIconType
+    icon: IconType
   }
   breadcrumbs?: BreadcrumbItemType[]
   actions?: {
