@@ -1,5 +1,4 @@
 import { autoColor } from "@/components/Charts/utils/colors"
-import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
 interface DualProgressBarProps {
@@ -14,11 +13,8 @@ export const ProgressBarDuo = forwardRef<HTMLDivElement, DualProgressBarProps>(
     return (
       <div ref={ref} className="flex h-2 w-full gap-0.5 overflow-hidden">
         <div
-          className={cn(
-            "rounded transition-all duration-300 ease-in-out",
-            `bg-[${autoColor(0)}]`
-          )}
-          style={{ width: `${percentage}%` }}
+          className="rounded transition-all duration-300 ease-in-out"
+          style={{ width: `${percentage}%`, backgroundColor: autoColor(0) }}
         />
         <div
           className="rounded bg-f1-foreground-disabled transition-all duration-300 ease-in-out"
