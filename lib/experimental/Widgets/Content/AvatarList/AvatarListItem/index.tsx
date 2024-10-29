@@ -37,30 +37,42 @@ export function AvatarListItem({
     <Wrapper onClick={handleOnClick} className={className}>
       {!hideIcon &&
         (item.src ? (
-          <div className="flex items-center justify-center overflow-hidden rounded-[10px] border-[1px] border-solid border-f1-background-secondary-hover">
+          <div className="flex flex-shrink-0 items-center justify-center overflow-hidden rounded-[10px] border-[1px] border-solid border-f1-background-secondary-hover">
             <Image width={32} height={32} src={item.src} />
           </div>
         ) : (
-          <div className="flex h-[32px] w-[32px] items-center justify-center rounded-[10px] border-[1px] border-solid border-f1-background-secondary-hover">
+          <div className="flex h-[32px] w-[32px] flex-shrink-0 items-center justify-center rounded-[10px] border-[1px] border-solid border-f1-background-secondary-hover">
             <Icon size="md" icon={Pig} color={"rgba(100, 112, 132, 1)"} />
           </div>
         ))}
-      <div className="flex flex-1 flex-col gap-1">
-        <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{item.title}</p>
+      <div className="flex flex-1 flex-col gap-1 overflow-hidden">
+        <p className="mt-0.5 flex-1 truncate font-medium" title={item.title}>
+          {item.title}
+        </p>
         {item.description && (
-          <p className="line-clamp-1 text-f1-foreground-secondary">
+          <p
+            className="truncate text-f1-foreground-secondary"
+            title={item.description}
+          >
             {item.description}
           </p>
         )}
       </div>
-      <div className="flex flex-1 flex-col gap-1 text-end">
-        <p className="mt-0.5 line-clamp-2 flex-1 pr-2 font-medium">
+      <div className="flex flex-1 flex-col justify-end gap-1 overflow-hidden text-end">
+        <p
+          className="mt-0.5 flex-1 truncate pr-2 font-medium"
+          title={item.value}
+        >
           {item.value}
         </p>
-        <BalanceTag
-          text={item.badgeValue?.value ?? ""}
-          status={item.badgeValue?.type ?? "positive"}
-        />
+        <div className="flex justify-end">
+          {!!item.badgeValue && (
+            <BalanceTag
+              text={item.badgeValue.value}
+              status={item.badgeValue.type}
+            />
+          )}
+        </div>
       </div>
     </Wrapper>
   )

@@ -103,3 +103,57 @@ function generateRandomValue(sign: "positive" | "negative") {
   }).format(euros)
   return `${percent}% · ${formattedEuros}`
 }
+
+export const ExtremeValues: Story = {
+  args: {
+    hideIcons: false,
+    onClickItem: fn(),
+    onShowMore: fn(),
+    items: [
+      {
+        id: 1,
+        src: "https://github.com/Rogermax.png",
+        title:
+          "Title with a very long description to test the component’s limit",
+        description:
+          "This is a subtitle with additional details to see if it breaks in smaller containers",
+        value: "12.345.678,90000000000 €",
+        badgeValue: {
+          type: "negative",
+          value: "-125.35% · 123.456.789,01 €",
+        },
+      },
+      {
+        id: 2,
+        title: "Title",
+        value: "12.345.678,90000000000 €",
+        badgeValue: {
+          type: "positive",
+          value: "125.35% · 123.456.789,01 €",
+        },
+      },
+      {
+        id: 3,
+        src: "https://github.com/Rogermax.png",
+        title:
+          "Title with a very long description to test the component’s limit",
+        description: "Subtitle",
+        value: "12.345.678,90000000000 €",
+      },
+      {
+        id: 4,
+        title:
+          "Title with a very long description to test the component’s limit",
+        description:
+          "This is a subtitle with additional details to see if it breaks in smaller containers",
+        value: "",
+        badgeValue: {
+          type: "negative",
+          value: "-125.35% · 123.456.789,01 €",
+        },
+      },
+    ],
+    maxItemsToShow: 5,
+    moreElementsLabel: "elements",
+  },
+}

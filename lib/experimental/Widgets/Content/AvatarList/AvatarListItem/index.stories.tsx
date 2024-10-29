@@ -55,3 +55,22 @@ export const WithImage: Story = {
     },
   },
 }
+
+export const ExtremeValues: Story = {
+  args: {
+    hideIcon: false,
+    onClick: fn(),
+    item: {
+      id: 1,
+      src: "https://github.com/Rogermax.png",
+      title: "Title with a very long description to test the component’s limit",
+      description:
+        "This is a subtitle with additional details to see if it breaks in smaller containers",
+      value: "12.345.678,90000000000 €",
+      badgeValue: {
+        type: "negative",
+        value: "-125.35% · 123.456.789,01 €",
+      },
+    },
+  },
+}
