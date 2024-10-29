@@ -10,16 +10,13 @@ import {
 const iconVariants = cva("inline-block shrink-0", {
   variants: {
     size: {
-      xl: "h-12 w-12",
-      lg: "h-8 w-8",
-      md: "h-5 w-5",
-      sm: "h-4 w-4",
-      xs: "h-3 w-3",
+      lg: "w-[24px]",
+      md: "w-[20px]",
+      sm: "w-[16px]",
     },
   },
-
   defaultVariants: {
-    size: "xl",
+    size: "md",
   },
 })
 
@@ -43,7 +40,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
     <Component
       ref={ref}
       {...props}
-      className={cn(iconVariants({ size }), className)}
+      className={cn("aspect-square", iconVariants({ size }), className)}
     />
   )
 })
