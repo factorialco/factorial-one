@@ -1,4 +1,4 @@
-import { Badge } from "@/components/Information/Badge"
+import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { forwardRef } from "react"
 
 interface TimeStatusProps {
@@ -23,7 +23,7 @@ export const TimeStatus = forwardRef<HTMLDivElement, TimeStatusProps>(
           className="flex flex-row items-center gap-3 text-f1-foreground-secondary"
         >
           <p className="mr-auto text-sm font-semibold uppercase">{title}</p>
-          <Badge text={statusText} hasDot variant={variant[status]} />
+          <StatusTag text={statusText} variant={variant[status]} />
         </div>
         <p className="text-3xl font-semibold">{time}</p>
       </div>
