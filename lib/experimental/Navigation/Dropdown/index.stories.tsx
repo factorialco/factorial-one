@@ -1,4 +1,4 @@
-import { Avatar } from "@/experimental/Information/Avatar"
+import { UserAvatar } from "@/experimental/Information/Avatars"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Dropdown } from "."
 
@@ -60,9 +60,10 @@ export const WithCustomTrigger: Story = {
   render: (args) => (
     <Dropdown {...args}>
       <button>
-        <Avatar
+        <UserAvatar
           src="https://github.com/dani-moreno.png"
-          alt="DM"
+          firstName="Dani"
+          lastName="Moreno"
           size="large"
         />
       </button>

@@ -29,10 +29,10 @@ const avatarVariants = cva(
   {
     variants: {
       size: {
-        xsmall: "h-5 w-5 rounded-xs text-sm",
-        small: "h-6 w-6 rounded-sm text-sm",
-        medium: "h-8 w-8 rounded",
-        large: "h-18 w-18 rounded-xl text-2xl",
+        xsmall: "size-5 rounded-xs text-sm",
+        small: "size-6 rounded-sm text-sm",
+        medium: "size-8 rounded",
+        large: "size-18 rounded-xl text-2xl",
       } satisfies Record<(typeof sizes)[number], string>,
       type: {
         base: "",

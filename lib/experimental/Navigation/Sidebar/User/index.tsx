@@ -1,11 +1,11 @@
-import { Avatar } from "@/experimental/Information/Avatar"
+import { UserAvatar } from "@/experimental/Information/Avatars/"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { cn, focusRing } from "@/lib/utils"
 
 interface UserProps {
-  name: string
+  firstName: string
+  lastName: string
   avatarUrl?: string
-  avatarAlt: string
   options: {
     label: string
     href?: string
@@ -13,7 +13,7 @@ interface UserProps {
   }[]
 }
 
-export function User({ name, avatarUrl, avatarAlt, options }: UserProps) {
+export function User({ firstName, lastName, avatarUrl, options }: UserProps) {
   return (
     <div className="border-t border-dashed border-transparent border-t-f1-border pt-4">
       <Dropdown items={options}>
@@ -23,8 +23,13 @@ export function User({ name, avatarUrl, avatarAlt, options }: UserProps) {
             focusRing()
           )}
         >
-          <Avatar src={avatarUrl} alt={avatarAlt} size="xxsmall" />
-          {name}
+          <UserAvatar
+            src={avatarUrl}
+            firstName={firstName}
+            lastName={lastName}
+            size="xsmall"
+          />
+          {firstName} {lastName}
         </button>
       </Dropdown>
     </div>

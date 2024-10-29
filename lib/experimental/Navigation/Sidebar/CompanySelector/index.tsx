@@ -1,5 +1,5 @@
 import { Select } from "@/experimental/Forms/Fields/Select"
-import { Avatar } from "@/experimental/Information/Avatar"
+import { CompanyAvatar } from "@/experimental/Information/Avatars"
 import ChevronDown from "@/icons/ChevronDown"
 import { cn, focusRing } from "@/lib/utils"
 import { motion } from "framer-motion"
@@ -49,8 +49,8 @@ export function CompanySelector({
         tabIndex={0}
         title={selectedCompany?.name}
       >
-        <Avatar
-          alt={selectedCompany?.name?.[0]}
+        <CompanyAvatar
+          name={selectedCompany?.name?.[0]}
           src={selectedCompany?.logo}
           size="xsmall"
         />
