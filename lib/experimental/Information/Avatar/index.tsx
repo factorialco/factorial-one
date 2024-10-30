@@ -1,4 +1,4 @@
-import { AvailableColors } from "@/experimental/Layouts/Utils/helper"
+import { AvailableColors } from "@/experimental/PageLayouts/Utils/helper"
 import { cn } from "@/lib/utils"
 import {
   Avatar as AvatarComponent,

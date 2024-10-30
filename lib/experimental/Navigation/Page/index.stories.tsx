@@ -7,7 +7,7 @@ import * as HeaderStories from "../Header/PageHeader/index.stories"
 import { Tabs } from "../Tabs"
 import * as TabsStories from "../Tabs/index.stories"
 
-import { StandardLayout } from "@/experimental/Layouts/StandardLayout"
+import { StandardLayout } from "@/experimental/PageLayouts/StandardLayout"
 
 const meta: Meta<typeof Page> = {
   component: Page,
