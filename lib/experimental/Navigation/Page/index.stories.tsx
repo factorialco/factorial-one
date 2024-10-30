@@ -1,4 +1,4 @@
-import { Placeholder } from "@/lib/storybook-utils"
+import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Page } from "."
 

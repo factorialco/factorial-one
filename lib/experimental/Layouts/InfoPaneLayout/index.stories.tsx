@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { Dashboard } from "@/experimental/Widgets/Layout/Dashboard"
 import * as DashboardStories from "@/experimental/Widgets/Layout/Dashboard/index.stories"
+import { PageDecorator } from "@/lib/storybook-utils/pageDecorator"
 import { ComponentProps } from "react"
 import { InfoPaneLayout } from "."
 import { DetailsItemsList } from "../Utils/DetailsItemsList"
@@ -10,6 +11,7 @@ import * as DetailsItemsListStories from "../Utils/DetailsItemsList/index.storie
 const meta = {
   component: InfoPaneLayout,
   tags: ["autodocs"],
+  decorators: [PageDecorator],
   args: {
     mainContent: (
       <div className="flex h-64 items-center justify-center bg-f1-foreground-info text-f1-foreground-inverse">
