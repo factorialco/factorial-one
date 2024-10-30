@@ -1,8 +1,5 @@
-import { Button } from "@/components/Actions/Button"
 import { TasksList } from "@/experimental/Widgets/Content/TasksList"
 import { Widget } from "@/experimental/Widgets/Widget"
-import { Circle } from "@/icons"
-import AlertCircle from "@/icons/AlertCircle"
 import { Indicator } from "@/ui/indicator"
 import { forwardRef } from "react"
 
@@ -50,20 +47,14 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
       {
         label: overdueLabel,
         content: overdueTasksCount,
-        icon: AlertCircle,
-        color: "text-critical-50",
       },
       {
         label: dueLabel,
         content: dueTasksCount,
-        icon: Circle,
-        color: "text-f1-foreground-secondary",
       },
       {
         label: noDueLabel,
         content: noDueTasksCount,
-        icon: Circle,
-        color: "text-f1-foreground-secondary",
       },
     ]
 
@@ -74,44 +65,36 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
           title,
           link: { title: linkTitle, url: linkUrl },
         }}
+        action={
+          buttonLabel
+            ? { label: buttonLabel, onClick: handleNavigate }
+            : undefined
+        }
       >
         <div className="grid grid-cols-3">
-          {taskCategories.map(({ label, content, icon, color }) => (
-            <Indicator
-              key={label}
-              label={label}
-              content={content}
-              icon={icon}
-              color={color}
-            />
+          {taskCategories.map(({ label, content }) => (
+            <Indicator key={label} label={label} content={content} />
           ))}
         </div>
         {(inProgressTasks.length || dueTasks.length || noDueTasks.length) && (
-          <TasksList
-            tasks={{
-              inProgress: inProgressTasks.map((task) => ({
-                id: 1,
-                text: task,
-              })),
-              noDue: noDueTasks.map((task) => ({
-                id: 2,
-                text: task,
-              })),
-              due: dueTasks.map((task) => ({
-                id: 3,
-                text: task,
-              })),
-            }}
-          />
-        )}
-        {buttonLabel && (
-          <span className="mt-4 max-w-20">
-            <Button
-              variant="outline"
-              label={buttonLabel}
-              onClick={handleNavigate}
+          <div className="-mx-2">
+            <TasksList
+              tasks={{
+                inProgress: inProgressTasks.map((task) => ({
+                  id: 1,
+                  text: task,
+                })),
+                noDue: noDueTasks.map((task) => ({
+                  id: 2,
+                  text: task,
+                })),
+                due: dueTasks.map((task) => ({
+                  id: 3,
+                  text: task,
+                })),
+              }}
             />
-          </span>
+          </div>
         )}
       </Widget>
     )
