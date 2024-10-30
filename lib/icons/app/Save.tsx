@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { SVGProps } from "react";
 import { Ref, forwardRef } from "react";
-const SvgSave = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" d="M16 20H8a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4h5.757a4 4 0 0 1 2.829 1.172l2.242 2.242A4 4 0 0 1 20 10.243V16a4 4 0 0 1-4 4M6 8v8a2 2 0 0 0 1 1.732V16a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1.732A2 2 0 0 0 18 16v-5.757a2 2 0 0 0-.586-1.415L16 7.414V10a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V6a2 2 0 0 0-2 2m8-1.985A2 2 0 0 0 13.757 6H10v3h4zM15 16a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v2h6z" /></svg>;
+const SvgSave = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" fillRule="evenodd" d="M5.65 8A2.35 2.35 0 0 1 8 5.65h.452A.65.65 0 0 0 8.35 6v4c0 .359.291.65.65.65h6a.65.65 0 0 0 .65-.65V6.57l2.012 2.01c.44.442.688 1.04.688 1.663V16a2.35 2.35 0 0 1-1.7 2.259V16A2.65 2.65 0 0 0 14 13.35h-4A2.65 2.65 0 0 0 7.35 16v2.259A2.35 2.35 0 0 1 5.65 16zm8.754-2.26a2.4 2.4 0 0 0-.647-.09h-4.21A.65.65 0 0 1 9.65 6v3.35h4.7V6q.001-.139.054-.26M15.35 16v2.35h-6.7V16c0-.746.604-1.35 1.35-1.35h4c.746 0 1.35.604 1.35 1.35M8 4.35A3.65 3.65 0 0 0 4.35 8v8A3.65 3.65 0 0 0 8 19.65h8A3.65 3.65 0 0 0 19.65 16v-5.757a3.65 3.65 0 0 0-1.07-2.581l-2.242-2.243a3.65 3.65 0 0 0-2.58-1.069z" clipRule="evenodd" /></svg>;
 const ForwardRef = forwardRef(SvgSave);
 export default ForwardRef;

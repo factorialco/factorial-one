@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { SVGProps } from "react";
 import { Ref, forwardRef } from "react";
-const SvgEyeVisible = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" d="M5.147 12c.993 2.543 3.568 4.922 6.853 4.922 3.286 0 5.86-2.38 6.854-4.922C17.86 9.457 15.286 7.078 12 7.078S6.14 9.458 5.147 12m-2.17-.341C4.088 8.326 7.432 4.922 12 4.922s7.912 3.404 9.023 6.737c.074.221.074.46 0 .682-1.111 3.333-4.455 6.737-9.023 6.737s-7.912-3.404-9.023-6.737a1.08 1.08 0 0 1 0-.682" /><path fill="currentColor" d="M12 13a1 1 0 1 1 0-2 1 1 0 0 1 0 2m0 2a3 3 0 1 0 0-6 3 3 0 0 0 0 6" /></svg>;
+const SvgEyeVisible = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" fillRule="evenodd" d="M12 17.35c-3.568 0-6.313-2.623-7.311-5.35C5.687 9.273 8.432 6.65 12 6.65s6.313 2.623 7.311 5.35c-.998 2.727-3.743 5.35-7.311 5.35m0-12c-4.342 0-7.55 3.244-8.617 6.445a.65.65 0 0 0 0 .41C4.45 15.407 7.658 18.65 12 18.65s7.55-3.244 8.617-6.444a.65.65 0 0 0 0-.412C19.55 8.595 16.342 5.35 12 5.35M13.7 12a1.7 1.7 0 1 1-3.4 0 1.7 1.7 0 0 1 3.4 0m1.3 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0" clipRule="evenodd" /></svg>;
 const ForwardRef = forwardRef(SvgEyeVisible);
 export default ForwardRef;
