@@ -135,6 +135,11 @@ export default {
       screens: {
         xs: "480px",
       },
+      strokeWidth: {
+        lg: "12px",
+        md: "1.2px",
+        sm: "1.1px",
+      },
     },
   },
   plugins: [
