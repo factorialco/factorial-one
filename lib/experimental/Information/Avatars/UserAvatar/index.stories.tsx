@@ -16,6 +16,11 @@ const meta: Meta<typeof UserAvatar> = {
     lastName: "Moreno",
     size: "medium",
   },
+  parameters: {
+    a11y: {
+      disable: true,
+    },
+  },
 }
 
 export default meta

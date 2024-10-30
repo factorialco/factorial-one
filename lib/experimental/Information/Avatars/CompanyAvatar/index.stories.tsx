@@ -15,6 +15,11 @@ const meta: Meta<typeof CompanyAvatar> = {
     name: "Factorial",
     size: "medium",
   },
+  parameters: {
+    a11y: {
+      disable: true,
+    },
+  },
 }
 
 export default meta

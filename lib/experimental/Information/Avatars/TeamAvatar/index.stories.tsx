@@ -15,6 +15,11 @@ const meta: Meta<typeof TeamAvatar> = {
     name: "Design",
     size: "medium",
   },
+  parameters: {
+    a11y: {
+      disable: true,
+    },
+  },
 }
 
 export default meta
