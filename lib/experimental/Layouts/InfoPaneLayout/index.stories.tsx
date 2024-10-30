@@ -13,7 +13,7 @@ const meta = {
   tags: ["autodocs"],
   decorators: [PageDecorator],
   args: {
-    mainContent: (
+    children: (
       <div className="flex h-64 items-center justify-center bg-f1-foreground-info text-f1-foreground-inverse">
         Main
       </div>
@@ -39,7 +39,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {}
 export const Profile: Story = {
   args: {
-    mainContent: <Dashboard {...DashboardStories.default.args} />,
+    children: <Dashboard {...DashboardStories.default.args} />,
     sideContent: (
       <DetailsItemsList
         // Storybook doesn't return the correct type for the args
