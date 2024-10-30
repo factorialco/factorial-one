@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react"
 
-export interface StandardLayoutProps {
+export type StandardLayoutProps = {
   children: React.ReactNode
 }
 
