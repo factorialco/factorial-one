@@ -1,3 +1,4 @@
+import { DataList } from "@/experimental/Lists/DataList"
 import { cn } from "@/lib/utils"
 import React, { forwardRef } from "react"
 
@@ -14,8 +15,12 @@ export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
         ref={ref}
         className={cn("flex flex-col", hasBiggerGap ? "gap-2" : "gap-1")}
       >
-        <p className="text-f1-foreground-secondary">{title}</p>
-        <p className="font-medium text-f1-foreground">{content}</p>
+        <p className="pl-1.5 text-f1-foreground-secondary">{title}</p>
+        {typeof content === "string" ? (
+          <DataList.ItemWithCopyButton text={content} />
+        ) : (
+          content
+        )}
       </div>
     )
   }
