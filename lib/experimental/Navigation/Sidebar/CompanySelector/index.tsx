@@ -1,5 +1,5 @@
 import { Select } from "@/experimental/Forms/Fields/Select"
-import { CompanyAvatar } from "@/experimental/Information/Avatars"
+import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
 import ChevronDown from "@/icons/app/ChevronDown"
 import { cn, focusRing } from "@/lib/utils"
 import { motion } from "framer-motion"
