@@ -80,7 +80,7 @@ const Container = forwardRef<
   }
 
   return (
-    <Card className="flex gap-4 border-f1-border-secondary" ref={ref}>
+    <Card className="relative flex gap-4 border-f1-border-secondary" ref={ref}>
       {header && (
         <CardHeader className="-mr-1 -mt-1">
           <div className="flex w-full flex-1 flex-col gap-4">

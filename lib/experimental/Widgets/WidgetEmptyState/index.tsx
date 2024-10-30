@@ -1,22 +1,14 @@
+import { IconType } from "@/components/Utilities/Icon"
 import { Widget } from "@/experimental/exports"
-import { MoneyBag } from "@/icons/app"
-import AreaGraph from "@/icons/app/AreaGraph"
-import { ExoticComponent, forwardRef } from "react"
-
-type Icon = "area-graph" | "cash"
+import { forwardRef } from "react"
 
 export interface Props {
   title: string
   content: string
-  icon: Icon
+  icon: IconType
   buttonLabel?: string
   buttonAction?: () => void
   promote?: boolean
-}
-
-const Icons: Record<Icon, ExoticComponent<{ className: string }>> = {
-  "area-graph": AreaGraph,
-  cash: MoneyBag,
 }
 
 export const WidgetEmptyState = forwardRef<HTMLDivElement, Props>(
@@ -24,7 +16,7 @@ export const WidgetEmptyState = forwardRef<HTMLDivElement, Props>(
     { title, content, icon, buttonLabel, buttonAction, promote = false },
     ref
   ) {
-    const Icon = Icons[icon]
+    const Icon = icon
 
     return (
       <Widget
@@ -43,7 +35,7 @@ export const WidgetEmptyState = forwardRef<HTMLDivElement, Props>(
         ref={ref}
       >
         <div className="relative flex min-h-28 flex-1">
-          <Icon className="absolute -top-8 right-0 z-10" />
+          <Icon className="absolute right-0 top-0 z-10 max-h-full max-w-full text-f1-background-promote" />
           <p className="flex w-3/4 text-xl font-semibold">{content}</p>
         </div>
       </Widget>
