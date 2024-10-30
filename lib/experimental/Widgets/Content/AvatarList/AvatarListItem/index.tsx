@@ -1,7 +1,7 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { Image } from "@/components/Utilities/Image"
 import { BalanceTag } from "@/experimental/exports"
-import { Pig } from "@/icons"
+import { Pig } from "@/icons/app"
 import { getWidgetListItemClassname, Wrapper } from "../../TasksList/TaskItem"
 
 export interface AvatarListItem {
