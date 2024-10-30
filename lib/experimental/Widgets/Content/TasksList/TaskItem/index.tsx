@@ -57,12 +57,7 @@ export function TaskItem({
   onClick,
   hideIcon = false,
 }: TaskItemProps) {
-  const className = cn(
-    "flex flex-row items-center gap-1 rounded-sm border border-solid border-transparent px-2 py-1.5",
-    onClick
-      ? "cursor-pointer hover:bg-f1-background-tertiary focus:border-f1-background-selected-bold focus:outline-none"
-      : undefined
-  )
+  const className = getWidgetListItemClassname(onClick !== undefined)
   const handleOnClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
     ev.preventDefault()
     onClick?.(task)
