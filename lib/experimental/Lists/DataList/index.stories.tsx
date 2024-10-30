@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react"
 
-import { Check } from "@/icons"
+import { Check } from "@/icons/app"
 import { DataList } from "."
 
 const meta: Meta<typeof DataList> = {

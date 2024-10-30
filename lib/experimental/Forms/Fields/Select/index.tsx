@@ -1,4 +1,4 @@
-import * as Icons from "@/icons"
+import * as Icons from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
   SelectContent,

@@ -1,0 +1,6 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+import { Ref, forwardRef } from "react";
+const SvgHome = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 26" ref={ref} {...props}><g filter="url(#Home_svg__a)"><path fill="currentColor" d="M9.675 3.932a4 4 0 0 1 4.65 0l4 2.857A4 4 0 0 1 20 10.044V16a4 4 0 0 1-4 4h-1a2 2 0 0 1-2-2v-2.5a1 1 0 1 0-2 0V18a2 2 0 0 1-2 2H8a4 4 0 0 1-4-4v-5.956a4 4 0 0 1 1.675-3.255z" /></g><defs><filter id="Home_svg__a" width={23.758} height={24.571} x={0.121} y={1.247} colorInterpolationFilters="sRGB" filterUnits="userSpaceOnUse"><feFlood floodOpacity={0} result="BackgroundImageFix" /><feColorMatrix in="SourceAlpha" result="hardAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" /><feOffset dy={1.939} /><feGaussianBlur stdDeviation={1.939} /><feComposite in2="hardAlpha" operator="out" /><feColorMatrix values="0 0 0 0 0.0352941 0 0 0 0 0.0627451 0 0 0 0 0.109804 0 0 0 0.12 0" /><feBlend in2="BackgroundImageFix" result="effect1_dropShadow_80_61" /><feBlend in="SourceGraphic" in2="effect1_dropShadow_80_61" result="shape" /></filter></defs></svg>;
+const ForwardRef = forwardRef(SvgHome);
+export default ForwardRef;

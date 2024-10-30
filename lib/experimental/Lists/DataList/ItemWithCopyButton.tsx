@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Icon } from "@/components/Utilities/Icon"
 import { ItemProps } from "@/experimental/Lists/DataList"
 import { ItemContainer } from "@/experimental/Lists/DataList/ItemContainer"
-import { CheckCircle, LayersFront } from "@/icons"
+import { CheckCircle, LayersFront } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
 const COPIED_SHOWN_MS = 750

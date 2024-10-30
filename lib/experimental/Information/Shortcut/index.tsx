@@ -1,5 +1,5 @@
 import { Icon, IconProps } from "@/components/Utilities/Icon"
-import { Cmd } from "@/icons"
+import { Cmd } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { VariantProps, cva } from "class-variance-authority"
 

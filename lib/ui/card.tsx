@@ -2,8 +2,8 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-import ChevronRight from "@/icons/ChevronRight"
-import InfoCircleLine from "@/icons/InfoCircleLine"
+import ChevronRight from "@/icons/app/ChevronRight"
+import InfoCircleLine from "@/icons/app/InfoCircleLine"
 
 import { Icon } from "@/components/Utilities/Icon"
 import { Link } from "@/lib/linkHandler"

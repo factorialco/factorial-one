@@ -1,16 +1,11 @@
+import * as iconComponents from "@/icons/modules"
 import type { Meta, StoryObj } from "@storybook/react"
-import { iconComponents, ModuleAvatar, ModuleAvatarProps } from "."
-
-const iconOptions = Object.keys(iconComponents) as ModuleAvatarProps["icon"][]
+import { ModuleAvatar } from "."
 
 const meta: Meta<typeof ModuleAvatar> = {
   component: ModuleAvatar,
   tags: ["autodocs"],
   argTypes: {
-    icon: {
-      control: "select",
-      options: iconOptions,
-    },
     size: {
       control: "radio",
       options: ["sm", "md", "lg"],
@@ -24,7 +19,7 @@ type Story = StoryObj<typeof ModuleAvatar>
 
 export const Default: Story = {
   args: {
-    icon: "Home",
+    icon: iconComponents.Home,
     size: "lg",
   },
 }
@@ -32,8 +27,12 @@ export const Default: Story = {
 export const AllModules: Story = {
   render: () => (
     <div className="flex flex-wrap gap-3">
-      {iconOptions.map((icon) => (
-        <ModuleAvatar key={icon} icon={icon} size="lg" />
+      {Object.keys(iconComponents).map((icon) => (
+        <ModuleAvatar
+          key={icon}
+          icon={iconComponents[icon as keyof typeof iconComponents]}
+          size="lg"
+        />
       ))}
     </div>
   ),

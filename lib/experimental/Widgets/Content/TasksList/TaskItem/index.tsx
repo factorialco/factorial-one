@@ -2,7 +2,7 @@ import { Icon } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
 import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
-import { Calendar, DottedCircle, InProgressTask } from "@/icons"
+import { Calendar, DottedCircle, InProgressTask } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
 export type TaskStatus = "in-progress" | "due" | "no-due"
@@ -60,14 +60,13 @@ export function TaskItem({
       {!hideIcon && (status === "due" || status === "no-due") && (
         <Icon
           icon={DottedCircle}
-          color={
-            status === "no-due"
-              ? "hsl(var(--neutral-40))"
-              : "hsl(var(--neutral-50))"
-          }
+          size="md"
+          className="text-f1-icon-secondary"
         />
       )}
-      {!hideIcon && status === "in-progress" && <Icon icon={InProgressTask} />}
+      {!hideIcon && status === "in-progress" && (
+        <Icon icon={InProgressTask} size="md" className="text-f1-icon-info" />
+      )}
       <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{task.text}</p>
       {!!task.badge && (
         <>

@@ -1,6 +1,6 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { Shortcut } from "@/experimental/Information/Shortcut"
-import { Search } from "@/icons"
+import { Search } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import { ButtonHTMLAttributes } from "react"
 
