@@ -60,12 +60,12 @@ export function TaskItem({
       {!hideIcon && (status === "due" || status === "no-due") && (
         <Icon
           icon={DottedCircle}
-          size="sm"
+          size="md"
           className="text-f1-icon-secondary"
         />
       )}
       {!hideIcon && status === "in-progress" && (
-        <Icon icon={InProgressTask} size="sm" className="text-f1-icon-info" />
+        <Icon icon={InProgressTask} size="md" className="text-f1-icon-info" />
       )}
       <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{task.text}</p>
       {!!task.badge && (
