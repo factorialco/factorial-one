@@ -38,7 +38,12 @@ export function AvatarListItem({
       {!hideIcon &&
         (item.src ? (
           <div className="flex flex-shrink-0 items-center justify-center overflow-hidden rounded-[10px] border-[1px] border-solid border-f1-background-secondary-hover">
-            <Image width={32} height={32} src={item.src} />
+            <Image
+              alt={item.description ?? item.title}
+              width={32}
+              height={32}
+              src={item.src}
+            />
           </div>
         ) : (
           <div className="flex h-[32px] w-[32px] flex-shrink-0 items-center justify-center rounded-[10px] border-[1px] border-solid border-f1-background-secondary-hover">
