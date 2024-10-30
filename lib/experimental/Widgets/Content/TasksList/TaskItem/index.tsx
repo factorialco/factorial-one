@@ -1,6 +1,8 @@
-import { Badge } from "@/components/Information/Badge"
+import { Icon } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
-import { DottedCircle, InProgressTask } from "@/icons/app"
+import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
+import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { Calendar, DottedCircle, InProgressTask } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
 export type TaskStatus = "in-progress" | "due" | "no-due"
@@ -43,7 +45,7 @@ export function TaskItem({
   hideIcon = false,
 }: TaskItemProps) {
   const className = cn(
-    "flex flex-row items-center gap-2 rounded-[8px] border border-solid border-transparent px-2 py-[6px]",
+    "flex flex-row items-center gap-1 rounded-sm border border-solid border-transparent px-2 py-1.5",
     onClick
       ? "cursor-pointer hover:bg-f1-background-tertiary focus:border-f1-background-selected-bold focus:outline-none"
       : undefined
@@ -56,17 +58,24 @@ export function TaskItem({
   return (
     <Wrapper onClick={handleOnClick} className={className}>
       {!hideIcon && (status === "due" || status === "no-due") && (
-        <DottedCircle className="w-6 text-f1-icon-secondary" />
+        <Icon
+          icon={DottedCircle}
+          size="sm"
+          className="text-f1-icon-secondary"
+        />
       )}
       {!hideIcon && status === "in-progress" && (
-        <InProgressTask className="w-6 text-f1-icon-info" />
+        <Icon icon={InProgressTask} size="sm" className="text-f1-icon-info" />
       )}
       <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{task.text}</p>
       {!!task.badge && (
-        <Badge
-          text={task.badge.text}
-          variant={task.badge.isPastDue ? "critical" : "neutral"}
-        />
+        <>
+          {task.badge.isPastDue ? (
+            <AlertTag text={task.badge.text} level="critical" />
+          ) : (
+            <RawTag text={task.badge.text} icon={Calendar} />
+          )}
+        </>
       )}
       {!!task.counter && <Counter value={task.counter} />}
     </Wrapper>
