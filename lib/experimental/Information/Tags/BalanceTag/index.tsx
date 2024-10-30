@@ -26,7 +26,7 @@ export const BalanceTag = forwardRef<HTMLDivElement, Props>(
       <BaseTag
         ref={ref}
         className={cn(
-          "line-clamp-1 flex flex-row items-center justify-between gap-0.5 rounded-md py-0.5 pl-1 pr-2 text-base font-medium",
+          "pl-1",
           {
             positive: "bg-f1-background-positive text-f1-foreground-positive",
             negative: "bg-f1-background-critical text-f1-foreground-critical",
