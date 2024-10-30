@@ -56,16 +56,11 @@ export function TaskItem({
   return (
     <Wrapper onClick={handleOnClick} className={className}>
       {!hideIcon && (status === "due" || status === "no-due") && (
-        <DottedCircle
-          width={24}
-          color={
-            status === "no-due"
-              ? "hsl(var(--neutral-40))"
-              : "hsl(var(--neutral-50))"
-          }
-        />
+        <DottedCircle className="w-6 text-f1-icon-secondary" />
       )}
-      {!hideIcon && status === "in-progress" && <InProgressTask />}
+      {!hideIcon && status === "in-progress" && (
+        <InProgressTask className="w-6 text-f1-icon-info" />
+      )}
       <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{task.text}</p>
       {!!task.badge && (
         <Badge
