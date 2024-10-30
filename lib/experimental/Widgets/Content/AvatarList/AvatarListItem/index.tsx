@@ -45,33 +45,35 @@ export function AvatarListItem({
             <Icon size="md" icon={Pig} color={"rgba(100, 112, 132, 1)"} />
           </div>
         ))}
-      <div className="flex flex-1 flex-col gap-1 overflow-hidden">
-        <p className="mt-0.5 flex-1 truncate font-medium" title={item.title}>
-          {item.title}
-        </p>
-        {item.description && (
-          <p
-            className="truncate text-f1-foreground-secondary"
-            title={item.description}
-          >
-            {item.description}
+      <div className="flex w-full flex-row justify-between overflow-hidden">
+        <div className="flex flex-1 flex-col gap-1 overflow-hidden">
+          <p className="mt-0.5 flex-1 truncate font-medium" title={item.title}>
+            {item.title}
           </p>
-        )}
-      </div>
-      <div className="flex flex-1 flex-col justify-end gap-1 overflow-hidden text-end">
-        <p
-          className="mt-0.5 flex-1 truncate pr-2 font-medium"
-          title={item.value}
-        >
-          {item.value}
-        </p>
-        <div className="flex justify-end">
-          {!!item.badgeValue && (
-            <BalanceTag
-              text={item.badgeValue.value}
-              status={item.badgeValue.type}
-            />
+          {item.description && (
+            <p
+              className="truncate text-f1-foreground-secondary"
+              title={item.description}
+            >
+              {item.description}
+            </p>
           )}
+        </div>
+        <div className="flex flex-col justify-end gap-1 overflow-hidden text-end">
+          <p
+            className="mt-0.5 flex-1 truncate pr-2 font-medium"
+            title={item.value}
+          >
+            {item.value}
+          </p>
+          <div className="flex justify-end">
+            {!!item.badgeValue && (
+              <BalanceTag
+                text={item.badgeValue.value}
+                status={item.badgeValue.type}
+              />
+            )}
+          </div>
         </div>
       </div>
     </Wrapper>
