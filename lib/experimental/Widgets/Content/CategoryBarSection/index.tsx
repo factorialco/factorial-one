@@ -4,7 +4,6 @@ import {
 } from "@/components/Charts/CategoryBarChart"
 
 interface CategoryBarSectionProps {
-  label: string
   title: string
   subtitle: string
   data: CategoryBarProps["data"]
