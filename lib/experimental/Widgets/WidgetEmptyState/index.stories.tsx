@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { ChartLine, MoneyBag } from "@/icons/app"
 import { WidgetEmptyState } from "."
 
-const meta: Meta = {
+const meta: Meta<typeof WidgetEmptyState> = {
   component: WidgetEmptyState,
   parameters: {
     tags: ["autodocs"],
@@ -12,7 +13,7 @@ const meta: Meta = {
     content: "See how Hugo's performance evolved over time",
     buttonLabel: "Try it for free",
     promote: true,
-    icon: "area-graph",
+    icon: ChartLine,
   },
   decorators: [
     (Story) => (
@@ -34,6 +35,6 @@ export const SalaryEmptyState: Story = {
     content: "See how Hugo’s salary evolved over time",
     buttonLabel: "Add info",
     promote: false,
-    icon: "cash",
+    icon: MoneyBag,
   },
 }

@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import * as Icons from "@/icons"
+import * as Icons from "@/icons/app"
 import { cn } from "@/lib/utils"
 import {
   DropdownMenu,

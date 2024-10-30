@@ -7,18 +7,16 @@ import {
   BreadcrumbItem as ShadBreadcrumbItem,
 } from "@/ui/breadcrumb"
 
-import {
-  ModuleAvatar,
-  type IconType,
-} from "@/experimental/Information/ModuleAvatar"
+import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 
 import { Dropdown, type DropdownItem } from "@/experimental/Navigation/Dropdown"
 
-import { ChevronRight } from "@/icons"
+import { ChevronRight } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn, focusRing } from "@/lib/utils"
 import { NavigationItem } from "../../utils"
 
+import { IconType } from "@/components/Utilities/Icon"
 import { useEffect, useRef, useState } from "react"
 
 export type BreadcrumbItemType = NavigationItem & {

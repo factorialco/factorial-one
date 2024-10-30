@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import AddAvatar from "@/icons/AddAvatar"
+import { LogoAvatar } from "@/icons/app"
 import { ComponentProps } from "react"
 import { Icon } from "."
 
@@ -11,7 +11,7 @@ const meta = {
   },
   args: {
     size: "md",
-    icon: AddAvatar,
+    icon: LogoAvatar,
   },
   tags: ["autodocs"],
 } satisfies Meta<ComponentProps<typeof Icon>>

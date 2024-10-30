@@ -1,6 +1,6 @@
 import { Select } from "@/experimental/Forms/Fields/Select"
 import { CompanyAvatar } from "@/experimental/Information/Avatars"
-import ChevronDown from "@/icons/ChevronDown"
+import ChevronDown from "@/icons/app/ChevronDown"
 import { cn, focusRing } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { useState } from "react"

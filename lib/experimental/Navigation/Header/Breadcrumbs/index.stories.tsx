@@ -1,3 +1,4 @@
+import { Documents, Recruitment } from "@/icons/modules"
 import type { Meta, StoryObj } from "@storybook/react"
 import Breadcrumbs from "./index"
 
@@ -13,7 +14,7 @@ type Story = StoryObj<typeof Breadcrumbs>
 export const Default: Story = {
   args: {
     breadcrumbs: [
-      { label: "Recruitment", href: "/recruitment", icon: "Recruitment" },
+      { label: "Recruitment", href: "/recruitment", icon: Recruitment },
       { label: "Candidates", href: "/recruitment/candidates" },
       { label: "Dani Moreno" },
     ],
@@ -23,7 +24,7 @@ export const Default: Story = {
 export const LongBreadcrumbs: Story = {
   args: {
     breadcrumbs: [
-      { label: "Documents", href: "/", icon: "Documents" },
+      { label: "Documents", href: "/", icon: Documents },
       { label: "Employee Documents", href: "/documents" },
       { label: "Human Resources", href: "/documents/hr" },
       { label: "Recruitment", href: "/documents/hr/recruitment" },

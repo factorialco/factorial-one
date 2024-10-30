@@ -1,4 +1,4 @@
-import { Badge } from "@/components/Information/Badge"
+import { PersonTag, TeamTag } from "@/experimental/Information/Tags/exports"
 import {
   DetailsItem,
   DetailsItemType,
@@ -97,13 +97,7 @@ export const Details: Story = {
           <DetailsItem
             title={manager.title}
             content={
-              <Badge
-                text={manager.name}
-                avatar={{
-                  src: manager.avatar,
-                  alt: manager.name[0],
-                }}
-              />
+              <PersonTag name={manager.name} avatarUrl={manager.avatar} />
             }
           />
         )}
@@ -114,10 +108,10 @@ export const Details: Story = {
               <div className="flex flex-row flex-wrap gap-2">
                 {teams.list.map((team, index) => {
                   return !team ? null : (
-                    <Badge
+                    <TeamTag
                       key={team + index}
-                      text={team}
-                      avatar={{ alt: team[0] }}
+                      teamName={team}
+                      teamImageUrl={team[0]}
                     />
                   )
                 })}
