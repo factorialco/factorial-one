@@ -32,7 +32,7 @@ const meta: Meta = {
       dueTasksCount: 3,
       noDueLabel: "No due",
       noDueTasksCount: 8,
-      buttonLabel: "See 16 more",
+      buttonLabel: "+16 tasks",
       linkUrl: "/tasks",
       linkTitle: "Tasks",
       handleNavigate: () => {},

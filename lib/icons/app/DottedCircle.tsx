@@ -1,0 +1,6 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+import { Ref, forwardRef } from "react";
+const SvgDottedCircle = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" ref={ref} {...props}><path fill="currentColor" d="M9.045 2.745a7.4 7.4 0 0 1 1.91 0l-.168 1.289a6 6 0 0 0-1.574 0zm3.756.494c.595.246 1.15.57 1.654.956l-.792 1.03a6 6 0 0 0-1.36-.786zm-7.256.956A7.3 7.3 0 0 1 7.2 3.239l.498 1.2a6 6 0 0 0-1.36.787zm10.26 1.35c.387.503.71 1.059.956 1.654l-1.2.498a6 6 0 0 0-.787-1.36zM3.239 7.2a7.3 7.3 0 0 1 .956-1.654l1.031.792a6 6 0 0 0-.786 1.36zm14.016 1.846a7.4 7.4 0 0 1 0 1.91l-1.29-.169a6 6 0 0 0 0-1.573zM2.683 10q0-.486.062-.955l1.29.168a6 6 0 0 0 0 1.573l-1.29.169A7 7 0 0 1 2.683 10m14.078 2.8a7.3 7.3 0 0 1-.956 1.654l-1.031-.792c.318-.414.584-.87.786-1.36zM4.195 14.455a7.3 7.3 0 0 1-.956-1.653l1.2-.498c.203.489.469.945.787 1.36zm10.26 1.35a7.3 7.3 0 0 1-1.654.957l-.498-1.2a6 6 0 0 0 1.36-.787zm-7.256.957a7.3 7.3 0 0 1-1.654-.956l.793-1.031c.414.318.87.584 1.36.786zm3.756.494a7.4 7.4 0 0 1-1.91 0l.168-1.29a6 6 0 0 0 1.574 0z" /></svg>;
+const ForwardRef = forwardRef(SvgDottedCircle);
+export default ForwardRef;

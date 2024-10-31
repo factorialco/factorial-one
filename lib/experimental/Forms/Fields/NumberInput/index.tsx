@@ -1,5 +1,5 @@
 import { Icon } from "@/components/Utilities/Icon"
-import { ChevronDown, ChevronUp } from "@/icons"
+import { ChevronDown, ChevronUp } from "@/icons/app"
 import { Input } from "@/ui/input"
 import { forwardRef, useEffect, useState } from "react"
 import { InputProps } from "../Input"

@@ -1,8 +1,8 @@
 // Replace your-framework with the name of your framework
 import { Button } from "@/components/Actions/Button"
-import Add from "@/icons/Add"
-import Ellipsis from "@/icons/Ellipsis"
-import { Placeholder } from "@/lib/storybook-utils"
+import Add from "@/icons/app/Add"
+import Ellipsis from "@/icons/app/Ellipsis"
+import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Split } from "./Split"
 import { Stack } from "./Stack"

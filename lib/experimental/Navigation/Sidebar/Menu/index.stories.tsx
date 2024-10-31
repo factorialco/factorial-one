@@ -1,4 +1,4 @@
-import * as Icons from "@/icons"
+import * as Icons from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Menu } from "."
 

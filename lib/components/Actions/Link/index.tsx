@@ -1,5 +1,5 @@
 import { Icon } from "@/components/Utilities/Icon"
-import ExternalLink from "@/icons/ExternalLink"
+import ExternalLink from "@/icons/app/ExternalLink"
 import {
   Link as BaseLink,
   LinkProps as BaseLinkProps,

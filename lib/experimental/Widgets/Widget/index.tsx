@@ -5,7 +5,7 @@ import {
   StatusVariant,
 } from "@/experimental/Information/Tags/StatusTag"
 import { PrivateBox } from "@/experimental/Utilities/PrivateBox"
-import { EyeInvisible, EyeVisible } from "@/icons"
+import { EyeInvisible, EyeVisible } from "@/icons/app"
 import { usePrivacyMode } from "@/lib/privacyMode"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
@@ -80,7 +80,7 @@ const Container = forwardRef<
   }
 
   return (
-    <Card className="flex gap-4 border-f1-border-secondary" ref={ref}>
+    <Card className="relative flex gap-4 border-f1-border-secondary" ref={ref}>
       {header && (
         <CardHeader className="-mr-1 -mt-1">
           <div className="flex w-full flex-1 flex-col gap-4">
