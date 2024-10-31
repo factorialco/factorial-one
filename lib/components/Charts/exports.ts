@@ -5,6 +5,7 @@ import { BarChart as BarChartComponent } from "./BarChart"
 import { CategoryBarChart as CategoryBarChartComponent } from "./CategoryBarChart"
 import { LineChart as LineChartComponent } from "./LineChart"
 import { PieChart as PieChartComponent } from "./PieChart"
+import { ProgressBar as ProgressBarComponent } from "./ProgressChart"
 import { VerticalBarChart as VerticalBarChartComponent } from "./VerticalBarChart"
 
 export const AreaChart = Component(
@@ -53,4 +54,12 @@ export const VerticalBarChart = Component(
     type: "info",
   },
   VerticalBarChartComponent
+)
+
+export const ProgressBarChart = Component(
+  {
+    name: "ProgressBarChart",
+    type: "info",
+  },
+  ProgressBarComponent
 )
