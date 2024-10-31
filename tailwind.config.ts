@@ -136,7 +136,7 @@ export default {
         xs: "480px",
       },
       strokeWidth: {
-        lg: "12px",
+        lg: "1.3px",
         md: "1.2px",
         sm: "1.1px",
       },
