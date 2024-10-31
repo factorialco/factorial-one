@@ -23,7 +23,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
       name,
       size,
       type,
-      color,
+      color = "random",
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledby,
     },
