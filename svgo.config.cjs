@@ -1,4 +1,4 @@
-console.log("Loading SVGO config...")
+// eslint-disable-next-line no-undef
 module.exports = {
   multipass: false,
   plugins: [
