@@ -1,4 +1,5 @@
 export { default as Add } from './Add'
+export { default as Ai } from './Ai'
 export { default as AlertCircleLine } from './AlertCircleLine'
 export { default as AlertCircle } from './AlertCircle'
 export { default as Alert } from './Alert'
