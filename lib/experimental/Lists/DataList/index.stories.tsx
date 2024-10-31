@@ -20,16 +20,16 @@ const meta: Meta<typeof DataList> = {
           action={{ type: "navigate", href: "https://factorialhr.com/" }}
           text="Banco Bilbao Vizcaya Argentaria"
         />
-        <DataList.EmployeeItem
+        <DataList.PersonItem
           fullName="Saul Dominguez"
           avatarUrl="https://avatars.githubusercontent.com/u/22561733?v=4"
         />
-        <DataList.EmployeeItem
+        <DataList.PersonItem
           fullName="Dani Moreno"
           avatarUrl="https://avatars.githubusercontent.com/u/96433370?s=60&v=4"
           action={{ type: "copy", text: "Dani" }}
         />
-        <DataList.EmployeeItem
+        <DataList.PersonItem
           fullName="Josep Jaume Roy Peroy"
           avatarUrl="https://avatars.githubusercontent.com/u/111746?s=60&v=4"
           action={{

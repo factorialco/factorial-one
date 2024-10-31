@@ -2,11 +2,11 @@ import { forwardRef, ReactElement } from "react"
 
 import { IconType } from "@/components/Utilities/Icon"
 import { Avatar } from "@/experimental/Information/Avatar"
-import { AvailableColors } from "@/experimental/Layouts/Utils/helper.ts"
 import {
   InternalActionType,
   ItemContainer,
 } from "@/experimental/Lists/DataList/ItemContainer"
+import { AvailableColors } from "@/experimental/PageLayouts/Utils/helper"
 
 export type DataListProps = {
   children: ReactElement<Items>[] | ReactElement<Items>
@@ -15,7 +15,7 @@ export type DataListProps = {
 
 type Items =
   | typeof Item
-  | typeof EmployeeItem
+  | typeof PersonItem
   | typeof CompanyItem
   | typeof TeamItem
 
@@ -77,7 +77,7 @@ type EmployeeItemProps = {
   action?: ActionType
 }
 
-const EmployeeItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
+const PersonItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
   ({ action, avatarUrl, fullName }, ref) => {
     return (
       <ItemContainer
@@ -89,7 +89,7 @@ const EmployeeItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
     )
   }
 )
-EmployeeItem.displayName = "EmployeeItem"
+PersonItem.displayName = "PersonItem"
 
 type CompanyItemProps = {
   name: string
@@ -152,6 +152,6 @@ const getInternalAction = (
 export const DataList = Object.assign(_DataList, {
   Item,
   CompanyItem,
-  EmployeeItem,
+  PersonItem,
   TeamItem,
 })
