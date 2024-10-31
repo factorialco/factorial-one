@@ -7,9 +7,15 @@ type Props = {
   name: string
   src?: string
   size?: BaseAvatarProps["size"]
-}
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
 
-export const CompanyAvatar = ({ name, src, size }: Props) => {
+export const CompanyAvatar = ({
+  name,
+  src,
+  size,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledby,
+}: Props) => {
   return (
     <BaseAvatar
       type="base"
@@ -17,6 +23,8 @@ export const CompanyAvatar = ({ name, src, size }: Props) => {
       src={src}
       size={size}
       color="viridian"
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
     />
   )
 }

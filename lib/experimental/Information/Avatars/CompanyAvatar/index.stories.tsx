@@ -14,10 +14,18 @@ const meta: Meta<typeof CompanyAvatar> = {
   args: {
     name: "Factorial",
     size: "medium",
+    "aria-label": "Factorial avatar",
   },
   parameters: {
     a11y: {
-      disable: true,
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
     },
   },
 }

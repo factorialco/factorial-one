@@ -18,7 +18,14 @@ const meta: Meta<typeof UserAvatar> = {
   },
   parameters: {
     a11y: {
-      disable: true,
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
     },
   },
 }

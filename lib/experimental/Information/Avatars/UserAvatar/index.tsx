@@ -8,9 +8,16 @@ type Props = {
   lastName: string
   src?: string
   size?: BaseAvatarProps["size"]
-}
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
 
-export const UserAvatar = ({ firstName, lastName, src, size }: Props) => {
+export const UserAvatar = ({
+  firstName,
+  lastName,
+  src,
+  size,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledby,
+}: Props) => {
   return (
     <BaseAvatar
       type="rounded"
@@ -18,6 +25,8 @@ export const UserAvatar = ({ firstName, lastName, src, size }: Props) => {
       src={src}
       size={size}
       color="random"
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledby}
     />
   )
 }

@@ -17,7 +17,14 @@ const meta: Meta<typeof TeamAvatar> = {
   },
   parameters: {
     a11y: {
-      disable: true,
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
     },
   },
 }
