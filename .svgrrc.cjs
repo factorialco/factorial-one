@@ -1,10 +1,9 @@
-// eslint-disable-next-line no-undef
 module.exports = {
   prettier: false,
   ref: true,
-  svgo: true,
   typescript: true,
   dimensions: false,
+  svgo: true,
   replaceAttrValues: {
     "#000": "currentColor",
     "#fff": "currentColor",
