@@ -5,7 +5,6 @@ import { DataList } from "."
 
 const meta: Meta<typeof DataList> = {
   component: DataList,
-  tags: ["autodocs"],
   args: {
     children: (
       <>
@@ -55,5 +54,11 @@ export const Primary: Story = {}
 export const WithLabel: Story = {
   args: {
     label: "Related Data",
+    children: (
+      <>
+        <DataList.Item text="test" />
+        <DataList.Item icon={Check} text="Make coffee" />
+      </>
+    ),
   },
 }
