@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { Dashboard } from "@/experimental/Widgets/Layout/Dashboard"
 import * as DashboardStories from "@/experimental/Widgets/Layout/Dashboard/index.stories"
+import { PageDecorator } from "@/lib/storybook-utils/pageDecorator"
 import { ComponentProps } from "react"
 import { InfoPaneLayout } from "."
 import { DetailsItemsList } from "../Utils/DetailsItemsList"
@@ -10,8 +11,9 @@ import * as DetailsItemsListStories from "../Utils/DetailsItemsList/index.storie
 const meta = {
   component: InfoPaneLayout,
   tags: ["autodocs"],
+  decorators: [PageDecorator],
   args: {
-    mainContent: (
+    children: (
       <div className="flex h-64 items-center justify-center bg-f1-foreground-info text-f1-foreground-inverse">
         Main
       </div>
@@ -37,7 +39,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {}
 export const Profile: Story = {
   args: {
-    mainContent: <Dashboard {...DashboardStories.default.args} />,
+    children: <Dashboard {...DashboardStories.default.args} />,
     sideContent: (
       <DetailsItemsList
         // Storybook doesn't return the correct type for the args

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Placeholder } from "@/lib/storybook-utils"
+import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { Split } from "."
 
 const meta = {
