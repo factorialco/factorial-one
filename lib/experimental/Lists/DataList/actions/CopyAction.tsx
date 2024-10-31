@@ -1,6 +1,6 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { InternalCopyActionType } from "@/experimental/Lists/DataList/ItemContainer"
-import { CheckCircle, LayersFront } from "@/icons"
+import { CheckCircle, LayersFront } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { ReactNode, useEffect, useState } from "react"
 

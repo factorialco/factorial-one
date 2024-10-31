@@ -1,6 +1,6 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { InternalNavigateActionType } from "@/experimental/Lists/DataList/ItemContainer"
-import ChevronRight from "@/icons/ChevronRight"
+import ChevronRight from "@/icons/app/ChevronRight"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import { memo, ReactNode } from "react"
