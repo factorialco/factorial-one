@@ -1,14 +1,14 @@
 import { Icon } from "@/components/Utilities/Icon"
-import { NavigateActionProps as NavigationActionP } from "@/experimental/Lists/DataList"
-import ChevronRight from "@/icons/ChevronRight.tsx"
-import { Link } from "@/lib/linkHandler.tsx"
-import { cn } from "@/lib/utils.ts"
-import { AnchorHTMLAttributes, memo, ReactNode } from "react"
+import { InternalNavigateActionType } from "@/experimental/Lists/DataList/ItemContainer"
+import ChevronRight from "@/icons/ChevronRight"
+import { Link } from "@/lib/linkHandler"
+import { cn } from "@/lib/utils"
+import { memo, ReactNode } from "react"
 
 export type NavigateActionProps = {
   children: ReactNode
-} & NavigationActionP &
-  AnchorHTMLAttributes<HTMLAnchorElement>
+  className?: string
+} & InternalNavigateActionType
 
 export const NavigateAction = memo(
   ({ children, className, ...props }: NavigateActionProps) => {

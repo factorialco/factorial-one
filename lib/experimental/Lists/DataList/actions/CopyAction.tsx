@@ -1,17 +1,16 @@
 import { Icon } from "@/components/Utilities/Icon"
-import { CopyActionProps as CopyActionP } from "@/experimental/Lists/DataList"
+import { InternalCopyActionType } from "@/experimental/Lists/DataList/ItemContainer"
 import { CheckCircle, LayersFront } from "@/icons"
-import { cn } from "@/lib/utils.ts"
-import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react"
+import { cn } from "@/lib/utils"
+import { ReactNode, useEffect, useState } from "react"
 
 const COPIED_SHOWN_MS = 750
 
 export type CopyActionProps = {
   children: ReactNode
-} & CopyActionP &
-  ButtonHTMLAttributes<HTMLButtonElement>
+} & InternalCopyActionType
 
-export const CopyAction = ({ text, children, ...props }: CopyActionProps) => {
+export const CopyAction = ({ text, children }: CopyActionProps) => {
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
@@ -34,7 +33,6 @@ export const CopyAction = ({ text, children, ...props }: CopyActionProps) => {
     <button
       type="button"
       aria-label={copied ? "Copied!" : `Copy ${text}`}
-      {...props}
       className={cn(
         "group flex items-center gap-1.5 rounded p-1.5",
         "focus-visible:outline focus-visible:outline-2 focus-visible:outline-f1-border-selected-bold",

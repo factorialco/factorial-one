@@ -3,7 +3,10 @@ import { forwardRef, ReactElement } from "react"
 import { IconType } from "@/components/Utilities/Icon"
 import { Avatar } from "@/experimental/Information/Avatar"
 import { AvailableColors } from "@/experimental/Layouts/Utils/helper.ts"
-import { ItemContainer } from "@/experimental/Lists/DataList/ItemContainer"
+import {
+  InternalActionType,
+  ItemContainer,
+} from "@/experimental/Lists/DataList/ItemContainer"
 
 export type DataListProps = {
   children: ReactElement<Items>[] | ReactElement<Items>
@@ -15,16 +18,6 @@ type Items =
   | typeof EmployeeItem
   | typeof CompanyItem
   | typeof TeamItem
-
-export type ActionProps = CopyActionProps | NavigateActionProps
-
-export type CopyActionProps = {
-  text: string
-}
-
-export type NavigateActionProps = {
-  href: string
-}
 
 const _DataList = forwardRef<HTMLUListElement, DataListProps>(
   ({ children, label }, ref) => {
@@ -46,13 +39,32 @@ _DataList.displayName = "DataList"
 export type ItemProps = {
   text: string
   icon?: IconType
-  action?: ActionProps
+  action?: ActionType
+}
+
+export type ActionType = CopyActionType | NavigateActionType
+
+export type CopyActionType = {
+  type: "copy"
+  text?: string
+}
+
+export type NavigateActionType = {
+  type: "navigate"
+  href: string
 }
 
 const Item = forwardRef<HTMLLIElement, ItemProps>(
-  ({ text, icon, action }, ref) => (
-    <ItemContainer ref={ref} text={text} leftIcon={icon} action={action} />
-  )
+  ({ text, icon, action }, ref) => {
+    return (
+      <ItemContainer
+        ref={ref}
+        text={text}
+        leftIcon={icon}
+        action={getInternalAction(action, text)}
+      />
+    )
+  }
 )
 
 Item.displayName = "DataList.Item"
@@ -62,7 +74,7 @@ type URL = string
 type EmployeeItemProps = {
   fullName: string
   avatarUrl?: URL
-  action?: ActionProps
+  action?: ActionType
 }
 
 const EmployeeItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
@@ -72,7 +84,7 @@ const EmployeeItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
         ref={ref}
         leftIcon={() => <Avatar size="xxsmall" src={avatarUrl} />}
         text={fullName}
-        action={action}
+        action={getInternalAction(action, fullName)}
       />
     )
   }
@@ -82,7 +94,7 @@ EmployeeItem.displayName = "EmployeeItem"
 type CompanyItemProps = {
   name: string
   avatarUrl?: URL
-  action?: ActionProps
+  action?: ActionType
 }
 
 const CompanyItem = forwardRef<HTMLLIElement, CompanyItemProps>(
@@ -92,7 +104,7 @@ const CompanyItem = forwardRef<HTMLLIElement, CompanyItemProps>(
         ref={ref}
         leftIcon={() => <Avatar size="xxsmall" src={avatarUrl} />}
         text={name}
-        action={action}
+        action={getInternalAction(action, name)}
       />
     )
   }
@@ -103,7 +115,7 @@ CompanyItem.displayName = "CompanyItem"
 type TeamItemProps = {
   name: string
   color?: AvailableColors
-  action?: ActionProps
+  action?: ActionType
 }
 
 const TeamItem = forwardRef<HTMLLIElement, TeamItemProps>(
@@ -113,13 +125,29 @@ const TeamItem = forwardRef<HTMLLIElement, TeamItemProps>(
         ref={ref}
         leftIcon={() => <Avatar size="xxsmall" alt={name[0]} color={color} />}
         text={name}
-        action={action}
+        action={getInternalAction(action, name)}
       />
     )
   }
 )
 
 TeamItem.displayName = "TeamItem"
+
+/**
+ * convert simplified action type received from user to internal action format
+ * @param action ActionType
+ * @param defaultCopyText what to use if copy text is not present
+ */
+const getInternalAction = (
+  action: ActionType | undefined,
+  defaultCopyText: string
+): InternalActionType | undefined => {
+  if (action && action.type === "copy") {
+    return { type: "copy", text: action.text ?? defaultCopyText }
+  }
+
+  return action
+}
 
 export const DataList = Object.assign(_DataList, {
   Item,

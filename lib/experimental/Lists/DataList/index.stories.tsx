@@ -11,13 +11,13 @@ const meta: Meta<typeof DataList> = {
       <>
         <DataList.Item text="test" />
         <DataList.Item icon={Check} text="Make coffee" />
-        <DataList.Item text="hellen@factorial.co" action={{ text: "hellen" }} />
+        <DataList.Item text="hellen@factorial.co" action={{ type: "copy" }} />
         <DataList.Item
-          action={{ href: "https://factorialhr.com/" }}
+          action={{ type: "navigate", href: "https://factorialhr.com/" }}
           text="Factorial"
         />
         <DataList.Item
-          action={{ href: "https://factorialhr.com/" }}
+          action={{ type: "navigate", href: "https://factorialhr.com/" }}
           text="Banco Bilbao Vizcaya Argentaria"
         />
         <DataList.EmployeeItem
@@ -27,12 +27,13 @@ const meta: Meta<typeof DataList> = {
         <DataList.EmployeeItem
           fullName="Dani Moreno"
           avatarUrl="https://avatars.githubusercontent.com/u/96433370?s=60&v=4"
-          action={{ text: "Dani Moreno" }}
+          action={{ type: "copy", text: "Dani" }}
         />
         <DataList.EmployeeItem
           fullName="Josep Jaume Roy Peroy"
           avatarUrl="https://avatars.githubusercontent.com/u/111746?s=60&v=4"
           action={{
+            type: "navigate",
             href: "https://avatars.githubusercontent.com/u/111746?s=60&v=4",
           }}
         />
