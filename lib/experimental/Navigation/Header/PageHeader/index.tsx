@@ -43,6 +43,7 @@ export function PageHeader({
 
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
+  const hasActions = actions.length > 0
 
   return (
     <div
@@ -80,26 +81,33 @@ export function PageHeader({
           ) : (
             <div className="text-xl font-semibold">{module.name}</div>
           )}
-          {!hasNavigation && hasStatus && (
-            <StatusTag text={statusTag.text} variant={statusTag.variant} />
-          )}
         </div>
       </div>
-      {actions && (
-        <div className="flex items-center gap-2">
-          {actions.map((action, index) => (
-            <Button
-              hideLabel
-              round
-              key={index}
-              variant="outline"
-              onClick={action.onClick}
-              label={action.label}
-              icon={action.icon}
-            />
-          ))}
-        </div>
-      )}
+      <div className="flex items-center">
+        {!hasNavigation && hasStatus && (
+          <div className="pe-3">
+            <StatusTag text={statusTag.text} variant={statusTag.variant} />
+          </div>
+        )}
+        {hasStatus && hasActions && (
+          <div className="right-0 h-4 w-px bg-f1-border-secondary"></div>
+        )}
+        {hasActions && (
+          <div className="items-right flex gap-2 ps-3">
+            {actions.map((action, index) => (
+              <Button
+                hideLabel
+                round
+                key={index}
+                variant="outline"
+                onClick={action.onClick}
+                label={action.label}
+                icon={action.icon}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
