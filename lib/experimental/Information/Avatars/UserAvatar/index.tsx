@@ -10,7 +10,7 @@ type Props = {
   size?: BaseAvatarProps["size"]
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
 
-export const UserAvatar = ({
+export const PersonAvatar = ({
   firstName,
   lastName,
   src,
@@ -31,4 +31,4 @@ export const UserAvatar = ({
   )
 }
 
-UserAvatar.displayName = "UserAvatar"
+PersonAvatar.displayName = "PersonAvatar"
