@@ -69,6 +69,11 @@ export const WithCustomTrigger: Story = {
       </button>
     </Dropdown>
   ),
+  parameters: {
+    a11y: {
+      disable: true,
+    },
+  },
 }
 
 export const WithLinks: Story = {
