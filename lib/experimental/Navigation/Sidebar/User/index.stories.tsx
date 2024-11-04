@@ -11,9 +11,9 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    name: "Dani Moreno",
+    firstName: "Dani",
+    lastName: "Moreno",
     avatarUrl: "https://github.com/dani-moreno.png",
-    avatarAlt: "DM",
     options: [
       { label: "Preferences", href: "/preferences" },
       { label: "Notifications", href: "/notifications" },
