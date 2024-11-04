@@ -1,12 +1,13 @@
 import { forwardRef, ReactElement } from "react"
 
 import { IconType } from "@/components/Utilities/Icon"
-import { Avatar } from "@/experimental/Information/Avatar"
+import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
+import { TeamAvatar } from "@/experimental/Information/Avatars/TeamAvatar"
+import { UserAvatar } from "@/experimental/Information/Avatars/UserAvatar"
 import {
   InternalActionType,
   ItemContainer,
 } from "@/experimental/Lists/DataList/ItemContainer"
-import { AvailableColors } from "@/experimental/PageLayouts/Utils/helper"
 
 export type DataListProps = {
   children: ReactElement<Items>[] | ReactElement<Items>
@@ -72,17 +73,26 @@ Item.displayName = "DataList.Item"
 type URL = string
 
 type EmployeeItemProps = {
-  fullName: string
+  firstName: string
+  lastName: string
   avatarUrl?: URL
   action?: ActionType
 }
 
 const PersonItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
-  ({ action, avatarUrl, fullName }, ref) => {
+  ({ action, avatarUrl, firstName, lastName }, ref) => {
+    const fullName = `${firstName} ${lastName}`
     return (
       <ItemContainer
         ref={ref}
-        leftIcon={() => <Avatar size="xxsmall" src={avatarUrl} />}
+        leftIcon={() => (
+          <UserAvatar
+            size="xsmall"
+            src={avatarUrl}
+            firstName={firstName}
+            lastName={lastName}
+          />
+        )}
         text={fullName}
         action={getInternalAction(action, fullName)}
       />
@@ -102,7 +112,9 @@ const CompanyItem = forwardRef<HTMLLIElement, CompanyItemProps>(
     return (
       <ItemContainer
         ref={ref}
-        leftIcon={() => <Avatar size="xxsmall" src={avatarUrl} />}
+        leftIcon={() => (
+          <CompanyAvatar name={name} size="xsmall" src={avatarUrl} />
+        )}
         text={name}
         action={getInternalAction(action, name)}
       />
@@ -114,16 +126,15 @@ CompanyItem.displayName = "CompanyItem"
 
 type TeamItemProps = {
   name: string
-  color?: AvailableColors
   action?: ActionType
 }
 
 const TeamItem = forwardRef<HTMLLIElement, TeamItemProps>(
-  ({ action, color, name }, ref) => {
+  ({ action, name }, ref) => {
     return (
       <ItemContainer
         ref={ref}
-        leftIcon={() => <Avatar size="xxsmall" alt={name[0]} color={color} />}
+        leftIcon={() => <TeamAvatar name={name} size="xsmall" />}
         text={name}
         action={getInternalAction(action, name)}
       />

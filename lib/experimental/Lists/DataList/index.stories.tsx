@@ -20,16 +20,19 @@ const meta: Meta<typeof DataList> = {
           text="Banco Bilbao Vizcaya Argentaria"
         />
         <DataList.PersonItem
-          fullName="Saul Dominguez"
+          firstName="Saul"
+          lastName="Dominguez"
           avatarUrl="https://avatars.githubusercontent.com/u/22561733?v=4"
         />
         <DataList.PersonItem
-          fullName="Dani Moreno"
+          firstName="Dani"
+          lastName="Moreno"
           avatarUrl="https://avatars.githubusercontent.com/u/96433370?s=60&v=4"
           action={{ type: "copy", text: "Dani" }}
         />
         <DataList.PersonItem
-          fullName="Josep Jaume Roy Peroy"
+          firstName="Josep Jaume"
+          lastName=" Rey Peroy"
           avatarUrl="https://avatars.githubusercontent.com/u/111746?s=60&v=4"
           action={{
             type: "navigate",
