@@ -3,7 +3,8 @@ import { describe, expect, test } from "vitest"
 
 describe("getInitials", () => {
   test("returns first two letters in uppercase from the name, if a string passed", () => {
-    expect(getInitials("John Doe")).eq("JO")
+    expect(getInitials("j")).eq("J")
+    expect(getInitials("John")).eq("JO")
     expect(getInitials("John Doe", "medium")).eq("JO")
     expect(getInitials("John Doe", "large")).eq("JO")
   })
@@ -27,5 +28,6 @@ describe("getInitials", () => {
   test("returns an empty string if name is an empty array or an empty string", () => {
     expect(getInitials("")).eq("")
     expect(getInitials([])).eq("")
+    expect(getInitials([""], "xsmall")).eq("")
   })
 })

@@ -10,7 +10,7 @@ export function getInitials(
   const nameArray = Array.isArray(name) ? name : [name]
   const isSmall = size === "xsmall" || size === "small"
 
-  if (isSmall) return nameArray[0][0].toUpperCase()
+  if (isSmall) return (nameArray[0][0] ?? "").toUpperCase()
   if (!Array.isArray(name)) return name.slice(0, 2).toUpperCase()
 
   return nameArray
