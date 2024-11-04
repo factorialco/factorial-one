@@ -40,7 +40,6 @@ export const Default: Story = {
 
 export const WithHelpText: Story = {
   args: {
-    label: "Progress",
     title: "2%",
     data: [
       {

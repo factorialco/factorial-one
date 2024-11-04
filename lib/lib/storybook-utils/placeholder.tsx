@@ -1,5 +1,5 @@
 import React from "react"
-import { cn } from "./utils"
+import { cn } from "../utils"
 
 export const Placeholder = React.forwardRef<
   HTMLDivElement,
@@ -9,7 +9,7 @@ export const Placeholder = React.forwardRef<
     <div
       className={cn(
         className,
-        "flex place-content-center rounded-xs border-2 border-dashed border-f1-border bg-f1-background p-4"
+        "flex place-content-center items-center justify-center rounded-xs border-2 border-dashed border-f1-border bg-f1-background p-4"
       )}
       tabIndex={0}
       ref={ref}

@@ -1,4 +1,5 @@
 import { Component } from "@/lib/component"
+import { FullscreenLayout as FullscreenLayoutComponent } from "./FullscreenLayout"
 import {
   InfoPaneLayout as InfoPaneLayoutComponent,
   InfoPaneLayoutProps,
@@ -15,4 +16,12 @@ export const InfoPaneLayout = Component(
     type: "layout",
   },
   InfoPaneLayoutComponent
+)
+
+export const FullscreenLayout = Component(
+  {
+    name: "FullscreenLayout",
+    type: "layout",
+  },
+  FullscreenLayoutComponent
 )
