@@ -71,7 +71,14 @@ export const WithCustomTrigger: Story = {
   ),
   parameters: {
     a11y: {
-      disable: true,
+      config: {
+        rules: [
+          {
+            id: "button-name",
+            enabled: false,
+          },
+        ],
+      },
     },
   },
 }
