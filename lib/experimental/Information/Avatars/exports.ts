@@ -1,3 +1,3 @@
 export * from "./CompanyAvatar"
-export * from "./TeamAvatar"
 export * from "./PersonAvatar"
+export * from "./TeamAvatar"
