@@ -1,5 +1,5 @@
 export * from "./Alert"
-export * from "./Avatar"
+export * from "./Avatars/exports"
 export * from "./Counter"
 export * from "./ModuleAvatar"
 export * from "./Shortcut"

@@ -1,7 +1,7 @@
 import { useReducedMotion } from "@/lib/a11y"
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
-import { ReactNode } from "react"
+import { AnimatePresence, motion } from "framer-motion"
+import { ReactNode, useState } from "react"
 import { useSidebar } from "../ApplicationFrame/FrameProvider"
 
 interface SidebarProps {
@@ -13,6 +13,11 @@ interface SidebarProps {
 export function Sidebar({ header, body, footer }: SidebarProps) {
   const { sidebarState, isSmallScreen } = useSidebar()
   const shouldReduceMotion = useReducedMotion()
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    setIsScrolled(e.currentTarget.scrollTop > 0)
+  }
 
   const transition = {
     x: {
@@ -59,7 +64,28 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
       transition={transition}
     >
       <div className="flex-shrink-0">{header}</div>
-      {body && <div className="flex-grow overflow-y-auto">{body}</div>}
+      {body && (
+        <div className="relative flex-grow overflow-y-hidden">
+          <AnimatePresence>
+            {isScrolled && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-f1-background-bold/15 to-transparent [mask-image:linear-gradient(to_right,transparent,black_30%,black_60%,transparent)]"
+              />
+            )}
+          </AnimatePresence>
+          <div
+            className="h-full overflow-y-auto"
+            onScroll={handleScroll}
+            onTouchMove={handleScroll}
+          >
+            {body}
+          </div>
+        </div>
+      )}
       <div className="flex-shrink-0">{footer}</div>
     </motion.div>
   )

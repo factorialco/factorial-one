@@ -1,24 +1,21 @@
-import { Avatar } from "@/experimental/Information/Avatar"
+import { UserAvatar } from "@/experimental/Information/Avatars/UserAvatar"
 import { cn } from "@/lib/utils"
 import { ComponentProps, forwardRef } from "react"
-import { getColorFromText } from "../helper"
 
 interface TagProps {
   text: string
-  avatar?: ComponentProps<typeof Avatar>
+  avatar?: {
+    firstName?: string
+    lastName?: string
+    src?: string
+    size?: ComponentProps<typeof UserAvatar>["size"]
+  }
   onClick?: () => void
 }
 
 export const Tag = forwardRef<HTMLDivElement, TagProps>(
   ({ text, avatar, onClick }, ref) => {
-    const short =
-      avatar?.alt ??
-      text
-        .split(/\s+/)
-        .slice(0, 2)
-        .map((e) => e[0])
-        .join("")
-        .toLocaleUpperCase()
+    const [firstName, lastName] = text.split(/\s+/).slice(0, 2)
 
     return (
       <div
@@ -30,11 +27,11 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         onClick={onClick}
       >
         <span>
-          <Avatar
-            alt={short}
+          <UserAvatar
+            firstName={avatar?.firstName ?? firstName}
+            lastName={avatar?.lastName ?? lastName}
             src={avatar?.src}
             size="xsmall"
-            color={getColorFromText(text)}
           />
         </span>
         <p>{text}</p>
