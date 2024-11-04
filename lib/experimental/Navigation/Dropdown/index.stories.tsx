@@ -1,4 +1,4 @@
-import { PersonAvatar } from "@/experimental/Information/Avatars/UserAvatar"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Dropdown } from "."
 

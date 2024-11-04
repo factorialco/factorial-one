@@ -1,4 +1,4 @@
-import { PersonAvatar } from "@/experimental/Information/Avatars/UserAvatar"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { cn, focusRing } from "@/lib/utils"
 

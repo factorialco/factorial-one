@@ -3,7 +3,7 @@ import { forwardRef, ReactElement } from "react"
 import { IconType } from "@/components/Utilities/Icon"
 import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
 import { TeamAvatar } from "@/experimental/Information/Avatars/TeamAvatar"
-import { PersonAvatar } from "@/experimental/Information/Avatars/UserAvatar"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import {
   InternalActionType,
   ItemContainer,

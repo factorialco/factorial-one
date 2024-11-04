@@ -1,4 +1,4 @@
-import { PersonAvatar } from "@/experimental/Information/Avatars/UserAvatar"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { cn } from "@/lib/utils"
 import { ComponentProps, forwardRef } from "react"
 
