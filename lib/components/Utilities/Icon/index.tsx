@@ -10,9 +10,9 @@ import {
 const iconVariants = cva("inline-block shrink-0", {
   variants: {
     size: {
-      lg: "w-6",
-      md: "w-5",
-      sm: "w-4",
+      lg: "w-6 [&_circle]:stroke-lg [&_path]:stroke-lg",
+      md: "w-5 [&_circle]:stroke-md [&_path]:stroke-md",
+      sm: "w-4 [&_circle]:stroke-sm [&_path]:stroke-sm",
     },
   },
   defaultVariants: {
