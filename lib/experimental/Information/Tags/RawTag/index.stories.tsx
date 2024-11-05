@@ -1,4 +1,4 @@
-import Placeholder from "@/icons/Placeholder"
+import { Ai } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { RawTag } from "."
@@ -11,7 +11,7 @@ const meta: Meta = {
   },
   args: {
     text: "Label",
-    icon: Placeholder,
+    icon: Ai,
   },
 }
 

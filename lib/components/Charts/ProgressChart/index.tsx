@@ -1,19 +1,21 @@
 import { Progress } from "@/ui/progress"
+import { ForwardedRef } from "react"
 import { autoColor } from "../utils/colors"
+import { fixedForwardRef } from "../utils/forwardRef"
+import { ChartConfig, ChartPropsBase } from "../utils/types"
 
-export interface ProgressBarProps {
-  value: number
-  max?: number
-  label?: string
-  color?: string
-}
+export type ProgressBarProps<K extends ChartConfig = ChartConfig> =
+  ChartPropsBase<K> & {
+    value: number
+    max?: number
+    label?: string
+    color?: string
+  }
 
-export function ProgressBar({
-  value,
-  max = 100,
-  label,
-  color,
-}: ProgressBarProps) {
+const _ProgressBar = <K extends ChartConfig>(
+  { value, max = 100, label, color }: ProgressBarProps<K>,
+  _ref: ForwardedRef<HTMLDivElement>
+) => {
   const barColor = color || autoColor(0)
   const percentage = (value / max) * 100
 
@@ -36,3 +38,5 @@ export function ProgressBar({
     </div>
   )
 }
+
+export const ProgressBar = fixedForwardRef(_ProgressBar)

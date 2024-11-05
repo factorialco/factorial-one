@@ -1,6 +1,7 @@
-import EllipsisHorizontal from "@/icons/EllipsisHorizontal"
-import Settings from "@/icons/Settings"
+import EllipsisHorizontal from "@/icons/app/EllipsisHorizontal"
+import Settings from "@/icons/app/Settings"
 
+import { Documents, Recruitment } from "@/icons/modules"
 import type { Meta, StoryObj } from "@storybook/react"
 import { PageHeader } from "."
 
@@ -17,7 +18,7 @@ export const Default: Story = {
     module: {
       name: "Recruitment",
       href: "/recruitment",
-      icon: "Recruitment",
+      icon: Recruitment,
     },
     breadcrumbs: [
       { label: "Candidates", href: "/recruitment/candidates" },
@@ -43,7 +44,7 @@ export const FirstLevel: Story = {
     module: {
       name: "Recruitment",
       href: "/recruitment",
-      icon: "Recruitment",
+      icon: Recruitment,
     },
   },
 }
@@ -53,7 +54,7 @@ export const LongBreadcrumbs: Story = {
     module: {
       name: "Documents",
       href: "/documents",
-      icon: "Documents",
+      icon: Documents,
     },
     breadcrumbs: [
       { label: "Employee Documents", href: "/documents" },

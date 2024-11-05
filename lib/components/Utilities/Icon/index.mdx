@@ -1,14 +1,17 @@
 import { Meta, Title, IconGallery, IconItem, Canvas } from "@storybook/blocks"
 
 import { Icon as IconExample } from "./"
-import AddAvatar from "@/icons/AddAvatar"
+import AreaGraph from "@/icons/app/AreaGraph"
 
 import * as IconStories from "./index.stories"
-import * as AllIcons from "@/icons"
+import * as AppIcons from "@/icons/app"
+import * as ModuleIcons from "@/icons/modules"
 
 <Meta of={IconStories} />
 
 # Icons
+
+## App Icons
 
 <Canvas
   of={IconStories.Example}
@@ -16,15 +19,36 @@ import * as AllIcons from "@/icons"
   source={{
     transform: (code) => {
       return `
-import AddAvatar from "@factorial-one/icons/AddAvatar"
+import AreaGraph from "@factorial-one/icons/app/AreaGraph"
 
-${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={AddAvatar")}` }}}
+${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={AreaGraph")}` }}}
 />
 
 <IconGallery>
-  {Object.keys(AllIcons).map((iconName) => (
+  {Object.keys(AppIcons).map((iconName) => (
     <IconItem key={iconName} name={iconName}>
-      <IconExample size="large" icon={AllIcons[iconName]} />
+      <IconExample size="large" icon={AppIcons[iconName]} />
+    </IconItem>
+  ))}
+</IconGallery>
+
+## Module Icons
+
+<Canvas
+  of={IconStories.Example}
+  sourceState="shown"
+  source={{
+    transform: (code) => {
+      return `
+import ModuleCalendar from "@factorial-one/icons/modules/ModuleCalendar"
+
+${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={ModuleCalendar")}`
+}}} />
+
+<IconGallery>
+  {Object.keys(ModuleIcons).map((iconName) => (
+    <IconItem key={iconName} name={iconName}>
+      <IconExample size="large" icon={ModuleIcons[iconName]} />
     </IconItem>
   ))}
 </IconGallery>

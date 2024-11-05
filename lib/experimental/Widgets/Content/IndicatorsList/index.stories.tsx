@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { AlertCircle, Circle } from "@/icons"
+import { AlertCircle, Circle } from "@/icons/app"
 import { ComponentProps } from "react"
 import { IndicatorsList } from "."
 
@@ -59,20 +59,6 @@ export const TwoLineLabel: Story = {
       ...taskCategories,
       {
         label: "The most urgent tasks",
-        content: "55",
-        icon: Circle,
-        color: "text-f1-icon-secondary",
-      },
-    ],
-  },
-}
-
-export const WithCrampedLabel: Story = {
-  args: {
-    items: [
-      ...taskCategories,
-      {
-        label: "The most urgent tasks on the planet Earth",
         content: "55",
         icon: Circle,
         color: "text-f1-icon-secondary",
