@@ -1,5 +1,6 @@
 import { DataList } from "@/experimental/Lists/DataList"
 import { Weekdays } from "@/experimental/Widgets/Content/Weekdays"
+import { isArray } from "lodash"
 import { ComponentProps, FC, forwardRef } from "react"
 
 type Content =
@@ -40,7 +41,7 @@ const ItemContent: FC<{ content: Content }> = ({ content }) => (
 
 export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
   function DetailsItem({ title, content }, ref) {
-    const contentArray = "length" in content ? content : [content]
+    const contentArray = isArray(content) ? content : [content]
 
     return (
       <div ref={ref} className="flex flex-col gap-0.5">
