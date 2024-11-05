@@ -2,8 +2,8 @@ import { forwardRef, ReactElement } from "react"
 
 import { IconType } from "@/components/Utilities/Icon"
 import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { TeamAvatar } from "@/experimental/Information/Avatars/TeamAvatar"
-import { UserAvatar } from "@/experimental/Information/Avatars/UserAvatar"
 import {
   InternalActionType,
   ItemContainer,
@@ -86,7 +86,7 @@ const PersonItem = forwardRef<HTMLLIElement, EmployeeItemProps>(
       <ItemContainer
         ref={ref}
         leftIcon={() => (
-          <UserAvatar
+          <PersonAvatar
             size="xsmall"
             src={avatarUrl}
             firstName={firstName}

@@ -1,9 +1,9 @@
 import { sizes } from "@/ui/avatar"
 import type { Meta, StoryObj } from "@storybook/react"
-import { UserAvatar } from "."
+import { PersonAvatar } from "."
 
-const meta: Meta<typeof UserAvatar> = {
-  component: UserAvatar,
+const meta: Meta<typeof PersonAvatar> = {
+  component: PersonAvatar,
   tags: ["autodocs"],
   argTypes: {
     size: {
@@ -32,7 +32,7 @@ const meta: Meta<typeof UserAvatar> = {
 
 export default meta
 
-type Story = StoryObj<typeof UserAvatar>
+type Story = StoryObj<typeof PersonAvatar>
 
 export const Default: Story = {}
 

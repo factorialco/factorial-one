@@ -1,4 +1,4 @@
-import { UserAvatar } from "@/experimental/Information/Avatars/UserAvatar"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { cn } from "@/lib/utils"
 import { ComponentProps, forwardRef } from "react"
 
@@ -8,7 +8,7 @@ interface TagProps {
     firstName?: string
     lastName?: string
     src?: string
-    size?: ComponentProps<typeof UserAvatar>["size"]
+    size?: ComponentProps<typeof PersonAvatar>["size"]
   }
   onClick?: () => void
 }
@@ -27,7 +27,7 @@ export const Tag = forwardRef<HTMLDivElement, TagProps>(
         onClick={onClick}
       >
         <span>
-          <UserAvatar
+          <PersonAvatar
             firstName={avatar?.firstName ?? firstName}
             lastName={avatar?.lastName ?? lastName}
             src={avatar?.src}
