@@ -1,7 +1,6 @@
 import { DataList } from "@/experimental/Lists/DataList"
 import { Weekdays } from "@/experimental/Widgets/Content/Weekdays"
 import { cn } from "@/lib/utils"
-import { isArray } from "lodash"
 import { ComponentProps, FC, forwardRef } from "react"
 
 type Content =
@@ -43,7 +42,7 @@ const ItemContent: FC<{ content: Content }> = ({ content }) => (
 
 export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
   function DetailsItem({ title, content, spacingAtTheBottom }, ref) {
-    const contentArray = isArray(content) ? content : [content]
+    const contentArray = Array.isArray(content) ? content : [content]
 
     return (
       <div
