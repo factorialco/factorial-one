@@ -29,9 +29,9 @@ export interface DetailsItemType {
 const ItemContent: FC<{ content: Content }> = ({ content }) => (
   <>
     {content.type === "weekdays" && (
-      <div className="px-1.5 py-1">
+      <li className="list-none px-1.5 py-1">
         <Weekdays {...content} />
-      </div>
+      </li>
     )}
     {content.type === "person" && <DataList.PersonItem {...content} />}
     {content.type === "item" && <DataList.Item {...content} />}
