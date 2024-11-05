@@ -26,7 +26,11 @@ type WrapperProps = {
   children: React.ReactNode
 }
 
-const Wrapper: React.FC<WrapperProps> = ({ onClick, className, children }) => {
+export const Wrapper: React.FC<WrapperProps> = ({
+  onClick,
+  className,
+  children,
+}) => {
   return onClick ? (
     <a className={className} onClick={onClick} tabIndex={0}>
       {children}
@@ -38,18 +42,22 @@ const Wrapper: React.FC<WrapperProps> = ({ onClick, className, children }) => {
   )
 }
 
+export function getWidgetListItemClassname(clickable = false) {
+  return cn(
+    "flex flex-row items-center gap-2 rounded-[8px] border border-solid border-transparent px-2 py-[6px]",
+    clickable
+      ? "cursor-pointer hover:bg-f1-background-tertiary focus:border-f1-background-selected-bold focus:outline-none"
+      : undefined
+  )
+}
+
 export function TaskItem({
   task,
   status,
   onClick,
   hideIcon = false,
 }: TaskItemProps) {
-  const className = cn(
-    "flex flex-row items-center gap-1 rounded-sm border border-solid border-transparent px-2 py-1.5",
-    onClick
-      ? "cursor-pointer hover:bg-f1-background-tertiary focus:border-f1-background-selected-bold focus:outline-none"
-      : undefined
-  )
+  const className = getWidgetListItemClassname(onClick !== undefined)
   const handleOnClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
     ev.preventDefault()
     onClick?.(task)
