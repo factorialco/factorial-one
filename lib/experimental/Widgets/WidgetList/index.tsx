@@ -1,3 +1,5 @@
+import { Button } from "@/factorial-one"
+import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement, useEffect, useRef, useState } from "react"
 import { WidgetListItemProps } from "./WidgetListItemTypes"
 
@@ -46,25 +48,47 @@ export function WidgetList<T extends WidgetListItemProps>({
   }, [children.length, maxHeight])
 
   return (
-    <div ref={containerRef} style={{ maxHeight }} className="overflow-hidden">
+    <motion.div
+      ref={containerRef}
+      style={{ maxHeight }}
+      className="overflow-hidden"
+      initial={{ opacity: 0, height: 0 }} // Animación inicial
+      animate={{ opacity: 1, height: "auto" }} // Animación al montar
+      exit={{ opacity: 0, height: 0 }} // Animación al desmontar
+      transition={{ duration: 0.3 }} // Control de tiempo
+    >
       {children.slice(0, visibleCount).map((child, index) => (
-        <div
-          key={index}
-          onClick={() => onItemClick && onItemClick(child.props)}
-          className="cursor-pointer"
-        >
-          {child}
-        </div>
+        <AnimatePresence key={index}>
+          <motion.div
+            onClick={() => onItemClick && onItemClick(child.props)}
+            className="cursor-pointer"
+            initial={{ opacity: 0, y: 10 }} // Empieza con opacidad baja y desplazado
+            animate={{ opacity: 1, y: 0 }} // Se anima a la posición final
+            exit={{ opacity: 0, y: 10 }} // Se anima al desmontarse
+            transition={{ duration: 0.2 }} // Tiempo para suavizar
+          >
+            {child}
+          </motion.div>
+        </AnimatePresence>
       ))}
+
       {visibleCount < children.length && (
-        <button
-          className="bg-blue-500 mt-2 rounded p-2 text-white"
-          style={{ width: "100%", height: `${BUTTON_HEIGHT}px` }}
-          onClick={onMoreElementsClick}
-        >
-          {`+${children.length - visibleCount} more`}
-        </button>
+        <AnimatePresence>
+          <motion.div
+            className="mt-2 pl-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Button
+              label={`See all`}
+              onClick={onMoreElementsClick}
+              variant="neutral"
+            />
+          </motion.div>
+        </AnimatePresence>
       )}
-    </div>
+    </motion.div>
   )
 }
