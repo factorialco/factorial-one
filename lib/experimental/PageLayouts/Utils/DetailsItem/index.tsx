@@ -45,10 +45,11 @@ export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
 
     return (
       <div ref={ref} className="flex flex-col gap-0.5">
-        <p className="pl-1.5 text-f1-foreground-secondary">{title}</p>
-        {contentArray.map((c, i) => (
-          <ItemContent key={i} content={c} />
-        ))}
+        <DataList label={title}>
+          {contentArray.map((c, i) => (
+            <ItemContent key={i} content={c} />
+          ))}
+        </DataList>
       </div>
     )
   }
