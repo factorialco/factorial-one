@@ -23,6 +23,7 @@ export const DetailsItemsList = forwardRef<
             title={item.title}
             key={item.title}
             content={item.content}
+            spacingAtTheBottom={item.spacingAtTheBottom}
           />
         ))}
       </div>

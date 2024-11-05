@@ -26,6 +26,7 @@ const meta: Meta = {
           type: "weekdays",
           activatedDays: ["Monday", "Tuesday", "Wednesday"],
         },
+        spacingAtTheBottom: true,
       },
       {
         title: "Teams",
