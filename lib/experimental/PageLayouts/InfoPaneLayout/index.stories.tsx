@@ -1,8 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { DetailsItemsList } from "@/experimental/PageLayouts/Utils/DetailsItemsList"
+import * as DetailsItemsListStories from "@/experimental/PageLayouts/Utils/DetailsItemsList/index.stories"
 import { Dashboard } from "@/experimental/Widgets/Layout/Dashboard"
 import * as DashboardStories from "@/experimental/Widgets/Layout/Dashboard/index.stories"
 import { PageDecorator } from "@/lib/storybook-utils/pageDecorator"
+import { ComponentProps } from "react"
 import { InfoPaneLayout } from "."
 
 const meta = {
@@ -34,8 +37,16 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
 export const Profile: Story = {
   args: {
     children: <Dashboard {...DashboardStories.default.args} />,
+    sideContent: (
+      <DetailsItemsList
+        {...(DetailsItemsListStories.default.args as ComponentProps<
+          typeof DetailsItemsList
+        >)}
+      />
+    ),
   },
 }

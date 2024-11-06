@@ -51,7 +51,7 @@ const meta: Meta = {
       },
     ],
   },
-}
+} satisfies Meta<typeof DetailsItemsList>
 
 export default meta
 type Story = StoryObj<typeof meta>
