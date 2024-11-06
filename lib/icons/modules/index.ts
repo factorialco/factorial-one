@@ -1,5 +1,6 @@
 export { default as Calendar } from './Calendar'
 export { default as ClockIn } from './ClockIn'
+export { default as Discover } from './Discover'
 export { default as Documents } from './Documents'
 export { default as Engagement } from './Engagement'
 export { default as Finance } from './Finance'
