@@ -1,12 +1,6 @@
-## Pull Request Title
-
-<!-- Provide a brief summary of the changes (e.g., "Add new Button component to experimental" or "Promote Card component to stable") -->
-
----
-
 ## Description
 
-<!-- Describe what this PR does and why it's needed -->
+<!-- Provide a brief summary of the changes (e.g., "Add new Button component to experimental" or "Promote Card component to stable"). Describe what this PR does and why it's needed -->
 
 ## Screenshots (if applicable)
 
