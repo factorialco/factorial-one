@@ -1,5 +1,6 @@
 import { Select } from "@/experimental/Forms/Fields/Select"
 import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
+import { AvatarVariant } from "@/experimental/Information/Avatars/types"
 import ChevronDown from "@/icons/app/ChevronDown"
 import { cn, focusRing } from "@/lib/utils"
 import { motion } from "framer-motion"
@@ -27,6 +28,11 @@ export function CompanySelector({
   const options = companies.map((company) => ({
     value: company.id,
     label: company.name,
+    avatar: {
+      type: "company",
+      name: company.name,
+      src: company.logo,
+    } satisfies AvatarVariant,
   }))
 
   const selectedCompany =

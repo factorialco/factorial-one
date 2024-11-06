@@ -1,3 +1,5 @@
 export * from "./CompanyAvatar"
 export * from "./PersonAvatar"
+export * from "./render"
 export * from "./TeamAvatar"
+export * from "./types"

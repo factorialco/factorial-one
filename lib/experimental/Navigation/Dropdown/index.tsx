@@ -1,5 +1,10 @@
 import { Button } from "@/components/Actions/Button"
+import {
+  AvatarVariant,
+  renderAvatar,
+} from "@/experimental/Information/Avatars/exports"
 import * as Icons from "@/icons/app"
+import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
@@ -7,8 +12,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
-
-import { Link } from "@/lib/linkHandler"
 import { NavigationItem } from "../utils"
 
 type IconName = keyof typeof Icons
@@ -18,6 +21,7 @@ export type DropdownItem = NavigationItem & {
   icon?: IconName
   description?: string
   critical?: boolean
+  avatar?: AvatarVariant
 }
 
 type DropdownProps = {
@@ -31,6 +35,7 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
 
   const content = (
     <>
+      {item.avatar && renderAvatar(item.avatar, "xsmall")}
       {Icon && (
         <Icon
           className={cn(
