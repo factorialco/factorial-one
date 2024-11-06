@@ -1,14 +1,21 @@
 import { sizes } from "@/ui/avatar"
+import { ComponentProps } from "react"
 import { CompanyAvatar } from "./CompanyAvatar"
 import { PersonAvatar } from "./PersonAvatar"
 import { TeamAvatar } from "./TeamAvatar"
-import { AvatarVariant } from "./types"
 
-type AvatarSize = (typeof sizes)[number]
+type PersonAvatarProps = ComponentProps<typeof PersonAvatar>
+type TeamAvatarProps = ComponentProps<typeof TeamAvatar>
+type CompanyAvatarProps = ComponentProps<typeof CompanyAvatar>
+
+export type AvatarVariant =
+  | ({ type: "person" } & PersonAvatarProps)
+  | ({ type: "team" } & TeamAvatarProps)
+  | ({ type: "company" } & CompanyAvatarProps)
 
 export function renderAvatar(
   avatar: AvatarVariant,
-  size: AvatarSize = "xsmall"
+  size: (typeof sizes)[number] = "xsmall"
 ) {
   switch (avatar.type) {
     case "person":

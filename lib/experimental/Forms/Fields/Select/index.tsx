@@ -1,7 +1,7 @@
 import {
   AvatarVariant,
   renderAvatar,
-} from "@/experimental/Information/Avatars/exports"
+} from "@/experimental/Information/Avatars/utils"
 import * as Icons from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
