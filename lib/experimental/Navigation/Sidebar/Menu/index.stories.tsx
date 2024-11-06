@@ -35,7 +35,7 @@ export const Default: Story = {
           },
           {
             label: "Discover Factorial",
-            icon: Icons.UpgradePlan,
+            icon: Icons.Sparkles,
             href: "/discover",
           },
         ],
@@ -46,14 +46,14 @@ export const Default: Story = {
         items: [
           { label: "Me", icon: Icons.Person, href: "/me" },
           { label: "Clock in", icon: Icons.Clock, href: "/clock-in" },
-          { label: "Time off", icon: Icons.TimeOff, href: "/time-off" },
+          { label: "Time off", icon: Icons.PalmTree, href: "/time-off" },
         ],
         isOpen: true,
       },
       {
         title: "Your company",
         items: [
-          { label: "Organization", icon: Icons.Manager, href: "/organization" },
+          { label: "Organization", icon: Icons.People, href: "/organization" },
           { label: "Calendar", icon: Icons.Calendar, href: "/calendar" },
         ],
         isOpen: true,
