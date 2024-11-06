@@ -3,7 +3,8 @@ import {
   AvatarVariant,
   renderAvatar,
 } from "@/experimental/Information/Avatars/utils"
-import * as Icons from "@/icons/app"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Ellipsis } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import {
@@ -14,11 +15,9 @@ import {
 } from "@/ui/dropdown-menu"
 import { NavigationItem } from "../utils"
 
-type IconName = keyof typeof Icons
-
 export type DropdownItem = NavigationItem & {
   onClick?: () => void
-  icon?: IconName
+  icon?: IconType
   description?: string
   critical?: boolean
   avatar?: AvatarVariant
@@ -31,15 +30,16 @@ type DropdownProps = {
 
 const DropdownItem = ({ item }: { item: DropdownItem }) => {
   const { label, ...props } = item
-  const Icon = item.icon && Icons[item.icon]
 
   const content = (
     <>
       {item.avatar && renderAvatar(item.avatar, "xsmall")}
-      {Icon && (
+      {item.icon && (
         <Icon
+          icon={item.icon}
+          size="md"
           className={cn(
-            "h-5 w-5 text-f1-icon",
+            "text-f1-icon",
             item.critical && "text-f1-icon-critical"
           )}
         />
@@ -89,7 +89,7 @@ export function Dropdown({ items, children }: DropdownProps) {
         {children || (
           <Button
             hideLabel
-            icon={Icons.Ellipsis}
+            icon={Ellipsis}
             label="..."
             round
             variant="outline"
