@@ -55,6 +55,7 @@ const CheckCircleAnimatedIcon = () => {
           cx="12"
           cy="12"
           r="8"
+          initial="normal"
           variants={circleVariants}
           transition={circleTransition}
           animate={controls}
@@ -62,6 +63,7 @@ const CheckCircleAnimatedIcon = () => {
         />
         <motion.path
           d="M9.00003 12L11.4 14.4L15 9.6"
+          initial="normal"
           variants={checkVariants}
           transition={checkTransition}
           animate={controls}

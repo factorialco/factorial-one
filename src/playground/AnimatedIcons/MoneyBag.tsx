@@ -73,6 +73,7 @@ const MoneyBagAnimatedIcon = () => {
       >
         <motion.g
           id="bag"
+          initial="normal"
           variants={bagVariants}
           transition={bagTransition}
           animate={controls}
@@ -88,6 +89,7 @@ const MoneyBagAnimatedIcon = () => {
         </motion.g>
         <motion.path
           d="M14 10H11.5C10.6716 10 10 10.6716 10 11.5V11.5C10 12.3284 10.6716 13 11.5 13H12.5C13.3284 13 14 13.6716 14 14.5V14.5C14 15.3284 13.3284 16 12.5 16H10"
+          initial="normal"
           variants={dollarVariants}
           transition={dollarTransition}
           animate={controls}
@@ -98,6 +100,7 @@ const MoneyBagAnimatedIcon = () => {
           y1="16"
           x2="12"
           y2="17"
+          initial="normal"
           variants={dotsVariants}
           transition={dotsTransition}
           animate={controls}
@@ -108,6 +111,7 @@ const MoneyBagAnimatedIcon = () => {
           y1="9"
           x2="12"
           y2="10"
+          initial="normal"
           variants={dotsVariants}
           transition={dotsTransition}
           animate={controls}

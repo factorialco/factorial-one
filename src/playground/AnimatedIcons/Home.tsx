@@ -14,7 +14,7 @@ const homeVariants: Variants = {
   },
   animate: {
     scaleX: [1, 0.85, 1],
-    x: [0, -1, 0],
+    x: [0, -2, 0],
   },
 }
 

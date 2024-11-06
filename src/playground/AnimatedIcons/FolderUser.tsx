@@ -60,6 +60,7 @@ const FolderUserAnimatedIcon = () => {
         />
         <motion.path
           d="M8 17.5C8 16 9.79086 15 12 15C14.2091 15 16 16 16 17.5"
+          initial="normal"
           variants={userVariants}
           transition={userTransition}
           animate={controls}
@@ -69,6 +70,7 @@ const FolderUserAnimatedIcon = () => {
           cx="12"
           cy="11.5"
           r="2.5"
+          initial="normal"
           variants={userVariants}
           transition={userTransition}
           animate={controls}

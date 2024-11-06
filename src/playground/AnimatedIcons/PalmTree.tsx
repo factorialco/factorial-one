@@ -47,6 +47,7 @@ const PalmTreeAnimatedIcon = () => {
       >
         <motion.g
           id="palm"
+          initial="normal"
           variants={palmVariants}
           transition={defaultTransition}
           animate={controls}
@@ -62,6 +63,7 @@ const PalmTreeAnimatedIcon = () => {
         </motion.g>
         <motion.path
           d="M8 19H16M13.5 13L14 19M10.5 13L10 19"
+          initial="normal"
           variants={treeVariants}
           transition={defaultTransition}
           animate={controls}

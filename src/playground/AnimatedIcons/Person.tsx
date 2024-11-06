@@ -39,6 +39,7 @@ const PersonAnimatedIcon = () => {
           cx="12"
           cy="9"
           r="4"
+          initial="normal"
           variants={headVariants}
           transition={headTransition}
           animate={controls}

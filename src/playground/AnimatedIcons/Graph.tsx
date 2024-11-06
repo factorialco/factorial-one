@@ -71,6 +71,7 @@ const GraphAnimatedIcon = () => {
       >
         <motion.path
           d="M4 6V15C4 16.6569 5.34315 18 7 18H20"
+          initial="normal"
           variants={axisVariants}
           transition={axisTransition}
           animate={controls}
@@ -78,6 +79,7 @@ const GraphAnimatedIcon = () => {
         />
         <motion.path
           d="M8 14L12 10L15 13L20 8"
+          initial="normal"
           variants={graphVariants}
           transition={graphTransition}
           animate={controls}
@@ -85,6 +87,7 @@ const GraphAnimatedIcon = () => {
         />
         <motion.path
           d="M17 8H20V11"
+          initial="normal"
           variants={arrowVariants}
           transition={arrowTransition}
           animate={controls}
