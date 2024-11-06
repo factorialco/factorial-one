@@ -1,5 +1,5 @@
 import { sizes } from "@/ui/avatar"
-import { ComponentProps } from "react"
+import { ComponentProps, ReactNode } from "react"
 import { CompanyAvatar } from "./CompanyAvatar"
 import { PersonAvatar } from "./PersonAvatar"
 import { TeamAvatar } from "./TeamAvatar"
@@ -16,7 +16,7 @@ export type AvatarVariant =
 export function renderAvatar(
   avatar: AvatarVariant,
   size: (typeof sizes)[number] = "xsmall"
-) {
+): ReactNode {
   switch (avatar.type) {
     case "person":
       return (
