@@ -53,7 +53,7 @@ export const Default: Story = {
       {
         title: "Your company",
         items: [
-          { label: "Organization", icon: Icons.Manager, href: "/organization" },
+          { label: "Organization", icon: Icons.People, href: "/organization" },
           { label: "Calendar", icon: Icons.Calendar, href: "/calendar" },
         ],
         isOpen: true,
