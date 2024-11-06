@@ -18,11 +18,29 @@ export function renderAvatar(
           lastName={avatar.lastName}
           src={avatar.src}
           size={size}
+          aria-label={avatar["aria-label"]}
+          aria-labelledby={avatar["aria-labelledby"]}
         />
       )
     case "team":
-      return <TeamAvatar name={avatar.name} src={avatar.src} size={size} />
+      return (
+        <TeamAvatar
+          name={avatar.name}
+          src={avatar.src}
+          size={size}
+          aria-label={avatar["aria-label"]}
+          aria-labelledby={avatar["aria-labelledby"]}
+        />
+      )
     case "company":
-      return <CompanyAvatar name={avatar.name} src={avatar.src} size={size} />
+      return (
+        <CompanyAvatar
+          name={avatar.name}
+          src={avatar.src}
+          size={size}
+          aria-label={avatar["aria-label"]}
+          aria-labelledby={avatar["aria-labelledby"]}
+        />
+      )
   }
 }

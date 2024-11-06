@@ -118,6 +118,7 @@ export const WithAvatars: Story = {
           firstName: "Josep Jaume",
           lastName: "Rey",
           src: "https://github.com/josepjaume.png",
+          "aria-label": "Josep Jaume Rey avatar",
         },
       },
       {
@@ -127,6 +128,7 @@ export const WithAvatars: Story = {
           firstName: "Nik",
           lastName: "Lopin",
           src: "https://github.com/nlopin.png",
+          "aria-label": "Nik Lopin avatar",
         },
       },
       {
@@ -136,6 +138,7 @@ export const WithAvatars: Story = {
           firstName: "Saúl",
           lastName: "Domínguez",
           src: "https://github.com/sauldom102.png",
+          "aria-label": "Saúl Domínguez avatar",
         },
       },
     ],

@@ -32,6 +32,7 @@ export function CompanySelector({
       type: "company",
       name: company.name,
       src: company.logo,
+      "aria-label": `${company.name} logo`,
     } satisfies AvatarVariant,
   }))
 
