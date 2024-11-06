@@ -1,3 +1,7 @@
+import {
+  AvatarVariant,
+  renderAvatar,
+} from "@/experimental/Information/Avatars/utils"
 import * as Icons from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
@@ -16,6 +20,7 @@ type SelectItemProps<T> = {
   label: string
   icon?: IconName
   description?: string
+  avatar?: AvatarVariant
 }
 
 type SelectProps<T> = {
@@ -34,6 +39,7 @@ const SelectItem = ({ item }: { item: SelectItemProps<string> }) => {
   return (
     <SelectItemPrimitive value={item.value}>
       <div className="flex items-start gap-1.5">
+        {item.avatar && renderAvatar(item.avatar, "xsmall")}
         {Icon && <Icon className="h-5 w-5 shrink-0 text-f1-icon" />}
         <div className="flex flex-col">
           <span className="font-medium">{item.label}</span>

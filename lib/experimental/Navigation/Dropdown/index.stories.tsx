@@ -108,3 +108,40 @@ export const WithLinks: Story = {
     ],
   },
 }
+
+export const WithAvatars: Story = {
+  args: {
+    items: [
+      {
+        label: "Josep Jaume Rey",
+        avatar: {
+          type: "person",
+          firstName: "Josep Jaume",
+          lastName: "Rey",
+          src: "https://github.com/josepjaume.png",
+          "aria-label": "Josep Jaume Rey avatar",
+        },
+      },
+      {
+        label: "Nik Lopin",
+        avatar: {
+          type: "person",
+          firstName: "Nik",
+          lastName: "Lopin",
+          src: "https://github.com/nlopin.png",
+          "aria-label": "Nik Lopin avatar",
+        },
+      },
+      {
+        label: "Saúl Domínguez",
+        avatar: {
+          type: "person",
+          firstName: "Saúl",
+          lastName: "Domínguez",
+          src: "https://github.com/sauldom102.png",
+          "aria-label": "Saúl Domínguez avatar",
+        },
+      },
+    ],
+  },
+}

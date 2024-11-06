@@ -1,6 +1,11 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import * as Icons from "@/icons/app"
+import {
+  AvatarVariant,
+  renderAvatar,
+} from "@/experimental/Information/Avatars/utils"
+import { Ellipsis } from "@/icons/app"
+import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
@@ -8,8 +13,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
-
-import { Link } from "@/lib/linkHandler"
 import { NavigationItem } from "../utils"
 
 export type DropdownItem = NavigationItem & {
@@ -17,6 +20,7 @@ export type DropdownItem = NavigationItem & {
   icon?: IconType
   description?: string
   critical?: boolean
+  avatar?: AvatarVariant
 }
 
 type DropdownProps = {
@@ -29,6 +33,7 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
 
   const content = (
     <>
+      {item.avatar && renderAvatar(item.avatar, "xsmall")}
       {item.icon && (
         <Icon
           icon={item.icon}
@@ -84,7 +89,7 @@ export function Dropdown({ items, children }: DropdownProps) {
         {children || (
           <Button
             hideLabel
-            icon={Icons.Ellipsis}
+            icon={Ellipsis}
             label="..."
             round
             variant="outline"
