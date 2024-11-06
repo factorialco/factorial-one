@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import CheckCircleAnimatedIcon from "./CheckCircle"
-import ClockAnimatedIcon from "./clock"
+import ClockAnimatedIcon from "./Clock"
 import FolderUserAnimatedIcon from "./FolderUser"
 import GraphAnimatedIcon from "./Graph"
 import HomeAnimatedIcon from "./Home"
-import MoneyBagAnimatedIcon from "./moneybag"
+import MoneyBagAnimatedIcon from "./MoneyBag"
 import PalmTreeAnimatedIcon from "./PalmTree"
 import PersonAnimatedIcon from "./Person"
 import RocketAnimatedIcon from "./Rocket"
-import SettingsAnimatedIcon from "./settings"
+import SettingsAnimatedIcon from "./Settings"
 const meta = {
   tags: ["autodocs"],
   parameters: {
