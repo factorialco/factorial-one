@@ -1,9 +1,9 @@
 import { Button } from "@/components/Actions/Button"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import {
   AvatarVariant,
   renderAvatar,
 } from "@/experimental/Information/Avatars/utils"
-import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Ellipsis } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
