@@ -1,4 +1,3 @@
-import { Icon } from "@/components/Utilities/Icon"
 import { Indicator } from "@/ui/indicator"
 import { ComponentProps, forwardRef } from "react"
 
@@ -14,19 +13,12 @@ export const IndicatorsList = forwardRef<HTMLDivElement, IndicatorsListProps>(
         className="grid auto-cols-fr grid-flow-col items-end gap-x-3"
       >
         {items.map(({ label, content, icon, color }) => (
-          <>
-            <p className="row-start-1 line-clamp-1 text-sm font-medium text-f1-foreground-secondary">
-              {label}
-            </p>
-            <div className="row-start-2 flex items-baseline gap-1">
-              <p className="text-2xl font-semibold">{content}</p>
-              {icon && (
-                <span className={color}>
-                  <Icon icon={icon} size="md" />
-                </span>
-              )}
-            </div>
-          </>
+          <Indicator
+            label={label}
+            content={content}
+            icon={icon}
+            color={color}
+          />
         ))}
       </div>
     )
