@@ -73,7 +73,7 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-f1-background-bold/15 to-transparent [mask-image:linear-gradient(to_right,transparent,black_30%,black_60%,transparent)]"
+                className="from-f1-foreground-tertiary pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b to-transparent mix-blend-soft-light [mask-image:linear-gradient(to_right,transparent,black_30%,black_60%,transparent)]"
               />
             )}
           </AnimatePresence>
