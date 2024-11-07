@@ -14,6 +14,7 @@ export const IndicatorsList = forwardRef<HTMLDivElement, IndicatorsListProps>(
       >
         {items.map(({ label, content, icon, color }) => (
           <Indicator
+            key={`${label}-${content}`}
             label={label}
             content={content}
             icon={icon}
