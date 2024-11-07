@@ -6,8 +6,7 @@ import { forwardRef } from "react"
 export interface TasksInsightData {
   title: string
   inProgressTasks: string[]
-  dueTasks: string[]
-  noDueTasks: string[]
+  todoTasks: string[]
   overdueLabel: string
   overdueTasksCount: string
   dueLabel: string
@@ -32,8 +31,7 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
       dueTasksCount,
       noDueTasksCount,
       overdueTasksCount,
-      dueTasks,
-      noDueTasks,
+      todoTasks,
       linkUrl,
       linkTitle,
       buttonLabel,
@@ -72,7 +70,7 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
         }
       >
         <IndicatorsList items={taskCategories} />
-        {(inProgressTasks.length || dueTasks.length || noDueTasks.length) && (
+        {(inProgressTasks.length || todoTasks.length) && (
           <div className="-mx-2">
             <TasksList
               tasks={{
@@ -80,12 +78,8 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
                   id: 1,
                   text: task,
                 })),
-                noDue: noDueTasks.map((task) => ({
+                todo: todoTasks.map((task) => ({
                   id: 2,
-                  text: task,
-                })),
-                due: dueTasks.map((task) => ({
-                  id: 3,
                   text: task,
                 })),
               }}
