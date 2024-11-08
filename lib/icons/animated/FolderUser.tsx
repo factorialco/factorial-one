@@ -1,4 +1,5 @@
-import { motion, Transition, useAnimation, Variants } from "framer-motion"
+import { motion, Transition, Variants } from "framer-motion"
+import { forwardRef, SVGProps } from "react"
 
 const folderTransition: Transition = {
   duration: 0.5,
@@ -32,30 +33,29 @@ const userVariants: Variants = {
   },
 }
 
-const FolderUserAnimatedIcon = () => {
-  const controls = useAnimation()
+interface FolderUserIconProps extends SVGProps<SVGSVGElement> {
+  animate?: "normal" | "animate"
+}
+
+const FolderUserAnimatedIcon = forwardRef<SVGSVGElement, FolderUserIconProps>(
+  ({ animate = "normal", ...props }, ref) => {
   return (
-    <div
-      className="h-6 w-6 select-none"
-      onMouseEnter={() => controls.start("animate")}
-      onMouseLeave={() => controls.start("normal")}
-    >
       <svg
-        width="24"
-        height="24"
+        ref={ref}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         stroke="currentColor"
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props}
       >
         <motion.path
           d="M11.4375 5C11.09 4.38228 10.4364 4 9.72765 4H7.2C6.07989 4 5.51984 4 5.09202 4.21799C4.71569 4.40973 4.40973 4.71569 4.21799 5.09202C4 5.51984 4 6.07989 4 7.2V13.2C4 14.8802 4 15.7202 4.32698 16.362C4.6146 16.9265 5.07354 17.3854 5.63803 17.673C6.27976 18 7.11984 18 8.8 18H15.2C16.8802 18 17.7202 18 18.362 17.673C18.9265 17.3854 19.3854 16.9265 19.673 16.362C20 15.7202 20 14.8802 20 13.2V10.8C20 9.11984 20 8.27976 19.673 7.63803C19.3854 7.07354 18.9265 6.6146 18.362 6.32698C17.7202 6 16.8802 6 15.2 6H13.1473C12.4386 6 11.785 5.61772 11.4375 5V5Z"
           variants={folderVariants}
           transition={folderTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
         <motion.path
@@ -63,7 +63,7 @@ const FolderUserAnimatedIcon = () => {
           initial="normal"
           variants={userVariants}
           transition={userTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
         <motion.circle
@@ -73,12 +73,14 @@ const FolderUserAnimatedIcon = () => {
           initial="normal"
           variants={userVariants}
           transition={userTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
       </svg>
-    </div>
-  )
-}
+    )
+  }
+)
+
+FolderUserAnimatedIcon.displayName = "FolderUserAnimatedIcon"
 
 export default FolderUserAnimatedIcon

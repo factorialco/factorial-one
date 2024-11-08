@@ -1,4 +1,5 @@
-import { motion, Transition, useAnimation, Variants } from "framer-motion"
+import { motion, Transition, Variants } from "framer-motion"
+import { forwardRef, SVGProps } from "react"
 
 const defaultTransition: Transition = {
   duration: 0.6,
@@ -27,30 +28,29 @@ const palmVariants: Variants = {
   },
 }
 
-const PalmTreeAnimatedIcon = () => {
-  const controls = useAnimation()
+interface PalmTreeIconProps extends SVGProps<SVGSVGElement> {
+  animate?: "normal" | "animate"
+}
+
+const PalmTreeAnimatedIcon = forwardRef<SVGSVGElement, PalmTreeIconProps>(
+  ({ animate = "normal", ...props }, ref) => {
   return (
-    <div
-      className="h-6 w-6 select-none"
-      onMouseEnter={() => controls.start("animate")}
-      onMouseLeave={() => controls.start("normal")}
-    >
       <svg
-        width="24"
-        height="24"
+        ref={ref}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         stroke="currentColor"
-        stroke-width="1.3"
-        stroke-linecap="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        {...props}
       >
         <motion.g
           id="palm"
           initial="normal"
           variants={palmVariants}
           transition={defaultTransition}
-          animate={controls}
+          animate={animate}
         >
           <path
             d="M12 12L17.9536 14.9768C17.9781 14.989 18.0078 14.9765 18.0161 14.9505C18.4772 13.5039 18.0133 12.0621 17.0728 11.0423C17.0459 11.0131 17.0663 10.9652 17.1061 10.9652H19.955C19.9799 10.9652 20.0001 10.9454 19.9995 10.9205C19.9697 9.47309 18.492 7.53588 15.0948 7.50048C15.0571 7.50008 15.0349 7.45634 15.0585 7.42687L16.982 5.02247C16.993 5.00876 16.9952 4.99013 16.9869 4.97467C16.4577 3.99167 13.9831 3.51695 12 5.5"
@@ -66,12 +66,14 @@ const PalmTreeAnimatedIcon = () => {
           initial="normal"
           variants={treeVariants}
           transition={defaultTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
       </svg>
-    </div>
-  )
-}
+    )
+  }
+)
+
+PalmTreeAnimatedIcon.displayName = "PalmTreeAnimatedIcon"
 
 export default PalmTreeAnimatedIcon

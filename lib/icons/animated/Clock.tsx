@@ -1,4 +1,5 @@
-import { motion, Transition, useAnimation, Variants } from "framer-motion"
+import { motion, Transition, Variants } from "framer-motion"
+import { forwardRef, SVGProps } from "react"
 
 const handTransition: Transition = {
   duration: 0.7,
@@ -32,17 +33,15 @@ const handMinuteVariants: Variants = {
   },
 }
 
-const ClockAnimatedIcon = () => {
-  const controls = useAnimation()
+interface ClockIconProps extends SVGProps<SVGSVGElement> {
+  animate?: "normal" | "animate"
+}
+
+const ClockAnimatedIcon = forwardRef<SVGSVGElement, ClockIconProps>(
+  ({ animate = "normal", ...props }, ref) => {
   return (
-    <div
-      className="h-6 w-6 select-none"
-      onMouseEnter={() => controls.start("animate")}
-      onMouseLeave={() => controls.start("normal")}
-    >
       <svg
-        width="24"
-        height="24"
+        ref={ref}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -50,6 +49,7 @@ const ClockAnimatedIcon = () => {
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
+        {...props}
       >
         <circle cx="12" cy="12" r="8" />
         <motion.line
@@ -58,7 +58,7 @@ const ClockAnimatedIcon = () => {
           x2="12"
           y2="9"
           variants={handVariants}
-          animate={controls}
+          animate={animate}
           initial="normal"
           transition={handTransition}
           vector-effect="non-scaling-stroke"
@@ -69,14 +69,16 @@ const ClockAnimatedIcon = () => {
           x2="12"
           y2="8"
           variants={handMinuteVariants}
-          animate={controls}
+          animate={animate}
           initial="normal"
           transition={handMinuteTransition}
           vector-effect="non-scaling-stroke"
         />
       </svg>
-    </div>
-  )
-}
+    )
+  }
+)
+
+ClockAnimatedIcon.displayName = "ClockAnimatedIcon"
 
 export default ClockAnimatedIcon

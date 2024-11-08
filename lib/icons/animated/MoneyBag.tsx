@@ -1,4 +1,5 @@
-import { motion, Transition, useAnimation, Variants } from "framer-motion"
+import { motion, Transition, Variants } from "framer-motion"
+import { forwardRef, SVGProps } from "react"
 
 const bagTransition: Transition = {
   duration: 0.6,
@@ -52,17 +53,15 @@ const dotsVariants: Variants = {
   },
 }
 
-const MoneyBagAnimatedIcon = () => {
-  const controls = useAnimation()
+interface MoneyBagIconProps extends SVGProps<SVGSVGElement> {
+  animate?: "normal" | "animate"
+}
+
+const MoneyBagAnimatedIcon = forwardRef<SVGSVGElement, MoneyBagIconProps>(
+  ({ animate = "normal", ...props }, ref) => {
   return (
-    <div
-      className="h-6 w-6 select-none"
-      onMouseEnter={() => controls.start("animate")}
-      onMouseLeave={() => controls.start("normal")}
-    >
       <svg
-        width="24"
-        height="24"
+        ref={ref}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -70,13 +69,14 @@ const MoneyBagAnimatedIcon = () => {
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
+        {...props}
       >
         <motion.g
           id="bag"
           initial="normal"
           variants={bagVariants}
           transition={bagTransition}
-          animate={controls}
+          animate={animate}
         >
           <path
             d="M5.54981 14.121L6.2641 10.121C6.68993 7.73641 8.76387 6 11.1862 6H12.8138C15.2361 6 17.3101 7.73641 17.7359 10.121L18.4502 14.121C18.9974 17.1857 16.6412 20 13.528 20H10.472C7.35882 20 5.00255 17.1857 5.54981 14.121Z"
@@ -92,7 +92,7 @@ const MoneyBagAnimatedIcon = () => {
           initial="normal"
           variants={dollarVariants}
           transition={dollarTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
         <motion.line
@@ -103,7 +103,7 @@ const MoneyBagAnimatedIcon = () => {
           initial="normal"
           variants={dotsVariants}
           transition={dotsTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
         <motion.line
@@ -114,12 +114,14 @@ const MoneyBagAnimatedIcon = () => {
           initial="normal"
           variants={dotsVariants}
           transition={dotsTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
       </svg>
-    </div>
-  )
-}
+    )
+  }
+)
+
+MoneyBagAnimatedIcon.displayName = "MoneyBagAnimatedIcon"
 
 export default MoneyBagAnimatedIcon

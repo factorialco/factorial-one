@@ -1,4 +1,5 @@
-import { motion, Transition, useAnimation, Variants } from "framer-motion"
+import { motion, Transition, Variants } from "framer-motion"
+import { forwardRef, SVGProps } from "react"
 
 const graphTransition: Transition = {
   duration: 0.5,
@@ -50,31 +51,30 @@ const axisVariants: Variants = {
   },
 }
 
-const GraphAnimatedIcon = () => {
-  const controls = useAnimation()
+interface GraphIconProps extends SVGProps<SVGSVGElement> {
+  animate?: "normal" | "animate"
+}
+
+const GraphAnimatedIcon = forwardRef<SVGSVGElement, GraphIconProps>(
+  ({ animate = "normal", ...props }, ref) => {
   return (
-    <div
-      className="h-6 w-6 select-none"
-      onMouseEnter={() => controls.start("animate")}
-      onMouseLeave={() => controls.start("normal")}
-    >
       <svg
-        width="24"
-        height="24"
+        ref={ref}
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         stroke="currentColor"
-        stroke-width="1.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props}
       >
         <motion.path
           d="M4 6V15C4 16.6569 5.34315 18 7 18H20"
           initial="normal"
           variants={axisVariants}
           transition={axisTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
         <motion.path
@@ -82,7 +82,7 @@ const GraphAnimatedIcon = () => {
           initial="normal"
           variants={graphVariants}
           transition={graphTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
         <motion.path
@@ -90,12 +90,14 @@ const GraphAnimatedIcon = () => {
           initial="normal"
           variants={arrowVariants}
           transition={arrowTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
       </svg>
-    </div>
-  )
-}
+    )
+  }
+)
+
+GraphAnimatedIcon.displayName = "GraphAnimatedIcon"
 
 export default GraphAnimatedIcon
