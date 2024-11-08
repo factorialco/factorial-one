@@ -62,7 +62,7 @@ const CheckCircleAnimatedIcon = forwardRef<SVGSVGElement, CheckCircleIconProps>(
           variants={circleVariants}
           transition={circleTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
         <motion.path
           d="M9.00003 12L11.4 14.4L15 9.6"
@@ -70,7 +70,7 @@ const CheckCircleAnimatedIcon = forwardRef<SVGSVGElement, CheckCircleIconProps>(
           variants={checkVariants}
           transition={checkTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
       </svg>
     )

@@ -75,7 +75,7 @@ const GraphAnimatedIcon = forwardRef<SVGSVGElement, GraphIconProps>(
           variants={axisVariants}
           transition={axisTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
         <motion.path
           d="M8 14L12 10L15 13L20 8"
@@ -83,7 +83,7 @@ const GraphAnimatedIcon = forwardRef<SVGSVGElement, GraphIconProps>(
           variants={graphVariants}
           transition={graphTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
         <motion.path
           d="M17 8H20V11"
@@ -91,7 +91,7 @@ const GraphAnimatedIcon = forwardRef<SVGSVGElement, GraphIconProps>(
           variants={arrowVariants}
           transition={arrowTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
       </svg>
     )

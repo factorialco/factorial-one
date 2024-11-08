@@ -56,7 +56,7 @@ const FolderUserAnimatedIcon = forwardRef<SVGSVGElement, FolderUserIconProps>(
           variants={folderVariants}
           transition={folderTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
         <motion.path
           d="M8 17.5C8 16 9.79086 15 12 15C14.2091 15 16 16 16 17.5"
@@ -64,7 +64,7 @@ const FolderUserAnimatedIcon = forwardRef<SVGSVGElement, FolderUserIconProps>(
           variants={userVariants}
           transition={userTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
         <motion.circle
           cx="12"
@@ -74,7 +74,7 @@ const FolderUserAnimatedIcon = forwardRef<SVGSVGElement, FolderUserIconProps>(
           variants={userVariants}
           transition={userTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
       </svg>
     )

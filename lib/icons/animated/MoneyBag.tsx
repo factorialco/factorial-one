@@ -80,11 +80,11 @@ const MoneyBagAnimatedIcon = forwardRef<SVGSVGElement, MoneyBagIconProps>(
         >
           <path
             d="M5.54981 14.121L6.2641 10.121C6.68993 7.73641 8.76387 6 11.1862 6H12.8138C15.2361 6 17.3101 7.73641 17.7359 10.121L18.4502 14.121C18.9974 17.1857 16.6412 20 13.528 20H10.472C7.35882 20 5.00255 17.1857 5.54981 14.121Z"
-            vector-effect="non-scaling-stroke"
+            vectorEffect="non-scaling-stroke"
           />
           <path
             d="M10.3257 2.5H13.6743C14.3386 2.5 14.8183 3.13591 14.6358 3.77472L14 6H10L9.36421 3.77472C9.18169 3.1359 9.66135 2.5 10.3257 2.5Z"
-            vector-effect="non-scaling-stroke"
+            vectorEffect="non-scaling-stroke"
           />
         </motion.g>
         <motion.path
@@ -93,7 +93,7 @@ const MoneyBagAnimatedIcon = forwardRef<SVGSVGElement, MoneyBagIconProps>(
           variants={dollarVariants}
           transition={dollarTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
         <motion.line
           x1="12"
@@ -104,7 +104,7 @@ const MoneyBagAnimatedIcon = forwardRef<SVGSVGElement, MoneyBagIconProps>(
           variants={dotsVariants}
           transition={dotsTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
         <motion.line
           x1="12"
@@ -115,7 +115,7 @@ const MoneyBagAnimatedIcon = forwardRef<SVGSVGElement, MoneyBagIconProps>(
           variants={dotsVariants}
           transition={dotsTransition}
           animate={animate}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
       </svg>
     )

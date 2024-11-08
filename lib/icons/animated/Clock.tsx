@@ -61,7 +61,7 @@ const ClockAnimatedIcon = forwardRef<SVGSVGElement, ClockIconProps>(
           animate={animate}
           initial="normal"
           transition={handTransition}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
         <motion.line
           x1="12"
@@ -72,7 +72,7 @@ const ClockAnimatedIcon = forwardRef<SVGSVGElement, ClockIconProps>(
           animate={animate}
           initial="normal"
           transition={handMinuteTransition}
-          vector-effect="non-scaling-stroke"
+          vectorEffect="non-scaling-stroke"
         />
       </svg>
     )
