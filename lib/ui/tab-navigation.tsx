@@ -23,7 +23,7 @@ function getSubtree(
 }
 
 const tabNavigationVariants = cva(
-  "flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap border-x-0 border-b border-t-0 border-solid border-f1-border-secondary px-6 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+  "relative flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap px-6 py-3 [scrollbar-width:none] before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-f1-border-secondary before:content-[''] [&::-webkit-scrollbar]:hidden",
   {
     variants: {
       secondary: {

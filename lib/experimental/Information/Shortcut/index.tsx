@@ -11,7 +11,7 @@ const shortcutVariants = cva(
         default:
           "border-f1-border bg-f1-background-tertiary text-f1-foreground-secondary",
         inverse:
-          "border-f1-border/20 bg-f1-background/10 text-f1-foreground-inverse/70",
+          "border-f1-border-inverse text-f1-foreground-inverse-secondary",
       },
     },
     defaultVariants: {

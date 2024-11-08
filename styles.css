@@ -8,7 +8,7 @@
 @layer base {
   :root {
     --neutral-0: theme("colors.white");
-    --neutral-2: theme("colors.grey.2");
+    --neutral-2: theme("colors.grey.0");
     --neutral-5: theme("colors.grey.5");
     --neutral-10: theme("colors.grey.10");
     --neutral-20: theme("colors.grey.20");
@@ -64,7 +64,7 @@
 
   .dark {
     --neutral-0: theme("colors.white");
-    --neutral-2: theme("colors.grey.2");
+    --neutral-2: theme("colors.grey.0");
     --neutral-5: theme("colors.grey.5");
     --neutral-10: theme("colors.grey.10");
     --neutral-20: theme("colors.grey.20");
