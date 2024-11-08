@@ -22,7 +22,7 @@ export function User({ firstName, lastName, avatarUrl, options }: UserProps) {
       <Dropdown items={options}>
         <button
           className={cn(
-            "flex w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary-hover data-[state=open]:bg-f1-background-secondary-hover",
+            "flex w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary data-[state=open]:bg-f1-background-secondary",
             focusRing()
           )}
         >

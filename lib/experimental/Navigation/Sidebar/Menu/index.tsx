@@ -68,8 +68,8 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
         "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
         focusRing(),
         active
-          ? "bg-f1-background-secondary-hover text-f1-foreground"
-          : "hover:bg-f1-background-secondary-hover"
+          ? "bg-f1-background-secondary text-f1-foreground"
+          : "hover:bg-f1-background-secondary"
       )}
     >
       <MenuItemContent item={item} active={active} />

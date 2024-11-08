@@ -50,7 +50,7 @@ export function CompanySelector({
     >
       <div
         className={cn(
-          "group flex w-fit flex-nowrap items-center gap-2 truncate rounded p-1.5 text-lg font-semibold text-f1-foreground transition-colors hover:bg-f1-background-secondary-hover data-[state=open]:bg-f1-background-secondary-hover",
+          "group flex w-fit flex-nowrap items-center gap-2 truncate rounded p-1.5 text-lg font-semibold text-f1-foreground transition-colors hover:bg-f1-background-secondary data-[state=open]:bg-f1-background-secondary",
           focusRing()
         )}
         tabIndex={0}
