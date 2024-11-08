@@ -1,4 +1,5 @@
-import { motion, Transition, useAnimation, Variants } from "framer-motion"
+import { motion, Transition, Variants } from "framer-motion"
+import { forwardRef, SVGProps } from "react"
 
 const checkTransition: Transition = {
   duration: 0.5,
@@ -32,15 +33,16 @@ const circleVariants: Variants = {
   },
 }
 
-const CheckCircleAnimatedIcon = () => {
-  const controls = useAnimation()
-  return (
-    <div
-      className="h-6 w-6 select-none"
-      onMouseEnter={() => controls.start("animate")}
-      onMouseLeave={() => controls.start("normal")}
-    >
+interface CheckCircleIconProps extends SVGProps<SVGSVGElement> {
+  animate?: "normal" | "animate"
+}
+
+const CheckCircleAnimatedIcon = forwardRef<SVGSVGElement, CheckCircleIconProps>(
+  ({ animate = "normal", ...props }, ref) => {
+
+    return (
       <svg
+        ref={ref}
         width="24"
         height="24"
         viewBox="0 0 24 24"
@@ -50,6 +52,7 @@ const CheckCircleAnimatedIcon = () => {
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
+        {...props}
       >
         <motion.circle
           cx="12"
@@ -58,7 +61,7 @@ const CheckCircleAnimatedIcon = () => {
           initial="normal"
           variants={circleVariants}
           transition={circleTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
         <motion.path
@@ -66,12 +69,14 @@ const CheckCircleAnimatedIcon = () => {
           initial="normal"
           variants={checkVariants}
           transition={checkTransition}
-          animate={controls}
+          animate={animate}
           vector-effect="non-scaling-stroke"
         />
       </svg>
-    </div>
-  )
-}
+    )
+  }
+)
+
+CheckCircleAnimatedIcon.displayName = "CheckCircleAnimatedIcon"
 
 export default CheckCircleAnimatedIcon

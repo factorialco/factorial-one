@@ -3,7 +3,6 @@ import CheckCircleAnimatedIcon from "./CheckCircle"
 import ClockAnimatedIcon from "./Clock"
 import FolderUserAnimatedIcon from "./FolderUser"
 import GraphAnimatedIcon from "./Graph"
-import HomeAnimatedIcon from "./Home"
 import MoneyBagAnimatedIcon from "./MoneyBag"
 import PalmTreeAnimatedIcon from "./PalmTree"
 import PersonAnimatedIcon from "./Person"
@@ -31,7 +30,6 @@ export const AllIcons: Story = {
       <GraphAnimatedIcon />
       <PersonAnimatedIcon />
       <FolderUserAnimatedIcon />
-      <HomeAnimatedIcon />
     </div>
   ),
 }
