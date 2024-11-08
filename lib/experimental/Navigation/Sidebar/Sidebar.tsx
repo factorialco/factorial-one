@@ -46,10 +46,10 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
         sidebarState === "locked"
           ? "h-screen"
           : cn(
-              "pb-3",
+              "border-solid border-f1-border-secondary pb-3 shadow-lg backdrop-blur-2xl",
               isSmallScreen
-                ? "h-screen bg-f1-background-secondary"
-                : "h-[calc(100vh-16px)] border-solid border-f1-border/40 bg-f1-background/60 shadow-lg backdrop-blur-2xl"
+                ? "h-screen border-y-transparent border-l-transparent bg-f1-background/90"
+                : "h-[calc(100vh-16px)] bg-f1-background/60"
             )
       )}
       animate={{
@@ -70,10 +70,10 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
             {isScrolled && (
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={{ opacity: 0.2 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
-                className="pointer-events-none absolute inset-x-0 top-0 z-10 h-6 bg-gradient-to-b from-f1-background-bold/15 to-transparent [mask-image:linear-gradient(to_right,transparent,black_30%,black_60%,transparent)]"
+                className="pointer-events-none absolute inset-x-0 top-0 z-10 h-5 bg-gradient-to-b from-f1-background-bold to-transparent [mask-image:linear-gradient(to_right,transparent,black_30%,black_60%,transparent)]"
               />
             )}
           </AnimatePresence>
