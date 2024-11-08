@@ -98,26 +98,17 @@ export const f1Colors = {
     DEFAULT: "hsl(var(--neutral-100))",
     secondary: "hsl(var(--neutral-50))",
     tertiary: "hsl(var(--neutral-40))",
-    inverse: "hsl(var(--neutral-0))",
+    inverse: {
+      DEFAULT: "hsl(var(--neutral-0))",
+      secondary: "hsl(var(--neutral-0) / 0.8)",
+    },
     disabled: "hsl(var(--neutral-30))",
-    accent: {
-      DEFAULT: "hsl(var(--accent-70))",
-    },
-    critical: {
-      DEFAULT: "hsl(var(--critical-70))",
-    },
-    info: {
-      DEFAULT: "hsl(var(--info-70))",
-    },
-    warning: {
-      DEFAULT: "hsl(var(--warning-70))",
-    },
-    positive: {
-      DEFAULT: "hsl(var(--positive-70))",
-    },
-    selected: {
-      DEFAULT: "hsl(var(--selected-70))",
-    },
+    accent: "hsl(var(--accent-70))",
+    critical: "hsl(var(--critical-70))",
+    info: "hsl(var(--info-70))",
+    warning: "hsl(var(--warning-70))",
+    positive: "hsl(var(--positive-70))",
+    selected: "hsl(var(--selected-70))",
   },
   background: {
     DEFAULT: "hsl(var(--neutral-0))",
@@ -143,15 +134,9 @@ export const f1Colors = {
       DEFAULT: "hsl(var(--critical-50) / 0.1)",
       bold: "hsl(var(--critical-70))",
     },
-    info: {
-      DEFAULT: "hsl(var(--info-50) / 0.1)",
-    },
-    warning: {
-      DEFAULT: "hsl(var(--warning-50) / 0.1)",
-    },
-    positive: {
-      DEFAULT: "hsl(var(--positive-50) / 0.1)",
-    },
+    info: "hsl(var(--info-50) / 0.1)",
+    warning: "hsl(var(--warning-50) / 0.1)",
+    positive: "hsl(var(--positive-50) / 0.1)",
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.2)",
       bold: "hsl(var(--selected-50))",
@@ -161,9 +146,8 @@ export const f1Colors = {
     DEFAULT: "hsl(var(--neutral-30))",
     hover: "hsl(var(--neutral-40))",
     secondary: "hsl(var(--neutral-10))",
-    promote: {
-      DEFAULT: "hsl(var(--promote-50) / 0.4)",
-    },
+    inverse: "hsl(var(--neutral-0) / 0.2)",
+    promote: "hsl(var(--promote-50) / 0.4)",
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.2)",
       bold: "hsl(var(--selected-50))",
@@ -178,15 +162,9 @@ export const f1Colors = {
       DEFAULT: "hsl(var(--critical-50))",
       bold: "hsl(var(--critical-70))",
     },
-    info: {
-      DEFAULT: "hsl(var(--info-50))",
-    },
-    warning: {
-      DEFAULT: "hsl(var(--warning-50))",
-    },
-    positive: {
-      DEFAULT: "hsl(var(--positive-50))",
-    },
+    info: "hsl(var(--info-50))",
+    warning: "hsl(var(--warning-50))",
+    positive: "hsl(var(--positive-50))",
     selected: "hsl(var(--selected-50))",
   },
   ring: "hsl(var(--ring))",
