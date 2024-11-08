@@ -5,7 +5,7 @@ import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { Calendar, DottedCircle, InProgressTask } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
-export type TaskStatus = "in-progress" | "due" | "no-due"
+export type TaskStatus = "in-progress" | "todo"
 export interface Task {
   id: number | string
   text: string
@@ -45,7 +45,7 @@ export function TaskItem({
   hideIcon = false,
 }: TaskItemProps) {
   const className = cn(
-    "flex flex-row items-center gap-1 rounded-sm border border-solid border-transparent px-2 py-1.5",
+    "flex flex-row items-center gap-1 rounded-sm border border-solid border-transparent px-2 py-1.5 text-f1-foreground",
     onClick
       ? "cursor-pointer hover:bg-f1-background-tertiary focus:border-f1-background-selected-bold focus:outline-none"
       : undefined
@@ -57,7 +57,7 @@ export function TaskItem({
 
   return (
     <Wrapper onClick={handleOnClick} className={className}>
-      {!hideIcon && (status === "due" || status === "no-due") && (
+      {!hideIcon && status === "todo" && (
         <Icon
           icon={DottedCircle}
           size="md"

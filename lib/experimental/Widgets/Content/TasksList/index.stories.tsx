@@ -24,8 +24,7 @@ export const Default: Story = {
   args: {
     tasks: {
       inProgress: [{ id: 1, text: "Migrate to new CRM" }],
-      due: [],
-      noDue: [
+      todo: [
         { id: 2, text: "Connect to Slack" },
         { id: 3, text: "Write changelog" },
         { id: 4, text: "Product review" },
@@ -46,8 +45,7 @@ export const WithLabels: Story = {
         },
         { id: 2, text: "Connect to Slack" },
       ],
-      due: [],
-      noDue: [
+      todo: [
         { id: 3, text: "Write changelog", badge: { text: "Due Oct 2" } },
         { id: 4, text: "Product review", badge: { text: "Due Oct 21" } },
         { id: 5, text: "Final conclusions", badge: { text: "Due Nov 2" } },
@@ -70,8 +68,7 @@ export const WithCounters: Story = {
         },
         { id: 2, text: "Connect to Slack" },
       ],
-      due: [],
-      noDue: [
+      todo: [
         {
           id: 1,
           text: "Write changelog",
@@ -104,8 +101,7 @@ export const WithLongTaskTitles: Story = {
           text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ut sem accumsan ipsum malesuada maximus id vitae libero. Maecenas iaculis felis id massa elementum tristique.",
         },
       ],
-      due: [],
-      noDue: [
+      todo: [
         {
           id: 2,
           text: "Nam et dapibus lorem. Sed tristique, metus iaculis viverra accumsan, urna purus auctor purus, quis tempor risus augue nec dui.",
@@ -124,8 +120,7 @@ export const EmptyState: Story = {
     emptyMessage: "No tasks assigned",
     tasks: {
       inProgress: [],
-      due: [],
-      noDue: [],
+      todo: [],
     },
   },
 }
