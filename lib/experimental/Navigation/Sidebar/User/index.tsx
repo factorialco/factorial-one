@@ -1,4 +1,5 @@
-import { UserAvatar } from "@/experimental/Information/Avatars/UserAvatar"
+import { IconType } from "@/components/Utilities/Icon"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { cn, focusRing } from "@/lib/utils"
 
@@ -9,7 +10,9 @@ interface UserProps {
   options: {
     label: string
     href?: string
+    icon?: IconType
     onClick?: () => void
+    critical?: boolean
   }[]
 }
 
@@ -23,7 +26,7 @@ export function User({ firstName, lastName, avatarUrl, options }: UserProps) {
             focusRing()
           )}
         >
-          <UserAvatar
+          <PersonAvatar
             src={avatarUrl}
             firstName={firstName}
             lastName={lastName}

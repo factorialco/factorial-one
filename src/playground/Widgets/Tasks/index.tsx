@@ -1,6 +1,6 @@
+import { IndicatorsList } from "@/experimental/Widgets/Content/IndicatorsList"
 import { TasksList } from "@/experimental/Widgets/Content/TasksList"
 import { Widget } from "@/experimental/Widgets/Widget"
-import { Indicator } from "@/ui/indicator"
 import { forwardRef } from "react"
 
 export interface TasksInsightData {
@@ -71,11 +71,7 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
             : undefined
         }
       >
-        <div className="grid grid-cols-3">
-          {taskCategories.map(({ label, content }) => (
-            <Indicator key={label} label={label} content={content} />
-          ))}
-        </div>
+        <IndicatorsList items={taskCategories} />
         {(inProgressTasks.length || dueTasks.length || noDueTasks.length) && (
           <div className="-mx-2">
             <TasksList

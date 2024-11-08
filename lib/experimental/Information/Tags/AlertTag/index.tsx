@@ -1,6 +1,6 @@
 import { IconType } from "@/components/Utilities/Icon"
 import { Icon } from "@/factorial-one"
-import { Alert, AlertCircle, InfoCircle } from "@/icons/app"
+import { AlertCircle, InfoCircle, Warning } from "@/icons/app"
 import { useTextFormatEnforcer } from "@/lib/text"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
@@ -15,7 +15,7 @@ type Props<Text extends string = string> = {
 
 const iconMap: Record<Level, IconType> = {
   info: InfoCircle,
-  warning: Alert,
+  warning: Warning,
   critical: AlertCircle,
 }
 

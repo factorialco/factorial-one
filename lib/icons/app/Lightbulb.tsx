@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { SVGProps } from "react";
 import { Ref, forwardRef } from "react";
-const SvgLightbulb = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" d="m7 13.92-.004-.01a.2.2 0 0 0-.038-.054 7 7 0 1 1 10.084 0 .2.2 0 0 0-.042.065V17a4 4 0 0 1-4 4h-2a4 4 0 0 1-4-4zM7 9a4.98 4.98 0 0 0 1.398 3.468A2.1 2.1 0 0 1 9 13.92V15h2v-2.965l-1.055-.703a1 1 0 0 1 1.11-1.664l.945.63.945-.63a1 1 0 0 1 1.11 1.664L13 12.035V15h2v-1.08a2.1 2.1 0 0 1 .601-1.452A5 5 0 1 0 7 9m5 8H9a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2h-3" /></svg>;
+const SvgLightbulb = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path stroke="currentColor" d="M8 16H16V17C16 18.6569 14.6569 20 13 20H11C9.34315 20 8 18.6569 8 17V16Z" vectorEffect="non-scaling-stroke" /><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M12 16V11.5M12 11.5L10.5 10.5M12 11.5L13.5 10.5" vectorEffect="non-scaling-stroke" /><path stroke="currentColor" d="M8 16V13.9192C8 13.6348 7.87558 13.3669 7.67824 13.162C6.63904 12.0832 6 10.6162 6 9C6 5.68629 8.68629 3 12 3C15.3137 3 18 5.68629 18 9C18 10.6162 17.361 12.0832 16.3218 13.162C16.1244 13.3669 16 13.6348 16 13.9192V16" vectorEffect="non-scaling-stroke" /></svg>;
 const ForwardRef = forwardRef(SvgLightbulb);
 export default ForwardRef;

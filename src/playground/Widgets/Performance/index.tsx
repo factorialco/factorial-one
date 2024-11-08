@@ -1,7 +1,7 @@
 import { ChartItem } from "@/components/Charts/utils/types"
 import { AreaChartWidget } from "@/experimental/Widgets/Charts/AreaChartWidget"
 import { WidgetEmptyState } from "@/experimental/Widgets/WidgetEmptyState"
-import { AreaGraph } from "@/icons/app"
+import { ChartLine } from "@/icons/app"
 import { ChartConfig } from "@/ui/chart"
 import { ComponentProps, forwardRef } from "react"
 
@@ -27,7 +27,7 @@ export const PerformanceInsight = forwardRef<
       <WidgetEmptyState
         title={title}
         content={`See how ${name}'s performance evolved over time`}
-        icon={AreaGraph}
+        icon={ChartLine}
         buttonLabel="Try it for free"
         promote
       />

@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
-import AlignTextJustify from "@/icons/app/AlignTextJustify"
+import { Menu } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
@@ -59,7 +59,7 @@ export function PageHeader({
                   round
                   onClick={toggleSidebar}
                   label="Menu"
-                  icon={AlignTextJustify}
+                  icon={Menu}
                 />
               </div>
             </motion.div>

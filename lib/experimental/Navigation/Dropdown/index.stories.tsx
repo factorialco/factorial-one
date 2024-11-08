@@ -1,4 +1,5 @@
-import { UserAvatar } from "@/experimental/Information/Avatars/UserAvatar"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import * as Icons from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Dropdown } from "."
 
@@ -17,19 +18,19 @@ export const Default: Story = {
       {
         label: "Create",
         onClick: () => console.log("Create clicked"),
-        icon: "Add",
+        icon: Icons.Add,
         description: "New creation process",
       },
       {
         label: "Edit",
         onClick: () => console.log("Edit clicked"),
-        icon: "Pencil",
+        icon: Icons.Pencil,
         description: "Edit item's information",
       },
       {
         label: "Save",
         onClick: () => console.log("Save clicked"),
-        icon: "Save",
+        icon: Icons.Save,
         description: "Preserve changes",
       },
       {
@@ -37,7 +38,7 @@ export const Default: Story = {
         onClick: () => console.log("Delete clicked"),
         description: "Remove item",
         critical: true,
-        icon: "Delete",
+        icon: Icons.Delete,
       },
     ],
   },
@@ -60,7 +61,7 @@ export const WithCustomTrigger: Story = {
   render: (args) => (
     <Dropdown {...args}>
       <button>
-        <UserAvatar
+        <PersonAvatar
           src="https://github.com/dani-moreno.png"
           firstName="Dani"
           lastName="Moreno"
@@ -90,19 +91,56 @@ export const WithLinks: Story = {
         label: "Dashboard",
         href: "/dashboard",
         description: "View your dashboard",
-        icon: "Home",
+        icon: Icons.Home,
       },
       {
         label: "Settings",
         href: "/settings",
         description: "Adjust your settings",
-        icon: "Settings",
+        icon: Icons.Settings,
       },
       {
         label: "Help",
         href: "/help",
         description: "Get help and support",
-        icon: "Info",
+        icon: Icons.InfoCircleLine,
+      },
+    ],
+  },
+}
+
+export const WithAvatars: Story = {
+  args: {
+    items: [
+      {
+        label: "Josep Jaume Rey",
+        avatar: {
+          type: "person",
+          firstName: "Josep Jaume",
+          lastName: "Rey",
+          src: "https://github.com/josepjaume.png",
+          "aria-label": "Josep Jaume Rey avatar",
+        },
+      },
+      {
+        label: "Nik Lopin",
+        avatar: {
+          type: "person",
+          firstName: "Nik",
+          lastName: "Lopin",
+          src: "https://github.com/nlopin.png",
+          "aria-label": "Nik Lopin avatar",
+        },
+      },
+      {
+        label: "Saúl Domínguez",
+        avatar: {
+          type: "person",
+          firstName: "Saúl",
+          lastName: "Domínguez",
+          src: "https://github.com/sauldom102.png",
+          "aria-label": "Saúl Domínguez avatar",
+        },
       },
     ],
   },

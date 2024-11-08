@@ -17,18 +17,21 @@ const moduleAvatarVariants = cva(
   }
 )
 
-const iconSizeVariants = cva("relative text-f1-foreground-inverse", {
-  variants: {
-    size: {
-      sm: "h-3 w-3",
-      md: "h-4 w-4",
-      lg: "h-6 w-6",
+const iconSizeVariants = cva(
+  "relative text-f1-foreground-inverse drop-shadow",
+  {
+    variants: {
+      size: {
+        sm: "h-3 w-3",
+        md: "h-4 w-4",
+        lg: "h-6 w-6",
+      },
     },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-})
+    defaultVariants: {
+      size: "md",
+    },
+  }
+)
 
 export interface ModuleAvatarProps
   extends VariantProps<typeof moduleAvatarVariants> {

@@ -1,3 +1,4 @@
+import * as Icons from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { User } from "."
 
@@ -15,9 +16,9 @@ export const Default: Story = {
     lastName: "Moreno",
     avatarUrl: "https://github.com/dani-moreno.png",
     options: [
-      { label: "Preferences", href: "/preferences" },
-      { label: "Notifications", href: "/notifications" },
-      { label: "Logout", href: "/logout" },
+      { label: "Preferences", href: "/preferences", icon: Icons.Sliders },
+      { label: "Notifications", href: "/notifications", icon: Icons.Bell },
+      { label: "Logout", href: "/logout", icon: Icons.Exit, critical: true },
     ],
   },
 }

@@ -9,7 +9,13 @@ const meta: Meta = {
   },
   args: {
     title: "Email",
-    content: "alicia.keys@factorial.co",
+    content: {
+      type: "item",
+      text: "alicia.keys@factorial.co",
+      action: {
+        type: "copy",
+      },
+    },
   },
 }
 
