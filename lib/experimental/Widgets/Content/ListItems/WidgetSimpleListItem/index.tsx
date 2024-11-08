@@ -45,7 +45,7 @@ export function WidgetSimpleListItem({
   onClick,
 }: Props) {
   const className = cn(
-    "flex flex-row items-center gap-1 rounded-md border border-solid border-transparent px-2 py-1.5 text-f1-foreground",
+    "flex flex-row items-start gap-1 rounded-md border border-solid border-transparent px-2 py-1.5 text-f1-foreground",
     onClick
       ? "cursor-pointer hover:bg-f1-background-tertiary focus:border-f1-background-selected-bold focus:outline-none"
       : undefined
@@ -57,7 +57,9 @@ export function WidgetSimpleListItem({
 
   return (
     <Wrapper onClick={handleOnClick} className={className}>
-      {icon && <Icon icon={icon} size="md" className={iconClassName} />}
+      {icon && (
+        <Icon icon={icon} size="md" className={cn("mt-0.5", iconClassName)} />
+      )}
       <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{title}</p>
       <div className="flex flex-row items-center gap-2">
         {alert && <AlertTag {...alert} />}
