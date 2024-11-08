@@ -41,7 +41,7 @@ export function PageHeader({
       className={cn(
         "flex h-16 items-center justify-between bg-f1-background/80 px-5 py-4 backdrop-blur-xl xs:px-6",
         hasNavigation &&
-          "border-b border-dashed border-transparent border-b-f1-border/80"
+          "border-b border-dashed border-transparent border-b-f1-border"
       )}
     >
       <div className="flex flex-grow items-center">
