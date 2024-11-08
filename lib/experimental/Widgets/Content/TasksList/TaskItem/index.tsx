@@ -36,7 +36,7 @@ export function TaskItem({
     if (status === "in-progress") {
       return InProgressTask
     }
-  }, [status])
+  }, [status, hideIcon])
 
   return (
     <WidgetSimpleListItem
