@@ -1,6 +1,6 @@
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
-import * as Icons from "@/icons/app"
+import { ChevronDown } from "@/icons/app"
 import { useReducedMotion } from "@/lib/a11y"
 import { Link, useNavigation } from "@/lib/linkHandler"
 import { cn, focusRing } from "@/lib/utils"
@@ -9,7 +9,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/ui/collapsible"
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import React from "react"
 import { NavigationItem } from "../../utils"
 
@@ -36,14 +36,14 @@ const MenuItemContent = ({
   item: MenuItem
   active: boolean
 }) => {
-  const IconComponent = item.icon
-
   return (
     <div className="flex w-full items-center justify-between">
       <div className="flex items-center gap-1.5 font-medium text-f1-foreground">
-        <IconComponent
+        <Icon
+          icon={item.icon}
+          size="md"
           className={cn(
-            "h-5 w-5 transition-colors",
+            "transition-colors",
             active ? "text-f1-icon-bold" : "text-f1-icon"
           )}
         />
@@ -105,32 +105,36 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
           animate={{ rotate: isOpen ? 0 : -90 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.1 }}
         >
-          <Icons.ChevronDown className="h-4 w-4 text-f1-icon-secondary" />
+          <Icon
+            icon={ChevronDown}
+            size="sm"
+            className="text-f1-icon-secondary"
+          />
         </motion.div>
       </CollapsibleTrigger>
       <CollapsibleContent
         forceMount
-        className="flex flex-col gap-1 overflow-hidden pb-3"
+        className="flex flex-col gap-1 overflow-hidden pb-2"
       >
-        <AnimatePresence initial={false}>
-          {isOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{
-                duration: shouldReduceMotion ? 0 : 0.15,
-                ease: [0.165, 0.84, 0.44, 1],
-              }}
-            >
-              <div className="flex flex-col gap-1 pb-3">
-                {category.items.map((item, index) => (
-                  <MenuItem key={index} item={item} />
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <motion.div
+          initial={{ height: 0, opacity: 0 }}
+          animate={{
+            height: isOpen ? "auto" : 0,
+            opacity: isOpen ? 1 : 0,
+            visibility: isOpen ? "visible" : "hidden",
+            pointerEvents: isOpen ? "auto" : "none",
+          }}
+          transition={{
+            duration: shouldReduceMotion ? 0 : 0.15,
+            ease: [0.165, 0.84, 0.44, 1],
+          }}
+        >
+          <div className="flex flex-col gap-1 pb-3">
+            {category.items.map((item, index) => (
+              <MenuItem key={index} item={item} />
+            ))}
+          </div>
+        </motion.div>
       </CollapsibleContent>
     </Collapsible>
   )
