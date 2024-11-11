@@ -125,10 +125,12 @@ export const f1Colors = {
         DEFAULT: "hsl(var(--accent-50))",
         hover: "hsl(var(--accent-60))",
       },
+      alpha5: "hsl(var(--accent-50) / 0.05)",
     },
     promote: {
       DEFAULT: "hsl(var(--promote-50) / 0.2)",
       hover: "hsl(var(--promote-50) / 0.4)",
+      alpha5: "hsl(var(--promote-50) / 0.05)",
     },
     critical: {
       DEFAULT: "hsl(var(--critical-50) / 0.1)",
@@ -148,9 +150,13 @@ export const f1Colors = {
     secondary: "hsl(var(--neutral-10))",
     inverse: "hsl(var(--neutral-0) / 0.2)",
     promote: "hsl(var(--promote-50) / 0.4)",
+    promoteAlpha30: "hsl(var(--promote-50) / 0.3)",
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.2)",
       bold: "hsl(var(--selected-50))",
+    },
+    accent: {
+      alpha20: "hsl(var(--accent-50) / 0.2)",
     },
   },
   icon: {
