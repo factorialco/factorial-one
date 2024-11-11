@@ -101,6 +101,7 @@
     "@storybook/theming": "^8.3.1",
     "@svgr/cli": "^8.1.0",
     "@testing-library/react": "^16.0.1",
+    "@types/canvas-confetti": "^1.6.4",
     "@types/lodash": "^4.17.13",
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",
@@ -136,5 +137,9 @@
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.24"
+  },
+  "dependencies": {
+    "@number-flow/react": "^0.3.0",
+    "canvas-confetti": "^1.9.3"
   }
 }
