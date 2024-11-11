@@ -51,11 +51,11 @@ const axisVariants: Variants = {
   },
 }
 
-interface GraphIconProps extends SVGProps<SVGSVGElement> {
+interface GraphProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const GraphAnimatedIcon = forwardRef<SVGSVGElement, GraphIconProps>(
+const GraphAnimated = forwardRef<SVGSVGElement, GraphProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg
@@ -98,6 +98,6 @@ const GraphAnimatedIcon = forwardRef<SVGSVGElement, GraphIconProps>(
   }
 )
 
-GraphAnimatedIcon.displayName = "GraphAnimatedIcon"
+GraphAnimated.displayName = "GraphAnimated"
 
-export default GraphAnimatedIcon
+export default GraphAnimated

@@ -37,11 +37,11 @@ const shipVariants: Variants = {
   },
 }
 
-interface RocketIconProps extends SVGProps<SVGSVGElement> {
+interface RocketProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const RocketAnimatedIcon = forwardRef<SVGSVGElement, RocketIconProps>(
+const RocketAnimated = forwardRef<SVGSVGElement, RocketProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg
@@ -76,6 +76,6 @@ const RocketAnimatedIcon = forwardRef<SVGSVGElement, RocketIconProps>(
   }
 )
 
-RocketAnimatedIcon.displayName = "RocketAnimatedIcon"
+RocketAnimated.displayName = "RocketAnimated"
 
-export default RocketAnimatedIcon
+export default RocketAnimated

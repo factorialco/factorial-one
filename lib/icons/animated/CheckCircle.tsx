@@ -33,11 +33,11 @@ const circleVariants: Variants = {
   },
 }
 
-interface CheckCircleIconProps extends SVGProps<SVGSVGElement> {
+interface CheckCircleProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const CheckCircleAnimatedIcon = forwardRef<SVGSVGElement, CheckCircleIconProps>(
+const CheckCircleAnimated = forwardRef<SVGSVGElement, CheckCircleProps>(
   ({ animate = "normal", ...props }, ref) => {
 
     return (
@@ -77,6 +77,6 @@ const CheckCircleAnimatedIcon = forwardRef<SVGSVGElement, CheckCircleIconProps>(
   }
 )
 
-CheckCircleAnimatedIcon.displayName = "CheckCircleAnimatedIcon"
+CheckCircleAnimated.displayName = "CheckCircleAnimated"
 
-export default CheckCircleAnimatedIcon
+export default CheckCircleAnimated

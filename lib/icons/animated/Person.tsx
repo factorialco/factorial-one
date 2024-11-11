@@ -17,11 +17,11 @@ const headVariants: Variants = {
   },
 }
 
-interface PersonIconProps extends SVGProps<SVGSVGElement> {
+interface PersonProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const PersonAnimatedIcon = forwardRef<SVGSVGElement, PersonIconProps>(
+const PersonAnimated = forwardRef<SVGSVGElement, PersonProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg
@@ -51,6 +51,6 @@ const PersonAnimatedIcon = forwardRef<SVGSVGElement, PersonIconProps>(
   }
 )
 
-PersonAnimatedIcon.displayName = "PersonAnimatedIcon"
+PersonAnimated.displayName = "PersonAnimated"
 
-export default PersonAnimatedIcon
+export default PersonAnimated

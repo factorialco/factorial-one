@@ -33,11 +33,11 @@ const userVariants: Variants = {
   },
 }
 
-interface FolderUserIconProps extends SVGProps<SVGSVGElement> {
+interface FolderUserProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const FolderUserAnimatedIcon = forwardRef<SVGSVGElement, FolderUserIconProps>(
+const FolderUserAnimated = forwardRef<SVGSVGElement, FolderUserProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg
@@ -81,6 +81,6 @@ const FolderUserAnimatedIcon = forwardRef<SVGSVGElement, FolderUserIconProps>(
   }
 )
 
-FolderUserAnimatedIcon.displayName = "FolderUserAnimatedIcon"
+FolderUserAnimated.displayName = "FolderUserAnimatedIcon"
 
-export default FolderUserAnimatedIcon
+export default FolderUserAnimated

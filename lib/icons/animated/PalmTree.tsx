@@ -28,11 +28,11 @@ const palmVariants: Variants = {
   },
 }
 
-interface PalmTreeIconProps extends SVGProps<SVGSVGElement> {
+interface PalmTreeProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const PalmTreeAnimatedIcon = forwardRef<SVGSVGElement, PalmTreeIconProps>(
+const PalmTreeAnimated = forwardRef<SVGSVGElement, PalmTreeProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg
@@ -74,6 +74,6 @@ const PalmTreeAnimatedIcon = forwardRef<SVGSVGElement, PalmTreeIconProps>(
   }
 )
 
-PalmTreeAnimatedIcon.displayName = "PalmTreeAnimatedIcon"
+PalmTreeAnimated.displayName = "PalmTreeAnimated"
 
-export default PalmTreeAnimatedIcon
+export default PalmTreeAnimated

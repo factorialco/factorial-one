@@ -41,7 +41,7 @@ export const Example: Story = {
 export const Animated: Story = {
   args: {
     size: "md",
-    icon: AnimatedIcons.HomeAnimatedIcon,
+    icon: AnimatedIcons.HomeAnimated,
   },
   argTypes: {
     icon: {

@@ -53,11 +53,11 @@ const dotsVariants: Variants = {
   },
 }
 
-interface MoneyBagIconProps extends SVGProps<SVGSVGElement> {
+interface MoneyBagProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const MoneyBagAnimatedIcon = forwardRef<SVGSVGElement, MoneyBagIconProps>(
+const MoneyBagAnimated = forwardRef<SVGSVGElement, MoneyBagProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg
@@ -122,6 +122,6 @@ const MoneyBagAnimatedIcon = forwardRef<SVGSVGElement, MoneyBagIconProps>(
   }
 )
 
-MoneyBagAnimatedIcon.displayName = "MoneyBagAnimatedIcon"
+MoneyBagAnimated.displayName = "MoneyBagAnimated"
 
-export default MoneyBagAnimatedIcon
+export default MoneyBagAnimated

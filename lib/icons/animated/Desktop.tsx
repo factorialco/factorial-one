@@ -29,11 +29,11 @@ const lineVariants: Variants = {
   },
 }
 
-interface DesktopIconProps extends SVGProps<SVGSVGElement> {
+interface DesktopProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const DesktopAnimatedIcon = forwardRef<SVGSVGElement, DesktopIconProps>(
+const DesktopAnimated = forwardRef<SVGSVGElement, DesktopProps>(
   ({ animate = "normal", ...props }, ref) => {
     return (
       <svg
@@ -80,6 +80,6 @@ const DesktopAnimatedIcon = forwardRef<SVGSVGElement, DesktopIconProps>(
   }
 )
 
-DesktopAnimatedIcon.displayName = "DesktopAnimatedIcon"
+DesktopAnimated.displayName = "DesktopAnimated"
 
-export default DesktopAnimatedIcon
+export default DesktopAnimated

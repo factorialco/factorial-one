@@ -17,11 +17,11 @@ const cogVariants: Variants = {
   },
 }
 
-interface SettingsIconProps extends SVGProps<SVGSVGElement> {
+interface SettingsProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const SettingsAnimatedIcon = forwardRef<SVGSVGElement, SettingsIconProps>(
+const SettingsAnimated = forwardRef<SVGSVGElement, SettingsProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg
@@ -54,6 +54,6 @@ const SettingsAnimatedIcon = forwardRef<SVGSVGElement, SettingsIconProps>(
   }
 )
 
-SettingsAnimatedIcon.displayName = "SettingsAnimatedIcon"
+SettingsAnimated.displayName = "SettingsAnimated"
 
-export default SettingsAnimatedIcon
+export default SettingsAnimated

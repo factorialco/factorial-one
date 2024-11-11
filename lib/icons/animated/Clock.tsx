@@ -33,11 +33,11 @@ const handMinuteVariants: Variants = {
   },
 }
 
-interface ClockIconProps extends SVGProps<SVGSVGElement> {
+interface ClockProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const ClockAnimatedIcon = forwardRef<SVGSVGElement, ClockIconProps>(
+const ClockAnimated = forwardRef<SVGSVGElement, ClockProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg
@@ -79,6 +79,6 @@ const ClockAnimatedIcon = forwardRef<SVGSVGElement, ClockIconProps>(
   }
 )
 
-ClockAnimatedIcon.displayName = "ClockAnimatedIcon"
+ClockAnimated.displayName = "ClockAnimated"
 
-export default ClockAnimatedIcon
+export default ClockAnimated

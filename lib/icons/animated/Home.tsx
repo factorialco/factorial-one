@@ -32,11 +32,11 @@ const pathVariants: Variants = {
   },
 }
 
-interface HomeIconProps extends SVGProps<SVGSVGElement> {
+interface HomeProps extends SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const HomeAnimatedIcon = forwardRef<SVGSVGElement, HomeIconProps>(
+const HomeAnimated = forwardRef<SVGSVGElement, HomeProps>(
   ({ animate = "normal", ...props }, ref) => {
     return (
       <svg
@@ -71,6 +71,6 @@ const HomeAnimatedIcon = forwardRef<SVGSVGElement, HomeIconProps>(
   }
 )
 
-HomeAnimatedIcon.displayName = "HomeAnimatedIcon"
+HomeAnimated.displayName = "HomeAnimated"
 
-export default HomeAnimatedIcon
+export default HomeAnimated
