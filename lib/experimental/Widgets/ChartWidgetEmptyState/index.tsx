@@ -19,7 +19,7 @@ export interface Props {
 
 const ROOT_CLASSNAMES: Record<Type, string> = {
   "line-chart": "border-f1-border-accent-alpha20",
-  "bar-chart": "border-f1-border-promoteAlpha30",
+  "bar-chart": "border-f1-border-promote-alpha30",
 }
 
 const CONTENT_CLASSNAMES: Record<Type, string> = {
