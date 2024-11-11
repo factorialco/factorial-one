@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const graphTransition: Transition = {
   duration: 0.5,
@@ -51,11 +51,11 @@ const axisVariants: Variants = {
   },
 }
 
-interface GraphProps extends SVGProps<SVGSVGElement> {
+interface GraphProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const GraphAnimated = forwardRef<SVGSVGElement, GraphProps>(
+const GraphAnimated = React.forwardRef<SVGSVGElement, GraphProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg

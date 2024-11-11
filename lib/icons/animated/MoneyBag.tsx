@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const bagTransition: Transition = {
   duration: 0.6,
@@ -53,11 +53,11 @@ const dotsVariants: Variants = {
   },
 }
 
-interface MoneyBagProps extends SVGProps<SVGSVGElement> {
+interface MoneyBagProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const MoneyBagAnimated = forwardRef<SVGSVGElement, MoneyBagProps>(
+const MoneyBagAnimated = React.forwardRef<SVGSVGElement, MoneyBagProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg

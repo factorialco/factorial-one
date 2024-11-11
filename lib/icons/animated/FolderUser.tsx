@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const folderTransition: Transition = {
   duration: 0.5,
@@ -33,11 +33,11 @@ const userVariants: Variants = {
   },
 }
 
-interface FolderUserProps extends SVGProps<SVGSVGElement> {
+interface FolderUserProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const FolderUserAnimated = forwardRef<SVGSVGElement, FolderUserProps>(
+const FolderUserAnimated = React.forwardRef<SVGSVGElement, FolderUserProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg

@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const fireTransition: Transition = {
   duration: 0.8,
@@ -37,11 +37,11 @@ const shipVariants: Variants = {
   },
 }
 
-interface RocketProps extends SVGProps<SVGSVGElement> {
+interface RocketProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const RocketAnimated = forwardRef<SVGSVGElement, RocketProps>(
+const RocketAnimated = React.forwardRef<SVGSVGElement, RocketProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg

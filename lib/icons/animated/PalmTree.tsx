@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const defaultTransition: Transition = {
   duration: 0.6,
@@ -28,11 +28,11 @@ const palmVariants: Variants = {
   },
 }
 
-interface PalmTreeProps extends SVGProps<SVGSVGElement> {
+interface PalmTreeProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const PalmTreeAnimated = forwardRef<SVGSVGElement, PalmTreeProps>(
+const PalmTreeAnimated = React.forwardRef<SVGSVGElement, PalmTreeProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg

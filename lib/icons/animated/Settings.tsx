@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const cogTransition: Transition = {
   duration: 0.6,
@@ -17,11 +17,11 @@ const cogVariants: Variants = {
   },
 }
 
-interface SettingsProps extends SVGProps<SVGSVGElement> {
+interface SettingsProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const SettingsAnimated = forwardRef<SVGSVGElement, SettingsProps>(
+const SettingsAnimated = React.forwardRef<SVGSVGElement, SettingsProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg

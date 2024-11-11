@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const headTransition: Transition = {
   duration: 0.6,
@@ -17,11 +17,11 @@ const headVariants: Variants = {
   },
 }
 
-interface PersonProps extends SVGProps<SVGSVGElement> {
+interface PersonProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const PersonAnimated = forwardRef<SVGSVGElement, PersonProps>(
+const PersonAnimated = React.forwardRef<SVGSVGElement, PersonProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg

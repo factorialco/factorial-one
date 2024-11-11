@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const handTransition: Transition = {
   duration: 0.7,
@@ -33,11 +33,11 @@ const handMinuteVariants: Variants = {
   },
 }
 
-interface ClockProps extends SVGProps<SVGSVGElement> {
+interface ClockProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const ClockAnimated = forwardRef<SVGSVGElement, ClockProps>(
+const ClockAnimated = React.forwardRef<SVGSVGElement, ClockProps>(
   ({ animate = "normal", ...props }, ref) => {
   return (
       <svg

@@ -1,5 +1,5 @@
 import { motion, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const containerVariants: Variants = {
   normal: {
@@ -29,11 +29,11 @@ const lineVariants: Variants = {
   },
 }
 
-interface DesktopProps extends SVGProps<SVGSVGElement> {
+interface DesktopProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const DesktopAnimated = forwardRef<SVGSVGElement, DesktopProps>(
+const DesktopAnimated = React.forwardRef<SVGSVGElement, DesktopProps>(
   ({ animate = "normal", ...props }, ref) => {
     return (
       <svg

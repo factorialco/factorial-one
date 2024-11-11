@@ -1,5 +1,5 @@
 import { motion, Transition, Variants } from "framer-motion"
-import { forwardRef, SVGProps } from "react"
+import * as React from "react"
 
 const checkTransition: Transition = {
   duration: 0.5,
@@ -33,11 +33,11 @@ const circleVariants: Variants = {
   },
 }
 
-interface CheckCircleProps extends SVGProps<SVGSVGElement> {
+interface CheckCircleProps extends React.SVGProps<SVGSVGElement> {
   animate?: "normal" | "animate"
 }
 
-const CheckCircleAnimated = forwardRef<SVGSVGElement, CheckCircleProps>(
+const CheckCircleAnimated = React.forwardRef<SVGSVGElement, CheckCircleProps>(
   ({ animate = "normal", ...props }, ref) => {
 
     return (
