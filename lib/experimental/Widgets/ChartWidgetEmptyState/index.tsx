@@ -56,7 +56,7 @@ export const ChartWidgetEmptyState = forwardRef<HTMLDivElement, Props>(
         ref={ref}
       >
         <CardHeader className="-mt-0.5">
-          <CardTitle className="truncate">{title}</CardTitle>
+          <CardTitle>{title}</CardTitle>
         </CardHeader>
         <CardContent className={cn("flex flex-col gap-4", contentClassName)}>
           <div
