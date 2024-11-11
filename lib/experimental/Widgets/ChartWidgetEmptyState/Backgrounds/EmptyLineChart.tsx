@@ -16,9 +16,9 @@ const SvgLineChart = (
     <path
       d="M406 1L352.178 11.5985C343.237 13.359 334.653 16.5974 326.777 21.1805L270.327 54.031L208.727 80.0238C204.915 81.6326 200.986 82.9506 196.974 83.9662L146.837 96.6597C139.431 98.5348 132.323 101.436 125.72 105.279L80.2168 131.758C71.6933 136.718 62.3449 140.1 52.6208 141.742L1.12057e-05 150.623"
       stroke="#E51943"
-      stroke-opacity="0.1"
-      stroke-width="1.3"
-      stroke-linejoin="round"
+      strokeOpacity="0.1"
+      strokeWidth="1.3"
+      strokeLinejoin="round"
     />
     <path
       d="M203 82.4405L270.327 54.031L338.673 14.2578L406 1V179H0V150.623L67.3266 139.26L135.673 99.4862L203 82.4405Z"
@@ -33,8 +33,8 @@ const SvgLineChart = (
         y2="1"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#E51943" stop-opacity="0" />
-        <stop offset="1" stop-color="#E51943" stop-opacity="0.05" />
+        <stop stopColor="#E51943" stopOpacity="0" />
+        <stop offset="1" stopColor="#E51943" stopOpacity="0.05" />
       </linearGradient>
     </defs>
   </svg>

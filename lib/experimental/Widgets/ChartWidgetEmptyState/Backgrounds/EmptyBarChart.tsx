@@ -20,7 +20,7 @@ const SvgBarChart = (
         height="86"
         rx="10"
         fill="#F5A51C"
-        fill-opacity="0.1"
+        fillOpacity="0.1"
       />
     </g>
     <g filter="url(#filter1_b_378_17717)">
@@ -31,7 +31,7 @@ const SvgBarChart = (
         height="113"
         rx="10"
         fill="#F5A51C"
-        fill-opacity="0.1"
+        fillOpacity="0.1"
       />
     </g>
     <g filter="url(#filter2_b_378_17717)">
@@ -42,7 +42,7 @@ const SvgBarChart = (
         height="86"
         rx="10"
         fill="#F5A51C"
-        fill-opacity="0.1"
+        fillOpacity="0.1"
       />
     </g>
     <g filter="url(#filter3_b_378_17717)">
@@ -53,7 +53,7 @@ const SvgBarChart = (
         height="108"
         rx="10"
         fill="#F5A51C"
-        fill-opacity="0.1"
+        fillOpacity="0.1"
       />
     </g>
     <g filter="url(#filter4_b_378_17717)">
@@ -63,7 +63,7 @@ const SvgBarChart = (
         height="146"
         rx="10"
         fill="#F5A51C"
-        fill-opacity="0.1"
+        fillOpacity="0.1"
       />
     </g>
     <defs>
@@ -74,9 +74,9 @@ const SvgBarChart = (
         width="120"
         height="166"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feGaussianBlur in="BackgroundImageFix" stdDeviation="20" />
         <feComposite
           in2="SourceAlpha"
@@ -97,9 +97,9 @@ const SvgBarChart = (
         width="120"
         height="193"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feGaussianBlur in="BackgroundImageFix" stdDeviation="20" />
         <feComposite
           in2="SourceAlpha"
@@ -120,9 +120,9 @@ const SvgBarChart = (
         width="120"
         height="166"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feGaussianBlur in="BackgroundImageFix" stdDeviation="20" />
         <feComposite
           in2="SourceAlpha"
@@ -143,9 +143,9 @@ const SvgBarChart = (
         width="120"
         height="188"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feGaussianBlur in="BackgroundImageFix" stdDeviation="20" />
         <feComposite
           in2="SourceAlpha"
@@ -166,9 +166,9 @@ const SvgBarChart = (
         width="120"
         height="226"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feGaussianBlur in="BackgroundImageFix" stdDeviation="20" />
         <feComposite
           in2="SourceAlpha"
