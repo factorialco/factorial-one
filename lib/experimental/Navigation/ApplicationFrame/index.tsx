@@ -50,11 +50,11 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
           <AnimatePresence>
             {sidebarState === "unlocked" && (
               <motion.div
-                className={cn("fixed inset-0 z-[5] bg-f1-background-bold/60", {
+                className={cn("fixed inset-0 z-[5] bg-f1-background-bold", {
                   hidden: !isSmallScreen,
                 })}
                 initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                animate={{ opacity: 0.1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
                 onClick={toggleSidebar}

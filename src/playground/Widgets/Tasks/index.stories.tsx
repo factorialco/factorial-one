@@ -19,13 +19,12 @@ const meta: Meta = {
     title: "Tasks",
     data: {
       inProgressTasks: ["Migrate to new CRM"],
-      noDueTasks: [
+      todoTasks: [
         "Connect to Slack",
         "Write changelog",
         "Product review",
         "Final conclusions",
       ],
-      dueTasks: [],
       overdueLabel: "Overdue",
       overdueTasksCount: 1,
       dueLabel: "Due",
@@ -59,8 +58,7 @@ export const EmptyState: Story = {
     data: {
       ...meta?.args?.data,
       inProgressTasks: [],
-      dueTasks: [],
-      noDueTasks: [],
+      todoTasks: [],
       buttonLabel: undefined,
       overdueTasks: 0,
       dueTasksCount: 0,
