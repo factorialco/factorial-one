@@ -24,18 +24,35 @@ export interface IconProps
   extends SVGProps<SVGSVGElement>,
     VariantProps<typeof iconVariants> {
   icon: IconType
+  state?: "normal" | "animate"
 }
 
 export type IconType = ForwardRefExoticComponent<
-  SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement>
+  SVGProps<SVGSVGElement> &
+    RefAttributes<SVGSVGElement> & {
+      animate?: "normal" | "animate"
+    }
 >
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
-  { size, icon, className, ...props },
+  { size, icon, state = "normal", className, ...props },
   ref
 ) {
   if (!icon) return null
   const Component = icon
+  const isAnimated = icon.displayName?.includes("Animated")
+
+  if (isAnimated) {
+    return (
+      <Component
+        ref={ref}
+        {...props}
+        animate={state}
+        className={cn(iconVariants({ size }), "select-none", className)}
+      />
+    )
+  }
+
   return (
     <Component
       ref={ref}
