@@ -42,6 +42,7 @@ const MenuItemContent = ({
         <Icon
           icon={item.icon}
           size="md"
+          state={active ? "animate" : "normal"}
           className={cn(
             "transition-colors",
             active ? "text-f1-icon-bold" : "text-f1-icon"
