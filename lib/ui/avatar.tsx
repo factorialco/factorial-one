@@ -25,7 +25,7 @@ export const color = [
 ] as const
 
 const avatarVariants = cva(
-  "relative flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold",
+  "relative flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold ring-1 ring-inset ring-f1-border-secondary",
   {
     variants: {
       size: {
