@@ -82,7 +82,7 @@ export function WidgetList<T extends WidgetListItemProps>({
             transition={{ duration: 0.3 }}
           >
             <Button
-              label={`See all`}
+              label={`See all ${children.length - visibleCount}`}
               onClick={onMoreElementsClick}
               variant="neutral"
             />
