@@ -1,6 +1,5 @@
 import { ScrollArea } from "@/experimental/Utilities/ScrollArea"
 import { Blend, withSkeleton } from "@/lib/skeleton"
-import { cn } from "@/lib/utils"
 import { forwardRef, ReactNode } from "react"
 import { Widget } from "../../Widget"
 
@@ -9,11 +8,7 @@ type DashboardProps = {
 }
 
 const Container: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <div
-    className={cn(
-      "flex min-h-40 flex-row items-stretch gap-4 text-f1-foreground [&>*]:min-w-96 [&>*]:max-w-lg [&>*]:flex-grow [&>*]:basis-0"
-    )}
-  >
+  <div className="widget-strip flex min-h-40 flex-row items-stretch gap-4 text-f1-foreground">
     {children}
   </div>
 )
@@ -24,7 +19,7 @@ export const WidgetStrip = withSkeleton(
     ref
   ) {
     return (
-      <ScrollArea ref={ref}>
+      <ScrollArea ref={ref} showBar={false}>
         <Container>{children}</Container>
       </ScrollArea>
     )
