@@ -8,7 +8,7 @@ import EmptyLineChart from "./Backgrounds/EmptyLineChart"
 
 type Type = "bar-chart" | "line-chart"
 
-export interface Props {
+interface Props {
   title: string
   content: string
   buttonLabel?: string
@@ -16,6 +16,8 @@ export interface Props {
   buttonAction?: () => void
   type: Type
 }
+
+export type ChatWidgetEmptyStateProps = Props
 
 const ROOT_CLASSNAMES: Record<Type, string> = {
   "line-chart": "border-f1-border-accent-alpha20",
