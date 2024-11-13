@@ -9,15 +9,14 @@ const flagTransition: Transition = {
 const flagVariants: Variants = {
   normal: {
     skewY: 0,
+    x: 0,
     y: 0,
-    scaleX: 1,
     originX: "50%",
     originY: "60%",
   },
   animate: {
-    skewY: [0, -15, 15, 0],
-    y: [0, -2, 2, 0],
-    scaleX: [1, 1.1, 1.1, 1],
+    skewY: [0, -10, 10, 0],
+    y: [0, -1, 1, 0],
   },
 }
 

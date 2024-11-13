@@ -14,8 +14,8 @@ const personFrontVariants: Variants = {
     originY: "50%",
   },
   animate: {
-    x: [3, 0],
-    scale: [0.9, 1],
+    x: [0, 3, 0],
+    scale: [1, 1.1, 1],
   },
 }
 
@@ -25,8 +25,8 @@ const personBackVariants: Variants = {
     opacity: 1,
   },
   animate: {
-    x: [-3, 0],
-    opacity: [0, 1],
+    x: [0, -3, 0],
+    opacity: [1, 0, 1],
   },
 }
 
