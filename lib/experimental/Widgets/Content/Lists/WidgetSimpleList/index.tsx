@@ -14,7 +14,7 @@ export function WidgetSimpleList({ items, onClickItem }: Props) {
   return (
     <div className="flex flex-col gap-1">
       {items.map((item) => (
-        <WidgetSimpleListItem {...item} onClick={onClickItem} />
+        <WidgetSimpleListItem key={item.id} {...item} onClick={onClickItem} />
       ))}
     </div>
   )
