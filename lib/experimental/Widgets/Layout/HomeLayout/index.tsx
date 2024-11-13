@@ -21,29 +21,26 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
     return (
       <div ref={ref} className="flex flex-col gap-6">
         <WidgetStrip>{arrayWidgets}</WidgetStrip>
-
         <main>{children}</main>
       </div>
     )
   }
 
   return (
-    <div ref={ref} className="flex flex-col gap-6">
-      {/* A */}
-      <div className="flex flex-row gap-6 *:flex-1">
+    <div
+      ref={ref}
+      className="grid h-screen grid-cols-3 grid-rows-[auto,1fr,1fr,1fr] gap-6"
+    >
+      <div className="col-span-3 flex flex-row gap-6 *:flex-1">
         {arrayWidgets.slice(0, 3)}
       </div>
 
-      <div className="flex flex-row gap-12">
-        {/* C */}
-        <div className="flex-[2]">{children}</div>
+      <main className="col-span-2 lg:row-span-3">{children}</main>
 
-        {/* B */}
-        <div className="flex flex-1 flex-col gap-6">
-          {arrayWidgets.slice(3).map((widget) => (
-            <div>{widget}</div>
-          ))}
-        </div>
+      <div className="flex flex-1 flex-col gap-6">
+        {arrayWidgets.slice(3).map((widget) => (
+          <div>{widget}</div>
+        ))}
       </div>
     </div>
   )
