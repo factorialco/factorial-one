@@ -122,21 +122,3 @@
 body {
   @apply font-sans text-base text-f1-foreground antialiased;
 }
-
-@media (max-width: 992px) {
-  .widget-strip > div {
-    @apply min-w-96;
-  }
-}
-
-@media (max-width: 992px) {
-  .widget-strip > div {
-    min-width: calc(50vw - 48px);
-  }
-}
-
-@media (max-width: 743px) {
-  .widget-strip > div {
-    min-width: calc(100vw - 40px - 42px);
-  }
-}
