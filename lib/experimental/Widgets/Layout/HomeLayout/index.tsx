@@ -11,13 +11,13 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
   { widgets, children },
   ref
 ) {
-  const isSmallScreen = useMediaQuery("(max-width: 992px)", {
+  const isSmallerScreen = useMediaQuery("(max-width: 992px)", {
     initializeWithValue: true,
   })
 
   const arrayWidgets = Children.toArray(widgets).filter((widget) => !!widget)
 
-  if (isSmallScreen) {
+  if (isSmallerScreen) {
     return (
       <div ref={ref} className="flex flex-col gap-6">
         <WidgetStrip>{arrayWidgets}</WidgetStrip>
@@ -37,11 +37,7 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
 
       <main className="col-span-2 lg:row-span-3">{children}</main>
 
-      <div className="flex flex-1 flex-col gap-6">
-        {arrayWidgets.slice(3).map((widget) => (
-          <div>{widget}</div>
-        ))}
-      </div>
+      <div className="flex flex-1 flex-col gap-6">{arrayWidgets.slice(3)}</div>
     </div>
   )
 })

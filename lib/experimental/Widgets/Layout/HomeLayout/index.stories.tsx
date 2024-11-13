@@ -17,23 +17,28 @@ import { VerticalBarChartWidget } from "../../Charts/VerticalBarChartWidget"
 import VerticalBarChartWidgetStoriesMeta from "../../Charts/VerticalBarChartWidget/index.stories"
 import { Widget } from "../../Widget"
 
-// /* eslint-disable react/jsx-key */
 const widgets = [
   <AreaChartWidget
+    key="area-chart"
     {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
   />,
-  <Widget header={{ title: "A form widget" }}>
+  <Widget key="never-gonna" header={{ title: "A form widget" }}>
     <p>
       Never gonna give you up. Never gonna let you down. Never gonna turn around
       and desert you.
     </p>
   </Widget>,
-  <LineChartWidget {...LineChartWidgetStoriesMeta.args} />,
-  <BarChartWidget {...BarChartWidgetStoriesMeta.args} />,
-  <VerticalBarChartWidget {...VerticalBarChartWidgetStoriesMeta.args} />,
-  <RadialProgressWidget {...RadialProgressWidgetStoriesMeta.args} />,
+  <LineChartWidget key="line-chart" {...LineChartWidgetStoriesMeta.args} />,
+  <BarChartWidget key="bar-chart" {...BarChartWidgetStoriesMeta.args} />,
+  <VerticalBarChartWidget
+    key="vertical-bar-chart"
+    {...VerticalBarChartWidgetStoriesMeta.args}
+  />,
+  <RadialProgressWidget
+    key="radial-progress"
+    {...RadialProgressWidgetStoriesMeta.args}
+  />,
 ]
-// /* eslint-enable react/jsx-key */
 
 const meta = {
   component: HomeLayout,
