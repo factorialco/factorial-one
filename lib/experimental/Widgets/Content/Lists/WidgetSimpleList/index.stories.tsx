@@ -3,9 +3,9 @@ import {
   Default as DefaultWidgetSimpleListItemStory,
   WithLongTitle as WithLongTitleWidgetSimpleListItemStory,
 } from "../../ListItems/WidgetSimpleListItem/index.stories"
-import { Props, WidgetSimpleList } from "./index"
+import { WidgetSimpleList, WidgetSimpleListProps } from "./index"
 
-const meta: Meta<Props> = {
+const meta: Meta<WidgetSimpleListProps> = {
   component: WidgetSimpleList,
   tags: ["autodocs"],
   parameters: {
@@ -21,7 +21,7 @@ const meta: Meta<Props> = {
 }
 
 export default meta
-type Story = StoryObj<Props>
+type Story = StoryObj<WidgetSimpleListProps>
 
 export const Default: Story = {
   args: {

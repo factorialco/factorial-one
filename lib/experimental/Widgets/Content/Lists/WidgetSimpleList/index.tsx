@@ -3,10 +3,12 @@ import {
   Props as WidgetSimpleListItemProps,
 } from "../../ListItems/WidgetSimpleListItem"
 
-export type Props<Id extends string | number = string | number> = {
+type Props<Id extends string | number = string | number> = {
   items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[]
   onClickItem?: (id: Id) => void
 }
+
+export type WidgetSimpleListProps = Props
 
 export function WidgetSimpleList({ items, onClickItem }: Props) {
   return (
