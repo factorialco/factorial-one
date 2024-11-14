@@ -53,7 +53,7 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
             {arrayWidgets.slice(0, 3)}
           </div>
 
-          <main className="col-span-2 lg:row-span-3">{children}</main>
+          <main className="col-span-2">{children}</main>
 
           <div className="flex flex-1 flex-col gap-6">
             {arrayWidgets.slice(3)}
