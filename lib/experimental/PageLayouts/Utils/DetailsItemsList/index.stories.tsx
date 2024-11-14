@@ -21,6 +21,19 @@ const meta: Meta = {
         },
       },
       {
+        title: "Manager",
+        content: {
+          type: "person",
+          firstName: "Saul",
+          lastName: "Dominguez",
+          avatarUrl: "https://github.com/sauldom102.png",
+          action: {
+            type: "navigate",
+            href: "",
+          },
+        },
+      },
+      {
         title: "Workable days",
         content: {
           type: "weekdays",
