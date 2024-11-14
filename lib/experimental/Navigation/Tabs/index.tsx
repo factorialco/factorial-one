@@ -1,4 +1,5 @@
 import { Link, useNavigation } from "@/lib/linkHandler"
+import { withSkeleton } from "@/lib/skeleton"
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 
 export type TabItem = {
@@ -10,38 +11,43 @@ export type TabItem = {
 interface TabsProps {
   tabs: TabItem[]
   secondary?: boolean
-  loading?: boolean
 }
 
-export function Tabs({ tabs, secondary = false, loading = false }: TabsProps) {
+export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const { isActive } = useNavigation()
   const activeTabIndex = findActiveTabIndex(tabs, isActive)
 
   return (
     <TabNavigation secondary={secondary}>
-      {!loading ? (
-        tabs.map(({ label, ...props }, index) => (
-          <TabNavigationLink
-            key={index}
-            active={activeTabIndex === index}
-            href={props.href}
-            secondary={secondary}
-            asChild
-          >
-            <Link {...props}>{label}</Link>
-          </TabNavigationLink>
-        ))
-      ) : (
-        <>
-          <TabNavigationLink.Skeleton className="w-24" />
-          <TabNavigationLink.Skeleton className="w-20" />
-          <TabNavigationLink.Skeleton className="w-28" />
-          <TabNavigationLink.Skeleton className="w-20" />
-        </>
-      )}
+      {tabs.map(({ label, ...props }, index) => (
+        <TabNavigationLink
+          key={index}
+          active={activeTabIndex === index}
+          href={props.href}
+          secondary={secondary}
+          asChild
+        >
+          <Link {...props}>{label}</Link>
+        </TabNavigationLink>
+      ))}
     </TabNavigation>
   )
 }
+
+export const TabsSkeleton: React.FC<Pick<TabsProps, "secondary">> = ({
+  secondary,
+}) => {
+  return (
+    <TabNavigation secondary={secondary}>
+      <TabNavigationLink.Skeleton className="w-24" />
+      <TabNavigationLink.Skeleton className="w-20" />
+      <TabNavigationLink.Skeleton className="w-28" />
+      <TabNavigationLink.Skeleton className="w-20" />
+    </TabNavigation>
+  )
+}
+
+export const Tabs = withSkeleton(BaseTabs, TabsSkeleton)
 
 // The following piece of code is used to find the right active tab when
 // one of the tabs is an index one. Since index tabs are usually `/` while
