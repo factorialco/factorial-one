@@ -140,7 +140,7 @@ export const f1Colors = {
     warning: "hsl(var(--warning-50) / 0.1)",
     positive: "hsl(var(--positive-50) / 0.1)",
     selected: {
-      DEFAULT: "hsl(var(--selected-50) / 0.2)",
+      DEFAULT: "hsl(var(--selected-50) / 0.1)",
       bold: "hsl(var(--selected-50))",
     },
   },

@@ -13,11 +13,11 @@ export const DetailsItemsList = forwardRef<
   return (
     <div ref={ref} className="flex flex-col gap-4">
       {!!title && (
-        <p className="mb-1 pl-3 text-sm font-semibold text-f1-foreground-secondary">
+        <p className="mb-1 pl-1.5 text-sm font-semibold text-f1-foreground-secondary">
           {title.toLocaleUpperCase()}
         </p>
       )}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-3">
         {details?.map((item) => (
           <DetailsItem
             title={item.title}
