@@ -14,9 +14,6 @@ export default meta
 type Story = StoryObj<typeof ResourceHeader>
 
 export const Default: Story = {
-  parameters: {
-    layout: "fullscreen",
-  },
   args: {
     title: "Senior Product Designer",
     description:

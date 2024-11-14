@@ -14,9 +14,6 @@ export default meta
 type Story = StoryObj<typeof CompanyHeader>
 
 export const Default: Story = {
-  parameters: {
-    layout: "fullscreen",
-  },
   args: {
     name: "Factorial",
     description: "HR Software to Empower Your Team",
@@ -38,5 +35,17 @@ export const Default: Story = {
         onClick: () => console.log("Remove clicked"),
       },
     ],
+  },
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
 }

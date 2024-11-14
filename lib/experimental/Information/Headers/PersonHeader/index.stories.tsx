@@ -14,9 +14,6 @@ export default meta
 type Story = StoryObj<typeof PersonHeader>
 
 export const Default: Story = {
-  parameters: {
-    layout: "fullscreen",
-  },
   args: {
     firstName: "Josep Jaume",
     lastName: "Rey",
