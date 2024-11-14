@@ -16,6 +16,9 @@ const meta = {
     secondary: {
       control: "boolean",
     },
+    loading: {
+      control: "boolean",
+    },
   },
 } satisfies Meta<typeof Tabs>
 
@@ -29,9 +32,25 @@ export const Primary: Story = {
   },
 }
 
+export const PrimaryLoading: Story = {
+  args: {
+    tabs: tabItems,
+    secondary: false,
+    loading: true,
+  },
+}
+
 export const Secondary: Story = {
   args: {
     tabs: tabItems,
     secondary: true,
+  },
+}
+
+export const SecondaryLoading: Story = {
+  args: {
+    tabs: tabItems,
+    secondary: true,
+    loading: true,
   },
 }

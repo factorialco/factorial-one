@@ -10,25 +10,35 @@ export type TabItem = {
 interface TabsProps {
   tabs: TabItem[]
   secondary?: boolean
+  loading?: boolean
 }
 
-export function Tabs({ tabs, secondary = false }: TabsProps) {
+export function Tabs({ tabs, secondary = false, loading = false }: TabsProps) {
   const { isActive } = useNavigation()
   const activeTabIndex = findActiveTabIndex(tabs, isActive)
 
   return (
     <TabNavigation secondary={secondary}>
-      {tabs.map(({ label, ...props }, index) => (
-        <TabNavigationLink
-          key={index}
-          active={activeTabIndex === index}
-          href={props.href}
-          secondary={secondary}
-          asChild
-        >
-          <Link {...props}>{label}</Link>
-        </TabNavigationLink>
-      ))}
+      {!loading ? (
+        tabs.map(({ label, ...props }, index) => (
+          <TabNavigationLink
+            key={index}
+            active={activeTabIndex === index}
+            href={props.href}
+            secondary={secondary}
+            asChild
+          >
+            <Link {...props}>{label}</Link>
+          </TabNavigationLink>
+        ))
+      ) : (
+        <>
+          <TabNavigationLink.Skeleton className="w-24" />
+          <TabNavigationLink.Skeleton className="w-20" />
+          <TabNavigationLink.Skeleton className="w-28" />
+          <TabNavigationLink.Skeleton className="w-20" />
+        </>
+      )}
     </TabNavigation>
   )
 }
