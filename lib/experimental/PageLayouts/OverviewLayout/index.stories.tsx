@@ -4,8 +4,13 @@ import { Dashboard } from "@/experimental/Widgets/Layout/Dashboard"
 import * as DashboardStories from "@/experimental/Widgets/Layout/Dashboard/index.stories"
 import { PageDecorator } from "@/lib/storybook-utils/pageDecorator"
 import { Placeholder } from "@/lib/storybook-utils/placeholder"
+import { ComponentProps } from "react"
 import { OverviewLayout } from "."
-import { SAMPLE_DETAILS_ITEMS_LIST_ARGS } from "../Utils/DetailsItemsList/index.stories"
+import { DetailsItemsList } from "../Utils/DetailsItemsList"
+import * as DetailsItemsListStories from "../Utils/DetailsItemsList/index.stories"
+
+const DETAILS_ITEMS_ARGS = DetailsItemsListStories.default
+  .args as ComponentProps<typeof DetailsItemsList>
 
 const meta = {
   component: OverviewLayout,
@@ -14,8 +19,8 @@ const meta = {
   args: {
     children: <Placeholder className="h-[450px]">Main</Placeholder>,
     sidepanel: {
-      title: SAMPLE_DETAILS_ITEMS_LIST_ARGS.title,
-      items: SAMPLE_DETAILS_ITEMS_LIST_ARGS.details,
+      title: DETAILS_ITEMS_ARGS.title,
+      items: DETAILS_ITEMS_ARGS.details,
     },
   },
   parameters: {
