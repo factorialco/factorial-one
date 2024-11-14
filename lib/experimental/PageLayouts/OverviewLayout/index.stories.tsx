@@ -23,13 +23,6 @@ const meta = {
       items: DETAILS_ITEMS_ARGS.details,
     },
   },
-  parameters: {
-    a11y: {
-      config: {
-        rules: [{ id: "svg-img-alt", enabled: false }],
-      },
-    },
-  },
 } satisfies Meta<typeof OverviewLayout>
 
 export default meta
