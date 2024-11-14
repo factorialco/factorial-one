@@ -149,14 +149,16 @@ const TabNavigationLinkSkeleton: React.FC<{ className?: string }> = ({
   className,
 }) => {
   return (
-    <Skeleton
-      className={cn(
-        "mr-4 w-20 rounded-md border border-solid border-transparent py-1.5",
-        className
-      )}
-    >
-      &nbsp;
-    </Skeleton>
+    <li className="list-none">
+      <Skeleton
+        className={cn(
+          "mr-4 w-20 rounded-md border border-solid border-transparent py-1.5",
+          className
+        )}
+      >
+        &nbsp;
+      </Skeleton>
+    </li>
   )
 }
 

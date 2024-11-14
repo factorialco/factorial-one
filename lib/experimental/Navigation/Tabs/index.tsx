@@ -38,7 +38,7 @@ export const TabsSkeleton: React.FC<Pick<TabsProps, "secondary">> = ({
   secondary,
 }) => {
   return (
-    <TabNavigation secondary={secondary}>
+    <TabNavigation secondary={secondary} aria-busy="true" aria-live="polite">
       <TabNavigationLink.Skeleton className="w-24" />
       <TabNavigationLink.Skeleton className="w-20" />
       <TabNavigationLink.Skeleton className="w-28" />
