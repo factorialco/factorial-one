@@ -22,4 +22,30 @@ const meta: Meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {}
+export const Default: Story = {}
+
+export const WithLongText: Story = {
+  args: {
+    title: "Address",
+    content: {
+      type: "item",
+      text: "Paseo Mara, 62, Bajos\nPáez del Vallès\nCeuta",
+      action: {
+        type: "copy",
+      },
+    },
+  },
+}
+
+export const WithMoreLinesThanAllowed: Story = {
+  args: {
+    title: "Address",
+    content: {
+      type: "item",
+      text: "Paseo Mara, 62, Bajos\nPáez del Vallès\nCeuta\nPaseo Mara, 62, Bajos\nPáez del Vallès\nCeuta",
+      action: {
+        type: "copy",
+      },
+    },
+  },
+}
