@@ -1,9 +1,12 @@
 import { Button } from "@/components/Actions/Button"
-import { IconType } from "@/components/Utilities/Icon"
 import {
   AvatarVariant,
   renderAvatar,
 } from "@/experimental/Information/Avatars/utils"
+import {
+  PrimaryAction,
+  SecondaryAction,
+} from "@/experimental/Information/utils"
 import { cn } from "@/lib/utils"
 
 interface BaseHeaderProps {
@@ -12,17 +15,8 @@ interface BaseHeaderProps {
   description?: string
   eyebrow?: React.ReactNode
   footer?: React.ReactNode
-  primaryAction?: {
-    label: string
-    icon?: IconType
-    onClick: () => void
-  }
-  secondaryActions?: Array<{
-    label: string
-    icon?: IconType
-    onClick: () => void
-    variant?: "outline" | "critical"
-  }>
+  primaryAction?: PrimaryAction
+  secondaryActions?: SecondaryAction[]
 }
 
 export function BaseHeader({

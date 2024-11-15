@@ -1,6 +1,7 @@
 export * from "./Alert"
 export * from "./Avatars/exports"
 export * from "./Counter"
+export * from "./Headers/exports"
 export * from "./ModuleAvatar"
 export * from "./Shortcut"
 export * from "./Tags/exports"
