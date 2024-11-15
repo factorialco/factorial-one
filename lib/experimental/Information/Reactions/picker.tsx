@@ -2,7 +2,7 @@ import { Icon } from "@/components/Utilities/Icon"
 import { Reaction } from "@/icons/app"
 import { useReducedMotion } from "@/lib/a11y"
 import { EmojiImage, getEmojiLabel } from "@/lib/emojis"
-import { cn } from "@/lib/utils"
+import { cn, focusRing } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { AnimatePresence, motion } from "framer-motion"
@@ -49,9 +49,13 @@ export function Picker({ onSelect }: PickerProps) {
                   setIsOpen(false)
                   onSelect?.(emoji)
                 }}
-                className="flex h-8 items-center justify-center rounded-xs text-xl transition-colors hover:bg-f1-background-hover"
+                className={cn(
+                  "flex h-8 items-center justify-center rounded-xs text-xl transition-colors hover:bg-f1-background-hover",
+                  focusRing()
+                )}
                 aria-label={getEmojiLabel(emoji)}
                 type="button"
+                tabIndex={0}
               >
                 <EmojiImage emoji={emoji} size="md" />
               </motion.button>

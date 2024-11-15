@@ -74,7 +74,7 @@ export function Reaction({
       ref={buttonRef}
       variant="outline"
       size="md"
-      onMouseUp={handleClick}
+      onClick={handleClick}
       className={cn(
         "flex items-center gap-1 px-2 py-1 font-medium leading-tight transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
         isActive &&
