@@ -1,4 +1,5 @@
 import { Link, useNavigation } from "@/lib/linkHandler"
+import { withSkeleton } from "@/lib/skeleton"
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 
 export type TabItem = {
@@ -12,7 +13,7 @@ interface TabsProps {
   secondary?: boolean
 }
 
-export function Tabs({ tabs, secondary = false }: TabsProps) {
+export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const { isActive } = useNavigation()
   const activeTabIndex = findActiveTabIndex(tabs, isActive)
 
@@ -32,6 +33,21 @@ export function Tabs({ tabs, secondary = false }: TabsProps) {
     </TabNavigation>
   )
 }
+
+export const TabsSkeleton: React.FC<Pick<TabsProps, "secondary">> = ({
+  secondary,
+}) => {
+  return (
+    <TabNavigation secondary={secondary} aria-busy="true" aria-live="polite">
+      <TabNavigationLink.Skeleton className="w-24" />
+      <TabNavigationLink.Skeleton className="w-20" />
+      <TabNavigationLink.Skeleton className="w-28" />
+      <TabNavigationLink.Skeleton className="w-20" />
+    </TabNavigation>
+  )
+}
+
+export const Tabs = withSkeleton(BaseTabs, TabsSkeleton)
 
 // The following piece of code is used to find the right active tab when
 // one of the tabs is an index one. Since index tabs are usually `/` while
