@@ -15,6 +15,9 @@ type Story = StoryObj<typeof Reactions>
 
 export const Default: Story = {
   args: {
+    onInteraction: () => {
+      console.log("interaction")
+    },
     items: [
       {
         emoji: "👍",
@@ -54,6 +57,7 @@ export const Default: Story = {
       {
         emoji: "🎉",
         initialCount: 3,
+        hasReacted: true,
         users: [
           { name: "John Doe" },
           { name: "Jane Smith" },

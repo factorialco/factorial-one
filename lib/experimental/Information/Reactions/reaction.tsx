@@ -15,6 +15,7 @@ export interface ReactionProps {
   initialCount: number
   hasReacted?: boolean
   users?: User[]
+  onInteraction?: () => void
 }
 
 export function Reaction({
@@ -22,6 +23,7 @@ export function Reaction({
   initialCount,
   hasReacted = false,
   users,
+  onInteraction,
 }: ReactionProps) {
   const [isActive, setIsActive] = useState(hasReacted)
   const [count, setCount] = useState(initialCount)
@@ -55,8 +57,10 @@ export function Reaction({
   }, [])
 
   const handleClick = () => {
+    setCount(count + (isActive ? -1 : 1))
     setIsActive(!isActive)
-    setCount((prevCount) => (isActive ? prevCount - 1 : prevCount + 1))
+    onInteraction?.()
+
     if (!isActive && !shouldReduceMotion) {
       fireConfetti()
     }

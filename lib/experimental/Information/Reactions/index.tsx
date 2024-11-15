@@ -3,12 +3,13 @@ import { Reaction, ReactionProps } from "./reaction"
 
 interface ReactionsProps {
   items: ReactionProps[]
+  onInteraction?: () => void
 }
 
-export function Reactions({ items }: ReactionsProps) {
+export function Reactions({ items, onInteraction }: ReactionsProps) {
   return (
     <div className="flex flex-wrap gap-2">
-      <Picker />
+      <Picker onSelect={onInteraction} />
       {items.map((item) => (
         <Reaction
           key={item.emoji}
@@ -16,6 +17,7 @@ export function Reactions({ items }: ReactionsProps) {
           initialCount={item.initialCount}
           hasReacted={item.hasReacted}
           users={item.users}
+          onInteraction={onInteraction}
         />
       ))}
     </div>

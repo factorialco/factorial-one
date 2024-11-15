@@ -33,7 +33,7 @@ export function Picker({ onSelect }: PickerProps) {
         align="start"
         className="w-auto rounded-md border border-solid border-f1-border bg-f1-background p-1"
       >
-        <div className="flex flex-wrap gap-2 text-xl">
+        <div className="flex flex-wrap gap-1.5">
           <AnimatePresence>
             {emojis.map((emoji, index) => (
               <motion.button
@@ -42,14 +42,13 @@ export function Picker({ onSelect }: PickerProps) {
                 animate={{ opacity: 1, y: 0, width: "auto" }}
                 transition={{
                   duration: shouldReduceMotion ? 0 : 0.1,
-                  delay: index * 0.03 * (shouldReduceMotion ? 0 : 1),
-                  ease: [0.215, 0.61, 0.355, 1],
+                  delay: index * 0.02 * (shouldReduceMotion ? 0 : 1),
                 }}
                 onClick={() => {
                   setIsOpen(false)
                   onSelect?.(emoji)
                 }}
-                className="rounded-sm transition-colors hover:bg-f1-background-hover"
+                className="rounded-xs text-xl transition-colors hover:bg-f1-background-hover"
                 aria-label={`React with ${emoji}`}
                 type="button"
               >
