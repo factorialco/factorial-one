@@ -1,6 +1,7 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { Reaction } from "@/icons/app"
 import { useReducedMotion } from "@/lib/a11y"
+import { EmojiImage, getEmojiLabel } from "@/lib/emojis"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
@@ -33,13 +34,13 @@ export function Picker({ onSelect }: PickerProps) {
         align="start"
         className="w-auto rounded-md border border-solid border-f1-border bg-f1-background p-1"
       >
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap">
           <AnimatePresence>
             {emojis.map((emoji, index) => (
               <motion.button
                 key={emoji}
                 initial={{ opacity: 0, y: 8, width: 0 }}
-                animate={{ opacity: 1, y: 0, width: "auto" }}
+                animate={{ opacity: 1, y: 0, width: 28 }}
                 transition={{
                   duration: shouldReduceMotion ? 0 : 0.1,
                   delay: index * 0.02 * (shouldReduceMotion ? 0 : 1),
@@ -48,11 +49,11 @@ export function Picker({ onSelect }: PickerProps) {
                   setIsOpen(false)
                   onSelect?.(emoji)
                 }}
-                className="rounded-xs text-xl transition-colors hover:bg-f1-background-hover"
-                aria-label={`React with ${emoji}`}
+                className="flex h-8 items-center justify-center rounded-xs text-xl transition-colors hover:bg-f1-background-hover"
+                aria-label={getEmojiLabel(emoji)}
                 type="button"
               >
-                {emoji}
+                <EmojiImage emoji={emoji} size="md" />
               </motion.button>
             ))}
           </AnimatePresence>

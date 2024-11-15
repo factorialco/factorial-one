@@ -1,5 +1,5 @@
+import { cva, type VariantProps } from "class-variance-authority"
 import { parse } from "twemoji-parser"
-import { cn } from "./utils"
 
 interface ParseObject {
   url: string
@@ -7,52 +7,45 @@ interface ParseObject {
   text: string
 }
 
-interface EmojiOptions {
-  assetType?: "svg" | "png"
-  size?: "72x72" | "16x16"
-  cdn?: "jsdelivr" | "unpkg"
-}
+const emojiVariants = cva("", {
+  variants: {
+    size: {
+      sm: "h-4 w-4",
+      md: "h-5 w-5",
+      lg: "h-6 w-6",
+    },
+  },
+  defaultVariants: {
+    size: "sm",
+  },
+})
 
-const CDN_URLS = {
-  jsdelivr: "https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets",
-  unpkg: "https://unpkg.com/twemoji@latest/assets",
-} as const
-
-export function parseEmoji(
-  emoji: string,
-  options?: EmojiOptions
-): ParseObject | null {
-  const { assetType = "svg", cdn = "jsdelivr" } = options ?? {}
-
-  const [entity] = parse(emoji, {
-    buildUrl: (codePoints) =>
-      `${CDN_URLS[cdn]}/${assetType}/${codePoints}.${assetType}`,
-  })
-
-  return entity || null
-}
-
-export function EmojiImage({
-  emoji,
-  className,
-  size = 4,
-}: {
+export interface EmojiImageProps extends VariantProps<typeof emojiVariants> {
   emoji: string
-  className?: string
-  size?: number
-}) {
+}
+
+export function EmojiImage({ emoji, size }: EmojiImageProps) {
   const emojiEntity = parseEmoji(emoji)
 
   return emojiEntity ? (
     <img
       src={emojiEntity.url}
       alt={emoji}
-      className={cn(`w-${size} h-${size}`, className)}
+      className={emojiVariants({ size })}
       draggable={false}
     />
   ) : (
     <span>{emoji}</span>
   )
+}
+
+const parseEmoji = (emoji: string): ParseObject | null => {
+  const [entity] = parse(emoji, {
+    buildUrl: (codePoints) =>
+      `https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/${codePoints}.svg`,
+  })
+
+  return entity || null
 }
 
 export function getEmojiLabel(emoji: string): string {

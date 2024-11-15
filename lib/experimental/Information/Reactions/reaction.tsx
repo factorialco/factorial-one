@@ -73,16 +73,16 @@ export function Reaction({
     <Button
       ref={buttonRef}
       variant="outline"
-      size="sm"
+      size="md"
       onMouseUp={handleClick}
       className={cn(
-        "flex h-auto items-center gap-1 px-2 py-1 font-medium leading-tight transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
+        "flex items-center gap-1 px-2 py-1 font-medium leading-tight transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
         isActive &&
           "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
       )}
       aria-label={getEmojiLabel(emoji)}
     >
-      <EmojiImage emoji={emoji} />
+      <EmojiImage emoji={emoji} size="md" />
       <NumberFlow
         value={count}
         spinTiming={{
