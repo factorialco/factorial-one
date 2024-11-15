@@ -55,7 +55,9 @@ export const ItemContainer = forwardRef<HTMLLIElement, ItemContainerProps>(
             ) : (
               <Icon icon={LeftIcon} size="md" aria-hidden="true" />
             ))}
-          <div className="line-clamp-2 flex-1 text-left">{text}</div>
+          <div className="line-clamp-5 flex-1 whitespace-pre-line text-left">
+            {text}
+          </div>
         </Action>
       </li>
     )

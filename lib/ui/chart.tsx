@@ -331,6 +331,7 @@ const ChartLegendContent = React.forwardRef<
       hideIcon?: boolean
       nameKey?: string
       leftShift?: number
+      hiddenKey?: string
     }
 >(
   (
@@ -340,6 +341,7 @@ const ChartLegendContent = React.forwardRef<
       payload,
       verticalAlign = "bottom",
       nameKey,
+      hiddenKey,
       leftShift = 0,
     },
     ref
@@ -362,11 +364,16 @@ const ChartLegendContent = React.forwardRef<
       >
         {payload.map((item) => {
           const key = `${nameKey || item.dataKey || "value"}`
-          const itemConfig = getPayloadConfigFromPayload(config, item, key)
+          const itemConfig = getPayloadConfigFromPayload(
+            config,
+            item,
+            key,
+            hiddenKey
+          )
 
           return (
             <div
-              key={item.value}
+              key={JSON.stringify(item)}
               className={cn(
                 "flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-f1-foreground"
               )}
@@ -374,12 +381,14 @@ const ChartLegendContent = React.forwardRef<
               {itemConfig?.icon && !hideIcon ? (
                 <itemConfig.icon />
               ) : (
-                <div
-                  className="h-2.5 w-2.5 shrink-0 rounded-full"
-                  style={{
-                    backgroundColor: item.color,
-                  }}
-                />
+                itemConfig && (
+                  <div
+                    className="h-2.5 w-2.5 shrink-0 rounded-full"
+                    style={{
+                      backgroundColor: item.color,
+                    }}
+                  />
+                )
               )}
               <span className="text font-medium tracking-wide text-f1-foreground">
                 {itemConfig?.label}
@@ -397,7 +406,8 @@ ChartLegendContent.displayName = "ChartLegend"
 function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: unknown,
-  key: string
+  key: string,
+  hiddenKey?: string
 ) {
   if (typeof payload !== "object" || payload === null) {
     return undefined
@@ -423,6 +433,10 @@ function getPayloadConfigFromPayload(
     typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
   ) {
     configLabelKey = payloadPayload[key as keyof typeof payloadPayload]
+  }
+
+  if (hiddenKey && hiddenKey === configLabelKey) {
+    return undefined
   }
 
   return configLabelKey in config

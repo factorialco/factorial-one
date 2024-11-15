@@ -1,4 +1,5 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
+import { Counter } from "@/experimental/Information/Counter"
 import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
 import {
   StatusTag,
@@ -31,6 +32,7 @@ export interface WidgetProps {
     comment?: string
     canBeBlurred?: boolean
     link?: { title: string; url: string }
+    count?: number
   }
   action?: ButtonProps
   summaries?: Array<{
@@ -95,6 +97,11 @@ const Container = forwardRef<
                     <CardSubtitle className="truncate">
                       {header.subtitle}
                     </CardSubtitle>
+                  </div>
+                )}
+                {header.count && (
+                  <div className="ml-0.5">
+                    <Counter value={header.count} />
                   </div>
                 )}
               </div>
