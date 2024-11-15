@@ -55,7 +55,7 @@ export function Reaction({
         disableInteraction: shouldReduceMotion,
       })
     }
-  }, [])
+  }, [emoji, shouldReduceMotion])
 
   const handleClick = () => {
     setCount(count + (isActive ? -1 : 1))
