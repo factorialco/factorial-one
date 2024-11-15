@@ -9,7 +9,7 @@ export const Placeholder = React.forwardRef<
     <div
       className={cn(
         className,
-        "flex place-content-center items-center justify-center rounded-xs border-2 border-dashed border-f1-border bg-f1-background p-4"
+        "flex place-content-center items-center justify-center rounded-xs border border-dashed border-f1-border bg-transparent p-4 dark:border-f1-border-secondary"
       )}
       tabIndex={0}
       ref={ref}

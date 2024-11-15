@@ -1,5 +1,18 @@
 export const baseColors = {
-  white: "0 0% 100%",
+  white: {
+    3: "0 0% 100% / 0.03",
+    5: "0 0% 100% / 0.05",
+    10: "0 0% 100% / 0.1",
+    20: "0 0% 100% / 0.2",
+    30: "0 0% 100% / 0.3",
+    40: "0 0% 100% / 0.4",
+    50: "0 0% 100% / 0.5",
+    60: "0 0% 100% / 0.6",
+    70: "0 0% 100% / 0.7",
+    80: "0 0% 100% / 0.8",
+    90: "0 0% 100% / 0.9",
+    100: "0 0% 100%",
+  },
   current: "currentColor",
   transparent: "transparent",
   grey: {
@@ -99,8 +112,8 @@ export const f1Colors = {
     secondary: "hsl(var(--neutral-50))",
     tertiary: "hsl(var(--neutral-40))",
     inverse: {
-      DEFAULT: "hsl(var(--neutral-0))",
-      secondary: "hsl(var(--neutral-0) / 0.8)",
+      DEFAULT: "hsl(var(--white-100))",
+      secondary: "hsl(var(--white-80))",
     },
     disabled: "hsl(var(--neutral-30))",
     accent: "hsl(var(--accent-70))",
@@ -118,6 +131,10 @@ export const f1Colors = {
       hover: "hsl(var(--neutral-20))",
     },
     tertiary: "hsl(var(--neutral-5))",
+    inverse: {
+      DEFAULT: "hsl(var(--neutral-90))",
+      secondary: "hsl(var(--white-60))",
+    },
     bold: "hsl(var(--neutral-90))",
     accent: {
       DEFAULT: "hsl(var(--accent-50) / 0.1)",
@@ -177,4 +194,5 @@ export const f1Colors = {
   },
   ring: "hsl(var(--ring))",
   link: "hsl(var(--link))",
+  page: "hsl(var(--page))",
 }

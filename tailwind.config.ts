@@ -91,10 +91,10 @@ export default {
       full: "9999px",
     },
     boxShadow: {
-      DEFAULT: "0 2px 20px 0 hsl(var(--neutral-100) / 0.04)",
-      md: "0 4px 20px 0 hsl(var(--neutral-100) / 0.08)",
-      lg: "0 8px 30px 0 hsl(var(--neutral-100) / 0.12)",
-      xl: "0 12px 56px 0 hsl(var(--neutral-100) / 0.16)",
+      DEFAULT: "0 2px 20px 0 hsl(var(--shadow) / 0.04)",
+      md: "0 4px 20px 0 hsl(var(--shadow) / 0.08)",
+      lg: "0 8px 30px 0 hsl(var(--shadow) / 0.12)",
+      xl: "0 12px 56px 0 hsl(var(--shadow) / 0.16)",
       none: "none",
     },
     // use pixel scale by default

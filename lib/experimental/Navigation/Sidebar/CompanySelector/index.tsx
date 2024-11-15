@@ -63,13 +63,13 @@ export function CompanySelector({
         />
         <span className="truncate">{selectedCompany?.name}</span>
         <div className="h-6 w-6 shrink-0 p-1">
-          <div className="flex h-4 w-4 items-center justify-center rounded-xs bg-f1-background-secondary-hover transition-all group-hover:brightness-90 group-data-[state=open]:brightness-90">
+          <div className="flex h-4 w-4 items-center justify-center rounded-xs bg-f1-background-secondary transition-all group-hover:brightness-90 group-data-[state=open]:brightness-90">
             <motion.div
               animate={{ rotate: open ? 180 : 0 }}
               transition={{ duration: 0.2 }}
               className="flex h-3 w-3 items-center justify-center"
             >
-              <ChevronDown className="h-3 w-3 shrink-0 text-f1-icon" />
+              <ChevronDown className="h-3 w-3 shrink-0 text-f1-icon-bold" />
             </motion.div>
           </div>
         </div>

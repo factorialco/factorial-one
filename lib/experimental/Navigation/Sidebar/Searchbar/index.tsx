@@ -19,7 +19,7 @@ export function SearchBar({
     <button
       onClick={onClick}
       className={cn(
-        "mb-4 mt-2 flex w-full cursor-pointer items-center justify-between rounded border border-solid border-f1-border-secondary bg-f1-background/60 p-1.5 text-f1-foreground-secondary transition-colors hover:border-f1-border-hover",
+        "bg-f1-background-inverse-secondary mb-4 mt-2 flex w-full cursor-pointer items-center justify-between rounded border border-solid border-f1-border-secondary p-1.5 text-f1-foreground-secondary transition-colors hover:border-f1-border-hover",
         focusRing()
       )}
       type="button"
