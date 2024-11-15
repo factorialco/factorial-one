@@ -16,6 +16,11 @@ interface TabsProps {
 export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const { isActive } = useNavigation()
 
+  // Index tabs are usually `/` while other tabs are `/some-other-path`.
+  // We need to find the right active tab by checking if the current path
+  // is active without the index first, and then with the index. Otherwise,
+  // we would incorrectly match the index tab as active, resulting in two tabs
+  // being active at the same time.
   const sortedTabs = tabs.sort((a, b) => (a.index ? 1 : b.index ? -1 : 0))
   const activeTabIndex = sortedTabs.findIndex((tab) => isActive(tab.href))
 
