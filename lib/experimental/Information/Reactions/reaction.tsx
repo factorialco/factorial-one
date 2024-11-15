@@ -1,5 +1,6 @@
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { useReducedMotion } from "@/lib/a11y"
+import { EmojiImage, getEmojiLabel } from "@/lib/emojis"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import NumberFlow from "@number-flow/react"
@@ -79,9 +80,9 @@ export function Reaction({
         isActive &&
           "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
       )}
-      aria-label={`${emoji} reaction`}
+      aria-label={getEmojiLabel(emoji)}
     >
-      <span>{emoji}</span>
+      <EmojiImage emoji={emoji} />
       <NumberFlow
         value={count}
         spinTiming={{
