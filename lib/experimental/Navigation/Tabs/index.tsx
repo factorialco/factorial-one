@@ -21,15 +21,15 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   // is active without the index first, and then with the index. Otherwise,
   // we would incorrectly match the index tab as active, resulting in two tabs
   // being active at the same time.
-  const sortedTabs = tabs.sort((a, b) => (a.index ? 1 : b.index ? -1 : 0))
-  const activeTabIndex = sortedTabs.findIndex((tab) => isActive(tab.href))
+  const sortedTabs = [...tabs].sort((a, b) => (a.index ? 1 : b.index ? -1 : 0))
+  const activeTab = sortedTabs.find((tab) => isActive(tab.href))
 
   return (
     <TabNavigation secondary={secondary}>
       {tabs.map(({ label, ...props }, index) => (
         <TabNavigationLink
           key={index}
-          active={activeTabIndex === index}
+          active={activeTab?.href === props.href}
           href={props.href}
           secondary={secondary}
           asChild
