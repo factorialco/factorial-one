@@ -24,7 +24,11 @@ interface SpinnerProps extends VariantProps<typeof spinnerVariants> {
 
 function Spinner({ size, className }: SpinnerProps) {
   return (
-    <div className={cn(spinnerVariants({ size, className }))}>
+    <div
+      className={cn(spinnerVariants({ size, className }))}
+      aria-live="polite"
+      aria-busy={true}
+    >
       <svg
         viewBox="0 0 32 32"
         fill="none"
