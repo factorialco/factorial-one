@@ -35,6 +35,18 @@ export const _PieChart = (
       dataConfig[item.label as keyof typeof dataConfig]?.color ||
       autoColor(index),
   }))
+  const values = data.map((item) => item.value)
+  const sum = values.reduce((acc, value) => {
+    return acc + value
+  })
+
+  if (sum === 0) {
+    preparedData.push({
+      label: "-",
+      value: 1,
+      fill: "hsl(var(--neutral-2))",
+    })
+  }
 
   return (
     <ChartContainer
@@ -45,10 +57,12 @@ export const _PieChart = (
       style={{ height: 380 }}
     >
       <PieChartPrimitive accessibilityLayer margin={{ left: 0, right: 0 }}>
-        <ChartTooltip
-          cursor
-          content={<ChartTooltipContent yAxisFormatter={tickFormatter} />}
-        />
+        {sum !== 0 && (
+          <ChartTooltip
+            cursor
+            content={<ChartTooltipContent yAxisFormatter={tickFormatter} />}
+          />
+        )}
         <Pie
           isAnimationActive={false}
           nameKey={"label"}
@@ -94,7 +108,7 @@ export const _PieChart = (
           />
         </Pie>
         <ChartLegend
-          content={<ChartLegendContent />}
+          content={<ChartLegendContent nameKey="label" hiddenKey="-" />}
           align={"center"}
           verticalAlign={"bottom"}
           layout="vertical"
