@@ -3,12 +3,16 @@ import React, { useState } from "react"
 import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport"
 import type { Preview } from "@storybook/react"
 import { action } from "@storybook/addon-actions"
+import { MotionGlobalConfig } from "framer-motion"
+import isChromatic from "chromatic/isChromatic"
 
 import "../styles.css"
 
 import { ThemeProvider } from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
 import { DocsContainer } from "./DocsContainer"
+
+MotionGlobalConfig.skipAnimations = isChromatic()
 
 export const withTheme = () => {
   // eslint-disable-next-line react/display-name

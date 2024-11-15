@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { ChartLine, MoneyBag } from "@/icons/app"
-import { WidgetEmptyState } from "."
+import { Add } from "@/icons/app"
+import { ChartWidgetEmptyState } from "."
 
-const meta: Meta<typeof WidgetEmptyState> = {
-  component: WidgetEmptyState,
+const meta: Meta<typeof ChartWidgetEmptyState> = {
+  component: ChartWidgetEmptyState,
   parameters: {
     tags: ["autodocs"],
   },
@@ -12,8 +12,8 @@ const meta: Meta<typeof WidgetEmptyState> = {
     title: "Performance",
     content: "See how Hugo's performance evolved over time",
     buttonLabel: "Try it for free",
-    promote: true,
-    icon: ChartLine,
+    buttonAction: () => {},
+    type: "bar-chart",
   },
   decorators: [
     (Story) => (
@@ -34,7 +34,8 @@ export const SalaryEmptyState: Story = {
     title: "Salary",
     content: "See how Hugo’s salary evolved over time",
     buttonLabel: "Add info",
-    promote: false,
-    icon: MoneyBag,
+    buttonIcon: Add,
+    buttonAction: () => {},
+    type: "line-chart",
   },
 }

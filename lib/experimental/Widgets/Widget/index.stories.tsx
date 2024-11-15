@@ -22,6 +22,7 @@ const meta: Meta = {
     header: {
       title: "A widget",
       subtitle: "2024",
+      count: 2,
     },
     children: <Placeholder>Put your content in there</Placeholder>,
   } satisfies ComponentProps<typeof Widget>,

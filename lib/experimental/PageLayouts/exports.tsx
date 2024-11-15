@@ -3,7 +3,7 @@ import { FullscreenLayout as FullscreenLayoutComponent } from "./FullscreenLayou
 import {
   InfoPaneLayout as InfoPaneLayoutComponent,
   InfoPaneLayoutProps,
-} from "./InfoPaneLayout"
+} from "./Utils/InfoPaneLayout"
 export * from "./StandardLayout"
 
 export type { InfoPaneLayoutProps }

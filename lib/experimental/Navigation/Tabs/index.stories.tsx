@@ -35,3 +35,10 @@ export const Secondary: Story = {
     secondary: true,
   },
 }
+
+export const Skeleton: Story = {
+  args: {
+    tabs: [],
+  },
+  render: ({ secondary }) => <Tabs.Skeleton secondary={secondary} />,
+}

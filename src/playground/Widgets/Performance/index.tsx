@@ -1,7 +1,6 @@
 import { ChartItem } from "@/components/Charts/utils/types"
 import { AreaChartWidget } from "@/experimental/Widgets/Charts/AreaChartWidget"
-import { WidgetEmptyState } from "@/experimental/Widgets/WidgetEmptyState"
-import { ChartLine } from "@/icons/app"
+import { ChartWidgetEmptyState } from "@/experimental/Widgets/ChartWidgetEmptyState"
 import { ChartConfig } from "@/ui/chart"
 import { ComponentProps, forwardRef } from "react"
 
@@ -24,12 +23,11 @@ export const PerformanceInsight = forwardRef<
 ) {
   if (!hasAccess) {
     return (
-      <WidgetEmptyState
+      <ChartWidgetEmptyState
         title={title}
         content={`See how ${name}'s performance evolved over time`}
-        icon={ChartLine}
         buttonLabel="Try it for free"
-        promote
+        type="bar-chart"
       />
     )
   }
