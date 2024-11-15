@@ -15,7 +15,9 @@ interface TabsProps {
 
 export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const { isActive } = useNavigation()
-  const activeTabIndex = findActiveTabIndex(tabs, isActive)
+
+  const sortedTabs = tabs.sort((a, b) => (a.index ? 1 : b.index ? -1 : 0))
+  const activeTabIndex = sortedTabs.findIndex((tab) => isActive(tab.href))
 
   return (
     <TabNavigation secondary={secondary}>
@@ -48,31 +50,3 @@ export const TabsSkeleton: React.FC<Pick<TabsProps, "secondary">> = ({
 }
 
 export const Tabs = withSkeleton(BaseTabs, TabsSkeleton)
-
-// The following piece of code is used to find the right active tab when
-// one of the tabs is an index one. Since index tabs are usually `/` while
-// other tabs are `/some-other-path`, we need to find the right tab by
-// checking if the current path is active without the index first, and then
-// checking if it's active with the index.
-//
-// Otherwise, we would incorrectly match the index tab as active, resulting
-// in two tabs being active at the same time.
-const findActiveTabIndex = (
-  tabs: TabItem[],
-  isActive: (href: string) => boolean
-) => {
-  const tabsWithIndex = tabs.map((tab, index) => ({
-    index,
-    tab,
-  }))
-
-  const nonIndexActiveTab = tabsWithIndex
-    .filter((indexedTab) => !indexedTab.tab.index)
-    .find((indexedTab) => isActive(indexedTab.tab.href))
-
-  const activeTab = nonIndexActiveTab
-    ? nonIndexActiveTab
-    : tabsWithIndex.find((indexedTab) => isActive(indexedTab.tab.href))
-
-  return activeTab?.index
-}
