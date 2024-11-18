@@ -136,10 +136,10 @@
     "vite": "^5.4.11",
     "vite-plugin-dts": "^4.3.0",
     "vite-plugin-lib-inject-css": "^2.1.1",
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.4"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.27"
+    "@rollup/rollup-linux-x64-gnu": "^4.24"
   },
   "dependencies": {
     "@number-flow/react": "^0.3.0",
