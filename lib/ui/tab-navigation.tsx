@@ -29,7 +29,7 @@ const tabNavigationVariants = cva(
   {
     variants: {
       secondary: {
-        true: "bg-f1-background-secondary/25",
+        true: "bg-f1-background-secondary/25 dark:bg-f1-foreground/[.02]",
         false: "bg-f1-background-transparent",
       },
     },
@@ -73,9 +73,9 @@ const tabNavigationLinkVariants = cva(
   {
     variants: {
       secondary: {
-        true: "bg-f1-background/60 group-hover:border-f1-border group-data-[active=true]:border-f1-border group-data-[active=true]:text-f1-foreground",
+        true: "group-hover:border-f1-border group-data-[active=true]:border-f1-border group-data-[active=true]:bg-f1-background-inverse-secondary group-data-[active=true]:text-f1-foreground",
         false:
-          "bg-f1-background-transparent group-hover:bg-f1-background-secondary group-hover:text-f1-foreground group-data-[active=true]:bg-f1-background-secondary group-data-[active=true]:text-f1-foreground",
+          "bg-f1-background-transparent group-hover:bg-f1-background-tertiary group-hover:text-f1-foreground group-data-[active=true]:bg-f1-background-tertiary group-data-[active=true]:text-f1-foreground",
       },
       disabled: {
         true: "pointer-events-none text-f1-foreground-disabled",

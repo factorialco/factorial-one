@@ -9,7 +9,7 @@ const shortcutVariants = cva(
     variants: {
       variant: {
         default:
-          "border-f1-border bg-f1-background-tertiary text-f1-foreground-secondary",
+          "border-f1-border-secondary bg-f1-background-tertiary text-f1-foreground-secondary",
         inverse:
           "border-f1-border-inverse text-f1-foreground-inverse-secondary",
       },

@@ -32,7 +32,9 @@ export function User({ firstName, lastName, avatarUrl, options }: UserProps) {
             lastName={lastName}
             size="xsmall"
           />
-          {firstName} {lastName}
+          <span className="text-f1-foreground">
+            {firstName} {lastName}
+          </span>
         </button>
       </Dropdown>
     </div>
