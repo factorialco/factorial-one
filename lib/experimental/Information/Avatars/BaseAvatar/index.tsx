@@ -48,7 +48,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledby}
         className={
-          src ? "dark:bg-f1-background-inverse-secondary bg-f1-background" : ""
+          src ? "bg-f1-background dark:bg-f1-background-inverse-secondary" : ""
         }
       >
         <AvatarImage src={src} alt={initials} />
