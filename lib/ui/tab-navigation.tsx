@@ -73,7 +73,7 @@ const tabNavigationLinkVariants = cva(
   {
     variants: {
       secondary: {
-        true: "group-data-[active=true]:bg-f1-background-inverse-secondary group-hover:border-f1-border group-data-[active=true]:border-f1-border group-data-[active=true]:text-f1-foreground",
+        true: "group-hover:border-f1-border group-data-[active=true]:border-f1-border group-data-[active=true]:bg-f1-background-inverse-secondary group-data-[active=true]:text-f1-foreground",
         false:
           "bg-f1-background-transparent group-hover:bg-f1-background-tertiary group-hover:text-f1-foreground group-data-[active=true]:bg-f1-background-tertiary group-data-[active=true]:text-f1-foreground",
       },
