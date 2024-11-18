@@ -29,7 +29,7 @@ const buttonVariants = cva(
         neutral:
           "bg-f1-background-secondary text-f1-foreground hover:bg-f1-background-secondary-hover",
         critical:
-          "border border-solid border-f1-border bg-f1-background-secondary text-f1-foreground-critical hover:border-transparent hover:bg-f1-background-critical-bold hover:text-f1-foreground-inverse",
+          "border border-solid border-f1-border bg-f1-background-secondary text-f1-foreground-critical hover:border-transparent hover:bg-f1-background-critical-bold hover:text-f1-foreground-inverse dark:bg-transparent dark:hover:bg-f1-background-critical-bold",
         ghost:
           "bg-transparent text-f1-foreground hover:bg-f1-background-secondary-hover",
         promote:
