@@ -73,3 +73,15 @@ export const NoImage: Story = {
     },
   },
 }
+
+export const Skeleton: Story = {
+  decorators: [
+    (Story) => (
+      <div className="w-48">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {},
+  render: () => <Celebration.Skeleton />,
+}

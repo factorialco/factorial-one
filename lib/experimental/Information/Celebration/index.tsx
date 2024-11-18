@@ -4,7 +4,9 @@ import { PersonAvatar } from "@/experimental/Information/Avatars/exports"
 import Reaction from "@/icons/app/Reaction"
 import { EmojiImage } from "@/lib/emojis"
 import { Link } from "@/lib/linkHandler"
+import { withSkeleton } from "@/lib/skeleton"
 import { cn, focusRing } from "@/lib/utils"
+import { Skeleton } from "@/ui/skeleton"
 
 type CelebrationProps = {
   firstName: string
@@ -18,7 +20,7 @@ type CelebrationProps = {
   }
 }
 
-export const Celebration = ({
+export const BaseCelebration = ({
   firstName,
   lastName,
   src,
@@ -105,7 +107,7 @@ export const Celebration = ({
           </div>
         </div>
       </div>
-      <div className="flex basis-1/3 flex-row justify-between p-3">
+      <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
         <div className="flex min-w-0 flex-1 flex-col">
           <div className="truncate font-medium text-f1-foreground">
             {firstName} {lastName}
@@ -120,3 +122,23 @@ export const Celebration = ({
     </Link>
   )
 }
+
+export const CelebrationSkeleton = () => {
+  return (
+    <div className="bg-f1-background-inverse-secondar flex flex-col rounded-xl border border-solid border-f1-border-secondary">
+      <div className="basis-2/3 px-1 pt-1">
+        <Skeleton className="h-32 w-full rounded-lg" />
+      </div>
+      <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
+        <div className="flex min-w-0 flex-1 flex-col">
+          <div className="flex flex-col gap-2 py-1">
+            <Skeleton className="h-3 w-2/3" />
+            <Skeleton className="h-3 w-1/3" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export const Celebration = withSkeleton(BaseCelebration, CelebrationSkeleton)
