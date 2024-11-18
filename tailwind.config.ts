@@ -37,6 +37,12 @@ export default {
       semibold: "600",
     },
     fontSize: {
+      xs: [
+        ".625rem",
+        {
+          lineHeight: "0.5rem",
+        },
+      ],
       sm: [
         ".75rem",
         {
