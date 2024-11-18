@@ -160,6 +160,12 @@ export const f1Colors = {
     accent: {
       alpha20: "hsl(var(--accent-50) / 0.2)",
     },
+    critical: {
+      DEFAULT: "hsl(var(--critical-50) / 0.1)",
+      bold: "hsl(var(--critical-50))",
+    },
+    warning: "hsl(var(--warning-50) / 0.1)",
+    info: "hsl(var(--info-50) / 0.1)",
   },
   icon: {
     DEFAULT: "hsl(var(--neutral-50))",
