@@ -1,9 +1,11 @@
+import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import * as NavigationMenuPrimitives from "@radix-ui/react-navigation-menu"
 import { cva, type VariantProps } from "class-variance-authority"
 import { LayoutGroup, motion } from "framer-motion"
 import * as React from "react"
 import { useId } from "react"
+import { Skeleton } from "./skeleton"
 
 function getSubtree(
   options: { asChild: boolean | undefined; children: React.ReactNode },
@@ -95,14 +97,14 @@ interface TabNavigationLinkProps
   active?: boolean
 }
 
-const TabNavigationLink = React.forwardRef<
+const _TabNavigationLink = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitives.Link>,
   TabNavigationLinkProps
->(
-  (
-    { asChild, disabled, active, className, children, secondary, ...props },
-    forwardedRef
-  ) => (
+>(function TabNavigationLink(
+  { asChild, disabled, active, className, children, secondary, ...props },
+  forwardedRef
+) {
+  return (
     <NavigationMenuPrimitives.Item className="flex">
       <NavigationMenuPrimitives.Link
         data-active={active ? "true" : undefined}
@@ -141,8 +143,28 @@ const TabNavigationLink = React.forwardRef<
       </NavigationMenuPrimitives.Link>
     </NavigationMenuPrimitives.Item>
   )
-)
+})
 
-TabNavigationLink.displayName = "TabNavigationLink"
+const TabNavigationLinkSkeleton: React.FC<{ className?: string }> = ({
+  className,
+}) => {
+  return (
+    <li className="list-none">
+      <Skeleton
+        className={cn(
+          "mr-4 w-20 rounded-md border border-solid border-transparent py-1.5",
+          className
+        )}
+      >
+        &nbsp;
+      </Skeleton>
+    </li>
+  )
+}
+
+const TabNavigationLink = withSkeleton(
+  _TabNavigationLink,
+  TabNavigationLinkSkeleton
+)
 
 export { TabNavigation, TabNavigationLink }
