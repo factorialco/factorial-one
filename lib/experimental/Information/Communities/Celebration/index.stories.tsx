@@ -66,7 +66,7 @@ export const NoImage: Story = {
     firstName: "Saúl",
     lastName: "Domínguez",
     type: "first-day",
-    typeLabel: "First day",
+    typeLabel: "First day very long name",
     date: {
       day: 15,
       month: "DEC",
