@@ -24,11 +24,11 @@ const daytimePageVariants = cva(
     variants: {
       period: {
         morning:
-          "bg-gradient-to-bl from-[#E51943] from-20% via-[#F97316] to-transparent to-80%",
+          "bg-gradient-to-bl from-[#E51943] from-20% via-[#F97316] via-35% to-transparent to-50%",
         afternoon:
-          "bg-gradient-to-bl from-[#5596F6] from-20% via-[#10B881] to-transparent to-80%",
+          "bg-gradient-to-bl from-[#5596F6] from-20% via-[#10B881] via-35% to-transparent to-50%",
         evening:
-          "bg-gradient-to-bl from-[#3739A8] from-20% via-[#CB6687] to-transparent to-80%",
+          "bg-gradient-to-bl from-[#3739A8] from-20% via-[#CB6687] via-35% to-transparent to-50%",
       },
     },
     defaultVariants: {
