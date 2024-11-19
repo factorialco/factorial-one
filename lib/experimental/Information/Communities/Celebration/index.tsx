@@ -30,7 +30,7 @@ export const BaseCelebration = ({
     <Link
       href="/"
       className={cn(
-        "bg-f1-background-inverse-secondar relative flex flex-col rounded-xl border border-solid border-f1-border-secondary no-underline transition-shadow hover:shadow",
+        "relative flex flex-col rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary no-underline transition-shadow hover:shadow",
         focusRing()
       )}
       onMouseEnter={shouldReduceMotion ? undefined : handleMouseEnter}
@@ -65,27 +65,25 @@ export const BaseCelebration = ({
   )
 }
 
-export const CelebrationSkeleton = () => {
-  return (
-    <div
-      className="bg-f1-background-inverse-secondar flex flex-col rounded-xl border border-solid border-f1-border-secondary"
-      role="status"
-      aria-busy="true"
-      aria-live="polite"
-    >
-      <div className="basis-2/3 px-1 pt-1">
-        <Skeleton className="h-32 w-full rounded-lg" />
-      </div>
-      <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
-        <div className="flex min-w-0 flex-1 flex-col">
-          <div className="flex flex-col gap-2 py-1">
-            <Skeleton className="h-3 w-2/3" />
-            <Skeleton className="h-3 w-1/3" />
-          </div>
+export const CelebrationSkeleton = () => (
+  <div
+    className="bg-f1-background-inverse-secondar flex flex-col rounded-xl border border-solid border-f1-border-secondary"
+    role="status"
+    aria-busy="true"
+    aria-live="polite"
+  >
+    <div className="basis-2/3 px-1 pt-1">
+      <Skeleton className="h-32 w-full rounded-lg" />
+    </div>
+    <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
+      <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex flex-col gap-2 py-1">
+          <Skeleton className="h-3 w-2/3" />
+          <Skeleton className="h-3 w-1/3" />
         </div>
       </div>
     </div>
-  )
-}
+  </div>
+)
 
 export const Celebration = withSkeleton(BaseCelebration, CelebrationSkeleton)
