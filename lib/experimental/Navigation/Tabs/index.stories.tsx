@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Tabs } from "."
 
 const tabItems = [
-  { label: "Overview", href: "/", exactMatch: true },
+  { label: "Overview", href: "/", index: true },
   { label: "Courses", href: "/courses" },
   { label: "Categories", href: "/categories" },
   { label: "Catalog", href: "/catalog" },
