@@ -30,8 +30,8 @@ export const Default: Story = {
           type="birthday"
           typeLabel="Birthday"
           date={{
-            day: 15,
-            month: "DEC",
+            day: 29,
+            month: "November",
           }}
         />
       </div>
@@ -43,8 +43,8 @@ export const Default: Story = {
           type="anniversary"
           typeLabel="Anniversary"
           date={{
-            day: 15,
-            month: "DEC",
+            day: 4,
+            month: "December",
           }}
         />
       </div>
@@ -67,7 +67,7 @@ export const NoImage: Story = {
     typeLabel: "First day very long name",
     date: {
       day: 15,
-      month: "DEC",
+      month: "December",
     },
   },
 }

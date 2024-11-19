@@ -1,3 +1,4 @@
+import { DateAvatar } from "@/experimental/Information/Avatars/DateAvatar/"
 import { useReducedMotion } from "@/lib/a11y"
 import { EmojiImage } from "@/lib/emojis"
 import { Link } from "@/lib/linkHandler"
@@ -56,7 +57,9 @@ export const BaseCelebration = ({
             <span className="shrink-0 leading-none">{emoji}</span>
           </div>
         </div>
-        <div className="shrink-0">{date.month}</div>
+        <div className="shrink-0">
+          <DateAvatar month={date.month} day={date.day} />
+        </div>
       </div>
     </Link>
   )
