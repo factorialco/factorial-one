@@ -1,6 +1,6 @@
 import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import type { Meta, StoryObj } from "@storybook/react"
-import { Page } from "."
+import { DaytimePage, DaytimePageProps, Page } from "."
 
 import { PageHeader } from "../Header/PageHeader"
 import * as HeaderStories from "../Header/PageHeader/index.stories"
@@ -25,7 +25,7 @@ const meta: Meta<typeof Page> = {
 }
 
 export default meta
-type Story = StoryObj
+type Story = StoryObj<DaytimePageProps>
 
 export const Default: Story = {
   args: {
@@ -45,4 +45,36 @@ export const Default: Story = {
       </StandardLayout>
     ),
   },
+}
+
+export const Daytime: Story = {
+  args: {
+    period: "morning",
+  },
+  argTypes: {
+    period: {
+      control: "select",
+      options: ["morning", "afternoon", "evening"],
+    },
+  },
+  render: ({ period }) => (
+    <DaytimePage
+      period={period}
+      header={
+        <>
+          <PageHeader {...HeaderStories.FirstLevel.args} />
+          <Tabs {...TabsStories.Primary.args} />
+        </>
+      }
+      children={
+        <StandardLayout>
+          {Array(25)
+            .fill(0)
+            .map((_, index) => (
+              <Placeholder key={index} className="min-h-24" />
+            ))}
+        </StandardLayout>
+      }
+    />
+  ),
 }
