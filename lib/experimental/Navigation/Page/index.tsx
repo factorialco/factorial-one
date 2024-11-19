@@ -7,7 +7,7 @@ interface PageProps {
 
 export function Page({ children, header }: PageProps) {
   return (
-    <div className="bg-f1-page flex w-full flex-col overflow-hidden rounded-xl shadow">
+    <div className="flex w-full flex-col overflow-hidden rounded-xl bg-f1-page shadow">
       {header && <div className="flex flex-col">{header}</div>}
       <div className="isolate flex w-full flex-1 flex-col overflow-auto [&>*]:flex-1">
         {children}
@@ -45,7 +45,7 @@ export interface DaytimePageProps
 
 export function DaytimePage({ children, header, period }: DaytimePageProps) {
   return (
-    <div className="bg-f1-page relative flex w-full flex-col overflow-hidden rounded-xl shadow">
+    <div className="relative flex w-full flex-col overflow-hidden rounded-xl bg-f1-page shadow">
       <div className={daytimePageVariants({ period })} />
       {header && <div className="flex flex-col">{header}</div>}
       <div className="isolate flex w-full flex-1 flex-col overflow-auto [&>*]:flex-1">
