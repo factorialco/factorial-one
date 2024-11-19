@@ -1,5 +1,6 @@
 import { Component } from "@/lib/component"
 import { FullscreenLayout as FullscreenLayoutComponent } from "./FullscreenLayout"
+import { OverviewLayout as OverviewLayoutComponent } from "./OverviewLayout"
 import {
   InfoPaneLayout as InfoPaneLayoutComponent,
   InfoPaneLayoutProps,
@@ -24,4 +25,12 @@ export const FullscreenLayout = Component(
     type: "layout",
   },
   FullscreenLayoutComponent
+)
+
+export const OverviewLayout = Component(
+  {
+    name: "OverviewLayout",
+    type: "layout",
+  },
+  OverviewLayoutComponent
 )
