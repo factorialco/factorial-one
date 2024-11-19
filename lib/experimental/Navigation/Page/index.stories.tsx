@@ -63,18 +63,16 @@ export const Daytime: Story = {
       header={
         <>
           <PageHeader {...HeaderStories.FirstLevel.args} />
-          <Tabs {...TabsStories.Primary.args} />
         </>
       }
-      children={
-        <StandardLayout>
-          {Array(25)
-            .fill(0)
-            .map((_, index) => (
-              <Placeholder key={index} className="min-h-24" />
-            ))}
-        </StandardLayout>
-      }
-    />
+    >
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    </DaytimePage>
   ),
 }
