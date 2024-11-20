@@ -25,7 +25,7 @@ const buttonVariants = cva(
         default:
           "bg-f1-background-accent-bold text-f1-foreground-inverse hover:bg-f1-background-accent-bold-hover",
         outline:
-          "border border-solid border-f1-border bg-f1-background text-f1-foreground hover:border-f1-border-hover",
+          "border border-solid border-f1-border bg-f1-background-inverse-secondary text-f1-foreground hover:border-f1-border-hover",
         neutral:
           "bg-f1-background-secondary text-f1-foreground hover:bg-f1-background-secondary-hover",
         critical:
