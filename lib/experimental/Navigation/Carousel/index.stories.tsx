@@ -8,13 +8,19 @@ const meta: Meta<typeof Carousel> = {
     layout: "fullscreen",
   },
   argTypes: {
-    enableAutoplay: { control: "boolean" },
+    autoplay: { control: "boolean" },
   },
 }
 
 export default meta
 
 type Story = StoryObj<typeof Carousel>
+
+const SLIDES = Array.from({ length: 6 }, (_, i) => (
+  <Placeholder key={i + 1} className="h-32">
+    Slide {i + 1}
+  </Placeholder>
+))
 
 export const Default: Story = {
   decorators: [
@@ -25,30 +31,11 @@ export const Default: Story = {
     ),
   ],
   argTypes: {
-    enableAutoplay: { table: { disable: true } },
+    autoplay: { table: { disable: true } },
   },
   args: {
-    enableAutoplay: false,
-    children: [
-      <Placeholder key="1" className="h-32">
-        Slide 1
-      </Placeholder>,
-      <Placeholder key="2" className="h-32">
-        Slide 2
-      </Placeholder>,
-      <Placeholder key="3" className="h-32">
-        Slide 3
-      </Placeholder>,
-      <Placeholder key="4" className="h-32">
-        Slide 4
-      </Placeholder>,
-      <Placeholder key="5" className="h-32">
-        Slide 5
-      </Placeholder>,
-      <Placeholder key="6" className="h-32">
-        Slide 6
-      </Placeholder>,
-    ],
+    autoplay: false,
+    children: SLIDES,
   },
 }
 
@@ -61,28 +48,9 @@ export const AutoScroll: Story = {
     ),
   ],
   args: {
-    enableAutoplay: true,
-    autoplayDelay: 3000,
-    children: [
-      <Placeholder key="1" className="h-32">
-        Slide 1
-      </Placeholder>,
-      <Placeholder key="2" className="h-32">
-        Slide 2
-      </Placeholder>,
-      <Placeholder key="3" className="h-32">
-        Slide 3
-      </Placeholder>,
-      <Placeholder key="4" className="h-32">
-        Slide 4
-      </Placeholder>,
-      <Placeholder key="5" className="h-32">
-        Slide 5
-      </Placeholder>,
-      <Placeholder key="6" className="h-32">
-        Slide 6
-      </Placeholder>,
-    ],
+    autoplay: true,
+    delay: 3000,
+    children: SLIDES,
   },
 }
 
@@ -97,25 +65,6 @@ export const SneakPeek: Story = {
   args: {
     itemClassName: "w-11/12 basis-auto",
     showArrows: false,
-    children: [
-      <Placeholder key="1" className="h-32">
-        Slide 1
-      </Placeholder>,
-      <Placeholder key="2" className="h-32">
-        Slide 2
-      </Placeholder>,
-      <Placeholder key="3" className="h-32">
-        Slide 3
-      </Placeholder>,
-      <Placeholder key="4" className="h-32">
-        Slide 4
-      </Placeholder>,
-      <Placeholder key="5" className="h-32">
-        Slide 5
-      </Placeholder>,
-      <Placeholder key="6" className="h-32">
-        Slide 6
-      </Placeholder>,
-    ],
+    children: SLIDES,
   },
 }

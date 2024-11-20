@@ -15,8 +15,8 @@ interface CarouselProps {
   children: React.ReactNode
   showArrows?: boolean
   showDots?: boolean
-  enableAutoplay?: boolean
-  autoplayDelay?: number
+  autoplay?: boolean
+  delay?: number
   itemClassName?: string
 }
 
@@ -24,16 +24,14 @@ export const Carousel = ({
   children,
   showArrows = true,
   showDots = true,
-  enableAutoplay = false,
-  autoplayDelay = 3000,
+  autoplay = false,
+  delay = 3000,
   itemClassName = "sm:basis-1/2 md:basis-1/3 lg:basis-1/4",
 }: CarouselProps) => {
   const childrenArray = React.Children.toArray(children)
 
   const plugin = React.useRef(
-    enableAutoplay
-      ? Autoplay({ delay: autoplayDelay, stopOnInteraction: true })
-      : undefined
+    autoplay ? Autoplay({ delay: delay, stopOnInteraction: true }) : undefined
   )
 
   const handleMouseEnter = () => {
@@ -58,8 +56,8 @@ export const Carousel = ({
         containScroll: false,
       }}
       plugins={[plugin.current, WheelGesturesPlugin()].filter(Boolean)}
-      onMouseEnter={enableAutoplay ? handleMouseEnter : undefined}
-      onMouseLeave={enableAutoplay ? handleMouseLeave : undefined}
+      onMouseEnter={autoplay ? handleMouseEnter : undefined}
+      onMouseLeave={autoplay ? handleMouseLeave : undefined}
     >
       <div className="flex flex-col gap-3">
         <div className="relative">
