@@ -220,6 +220,7 @@ const CarouselPrevious = React.forwardRef<
       {...props}
     >
       <Icon size="sm" icon={ArrowLeft} />
+      <span className="sr-only">Previous</span>
     </Button>
   )
 })
@@ -250,6 +251,7 @@ const CarouselNext = React.forwardRef<
       {...props}
     >
       <Icon size="sm" icon={ArrowRight} />
+      <span className="sr-only">Mext</span>
     </Button>
   )
 })
