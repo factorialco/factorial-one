@@ -5,56 +5,6 @@
   "typings": "dist/factorial-one.d.ts",
   "type": "module",
   "packageManager": "npm@10.8.2",
-  "exports": {
-    ".": {
-      "default": "./dist/factorial-one.js",
-      "types": "./dist/factorial-one.d.ts"
-    },
-    "./experimental": {
-      "default": "./dist/experimental.js",
-      "types": "./dist/experimental.d.ts"
-    },
-    "./icons": {
-      "default": "./icons/index.js",
-      "types": "./icons/index.d.ts"
-    },
-    "./icons/*": {
-      "default": "./icons/*",
-      "types": "./icons/*"
-    },
-    "./icons/app": {
-      "default": "./icons/app/index.js",
-      "types": "./icons/app/index.d.ts"
-    },
-    "./icons/app/*": {
-      "default": "./icons/app/*",
-      "types": "./icons/app/*"
-    },
-    "./icons/modules": {
-      "default": "./icons/modules/index.js",
-      "types": "./icons/modules/index.d.ts"
-    },
-    "./icons/modules/*": {
-      "default": "./icons/modules/*",
-      "types": "./icons/modules/*"
-    },
-    "./icons/animated/*": {
-      "default": "./icons/animated/*",
-      "types": "./icons/animated/*"
-    },
-    "./assets/*": {
-      "default": "./assets/*"
-    },
-    "./styles.css": {
-      "default": "./dist/styles.css"
-    },
-    "./reset.css": {
-      "default": "./reset.css"
-    },
-    "./tailwind.config.ts": {
-      "default": "./tailwind.config.ts"
-    }
-  },
   "files": [
     "assets",
     "icons",
