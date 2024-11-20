@@ -30,15 +30,19 @@ export const BasePostEvent = ({
       )}
       <div className="flex h-full flex-row gap-3 p-2">
         <div className="w-1 self-stretch rounded-full bg-f1-background-accent-bold" />
-        <div className="flex grow flex-col">
-          <span className="font-medium text-f1-foreground">{title}</span>
-          <span className="flex flex-row gap-1 text-f1-foreground-secondary">
+        <div className="flex min-w-0 grow flex-col">
+          <span className="truncate font-medium text-f1-foreground">
+            {title}
+          </span>
+          <span className="flex min-w-0 flex-row gap-1 text-f1-foreground-secondary">
             <span>{date.hour}</span>
             <span>·</span>
-            <span>{place}</span>
+            <span className="truncate">{place}</span>
           </span>
         </div>
-        <DateAvatar day={date.day} month={date.month} />
+        <div className="shrink-0">
+          <DateAvatar day={date.day} month={date.month} />
+        </div>
       </div>
     </div>
   )
