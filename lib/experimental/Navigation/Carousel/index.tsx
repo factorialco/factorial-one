@@ -13,7 +13,6 @@ import React from "react"
 
 interface CarouselProps {
   children: React.ReactNode
-  align?: "start" | "center"
   showArrows?: boolean
   showDots?: boolean
   enableAutoplay?: boolean
@@ -23,7 +22,6 @@ interface CarouselProps {
 
 export const Carousel = ({
   children,
-  align = "start",
   showArrows = true,
   showDots = true,
   enableAutoplay = false,
@@ -54,7 +52,7 @@ export const Carousel = ({
     <ShadCarousel
       className="flex flex-col gap-3"
       opts={{
-        align: align,
+        align: "center",
         slidesToScroll: "auto",
         duration: 20,
         containScroll: false,

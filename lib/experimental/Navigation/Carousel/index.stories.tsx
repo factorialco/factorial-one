@@ -97,7 +97,6 @@ export const SneakPeek: Story = {
   args: {
     itemClassName: "w-11/12 basis-auto",
     showArrows: false,
-    align: "center",
     children: [
       <Placeholder key="1" className="h-32">
         Slide 1
