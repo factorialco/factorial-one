@@ -66,6 +66,7 @@ export const NoImage: Story = {
     link: "/",
     firstName: "Saúl",
     lastName: "Domínguez",
+    canReact: false,
     type: "first-day",
     typeLabel: "First day very long name",
     date: {

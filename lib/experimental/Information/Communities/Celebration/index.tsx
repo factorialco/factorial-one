@@ -14,6 +14,7 @@ export type CelebrationProps = {
   firstName: string
   lastName: string
   src?: string
+  canReact?: boolean
   type?: "birthday" | "anniversary" | "first-day"
   typeLabel: string
   date: {
@@ -27,6 +28,7 @@ export const BaseCelebration = ({
   firstName,
   lastName,
   src,
+  canReact = true,
   type,
   typeLabel,
   date,
@@ -59,6 +61,7 @@ export const BaseCelebration = ({
           firstName={firstName}
           lastName={lastName}
           src={src}
+          canReact={canReact}
         />
       </div>
       <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
