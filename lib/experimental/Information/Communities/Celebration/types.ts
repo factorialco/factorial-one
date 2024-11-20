@@ -1,15 +1,3 @@
-export type CelebrationProps = {
-  firstName: string
-  lastName: string
-  src?: string
-  type?: "birthday" | "anniversary" | "first-day"
-  typeLabel: string
-  date: {
-    day: number
-    month: string
-  }
-}
-
 export const EMOJI_MAP = {
   birthday: "🎂",
   anniversary: "🎉",

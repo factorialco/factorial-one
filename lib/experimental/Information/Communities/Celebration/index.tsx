@@ -7,7 +7,19 @@ import { cn, focusRing } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import { CelebrationAvatar } from "./components/avatar"
 import { useConfetti } from "./hooks/useConfetti"
-import { CelebrationProps, EMOJI_MAP } from "./types"
+import { EMOJI_MAP } from "./types"
+
+export type CelebrationProps = {
+  firstName: string
+  lastName: string
+  src?: string
+  type?: "birthday" | "anniversary" | "first-day"
+  typeLabel: string
+  date: {
+    day: number
+    month: string
+  }
+}
 
 export const BaseCelebration = ({
   firstName,
