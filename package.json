@@ -26,21 +26,13 @@
       "default": "./icons/app/index.js",
       "types": "./icons/app/index.d.ts"
     },
-    "./icons/app/*": {
-      "default": "./icons/app/*.js",
-      "types": "./icons/app/*.d.ts"
-    },
     "./icons/modules": {
       "default": "./icons/modules/index.js",
       "types": "./icons/modules/index.d.ts"
     },
-    "./icons/modules/*": {
-      "default": "./icons/modules/*.js",
-      "types": "./icons/modules/*.d.ts"
-    },
-    "./icons/animated/*": {
-      "default": "./icons/animated/*.js",
-      "types": "./icons/animated/*.d.ts"
+    "./icons/animated": {
+      "default": "./icons/animated/index.js",
+      "types": "./icons/animated/index.d.ts"
     },
     "./assets/*": {
       "default": "./assets/*"
