@@ -24,6 +24,7 @@ export const Default: Story = {
     <>
       <div className="w-48">
         <Celebration
+          link="/"
           firstName="Josep Jaume"
           lastName="Rey"
           src="https://github.com/josepjaume.png"
@@ -37,6 +38,7 @@ export const Default: Story = {
       </div>
       <div className="w-48">
         <Celebration
+          link="/"
           firstName="Nik"
           lastName="Lopin"
           src="https://github.com/nlopin.png"
@@ -61,6 +63,7 @@ export const NoImage: Story = {
     ),
   ],
   args: {
+    link: "/",
     firstName: "Saúl",
     lastName: "Domínguez",
     type: "first-day",

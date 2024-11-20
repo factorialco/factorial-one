@@ -10,6 +10,7 @@ import { useConfetti } from "./hooks/useConfetti"
 import { EMOJI_MAP } from "./types"
 
 export type CelebrationProps = {
+  link: string
   firstName: string
   lastName: string
   src?: string
@@ -22,6 +23,7 @@ export type CelebrationProps = {
 }
 
 export const BaseCelebration = ({
+  link,
   firstName,
   lastName,
   src,
@@ -40,7 +42,7 @@ export const BaseCelebration = ({
 
   return (
     <Link
-      href="/"
+      href={link}
       className={cn(
         "relative flex flex-col rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary no-underline transition-shadow hover:shadow",
         focusRing()
