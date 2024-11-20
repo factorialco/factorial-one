@@ -260,23 +260,22 @@ const CarouselDots = React.forwardRef<
   React.HTMLAttributes<HTMLDivElement>
 >((props, ref) => {
   const { api } = useCarousel()
-  const [updateState, setUpdateState] = React.useState(false)
-  const toggleUpdateState = React.useCallback(
-    () => setUpdateState((prevState) => !prevState),
-    []
-  )
+  const [, setUpdate] = React.useState(false)
+  const forceUpdate = React.useCallback(() => {
+    setUpdate((prev) => !prev)
+  }, [])
 
   React.useEffect(() => {
     if (api) {
-      api.on("select", toggleUpdateState)
-      api.on("reInit", toggleUpdateState)
+      api.on("select", forceUpdate)
+      api.on("reInit", forceUpdate)
 
       return () => {
-        api.off("select", toggleUpdateState)
-        api.off("reInit", toggleUpdateState)
+        api.off("select", forceUpdate)
+        api.off("reInit", forceUpdate)
       }
     }
-  }, [api, toggleUpdateState])
+  }, [api, forceUpdate])
 
   const numberOfSlides = api?.scrollSnapList().length || 0
   const currentSlide = api?.selectedScrollSnap() || 0
