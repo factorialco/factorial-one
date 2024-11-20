@@ -8,30 +8,31 @@ import {
   Carousel as ShadCarousel,
 } from "@/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
+import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 import React from "react"
 
 interface CarouselProps {
   children: React.ReactNode
-  showArrows?: boolean
-  showDots?: boolean
-  autoScroll?: boolean
-  autoScrollSpeed?: number
-  responsive?: boolean
+  showNavigationArrows?: boolean
+  showPaginationDots?: boolean
+  enableAutoplay?: boolean
+  autoplayDelay?: number
+  itemClassName?: string
 }
 
 export const Carousel = ({
   children,
-  showArrows = true,
-  showDots = true,
-  autoScroll = false,
-  autoScrollSpeed = 3000,
-  responsive = true,
+  showNavigationArrows = true,
+  showPaginationDots = true,
+  enableAutoplay = false,
+  autoplayDelay = 3000,
+  itemClassName = "sm:basis-1/2 md:basis-1/3 lg:basis-1/4",
 }: CarouselProps) => {
   const childrenArray = React.Children.toArray(children)
 
   const plugin = React.useRef(
-    autoScroll
-      ? Autoplay({ delay: autoScrollSpeed, stopOnInteraction: true })
+    enableAutoplay
+      ? Autoplay({ delay: autoplayDelay, stopOnInteraction: true })
       : undefined
   )
 
@@ -53,32 +54,26 @@ export const Carousel = ({
       opts={{
         align: "start",
         slidesToScroll: "auto",
+        duration: 20,
       }}
-      plugins={plugin.current ? [plugin.current] : []}
-      onMouseEnter={autoScroll ? handleMouseEnter : undefined}
-      onMouseLeave={autoScroll ? handleMouseLeave : undefined}
+      plugins={[plugin.current, WheelGesturesPlugin()].filter(Boolean)}
+      onMouseEnter={enableAutoplay ? handleMouseEnter : undefined}
+      onMouseLeave={enableAutoplay ? handleMouseLeave : undefined}
     >
       <CarouselContent>
         {React.Children.map(childrenArray, (child, index) => (
-          <CarouselItem
-            key={index}
-            className={cn(
-              responsive
-                ? "sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
-                : "basis-full"
-            )}
-          >
+          <CarouselItem key={index} className={cn("basis-full", itemClassName)}>
             {child}
           </CarouselItem>
         ))}
       </CarouselContent>
-      {showArrows && (
+      {showNavigationArrows && (
         <>
           <CarouselPrevious />
           <CarouselNext />
         </>
       )}
-      {showDots && <CarouselDots />}
+      {showPaginationDots && <CarouselDots />}
     </ShadCarousel>
   )
 }

@@ -8,12 +8,7 @@ const meta: Meta<typeof Carousel> = {
     layout: "fullscreen",
   },
   argTypes: {
-    autoScroll: { control: "boolean" },
-    responsive: {
-      control: "boolean",
-      description:
-        "Displays more slides per page depending on the screen size.",
-    },
+    enableAutoplay: { control: "boolean" },
   },
 }
 
@@ -30,8 +25,7 @@ export const Default: Story = {
     ),
   ],
   args: {
-    autoScroll: false,
-    responsive: true,
+    enableAutoplay: false,
     children: [
       <Placeholder key="1" className="h-32">
         Slide 1
@@ -64,8 +58,8 @@ export const AutoScroll: Story = {
     ),
   ],
   args: {
-    autoScroll: true,
-    autoScrollSpeed: 3000,
+    enableAutoplay: true,
+    autoplayDelay: 3000,
     children: [
       <Placeholder key="1" className="h-32">
         Slide 1

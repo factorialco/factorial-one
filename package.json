@@ -194,6 +194,7 @@
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.4.0",
-    "embla-carousel-react": "^8.4.0"
+    "embla-carousel-react": "^8.4.0",
+    "embla-carousel-wheel-gestures": "^8.0.1"
   }
 }
