@@ -93,9 +93,9 @@ export const DaytimeHomeLayout: Story = {
     <DaytimePage
       period={period}
       header={
-        <>
-          <PageHeader {...HeaderStories.FirstLevel.args} />
-        </>
+        <div className="px-3 py-4 lg:px-6">
+          <p className="text-xl font-semibold">Good morning, Saul!</p>
+        </div>
       }
     >
       <HomeLayout {...DefaultHomeLayoutStory.args} />

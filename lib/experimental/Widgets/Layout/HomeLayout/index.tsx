@@ -31,17 +31,11 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
 
   if (isSmallerScreen) {
     return (
-      <div ref={ref} className="flex flex-col gap-6 pt-2">
+      <div ref={ref} className="flex flex-col gap-6 px-3 pb-3 pt-2">
         {canShowContent && (
           <>
-            <WidgetStrip>
-              {[
-                <div className="!min-w-2" />,
-                ...arrayWidgets,
-                <div className="!min-w-2" />,
-              ]}
-            </WidgetStrip>
-            <main className="px-6 pb-6">{children}</main>
+            <WidgetStrip>{arrayWidgets}</WidgetStrip>
+            <main>{children}</main>
           </>
         )}
       </div>
