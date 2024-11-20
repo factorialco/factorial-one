@@ -13,8 +13,9 @@ import React from "react"
 
 interface CarouselProps {
   children: React.ReactNode
-  showNavigationArrows?: boolean
-  showPaginationDots?: boolean
+  align?: "start" | "center"
+  showArrows?: boolean
+  showDots?: boolean
   enableAutoplay?: boolean
   autoplayDelay?: number
   itemClassName?: string
@@ -22,8 +23,9 @@ interface CarouselProps {
 
 export const Carousel = ({
   children,
-  showNavigationArrows = true,
-  showPaginationDots = true,
+  align = "start",
+  showArrows = true,
+  showDots = true,
   enableAutoplay = false,
   autoplayDelay = 3000,
   itemClassName = "sm:basis-1/2 md:basis-1/3 lg:basis-1/4",
@@ -52,28 +54,36 @@ export const Carousel = ({
     <ShadCarousel
       className="flex flex-col gap-3"
       opts={{
-        align: "start",
+        align: align,
         slidesToScroll: "auto",
         duration: 20,
+        containScroll: false,
       }}
       plugins={[plugin.current, WheelGesturesPlugin()].filter(Boolean)}
       onMouseEnter={enableAutoplay ? handleMouseEnter : undefined}
       onMouseLeave={enableAutoplay ? handleMouseLeave : undefined}
     >
-      <CarouselContent>
-        {React.Children.map(childrenArray, (child, index) => (
-          <CarouselItem key={index} className={cn("basis-full", itemClassName)}>
-            {child}
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      {showNavigationArrows && (
-        <>
-          <CarouselPrevious />
-          <CarouselNext />
-        </>
-      )}
-      {showPaginationDots && <CarouselDots />}
+      <div className="flex flex-col gap-3">
+        <div className="relative">
+          <CarouselContent>
+            {React.Children.map(childrenArray, (child, index) => (
+              <CarouselItem
+                key={index}
+                className={cn("basis-full", itemClassName)}
+              >
+                {child}
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          {showArrows && (
+            <>
+              <CarouselPrevious />
+              <CarouselNext />
+            </>
+          )}
+        </div>
+        {showDots && <CarouselDots />}
+      </div>
     </ShadCarousel>
   )
 }
