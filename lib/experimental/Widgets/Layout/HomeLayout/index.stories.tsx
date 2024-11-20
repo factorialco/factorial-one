@@ -62,6 +62,7 @@ export const Default: Story = {
       defaultViewport: "reset",
     },
   },
+  args: meta.args,
 }
 
 export const Mobile: Story = {

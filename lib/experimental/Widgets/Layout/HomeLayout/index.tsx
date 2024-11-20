@@ -31,11 +31,17 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
 
   if (isSmallerScreen) {
     return (
-      <div ref={ref} className="flex flex-col gap-6">
+      <div ref={ref} className="flex flex-col gap-6 pt-2">
         {canShowContent && (
           <>
-            <WidgetStrip>{arrayWidgets}</WidgetStrip>
-            <main>{children}</main>
+            <WidgetStrip>
+              {[
+                <div className="!min-w-2" />,
+                ...arrayWidgets,
+                <div className="!min-w-2" />,
+              ]}
+            </WidgetStrip>
+            <main className="px-6 pb-6">{children}</main>
           </>
         )}
       </div>
@@ -45,7 +51,7 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
   return (
     <div
       ref={ref}
-      className="grid h-screen grid-cols-3 grid-rows-[auto,1fr,1fr,1fr] gap-6"
+      className="grid h-screen grid-cols-3 grid-rows-[auto,1fr,1fr,1fr] gap-6 px-6 pb-6 pt-2"
     >
       {canShowContent && (
         <>
