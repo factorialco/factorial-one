@@ -29,7 +29,7 @@ export const BasePostEvent = ({
         />
       )}
       <div className="flex h-full flex-row gap-3 p-2">
-        <div className="w-1 self-stretch rounded-full bg-f1-background-accent-bold" />
+        <div className="w-1 shrink-0 self-stretch rounded-full bg-f1-background-accent-bold" />
         <div className="flex min-w-0 grow flex-col">
           <span className="truncate font-medium text-f1-foreground">
             {title}
@@ -59,7 +59,7 @@ export const PostEventSkeleton = () => (
       <Skeleton className="aspect-video h-full w-full rounded-lg" />
     </div>
     <div className="flex h-full flex-row gap-3 p-2">
-      <Skeleton className="w-1 self-stretch rounded-full" />
+      <Skeleton className="w-1 shrink-0 self-stretch rounded-full" />
       <div className="flex grow flex-col gap-1.5 py-1">
         <Skeleton className="mt-px h-3 w-1/2" />
         <Skeleton className="mb-px h-3 w-1/4" />
