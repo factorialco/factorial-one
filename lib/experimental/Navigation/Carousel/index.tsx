@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils"
 import {
   CarouselContent,
   CarouselDots,
@@ -10,6 +9,7 @@ import {
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 import React from "react"
+import { carouselItemVariants, type CarouselItemVariants } from "./types"
 
 interface CarouselProps {
   children: React.ReactNode
@@ -17,7 +17,7 @@ interface CarouselProps {
   showDots?: boolean
   autoplay?: boolean
   delay?: number
-  itemClassName?: string
+  columns: CarouselItemVariants
 }
 
 export const Carousel = ({
@@ -26,7 +26,7 @@ export const Carousel = ({
   showDots = true,
   autoplay = false,
   delay = 3000,
-  itemClassName = "sm:basis-1/2 md:basis-1/3 lg:basis-1/4",
+  columns,
 }: CarouselProps) => {
   const childrenArray = React.Children.toArray(children)
 
@@ -65,7 +65,7 @@ export const Carousel = ({
             {React.Children.map(childrenArray, (child, index) => (
               <CarouselItem
                 key={index}
-                className={cn("basis-full", itemClassName)}
+                className={carouselItemVariants(columns)}
               >
                 {child}
               </CarouselItem>

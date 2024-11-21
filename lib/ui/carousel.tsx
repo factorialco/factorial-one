@@ -292,7 +292,7 @@ const CarouselDots = React.forwardRef<
           <Button
             key={i}
             className={cn("h-2 w-2 rounded-full p-0", {
-              "bg-f1-foreground-secondary hover:bg-f1-background-secondary-hover":
+              "bg-f1-foreground-secondary hover:bg-f1-foreground-secondary":
                 i === currentSlide,
               "bg-f1-background-secondary hover:bg-f1-background-secondary-hover":
                 i !== currentSlide,

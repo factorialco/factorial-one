@@ -39,6 +39,29 @@ export const Default: Story = {
   },
 }
 
+export const CustomColumns: Story = {
+  decorators: [
+    (Story) => (
+      <div className="w-full p-6">
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    autoplay: { table: { disable: true } },
+  },
+  args: {
+    autoplay: false,
+    children: SLIDES,
+    columns: {
+      xs: 2,
+      sm: 3,
+      md: 4,
+      lg: 6,
+    },
+  },
+}
+
 export const AutoScroll: Story = {
   decorators: [
     (Story) => (
@@ -63,8 +86,11 @@ export const SneakPeek: Story = {
     ),
   ],
   args: {
-    itemClassName: "w-11/12 basis-auto",
     showArrows: false,
     children: SLIDES,
+    columns: {
+      md: 2,
+      lg: 2,
+    },
   },
 }
