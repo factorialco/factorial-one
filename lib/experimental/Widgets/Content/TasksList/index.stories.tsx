@@ -29,6 +29,8 @@ export const Default: Story = {
         { id: 3, text: "Write changelog" },
         { id: 4, text: "Product review" },
         { id: 5, text: "Final conclusions" },
+        { id: 6, text: "Final conclusions 2" },
+        { id: 7, text: "Final conclusions 3" },
       ],
     },
   },
