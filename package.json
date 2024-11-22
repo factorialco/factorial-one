@@ -87,7 +87,7 @@
     "@eslint/compat": "^1.2.3",
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.14.0",
-    "@microsoft/api-extractor": "^7.47.11",
+    "@microsoft/api-extractor": "^7.47.12",
     "@storybook/addon-a11y": "^8.4.4",
     "@storybook/addon-designs": "^8.0.4",
     "@storybook/addon-essentials": "^8.4.4",
