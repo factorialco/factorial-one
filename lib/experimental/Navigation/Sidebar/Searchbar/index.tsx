@@ -16,22 +16,24 @@ export function SearchBar({
   ...props
 }: SearchBarProps) {
   return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "mb-4 mt-2 flex w-full cursor-pointer items-center justify-between rounded border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-1.5 text-f1-foreground-secondary transition-colors hover:border-f1-border-hover",
-        focusRing()
-      )}
-      type="button"
-      {...props}
-    >
-      <div className="flex items-center gap-1">
-        <Icon icon={Search} size="md" />
-        <span>{placeholder}</span>
-      </div>
-      <div className="hidden xs:block">
-        <Shortcut keys={shortcut} />
-      </div>
-    </button>
+    <div className="px-3">
+      <button
+        onClick={onClick}
+        className={cn(
+          "mb-[calc(0.75rem-1px)] flex w-full cursor-pointer items-center justify-between rounded bg-f1-background-inverse-secondary p-1.5 text-f1-foreground-secondary ring-1 ring-inset ring-f1-border-secondary transition-all hover:ring-f1-border-hover",
+          focusRing()
+        )}
+        type="button"
+        {...props}
+      >
+        <div className="flex items-center gap-1">
+          <Icon icon={Search} size="md" />
+          <span>{placeholder}</span>
+        </div>
+        <div className="hidden xs:block">
+          <Shortcut keys={shortcut} />
+        </div>
+      </button>
+    </div>
   )
 }

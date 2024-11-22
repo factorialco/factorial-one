@@ -9,7 +9,7 @@ export function SidebarHeader({
   onChange,
 }: SidebarHeaderProps) {
   return (
-    <div className="flex h-[72px] items-center justify-between gap-3">
+    <div className="flex h-[72px] items-center justify-between gap-3 px-3">
       <CompanySelector
         companies={companies}
         selected={selected}
