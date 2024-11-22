@@ -25,12 +25,12 @@ function getSubtree(
 }
 
 const tabNavigationVariants = cva(
-  "relative flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap px-6 pb-3 pt-1 [scrollbar-width:none] before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-f1-border-secondary before:content-[''] [&::-webkit-scrollbar]:hidden",
+  "relative flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap px-6 py-3 [scrollbar-width:none] before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-f1-border-secondary before:content-[''] [&::-webkit-scrollbar]:hidden",
   {
     variants: {
       secondary: {
         true: "bg-f1-background-secondary/25 dark:bg-f1-foreground/[.02]",
-        false: "bg-f1-background-transparent",
+        false: "bg-f1-background-transparent pt-1",
       },
     },
     defaultVariants: {

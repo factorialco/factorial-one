@@ -26,7 +26,7 @@ export const withTheme = () => {
 }
 
 export const FactorialOne = (Story, { parameters }) => {
-  const [currentPath, setCurrentPath] = useState("/")
+  const [currentPath, setCurrentPath] = useState(parameters.currentPath ?? "/")
 
   return (
     <FactorialOneProvider
