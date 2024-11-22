@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 import { BaseTag } from "../BaseTag"
 
-export type Variant = "neutral" | "info" | "positive" | "warning" | "critical"
+type Variant = "neutral" | "info" | "positive" | "warning" | "critical"
 
 export type StatusVariant = Variant
 
