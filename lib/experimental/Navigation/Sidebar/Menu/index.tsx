@@ -142,7 +142,7 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
 
 export function Menu({ tree }: MenuProps) {
   return (
-    <div className="w-full bg-transparent">
+    <div className="w-full bg-transparent px-3">
       {tree.map((category, index) => (
         <CategoryItem key={index} category={category} />
       ))}
