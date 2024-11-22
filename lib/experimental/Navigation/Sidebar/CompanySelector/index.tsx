@@ -4,7 +4,7 @@ import { AvatarVariant } from "@/experimental/Information/Avatars/utils"
 import ChevronDown from "@/icons/app/ChevronDown"
 import { cn, focusRing } from "@/lib/utils"
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 interface Company {
   id: string
@@ -24,20 +24,28 @@ export function CompanySelector({
   onChange,
 }: CompanySelectorProps) {
   const [open, setOpen] = useState(false)
+  const options = useMemo(
+    () =>
+      companies.map((company) => ({
+        value: company.id,
+        label: company.name,
+        avatar: {
+          type: "company",
+          name: company.name,
+          src: company.logo,
+          "aria-label": `${company.name} logo`,
+        } satisfies AvatarVariant,
+      })),
+    [companies]
+  )
+  const selectedCompany = useMemo(
+    () => companies.find((company) => company.id === selected) || companies[0],
+    [companies, selected]
+  )
 
-  const options = companies.map((company) => ({
-    value: company.id,
-    label: company.name,
-    avatar: {
-      type: "company",
-      name: company.name,
-      src: company.logo,
-      "aria-label": `${company.name} logo`,
-    } satisfies AvatarVariant,
-  }))
-
-  const selectedCompany =
-    companies.find((company) => company.id === selected) || companies[0]
+  if (options.length === 1) {
+    return <SingleCompany company={selectedCompany} />
+  }
 
   return (
     <Select
@@ -63,19 +71,43 @@ export function CompanySelector({
         />
         <div className="flex flex-row items-center gap-1">
           <span className="truncate">{selectedCompany?.name}</span>
-          <div className="flex h-5 w-5 shrink-0 items-center justify-center">
-            <div className="flex h-3 w-3 items-center justify-center rounded-2xs bg-f1-background-secondary transition-all">
-              <motion.div
-                animate={{ rotate: open ? 180 : 0 }}
-                transition={{ duration: 0.2 }}
-                className="flex h-3 w-3 items-center justify-center"
-              >
-                <ChevronDown className="h-3 w-3 shrink-0 text-f1-icon-bold" />
-              </motion.div>
+            <div className="flex h-5 w-5 shrink-0 items-center justify-center">
+              <div className="flex h-3 w-3 items-center justify-center rounded-2xs bg-f1-background-secondary transition-all">
+                <motion.div
+                  animate={{ rotate: open ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex h-3 w-3 items-center justify-center"
+                >
+                  <ChevronDown className="h-3 w-3 shrink-0 text-f1-icon-bold" />
+                </motion.div>
+              </div>
             </div>
-          </div>
         </div>
       </div>
     </Select>
+  )
+}
+
+const SingleCompany = ({
+  company,
+}: {
+  company: CompanySelectorProps["companies"][number]
+}) => {
+  return (
+    <div
+      className={cn(
+        "flex w-fit flex-nowrap items-center justify-center gap-2 truncate rounded p-1.5 text-lg font-semibold text-f1-foreground transition-colors"
+      )}
+      title={company?.name}
+    >
+      <CompanyAvatar
+        name={company?.name?.[0]}
+        src={company?.logo}
+        size="xsmall"
+      />
+      <div className="flex flex-row items-center">
+        <span className="truncate">{company?.name}</span>
+      </div>
+    </div>
   )
 }
