@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
-import type { Variant } from "@/experimental/Information/Tags/StatusTag"
+import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import AlignTextJustify from "@/icons/app/AlignTextJustify"
@@ -18,7 +18,7 @@ type HeaderProps = {
   }
   statusTag?: {
     text: string
-    variant: Variant
+    variant: StatusVariant
   }
   breadcrumbs?: BreadcrumbItemType[]
   actions?: {
