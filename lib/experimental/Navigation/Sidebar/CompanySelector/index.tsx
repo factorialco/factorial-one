@@ -50,7 +50,7 @@ export function CompanySelector({
     >
       <div
         className={cn(
-          "group flex w-fit flex-nowrap items-center gap-2 truncate rounded p-1.5 text-lg font-semibold text-f1-foreground transition-colors hover:bg-f1-background-secondary data-[state=open]:bg-f1-background-secondary",
+          "group flex w-fit flex-nowrap items-center justify-center gap-2 truncate rounded p-1.5 text-lg font-semibold text-f1-foreground transition-colors hover:bg-f1-background-hover data-[state=open]:bg-f1-background-hover",
           focusRing()
         )}
         tabIndex={0}
@@ -61,16 +61,18 @@ export function CompanySelector({
           src={selectedCompany?.logo}
           size="xsmall"
         />
-        <span className="truncate">{selectedCompany?.name}</span>
-        <div className="h-6 w-6 shrink-0 p-1">
-          <div className="flex h-4 w-4 items-center justify-center rounded-xs bg-f1-background-secondary transition-all group-hover:brightness-90 group-data-[state=open]:brightness-90">
-            <motion.div
-              animate={{ rotate: open ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex h-3 w-3 items-center justify-center"
-            >
-              <ChevronDown className="h-3 w-3 shrink-0 text-f1-icon-bold" />
-            </motion.div>
+        <div className="flex flex-row items-center gap-1">
+          <span className="truncate">{selectedCompany?.name}</span>
+          <div className="flex h-5 w-5 shrink-0 items-center justify-center">
+            <div className="flex h-3 w-3 items-center justify-center rounded-2xs bg-f1-background-secondary transition-all">
+              <motion.div
+                animate={{ rotate: open ? 180 : 0 }}
+                transition={{ duration: 0.2 }}
+                className="flex h-3 w-3 items-center justify-center"
+              >
+                <ChevronDown className="h-3 w-3 shrink-0 text-f1-icon-bold" />
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
