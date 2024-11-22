@@ -100,6 +100,7 @@ const preview: Preview = {
       storySort: {
         order: [
           "Introduction",
+          "How to contribute?",
           "Foundations",
           ["Colors", "Typography", "Spacing", "Borders", "Shadows"],
           "Components",
