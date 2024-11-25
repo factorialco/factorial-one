@@ -61,7 +61,7 @@ export const useNavigation = () => {
       if (exact)
         return stripTrailingSlash(currentPath) === stripTrailingSlash(path)
 
-      return stripTrailingSlash(currentPath).startsWith(
+      return `${stripTrailingSlash(currentPath)}/`.startsWith(
         `${stripTrailingSlash(path)}/`
       )
     },
