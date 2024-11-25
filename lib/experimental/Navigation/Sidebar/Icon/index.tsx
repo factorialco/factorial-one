@@ -71,7 +71,7 @@ export function SidebarIcon() {
       size="md"
       round
       onClick={toggleSidebar}
-      className="group hover:bg-f1-background-secondary"
+      className="group hover:bg-f1-background-hover"
       title="Toggle Sidebar"
     >
       <div className={cn("hidden", { flex: !isSmallScreen })}>

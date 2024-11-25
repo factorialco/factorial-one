@@ -49,6 +49,46 @@ export const FirstLevel: Story = {
   },
 }
 
+export const FirstLevelWithTag: Story = {
+  args: {
+    module: {
+      name: "Recruitment",
+      href: "/recruitment",
+      icon: Recruitment,
+    },
+    statusTag: {
+      text: "Published",
+      variant: "positive",
+    },
+  },
+}
+
+export const FirstLevelWithTagAndActions: Story = {
+  args: {
+    module: {
+      name: "Documents",
+      href: "/documents",
+      icon: Recruitment,
+    },
+    statusTag: {
+      text: "Published",
+      variant: "positive",
+    },
+    actions: [
+      {
+        label: "Settings",
+        icon: Settings,
+        onClick: () => console.log("Settings clicked"),
+      },
+      {
+        label: "More options",
+        icon: EllipsisHorizontal,
+        onClick: () => console.log("More clicked"),
+      },
+    ],
+  },
+}
+
 export const LongBreadcrumbs: Story = {
   args: {
     module: {

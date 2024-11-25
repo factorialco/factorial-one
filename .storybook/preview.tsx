@@ -26,7 +26,7 @@ export const withTheme = () => {
 }
 
 export const FactorialOne = (Story, { parameters }) => {
-  const [currentPath, setCurrentPath] = useState("/")
+  const [currentPath, setCurrentPath] = useState(parameters.currentPath ?? "/")
 
   return (
     <FactorialOneProvider
@@ -100,6 +100,7 @@ const preview: Preview = {
       storySort: {
         order: [
           "Introduction",
+          "How to contribute?",
           "Foundations",
           ["Colors", "Typography", "Spacing", "Borders", "Shadows"],
           "Components",

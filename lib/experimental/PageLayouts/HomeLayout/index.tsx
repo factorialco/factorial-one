@@ -1,3 +1,4 @@
+import { WidgetStrip } from "@/experimental/Widgets/Layout/WidgetStrip"
 import {
   Children,
   forwardRef,
@@ -6,7 +7,6 @@ import {
   useRef,
 } from "react"
 import { useResizeObserver } from "usehooks-ts"
-import { WidgetStrip } from "../WidgetStrip"
 
 type Props = {
   widgets?: ReactNode[]
