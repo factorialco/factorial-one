@@ -43,10 +43,10 @@ export const Piled: Story = {
     currentPath: "/courses",
   },
   render: () => (
-    <>
+    <div>
       <Tabs tabs={tabItems} />
       <Tabs secondary tabs={secondaryTabItems} />
-    </>
+    </div>
   ),
 }
 
