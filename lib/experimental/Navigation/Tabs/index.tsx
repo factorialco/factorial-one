@@ -30,12 +30,13 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
         <TabNavigationLink
           key={index}
           active={activeTab?.href === props.href}
-          aria-labelledby={`${label} ${secondary ? "secondary" : ""}`}
           href={props.href}
           secondary={secondary}
           asChild
         >
-          <Link {...props}>{label}</Link>
+          <Link role="link" {...props}>
+            {label}
+          </Link>
         </TabNavigationLink>
       ))}
     </TabNavigation>
