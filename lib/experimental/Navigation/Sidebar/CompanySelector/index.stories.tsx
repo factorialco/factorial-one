@@ -39,6 +39,7 @@ export const SingleEntry: Story = {
 
 export const LoadingCompanies: Story = {
   args: {
-    isLoading: true
-  }
+    companies: exampleCompanies,
+    isLoading: true,
+  },
 }
