@@ -36,3 +36,9 @@ export const SingleEntry: Story = {
     selected: "1",
   },
 }
+
+export const LoadingCompanies: Story = {
+  args: {
+    isLoading: true
+  }
+}
