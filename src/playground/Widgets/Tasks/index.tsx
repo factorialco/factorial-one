@@ -70,22 +70,21 @@ export const TasksInsight = forwardRef<HTMLDivElement, TasksInsightProps>(
         }
       >
         <IndicatorsList items={taskCategories} />
-        {(inProgressTasks.length || todoTasks.length) && (
-          <div className="-mx-2">
-            <TasksList
-              tasks={{
-                inProgress: inProgressTasks.map((task) => ({
-                  id: 1,
-                  text: task,
-                })),
-                todo: todoTasks.map((task) => ({
-                  id: 2,
-                  text: task,
-                })),
-              }}
-            />
-          </div>
-        )}
+        <div className="-mx-2">
+          <TasksList
+            tasks={{
+              inProgress: inProgressTasks.map((task) => ({
+                id: 1,
+                text: task,
+              })),
+              todo: todoTasks.map((task) => ({
+                id: 2,
+                text: task,
+              })),
+            }}
+            emptyMessage="No tasks assigned"
+          />
+        </div>
       </Widget>
     )
   }
