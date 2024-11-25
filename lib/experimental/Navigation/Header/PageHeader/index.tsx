@@ -1,5 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
+import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
+import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import { Menu } from "@/icons/app"
 import { cn } from "@/lib/utils"
@@ -14,6 +16,10 @@ type HeaderProps = {
     href: string
     icon: IconType
   }
+  statusTag?: {
+    text: string
+    variant: StatusVariant
+  }
   breadcrumbs?: BreadcrumbItemType[]
   actions?: {
     label: string
@@ -24,6 +30,7 @@ type HeaderProps = {
 
 export function PageHeader({
   module,
+  statusTag = undefined,
   breadcrumbs = [],
   actions = [],
 }: HeaderProps) {
@@ -34,7 +41,9 @@ export function PageHeader({
     ...breadcrumbs,
   ]
 
+  const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
+  const hasActions = actions.length > 0
 
   return (
     <div
@@ -74,21 +83,31 @@ export function PageHeader({
           )}
         </div>
       </div>
-      {actions && (
-        <div className="flex items-center gap-2">
-          {actions.map((action, index) => (
-            <Button
-              hideLabel
-              round
-              key={index}
-              variant="outline"
-              onClick={action.onClick}
-              label={action.label}
-              icon={action.icon}
-            />
-          ))}
-        </div>
-      )}
+      <div className="flex items-center">
+        {!hasNavigation && hasStatus && (
+          <div className="pe-3">
+            <StatusTag text={statusTag.text} variant={statusTag.variant} />
+          </div>
+        )}
+        {hasStatus && hasActions && (
+          <div className="right-0 h-4 w-px bg-f1-border-secondary"></div>
+        )}
+        {hasActions && (
+          <div className="items-right flex gap-2 ps-3">
+            {actions.map((action, index) => (
+              <Button
+                hideLabel
+                round
+                key={index}
+                variant="outline"
+                onClick={action.onClick}
+                label={action.label}
+                icon={action.icon}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
