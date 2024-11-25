@@ -9,7 +9,12 @@ import {
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 import React from "react"
-import { carouselItemVariants, type CarouselItemVariants } from "./types"
+import {
+  type CarouselBreakpoints,
+  carouselItemVariants,
+  type ColumnNumber,
+  type PeekVariant,
+} from "./types"
 
 interface CarouselProps {
   children: React.ReactNode
@@ -17,7 +22,8 @@ interface CarouselProps {
   showDots?: boolean
   autoplay?: boolean
   delay?: number
-  columns: CarouselItemVariants
+  columns?: CarouselBreakpoints
+  showPeek?: boolean
 }
 
 export const Carousel = ({
@@ -26,7 +32,8 @@ export const Carousel = ({
   showDots = true,
   autoplay = false,
   delay = 3000,
-  columns,
+  columns = { default: 1 },
+  showPeek = false,
 }: CarouselProps) => {
   const childrenArray = React.Children.toArray(children)
 
@@ -44,6 +51,13 @@ export const Carousel = ({
     if (plugin.current) {
       plugin.current.play()
     }
+  }
+
+  function getVariantValue(
+    value: ColumnNumber | undefined,
+    showPeek: boolean
+  ): ColumnNumber | PeekVariant {
+    return showPeek ? (`peek${value || 1}` as PeekVariant) : value || 1
   }
 
   return (
@@ -65,7 +79,14 @@ export const Carousel = ({
             {React.Children.map(childrenArray, (child, index) => (
               <CarouselItem
                 key={index}
-                className={carouselItemVariants(columns)}
+                className={carouselItemVariants({
+                  default: getVariantValue(columns.default, showPeek),
+                  xs: getVariantValue(columns.xs, showPeek),
+                  sm: getVariantValue(columns.sm, showPeek),
+                  md: getVariantValue(columns.md, showPeek),
+                  lg: getVariantValue(columns.lg, showPeek),
+                  peek: showPeek,
+                })}
               >
                 {child}
               </CarouselItem>

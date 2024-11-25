@@ -80,7 +80,7 @@ export const AutoScroll: Story = {
 export const SneakPeek: Story = {
   decorators: [
     (Story) => (
-      <div className="w-full py-6">
+      <div className="w-full p-6">
         <Story />
       </div>
     ),
@@ -88,9 +88,6 @@ export const SneakPeek: Story = {
   args: {
     showArrows: false,
     children: SLIDES,
-    columns: {
-      md: 2,
-      lg: 2,
-    },
+    showPeek: true,
   },
 }

@@ -291,10 +291,10 @@ const CarouselDots = React.forwardRef<
         {Array.from({ length: numberOfSlides }, (_, i) => (
           <Button
             key={i}
-            className={cn("h-2 w-2 rounded-full p-0", {
-              "bg-f1-foreground-secondary hover:bg-f1-foreground-secondary":
+            className={cn("h-2 w-2 rounded-full p-0 transition-all", {
+              "bg-f1-foreground-secondary hover:scale-110 hover:bg-f1-foreground-secondary":
                 i === currentSlide,
-              "bg-f1-background-secondary hover:bg-f1-background-secondary-hover":
+              "bg-f1-background-secondary hover:scale-110 hover:bg-f1-background-secondary-hover":
                 i !== currentSlide,
             })}
             aria-label={`Go to slide ${i + 1}`}
