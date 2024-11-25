@@ -3,6 +3,7 @@ import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
 import { AvatarVariant } from "@/experimental/Information/Avatars/utils"
 import ChevronDown from "@/icons/app/ChevronDown"
 import { cn, focusRing } from "@/lib/utils"
+import { Skeleton } from "@/ui/skeleton"
 import { motion } from "framer-motion"
 import { ReactNode, useMemo, useState } from "react"
 
@@ -14,23 +15,34 @@ interface Company {
 
 export type CompanySelectorProps = {
   companies: Company[]
-  selected: string
+  selected?: string
   onChange: (value: string) => void
+  isLoading?: boolean
 }
 
 export function CompanySelector({
   companies,
   selected,
   onChange,
+  isLoading = false,
 }: CompanySelectorProps) {
   const selectedCompany = useMemo(
     () => companies.find((company) => company.id === selected) || companies[0],
     [companies, selected]
   )
 
+  if (isLoading) {
+    return (
+      <div className="flex w-fit items-center gap-2 p-1.5">
+        <Skeleton className="size-6" />
+        <Skeleton className="h-5 w-14" />
+      </div>
+    )
+  }
+
   if (companies.length === 1) {
     return (
-      <div className="p-1.5">
+      <div className="w-fit p-1.5">
         <SelectedCompanyLabel company={selectedCompany} />
       </div>
     )
