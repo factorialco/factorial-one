@@ -26,8 +26,9 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
 
   return (
     <TabNavigation
-      aria-label={secondary ? "Secondary nav" : "Main nav"}
       secondary={secondary}
+      asChild
+      aria-label={secondary ? "primary-navigation" : "secondary-navigation"}
     >
       {tabs.map(({ label, ...props }, index) => (
         <TabNavigationLink
