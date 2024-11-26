@@ -1,6 +1,8 @@
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/ui/chart"
@@ -29,6 +31,7 @@ export type BarChartProps<K extends ChartConfig = ChartConfig> =
   ChartPropsBase<K> & {
     type?: "simple" | "stacked" | "stacked-by-sign"
     label?: boolean
+    legend?: boolean
   }
 
 const _BarChart = <K extends ChartConfig>(
@@ -40,6 +43,7 @@ const _BarChart = <K extends ChartConfig>(
     label = false,
     type = "simple",
     aspect,
+    legend,
   }: BarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -107,6 +111,15 @@ const _BarChart = <K extends ChartConfig>(
             )}
           </Bar>
         ))}
+        {legend && (
+          <ChartLegend
+            content={<ChartLegendContent nameKey="label" />}
+            align={"center"}
+            verticalAlign={"bottom"}
+            layout="vertical"
+            className={"flex-row items-start gap-4 pr-3 pt-2"}
+          />
+        )}
       </BarChartPrimitive>
     </ChartContainer>
   )
