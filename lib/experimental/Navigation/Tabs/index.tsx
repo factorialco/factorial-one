@@ -25,7 +25,11 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const activeTab = sortedTabs.find((tab) => isActive(tab.href))
 
   return (
-    <TabNavigation secondary={secondary}>
+    <TabNavigation
+      secondary={secondary}
+      asChild
+      aria-label={secondary ? "primary-navigation" : "secondary-navigation"}
+    >
       {tabs.map(({ label, ...props }, index) => (
         <TabNavigationLink
           key={index}
