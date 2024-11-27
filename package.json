@@ -143,7 +143,7 @@
     "@rollup/rollup-linux-x64-gnu": "^4.27"
   },
   "dependencies": {
-    "embla-carousel-autoplay": "^8.4.0",
+    "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-react": "^8.5.1",
     "embla-carousel-wheel-gestures": "^8.0.1"
   }
