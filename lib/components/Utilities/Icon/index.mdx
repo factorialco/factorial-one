@@ -40,9 +40,9 @@ ${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={ChartLine")}` }}}
   source={{
     transform: (code) => {
       return `
-import ModuleCalendar from "@factorial-one/icons/modules/ModuleCalendar"
+import { Calendar } from "@factorial-one/icons/modules"
 
-${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={ModuleCalendar")}`
+${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={Calendar")}`
 }}} />
 
 <IconGallery>
