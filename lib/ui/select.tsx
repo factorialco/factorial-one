@@ -76,7 +76,7 @@ const SelectContent = React.forwardRef<
       <SelectScrollUpButton />
       <SelectPrimitive.Viewport
         className={cn(
-          "p-1",
+          "py-1",
           position === "popper" &&
             "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
         )}
@@ -108,8 +108,8 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative grid w-full cursor-default select-none grid-cols-[1fr_20px] gap-x-1.5 rounded p-2 outline-none transition-colors focus:bg-f1-background-hover focus:text-f1-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      "data-[state=checked]:bg-f1-background-selected-bold/10 hover:data-[state=checked]:bg-f1-background-selected-bold/10 dark:data-[state=checked]:bg-f1-background-selected-bold/20 dark:hover:data-[state=checked]:bg-f1-background-selected-bold/20",
+      "relative grid w-full cursor-default select-none grid-cols-[1fr_20px] gap-x-1.5 rounded px-3 py-2 outline-none transition-colors after:absolute after:inset-x-1 after:inset-y-0 after:h-full after:rounded after:bg-f1-background-secondary after:opacity-0 after:transition-opacity after:duration-75 after:content-[''] hover:after:opacity-100 focus:after:bg-f1-background-hover focus:after:text-f1-foreground focus:after:opacity-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "data-[state=checked]:after:bg-f1-background-selected-bold/10 data-[state=checked]:after:opacity-100 hover:data-[state=checked]:after:bg-f1-background-selected-bold/10 dark:data-[state=checked]:after:bg-f1-background-selected-bold/20 dark:hover:data-[state=checked]:after:bg-f1-background-selected-bold/20",
       className
     )}
     {...props}
