@@ -1,4 +1,4 @@
-import { WidgetStrip } from "@/experimental/Widgets/Layout/WidgetStrip"
+import { Carousel } from "@/experimental/Navigation/Carousel"
 import {
   Children,
   forwardRef,
@@ -27,14 +27,28 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
   const canShowContent = !!width
   const isSmallerScreen = canShowContent && width < 992
 
-  const arrayWidgets = Children.toArray(widgets).filter((widget) => !!widget)
+  const arrayWidgets = Children.toArray(widgets)
+    .filter((widget) => !!widget)
+    .map((widget, i) => (
+      <div key={i} className="h-full [&>div]:h-full [&>div]:shadow-none">
+        {widget}
+      </div>
+    ))
 
   if (isSmallerScreen) {
     return (
       <div ref={ref} className="flex flex-col gap-6 px-3 pb-3 pt-2">
         {canShowContent && (
           <>
-            <WidgetStrip>{arrayWidgets}</WidgetStrip>
+            <Carousel
+              columns={{
+                default: 1,
+                md: 2,
+              }}
+              showArrows={false}
+            >
+              {arrayWidgets}
+            </Carousel>
             <main>{children}</main>
           </>
         )}

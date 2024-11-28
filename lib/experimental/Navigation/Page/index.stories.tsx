@@ -7,9 +7,9 @@ import * as HeaderStories from "../Header/PageHeader/index.stories"
 import { Tabs } from "../Tabs"
 import * as TabsStories from "../Tabs/index.stories"
 
+import { HomeLayout } from "@/experimental/PageLayouts/HomeLayout"
+import { Default as DefaultHomeLayoutStory } from "@/experimental/PageLayouts/HomeLayout/index.stories"
 import { StandardLayout } from "@/experimental/PageLayouts/StandardLayout"
-import { HomeLayout } from "@/experimental/Widgets/Layout/HomeLayout"
-import { Default as DefaultHomeLayoutStory } from "@/experimental/Widgets/Layout/HomeLayout/index.stories"
 
 const meta: Meta<typeof Page> = {
   component: Page,
