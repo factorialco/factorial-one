@@ -112,7 +112,7 @@
     "@types/twemoji-parser": "^13.1.4",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
-    "@vitejs/plugin-react": "^4.3.3",
+    "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "axe-playwright": "^2.0.3",
     "chromatic": "^11.19.0",
@@ -127,7 +127,7 @@
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.49",
     "postcss-import": "^16.1.0",
-    "prettier": "^3.3.3",
+    "prettier": "^3.4.1",
     "prettier-plugin-organize-imports": "^4.1.0",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "react-syntax-highlighter": "^15.6.1",
@@ -137,13 +137,13 @@
     "vite": "^5.4.11",
     "vite-plugin-dts": "^4.3.0",
     "vite-plugin-lib-inject-css": "^2.1.1",
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.6"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.27"
   },
   "dependencies": {
-    "embla-carousel-autoplay": "^8.4.0",
+    "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-react": "^8.5.1",
     "embla-carousel-wheel-gestures": "^8.0.1"
   }
