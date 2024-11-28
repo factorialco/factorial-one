@@ -7,6 +7,8 @@ import * as HeaderStories from "../Header/PageHeader/index.stories"
 import { Tabs } from "../Tabs"
 import * as TabsStories from "../Tabs/index.stories"
 
+import { HomeLayout } from "@/experimental/PageLayouts/HomeLayout"
+import { Default as DefaultHomeLayoutStory } from "@/experimental/PageLayouts/HomeLayout/index.stories"
 import { StandardLayout } from "@/experimental/PageLayouts/StandardLayout"
 
 const meta: Meta<typeof Page> = {
@@ -73,6 +75,30 @@ export const Daytime: Story = {
             <Placeholder key={index} className="min-h-24" />
           ))}
       </StandardLayout>
+    </DaytimePage>
+  ),
+}
+
+export const DaytimeHomeLayout: Story = {
+  args: {
+    period: "morning",
+  },
+  argTypes: {
+    period: {
+      control: "select",
+      options: ["morning", "afternoon", "evening"],
+    },
+  },
+  render: ({ period }) => (
+    <DaytimePage
+      period={period}
+      header={
+        <div className="px-3 py-4 lg:px-6">
+          <p className="text-xl font-semibold">Good morning, Saul!</p>
+        </div>
+      }
+    >
+      <HomeLayout {...DefaultHomeLayoutStory.args} />
     </DaytimePage>
   ),
 }
