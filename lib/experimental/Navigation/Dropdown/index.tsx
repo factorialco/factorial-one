@@ -97,7 +97,7 @@ export function Dropdown({ items, children }: DropdownProps) {
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[var(--radix-dropdown-menu-trigger-width)]">
-        <div className="flex flex-col p-1">
+        <div className="flex flex-col">
           {items.map((item, index) => (
             <DropdownItem
               key={index}
