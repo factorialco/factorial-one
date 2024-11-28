@@ -29,3 +29,17 @@ export const Default: Story = {
     selected: "1",
   },
 }
+
+export const SingleEntry: Story = {
+  args: {
+    companies: [exampleCompanies[0]],
+    selected: "1",
+  },
+}
+
+export const LoadingCompanies: Story = {
+  args: {
+    companies: exampleCompanies,
+    isLoading: true,
+  },
+}

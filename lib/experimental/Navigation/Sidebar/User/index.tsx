@@ -18,7 +18,7 @@ interface UserProps {
 
 export function User({ firstName, lastName, avatarUrl, options }: UserProps) {
   return (
-    <div className="border-t border-dashed border-transparent border-t-f1-border pt-4">
+    <div className="mx-3 border-t border-dashed border-transparent border-t-f1-border pb-3 pt-4">
       <Dropdown items={options}>
         <button
           className={cn(

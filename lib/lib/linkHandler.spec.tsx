@@ -33,7 +33,7 @@ describe("useLink", () => {
     )
   })
 
-  test("isActive returns true if the current path starts with href", async () => {
+  test("isActive returns true if the current path starts with href including trailing slash", async () => {
     render(
       <LinkProvider currentPath="/foo/bar">
         <Component href="/foo" />
@@ -42,6 +42,18 @@ describe("useLink", () => {
 
     expect(screen.getByRole("link").getAttribute("data-is-active")).toEqual(
       "true"
+    )
+  })
+
+  test("isActive returns true if the current path starts with href with no trailing slash", async () => {
+    render(
+      <LinkProvider currentPath="/foo_bar">
+        <Component href="/foo" />
+      </LinkProvider>
+    )
+
+    expect(screen.getByRole("link").getAttribute("data-is-active")).toEqual(
+      "false"
     )
   })
 

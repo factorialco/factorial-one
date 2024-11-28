@@ -9,6 +9,12 @@ const tabItems = [
   { label: "Requests", href: "/requests" },
 ]
 
+const secondaryTabItems = [
+  { label: "All", href: "/courses", index: true },
+  { label: "Courses", href: "/courses/new" },
+  { label: "Activity", href: "/courses/activity" },
+]
+
 const meta = {
   component: Tabs,
   tags: ["autodocs"],
@@ -27,6 +33,21 @@ export const Primary: Story = {
     tabs: tabItems,
     secondary: false,
   },
+}
+
+export const Piled: Story = {
+  args: {
+    tabs: [],
+  },
+  parameters: {
+    currentPath: "/courses",
+  },
+  render: () => (
+    <div>
+      <Tabs tabs={tabItems} />
+      <Tabs secondary tabs={secondaryTabItems} />
+    </div>
+  ),
 }
 
 export const Secondary: Story = {

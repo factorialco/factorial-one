@@ -30,7 +30,7 @@ const tabNavigationVariants = cva(
     variants: {
       secondary: {
         true: "bg-f1-background-secondary/25 dark:bg-f1-foreground/[.02]",
-        false: "bg-f1-background-transparent",
+        false: "bg-f1-background-transparent pt-1",
       },
     },
     defaultVariants: {
@@ -73,7 +73,7 @@ const tabNavigationLinkVariants = cva(
   {
     variants: {
       secondary: {
-        true: "group-hover:border-f1-border group-data-[active=true]:border-f1-border group-data-[active=true]:bg-f1-background-inverse-secondary group-data-[active=true]:text-f1-foreground",
+        true: "group-hover:ring-f1-border group-data-[active=true]:bg-f1-background-inverse-secondary group-data-[active=true]:text-f1-foreground group-data-[active=true]:ring-f1-border",
         false:
           "bg-f1-background-transparent group-hover:bg-f1-background-tertiary group-hover:text-f1-foreground group-data-[active=true]:bg-f1-background-tertiary group-data-[active=true]:text-f1-foreground",
       },
@@ -121,7 +121,7 @@ const _TabNavigationLink = React.forwardRef<
         {getSubtree({ asChild, children }, (children) => (
           <span
             className={cn(
-              "border border-solid border-transparent text-f1-foreground-secondary",
+              "text-f1-foreground-secondary ring-1 ring-inset ring-transparent",
               tabNavigationLinkVariants({ secondary, disabled }),
               className
             )}
@@ -152,7 +152,7 @@ const TabNavigationLinkSkeleton: React.FC<{ className?: string }> = ({
     <li className="list-none">
       <Skeleton
         className={cn(
-          "mr-4 w-20 rounded-md border border-solid border-transparent py-1.5",
+          "mr-4 w-20 rounded-md py-1.5 ring-1 ring-inset ring-transparent",
           className
         )}
       >

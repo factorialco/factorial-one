@@ -14,12 +14,12 @@ import * as ModuleIcons from "@/icons/modules"
 ## App Icons
 
 <Canvas
-  of={IconStories.Example}
+  of={IconStories.App}
   sourceState="shown"
   source={{
     transform: (code) => {
       return `
-import AreaGraph from "@factorial-one/icons/app/AreaGraph"
+import { ChartLine } from "@factorial-one/icons/app"
 
 ${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={ChartLine")}` }}}
 />
@@ -35,15 +35,15 @@ ${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={ChartLine")}` }}}
 ## Module Icons
 
 <Canvas
-  of={IconStories.Example}
+  of={IconStories.Module}
   sourceState="shown"
   source={{
     transform: (code) => {
       return `
-import ModuleCalendar from "@factorial-one/icons/modules/ModuleCalendar"
+import { Calendar } from "@factorial-one/icons/modules"
 
-${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={ModuleCalendar")}`
-}}} />
+${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={Calendar")}` }}}
+/>
 
 <IconGallery>
   {Object.keys(ModuleIcons).map((iconName) => (

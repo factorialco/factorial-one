@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { AreaChartWidget } from "@/experimental/Widgets/Charts/AreaChartWidget"
 import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { HomeLayout } from "."
-import { AreaChartWidget } from "../../Charts/AreaChartWidget"
 
 import { AreaChartProps } from "@/components/Charts/AreaChart"
-import AreaChartWidgetStoriesMeta from "../../Charts/AreaChartWidget/index.stories"
-import { BarChartWidget } from "../../Charts/BarChartWidget"
-import BarChartWidgetStoriesMeta from "../../Charts/BarChartWidget/index.stories"
-import { ComposeChartContainerProps } from "../../Charts/ChartContainer"
-import { LineChartWidget } from "../../Charts/LineChartWidget"
-import LineChartWidgetStoriesMeta from "../../Charts/LineChartWidget/index.stories"
-import { RadialProgressWidget } from "../../Charts/RadialProgressWidget"
-import RadialProgressWidgetStoriesMeta from "../../Charts/RadialProgressWidget/index.stories"
-import { VerticalBarChartWidget } from "../../Charts/VerticalBarChartWidget"
-import VerticalBarChartWidgetStoriesMeta from "../../Charts/VerticalBarChartWidget/index.stories"
-import { Widget } from "../../Widget"
+import AreaChartWidgetStoriesMeta from "@/experimental/Widgets/Charts/AreaChartWidget/index.stories"
+import { BarChartWidget } from "@/experimental/Widgets/Charts/BarChartWidget"
+import BarChartWidgetStoriesMeta from "@/experimental/Widgets/Charts/BarChartWidget/index.stories"
+import { ComposeChartContainerProps } from "@/experimental/Widgets/Charts/ChartContainer"
+import { LineChartWidget } from "@/experimental/Widgets/Charts/LineChartWidget"
+import LineChartWidgetStoriesMeta from "@/experimental/Widgets/Charts/LineChartWidget/index.stories"
+import { RadialProgressWidget } from "@/experimental/Widgets/Charts/RadialProgressWidget"
+import RadialProgressWidgetStoriesMeta from "@/experimental/Widgets/Charts/RadialProgressWidget/index.stories"
+import { VerticalBarChartWidget } from "@/experimental/Widgets/Charts/VerticalBarChartWidget"
+import VerticalBarChartWidgetStoriesMeta from "@/experimental/Widgets/Charts/VerticalBarChartWidget/index.stories"
+import { Widget } from "@/experimental/Widgets/Widget"
 
 const widgets = [
   <AreaChartWidget
