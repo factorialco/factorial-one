@@ -64,7 +64,7 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
           <div
             className={cn(
               { "transition-all": !shouldReduceMotion },
-              sidebarState === "locked" ? "w-64 pl-3" : "w-0"
+              sidebarState === "locked" ? "w-[240px] shrink-0 pl-3" : "w-0"
             )}
           >
             {sidebar}

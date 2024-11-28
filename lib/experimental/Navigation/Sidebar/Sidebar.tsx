@@ -42,7 +42,7 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
     <motion.div
       initial={false}
       className={cn(
-        "absolute bottom-0 left-0 top-0 z-10 flex w-64 flex-col transition-[background-color]",
+        "absolute bottom-0 left-0 top-0 z-10 flex w-[240px] flex-col transition-[background-color]",
         sidebarState === "locked"
           ? "h-screen"
           : cn(
