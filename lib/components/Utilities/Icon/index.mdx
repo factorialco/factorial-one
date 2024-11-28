@@ -14,7 +14,7 @@ import * as ModuleIcons from "@/icons/modules"
 ## App Icons
 
 <Canvas
-  of={IconStories.Example}
+  of={IconStories.App}
   sourceState="shown"
   source={{
     transform: (code) => {
@@ -35,15 +35,15 @@ ${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={ChartLine")}` }}}
 ## Module Icons
 
 <Canvas
-  of={IconStories.Example}
+  of={IconStories.Module}
   sourceState="shown"
   source={{
     transform: (code) => {
       return `
 import { Calendar } from "@factorial-one/icons/modules"
 
-${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={Calendar")}`
-}}} />
+${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={Calendar")}` }}}
+/>
 
 <IconGallery>
   {Object.keys(ModuleIcons).map((iconName) => (

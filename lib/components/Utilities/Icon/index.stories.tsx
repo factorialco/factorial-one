@@ -3,26 +3,12 @@ import { useState } from "react"
 
 import * as AnimatedIcons from "@/icons/animated"
 import * as Icons from "@/icons/app"
+import * as ModuleIcons from "@/icons/modules"
 import { ComponentProps } from "react"
 import { Icon } from "."
 
 const meta = {
   component: Icon,
-  parameters: {
-    layout: "centered",
-  },
-
-  tags: ["autodocs"],
-} satisfies Meta<ComponentProps<typeof Icon>>
-
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Example: Story = {
-  args: {
-    size: "md",
-    icon: Icons.ArrowDown,
-  },
   argTypes: {
     icon: {
       control: "select",
@@ -35,6 +21,27 @@ export const Example: Story = {
       options: ["sm", "md", "lg"],
       description: "Size of the icon",
     },
+  },
+  parameters: {
+    layout: "centered",
+  },
+  tags: ["autodocs"],
+} satisfies Meta<ComponentProps<typeof Icon>>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const App: Story = {
+  args: {
+    size: "lg",
+    icon: Icons.ChartLine,
+  },
+}
+
+export const Module: Story = {
+  args: {
+    size: "lg",
+    icon: ModuleIcons.Calendar,
   },
 }
 
