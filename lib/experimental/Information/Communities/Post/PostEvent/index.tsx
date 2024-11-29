@@ -4,7 +4,7 @@ import { Skeleton } from "@/ui/skeleton"
 
 type PostEventProps = {
   title: string
-  image?: string
+  imageUrl?: string
   place: string
   date: {
     hour: string
@@ -15,18 +15,22 @@ type PostEventProps = {
 
 export const BasePostEvent = ({
   title,
-  image,
+  imageUrl,
   place,
   date,
 }: PostEventProps) => {
   return (
     <div className="flex w-full flex-col gap-1 rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-1 shadow">
-      {image && (
-        <img
-          src={image}
-          alt={title}
-          className="aspect-video h-full w-full rounded-md object-cover"
-        />
+      {imageUrl && (
+        <div className="relative aspect-video w-full">
+          <img
+            src={imageUrl}
+            role="presentation"
+            loading="lazy"
+            className="aspect-video h-full w-full rounded-md object-cover"
+          />
+          <Skeleton className="absolute inset-0 h-full w-full rounded-md" />
+        </div>
       )}
       <div className="flex h-full flex-row gap-3 p-2">
         <div className="w-1 shrink-0 self-stretch rounded-full bg-f1-background-accent-bold" />
@@ -35,9 +39,7 @@ export const BasePostEvent = ({
             {title}
           </span>
           <span className="flex min-w-0 flex-row gap-1 text-f1-foreground-secondary">
-            <span>{date.hour}</span>
-            <span>·</span>
-            <span className="truncate">{place}</span>
+            {date.hour} · <span className="truncate">{place}</span>
           </span>
         </div>
         <div className="shrink-0">

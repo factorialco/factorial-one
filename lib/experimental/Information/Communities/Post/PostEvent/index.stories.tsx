@@ -20,7 +20,7 @@ export const Default: Story = {
   args: {
     title: "End of the Year Dinner!",
     place: "Poble Espanyol",
-    image: "https://cataas.com/cat",
+    imageUrl: "https://cataas.com/cat",
     date: {
       hour: "20:00",
       day: 13,
