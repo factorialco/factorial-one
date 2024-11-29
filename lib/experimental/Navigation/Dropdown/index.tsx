@@ -66,7 +66,11 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
   )
 
   return (
-    <DropdownMenuItem asChild onClick={item.onClick} className={itemClass}>
+    <DropdownMenuItem
+      asChild
+      onClick={item.onClick}
+      className={cn(itemClass, item.href && "hover:cursor-pointer")}
+    >
       {item.href ? (
         <Link
           href={item.href}
