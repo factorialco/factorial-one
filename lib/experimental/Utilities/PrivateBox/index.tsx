@@ -5,5 +5,12 @@ import { FC, PropsWithChildren } from "react"
 export const PrivateBox: FC<PropsWithChildren> = ({ children }) => {
   const { enabled } = usePrivacyMode()
 
-  return <div className={cn(enabled && "blur-md", "inline")}>{children}</div>
+  return (
+    <div
+      className={cn(enabled && "select-none blur-sm", "inline")}
+      aria-hidden={enabled}
+    >
+      {children}
+    </div>
+  )
 }
