@@ -1,5 +1,5 @@
 import { DateAvatar } from "@/experimental/Information/Avatars/DateAvatar"
-import { formatMonth, formatTime, getDayOfMonth } from "@/lib/date"
+import { formatTime } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
 
@@ -40,7 +40,7 @@ export const BasePostEvent = ({
           </span>
         </div>
         <div className="shrink-0">
-          <DateAvatar day={getDayOfMonth(date)} month={formatMonth(date)} />
+          <DateAvatar date={date} />
         </div>
       </div>
     </div>
