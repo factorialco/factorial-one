@@ -6,7 +6,7 @@ const meta: Meta<typeof CompanySelector> = {
   tags: ["autodocs"],
   decorators: [
     (Story) => (
-      <div className="bg-f1-background-tertiary p-3">
+      <div className="max-w-[300px] bg-f1-background-tertiary p-3">
         <Story />
       </div>
     ),
@@ -20,7 +20,7 @@ type Story = StoryObj<typeof CompanySelector>
 const exampleCompanies = [
   { id: "1", name: "Factorial", logo: "https://github.com/factorial.png" },
   { id: "2", name: "Dazlog", logo: "https://github.com/dazlog.png" },
-  { id: "3", name: "Acme Corp" },
+  { id: "3", name: "Acme Corp, Company of Extended Names" },
 ]
 
 export const Default: Story = {
