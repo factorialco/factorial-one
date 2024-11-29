@@ -9,6 +9,9 @@ export default meta
 
 type Story = StoryObj<typeof PostEvent>
 
+// Fixed date for the example stories
+const eventDate = new Date(2024, 11, 13, 20, 0)
+
 export const Default: Story = {
   decorators: [
     (Story) => (
@@ -21,11 +24,7 @@ export const Default: Story = {
     title: "End of the Year Dinner!",
     place: "Poble Espanyol",
     imageUrl: "https://cataas.com/cat",
-    date: {
-      hour: "20:00",
-      day: 13,
-      month: "December",
-    },
+    date: eventDate,
   },
 }
 
@@ -40,11 +39,7 @@ export const NoImage: Story = {
   args: {
     title: "End of the Year Dinner!",
     place: "Poble Espanyol",
-    date: {
-      hour: "20:00",
-      day: 13,
-      month: "December",
-    },
+    date: eventDate,
   },
 }
 

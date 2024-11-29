@@ -1,4 +1,5 @@
 import { DateAvatar } from "@/experimental/Information/Avatars/DateAvatar"
+import { formatMonth, formatTime, getDayOfMonth } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
 
@@ -6,11 +7,7 @@ type PostEventProps = {
   title: string
   imageUrl?: string
   place: string
-  date: {
-    hour: string
-    day: number
-    month: string
-  }
+  date: Date
 }
 
 export const BasePostEvent = ({
@@ -39,11 +36,11 @@ export const BasePostEvent = ({
             {title}
           </span>
           <span className="flex min-w-0 flex-row gap-1 text-f1-foreground-secondary">
-            {date.hour} · <span className="truncate">{place}</span>
+            {formatTime(date)} · <span className="truncate">{place}</span>
           </span>
         </div>
         <div className="shrink-0">
-          <DateAvatar day={date.day} month={date.month} />
+          <DateAvatar day={getDayOfMonth(date)} month={formatMonth(date)} />
         </div>
       </div>
     </div>
