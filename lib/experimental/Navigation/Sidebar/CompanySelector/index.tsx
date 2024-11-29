@@ -35,7 +35,7 @@ export function CompanySelector({
     return (
       <div className="flex w-fit items-center gap-2 p-1.5">
         <Skeleton className="size-6" />
-        <Skeleton className="h-5 w-14" />
+        <Skeleton className="h-3 w-14" />
       </div>
     )
   }
@@ -97,7 +97,7 @@ const Selector = ({
     >
       <div
         className={cn(
-          "group flex w-fit flex-nowrap items-center justify-center gap-1 truncate rounded p-1.5 text-f1-foreground transition-colors hover:bg-f1-background-hover data-[state=open]:bg-f1-background-hover",
+          "group flex w-fit max-w-full flex-nowrap items-center justify-center gap-1 truncate rounded p-1.5 text-f1-foreground transition-colors hover:bg-f1-background-hover data-[state=open]:bg-f1-background-hover",
           focusRing()
         )}
         tabIndex={0}
@@ -128,7 +128,7 @@ const SelectedCompanyLabel = ({
   return (
     <div
       className={cn(
-        "flex w-fit flex-nowrap items-center justify-center gap-2 rounded text-lg font-semibold text-f1-foreground transition-colors"
+        "flex w-fit min-w-0 max-w-full items-center gap-2 rounded text-lg font-semibold text-f1-foreground transition-colors"
       )}
       title={company?.name}
     >
@@ -137,8 +137,8 @@ const SelectedCompanyLabel = ({
         src={company?.logo}
         size="xsmall"
       />
-      <div className="flex flex-row items-center">
-        <span className="truncate">{company?.name}</span>
+      <div className="min-w-0 flex-1">
+        <span className="block truncate">{company?.name}</span>
       </div>
     </div>
   )
