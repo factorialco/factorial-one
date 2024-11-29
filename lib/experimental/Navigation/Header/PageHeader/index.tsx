@@ -79,7 +79,9 @@ export function PageHeader({
           {breadcrumbsTree.length > 1 ? (
             <Breadcrumbs breadcrumbs={breadcrumbsTree} />
           ) : (
-            <div className="text-xl font-semibold">{module.name}</div>
+            <div className="text-xl font-semibold text-f1-foreground">
+              {module.name}
+            </div>
           )}
         </div>
       </div>
