@@ -136,7 +136,11 @@ const getStatusTagComponent = ({
     case statusTag !== undefined:
       return [
         true,
-        <StatusTag text={statusTag.text} variant={statusTag.variant} />,
+        <StatusTag
+          key={statusTag.text}
+          text={statusTag.text}
+          variant={statusTag.variant}
+        />,
       ]
     default:
       return [false, null]
