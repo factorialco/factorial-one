@@ -88,14 +88,14 @@ const StatusTag = () => {
   return <span>This is custom tag</span>
 }
 
-export const FirstLevelWithCustomTag: Story = {
+export const FirstLevelWithCustomStatus: Story = {
   args: {
     module: {
       name: "Documents",
       href: "/documents",
       icon: Recruitment,
     },
-    statusTagComponent: <StatusTag />,
+    statusComponent: <StatusTag />,
   },
 }
 

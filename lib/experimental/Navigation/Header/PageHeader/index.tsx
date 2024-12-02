@@ -24,7 +24,7 @@ type HeaderProps = {
     href: string
     icon: IconType
   }
-  statusTagComponent?: ReactElement
+  statusComponent?: ReactElement
   statusTag?: {
     text: string
     variant: StatusVariant
@@ -35,7 +35,7 @@ type HeaderProps = {
 
 export function PageHeader({
   module,
-  statusTagComponent,
+  statusComponent,
   statusTag = undefined,
   breadcrumbs = [],
   actions = [],
@@ -46,8 +46,8 @@ export function PageHeader({
     { label: module.name, href: module.href, icon: module.icon },
     ...breadcrumbs,
   ]
-  const [hasStatus, StatusTagComponent] = getStatusTagComponent({
-    statusTagComponent,
+  const [hasStatus, StatusComponent] = getStatusComponent({
+    statusComponent,
     statusTag,
   })
   const hasNavigation = breadcrumbs.length > 0
@@ -95,7 +95,7 @@ export function PageHeader({
       </div>
       <div className="flex items-center">
         {!hasNavigation && hasStatus && (
-          <div className="pe-3">{StatusTagComponent}</div>
+          <div className="pe-3">{StatusComponent}</div>
         )}
         {hasStatus && hasActions && (
           <div className="right-0 h-4 w-px bg-f1-border-secondary"></div>
@@ -124,15 +124,15 @@ function PageAction({ action }: { action: PageAction }) {
   )
 }
 
-const getStatusTagComponent = ({
-  statusTagComponent,
+const getStatusComponent = ({
+  statusComponent,
   statusTag,
-}: Pick<HeaderProps, "statusTagComponent" | "statusTag">):
+}: Pick<HeaderProps, "statusComponent" | "statusTag">):
   | [true, ReactElement]
   | [false, null] => {
   switch (true) {
-    case isValidElement(statusTagComponent):
-      return [true, statusTagComponent]
+    case isValidElement(statusComponent):
+      return [true, statusComponent]
     case statusTag !== undefined:
       return [
         true,
