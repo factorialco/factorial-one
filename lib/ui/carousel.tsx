@@ -153,22 +153,53 @@ Carousel.displayName = "Carousel"
 
 const CarouselContent = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => {
-  const { carouselRef, orientation } = useCarousel()
+  React.HTMLAttributes<HTMLDivElement> & { showFade: boolean }
+>(({ className, showFade, ...props }, ref) => {
+  const { carouselRef, orientation, canScrollNext, canScrollPrev } =
+    useCarousel()
 
   return (
-    <div ref={carouselRef} className="overflow-hidden">
-      <div
-        ref={ref}
-        className={cn(
-          "flex",
-          orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
-          className
-        )}
-        {...props}
-      />
-    </div>
+    <>
+      <div ref={carouselRef} className="overflow-hidden">
+        <div
+          ref={ref}
+          className={cn(
+            "flex",
+            orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col",
+            className
+          )}
+          {...props}
+        />
+      </div>
+      {showFade && canScrollPrev && (
+        <div
+          className={cn(
+            "w-[60px]",
+            "absolute",
+            "h-full",
+            "top-0",
+            "left-0",
+            orientation === "horizontal"
+              ? "bg-gradient-to-l from-transparent from-0% to-f1-background to-100%"
+              : "bg-gradient-to-t from-transparent from-0% to-f1-background to-100%"
+          )}
+        ></div>
+      )}
+      {showFade && canScrollNext && (
+        <div
+          className={cn(
+            "w-[60px]",
+            "absolute",
+            "h-full",
+            "top-0",
+            "right-0",
+            orientation === "horizontal"
+              ? "bg-gradient-to-r from-transparent from-0% to-f1-background to-100%"
+              : "bg-gradient-to-b from-transparent from-0% to-f1-background to-100%"
+          )}
+        ></div>
+      )}
+    </>
   )
 })
 CarouselContent.displayName = "CarouselContent"

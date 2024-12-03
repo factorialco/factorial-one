@@ -4,11 +4,12 @@ import { Carousel } from "."
 
 const meta: Meta<typeof Carousel> = {
   component: Carousel,
-  parameters: {
-    layout: "fullscreen",
-  },
   argTypes: {
     autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+    showFade: { control: "boolean" },
   },
 }
 
@@ -24,31 +25,52 @@ const SLIDES = Array.from({ length: 6 }, (_, i) => (
 
 export const Default: Story = {
   decorators: [
-    (Story) => (
+    (Story, args) => (
       <div className="w-full p-6">
-        <Story />
+        <Story {...args} />
       </div>
     ),
   ],
   argTypes: {
-    autoplay: { table: { disable: true } },
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+    showFade: { control: "boolean" },
   },
   args: {
     autoplay: false,
+    showArrows: true,
+    showDots: true,
+    showPeek: false,
+    showFade: false,
     children: SLIDES,
   },
 }
 
+/**
+ * `columns`: An object specifying the number of columns to display at different breakpoints:
+ *   - `xs`: Number of columns for extra small screens. Default is `2`.
+ *   - `sm`: Number of columns for small screens. Default is `3`.
+ *   - `md`: Number of columns for medium screens. Default is `4`.
+ *   - `lg`: Number of columns for large screens. Default is `6`.
+ *
+ * Try to **resize the window** to see the number of columns change.
+ */
 export const CustomColumns: Story = {
   decorators: [
-    (Story) => (
+    (Story, args) => (
       <div className="w-full p-6">
-        <Story />
+        <Story {...args} />
       </div>
     ),
   ],
   argTypes: {
-    autoplay: { table: { disable: true } },
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+    showFade: { control: "boolean" },
   },
   args: {
     autoplay: false,
@@ -62,6 +84,9 @@ export const CustomColumns: Story = {
   },
 }
 
+/**
+ * `autoplay`: Whether to automatically scroll through the slides. Default is `false`.
+ */
 export const AutoScroll: Story = {
   decorators: [
     (Story) => (
@@ -70,6 +95,13 @@ export const AutoScroll: Story = {
       </div>
     ),
   ],
+  argTypes: {
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+    showFade: { control: "boolean" },
+  },
   args: {
     autoplay: true,
     delay: 3000,
@@ -77,6 +109,9 @@ export const AutoScroll: Story = {
   },
 }
 
+/**
+ * `sneakPeek`: Whether to show a peek of the next slide. Default is `false`.
+ */
 export const SneakPeek: Story = {
   decorators: [
     (Story) => (
@@ -85,9 +120,47 @@ export const SneakPeek: Story = {
       </div>
     ),
   ],
+  argTypes: {
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+    showFade: { control: "boolean" },
+  },
   args: {
     showArrows: false,
     children: SLIDES,
     showPeek: true,
+  },
+}
+
+/**
+ * `showFade`: Whether to fade the edges of the carousel. Default is `false`.
+ */
+export const FadeEdges: Story = {
+  decorators: [
+    (Story) => (
+      <div className="w-full p-6">
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+    showFade: { control: "boolean" },
+  },
+  args: {
+    showArrows: true,
+    children: SLIDES,
+    showFade: true,
+    columns: {
+      xs: 2,
+      sm: 2,
+      md: 3,
+      lg: 3,
+    },
   },
 }
