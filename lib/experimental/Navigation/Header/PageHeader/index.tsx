@@ -10,6 +10,7 @@ import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import { Link } from "@/lib/linkHandler"
+import { ReactElement, isValidElement } from "react"
 
 export type PageAction = {
   label: string
@@ -23,6 +24,7 @@ type HeaderProps = {
     href: string
     icon: IconType
   }
+  statusComponent?: ReactElement
   statusTag?: {
     text: string
     variant: StatusVariant
@@ -33,6 +35,7 @@ type HeaderProps = {
 
 export function PageHeader({
   module,
+  statusComponent,
   statusTag = undefined,
   breadcrumbs = [],
   actions = [],
@@ -43,8 +46,10 @@ export function PageHeader({
     { label: module.name, href: module.href, icon: module.icon },
     ...breadcrumbs,
   ]
-
-  const hasStatus = statusTag && Object.keys(statusTag).length !== 0
+  const [hasStatus, StatusComponent] = getStatusComponent({
+    statusComponent,
+    statusTag,
+  })
   const hasNavigation = breadcrumbs.length > 0
   const hasActions = actions.length > 0
 
@@ -90,9 +95,7 @@ export function PageHeader({
       </div>
       <div className="flex items-center">
         {!hasNavigation && hasStatus && (
-          <div className="pe-3">
-            <StatusTag text={statusTag.text} variant={statusTag.variant} />
-          </div>
+          <div className="pe-3">{StatusComponent}</div>
         )}
         {hasStatus && hasActions && (
           <div className="right-0 h-4 w-px bg-f1-border-secondary"></div>
@@ -119,4 +122,27 @@ function PageAction({ action }: { action: PageAction }) {
       <Icon icon={action.icon} size="md" />
     </Link>
   )
+}
+
+const getStatusComponent = ({
+  statusComponent,
+  statusTag,
+}: Pick<HeaderProps, "statusComponent" | "statusTag">):
+  | [true, ReactElement]
+  | [false, null] => {
+  switch (true) {
+    case isValidElement(statusComponent):
+      return [true, statusComponent]
+    case statusTag !== undefined:
+      return [
+        true,
+        <StatusTag
+          key={statusTag.text}
+          text={statusTag.text}
+          variant={statusTag.variant}
+        />,
+      ]
+    default:
+      return [false, null]
+  }
 }
