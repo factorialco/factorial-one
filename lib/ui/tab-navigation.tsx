@@ -29,7 +29,7 @@ const tabNavigationVariants = cva(
   {
     variants: {
       secondary: {
-        true: "bg-f1-background-secondary/25 dark:bg-f1-foreground/[.02]",
+        true: "bg-f1-foreground/[.02] dark:bg-f1-foreground/[.02]",
         false: "bg-f1-background-transparent pt-1",
       },
     },
