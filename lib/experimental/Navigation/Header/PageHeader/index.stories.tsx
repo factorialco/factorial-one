@@ -33,7 +33,16 @@ export const Default: Story = {
       {
         label: "More options",
         icon: EllipsisHorizontal,
-        href: "/recruitment/settings",
+        actions: [
+          {
+            label: "Profile",
+            href: "/recruitment/profile",
+          },
+          {
+            label: "Whatever",
+            href: "/whatever",
+          },
+        ],
       },
     ],
   },
