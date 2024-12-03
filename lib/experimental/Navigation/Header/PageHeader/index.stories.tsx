@@ -93,21 +93,6 @@ export const FirstLevelWithTagAndActions: Story = {
   },
 }
 
-const StatusTag = () => {
-  return <span>This is custom tag</span>
-}
-
-export const FirstLevelWithCustomStatus: Story = {
-  args: {
-    module: {
-      name: "Documents",
-      href: "/documents",
-      icon: Recruitment,
-    },
-    statusComponent: <StatusTag />,
-  },
-}
-
 export const LongBreadcrumbs: Story = {
   args: {
     module: {
