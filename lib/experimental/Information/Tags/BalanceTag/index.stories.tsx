@@ -19,6 +19,12 @@ type Story = StoryObj<typeof meta>
 
 export const PositiveBalanceTag: Story = {}
 
+export const NeutralBalanceTag: Story = {
+  args: {
+    status: "neutral",
+  },
+}
+
 export const NegativeBalanceTag: Story = {
   args: {
     status: "negative",
