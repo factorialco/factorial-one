@@ -1,3 +1,4 @@
+export { default as Benefits } from './Benefits'
 export { default as Calendar } from './Calendar'
 export { default as ClockIn } from './ClockIn'
 export { default as Discover } from './Discover'
