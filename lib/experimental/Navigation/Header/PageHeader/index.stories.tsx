@@ -68,6 +68,7 @@ export const FirstLevelWithTag: Story = {
     statusTag: {
       text: "Published",
       variant: "positive",
+      tooltip: "Tooltip description",
     },
   },
 }
