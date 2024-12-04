@@ -1,5 +1,4 @@
 import { usePrivacyMode } from "@/lib/privacyMode"
-import { cn } from "@/lib/utils"
 import {
   ChartContainer,
   ChartLegend,
@@ -183,11 +182,14 @@ export const BaseAreaChart = <K extends LineChartConfig>(
             axisLine={false}
             tickMargin={8}
             tickCount={yAxis?.tickCount}
-            tickFormatter={yAxis?.tickFormatter}
+            tickFormatter={
+              canBeBlurred && privacyModeEnabled
+                ? () => "**"
+                : yAxis?.tickFormatter
+            }
             ticks={yAxis?.ticks}
             domain={yAxis?.domain}
             width={yAxisWidth}
-            className={cn(canBeBlurred && privacyModeEnabled && "blur-md")}
           />
         )}
         {showTooltip && (

@@ -32,7 +32,7 @@ export function User({ firstName, lastName, avatarUrl, options }: UserProps) {
             lastName={lastName}
             size="xsmall"
           />
-          <span className="text-f1-foreground">
+          <span className="min-w-0 truncate text-f1-foreground">
             {firstName} {lastName}
           </span>
         </button>

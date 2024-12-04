@@ -42,3 +42,20 @@ export const EmployeeProfile: Story = {
     children: <Dashboard {...DashboardStories.default.args} />,
   },
 }
+
+export const EmployeeProfileWithFewWidgets: Story = {
+  args: {
+    children: (
+      <Dashboard {...DashboardStories.default.args}>
+        {DashboardStories.default.args.children.slice(0, 3)}
+      </Dashboard>
+    ),
+  },
+  decorators: [
+    (Story) => (
+      <div className="h-screen">
+        <Story />
+      </div>
+    ),
+  ],
+}

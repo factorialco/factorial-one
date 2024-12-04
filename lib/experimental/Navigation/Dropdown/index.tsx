@@ -70,7 +70,10 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
       {item.href ? (
         <Link
           href={item.href}
-          className={cn(itemClass, "text-f1-foreground no-underline")}
+          className={cn(
+            itemClass,
+            "text-f1-foreground no-underline hover:cursor-pointer"
+          )}
           {...props}
         >
           {content}

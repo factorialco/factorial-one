@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
@@ -9,6 +9,22 @@ import { AnimatePresence, motion } from "framer-motion"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
+import { Link } from "@/lib/linkHandler"
+import { cva } from "class-variance-authority"
+import { ReactElement } from "react"
+import { Dropdown } from "../../Dropdown"
+
+export type PageAction = {
+  label: string
+  icon: IconType
+} & (
+  | {
+      href: string
+    }
+  | {
+      actions: Array<{ label: string; href: string }>
+    }
+)
 
 type HeaderProps = {
   module: {
@@ -21,11 +37,7 @@ type HeaderProps = {
     variant: StatusVariant
   }
   breadcrumbs?: BreadcrumbItemType[]
-  actions?: {
-    label: string
-    icon: IconType
-    onClick: () => void
-  }[]
+  actions?: PageAction[]
 }
 
 export function PageHeader({
@@ -40,7 +52,6 @@ export function PageHeader({
     { label: module.name, href: module.href, icon: module.icon },
     ...breadcrumbs,
   ]
-
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
   const hasActions = actions.length > 0
@@ -79,7 +90,9 @@ export function PageHeader({
           {breadcrumbsTree.length > 1 ? (
             <Breadcrumbs breadcrumbs={breadcrumbsTree} />
           ) : (
-            <div className="text-xl font-semibold">{module.name}</div>
+            <div className="text-xl font-semibold text-f1-foreground">
+              {module.name}
+            </div>
           )}
         </div>
       </div>
@@ -95,19 +108,37 @@ export function PageHeader({
         {hasActions && (
           <div className="items-right flex gap-2 ps-3">
             {actions.map((action, index) => (
-              <Button
-                hideLabel
-                round
-                key={index}
-                variant="outline"
-                onClick={action.onClick}
-                label={action.label}
-                icon={action.icon}
-              />
+              <PageAction key={index} action={action} />
             ))}
           </div>
         )}
       </div>
     </div>
+  )
+}
+
+const pageActionButtonVariants = cva(
+  "inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
+)
+
+function PageAction({ action }: { action: PageAction }): ReactElement {
+  if ("actions" in action) {
+    return (
+      <Dropdown items={action.actions}>
+        <button title={action.label} className={pageActionButtonVariants()}>
+          <Icon icon={action.icon} size="md" />
+        </button>
+      </Dropdown>
+    )
+  }
+
+  return (
+    <Link
+      href={action.href}
+      title={action.label}
+      className={pageActionButtonVariants()}
+    >
+      <Icon icon={action.icon} size="md" />
+    </Link>
   )
 }
