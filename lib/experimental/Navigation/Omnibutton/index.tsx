@@ -4,11 +4,10 @@ import { Question } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 
 interface Option {
-  title: string
+  title?: string
   description?: string
   href?: string
   onClick?: () => void
-  icon?: string
   target?: string
 }
 
@@ -23,7 +22,7 @@ function formatDropdownItems(options: Option[]): DropdownItem[] {
   return options
     .filter((option) => !!option.title)
     .map(({ title, description, href, onClick, target: _ }) => ({
-      label: title,
+      label: title!,
       description,
       href,
       onClick,
