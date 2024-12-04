@@ -60,7 +60,7 @@ export { default as LockLocked } from './LockLocked'
 export { default as LockUnlocked } from './LockUnlocked'
 export { default as LogoAvatar } from './LogoAvatar'
 export { default as LogoEruditai } from './LogoEruditai'
-export { default as LogoMeetingdoctors } from './LogoMeetingdoctors'
+
 export { default as LogoTravelperk } from './LogoTravelperk'
 export { default as Masonry } from './Masonry'
 export { default as Menu } from './Menu'
