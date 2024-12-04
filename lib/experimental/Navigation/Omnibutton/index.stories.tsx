@@ -41,6 +41,7 @@ const mockOptions = [
 
 export const Default: Story = {
   args: {
+    label: "Help",
     options: mockOptions,
     hasNewUpdate: false,
   },
@@ -48,6 +49,7 @@ export const Default: Story = {
 
 export const WithNewUpdate: Story = {
   args: {
+    label: "Help",
     options: mockOptions,
     hasNewUpdate: true,
   },

@@ -30,11 +30,7 @@ function formatDropdownItems(options: Option[]): DropdownItem[] {
     }))
 }
 
-export function OmniButton({
-  label = "Help",
-  options,
-  hasNewUpdate,
-}: OmniButtonProps) {
+export function OmniButton({ label, options, hasNewUpdate }: OmniButtonProps) {
   return (
     <div
       className="fixed z-10"
