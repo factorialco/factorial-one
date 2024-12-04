@@ -62,6 +62,14 @@ function ApplicationFrameContent({ children, sidebar }: ApplicationFrameProps) {
             )}
           </AnimatePresence>
           <div
+            ref={(node) => {
+              // React types does not support ["inert" attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert) at the moment
+              if (node) {
+                sidebarState === "hidden"
+                  ? node.setAttribute("inert", "")
+                  : node.removeAttribute("inert")
+              }
+            }}
             className={cn(
               { "transition-all": !shouldReduceMotion },
               sidebarState === "locked" ? "w-[240px] shrink-0 pl-3" : "w-0"
