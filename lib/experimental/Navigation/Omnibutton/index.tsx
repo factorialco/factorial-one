@@ -13,6 +13,7 @@ interface Option {
 }
 
 interface OmniButtonProps {
+  label: string
   options: Option[]
   hasNewUpdate?: boolean
 }
@@ -29,7 +30,11 @@ function formatDropdownItems(options: Option[]): DropdownItem[] {
     }))
 }
 
-export function OmniButton({ options, hasNewUpdate }: OmniButtonProps) {
+export function OmniButton({
+  label = "Help",
+  options,
+  hasNewUpdate,
+}: OmniButtonProps) {
   return (
     <div
       className="fixed z-10"
@@ -44,6 +49,7 @@ export function OmniButton({ options, hasNewUpdate }: OmniButtonProps) {
             "relative flex h-6 w-6 items-center justify-center rounded-full bg-f1-background-bold text-f1-foreground-inverse shadow-md transition-all",
             focusRing()
           )}
+          aria-label={label}
         >
           <Icon icon={Question} size="sm" />
           {hasNewUpdate && (
