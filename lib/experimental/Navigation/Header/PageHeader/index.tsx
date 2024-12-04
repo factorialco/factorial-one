@@ -10,12 +10,21 @@ import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import { Link } from "@/lib/linkHandler"
+import { cva } from "class-variance-authority"
+import { ReactElement } from "react"
+import { Dropdown } from "../../Dropdown"
 
 export type PageAction = {
   label: string
   icon: IconType
-  href: string
-}
+} & (
+  | {
+      href: string
+    }
+  | {
+      actions: Array<{ label: string; href: string }>
+    }
+)
 
 type HeaderProps = {
   module: {
@@ -43,7 +52,6 @@ export function PageHeader({
     { label: module.name, href: module.href, icon: module.icon },
     ...breadcrumbs,
   ]
-
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
   const hasActions = actions.length > 0
@@ -109,12 +117,26 @@ export function PageHeader({
   )
 }
 
-function PageAction({ action }: { action: PageAction }) {
+const pageActionButtonVariants = cva(
+  "inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
+)
+
+function PageAction({ action }: { action: PageAction }): ReactElement {
+  if ("actions" in action) {
+    return (
+      <Dropdown items={action.actions}>
+        <button title={action.label} className={pageActionButtonVariants()}>
+          <Icon icon={action.icon} size="md" />
+        </button>
+      </Dropdown>
+    )
+  }
+
   return (
     <Link
       href={action.href}
       title={action.label}
-      className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
+      className={pageActionButtonVariants()}
     >
       <Icon icon={action.icon} size="md" />
     </Link>

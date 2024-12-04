@@ -28,6 +28,10 @@ export const baseColors = {
     80: "219 94% 7% / 0.9",
     90: "219 88% 6% / 0.92",
     100: "218 48% 10%",
+    solid: {
+      40: "219 18% 69%",
+      50: "218 14% 45%",
+    },
   },
   lilac: {
     50: "340 49% 60%",
@@ -185,8 +189,8 @@ export const f1Colors = {
     info: "hsl(var(--info-50) / 0.1)",
   },
   icon: {
-    DEFAULT: "hsl(var(--neutral-50))",
-    secondary: "hsl(var(--neutral-40))",
+    DEFAULT: "hsl(var(--neutral-solid-50))",
+    secondary: "hsl(var(--neutral-solid-40))",
     inverse: "hsl(var(--neutral-0))",
     bold: "hsl(var(--neutral-100))",
     critical: {
