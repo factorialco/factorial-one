@@ -7,7 +7,7 @@ interface Option {
   title?: string
   description?: string
   href?: string
-  onClick?: () => void
+  onClick?: (event: any) => unknown
   target?: string
 }
 
@@ -25,7 +25,7 @@ function formatDropdownItems(options: Option[]): DropdownItem[] {
       label: title!,
       description,
       href,
-      onClick,
+      onClick: onClick ? () => onClick(undefined) : undefined,
     }))
 }
 
