@@ -7,8 +7,9 @@ interface Option {
   title?: string
   description?: string
   href?: string
-  onClick?: () => void
   target?: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Matching Dropdown component's onClick signature
+  onClick?: (event: any) => unknown
 }
 
 interface OmniButtonProps {
@@ -25,7 +26,7 @@ function formatDropdownItems(options: Option[]): DropdownItem[] {
       label: title!,
       description,
       href,
-      onClick,
+      onClick: onClick ? () => onClick(undefined) : undefined,
     }))
 }
 
