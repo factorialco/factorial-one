@@ -1,10 +1,13 @@
+import { formatMonth, getDayOfMonth } from "@/lib/date"
+
 type Props = {
-  month: string
-  day: number
+  date: Date
 }
 
-export const DateAvatar = ({ month, day }: Props) => {
-  const monthName = month.slice(0, 3)
+export const DateAvatar = ({ date }: Props) => {
+  const dateDay = getDayOfMonth(date)
+  const dateMonth = formatMonth(date)
+  const monthName = dateMonth.slice(0, 3)
 
   return (
     <div className="flex h-10 w-10 flex-col items-center justify-center rounded border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary">
@@ -12,7 +15,7 @@ export const DateAvatar = ({ month, day }: Props) => {
         {monthName}
       </div>
       <div className="flex items-center justify-center text-lg font-medium leading-tight text-f1-foreground">
-        {day}
+        {dateDay}
       </div>
     </div>
   )
