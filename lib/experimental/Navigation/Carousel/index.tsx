@@ -8,7 +8,7 @@ import {
 } from "@/ui/carousel"
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
-import React from "react"
+import React, { useMemo } from "react"
 import {
   type CarouselBreakpoints,
   carouselItemVariants,
@@ -24,6 +24,7 @@ interface CarouselProps {
   delay?: number
   columns?: CarouselBreakpoints
   showPeek?: boolean
+  showFade?: boolean
 }
 
 export const Carousel = ({
@@ -34,22 +35,23 @@ export const Carousel = ({
   delay = 3000,
   columns = { default: 1 },
   showPeek = false,
+  showFade = false,
 }: CarouselProps) => {
   const childrenArray = React.Children.toArray(children)
 
-  const plugin = React.useRef(
-    autoplay ? Autoplay({ delay: delay, stopOnInteraction: true }) : undefined
-  )
+  const plugin = useMemo(() => {
+    return autoplay ? Autoplay({ delay, stopOnInteraction: true }) : undefined
+  }, [autoplay, delay])
 
   const handleMouseEnter = () => {
-    if (plugin.current) {
-      plugin.current.stop()
+    if (plugin) {
+      plugin.stop()
     }
   }
 
   const handleMouseLeave = () => {
-    if (plugin.current) {
-      plugin.current.play()
+    if (plugin) {
+      plugin.play()
     }
   }
 
@@ -64,18 +66,16 @@ export const Carousel = ({
     <ShadCarousel
       className="flex flex-col gap-3"
       opts={{
-        align: "center",
-        slidesToScroll: "auto",
-        duration: 20,
-        containScroll: false,
+        align: "start",
+        slidesToScroll: 1,
       }}
-      plugins={[plugin.current, WheelGesturesPlugin()].filter(Boolean)}
+      plugins={[plugin, WheelGesturesPlugin()].filter(Boolean)}
       onMouseEnter={autoplay ? handleMouseEnter : undefined}
       onMouseLeave={autoplay ? handleMouseLeave : undefined}
     >
       <div className="flex flex-col gap-3">
         <div className="relative">
-          <CarouselContent>
+          <CarouselContent showFade={showFade}>
             {React.Children.map(childrenArray, (child, index) => (
               <CarouselItem
                 key={index}
