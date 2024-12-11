@@ -42,14 +42,14 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
     <motion.div
       initial={false}
       className={cn(
-        "absolute bottom-0 left-0 top-0 z-10 flex w-[240px] flex-col transition-[background-color]",
+        "absolute left-0 top-0 z-10 flex w-[240px] flex-col transition-[background-color]",
         sidebarState === "locked"
-          ? "h-screen"
+          ? "h-full"
           : cn(
               "border-solid border-f1-border-secondary shadow-lg backdrop-blur-2xl",
               isSmallScreen
-                ? "h-screen border-y-transparent border-l-transparent bg-f1-background/90"
-                : "h-[calc(100vh-16px)] bg-f1-background/60"
+                ? "h-full border-y-transparent border-l-transparent bg-f1-background/90"
+                : "h-[calc(100%-16px)] bg-f1-background/60"
             )
       )}
       animate={{
