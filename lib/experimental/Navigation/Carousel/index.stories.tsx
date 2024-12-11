@@ -4,9 +4,6 @@ import { Carousel } from "."
 
 const meta: Meta<typeof Carousel> = {
   component: Carousel,
-  parameters: {
-    layout: "fullscreen",
-  },
   argTypes: {
     autoplay: { control: "boolean" },
   },
@@ -16,8 +13,8 @@ export default meta
 
 type Story = StoryObj<typeof Carousel>
 
-const SLIDES = Array.from({ length: 6 }, (_, i) => (
-  <Placeholder key={i + 1} className="h-32">
+const SLIDES = Array.from({ length: 15 }, (_, i) => (
+  <Placeholder key={i + 1} className="h-32 min-w-40">
     Slide {i + 1}
   </Placeholder>
 ))
@@ -36,6 +33,7 @@ export const Default: Story = {
   args: {
     autoplay: false,
     children: SLIDES,
+    columns: { default: 1 },
   },
 }
 
@@ -74,10 +72,27 @@ export const AutoScroll: Story = {
     autoplay: true,
     delay: 3000,
     children: SLIDES,
+    columns: { default: 1 },
   },
 }
 
 export const SneakPeek: Story = {
+  decorators: [
+    (Story) => (
+      <div className="w-full p-6">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    showArrows: false,
+    children: SLIDES,
+    showPeek: true,
+    columns: { default: 1 },
+  },
+}
+
+export const NoColumns: Story = {
   decorators: [
     (Story) => (
       <div className="w-full p-6">
