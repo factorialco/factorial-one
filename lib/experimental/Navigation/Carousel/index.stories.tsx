@@ -26,7 +26,7 @@ const SLIDES = Array.from({ length: 6 }, (_, i) => (
   </Placeholder>
 ))
 
-const randomClasses = ["h-64", "h-full", "h-32", "w-32", "w-full", "w-64"]
+const randomClasses = ["h-full", "h-64", "h-32", "w-32", "w-full", "w-64"]
 
 const SLIDES_RANDOM = [
   <BarChartWidget key="widget" chart={BarChartStory.args as BarChartProps} />,
