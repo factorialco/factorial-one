@@ -26,13 +26,14 @@ export const AlertTag = forwardRef<HTMLDivElement, Props>(
     return (
       <BaseTag
         ref={ref}
-        className={
+        className={cn(
+          "pl-0.5",
           {
             info: "bg-f1-background-info text-f1-foreground-info",
             warning: "bg-f1-background-warning text-f1-foreground-warning",
             critical: "bg-f1-background-critical text-f1-foreground-critical",
           }[level]
-        }
+        )}
         left={
           <Icon
             icon={iconMap[level]}

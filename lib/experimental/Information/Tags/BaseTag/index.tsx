@@ -14,9 +14,9 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
     <div
       ref={ref}
       className={cn(
-        "line-clamp-1 flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-[10px] text-base font-medium",
+        "line-clamp-1 flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-2 text-base font-medium",
         onClick && "cursor-pointer hover:bg-f1-background-hover",
-        !left ? "pl-[10px]" : "pl-1",
+        !left ? "pl-2" : "pl-1",
         className
       )}
       onClick={onClick}
