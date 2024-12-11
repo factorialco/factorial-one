@@ -13,6 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/ui/tooltip"
+import { Button } from "../components/Actions/Button"
 
 const Card = React.forwardRef<
   HTMLDivElement,
@@ -95,15 +96,14 @@ const CardLink = React.forwardRef<
   React.ComponentPropsWithoutRef<"a">
 >(({ className, title, ...props }) => {
   return (
-    <Link
-      className={cn(
-        "flex h-6 w-6 items-center justify-center rounded-sm border border-solid border-f1-border text-f1-foreground-secondary transition-colors hover:text-f1-foreground",
-        className
-      )}
-      aria-label={title}
-      {...props}
-    >
-      <Icon icon={ChevronRight} size="sm" />
+    <Link className={className} aria-label={title} {...props}>
+      <Button
+        icon={ChevronRight}
+        label={title ?? ""}
+        variant="outline"
+        size="sm"
+        hideLabel
+      />
     </Link>
   )
 })
