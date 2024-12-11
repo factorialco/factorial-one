@@ -1,3 +1,6 @@
+import { BarChartProps } from "@/components/Charts/BarChart"
+import BarChartStory from "@/components/Charts/BarChart/index.stories"
+import { BarChartWidget } from "@/experimental/Widgets/Charts/BarChartWidget"
 import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { Meta, StoryObj } from "@storybook/react"
 import { Carousel } from "."
@@ -22,6 +25,21 @@ const SLIDES = Array.from({ length: 6 }, (_, i) => (
     Slide {i + 1}
   </Placeholder>
 ))
+
+const randomClasses = ["h-64", "h-full", "h-32", "w-32", "w-full", "w-64"]
+
+const SLIDES_RANDOM = [
+  <BarChartWidget key="widget" chart={BarChartStory.args as BarChartProps} />,
+  ...Array.from({ length: 6 }, (_, i) => {
+    const randomHeight = randomClasses[Math.floor(i / 2)]
+    const randomWidth = randomClasses[Math.floor(i / 2) + 3]
+    return (
+      <Placeholder key={i + 1} className={`${randomHeight} ${randomWidth}`}>
+        Slide {i + 1} ({randomHeight} {randomWidth})
+      </Placeholder>
+    )
+  }),
+]
 
 export const Default: Story = {
   decorators: [
@@ -162,5 +180,32 @@ export const FadeEdges: Story = {
       md: 3,
       lg: 3,
     },
+  },
+}
+
+/**
+ * auto columns
+ */
+export const AutoColumns: Story = {
+  decorators: [
+    (Story) => (
+      <div className="h-full w-full p-6">
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+    showFade: { control: "boolean" },
+  },
+  args: {
+    showArrows: true,
+    children: SLIDES_RANDOM,
+    showFade: true,
+    showPeek: true,
+    showDots: false,
   },
 }

@@ -73,7 +73,7 @@ export const Carousel = ({
       onMouseEnter={autoplay ? handleMouseEnter : undefined}
       onMouseLeave={autoplay ? handleMouseLeave : undefined}
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex h-full flex-col gap-3">
         <div className="relative">
           <CarouselContent showFade={showFade}>
             {React.Children.map(childrenArray, (child, index) => (
