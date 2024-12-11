@@ -14,9 +14,14 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
   const { sidebarState, isSmallScreen } = useSidebar()
   const shouldReduceMotion = useReducedMotion()
   const [isScrolled, setIsScrolled] = useState(false)
+  const [hasScrollBottom, setHasScrollBottom] = useState(false)
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    setIsScrolled(e.currentTarget.scrollTop > 0)
+    const target = e.currentTarget
+    setIsScrolled(target.scrollTop > 0)
+    setHasScrollBottom(
+      target.scrollHeight - target.scrollTop - target.clientHeight > 1
+    )
   }
 
   const transition = {
@@ -74,6 +79,17 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 className="pointer-events-none absolute inset-x-0 top-0 z-10 h-3 bg-gradient-to-b from-f1-background-secondary to-transparent after:absolute after:inset-x-0 after:top-0 after:h-px after:bg-f1-background-bold after:opacity-[0.04] after:content-['']"
+              />
+            )}
+          </AnimatePresence>
+          <AnimatePresence>
+            {hasScrollBottom && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 0.5 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-3 bg-gradient-to-t from-f1-background-secondary to-transparent after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-f1-background-bold after:opacity-[0.04] after:content-['']"
               />
             )}
           </AnimatePresence>
