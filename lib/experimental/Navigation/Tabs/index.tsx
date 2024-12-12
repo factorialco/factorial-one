@@ -31,11 +31,9 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
       aria-label={secondary ? "primary-navigation" : "secondary-navigation"}
     >
       {tabs.length === 1 ? (
-        <TabNavigationLink disabled secondary={secondary} className="p-0">
-          <span className="flex h-8 items-center justify-center whitespace-nowrap text-lg font-medium text-f1-foreground">
-            {tabs[0].label}
-          </span>
-        </TabNavigationLink>
+        <li className="flex h-8 items-center justify-center whitespace-nowrap text-lg font-medium text-f1-foreground">
+          {tabs[0].label}
+        </li>
       ) : (
         tabs.map(({ label, ...props }, index) => (
           <TabNavigationLink
