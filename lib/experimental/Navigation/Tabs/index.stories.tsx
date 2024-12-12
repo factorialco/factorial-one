@@ -63,3 +63,15 @@ export const Skeleton: Story = {
   },
   render: ({ secondary }) => <Tabs.Skeleton secondary={secondary} />,
 }
+
+export const SingleTab: Story = {
+  args: {
+    tabs: [],
+  },
+  render: () => (
+    <div>
+      <Tabs tabs={[{ label: "Overview", href: "/" }]} secondary={false} />
+      <Tabs tabs={[{ label: "Overview", href: "/" }]} secondary={true} />
+    </div>
+  ),
+}

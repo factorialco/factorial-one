@@ -30,19 +30,25 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
       asChild
       aria-label={secondary ? "primary-navigation" : "secondary-navigation"}
     >
-      {tabs.map(({ label, ...props }, index) => (
-        <TabNavigationLink
-          key={index}
-          active={activeTab?.href === props.href}
-          href={props.href}
-          secondary={secondary}
-          asChild
-        >
-          <Link role="link" {...props}>
-            {label}
-          </Link>
-        </TabNavigationLink>
-      ))}
+      {tabs.length === 1 ? (
+        <li className="flex h-8 items-center justify-center whitespace-nowrap text-lg font-medium text-f1-foreground">
+          {tabs[0].label}
+        </li>
+      ) : (
+        tabs.map(({ label, ...props }, index) => (
+          <TabNavigationLink
+            key={index}
+            active={activeTab?.href === props.href}
+            href={props.href}
+            secondary={secondary}
+            asChild
+          >
+            <Link role="link" {...props}>
+              {label}
+            </Link>
+          </TabNavigationLink>
+        ))
+      )}
     </TabNavigation>
   )
 }
