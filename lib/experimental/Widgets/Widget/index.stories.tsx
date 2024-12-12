@@ -39,7 +39,7 @@ export const WithLink: Story = {
     header: {
       title: "Wellness programs",
       subtitle: "Boosting workplace health",
-      link: { url: "/", title: "Go to link" },
+      link: { url: "/", title: "Go to link", onClick: fn() },
     },
   },
 }
