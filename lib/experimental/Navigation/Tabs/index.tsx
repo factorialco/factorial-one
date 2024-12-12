@@ -28,7 +28,7 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   return (
     <TabNavigation
       secondary={secondary}
-      asChild={!isSingleTab}
+      asChild
       aria-label={secondary ? "primary-navigation" : "secondary-navigation"}
     >
       {isSingleTab ? (
