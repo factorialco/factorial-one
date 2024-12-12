@@ -23,7 +23,7 @@ export function User({ firstName, lastName, avatarUrl, options }: UserProps) {
         <button
           className={cn(
             "flex w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary data-[state=open]:bg-f1-background-secondary",
-            focusRing()
+            focusRing("focus-visible:ring-inset")
           )}
         >
           <PersonAvatar
