@@ -59,7 +59,7 @@ export function PageHeader({
   return (
     <div
       className={cn(
-        "flex h-16 items-center justify-between px-5 py-4 backdrop-blur-xl xs:px-6",
+        "flex h-16 items-center justify-between px-5 py-4 xs:px-6",
         hasNavigation &&
           "border-b border-dashed border-transparent border-b-f1-border"
       )}
