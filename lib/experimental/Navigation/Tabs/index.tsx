@@ -15,6 +15,7 @@ interface TabsProps {
 
 export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const { isActive } = useNavigation()
+  const isSingleTab = tabs.length === 1
 
   // Index tabs are usually `/` while other tabs are `/some-other-path`.
   // We need to find the right active tab by checking if the current path
@@ -27,22 +28,28 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   return (
     <TabNavigation
       secondary={secondary}
-      asChild
+      asChild={!isSingleTab}
       aria-label={secondary ? "primary-navigation" : "secondary-navigation"}
     >
-      {tabs.map(({ label, ...props }, index) => (
-        <TabNavigationLink
-          key={index}
-          active={activeTab?.href === props.href}
-          href={props.href}
-          secondary={secondary}
-          asChild
-        >
-          <Link role="link" {...props}>
-            {label}
-          </Link>
-        </TabNavigationLink>
-      ))}
+      {isSingleTab ? (
+        <div className="flex h-8 items-center justify-center whitespace-nowrap text-lg font-medium text-f1-foreground">
+          {tabs[0].label}
+        </div>
+      ) : (
+        tabs.map(({ label, ...props }, index) => (
+          <TabNavigationLink
+            key={index}
+            active={activeTab?.href === props.href}
+            href={props.href}
+            secondary={secondary}
+            asChild
+          >
+            <Link role="link" {...props}>
+              {label}
+            </Link>
+          </TabNavigationLink>
+        ))
+      )}
     </TabNavigation>
   )
 }
