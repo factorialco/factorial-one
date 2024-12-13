@@ -6,7 +6,7 @@ import { forwardRef } from "react"
 import { BaseTag } from "../BaseTag"
 
 type Props = {
-  text: string
+  text?: string
   icon?: IconType
 }
 

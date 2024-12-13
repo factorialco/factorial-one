@@ -9,7 +9,7 @@ import {
 import React, { ComponentProps } from "react"
 
 interface TooltipProps {
-  label: string
+  label?: string
   description?: string
   children: React.ReactNode
   shortcut?: ComponentProps<typeof Shortcut>["keys"]
@@ -28,7 +28,7 @@ export function Tooltip({
         <TooltipContent className={cn("max-w-xs", shortcut && "pr-1.5")}>
           <div className="flex flex-col gap-0.5">
             <div className="flex items-center gap-2">
-              <p className="font-semibold">{label}</p>
+              {label && <p className="font-semibold">{label}</p>}
               {shortcut && <Shortcut keys={shortcut} variant="inverse" />}
             </div>
             {description && <p className="font-normal">{description}</p>}
