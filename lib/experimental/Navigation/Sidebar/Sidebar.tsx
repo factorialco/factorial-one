@@ -1,7 +1,8 @@
 import { useReducedMotion } from "@/lib/a11y"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
-import { ReactNode, useEffect, useRef, useState } from "react"
+import { ReactNode } from "react"
+import { useIntersectionObserver } from "usehooks-ts"
 import { useSidebar } from "../ApplicationFrame/FrameProvider"
 
 const ScrollShadow = ({ position }: { position: "top" | "bottom" }) => (
@@ -36,36 +37,9 @@ interface SidebarProps {
 export function Sidebar({ header, body, footer }: SidebarProps) {
   const { sidebarState, isSmallScreen } = useSidebar()
   const shouldReduceMotion = useReducedMotion()
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [hasScrollBottom, setHasScrollBottom] = useState(false)
-  const topScrollDetectorRef = useRef<HTMLDivElement>(null)
-  const bottomScrollDetectorRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const observerOptions = { threshold: [1] }
-
-    const createObserver = (callback: (isIntersecting: boolean) => void) => {
-      return new IntersectionObserver(
-        ([entry]) => callback(!entry.isIntersecting),
-        observerOptions
-      )
-    }
-
-    const topObserver = createObserver(setIsScrolled)
-    const bottomObserver = createObserver(setHasScrollBottom)
-
-    if (topScrollDetectorRef.current) {
-      topObserver.observe(topScrollDetectorRef.current)
-    }
-    if (bottomScrollDetectorRef.current) {
-      bottomObserver.observe(bottomScrollDetectorRef.current)
-    }
-
-    return () => {
-      topObserver.disconnect()
-      bottomObserver.disconnect()
-    }
-  }, [])
+  const [topRef, isAtTop] = useIntersectionObserver({ threshold: 1 })
+  const [bottomRef, isAtBottom] = useIntersectionObserver({ threshold: 1 })
 
   const transition = {
     x: {
@@ -115,25 +89,14 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
       {body && (
         <div className="relative flex-grow overflow-y-hidden">
           <div className="h-full overflow-y-auto">
-            <div
-              ref={topScrollDetectorRef}
-              className="h-px"
-              aria-hidden="true"
-            />
+            <div ref={topRef} className="h-px" aria-hidden="true" />
             {body}
-            <div
-              ref={bottomScrollDetectorRef}
-              className="h-px"
-              aria-hidden="true"
-            />
+            <div ref={bottomRef} className="h-px" aria-hidden="true" />
           </div>
 
           <AnimatePresence>
-            {isScrolled && <ScrollShadow position="top" />}
-          </AnimatePresence>
-
-          <AnimatePresence>
-            {hasScrollBottom && <ScrollShadow position="bottom" />}
+            {!isAtTop && <ScrollShadow position="top" />}
+            {!isAtBottom && <ScrollShadow position="bottom" />}
           </AnimatePresence>
         </div>
       )}
