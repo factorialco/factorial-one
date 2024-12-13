@@ -103,7 +103,13 @@ export function PageHeader({
           <div className="pe-3">
             {statusTag.tooltip ? (
               <Tooltip label={statusTag.tooltip}>
-                <StatusTag text={statusTag.text} variant={statusTag.variant} />
+                <div>
+                  <StatusTag
+                    text={statusTag.text}
+                    variant={statusTag.variant}
+                    additionalAccesibleText={statusTag.tooltip}
+                  />
+                </div>
               </Tooltip>
             ) : (
               <StatusTag text={statusTag.text} variant={statusTag.variant} />
