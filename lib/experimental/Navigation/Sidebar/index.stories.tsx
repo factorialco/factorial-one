@@ -33,9 +33,9 @@ const meta: Meta<typeof Sidebar> = {
     body: (
       <>
         <Menu {...SidebarMenuStories.Default.args} />
-        <User {...UserStories.Default.args} />
       </>
     ),
+    footer: <User {...UserStories.Default.args} />,
   } satisfies ComponentProps<typeof Sidebar>,
 }
 
