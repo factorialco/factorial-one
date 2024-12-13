@@ -6,14 +6,14 @@ import {
   useImperativeHandle,
   useRef,
 } from "react"
-import { useResizeObserver } from "usehooks-ts"
+import { useWindowSize } from "usehooks-ts"
 
 type Props = {
   widgets?: ReactNode[]
   children?: ReactNode
 }
 
-export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
+export const HomeLayout = forwardRef<HTMLDivElement, Props>(function HomeLayout(
   { widgets, children },
   forwardedRef
 ) {
@@ -21,10 +21,10 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
 
   useImperativeHandle(forwardedRef, () => ref.current as HTMLDivElement)
 
-  const { width } = useResizeObserver({
-    ref,
-  })
+  const { width } = useWindowSize()
+
   const canShowContent = !!width
+
   const isSmallerScreen = canShowContent && width < 992
 
   let arrayWidgets = Children.toArray(widgets).filter((widget) => !!widget)
@@ -41,8 +41,10 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function Dashboard(
           <>
             <Carousel
               columns={{
-                default: 1,
+                xs: 1,
+                sm: 1,
                 md: 2,
+                lg: 2,
               }}
               showArrows={false}
             >
