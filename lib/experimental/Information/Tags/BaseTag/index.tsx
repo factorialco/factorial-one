@@ -4,6 +4,10 @@ import { forwardRef, ReactNode } from "react"
 type Props = {
   left?: ReactNode
   text: string
+  /**
+   * Sometimes you need to clarify the status for screen reader users
+   * E.g., when showing a tooltip for sighted user, provide the tootip text to this prop because tooltips aren't accessible
+   */
   additionalAccesibleText?: string
   onClick?: () => void
   className?: string
@@ -21,10 +25,10 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
       onClick={onClick}
     >
       {left}
-      {additionalAccesibleText && (
-        <span className="sr-only">{additionalAccesibleText}</span>
-      )}
       <span>{text}</span>
+      {additionalAccesibleText && (
+        <span className="sr-only">, {additionalAccesibleText}</span>
+      )}
     </div>
   )
 )

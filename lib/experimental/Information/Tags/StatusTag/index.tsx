@@ -10,10 +10,15 @@ export type StatusVariant = Variant
 interface Props {
   text: string
   variant: Variant
+  /**
+   * Sometimes you need to clarify the status for screen reader users
+   * E.g., when showing a tooltip for sighted user, provide the tootip text to this prop because tooltips aren't accessible
+   */
+  additionalAccesibleText?: string
 }
 
 export const StatusTag = forwardRef<HTMLDivElement, Props>(
-  ({ text, variant }, ref) => {
+  ({ text, additionalAccesibleText, variant }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
@@ -44,7 +49,7 @@ export const StatusTag = forwardRef<HTMLDivElement, Props>(
             aria-hidden
           />
         }
-        additionalAccesibleText="Status"
+        additionalAccesibleText={additionalAccesibleText}
         text={text}
       />
     )
