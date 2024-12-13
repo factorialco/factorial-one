@@ -31,7 +31,7 @@ export interface WidgetProps {
     subtitle?: string
     comment?: string
     canBeBlurred?: boolean
-    link?: { title: string; url: string }
+    link?: { title: string; url: string; onClick?: () => void }
     count?: number
   }
   action?: ButtonProps
@@ -81,6 +81,10 @@ const Container = forwardRef<
     )
   }
 
+  const handleLinkClick = () => {
+    header?.link?.onClick?.()
+  }
+
   return (
     <Card className="relative flex gap-4 border-f1-border-secondary" ref={ref}>
       {header && (
@@ -111,7 +115,11 @@ const Container = forwardRef<
                   <StatusTag text={status.text} variant={status.variant} />
                 )}
                 {header.link && (
-                  <CardLink href={header.link.url} title={header.link.title} />
+                  <CardLink
+                    onClick={handleLinkClick}
+                    href={header.link.url}
+                    title={header.link.title}
+                  />
                 )}
               </div>
             </div>
