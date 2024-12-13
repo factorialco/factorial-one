@@ -25,7 +25,6 @@ export const StatusTag = forwardRef<HTMLDivElement, Props>(
       <BaseTag
         ref={ref}
         className={cn(
-          "pl-1",
           {
             neutral: "bg-f1-background-secondary text-f1-foreground-secondary",
             info: "bg-f1-background-info text-f1-foreground-info",

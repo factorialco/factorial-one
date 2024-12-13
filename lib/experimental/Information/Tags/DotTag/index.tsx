@@ -32,7 +32,7 @@ export const DotTag = forwardRef<HTMLDivElement, Props>(
     return (
       <BaseTag
         ref={ref}
-        className="border-[1px] border-solid border-f1-border-secondary pl-1"
+        className="border-[1px] border-solid border-f1-border-secondary"
         left={
           <div
             className="m-1 aspect-square w-2 rounded-full"
