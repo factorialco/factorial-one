@@ -26,6 +26,7 @@ export interface CalendarEventProps {
   }
   fromDate?: Date
   toDate: Date
+  showBackground?: boolean
 }
 
 export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
@@ -41,6 +42,7 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
       action,
       fromDate,
       toDate,
+      showBackground = true,
     },
     ref
   ) {
@@ -49,18 +51,23 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
         ref={ref}
         className="relative flex flex-row items-stretch gap-2.5 overflow-hidden rounded-sm p-2"
       >
-        <div
-          className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-5"
-          style={{
-            background: `${color}`,
-          }}
-        />
-        <div
-          className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-5"
-          style={{
-            background: `linear-gradient(to right, ${color}, transparent)`,
-          }}
-        />
+        {showBackground && (
+          <>
+            <div
+              className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-5"
+              style={{
+                background: `${color}`,
+              }}
+            />
+            <div
+              className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-5"
+              style={{
+                background: `linear-gradient(to right, ${color}, transparent)`,
+              }}
+            />
+          </>
+        )}
+
         <div
           className="min-h-10 min-w-1 rounded-2xs"
           style={
@@ -126,7 +133,11 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
               </div>
               {action && (
                 <div className="cursor-pointer" onClick={action.onClick}>
-                  <RawTag key={action.title} icon={action.icon} />
+                  <Tooltip label={action.title}>
+                    <div>
+                      <RawTag key={action.title} icon={action.icon} />
+                    </div>
+                  </Tooltip>
                 </div>
               )}
             </div>

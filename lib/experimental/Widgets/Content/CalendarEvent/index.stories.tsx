@@ -59,3 +59,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
+
+export const NoBackground: Story = {
+  args: {
+    showBackground: false,
+  },
+}
