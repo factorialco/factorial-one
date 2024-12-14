@@ -3,6 +3,7 @@ import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { ChevronDown } from "@/icons/app"
 import { Link, useNavigation } from "@/lib/linkHandler"
 import { withSkeleton } from "@/lib/skeleton"
+import { cn } from "@/lib/utils"
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
@@ -36,6 +37,10 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const sortedTabs = [...tabs].sort((a, b) => (a.index ? 1 : b.index ? -1 : 0))
   const activeTab = sortedTabs.find((tab) => isActive(tab.href))
 
+  const isTabActive = (href: string) => activeTab?.href === href
+  const hasActiveOverflowTab = () =>
+    overflowTabs.some((tab) => isTabActive(tab.href))
+
   const updateVisibleTabs = () => {
     // Early return for mobile or no container
     if (!containerRef.current || !isMdScreen) {
@@ -45,7 +50,7 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
     }
 
     const container = containerRef.current
-    const moreButtonWidth = 120
+    const moreButtonWidth = 128
     const padding = 32
     const containerPadding = 48
     const availableWidth =
@@ -107,7 +112,7 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
             {visibleTabs.map(({ label, ...props }, index) => (
               <TabNavigationLink
                 key={index}
-                active={activeTab?.href === props.href}
+                active={isTabActive(props.href)}
                 href={props.href}
                 secondary={secondary}
                 asChild
@@ -120,34 +125,42 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
 
             {isMdScreen && overflowTabs.length > 0 && (
               <TabNavigationLink
-                active={false}
+                active={hasActiveOverflowTab()}
                 href="#"
                 secondary={secondary}
                 asChild
+                className="p-0"
               >
-                <Dropdown
-                  items={overflowTabs.map((tab) => ({
-                    label: tab.label,
-                    href: tab.href,
-                  }))}
-                  open={open}
-                  onOpenChange={setOpen}
-                >
-                  <button className="flex items-center gap-1 text-f1-foreground-secondary">
-                    +{overflowTabs.length} more
-                    <div className="flex w-5 shrink-0 items-center justify-center">
-                      <div className="flex h-3 w-3 items-center justify-center rounded-2xs bg-f1-background-secondary transition-all">
-                        <motion.div
-                          animate={{ rotate: open ? 180 : 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="flex h-3 w-3 items-center justify-center"
-                        >
-                          <Icon icon={ChevronDown} size="xs" />
-                        </motion.div>
+                <div data-active={hasActiveOverflowTab() || open}>
+                  <Dropdown
+                    items={overflowTabs.map((tab) => ({
+                      label: tab.label,
+                      href: tab.href,
+                    }))}
+                    open={open}
+                    onOpenChange={setOpen}
+                  >
+                    <button
+                      className={cn(
+                        "flex items-center gap-1 py-1.5 pl-3 pr-2 text-f1-foreground-secondary",
+                        hasActiveOverflowTab() && "text-f1-foreground"
+                      )}
+                    >
+                      +{overflowTabs.length} more
+                      <div className="flex w-5 shrink-0 items-center justify-center">
+                        <div className="flex h-3 w-3 items-center justify-center rounded-2xs bg-f1-background-secondary transition-all">
+                          <motion.div
+                            animate={{ rotate: open ? 180 : 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="flex h-3 w-3 items-center justify-center"
+                          >
+                            <Icon icon={ChevronDown} size="xs" />
+                          </motion.div>
+                        </div>
                       </div>
-                    </div>
-                  </button>
-                </Dropdown>
+                    </button>
+                  </Dropdown>
+                </div>
               </TabNavigationLink>
             )}
           </>
