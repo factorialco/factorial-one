@@ -75,3 +75,29 @@ export const SingleTab: Story = {
     </div>
   ),
 }
+
+const tabMultipleItems = [
+  { label: "Overview", href: "/", index: true },
+  { label: "Courses", href: "/courses" },
+  { label: "Categories", href: "/categories" },
+  { label: "Catalog", href: "/catalog" },
+  { label: "Requests", href: "/requests" },
+  { label: "Settings", href: "/settings" },
+  { label: "Profile", href: "/profile" },
+  { label: "Notifications", href: "/notifications" },
+  { label: "Messages", href: "/messages" },
+  { label: "Help", href: "/help" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Blog", href: "/blog" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+  { label: "Terms", href: "/terms" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Dashboard", href: "/dashboard" },
+]
+
+export const MultipleTabs: Story = {
+  args: {
+    tabs: tabMultipleItems,
+  },
+}
