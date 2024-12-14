@@ -42,7 +42,7 @@ export function CompanySelector({
 
   if (companies.length === 1) {
     return (
-      <div className="w-fit p-1.5">
+      <div className="p-1.5">
         <SelectedCompanyLabel company={selectedCompany} />
       </div>
     )
