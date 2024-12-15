@@ -145,6 +145,7 @@ export default {
         lg: "1.4px",
         md: "1.3px",
         sm: "1.2px",
+        xs: "1px",
       },
     },
   },
