@@ -21,3 +21,14 @@ export const Default: Story = {
     size: "md",
   },
 }
+
+export const Variants: Story = {
+  render: () => (
+    <div className="flex flex-row gap-2">
+      <StatusBadge icon={Icons.Placeholder} size="md" />
+      <StatusBadge icon={Icons.Check} status="positive" size="md" />
+      <StatusBadge icon={Icons.Cross} status="critical" size="md" />
+      <StatusBadge icon={Icons.Alert} status="warning" size="md" />
+    </div>
+  ),
+}
