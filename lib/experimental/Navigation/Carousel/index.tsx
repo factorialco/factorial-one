@@ -9,6 +9,7 @@ import {
 import Autoplay from "embla-carousel-autoplay"
 import { WheelGesturesPlugin } from "embla-carousel-wheel-gestures"
 import React from "react"
+import { DynamicCarousel } from "./DynamicCarousel"
 import {
   type CarouselBreakpoints,
   carouselItemVariants,
@@ -28,11 +29,11 @@ interface CarouselProps {
 
 export const Carousel = ({
   children,
+  columns,
   showArrows = true,
   showDots = true,
   autoplay = false,
   delay = 3000,
-  columns = { default: 1 },
   showPeek = false,
 }: CarouselProps) => {
   const childrenArray = React.Children.toArray(children)
@@ -58,6 +59,10 @@ export const Carousel = ({
     showPeek: boolean
   ): ColumnNumber | PeekVariant {
     return showPeek ? (`peek${value || 1}` as PeekVariant) : value || 1
+  }
+
+  if (!columns) {
+    return <DynamicCarousel>{children}</DynamicCarousel>
   }
 
   return (
