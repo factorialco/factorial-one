@@ -135,7 +135,7 @@ const SelectedCompanyLabel = ({
       <CompanyAvatar
         name={company?.name?.[0]}
         src={company?.logo}
-        size="xsmall"
+        size="small"
       />
       <div className="min-w-0 flex-1">
         <span className="block truncate">{company?.name}</span>
