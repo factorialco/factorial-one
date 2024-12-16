@@ -40,16 +40,16 @@ const ScrollBar = React.forwardRef<
     orientation={orientation}
     forceMount
     className={cn(
-      "z-50 flex touch-none select-none p-[1px]",
+      "group/scrollbar z-50 flex touch-none select-none p-[1px]",
       "transition-opacity data-[state=hidden]:pointer-events-none data-[state=visible]:pointer-events-auto data-[state=hidden]:opacity-0 data-[state=visible]:opacity-100",
-      orientation === "vertical" && "mr-[2px] h-full w-2.5",
-      orientation === "horizontal" && "mt-[2px] h-2.5 flex-col",
+      orientation === "vertical" && "mr-[2px] h-full w-2",
+      orientation === "horizontal" && "mt-[2px] h-2 flex-col",
       className
     )}
     {...props}
   >
     {showBar && (
-      <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-f1-background-secondary opacity-50" />
+      <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-f1-background-bold opacity-30 transition-opacity group-hover/scrollbar:opacity-50" />
     )}
   </ScrollAreaPrimitive.ScrollAreaScrollbar>
 ))

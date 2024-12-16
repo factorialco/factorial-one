@@ -18,7 +18,7 @@ export const ImageTag = forwardRef<HTMLDivElement, Props>(
       <BaseTag
         ref={ref}
         className={cn(
-          "gap-1 border-[1px] border-solid border-f1-border-secondary pl-0.5",
+          "gap-1 border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]",
           rounded ? "rounded-full" : "rounded-[8px]"
         )}
         left={

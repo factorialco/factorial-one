@@ -17,10 +17,7 @@ export const RawTag = forwardRef<HTMLDivElement, Props>(
     return (
       <BaseTag
         ref={ref}
-        className={cn(
-          "border-[1px] border-solid border-f1-border-secondary pl-1",
-          icon ? "pl-1" : "pl-2"
-        )}
+        className={cn("border-[1px] border-solid border-f1-border-secondary")}
         left={
           icon ? (
             <Icon icon={icon} size="sm" className="text-f1-icon" aria-hidden />

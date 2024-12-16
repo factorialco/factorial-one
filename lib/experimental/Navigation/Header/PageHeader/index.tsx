@@ -3,6 +3,7 @@ import { Icon, IconType } from "@/components/Utilities/Icon"
 import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { Menu } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
@@ -35,6 +36,7 @@ type HeaderProps = {
   statusTag?: {
     text: string
     variant: StatusVariant
+    tooltip?: string
   }
   breadcrumbs?: BreadcrumbItemType[]
   actions?: PageAction[]
@@ -85,7 +87,7 @@ export function PageHeader({
             </motion.div>
           )}
         </AnimatePresence>
-        <div className="flex flex-grow items-center gap-3">
+        <div className="flex flex-grow items-center gap-2">
           {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
           {breadcrumbsTree.length > 1 ? (
             <Breadcrumbs breadcrumbs={breadcrumbsTree} />
@@ -99,7 +101,19 @@ export function PageHeader({
       <div className="flex items-center">
         {!hasNavigation && hasStatus && (
           <div className="pe-3">
-            <StatusTag text={statusTag.text} variant={statusTag.variant} />
+            {statusTag.tooltip ? (
+              <Tooltip label={statusTag.tooltip}>
+                <div>
+                  <StatusTag
+                    text={statusTag.text}
+                    variant={statusTag.variant}
+                    additionalAccesibleText={statusTag.tooltip}
+                  />
+                </div>
+              </Tooltip>
+            ) : (
+              <StatusTag text={statusTag.text} variant={statusTag.variant} />
+            )}
           </div>
         )}
         {hasStatus && hasActions && (

@@ -42,7 +42,7 @@ export function CompanySelector({
 
   if (companies.length === 1) {
     return (
-      <div className="w-fit p-1.5">
+      <div className="p-1.5">
         <SelectedCompanyLabel company={selectedCompany} />
       </div>
     )
@@ -135,7 +135,7 @@ const SelectedCompanyLabel = ({
       <CompanyAvatar
         name={company?.name?.[0]}
         src={company?.logo}
-        size="xsmall"
+        size="small"
       />
       <div className="min-w-0 flex-1">
         <span className="block truncate">{company?.name}</span>
