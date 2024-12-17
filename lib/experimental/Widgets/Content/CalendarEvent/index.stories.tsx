@@ -16,7 +16,7 @@ const meta: Meta = {
     description: "14:00 - 20:00",
     color: "orange",
     isPending: false,
-    tags: [
+    leftTags: [
       {
         label: "Break",
         description: "10:00 AM",
@@ -38,11 +38,12 @@ const meta: Meta = {
         icon: Pin,
       },
     ],
-    action: {
-      title: "Swap shift",
-      icon: Replace,
-      onClick: () => {},
-    },
+    rightTags: [
+      {
+        description: "This shift can be swapped",
+        icon: Replace,
+      },
+    ],
     fromDate: new Date(2024, 6, 15),
     toDate: new Date(2024, 6, 22),
   },
@@ -63,5 +64,17 @@ export const Primary: Story = {}
 export const NoBackground: Story = {
   args: {
     showBackground: false,
+  },
+}
+
+export const NoLeftTags: Story = {
+  args: {
+    leftTags: undefined,
+  },
+}
+
+export const NoRightTags: Story = {
+  args: {
+    rightTags: undefined,
   },
 }

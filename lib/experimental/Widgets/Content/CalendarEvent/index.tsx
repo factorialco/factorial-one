@@ -3,13 +3,31 @@ import { DateAvatar } from "@/experimental/Information/Avatars/DateAvatar"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { ChevronRight } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
 type Tag = {
   icon: IconType
-  label: string
-  description: string
+  label?: string
+  description?: string
 }
+
+const Tags = ({ tags, right }: { tags: Tag[]; right?: boolean }) => (
+  <div
+    className={cn(
+      "flex flex-1 flex-row items-center gap-1.5",
+      right && "justify-end"
+    )}
+  >
+    {tags.map((tag) => (
+      <Tooltip key={tag.label} label={tag.label} description={tag.description}>
+        <div>
+          <RawTag icon={tag.icon} />
+        </div>
+      </Tooltip>
+    ))}
+  </div>
+)
 
 export interface CalendarEventProps {
   label?: string
@@ -18,12 +36,8 @@ export interface CalendarEventProps {
   description: string
   color: string
   isPending: boolean
-  tags?: Tag[]
-  action?: {
-    title: string
-    icon: IconType
-    onClick: () => void
-  }
+  leftTags?: Tag[]
+  rightTags?: Tag[]
   fromDate?: Date
   toDate: Date
   showBackground?: boolean
@@ -38,8 +52,8 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
       description,
       color,
       isPending,
-      tags,
-      action,
+      leftTags,
+      rightTags,
       fromDate,
       toDate,
       showBackground = true,
@@ -116,30 +130,10 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
               {toDate && <DateAvatar date={toDate} />}
             </div>
           </div>
-          {!!tags && (
+          {(leftTags || rightTags) && (
             <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-1 flex-row items-center gap-1.5">
-                {tags.map((tag) => (
-                  <Tooltip
-                    key={tag.label}
-                    label={tag.label}
-                    description={tag.description}
-                  >
-                    <div>
-                      <RawTag icon={tag.icon} />
-                    </div>
-                  </Tooltip>
-                ))}
-              </div>
-              {action && (
-                <div className="cursor-pointer" onClick={action.onClick}>
-                  <Tooltip label={action.title}>
-                    <div>
-                      <RawTag key={action.title} icon={action.icon} />
-                    </div>
-                  </Tooltip>
-                </div>
-              )}
+              {leftTags && <Tags tags={leftTags} />}
+              {rightTags && <Tags tags={rightTags} right />}
             </div>
           )}
         </div>
