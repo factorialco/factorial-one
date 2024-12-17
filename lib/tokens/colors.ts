@@ -155,11 +155,20 @@ export const f1Colors = {
     },
     critical: {
       DEFAULT: "hsl(var(--critical-50) / 0.1)",
-      bold: "hsl(var(--critical-70))",
+      bold: "hsl(var(--critical-50))",
     },
-    info: "hsl(var(--info-50) / 0.1)",
-    warning: "hsl(var(--warning-50) / 0.1)",
-    positive: "hsl(var(--positive-50) / 0.1)",
+    info: {
+      DEFAULT: "hsl(var(--info-50) / 0.1)",
+      bold: "hsl(var(--info-50))",
+    },
+    warning: {
+      DEFAULT: "hsl(var(--warning-50) / 0.1)",
+      bold: "hsl(var(--warning-50))",
+    },
+    positive: {
+      DEFAULT: "hsl(var(--positive-50) / 0.1)",
+      bold: "hsl(var(--positive-50))",
+    },
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.1)",
       bold: "hsl(var(--selected-50))",
