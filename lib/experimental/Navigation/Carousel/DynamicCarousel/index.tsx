@@ -113,7 +113,6 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
             )}
       </div>
 
-      {/* Gradientes dinámicos para los bordes */}
       {canScrollPrev && (
         <div
           className={cn(
@@ -139,7 +138,6 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
         ></div>
       )}
 
-      {/* Botón Izquierdo dinámico */}
       {canScrollPrev && (
         <Button
           size="sm"
@@ -156,7 +154,6 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
         </Button>
       )}
 
-      {/* Botón Derecho dinámico */}
       {canScrollNext && (
         <Button
           size="sm"
