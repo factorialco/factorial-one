@@ -6,7 +6,7 @@ import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 import { motion } from "framer-motion"
-import { useEffect, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { useMediaQuery, useResizeObserver } from "usehooks-ts"
 
 export type TabItem = {
@@ -24,14 +24,52 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const { isActive } = useNavigation()
   const [visibleTabs, setVisibleTabs] = useState<TabItem[]>(tabs)
   const [overflowTabs, setOverflowTabs] = useState<TabItem[]>([])
-  const isMdScreen = useMediaQuery("(min-width: 768px)")
   const [open, setOpen] = useState(false)
-
   const containerRef = useRef<HTMLDivElement>(null)
+  const isMdScreen = useMediaQuery("(min-width: 768px)")
 
-  const { width } = useResizeObserver({
+  const updateVisibleTabs = () => {
+    if (!containerRef.current || !isMdScreen) {
+      setVisibleTabs(tabs)
+      setOverflowTabs([])
+      return
+    }
+
+    const container = containerRef.current
+    const moreButtonWidth = 128
+    const padding = 32
+    const containerPadding = 48
+    const availableWidth =
+      container.offsetWidth - moreButtonWidth - padding - containerPadding
+
+    const tabWidths = container.dataset.tabWidths
+      ? JSON.parse(container.dataset.tabWidths)
+      : Array.from(container.querySelectorAll('[role="link"]')).map(
+          (tab) => tab.getBoundingClientRect().width
+        )
+
+    if (!container.dataset.tabWidths) {
+      container.dataset.tabWidths = JSON.stringify(tabWidths)
+    }
+
+    let remainingWidth = availableWidth
+    const visibleCount = tabWidths.findIndex((width: number) => {
+      remainingWidth -= width
+      return remainingWidth < 0
+    })
+
+    setVisibleTabs(
+      tabs.slice(0, visibleCount === -1 ? tabs.length : visibleCount)
+    )
+    setOverflowTabs(
+      tabs.slice(visibleCount === -1 ? tabs.length : visibleCount)
+    )
+  }
+
+  useResizeObserver({
     ref: containerRef,
     box: "border-box",
+    onResize: updateVisibleTabs,
   })
 
   // Index tabs are usually `/` while other tabs are `/some-other-path`.
@@ -45,48 +83,6 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const isTabActive = (href: string) => activeTab?.href === href
   const hasActiveOverflowTab = () =>
     overflowTabs.some((tab) => isTabActive(tab.href))
-
-  useEffect(() => {
-    const updateVisibleTabs = () => {
-      if (!containerRef.current || !isMdScreen) {
-        setVisibleTabs(tabs)
-        setOverflowTabs([])
-        return
-      }
-
-      const container = containerRef.current
-      const moreButtonWidth = 128
-      const padding = 32
-      const containerPadding = 48
-      const availableWidth =
-        container.offsetWidth - moreButtonWidth - padding - containerPadding
-
-      const tabWidths = container.dataset.tabWidths
-        ? JSON.parse(container.dataset.tabWidths)
-        : Array.from(container.querySelectorAll('[role="link"]')).map(
-            (tab) => tab.getBoundingClientRect().width
-          )
-
-      if (!container.dataset.tabWidths) {
-        container.dataset.tabWidths = JSON.stringify(tabWidths)
-      }
-
-      let remainingWidth = availableWidth
-      const visibleCount = tabWidths.findIndex((width: number) => {
-        remainingWidth -= width
-        return remainingWidth < 0
-      })
-
-      setVisibleTabs(
-        tabs.slice(0, visibleCount === -1 ? tabs.length : visibleCount)
-      )
-      setOverflowTabs(
-        tabs.slice(visibleCount === -1 ? tabs.length : visibleCount)
-      )
-    }
-
-    updateVisibleTabs()
-  }, [width, tabs, isMdScreen])
 
   return (
     <div ref={containerRef}>
