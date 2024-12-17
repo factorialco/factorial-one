@@ -14,6 +14,7 @@ const statusBadgeVariants = cva(
       size: {
         sm: "h-3 w-3",
         md: "h-5 w-5",
+        lg: "h-6 w-6",
       },
     },
     defaultVariants: {
@@ -26,11 +27,13 @@ const statusBadgeVariants = cva(
 const iconSizes = {
   sm: "xs",
   md: "sm",
+  lg: "md",
 } as const
 
-interface StatusBadgeProps extends VariantProps<typeof statusBadgeVariants> {
+export interface StatusBadgeProps
+  extends VariantProps<typeof statusBadgeVariants> {
   icon: IconType
-  size: keyof typeof iconSizes
+  size?: keyof typeof iconSizes
 }
 
 export const StatusBadge = ({

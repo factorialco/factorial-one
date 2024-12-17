@@ -1,3 +1,4 @@
+import { Check } from "@/icons/app"
 import { sizes } from "@/ui/avatar"
 import type { Meta, StoryObj } from "@storybook/react"
 import { PersonAvatar } from "."
@@ -39,5 +40,14 @@ export const Default: Story = {}
 export const WithImage: Story = {
   args: {
     src: "https://github.com/dani-moreno.png",
+  },
+}
+
+export const WithBadge: Story = {
+  args: {
+    badge: {
+      status: "positive",
+      icon: Check,
+    },
   },
 }
