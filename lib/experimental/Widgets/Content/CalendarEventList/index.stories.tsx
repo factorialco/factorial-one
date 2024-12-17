@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { EventsList } from "."
+import { CalendarEventList } from "."
 
 const meta: Meta = {
-  component: EventsList,
+  component: CalendarEventList,
   parameters: {
     layout: "centered",
     tags: ["autodocs"],
@@ -16,13 +16,16 @@ const meta: Meta = {
         description: "02/07 - 04/07",
         color: "orange",
         isPending: false,
+        fromDate: new Date(2024, 6, 2),
+        toDate: new Date(2024, 6, 4),
       },
       {
         title: "Retrospective",
         subtitle: "(1 day)",
-        description: "06/07 - 06/07",
+        description: "06/07",
         color: "green",
         isPending: false,
+        toDate: new Date(2024, 6, 6),
       },
       {
         title: "Team Building",
@@ -30,12 +33,14 @@ const meta: Meta = {
         description: "10/07 - 12/07",
         color: "blue",
         isPending: false,
+        fromDate: new Date(2024, 6, 10),
+        toDate: new Date(2024, 6, 12),
       },
     ],
   },
   decorators: [
     (Story) => (
-      <div className="w-64">
+      <div className="w-96">
         <Story />
       </div>
     ),

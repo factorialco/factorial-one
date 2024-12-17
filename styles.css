@@ -48,6 +48,8 @@
     --selected-60: theme("colors.viridian.60");
     --selected-70: theme("colors.viridian.70");
 
+    --special-highlight: theme("colors.special.highlight");
+
     --critical-50: theme("colors.red.50");
     --critical-60: theme("colors.red.60");
     --critical-70: theme("colors.red.70");
@@ -120,6 +122,8 @@
     --selected-50: theme("colors.viridian.50");
     --selected-60: theme("colors.viridian.60");
     --selected-70: theme("colors.viridian.50");
+
+    --special-highlight: theme("colors.special.highlight");
 
     --critical-50: theme("colors.red.60");
     --critical-60: theme("colors.red.50");

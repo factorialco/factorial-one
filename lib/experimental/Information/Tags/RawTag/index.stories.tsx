@@ -25,3 +25,9 @@ export const NoIconTag: Story = {
     icon: undefined,
   },
 }
+
+export const IconTag: Story = {
+  args: {
+    text: undefined,
+  },
+}
