@@ -8,12 +8,19 @@ import {
 } from "@/ui/tooltip"
 import React, { ComponentProps } from "react"
 
-interface TooltipProps {
-  label?: string
-  description?: string
+type TooltipProps = {
   children: React.ReactNode
   shortcut?: ComponentProps<typeof Shortcut>["keys"]
-}
+} & (
+  | {
+      label: string
+      description?: string
+    }
+  | {
+      label?: string
+      description: string
+    }
+)
 
 export function Tooltip({
   label,
