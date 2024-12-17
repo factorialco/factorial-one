@@ -1,0 +1,52 @@
+import { Canvas, Meta, Unstyled } from "@storybook/blocks"
+import * as StatusBadgeStories from "./StatusBadge/index.stories"
+import * as EmojiBadgeStories from "./EmojiBadge/index.stories"
+
+# Badges
+
+Badges are compact visual indicators. They provide quick visual cues to users
+about the state or nature of an item.
+
+## StatusBadge
+
+A badge that displays status through icons. Useful for showing status or alert
+levels.
+
+<Canvas of={StatusBadgeStories.Variants} />
+
+### Variants
+
+<Unstyled>
+  <table>
+    <thead>
+      <tr>
+        <th>Variant</th>
+        <th>Usage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Neutral</td>
+        <td>Default state, used for general information</td>
+      </tr>
+      <tr>
+        <td>Positive</td>
+        <td>Indicates success or completion</td>
+      </tr>
+      <tr>
+        <td>Critical</td>
+        <td>Shows errors or critical states</td>
+      </tr>
+      <tr>
+        <td>Warning</td>
+        <td>Highlights potential issues or important notices</td>
+      </tr>
+    </tbody>
+  </table>
+</Unstyled>
+
+## EmojiBadge
+
+A badge that displays an emoji. Useful for showing a reaction.
+
+<Canvas of={EmojiBadgeStories.Default} />

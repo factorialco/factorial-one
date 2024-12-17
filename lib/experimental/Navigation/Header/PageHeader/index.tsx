@@ -87,7 +87,7 @@ export function PageHeader({
             </motion.div>
           )}
         </AnimatePresence>
-        <div className="flex flex-grow items-center gap-3">
+        <div className="flex flex-grow items-center gap-2">
           {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
           {breadcrumbsTree.length > 1 ? (
             <Breadcrumbs breadcrumbs={breadcrumbsTree} />

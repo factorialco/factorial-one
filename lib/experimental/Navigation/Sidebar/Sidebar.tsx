@@ -1,5 +1,6 @@
 import { useReducedMotion } from "@/lib/a11y"
 import { cn } from "@/lib/utils"
+import { ScrollArea } from "@/ui/scrollarea"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactNode } from "react"
 import { useIntersectionObserver } from "usehooks-ts"
@@ -88,11 +89,11 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
       <div className="flex-shrink-0">{header}</div>
       {body && (
         <div className="relative flex-grow overflow-y-hidden">
-          <div className="h-full overflow-y-auto">
+          <ScrollArea className="h-full">
             <div ref={topRef} className="h-px" aria-hidden="true" />
             {body}
             <div ref={bottomRef} className="h-px" aria-hidden="true" />
-          </div>
+          </ScrollArea>
 
           <AnimatePresence>
             {!isAtTop && <ScrollShadow position="top" />}

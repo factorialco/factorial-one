@@ -1,14 +1,17 @@
+import { BarChartProps } from "@/components/Charts/BarChart"
+import BarChartStory from "@/components/Charts/BarChart/index.stories"
+import { BarChartWidget } from "@/experimental/Widgets/Charts/BarChartWidget"
 import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { Meta, StoryObj } from "@storybook/react"
 import { Carousel } from "."
 
 const meta: Meta<typeof Carousel> = {
   component: Carousel,
-  parameters: {
-    layout: "fullscreen",
-  },
   argTypes: {
     autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
   },
 }
 
@@ -16,39 +19,58 @@ export default meta
 
 type Story = StoryObj<typeof Carousel>
 
-const SLIDES = Array.from({ length: 6 }, (_, i) => (
-  <Placeholder key={i + 1} className="h-32">
+const SLIDES = Array.from({ length: 15 }, (_, i) => (
+  <Placeholder key={i + 1} className="h-32 min-w-40">
     Slide {i + 1}
   </Placeholder>
 ))
 
 export const Default: Story = {
   decorators: [
-    (Story) => (
+    (Story, args) => (
       <div className="w-full p-6">
-        <Story />
+        <Story {...args} />
       </div>
     ),
   ],
   argTypes: {
-    autoplay: { table: { disable: true } },
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
   },
   args: {
     autoplay: false,
+    showArrows: true,
+    showDots: true,
+    showPeek: false,
     children: SLIDES,
+    columns: { default: 1 },
   },
 }
 
+/**
+ * `columns`: An object specifying the number of columns to display at different breakpoints:
+ *   - `xs`: Number of columns for extra small screens. Default is `2`.
+ *   - `sm`: Number of columns for small screens. Default is `3`.
+ *   - `md`: Number of columns for medium screens. Default is `4`.
+ *   - `lg`: Number of columns for large screens. Default is `6`.
+ *
+ * Try to **resize the window** to see the number of columns change.
+ */
 export const CustomColumns: Story = {
   decorators: [
-    (Story) => (
+    (Story, args) => (
       <div className="w-full p-6">
-        <Story />
+        <Story {...args} />
       </div>
     ),
   ],
   argTypes: {
-    autoplay: { table: { disable: true } },
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
   },
   args: {
     autoplay: false,
@@ -62,6 +84,9 @@ export const CustomColumns: Story = {
   },
 }
 
+/**
+ * `autoplay`: Whether to automatically scroll through the slides. Default is `false`.
+ */
 export const AutoScroll: Story = {
   decorators: [
     (Story) => (
@@ -70,14 +95,46 @@ export const AutoScroll: Story = {
       </div>
     ),
   ],
+  argTypes: {
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+  },
   args: {
     autoplay: true,
     delay: 3000,
     children: SLIDES,
+    columns: { default: 1 },
   },
 }
 
+/**
+ * `sneakPeek`: Whether to show a peek of the next slide. Default is `false`.
+ */
 export const SneakPeek: Story = {
+  decorators: [
+    (Story) => (
+      <div className="w-full p-6">
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+  },
+  args: {
+    showArrows: false,
+    children: SLIDES,
+    showPeek: true,
+    columns: { default: 1 },
+  },
+}
+
+export const NoColumns: Story = {
   decorators: [
     (Story) => (
       <div className="w-full p-6">
@@ -89,5 +146,49 @@ export const SneakPeek: Story = {
     showArrows: false,
     children: SLIDES,
     showPeek: true,
+  },
+}
+
+const randomClasses = ["h-64", "h-full", "h-32", "w-32", "w-full", "w-64"]
+
+const SLIDES_RANDOM = [
+  <BarChartWidget
+    key="widget"
+    chart={BarChartStory.args as BarChartProps}
+    fullHeight
+  />,
+  ...Array.from({ length: 6 }, (_, i) => {
+    const randomHeight = randomClasses[Math.floor(i / 2)]
+    const randomWidth = randomClasses[Math.floor(i / 2) + 3]
+    return (
+      <Placeholder key={i + 1} className={`${randomHeight} ${randomWidth}`}>
+        Slide {i + 1} ({randomHeight} {randomWidth})
+      </Placeholder>
+    )
+  }),
+]
+
+/**
+ * Care using this component for distinct size widgets.
+ */
+export const MultipleWidths: Story = {
+  decorators: [
+    (Story) => (
+      <div className="h-full w-full p-6">
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+  },
+  args: {
+    showArrows: true,
+    children: SLIDES_RANDOM,
+    showPeek: true,
+    showDots: false,
   },
 }
