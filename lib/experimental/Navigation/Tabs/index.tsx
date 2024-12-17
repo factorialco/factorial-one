@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
-import { useMediaQuery } from "usehooks-ts"
+import { useMediaQuery, useResizeObserver } from "usehooks-ts"
 
 export type TabItem = {
   label: string
@@ -22,12 +22,21 @@ interface TabsProps {
 
 export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const { isActive } = useNavigation()
-  const containerRef = useRef<HTMLDivElement>(null)
   const [visibleTabs, setVisibleTabs] = useState<TabItem[]>(tabs)
   const [overflowTabs, setOverflowTabs] = useState<TabItem[]>([])
-
   const isMdScreen = useMediaQuery("(min-width: 768px)")
   const [open, setOpen] = useState(false)
+
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const { width } = useResizeObserver({
+    ref: containerRef,
+    box: "border-box",
+  })
+
+  useEffect(() => {
+    updateVisibleTabs()
+  }, [width, tabs, isMdScreen])
 
   // Index tabs are usually `/` while other tabs are `/some-other-path`.
   // We need to find the right active tab by checking if the current path
@@ -42,7 +51,7 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
     overflowTabs.some((tab) => isTabActive(tab.href))
 
   const updateVisibleTabs = () => {
-    // Early return for mobile or no container
+    // Early return for mobile
     if (!containerRef.current || !isMdScreen) {
       setVisibleTabs(tabs)
       setOverflowTabs([])
@@ -56,19 +65,16 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
     const availableWidth =
       container.offsetWidth - moreButtonWidth - padding - containerPadding
 
-    // Get or calculate tab widths once
     const tabWidths = container.dataset.tabWidths
       ? JSON.parse(container.dataset.tabWidths)
       : Array.from(container.querySelectorAll('[role="link"]')).map(
           (tab) => tab.getBoundingClientRect().width
         )
 
-    // Store widths if first time
     if (!container.dataset.tabWidths) {
       container.dataset.tabWidths = JSON.stringify(tabWidths)
     }
 
-    // Find how many tabs fit
     let remainingWidth = availableWidth
     const visibleCount = tabWidths.findIndex((width: number) => {
       remainingWidth -= width
@@ -82,19 +88,6 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
       tabs.slice(visibleCount === -1 ? tabs.length : visibleCount)
     )
   }
-
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver(() => {
-      updateVisibleTabs()
-    })
-
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current)
-      updateVisibleTabs()
-    }
-
-    return () => resizeObserver.disconnect()
-  }, [tabs, isMdScreen])
 
   return (
     <div ref={containerRef}>
