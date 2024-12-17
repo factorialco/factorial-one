@@ -17,10 +17,7 @@ export type CelebrationProps = {
   canReact?: boolean
   type?: "birthday" | "anniversary" | "first-day"
   typeLabel: string
-  date: {
-    day: number
-    month: string
-  }
+  date: Date
 }
 
 export const BaseCelebration = ({
@@ -75,7 +72,7 @@ export const BaseCelebration = ({
           </div>
         </div>
         <div className="shrink-0">
-          <DateAvatar month={date.month} day={date.day} />
+          <DateAvatar date={date} />
         </div>
       </div>
     </Link>
