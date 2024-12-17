@@ -13,7 +13,7 @@ const iconVariants = cva("inline-block shrink-0", {
       lg: "w-6 [&_circle]:stroke-lg [&_path]:stroke-lg [&_rect]:stroke-lg",
       md: "w-5 [&_circle]:stroke-md [&_path]:stroke-md [&_rect]:stroke-md",
       sm: "w-4 [&_circle]:stroke-sm [&_path]:stroke-sm [&_rect]:stroke-sm",
-      xs: "[&_circle]:stroke-xs [&_path]:stroke-xs [&_rect]:stroke-xs w-3",
+      xs: "w-3 [&_circle]:stroke-xs [&_path]:stroke-xs [&_rect]:stroke-xs",
     },
   },
   defaultVariants: {
