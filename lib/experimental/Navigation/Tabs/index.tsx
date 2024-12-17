@@ -34,10 +34,6 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
     box: "border-box",
   })
 
-  useEffect(() => {
-    updateVisibleTabs()
-  }, [width, tabs, isMdScreen])
-
   // Index tabs are usually `/` while other tabs are `/some-other-path`.
   // We need to find the right active tab by checking if the current path
   // is active without the index first, and then with the index. Otherwise,
@@ -88,6 +84,10 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
       tabs.slice(visibleCount === -1 ? tabs.length : visibleCount)
     )
   }
+
+  useEffect(() => {
+    updateVisibleTabs()
+  }, [width, tabs, isMdScreen, updateVisibleTabs])
 
   return (
     <div ref={containerRef}>
