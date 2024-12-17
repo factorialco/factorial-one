@@ -46,48 +46,47 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
   const hasActiveOverflowTab = () =>
     overflowTabs.some((tab) => isTabActive(tab.href))
 
-  const updateVisibleTabs = () => {
-    // Early return for mobile
-    if (!containerRef.current || !isMdScreen) {
-      setVisibleTabs(tabs)
-      setOverflowTabs([])
-      return
-    }
-
-    const container = containerRef.current
-    const moreButtonWidth = 128
-    const padding = 32
-    const containerPadding = 48
-    const availableWidth =
-      container.offsetWidth - moreButtonWidth - padding - containerPadding
-
-    const tabWidths = container.dataset.tabWidths
-      ? JSON.parse(container.dataset.tabWidths)
-      : Array.from(container.querySelectorAll('[role="link"]')).map(
-          (tab) => tab.getBoundingClientRect().width
-        )
-
-    if (!container.dataset.tabWidths) {
-      container.dataset.tabWidths = JSON.stringify(tabWidths)
-    }
-
-    let remainingWidth = availableWidth
-    const visibleCount = tabWidths.findIndex((width: number) => {
-      remainingWidth -= width
-      return remainingWidth < 0
-    })
-
-    setVisibleTabs(
-      tabs.slice(0, visibleCount === -1 ? tabs.length : visibleCount)
-    )
-    setOverflowTabs(
-      tabs.slice(visibleCount === -1 ? tabs.length : visibleCount)
-    )
-  }
-
   useEffect(() => {
+    const updateVisibleTabs = () => {
+      if (!containerRef.current || !isMdScreen) {
+        setVisibleTabs(tabs)
+        setOverflowTabs([])
+        return
+      }
+
+      const container = containerRef.current
+      const moreButtonWidth = 128
+      const padding = 32
+      const containerPadding = 48
+      const availableWidth =
+        container.offsetWidth - moreButtonWidth - padding - containerPadding
+
+      const tabWidths = container.dataset.tabWidths
+        ? JSON.parse(container.dataset.tabWidths)
+        : Array.from(container.querySelectorAll('[role="link"]')).map(
+            (tab) => tab.getBoundingClientRect().width
+          )
+
+      if (!container.dataset.tabWidths) {
+        container.dataset.tabWidths = JSON.stringify(tabWidths)
+      }
+
+      let remainingWidth = availableWidth
+      const visibleCount = tabWidths.findIndex((width: number) => {
+        remainingWidth -= width
+        return remainingWidth < 0
+      })
+
+      setVisibleTabs(
+        tabs.slice(0, visibleCount === -1 ? tabs.length : visibleCount)
+      )
+      setOverflowTabs(
+        tabs.slice(visibleCount === -1 ? tabs.length : visibleCount)
+      )
+    }
+
     updateVisibleTabs()
-  }, [width, tabs, isMdScreen, updateVisibleTabs])
+  }, [width, tabs, isMdScreen])
 
   return (
     <div ref={containerRef}>
