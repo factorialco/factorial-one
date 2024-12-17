@@ -7,11 +7,12 @@ import { BaseTag } from "../BaseTag"
 
 type Props = {
   text?: string
+  additionalAccesibleText?: string
   icon?: IconType
 }
 
 export const RawTag = forwardRef<HTMLDivElement, Props>(
-  ({ text, icon }, ref) => {
+  ({ text, additionalAccesibleText, icon }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
@@ -24,6 +25,7 @@ export const RawTag = forwardRef<HTMLDivElement, Props>(
           ) : null
         }
         text={text}
+        additionalAccesibleText={additionalAccesibleText}
       />
     )
   }

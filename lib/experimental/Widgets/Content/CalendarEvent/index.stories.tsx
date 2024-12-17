@@ -63,7 +63,7 @@ export const Primary: Story = {}
 
 export const NoBackground: Story = {
   args: {
-    showBackground: false,
+    noBackground: true,
   },
 }
 

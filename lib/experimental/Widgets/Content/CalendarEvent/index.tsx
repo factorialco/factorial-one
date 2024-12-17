@@ -22,7 +22,10 @@ const Tags = ({ tags, right }: { tags: Tag[]; right?: boolean }) => (
     {tags.map((tag) => (
       <Tooltip key={tag.label} label={tag.label} description={tag.description}>
         <div>
-          <RawTag icon={tag.icon} />
+          <RawTag
+            icon={tag.icon}
+            additionalAccesibleText={`${tag.label}: ${tag.description}`}
+          />
         </div>
       </Tooltip>
     ))}
@@ -40,7 +43,7 @@ export interface CalendarEventProps {
   rightTags?: Tag[]
   fromDate?: Date
   toDate: Date
-  showBackground?: boolean
+  noBackground?: boolean
 }
 
 export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
@@ -56,7 +59,7 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
       rightTags,
       fromDate,
       toDate,
-      showBackground = true,
+      noBackground,
     },
     ref
   ) {
@@ -65,7 +68,7 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
         ref={ref}
         className="relative flex flex-row items-stretch gap-2.5 overflow-hidden rounded-sm p-2"
       >
-        {showBackground && (
+        {!noBackground && (
           <>
             <div
               className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-5"

@@ -32,10 +32,10 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
         onClick={onClick}
       >
         {left}
+        {!!text && <span>{text}</span>}
         {additionalAccesibleText && (
           <span className="sr-only">{additionalAccesibleText}</span>
         )}
-        {!!text && <span>{text}</span>}
       </div>
     )
   }
