@@ -19,16 +19,30 @@ const Tags = ({ tags, right }: { tags: Tag[]; right?: boolean }) => (
       right && "justify-end"
     )}
   >
-    {tags.map((tag) => (
-      <Tooltip key={tag.label} label={tag.label} description={tag.description}>
+    {tags.map((tag) => {
+      const Content = (
         <div>
           <RawTag
             icon={tag.icon}
             additionalAccesibleText={`${tag.label}: ${tag.description}`}
           />
         </div>
-      </Tooltip>
-    ))}
+      )
+
+      if (tag.label || tag.description) {
+        return (
+          <Tooltip
+            key={tag.label ?? tag.description}
+            label={tag.label as string}
+            description={tag.description as string}
+          >
+            {Content}
+          </Tooltip>
+        )
+      }
+
+      return Content
+    })}
   </div>
 )
 
