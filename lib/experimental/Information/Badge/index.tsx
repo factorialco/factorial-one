@@ -1,12 +1,13 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { cva, VariantProps } from "class-variance-authority"
 
-const statusBadgeVariants = cva(
+const badgeVariants = cva(
   "flex shrink-0 items-center justify-center rounded-full",
   {
     variants: {
-      status: {
+      type: {
         neutral: "bg-transparent text-f1-icon",
+        highlight: "text-f1-special-highlight",
         positive: "bg-f1-background-positive-bold text-f1-foreground-inverse",
         critical: "bg-f1-background-critical-bold text-f1-foreground-inverse",
         warning: "bg-f1-background-warning-bold text-f1-foreground-inverse",
@@ -18,7 +19,7 @@ const statusBadgeVariants = cva(
       },
     },
     defaultVariants: {
-      status: "neutral",
+      type: "neutral",
       size: "md",
     },
   }
@@ -30,19 +31,14 @@ const iconSizes = {
   lg: "md",
 } as const
 
-export interface StatusBadgeProps
-  extends VariantProps<typeof statusBadgeVariants> {
+interface BadgeProps extends VariantProps<typeof badgeVariants> {
   icon: IconType
-  size?: keyof typeof iconSizes
+  size: keyof typeof iconSizes
 }
 
-export const StatusBadge = ({
-  status,
-  size = "md",
-  icon,
-}: StatusBadgeProps) => {
+export const Badge = ({ type, size = "md", icon }: BadgeProps) => {
   return (
-    <div className={statusBadgeVariants({ status, size })}>
+    <div className={badgeVariants({ type, size })}>
       <Icon icon={icon} size={iconSizes[size]} />
     </div>
   )

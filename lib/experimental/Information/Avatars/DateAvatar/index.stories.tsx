@@ -12,7 +12,6 @@ type Story = StoryObj<typeof DateAvatar>
 
 export const Default: Story = {
   args: {
-    month: "January",
-    day: 15,
+    date: new Date(2024, 0, 15),
   },
 }

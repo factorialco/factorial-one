@@ -30,10 +30,7 @@ export const Default: Story = {
           src="https://github.com/josepjaume.png"
           type="birthday"
           typeLabel="Birthday"
-          date={{
-            day: 29,
-            month: "November",
-          }}
+          date={new Date(2024, 10, 29)}
         />
       </div>
       <div className="w-48">
@@ -44,10 +41,7 @@ export const Default: Story = {
           src="https://github.com/nlopin.png"
           type="anniversary"
           typeLabel="Anniversary"
-          date={{
-            day: 4,
-            month: "December",
-          }}
+          date={new Date(2024, 11, 4)}
         />
       </div>
     </>
@@ -69,10 +63,7 @@ export const NoImage: Story = {
     canReact: false,
     type: "first-day",
     typeLabel: "First day very long name",
-    date: {
-      day: 15,
-      month: "December",
-    },
+    date: new Date(2024, 11, 15),
   },
 }
 

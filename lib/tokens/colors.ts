@@ -108,6 +108,9 @@ export const baseColors = {
     60: "258 56% 56%",
     70: "258 43% 46%",
   },
+  special: {
+    highlight: "348 80% 50%",
+  },
 }
 
 export const f1Colors = {
@@ -214,4 +217,5 @@ export const f1Colors = {
   ring: "hsl(var(--ring))",
   link: "hsl(var(--link))",
   page: "hsl(var(--page))",
+  "special-highlight": "hsl(var(--special-highlight))",
 }

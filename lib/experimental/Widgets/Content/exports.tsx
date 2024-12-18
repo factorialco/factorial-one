@@ -1,5 +1,5 @@
+export * from "./CalendarEventList"
 export * from "./CategoryBarSection"
-export * from "./EventsList"
 export * from "./Highlights/exports"
 export * from "./IndicatorsList"
 export * from "./Lists/exports"
