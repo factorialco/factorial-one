@@ -22,10 +22,11 @@ export const Default: Story = {
   },
 }
 
-export const Variants: Story = {
+export const Types: Story = {
   render: () => (
     <div className="flex flex-row gap-2">
       <Badge icon={Icons.Placeholder} size="md" />
+      <Badge icon={Icons.Circle} type="highlight" size="md" />
       <Badge icon={Icons.Check} type="positive" size="md" />
       <Badge icon={Icons.Cross} type="critical" size="md" />
       <Badge icon={Icons.Alert} type="warning" size="md" />
