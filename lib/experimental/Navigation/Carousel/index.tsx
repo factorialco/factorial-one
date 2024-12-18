@@ -67,7 +67,7 @@ export const Carousel = ({
 
   return (
     <ShadCarousel
-      className="flex flex-col gap-3"
+      className="flex w-full flex-col gap-3"
       opts={{
         align: "center",
         slidesToScroll: "auto",
