@@ -49,7 +49,7 @@ const Tags = ({ tags, right }: { tags: Tag[]; right?: boolean }) => (
 export interface CalendarEventProps {
   label?: string
   title: string
-  subtitle: string
+  subtitle?: string
   description: string
   color: string
   isPending: boolean
@@ -85,13 +85,13 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
         {!noBackground && (
           <>
             <div
-              className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-5"
+              className="absolute bottom-0 left-0 right-0 top-0 opacity-5"
               style={{
                 background: `${color}`,
               }}
             />
             <div
-              className="absolute bottom-0 left-0 right-0 top-0 -z-10 opacity-5"
+              className="absolute bottom-0 left-0 right-0 top-0 opacity-5"
               style={{
                 background: `linear-gradient(to right, ${color}, transparent)`,
               }}
@@ -117,7 +117,7 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
                 }
           }
         />
-        <div className="flex flex-1 flex-col gap-2">
+        <div className="z-10 flex flex-1 flex-col gap-2">
           <div className="flex flex-row items-start gap-2.5">
             <div className="flex flex-1 flex-col gap-0.5">
               {!!label && (
