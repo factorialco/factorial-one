@@ -44,9 +44,8 @@ export const WithImage: Story = {
 
 export const WithBadge: Story = {
   args: {
-    src: "https://avatars.githubusercontent.com/u/21041797?s=48&v=4",
     badge: {
-      status: "positive",
+      type: "positive",
       icon: Check,
     },
   },

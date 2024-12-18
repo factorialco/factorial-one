@@ -46,7 +46,7 @@ export const WithImage: Story = {
 export const WithBadge: Story = {
   args: {
     badge: {
-      status: "positive",
+      type: "positive",
       icon: Check,
     },
   },

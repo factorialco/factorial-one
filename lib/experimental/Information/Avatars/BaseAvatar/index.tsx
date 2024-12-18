@@ -1,7 +1,4 @@
-import {
-  StatusBadge,
-  StatusBadgeProps,
-} from "@/experimental/Information/Badges/StatusBadge"
+import { Badge, BadgeProps } from "@/experimental/Information/Badge"
 import {
   Avatar as AvatarComponent,
   AvatarFallback,
@@ -24,7 +21,7 @@ type Props = {
   src?: string
   size?: ShadAvatarProps["size"]
   color?: ShadAvatarProps["color"] | "random"
-  badge?: StatusBadgeProps
+  badge?: BadgeProps
 } & Pick<ShadAvatarProps, "aria-label" | "aria-labelledby">
 
 export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
@@ -76,8 +73,8 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
         </div>
         {badge && (
           <div className="absolute -bottom-0.5 -right-0.5">
-            <StatusBadge
-              status={badge.status}
+            <Badge
+              type={badge.type}
               icon={badge.icon}
               size={getBadgeSize(size)}
             />

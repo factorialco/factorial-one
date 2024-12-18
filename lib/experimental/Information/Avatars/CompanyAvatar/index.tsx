@@ -1,4 +1,4 @@
-import { StatusBadgeProps } from "@/experimental/Information/Badges/StatusBadge"
+import { BadgeProps } from "@/experimental/Information/Badge"
 import { ComponentProps } from "react"
 import { BaseAvatar } from "../BaseAvatar"
 
@@ -8,7 +8,7 @@ type Props = {
   name: string
   src?: string
   size?: BaseAvatarProps["size"]
-  badge?: StatusBadgeProps
+  badge?: BadgeProps
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
 
 export const CompanyAvatar = ({
