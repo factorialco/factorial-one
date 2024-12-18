@@ -46,7 +46,6 @@ export interface WidgetProps {
     text: string
     variant: StatusVariant
   }
-  fullHeight?: boolean
 }
 
 const InlineDot = () => (
@@ -57,7 +56,7 @@ const Container = forwardRef<
   HTMLDivElement,
   WidgetProps & { children: ReactNode }
 >(function Container(
-  { header, children, action, summaries, alert, status, fullHeight = false },
+  { header, children, action, summaries, alert, status },
   ref
 ) {
   const { enabled: privacyModeEnabled, toggle: togglePrivacyMode } =
@@ -88,10 +87,7 @@ const Container = forwardRef<
 
   return (
     <Card
-      className={cn(
-        fullHeight ? "h-full" : "",
-        "relative flex gap-4 border-f1-border-secondary"
-      )}
+      className={cn("h-full", "relative flex gap-4 border-f1-border-secondary")}
       ref={ref}
     >
       {header && (
