@@ -53,11 +53,11 @@ export function CelebrationAvatar({
               src={src}
               firstName={firstName}
               lastName={lastName}
-              size="large"
+              size="xlarge"
             />
           </div>
           {canReact && (
-            <div className="absolute -bottom-[3px] -right-0.5">
+            <div className="absolute -right-0.5 bottom-0.5">
               <Button
                 label="React"
                 hideLabel

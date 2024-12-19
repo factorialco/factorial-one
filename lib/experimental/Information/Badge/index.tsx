@@ -31,9 +31,9 @@ const iconSizes = {
   lg: "md",
 } as const
 
-interface BadgeProps extends VariantProps<typeof badgeVariants> {
+export interface BadgeProps extends VariantProps<typeof badgeVariants> {
   icon: IconType
-  size: keyof typeof iconSizes
+  size?: keyof typeof iconSizes
 }
 
 export const Badge = ({ type, size = "md", icon }: BadgeProps) => {
