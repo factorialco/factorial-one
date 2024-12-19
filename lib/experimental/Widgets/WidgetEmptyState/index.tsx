@@ -23,6 +23,12 @@ export function WidgetEmptyState({
   emoji,
   actions,
 }: WidgetEmptyStateProps) {
+  if ((actions?.length ?? 0) > 2) {
+    throw Error(
+      "You can only provide up to two actions for the WidgetEmptyState"
+    )
+  }
+
   return (
     <div className="flex min-h-56 flex-col items-center justify-center p-8">
       {emoji ? (
