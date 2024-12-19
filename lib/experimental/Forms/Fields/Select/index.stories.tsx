@@ -54,6 +54,7 @@ export const WithCustomTrigger: Story = {
     options: [
       { value: "red", label: "Red" },
       { value: "green", label: "Green" },
+      "separator",
       { value: "blue", label: "Blue" },
     ],
   },
