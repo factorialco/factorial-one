@@ -1,7 +1,7 @@
 import { Select } from "@/experimental/Forms/Fields/Select"
 import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
 import { AvatarVariant } from "@/experimental/Information/Avatars/utils"
-import ChevronDown from "@/icons/app/ChevronDown"
+import { ChevronDown, Circle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import { motion } from "framer-motion"
@@ -18,6 +18,7 @@ export type CompanySelectorProps = {
   selected?: string
   onChange: (value: string) => void
   isLoading?: boolean
+  notification?: boolean
 }
 
 export function CompanySelector({
@@ -25,6 +26,7 @@ export function CompanySelector({
   selected,
   onChange,
   isLoading = false,
+  notification = false,
 }: CompanySelectorProps) {
   const selectedCompany = useMemo(
     () => companies.find((company) => company.id === selected) || companies[0],
@@ -43,7 +45,10 @@ export function CompanySelector({
   if (companies.length === 1) {
     return (
       <div className="p-1.5">
-        <SelectedCompanyLabel company={selectedCompany} />
+        <SelectedCompanyLabel
+          company={selectedCompany}
+          notification={notification}
+        />
       </div>
     )
   }
@@ -54,7 +59,10 @@ export function CompanySelector({
       selected={selectedCompany}
       onChange={onChange}
     >
-      <SelectedCompanyLabel company={selectedCompany} />
+      <SelectedCompanyLabel
+        company={selectedCompany}
+        notification={notification}
+      />
     </Selector>
   )
 }
@@ -122,8 +130,10 @@ const Selector = ({
 
 const SelectedCompanyLabel = ({
   company,
+  notification = false,
 }: {
   company: CompanySelectorProps["companies"][number]
+  notification?: boolean
 }) => {
   return (
     <div
@@ -136,6 +146,7 @@ const SelectedCompanyLabel = ({
         name={company?.name?.[0]}
         src={company?.logo}
         size="small"
+        badge={notification ? { icon: Circle, type: "highlight" } : undefined}
       />
       <div className="min-w-0 flex-1">
         <span className="block truncate">{company?.name}</span>

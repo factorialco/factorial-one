@@ -4,12 +4,6 @@ import { SidebarHeader } from "./index"
 const meta = {
   component: SidebarHeader,
   tags: ["autodocs"],
-} satisfies Meta<typeof SidebarHeader>
-
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
   args: {
     companies: [
       { id: "1", name: "Factorial", logo: "https://github.com/factorial.png" },
@@ -19,5 +13,16 @@ export const Default: Story = {
     selected: "1",
     onChange: (company) => console.log("Selected company:", company),
     isExpanded: true,
+  },
+} satisfies Meta<typeof SidebarHeader>
+
+export default meta
+type Story = StoryObj<typeof meta>
+
+export const Default: Story = {}
+
+export const Notification: Story = {
+  args: {
+    notification: true,
   },
 }
