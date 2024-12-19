@@ -390,9 +390,7 @@ const ChartLegendContent = React.forwardRef<
                   />
                 )
               )}
-              <span className="text font-medium tracking-wide text-f1-foreground">
-                {itemConfig?.label}
-              </span>
+              <span className="text-f1-foreground">{itemConfig?.label}</span>
             </div>
           )
         })}
