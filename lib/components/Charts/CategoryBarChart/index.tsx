@@ -90,9 +90,7 @@ const _CategoryBarChart = (
                   className="h-2 w-2 shrink-0 rounded-full"
                   style={{ backgroundColor: color }}
                 />
-                <span className="text text-sm font-medium tracking-wide text-f1-foreground">
-                  {category.name}
-                </span>
+                <span className="text-f1-foreground">{category.name}</span>
               </div>
             )
           })}
