@@ -12,18 +12,19 @@ const meta: Meta<typeof WidgetEmptyState> = {
     title: "Title",
     description: "Description",
     emoji: "🍆",
-    actions: {
-      primary: {
+    actions: [
+      {
         icon: PlaceholderIcon,
         onClick: () => {},
         label: "Label",
       },
-      outline: {
+      {
         icon: PlaceholderIcon,
         onClick: () => {},
         label: "Label",
+        variant: "outline",
       },
-    },
+    ],
   },
   decorators: [
     (Story) => (
@@ -52,6 +53,20 @@ export const WidgetEmptyStateWithLongTexts: Story = {
       "Really really long title that we want to show that we want to show to our users for them to read",
     description:
       "Really really long description that we want to show to our users for them to read and express their thoughts",
+  },
+}
+
+export const WidgetEmptyStateWithOnlyOutlineAction: Story = {
+  args: {
+    emoji: undefined,
+    actions: [
+      {
+        icon: PlaceholderIcon,
+        onClick: () => {},
+        label: "Label",
+        variant: "outline",
+      },
+    ],
   },
 }
 
