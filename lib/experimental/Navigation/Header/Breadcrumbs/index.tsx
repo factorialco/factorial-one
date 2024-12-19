@@ -9,7 +9,10 @@ import {
 
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 
-import { Dropdown, type DropdownItem } from "@/experimental/Navigation/Dropdown"
+import {
+  Dropdown,
+  type DropdownItemObject,
+} from "@/experimental/Navigation/Dropdown"
 
 import { ChevronRight } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
@@ -28,7 +31,7 @@ interface BreadcrumbItemProps {
   isLast: boolean
 }
 
-type DropdownItemWithoutIcon = Omit<DropdownItem, "icon">
+type DropdownItemWithoutIcon = Omit<DropdownItemObject, "icon">
 
 function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
