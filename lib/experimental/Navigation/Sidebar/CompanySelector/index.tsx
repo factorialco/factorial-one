@@ -1,3 +1,4 @@
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Select } from "@/experimental/Forms/Fields/Select"
 import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
 import { AvatarVariant } from "@/experimental/Information/Avatars/utils"
@@ -22,6 +23,7 @@ export type CompanySelectorProps = {
   additionalOptions?: {
     label: string
     value: string
+    icon?: IconType
     description?: string
     onClick?: () => void
   }[]
@@ -101,9 +103,11 @@ const Selector = ({
           "aria-label": `${company.name} logo`,
         } satisfies AvatarVariant,
       })),
+      ...(additionalOptions ? ["separator" as const] : []),
       ...(additionalOptions?.map((option) => ({
         value: option.value,
         label: option.label,
+        icon: option.icon,
         description: option.description,
         onClick: option.onClick,
       })) ?? []),
@@ -143,9 +147,9 @@ const Selector = ({
             <motion.div
               animate={{ rotate: open ? 180 : 0 }}
               transition={{ duration: 0.2 }}
-              className="flex h-3 w-3 items-center justify-center"
+              className="flex h-3 w-3 shrink-0 items-center justify-center text-f1-icon-bold"
             >
-              <ChevronDown className="h-3 w-3 shrink-0 text-f1-icon-bold" />
+              <Icon icon={ChevronDown} size="xs" />
             </motion.div>
           </div>
         </div>

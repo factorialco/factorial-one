@@ -1,3 +1,4 @@
+import { Image } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { SidebarHeader } from "./index"
 
@@ -33,26 +34,7 @@ export const Notification: Story = {
         label: "Upload company avatar",
         value: "upload",
         description: "Personalise your experience",
-      },
-    ],
-  },
-}
-
-export const NotificationSingle: Story = {
-  args: {
-    companies: [
-      {
-        id: "1",
-        name: "Factorial",
-        logo: "https://github.com/factorialco.png",
-      },
-    ],
-    notification: true,
-    additionalOptions: [
-      {
-        label: "Upload company avatar",
-        value: "upload",
-        description: "Personalise your experience",
+        icon: Image,
       },
     ],
   },
