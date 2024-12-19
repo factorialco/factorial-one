@@ -6,7 +6,11 @@ const meta = {
   tags: ["autodocs"],
   args: {
     companies: [
-      { id: "1", name: "Factorial", logo: "https://github.com/factorial.png" },
+      {
+        id: "1",
+        name: "Factorial",
+        logo: "https://github.com/factorialco.png",
+      },
       { id: "2", name: "Dazlog", logo: "https://github.com/dazlog.png" },
       { id: "3", name: "Acme Corp" },
     ],
@@ -24,5 +28,32 @@ export const Default: Story = {}
 export const Notification: Story = {
   args: {
     notification: true,
+    additionalOptions: [
+      {
+        label: "Upload company avatar",
+        value: "upload",
+        description: "Personalise your experience",
+      },
+    ],
+  },
+}
+
+export const NotificationSingle: Story = {
+  args: {
+    companies: [
+      {
+        id: "1",
+        name: "Factorial",
+        logo: "https://github.com/factorialco.png",
+      },
+    ],
+    notification: true,
+    additionalOptions: [
+      {
+        label: "Upload company avatar",
+        value: "upload",
+        description: "Personalise your experience",
+      },
+    ],
   },
 }

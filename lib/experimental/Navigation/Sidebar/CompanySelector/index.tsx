@@ -19,6 +19,12 @@ export type CompanySelectorProps = {
   onChange: (value: string) => void
   isLoading?: boolean
   notification?: boolean
+  additionalOptions?: {
+    label: string
+    value: string
+    description?: string
+    onClick?: () => void
+  }[]
 }
 
 export function CompanySelector({
@@ -27,6 +33,7 @@ export function CompanySelector({
   onChange,
   isLoading = false,
   notification = false,
+  additionalOptions,
 }: CompanySelectorProps) {
   const selectedCompany = useMemo(
     () => companies.find((company) => company.id === selected) || companies[0],
@@ -42,7 +49,7 @@ export function CompanySelector({
     )
   }
 
-  if (companies.length === 1) {
+  if (companies.length + (additionalOptions?.length || 0) === 1) {
     return (
       <div className="p-1.5">
         <SelectedCompanyLabel
@@ -58,6 +65,7 @@ export function CompanySelector({
       companies={companies}
       selected={selectedCompany}
       onChange={onChange}
+      additionalOptions={additionalOptions}
     >
       <SelectedCompanyLabel
         company={selectedCompany}
@@ -72,16 +80,18 @@ const Selector = ({
   selected,
   onChange,
   children,
+  additionalOptions,
 }: {
   companies: Company[]
   selected: Company
   onChange: (value: string) => void
   children: ReactNode
+  additionalOptions?: CompanySelectorProps["additionalOptions"]
 }) => {
   const [open, setOpen] = useState(false)
   const options = useMemo(
-    () =>
-      companies.map((company) => ({
+    () => [
+      ...companies.map((company) => ({
         value: company.id,
         label: company.name,
         avatar: {
@@ -91,14 +101,30 @@ const Selector = ({
           "aria-label": `${company.name} logo`,
         } satisfies AvatarVariant,
       })),
-    [companies]
+      ...(additionalOptions?.map((option) => ({
+        value: option.value,
+        label: option.label,
+        description: option.description,
+        onClick: option.onClick,
+      })) ?? []),
+    ],
+    [companies, additionalOptions]
   )
+
+  const handleChange = (value: string) => {
+    const option = additionalOptions?.find((opt) => opt.value === value)
+    if (option?.onClick) {
+      option.onClick()
+      return
+    }
+    onChange(value)
+  }
 
   return (
     <Select
       options={options}
       value={selected.id}
-      onChange={onChange}
+      onChange={handleChange}
       placeholder="Select a company"
       open={open}
       onOpenChange={setOpen}
