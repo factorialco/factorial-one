@@ -10,6 +10,8 @@ export type Props<Id extends string | number = string | number> = {
   title: string
   icon?: IconType
   iconClassName?: string
+  rightIcon?: IconType
+  rightIconClassName?: string
   count?: number
   alert?: ComponentProps<typeof AlertTag>
   rawTag?: ComponentProps<typeof RawTag>
@@ -41,7 +43,9 @@ export function WidgetSimpleListItem({
   rawTag,
   count,
   icon,
+  rightIcon,
   iconClassName = "text-f1-icon-secondary",
+  rightIconClassName = "text-f1-icon-secondary",
   onClick,
 }: Props) {
   const className = cn(
@@ -57,10 +61,19 @@ export function WidgetSimpleListItem({
 
   return (
     <Wrapper onClick={handleOnClick} className={className}>
-      {icon && (
-        <Icon icon={icon} size="md" className={cn("mt-0.5", iconClassName)} />
-      )}
-      <p className="mt-0.5 line-clamp-2 flex-1 font-medium">{title}</p>
+      <div className="flex flex-1 flex-row items-center gap-1">
+        {icon && (
+          <Icon icon={icon} size="md" className={cn("mt-0.5", iconClassName)} />
+        )}
+        <p className="mt-0.5 line-clamp-2 font-medium">{title}</p>
+        {rightIcon && (
+          <Icon
+            icon={rightIcon}
+            size="md"
+            className={cn("mt-0.5", rightIconClassName)}
+          />
+        )}
+      </div>
       <div className="flex flex-row items-center gap-2">
         {alert && <AlertTag {...alert} />}
         {rawTag && <RawTag {...rawTag} />}
