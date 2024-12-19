@@ -1,24 +1,20 @@
-import { Button } from "@/components/Actions/Button"
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
 import { AlertAvatar } from "@/experimental/Information/Avatars/AlertAvatar"
 import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
+
+type Action = {
+  label: string
+  onClick: () => void
+  icon?: IconType
+  variant?: ButtonProps["variant"]
+}
 
 export type WidgetEmptyStateProps = {
   title: string
   description: string
   emoji?: string
-  actions?: {
-    primary: {
-      label: string
-      onClick: () => void
-      icon?: IconType
-    }
-    outline: {
-      label: string
-      onClick: () => void
-      icon?: IconType
-    }
-  }
+  actions?: Action[]
 }
 
 export function WidgetEmptyState({
@@ -42,17 +38,15 @@ export function WidgetEmptyState({
       </div>
       {!!actions && (
         <div className="mt-5 flex flex-row gap-3">
-          <Button
-            label={actions.primary.label}
-            icon={actions.primary.icon}
-            onClick={actions.primary.onClick}
-          />
-          <Button
-            label={actions.outline.label}
-            icon={actions.outline.icon}
-            onClick={actions.outline.onClick}
-            variant="outline"
-          />
+          {actions.map((action) => (
+            <Button
+              key={action.label}
+              label={action.label}
+              icon={action.icon}
+              onClick={action.onClick}
+              variant={action.variant}
+            />
+          ))}
         </div>
       )}
     </div>
