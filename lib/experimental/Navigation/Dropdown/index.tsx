@@ -26,6 +26,8 @@ export type DropdownItem = NavigationItem & {
 type DropdownProps = {
   items: DropdownItem[]
   children?: React.ReactNode
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 const DropdownItem = ({ item }: { item: DropdownItem }) => {
@@ -85,9 +87,14 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
   )
 }
 
-export function Dropdown({ items, children }: DropdownProps) {
+export function Dropdown({
+  items,
+  children,
+  open,
+  onOpenChange,
+}: DropdownProps) {
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
         {children || (
           <Button
