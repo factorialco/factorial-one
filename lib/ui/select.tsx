@@ -1,9 +1,9 @@
 "use client"
 
-import CheckCircle from "@/icons/app/CheckCircle"
+import { Icon } from "@/components/Utilities/Icon"
+import { CheckCircle, ChevronDown, ChevronUp } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import * as SelectPrimitive from "@radix-ui/react-select"
-import { ChevronDown, ChevronUp } from "lucide-react"
 import * as React from "react"
 
 const Select = SelectPrimitive.Root
@@ -29,12 +29,12 @@ const SelectScrollUpButton = React.forwardRef<
   <SelectPrimitive.ScrollUpButton
     ref={ref}
     className={cn(
-      "flex cursor-default items-center justify-center py-1",
+      "flex cursor-default items-center justify-center py-1 text-f1-icon",
       className
     )}
     {...props}
   >
-    <ChevronUp className="h-4 w-4 text-f1-foreground" />
+    <Icon icon={ChevronUp} size="sm" />
   </SelectPrimitive.ScrollUpButton>
 ))
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
@@ -46,12 +46,12 @@ const SelectScrollDownButton = React.forwardRef<
   <SelectPrimitive.ScrollDownButton
     ref={ref}
     className={cn(
-      "flex cursor-default items-center justify-center py-1",
+      "flex cursor-default items-center justify-center py-1 text-f1-icon",
       className
     )}
     {...props}
   >
-    <ChevronDown className="h-4 w-4 text-f1-foreground" />
+    <Icon icon={ChevronDown} size="sm" />
   </SelectPrimitive.ScrollDownButton>
 ))
 SelectScrollDownButton.displayName =
@@ -115,8 +115,8 @@ const SelectItem = React.forwardRef<
     {...props}
   >
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-    <SelectPrimitive.ItemIndicator className="flex">
-      <CheckCircle className="size-5 text-f1-icon-selected" />
+    <SelectPrimitive.ItemIndicator className="flex text-f1-icon-selected">
+      <Icon icon={CheckCircle} size="md" />
     </SelectPrimitive.ItemIndicator>
   </SelectPrimitive.Item>
 ))
