@@ -30,7 +30,7 @@ export const Default: Story = {
 export const Notification: Story = {
   args: {
     ...Default.args,
-    notification: true,
+    withNotification: true,
     additionalOptions: [
       {
         label: "Upload company avatar",

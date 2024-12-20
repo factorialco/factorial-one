@@ -7,7 +7,7 @@ export function SidebarHeader({
   companies,
   selected,
   onChange,
-  notification = false,
+  withNotification = false,
   additionalOptions,
 }: SidebarHeaderProps) {
   return (
@@ -16,7 +16,7 @@ export function SidebarHeader({
         companies={companies}
         selected={selected}
         onChange={onChange}
-        notification={notification}
+        withNotification={withNotification}
         additionalOptions={additionalOptions}
       />
       <SidebarIcon />

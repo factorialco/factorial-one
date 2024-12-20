@@ -19,7 +19,7 @@ export type CompanySelectorProps = {
   selected?: string
   onChange: (value: string) => void
   isLoading?: boolean
-  notification?: boolean
+  withNotification?: boolean
   additionalOptions?: {
     label: string
     value: string
@@ -34,8 +34,8 @@ export function CompanySelector({
   selected,
   onChange,
   isLoading = false,
-  notification = false,
-  additionalOptions,
+  withNotification = false,
+  additionalOptions = [],
 }: CompanySelectorProps) {
   const selectedCompany = useMemo(
     () => companies.find((company) => company.id === selected) || companies[0],
@@ -56,7 +56,7 @@ export function CompanySelector({
       <div className="p-1.5">
         <SelectedCompanyLabel
           company={selectedCompany}
-          notification={notification}
+          withNotification={withNotification}
         />
       </div>
     )
@@ -71,7 +71,7 @@ export function CompanySelector({
     >
       <SelectedCompanyLabel
         company={selectedCompany}
-        notification={notification}
+        withNotification={withNotification}
       />
     </Selector>
   )
@@ -82,7 +82,7 @@ const Selector = ({
   selected,
   onChange,
   children,
-  additionalOptions,
+  additionalOptions = [],
 }: {
   companies: Company[]
   selected: Company
@@ -103,14 +103,8 @@ const Selector = ({
           "aria-label": `${company.name} logo`,
         } satisfies AvatarVariant,
       })),
-      ...(additionalOptions ? ["separator" as const] : []),
-      ...(additionalOptions?.map((option) => ({
-        value: option.value,
-        label: option.label,
-        icon: option.icon,
-        description: option.description,
-        onClick: option.onClick,
-      })) ?? []),
+      ...(additionalOptions.length ? ["separator" as const] : []),
+      ...additionalOptions,
     ],
     [companies, additionalOptions]
   )
@@ -160,10 +154,10 @@ const Selector = ({
 
 const SelectedCompanyLabel = ({
   company,
-  notification = false,
+  withNotification = false,
 }: {
   company: CompanySelectorProps["companies"][number]
-  notification?: boolean
+  withNotification?: boolean
 }) => {
   return (
     <div
@@ -176,7 +170,9 @@ const SelectedCompanyLabel = ({
         name={company?.name?.[0]}
         src={company?.logo}
         size="small"
-        badge={notification ? { icon: Circle, type: "highlight" } : undefined}
+        badge={
+          withNotification ? { icon: Circle, type: "highlight" } : undefined
+        }
       />
       <div className="min-w-0 flex-1">
         <span className="block truncate">{company?.name}</span>
