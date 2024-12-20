@@ -61,7 +61,7 @@ export function WidgetSimpleListItem({
 
   return (
     <Wrapper onClick={handleOnClick} className={className}>
-      <div className="flex flex-1 flex-row items-center gap-1">
+      <div className="flex flex-1 flex-row items-start gap-1">
         {icon && (
           <Icon icon={icon} size="md" className={cn("mt-0.5", iconClassName)} />
         )}
