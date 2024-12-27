@@ -86,9 +86,9 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
       }}
       transition={transition}
     >
-      <div className="flex-shrink-0">{header}</div>
+      <header className="flex-shrink-0">{header}</header>
       {body && (
-        <div className="relative flex-grow overflow-y-hidden">
+        <nav className="relative flex-grow overflow-y-hidden">
           <ScrollArea className="h-full">
             <div ref={topRef} className="h-px" aria-hidden="true" />
             {body}
@@ -99,7 +99,7 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
             {!isAtTop && <ScrollShadow position="top" />}
             {!isAtBottom && <ScrollShadow position="bottom" />}
           </AnimatePresence>
-        </div>
+        </nav>
       )}
       <div className="flex-shrink-0">{footer}</div>
     </motion.div>
