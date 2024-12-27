@@ -47,7 +47,6 @@ function ApplicationFrameContent({
 
   return (
     <>
-      <SkipToContentButton contentId="content" />
       <MotionConfig
         reducedMotion={shouldReduceMotion ? "always" : "never"}
         transition={{
@@ -86,6 +85,7 @@ function ApplicationFrameContent({
                 }
               }}
             >
+              <SkipToContentButton contentId="content" />
               {sidebar}
             </div>
             <motion.main
