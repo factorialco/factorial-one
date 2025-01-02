@@ -1,7 +1,7 @@
 import { format } from "date-fns"
 
 export function formatTime(date: Date) {
-  return format(date, "HH:mm")
+  return format(date, "p")
 }
 
 export function getAbbreviateMonth(date: Date) {
