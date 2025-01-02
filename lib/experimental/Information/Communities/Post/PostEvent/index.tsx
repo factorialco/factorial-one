@@ -1,12 +1,13 @@
-import { DateAvatar } from "@/experimental/Information/Avatars/DateAvatar"
+import { CalendarEvent } from "@/experimental/Widgets/Content/CalendarEvent"
 import { formatTime } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
+import { f1Colors } from "@/tokens/colors"
 import { Skeleton } from "@/ui/skeleton"
 
 type PostEventProps = {
   title: string
   imageUrl?: string
-  place: string
+  place?: string
   date: Date
 }
 
@@ -16,6 +17,12 @@ export const BasePostEvent = ({
   place,
   date,
 }: PostEventProps) => {
+  let description = formatTime(date)
+
+  if (place) {
+    description = `${description} · ${place}`
+  }
+
   return (
     <div className="flex w-full flex-col gap-1 rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-1 shadow">
       {imageUrl && (
@@ -29,20 +36,14 @@ export const BasePostEvent = ({
           <Skeleton className="absolute inset-0 h-full w-full rounded-md" />
         </div>
       )}
-      <div className="flex h-full flex-row gap-3 p-2">
-        <div className="w-1 shrink-0 self-stretch rounded-full bg-f1-background-accent-bold" />
-        <div className="flex min-w-0 grow flex-col">
-          <span className="truncate font-medium text-f1-foreground">
-            {title}
-          </span>
-          <span className="flex min-w-0 flex-row gap-1 text-f1-foreground-secondary">
-            {formatTime(date)} · <span className="truncate">{place}</span>
-          </span>
-        </div>
-        <div className="shrink-0">
-          <DateAvatar date={date} />
-        </div>
-      </div>
+      <CalendarEvent
+        title={title}
+        description={description}
+        color={f1Colors["special-highlight"]}
+        isPending={false}
+        toDate={date}
+        noBackground
+      />
     </div>
   )
 }

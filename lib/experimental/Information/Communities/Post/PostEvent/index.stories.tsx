@@ -15,7 +15,7 @@ const eventDate = new Date(2024, 11, 13, 20, 0)
 export const Default: Story = {
   decorators: [
     (Story) => (
-      <div className="max-w-96">
+      <div className="max-w-[480px]">
         <Story />
       </div>
     ),
