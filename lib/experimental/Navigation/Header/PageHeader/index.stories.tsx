@@ -28,12 +28,21 @@ export const Default: Story = {
       {
         label: "Settings",
         icon: Settings,
-        onClick: () => console.log("Settings clicked"),
+        href: "/recruitment/settings",
       },
       {
         label: "More options",
         icon: EllipsisHorizontal,
-        onClick: () => console.log("More clicked"),
+        actions: [
+          {
+            label: "Profile",
+            href: "/recruitment/profile",
+          },
+          {
+            label: "Whatever",
+            href: "/whatever",
+          },
+        ],
       },
     ],
   },
@@ -46,6 +55,42 @@ export const FirstLevel: Story = {
       href: "/recruitment",
       icon: Recruitment,
     },
+  },
+}
+
+export const FirstLevelWithTag: Story = {
+  args: {
+    module: {
+      name: "Recruitment",
+      href: "/recruitment",
+      icon: Recruitment,
+    },
+    statusTag: {
+      text: "Published",
+      variant: "positive",
+      tooltip: "Tooltip description",
+    },
+  },
+}
+
+export const FirstLevelWithTagAndActions: Story = {
+  args: {
+    module: {
+      name: "Documents",
+      href: "/documents",
+      icon: Recruitment,
+    },
+    statusTag: {
+      text: "Published",
+      variant: "positive",
+    },
+    actions: [
+      {
+        label: "Settings",
+        icon: Settings,
+        href: "/recruitment/settings",
+      },
+    ],
   },
 }
 
@@ -78,12 +123,12 @@ export const LongBreadcrumbs: Story = {
       {
         label: "Settings",
         icon: Settings,
-        onClick: () => console.log("Settings clicked"),
+        href: "/recruitment/settings",
       },
       {
         label: "More options",
         icon: EllipsisHorizontal,
-        onClick: () => console.log("More clicked"),
+        href: "/recruitment/settings",
       },
     ],
   },

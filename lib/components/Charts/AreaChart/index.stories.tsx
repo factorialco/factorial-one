@@ -24,6 +24,7 @@ const meta: Meta<typeof AreaChart<typeof dataConfig>> = {
       tickFormatter: (value: string) =>
         `${Number.isNaN(parseFloat(value)) ? value : (parseFloat(value) / 100).toFixed(2) + ",00 Euros"}`,
     },
+    blurArea: "lr",
     data: [
       { label: "January", values: { mobile: 1200, desktop: 500 } },
       { label: "February", values: { mobile: 1500, desktop: 1500 } },
@@ -32,6 +33,12 @@ const meta: Meta<typeof AreaChart<typeof dataConfig>> = {
       { label: "May", values: { mobile: 800, desktop: 5000 } },
       { label: "June", values: { mobile: 600, desktop: 4000 } },
     ],
+  },
+  argTypes: {
+    blurArea: {
+      control: "select",
+      options: [undefined, "l", "r", "lr"],
+    },
   },
   decorators: [
     (Story) => (

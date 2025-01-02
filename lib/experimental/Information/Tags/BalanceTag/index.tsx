@@ -6,14 +6,14 @@ import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 import { BaseTag } from "../BaseTag"
 
-type Status = "positive" | "negative"
+type Status = "positive" | "neutral" | "negative"
 
 interface Props {
   text: string
   status: Status
 }
 
-const iconMap: Record<Status, IconType> = {
+const iconMap: Record<Exclude<Status, "neutral">, IconType> = {
   positive: ArrowUp,
   negative: ArrowDown,
 }
@@ -26,23 +26,26 @@ export const BalanceTag = forwardRef<HTMLDivElement, Props>(
       <BaseTag
         ref={ref}
         className={cn(
-          "pl-1",
           {
             positive: "bg-f1-background-positive text-f1-foreground-positive",
+            neutral: "bg-f1-background-secondary text-f1-foreground-secondary",
             negative: "bg-f1-background-critical text-f1-foreground-critical",
           }[status]
         )}
         left={
-          <Icon
-            icon={iconMap[status]}
-            size="sm"
-            className={cn(
-              {
-                positive: "text-f1-icon-positive",
-                negative: "text-f1-icon-critical",
-              }[status]
-            )}
-          />
+          status === "neutral" ? null : (
+            <Icon
+              icon={iconMap[status]}
+              size="sm"
+              className={cn(
+                {
+                  positive: "text-f1-icon-positive",
+                  neutral: "text-f1-icon-secondary",
+                  negative: "text-f1-icon-critical",
+                }[status]
+              )}
+            />
+          )
         }
         additionalAccesibleText={`${status} balance`}
         text={text}

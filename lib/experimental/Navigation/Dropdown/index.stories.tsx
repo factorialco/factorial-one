@@ -33,6 +33,7 @@ export const Default: Story = {
         icon: Icons.Save,
         description: "Preserve changes",
       },
+      "separator",
       {
         label: "Delete",
         onClick: () => console.log("Delete clicked"),

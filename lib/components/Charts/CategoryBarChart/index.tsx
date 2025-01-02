@@ -74,7 +74,7 @@ const _CategoryBarChart = (
       </div>
       {legend && (
         <div
-          className="mt-1 flex w-full flex-wrap gap-x-2.5 gap-y-0.5"
+          className="mt-2 flex w-full flex-wrap gap-x-2.5 gap-y-0.5"
           role="list"
         >
           {data.map((category, index) => {
@@ -83,16 +83,14 @@ const _CategoryBarChart = (
             return (
               <div
                 key={category.name}
-                className="flex items-center gap-1"
+                className="flex items-center gap-1.5"
                 role="listitem"
               >
                 <div
-                  className="h-2 w-2 shrink-0 translate-y-px rounded-full"
+                  className="h-2 w-2 shrink-0 rounded-full"
                   style={{ backgroundColor: color }}
                 />
-                <span className="text-sm tracking-wide text-f1-foreground-secondary">
-                  {category.name}
-                </span>
+                <span className="text-f1-foreground">{category.name}</span>
               </div>
             )
           })}

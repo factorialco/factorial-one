@@ -22,9 +22,7 @@ export function CategoryBarSection({
     <div>
       <div className="flex items-baseline justify-between">
         <span className="text-2xl font-semibold">{title}</span>
-        <span className="text-2xl font-semibold text-f1-foreground-secondary">
-          {subtitle}
-        </span>
+        <span className="text-xl text-f1-foreground-secondary">{subtitle}</span>
       </div>
       <div className="mt-2">
         <CategoryBarChart data={data} legend={legend} />

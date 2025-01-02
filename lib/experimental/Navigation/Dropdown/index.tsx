@@ -11,11 +11,12 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
 import { NavigationItem } from "../utils"
 
-export type DropdownItem = NavigationItem & {
+export type DropdownItemObject = NavigationItem & {
   onClick?: () => void
   icon?: IconType
   description?: string
@@ -23,12 +24,14 @@ export type DropdownItem = NavigationItem & {
   avatar?: AvatarVariant
 }
 
+export type DropdownItem = DropdownItemObject | "separator"
+
 type DropdownProps = {
   items: DropdownItem[]
   children?: React.ReactNode
 }
 
-const DropdownItem = ({ item }: { item: DropdownItem }) => {
+const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
   const { label, ...props } = item
 
   const content = (
@@ -70,7 +73,10 @@ const DropdownItem = ({ item }: { item: DropdownItem }) => {
       {item.href ? (
         <Link
           href={item.href}
-          className={cn(itemClass, "text-f1-foreground no-underline")}
+          className={cn(
+            itemClass,
+            "text-f1-foreground no-underline hover:cursor-pointer"
+          )}
           {...props}
         >
           {content}
@@ -97,16 +103,20 @@ export function Dropdown({ items, children }: DropdownProps) {
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="min-w-[var(--radix-dropdown-menu-trigger-width)]">
-        <div className="flex flex-col p-1">
-          {items.map((item, index) => (
-            <DropdownItem
-              key={index}
-              item={{
-                ...item,
-                onClick: item.onClick,
-              }}
-            />
-          ))}
+        <div className="flex flex-col">
+          {items.map((item, index) =>
+            item === "separator" ? (
+              <DropdownMenuSeparator key={`separator-${index}`} />
+            ) : (
+              <DropdownItem
+                key={index}
+                item={{
+                  ...item,
+                  onClick: item.onClick,
+                }}
+              />
+            )
+          )}
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

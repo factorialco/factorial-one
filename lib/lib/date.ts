@@ -4,8 +4,8 @@ export function formatTime(date: Date) {
   return format(date, "HH:mm")
 }
 
-export function formatMonth(date: Date) {
-  return format(date, "MMM")
+export function getAbbreviateMonth(date: Date) {
+  return format(date, "LLL")
 }
 
 export function getDayOfMonth(date: Date) {

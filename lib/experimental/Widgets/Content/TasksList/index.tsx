@@ -52,7 +52,7 @@ export function TasksList({
   return (
     <div className="flex flex-col gap-0">
       {isEmpty ? (
-        <p className="font-medium">{emptyMessage}</p>
+        <p className="pl-2 font-medium">{emptyMessage}</p>
       ) : (
         tasksToRender
           .slice(0, maxTasksToShow)

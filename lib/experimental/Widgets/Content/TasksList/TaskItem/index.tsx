@@ -43,7 +43,7 @@ export function TaskItem({
       id={task.id}
       title={task.text}
       icon={icon}
-      iconClassName={status === "todo" ? undefined : "text-f1-icon-info"}
+      iconClassName={status === "todo" ? "text-f1-icon" : "text-f1-icon-info"}
       alert={
         task.badge?.isPastDue
           ? {

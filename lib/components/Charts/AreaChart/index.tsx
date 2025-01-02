@@ -1,5 +1,4 @@
 import { usePrivacyMode } from "@/lib/privacyMode"
-import { cn } from "@/lib/utils"
 import {
   ChartContainer,
   ChartLegend,
@@ -33,6 +32,7 @@ export type AreaChartProps<K extends LineChartConfig = LineChartConfig> =
     lineType?: allowedLineTypes
     marginTop?: number
     canBeBlurred?: boolean
+    blurArea?: "l" | "r" | "lr"
   }
 
 // Rechart props give any
@@ -70,6 +70,7 @@ export const BaseAreaChart = <K extends LineChartConfig>(
     xAxis,
     yAxis,
     canBeBlurred,
+    blurArea,
     lineType = "monotoneX",
     aspect,
     marginTop = 0,
@@ -118,12 +119,26 @@ export const BaseAreaChart = <K extends LineChartConfig>(
             x2="100%"
             y2="0"
           >
-            <stop offset="0%" stopColor="black" stopOpacity="0"></stop>
-            <stop offset="1%" stopColor="white" stopOpacity="0.1"></stop>
-            <stop offset="7%" stopColor="white" stopOpacity="1"></stop>
-            <stop offset="93%" stopColor="white" stopOpacity="1"></stop>
-            <stop offset="99%" stopColor="white" stopOpacity="0.1"></stop>
-            <stop offset="100%" stopColor="black" stopOpacity="0"></stop>
+            {(blurArea === "l" || blurArea === "lr") && (
+              <>
+                <stop offset="0%" stopColor="black" stopOpacity="0"></stop>
+                <stop offset="1%" stopColor="white" stopOpacity="0.1"></stop>
+                <stop offset="7%" stopColor="white" stopOpacity="1"></stop>
+              </>
+            )}
+            {(blurArea === "r" || blurArea === "lr") && (
+              <>
+                <stop offset="93%" stopColor="white" stopOpacity="1"></stop>
+                <stop offset="99%" stopColor="white" stopOpacity="0.1"></stop>
+                <stop offset="100%" stopColor="black" stopOpacity="0"></stop>
+              </>
+            )}
+            {!blurArea && (
+              <>
+                <stop offset="0%" stopColor="white" stopOpacity="1"></stop>
+                <stop offset="100%" stopColor="white" stopOpacity="1"></stop>
+              </>
+            )}
           </linearGradient>
           <mask
             id={`${chartId}-transparent-edges`}
@@ -183,11 +198,14 @@ export const BaseAreaChart = <K extends LineChartConfig>(
             axisLine={false}
             tickMargin={8}
             tickCount={yAxis?.tickCount}
-            tickFormatter={yAxis?.tickFormatter}
+            tickFormatter={
+              canBeBlurred && privacyModeEnabled
+                ? () => "**"
+                : yAxis?.tickFormatter
+            }
             ticks={yAxis?.ticks}
             domain={yAxis?.domain}
             width={yAxisWidth}
-            className={cn(canBeBlurred && privacyModeEnabled && "blur-md")}
           />
         )}
         {showTooltip && (
@@ -218,12 +236,7 @@ export const BaseAreaChart = <K extends LineChartConfig>(
         {Object.keys(dataConfig).length > 1 && (
           <ChartLegend
             className="flex justify-start"
-            iconType="star"
-            content={
-              <ChartLegendContent
-                leftShift={isYAxisVisible ? Math.round(yAxisWidth) : 0}
-              />
-            }
+            content={<ChartLegendContent />}
           />
         )}
       </AreaChartPrimitive>

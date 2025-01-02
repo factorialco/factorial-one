@@ -1,8 +1,33 @@
 import { useReducedMotion } from "@/lib/a11y"
 import { cn } from "@/lib/utils"
+import { ScrollArea } from "@/ui/scrollarea"
 import { AnimatePresence, motion } from "framer-motion"
-import { ReactNode, useState } from "react"
+import { ReactNode } from "react"
+import { useIntersectionObserver } from "usehooks-ts"
 import { useSidebar } from "../ApplicationFrame/FrameProvider"
+
+const ScrollShadow = ({ position }: { position: "top" | "bottom" }) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 0.5 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.2, ease: "easeOut" }}
+    className={cn(
+      "pointer-events-none absolute inset-x-0 z-10 h-3 after:absolute after:inset-x-0 after:h-px after:bg-f1-background-bold after:opacity-[0.04] after:content-['']",
+      position === "top"
+        ? [
+            "top-0",
+            "bg-gradient-to-b from-f1-background-secondary to-transparent",
+            "after:top-0",
+          ]
+        : [
+            "bottom-0",
+            "bg-gradient-to-t from-f1-background-secondary to-transparent",
+            "after:bottom-0",
+          ]
+    )}
+  />
+)
 
 interface SidebarProps {
   header?: ReactNode
@@ -13,11 +38,9 @@ interface SidebarProps {
 export function Sidebar({ header, body, footer }: SidebarProps) {
   const { sidebarState, isSmallScreen } = useSidebar()
   const shouldReduceMotion = useReducedMotion()
-  const [isScrolled, setIsScrolled] = useState(false)
 
-  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
-    setIsScrolled(e.currentTarget.scrollTop > 0)
-  }
+  const [topRef, isAtTop] = useIntersectionObserver({ threshold: 1 })
+  const [bottomRef, isAtBottom] = useIntersectionObserver({ threshold: 1 })
 
   const transition = {
     x: {
@@ -42,14 +65,14 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
     <motion.div
       initial={false}
       className={cn(
-        "absolute bottom-0 left-0 top-0 z-10 flex w-64 flex-col px-3 transition-[background-color]",
+        "absolute bottom-0 left-0 top-0 z-10 flex w-[240px] flex-col transition-[background-color]",
         sidebarState === "locked"
-          ? "h-screen"
+          ? "h-full"
           : cn(
-              "border-solid border-f1-border-secondary pb-3 shadow-lg backdrop-blur-2xl",
+              "border-solid border-f1-border-secondary shadow-lg backdrop-blur-2xl",
               isSmallScreen
-                ? "h-screen border-y-transparent border-l-transparent bg-f1-background/90"
-                : "h-[calc(100vh-16px)] bg-f1-background/60"
+                ? "h-full border-y-transparent border-l-transparent bg-f1-background/90"
+                : "h-[calc(100%-16px)] bg-f1-background/60"
             )
       )}
       animate={{
@@ -66,24 +89,16 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
       <div className="flex-shrink-0">{header}</div>
       {body && (
         <div className="relative flex-grow overflow-y-hidden">
-          <AnimatePresence>
-            {isScrolled && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.2 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-                className="pointer-events-none absolute inset-x-0 top-0 z-10 h-5 bg-gradient-to-b from-f1-background-bold to-transparent [mask-image:linear-gradient(to_right,transparent,black_30%,black_60%,transparent)]"
-              />
-            )}
-          </AnimatePresence>
-          <div
-            className="h-full overflow-y-auto"
-            onScroll={handleScroll}
-            onTouchMove={handleScroll}
-          >
+          <ScrollArea className="h-full">
+            <div ref={topRef} className="h-px" aria-hidden="true" />
             {body}
-          </div>
+            <div ref={bottomRef} className="h-px" aria-hidden="true" />
+          </ScrollArea>
+
+          <AnimatePresence>
+            {!isAtTop && <ScrollShadow position="top" />}
+            {!isAtBottom && <ScrollShadow position="bottom" />}
+          </AnimatePresence>
         </div>
       )}
       <div className="flex-shrink-0">{footer}</div>

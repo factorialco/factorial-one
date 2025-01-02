@@ -18,12 +18,12 @@ interface UserProps {
 
 export function User({ firstName, lastName, avatarUrl, options }: UserProps) {
   return (
-    <div className="border-t border-dashed border-transparent border-t-f1-border pt-4">
+    <div className="mx-3 pb-3 pt-3">
       <Dropdown items={options}>
         <button
           className={cn(
             "flex w-full items-center gap-1.5 rounded p-1.5 font-medium transition-colors hover:bg-f1-background-secondary data-[state=open]:bg-f1-background-secondary",
-            focusRing()
+            focusRing("focus-visible:ring-inset")
           )}
         >
           <PersonAvatar
@@ -32,7 +32,7 @@ export function User({ firstName, lastName, avatarUrl, options }: UserProps) {
             lastName={lastName}
             size="xsmall"
           />
-          <span className="text-f1-foreground">
+          <span className="min-w-0 truncate text-f1-foreground">
             {firstName} {lastName}
           </span>
         </button>

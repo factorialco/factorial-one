@@ -383,16 +383,14 @@ const ChartLegendContent = React.forwardRef<
               ) : (
                 itemConfig && (
                   <div
-                    className="h-2.5 w-2.5 shrink-0 rounded-full"
+                    className="h-2 w-2 shrink-0 rounded-full"
                     style={{
                       backgroundColor: item.color,
                     }}
                   />
                 )
               )}
-              <span className="text font-medium tracking-wide text-f1-foreground">
-                {itemConfig?.label}
-              </span>
+              <span className="text-f1-foreground">{itemConfig?.label}</span>
             </div>
           )
         })}
@@ -433,6 +431,8 @@ function getPayloadConfigFromPayload(
     typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
   ) {
     configLabelKey = payloadPayload[key as keyof typeof payloadPayload]
+  } else if ("dataKey" in payload && typeof payload["dataKey"] === "string") {
+    configLabelKey = payload["dataKey"]
   }
 
   if (hiddenKey && hiddenKey === configLabelKey) {

@@ -28,6 +28,10 @@ export const baseColors = {
     80: "219 94% 7% / 0.9",
     90: "219 88% 6% / 0.92",
     100: "218 48% 10%",
+    solid: {
+      40: "219 18% 69%",
+      50: "218 14% 45%",
+    },
   },
   lilac: {
     50: "340 49% 60%",
@@ -104,6 +108,9 @@ export const baseColors = {
     60: "258 56% 56%",
     70: "258 43% 46%",
   },
+  special: {
+    highlight: "348 80% 50%",
+  },
 }
 
 export const f1Colors = {
@@ -151,11 +158,20 @@ export const f1Colors = {
     },
     critical: {
       DEFAULT: "hsl(var(--critical-50) / 0.1)",
-      bold: "hsl(var(--critical-70))",
+      bold: "hsl(var(--critical-50))",
     },
-    info: "hsl(var(--info-50) / 0.1)",
-    warning: "hsl(var(--warning-50) / 0.1)",
-    positive: "hsl(var(--positive-50) / 0.1)",
+    info: {
+      DEFAULT: "hsl(var(--info-50) / 0.1)",
+      bold: "hsl(var(--info-50))",
+    },
+    warning: {
+      DEFAULT: "hsl(var(--warning-50) / 0.1)",
+      bold: "hsl(var(--warning-50))",
+    },
+    positive: {
+      DEFAULT: "hsl(var(--positive-50) / 0.1)",
+      bold: "hsl(var(--positive-50))",
+    },
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.1)",
       bold: "hsl(var(--selected-50))",
@@ -185,8 +201,8 @@ export const f1Colors = {
     info: "hsl(var(--info-50) / 0.1)",
   },
   icon: {
-    DEFAULT: "hsl(var(--neutral-50))",
-    secondary: "hsl(var(--neutral-40))",
+    DEFAULT: "hsl(var(--neutral-solid-50))",
+    secondary: "hsl(var(--neutral-solid-40))",
     inverse: "hsl(var(--neutral-0))",
     bold: "hsl(var(--neutral-100))",
     critical: {
@@ -201,4 +217,5 @@ export const f1Colors = {
   ring: "hsl(var(--ring))",
   link: "hsl(var(--link))",
   page: "hsl(var(--page))",
+  "special-highlight": "hsl(var(--special-highlight))",
 }

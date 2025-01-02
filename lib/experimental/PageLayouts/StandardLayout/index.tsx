@@ -8,7 +8,7 @@ export interface StandardLayoutProps
 }
 
 const layoutVariants = cva(
-  "relative flex w-full flex-1 flex-col gap-4 place-self-center overflow-y-auto px-6 py-5",
+  "relative flex min-h-full w-full flex-col gap-4 place-self-center overflow-y-auto px-6 py-5",
   {
     variants: {
       variant: {
@@ -18,10 +18,19 @@ const layoutVariants = cva(
   }
 )
 
-export function StandardLayout({ children, variant }: StandardLayoutProps) {
+export const StandardLayout = React.forwardRef<
+  HTMLElement,
+  StandardLayoutProps & React.HTMLAttributes<HTMLElement>
+>(({ children, variant, className, ...props }, ref) => {
   return (
-    <div className="relative flex-1 overflow-auto">
+    <section
+      ref={ref}
+      className={cn("relative flex-1 overflow-auto", className)}
+      {...props}
+    >
       <div className={cn(layoutVariants({ variant }))}>{children}</div>
-    </div>
+    </section>
   )
-}
+})
+
+StandardLayout.displayName = "StandardLayout"

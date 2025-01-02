@@ -25,6 +25,7 @@ export const Default: Story = {
     id: "1",
     icon: Placeholder,
     title: "Title",
+    rightIcon: Placeholder,
     count: 2,
     alert: {
       text: "Info",

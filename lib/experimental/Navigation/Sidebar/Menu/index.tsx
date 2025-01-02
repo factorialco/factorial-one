@@ -66,7 +66,7 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
       {...props}
       className={cn(
         "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
-        focusRing(),
+        focusRing("focus-visible:ring-inset"),
         active
           ? "bg-f1-background-secondary text-f1-foreground"
           : "hover:bg-f1-background-secondary"
@@ -142,7 +142,7 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
 
 export function Menu({ tree }: MenuProps) {
   return (
-    <div className="w-full bg-transparent">
+    <div className="w-full bg-transparent px-3">
       {tree.map((category, index) => (
         <CategoryItem key={index} category={category} />
       ))}

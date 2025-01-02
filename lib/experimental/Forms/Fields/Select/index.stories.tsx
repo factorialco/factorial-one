@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { Select } from "."
 
+import { Appearance, Circle, Desktop } from "@/icons/app"
+
 const meta: Meta = {
   component: Select,
   parameters: {
@@ -17,20 +19,20 @@ const meta: Meta = {
       {
         value: "light",
         label: "Light",
-        icon: "Circle",
+        icon: Circle,
         description:
           "A bright and airy theme for a visually appealing interface",
       },
       {
         value: "dark",
         label: "Dark",
-        icon: "Appearance",
+        icon: Appearance,
         description: "A sleek and modern theme for a sophisticated look",
       },
       {
         value: "system",
         label: "System",
-        icon: "Desktop",
+        icon: Desktop,
         description: "A theme that adapts to the system's default appearance",
       },
     ],
@@ -52,6 +54,7 @@ export const WithCustomTrigger: Story = {
     options: [
       { value: "red", label: "Red" },
       { value: "green", label: "Green" },
+      "separator",
       { value: "blue", label: "Blue" },
     ],
   },

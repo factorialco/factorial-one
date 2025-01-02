@@ -31,7 +31,7 @@ export interface WidgetProps {
     subtitle?: string
     comment?: string
     canBeBlurred?: boolean
-    link?: { title: string; url: string }
+    link?: { title: string; url: string; onClick?: () => void }
     count?: number
   }
   action?: ButtonProps
@@ -46,6 +46,7 @@ export interface WidgetProps {
     text: string
     variant: StatusVariant
   }
+  fullHeight?: boolean
 }
 
 const InlineDot = () => (
@@ -56,7 +57,7 @@ const Container = forwardRef<
   HTMLDivElement,
   WidgetProps & { children: ReactNode }
 >(function Container(
-  { header, children, action, summaries, alert, status },
+  { header, children, action, summaries, alert, status, fullHeight = false },
   ref
 ) {
   const { enabled: privacyModeEnabled, toggle: togglePrivacyMode } =
@@ -81,8 +82,18 @@ const Container = forwardRef<
     )
   }
 
+  const handleLinkClick = () => {
+    header?.link?.onClick?.()
+  }
+
   return (
-    <Card className="relative flex gap-4 border-f1-border-secondary" ref={ref}>
+    <Card
+      className={cn(
+        fullHeight ? "h-full" : "",
+        "relative flex gap-4 border-f1-border-secondary"
+      )}
+      ref={ref}
+    >
       {header && (
         <CardHeader className="-mr-1 -mt-1">
           <div className="flex w-full flex-1 flex-col gap-4">
@@ -111,7 +122,11 @@ const Container = forwardRef<
                   <StatusTag text={status.text} variant={status.variant} />
                 )}
                 {header.link && (
-                  <CardLink href={header.link.url} title={header.link.title} />
+                  <CardLink
+                    onClick={handleLinkClick}
+                    href={header.link.url}
+                    title={header.link.title}
+                  />
                 )}
               </div>
             </div>
@@ -138,7 +153,7 @@ const Container = forwardRef<
           </div>
         </CardHeader>
       )}
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex h-full flex-col gap-4">
         {summaries && (
           <div className="flex flex-row">
             {summaries.map((summary, index) => (
