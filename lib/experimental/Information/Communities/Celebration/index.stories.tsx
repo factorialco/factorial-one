@@ -12,6 +12,9 @@ export default meta
 
 type Story = StoryObj<typeof Celebration>
 
+// Fixed date for the example stories
+const exampleDate = new Date(2024, 11, 13, 20, 0)
+
 export const Default: Story = {
   decorators: [
     (Story) => (
@@ -30,7 +33,7 @@ export const Default: Story = {
           src="https://github.com/josepjaume.png"
           type="birthday"
           typeLabel="Birthday"
-          date={new Date(2024, 10, 29)}
+          date={exampleDate}
         />
       </div>
       <div className="w-48">
@@ -41,7 +44,7 @@ export const Default: Story = {
           src="https://github.com/nlopin.png"
           type="anniversary"
           typeLabel="Anniversary"
-          date={new Date(2024, 11, 4)}
+          date={exampleDate}
         />
       </div>
     </>
@@ -63,7 +66,7 @@ export const NoImage: Story = {
     canReact: false,
     type: "first-day",
     typeLabel: "First day very long name",
-    date: new Date(2024, 11, 15),
+    date: exampleDate,
   },
 }
 

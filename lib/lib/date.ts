@@ -1,6 +1,6 @@
 import { format } from "date-fns"
 
-export function getUITime(date: Date) {
+export function formatTime(date: Date) {
   return format(date, "p")
 }
 

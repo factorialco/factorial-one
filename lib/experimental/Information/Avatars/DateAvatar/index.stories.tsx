@@ -10,8 +10,11 @@ export default meta
 
 type Story = StoryObj<typeof DateAvatar>
 
+// Fixed date for the example stories
+const exampleDate = new Date(2024, 11, 13, 20, 0)
+
 export const Default: Story = {
   args: {
-    date: new Date(2024, 0, 15),
+    date: exampleDate,
   },
 }
