@@ -90,18 +90,16 @@ export const Collapsed: Story = {
   },
 }
 
-// type SkeletonStory = StoryObj<typeof CommunityPost.Skeleton>
+type SkeletonStory = StoryObj<typeof PostDescription.Skeleton>
 
-// export const Skeleton: SkeletonStory = {
-//   decorators: [
-//     (Story) => (
-//       <div className="max-w-[755px]">
-//         <Story />
-//       </div>
-//     ),
-//   ],
-//   args: {
-//     withEvent: true,
-//   },
-//   render: (args) => <CommunityPost.Skeleton {...args} />,
-// }
+export const Skeleton: SkeletonStory = {
+  decorators: [
+    (Story) => (
+      <div className="max-w-[755px]">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {},
+  render: () => <PostDescription.Skeleton />,
+}

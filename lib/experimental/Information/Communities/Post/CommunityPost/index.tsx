@@ -190,9 +190,8 @@ export const CommunityPostSkeleton = ({
         <Skeleton className="h-2.5 w-18 rounded-2xs" />
       </div>
       <Skeleton className="mt-3.5 h-3.5 w-1/5 rounded-2xs" />
-      <div className="mt-3 flex flex-col justify-around gap-3 py-2">
-        <Skeleton className="h-2.5 w-1/2 rounded-2xs" />
-        <Skeleton className="h-2.5 w-2/3 rounded-2xs" />
+      <div className="mt-3">
+        <PostDescription.Skeleton />
       </div>
       {withImage && !withEvent && (
         <div className="mt-3 aspect-video w-full overflow-hidden rounded-xl md:w-2/3">
