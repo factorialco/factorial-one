@@ -4,7 +4,7 @@ import { withSkeleton } from "@/lib/skeleton"
 import { f1Colors } from "@/tokens/colors"
 import { Skeleton } from "@/ui/skeleton"
 
-type PostEventProps = {
+export type PostEventProps = {
   title: string
   imageUrl?: string
   place?: string
@@ -26,14 +26,14 @@ export const BasePostEvent = ({
   return (
     <div className="flex w-full flex-col gap-1 rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-1 shadow">
       {imageUrl && (
-        <div className="relative aspect-video w-full">
+        <div className="relative aspect-video w-full overflow-hidden rounded-md">
           <img
             src={imageUrl}
             role="presentation"
             loading="lazy"
-            className="aspect-video h-full w-full rounded-md object-cover"
+            className="aspect-video h-full w-full object-cover"
           />
-          <Skeleton className="absolute inset-0 h-full w-full rounded-md" />
+          <Skeleton className="absolute inset-0 h-full w-full" />
         </div>
       )}
       <CalendarEvent
