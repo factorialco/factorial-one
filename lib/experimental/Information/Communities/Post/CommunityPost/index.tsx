@@ -178,7 +178,7 @@ export const CommunityPostSkeleton = ({
   withEvent,
   withImage,
 }: CommunityPostSkeletonProps) => (
-  <div className="flex w-full flex-row gap-3 rounded-xl p-3 pt-2 md:pb-4 md:pt-3">
+  <div className="flex w-full cursor-wait flex-row gap-3 rounded-xl p-3 pt-2 md:pb-4 md:pt-3">
     <div className="hidden md:block">
       <Skeleton className="aspect-square w-8 rounded-full" />
     </div>
