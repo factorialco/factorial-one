@@ -1,88 +1,88 @@
-.TextEditor {
+.FactorialOneTextEditor {
   @apply leading-6;
 }
 
-.TextEditorTheme__ltr {
+.FactorialOneTextEditor .TextEditorTheme__ltr {
   @apply text-left;
 }
 
-.TextEditorTheme__rtl {
+.FactorialOneTextEditor .TextEditorTheme__rtl {
   @apply text-right;
 }
 
-.TextEditorTheme__paragraph {
+.FactorialOneTextEditor .TextEditorTheme__paragraph {
   @apply relative m-0 mb-2;
 }
 
-.TextEditorTheme__paragraph:last-child {
+.FactorialOneTextEditor .TextEditorTheme__paragraph:last-child {
   @apply mb-0;
 }
 
-.TextEditorTheme__quote {
+.FactorialOneTextEditor .TextEditorTheme__quote {
   @apply m-0 mb-2.5 ml-5 border-b-4 pl-4;
   color: rgb(101, 103, 107);
   border-left-color: rgb(206, 208, 212);
 }
 
-.TextEditorTheme__h1 {
+.FactorialOneTextEditor .TextEditorTheme__h1 {
   @apply m-0 mb-3 p-0 text-xl font-semibold;
 }
 
-.TextEditorTheme__h2 {
+.FactorialOneTextEditor .TextEditorTheme__h2 {
   @apply m-0 mt-2.5 p-0 text-lg;
 }
 
-.TextEditorTheme__h3 {
+.FactorialOneTextEditor .TextEditorTheme__h3 {
   @apply m-0 mt-2.5 p-0;
 }
 
-.TextEditorTheme__textBold {
+.FactorialOneTextEditor .TextEditorTheme__textBold {
   @apply font-semibold;
 }
 
-.TextEditorTheme__textItalic {
+.FactorialOneTextEditor .TextEditorTheme__textItalic {
   @apply italic;
 }
 
-.TextEditorTheme__textUnderline {
+.FactorialOneTextEditor .TextEditorTheme__textUnderline {
   @apply underline;
 }
 
-.TextEditorTheme__textStrikethrough {
+.FactorialOneTextEditor .TextEditorTheme__textStrikethrough {
   @apply line-through;
 }
 
-.TextEditorTheme__textUnderlineStrikethrough {
+.FactorialOneTextEditor .TextEditorTheme__textUnderlineStrikethrough {
   text-decoration: underline line-through;
 }
 
-.TextEditorTheme__textSubscript {
+.FactorialOneTextEditor .TextEditorTheme__textSubscript {
   vertical-align: sub !important;
 }
 
-.TextEditorTheme__textSuperscript {
+.FactorialOneTextEditor .TextEditorTheme__textSuperscript {
   vertical-align: super;
 }
 
-.TextEditorTheme__textCode {
+.FactorialOneTextEditor .TextEditorTheme__textCode {
   background-color: rgb(240, 242, 245);
   padding: 1px 0.25rem;
   font-family: Menlo, Consolas, Monaco, monospace;
 }
 
-.TextEditorTheme__hashtag {
+.FactorialOneTextEditor .TextEditorTheme__hashtag {
   @apply rounded-xs bg-f1-background-info px-0.5 py-0.5 font-medium text-f1-foreground-info no-underline;
 }
 
-.TextEditorTheme__link {
+.FactorialOneTextEditor .TextEditorTheme__link {
   @apply font-medium text-f1-link;
 }
 
-.TextEditorTheme__link:hover {
+.FactorialOneTextEditor .TextEditorTheme__link:hover {
   @apply underline;
 }
 
-.TextEditorTheme__code {
+.FactorialOneTextEditor .TextEditorTheme__code {
   @apply mx-0 my-2 p-2 pl-10;
   background-color: rgb(240, 242, 245);
   font-family: Menlo, Consolas, Monaco, monospace;
@@ -94,7 +94,7 @@
   position: relative;
 }
 
-.TextEditorTheme__code:before {
+.FactorialOneTextEditor .TextEditorTheme__code:before {
   content: attr(data-gutter);
   position: absolute;
   background-color: #eee;
@@ -108,7 +108,7 @@
   min-width: 25px;
 }
 
-.TextEditorTheme__code:after {
+.FactorialOneTextEditor .TextEditorTheme__code:after {
   content: attr(data-highlight-language);
   top: 0;
   right: 3px;
@@ -118,103 +118,103 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
-.TextEditorTheme__characterLimit {
+.FactorialOneTextEditor .TextEditorTheme__characterLimit {
   display: inline;
   background-color: #ffbbbb !important;
 }
 
-.TextEditorTheme__ol1 {
+.FactorialOneTextEditor .TextEditorTheme__ol1 {
   @apply m-0 ml-4 p-0;
 }
 
-.TextEditorTheme__ol2 {
+.FactorialOneTextEditor .TextEditorTheme__ol2 {
   @apply m-0 ml-4 p-0;
   list-style-type: upper-alpha;
 }
 
-.TextEditorTheme__ol3 {
+.FactorialOneTextEditor .TextEditorTheme__ol3 {
   @apply m-0 ml-4 p-0;
   list-style-type: lower-alpha;
 }
 
-.TextEditorTheme__ol4 {
+.FactorialOneTextEditor .TextEditorTheme__ol4 {
   @apply m-0 ml-4 p-0;
   list-style-type: upper-roman;
 }
 
-.TextEditorTheme__ol5 {
+.FactorialOneTextEditor .TextEditorTheme__ol5 {
   @apply m-0 ml-4 p-0;
   list-style-type: lower-roman;
 }
 
-.TextEditorTheme__ul {
+.FactorialOneTextEditor .TextEditorTheme__ul {
   @apply m-0 ml-4 p-0;
   list-style: disc;
 }
 
-.TextEditorTheme__tokenComment {
+.FactorialOneTextEditor .TextEditorTheme__tokenComment {
   color: slategray;
 }
 
-.TextEditorTheme__tokenPunctuation {
+.FactorialOneTextEditor .TextEditorTheme__tokenPunctuation {
   color: #999;
 }
 
-.TextEditorTheme__tokenProperty {
+.FactorialOneTextEditor .TextEditorTheme__tokenProperty {
   color: #905;
 }
 
-.TextEditorTheme__tokenSelector {
+.FactorialOneTextEditor.TextEditorTheme__tokenSelector {
   color: #690;
 }
 
-.TextEditorTheme__tokenOperator {
+.FactorialOneTextEditor .TextEditorTheme__tokenOperator {
   color: #9a6e3a;
 }
 
-.TextEditorTheme__tokenAttr {
+.FactorialOneTextEditor .TextEditorTheme__tokenAttr {
   color: #07a;
 }
 
-.TextEditorTheme__tokenVariable {
+.FactorialOneTextEditor .TextEditorTheme__tokenVariable {
   color: #e90;
 }
 
-.TextEditorTheme__tokenFunction {
+.FactorialOneTextEditor .TextEditorTheme__tokenFunction {
   color: #dd4a68;
 }
 
-.TextEditorTheme__mark {
+.FactorialOneTextEditor .TextEditorTheme__mark {
   background: rgba(255, 212, 0, 0.14);
   border-bottom: 2px solid rgba(255, 212, 0, 0.3);
   padding-bottom: 2px;
 }
 
-.TextEditorTheme__markOverlap {
+.FactorialOneTextEditor .TextEditorTheme__markOverlap {
   background: rgba(255, 212, 0, 0.3);
   border-bottom: 2px solid rgba(255, 212, 0, 0.7);
 }
 
-.TextEditorTheme__mark.selected {
+.FactorialOneTextEditor .TextEditorTheme__mark.selected {
   background: rgba(255, 212, 0, 0.5);
   border-bottom: 2px solid rgba(255, 212, 0, 1);
 }
 
-.TextEditorTheme__markOverlap.selected {
+.FactorialOneTextEditor .TextEditorTheme__markOverlap.selected {
   background: rgba(255, 212, 0, 0.7);
   border-bottom: 2px solid rgba(255, 212, 0, 0.7);
 }
 
-.mention a,
-.mentioned a {
+.FactorialOneTextEditor .mention a,
+.FactorialOneTextEditor .mentioned a {
   @apply rounded-xs bg-f1-background-accent px-1.5 py-0.5 font-medium text-f1-foreground-accent no-underline;
 }
 
-.mention:focus a,
-.mentioned:focus a {
+.FactorialOneTextEditor .mention:focus a,
+.FactorialOneTextEditor .mentioned:focus a {
   @apply outline outline-1 outline-offset-1 outline-f1-border-selected-bold;
 }
 
-.link_mentioned {
+.FactorialOneTextEditor .link_mentioned {
   text-decoration: none;
 }
