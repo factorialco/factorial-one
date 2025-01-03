@@ -185,12 +185,13 @@
 }
 
 .FactorialOneTextEditor .TextEditorTheme__mark {
+  @apply p-0.5;
   background: rgba(255, 212, 0, 0.14);
   border-bottom: 2px solid rgba(255, 212, 0, 0.3);
-  padding-bottom: 2px;
 }
 
 .FactorialOneTextEditor .TextEditorTheme__markOverlap {
+  @apply p-0.5;
   background: rgba(255, 212, 0, 0.3);
   border-bottom: 2px solid rgba(255, 212, 0, 0.7);
 }
