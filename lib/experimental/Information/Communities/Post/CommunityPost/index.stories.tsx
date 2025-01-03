@@ -30,7 +30,7 @@ export const Default: Story = {
     },
     group: {
       title: "All company",
-      url: "https://google.com/",
+      onClick: () => {},
     },
     createdAt: subMonths(new Date(), 1),
     title: "Title",

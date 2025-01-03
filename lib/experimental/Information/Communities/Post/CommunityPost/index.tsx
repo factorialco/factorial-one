@@ -7,10 +7,11 @@ import { EllipsisHorizontal } from "@/icons/app"
 import { getAgo } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
-import { PostDescription } from "../PostDescription"
+import { PostDescription, PostDescriptionProps } from "../PostDescription"
 import { PostEvent, PostEventProps } from "../PostEvent"
 
-type CommunityPostProps = {
+export type CommunityPostProps = {
+  id: string
   author: {
     firstName: string
     lastName: string
@@ -19,13 +20,12 @@ type CommunityPostProps = {
   }
   group: {
     title: string
-    url: string
+    onClick: () => void
   }
   createdAt: Date
 
   title: string
-  description?: string
-  onClick: () => void
+  description?: PostDescriptionProps["content"]
   imageUrl?: string
 
   event?: PostEventProps
@@ -42,9 +42,12 @@ type CommunityPostProps = {
     label: string
     onClick: () => void
   }
+
+  onClick: (id: string) => void
 }
 
 export const BaseCommunityPost = ({
+  id,
   author,
   group,
   createdAt,
@@ -64,10 +67,14 @@ export const BaseCommunityPost = ({
 
   const ago = getAgo(createdAt)
 
+  const handleClick = () => {
+    onClick(id)
+  }
+
   return (
     <div
       className="flex w-full cursor-pointer flex-row gap-3 rounded-xl border border-solid border-transparent p-3 pt-2 hover:bg-f1-background-hover focus:border-f1-border-secondary focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold md:pb-4 md:pt-3"
-      onClick={onClick}
+      onClick={handleClick}
     >
       <div className="hidden md:block">
         <Link href={author.url}>
@@ -94,14 +101,14 @@ export const BaseCommunityPost = ({
               </Link>
               <Link
                 href={author.url}
-                className="font-medium text-f1-foreground no-underline"
+                className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
               >
                 {`${author.firstName} ${author.lastName}`}
               </Link>
               <span className="text-f1-foreground-secondary">{inLabel}</span>
               <Link
-                href={group.url}
-                className="font-medium text-f1-foreground no-underline"
+                onClick={group.onClick}
+                className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
               >
                 {group.title}
               </Link>

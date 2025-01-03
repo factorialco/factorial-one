@@ -3,10 +3,10 @@ import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import "./TextEditorTheme.css"
 
-export default {}
+type HTMLString = string
 
-type PostDescriptionProps = {
-  content: string
+export type PostDescriptionProps = {
+  content: HTMLString
   collapsed?: boolean
 }
 
