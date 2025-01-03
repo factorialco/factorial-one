@@ -2,7 +2,7 @@ import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar/"
 import { Kudos } from "@/icons/modules/"
 import { Button } from "@/ui/button"
 
-type HighlightBannerProps = {
+export type HighlightBannerProps = {
   title: string
   subtitle: string
   buttonLabel: string
