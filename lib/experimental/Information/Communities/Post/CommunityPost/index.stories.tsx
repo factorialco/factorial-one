@@ -34,8 +34,7 @@ export const Default: Story = {
     },
     createdAt: subMonths(new Date(), 1),
     title: "Title",
-    description:
-      "Description with a maximum of two lines visible.<br />Like this one :)<br />This shouldn't be visible",
+    description: `<p class="TextEditorTheme__paragraph" dir="ltr"><span>Super Kudos for </span><strong class="mentioned"><span><a href="/employees/1">First Employee</a></span></strong><span> and </span><strong class="mentioned"><span><a href="/employees/2">Second Employee</a></span></strong><span> , who always are available to help in any way they can and as quickly as possible. You guys are great! ⭐</span></p><p class="TextEditorTheme__paragraph" dir="ltr">Including some link here too: <a href="mailto:randomemail@factorial.co" class="TextEditorTheme__link"><span>randomemail@factorial.co</span></a></p></p>`,
     onClick: () => {},
     imageUrl:
       "https://multimedia.andalucia.org/media/0BC700DB844F4EDFBE00C1FA9B493D71/img/1112772E6D5945A1B89C26E539DD0D99/SE_Catedral_01.jpg?responsive",

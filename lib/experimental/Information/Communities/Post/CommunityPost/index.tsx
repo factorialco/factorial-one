@@ -7,6 +7,7 @@ import { EllipsisHorizontal } from "@/icons/app"
 import { getAgo } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
+import { PostDescription } from "../PostDescription"
 import { PostEvent, PostEventProps } from "../PostEvent"
 
 type CommunityPostProps = {
@@ -138,12 +139,7 @@ export const BaseCommunityPost = ({
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-xl font-semibold">{title}</p>
-            {description && (
-              <p
-                dangerouslySetInnerHTML={{ __html: description }}
-                className="line-clamp-2"
-              />
-            )}
+            {description && <PostDescription content={description} collapsed />}
           </div>
         </div>
         {imageUrl && !event && (
