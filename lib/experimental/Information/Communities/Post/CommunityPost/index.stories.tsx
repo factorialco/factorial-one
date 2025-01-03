@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { subMonths } from "date-fns"
 import { CommunityPost } from "."
 
 const meta: Meta<typeof CommunityPost> = {
@@ -31,7 +32,7 @@ export const Default: Story = {
       title: "All company",
       url: "https://google.com/",
     },
-    ago: "a month ago",
+    createdAt: subMonths(new Date(), 1),
     title: "Title",
     description:
       "Description with a maximum of two lines visible.<br />Like this one :)<br />This shouldn't be visible",

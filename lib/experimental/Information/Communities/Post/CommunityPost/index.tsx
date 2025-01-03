@@ -4,6 +4,7 @@ import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { Reactions, ReactionsProps } from "@/experimental/Information/Reactions"
 import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { EllipsisHorizontal } from "@/icons/app"
+import { getAgo } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
 import { PostEvent, PostEventProps } from "../PostEvent"
@@ -19,7 +20,7 @@ type CommunityPostProps = {
     title: string
     url: string
   }
-  ago: string
+  createdAt: Date
 
   title: string
   description?: string
@@ -45,7 +46,7 @@ type CommunityPostProps = {
 export const BaseCommunityPost = ({
   author,
   group,
-  ago,
+  createdAt,
   title,
   description,
   onClick,
@@ -59,6 +60,8 @@ export const BaseCommunityPost = ({
   const countersDisplay = [counters.views, counters.comments]
     .filter(Boolean)
     .join(" · ")
+
+  const ago = getAgo(createdAt)
 
   return (
     <div
