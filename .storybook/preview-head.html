@@ -1,30 +1,30 @@
 <style>
-  #storybook-docs h1,
-  #storybook-docs h2,
-  #storybook-docs h3 {
+  #storybook-docs h1:not(.docs-story *),
+  #storybook-docs h2:not(.docs-story *),
+  #storybook-docs h3:not(.docs-story *) {
     font-weight: 500 !important;
     color: #0d1625 !important;
     line-height: 1.25 !important;
     letter-spacing: 0 !important;
   }
 
-  #storybook-docs h1 {
+  #storybook-docs h1:not(.docs-story *) {
     font-size: 36px !important;
     margin-bottom: 12px !important;
   }
 
-  #storybook-docs h2 {
+  #storybook-docs h2:not(.docs-story *) {
     font-size: 26px !important;
     margin-bottom: 12px !important;
     margin-top: 48px !important;
     border-bottom: none !important;
   }
 
-  #storybook-docs a.sbdocs-a {
+  #storybook-docs a.sbdocs-a:not(.docs-story *) {
     color: #ff355e !important;
   }
 
-  .docblock-source {
+  .docblock-source:not(.docs-story *) {
     font-family:
       Menlo,
       Consolas,
@@ -39,7 +39,7 @@
     box-shadow: 0px 2px 20px rgba(13, 22, 37, 0.04) !important;
   }
 
-  .sbdocs-preview {
+  .sbdocs-preview:not(.docs-story *) {
     border: #dce0e5 1px solid !important;
     box-shadow: 0px 2px 20px rgba(13, 22, 37, 0.04) !important;
     border-radius: 12px !important;
@@ -63,23 +63,23 @@
     background: #fff;
   }
 
-  .sb-unstyled tbody > tr:nth-child(even) > td:not(.docs-story td),
-  .docblock-argstable-body > tr:nth-child(even) > td {
+  .sb-unstyled tbody>tr:nth-child(even)>td:not(.docs-story td),
+  .docblock-argstable-body>tr:nth-child(even)>td {
     background: #fafbfc !important;
   }
 
-  .sb-unstyled tbody > tr:not(:last-child) > td:not(.docs-story td),
-  .docblock-argstable-body > tr:not(:last-child) > td {
+  .sb-unstyled tbody>tr:not(:last-child)>td:not(.docs-story td),
+  .docblock-argstable-body>tr:not(:last-child)>td {
     border-bottom: #dce0e5 1px solid !important;
   }
 
-  .sb-unstyled thead > tr > th:not(.docs-story th) {
+  .sb-unstyled thead>tr>th:not(.docs-story th) {
     padding: 10px 20px;
     color: #647084;
     text-align: left;
   }
 
-  .sb-unstyled tbody > tr > td:not(.docs-story td) {
+  .sb-unstyled tbody>tr>td:not(.docs-story td) {
     padding: 16px 20px;
   }
 
@@ -123,9 +123,9 @@
     color: #fff !important;
   }
 
-  body.dark #storybook-docs h1 > a,
-  body.dark #storybook-docs h2 > a,
-  body.dark #storybook-docs h3 > a {
+  body.dark #storybook-docs h1>a,
+  body.dark #storybook-docs h2>a,
+  body.dark #storybook-docs h3>a {
     float: left;
     line-height: inherit;
     padding-right: 10px;
@@ -133,7 +133,7 @@
     color: #647084;
   }
 
-  body.dark #storybook-docs > div {
+  body.dark #storybook-docs>div {
     background: transparent !important;
   }
 
@@ -151,7 +151,7 @@
     border-left-color: #647084 !important;
   }
 
-  body.dark .toc-list .toc-list-item > a.is-active-link {
+  body.dark .toc-list .toc-list-item>a.is-active-link {
     color: #fff !important;
   }
 
@@ -166,8 +166,8 @@
     border: #161f30 4px solid;
   }
 
-  body.dark .sb-unstyled thead > tr > th,
-  body.dark .docblock-argstable-head > tr > th > span {
+  body.dark .sb-unstyled thead>tr>th,
+  body.dark .docblock-argstable-head>tr>th>span {
     color: #a1abbd !important;
   }
 
@@ -177,13 +177,13 @@
     background: #0d1625;
   }
 
-  body.dark .sb-unstyled tbody > tr:nth-child(even) > td,
-  body.dark .docblock-argstable-body > tr:nth-child(even) > td {
+  body.dark .sb-unstyled tbody>tr:nth-child(even)>td,
+  body.dark .docblock-argstable-body>tr:nth-child(even)>td {
     background: #111a2a !important;
   }
 
-  body.dark .sb-unstyled tbody > tr:not(:last-child) > td,
-  body.dark .docblock-argstable-body > tr:not(:last-child) > td {
+  body.dark .sb-unstyled tbody>tr:not(:last-child)>td,
+  body.dark .docblock-argstable-body>tr:not(:last-child)>td {
     border-bottom: #172031 1px solid !important;
   }
 
