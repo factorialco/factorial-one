@@ -368,3 +368,14 @@ export const Default: Story = {
     highlightBanner: HighlightBannerDefaultStory.args as HighlightBannerProps,
   },
 }
+
+export const Skeleton: Story = {
+  decorators: [
+    (Story) => (
+      <div className="w-[755px]">
+        <Story />
+      </div>
+    ),
+  ],
+  render: () => <CommunityPostList.Skeleton />,
+}
