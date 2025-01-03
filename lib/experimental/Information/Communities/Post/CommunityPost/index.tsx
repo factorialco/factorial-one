@@ -77,7 +77,7 @@ export const BaseCommunityPost = ({
           />
         </Link>
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-1 flex-col gap-3">
         <div className="flex flex-col gap-2">
           <div className="flex flex-row justify-between">
             <div className="flex flex-1 flex-row flex-wrap items-center gap-1">
@@ -147,7 +147,7 @@ export const BaseCommunityPost = ({
           </div>
         </div>
         {imageUrl && !event && (
-          <div className="aspect-video w-full overflow-hidden rounded-xl md:w-2/3">
+          <div className="relative aspect-video overflow-hidden rounded-xl md:w-2/3">
             <img
               src={imageUrl}
               role="presentation"
