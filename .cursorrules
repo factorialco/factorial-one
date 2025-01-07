@@ -126,8 +126,6 @@ Available Commands
 
 Development:
 
-- `npm run dev`: Start Storybook development server
-- `npm run dev:docs`: Start Storybook in documentation mode
 - `npm run build`: Build the library and generate types
 
 Testing:
