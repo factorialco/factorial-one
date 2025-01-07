@@ -12,7 +12,7 @@ import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import { Link } from "@/lib/linkHandler"
 import { cva } from "class-variance-authority"
-import { ReactElement, useRef } from "react"
+import { ReactElement } from "react"
 import { Dropdown } from "../../Dropdown"
 
 export type PageAction = {
@@ -49,7 +49,6 @@ export function PageHeader({
   actions = [],
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
-  const openSidebarButtonRef = useRef<HTMLButtonElement>(null)
 
   const breadcrumbsTree: BreadcrumbItemType[] = [
     { label: module.name, href: module.href, icon: module.icon },
@@ -58,12 +57,6 @@ export function PageHeader({
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
   const hasActions = actions.length > 0
-
-  // useEffect(() => {
-  //   if (sidebarState === "hidden" && openSidebarButtonRef.current) {
-  //     openSidebarButtonRef.current.focus()
-  //   }
-  // }, [sidebarState])
 
   return (
     <div
