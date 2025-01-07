@@ -1,0 +1,144 @@
+Factorial One Design System - TypeScript, React, and Storybook Guidelines
+
+Key Principles
+
+- Write modular, reusable components following atomic design principles.
+- Use TypeScript with strict type checking for all components and utilities.
+- Follow functional and declarative programming patterns.
+- Implement comprehensive testing with Vitest and Storybook tests.
+- Ensure accessibility (a11y) compliance in all components.
+
+Project Structure
+
+- /lib: Core component library and utilities
+  - /components: Reusable UI components
+  - /experimental: New components in development
+  - /lib: Shared utilities and handlers
+- /assets: Static assets and icons
+- /docs: Documentation and examples
+- Stories alongside components (\*.stories.tsx)
+- Tests alongside components (\*.spec.tsx)
+
+Component Guidelines
+
+- Use named exports for all components
+- Implement 'use client' directive only when necessary
+- Structure component files:
+  1. Type definitions and interfaces
+  2. Component implementation
+  3. Helper functions
+  4. Exports
+
+TypeScript Usage
+
+- Use strict TypeScript configuration
+- Prefer interfaces over types for public APIs
+- Use discriminated unions for complex state
+- Export component prop interfaces
+- Implement proper generic constraints
+
+Testing Standards
+
+- Write Vitest unit tests for utilities and hooks
+- Create Storybook stories for visual testing
+- Include accessibility tests using axe-playwright
+- Test component variants and edge cases
+
+Styling Approach
+
+- Use Tailwind CSS with custom configuration for primary styling
+- Leverage shadcn/ui components as base primitives (avoid modifications unless
+  necessary)
+- Follow mobile-first responsive design
+- Utilize container queries where appropriate
+- Animation strategy:
+  - Use CSS animations/transitions for simple interactions
+  - Leverage Framer Motion for complex animations and gestures
+  - Use tailwindcss-animate for common animation patterns
+- Design tokens implementation:
+  - Use Tailwind theme configuration
+  - Follow shadcn/ui token conventions
+  - Maintain consistent spacing and color scales
+
+Dependencies and Tools
+
+Core:
+
+- React 18+ with functional components
+- TypeScript 5+ with strict mode
+- Vite for building and development
+
+UI and Styling:
+
+- Radix UI primitives for accessible components
+- shadcn/ui as component foundation
+- Tailwind CSS for styling
+- Framer Motion for advanced animations
+- Embla Carousel for carousel components
+- Lucide React for icons
+- SVGR for custom icon management
+
+Forms and Validation:
+
+- React Hook Form for form management
+- Zod for schema validation
+- @hookform/resolvers for form validation
+
+Development Tools:
+
+- Storybook for component development
+- Vitest for unit testing
+- ESLint + Prettier for code formatting
+- Chromatic for visual regression testing
+
+Utilities:
+
+- class-variance-authority for component variants
+- clsx and tailwind-merge for class management
+- date-fns for date manipulation
+- usehooks-ts for common React hooks
+
+Performance Guidelines
+
+- Implement code splitting where beneficial
+- Use React.memo() for expensive renders
+- Optimize bundle size with tree shaking
+- Implement proper loading states
+- Use proper image optimization
+
+Documentation
+
+- Include JSDoc comments for public APIs
+- Write comprehensive Storybook stories
+- Document component variants and props
+- Include usage examples
+- Maintain changelog for versioning
+
+Build and Release
+
+- Use Vite for development and building
+- Implement proper semantic versioning
+- Generate TypeScript declarations
+- Bundle CSS with components
+- Optimize for tree-shaking
+
+Available Commands
+
+Development:
+
+- `npm run dev`: Start Storybook development server
+- `npm run dev:docs`: Start Storybook in documentation mode
+- `npm run build`: Build the library and generate types
+
+Testing:
+
+- `npm run vitest`: Run Vitest in watch mode for development
+- `npm run vitest:ci`: Run Vitest tests once for CI
+- `npm run test-storybook`: Run Storybook tests
+
+Linting and Formatting:
+
+- `npm run lint`: Run ESLint checks
+- `npm run lint-fix`: Fix ESLint issues
+- `npm run prettier:format`: Format code with Prettier
+- `npm run tsc`: Type check TypeScript files
