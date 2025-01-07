@@ -18,9 +18,14 @@ export type TabItem = {
 interface TabsProps {
   tabs: TabItem[]
   secondary?: boolean
+  moreText?: string
 }
 
-export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
+export const BaseTabs: React.FC<TabsProps> = ({
+  tabs,
+  secondary = false,
+  moreText = "more",
+}) => {
   const { isActive } = useNavigation()
   const [visibleTabs, setVisibleTabs] = useState<TabItem[]>(tabs)
   const [overflowTabs, setOverflowTabs] = useState<TabItem[]>([])
@@ -134,7 +139,7 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
                         hasActiveOverflowTab() && "text-f1-foreground"
                       )}
                     >
-                      +{overflowTabs.length} more
+                      +{overflowTabs.length} {moreText}
                       <div className="flex w-5 shrink-0 items-center justify-center">
                         <div className="flex h-3 w-3 items-center justify-center rounded-2xs bg-f1-background-secondary transition-all">
                           <motion.div
