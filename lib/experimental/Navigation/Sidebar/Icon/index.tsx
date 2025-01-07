@@ -69,7 +69,7 @@ export function SidebarIcon() {
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    if (prevSidebarState === "hidden") {
+    if (prevSidebarState === "hidden" && sidebarState === "locked") {
       buttonRef.current?.focus()
     }
   }, [prevSidebarState, sidebarState])
