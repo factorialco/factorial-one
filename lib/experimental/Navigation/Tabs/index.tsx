@@ -6,8 +6,14 @@ import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 import { motion } from "framer-motion"
-import { useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useMediaQuery, useResizeObserver } from "usehooks-ts"
+
+const LAYOUT_CONSTANTS = {
+  moreButtonWidth: 128,
+  containerPadding: 48,
+  itemPadding: 32,
+} as const
 
 export type TabItem = {
   label: string
@@ -29,52 +35,101 @@ export const BaseTabs: React.FC<TabsProps> = ({
   const { isActive } = useNavigation()
   const [visibleTabs, setVisibleTabs] = useState<TabItem[]>(tabs)
   const [overflowTabs, setOverflowTabs] = useState<TabItem[]>([])
+  const [tabWidths, setTabWidths] = useState<number[]>([])
   const [open, setOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const resizeTimeoutRef = useRef<number>()
   const isMdScreen = useMediaQuery("(min-width: 768px)")
 
-  const updateVisibleTabs = () => {
+  const calculateVisibleTabs = useCallback(
+    (containerWidth: number, widths: number[]) => {
+      const { moreButtonWidth, containerPadding, itemPadding } =
+        LAYOUT_CONSTANTS
+      const availableWidth =
+        containerWidth - moreButtonWidth - containerPadding - itemPadding
+
+      let totalWidth = 0
+      let visibleCount = widths.length
+
+      for (let i = 0; i < widths.length; i++) {
+        totalWidth += widths[i]
+        if (totalWidth > availableWidth) {
+          visibleCount = i
+          break
+        }
+      }
+
+      return {
+        visible: tabs.slice(0, visibleCount),
+        overflow: tabs.slice(visibleCount),
+      }
+    },
+    [tabs]
+  )
+
+  const measureTabWidths = useCallback(() => {
+    if (!containerRef.current) return
+
+    return new Promise<number[]>((resolve) => {
+      requestAnimationFrame(() => {
+        const tabElements = Array.from(
+          containerRef.current?.querySelectorAll('[role="link"]') ?? []
+        )
+        const widths = tabElements.map(
+          (tab) => tab.getBoundingClientRect().width
+        )
+        resolve(widths)
+      })
+    })
+  }, [])
+
+  const updateLayout = useCallback(async () => {
     if (!containerRef.current || !isMdScreen) {
       setVisibleTabs(tabs)
       setOverflowTabs([])
       return
     }
 
-    const container = containerRef.current
-    const moreButtonWidth = 128
-    const padding = 32
-    const containerPadding = 48
-    const availableWidth =
-      container.offsetWidth - moreButtonWidth - padding - containerPadding
+    const currentWidths = tabWidths.length
+      ? tabWidths
+      : await measureTabWidths()
+    if (!currentWidths?.length) return
 
-    const tabWidths = container.dataset.tabWidths
-      ? JSON.parse(container.dataset.tabWidths)
-      : Array.from(container.querySelectorAll('[role="link"]')).map(
-          (tab) => tab.getBoundingClientRect().width
-        )
-
-    if (!container.dataset.tabWidths) {
-      container.dataset.tabWidths = JSON.stringify(tabWidths)
+    if (!tabWidths.length) {
+      setTabWidths(currentWidths)
     }
 
-    let remainingWidth = availableWidth
-    const visibleCount = tabWidths.findIndex((width: number) => {
-      remainingWidth -= width
-      return remainingWidth < 0
-    })
+    const { visible, overflow } = calculateVisibleTabs(
+      containerRef.current.offsetWidth,
+      currentWidths
+    )
 
-    setVisibleTabs(
-      tabs.slice(0, visibleCount === -1 ? tabs.length : visibleCount)
-    )
-    setOverflowTabs(
-      tabs.slice(visibleCount === -1 ? tabs.length : visibleCount)
-    )
-  }
+    setVisibleTabs(visible)
+    setOverflowTabs(overflow)
+  }, [tabs, isMdScreen, tabWidths, measureTabWidths, calculateVisibleTabs])
+
+  const debouncedUpdateLayout = useCallback(() => {
+    if (resizeTimeoutRef.current) {
+      window.cancelAnimationFrame(resizeTimeoutRef.current)
+    }
+    resizeTimeoutRef.current = window.requestAnimationFrame(() => {
+      void updateLayout()
+    })
+  }, [updateLayout])
+
+  useEffect(() => {
+    void updateLayout()
+    return () => {
+      if (resizeTimeoutRef.current) {
+        window.cancelAnimationFrame(resizeTimeoutRef.current)
+      }
+    }
+  }, [updateLayout])
 
   useResizeObserver({
     ref: containerRef,
     box: "border-box",
-    onResize: updateVisibleTabs,
+    onResize: debouncedUpdateLayout,
   })
 
   // Index tabs are usually `/` while other tabs are `/some-other-path`.
