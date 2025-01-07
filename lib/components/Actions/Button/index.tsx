@@ -49,7 +49,7 @@ const iconOnlyVariants = cva("transition-colors", {
   },
 })
 
-const Button: React.FC<ButtonProps> = forwardRef<
+const Button = forwardRef<
   HTMLButtonElement,
   ButtonProps
 >(function Button(

@@ -90,14 +90,28 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
       {body && (
         <nav className="relative flex-grow overflow-y-hidden">
           <ScrollArea className="h-full">
-            <div ref={topRef} className="h-px" aria-hidden="true" />
+            <div
+              ref={topRef}
+              className="h-px"
+              aria-hidden="true"
+              key="top-ref"
+            />
             {body}
-            <div ref={bottomRef} className="h-px" aria-hidden="true" />
+            <div
+              ref={bottomRef}
+              className="h-px"
+              aria-hidden="true"
+              key="bottom-ref"
+            />
           </ScrollArea>
 
           <AnimatePresence>
-            {!isAtTop && <ScrollShadow position="top" />}
-            {!isAtBottom && <ScrollShadow position="bottom" />}
+            {!isAtTop && (
+              <ScrollShadow position="top" key="shadow-scroll-top" />
+            )}
+            {!isAtBottom && (
+              <ScrollShadow position="bottom" key="shadow-scroll-bottom" />
+            )}
           </AnimatePresence>
         </nav>
       )}

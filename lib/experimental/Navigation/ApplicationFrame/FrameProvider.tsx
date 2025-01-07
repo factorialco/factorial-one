@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
@@ -14,6 +15,7 @@ type SidebarState = "locked" | "unlocked" | "hidden"
 interface FrameContextType {
   isSmallScreen: boolean
   sidebarState: SidebarState
+  prevSidebarState: SidebarState | null
   toggleSidebar: () => void
 }
 
@@ -24,6 +26,7 @@ export function useSidebar(): FrameContextType {
   if (context === undefined) {
     return {
       isSmallScreen: false,
+      prevSidebarState: null,
       sidebarState: "locked",
       toggleSidebar: () => {},
     }
@@ -44,6 +47,9 @@ export function FrameProvider({ children }: FrameProviderProps) {
 
   const [locked, setLocked] = useState(true)
   const [visible, setVisible] = useState(false)
+  const [prevSidebarState, setPrevSidebarState] = useState<SidebarState | null>(
+    null
+  )
 
   const toggleSidebar = useCallback(() => {
     if (isSmallScreen) setVisible(!visible)
@@ -65,7 +71,7 @@ export function FrameProvider({ children }: FrameProviderProps) {
     [isSmallScreen, setVisible]
   )
 
-  const sidebarState: SidebarState = (() => {
+  const sidebarState: SidebarState = useMemo(() => {
     if (isSmallScreen) {
       if (visible) return "unlocked"
       return "hidden"
@@ -73,11 +79,17 @@ export function FrameProvider({ children }: FrameProviderProps) {
     if (!locked && !visible) return "hidden"
     if (!locked && visible) return "unlocked"
     return "locked"
-  })()
+  }, [isSmallScreen, visible, locked])
 
   useEffect(() => {
     setVisible(false)
   }, [currentPath])
+
+  useEffect(() => {
+    return () => {
+      setPrevSidebarState(sidebarState)
+    }
+  }, [sidebarState])
 
   return (
     <FrameContext.Provider
@@ -85,6 +97,7 @@ export function FrameProvider({ children }: FrameProviderProps) {
         isSmallScreen,
         sidebarState,
         toggleSidebar,
+        prevSidebarState,
       }}
     >
       <div onPointerMove={handlePointerMove} className="h-screen w-screen">
