@@ -3,7 +3,6 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
   BreadcrumbItem as ShadBreadcrumbItem,
 } from "@/ui/breadcrumb"
 
@@ -53,9 +52,13 @@ function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
               <span className="truncate">{item.label}</span>
             </Link>
           </BreadcrumbLink>
-          <BreadcrumbSeparator>
+          <div
+            aria-hidden="true"
+            className="flex align-bottom"
+            role="presentation"
+          >
             <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
-          </BreadcrumbSeparator>
+          </div>
         </>
       ) : (
         <BreadcrumbPage>{item.label}</BreadcrumbPage>
@@ -82,7 +85,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
         return
       }
 
-      const containerWidth = containerRef.current.offsetWidth
+      const containerWidth = containerRef.current.getBoundingClientRect().width
       const itemWidth = 150
       const dropdownWidth = 50
 
@@ -105,7 +108,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
         }
       }
 
-      setVisibleCount(count)
+      setVisibleCount(Math.max(2, count))
     }
 
     const resizeObserver = new ResizeObserver(() => {
@@ -120,6 +123,10 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
     }
   }, [breadcrumbs])
 
+  if (!breadcrumbs.length) {
+    return <Breadcrumb ref={containerRef} className="w-full" />
+  }
+
   const firstItem = breadcrumbs[0]
   const lastItems = breadcrumbs.slice(-visibleCount + 1)
   const collapsedItems = breadcrumbs.slice(1, -visibleCount + 1)
@@ -129,16 +136,20 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
       <BreadcrumbList>
         <BreadcrumbItem item={firstItem} isLast={false} />
         {collapsedItems.length > 0 && (
-          <>
+          <ShadBreadcrumbItem>
             <Dropdown items={collapsedItems as DropdownItemWithoutIcon[]}>
-              <li className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
+              <span className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
                 ...
-              </li>
+              </span>
             </Dropdown>
-            <BreadcrumbSeparator>
+            <div
+              aria-hidden="true"
+              className="flex align-bottom"
+              role="presentation"
+            >
               <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
-            </BreadcrumbSeparator>
-          </>
+            </div>
+          </ShadBreadcrumbItem>
         )}
         {lastItems.map((item, index) => (
           <BreadcrumbItem
