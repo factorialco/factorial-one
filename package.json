@@ -35,8 +35,9 @@
     "prettier:format": "prettier --write \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "tsc": "tsc --noEmit",
-    "vitest": "vitest dev",
-    "vitest:ci": "vitest run"
+    "vitest": "vitest run",
+    "vitest:watch": "vitest dev",
+    "vitest:ci": "vitest run --reporter=dot"
   },
   "peerDependencies": {
     "@hookform/resolvers": "^3.9.0",
