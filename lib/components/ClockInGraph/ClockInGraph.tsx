@@ -1,59 +1,100 @@
 import { Cell, Pie, PieChart } from "recharts"
 
 export interface ClockInGraphProps {
-  startAt?: Date
-  endAt?: Date
   data?: {
     from: Date
     to: Date
-    variant: "clocked-in" | "break"
+    variant: "clocked-in" | "break" | "clocked-out"
   }[]
-  /** Custom CSS classes */
-  className?: string
+  remainingMinutes?: number
 }
 
 const COLORS = {
   "clocked-in": "#10B883",
   break: "#F5A51C",
   empty: "#0526570F",
+  "clocked-out": "#0526570F",
+  overtime: "#FD812F",
 }
 
+const EMPTY_LABEL = "--:--"
+
+const formatTimeForLabel = (date: Date) =>
+  date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  })
+
 export function ClockInGraph({
-  startAt = new Date(),
-  endAt = new Date(),
   data = [],
+  remainingMinutes,
 }: ClockInGraphProps) {
-  const leftEntry = {
-    value:
-      endAt.getTime() -
-      (data?.[data.length - 1]?.to.getTime() ?? startAt.getTime()),
-    color: COLORS["empty"],
-  }
-
-  const normalizedData = [
-    ...data.map((entry) => ({
-      value: entry.to.getTime() - entry.from.getTime(),
-      color: COLORS[entry.variant],
-    })),
-    leftEntry,
-  ]
-
-  const primaryLabel = startAt.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  })
-  const secondaryLabel = endAt.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  })
+  const clockedInAt = data.find((entry) => entry.variant === "clocked-in")?.from
+  const clockedOutAt = data.find(
+    (entry) => entry.variant === "clocked-out"
+  )?.from
 
   const lastEntry = data[data.length - 1]
 
+  const lastClockedInEntry = data
+    .slice()
+    .reverse()
+    .find((entry) => entry.variant === "clocked-in")
+
+  const leftEntry = (() => {
+    if (remainingMinutes && remainingMinutes > 0) {
+      return {
+        value: remainingMinutes,
+        color: COLORS.empty,
+      }
+    }
+
+    if (remainingMinutes && remainingMinutes < 0) {
+      return {
+        value: Math.abs(remainingMinutes),
+        color: COLORS.overtime,
+      }
+    }
+
+    return {
+      value: 1,
+      color: COLORS.empty,
+    }
+  })()
+
+  const normalizedData = [
+    ...(remainingMinutes
+      ? data.map((entry) => {
+          const value = Math.floor(
+            (entry.to.getTime() - entry.from.getTime()) / 60000
+          )
+
+          return {
+            value,
+            color: COLORS[entry.variant],
+          }
+        })
+      : []),
+    leftEntry,
+  ]
+
+  const primaryLabel = clockedInAt
+    ? formatTimeForLabel(clockedInAt)
+    : EMPTY_LABEL
+
+  const secondaryLabel = (() => {
+    if (remainingMinutes && remainingMinutes < 0) {
+      return lastClockedInEntry
+        ? formatTimeForLabel(lastClockedInEntry.to)
+        : EMPTY_LABEL
+    }
+
+    return clockedOutAt ? formatTimeForLabel(clockedOutAt) : EMPTY_LABEL
+  })()
+
   const isLastEntryClockedIn = lastEntry?.variant === "clocked-in"
 
-  // Calculate total clocked-in time in milliseconds
   const totalTime = isLastEntryClockedIn
     ? data.reduce((acc, entry) => {
         if (entry.variant === "clocked-in") {
@@ -63,7 +104,6 @@ export function ClockInGraph({
       }, 0)
     : lastEntry?.to.getTime() - lastEntry?.from.getTime() || 0
 
-  // Convert milliseconds to hours and minutes
   const hours = Math.floor(totalTime / (1000 * 60 * 60))
   const minutes = Math.floor((totalTime % (1000 * 60 * 60)) / (1000 * 60))
 

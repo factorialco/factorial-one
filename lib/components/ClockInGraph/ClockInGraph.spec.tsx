@@ -9,10 +9,14 @@ describe("ClockInGraph", () => {
   })
 
   it("renders with custom dates", () => {
-    const startAt = new Date("2024-03-20T09:00:00")
-    const endAt = new Date("2024-03-20T17:00:00")
-    render(<ClockInGraph startAt={startAt} endAt={endAt} />)
+    const data = [
+      {
+        from: new Date("2024-03-20T09:00:00"),
+        to: new Date("2024-03-20T17:00:00"),
+        variant: "clocked-in" as const,
+      },
+    ]
+    render(<ClockInGraph data={data} />)
     expect(screen.getByText("09:00")).toBeInTheDocument()
-    expect(screen.getByText("17:00")).toBeInTheDocument()
   })
 })

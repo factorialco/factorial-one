@@ -6,8 +6,7 @@ const meta: Meta<typeof ClockInGraph> = {
   component: ClockInGraph,
   tags: ["autodocs"],
   args: {
-    startAt: new Date(),
-    endAt: new Date(),
+    remainingMinutes: 60 * 4 + 39,
     data: [],
   },
 }
@@ -17,17 +16,12 @@ type Story = StoryObj<typeof ClockInGraph>
 
 export const Default: Story = {}
 
-export const CustomDates: Story = {
-  args: {
-    startAt: new Date("2024-03-20T09:00:00"),
-    endAt: new Date("2024-03-20T17:00:00"),
-  },
+export const Empty: Story = {
+  args: {},
 }
 
-export const WithProgress: Story = {
+export const WithSomeProgress: Story = {
   args: {
-    startAt: new Date("2024-03-20T09:00:00"),
-    endAt: new Date("2024-03-20T17:00:00"),
     data: [
       {
         from: new Date("2024-03-20T09:00:00"),
@@ -45,8 +39,6 @@ export const WithProgress: Story = {
 
 export const WithConsecutiveBreaks: Story = {
   args: {
-    startAt: new Date("2024-03-20T09:00:00"),
-    endAt: new Date("2024-03-20T17:00:00"),
     data: [
       {
         from: new Date("2024-03-20T09:00:00"),
@@ -69,8 +61,6 @@ export const WithConsecutiveBreaks: Story = {
 
 export const WithAlternatingEntries: Story = {
   args: {
-    startAt: new Date("2024-03-20T09:00:00"),
-    endAt: new Date("2024-03-20T17:00:00"),
     data: [
       {
         from: new Date("2024-03-20T09:00:00"),
@@ -91,6 +81,84 @@ export const WithAlternatingEntries: Story = {
         from: new Date("2024-03-20T13:00:00"),
         to: new Date("2024-03-20T13:45:00"),
         variant: "break",
+      },
+    ],
+  },
+}
+
+export const WithAlternatingEntriesAndFinalClockedIn: Story = {
+  args: {
+    data: [
+      {
+        from: new Date("2024-03-20T09:00:00"),
+        to: new Date("2024-03-20T11:00:00"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2024-03-20T11:00:00"),
+        to: new Date("2024-03-20T11:30:00"),
+        variant: "break",
+      },
+      {
+        from: new Date("2024-03-20T11:30:00"),
+        to: new Date("2024-03-20T13:00:00"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2024-03-20T13:00:00"),
+        to: new Date("2024-03-20T13:45:00"),
+        variant: "break",
+      },
+      {
+        from: new Date("2024-03-20T13:45:00"),
+        to: new Date("2024-03-20T15:30:00"),
+        variant: "clocked-in",
+      },
+    ],
+  },
+}
+
+export const WithoutRemainingMinutes: Story = {
+  args: {
+    remainingMinutes: undefined,
+    data: [
+      {
+        from: new Date("2024-03-20T09:00:00"),
+        to: new Date("2024-03-20T11:00:00"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2024-03-20T11:00:00"),
+        to: new Date("2024-03-20T11:30:00"),
+        variant: "break",
+      },
+      {
+        from: new Date("2024-03-20T11:30:00"),
+        to: new Date("2024-03-20T13:00:00"),
+        variant: "clocked-in",
+      },
+    ],
+  },
+}
+
+export const WithOvertime: Story = {
+  args: {
+    remainingMinutes: -17,
+    data: [
+      {
+        from: new Date("2024-03-20T08:02:00"),
+        to: new Date("2024-03-20T11:02:00"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2024-03-20T12:02:00"),
+        to: new Date("2024-03-20T13:02:00"),
+        variant: "break",
+      },
+      {
+        from: new Date("2024-03-20T13:02:00"),
+        to: new Date("2024-03-20T18:17:00"),
+        variant: "clocked-in",
       },
     ],
   },
