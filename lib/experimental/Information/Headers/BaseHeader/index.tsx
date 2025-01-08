@@ -3,20 +3,26 @@ import {
   AvatarVariant,
   renderAvatar,
 } from "@/experimental/Information/Avatars/utils"
+import { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import {
   PrimaryAction,
   SecondaryAction,
 } from "@/experimental/Information/utils"
-import { cn } from "@/lib/utils"
+import { Metadata, MetadataItem } from "../Metadata"
 
 interface BaseHeaderProps {
   title: string
   avatar?: AvatarVariant
   description?: string
   eyebrow?: React.ReactNode
-  footer?: React.ReactNode
   primaryAction?: PrimaryAction
   secondaryActions?: SecondaryAction[]
+  status?: {
+    label: string
+    text: string
+    variant: StatusVariant
+  }
+  metadata?: MetadataItem[]
 }
 
 export function BaseHeader({
@@ -24,62 +30,79 @@ export function BaseHeader({
   avatar,
   description,
   eyebrow,
-  footer,
   primaryAction,
   secondaryActions,
+  status,
+  metadata,
 }: BaseHeaderProps) {
+  const allMetadata = status
+    ? [
+        {
+          label: status.label,
+          value: {
+            type: "status" as const,
+            label: status.text,
+            variant: status.variant,
+          },
+        },
+        ...(metadata ?? []),
+      ]
+    : metadata
+
   return (
-    <div className="flex flex-col items-start justify-start gap-4 p-8 md:flex-row">
-      <div className="flex grow flex-col items-start justify-start gap-4 md:flex-row md:items-center">
-        {avatar && (
-          <div className="flex items-start">
-            {renderAvatar(avatar, "large")}
-          </div>
-        )}
-        <div className="flex flex-col gap-1">
-          {eyebrow && (
-            <div className="w-fit text-f1-foreground-secondary">{eyebrow}</div>
-          )}
-          <span className="text-xl font-semibold text-f1-foreground">
-            {title}
-          </span>
-          {description && (
-            <div className="text-lg text-f1-foreground-secondary">
-              {description}
+    <div className="flex flex-col gap-3 p-8">
+      <div className="flex flex-col items-start justify-start gap-4 md:flex-row">
+        <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-center">
+          {avatar && (
+            <div className="flex items-start">
+              {renderAvatar(avatar, "large")}
             </div>
           )}
-          {footer && (
-            <div className="w-fit text-f1-foreground-secondary">{footer}</div>
+          <div className="flex flex-col gap-1">
+            {eyebrow && (
+              <div className="text-lg text-f1-foreground-secondary">
+                {eyebrow}
+              </div>
+            )}
+            <span className="text-xl font-semibold text-f1-foreground">
+              {title}
+            </span>
+            {description && (
+              <div className="text-lg text-f1-foreground-secondary">
+                {description}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 md:hidden">
+          {metadata && <Metadata items={allMetadata} />}
+        </div>
+        <div className="flex w-full shrink-0 flex-wrap items-center gap-x-3 gap-y-4 md:w-fit md:flex-row-reverse md:gap-y-2 md:overflow-x-auto [&>*]:w-full [&>*]:md:w-auto">
+          {primaryAction && (
+            <Button
+              label={primaryAction.label}
+              onClick={primaryAction.onClick}
+              variant="default"
+              icon={primaryAction.icon}
+            />
           )}
+          {primaryAction && secondaryActions && (
+            <div className="hidden h-4 w-px bg-f1-background-secondary md:block" />
+          )}
+          {secondaryActions &&
+            secondaryActions.map((action) => (
+              <Button
+                key={action.label}
+                label={action.label}
+                onClick={action.onClick}
+                variant={action.variant ?? "outline"}
+                icon={action.icon}
+              />
+            ))}
         </div>
       </div>
-      <div
-        className={cn(
-          "flex shrink-0 flex-wrap items-center gap-x-3 gap-y-2 overflow-x-auto md:flex-row-reverse",
-          avatar && "md:pt-1.5"
-        )}
-      >
-        {primaryAction && (
-          <Button
-            label={primaryAction.label}
-            onClick={primaryAction.onClick}
-            variant="default"
-            icon={primaryAction.icon}
-          />
-        )}
-        {primaryAction && secondaryActions && (
-          <div className="hidden h-4 w-px bg-f1-background-secondary md:block" />
-        )}
-        {secondaryActions &&
-          secondaryActions.map((action) => (
-            <Button
-              key={action.label}
-              label={action.label}
-              onClick={action.onClick}
-              variant={action.variant ?? "outline"}
-              icon={action.icon}
-            />
-          ))}
+      <div className="flex hidden flex-wrap items-center gap-x-3 gap-y-1 md:block">
+        {metadata && <Metadata items={allMetadata} />}
       </div>
     </div>
   )
