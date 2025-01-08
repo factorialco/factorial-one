@@ -58,6 +58,7 @@ describe("ClockInControls", () => {
     render(
       <ClockInControls
         labels={defaultLabels}
+        remainingMinutes={4 * 60 + 39}
         data={[
           {
             from: new Date(),
