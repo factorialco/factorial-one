@@ -32,12 +32,14 @@ type Story = StoryObj<typeof ClockInControls>
 
 export const ClockedOut: Story = {
   args: {
+    remainingMinutes: 8 * 60,
     data: [],
   },
 }
 
 export const ClockedIn: Story = {
   args: {
+    remainingMinutes: 4 * 60 + 39,
     data: [
       {
         from: new Date("2024-03-20T09:02:00"),
@@ -50,6 +52,7 @@ export const ClockedIn: Story = {
 
 export const OnBreak: Story = {
   args: {
+    remainingMinutes: 4 * 60 + 39,
     data: [
       {
         from: new Date("2024-03-20T09:02:00"),

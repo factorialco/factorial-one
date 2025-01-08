@@ -1,21 +1,23 @@
 import { formatTime24Hours } from "@/lib/date"
 import { Cell, Pie, PieChart } from "recharts"
 
+export type ClockInStatus = "clocked-in" | "break" | "clocked-out"
+
 export interface ClockInGraphProps {
   data?: {
     from: Date
     to: Date
-    variant: "clocked-in" | "break" | "clocked-out"
+    variant: ClockInStatus
   }[]
   remainingMinutes?: number
 }
 
-const COLORS = {
-  "clocked-in": "#10B883",
-  break: "#F5A51C",
-  empty: "#0526570F",
-  "clocked-out": "#0526570F",
-  overtime: "#FD812F",
+export const CLOCK_IN_COLORS = {
+  "clocked-in": "hsl(var(--positive-50))",
+  break: "hsl(var(--promote-50))",
+  empty: "hsl(var(--neutral-10))",
+  "clocked-out": "hsl(var(--neutral-10))",
+  overtime: "hsl(var(--warning-50))",
 }
 
 const EMPTY_LABEL = "--:--"
@@ -40,20 +42,20 @@ export function ClockInGraph({
     if (remainingMinutes && remainingMinutes > 0) {
       return {
         value: remainingMinutes,
-        color: COLORS.empty,
+        color: CLOCK_IN_COLORS.empty,
       }
     }
 
     if (remainingMinutes && remainingMinutes < 0) {
       return {
         value: Math.abs(remainingMinutes),
-        color: COLORS.overtime,
+        color: CLOCK_IN_COLORS.overtime,
       }
     }
 
     return {
       value: 1,
-      color: COLORS.empty,
+      color: CLOCK_IN_COLORS.empty,
     }
   })()
 
@@ -66,7 +68,7 @@ export function ClockInGraph({
 
           return {
             value,
-            color: COLORS[entry.variant],
+            color: CLOCK_IN_COLORS[entry.variant],
           }
         })
       : []),
@@ -119,6 +121,7 @@ export function ClockInGraph({
           cornerRadius={4}
           dataKey="value"
           strokeWidth={0}
+          isAnimationActive={false}
         >
           {normalizedData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={entry.color} />

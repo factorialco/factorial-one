@@ -1,17 +1,13 @@
 import { Button } from "@/components/Actions/Button"
 import { SolidPause, SolidPlay, SolidStop } from "@/icons/app"
-import { formatTime24Hours } from "@/lib/date"
-import { ClockInGraph } from "../ClockInGraph"
+import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
+import { CLOCK_IN_COLORS } from "../ClockInGraph/ClockInGraph"
 
 export interface ClockInControlsProps {
   /** Optional remaining time in minutes */
   remainingMinutes?: number
   /** Clock in entries data */
-  data?: {
-    from: Date
-    to: Date
-    variant: "clocked-in" | "break" | "clocked-out"
-  }[]
+  data: ClockInGraphProps["data"]
   /** Labels for all text content */
   labels: {
     clockedOut: string
@@ -30,8 +26,6 @@ export interface ClockInControlsProps {
   onClockOut?: () => void
   /** Callback when Break button is clicked */
   onBreak?: () => void
-  /** Callback when Resume button is clicked */
-  onResume?: () => void
 }
 
 export function ClockInControls({
@@ -41,7 +35,6 @@ export function ClockInControls({
   onClockIn,
   onClockOut,
   onBreak,
-  onResume,
 }: ClockInControlsProps) {
   const lastEntry = data[data.length - 1]
   const status = lastEntry?.variant || "clocked-out"
@@ -55,26 +48,40 @@ export function ClockInControls({
   const subtitle = (() => {
     if (!remainingMinutes) return
 
+    const absRemainingMinutes = Math.abs(remainingMinutes)
+
+    const hours = Math.floor(absRemainingMinutes / 60)
+    const minutes = Math.floor(absRemainingMinutes % 60)
+
+    const normalizedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`
+
     if (remainingMinutes > 0) {
-      // I would like to show the remaining time in the format of 00:00
-      return `${labels.remainingTime} ${formatTime24Hours(new Date(remainingMinutes * 60 * 1000))}`
+      return `${labels.remainingTime} ${normalizedTime}`
     }
 
-    return `${labels.overtime} ${formatTime24Hours(new Date(remainingMinutes * 60 * 1000))}`
+    return `${labels.overtime} ${normalizedTime}`
   })()
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-10">
       <div className="flex-1 space-y-4">
         <div className="space-y-0.5">
           <div className="flex items-center gap-2">
             <span className="text-xl font-semibold">{statusText}</span>
-            {status !== "clocked-out" && (
-              <div className="relative h-4 w-4">
-                <div className="absolute inset-0 rounded-full bg-[#10B883]/20" />
-                <div className="absolute inset-[3px] rounded-full bg-[#10B883]" />
-              </div>
-            )}
+            <div className="relative aspect-square h-4">
+              <div
+                className="absolute inset-0 rounded-full opacity-20"
+                style={{
+                  backgroundColor: CLOCK_IN_COLORS[status],
+                }}
+              />
+              <div
+                className="absolute inset-[3px] rounded-full"
+                style={{
+                  backgroundColor: CLOCK_IN_COLORS[status],
+                }}
+              />
+            </div>
           </div>
           {subtitle && (
             <p className="text-f1-foreground-secondary">{subtitle}</p>
@@ -117,7 +124,7 @@ export function ClockInControls({
                 hideLabel
               />
               <Button
-                onClick={onResume}
+                onClick={onClockIn}
                 label={labels.resume}
                 icon={SolidPlay}
               />
@@ -125,10 +132,7 @@ export function ClockInControls({
           )}
         </div>
       </div>
-
-      <div className="flex-1">
-        <ClockInGraph data={data} remainingMinutes={remainingMinutes} />
-      </div>
+      <ClockInGraph data={data} remainingMinutes={remainingMinutes} />
     </div>
   )
 }

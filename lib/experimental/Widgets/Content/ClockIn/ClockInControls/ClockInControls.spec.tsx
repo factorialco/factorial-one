@@ -16,7 +16,7 @@ const defaultLabels = {
 
 describe("ClockInControls", () => {
   it("renders clocked out state when no data", () => {
-    render(<ClockInControls labels={defaultLabels} />)
+    render(<ClockInControls data={[]} labels={defaultLabels} />)
     expect(screen.getByText("Clocked out")).toBeInTheDocument()
     expect(screen.getByText("Clock in")).toBeInTheDocument()
   })
@@ -88,7 +88,9 @@ describe("ClockInControls", () => {
 
   it("calls onClockIn when clock in button is clicked", () => {
     const onClockIn = vi.fn()
-    render(<ClockInControls labels={defaultLabels} onClockIn={onClockIn} />)
+    render(
+      <ClockInControls data={[]} labels={defaultLabels} onClockIn={onClockIn} />
+    )
     screen.getByText("Clock in").click()
     expect(onClockIn).toHaveBeenCalled()
   })
