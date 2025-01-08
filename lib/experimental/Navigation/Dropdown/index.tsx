@@ -94,7 +94,7 @@ export function Dropdown({ items, children }: DropdownProps) {
         {children || (
           <button
             type="button"
-            className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary"
+            className="rounded-sm border border-f1-border px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary"
             aria-label="More options"
           >
             <Icon icon={Ellipsis} size="md" />
