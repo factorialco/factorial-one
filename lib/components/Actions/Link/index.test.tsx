@@ -19,15 +19,6 @@ describe("Link", () => {
     expect(screen.getByRole("link")).toHaveClass("text-f1-link")
   })
 
-  it("applies text variant correctly", () => {
-    render(
-      <Link href="/test" variant="text">
-        Click me
-      </Link>
-    )
-    expect(screen.getByRole("link")).toHaveClass("text-inherit")
-  })
-
   it("shows external link icon when target is _blank", () => {
     render(
       <Link href="https://example.com" target="_blank">

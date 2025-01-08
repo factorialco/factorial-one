@@ -37,17 +37,12 @@ function Shortcut({ keys, variant }: ShortcutProps) {
         return (
           <kbd
             key={index}
-            role="term"
             className={cn(
               shortcutVariants({ variant }),
               isIcon ? "w-5 px-0.5" : "min-w-5 px-1"
             )}
           >
-            {isIcon ? (
-              <Icon data-testid="cmd-icon" icon={iconMap[lowerKey]} size="sm" />
-            ) : (
-              key
-            )}
+            {isIcon ? <Icon icon={iconMap[lowerKey]} size="sm" /> : key}
           </kbd>
         )
       })}
