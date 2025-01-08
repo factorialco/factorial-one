@@ -124,7 +124,12 @@ export function ClockInGraph({
           isAnimationActive={false}
         >
           {normalizedData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.color} />
+            <Cell
+              key={`cell-${index}`}
+              fill={entry.color}
+              role="presentation"
+              aria-label={`${entry.value} minutes`}
+            />
           ))}
         </Pie>
       </PieChart>
