@@ -109,7 +109,7 @@ export function Metadata({ items }: MetadataProps) {
   if (!items?.length) return null
 
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-0">
+    <div className="flex flex-col items-start gap-x-3 gap-y-0 md:flex-row md:flex-wrap md:items-center">
       {items.map((item, index) => (
         <>
           <MetadataItem key={`item-${index}`} item={item} />
