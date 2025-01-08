@@ -1,4 +1,3 @@
-import { Button } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import {
   AvatarVariant,
@@ -93,31 +92,23 @@ export function Dropdown({ items, children }: DropdownProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {children || (
-          <Button
-            hideLabel
-            icon={Ellipsis}
-            label="..."
-            round
-            variant="outline"
-          />
+          <button
+            type="button"
+            className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary"
+            aria-label="More options"
+          >
+            <Icon icon={Ellipsis} size="md" />
+          </button>
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-[var(--radix-dropdown-menu-trigger-width)]">
-        <div className="flex flex-col">
-          {items.map((item, index) =>
-            item === "separator" ? (
-              <DropdownMenuSeparator key={`separator-${index}`} />
-            ) : (
-              <DropdownItem
-                key={index}
-                item={{
-                  ...item,
-                  onClick: item.onClick,
-                }}
-              />
-            )
-          )}
-        </div>
+      <DropdownMenuContent align="end">
+        {items.map((item, index) =>
+          item === "separator" ? (
+            <DropdownMenuSeparator key={index} />
+          ) : (
+            <DropdownItem key={index} item={item} />
+          )
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

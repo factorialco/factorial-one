@@ -138,9 +138,9 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
         {collapsedItems.length > 0 && (
           <ShadBreadcrumbItem>
             <Dropdown items={collapsedItems as DropdownItemWithoutIcon[]}>
-              <span className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
+              <button className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
                 ...
-              </span>
+              </button>
             </Dropdown>
             <div
               aria-hidden="true"
