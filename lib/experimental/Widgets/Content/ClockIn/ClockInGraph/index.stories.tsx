@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { ClockInGraph } from "./ClockInGraph"
+import { ClockInGraph } from "."
 
 const meta: Meta<typeof ClockInGraph> = {
   title: "Components/ClockInGraph",

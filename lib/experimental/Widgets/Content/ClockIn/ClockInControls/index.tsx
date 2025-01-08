@@ -1,7 +1,10 @@
 import { Button } from "@/components/Actions/Button"
 import { SolidPause, SolidPlay, SolidStop } from "@/icons/app"
-import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
-import { CLOCK_IN_COLORS } from "../ClockInGraph/ClockInGraph"
+import {
+  CLOCK_IN_COLORS,
+  ClockInGraph,
+  ClockInGraphProps,
+} from "../ClockInGraph"
 
 export interface ClockInControlsProps {
   /** Optional remaining time in minutes */

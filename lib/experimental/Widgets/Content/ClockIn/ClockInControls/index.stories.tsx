@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { ClockInControls } from "./ClockInControls"
+import { ClockInControls } from "."
 
 const defaultLabels = {
   clockedOut: "Clocked out",
