@@ -17,7 +17,7 @@ export const BasePostDescription = ({
   return (
     <div
       dangerouslySetInnerHTML={{ __html: content }}
-      className={cn("FactorialOneTextEditor", collapsed && "line-clamp-2")}
+      className={cn("FactorialOneTextEditor", collapsed && "line-clamp-5")}
     />
   )
 }
