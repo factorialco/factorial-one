@@ -69,9 +69,14 @@ export const Metadata: Story = {
     ],
     metadata: [
       {
-        label: "Created",
+        label: "Created at a large label indeed",
         value: { type: "text", content: "2024-01-01" },
         actions: [
+          {
+            label: "Edit",
+            icon: Pencil,
+            onClick: fn(),
+          },
           {
             label: "Copy",
             icon: LayersFront,

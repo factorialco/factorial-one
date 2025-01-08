@@ -8,7 +8,6 @@ import {
   StatusTag,
   StatusVariant,
 } from "@/experimental/Information/Tags/StatusTag"
-import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
@@ -51,28 +50,24 @@ function renderMetadataValue(item: MetadataItem) {
 }
 
 function MetadataItem({ item }: { item: MetadataItem }) {
-  const [isActive, setIsActive] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
   const isAction = item.actions?.length
 
   return (
-    <div className="flex h-8 items-center gap-2">
-      <div className="w-28 truncate text-f1-foreground-secondary md:w-fit">
+    <div className="flex h-8 items-center gap-2 text-sm">
+      <div className="w-28 truncate text-sm text-f1-foreground-secondary md:w-fit">
         {item.label}
       </div>
       <div
-        role="button"
-        tabIndex={isAction ? 0 : -1}
-        onMouseEnter={() => isAction && setIsActive(true)}
-        onMouseLeave={() => isAction && setIsActive(false)}
-        onFocus={() => isAction && setIsActive(true)}
-        onBlur={() => isAction && setIsActive(false)}
-        className="relative flex h-5 w-fit items-center hover:cursor-default"
+        onMouseEnter={() => isAction && setIsHovered(true)}
+        onMouseLeave={() => isAction && setIsHovered(false)}
+        className="relative flex h-5 w-fit items-center"
       >
         <div className="font-medium text-f1-foreground">
           {renderMetadataValue(item)}
         </div>
         <AnimatePresence>
-          {isActive && isAction && (
+          {isHovered && isAction && (
             <motion.div
               className={cn(
                 "absolute -left-1.5 -top-1.5 z-50 flex hidden h-8 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm bg-f1-background py-1 pl-1.5 shadow-md ring-1 ring-inset ring-f1-border-secondary md:flex",
@@ -83,32 +78,24 @@ function MetadataItem({ item }: { item: MetadataItem }) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
             >
-              <div className="flex h-5 items-center font-medium text-f1-foreground">
+              <div className="flex h-5 items-center text-sm font-medium text-f1-foreground">
                 {renderMetadataValue(item)}
               </div>
               {isAction && (
-                <motion.div
-                  className="flex gap-1"
-                  initial={{ x: -16 }}
-                  animate={{ x: 0 }}
-                  exit={{ x: -16 }}
-                  transition={{ duration: 0.1 }}
-                >
+                <div className="flex gap-1">
                   {item.actions?.map((action, index) => (
-                    <Tooltip label={action.label} key={`tooltip-${index}`}>
-                      <Button
-                        key={`action-${index}`}
-                        size="sm"
-                        variant="neutral"
-                        round
-                        label={action.label}
-                        hideLabel
-                        icon={action.icon}
-                        onClick={action.onClick}
-                      />
-                    </Tooltip>
+                    <Button
+                      key={`action-${index}`}
+                      size="sm"
+                      variant="neutral"
+                      round
+                      label={action.label}
+                      hideLabel
+                      icon={action.icon}
+                      onClick={action.onClick}
+                    />
                   ))}
-                </motion.div>
+                </div>
               )}
             </motion.div>
           )}
@@ -122,7 +109,7 @@ export function Metadata({ items }: MetadataProps) {
   if (!items?.length) return null
 
   return (
-    <div className="flex flex-col items-start gap-x-3 gap-y-0 md:flex-row md:flex-wrap md:items-center">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-0">
       {items.map((item, index) => (
         <>
           <MetadataItem key={`item-${index}`} item={item} />
