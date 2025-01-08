@@ -76,6 +76,7 @@ describe("ClockInControls", () => {
     render(
       <ClockInControls
         labels={defaultLabels}
+        remainingMinutes={-17}
         data={[
           {
             from: new Date(),
