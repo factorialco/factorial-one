@@ -65,7 +65,7 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
     <Link
       {...props}
       className={cn(
-        "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
+        "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 text-f1-foreground no-underline transition-colors",
         focusRing("focus-visible:ring-inset"),
         active
           ? "bg-f1-background-secondary text-f1-foreground"
