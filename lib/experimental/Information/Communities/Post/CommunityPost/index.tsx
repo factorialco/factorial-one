@@ -71,13 +71,15 @@ export const BaseCommunityPost = ({
     onClick(id)
   }
 
+  const authorFullName = `${author.firstName} ${author.lastName}`
+
   return (
     <div
       className="flex w-full cursor-pointer flex-row gap-3 rounded-xl border border-solid border-transparent p-3 pt-2 hover:bg-f1-background-hover focus:border-f1-border-secondary focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold md:pb-4 md:pt-3"
       onClick={handleClick}
     >
       <div className="hidden md:block">
-        <Link href={author.url}>
+        <Link href={author.url} title={authorFullName}>
           <PersonAvatar
             firstName={author.firstName}
             lastName={author.lastName}
@@ -89,7 +91,11 @@ export const BaseCommunityPost = ({
         <div className="flex flex-col gap-2">
           <div className="flex flex-row justify-between">
             <div className="flex flex-1 flex-row flex-wrap items-center gap-1">
-              <Link href={author.url} className="block md:hidden">
+              <Link
+                href={author.url}
+                className="block md:hidden"
+                title={authorFullName}
+              >
                 <span className="flex items-center">
                   <PersonAvatar
                     firstName={author.firstName}
@@ -101,13 +107,15 @@ export const BaseCommunityPost = ({
               </Link>
               <Link
                 href={author.url}
+                title={authorFullName}
                 className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
               >
-                {`${author.firstName} ${author.lastName}`}
+                {authorFullName}
               </Link>
               <span className="text-f1-foreground-secondary">{inLabel}</span>
               <Link
                 onClick={group.onClick}
+                title={group.title}
                 className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
               >
                 {group.title}
@@ -120,7 +128,7 @@ export const BaseCommunityPost = ({
 
             <div className="flex flex-row gap-2">
               <div className="hidden md:block">
-                <Link onClick={comment.onClick}>
+                <Link onClick={comment.onClick} title={comment.label}>
                   <Button label={comment.label} size="sm" variant="outline" />
                 </Link>
               </div>
