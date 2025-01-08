@@ -43,7 +43,6 @@ const meta = {
     },
     label: {
       control: "text",
-      description: "Button text content",
     },
     icon: {
       control: "boolean",
@@ -51,11 +50,9 @@ const meta = {
     },
     disabled: {
       control: "boolean",
-      description: "Disabled state of the button",
     },
     loading: {
       control: "boolean",
-      description: "Loading state of the button",
     },
     hideLabel: {
       control: "boolean",
