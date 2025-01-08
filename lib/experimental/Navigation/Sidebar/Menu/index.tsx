@@ -38,7 +38,7 @@ const MenuItemContent = ({
 }) => {
   return (
     <div className="flex w-full items-center justify-between">
-      <div className="text-f1-foreground-bold flex items-center gap-1.5 font-medium">
+      <div className="flex items-center gap-1.5 font-medium text-f1-foreground">
         <Icon
           icon={item.icon}
           size="md"
@@ -65,7 +65,7 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
     <Link
       {...props}
       className={cn(
-        "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 text-f1-foreground no-underline transition-colors",
+        "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
         focusRing("focus-visible:ring-inset"),
         active
           ? "bg-f1-background-secondary text-f1-foreground"

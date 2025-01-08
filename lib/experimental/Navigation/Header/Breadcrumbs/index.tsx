@@ -3,6 +3,7 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
+  BreadcrumbSeparator,
   BreadcrumbItem as ShadBreadcrumbItem,
 } from "@/ui/breadcrumb"
 
@@ -52,13 +53,9 @@ function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
               <span className="truncate">{item.label}</span>
             </Link>
           </BreadcrumbLink>
-          <div
-            aria-hidden="true"
-            className="flex align-bottom"
-            role="presentation"
-          >
+          <BreadcrumbSeparator>
             <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
-          </div>
+          </BreadcrumbSeparator>
         </>
       ) : (
         <BreadcrumbPage>{item.label}</BreadcrumbPage>
