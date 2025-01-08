@@ -1,10 +1,25 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { ClockInControls } from "./ClockInControls"
 
+const defaultLabels = {
+  clockedOut: "Clocked out",
+  clockedIn: "Clocked in",
+  onBreak: "On a break",
+  clockIn: "Clock in",
+  clockOut: "Clock out",
+  break: "Break",
+  resume: "Resume",
+  remainingTime: "Remaining time",
+  overtime: "Overtime",
+}
+
 const meta: Meta<typeof ClockInControls> = {
   title: "Components/ClockInControls",
   component: ClockInControls,
   tags: ["autodocs"],
+  args: {
+    labels: defaultLabels,
+  },
   render: (args) => (
     <div className="w-[350px]">
       <ClockInControls {...args} />
@@ -17,15 +32,12 @@ type Story = StoryObj<typeof ClockInControls>
 
 export const ClockedOut: Story = {
   args: {
-    status: "clocked-out",
-    remainingTimeText: "Remaining time 08:00",
+    data: [],
   },
 }
 
 export const ClockedIn: Story = {
   args: {
-    status: "clocked-in",
-    remainingTimeText: "Remaining time 04:39",
     data: [
       {
         from: new Date("2024-03-20T09:02:00"),
@@ -38,8 +50,6 @@ export const ClockedIn: Story = {
 
 export const OnBreak: Story = {
   args: {
-    status: "on-break",
-    remainingTimeText: "Remaining time 04:39",
     data: [
       {
         from: new Date("2024-03-20T09:02:00"),
@@ -57,8 +67,6 @@ export const OnBreak: Story = {
 
 export const WithOvertime: Story = {
   args: {
-    status: "clocked-in",
-    overtimeText: "Overtime 00:17",
     remainingMinutes: -17,
     data: [
       {

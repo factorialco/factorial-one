@@ -1,3 +1,4 @@
+import { formatTime24Hours } from "@/lib/date"
 import { Cell, Pie, PieChart } from "recharts"
 
 export interface ClockInGraphProps {
@@ -18,13 +19,6 @@ const COLORS = {
 }
 
 const EMPTY_LABEL = "--:--"
-
-const formatTimeForLabel = (date: Date) =>
-  date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  })
 
 export function ClockInGraph({
   data = [],
@@ -80,17 +74,17 @@ export function ClockInGraph({
   ]
 
   const primaryLabel = clockedInAt
-    ? formatTimeForLabel(clockedInAt)
+    ? formatTime24Hours(clockedInAt)
     : EMPTY_LABEL
 
   const secondaryLabel = (() => {
     if (remainingMinutes && remainingMinutes < 0) {
       return lastClockedInEntry
-        ? formatTimeForLabel(lastClockedInEntry.to)
+        ? formatTime24Hours(lastClockedInEntry.to)
         : EMPTY_LABEL
     }
 
-    return clockedOutAt ? formatTimeForLabel(clockedOutAt) : EMPTY_LABEL
+    return clockedOutAt ? formatTime24Hours(clockedOutAt) : EMPTY_LABEL
   })()
 
   const isLastEntryClockedIn = lastEntry?.variant === "clocked-in"
