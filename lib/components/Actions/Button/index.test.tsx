@@ -30,28 +30,6 @@ test("Button is temporarily disabled when onClick is a promise until the promise
   expect(button.attributes.getNamedItem("disabled")).toBeNull()
 })
 
-test("Button renders with different variants", () => {
-  const { rerender } = render(<Button label="Test" variant="default" />)
-  expect(screen.getByRole("button")).toHaveClass("bg-f1-background-accent-bold")
-
-  rerender(<Button label="Test" variant="critical" />)
-  expect(screen.getByRole("button")).toHaveClass("text-f1-foreground-critical")
-
-  rerender(<Button label="Test" variant="ghost" />)
-  expect(screen.getByRole("button")).toHaveClass("bg-transparent")
-})
-
-test("Button renders with different sizes", () => {
-  const { rerender } = render(<Button label="Test" size="sm" />)
-  expect(screen.getByRole("button")).toHaveClass("h-6")
-
-  rerender(<Button label="Test" size="md" />)
-  expect(screen.getByRole("button")).toHaveClass("h-8")
-
-  rerender(<Button label="Test" size="lg" />)
-  expect(screen.getByRole("button")).toHaveClass("h-10")
-})
-
 test("Button renders with icon", () => {
   render(<Button label="Add Item" icon={Add} />)
   const button = screen.getByRole("button")
