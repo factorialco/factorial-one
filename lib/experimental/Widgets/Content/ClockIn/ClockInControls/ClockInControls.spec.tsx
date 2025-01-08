@@ -17,8 +17,8 @@ const defaultLabels = {
 describe("ClockInControls", () => {
   it("renders clocked out state when no data", () => {
     render(<ClockInControls data={[]} labels={defaultLabels} />)
-    expect(screen.getByText("Clocked out")).toBeInTheDocument()
-    expect(screen.getByText("Clock in")).toBeInTheDocument()
+    expect(screen.getByText(defaultLabels.clockedOut)).toBeInTheDocument()
+    expect(screen.getByText(defaultLabels.clockIn)).toBeInTheDocument()
   })
 
   it("renders clocked in state", () => {
@@ -34,7 +34,7 @@ describe("ClockInControls", () => {
         ]}
       />
     )
-    expect(screen.getByText("Clocked in")).toBeInTheDocument()
+    expect(screen.getByText(defaultLabels.clockedIn)).toBeInTheDocument()
   })
 
   it("renders break state", () => {
@@ -50,8 +50,8 @@ describe("ClockInControls", () => {
         ]}
       />
     )
-    expect(screen.getByText("On a break")).toBeInTheDocument()
-    expect(screen.getByText("Resume")).toBeInTheDocument()
+    expect(screen.getByText(defaultLabels.onBreak)).toBeInTheDocument()
+    expect(screen.getByText(defaultLabels.resume)).toBeInTheDocument()
   })
 
   it("shows remaining time text", () => {
@@ -67,7 +67,9 @@ describe("ClockInControls", () => {
         ]}
       />
     )
-    expect(screen.getByText("Remaining time 04:39")).toBeInTheDocument()
+    expect(
+      screen.getByText(`${defaultLabels.remainingTime} 04:39`)
+    ).toBeInTheDocument()
   })
 
   it("shows overtime text", () => {
@@ -83,7 +85,9 @@ describe("ClockInControls", () => {
         ]}
       />
     )
-    expect(screen.getByText("Overtime 00:17")).toBeInTheDocument()
+    expect(
+      screen.getByText(`${defaultLabels.overtime} 00:17`)
+    ).toBeInTheDocument()
   })
 
   it("calls onClockIn when clock in button is clicked", () => {
@@ -91,7 +95,7 @@ describe("ClockInControls", () => {
     render(
       <ClockInControls data={[]} labels={defaultLabels} onClockIn={onClockIn} />
     )
-    screen.getByText("Clock in").click()
+    screen.getByText(defaultLabels.clockIn).click()
     expect(onClockIn).toHaveBeenCalled()
   })
 })
