@@ -4,7 +4,7 @@ import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { Menu } from "@/icons/app"
+import { ChevronLeft, Menu } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
@@ -40,6 +40,7 @@ type HeaderProps = {
   }
   breadcrumbs?: BreadcrumbItemType[]
   actions?: PageAction[]
+  embedded?: boolean
 }
 
 export function PageHeader({
@@ -47,6 +48,7 @@ export function PageHeader({
   statusTag = undefined,
   breadcrumbs = [],
   actions = [],
+  embedded = false,
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
@@ -56,19 +58,26 @@ export function PageHeader({
   ]
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
-  const hasActions = actions.length > 0
+  const hasActions = !embedded && actions.length > 0
+  const showBackButton = embedded && hasNavigation
+  const lastBreadcrumb = breadcrumbsTree[breadcrumbsTree.length - 1]
+  const parentBreadcrumb = hasNavigation
+    ? breadcrumbsTree[breadcrumbsTree.length - 2]
+    : null
 
   return (
     <div
       className={cn(
-        "flex h-16 items-center justify-between px-5 py-4 xs:px-6",
+        "flex items-center justify-between px-5 py-4 xs:px-6",
+        embedded ? "h-12" : "h-16",
         hasNavigation &&
+          !embedded &&
           "border-b border-dashed border-transparent border-b-f1-border"
       )}
     >
       <div className="flex flex-grow items-center">
         <AnimatePresence>
-          {sidebarState !== "locked" && (
+          {!embedded && sidebarState !== "locked" && (
             <motion.div
               initial={{ opacity: 0, width: 0 }}
               animate={{ opacity: 1, width: "auto" }}
@@ -87,9 +96,33 @@ export function PageHeader({
             </motion.div>
           )}
         </AnimatePresence>
-        <div className="flex flex-grow items-center gap-2">
-          {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
-          {breadcrumbsTree.length > 1 ? (
+        <div
+          className={cn(
+            "flex flex-grow items-center gap-2",
+            embedded && hasNavigation && "justify-center"
+          )}
+        >
+          {showBackButton && parentBreadcrumb && (
+            <div className="absolute left-4">
+              <Link href={parentBreadcrumb.href}>
+                <Button
+                  variant="ghost"
+                  hideLabel
+                  round
+                  label="Back"
+                  icon={ChevronLeft}
+                />
+              </Link>
+            </div>
+          )}
+          {(!hasNavigation || (embedded && !hasNavigation)) && (
+            <ModuleAvatar icon={module.icon} size="lg" />
+          )}
+          {embedded && hasNavigation ? (
+            <div className="text-lg font-semibold text-f1-foreground">
+              {lastBreadcrumb.label}
+            </div>
+          ) : breadcrumbsTree.length > 1 ? (
             <Breadcrumbs breadcrumbs={breadcrumbsTree} />
           ) : (
             <div className="text-xl font-semibold text-f1-foreground">
@@ -99,7 +132,7 @@ export function PageHeader({
         </div>
       </div>
       <div className="flex items-center">
-        {!hasNavigation && hasStatus && (
+        {!embedded && !hasNavigation && hasStatus && (
           <div className="pe-3">
             {statusTag.tooltip ? (
               <Tooltip label={statusTag.tooltip}>
@@ -116,7 +149,7 @@ export function PageHeader({
             )}
           </div>
         )}
-        {hasStatus && hasActions && (
+        {!embedded && hasStatus && hasActions && (
           <div className="right-0 h-4 w-px bg-f1-border-secondary"></div>
         )}
         {hasActions && (
