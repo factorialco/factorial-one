@@ -76,11 +76,14 @@ export function PageHeader({
             >
               <div className="mr-3">
                 <Button
+                  ref={(buttonEl) => {
+                    buttonEl?.focus()
+                  }}
                   variant="ghost"
                   hideLabel
                   round
                   onClick={toggleSidebar}
-                  label="Menu"
+                  label="Open main menu"
                   icon={Menu}
                 />
               </div>

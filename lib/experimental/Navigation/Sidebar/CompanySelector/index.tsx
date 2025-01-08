@@ -164,7 +164,6 @@ const SelectedCompanyLabel = ({
       className={cn(
         "flex w-fit min-w-0 max-w-full items-center gap-2 rounded text-lg font-semibold text-f1-foreground transition-colors"
       )}
-      title={company?.name}
     >
       <CompanyAvatar
         name={company?.name?.[0]}

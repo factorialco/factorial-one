@@ -47,7 +47,6 @@ function ApplicationFrameContent({
 
   return (
     <>
-      <SkipToContentButton contentId="content" />
       <MotionConfig
         reducedMotion={shouldReduceMotion ? "always" : "never"}
         transition={{
@@ -77,7 +76,16 @@ function ApplicationFrameContent({
                 { "transition-all": !shouldReduceMotion },
                 sidebarState === "locked" ? "w-[240px] shrink-0 pl-3" : "w-0"
               )}
+              ref={(node) => {
+                // React types does not yet support ["inert" attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert) at the moment
+                if (sidebarState === "hidden") {
+                  node?.setAttribute("inert", "")
+                } else {
+                  node?.removeAttribute("inert")
+                }
+              }}
             >
+              <SkipToContentButton contentId="content" />
               {sidebar}
             </div>
             <motion.main

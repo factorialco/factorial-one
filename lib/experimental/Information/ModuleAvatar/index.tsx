@@ -45,7 +45,7 @@ export function ModuleAvatar({ size = "md", icon }: ModuleAvatarProps) {
   const IconComponent = icon
 
   return (
-    <div className={moduleAvatarVariants({ size })}>
+    <div className={moduleAvatarVariants({ size })} aria-hidden="true">
       <svg
         viewBox="0 0 100 100"
         className="absolute h-full w-full"
