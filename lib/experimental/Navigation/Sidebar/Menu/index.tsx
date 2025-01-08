@@ -38,7 +38,7 @@ const MenuItemContent = ({
 }) => {
   return (
     <div className="flex w-full items-center justify-between">
-      <div className="flex items-center gap-1.5 font-medium text-f1-foreground">
+      <div className="text-f1-foreground-bold flex items-center gap-1.5 font-medium">
         <Icon
           icon={item.icon}
           size="md"
