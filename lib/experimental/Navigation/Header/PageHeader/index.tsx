@@ -115,9 +115,7 @@ export function PageHeader({
               </Link>
             </div>
           )}
-          {(!hasNavigation || (embedded && !hasNavigation)) && (
-            <ModuleAvatar icon={module.icon} size="lg" />
-          )}
+          {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
           {embedded && hasNavigation ? (
             <div className="text-lg font-semibold text-f1-foreground">
               {lastBreadcrumb.label}
