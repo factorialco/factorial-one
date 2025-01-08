@@ -77,27 +77,54 @@ export function BaseHeader({
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 md:hidden">
           {metadata && <Metadata items={allMetadata} />}
         </div>
-        <div className="flex w-full shrink-0 flex-wrap items-center gap-x-3 gap-y-4 md:w-fit md:flex-row-reverse md:gap-y-2 md:overflow-x-auto [&>*]:w-full [&>*]:md:w-auto">
+        <div className="flex w-full shrink-0 flex-wrap items-center gap-x-3 gap-y-4 md:w-fit md:flex-row-reverse md:gap-y-2 md:overflow-x-auto">
           {primaryAction && (
-            <Button
-              label={primaryAction.label}
-              onClick={primaryAction.onClick}
-              variant="default"
-              icon={primaryAction.icon}
-            />
+            <>
+              <div className="hidden md:block">
+                <Button
+                  label={primaryAction.label}
+                  onClick={primaryAction.onClick}
+                  variant="default"
+                  icon={primaryAction.icon}
+                />
+              </div>
+              <div className="w-full md:hidden [&>*]:w-full">
+                <Button
+                  label={primaryAction.label}
+                  onClick={primaryAction.onClick}
+                  variant="default"
+                  icon={primaryAction.icon}
+                  size="lg"
+                />
+              </div>
+            </>
           )}
           {primaryAction && secondaryActions && (
             <div className="hidden h-4 w-px bg-f1-background-secondary md:block" />
           )}
           {secondaryActions &&
             secondaryActions.map((action) => (
-              <Button
-                key={action.label}
-                label={action.label}
-                onClick={action.onClick}
-                variant={action.variant ?? "outline"}
-                icon={action.icon}
-              />
+              <>
+                <div className="hidden md:block">
+                  <Button
+                    key={action.label}
+                    label={action.label}
+                    onClick={action.onClick}
+                    variant={action.variant ?? "outline"}
+                    icon={action.icon}
+                  />
+                </div>
+                <div className="w-full md:hidden [&>*]:w-full">
+                  <Button
+                    key={action.label}
+                    label={action.label}
+                    onClick={action.onClick}
+                    variant={action.variant ?? "outline"}
+                    icon={action.icon}
+                    size="lg"
+                  />
+                </div>
+              </>
             ))}
         </div>
       </div>
