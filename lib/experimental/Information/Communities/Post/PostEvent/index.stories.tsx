@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { PostEvent } from "."
+import cat from "../../../../../../storybook-assets/cat.jpeg"
 
 const meta: Meta<typeof PostEvent> = {
   component: PostEvent,
@@ -23,7 +24,7 @@ export const Default: Story = {
   args: {
     title: "End of the Year Dinner!",
     place: "Poble Espanyol",
-    imageUrl: "https://cataas.com/cat",
+    imageUrl: cat,
     date: eventDate,
   },
 }
