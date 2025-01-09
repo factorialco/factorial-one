@@ -40,11 +40,11 @@ export function BaseHeader({
         {
           label: status.label,
           value: {
-            type: "status" as const,
+            type: "status",
             label: status.text,
             variant: status.variant,
           },
-        },
+        } satisfies MetadataItem,
         ...(metadata ?? []),
       ]
     : metadata
