@@ -7,7 +7,10 @@ type Props = {
   name: string
   description: string
   src?: string
-} & Pick<BaseHeaderProps, "primaryAction" | "secondaryActions">
+} & Pick<
+  BaseHeaderProps,
+  "primaryAction" | "secondaryActions" | "metadata" | "status"
+>
 
 export const CompanyHeader = ({
   name,
@@ -15,6 +18,8 @@ export const CompanyHeader = ({
   src,
   primaryAction,
   secondaryActions,
+  metadata,
+  status,
 }: Props) => {
   return (
     <BaseHeader
@@ -27,6 +32,8 @@ export const CompanyHeader = ({
       }}
       primaryAction={primaryAction}
       secondaryActions={secondaryActions}
+      metadata={metadata}
+      status={status}
     />
   )
 }
