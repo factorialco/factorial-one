@@ -57,10 +57,6 @@ type HeaderProps = {
   navigation?: NavigationProps
 }
 
-const pageNavigationLinkVariants = cva(
-  "inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background px-0 text-f1-foreground hover:border-f1-border-hover disabled:pointer-events-none disabled:opacity-50"
-)
-
 function PageNavigationLink({
   icon,
   href,
@@ -72,16 +68,15 @@ function PageNavigationLink({
   label: string
   disabled?: boolean
 }) {
-  if (disabled) {
-    return (
-      <div className={pageNavigationLinkVariants()} title={label}>
-        <Icon icon={icon} size="md" />
-      </div>
-    )
-  }
-
   return (
-    <Link href={href} title={label} className={pageNavigationLinkVariants()}>
+    <Link
+      href={disabled ? "" : href}
+      title={label}
+      className={cn(
+        "inline-flex aspect-square h-6 items-center justify-center rounded-sm border border-solid border-f1-border bg-f1-background px-0 text-f1-foreground hover:border-f1-border-hover",
+        disabled && "pointer-events-none opacity-50"
+      )}
+    >
       <Icon icon={icon} size="md" />
     </Link>
   )
@@ -225,7 +220,7 @@ export function PageHeader({
           <div className="h-4 w-px bg-f1-border-secondary" />
         )}
         {hasActions && (
-          <div className="items-right flex gap-2 ps-3">
+          <div className="items-right flex gap-2">
             {actions.map((action, index) => (
               <PageAction key={index} action={action} />
             ))}
