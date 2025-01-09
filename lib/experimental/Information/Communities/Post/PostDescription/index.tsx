@@ -10,14 +10,25 @@ export type PostDescriptionProps = {
   collapsed?: boolean
 }
 
+const linkClickHandler = (e: Event) => {
+  e.stopPropagation()
+}
+
 export const BasePostDescription = ({
   content,
   collapsed,
 }: PostDescriptionProps) => {
+  const className = "FactorialOneTextEditor"
+
+  document.querySelectorAll(`.${className} a`).forEach((a) => {
+    a.removeEventListener("click", linkClickHandler)
+    a.addEventListener("click", linkClickHandler)
+  })
+
   return (
     <div
       dangerouslySetInnerHTML={{ __html: content }}
-      className={cn("FactorialOneTextEditor", collapsed && "line-clamp-5")}
+      className={cn(className, collapsed && "line-clamp-5")}
     />
   )
 }
