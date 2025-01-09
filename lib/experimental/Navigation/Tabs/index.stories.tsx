@@ -22,6 +22,9 @@ const meta = {
     secondary: {
       control: "boolean",
     },
+    embedded: {
+      control: "boolean",
+    },
   },
 } satisfies Meta<typeof Tabs>
 
@@ -74,4 +77,11 @@ export const SingleTab: Story = {
       <Tabs tabs={[{ label: "Overview", href: "/" }]} secondary={true} />
     </div>
   ),
+}
+
+export const Embedded: Story = {
+  args: {
+    tabs: tabItems,
+    embedded: true,
+  },
 }

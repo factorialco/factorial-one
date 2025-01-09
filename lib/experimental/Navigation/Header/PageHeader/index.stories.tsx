@@ -133,3 +133,50 @@ export const LongBreadcrumbs: Story = {
     ],
   },
 }
+
+export const EmbeddedFirstLevel: Story = {
+  args: {
+    module: {
+      name: "Recruitment",
+      href: "/recruitment",
+      icon: Recruitment,
+    },
+    embedded: true,
+  },
+}
+
+export const EmbeddedSecondLevel: Story = {
+  args: {
+    module: {
+      name: "Recruitment",
+      href: "/recruitment",
+      icon: Recruitment,
+    },
+    breadcrumbs: [
+      { label: "Candidates", href: "/recruitment/candidates" },
+      { label: "Dani Moreno" },
+    ],
+    embedded: true,
+    actions: [
+      {
+        label: "Settings",
+        icon: Settings,
+        href: "/recruitment/settings",
+      },
+      {
+        label: "More options",
+        icon: EllipsisHorizontal,
+        actions: [
+          {
+            label: "Profile",
+            href: "/recruitment/profile",
+          },
+          {
+            label: "Whatever",
+            href: "/whatever",
+          },
+        ],
+      },
+    ],
+  },
+}

@@ -102,3 +102,56 @@ export const DaytimeHomeLayout: Story = {
     </DaytimePage>
   ),
 }
+
+export const Embedded: Story = {
+  args: {
+    embedded: true,
+    header: (
+      <>
+        <PageHeader {...HeaderStories.FirstLevel.args} />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
+}
+
+export const EmbeddedDaytime: Story = {
+  args: {
+    embedded: true,
+    period: "morning",
+  },
+  argTypes: {
+    period: {
+      control: "select",
+      options: ["morning", "afternoon", "evening"],
+    },
+  },
+  render: ({ period, embedded }) => (
+    <DaytimePage
+      period={period}
+      embedded={embedded}
+      header={
+        <>
+          <PageHeader {...HeaderStories.FirstLevel.args} />
+        </>
+      }
+    >
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    </DaytimePage>
+  ),
+}

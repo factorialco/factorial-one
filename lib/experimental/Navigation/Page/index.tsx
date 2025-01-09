@@ -3,11 +3,16 @@ import { cva, type VariantProps } from "class-variance-authority"
 interface PageProps {
   children?: React.ReactNode
   header?: React.ReactNode
+  embedded?: boolean
 }
 
-export function Page({ children, header }: PageProps) {
+export function Page({ children, header, embedded = false }: PageProps) {
   return (
-    <div className="flex w-full flex-col overflow-hidden rounded-xl bg-f1-page ring-1 ring-inset ring-f1-border-secondary">
+    <div
+      className={`flex w-full flex-col overflow-hidden ${
+        embedded ? "" : "rounded-xl"
+      } bg-f1-page ring-1 ring-inset ring-f1-border-secondary`}
+    >
       {header && <div className="flex flex-col">{header}</div>}
       <div className="isolate flex w-full flex-1 flex-col overflow-auto [&>*]:flex-1">
         {children}
@@ -41,11 +46,21 @@ export interface DaytimePageProps
   extends VariantProps<typeof daytimePageVariants> {
   children?: React.ReactNode
   header?: React.ReactNode
+  embedded?: boolean
 }
 
-export function DaytimePage({ children, header, period }: DaytimePageProps) {
+export function DaytimePage({
+  children,
+  header,
+  period,
+  embedded = false,
+}: DaytimePageProps) {
   return (
-    <div className="relative flex w-full flex-col overflow-hidden rounded-xl bg-f1-page shadow">
+    <div
+      className={`relative flex w-full flex-col overflow-hidden ${
+        embedded ? "" : "rounded-xl"
+      } bg-f1-page shadow`}
+    >
       <div className={daytimePageVariants({ period })} />
       {header && <div className="flex flex-col">{header}</div>}
       <div className="isolate flex w-full flex-1 flex-col overflow-auto [&>*]:flex-1">
