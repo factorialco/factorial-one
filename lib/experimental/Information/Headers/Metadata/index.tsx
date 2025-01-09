@@ -55,8 +55,8 @@ function MetadataItem({ item }: { item: MetadataItem }) {
   const isAction = item.actions?.length
 
   return (
-    <div className="flex h-8 items-center gap-2 text-sm">
-      <div className="w-28 truncate text-sm text-f1-foreground-secondary md:w-fit">
+    <div className="flex h-8 items-center gap-2">
+      <div className="w-28 truncate text-f1-foreground-secondary md:w-fit">
         {item.label}
       </div>
       <div
@@ -83,7 +83,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
             >
-              <div className="flex h-5 items-center text-sm font-medium text-f1-foreground">
+              <div className="flex h-5 items-center font-medium text-f1-foreground">
                 {renderMetadataValue(item)}
               </div>
               {isAction && (
