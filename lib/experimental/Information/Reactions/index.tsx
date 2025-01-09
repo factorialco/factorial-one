@@ -1,7 +1,7 @@
 import { Picker } from "./picker"
 import { Reaction, ReactionProps } from "./reaction"
 
-interface ReactionsProps {
+export interface ReactionsProps {
   items: ReactionProps[]
   onInteraction?: () => void
 }

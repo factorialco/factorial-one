@@ -3,6 +3,7 @@ import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProv
 import { Cross } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
+import { useEffect, useRef } from "react"
 
 export type SidebarIconProps = {
   isExpanded: boolean
@@ -63,7 +64,15 @@ function SidebarIconSvg({ isExpanded }: SidebarIconProps) {
 }
 
 export function SidebarIcon() {
-  const { sidebarState, toggleSidebar, isSmallScreen } = useSidebar()
+  const { prevSidebarState, sidebarState, toggleSidebar, isSmallScreen } =
+    useSidebar()
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => {
+    if (prevSidebarState === "hidden" && sidebarState === "locked") {
+      buttonRef.current?.focus()
+    }
+  }, [prevSidebarState, sidebarState])
 
   return (
     <Button
@@ -72,7 +81,8 @@ export function SidebarIcon() {
       round
       onClick={toggleSidebar}
       className="group hover:bg-f1-background-hover"
-      title="Toggle Sidebar"
+      title="Close Sidebar"
+      ref={buttonRef}
     >
       <div className={cn("hidden", { flex: !isSmallScreen })}>
         <SidebarIconSvg isExpanded={sidebarState === "locked"} />
