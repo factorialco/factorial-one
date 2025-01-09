@@ -22,6 +22,7 @@ import {
   DropdownItemObject,
 } from "./DropdownItem"
 
+export type { DropdownItemObject } from "./DropdownItem"
 export type DropdownItem = DropdownItemObject | "separator"
 
 type DropdownProps = {
