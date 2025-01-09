@@ -1,182 +1,157 @@
-import EllipsisHorizontal from "@/icons/app/EllipsisHorizontal"
-import Settings from "@/icons/app/Settings"
-
-import { Documents, Recruitment } from "@/icons/modules"
+import { Briefcase, Settings } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { PageHeader } from "."
 
 const meta = {
+  title: "Navigation/Header/PageHeader",
   component: PageHeader,
-  tags: ["autodocs"],
+  parameters: {
+    layout: "fullscreen",
+  },
 } satisfies Meta<typeof PageHeader>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof PageHeader>
+
+const defaultModule = {
+  name: "Time Tracking",
+  href: "/time-tracking",
+  icon: Briefcase,
+}
 
 export const Default: Story = {
   args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
+    module: defaultModule,
+  },
+}
+
+export const WithNavigation: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      previous: {
+        url: "/previous",
+      },
+      next: {
+        url: "/next",
+      },
+      counter: {
+        current: 1,
+        total: 30,
+      },
     },
+  },
+}
+
+export const WithNavigationDisabledPrevious: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      next: {
+        url: "/next",
+      },
+      counter: {
+        current: 1,
+        total: 30,
+      },
+    },
+  },
+}
+
+export const WithNavigationDisabledNext: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      previous: {
+        url: "/previous",
+      },
+      counter: {
+        current: 30,
+        total: 30,
+      },
+    },
+  },
+}
+
+export const WithNavigationNoCounter: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      previous: {
+        url: "/previous",
+      },
+      next: {
+        url: "/next",
+      },
+    },
+  },
+}
+
+export const WithBreadcrumbsAndNavigation: Story = {
+  args: {
+    module: defaultModule,
     breadcrumbs: [
-      { label: "Candidates", href: "/recruitment/candidates" },
-      { label: "Dani Moreno" },
+      { label: "Employees", href: "/employees" },
+      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
+    navigation: {
+      previous: {
+        url: "/previous",
+      },
+      next: {
+        url: "/next",
+      },
+      counter: {
+        current: 1,
+        total: 30,
+      },
+    },
+  },
+}
+
+export const WithNavigationAndActions: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      previous: {
+        url: "/previous",
+      },
+      next: {
+        url: "/next",
+      },
+      counter: {
+        current: 1,
+        total: 30,
+      },
+    },
     actions: [
       {
         label: "Settings",
         icon: Settings,
-        href: "/recruitment/settings",
-      },
-      {
-        label: "More options",
-        icon: EllipsisHorizontal,
-        actions: [
-          {
-            label: "Profile",
-            href: "/recruitment/profile",
-          },
-          {
-            label: "Whatever",
-            href: "/whatever",
-          },
-        ],
+        href: "/settings",
       },
     ],
   },
 }
 
-export const FirstLevel: Story = {
+export const WithNavigationAndStatus: Story = {
   args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
-  },
-}
-
-export const FirstLevelWithTag: Story = {
-  args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
+    module: defaultModule,
+    navigation: {
+      previous: {
+        url: "/previous",
+      },
+      next: {
+        url: "/next",
+      },
+      counter: {
+        current: 1,
+        total: 30,
+      },
     },
     statusTag: {
       text: "Published",
       variant: "positive",
-      tooltip: "Tooltip description",
     },
-  },
-}
-
-export const FirstLevelWithTagAndActions: Story = {
-  args: {
-    module: {
-      name: "Documents",
-      href: "/documents",
-      icon: Recruitment,
-    },
-    statusTag: {
-      text: "Published",
-      variant: "positive",
-    },
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
-      },
-    ],
-  },
-}
-
-export const LongBreadcrumbs: Story = {
-  args: {
-    module: {
-      name: "Documents",
-      href: "/documents",
-      icon: Documents,
-    },
-    breadcrumbs: [
-      { label: "Employee Documents", href: "/documents" },
-      { label: "Human Resources", href: "/documents/hr" },
-      { label: "Recruitment", href: "/documents/hr/recruitment" },
-      { label: "Candidates", href: "/documents/hr/recruitment/candidates" },
-      {
-        label: "Dani Moreno",
-        href: "/dani-moreno",
-      },
-      {
-        label: "Applications",
-        href: "/dani-moreno/applications",
-      },
-      {
-        label: "Interviews",
-        href: "/dani-moreno/applications/interviews",
-      },
-    ],
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
-      },
-      {
-        label: "More options",
-        icon: EllipsisHorizontal,
-        href: "/recruitment/settings",
-      },
-    ],
-  },
-}
-
-export const EmbeddedFirstLevel: Story = {
-  args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
-    embedded: true,
-  },
-}
-
-export const EmbeddedSecondLevel: Story = {
-  args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
-    breadcrumbs: [
-      { label: "Candidates", href: "/recruitment/candidates" },
-      { label: "Dani Moreno" },
-    ],
-    embedded: true,
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
-      },
-      {
-        label: "More options",
-        icon: EllipsisHorizontal,
-        actions: [
-          {
-            label: "Profile",
-            href: "/recruitment/profile",
-          },
-          {
-            label: "Whatever",
-            href: "/whatever",
-          },
-        ],
-      },
-    ],
   },
 }

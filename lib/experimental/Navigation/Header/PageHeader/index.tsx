@@ -4,7 +4,7 @@ import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { ChevronLeft, Menu } from "@/icons/app"
+import { ChevronDown, ChevronLeft, ChevronUp, Menu } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
@@ -27,6 +27,19 @@ export type PageAction = {
     }
 )
 
+type NavigationProps = {
+  previous?: {
+    url: string
+  }
+  next?: {
+    url: string
+  }
+  counter?: {
+    current: number
+    total: number
+  }
+}
+
 type HeaderProps = {
   module: {
     name: string
@@ -41,6 +54,7 @@ type HeaderProps = {
   breadcrumbs?: BreadcrumbItemType[]
   actions?: PageAction[]
   embedded?: boolean
+  navigation?: NavigationProps
 }
 
 export function PageHeader({
@@ -49,6 +63,7 @@ export function PageHeader({
   breadcrumbs = [],
   actions = [],
   embedded = false,
+  navigation,
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
@@ -132,7 +147,45 @@ export function PageHeader({
           )}
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
+        {navigation && (
+          <div className="flex items-center gap-3">
+            {navigation.counter && (
+              <span className="text-sm text-f1-foreground-secondary">
+                {navigation.counter.current}/{navigation.counter.total}
+              </span>
+            )}
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                hideLabel
+                round
+                label="Previous"
+                icon={ChevronUp}
+                disabled={!navigation.previous}
+                {...(navigation.previous && {
+                  as: Link,
+                  href: navigation.previous.url,
+                })}
+              />
+              <Button
+                variant="ghost"
+                hideLabel
+                round
+                label="Next"
+                icon={ChevronDown}
+                disabled={!navigation.next}
+                {...(navigation.next && {
+                  as: Link,
+                  href: navigation.next.url,
+                })}
+              />
+            </div>
+          </div>
+        )}
+        {navigation && (hasStatus || hasActions) && (
+          <div className="h-4 w-px bg-f1-border-secondary" />
+        )}
         {!embedded && !hasNavigation && hasStatus && (
           <div className="pe-3">
             {statusTag.tooltip ? (
@@ -151,7 +204,7 @@ export function PageHeader({
           </div>
         )}
         {!embedded && hasStatus && hasActions && (
-          <div className="right-0 h-4 w-px bg-f1-border-secondary"></div>
+          <div className="h-4 w-px bg-f1-border-secondary" />
         )}
         {hasActions && (
           <div className="items-right flex gap-2 ps-3">
