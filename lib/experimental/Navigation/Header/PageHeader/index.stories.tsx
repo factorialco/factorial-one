@@ -1,182 +1,171 @@
-import EllipsisHorizontal from "@/icons/app/EllipsisHorizontal"
-import Settings from "@/icons/app/Settings"
-
-import { Documents, Recruitment } from "@/icons/modules"
+import { Briefcase, EllipsisHorizontal, Settings } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { PageHeader } from "."
 
 const meta = {
+  title: "Navigation/Header/PageHeader",
   component: PageHeader,
-  tags: ["autodocs"],
+  parameters: {
+    layout: "fullscreen",
+    a11y: {
+      // Disable color contrast checks for this component since the status tags
+      // are designed to be used with specific backgrounds in the actual application
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="bg-f1-background">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof PageHeader>
 
 export default meta
-type Story = StoryObj<typeof meta>
+type Story = StoryObj<typeof PageHeader>
+
+const defaultModule = {
+  name: "Time Tracking",
+  href: "/time-tracking",
+  icon: Briefcase,
+}
+
+const defaultActions = [
+  {
+    label: "Settings",
+    icon: Settings,
+    href: "/settings",
+  },
+  {
+    label: "More options",
+    icon: EllipsisHorizontal,
+    actions: [
+      {
+        label: "Download",
+        href: "/download",
+      },
+      {
+        label: "Export",
+        href: "/export",
+      },
+    ],
+  },
+]
+
+const defaultNavigation = {
+  previous: {
+    url: "/previous",
+    title: "Previous Employee: John Smith",
+  },
+  next: {
+    url: "/next",
+    title: "Next Employee: Sarah Johnson",
+  },
+  counter: {
+    current: 1,
+    total: 30,
+  },
+}
 
 export const Default: Story = {
   args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
-    breadcrumbs: [
-      { label: "Candidates", href: "/recruitment/candidates" },
-      { label: "Dani Moreno" },
-    ],
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
-      },
-      {
-        label: "More options",
-        icon: EllipsisHorizontal,
-        actions: [
-          {
-            label: "Profile",
-            href: "/recruitment/profile",
-          },
-          {
-            label: "Whatever",
-            href: "/whatever",
-          },
-        ],
-      },
-    ],
+    module: defaultModule,
   },
 }
 
-export const FirstLevel: Story = {
+export const WithActions: Story = {
   args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
+    module: defaultModule,
+    actions: defaultActions,
   },
 }
 
-export const FirstLevelWithTag: Story = {
+export const WithStatus: Story = {
   args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
-    statusTag: {
-      text: "Published",
-      variant: "positive",
-      tooltip: "Tooltip description",
-    },
-  },
-}
-
-export const FirstLevelWithTagAndActions: Story = {
-  args: {
-    module: {
-      name: "Documents",
-      href: "/documents",
-      icon: Recruitment,
-    },
+    module: defaultModule,
     statusTag: {
       text: "Published",
       variant: "positive",
     },
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
-      },
-    ],
   },
 }
 
-export const LongBreadcrumbs: Story = {
+export const WithStatusVariants: Story = {
   args: {
-    module: {
-      name: "Documents",
-      href: "/documents",
-      icon: Documents,
+    module: defaultModule,
+    statusTag: {
+      text: "Draft",
+      variant: "warning",
+      tooltip: "This document is not yet published",
     },
+  },
+}
+
+export const WithNavigation: Story = {
+  args: {
+    module: defaultModule,
+    navigation: defaultNavigation,
+  },
+}
+
+export const WithNavigationDisabled: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      next: {
+        url: "/next",
+        title: "Next Employee: Sarah Johnson",
+      },
+      counter: {
+        current: 1,
+        total: 30,
+      },
+    },
+  },
+}
+
+export const WithBreadcrumbs: Story = {
+  args: {
+    module: defaultModule,
     breadcrumbs: [
-      { label: "Employee Documents", href: "/documents" },
-      { label: "Human Resources", href: "/documents/hr" },
-      { label: "Recruitment", href: "/documents/hr/recruitment" },
-      { label: "Candidates", href: "/documents/hr/recruitment/candidates" },
-      {
-        label: "Dani Moreno",
-        href: "/dani-moreno",
-      },
-      {
-        label: "Applications",
-        href: "/dani-moreno/applications",
-      },
-      {
-        label: "Interviews",
-        href: "/dani-moreno/applications/interviews",
-      },
-    ],
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
-      },
-      {
-        label: "More options",
-        icon: EllipsisHorizontal,
-        href: "/recruitment/settings",
-      },
+      { label: "Employees", href: "/employees" },
+      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
   },
 }
 
-export const EmbeddedFirstLevel: Story = {
+export const WithEverything: Story = {
   args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
-    embedded: true,
-  },
-}
-
-export const EmbeddedSecondLevel: Story = {
-  args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
+    module: defaultModule,
     breadcrumbs: [
-      { label: "Candidates", href: "/recruitment/candidates" },
-      { label: "Dani Moreno" },
+      { label: "Employees", href: "/employees" },
+      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
+    navigation: defaultNavigation,
+    statusTag: {
+      text: "Draft",
+      tooltip: "This employee profile is not yet published",
+      variant: "critical",
+    },
+    actions: defaultActions,
+  },
+}
+
+export const Embedded: Story = {
+  args: {
+    module: defaultModule,
     embedded: true,
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
-      },
-      {
-        label: "More options",
-        icon: EllipsisHorizontal,
-        actions: [
-          {
-            label: "Profile",
-            href: "/recruitment/profile",
-          },
-          {
-            label: "Whatever",
-            href: "/whatever",
-          },
-        ],
-      },
+    breadcrumbs: [
+      { label: "Employees", href: "/employees" },
+      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
   },
 }

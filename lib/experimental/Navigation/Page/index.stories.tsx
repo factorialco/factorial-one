@@ -10,6 +10,7 @@ import * as TabsStories from "../Tabs/index.stories"
 import { HomeLayout } from "@/experimental/PageLayouts/HomeLayout"
 import { Default as DefaultHomeLayoutStory } from "@/experimental/PageLayouts/HomeLayout/index.stories"
 import { StandardLayout } from "@/experimental/PageLayouts/StandardLayout"
+import { Briefcase } from "@/icons/app"
 
 const meta: Meta<typeof Page> = {
   component: Page,
@@ -29,11 +30,21 @@ const meta: Meta<typeof Page> = {
 export default meta
 type Story = StoryObj<DaytimePageProps>
 
+const defaultModule = {
+  name: "Time Tracking",
+  href: "/time-tracking",
+  icon: Briefcase,
+}
+
+// Common real-world combinations
 export const Default: Story = {
   args: {
     header: (
       <>
-        <PageHeader {...HeaderStories.FirstLevel.args} />
+        <PageHeader
+          module={defaultModule}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),
@@ -49,25 +60,22 @@ export const Default: Story = {
   },
 }
 
-export const Daytime: Story = {
+export const WithBreadcrumbs: Story = {
   args: {
-    period: "morning",
-  },
-  argTypes: {
-    period: {
-      control: "select",
-      options: ["morning", "afternoon", "evening"],
-    },
-  },
-  render: ({ period }) => (
-    <DaytimePage
-      period={period}
-      header={
-        <>
-          <PageHeader {...HeaderStories.FirstLevel.args} />
-        </>
-      }
-    >
+    header: (
+      <>
+        <PageHeader
+          module={defaultModule}
+          breadcrumbs={[
+            { label: "Employees", href: "/employees" },
+            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+          ]}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
       <StandardLayout>
         {Array(25)
           .fill(0)
@@ -75,8 +83,151 @@ export const Daytime: Story = {
             <Placeholder key={index} className="min-h-24" />
           ))}
       </StandardLayout>
-    </DaytimePage>
-  ),
+    ),
+  },
+}
+
+export const WithBreadcrumbsAndStatus: Story = {
+  args: {
+    header: (
+      <>
+        <PageHeader
+          module={defaultModule}
+          breadcrumbs={[
+            { label: "Employees", href: "/employees" },
+            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+          ]}
+          statusTag={{
+            text: "Draft",
+            variant: "warning",
+            tooltip: "This employee profile is not yet published",
+          }}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
+}
+
+export const WithNavigation: Story = {
+  args: {
+    header: (
+      <>
+        <PageHeader
+          module={defaultModule}
+          navigation={{
+            previous: {
+              url: "/previous",
+              title: "Previous Employee: John Smith",
+            },
+            next: {
+              url: "/next",
+              title: "Next Employee: Sarah Johnson",
+            },
+            counter: {
+              current: 1,
+              total: 30,
+            },
+          }}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
+}
+
+export const WithNavigationAndStatus: Story = {
+  args: {
+    header: (
+      <>
+        <PageHeader
+          module={defaultModule}
+          navigation={{
+            previous: {
+              url: "/previous",
+              title: "Previous Employee: John Smith",
+            },
+            next: {
+              url: "/next",
+              title: "Next Employee: Sarah Johnson",
+            },
+            counter: {
+              current: 1,
+              total: 30,
+            },
+          }}
+          statusTag={{
+            text: "Processing",
+            variant: "info",
+            tooltip: "Importing employee data",
+          }}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
+}
+
+export const Embedded: Story = {
+  args: {
+    embedded: true,
+    header: (
+      <>
+        <PageHeader
+          module={defaultModule}
+          embedded
+          breadcrumbs={[
+            { label: "Employees", href: "/employees" },
+            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+          ]}
+          statusTag={{
+            text: "Published",
+            variant: "positive",
+          }}
+        />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
 }
 
 export const DaytimeHomeLayout: Story = {
@@ -99,59 +250,6 @@ export const DaytimeHomeLayout: Story = {
       }
     >
       <HomeLayout {...DefaultHomeLayoutStory.args} />
-    </DaytimePage>
-  ),
-}
-
-export const Embedded: Story = {
-  args: {
-    embedded: true,
-    header: (
-      <>
-        <PageHeader {...HeaderStories.FirstLevel.args} />
-        <Tabs {...TabsStories.Primary.args} />
-      </>
-    ),
-    children: (
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    ),
-  },
-}
-
-export const EmbeddedDaytime: Story = {
-  args: {
-    embedded: true,
-    period: "morning",
-  },
-  argTypes: {
-    period: {
-      control: "select",
-      options: ["morning", "afternoon", "evening"],
-    },
-  },
-  render: ({ period, embedded }) => (
-    <DaytimePage
-      period={period}
-      embedded={embedded}
-      header={
-        <>
-          <PageHeader {...HeaderStories.FirstLevel.args} />
-        </>
-      }
-    >
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
     </DaytimePage>
   ),
 }
