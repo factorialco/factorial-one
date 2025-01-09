@@ -57,7 +57,8 @@ export function Reaction({
     }
   }, [emoji, shouldReduceMotion])
 
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation()
     setCount(count + (isActive ? -1 : 1))
     setIsActive(!isActive)
     onInteraction?.()
