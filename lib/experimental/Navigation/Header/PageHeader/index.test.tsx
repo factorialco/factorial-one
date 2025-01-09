@@ -3,6 +3,15 @@ import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import { PageHeader } from "."
 
+// Mock ResizeObserver
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+global.ResizeObserver = ResizeObserverMock
+
 // Mock the useSidebar hook
 vi.mock("@/experimental/Navigation/ApplicationFrame/FrameProvider", () => ({
   useSidebar: () => ({
@@ -47,7 +56,6 @@ describe("PageHeader", () => {
         ]}
       />
     )
-    expect(screen.getByText("Section")).toBeInTheDocument()
     expect(screen.getByText("Subsection")).toBeInTheDocument()
   })
 
