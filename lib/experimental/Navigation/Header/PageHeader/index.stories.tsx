@@ -41,6 +41,21 @@ const defaultActions = [
   },
 ]
 
+const defaultNavigation = {
+  previous: {
+    url: "/previous",
+    title: "Previous Employee: John Smith",
+  },
+  next: {
+    url: "/next",
+    title: "Next Employee: Sarah Johnson",
+  },
+  counter: {
+    current: 1,
+    total: 30,
+  },
+}
+
 export const Default: Story = {
   args: {
     module: defaultModule,
@@ -54,39 +69,68 @@ export const WithActions: Story = {
   },
 }
 
+export const WithStatus: Story = {
+  args: {
+    module: defaultModule,
+    statusTag: {
+      text: "Published",
+      variant: "positive",
+    },
+  },
+}
+
+export const WithStatusAndTooltip: Story = {
+  args: {
+    module: defaultModule,
+    statusTag: {
+      text: "Draft",
+      variant: "warning",
+      tooltip: "This document is not yet published",
+    },
+  },
+}
+
+export const WithStatusCritical: Story = {
+  args: {
+    module: defaultModule,
+    statusTag: {
+      text: "Error",
+      variant: "critical",
+    },
+  },
+}
+
+export const WithStatusInfo: Story = {
+  args: {
+    module: defaultModule,
+    statusTag: {
+      text: "Processing",
+      variant: "info",
+    },
+  },
+}
+
+export const WithStatusNeutral: Story = {
+  args: {
+    module: defaultModule,
+    statusTag: {
+      text: "Archived",
+      variant: "neutral",
+    },
+  },
+}
+
 export const WithNavigation: Story = {
   args: {
     module: defaultModule,
-    navigation: {
-      previous: {
-        url: "/previous",
-      },
-      next: {
-        url: "/next",
-      },
-      counter: {
-        current: 1,
-        total: 30,
-      },
-    },
+    navigation: defaultNavigation,
   },
 }
 
 export const WithNavigationAndActions: Story = {
   args: {
     module: defaultModule,
-    navigation: {
-      previous: {
-        url: "/previous",
-      },
-      next: {
-        url: "/next",
-      },
-      counter: {
-        current: 1,
-        total: 30,
-      },
-    },
+    navigation: defaultNavigation,
     actions: defaultActions,
   },
 }
@@ -97,6 +141,7 @@ export const WithNavigationDisabledPrevious: Story = {
     navigation: {
       next: {
         url: "/next",
+        title: "Next Employee: Sarah Johnson",
       },
       counter: {
         current: 1,
@@ -112,6 +157,7 @@ export const WithNavigationDisabledNext: Story = {
     navigation: {
       previous: {
         url: "/previous",
+        title: "Previous Employee: John Smith",
       },
       counter: {
         current: 30,
@@ -127,9 +173,11 @@ export const WithNavigationNoCounter: Story = {
     navigation: {
       previous: {
         url: "/previous",
+        title: "Previous Employee: John Smith",
       },
       next: {
         url: "/next",
+        title: "Next Employee: Sarah Johnson",
       },
     },
   },
@@ -141,9 +189,11 @@ export const WithNavigationNoCounterAndActions: Story = {
     navigation: {
       previous: {
         url: "/previous",
+        title: "Previous Employee: John Smith",
       },
       next: {
         url: "/next",
+        title: "Next Employee: Sarah Johnson",
       },
     },
     actions: defaultActions,
@@ -157,18 +207,7 @@ export const WithBreadcrumbsAndNavigation: Story = {
       { label: "Employees", href: "/employees" },
       { label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
-    navigation: {
-      previous: {
-        url: "/previous",
-      },
-      next: {
-        url: "/next",
-      },
-      counter: {
-        current: 1,
-        total: 30,
-      },
-    },
+    navigation: defaultNavigation,
   },
 }
 
@@ -179,18 +218,7 @@ export const WithBreadcrumbsNavigationAndActions: Story = {
       { label: "Employees", href: "/employees" },
       { label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
-    navigation: {
-      previous: {
-        url: "/previous",
-      },
-      next: {
-        url: "/next",
-      },
-      counter: {
-        current: 1,
-        total: 30,
-      },
-    },
+    navigation: defaultNavigation,
     actions: defaultActions,
   },
 }
@@ -198,18 +226,7 @@ export const WithBreadcrumbsNavigationAndActions: Story = {
 export const WithNavigationAndStatus: Story = {
   args: {
     module: defaultModule,
-    navigation: {
-      previous: {
-        url: "/previous",
-      },
-      next: {
-        url: "/next",
-      },
-      counter: {
-        current: 1,
-        total: 30,
-      },
-    },
+    navigation: defaultNavigation,
     statusTag: {
       text: "Published",
       variant: "positive",
@@ -220,18 +237,7 @@ export const WithNavigationAndStatus: Story = {
 export const WithNavigationStatusAndActions: Story = {
   args: {
     module: defaultModule,
-    navigation: {
-      previous: {
-        url: "/previous",
-      },
-      next: {
-        url: "/next",
-      },
-      counter: {
-        current: 1,
-        total: 30,
-      },
-    },
+    navigation: defaultNavigation,
     statusTag: {
       text: "Published",
       variant: "positive",
@@ -240,12 +246,32 @@ export const WithNavigationStatusAndActions: Story = {
   },
 }
 
-export const WithStatusAndActions: Story = {
+export const WithBreadcrumbsAndStatus: Story = {
   args: {
     module: defaultModule,
+    breadcrumbs: [
+      { label: "Employees", href: "/employees" },
+      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
     statusTag: {
-      text: "Published",
-      variant: "positive",
+      text: "Draft",
+      variant: "warning",
+      tooltip: "This employee profile is not yet published",
+    },
+  },
+}
+
+export const WithBreadcrumbsStatusAndActions: Story = {
+  args: {
+    module: defaultModule,
+    breadcrumbs: [
+      { label: "Employees", href: "/employees" },
+      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
+    statusTag: {
+      text: "Draft",
+      variant: "warning",
+      tooltip: "This employee profile is not yet published",
     },
     actions: defaultActions,
   },

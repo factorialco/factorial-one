@@ -30,9 +30,11 @@ export type PageAction = {
 type NavigationProps = {
   previous?: {
     url: string
+    title: string
   }
   next?: {
     url: string
+    title: string
   }
   counter?: {
     current: number
@@ -72,6 +74,7 @@ function PageNavigationLink({
     <Link
       href={disabled ? "" : href}
       title={label}
+      aria-label={label}
       className={cn(
         "inline-flex aspect-square h-6 items-center justify-center rounded-sm border border-solid border-f1-border bg-f1-background px-0 text-f1-foreground hover:border-f1-border-hover",
         disabled && "pointer-events-none opacity-50"
@@ -183,13 +186,13 @@ export function PageHeader({
             <div className="flex items-center gap-2">
               <PageNavigationLink
                 icon={ChevronUp}
-                label="Previous"
+                label={navigation.previous?.title || "Previous"}
                 href={navigation.previous?.url || ""}
                 disabled={!navigation.previous}
               />
               <PageNavigationLink
                 icon={ChevronDown}
-                label="Next"
+                label={navigation.next?.title || "Next"}
                 href={navigation.next?.url || ""}
                 disabled={!navigation.next}
               />
@@ -200,7 +203,7 @@ export function PageHeader({
           <div className="h-4 w-px bg-f1-border-secondary" />
         )}
         {!embedded && !hasNavigation && hasStatus && (
-          <div className="pe-3">
+          <div>
             {statusTag.tooltip ? (
               <Tooltip label={statusTag.tooltip}>
                 <div>
