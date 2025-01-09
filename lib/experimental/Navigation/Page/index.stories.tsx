@@ -46,8 +46,18 @@ const navigationHeaderProps = {
   module: defaultModule,
 }
 
+const navigationWithActionsHeaderProps = {
+  ...HeaderStories.WithNavigationAndActions.args,
+  module: defaultModule,
+}
+
 const breadcrumbsNavigationHeaderProps = {
   ...HeaderStories.WithBreadcrumbsAndNavigation.args,
+  module: defaultModule,
+}
+
+const breadcrumbsNavigationWithActionsHeaderProps = {
+  ...HeaderStories.WithBreadcrumbsNavigationAndActions.args,
   module: defaultModule,
 }
 
@@ -56,6 +66,29 @@ export const Default: Story = {
     header: (
       <>
         <PageHeader {...defaultHeaderProps} />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
+}
+
+export const WithActions: Story = {
+  args: {
+    header: (
+      <>
+        <PageHeader
+          {...HeaderStories.WithActions.args}
+          module={defaultModule}
+        />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),
@@ -91,11 +124,51 @@ export const WithNavigation: Story = {
   },
 }
 
+export const WithNavigationAndActions: Story = {
+  args: {
+    header: (
+      <>
+        <PageHeader {...navigationWithActionsHeaderProps} />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
+}
+
 export const WithNavigationAndBreadcrumbs: Story = {
   args: {
     header: (
       <>
         <PageHeader {...breadcrumbsNavigationHeaderProps} />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
+}
+
+export const WithNavigationBreadcrumbsAndActions: Story = {
+  args: {
+    header: (
+      <>
+        <PageHeader {...breadcrumbsNavigationWithActionsHeaderProps} />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),
@@ -171,6 +244,36 @@ export const DaytimeWithNavigation: Story = {
   ),
 }
 
+export const DaytimeWithNavigationAndActions: Story = {
+  args: {
+    period: "morning",
+  },
+  argTypes: {
+    period: {
+      control: "select",
+      options: ["morning", "afternoon", "evening"],
+    },
+  },
+  render: ({ period }) => (
+    <DaytimePage
+      period={period}
+      header={
+        <>
+          <PageHeader {...navigationWithActionsHeaderProps} />
+        </>
+      }
+    >
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    </DaytimePage>
+  ),
+}
+
 export const DaytimeHomeLayout: Story = {
   args: {
     period: "morning",
@@ -222,6 +325,27 @@ export const EmbeddedWithNavigation: Story = {
     header: (
       <>
         <PageHeader {...navigationHeaderProps} embedded />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
+}
+
+export const EmbeddedWithNavigationAndActions: Story = {
+  args: {
+    embedded: true,
+    header: (
+      <>
+        <PageHeader {...navigationWithActionsHeaderProps} embedded />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),

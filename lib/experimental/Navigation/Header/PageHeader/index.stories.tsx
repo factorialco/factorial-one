@@ -1,4 +1,4 @@
-import { Briefcase, Settings } from "@/icons/app"
+import { Briefcase, EllipsisHorizontal, Settings } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { PageHeader } from "."
 
@@ -19,9 +19,38 @@ const defaultModule = {
   icon: Briefcase,
 }
 
+const defaultActions = [
+  {
+    label: "Settings",
+    icon: Settings,
+    href: "/settings",
+  },
+  {
+    label: "More options",
+    icon: EllipsisHorizontal,
+    actions: [
+      {
+        label: "Download",
+        href: "/download",
+      },
+      {
+        label: "Export",
+        href: "/export",
+      },
+    ],
+  },
+]
+
 export const Default: Story = {
   args: {
     module: defaultModule,
+  },
+}
+
+export const WithActions: Story = {
+  args: {
+    module: defaultModule,
+    actions: defaultActions,
   },
 }
 
@@ -40,6 +69,25 @@ export const WithNavigation: Story = {
         total: 30,
       },
     },
+  },
+}
+
+export const WithNavigationAndActions: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      previous: {
+        url: "/previous",
+      },
+      next: {
+        url: "/next",
+      },
+      counter: {
+        current: 1,
+        total: 30,
+      },
+    },
+    actions: defaultActions,
   },
 }
 
@@ -87,6 +135,21 @@ export const WithNavigationNoCounter: Story = {
   },
 }
 
+export const WithNavigationNoCounterAndActions: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      previous: {
+        url: "/previous",
+      },
+      next: {
+        url: "/next",
+      },
+    },
+    actions: defaultActions,
+  },
+}
+
 export const WithBreadcrumbsAndNavigation: Story = {
   args: {
     module: defaultModule,
@@ -109,9 +172,13 @@ export const WithBreadcrumbsAndNavigation: Story = {
   },
 }
 
-export const WithNavigationAndActions: Story = {
+export const WithBreadcrumbsNavigationAndActions: Story = {
   args: {
     module: defaultModule,
+    breadcrumbs: [
+      { label: "Employees", href: "/employees" },
+      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
     navigation: {
       previous: {
         url: "/previous",
@@ -124,13 +191,7 @@ export const WithNavigationAndActions: Story = {
         total: 30,
       },
     },
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/settings",
-      },
-    ],
+    actions: defaultActions,
   },
 }
 
@@ -153,5 +214,39 @@ export const WithNavigationAndStatus: Story = {
       text: "Published",
       variant: "positive",
     },
+  },
+}
+
+export const WithNavigationStatusAndActions: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      previous: {
+        url: "/previous",
+      },
+      next: {
+        url: "/next",
+      },
+      counter: {
+        current: 1,
+        total: 30,
+      },
+    },
+    statusTag: {
+      text: "Published",
+      variant: "positive",
+    },
+    actions: defaultActions,
+  },
+}
+
+export const WithStatusAndActions: Story = {
+  args: {
+    module: defaultModule,
+    statusTag: {
+      text: "Published",
+      variant: "positive",
+    },
+    actions: defaultActions,
   },
 }

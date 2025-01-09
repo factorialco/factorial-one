@@ -57,6 +57,36 @@ type HeaderProps = {
   navigation?: NavigationProps
 }
 
+const pageNavigationLinkVariants = cva(
+  "inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background px-0 text-f1-foreground hover:border-f1-border-hover disabled:pointer-events-none disabled:opacity-50"
+)
+
+function PageNavigationLink({
+  icon,
+  href,
+  label,
+  disabled,
+}: {
+  icon: IconType
+  href: string
+  label: string
+  disabled?: boolean
+}) {
+  if (disabled) {
+    return (
+      <div className={pageNavigationLinkVariants()} title={label}>
+        <Icon icon={icon} size="md" />
+      </div>
+    )
+  }
+
+  return (
+    <Link href={href} title={label} className={pageNavigationLinkVariants()}>
+      <Icon icon={icon} size="md" />
+    </Link>
+  )
+}
+
 export function PageHeader({
   module,
   statusTag = undefined,
@@ -156,29 +186,17 @@ export function PageHeader({
               </span>
             )}
             <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                hideLabel
-                round
-                label="Previous"
+              <PageNavigationLink
                 icon={ChevronUp}
+                label="Previous"
+                href={navigation.previous?.url || ""}
                 disabled={!navigation.previous}
-                {...(navigation.previous && {
-                  as: Link,
-                  href: navigation.previous.url,
-                })}
               />
-              <Button
-                variant="ghost"
-                hideLabel
-                round
-                label="Next"
+              <PageNavigationLink
                 icon={ChevronDown}
+                label="Next"
+                href={navigation.next?.url || ""}
                 disabled={!navigation.next}
-                {...(navigation.next && {
-                  as: Link,
-                  href: navigation.next.url,
-                })}
               />
             </div>
           </div>
