@@ -8,6 +8,7 @@ import {
   StatusTag,
   StatusVariant,
 } from "@/experimental/Information/Tags/StatusTag"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
@@ -50,7 +51,7 @@ function renderMetadataValue(item: MetadataItem) {
 }
 
 function MetadataItem({ item }: { item: MetadataItem }) {
-  const [isHovered, setIsHovered] = useState(false)
+  const [isActive, setIsActive] = useState(false)
   const isAction = item.actions?.length
 
   return (
@@ -59,15 +60,19 @@ function MetadataItem({ item }: { item: MetadataItem }) {
         {item.label}
       </div>
       <div
-        onMouseEnter={() => isAction && setIsHovered(true)}
-        onMouseLeave={() => isAction && setIsHovered(false)}
-        className="relative flex h-5 w-fit items-center"
+        role="button"
+        tabIndex={isAction ? 0 : -1}
+        onMouseEnter={() => isAction && setIsActive(true)}
+        onMouseLeave={() => isAction && setIsActive(false)}
+        onFocus={() => isAction && setIsActive(true)}
+        onBlur={() => isAction && setIsActive(false)}
+        className="relative flex h-5 w-fit items-center hover:cursor-default"
       >
         <div className="font-medium text-f1-foreground">
           {renderMetadataValue(item)}
         </div>
         <AnimatePresence>
-          {isHovered && isAction && (
+          {isActive && isAction && (
             <motion.div
               className={cn(
                 "absolute -left-1.5 -top-1.5 z-50 flex hidden h-8 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm bg-f1-background py-1 pl-1.5 shadow-md ring-1 ring-inset ring-f1-border-secondary md:flex",
@@ -90,16 +95,18 @@ function MetadataItem({ item }: { item: MetadataItem }) {
                   transition={{ duration: 0.1 }}
                 >
                   {item.actions?.map((action, index) => (
-                    <Button
-                      key={`action-${index}`}
-                      size="sm"
-                      variant="neutral"
-                      round
-                      label={action.label}
-                      hideLabel
-                      icon={action.icon}
-                      onClick={action.onClick}
-                    />
+                    <Tooltip label={action.label}>
+                      <Button
+                        key={`action-${index}`}
+                        size="sm"
+                        variant="neutral"
+                        round
+                        label={action.label}
+                        hideLabel
+                        icon={action.icon}
+                        onClick={action.onClick}
+                      />
+                    </Tooltip>
                   ))}
                 </motion.div>
               )}
