@@ -102,22 +102,14 @@ export function Dropdown({ items, children }: DropdownProps) {
           />
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-[var(--radix-dropdown-menu-trigger-width)]">
-        <div className="flex flex-col">
-          {items.map((item, index) =>
-            item === "separator" ? (
-              <DropdownMenuSeparator key={`separator-${index}`} />
-            ) : (
-              <DropdownItem
-                key={index}
-                item={{
-                  ...item,
-                  onClick: item.onClick,
-                }}
-              />
-            )
-          )}
-        </div>
+      <DropdownMenuContent align="end">
+        {items.map((item, index) =>
+          item === "separator" ? (
+            <DropdownMenuSeparator key={index} />
+          ) : (
+            <DropdownItem key={index} item={item} />
+          )
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )

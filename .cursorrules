@@ -43,6 +43,9 @@ Testing Standards
 - Create Storybook stories for visual testing
 - Include accessibility tests using axe-playwright
 - Test component variants and edge cases
+- Try to avoid mocking unless absolutely necessary
+- Tests should test behavior, not internals
+- Always run tests to double-check after changing them
 
 Styling Approach
 
