@@ -95,7 +95,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
                   transition={{ duration: 0.1 }}
                 >
                   {item.actions?.map((action, index) => (
-                    <Tooltip label={action.label}>
+                    <Tooltip label={action.label} key={`tooltip-${index}`}>
                       <Button
                         key={`action-${index}`}
                         size="sm"
