@@ -40,8 +40,6 @@ const Content = ({ item }: { item: DropdownItemObject }) => (
 )
 
 const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
-  const { label, ...props } = item
-
   const itemClass = cn(
     "flex items-start gap-1.5 w-full",
     item.critical && "text-f1-foreground-critical"
@@ -56,7 +54,7 @@ const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
             itemClass,
             "text-f1-foreground no-underline hover:cursor-pointer"
           )}
-          {...props}
+          {...item}
         >
           <Content item={item} />
         </Link>
