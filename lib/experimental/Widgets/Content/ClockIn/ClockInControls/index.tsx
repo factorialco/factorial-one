@@ -1,5 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { SolidPause, SolidPlay, SolidStop } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import {
   CLOCK_IN_COLORS,
   ClockInGraph,
@@ -29,6 +30,7 @@ export interface ClockInControlsProps {
   onClockOut?: () => void
   /** Callback when Break button is clicked */
   onBreak?: () => void
+  collapsed?: boolean
 }
 
 export function ClockInControls({
@@ -38,6 +40,7 @@ export function ClockInControls({
   onClockIn,
   onClockOut,
   onBreak,
+  collapsed = false,
 }: ClockInControlsProps) {
   const lastEntry = data[data.length - 1]
   const status = lastEntry?.variant || "clocked-out"
@@ -66,9 +69,16 @@ export function ClockInControls({
   })()
 
   return (
-    <div className="flex items-center gap-10">
-      <div className="flex-1 space-y-4">
-        <div className="space-y-0.5">
+    <div
+      className={cn("flex items-center gap-10", collapsed && "flex-col gap-2")}
+    >
+      <div className={cn("flex-1 space-y-4", collapsed && "order-2")}>
+        <div
+          className={cn(
+            "space-y-0.5",
+            collapsed && "flex flex-col items-center"
+          )}
+        >
           <div className="flex items-center gap-2">
             <span className="text-xl font-semibold">{statusText}</span>
             <div className="relative aspect-square h-4">
@@ -91,13 +101,15 @@ export function ClockInControls({
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className={cn("flex gap-2", collapsed && "justify-center")}>
           {status === "clocked-out" && (
-            <Button
-              onClick={onClockIn}
-              label={labels.clockIn}
-              icon={SolidPlay}
-            />
+            <div className={cn(collapsed && "mr-3")}>
+              <Button
+                onClick={onClockIn}
+                label={labels.clockIn}
+                icon={SolidPlay}
+              />
+            </div>
           )}
 
           {status === "clocked-in" && (

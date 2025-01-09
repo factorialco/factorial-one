@@ -90,3 +90,9 @@ export const WithOvertime: Story = {
     ],
   },
 }
+
+export const Collapsed: Story = {
+  args: {
+    collapsed: true,
+  },
+}
