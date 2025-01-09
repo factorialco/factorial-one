@@ -176,6 +176,26 @@ export function PageHeader({
         </div>
       </div>
       <div className="flex items-center gap-3">
+        {!embedded && hasStatus && (
+          <div>
+            {statusTag.tooltip ? (
+              <Tooltip label={statusTag.tooltip}>
+                <div>
+                  <StatusTag
+                    text={statusTag.text}
+                    variant={statusTag.variant}
+                    additionalAccesibleText={statusTag.tooltip}
+                  />
+                </div>
+              </Tooltip>
+            ) : (
+              <StatusTag text={statusTag.text} variant={statusTag.variant} />
+            )}
+          </div>
+        )}
+        {!embedded && hasStatus && (navigation || hasActions) && (
+          <div className="h-4 w-px bg-f1-border-secondary" />
+        )}
         {navigation && (
           <div className="flex items-center gap-3">
             {navigation.counter && (
@@ -199,27 +219,7 @@ export function PageHeader({
             </div>
           </div>
         )}
-        {navigation && (hasStatus || hasActions) && (
-          <div className="h-4 w-px bg-f1-border-secondary" />
-        )}
-        {!embedded && !hasNavigation && hasStatus && (
-          <div>
-            {statusTag.tooltip ? (
-              <Tooltip label={statusTag.tooltip}>
-                <div>
-                  <StatusTag
-                    text={statusTag.text}
-                    variant={statusTag.variant}
-                    additionalAccesibleText={statusTag.tooltip}
-                  />
-                </div>
-              </Tooltip>
-            ) : (
-              <StatusTag text={statusTag.text} variant={statusTag.variant} />
-            )}
-          </div>
-        )}
-        {!embedded && hasStatus && hasActions && (
+        {navigation && hasActions && (
           <div className="h-4 w-px bg-f1-border-secondary" />
         )}
         {hasActions && (

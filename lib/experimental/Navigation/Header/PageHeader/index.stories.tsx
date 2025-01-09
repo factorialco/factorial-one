@@ -79,43 +79,13 @@ export const WithStatus: Story = {
   },
 }
 
-export const WithStatusAndTooltip: Story = {
+export const WithStatusVariants: Story = {
   args: {
     module: defaultModule,
     statusTag: {
       text: "Draft",
       variant: "warning",
       tooltip: "This document is not yet published",
-    },
-  },
-}
-
-export const WithStatusCritical: Story = {
-  args: {
-    module: defaultModule,
-    statusTag: {
-      text: "Error",
-      variant: "critical",
-    },
-  },
-}
-
-export const WithStatusInfo: Story = {
-  args: {
-    module: defaultModule,
-    statusTag: {
-      text: "Processing",
-      variant: "info",
-    },
-  },
-}
-
-export const WithStatusNeutral: Story = {
-  args: {
-    module: defaultModule,
-    statusTag: {
-      text: "Archived",
-      variant: "neutral",
     },
   },
 }
@@ -127,15 +97,7 @@ export const WithNavigation: Story = {
   },
 }
 
-export const WithNavigationAndActions: Story = {
-  args: {
-    module: defaultModule,
-    navigation: defaultNavigation,
-    actions: defaultActions,
-  },
-}
-
-export const WithNavigationDisabledPrevious: Story = {
+export const WithNavigationDisabled: Story = {
   args: {
     module: defaultModule,
     navigation: {
@@ -151,56 +113,17 @@ export const WithNavigationDisabledPrevious: Story = {
   },
 }
 
-export const WithNavigationDisabledNext: Story = {
+export const WithBreadcrumbs: Story = {
   args: {
     module: defaultModule,
-    navigation: {
-      previous: {
-        url: "/previous",
-        title: "Previous Employee: John Smith",
-      },
-      counter: {
-        current: 30,
-        total: 30,
-      },
-    },
+    breadcrumbs: [
+      { label: "Employees", href: "/employees" },
+      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
   },
 }
 
-export const WithNavigationNoCounter: Story = {
-  args: {
-    module: defaultModule,
-    navigation: {
-      previous: {
-        url: "/previous",
-        title: "Previous Employee: John Smith",
-      },
-      next: {
-        url: "/next",
-        title: "Next Employee: Sarah Johnson",
-      },
-    },
-  },
-}
-
-export const WithNavigationNoCounterAndActions: Story = {
-  args: {
-    module: defaultModule,
-    navigation: {
-      previous: {
-        url: "/previous",
-        title: "Previous Employee: John Smith",
-      },
-      next: {
-        url: "/next",
-        title: "Next Employee: Sarah Johnson",
-      },
-    },
-    actions: defaultActions,
-  },
-}
-
-export const WithBreadcrumbsAndNavigation: Story = {
+export const WithEverything: Story = {
   args: {
     module: defaultModule,
     breadcrumbs: [
@@ -208,71 +131,22 @@ export const WithBreadcrumbsAndNavigation: Story = {
       { label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
     navigation: defaultNavigation,
-  },
-}
-
-export const WithBreadcrumbsNavigationAndActions: Story = {
-  args: {
-    module: defaultModule,
-    breadcrumbs: [
-      { label: "Employees", href: "/employees" },
-      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
-    ],
-    navigation: defaultNavigation,
-    actions: defaultActions,
-  },
-}
-
-export const WithNavigationAndStatus: Story = {
-  args: {
-    module: defaultModule,
-    navigation: defaultNavigation,
-    statusTag: {
-      text: "Published",
-      variant: "positive",
-    },
-  },
-}
-
-export const WithNavigationStatusAndActions: Story = {
-  args: {
-    module: defaultModule,
-    navigation: defaultNavigation,
-    statusTag: {
-      text: "Published",
-      variant: "positive",
-    },
-    actions: defaultActions,
-  },
-}
-
-export const WithBreadcrumbsAndStatus: Story = {
-  args: {
-    module: defaultModule,
-    breadcrumbs: [
-      { label: "Employees", href: "/employees" },
-      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
-    ],
     statusTag: {
       text: "Draft",
-      variant: "warning",
       tooltip: "This employee profile is not yet published",
+      variant: "critical",
     },
+    actions: defaultActions,
   },
 }
 
-export const WithBreadcrumbsStatusAndActions: Story = {
+export const Embedded: Story = {
   args: {
     module: defaultModule,
+    embedded: true,
     breadcrumbs: [
       { label: "Employees", href: "/employees" },
       { label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
-    statusTag: {
-      text: "Draft",
-      variant: "warning",
-      tooltip: "This employee profile is not yet published",
-    },
-    actions: defaultActions,
   },
 }

@@ -36,46 +36,15 @@ const defaultModule = {
   icon: Briefcase,
 }
 
-const defaultHeaderProps = {
-  ...HeaderStories.Default.args,
-  module: defaultModule,
-}
-
-const navigationHeaderProps = {
-  ...HeaderStories.WithNavigation.args,
-  module: defaultModule,
-}
-
-const navigationWithActionsHeaderProps = {
-  ...HeaderStories.WithNavigationAndActions.args,
-  module: defaultModule,
-}
-
-const breadcrumbsNavigationHeaderProps = {
-  ...HeaderStories.WithBreadcrumbsAndNavigation.args,
-  module: defaultModule,
-}
-
-const breadcrumbsNavigationWithActionsHeaderProps = {
-  ...HeaderStories.WithBreadcrumbsNavigationAndActions.args,
-  module: defaultModule,
-}
-
-const statusHeaderProps = {
-  ...HeaderStories.WithStatus.args,
-  module: defaultModule,
-}
-
-const statusWithTooltipHeaderProps = {
-  ...HeaderStories.WithStatusAndTooltip.args,
-  module: defaultModule,
-}
-
+// Common real-world combinations
 export const Default: Story = {
   args: {
     header: (
       <>
-        <PageHeader {...defaultHeaderProps} />
+        <PageHeader
+          module={defaultModule}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),
@@ -91,53 +60,49 @@ export const Default: Story = {
   },
 }
 
-export const WithStatus: Story = {
-  args: {
-    header: (
-      <>
-        <PageHeader {...statusHeaderProps} />
-        <Tabs {...TabsStories.Primary.args} />
-      </>
-    ),
-    children: (
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    ),
-  },
-}
-
-export const WithStatusAndTooltip: Story = {
-  args: {
-    header: (
-      <>
-        <PageHeader {...statusWithTooltipHeaderProps} />
-        <Tabs {...TabsStories.Primary.args} />
-      </>
-    ),
-    children: (
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    ),
-  },
-}
-
-export const WithActions: Story = {
+export const WithBreadcrumbs: Story = {
   args: {
     header: (
       <>
         <PageHeader
-          {...HeaderStories.WithActions.args}
           module={defaultModule}
+          breadcrumbs={[
+            { label: "Employees", href: "/employees" },
+            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+          ]}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
+        <Tabs {...TabsStories.Primary.args} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+  },
+}
+
+export const WithBreadcrumbsAndStatus: Story = {
+  args: {
+    header: (
+      <>
+        <PageHeader
+          module={defaultModule}
+          breadcrumbs={[
+            { label: "Employees", href: "/employees" },
+            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+          ]}
+          statusTag={{
+            text: "Draft",
+            variant: "warning",
+            tooltip: "This employee profile is not yet published",
+          }}
+          actions={HeaderStories.WithActions.args?.actions}
         />
         <Tabs {...TabsStories.Primary.args} />
       </>
@@ -158,7 +123,24 @@ export const WithNavigation: Story = {
   args: {
     header: (
       <>
-        <PageHeader {...navigationHeaderProps} />
+        <PageHeader
+          module={defaultModule}
+          navigation={{
+            previous: {
+              url: "/previous",
+              title: "Previous Employee: John Smith",
+            },
+            next: {
+              url: "/next",
+              title: "Next Employee: Sarah Johnson",
+            },
+            counter: {
+              current: 1,
+              total: 30,
+            },
+          }}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),
@@ -174,11 +156,33 @@ export const WithNavigation: Story = {
   },
 }
 
-export const WithNavigationAndActions: Story = {
+export const WithNavigationAndStatus: Story = {
   args: {
     header: (
       <>
-        <PageHeader {...navigationWithActionsHeaderProps} />
+        <PageHeader
+          module={defaultModule}
+          navigation={{
+            previous: {
+              url: "/previous",
+              title: "Previous Employee: John Smith",
+            },
+            next: {
+              url: "/next",
+              title: "Next Employee: Sarah Johnson",
+            },
+            counter: {
+              current: 1,
+              total: 30,
+            },
+          }}
+          statusTag={{
+            text: "Processing",
+            variant: "info",
+            tooltip: "Importing employee data",
+          }}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),
@@ -194,11 +198,23 @@ export const WithNavigationAndActions: Story = {
   },
 }
 
-export const WithNavigationAndBreadcrumbs: Story = {
+export const Embedded: Story = {
   args: {
+    embedded: true,
     header: (
       <>
-        <PageHeader {...breadcrumbsNavigationHeaderProps} />
+        <PageHeader
+          module={defaultModule}
+          embedded
+          breadcrumbs={[
+            { label: "Employees", href: "/employees" },
+            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+          ]}
+          statusTag={{
+            text: "Published",
+            variant: "positive",
+          }}
+        />
         <Tabs {...TabsStories.Primary.args} />
       </>
     ),
@@ -212,116 +228,6 @@ export const WithNavigationAndBreadcrumbs: Story = {
       </StandardLayout>
     ),
   },
-}
-
-export const WithNavigationBreadcrumbsAndActions: Story = {
-  args: {
-    header: (
-      <>
-        <PageHeader {...breadcrumbsNavigationWithActionsHeaderProps} />
-        <Tabs {...TabsStories.Primary.args} />
-      </>
-    ),
-    children: (
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    ),
-  },
-}
-
-export const Daytime: Story = {
-  args: {
-    period: "morning",
-  },
-  argTypes: {
-    period: {
-      control: "select",
-      options: ["morning", "afternoon", "evening"],
-    },
-  },
-  render: ({ period }) => (
-    <DaytimePage
-      period={period}
-      header={
-        <>
-          <PageHeader {...defaultHeaderProps} />
-        </>
-      }
-    >
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    </DaytimePage>
-  ),
-}
-
-export const DaytimeWithNavigation: Story = {
-  args: {
-    period: "morning",
-  },
-  argTypes: {
-    period: {
-      control: "select",
-      options: ["morning", "afternoon", "evening"],
-    },
-  },
-  render: ({ period }) => (
-    <DaytimePage
-      period={period}
-      header={
-        <>
-          <PageHeader {...navigationHeaderProps} />
-        </>
-      }
-    >
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    </DaytimePage>
-  ),
-}
-
-export const DaytimeWithNavigationAndActions: Story = {
-  args: {
-    period: "morning",
-  },
-  argTypes: {
-    period: {
-      control: "select",
-      options: ["morning", "afternoon", "evening"],
-    },
-  },
-  render: ({ period }) => (
-    <DaytimePage
-      period={period}
-      header={
-        <>
-          <PageHeader {...navigationWithActionsHeaderProps} />
-        </>
-      }
-    >
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    </DaytimePage>
-  ),
 }
 
 export const DaytimeHomeLayout: Story = {
@@ -344,101 +250,6 @@ export const DaytimeHomeLayout: Story = {
       }
     >
       <HomeLayout {...DefaultHomeLayoutStory.args} />
-    </DaytimePage>
-  ),
-}
-
-export const Embedded: Story = {
-  args: {
-    embedded: true,
-    header: (
-      <>
-        <PageHeader {...defaultHeaderProps} embedded />
-        <Tabs {...TabsStories.Primary.args} />
-      </>
-    ),
-    children: (
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    ),
-  },
-}
-
-export const EmbeddedWithNavigation: Story = {
-  args: {
-    embedded: true,
-    header: (
-      <>
-        <PageHeader {...navigationHeaderProps} embedded />
-        <Tabs {...TabsStories.Primary.args} />
-      </>
-    ),
-    children: (
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    ),
-  },
-}
-
-export const EmbeddedWithNavigationAndActions: Story = {
-  args: {
-    embedded: true,
-    header: (
-      <>
-        <PageHeader {...navigationWithActionsHeaderProps} embedded />
-        <Tabs {...TabsStories.Primary.args} />
-      </>
-    ),
-    children: (
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
-    ),
-  },
-}
-
-export const EmbeddedDaytime: Story = {
-  args: {
-    embedded: true,
-    period: "morning",
-  },
-  argTypes: {
-    period: {
-      control: "select",
-      options: ["morning", "afternoon", "evening"],
-    },
-  },
-  render: ({ period, embedded }) => (
-    <DaytimePage
-      period={period}
-      embedded={embedded}
-      header={
-        <>
-          <PageHeader {...defaultHeaderProps} embedded />
-        </>
-      }
-    >
-      <StandardLayout>
-        {Array(25)
-          .fill(0)
-          .map((_, index) => (
-            <Placeholder key={index} className="min-h-24" />
-          ))}
-      </StandardLayout>
     </DaytimePage>
   ),
 }
