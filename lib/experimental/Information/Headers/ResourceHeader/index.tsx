@@ -9,6 +9,7 @@ type Props = {} & Pick<
   | "description"
   | "primaryAction"
   | "secondaryActions"
+  | "otherActions"
   | "metadata"
   | "status"
 >
@@ -18,6 +19,7 @@ export const ResourceHeader = ({
   description,
   primaryAction,
   secondaryActions,
+  otherActions,
   status,
   metadata,
 }: Props) => {
@@ -27,6 +29,7 @@ export const ResourceHeader = ({
       description={description}
       primaryAction={primaryAction}
       secondaryActions={secondaryActions}
+      otherActions={otherActions}
       status={status}
       metadata={metadata}
     />
