@@ -82,7 +82,13 @@ function MetadataItem({ item }: { item: MetadataItem }) {
                 {renderMetadataValue(item)}
               </div>
               {isAction && (
-                <div className="flex gap-1">
+                <motion.div
+                  className="flex gap-1"
+                  initial={{ x: -16 }}
+                  animate={{ x: 0 }}
+                  exit={{ x: -16 }}
+                  transition={{ duration: 0.1 }}
+                >
                   {item.actions?.map((action, index) => (
                     <Button
                       key={`action-${index}`}
@@ -95,7 +101,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
                       onClick={action.onClick}
                     />
                   ))}
-                </div>
+                </motion.div>
               )}
             </motion.div>
           )}
