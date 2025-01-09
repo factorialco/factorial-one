@@ -79,7 +79,7 @@ export const BaseCommunityPost = ({
       onClick={handleClick}
     >
       <div className="hidden md:block">
-        <Link href={author.url} title={authorFullName}>
+        <Link href={author.url} title={authorFullName} stopPropagation>
           <PersonAvatar
             firstName={author.firstName}
             lastName={author.lastName}
@@ -95,6 +95,7 @@ export const BaseCommunityPost = ({
                 href={author.url}
                 className="block md:hidden"
                 title={authorFullName}
+                stopPropagation
               >
                 <span className="flex items-center">
                   <PersonAvatar
@@ -109,6 +110,7 @@ export const BaseCommunityPost = ({
                 href={author.url}
                 title={authorFullName}
                 className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
+                stopPropagation
               >
                 {authorFullName}
               </Link>
@@ -117,6 +119,7 @@ export const BaseCommunityPost = ({
                 onClick={group.onClick}
                 title={group.title}
                 className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
+                stopPropagation
               >
                 {group.title}
               </Link>
@@ -128,7 +131,11 @@ export const BaseCommunityPost = ({
 
             <div className="flex flex-row gap-2">
               <div className="hidden md:block">
-                <Link onClick={comment.onClick} title={comment.label}>
+                <Link
+                  onClick={comment.onClick}
+                  title={comment.label}
+                  stopPropagation
+                >
                   <Button label={comment.label} size="sm" variant="outline" />
                 </Link>
               </div>
