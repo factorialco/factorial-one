@@ -1,19 +1,8 @@
-import { Icon, IconType } from "@/components/Utilities/Icon"
-import { AvatarVariant, renderAvatar } from "@/experimental/exports"
-import { Link } from "@/lib/linkHandler"
+import { Icon } from "@/components/Utilities/Icon"
+import { DropdownItemObject, renderAvatar } from "@/experimental/exports"
 import { cn } from "@/lib/utils"
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu"
-import { NavigationItem } from "../utils"
 
-export type DropdownItemObject = NavigationItem & {
-  onClick?: () => void
-  icon?: IconType
-  description?: string
-  critical?: boolean
-  avatar?: AvatarVariant
-}
-
-const Content = ({ item }: { item: DropdownItemObject }) => (
+export const DropdownItemContent = ({ item }: { item: DropdownItemObject }) => (
   <>
     {item.avatar && renderAvatar(item.avatar, "xsmall")}
     {item.icon && (
@@ -38,33 +27,3 @@ const Content = ({ item }: { item: DropdownItemObject }) => (
     </div>
   </>
 )
-
-const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
-  const itemClass = cn(
-    "flex items-start gap-1.5 w-full",
-    item.critical && "text-f1-foreground-critical"
-  )
-
-  return (
-    <DropdownMenuItem asChild onClick={item.onClick} className={itemClass}>
-      {item.href ? (
-        <Link
-          href={item.href}
-          className={cn(
-            itemClass,
-            "text-f1-foreground no-underline hover:cursor-pointer"
-          )}
-          {...item}
-        >
-          <Content item={item} />
-        </Link>
-      ) : (
-        <div className={itemClass}>
-          <Content item={item} />
-        </div>
-      )}
-    </DropdownMenuItem>
-  )
-}
-
-export { DropdownItem, Content as DropdownItemContent }

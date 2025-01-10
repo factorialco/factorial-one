@@ -1,4 +1,6 @@
 import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
+import { AvatarVariant } from "@/experimental/Information/Avatars/utils"
 import { Ellipsis, EllipsisHorizontal } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
@@ -11,23 +13,58 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
 import { Separator } from "@/ui/separator"
 import { useState } from "react"
-import {
-  DropdownItem,
-  DropdownItemContent,
-  DropdownItemObject,
-} from "./DropdownItem"
+import { NavigationItem } from "../utils"
+import { DropdownItemContent } from "./DropdownItem"
 
-export type { DropdownItemObject } from "./DropdownItem"
 export type DropdownItem = DropdownItemObject | "separator"
+
+export type DropdownItemObject = NavigationItem & {
+  onClick?: () => void
+  icon?: IconType
+  description?: string
+  critical?: boolean
+  avatar?: AvatarVariant
+}
 
 type DropdownProps = {
   items: DropdownItem[]
   children?: React.ReactNode
+}
+
+const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
+  const { label: _label, ...props } = item
+
+  const itemClass = cn(
+    "flex items-start gap-1.5 w-full",
+    item.critical && "text-f1-foreground-critical"
+  )
+
+  return (
+    <DropdownMenuItem asChild onClick={item.onClick} className={itemClass}>
+      {item.href ? (
+        <Link
+          href={item.href}
+          className={cn(
+            itemClass,
+            "text-f1-foreground no-underline hover:cursor-pointer"
+          )}
+          {...props}
+        >
+          <DropdownItemContent item={item} />
+        </Link>
+      ) : (
+        <div className={itemClass}>
+          <DropdownItemContent item={item} />
+        </div>
+      )}
+    </DropdownMenuItem>
+  )
 }
 
 export function Dropdown({ items, children }: DropdownProps) {
