@@ -38,7 +38,7 @@ type DropdownProps = {
 }
 
 const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
-  const { label, ...props } = item
+  const { label: _label, ...props } = item
 
   const itemClass = cn(
     "flex items-start gap-1.5 w-full",
