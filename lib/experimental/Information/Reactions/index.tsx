@@ -3,7 +3,7 @@ import { Reaction, ReactionProps } from "./reaction"
 
 export interface ReactionsProps {
   items: ReactionProps[]
-  onInteraction?: () => void
+  onInteraction?: (emoji: string) => void
 }
 
 export function Reactions({ items, onInteraction }: ReactionsProps) {

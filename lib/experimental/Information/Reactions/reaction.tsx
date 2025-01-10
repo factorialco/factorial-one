@@ -16,7 +16,7 @@ export interface ReactionProps {
   initialCount: number
   hasReacted?: boolean
   users?: User[]
-  onInteraction?: () => void
+  onInteraction?: (emoji: string) => void
 }
 
 export function Reaction({
@@ -57,11 +57,14 @@ export function Reaction({
     }
   }, [emoji, shouldReduceMotion])
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    emoji: string
+  ) => {
     event.stopPropagation()
     setCount(count + (isActive ? -1 : 1))
     setIsActive(!isActive)
-    onInteraction?.()
+    onInteraction?.(emoji)
 
     if (!isActive && !shouldReduceMotion) {
       fireConfetti()
@@ -75,7 +78,9 @@ export function Reaction({
       ref={buttonRef}
       variant="outline"
       size="md"
-      onClick={handleClick}
+      onClick={(event) => {
+        handleClick(event, emoji)
+      }}
       className={cn(
         "flex items-center gap-1 px-2 py-1 font-medium leading-tight transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
         isActive &&
