@@ -45,7 +45,8 @@ export function Picker({ onSelect }: PickerProps) {
                   duration: shouldReduceMotion ? 0 : 0.1,
                   delay: index * 0.02 * (shouldReduceMotion ? 0 : 1),
                 }}
-                onClick={() => {
+                onClick={(event) => {
+                  event.stopPropagation()
                   setIsOpen(false)
                   onSelect?.(emoji)
                 }}
