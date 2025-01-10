@@ -1,11 +1,8 @@
 import { Button } from "@/components/Actions/Button"
 import { SolidPause, SolidPlay, SolidStop } from "@/icons/app"
 import { cn } from "@/lib/utils"
-import {
-  CLOCK_IN_COLORS,
-  ClockInGraph,
-  ClockInGraphProps,
-} from "../ClockInGraph"
+import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
+import { getInfo } from "./helpers"
 
 export interface ClockInControlsProps {
   /** Optional remaining time in minutes */
@@ -42,31 +39,11 @@ export function ClockInControls({
   onBreak,
   collapsed = false,
 }: ClockInControlsProps) {
-  const lastEntry = data[data.length - 1]
-  const status = lastEntry?.variant || "clocked-out"
-
-  const statusText = {
-    "clocked-out": labels.clockedOut,
-    "clocked-in": labels.clockedIn,
-    break: labels.onBreak,
-  }[status]
-
-  const subtitle = (() => {
-    if (!remainingMinutes) return
-
-    const absRemainingMinutes = Math.abs(remainingMinutes)
-
-    const hours = Math.floor(absRemainingMinutes / 60)
-    const minutes = Math.floor(absRemainingMinutes % 60)
-
-    const normalizedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`
-
-    if (remainingMinutes > 0) {
-      return `${labels.remainingTime} ${normalizedTime}`
-    }
-
-    return `${labels.overtime} ${normalizedTime}`
-  })()
+  const { statusText, subtitle, statusColor } = getInfo({
+    data,
+    labels,
+    remainingMinutes,
+  })
 
   return (
     <div
@@ -85,13 +62,13 @@ export function ClockInControls({
               <div
                 className="absolute inset-0 rounded-full opacity-20"
                 style={{
-                  backgroundColor: CLOCK_IN_COLORS[status],
+                  backgroundColor: statusColor,
                 }}
               />
               <div
                 className="absolute inset-[3px] rounded-full"
                 style={{
-                  backgroundColor: CLOCK_IN_COLORS[status],
+                  backgroundColor: statusColor,
                 }}
               />
             </div>

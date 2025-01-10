@@ -1,5 +1,5 @@
-import { formatTime24Hours } from "@/lib/date"
 import { Cell, Pie, PieChart } from "recharts"
+import { getLabels, normalizeData } from "./helpers"
 
 export type ClockInStatus = "clocked-in" | "break" | "clocked-out"
 
@@ -20,90 +20,16 @@ export const CLOCK_IN_COLORS = {
   overtime: "hsl(var(--warning-50))",
 }
 
-const EMPTY_LABEL = "--:--"
-
 export function ClockInGraph({
   data = [],
   remainingMinutes,
 }: ClockInGraphProps) {
-  const clockedInAt = data.find((entry) => entry.variant === "clocked-in")?.from
-  const clockedOutAt = data.find(
-    (entry) => entry.variant === "clocked-out"
-  )?.from
+  const normalizedData = normalizeData(data, remainingMinutes)
 
-  const lastEntry = data[data.length - 1]
-
-  const lastClockedInEntry = data
-    .slice()
-    .reverse()
-    .find((entry) => entry.variant === "clocked-in")
-
-  const leftEntry = (() => {
-    if (remainingMinutes && remainingMinutes > 0) {
-      return {
-        value: remainingMinutes,
-        color: CLOCK_IN_COLORS.empty,
-      }
-    }
-
-    if (remainingMinutes && remainingMinutes < 0) {
-      return {
-        value: Math.abs(remainingMinutes),
-        color: CLOCK_IN_COLORS.overtime,
-      }
-    }
-
-    return {
-      value: 1,
-      color: CLOCK_IN_COLORS.empty,
-    }
-  })()
-
-  const normalizedData = [
-    ...(remainingMinutes
-      ? data.map((entry) => {
-          const value = Math.floor(
-            (entry.to.getTime() - entry.from.getTime()) / 60000
-          )
-
-          return {
-            value,
-            color: CLOCK_IN_COLORS[entry.variant],
-          }
-        })
-      : []),
-    leftEntry,
-  ]
-
-  const primaryLabel = clockedInAt
-    ? formatTime24Hours(clockedInAt)
-    : EMPTY_LABEL
-
-  const secondaryLabel = (() => {
-    if (remainingMinutes && remainingMinutes < 0) {
-      return lastClockedInEntry
-        ? formatTime24Hours(lastClockedInEntry.to)
-        : EMPTY_LABEL
-    }
-
-    return clockedOutAt ? formatTime24Hours(clockedOutAt) : EMPTY_LABEL
-  })()
-
-  const isLastEntryClockedIn = lastEntry?.variant === "clocked-in"
-
-  const totalTime = isLastEntryClockedIn
-    ? data.reduce((acc, entry) => {
-        if (entry.variant === "clocked-in") {
-          return acc + (entry.to.getTime() - entry.from.getTime())
-        }
-        return acc
-      }, 0)
-    : lastEntry?.to.getTime() - lastEntry?.from.getTime() || 0
-
-  const hours = Math.floor(totalTime / (1000 * 60 * 60))
-  const minutes = Math.floor((totalTime % (1000 * 60 * 60)) / (1000 * 60))
-
-  const normalizedTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`
+  const { primaryLabel, secondaryLabel, time } = getLabels({
+    data,
+    remainingMinutes,
+  })
 
   return (
     <div className="relative h-40 w-40">
@@ -136,7 +62,7 @@ export function ClockInGraph({
 
       {/* Time display */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-semibold">{normalizedTime}</span>
+        <span className="text-2xl font-semibold">{time}</span>
       </div>
 
       {/* Labels */}
