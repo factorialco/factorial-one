@@ -59,6 +59,7 @@ export const Default: Story = {
 export const Metadata: Story = {
   args: {
     ...defaultArgs,
+    primaryAction: undefined,
     secondaryActions: [
       {
         label: "Edit",
