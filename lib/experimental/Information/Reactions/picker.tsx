@@ -1,9 +1,8 @@
-import { Icon } from "@/components/Utilities/Icon"
+import { Button } from "@/components/Actions/Button"
 import { Reaction } from "@/icons/app"
 import { useReducedMotion } from "@/lib/a11y"
 import { EmojiImage, getEmojiLabel } from "@/lib/emojis"
 import { cn, focusRing } from "@/lib/utils"
-import { Button } from "@/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
@@ -23,11 +22,13 @@ export function Picker({ onSelect }: PickerProps) {
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          className={cn("h-auto px-1.5", isOpen && "border-f1-border-hover")}
-          aria-label="Add reaction"
-        >
-          <Icon icon={Reaction} aria-hidden="true" />
-        </Button>
+          label="Add reaction"
+          icon={Reaction}
+          onClick={(event) => {
+            event.stopPropagation()
+          }}
+          hideLabel
+        />
       </PopoverTrigger>
       <PopoverContent
         side="top"
