@@ -1,4 +1,11 @@
-import { Comment, LayersFront, Pencil } from "@/icons/app"
+import {
+  Archive,
+  Comment,
+  Download,
+  ExternalLink,
+  LayersFront,
+  Pencil,
+} from "@/icons/app"
 import * as Icon from "@/icons/app/"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
@@ -15,31 +22,35 @@ export default meta
 
 type Story = StoryObj<typeof ResourceHeader>
 
+const defaultArgs = {
+  title: "Senior Product Designer",
+  description:
+    "Open position on our team, seeking an experienced product designer to lead design initiatives",
+  status: {
+    label: "Status",
+    text: "Published",
+    variant: "positive",
+  },
+  primaryAction: {
+    label: "Edit",
+    icon: Icon.Pencil,
+    onClick: fn(),
+  },
+} as const
+
 export const Default: Story = {
   args: {
-    title: "Senior Product Designer",
-    description:
-      "Open position on our team, seeking an experienced product designer to lead design initiatives",
-    status: {
-      label: "Status",
-      text: "Published",
-      variant: "positive",
-    },
-    primaryAction: {
-      label: "Edit",
-      icon: Icon.Pencil,
-      onClick: () => console.log("Edit clicked"),
-    },
+    ...defaultArgs,
     secondaryActions: [
       {
         label: "Promote",
-        onClick: () => console.log("Promote clicked"),
+        onClick: fn(),
       },
       {
         label: "Remove",
         icon: Icon.Delete,
         variant: "critical",
-        onClick: () => console.log("Remove clicked"),
+        onClick: fn(),
       },
     ],
   },
@@ -47,14 +58,8 @@ export const Default: Story = {
 
 export const Metadata: Story = {
   args: {
-    title: "Senior Product Designer",
-    description:
-      "Open position on our team, seeking an experienced product designer to lead design initiatives",
-    status: {
-      label: "Status",
-      text: "Published",
-      variant: "positive",
-    },
+    ...defaultArgs,
+    primaryAction: undefined,
     secondaryActions: [
       {
         label: "Edit",
@@ -111,6 +116,36 @@ export const Metadata: Story = {
           label: "Pending",
           variant: "warning",
         },
+      },
+    ],
+  },
+}
+
+export const WithOtherActions: Story = {
+  args: {
+    ...defaultArgs,
+    secondaryActions: [
+      {
+        label: "Promote",
+        onClick: fn(),
+      },
+    ],
+    otherActions: [
+      {
+        label: "Share",
+        icon: ExternalLink,
+        onClick: fn(),
+      },
+      {
+        label: "Download",
+        icon: Download,
+        onClick: fn(),
+      },
+      {
+        label: "Archive",
+        icon: Archive,
+        variant: "critical",
+        onClick: fn(),
       },
     ],
   },

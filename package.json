@@ -45,8 +45,8 @@
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-checkbox": "^1.0.4",
-    "@radix-ui/react-collapsible": "^1.1.1",
-    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-collapsible": "^1.1.2",
+    "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-navigation-menu": "^1.2.0",
@@ -146,6 +146,7 @@
   "dependencies": {
     "embla-carousel-autoplay": "^8.5.1",
     "embla-carousel-react": "^8.5.1",
-    "embla-carousel-wheel-gestures": "^8.0.1"
+    "embla-carousel-wheel-gestures": "^8.0.1",
+    "vaul": "^1.1.2"
   }
 }

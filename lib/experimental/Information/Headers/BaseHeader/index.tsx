@@ -8,6 +8,7 @@ import {
   PrimaryAction,
   SecondaryAction,
 } from "@/experimental/Information/utils"
+import { Dropdown, MobileDropdown } from "@/experimental/Navigation/Dropdown"
 import { Metadata, MetadataItem } from "../Metadata"
 
 interface BaseHeaderProps {
@@ -17,6 +18,7 @@ interface BaseHeaderProps {
   eyebrow?: React.ReactNode
   primaryAction?: PrimaryAction
   secondaryActions?: SecondaryAction[]
+  otherActions?: SecondaryAction[]
   status?: {
     label: string
     text: string
@@ -32,6 +34,7 @@ export function BaseHeader({
   eyebrow,
   primaryAction,
   secondaryActions,
+  otherActions,
   status,
   metadata,
 }: BaseHeaderProps) {
@@ -40,11 +43,11 @@ export function BaseHeader({
         {
           label: status.label,
           value: {
-            type: "status",
+            type: "status" as const,
             label: status.text,
             variant: status.variant,
           },
-        } satisfies MetadataItem,
+        },
         ...(metadata ?? []),
       ]
     : metadata
@@ -99,7 +102,7 @@ export function BaseHeader({
               </div>
             </>
           )}
-          {primaryAction && secondaryActions && (
+          {primaryAction && (secondaryActions || otherActions) && (
             <div className="hidden h-4 w-px bg-f1-background-secondary md:block" />
           )}
           {secondaryActions &&
@@ -126,6 +129,30 @@ export function BaseHeader({
                 </div>
               </>
             ))}
+          {otherActions && otherActions.length > 0 && (
+            <>
+              <div className="hidden md:block">
+                <Dropdown
+                  items={otherActions.map((action) => ({
+                    label: action.label,
+                    icon: action.icon,
+                    onClick: action.onClick,
+                    critical: action.variant === "critical",
+                  }))}
+                />
+              </div>
+              <div className="w-full md:hidden">
+                <MobileDropdown
+                  items={otherActions.map((action) => ({
+                    label: action.label,
+                    icon: action.icon,
+                    onClick: action.onClick,
+                    critical: action.variant === "critical",
+                  }))}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
       <div className="flex hidden flex-wrap items-center gap-x-3 gap-y-1 md:block">

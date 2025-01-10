@@ -176,6 +176,9 @@ export const f1Colors = {
       DEFAULT: "hsl(var(--selected-50) / 0.1)",
       bold: "hsl(var(--selected-50))",
     },
+    overlay: {
+      DEFAULT: "hsl(var(--neutral-40))",
+    },
   },
   border: {
     DEFAULT: "hsl(var(--neutral-30))",
