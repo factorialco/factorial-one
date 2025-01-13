@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
 import { AvatarVariant } from "@/experimental/Information/Avatars/utils"
 import { Ellipsis, EllipsisHorizontal } from "@/icons/app"
@@ -34,6 +34,8 @@ export type DropdownItemObject = NavigationItem & {
 
 type DropdownProps = {
   items: DropdownItem[]
+  icon?: IconType
+  size?: ButtonProps["size"]
   children?: React.ReactNode
 }
 
@@ -67,14 +69,20 @@ const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
   )
 }
 
-export function Dropdown({ items, children }: DropdownProps) {
+export function Dropdown({
+  items,
+  icon = Ellipsis,
+  size,
+  children,
+}: DropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         {children || (
           <Button
             hideLabel
-            icon={Ellipsis}
+            icon={icon}
+            size={size}
             label="..."
             round
             variant="outline"
