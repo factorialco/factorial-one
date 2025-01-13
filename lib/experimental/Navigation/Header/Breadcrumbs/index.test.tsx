@@ -159,7 +159,7 @@ describe("Breadcrumbs", () => {
 
       // Verify loading items
       const loadingItems = items.filter((item) =>
-        item.querySelector('[role="status"]')
+        item.querySelector('[aria-hidden="true"]')
       )
       expect(loadingItems).toHaveLength(1)
     })
@@ -182,7 +182,7 @@ describe("Breadcrumbs", () => {
 
       // Verify loading items
       const loadingItems = items.filter((item) =>
-        item.querySelector('[role="status"]')
+        item.querySelector('[aria-hidden="true"]')
       )
       expect(loadingItems).toHaveLength(2)
     })
@@ -199,7 +199,7 @@ describe("Breadcrumbs", () => {
       // Ensure loading items are not interactive
       const items = within(nav!).getAllByRole("listitem")
       const loadingItems = items.filter((item) =>
-        item.querySelector('[role="status"]')
+        item.querySelector('[aria-hidden="true"]')
       )
 
       loadingItems.forEach((item) => {
