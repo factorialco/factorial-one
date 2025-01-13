@@ -37,14 +37,19 @@ describe("Breadcrumbs", () => {
     const nav = container.querySelector("nav")
     expect(nav).toBeInTheDocument()
 
-    // Check if all breadcrumb items are rendered
-    breadcrumbs.forEach((item) => {
+    // Check if all non-last breadcrumb items are rendered as links
+    breadcrumbs.slice(0, -1).forEach((item) => {
       const links = within(nav!).getAllByRole("link")
       const matchingLink = links.find((link) =>
         link.textContent?.includes(item.label)
       )
       expect(matchingLink).toBeDefined()
     })
+
+    // Check if last item is rendered as text
+    const lastItem = breadcrumbs[breadcrumbs.length - 1]
+    const lastElement = nav!.querySelector('[aria-current="page"]')
+    expect(lastElement).toHaveTextContent(lastItem.label)
   })
 
   it("renders first and last items when space is limited", () => {
@@ -71,14 +76,15 @@ describe("Breadcrumbs", () => {
     const nav = container.querySelector("nav")
     expect(nav).toBeInTheDocument()
 
-    // First and last items should always be visible
+    // First item should be a link
     const links = within(nav!).getAllByRole("link")
     const firstLink = links.find((link) =>
       link.textContent?.includes(home.label)
     )
-    const lastElement = within(nav!).getByRole("link", { current: "page" })
-
     expect(firstLink).toBeDefined()
+
+    // Last item should be text
+    const lastElement = nav!.querySelector('[aria-current="page"]')
     expect(lastElement).toHaveTextContent(laptops.label)
 
     // Should show ellipsis for collapsed items
@@ -94,20 +100,19 @@ describe("Breadcrumbs", () => {
     const nav = container.querySelector("nav")
     expect(nav).toBeInTheDocument()
 
-    // Check if labels are rendered
+    // Check if first item is rendered as a link with icon
     const links = within(nav!).getAllByRole("link")
     const homeLink = links.find((link) =>
       link.textContent?.includes(home.label)
     )
-    const settingsLink = links.find((link) =>
-      link.textContent?.includes(settings.label)
-    )
-
     expect(homeLink).toBeDefined()
-    expect(settingsLink).toBeDefined()
 
-    // Check if icons are rendered
-    expect(nav!.querySelectorAll("svg")).toHaveLength(3) // 2 icons + 1 separator
+    // Check if last item is rendered as text
+    const lastElement = nav!.querySelector('[aria-current="page"]')
+    expect(lastElement).toHaveTextContent(settings.label)
+
+    // Check if icons are rendered (2 icons + 1 separator)
+    expect(nav!.querySelectorAll("svg")).toHaveLength(3)
   })
 
   it("renders correct links for non-last items", () => {
@@ -120,16 +125,17 @@ describe("Breadcrumbs", () => {
     const nav = container.querySelector("nav")
     expect(nav).toBeInTheDocument()
 
+    // Check non-last items are links
     const links = within(nav!).getAllByRole("link")
     const firstLink = links.find((link) =>
       link.textContent?.includes(home.label)
     )
     expect(firstLink).toHaveAttribute("href", home.href)
 
-    // Last item should not be a link
-    const lastElement = within(nav!).getByRole("link", { current: "page" })
+    // Last item should be text
+    const lastElement = nav!.querySelector('[aria-current="page"]')
     expect(lastElement).toHaveTextContent(currentPage.label)
-    expect(lastElement.closest("a")).toBeNull()
+    expect(lastElement?.closest("a")).toBeNull()
   })
 
   it("handles empty breadcrumbs gracefully", () => {
