@@ -35,6 +35,7 @@ export const getInfo = ({
   const statusColor = CLOCK_IN_COLORS[status]
 
   return {
+    status,
     statusText,
     subtitle,
     statusColor,

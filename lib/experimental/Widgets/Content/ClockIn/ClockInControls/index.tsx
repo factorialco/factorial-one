@@ -39,7 +39,7 @@ export function ClockInControls({
   onBreak,
   collapsed = false,
 }: ClockInControlsProps) {
-  const { statusText, subtitle, statusColor } = getInfo({
+  const { status, statusText, subtitle, statusColor } = getInfo({
     data,
     labels,
     remainingMinutes,
