@@ -20,7 +20,7 @@ import { cn, focusRing } from "@/lib/utils"
 import { NavigationItem } from "../../utils"
 
 import { IconType } from "@/components/Utilities/Icon"
-import { Fragment, useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export type BreadcrumbItemType =
   | (NavigationItem & {
@@ -31,7 +31,11 @@ export type BreadcrumbItemType =
     }
 
 function BreadcrumbSkeleton() {
-  return <Skeleton className="h-4 w-24" aria-hidden="true" />
+  return (
+    <div className="px-1.5">
+      <Skeleton className="h-4 w-24" aria-hidden="true" />
+    </div>
+  )
 }
 
 interface BreadcrumbLinkProps {
@@ -64,6 +68,7 @@ function BreadcrumbSeparator() {
 interface BreadcrumbItemProps {
   item: BreadcrumbItemType
   isLast: boolean
+  showSeparator?: boolean
 }
 
 type DropdownItemWithoutIcon = Omit<DropdownItemObject, "icon">
@@ -91,13 +96,41 @@ function BreadcrumbContent({ item, isLast }: BreadcrumbContentProps) {
   return <BreadcrumbLink item={item} />
 }
 
-function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
+function BreadcrumbItem({ item, isLast, showSeparator }: BreadcrumbItemProps) {
   return (
-    <ShadBreadcrumbItem>
-      <div className="flex items-center">
-        <BreadcrumbContent item={item} isLast={isLast} />
-      </div>
-    </ShadBreadcrumbItem>
+    <>
+      <ShadBreadcrumbItem>
+        <div className="flex items-center">
+          <BreadcrumbContent item={item} isLast={isLast} />
+        </div>
+        {showSeparator && <BreadcrumbSeparator />}
+      </ShadBreadcrumbItem>
+    </>
+  )
+}
+
+interface CollapsedBreadcrumbItemProps {
+  items: DropdownItemWithoutIcon[]
+  showSeparator?: boolean
+}
+
+function CollapsedBreadcrumbItem({
+  items,
+  showSeparator,
+}: CollapsedBreadcrumbItemProps) {
+  return (
+    <>
+      <ShadBreadcrumbItem>
+        <div className="flex items-center">
+          <Dropdown items={items}>
+            <button className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
+              ...
+            </button>
+          </Dropdown>
+        </div>
+        {showSeparator && <BreadcrumbSeparator />}
+      </ShadBreadcrumbItem>
+    </>
   )
 }
 
@@ -168,36 +201,24 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   return (
     <Breadcrumb ref={containerRef} className="w-full">
       <BreadcrumbList>
-        <BreadcrumbItem item={firstItem} isLast={false} />
-        {!("loading" in firstItem) && (
-          <ShadBreadcrumbItem>
-            <BreadcrumbSeparator />
-          </ShadBreadcrumbItem>
-        )}
+        <BreadcrumbItem
+          item={firstItem}
+          isLast={false}
+          showSeparator={!("loading" in firstItem)}
+        />
         {collapsedItems.length > 0 && (
-          <ShadBreadcrumbItem>
-            <div className="flex items-center">
-              <Dropdown items={collapsedItems as DropdownItemWithoutIcon[]}>
-                <button className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
-                  ...
-                </button>
-              </Dropdown>
-              <BreadcrumbSeparator />
-            </div>
-          </ShadBreadcrumbItem>
+          <CollapsedBreadcrumbItem
+            items={collapsedItems as DropdownItemWithoutIcon[]}
+            showSeparator={true}
+          />
         )}
         {lastItems.map((item, index) => (
-          <Fragment key={index}>
-            <BreadcrumbItem
-              item={item}
-              isLast={index === lastItems.length - 1}
-            />
-            {index !== lastItems.length - 1 && (
-              <ShadBreadcrumbItem>
-                <BreadcrumbSeparator />
-              </ShadBreadcrumbItem>
-            )}
-          </Fragment>
+          <BreadcrumbItem
+            key={index}
+            item={item}
+            isLast={index === lastItems.length - 1}
+            showSeparator={index !== lastItems.length - 1}
+          />
         ))}
       </BreadcrumbList>
     </Breadcrumb>
