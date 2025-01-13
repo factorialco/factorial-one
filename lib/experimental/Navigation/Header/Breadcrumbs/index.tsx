@@ -98,14 +98,12 @@ function BreadcrumbContent({ item, isLast }: BreadcrumbContentProps) {
 
 function BreadcrumbItem({ item, isLast, showSeparator }: BreadcrumbItemProps) {
   return (
-    <>
-      <ShadBreadcrumbItem>
-        <div className="flex items-center">
-          <BreadcrumbContent item={item} isLast={isLast} />
-        </div>
-        {showSeparator && <BreadcrumbSeparator />}
-      </ShadBreadcrumbItem>
-    </>
+    <ShadBreadcrumbItem>
+      <div className="flex items-center">
+        <BreadcrumbContent item={item} isLast={isLast} />
+      </div>
+      {showSeparator && <BreadcrumbSeparator />}
+    </ShadBreadcrumbItem>
   )
 }
 
@@ -119,18 +117,16 @@ function CollapsedBreadcrumbItem({
   showSeparator,
 }: CollapsedBreadcrumbItemProps) {
   return (
-    <>
-      <ShadBreadcrumbItem>
-        <div className="flex items-center">
-          <Dropdown items={items}>
-            <button className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
-              ...
-            </button>
-          </Dropdown>
-        </div>
-        {showSeparator && <BreadcrumbSeparator />}
-      </ShadBreadcrumbItem>
-    </>
+    <ShadBreadcrumbItem>
+      <div className="flex items-center">
+        <Dropdown items={items}>
+          <button className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
+            ...
+          </button>
+        </Dropdown>
+      </div>
+      {showSeparator && <BreadcrumbSeparator />}
+    </ShadBreadcrumbItem>
   )
 }
 
