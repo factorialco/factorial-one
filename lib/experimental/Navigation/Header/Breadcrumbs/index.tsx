@@ -96,7 +96,11 @@ function BreadcrumbContent({ item, isLast }: BreadcrumbContentProps) {
   return <BreadcrumbLink item={item} />
 }
 
-function BreadcrumbItem({ item, isLast, showSeparator }: BreadcrumbItemProps) {
+function BreadcrumbItem({
+  item,
+  isLast,
+  showSeparator = true,
+}: BreadcrumbItemProps) {
   return (
     <ShadBreadcrumbItem>
       <div className="flex items-center">
@@ -114,7 +118,7 @@ interface CollapsedBreadcrumbItemProps {
 
 function CollapsedBreadcrumbItem({
   items,
-  showSeparator,
+  showSeparator = true,
 }: CollapsedBreadcrumbItemProps) {
   return (
     <ShadBreadcrumbItem>
@@ -205,7 +209,6 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
         {collapsedItems.length > 0 && (
           <CollapsedBreadcrumbItem
             items={collapsedItems as DropdownItemWithoutIcon[]}
-            showSeparator={true}
           />
         )}
         {lastItems.map((item, index) => (
