@@ -26,7 +26,7 @@ type SelectItemObject<T> = {
 type SelectItemProps<T> = SelectItemObject<T> | "separator"
 
 type SelectProps<T> = {
-  placeholder: string
+  placeholder?: string
   onChange: (value: T) => void
   value?: T
   options: SelectItemProps<T>[]
