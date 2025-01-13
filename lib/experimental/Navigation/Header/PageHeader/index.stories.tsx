@@ -169,3 +169,14 @@ export const Embedded: Story = {
     ],
   },
 }
+
+export const EmbeddedWithLoading: Story = {
+  args: {
+    module: defaultModule,
+    embedded: true,
+    breadcrumbs: [
+      { label: "Employees", href: "/employees" },
+      { loading: true },
+    ],
+  },
+}
