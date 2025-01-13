@@ -33,9 +33,7 @@ function BreadcrumbSkeleton() {
   return (
     <div
       className="h-4 w-24 animate-pulse rounded-xs bg-f1-background-secondary"
-      aria-label="Loading breadcrumb"
-      role="status"
-      aria-disabled="true"
+      aria-hidden="true"
     />
   )
 }
@@ -77,7 +75,7 @@ type DropdownItemWithoutIcon = Omit<DropdownItemObject, "icon">
 function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
   const isLoading = "loading" in item
   const content = isLast ? (
-    <BreadcrumbPage>
+    <BreadcrumbPage aria-hidden="true">
       {isLoading ? <BreadcrumbSkeleton /> : item.label}
     </BreadcrumbPage>
   ) : isLoading ? (
