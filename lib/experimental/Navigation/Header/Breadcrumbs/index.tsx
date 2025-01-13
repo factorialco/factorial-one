@@ -19,7 +19,7 @@ import { cn, focusRing } from "@/lib/utils"
 import { NavigationItem } from "../../utils"
 
 import { IconType } from "@/components/Utilities/Icon"
-import { useEffect, useRef, useState } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
 
 export type BreadcrumbItemType =
   | (NavigationItem & {
@@ -90,10 +90,7 @@ function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
 
   return (
     <ShadBreadcrumbItem>
-      <div className="flex items-center">
-        {content}
-        {!isLast && !isLoading && <BreadcrumbSeparator />}
-      </div>
+      <div className="flex items-center">{content}</div>
     </ShadBreadcrumbItem>
   )
 }
@@ -166,24 +163,35 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
     <Breadcrumb ref={containerRef} className="w-full">
       <BreadcrumbList>
         <BreadcrumbItem item={firstItem} isLast={false} />
+        {!("loading" in firstItem) && (
+          <ShadBreadcrumbItem>
+            <BreadcrumbSeparator />
+          </ShadBreadcrumbItem>
+        )}
         {collapsedItems.length > 0 && (
           <ShadBreadcrumbItem>
-            <Dropdown items={collapsedItems as DropdownItemWithoutIcon[]}>
-              <button className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
-                ...
-              </button>
-            </Dropdown>
-            <div className="flex align-bottom">
-              <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
+            <div className="flex items-center">
+              <Dropdown items={collapsedItems as DropdownItemWithoutIcon[]}>
+                <button className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
+                  ...
+                </button>
+              </Dropdown>
+              <BreadcrumbSeparator />
             </div>
           </ShadBreadcrumbItem>
         )}
         {lastItems.map((item, index) => (
-          <BreadcrumbItem
-            key={index}
-            item={item}
-            isLast={index === lastItems.length - 1}
-          />
+          <Fragment key={index}>
+            <BreadcrumbItem
+              item={item}
+              isLast={index === lastItems.length - 1}
+            />
+            {index !== lastItems.length - 1 && (
+              <ShadBreadcrumbItem>
+                <BreadcrumbSeparator />
+              </ShadBreadcrumbItem>
+            )}
+          </Fragment>
         ))}
       </BreadcrumbList>
     </Breadcrumb>
