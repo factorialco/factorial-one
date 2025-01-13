@@ -68,23 +68,35 @@ interface BreadcrumbItemProps {
 
 type DropdownItemWithoutIcon = Omit<DropdownItemObject, "icon">
 
-function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
-  const isLoading = "loading" in item
-  const content = isLast ? (
-    <BreadcrumbPage aria-hidden="true">
-      {isLoading ? <BreadcrumbSkeleton /> : item.label}
-    </BreadcrumbPage>
-  ) : isLoading ? (
-    <div className="max-w-40">
-      <BreadcrumbSkeleton />
-    </div>
-  ) : (
-    <BreadcrumbLink item={item} />
-  )
+interface BreadcrumbContentProps {
+  item: BreadcrumbItemType
+  isLast: boolean
+}
 
+function BreadcrumbContent({ item, isLast }: BreadcrumbContentProps) {
+  const isLoading = "loading" in item
+
+  if (isLoading) {
+    return (
+      <div className="max-w-40">
+        <BreadcrumbSkeleton />
+      </div>
+    )
+  }
+
+  if (isLast) {
+    return <BreadcrumbPage aria-hidden="true">{item.label}</BreadcrumbPage>
+  }
+
+  return <BreadcrumbLink item={item} />
+}
+
+function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
   return (
     <ShadBreadcrumbItem>
-      <div className="flex items-center">{content}</div>
+      <div className="flex items-center">
+        <BreadcrumbContent item={item} isLast={isLast} />
+      </div>
     </ShadBreadcrumbItem>
   )
 }
