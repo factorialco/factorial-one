@@ -1,14 +1,7 @@
 import { Home, Settings } from "@/icons/app"
 import { render, within } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import Breadcrumbs, { BreadcrumbItemType } from "."
-
-const mockBreadcrumbs: BreadcrumbItemType[] = [
-  { label: "Home", href: "/" },
-  { label: "Products", href: "/products" },
-  { label: "Electronics", href: "/products/electronics" },
-  { label: "Laptops", href: "/products/electronics/laptops" },
-]
+import Breadcrumbs from "."
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
@@ -34,13 +27,18 @@ describe("Breadcrumbs", () => {
   })
 
   it("renders all breadcrumbs when there's enough space", () => {
-    const { container } = render(<Breadcrumbs breadcrumbs={mockBreadcrumbs} />)
+    const home = { label: "Home", href: "/" }
+    const products = { label: "Products", href: "/products" }
+    const electronics = { label: "Electronics", href: "/products/electronics" }
+    const laptops = { label: "Laptops", href: "/products/electronics/laptops" }
+    const breadcrumbs = [home, products, electronics, laptops]
+
+    const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
     const nav = container.querySelector("nav")
     expect(nav).toBeInTheDocument()
 
     // Check if all breadcrumb items are rendered
-    mockBreadcrumbs.forEach((item) => {
-      if ("loading" in item) return
+    breadcrumbs.forEach((item) => {
       const links = within(nav!).getAllByRole("link")
       const matchingLink = links.find((link) =>
         link.textContent?.includes(item.label)
@@ -63,46 +61,46 @@ describe("Breadcrumbs", () => {
       toJSON: () => {},
     }))
 
-    const { container } = render(<Breadcrumbs breadcrumbs={mockBreadcrumbs} />)
+    const home = { label: "Home", href: "/" }
+    const products = { label: "Products", href: "/products" }
+    const electronics = { label: "Electronics", href: "/products/electronics" }
+    const laptops = { label: "Laptops", href: "/products/electronics/laptops" }
+    const breadcrumbs = [home, products, electronics, laptops]
+
+    const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
     const nav = container.querySelector("nav")
     expect(nav).toBeInTheDocument()
 
     // First and last items should always be visible
     const links = within(nav!).getAllByRole("link")
-    const firstItem = mockBreadcrumbs[0]
-    const lastItem = mockBreadcrumbs[mockBreadcrumbs.length - 1]
+    const firstLink = links.find((link) =>
+      link.textContent?.includes(home.label)
+    )
+    const lastElement = within(nav!).getByRole("link", { current: "page" })
 
-    if (!("loading" in firstItem) && !("loading" in lastItem)) {
-      const firstLink = links.find((link) =>
-        link.textContent?.includes(firstItem.label)
-      )
-      const lastElement = within(nav!).getByRole("link", { current: "page" })
-
-      expect(firstLink).toBeDefined()
-      expect(lastElement).toHaveTextContent(lastItem.label)
-    }
+    expect(firstLink).toBeDefined()
+    expect(lastElement).toHaveTextContent(laptops.label)
 
     // Should show ellipsis for collapsed items
     expect(within(nav!).getByText("...")).toBeInTheDocument()
   })
 
   it("renders breadcrumbs with icons when provided", () => {
-    const breadcrumbsWithIcons: BreadcrumbItemType[] = [
-      { label: "Home", href: "/", icon: Home },
-      { label: "Settings", href: "/settings", icon: Settings },
-    ]
+    const home = { label: "Home", href: "/", icon: Home }
+    const settings = { label: "Settings", href: "/settings", icon: Settings }
+    const breadcrumbs = [home, settings]
 
-    const { container } = render(
-      <Breadcrumbs breadcrumbs={breadcrumbsWithIcons} />
-    )
+    const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
     const nav = container.querySelector("nav")
     expect(nav).toBeInTheDocument()
 
     // Check if labels are rendered
     const links = within(nav!).getAllByRole("link")
-    const homeLink = links.find((link) => link.textContent?.includes("Home"))
+    const homeLink = links.find((link) =>
+      link.textContent?.includes(home.label)
+    )
     const settingsLink = links.find((link) =>
-      link.textContent?.includes("Settings")
+      link.textContent?.includes(settings.label)
     )
 
     expect(homeLink).toBeDefined()
@@ -113,26 +111,25 @@ describe("Breadcrumbs", () => {
   })
 
   it("renders correct links for non-last items", () => {
-    const { container } = render(<Breadcrumbs breadcrumbs={mockBreadcrumbs} />)
+    const home = { label: "Home", href: "/" }
+    const products = { label: "Products", href: "/products" }
+    const currentPage = { label: "Current Page", href: "/products/current" }
+    const breadcrumbs = [home, products, currentPage]
+
+    const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
     const nav = container.querySelector("nav")
     expect(nav).toBeInTheDocument()
 
-    // First item should be a link
-    const firstItem = mockBreadcrumbs[0]
-    const lastItem = mockBreadcrumbs[mockBreadcrumbs.length - 1]
+    const links = within(nav!).getAllByRole("link")
+    const firstLink = links.find((link) =>
+      link.textContent?.includes(home.label)
+    )
+    expect(firstLink).toHaveAttribute("href", home.href)
 
-    if (!("loading" in firstItem) && !("loading" in lastItem)) {
-      const links = within(nav!).getAllByRole("link")
-      const firstLink = links.find((link) =>
-        link.textContent?.includes(firstItem.label)
-      )
-      expect(firstLink).toHaveAttribute("href", firstItem.href)
-
-      // Last item should not be a link
-      const lastElement = within(nav!).getByRole("link", { current: "page" })
-      expect(lastElement).toHaveTextContent(lastItem.label)
-      expect(lastElement.closest("a")).toBeNull()
-    }
+    // Last item should not be a link
+    const lastElement = within(nav!).getByRole("link", { current: "page" })
+    expect(lastElement).toHaveTextContent(currentPage.label)
+    expect(lastElement.closest("a")).toBeNull()
   })
 
   it("handles empty breadcrumbs gracefully", () => {
@@ -144,15 +141,12 @@ describe("Breadcrumbs", () => {
 
   describe("loading states", () => {
     it("renders skeleton for last item when loading", () => {
-      const breadcrumbsWithLoading: BreadcrumbItemType[] = [
-        { label: "Home", href: "/" },
-        { label: "Products", href: "/products" },
-        { loading: true },
-      ]
+      const home = { label: "Home", href: "/" }
+      const products = { label: "Products", href: "/products" }
+      const loadingItem = { loading: true } as const
+      const breadcrumbs = [home, products, loadingItem]
 
-      const { container } = render(
-        <Breadcrumbs breadcrumbs={breadcrumbsWithLoading} />
-      )
+      const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
       const nav = container.querySelector("nav")
       expect(nav).toBeInTheDocument()
 
@@ -160,8 +154,8 @@ describe("Breadcrumbs", () => {
       const items = within(nav!).getAllByRole("listitem")
       const textItems = items.filter((item) => item.textContent)
       expect(textItems).toHaveLength(2)
-      expect(textItems[0]).toHaveTextContent("Home")
-      expect(textItems[1]).toHaveTextContent("Products")
+      expect(textItems[0]).toHaveTextContent(home.label)
+      expect(textItems[1]).toHaveTextContent(products.label)
 
       // Verify loading items
       const loadingItems = items.filter(
@@ -171,15 +165,12 @@ describe("Breadcrumbs", () => {
     })
 
     it("renders skeletons for last two items when loading", () => {
-      const breadcrumbsWithLoading: BreadcrumbItemType[] = [
-        { label: "Home", href: "/" },
-        { loading: true },
-        { loading: true },
-      ]
+      const home = { label: "Home", href: "/" }
+      const loadingItem1 = { loading: true } as const
+      const loadingItem2 = { loading: true } as const
+      const breadcrumbs = [home, loadingItem1, loadingItem2]
 
-      const { container } = render(
-        <Breadcrumbs breadcrumbs={breadcrumbsWithLoading} />
-      )
+      const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
       const nav = container.querySelector("nav")
       expect(nav).toBeInTheDocument()
 
@@ -187,7 +178,7 @@ describe("Breadcrumbs", () => {
       const items = within(nav!).getAllByRole("listitem")
       const textItems = items.filter((item) => item.textContent)
       expect(textItems).toHaveLength(1)
-      expect(textItems[0]).toHaveTextContent("Home")
+      expect(textItems[0]).toHaveTextContent(home.label)
 
       // Verify loading items
       const loadingItems = items.filter(
@@ -197,15 +188,12 @@ describe("Breadcrumbs", () => {
     })
 
     it("ensures loading items are not interactive", () => {
-      const breadcrumbsWithLoading: BreadcrumbItemType[] = [
-        { label: "Home", href: "/" },
-        { loading: true },
-        { loading: true },
-      ]
+      const home = { label: "Home", href: "/" }
+      const loadingItem1 = { loading: true } as const
+      const loadingItem2 = { loading: true } as const
+      const breadcrumbs = [home, loadingItem1, loadingItem2]
 
-      const { container } = render(
-        <Breadcrumbs breadcrumbs={breadcrumbsWithLoading} />
-      )
+      const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
       const nav = container.querySelector("nav")
 
       // Ensure loading items are not interactive
