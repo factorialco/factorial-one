@@ -21,6 +21,26 @@ export const Default: Story = {
   },
 }
 
+export const LoadingLastItem: Story = {
+  args: {
+    breadcrumbs: [
+      { label: "Recruitment", href: "/recruitment", icon: Recruitment },
+      { label: "Candidates", href: "/recruitment/candidates" },
+      { loading: true },
+    ],
+  },
+}
+
+export const LoadingLastTwoItems: Story = {
+  args: {
+    breadcrumbs: [
+      { label: "Recruitment", href: "/recruitment", icon: Recruitment },
+      { loading: true },
+      { loading: true },
+    ],
+  },
+}
+
 export const LongBreadcrumbs: Story = {
   args: {
     breadcrumbs: [

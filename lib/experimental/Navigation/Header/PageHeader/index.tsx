@@ -1,19 +1,19 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/components/Utilities/Icon"
+import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { ChevronDown, ChevronLeft, ChevronUp, Menu } from "@/icons/app"
-import { cn } from "@/lib/utils"
-import { AnimatePresence, motion } from "framer-motion"
-import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
-
-import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import { Link } from "@/lib/linkHandler"
+import { cn } from "@/lib/utils"
+import { Skeleton } from "@/ui/skeleton"
 import { cva } from "class-variance-authority"
+import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 import { Dropdown } from "../../Dropdown"
+import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
 export type PageAction = {
   label: string
@@ -148,23 +148,29 @@ export function PageHeader({
             embedded && hasNavigation && "justify-center"
           )}
         >
-          {showBackButton && parentBreadcrumb && (
-            <div className="absolute left-4">
-              <Link href={parentBreadcrumb.href}>
-                <Button
-                  variant="ghost"
-                  hideLabel
-                  round
-                  label="Back"
-                  icon={ChevronLeft}
-                />
-              </Link>
-            </div>
-          )}
+          {showBackButton &&
+            parentBreadcrumb &&
+            !("loading" in parentBreadcrumb) && (
+              <div className="absolute left-4">
+                <Link href={parentBreadcrumb.href}>
+                  <Button
+                    variant="ghost"
+                    hideLabel
+                    round
+                    label="Back"
+                    icon={ChevronLeft}
+                  />
+                </Link>
+              </div>
+            )}
           {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
           {embedded && hasNavigation ? (
             <div className="text-lg font-semibold text-f1-foreground">
-              {lastBreadcrumb.label}
+              {"loading" in lastBreadcrumb ? (
+                <Skeleton className="h-4 w-24" />
+              ) : (
+                lastBreadcrumb.label
+              )}
             </div>
           ) : breadcrumbsTree.length > 1 ? (
             <Breadcrumbs breadcrumbs={breadcrumbsTree} />
