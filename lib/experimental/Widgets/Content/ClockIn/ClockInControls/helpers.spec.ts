@@ -33,6 +33,7 @@ describe("ClockInControls helpers", () => {
         statusText: "Clocked Out",
         subtitle: undefined,
         statusColor: CLOCK_IN_COLORS["clocked-out"],
+        status: "clocked-out",
       })
     })
 
@@ -49,6 +50,7 @@ describe("ClockInControls helpers", () => {
         statusText: "Clocked In",
         subtitle: undefined,
         statusColor: CLOCK_IN_COLORS["clocked-in"],
+        status: "clocked-in",
       })
     })
 
@@ -65,6 +67,7 @@ describe("ClockInControls helpers", () => {
         statusText: "On Break",
         subtitle: undefined,
         statusColor: CLOCK_IN_COLORS.break,
+        status: "break",
       })
     })
 
@@ -76,6 +79,7 @@ describe("ClockInControls helpers", () => {
       })
 
       expect(result.subtitle).toBe("Remaining: 01:30")
+      expect(result.status).toBe("clocked-out")
     })
 
     it("should format overtime correctly when negative", () => {
@@ -86,6 +90,7 @@ describe("ClockInControls helpers", () => {
       })
 
       expect(result.subtitle).toBe("Overtime: 00:45")
+      expect(result.status).toBe("clocked-out")
     })
 
     it("should handle zero remaining minutes", () => {
@@ -96,6 +101,7 @@ describe("ClockInControls helpers", () => {
       })
 
       expect(result.subtitle).toBe("Remaining: 00:00")
+      expect(result.status).toBe("clocked-out")
     })
 
     it("should use last entry status when multiple entries exist", () => {
@@ -107,6 +113,7 @@ describe("ClockInControls helpers", () => {
         remainingMinutes: undefined,
       })
 
+      expect(result.status).toBe("break")
       expect(result.statusText).toBe("On Break")
       expect(result.statusColor).toBe(CLOCK_IN_COLORS.break)
     })
@@ -131,6 +138,7 @@ describe("ClockInControls helpers", () => {
       })
 
       expect(result).toEqual({
+        status: "clocked-out",
         statusText: "Clocked Out",
         subtitle: "Remaining: 02:00",
         statusColor: CLOCK_IN_COLORS["clocked-out"],
