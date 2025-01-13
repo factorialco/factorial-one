@@ -2,7 +2,7 @@ import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { Reactions, ReactionsProps } from "@/experimental/Information/Reactions"
-import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { EllipsisHorizontal } from "@/icons/app"
 import { getAgo } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
@@ -44,6 +44,8 @@ export type CommunityPostProps = {
   }
 
   onClick: (id: string) => void
+
+  dropdownItems?: DropdownItem[]
 }
 
 export const BaseCommunityPost = ({
@@ -60,6 +62,7 @@ export const BaseCommunityPost = ({
   reactions,
   inLabel,
   comment,
+  dropdownItems,
 }: CommunityPostProps) => {
   const countersDisplay = [counters.views, counters.comments]
     .filter(Boolean)
@@ -130,7 +133,7 @@ export const BaseCommunityPost = ({
             </div>
 
             <div className="flex flex-row gap-2">
-              <div className="hidden md:block">
+              <div className="hidden flex-row gap-2 md:flex">
                 <Link
                   onClick={comment.onClick}
                   title={comment.label}
@@ -138,6 +141,13 @@ export const BaseCommunityPost = ({
                 >
                   <Button label={comment.label} size="sm" variant="outline" />
                 </Link>
+                {dropdownItems?.length && (
+                  <Dropdown
+                    items={dropdownItems}
+                    icon={EllipsisHorizontal}
+                    size="sm"
+                  />
+                )}
               </div>
               <div className="md:hidden">
                 <Dropdown
@@ -146,16 +156,11 @@ export const BaseCommunityPost = ({
                       label: comment.label,
                       onClick: comment.onClick,
                     },
+                    ...(dropdownItems ?? []),
                   ]}
-                >
-                  <Button
-                    label={comment.label}
-                    hideLabel
-                    size="sm"
-                    variant="outline"
-                    icon={EllipsisHorizontal}
-                  />
-                </Dropdown>
+                  icon={EllipsisHorizontal}
+                  size="sm"
+                />
               </div>
             </div>
           </div>

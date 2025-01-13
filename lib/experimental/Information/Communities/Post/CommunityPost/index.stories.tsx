@@ -82,6 +82,22 @@ export const Default: Story = {
       label: "Comment",
       onClick: () => {},
     },
+    dropdownItems: [
+      {
+        label: "Edit post",
+        onClick: () => {},
+      },
+      {
+        label: "Turn comments and reactions on",
+        onClick: () => {},
+      },
+      "separator",
+      {
+        label: "Delete post",
+        onClick: () => {},
+        critical: true,
+      },
+    ],
   },
 }
 
