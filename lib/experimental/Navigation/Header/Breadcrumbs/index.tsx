@@ -1,13 +1,13 @@
 import {
   Breadcrumb,
-  BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
   BreadcrumbItem as ShadBreadcrumbItem,
+  BreadcrumbLink as ShadBreadcrumbLink,
 } from "@/ui/breadcrumb"
 
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
+import { Skeleton } from "@/ui/skeleton"
 
 import {
   Dropdown,
@@ -22,8 +22,47 @@ import { NavigationItem } from "../../utils"
 import { IconType } from "@/components/Utilities/Icon"
 import { useEffect, useRef, useState } from "react"
 
-export type BreadcrumbItemType = NavigationItem & {
-  icon?: IconType
+export type BreadcrumbItemType =
+  | (NavigationItem & {
+      icon?: IconType
+    })
+  | {
+      loading: true
+    }
+
+function BreadcrumbSkeleton() {
+  return (
+    <div aria-hidden="true">
+      <Skeleton className="h-4 w-24" />
+    </div>
+  )
+}
+
+interface BreadcrumbLinkProps {
+  item: NavigationItem & { icon?: IconType }
+  className?: string
+}
+
+function BreadcrumbLink({ item, className }: BreadcrumbLinkProps) {
+  return (
+    <ShadBreadcrumbLink
+      className={cn("max-w-40", item.icon && "pl-0.5", className)}
+      asChild
+    >
+      <Link {...item} className={cn("flex items-center gap-1.5", focusRing())}>
+        {item.icon && <ModuleAvatar icon={item.icon} size="sm" />}
+        <span className="truncate">{item.label}</span>
+      </Link>
+    </ShadBreadcrumbLink>
+  )
+}
+
+function BreadcrumbSeparator() {
+  return (
+    <div className="flex items-center">
+      <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
+    </div>
+  )
 }
 
 interface BreadcrumbItemProps {
@@ -34,32 +73,25 @@ interface BreadcrumbItemProps {
 type DropdownItemWithoutIcon = Omit<DropdownItemObject, "icon">
 
 function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { label, ...props } = item
+  const isLoading = "loading" in item
+  const content = isLast ? (
+    <BreadcrumbPage>
+      {isLoading ? <BreadcrumbSkeleton /> : item.label}
+    </BreadcrumbPage>
+  ) : isLoading ? (
+    <div className="max-w-40">
+      <BreadcrumbSkeleton />
+    </div>
+  ) : (
+    <BreadcrumbLink item={item} />
+  )
 
   return (
-    <ShadBreadcrumbItem>
-      {!isLast ? (
-        <>
-          <BreadcrumbLink
-            className={cn("max-w-40", item.icon && "pl-0.5")}
-            asChild
-          >
-            <Link
-              {...props}
-              className={cn("flex items-center gap-1.5", focusRing())}
-            >
-              {item.icon && <ModuleAvatar icon={item.icon} size="sm" />}
-              <span className="truncate">{item.label}</span>
-            </Link>
-          </BreadcrumbLink>
-          <BreadcrumbSeparator>
-            <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
-          </BreadcrumbSeparator>
-        </>
-      ) : (
-        <BreadcrumbPage>{item.label}</BreadcrumbPage>
-      )}
+    <ShadBreadcrumbItem aria-disabled={isLoading}>
+      <div className="flex items-center">
+        {content}
+        {!isLast && !isLoading && <BreadcrumbSeparator />}
+      </div>
     </ShadBreadcrumbItem>
   )
 }

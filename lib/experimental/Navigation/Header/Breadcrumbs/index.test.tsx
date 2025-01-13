@@ -40,6 +40,7 @@ describe("Breadcrumbs", () => {
 
     // Check if all breadcrumb items are rendered
     mockBreadcrumbs.forEach((item) => {
+      if ("loading" in item) return
       const links = within(nav!).getAllByRole("link")
       const matchingLink = links.find((link) =>
         link.textContent?.includes(item.label)
@@ -68,15 +69,18 @@ describe("Breadcrumbs", () => {
 
     // First and last items should always be visible
     const links = within(nav!).getAllByRole("link")
-    const firstLink = links.find((link) =>
-      link.textContent?.includes(mockBreadcrumbs[0].label)
-    )
-    const lastItem = within(nav!).getByRole("link", { current: "page" })
+    const firstItem = mockBreadcrumbs[0]
+    const lastItem = mockBreadcrumbs[mockBreadcrumbs.length - 1]
 
-    expect(firstLink).toBeDefined()
-    expect(lastItem).toHaveTextContent(
-      mockBreadcrumbs[mockBreadcrumbs.length - 1].label
-    )
+    if (!("loading" in firstItem) && !("loading" in lastItem)) {
+      const firstLink = links.find((link) =>
+        link.textContent?.includes(firstItem.label)
+      )
+      const lastElement = within(nav!).getByRole("link", { current: "page" })
+
+      expect(firstLink).toBeDefined()
+      expect(lastElement).toHaveTextContent(lastItem.label)
+    }
 
     // Should show ellipsis for collapsed items
     expect(within(nav!).getByText("...")).toBeInTheDocument()
@@ -114,18 +118,21 @@ describe("Breadcrumbs", () => {
     expect(nav).toBeInTheDocument()
 
     // First item should be a link
-    const links = within(nav!).getAllByRole("link")
-    const firstLink = links.find((link) =>
-      link.textContent?.includes(mockBreadcrumbs[0].label)
-    )
-    expect(firstLink).toHaveAttribute("href", mockBreadcrumbs[0].href)
+    const firstItem = mockBreadcrumbs[0]
+    const lastItem = mockBreadcrumbs[mockBreadcrumbs.length - 1]
 
-    // Last item should not be a link
-    const lastItem = within(nav!).getByRole("link", { current: "page" })
-    expect(lastItem).toHaveTextContent(
-      mockBreadcrumbs[mockBreadcrumbs.length - 1].label
-    )
-    expect(lastItem.closest("a")).toBeNull()
+    if (!("loading" in firstItem) && !("loading" in lastItem)) {
+      const links = within(nav!).getAllByRole("link")
+      const firstLink = links.find((link) =>
+        link.textContent?.includes(firstItem.label)
+      )
+      expect(firstLink).toHaveAttribute("href", firstItem.href)
+
+      // Last item should not be a link
+      const lastElement = within(nav!).getByRole("link", { current: "page" })
+      expect(lastElement).toHaveTextContent(lastItem.label)
+      expect(lastElement.closest("a")).toBeNull()
+    }
   })
 
   it("handles empty breadcrumbs gracefully", () => {
@@ -133,5 +140,83 @@ describe("Breadcrumbs", () => {
     const nav = container.querySelector("nav")
     expect(nav).toBeInTheDocument()
     expect(nav!.textContent).toBe("")
+  })
+
+  describe("loading states", () => {
+    it("renders skeleton for last item when loading", () => {
+      const breadcrumbsWithLoading: BreadcrumbItemType[] = [
+        { label: "Home", href: "/" },
+        { label: "Products", href: "/products" },
+        { loading: true },
+      ]
+
+      const { container } = render(
+        <Breadcrumbs breadcrumbs={breadcrumbsWithLoading} />
+      )
+      const nav = container.querySelector("nav")
+      expect(nav).toBeInTheDocument()
+
+      // Find all items that contain text content
+      const items = within(nav!).getAllByRole("listitem")
+      const textItems = items.filter((item) => item.textContent)
+      expect(textItems).toHaveLength(2)
+      expect(textItems[0]).toHaveTextContent("Home")
+      expect(textItems[1]).toHaveTextContent("Products")
+
+      // Verify loading items
+      const loadingItems = items.filter(
+        (item) => item.getAttribute("aria-disabled") === "true"
+      )
+      expect(loadingItems).toHaveLength(1)
+    })
+
+    it("renders skeletons for last two items when loading", () => {
+      const breadcrumbsWithLoading: BreadcrumbItemType[] = [
+        { label: "Home", href: "/" },
+        { loading: true },
+        { loading: true },
+      ]
+
+      const { container } = render(
+        <Breadcrumbs breadcrumbs={breadcrumbsWithLoading} />
+      )
+      const nav = container.querySelector("nav")
+      expect(nav).toBeInTheDocument()
+
+      // Find all items that contain text content
+      const items = within(nav!).getAllByRole("listitem")
+      const textItems = items.filter((item) => item.textContent)
+      expect(textItems).toHaveLength(1)
+      expect(textItems[0]).toHaveTextContent("Home")
+
+      // Verify loading items
+      const loadingItems = items.filter(
+        (item) => item.getAttribute("aria-disabled") === "true"
+      )
+      expect(loadingItems).toHaveLength(2)
+    })
+
+    it("ensures loading items are not interactive", () => {
+      const breadcrumbsWithLoading: BreadcrumbItemType[] = [
+        { label: "Home", href: "/" },
+        { loading: true },
+        { loading: true },
+      ]
+
+      const { container } = render(
+        <Breadcrumbs breadcrumbs={breadcrumbsWithLoading} />
+      )
+      const nav = container.querySelector("nav")
+
+      // Ensure loading items are not interactive
+      const items = within(nav!).getAllByRole("listitem")
+      const loadingItems = items.filter(
+        (item) => item.getAttribute("aria-disabled") === "true"
+      )
+
+      loadingItems.forEach((item) => {
+        expect(item.closest("a")).toBeNull()
+      })
+    })
   })
 })
