@@ -5,6 +5,7 @@ import {
   BreadcrumbItem as ShadBreadcrumbItem,
   BreadcrumbLink as ShadBreadcrumbLink,
 } from "@/ui/breadcrumb"
+import { Skeleton } from "@/ui/skeleton"
 
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 
@@ -30,12 +31,7 @@ export type BreadcrumbItemType =
     }
 
 function BreadcrumbSkeleton() {
-  return (
-    <div
-      className="h-4 w-24 animate-pulse rounded-xs bg-f1-background-secondary"
-      aria-hidden="true"
-    />
-  )
+  return <Skeleton className="h-4 w-24" aria-hidden="true" />
 }
 
 interface BreadcrumbLinkProps {
