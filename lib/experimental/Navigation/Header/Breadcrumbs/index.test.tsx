@@ -158,8 +158,8 @@ describe("Breadcrumbs", () => {
       expect(textItems[1]).toHaveTextContent(products.label)
 
       // Verify loading items
-      const loadingItems = items.filter(
-        (item) => item.getAttribute("aria-disabled") === "true"
+      const loadingItems = items.filter((item) =>
+        item.querySelector('[role="status"]')
       )
       expect(loadingItems).toHaveLength(1)
     })
@@ -181,8 +181,8 @@ describe("Breadcrumbs", () => {
       expect(textItems[0]).toHaveTextContent(home.label)
 
       // Verify loading items
-      const loadingItems = items.filter(
-        (item) => item.getAttribute("aria-disabled") === "true"
+      const loadingItems = items.filter((item) =>
+        item.querySelector('[role="status"]')
       )
       expect(loadingItems).toHaveLength(2)
     })
@@ -198,8 +198,8 @@ describe("Breadcrumbs", () => {
 
       // Ensure loading items are not interactive
       const items = within(nav!).getAllByRole("listitem")
-      const loadingItems = items.filter(
-        (item) => item.getAttribute("aria-disabled") === "true"
+      const loadingItems = items.filter((item) =>
+        item.querySelector('[role="status"]')
       )
 
       loadingItems.forEach((item) => {

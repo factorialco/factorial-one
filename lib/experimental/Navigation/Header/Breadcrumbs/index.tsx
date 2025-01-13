@@ -7,7 +7,6 @@ import {
 } from "@/ui/breadcrumb"
 
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
-import { Skeleton } from "@/ui/skeleton"
 
 import {
   Dropdown,
@@ -32,9 +31,12 @@ export type BreadcrumbItemType =
 
 function BreadcrumbSkeleton() {
   return (
-    <div aria-hidden="true">
-      <Skeleton className="h-4 w-24" />
-    </div>
+    <div
+      className="h-4 w-24 animate-pulse rounded-xs bg-f1-background-secondary"
+      aria-label="Loading breadcrumb"
+      role="status"
+      aria-disabled="true"
+    />
   )
 }
 
@@ -87,7 +89,7 @@ function BreadcrumbItem({ item, isLast }: BreadcrumbItemProps) {
   )
 
   return (
-    <ShadBreadcrumbItem aria-disabled={isLoading}>
+    <ShadBreadcrumbItem>
       <div className="flex items-center">
         {content}
         {!isLast && !isLoading && <BreadcrumbSeparator />}
@@ -171,11 +173,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
                 ...
               </button>
             </Dropdown>
-            <div
-              aria-hidden="true"
-              className="flex align-bottom"
-              role="presentation"
-            >
+            <div className="flex align-bottom">
               <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
             </div>
           </ShadBreadcrumbItem>
