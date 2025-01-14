@@ -10,6 +10,7 @@ const Checkbox = React.forwardRef<
   <div className="flex items-center gap-4">
     <CheckboxPrimitive.Root
       ref={ref}
+      id={props.id}
       className={cn(
         "ring-offset-background focus-visible:ring-ring data-[state=checked]:bg-primary peer h-4 w-4 shrink-0 rounded-2xs border-2 border-solid border-f1-border disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:text-f1-foreground",
         focusRing(),
@@ -17,14 +18,15 @@ const Checkbox = React.forwardRef<
       )}
       {...props}
     >
-      <CheckboxPrimitive.Indicator
-        className={cn("flex items-center justify-center text-current")}
-      >
+      <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
         <Check className="h-3 w-3" />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
     {props.title && (
-      <label className={cn("flex items-center justify-center text-current")}>
+      <label
+        htmlFor={props.id}
+        className="flex items-center justify-center text-current hover:cursor-pointer"
+      >
         {props.title}
       </label>
     )}
