@@ -141,10 +141,11 @@ export const WithOtherActions: Story = {
         icon: Download,
         onClick: fn(),
       },
+      "separator",
       {
         label: "Archive",
         icon: Archive,
-        variant: "critical",
+        critical: true,
         onClick: fn(),
       },
     ],
