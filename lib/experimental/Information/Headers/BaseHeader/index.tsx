@@ -8,7 +8,11 @@ import {
   PrimaryAction,
   SecondaryAction,
 } from "@/experimental/Information/utils"
-import { Dropdown, MobileDropdown } from "@/experimental/Navigation/Dropdown"
+import {
+  Dropdown,
+  DropdownItem,
+  MobileDropdown,
+} from "@/experimental/Navigation/Dropdown"
 import { Metadata, MetadataItem } from "../Metadata"
 
 interface BaseHeaderProps {
@@ -18,7 +22,7 @@ interface BaseHeaderProps {
   eyebrow?: React.ReactNode
   primaryAction?: PrimaryAction
   secondaryActions?: SecondaryAction[]
-  otherActions?: SecondaryAction[]
+  otherActions?: DropdownItem[]
   status?: {
     label: string
     text: string
@@ -132,24 +136,10 @@ export function BaseHeader({
           {otherActions && otherActions.length > 0 && (
             <>
               <div className="hidden md:block">
-                <Dropdown
-                  items={otherActions.map((action) => ({
-                    label: action.label,
-                    icon: action.icon,
-                    onClick: action.onClick,
-                    critical: action.variant === "critical",
-                  }))}
-                />
+                <Dropdown items={otherActions} />
               </div>
               <div className="w-full md:hidden">
-                <MobileDropdown
-                  items={otherActions.map((action) => ({
-                    label: action.label,
-                    icon: action.icon,
-                    onClick: action.onClick,
-                    critical: action.variant === "critical",
-                  }))}
-                />
+                <MobileDropdown items={otherActions} />
               </div>
             </>
           )}
