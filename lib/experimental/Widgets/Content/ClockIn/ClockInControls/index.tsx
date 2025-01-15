@@ -1,6 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { SolidPause, SolidPlay, SolidStop } from "@/icons/app"
 import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
 import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
 import { getInfo } from "./helpers"
 
@@ -59,10 +60,17 @@ export function ClockInControls({
           <div className="flex items-center gap-2">
             <span className="text-xl font-semibold">{statusText}</span>
             <div className="relative aspect-square h-4">
-              <div
+              <motion.div
                 className="absolute inset-0 rounded-full opacity-20"
                 style={{
                   backgroundColor: statusColor,
+                }}
+                initial={{ scale: 0.5, opacity: 0.6 }}
+                animate={{ scale: 1.6, opacity: 0 }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  repeatDelay: 1,
                 }}
               />
               <div
