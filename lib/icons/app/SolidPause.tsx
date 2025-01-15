@@ -1,5 +1,5 @@
 import type { SVGProps } from "react";
 import { Ref, forwardRef } from "react";
-const SvgSolidPause = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="#0D1625" fillRule="evenodd" d="M6 7V17C6 18.1046 6.89543 19 8 19C9.10457 19 10 18.1046 10 17V7C10 5.89543 9.10457 5 8 5C6.89543 5 6 5.89543 6 7ZM14 7V17C14 18.1046 14.8954 19 16 19C17.1046 19 18 18.1046 18 17V7C18 5.89543 17.1046 5 16 5C14.8954 5 14 5.89543 14 7Z" clipRule="evenodd" vectorEffect="non-scaling-stroke" /></svg>;
+const SvgSolidPause = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" d="M5.99999 17V6.99999C5.99999 5.89542 6.89542 4.99999 7.99999 4.99999C9.10456 4.99999 9.99999 5.89542 9.99999 6.99999V17C9.99999 18.1046 9.10456 19 7.99999 19C6.89542 19 5.99999 18.1046 5.99999 17Z" vectorEffect="non-scaling-stroke" /><path fill="currentColor" d="M14 17V6.99999C14 5.89542 14.8954 4.99999 16 4.99999C17.1046 4.99999 18 5.89542 18 6.99999V17C18 18.1046 17.1046 19 16 19C14.8954 19 14 18.1046 14 17Z" vectorEffect="non-scaling-stroke" /></svg>;
 const ForwardRef = forwardRef(SvgSolidPause);
 export default ForwardRef;
