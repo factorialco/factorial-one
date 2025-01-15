@@ -52,7 +52,7 @@ export function BaseHeader({
             label: status.text,
             variant: status.variant,
           },
-          actions: status.actions ? [...status.actions] : undefined,
+          actions: status.actions,
           hideLabel: true,
         },
         ...(metadata ?? []),
@@ -85,9 +85,7 @@ export function BaseHeader({
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 md:hidden">
-          {allMetadata && allMetadata.length > 0 && (
-            <Metadata items={allMetadata} />
-          )}
+          {allMetadata && <Metadata items={allMetadata} />}
         </div>
         <div className="flex w-full shrink-0 flex-wrap items-center gap-x-3 gap-y-4 md:w-fit md:flex-row-reverse md:gap-y-2 md:overflow-x-auto">
           {primaryAction && (
@@ -151,9 +149,7 @@ export function BaseHeader({
         </div>
       </div>
       <div className="hidden flex-wrap items-center gap-x-3 gap-y-1 md:block">
-        {allMetadata && allMetadata.length > 0 && (
-          <Metadata items={allMetadata} />
-        )}
+        {allMetadata && <Metadata items={allMetadata} />}
       </div>
     </div>
   )
