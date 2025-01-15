@@ -95,7 +95,7 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <CollapsibleTrigger
         className={cn(
-          "flex w-full cursor-pointer items-center gap-1 rounded px-1.5 py-2 text-sm font-medium tracking-wide text-f1-foreground-secondary hover:bg-f1-background-secondary",
+          "flex w-full cursor-pointer items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary hover:bg-f1-background-secondary",
           focusRing("focus-visible:ring-inset")
         )}
       >
