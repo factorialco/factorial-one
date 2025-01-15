@@ -13,7 +13,7 @@ import {
   DropdownItem,
   MobileDropdown,
 } from "@/experimental/Navigation/Dropdown"
-import { Metadata, MetadataItem } from "../Metadata"
+import { Metadata, MetadataAction, MetadataItem } from "../Metadata"
 
 interface BaseHeaderProps {
   title: string
@@ -27,6 +27,7 @@ interface BaseHeaderProps {
     label: string
     text: string
     variant: StatusVariant
+    actions?: MetadataAction[]
   }
   metadata?: MetadataItem[]
 }
@@ -51,13 +52,15 @@ export function BaseHeader({
             label: status.text,
             variant: status.variant,
           },
+          actions: status.actions ? [...status.actions] : undefined,
+          hideLabel: true,
         },
         ...(metadata ?? []),
       ]
     : metadata
 
   return (
-    <div className="flex flex-col gap-3 p-8">
+    <div className="flex flex-col gap-3 px-6 pb-5 pt-3">
       <div className="flex flex-col items-start justify-start gap-4 md:flex-row">
         <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-center">
           {avatar && (
@@ -82,7 +85,9 @@ export function BaseHeader({
           </div>
         </div>
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 md:hidden">
-          {metadata && <Metadata items={allMetadata} />}
+          {allMetadata && allMetadata.length > 0 && (
+            <Metadata items={allMetadata} />
+          )}
         </div>
         <div className="flex w-full shrink-0 flex-wrap items-center gap-x-3 gap-y-4 md:w-fit md:flex-row-reverse md:gap-y-2 md:overflow-x-auto">
           {primaryAction && (
@@ -145,8 +150,10 @@ export function BaseHeader({
           )}
         </div>
       </div>
-      <div className="flex hidden flex-wrap items-center gap-x-3 gap-y-1 md:block">
-        {metadata && <Metadata items={allMetadata} />}
+      <div className="hidden flex-wrap items-center gap-x-3 gap-y-1 md:block">
+        {allMetadata && allMetadata.length > 0 && (
+          <Metadata items={allMetadata} />
+        )}
       </div>
     </div>
   )

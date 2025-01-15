@@ -22,25 +22,28 @@ export default meta
 
 type Story = StoryObj<typeof ResourceHeader>
 
-const defaultArgs = {
-  title: "Senior Product Designer",
-  description:
-    "Open position on our team, seeking an experienced product designer to lead design initiatives",
-  status: {
-    label: "Status",
-    text: "Published",
-    variant: "positive",
-  },
-  primaryAction: {
-    label: "Edit",
-    icon: Icon.Pencil,
-    onClick: fn(),
-  },
-} as const
-
 export const Default: Story = {
   args: {
-    ...defaultArgs,
+    title: "Senior Product Designer",
+    description:
+      "Open position on our team, seeking an experienced product designer to lead design initiatives",
+    status: {
+      label: "Status",
+      text: "Published",
+      variant: "positive",
+      actions: [
+        {
+          label: "Edit",
+          icon: Icon.Pencil,
+          onClick: fn(),
+        },
+      ],
+    },
+    primaryAction: {
+      label: "Edit",
+      icon: Icon.Pencil,
+      onClick: fn(),
+    },
     secondaryActions: [
       {
         label: "Promote",
@@ -58,7 +61,7 @@ export const Default: Story = {
 
 export const Metadata: Story = {
   args: {
-    ...defaultArgs,
+    ...Default.args,
     primaryAction: undefined,
     secondaryActions: [
       {
@@ -123,7 +126,7 @@ export const Metadata: Story = {
 
 export const WithOtherActions: Story = {
   args: {
-    ...defaultArgs,
+    ...Default.args,
     secondaryActions: [
       {
         label: "Promote",

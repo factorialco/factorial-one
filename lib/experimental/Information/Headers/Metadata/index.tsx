@@ -28,6 +28,7 @@ interface MetadataItem {
   label: string
   value: MetadataItemValue
   actions?: MetadataAction[]
+  hideLabel?: boolean
 }
 
 interface MetadataProps {
@@ -56,7 +57,12 @@ function MetadataItem({ item }: { item: MetadataItem }) {
 
   return (
     <div className="flex h-8 items-center gap-2">
-      <div className="w-28 truncate text-f1-foreground-secondary md:w-fit">
+      <div
+        className={cn(
+          "w-28 truncate text-f1-foreground-secondary md:w-fit",
+          item.hideLabel && "md:hidden"
+        )}
+      >
         {item.label}
       </div>
       <div
@@ -75,7 +81,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
           {isActive && isAction && (
             <motion.div
               className={cn(
-                "absolute -left-1.5 -top-1.5 z-50 flex hidden h-8 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm bg-f1-background py-1 pl-1.5 shadow-md ring-1 ring-inset ring-f1-border-secondary md:flex",
+                "absolute -left-1.5 -top-1.5 z-50 hidden h-8 items-center justify-center gap-1.5 whitespace-nowrap rounded-sm bg-f1-background py-1 pl-1.5 shadow-md ring-1 ring-inset ring-f1-border-secondary md:flex",
                 isAction ? "pr-1" : "pr-1.5"
               )}
               initial={{ opacity: 0 }}
@@ -138,4 +144,4 @@ export function Metadata({ items }: MetadataProps) {
   )
 }
 
-export type { MetadataItem, MetadataItemValue }
+export type { MetadataAction, MetadataItem, MetadataItemValue }
