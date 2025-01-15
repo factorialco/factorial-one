@@ -11,6 +11,9 @@ import { HomeLayout } from "@/experimental/PageLayouts/HomeLayout"
 import { Default as DefaultHomeLayoutStory } from "@/experimental/PageLayouts/HomeLayout/index.stories"
 import { StandardLayout } from "@/experimental/PageLayouts/StandardLayout"
 import { Briefcase } from "@/icons/app"
+import { ComponentProps } from "react"
+
+type TabsProps = ComponentProps<typeof Tabs>
 
 const meta: Meta<typeof Page> = {
   component: Page,
@@ -45,7 +48,7 @@ export const Default: Story = {
           module={defaultModule}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
@@ -72,7 +75,7 @@ export const WithBreadcrumbs: Story = {
           ]}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...TabsStories.Primary.args as TabsProps} />
       </>
     ),
     children: (
@@ -104,7 +107,7 @@ export const WithBreadcrumbsAndStatus: Story = {
           }}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
@@ -141,7 +144,7 @@ export const WithNavigation: Story = {
           }}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
@@ -183,7 +186,7 @@ export const WithNavigationAndStatus: Story = {
           }}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
@@ -215,7 +218,7 @@ export const Embedded: Story = {
             variant: "positive",
           }}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
