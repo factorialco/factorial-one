@@ -13,6 +13,8 @@ describe("ClockInControls helpers", () => {
     clockOut: "Clock Out",
     break: "Break",
     resume: "Resume",
+    selectLocation: "Select location",
+    selectProject: "Select project",
   }
 
   const createEntry = (variant: ClockInStatus) => ({
