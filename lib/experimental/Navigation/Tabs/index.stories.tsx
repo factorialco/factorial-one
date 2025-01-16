@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Tabs } from "."
+import { TabItem, Tabs } from "."
 
-const tabItems = [
+const tabItems: TabItem[] = [
   { label: "Overview", href: "/", index: true },
   { label: "Courses", href: "/courses" },
   { label: "Categories", href: "/categories" },
@@ -15,7 +15,7 @@ const secondaryTabItems = [
   { label: "Activity", href: "/courses/activity" },
 ]
 
-const meta = {
+const meta: Meta<typeof Tabs> = {
   component: Tabs,
   tags: ["autodocs"],
   argTypes: {
@@ -26,7 +26,7 @@ const meta = {
       control: "boolean",
     },
   },
-} satisfies Meta<typeof Tabs>
+}
 
 export default meta
 type Story = StoryObj<typeof meta>
