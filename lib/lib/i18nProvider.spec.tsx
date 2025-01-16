@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import { I18nProvider, useI18n } from "./i18n-provider"
+import { I18nProvider, TranslationsType, useI18n } from "./i18n-provider"
 
 // Test component that uses the i18n hook
 function TestComponent() {
@@ -20,8 +20,8 @@ describe("I18nProvider", () => {
   })
 
   it("allows overriding translations", () => {
-    const customTranslations = {
-      save: "Guardar",
+    const customTranslations: TranslationsType = {
+      save: "Desar",
     }
 
     render(
@@ -30,7 +30,7 @@ describe("I18nProvider", () => {
       </I18nProvider>
     )
 
-    expect(screen.getByTestId("translation")).toHaveTextContent("Guardar")
+    expect(screen.getByTestId("translation")).toHaveTextContent("Desar")
   })
 
   it("throws error when useI18n is used outside provider", () => {
