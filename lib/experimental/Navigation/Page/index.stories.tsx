@@ -75,7 +75,7 @@ export const WithBreadcrumbs: Story = {
           ]}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args as TabsProps} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
