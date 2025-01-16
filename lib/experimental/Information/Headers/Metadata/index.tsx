@@ -8,6 +8,7 @@ import {
   StatusTag,
   StatusVariant,
 } from "@/experimental/Information/Tags/StatusTag"
+import { MobileDropdown } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
@@ -53,6 +54,7 @@ function renderMetadataValue(item: MetadataItem) {
 function MetadataItem({ item }: { item: MetadataItem }) {
   const [isActive, setIsActive] = useState(false)
   const isAction = item.actions?.length
+  const metadataValue = renderMetadataValue(item)
 
   return (
     <div className="flex h-8 items-center gap-2">
@@ -68,9 +70,29 @@ function MetadataItem({ item }: { item: MetadataItem }) {
         onBlur={() => isAction && setIsActive(false)}
         className="relative flex h-5 w-fit items-center hover:cursor-default"
       >
-        <div className="font-medium text-f1-foreground">
-          {renderMetadataValue(item)}
+        <div
+          className={cn(
+            "hidden font-medium text-f1-foreground md:block",
+            !isAction && "block"
+          )}
+        >
+          {metadataValue}
         </div>
+        {isAction && (
+          <div className="w-full md:hidden">
+            <MobileDropdown
+              items={
+                item.actions?.map((action) => ({
+                  label: action.label,
+                  icon: action.icon,
+                  onClick: action.onClick,
+                })) ?? []
+              }
+            >
+              {metadataValue}
+            </MobileDropdown>
+          </div>
+        )}
         <AnimatePresence>
           {isActive && isAction && (
             <motion.div
@@ -84,7 +106,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
               transition={{ duration: 0.1 }}
             >
               <div className="flex h-5 items-center font-medium text-f1-foreground">
-                {renderMetadataValue(item)}
+                {metadataValue}
               </div>
               {isAction && (
                 <motion.div
