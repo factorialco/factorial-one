@@ -1,8 +1,13 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
-import { DropdownDefault, SolidPause, SolidPlay, SolidStop } from "@/icons/app"
-import SuitcaseIcon from "@/icons/app/Suitcase"
+import {
+  DropdownDefault,
+  SolidPause,
+  SolidPlay,
+  SolidStop,
+  Suitcase as SuitcaseIcon,
+} from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
