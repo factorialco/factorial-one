@@ -12,6 +12,8 @@ const defaultLabels = {
   resume: "Resume",
   remainingTime: "Remaining time",
   overtime: "Overtime",
+  selectLocation: "Select location",
+  selectProject: "Select project",
 }
 
 const meta: Meta<typeof ClockInControls> = {
@@ -103,4 +105,17 @@ export const Collapsed: Story = {
       <ClockInControls {...args} />
     </div>
   ),
+}
+
+export const WithNoLocationOrProject: Story = {
+  args: {
+    location: undefined,
+    projectName: undefined,
+  },
+}
+
+export const WithLongProjectName: Story = {
+  args: {
+    projectName: "Bolt’s project with a very long name",
+  },
 }
