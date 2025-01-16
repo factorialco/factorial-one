@@ -10,6 +10,6 @@ export default defineConfig({
   splitting: false,
   sourcemap: true,
   clean: true,
-  outDir: "dist_test",
+  outDir: "dist",
   tsconfig: "tsconfig-build.json",
 })
