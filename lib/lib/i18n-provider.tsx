@@ -9,12 +9,12 @@ const I18nContext = createContext<TranslationsType | null>(null)
 
 export interface I18nProviderProps {
   children: ReactNode
-  translations: TranslationsType
+  translations?: TranslationsType
 }
 
 export function I18nProvider({
   children,
-  translations,
+  translations = defaultTranslations,
 }: I18nProviderProps): JSX.Element {
   return (
     <I18nContext.Provider value={translations}>{children}</I18nContext.Provider>
