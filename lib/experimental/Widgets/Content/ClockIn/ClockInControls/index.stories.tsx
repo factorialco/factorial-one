@@ -21,7 +21,7 @@ const meta: Meta<typeof ClockInControls> = {
     labels: defaultLabels,
   },
   render: (args) => (
-    <div className="w-[350px]">
+    <div className="max-w-[350px]">
       <ClockInControls {...args} />
     </div>
   ),
@@ -92,7 +92,9 @@ export const WithOvertime: Story = {
 }
 
 export const Collapsed: Story = {
-  args: {
-    collapsed: true,
-  },
+  render: (args) => (
+    <div className="max-w-[250px]">
+      <ClockInControls {...args} />
+    </div>
+  ),
 }
