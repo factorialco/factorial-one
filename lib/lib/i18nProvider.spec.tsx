@@ -9,16 +9,6 @@ function TestComponent() {
 }
 
 describe("I18nProvider", () => {
-  it("provides default translations", () => {
-    render(
-      <I18nProvider>
-        <TestComponent />
-      </I18nProvider>
-    )
-
-    expect(screen.getByTestId("translation")).toHaveTextContent("Save")
-  })
-
   it("allows overriding translations", () => {
     const customTranslations: TranslationsType = {
       save: "Desar",
@@ -57,6 +47,13 @@ describe("I18nProvider", () => {
     render(
       // @ts-expect-error - Missing required translation keys should be caught by TypeScript
       <I18nProvider translations={{}}>
+        <div />
+      </I18nProvider>
+    )
+
+    render(
+      // @ts-expect-error - Translations are required
+      <I18nProvider>
         <div />
       </I18nProvider>
     )

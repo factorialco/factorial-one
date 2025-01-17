@@ -71,7 +71,7 @@ export const FactorialOneProvider: React.FC<{
   privacyModeInitiallyEnabled?: boolean
   image?: ImageContextValue
   layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">
-  i18n?: Omit<I18nProviderProps, "children">
+  i18n: Omit<I18nProviderProps, "children">
 }> = ({ children, layout, link, privacyModeInitiallyEnabled, image, i18n }) => {
   return (
     <MotionProvider>
