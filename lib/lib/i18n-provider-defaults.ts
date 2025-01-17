@@ -5,6 +5,6 @@ const defaultTranslations = {
     save: "Save",
     cancel: "Cancel",
   },
-} as const
+}
 
 export { defaultTranslations }
