@@ -1,0 +1,84 @@
+import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
+import LinkTo from "@storybook/addon-links/react"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
+
+import * as ResourceHeaderStories from "./ResourceHeader/index.stories"
+import * as PersonHeaderStories from "./PersonHeader/index.stories"
+import * as CompanyHeaderStories from "./CompanyHeader/index.stories"
+
+# Headers
+
+## Introduction
+
+### Definition
+
+The Resource Header is a structural component that provides context and key
+actions for a resource page. It helps users understand where they are and what
+actions they can take.
+
+### Purpose
+
+- Provides immediate context about the current resource being viewed
+- Centralizes primary and secondary actions related to the resource
+- Displays crucial metadata and status information
+- Creates a consistent navigation pattern across different resource types
+
+## Anatomy
+
+<Canvas of={ResourceHeaderStories.Default} meta={ResourceHeaderStories} />
+<Controls of={ResourceHeaderStories.Default} />
+
+## Variants
+
+The Resource Header is designed to adapt to different types of content,
+providing a clear and relevant presentation based on the context.
+
+### ResourceHeader
+
+<Canvas of={ResourceHeaderStories.Default} />
+
+### PersonHeader
+
+Designed for individual users.
+
+<Canvas of={PersonHeaderStories.Default} />
+
+### CompanyHeader
+
+Designed for company, client and other entity profiles.
+
+<Canvas of={CompanyHeaderStories.Default} />
+
+# Guidelines
+
+## Content best practices
+
+- Keep titles concise and descriptive (recommended: 2-5 words)
+- Write descriptions that provide meaningful context (recommended: 1-2
+  sentences)
+- Use action verbs for button labels (e.g., "Edit profile" instead of "Profile
+  edition")
+- Ensure metadata labels are clear and consistent across the application
+
+## Design best practices
+
+<DoDonts
+  do={{
+    description: "Use Resource Header when you need to:",
+    guidelines: [
+      "Display key information about a specific resource (employee, project, document, course, job post, expense, performance review, etc.)",
+      "Provide quick access to common actions related to the resource",
+      "Show the current status and important metadata of a resource",
+      "Create consistent navigation patterns across resource detail pages",
+    ],
+  }}
+  dont={{
+    description: "Don't use Resource Header when:",
+    guidelines: [
+      "You're displaying a data collection",
+      "The page doesn't represent a specific resource",
+      "You need minimal identification without actions or metadata",
+      "You're creating a dashboard overview",
+    ],
+  }}
+/>

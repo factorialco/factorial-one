@@ -16,6 +16,33 @@ const meta: Meta<typeof ResourceHeader> = {
   parameters: {
     layout: "centered",
   },
+  argTypes: {
+    title: {
+      description: "Main heading identifying the resource",
+    },
+    description: {
+      description: "Supporting text providing additional context",
+    },
+    status: {
+      description: "Visual indicator of the resource's current state",
+    },
+    metadata: {
+      description:
+        "Horizontal list of key-value pairs showing relevant information",
+    },
+    primaryAction: {
+      description:
+        "Main button representing the most important action available for the resource",
+    },
+    secondaryActions: {
+      description:
+        "Complementary set of lower-priority actions offering additional but less frequent functionalities",
+    },
+    otherActions: {
+      description:
+        "Expandable menu containing additional operations and advanced options",
+    },
+  },
 }
 
 export default meta
