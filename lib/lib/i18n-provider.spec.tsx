@@ -5,13 +5,16 @@ import { I18nProvider, TranslationsType, useI18n } from "./i18n-provider"
 // Test component that uses the i18n hook
 function TestComponent() {
   const i18n = useI18n()
-  return <div data-testid="translation">{i18n.save}</div>
+  return <div data-testid="translation">{i18n.actions.save}</div>
 }
 
 describe("I18nProvider", () => {
   it("allows overriding translations", () => {
     const customTranslations: TranslationsType = {
-      save: "Desar",
+      actions: {
+        save: "Desar",
+        cancel: "Cancelar",
+      },
     }
 
     render(

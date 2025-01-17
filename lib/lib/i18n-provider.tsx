@@ -1,10 +1,7 @@
 "use client"
 
 import { createContext, ReactNode, useContext } from "react"
-import defaultTranslations from "../../i18n.json"
-
-export type TranslationsType = typeof defaultTranslations
-
+import { TranslationsType } from "./i18n-provider-defaults"
 const I18nContext = createContext<TranslationsType | null>(null)
 
 export interface I18nProviderProps {
@@ -37,7 +34,6 @@ export const buildTranslations = (
   return translations
 }
 
-export { defaultTranslations }
-
 // Type helper for creating translation objects that match the expected shape
 export type I18nStrings = TranslationsType
+export type { TranslationsType }

@@ -1,3 +1,6 @@
 {
-  "save": "Save"
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel"
+  }
 }
