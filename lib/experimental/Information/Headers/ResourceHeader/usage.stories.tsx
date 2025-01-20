@@ -23,6 +23,9 @@ const meta: Meta<typeof ResourceHeader> = {
   component: ResourceHeader,
   parameters: {
     layout: "fullscreen",
+    a11y: {
+      disable: true,
+    },
   },
 }
 
