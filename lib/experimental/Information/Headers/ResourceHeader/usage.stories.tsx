@@ -374,10 +374,12 @@ export const Default: Story = {
               }}
               breadcrumbs={[
                 {
+                  id: "jobs",
                   href: "/jobs",
                   label: "Job openings",
                 },
                 {
+                  id: "product-designer",
                   href: "/jobs/product-designer",
                   label: "Product Designer",
                 },
