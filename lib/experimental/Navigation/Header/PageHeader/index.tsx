@@ -173,7 +173,10 @@ export function PageHeader({
               )}
             </div>
           ) : (
-            <Breadcrumbs breadcrumbs={breadcrumbsTree} />
+            <Breadcrumbs
+              key={breadcrumbsTree[0].id}
+              breadcrumbs={breadcrumbsTree}
+            />
           )}
         </div>
       </div>

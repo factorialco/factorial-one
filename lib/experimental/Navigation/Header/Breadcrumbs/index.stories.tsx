@@ -232,3 +232,56 @@ export const Interactive: Story = {
     })
   },
 }
+
+export const SingleLevelTransition: Story = {
+  render: () => {
+    const [currentSection, setCurrentSection] = useState<
+      "recruitment" | "documents"
+    >("recruitment")
+    const [isLoading, setIsLoading] = useState(false)
+
+    const sections = {
+      recruitment: {
+        id: "recruitment",
+        label: "Recruitment",
+        href: "/recruitment",
+        icon: Recruitment,
+      },
+      documents: {
+        id: "documents",
+        label: "Documents",
+        href: "/documents",
+        icon: Documents,
+      },
+    }
+
+    const handleSwitch = async () => {
+      setIsLoading(true)
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      setCurrentSection((current) =>
+        current === "recruitment" ? "documents" : "recruitment"
+      )
+      setIsLoading(false)
+    }
+
+    return (
+      <div className="space-y-4">
+        <Button onClick={handleSwitch} variant="outline" disabled={isLoading}>
+          Switch Section
+        </Button>
+        <div
+          className="flex w-full items-center"
+          data-testid="breadcrumbs-container"
+        >
+          <Breadcrumbs
+            breadcrumbs={[
+              isLoading
+                ? { id: "loading", label: "Loading", loading: true }
+                : sections[currentSection],
+            ]}
+          />
+        </div>
+      </div>
+    )
+  },
+}
