@@ -27,10 +27,18 @@ describe("Breadcrumbs", () => {
   })
 
   it("renders all breadcrumbs when there's enough space", () => {
-    const home = { label: "Home", href: "/" }
-    const products = { label: "Products", href: "/products" }
-    const electronics = { label: "Electronics", href: "/products/electronics" }
-    const laptops = { label: "Laptops", href: "/products/electronics/laptops" }
+    const home = { id: "home", label: "Home", href: "/" }
+    const products = { id: "products", label: "Products", href: "/products" }
+    const electronics = {
+      id: "electronics",
+      label: "Electronics",
+      href: "/products/electronics",
+    }
+    const laptops = {
+      id: "laptops",
+      label: "Laptops",
+      href: "/products/electronics/laptops",
+    }
     const breadcrumbs = [home, products, electronics, laptops]
 
     const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
@@ -66,10 +74,18 @@ describe("Breadcrumbs", () => {
       toJSON: () => {},
     }))
 
-    const home = { label: "Home", href: "/" }
-    const products = { label: "Products", href: "/products" }
-    const electronics = { label: "Electronics", href: "/products/electronics" }
-    const laptops = { label: "Laptops", href: "/products/electronics/laptops" }
+    const home = { id: "home", label: "Home", href: "/" }
+    const products = { id: "products", label: "Products", href: "/products" }
+    const electronics = {
+      id: "electronics",
+      label: "Electronics",
+      href: "/products/electronics",
+    }
+    const laptops = {
+      id: "laptops",
+      label: "Laptops",
+      href: "/products/electronics/laptops",
+    }
     const breadcrumbs = [home, products, electronics, laptops]
 
     const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
@@ -92,8 +108,13 @@ describe("Breadcrumbs", () => {
   })
 
   it("renders breadcrumbs with icons when provided", () => {
-    const home = { label: "Home", href: "/", icon: Home }
-    const settings = { label: "Settings", href: "/settings", icon: Settings }
+    const home = { id: "home", label: "Home", href: "/", icon: Home }
+    const settings = {
+      id: "settings",
+      label: "Settings",
+      href: "/settings",
+      icon: Settings,
+    }
     const breadcrumbs = [home, settings]
 
     const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
@@ -116,9 +137,13 @@ describe("Breadcrumbs", () => {
   })
 
   it("renders correct links for non-last items", () => {
-    const home = { label: "Home", href: "/" }
-    const products = { label: "Products", href: "/products" }
-    const currentPage = { label: "Current Page", href: "/products/current" }
+    const home = { id: "home", label: "Home", href: "/" }
+    const products = { id: "products", label: "Products", href: "/products" }
+    const currentPage = {
+      id: "current",
+      label: "Current Page",
+      href: "/products/current",
+    }
     const breadcrumbs = [home, products, currentPage]
 
     const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
@@ -147,9 +172,9 @@ describe("Breadcrumbs", () => {
 
   describe("loading states", () => {
     it("renders skeleton for last item when loading", () => {
-      const home = { label: "Home", href: "/" }
-      const products = { label: "Products", href: "/products" }
-      const loadingItem = { loading: true } as const
+      const home = { id: "home", label: "Home", href: "/" }
+      const products = { id: "products", label: "Products", href: "/products" }
+      const loadingItem = { id: "loading", loading: true } as const
       const breadcrumbs = [home, products, loadingItem]
 
       const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
@@ -171,9 +196,9 @@ describe("Breadcrumbs", () => {
     })
 
     it("renders skeletons for last two items when loading", () => {
-      const home = { label: "Home", href: "/" }
-      const loadingItem1 = { loading: true } as const
-      const loadingItem2 = { loading: true } as const
+      const home = { id: "home", label: "Home", href: "/" }
+      const loadingItem1 = { id: "loading1", loading: true } as const
+      const loadingItem2 = { id: "loading2", loading: true } as const
       const breadcrumbs = [home, loadingItem1, loadingItem2]
 
       const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
@@ -194,9 +219,9 @@ describe("Breadcrumbs", () => {
     })
 
     it("ensures loading items are not interactive", () => {
-      const home = { label: "Home", href: "/" }
-      const loadingItem1 = { loading: true } as const
-      const loadingItem2 = { loading: true } as const
+      const home = { id: "home", label: "Home", href: "/" }
+      const loadingItem1 = { id: "loading1", loading: true } as const
+      const loadingItem2 = { id: "loading2", loading: true } as const
       const breadcrumbs = [home, loadingItem1, loadingItem2]
 
       const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)

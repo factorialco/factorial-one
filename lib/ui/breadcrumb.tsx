@@ -21,12 +21,14 @@ const BreadcrumbList = React.forwardRef<
   <ol
     ref={ref}
     className={cn(
-      "flex list-none flex-nowrap items-center gap-1 text-f1-foreground-secondary",
+      "flex list-none flex-nowrap items-center text-f1-foreground-secondary",
       className
     )}
     {...props}
   >
-    <AnimatePresence initial={false}>{children}</AnimatePresence>
+    <AnimatePresence mode="popLayout" initial={false}>
+      {children}
+    </AnimatePresence>
   </ol>
 ))
 BreadcrumbList.displayName = "BreadcrumbList"
