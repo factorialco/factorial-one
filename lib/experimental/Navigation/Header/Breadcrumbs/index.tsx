@@ -22,13 +22,14 @@ import { NavigationItem } from "../../utils"
 import { IconType } from "@/components/Utilities/Icon"
 import { useEffect, useRef, useState } from "react"
 
-export type BreadcrumbItemType =
+export type BreadcrumbItemType = { id: string } & (
   | (NavigationItem & {
       icon?: IconType
     })
   | {
       loading: true
     }
+)
 
 function BreadcrumbSkeleton() {
   return (
@@ -102,7 +103,7 @@ function BreadcrumbItem({
   showSeparator = true,
 }: BreadcrumbItemProps) {
   return (
-    <ShadBreadcrumbItem>
+    <ShadBreadcrumbItem key={item.id}>
       <div className="flex items-center">
         <BreadcrumbContent item={item} isLast={isLast} />
       </div>
@@ -198,22 +199,26 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   const lastItems = breadcrumbs.slice(-visibleCount + 1)
   const collapsedItems = breadcrumbs.slice(1, -visibleCount + 1)
 
+  console.log(lastItems)
+
   return (
     <Breadcrumb ref={containerRef} className="w-full">
       <BreadcrumbList>
         <BreadcrumbItem
+          key={firstItem.id}
           item={firstItem}
           isLast={false}
           showSeparator={!("loading" in firstItem)}
         />
         {collapsedItems.length > 0 && (
           <CollapsedBreadcrumbItem
+            key="collapsed-items"
             items={collapsedItems as DropdownItemWithoutIcon[]}
           />
         )}
         {lastItems.map((item, index) => (
           <BreadcrumbItem
-            key={index}
+            key={item.id}
             item={item}
             isLast={index === lastItems.length - 1}
             showSeparator={index !== lastItems.length - 1}
