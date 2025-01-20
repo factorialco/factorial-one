@@ -20,7 +20,7 @@ import { cn, focusRing } from "@/lib/utils"
 import { NavigationItem } from "../../utils"
 
 import { IconType } from "@/components/Utilities/Icon"
-import { useEffect, useRef, useState } from "react"
+import { useLayoutEffect, useRef, useState } from "react"
 
 export type BreadcrumbItemType = { id: string } & (
   | (NavigationItem & {
@@ -143,7 +143,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   const [visibleCount, setVisibleCount] = useState(2)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const container = containerRef.current
     if (!container) return
 
@@ -189,23 +189,23 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
     return () => {
       resizeObserver.disconnect()
     }
-  }, [breadcrumbs])
+  }, [breadcrumbs.length])
 
   if (!breadcrumbs.length) {
     return <Breadcrumb ref={containerRef} className="w-full" />
   }
 
   const firstItem = breadcrumbs[0]
-  const lastItems = breadcrumbs.slice(-visibleCount + 1)
-  const collapsedItems = breadcrumbs.slice(1, -visibleCount + 1)
+  const lastItems = [...breadcrumbs].slice(-visibleCount + 1)
+  const collapsedItems = [...breadcrumbs].slice(1, -visibleCount + 1)
 
-  console.log(lastItems)
+  console.log({ visibleCount, firstItem, lastItems, collapsedItems })
 
   return (
     <Breadcrumb ref={containerRef} className="w-full">
       <BreadcrumbList>
         <BreadcrumbItem
-          key={firstItem.id}
+          key={`first-item-${firstItem.id}`}
           item={firstItem}
           isLast={false}
           showSeparator={!("loading" in firstItem)}
