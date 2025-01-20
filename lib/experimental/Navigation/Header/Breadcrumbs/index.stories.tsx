@@ -1,13 +1,7 @@
 import { Documents, Recruitment } from "@/icons/modules"
 import { Button } from "@/ui/button"
 import type { Meta, StoryObj } from "@storybook/react"
-import {
-  expect,
-  userEvent,
-  waitFor,
-  waitForElementToBeRemoved,
-  within,
-} from "@storybook/test"
+import { expect, userEvent, waitFor, within } from "@storybook/test"
 import { useState } from "react"
 import Breadcrumbs, { BreadcrumbItemType } from "./index"
 
@@ -219,12 +213,16 @@ export const Interactive: Story = {
 
     // Remove Applications
     await userEvent.click(removeButton)
-    await waitForElementToBeRemoved(() => canvas.queryByText("Applications"))
+    await waitFor(() =>
+      expect(canvas.queryByText("Applications")).not.toBeInTheDocument()
+    )
     await sleep(500)
 
     // Remove Dani Moreno
     await userEvent.click(removeButton)
-    await waitForElementToBeRemoved(() => canvas.queryByText("Dani Moreno"))
+    await waitFor(() =>
+      expect(canvas.queryByText("Dani Moreno")).not.toBeInTheDocument()
+    )
     await sleep(500)
 
     // Check final state
