@@ -1,5 +1,13 @@
 import { Documents, Recruitment } from "@/icons/modules"
+import { Button } from "@/ui/button"
 import type { Meta, StoryObj } from "@storybook/react"
+import {
+  expect,
+  userEvent,
+  waitFor,
+  waitForElementToBeRemoved,
+  within,
+} from "@storybook/test"
 import { useState } from "react"
 import Breadcrumbs, { BreadcrumbItemType } from "./index"
 
@@ -108,6 +116,8 @@ export const LongBreadcrumbs: Story = {
   },
 }
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export const Interactive: Story = {
   render: () => {
     const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItemType[]>([
@@ -137,43 +147,90 @@ export const Interactive: Story = {
       },
     ]
 
-    const canAdd = breadcrumbs.length < additionalItems.length + 1
-    const canRemove = breadcrumbs.length > 1
-
     const handleAdd = () => {
-      if (canAdd) {
-        setBreadcrumbs((prev) => [...prev, additionalItems[prev.length - 1]])
-      }
+      setBreadcrumbs((prev) => [...prev, additionalItems[prev.length - 1]])
     }
 
     const handleRemove = () => {
-      if (canRemove) {
-        setBreadcrumbs((prev) => prev.slice(0, -1))
-      }
+      setBreadcrumbs((prev) => prev.slice(0, -1))
     }
 
     return (
       <div className="space-y-4">
         <div className="flex gap-2">
-          <button
+          <Button
             onClick={handleAdd}
-            disabled={!canAdd}
-            className="rounded-md bg-f1-background-secondary px-4 py-2 text-sm font-medium text-f1-foreground hover:bg-f1-background-secondary/80 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={breadcrumbs.length >= 4}
+            variant="outline"
           >
-            Add Item
-          </button>
-          <button
+            Add Breadcrumb
+          </Button>
+          <Button
             onClick={handleRemove}
-            disabled={!canRemove}
-            className="rounded-md bg-f1-background-secondary px-4 py-2 text-sm font-medium text-f1-foreground hover:bg-f1-background-secondary/80 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={breadcrumbs.length <= 1}
+            variant="outline"
           >
-            Remove Item
-          </button>
+            Remove Breadcrumb
+          </Button>
         </div>
-        <div className="flex h-40 w-full items-center">
+        <div
+          className="flex w-full items-center"
+          data-testid="breadcrumbs-container"
+        >
           <Breadcrumbs breadcrumbs={breadcrumbs} />
         </div>
       </div>
     )
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    // Initial state - just Recruitment
+    await waitFor(() => {
+      expect(canvas.getByText("Recruitment")).toBeInTheDocument()
+    })
+
+    // Add and check each breadcrumb
+    const addButton = canvas.getByText("Add Breadcrumb")
+
+    // Add Candidates
+    await userEvent.click(addButton)
+    await waitFor(() => {
+      expect(canvas.getByText("Candidates")).toBeInTheDocument()
+    })
+    await sleep(500)
+
+    // Add Dani Moreno
+    await userEvent.click(addButton)
+    await waitFor(() => {
+      expect(canvas.getByText("Dani Moreno")).toBeInTheDocument()
+    })
+    await sleep(500)
+
+    // Add Applications
+    await userEvent.click(addButton)
+    await waitFor(() => {
+      expect(canvas.getByText("Applications")).toBeInTheDocument()
+    })
+    await sleep(500)
+
+    // Remove breadcrumbs and verify
+    const removeButton = canvas.getByText("Remove Breadcrumb")
+
+    // Remove Applications
+    await userEvent.click(removeButton)
+    await waitForElementToBeRemoved(() => canvas.queryByText("Applications"))
+    await sleep(500)
+
+    // Remove Dani Moreno
+    await userEvent.click(removeButton)
+    await waitForElementToBeRemoved(() => canvas.queryByText("Dani Moreno"))
+    await sleep(500)
+
+    // Check final state
+    await waitFor(() => {
+      expect(canvas.getByText("Recruitment")).toBeInTheDocument()
+      expect(canvas.getByText("Candidates")).toBeInTheDocument()
+    })
   },
 }
