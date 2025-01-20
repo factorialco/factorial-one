@@ -1,12 +1,17 @@
 import { Slot } from "@radix-ui/react-slot"
-import { AnimatePresence, HTMLMotionProps, motion } from "framer-motion"
+import {
+  AnimatePresence,
+  HTMLMotionProps,
+  LayoutGroup,
+  motion,
+} from "framer-motion"
 import { ChevronRight, MoreHorizontal } from "lucide-react"
-import * as React from "react"
+import { forwardRef, useId } from "react"
 
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 
-const Breadcrumb = React.forwardRef<
+const Breadcrumb = forwardRef<
   HTMLElement,
   React.ComponentPropsWithoutRef<"nav"> & {
     separator?: React.ReactNode
@@ -14,26 +19,31 @@ const Breadcrumb = React.forwardRef<
 >(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />)
 Breadcrumb.displayName = "Breadcrumb"
 
-const BreadcrumbList = React.forwardRef<
+const BreadcrumbList = forwardRef<
   HTMLOListElement,
   React.ComponentPropsWithoutRef<"ol">
->(({ className, children, ...props }, ref) => (
-  <ol
-    ref={ref}
-    className={cn(
-      "flex h-8 list-none flex-nowrap items-center text-f1-foreground-secondary",
-      className
-    )}
-    {...props}
-  >
-    <AnimatePresence mode="popLayout" initial={false}>
-      {children}
-    </AnimatePresence>
-  </ol>
-))
+>(({ className, children, ...props }, ref) => {
+  const id = useId()
+
+  return (
+    <ol
+      ref={ref}
+      className={cn(
+        "flex h-8 list-none flex-nowrap items-center text-f1-foreground-secondary",
+        className
+      )}
+      {...props}
+    >
+      <LayoutGroup id={id}>
+        <AnimatePresence initial={false}>{children}</AnimatePresence>
+      </LayoutGroup>
+    </ol>
+  )
+})
+
 BreadcrumbList.displayName = "BreadcrumbList"
 
-const BreadcrumbItem = React.forwardRef<HTMLLIElement, HTMLMotionProps<"li">>(
+const BreadcrumbItem = forwardRef<HTMLLIElement, HTMLMotionProps<"li">>(
   ({ className, ...props }, ref) => (
     <motion.li
       ref={ref}
@@ -48,7 +58,7 @@ const BreadcrumbItem = React.forwardRef<HTMLLIElement, HTMLMotionProps<"li">>(
 )
 BreadcrumbItem.displayName = "BreadcrumbItem"
 
-const BreadcrumbLink = React.forwardRef<
+const BreadcrumbLink = forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithoutRef<"a"> & {
     asChild?: boolean
@@ -69,7 +79,7 @@ const BreadcrumbLink = React.forwardRef<
 })
 BreadcrumbLink.displayName = "BreadcrumbLink"
 
-const BreadcrumbPage = React.forwardRef<
+const BreadcrumbPage = forwardRef<
   HTMLSpanElement,
   React.ComponentPropsWithoutRef<"span">
 >(({ className, ...props }, ref) => (
