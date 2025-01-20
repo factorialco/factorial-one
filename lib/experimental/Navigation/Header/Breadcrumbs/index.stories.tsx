@@ -114,47 +114,87 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const Interactive: Story = {
   render: () => {
-    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItemType[]>([
-      {
+    const [currentSection, setCurrentSection] = useState<
+      "recruitment" | "documents"
+    >("recruitment")
+
+    const sections = {
+      recruitment: {
         id: "recruitment",
         label: "Recruitment",
         href: "/recruitment",
         icon: Recruitment,
+        additionalItems: [
+          {
+            id: "candidates",
+            label: "Candidates",
+            href: "/recruitment/candidates",
+          },
+          {
+            id: "dani-moreno",
+            label: "Dani Moreno",
+            href: "/recruitment/candidates/dani-moreno",
+          },
+          {
+            id: "applications",
+            label: "Applications",
+            href: "/recruitment/candidates/dani-moreno/applications",
+          },
+        ],
       },
+      documents: {
+        id: "documents",
+        label: "Documents",
+        href: "/documents",
+        icon: Documents,
+        additionalItems: [
+          {
+            id: "employee-documents",
+            label: "Employee Documents",
+            href: "/documents/employee",
+          },
+          {
+            id: "contracts",
+            label: "Contracts",
+            href: "/documents/employee/contracts",
+          },
+          {
+            id: "templates",
+            label: "Templates",
+            href: "/documents/employee/contracts/templates",
+          },
+        ],
+      },
+    }
+
+    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItemType[]>([
+      sections[currentSection],
     ])
 
-    const additionalItems: BreadcrumbItemType[] = [
-      {
-        id: "candidates",
-        label: "Candidates",
-        href: "/recruitment/candidates",
-      },
-      {
-        id: "dani-moreno",
-        label: "Dani Moreno",
-        href: "/recruitment/candidates/dani-moreno",
-      },
-      {
-        id: "applications",
-        label: "Applications",
-        href: "/recruitment/candidates/dani-moreno/applications",
-      },
-    ]
-
     const handleAdd = () => {
-      setBreadcrumbs((prev) => [...prev, additionalItems[prev.length - 1]])
+      const currentItems = sections[currentSection].additionalItems
+      setBreadcrumbs((prev) => [...prev, currentItems[prev.length - 1]])
     }
 
     const handleRemove = () => {
       setBreadcrumbs((prev) => prev.slice(0, -1))
     }
 
+    const handleSwitch = () => {
+      const newSection =
+        currentSection === "recruitment" ? "documents" : "recruitment"
+      setCurrentSection(newSection)
+      setBreadcrumbs([sections[newSection]])
+    }
+
+    const currentItems = sections[currentSection].additionalItems
+
     return (
       <div className="space-y-4">
         <div className="flex gap-2">
           <Button
             onClick={handleAdd}
-            disabled={breadcrumbs.length >= 4}
+            disabled={breadcrumbs.length >= currentItems.length + 1}
             variant="outline"
           >
             Add Breadcrumb
@@ -165,6 +205,9 @@ export const Interactive: Story = {
             variant="outline"
           >
             Remove Breadcrumb
+          </Button>
+          <Button onClick={handleSwitch} variant="outline">
+            Switch Section
           </Button>
         </div>
         <div
@@ -184,7 +227,7 @@ export const Interactive: Story = {
       expect(canvas.getByText("Recruitment")).toBeInTheDocument()
     })
 
-    // Add and check each breadcrumb
+    // Add and check each breadcrumb in Recruitment section
     const addButton = canvas.getByText("Add Breadcrumb")
 
     // Add Candidates
@@ -201,34 +244,35 @@ export const Interactive: Story = {
     })
     await sleep(500)
 
-    // Add Applications
-    await userEvent.click(addButton)
+    // Switch to Documents section
+    const switchButton = canvas.getByText("Switch Section")
+    await userEvent.click(switchButton)
+
+    // Verify Documents section loaded
     await waitFor(() => {
-      expect(canvas.getByText("Applications")).toBeInTheDocument()
+      expect(canvas.getByText("Documents")).toBeInTheDocument()
     })
     await sleep(500)
 
-    // Remove breadcrumbs and verify
+    // Add breadcrumbs in Documents section
+    await userEvent.click(addButton)
+    await waitFor(() => {
+      expect(canvas.getByText("Employee Documents")).toBeInTheDocument()
+    })
+    await sleep(500)
+
+    // Remove breadcrumb
     const removeButton = canvas.getByText("Remove Breadcrumb")
-
-    // Remove Applications
     await userEvent.click(removeButton)
-    await waitFor(() =>
-      expect(canvas.queryByText("Applications")).not.toBeInTheDocument()
-    )
+    await waitFor(() => {
+      expect(canvas.queryByText("Employee Documents")).not.toBeInTheDocument()
+    })
     await sleep(500)
 
-    // Remove Dani Moreno
-    await userEvent.click(removeButton)
-    await waitFor(() =>
-      expect(canvas.queryByText("Dani Moreno")).not.toBeInTheDocument()
-    )
-    await sleep(500)
-
-    // Check final state
+    // Switch back to Recruitment
+    await userEvent.click(switchButton)
     await waitFor(() => {
       expect(canvas.getByText("Recruitment")).toBeInTheDocument()
-      expect(canvas.getByText("Candidates")).toBeInTheDocument()
     })
   },
 }
