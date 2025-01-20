@@ -20,6 +20,7 @@ import { cn, focusRing } from "@/lib/utils"
 import { NavigationItem } from "../../utils"
 
 import { IconType } from "@/components/Utilities/Icon"
+import { motion } from "framer-motion"
 import { useLayoutEffect, useRef, useState } from "react"
 
 export type BreadcrumbItemType = { id: string } & (
@@ -60,9 +61,15 @@ function BreadcrumbLink({ item, className }: BreadcrumbLinkProps) {
 
 function BreadcrumbSeparator() {
   return (
-    <div className="flex items-center">
+    <motion.div
+      className="flex items-center"
+      initial={{ opacity: 0, translateX: -8 }}
+      animate={{ opacity: 1, translateX: 0 }}
+      exit={{ opacity: 0, translateX: -8 }}
+      transition={{ duration: 0.15 }}
+    >
       <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
-    </div>
+    </motion.div>
   )
 }
 
