@@ -1,3 +1,4 @@
+import HomeIcon from "@/icons/app/Home"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ClockInControls } from "."
 
@@ -11,6 +12,8 @@ const defaultLabels = {
   resume: "Resume",
   remainingTime: "Remaining time",
   overtime: "Overtime",
+  selectLocation: "Select location",
+  selectProject: "Select project",
 }
 
 const meta: Meta<typeof ClockInControls> = {
@@ -19,9 +22,14 @@ const meta: Meta<typeof ClockInControls> = {
   tags: ["autodocs"],
   args: {
     labels: defaultLabels,
+    location: {
+      name: "Home",
+      icon: HomeIcon,
+    },
+    projectName: "Bolt’s project",
   },
   render: (args) => (
-    <div className="w-[350px]">
+    <div className="max-w-[350px]">
       <ClockInControls {...args} />
     </div>
   ),
@@ -92,7 +100,22 @@ export const WithOvertime: Story = {
 }
 
 export const Collapsed: Story = {
+  render: (args) => (
+    <div className="max-w-[300px]">
+      <ClockInControls {...args} />
+    </div>
+  ),
+}
+
+export const WithNoLocationOrProject: Story = {
   args: {
-    collapsed: true,
+    location: undefined,
+    projectName: undefined,
+  },
+}
+
+export const WithLongProjectName: Story = {
+  args: {
+    projectName: "Bolt’s project with a very long name",
   },
 }

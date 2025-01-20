@@ -11,6 +11,8 @@ import "../styles.css"
 import { ThemeProvider } from "../lib/lib/theme-provider"
 import { FactorialOneProvider } from "../lib/lib/one-provider"
 import { DocsContainer } from "./DocsContainer"
+import { buildTranslations } from "../lib/lib/i18n-provider"
+import { defaultTranslations } from "../lib/lib/i18n-provider-defaults"
 
 MotionGlobalConfig.skipAnimations = isChromatic()
 
@@ -32,6 +34,9 @@ export const FactorialOne = (Story, { parameters }) => {
     <FactorialOneProvider
       layout={{
         fullScreen: parameters.layout === "fullscreen",
+      }}
+      i18n={{
+        translations: buildTranslations(defaultTranslations),
       }}
       link={{
         currentPath,

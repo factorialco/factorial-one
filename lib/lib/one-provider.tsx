@@ -7,6 +7,8 @@ import {
   useState,
 } from "react"
 import { useIsomorphicLayoutEffect } from "usehooks-ts"
+import { I18nProvider, I18nProviderProps } from "./i18n-provider"
+
 import { ImageContextValue, ImageProvider } from "./imageHandler"
 import { LinkContextValue, LinkProvider } from "./linkHandler"
 import { PrivacyModeProvider } from "./privacyMode"
@@ -69,18 +71,23 @@ export const FactorialOneProvider: React.FC<{
   privacyModeInitiallyEnabled?: boolean
   image?: ImageContextValue
   layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">
-}> = ({ children, layout, link, privacyModeInitiallyEnabled, image }) => {
+  i18n: Omit<I18nProviderProps, "children">
+}> = ({ children, layout, link, privacyModeInitiallyEnabled, image, i18n }) => {
   return (
     <MotionProvider>
-      <LinkProvider {...link}>
-        <LayoutProvider {...layout}>
-          <XRayProvider>
-            <PrivacyModeProvider initiallyEnabled={privacyModeInitiallyEnabled}>
-              <ImageProvider {...image}>{children}</ImageProvider>
-            </PrivacyModeProvider>
-          </XRayProvider>
-        </LayoutProvider>
-      </LinkProvider>
+      <I18nProvider {...i18n}>
+        <LinkProvider {...link}>
+          <LayoutProvider {...layout}>
+            <XRayProvider>
+              <PrivacyModeProvider
+                initiallyEnabled={privacyModeInitiallyEnabled}
+              >
+                <ImageProvider {...image}>{children}</ImageProvider>
+              </PrivacyModeProvider>
+            </XRayProvider>
+          </LayoutProvider>
+        </LinkProvider>
+      </I18nProvider>
     </MotionProvider>
   )
 }

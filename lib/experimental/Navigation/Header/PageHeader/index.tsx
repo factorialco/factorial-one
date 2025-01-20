@@ -112,10 +112,7 @@ export function PageHeader({
     <div
       className={cn(
         "flex items-center justify-between px-5 py-4 xs:px-6",
-        embedded ? "h-12" : "h-16",
-        hasNavigation &&
-          !embedded &&
-          "border-b border-dashed border-transparent border-b-f1-border"
+        embedded ? "h-12" : "h-16"
       )}
     >
       <div className="flex flex-grow items-center">
