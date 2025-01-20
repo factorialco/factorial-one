@@ -95,7 +95,12 @@ export function PageHeader({
   const { sidebarState, toggleSidebar } = useSidebar()
 
   const breadcrumbsTree: BreadcrumbItemType[] = [
-    { id: "module", label: module.name, href: module.href, icon: module.icon },
+    {
+      id: module.href,
+      label: module.name,
+      href: module.href,
+      icon: module.icon,
+    },
     ...breadcrumbs,
   ]
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
