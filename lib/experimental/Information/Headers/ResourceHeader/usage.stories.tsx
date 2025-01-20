@@ -23,9 +23,6 @@ const meta: Meta<typeof ResourceHeader> = {
   component: ResourceHeader,
   parameters: {
     layout: "fullscreen",
-    a11y: {
-      disable: true,
-    },
   },
 }
 
@@ -470,17 +467,11 @@ export const Default: Story = {
         value: {
           type: "avatar",
           variant: {
-            type: "person",
-            firstName: "Josep Jaume",
-            lastName: "Rey",
-            src: "https://github.com/josepjaume.png",
+            type: "team",
+            name: "Human Resources",
           },
-          text: "",
+          text: "Human Resources",
         },
-      },
-      {
-        label: "Team",
-        value: { type: "text", content: "Human Resources" },
         actions: [
           {
             label: "Copy",
