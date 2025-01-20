@@ -195,80 +195,101 @@ function calculateVisibleCount(containerWidth: number, totalItems: number) {
   return Math.max(2, count)
 }
 
+interface BreadcrumbState {
+  visibleCount: number
+  firstItem: BreadcrumbItemType | null
+  lastItems: BreadcrumbItemType[]
+  collapsedItems: BreadcrumbItemType[]
+  isOnly: boolean
+}
+
 export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [mounted, setMounted] = useState(false)
-  const [visibleCount, setVisibleCount] = useState(
-    breadcrumbs.length <= 2 ? breadcrumbs.length : 2
-  )
+  const [state, setState] = useState<BreadcrumbState>({
+    visibleCount: breadcrumbs.length <= 2 ? breadcrumbs.length : 2,
+    firstItem: breadcrumbs[0] || null,
+    lastItems: [],
+    collapsedItems: [],
+    isOnly: breadcrumbs.length === 1,
+  })
 
   useLayoutEffect(() => {
     const container = containerRef.current
     if (!container) return
 
-    const updateVisibleBreadcrumb = () => {
+    const updateBreadcrumbState = () => {
       if (!containerRef.current || breadcrumbs.length <= 2) {
-        setVisibleCount(breadcrumbs.length)
+        setState({
+          visibleCount: breadcrumbs.length,
+          firstItem: breadcrumbs[0] || null,
+          lastItems: breadcrumbs.slice(1),
+          collapsedItems: [],
+          isOnly: breadcrumbs.length === 1,
+        })
         return
       }
 
       const containerWidth = containerRef.current.getBoundingClientRect().width
-      setVisibleCount(calculateVisibleCount(containerWidth, breadcrumbs.length))
+      const visibleCount = calculateVisibleCount(
+        containerWidth,
+        breadcrumbs.length
+      )
+
+      setState({
+        visibleCount,
+        firstItem: breadcrumbs[0],
+        lastItems: breadcrumbs.slice(
+          Math.max(1, breadcrumbs.length - (visibleCount - 1))
+        ),
+        collapsedItems: breadcrumbs.slice(
+          1,
+          breadcrumbs.length - (visibleCount - 1)
+        ),
+        isOnly: breadcrumbs.length === 1,
+      })
     }
 
     const resizeObserver = new ResizeObserver(() => {
-      updateVisibleBreadcrumb()
+      updateBreadcrumbState()
     })
 
     resizeObserver.observe(container)
     // Calculate initial width immediately after mount
-    updateVisibleBreadcrumb()
+    updateBreadcrumbState()
     setMounted(true)
 
     return () => {
       resizeObserver.disconnect()
     }
-  }, [breadcrumbs.length])
+  }, [breadcrumbs])
 
-  if (!breadcrumbs.length) {
+  if (!breadcrumbs.length || !state.firstItem) {
     return <Breadcrumb ref={containerRef} className="w-full" />
   }
-
-  const firstItem = breadcrumbs[0]
-  const lastItems = breadcrumbs.slice(
-    Math.max(1, breadcrumbs.length - (visibleCount - 1))
-  )
-  const collapsedItems = breadcrumbs.slice(
-    1,
-    breadcrumbs.length - (visibleCount - 1)
-  )
-
-  const isOnly = breadcrumbs.length === 1
-
-  console.log({ lastItems })
 
   return (
     <Breadcrumb ref={containerRef} className="w-full">
       {mounted && (
         <BreadcrumbList>
           <BreadcrumbItem
-            isOnly={isOnly}
+            isOnly={state.isOnly}
             isFirst={true}
-            key={`first-item-${firstItem.id}`}
-            item={firstItem}
+            key={`first-item-${state.firstItem.id}`}
+            item={state.firstItem}
             isLast={false}
           />
-          {collapsedItems.length > 0 && (
+          {state.collapsedItems.length > 0 && (
             <CollapsedBreadcrumbItem
               key="collapsed-items"
-              items={collapsedItems as DropdownItemWithoutIcon[]}
+              items={state.collapsedItems as DropdownItemWithoutIcon[]}
             />
           )}
-          {lastItems.map((item, index) => (
+          {state.lastItems.map((item, index) => (
             <BreadcrumbItem
               key={item.id}
               item={item}
-              isLast={index === lastItems.length - 1}
+              isLast={index === state.lastItems.length - 1}
               isFirst={false}
             />
           ))}
