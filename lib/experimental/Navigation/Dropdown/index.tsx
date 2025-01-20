@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { AvatarVariant } from "@/experimental/Information/Avatars/utils"
-import { Ellipsis, EllipsisHorizontal } from "@/icons/app"
+import { EllipsisHorizontal } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import {
@@ -17,7 +17,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
-import { Separator } from "@/ui/separator"
 import { useState } from "react"
 import { NavigationItem } from "../utils"
 import { DropdownItemContent } from "./DropdownItem"
@@ -71,7 +70,7 @@ const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
 
 export function Dropdown({
   items,
-  icon = Ellipsis,
+  icon = EllipsisHorizontal,
   size,
   children,
 }: DropdownProps) {
@@ -89,7 +88,7 @@ export function Dropdown({
           />
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="start">
         {items.map((item, index) =>
           item === "separator" ? (
             <DropdownMenuSeparator key={index} />
@@ -121,10 +120,13 @@ export const MobileDropdown = ({ items, children }: DropdownProps) => {
       </DrawerTrigger>
       <DrawerOverlay className="bg-f1-background-overlay" />
       <DrawerContent className="bg-f1-background">
-        <div className="flex flex-col gap-2 p-4">
+        <div className="flex flex-col px-2 pb-3 pt-2">
           {items.map((item, index) =>
             item === "separator" ? (
-              <Separator key={`separator-${index}`} />
+              <div
+                key={`separator-${index}`}
+                className="mx-[-8px] my-2 h-px w-[calc(100%+16px)] bg-f1-border-secondary"
+              />
             ) : item.href ? (
               <Link
                 {...item}
@@ -138,17 +140,33 @@ export const MobileDropdown = ({ items, children }: DropdownProps) => {
                 <DropdownItemContent item={item} />
               </Link>
             ) : (
-              <Button
+              <button
                 key={item.label}
-                label={item.label}
                 onClick={() => {
                   item.onClick?.()
                   setOpen(false)
                 }}
-                variant={item.critical ? "critical" : "outline"}
-                icon={item.icon}
-                size="lg"
-              />
+                className="flex w-full items-center gap-2 p-3"
+              >
+                {item.icon && (
+                  <span
+                    className={cn(
+                      "h-5 w-5 text-f1-icon",
+                      item.critical && "text-f1-icon-critical"
+                    )}
+                  >
+                    <Icon icon={item.icon} size="md" />
+                  </span>
+                )}
+                <span
+                  className={cn(
+                    "font-medium",
+                    item.critical && "text-f1-foreground-critical"
+                  )}
+                >
+                  {item.label}
+                </span>
+              </button>
             )
           )}
         </div>

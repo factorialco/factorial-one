@@ -87,7 +87,7 @@ export function BaseHeader({
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 md:hidden">
           {allMetadata && <Metadata items={allMetadata} />}
         </div>
-        <div className="flex w-full shrink-0 flex-wrap items-center gap-x-3 gap-y-4 md:w-fit md:flex-row-reverse md:gap-y-2 md:overflow-x-auto">
+        <div className="flex w-full shrink-0 flex-wrap items-center gap-x-2 gap-y-3 md:w-fit md:flex-row-reverse md:gap-y-2 md:overflow-x-auto">
           {primaryAction && (
             <>
               <div className="hidden md:block">
@@ -110,7 +110,7 @@ export function BaseHeader({
             </>
           )}
           {primaryAction && (secondaryActions || otherActions) && (
-            <div className="hidden h-4 w-px bg-f1-background-secondary md:block" />
+            <div className="mx-1 hidden h-4 w-px bg-f1-background-secondary md:block" />
           )}
           {secondaryActions &&
             secondaryActions.map((action) => (
