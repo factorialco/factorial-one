@@ -136,8 +136,8 @@ export const WithBreadcrumbs: Story = {
   args: {
     module: defaultModule,
     breadcrumbs: [
-      { label: "Employees", href: "/employees" },
-      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
   },
 }
@@ -146,8 +146,8 @@ export const WithEverything: Story = {
   args: {
     module: defaultModule,
     breadcrumbs: [
-      { label: "Employees", href: "/employees" },
-      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
     navigation: defaultNavigation,
     statusTag: {
@@ -164,8 +164,8 @@ export const Embedded: Story = {
     module: defaultModule,
     embedded: true,
     breadcrumbs: [
-      { label: "Employees", href: "/employees" },
-      { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
   },
 }
@@ -175,8 +175,8 @@ export const EmbeddedWithLoading: Story = {
     module: defaultModule,
     embedded: true,
     breadcrumbs: [
-      { label: "Employees", href: "/employees" },
-      { loading: true },
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "loading", loading: true },
     ],
   },
 }
