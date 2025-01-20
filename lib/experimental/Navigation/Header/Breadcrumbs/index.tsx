@@ -16,7 +16,7 @@ import {
 
 import { ChevronRight } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
-import { cn, focusRing } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { NavigationItem } from "../../utils"
 
 import { IconType } from "@/components/Utilities/Icon"
@@ -114,36 +114,6 @@ function BreadcrumbSkeleton() {
   )
 }
 
-interface BreadcrumbLinkProps {
-  item: NavigationItem & { icon?: IconType }
-  className?: string
-  size?: "md" | "xl"
-}
-
-function BreadcrumbLink({ item, className, size = "md" }: BreadcrumbLinkProps) {
-  return (
-    <ShadBreadcrumbLink
-      className={cn(
-        size === "md" && "max-w-40",
-        item.icon && "pl-0.5",
-        className
-      )}
-      asChild
-    >
-      <Link {...item} className={cn("flex items-center gap-2", focusRing())}>
-        {item.icon && (
-          <ModuleAvatar icon={item.icon} size={size === "md" ? "sm" : "lg"} />
-        )}
-        <span
-          className={cn("truncate", size === "xl" && "text-xl font-semibold")}
-        >
-          {item.label}
-        </span>
-      </Link>
-    </ShadBreadcrumbLink>
-  )
-}
-
 function BreadcrumbSeparator() {
   return <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
 }
@@ -164,19 +134,44 @@ function BreadcrumbContent({
   isFirst = false,
 }: BreadcrumbContentProps) {
   const isLoading = "loading" in item
+  const shouldRenderAsPage = isLast || isOnly
+
+  const content = (
+    <motion.div
+      layoutId={`breadcrumb-${item.id}`}
+      className={cn(
+        "flex items-center gap-2 px-1.5 py-0.5",
+        isOnly && "text-xl font-semibold"
+      )}
+      transition={{ duration: 0.15 }}
+    >
+      {!isLoading && "icon" in item && (isOnly || isFirst) && item.icon && (
+        <ModuleAvatar icon={item.icon} size={isOnly ? "lg" : "sm"} />
+      )}
+      <span className="truncate">
+        {!isLoading && "label" in item ? item.label : ""}
+      </span>
+    </motion.div>
+  )
 
   return (
     <motion.div
-      layout={isFirst}
+      layout
       className={cn(isLoading && "max-w-40")}
-      transition={!isLoading && !isLast ? { duration: 0.15 } : undefined}
+      transition={{ duration: 0.15 }}
     >
       {isLoading ? (
         <BreadcrumbSkeleton />
-      ) : isLast ? (
-        <BreadcrumbPage aria-hidden="true">{item.label}</BreadcrumbPage>
+      ) : shouldRenderAsPage ? (
+        <BreadcrumbPage aria-hidden="true" className="p-0">
+          {content}
+        </BreadcrumbPage>
       ) : (
-        <BreadcrumbLink item={item} size={isOnly ? "xl" : "md"} />
+        <ShadBreadcrumbLink asChild className="p-0">
+          <Link {...("href" in item ? item : {})} className="block">
+            {content}
+          </Link>
+        </ShadBreadcrumbLink>
       )}
     </motion.div>
   )
