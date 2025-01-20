@@ -139,9 +139,40 @@ interface BreadcrumbsProps {
   breadcrumbs: BreadcrumbItemType[]
 }
 
+function calculateVisibleCount(containerWidth: number, totalItems: number) {
+  if (totalItems <= 2) return totalItems
+
+  const itemWidth = 150
+  const dropdownWidth = 50
+
+  let availableWidth = containerWidth - itemWidth
+  let count = 1
+
+  for (let i = totalItems - 1; i > 0; i--) {
+    if (availableWidth < itemWidth) {
+      break
+    }
+    availableWidth -= itemWidth
+    count++
+  }
+
+  if (count < totalItems - 1) {
+    availableWidth -= dropdownWidth
+    while (availableWidth < 0 && count > 1) {
+      availableWidth += itemWidth
+      count--
+    }
+  }
+
+  return Math.max(2, count)
+}
+
 export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
-  const [visibleCount, setVisibleCount] = useState(2)
   const containerRef = useRef<HTMLDivElement>(null)
+  const [mounted, setMounted] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(
+    breadcrumbs.length <= 2 ? breadcrumbs.length : 2
+  )
 
   useLayoutEffect(() => {
     const container = containerRef.current
@@ -154,29 +185,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
       }
 
       const containerWidth = containerRef.current.getBoundingClientRect().width
-      const itemWidth = 150
-      const dropdownWidth = 50
-
-      let availableWidth = containerWidth - itemWidth
-      let count = 1
-
-      for (let i = breadcrumbs.length - 1; i > 0; i--) {
-        if (availableWidth < itemWidth) {
-          break
-        }
-        availableWidth -= itemWidth
-        count++
-      }
-
-      if (count < breadcrumbs.length - 1) {
-        availableWidth -= dropdownWidth
-        while (availableWidth < 0 && count > 1) {
-          availableWidth += itemWidth
-          count--
-        }
-      }
-
-      setVisibleCount(Math.max(2, count))
+      setVisibleCount(calculateVisibleCount(containerWidth, breadcrumbs.length))
     }
 
     const resizeObserver = new ResizeObserver(() => {
@@ -184,7 +193,9 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
     })
 
     resizeObserver.observe(container)
+    // Calculate initial width immediately after mount
     updateVisibleBreadcrumb()
+    setMounted(true)
 
     return () => {
       resizeObserver.disconnect()
@@ -196,35 +207,40 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   }
 
   const firstItem = breadcrumbs[0]
-  const lastItems = [...breadcrumbs].slice(-visibleCount + 1)
-  const collapsedItems = [...breadcrumbs].slice(1, -visibleCount + 1)
-
-  console.log({ visibleCount, firstItem, lastItems, collapsedItems })
+  const lastItems = breadcrumbs.slice(
+    Math.max(1, breadcrumbs.length - (visibleCount - 1))
+  )
+  const collapsedItems = breadcrumbs.slice(
+    1,
+    breadcrumbs.length - (visibleCount - 1)
+  )
 
   return (
     <Breadcrumb ref={containerRef} className="w-full">
-      <BreadcrumbList>
-        <BreadcrumbItem
-          key={`first-item-${firstItem.id}`}
-          item={firstItem}
-          isLast={false}
-          showSeparator={!("loading" in firstItem)}
-        />
-        {collapsedItems.length > 0 && (
-          <CollapsedBreadcrumbItem
-            key="collapsed-items"
-            items={collapsedItems as DropdownItemWithoutIcon[]}
-          />
-        )}
-        {lastItems.map((item, index) => (
+      {mounted && (
+        <BreadcrumbList>
           <BreadcrumbItem
-            key={item.id}
-            item={item}
-            isLast={index === lastItems.length - 1}
-            showSeparator={index !== lastItems.length - 1}
+            key={`first-item-${firstItem.id}`}
+            item={firstItem}
+            isLast={false}
+            showSeparator={!("loading" in firstItem)}
           />
-        ))}
-      </BreadcrumbList>
+          {collapsedItems.length > 0 && (
+            <CollapsedBreadcrumbItem
+              key="collapsed-items"
+              items={collapsedItems as DropdownItemWithoutIcon[]}
+            />
+          )}
+          {lastItems.map((item, index) => (
+            <BreadcrumbItem
+              key={item.id}
+              item={item}
+              isLast={index === lastItems.length - 1}
+              showSeparator={index !== lastItems.length - 1}
+            />
+          ))}
+        </BreadcrumbList>
+      )}
     </Breadcrumb>
   )
 }
