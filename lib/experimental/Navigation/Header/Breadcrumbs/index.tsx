@@ -152,7 +152,8 @@ const BreadcrumbContent = React.forwardRef<
     <motion.div
       layoutId={`breadcrumb-${item.id}`}
       className={cn(
-        "flex items-center gap-2 px-1.5 py-0.5",
+        "flex items-center gap-2 px-1.5",
+        isFirst && "pl-0",
         isOnly && "text-xl font-semibold"
       )}
       transition={{ duration: 0.15 }}
