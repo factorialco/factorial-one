@@ -1,4 +1,4 @@
-import * as Icons from "@/icons/app"
+import * as Icons from "@/icons/animated"
 import type { Meta, StoryObj } from "@storybook/react"
 import { Menu } from "."
 
@@ -26,16 +26,21 @@ export const Default: Story = {
       {
         title: "Root",
         items: [
-          { label: "Home", icon: Icons.Home, href: "/", exactMatch: true },
+          {
+            label: "Home",
+            icon: Icons.HomeAnimated,
+            href: "/",
+            exactMatch: true,
+          },
           {
             label: "Inbox",
-            icon: Icons.Envelope,
+            icon: Icons.HomeAnimated,
             href: "/inbox",
             badge: 6,
           },
           {
             label: "Discover Factorial",
-            icon: Icons.Sparkles,
+            icon: Icons.RocketAnimated,
             href: "/discover",
           },
         ],
@@ -44,17 +49,53 @@ export const Default: Story = {
       {
         title: "You",
         items: [
-          { label: "Me", icon: Icons.Person, href: "/me" },
-          { label: "Clock in", icon: Icons.Clock, href: "/clock-in" },
-          { label: "Time off", icon: Icons.PalmTree, href: "/time-off" },
+          { label: "Me", icon: Icons.PersonAnimated, href: "/me" },
+          {
+            label: "Clock in",
+            icon: Icons.ClockAnimated,
+            href: "/clock-in",
+          },
+          {
+            label: "Time off",
+            icon: Icons.PalmTreeAnimated,
+            href: "/time-off",
+          },
+          {
+            label: "Tasks",
+            icon: Icons.CheckCircleAnimated,
+            href: "/tasks",
+          },
+          {
+            label: "My documents",
+            icon: Icons.FolderUserAnimated,
+            href: "/my-documents",
+          },
         ],
         isOpen: true,
       },
       {
         title: "Your company",
         items: [
-          { label: "Organization", icon: Icons.People, href: "/organization" },
-          { label: "Calendar", icon: Icons.Calendar, href: "/calendar" },
+          {
+            label: "Performance",
+            icon: Icons.GraphAnimated,
+            href: "/performance",
+          },
+          {
+            label: "Finance",
+            icon: Icons.MoneyBagAnimated,
+            href: "/finance",
+          },
+          {
+            label: "Software",
+            icon: Icons.DesktopAnimated,
+            href: "/software",
+          },
+          {
+            label: "Settings",
+            icon: Icons.SettingsAnimated,
+            href: "/settings",
+          },
         ],
         isOpen: true,
       },
