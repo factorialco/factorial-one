@@ -35,7 +35,7 @@ interface MetadataProps {
   items?: MetadataItem[]
 }
 
-function renderMetadataValue(item: MetadataItem) {
+function MetadataValue({ item }: { item: MetadataItem }) {
   switch (item.value.type) {
     case "text":
       return <span>{item.value.content}</span>
@@ -54,7 +54,6 @@ function renderMetadataValue(item: MetadataItem) {
 function MetadataItem({ item }: { item: MetadataItem }) {
   const [isActive, setIsActive] = useState(false)
   const isAction = item.actions?.length
-  const metadataValue = renderMetadataValue(item)
 
   return (
     <div className="flex h-8 items-center gap-2">
@@ -76,7 +75,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
             !isAction && "block"
           )}
         >
-          {metadataValue}
+          <MetadataValue item={item} />
         </div>
         {isAction && (
           <div className="w-full md:hidden">
@@ -89,7 +88,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
                 })) ?? []
               }
             >
-              {metadataValue}
+              <MetadataValue item={item} />
             </MobileDropdown>
           </div>
         )}
@@ -106,7 +105,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
               transition={{ duration: 0.1 }}
             >
               <div className="flex h-5 items-center font-medium text-f1-foreground">
-                {metadataValue}
+                <MetadataValue item={item} />
               </div>
               {isAction && (
                 <motion.div
