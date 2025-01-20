@@ -21,7 +21,7 @@ import { NavigationItem } from "../../utils"
 
 import { IconType } from "@/components/Utilities/Icon"
 import { motion } from "framer-motion"
-import { useLayoutEffect, useRef, useState } from "react"
+import React, { useLayoutEffect, useRef, useState } from "react"
 
 export type BreadcrumbItemType = { id: string } & (
   | (NavigationItem & {
@@ -106,17 +106,31 @@ function calculateBreadcrumbState(
 /**
  * Loading skeleton for breadcrumb items
  */
-function BreadcrumbSkeleton() {
-  return (
-    <div className="px-1.5">
-      <Skeleton className="h-4 w-24" aria-hidden="true" />
-    </div>
-  )
-}
+const BreadcrumbSkeleton = React.forwardRef<
+  HTMLDivElement,
+  React.ComponentPropsWithoutRef<"div">
+>((props, ref) => (
+  <div ref={ref} className="px-1.5" {...props}>
+    <Skeleton className="h-4 w-24" aria-hidden="true" />
+  </div>
+))
+BreadcrumbSkeleton.displayName = "BreadcrumbSkeleton"
 
-function BreadcrumbSeparator() {
-  return <ChevronRight className="h-4 w-4 text-f1-icon-secondary" />
-}
+const BreadcrumbSeparator = React.forwardRef<
+  HTMLSpanElement,
+  React.ComponentPropsWithoutRef<"span">
+>((props, ref) => (
+  <span
+    ref={ref}
+    role="presentation"
+    aria-hidden="true"
+    className="h-4 w-4 text-f1-icon-secondary"
+    {...props}
+  >
+    <ChevronRight />
+  </span>
+))
+BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
 
 type DropdownItemWithoutIcon = Omit<DropdownItemObject, "icon">
 
@@ -127,12 +141,10 @@ interface BreadcrumbContentProps {
   isFirst?: boolean
 }
 
-function BreadcrumbContent({
-  item,
-  isLast,
-  isOnly = false,
-  isFirst = false,
-}: BreadcrumbContentProps) {
+const BreadcrumbContent = React.forwardRef<
+  HTMLDivElement,
+  BreadcrumbContentProps
+>(({ item, isLast, isOnly = false, isFirst = false }, ref) => {
   const isLoading = "loading" in item
   const shouldRenderAsPage = isLast || isOnly
 
@@ -156,6 +168,7 @@ function BreadcrumbContent({
 
   return (
     <motion.div
+      ref={ref}
       layout
       className={cn(isLoading && "max-w-40")}
       transition={{ duration: 0.15 }}
@@ -175,16 +188,12 @@ function BreadcrumbContent({
       )}
     </motion.div>
   )
-}
+})
+BreadcrumbContent.displayName = "BreadcrumbContent"
 
-function BreadcrumbItem({
-  item,
-  isLast,
-  isOnly = false,
-  isFirst = false,
-}: BreadcrumbContentProps) {
-  return (
-    <ShadBreadcrumbItem key={item.id}>
+const BreadcrumbItem = React.forwardRef<HTMLLIElement, BreadcrumbContentProps>(
+  ({ item, isLast, isOnly = false, isFirst = false }, ref) => (
+    <ShadBreadcrumbItem key={item.id} ref={ref}>
       {!isFirst && <BreadcrumbSeparator />}
       <BreadcrumbContent
         item={item}
@@ -194,7 +203,8 @@ function BreadcrumbItem({
       />
     </ShadBreadcrumbItem>
   )
-}
+)
+BreadcrumbItem.displayName = "BreadcrumbItem"
 
 interface CollapsedBreadcrumbItemProps {
   items: DropdownItemWithoutIcon[]
@@ -203,20 +213,22 @@ interface CollapsedBreadcrumbItemProps {
 /**
  * Renders the collapsed breadcrumb items as a dropdown
  */
-function CollapsedBreadcrumbItem({ items }: CollapsedBreadcrumbItemProps) {
-  return (
-    <ShadBreadcrumbItem>
-      <div className="flex items-center">
-        <BreadcrumbSeparator />
-        <Dropdown items={items}>
-          <button className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
-            ...
-          </button>
-        </Dropdown>
-      </div>
-    </ShadBreadcrumbItem>
-  )
-}
+const CollapsedBreadcrumbItem = React.forwardRef<
+  HTMLLIElement,
+  CollapsedBreadcrumbItemProps
+>(({ items }, ref) => (
+  <ShadBreadcrumbItem ref={ref}>
+    <div className="flex items-center">
+      <BreadcrumbSeparator />
+      <Dropdown items={items}>
+        <button className="rounded-sm px-1.5 py-0.5 font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary">
+          ...
+        </button>
+      </Dropdown>
+    </div>
+  </ShadBreadcrumbItem>
+))
+CollapsedBreadcrumbItem.displayName = "CollapsedBreadcrumbItem"
 
 interface BreadcrumbsProps {
   /** Array of breadcrumb items to display */
