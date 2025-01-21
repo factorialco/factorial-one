@@ -78,7 +78,11 @@ export const Default: Story = {
           name="username"
         >
           {(field) => (
-            <Input placeholder="A username must be all letters" {...field} />
+            <Input
+              placeholder="A username must be all letters"
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
           )}
         </FormField>
 
@@ -88,7 +92,12 @@ export const Default: Story = {
           control={form.control}
           name="fullName"
         >
-          {(field) => <Input {...field} />}
+          {(field) => (
+            <Input
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -97,7 +106,13 @@ export const Default: Story = {
           control={form.control}
           name="email"
         >
-          {(field) => <Input type="email" {...field} />}
+          {(field) => (
+            <Input
+              type="email"
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -106,7 +121,13 @@ export const Default: Story = {
           control={form.control}
           name="password"
         >
-          {(field) => <Input type="password" {...field} />}
+          {(field) => (
+            <Input
+              type="password"
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -115,7 +136,13 @@ export const Default: Story = {
           control={form.control}
           name="passwordConfirmation"
         >
-          {(field) => <Input type="password" {...field} />}
+          {(field) => (
+            <Input
+              type="password"
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -124,7 +151,12 @@ export const Default: Story = {
           control={form.control}
           name="bio"
         >
-          {(field) => <Textarea {...field} />}
+          {(field) => (
+            <Textarea
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -136,6 +168,7 @@ export const Default: Story = {
           {(field) => (
             <Select
               {...field}
+              value={field.value ? String(field.value) : undefined}
               placeholder="Select something"
               options={[
                 { label: "Foo", value: "foo" },
@@ -151,7 +184,13 @@ export const Default: Story = {
           control={form.control}
           name="acceptedTerms"
         >
-          {(field) => <Checkbox {...field} />}
+          {(field) => (
+            <Checkbox
+              {...field}
+              onCheckedChange={field.onChange}
+              value={String(field.value)}
+            />
+          )}
         </FormField>
 
         <FormActions submitLabel="Create" form={form} />

@@ -5,6 +5,7 @@ type CheckboxProps = Omit<
   "asChild"
 > & {
   title?: string
+  onCheckedChange?: (checked: boolean) => void
 }
 
 const Checkbox: React.FC<CheckboxProps> = ShadcnInput
