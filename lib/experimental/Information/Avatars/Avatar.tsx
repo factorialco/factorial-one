@@ -13,10 +13,13 @@ export type AvatarVariant =
   | ({ type: "team" } & TeamAvatarProps)
   | ({ type: "company" } & CompanyAvatarProps)
 
-export function renderAvatar(
-  avatar: AvatarVariant,
-  size: (typeof sizes)[number] = "xsmall"
-): ReactNode {
+export const Avatar = ({
+  avatar,
+  size = "xsmall",
+}: {
+  avatar: AvatarVariant
+  size?: (typeof sizes)[number]
+}): ReactNode => {
   switch (avatar.type) {
     case "person":
       return (

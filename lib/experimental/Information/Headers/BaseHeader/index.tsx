@@ -1,8 +1,8 @@
 import { Button } from "@/components/Actions/Button"
 import {
+  Avatar,
   AvatarVariant,
-  renderAvatar,
-} from "@/experimental/Information/Avatars/utils"
+} from "@/experimental/Information/Avatars/Avatar"
 import { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import {
   PrimaryAction,
@@ -65,7 +65,7 @@ export function BaseHeader({
         <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-center">
           {avatar && (
             <div className="flex items-start">
-              {renderAvatar(avatar, "large")}
+              <Avatar avatar={avatar} size="large" />
             </div>
           )}
           <div className="flex flex-col gap-1">

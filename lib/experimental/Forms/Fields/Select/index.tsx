@@ -1,8 +1,5 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import {
-  AvatarVariant,
-  renderAvatar,
-} from "@/experimental/Information/Avatars/utils"
+import { Avatar, AvatarVariant } from "@/experimental/Information/Avatars"
 import { ChevronDown } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
@@ -40,7 +37,7 @@ const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   return (
     <SelectItemPrimitive value={item.value}>
       <div className="flex items-start gap-1.5">
-        {item.avatar && renderAvatar(item.avatar, "xsmall")}
+        {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
         {item.icon && (
           <div className="text-f1-icon">
             <Icon icon={item.icon} />
