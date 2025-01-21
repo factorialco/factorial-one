@@ -44,7 +44,6 @@ export function Reaction({
         spread: 45,
         startVelocity: 12,
         ticks: 30,
-        // @ts-expect-error flat property exists in canvas-confetti
         flat: true,
         origin: {
           x: centerX / window.innerWidth,
@@ -52,7 +51,7 @@ export function Reaction({
         },
         shapes: [confetti.shapeFromText({ text: emoji })],
         scalar: 1.5,
-        disableInteraction: shouldReduceMotion,
+        disableForReducedMotion: shouldReduceMotion,
       })
     }
   }, [emoji, shouldReduceMotion])
