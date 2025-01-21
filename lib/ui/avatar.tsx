@@ -40,17 +40,17 @@ const avatarVariants = cva(
         rounded: "rounded-full",
       } satisfies Record<(typeof type)[number], string>,
       color: {
-        viridian: "bg-[hsl(theme(colors.viridian.50))]",
-        malibu: "bg-[hsl(theme(colors.malibu.50))]",
-        yellow: "bg-[hsl(theme(colors.yellow.50))]",
-        purple: "bg-[hsl(theme(colors.purple.50))]",
-        lilac: "bg-[hsl(theme(colors.lilac.50))]",
-        barbie: "bg-[hsl(theme(colors.barbie.50))]",
-        smoke: "bg-[hsl(theme(colors.smoke.50))]",
-        army: "bg-[hsl(theme(colors.army.50))]",
-        flubber: "bg-[hsl(theme(colors.flubber.50))]",
-        indigo: "bg-[hsl(theme(colors.indigo.50))]",
-        camel: "bg-[hsl(theme(colors.camel.50))]",
+        viridian: "bg-[hsl(theme(colors.viridian.70))]",
+        malibu: "bg-[hsl(theme(colors.malibu.70))]",
+        yellow: "bg-[hsl(theme(colors.yellow.70))]",
+        purple: "bg-[hsl(theme(colors.purple.70))]",
+        lilac: "bg-[hsl(theme(colors.lilac.70))]",
+        barbie: "bg-[hsl(theme(colors.barbie.70))]",
+        smoke: "bg-[hsl(theme(colors.smoke.70))]",
+        army: "bg-[hsl(theme(colors.army.70))]",
+        flubber: "bg-[hsl(theme(colors.flubber.70))]",
+        indigo: "bg-[hsl(theme(colors.indigo.70))]",
+        camel: "bg-[hsl(theme(colors.camel.70))]",
       } satisfies Record<(typeof color)[number], string>,
     },
     defaultVariants: {
@@ -103,7 +103,7 @@ const AvatarFallback = React.forwardRef<
   <AvatarPrimitive.Fallback
     ref={ref}
     className={cn(
-      "flex h-full w-full items-center justify-center text-f1-foreground-inverse/90",
+      "flex h-full w-full items-center justify-center text-f1-foreground-inverse",
       className
     )}
     {...props}
