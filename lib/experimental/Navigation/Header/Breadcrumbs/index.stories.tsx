@@ -114,66 +114,69 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const Interactive: Story = {
   render: () => {
-    const [currentSection, setCurrentSection] = useState<
-      "recruitment" | "documents"
-    >("recruitment")
-
-    const sections = {
-      recruitment: {
+    const recruitmentBreadcrumbs: BreadcrumbItemType[] = [
+      {
         id: "recruitment",
         label: "Recruitment",
         href: "/recruitment",
         icon: Recruitment,
-        additionalItems: [
-          {
-            id: "candidates",
-            label: "Candidates",
-            href: "/recruitment/candidates",
-          },
-          {
-            id: "dani-moreno",
-            label: "Dani Moreno",
-            href: "/recruitment/candidates/dani-moreno",
-          },
-          {
-            id: "applications",
-            label: "Applications",
-            href: "/recruitment/candidates/dani-moreno/applications",
-          },
-        ],
       },
-      documents: {
+      {
+        id: "candidates",
+        label: "Candidates",
+        href: "/recruitment/candidates",
+      },
+      {
+        id: "dani-moreno",
+        label: "Dani Moreno",
+        href: "/recruitment/candidates/dani-moreno",
+      },
+      {
+        id: "applications",
+        label: "Applications",
+        href: "/recruitment/candidates/dani-moreno/applications",
+      },
+    ]
+
+    const documentsBreadcrumbs: BreadcrumbItemType[] = [
+      {
         id: "documents",
         label: "Documents",
         href: "/documents",
         icon: Documents,
-        additionalItems: [
-          {
-            id: "employee-documents",
-            label: "Employee Documents",
-            href: "/documents/employee",
-          },
-          {
-            id: "contracts",
-            label: "Contracts",
-            href: "/documents/employee/contracts",
-          },
-          {
-            id: "templates",
-            label: "Templates",
-            href: "/documents/employee/contracts/templates",
-          },
-        ],
       },
-    }
+      {
+        id: "employee-documents",
+        label: "Employee Documents",
+        href: "/documents/employee",
+      },
+      {
+        id: "contracts",
+        label: "Contracts",
+        href: "/documents/employee/contracts",
+      },
+      {
+        id: "templates",
+        label: "Templates",
+        href: "/documents/employee/contracts/templates",
+      },
+    ]
 
-    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItemType[]>([
-      sections[currentSection],
-    ])
+    const [currentSection, setCurrentSection] = useState<
+      "recruitment" | "documents"
+    >("recruitment")
+    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItemType[]>(
+      recruitmentBreadcrumbs
+    )
 
     const handleAdd = () => {
-      const currentItems = sections[currentSection].additionalItems
-      setBreadcrumbs((prev) => [...prev, currentItems[prev.length - 1]])
+      const sourceBreadcrumbs =
+        currentSection === "recruitment"
+          ? recruitmentBreadcrumbs
+          : documentsBreadcrumbs
+      if (breadcrumbs.length < sourceBreadcrumbs.length) {
+        setBreadcrumbs((prev) => [...prev, sourceBreadcrumbs[prev.length]])
+      }
     }
 
     const handleRemove = () => {
@@ -184,17 +187,24 @@ export const Interactive: Story = {
       const newSection =
         currentSection === "recruitment" ? "documents" : "recruitment"
       setCurrentSection(newSection)
-      setBreadcrumbs([sections[newSection]])
+      setBreadcrumbs(
+        newSection === "recruitment"
+          ? recruitmentBreadcrumbs
+          : documentsBreadcrumbs
+      )
     }
-
-    const currentItems = sections[currentSection].additionalItems
 
     return (
       <div className="space-y-4">
         <div className="flex gap-2">
           <Button
             onClick={handleAdd}
-            disabled={breadcrumbs.length >= currentItems.length + 1}
+            disabled={
+              breadcrumbs.length >=
+              (currentSection === "recruitment"
+                ? recruitmentBreadcrumbs.length
+                : documentsBreadcrumbs.length)
+            }
             variant="outline"
           >
             Add Breadcrumb
@@ -214,7 +224,7 @@ export const Interactive: Story = {
           className="flex w-full items-center"
           data-testid="breadcrumbs-container"
         >
-          <Breadcrumbs breadcrumbs={breadcrumbs} />
+          <Breadcrumbs key={currentSection} breadcrumbs={breadcrumbs} />
         </div>
       </div>
     )
@@ -222,22 +232,30 @@ export const Interactive: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    // Initial state - just Recruitment
+    // Initial state - full Recruitment breadcrumbs
     await waitFor(() => {
       expect(canvas.getByText("Recruitment")).toBeInTheDocument()
+      expect(canvas.getByText("Candidates")).toBeInTheDocument()
+      expect(canvas.getByText("Dani Moreno")).toBeInTheDocument()
+      expect(canvas.getByText("Applications")).toBeInTheDocument()
     })
 
-    // Add and check each breadcrumb in Recruitment section
-    const addButton = canvas.getByText("Add Breadcrumb")
-
-    // Add Candidates
-    await userEvent.click(addButton)
+    // Remove some items
+    const removeButton = canvas.getByText("Remove Breadcrumb")
+    await userEvent.click(removeButton)
     await waitFor(() => {
-      expect(canvas.getByText("Candidates")).toBeInTheDocument()
+      expect(canvas.queryByText("Applications")).not.toBeInTheDocument()
     })
     await sleep(500)
 
-    // Add Dani Moreno
+    await userEvent.click(removeButton)
+    await waitFor(() => {
+      expect(canvas.queryByText("Dani Moreno")).not.toBeInTheDocument()
+    })
+    await sleep(500)
+
+    // Add items back
+    const addButton = canvas.getByText("Add Breadcrumb")
     await userEvent.click(addButton)
     await waitFor(() => {
       expect(canvas.getByText("Dani Moreno")).toBeInTheDocument()
@@ -248,31 +266,32 @@ export const Interactive: Story = {
     const switchButton = canvas.getByText("Switch Section")
     await userEvent.click(switchButton)
 
-    // Verify Documents section loaded
+    // Verify full Documents section loaded
     await waitFor(() => {
       expect(canvas.getByText("Documents")).toBeInTheDocument()
-    })
-    await sleep(500)
-
-    // Add breadcrumbs in Documents section
-    await userEvent.click(addButton)
-    await waitFor(() => {
       expect(canvas.getByText("Employee Documents")).toBeInTheDocument()
+      expect(canvas.getByText("Contracts")).toBeInTheDocument()
+      expect(canvas.getByText("Templates")).toBeInTheDocument()
     })
     await sleep(500)
 
-    // Remove breadcrumb
-    const removeButton = canvas.getByText("Remove Breadcrumb")
+    // Remove some items from Documents
+    await userEvent.click(removeButton)
     await userEvent.click(removeButton)
     await waitFor(() => {
-      expect(canvas.queryByText("Employee Documents")).not.toBeInTheDocument()
+      expect(canvas.queryByText("Templates")).not.toBeInTheDocument()
+      expect(canvas.queryByText("Contracts")).not.toBeInTheDocument()
     })
     await sleep(500)
 
     // Switch back to Recruitment
     await userEvent.click(switchButton)
     await waitFor(() => {
+      // Should show full Recruitment breadcrumbs again
       expect(canvas.getByText("Recruitment")).toBeInTheDocument()
+      expect(canvas.getByText("Candidates")).toBeInTheDocument()
+      expect(canvas.getByText("Dani Moreno")).toBeInTheDocument()
+      expect(canvas.getByText("Applications")).toBeInTheDocument()
     })
   },
 }
