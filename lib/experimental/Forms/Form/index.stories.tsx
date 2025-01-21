@@ -2,10 +2,16 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { Textarea } from "@/ui/textarea"
 import { Form, FormActions } from "."
+import Checkbox from "../Fields/Checkbox"
 import { Input } from "../Fields/Input"
 import { Select } from "../Fields/Select"
 import { FormField } from "../FormField"
-import { buildFormSchema, stringField, useFormSchema } from "../lib/useForm"
+import {
+  booleanField,
+  buildFormSchema,
+  stringField,
+  useFormSchema,
+} from "../lib/useForm"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -37,6 +43,7 @@ export const Default: Story = {
       passwordConfirmation: stringField(),
       bio: stringField().max(500),
       tag: stringField(),
+      acceptedTerms: booleanField(),
     }).refine((data) => data.password === data.passwordConfirmation, {
       message: "Passwords do not match",
       path: ["passwordConfirmation"],
@@ -49,6 +56,7 @@ export const Default: Story = {
           username: "",
           fullName: "",
           email: "",
+          acceptedTerms: false,
         },
       },
       async (data) => {
@@ -135,6 +143,15 @@ export const Default: Story = {
               ]}
             />
           )}
+        </FormField>
+
+        <FormField
+          label="Accept terms"
+          description="Accept terms and conditions"
+          control={form.control}
+          name="acceptedTerms"
+        >
+          {(field) => <Checkbox {...field} />}
         </FormField>
 
         <FormActions submitLabel="Create" form={form} />
