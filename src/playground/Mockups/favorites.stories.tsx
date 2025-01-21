@@ -53,44 +53,64 @@ const FavoriteItem = ({
   icon,
   avatar,
   onRemove,
-}: FavoriteItemProps & { onRemove: (label: string) => void }) => {
+  onMoveUp,
+  onMoveDown,
+  isFirst,
+  isLast,
+}: FavoriteItemProps & {
+  onRemove: (label: string) => void
+  onMoveUp: (label: string) => void
+  onMoveDown: (label: string) => void
+  isFirst: boolean
+  isLast: boolean
+}) => {
+  const dropdownItems = [
+    ...(isFirst
+      ? []
+      : [
+          {
+            label: "Move up",
+            icon: Icon.ArrowUp,
+            onClick: () => onMoveUp(label),
+          },
+        ]),
+    ...(isLast
+      ? []
+      : [
+          {
+            label: "Move down",
+            icon: Icon.ArrowDown,
+            onClick: () => onMoveDown(label),
+          },
+        ]),
+    ...(!isFirst || !isLast ? ["separator" as const] : []),
+    {
+      label: "Remove favorite",
+      icon: Icon.Delete,
+      critical: true,
+      onClick: () => onRemove(label),
+    },
+  ]
+
   return (
-    <div
-      className={cn(
-        "group flex cursor-pointer items-center rounded py-1 pl-1.5 pr-1 no-underline backdrop-blur transition-colors hover:bg-f1-background-secondary"
-      )}
-    >
-      <div className="flex w-full items-center justify-between">
-        <div className="flex w-full items-center justify-between gap-1.5 font-medium text-f1-foreground">
-          <div className="flex gap-1.5">
-            {icon && (
-              <IconComponent
-                icon={icon.icon}
-                size="md"
-                className={cn("transition-colors", icon.className)}
-              />
-            )}
-            {avatar && <Avatar avatar={avatar} size="xsmall" />}
-            <span>{label}</span>
-          </div>
-          <Dropdown
-            items={[
-              { label: "Move up", icon: Icon.ArrowUp },
-              { label: "Move down", icon: Icon.ArrowDown },
-              "separator",
-              {
-                label: "Remove favorite",
-                icon: Icon.Delete,
-                critical: true,
-                onClick: () => onRemove(label),
-              },
-            ]}
-          >
-            <div className="flex size-6 items-center justify-center rounded-xs text-f1-icon opacity-0 transition-all hover:bg-f1-background-secondary hover:text-f1-icon-bold group-hover:opacity-100 data-[state=open]:bg-f1-background-secondary data-[state=open]:text-f1-icon-bold data-[state=open]:opacity-100">
-              <IconComponent icon={Icon.EllipsisHorizontal} size="md" />
-            </div>
-          </Dropdown>
+    <div className="group flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between gap-1.5 font-medium text-f1-foreground">
+        <div className="flex gap-1.5">
+          {icon && (
+            <IconComponent
+              icon={icon.icon}
+              size="md"
+              className={cn("transition-colors", icon.className)}
+            />
+          )}
+          {avatar && <Avatar avatar={avatar} size="xsmall" />}
+          <span>{label}</span>
         </div>
+        <Dropdown items={dropdownItems}>
+          <div className="flex size-6 items-center justify-center rounded-xs text-f1-icon opacity-0 transition-all hover:bg-f1-background-secondary hover:text-f1-icon-bold group-hover:opacity-100 data-[state=open]:bg-f1-background-secondary data-[state=open]:text-f1-icon-bold data-[state=open]:opacity-100">
+            <IconComponent icon={Icon.EllipsisHorizontal} size="md" />
+          </div>
+        </Dropdown>
       </div>
     </div>
   )
@@ -136,6 +156,28 @@ export const Default: Story = {
         setFavorites(favorites.filter((favorite) => favorite.label !== label))
       }
 
+      const moveFavorite = (label: string, direction: "up" | "down") => {
+        const index = favorites.findIndex(
+          (favorite) => favorite.label === label
+        )
+        const offset = direction === "up" ? -1 : 1
+
+        if (
+          (direction === "up" && index > 0) ||
+          (direction === "down" && index < favorites.length - 1)
+        ) {
+          const newFavorites = [...favorites]
+          ;[newFavorites[index], newFavorites[index + offset]] = [
+            newFavorites[index + offset],
+            newFavorites[index],
+          ]
+          setFavorites(newFavorites)
+        }
+      }
+
+      const moveFavoriteUp = (label: string) => moveFavorite(label, "up")
+      const moveFavoriteDown = (label: string) => moveFavorite(label, "down")
+
       return (
         <ApplicationFrame
           sidebar={
@@ -158,11 +200,10 @@ export const Default: Story = {
                     className="flex list-none flex-col gap-0.5"
                   >
                     <AnimatePresence>
-                      {favorites.map((item) => (
+                      {favorites.map((item, index) => (
                         <Reorder.Item
                           key={item.label}
                           value={item}
-                          className="relative"
                           initial={{ opacity: 1 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{
@@ -173,10 +214,29 @@ export const Default: Story = {
                           transition={{
                             opacity: { duration: 0.2, ease: "easeInOut" },
                             filter: { duration: 0.1, ease: "easeInOut" },
-                            scale: { duration: 0.2, ease: "easeInOut" },
+                            scale: {
+                              duration: 0.2,
+                              ease: [0.175, 0.885, 0.32, 1.275],
+                            },
                           }}
+                          whileDrag={{
+                            scale: 1.04,
+                            cursor: "grabbing",
+                          }}
+                          className={cn(
+                            "relative cursor-pointer rounded py-1 pl-1.5 pr-1",
+                            "backdrop-blur transition-colors",
+                            "hover:bg-f1-background-secondary"
+                          )}
                         >
-                          <FavoriteItem {...item} onRemove={removeFavorite} />
+                          <FavoriteItem
+                            {...item}
+                            onRemove={removeFavorite}
+                            onMoveUp={moveFavoriteUp}
+                            onMoveDown={moveFavoriteDown}
+                            isFirst={index === 0}
+                            isLast={index === favorites.length - 1}
+                          />
                         </Reorder.Item>
                       ))}
                     </AnimatePresence>
