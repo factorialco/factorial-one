@@ -1,9 +1,9 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
 import {
+  Avatar,
   AvatarVariant,
-  renderAvatar,
-} from "@/experimental/Information/Avatars/utils"
+} from "@/experimental/Information/Avatars/Avatar"
 import {
   StatusTag,
   StatusVariant,
@@ -43,7 +43,7 @@ function MetadataValue({ item }: { item: MetadataItem }) {
     case "avatar":
       return (
         <div className="flex items-center gap-1">
-          {renderAvatar(item.value.variant, "xsmall")}
+          <Avatar avatar={item.value.variant} size="xsmall" />
           {item.value.text && <span>{item.value.text}</span>}
         </div>
       )

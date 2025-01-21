@@ -1,10 +1,10 @@
 import { Icon } from "@/components/Utilities/Icon"
-import { DropdownItemObject, renderAvatar } from "@/experimental/exports"
+import { Avatar, DropdownItemObject } from "@/experimental/exports"
 import { cn } from "@/lib/utils"
 
 export const DropdownItemContent = ({ item }: { item: DropdownItemObject }) => (
   <>
-    {item.avatar && renderAvatar(item.avatar, "xsmall")}
+    {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
     {item.icon && (
       <Icon
         icon={item.icon}
