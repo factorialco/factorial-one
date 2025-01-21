@@ -108,7 +108,7 @@
     "@svgr/cli": "^8.1.0",
     "@testing-library/react": "^16.1.0",
     "@types/canvas-confetti": "^1.6.4",
-    "@types/lodash": "^4.17.13",
+    "@types/lodash": "^4.17.14",
     "@types/node": "^22.10.7",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.1",
