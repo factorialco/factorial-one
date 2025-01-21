@@ -1,6 +1,6 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Select } from "@/experimental/Forms/Fields/Select"
-import { AvatarVariant } from "@/experimental/Information/Avatars"
+import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
 import { ChevronDown, Circle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"

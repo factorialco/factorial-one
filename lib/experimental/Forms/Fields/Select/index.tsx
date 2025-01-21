@@ -1,5 +1,8 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { Avatar, AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
+import {
+  Avatar,
+  AvatarVariant,
+} from "@/experimental/Information/Avatars/Avatar"
 import { ChevronDown } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
