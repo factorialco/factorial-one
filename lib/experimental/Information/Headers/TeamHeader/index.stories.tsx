@@ -12,7 +12,6 @@ const meta = {
           {
             id: "color-contrast",
             enabled: false,
-            selector: "*",
           },
         ],
       },
