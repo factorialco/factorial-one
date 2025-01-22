@@ -5,6 +5,7 @@ const defaultTranslations = {
     save: "Save",
     cancel: "Cancel",
   },
+  shortcut: "Shortcut",
 }
 
 export { defaultTranslations }
