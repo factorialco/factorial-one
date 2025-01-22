@@ -288,7 +288,11 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   }
 
   return (
-    <Breadcrumb ref={containerRef} className="w-full">
+    <Breadcrumb
+      ref={containerRef}
+      className="w-full"
+      key={breadcrumbs.at(-1)?.id}
+    >
       {mounted && (
         <BreadcrumbList>
           <BreadcrumbItem

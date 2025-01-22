@@ -61,6 +61,7 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
             aria-hidden={!hasAria}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
+            data-a11y-color-contrast-ignore
             className={
               src
                 ? "bg-f1-background dark:bg-f1-background-inverse-secondary"
@@ -68,7 +69,9 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
             }
           >
             <AvatarImage src={src} alt={initials} />
-            <AvatarFallback>{initials}</AvatarFallback>
+            <AvatarFallback data-a11y-color-contrast-ignore>
+              {initials}
+            </AvatarFallback>
           </AvatarComponent>
         </div>
         {badge && (

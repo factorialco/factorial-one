@@ -35,9 +35,7 @@ const BreadcrumbList = forwardRef<
       {...props}
     >
       <LayoutGroup id={id}>
-        <AnimatePresence initial={false} mode="popLayout">
-          {children}
-        </AnimatePresence>
+        <AnimatePresence initial={false}>{children}</AnimatePresence>
       </LayoutGroup>
     </ol>
   )
