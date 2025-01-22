@@ -15,7 +15,7 @@ import { Recruitment } from "@/icons/modules/"
 import { cn } from "@/lib/utils"
 import type { Meta, StoryObj } from "@storybook/react"
 import { AnimatePresence, Reorder } from "framer-motion"
-import { useState } from "react"
+import { useRef, useState } from "react"
 
 const meta: Meta<typeof ApplicationFrame> = {
   component: ApplicationFrame,
@@ -178,6 +178,8 @@ export const Default: Story = {
       const moveFavoriteUp = (label: string) => moveFavorite(label, "up")
       const moveFavoriteDown = (label: string) => moveFavorite(label, "down")
 
+      const containerRef = useRef<HTMLDivElement>(null)
+
       return (
         <ApplicationFrame
           sidebar={
@@ -198,6 +200,7 @@ export const Default: Story = {
                     values={favorites}
                     onReorder={setFavorites}
                     className="flex list-none flex-col gap-0.5"
+                    ref={containerRef}
                   >
                     <AnimatePresence>
                       {favorites.map((item, index) => (
@@ -226,8 +229,11 @@ export const Default: Story = {
                           className={cn(
                             "relative cursor-pointer rounded py-1 pl-1.5 pr-1",
                             "backdrop-blur transition-colors",
-                            "hover:bg-f1-background-secondary"
+                            "hover:bg-f1-background-secondary",
+                            "data-[dragging=true]:bg-f1-background-secondary"
                           )}
+                          dragConstraints={containerRef}
+                          dragElastic={0.1}
                         >
                           <FavoriteItem
                             {...item}
