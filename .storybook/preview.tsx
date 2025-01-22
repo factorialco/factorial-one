@@ -69,6 +69,17 @@ const preview: Preview = {
 
   parameters: {
     chromatic: { diffThreshold: 0.2 },
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: true,
+            selector: "*:not([data-a11y-color-contrast-ignore])",
+          },
+        ],
+      },
+    },
     html: {
       root: "#factorial-one-layout",
       highlighter: {

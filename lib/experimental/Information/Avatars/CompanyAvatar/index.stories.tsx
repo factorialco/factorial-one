@@ -17,18 +17,6 @@ const meta: Meta<typeof CompanyAvatar> = {
     size: "medium",
     "aria-label": "Factorial avatar",
   },
-  parameters: {
-    a11y: {
-      config: {
-        rules: [
-          {
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
-    },
-  },
 }
 
 export default meta

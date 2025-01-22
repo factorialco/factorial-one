@@ -75,6 +75,7 @@ const Avatar = React.forwardRef<
 >(({ size, type, color, className, ...props }, ref) => (
   <AvatarPrimitive.Root
     ref={ref}
+    data-a11y-color-contrast-ignore
     className={cn(avatarVariants({ size, type, color, className }))}
     {...props}
   />

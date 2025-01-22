@@ -26,9 +26,7 @@ const config: TestRunnerConfig = {
       }
 
       // Apply story-level a11y rules
-      await configureAxe(page, {
-        rules: storyContext.parameters?.a11y?.config?.rules,
-      })
+      await configureAxe(page, storyContext.parameters?.a11y?.config || {})
 
       // Add a longer delay to ensure previous axe run is complete
       await page.waitForTimeout(500)

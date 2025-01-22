@@ -6,16 +6,6 @@ const meta = {
   component: TeamHeader,
   parameters: {
     layout: "centered",
-    a11y: {
-      config: {
-        rules: [
-          {
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
-    },
   },
   tags: ["autodocs"],
 } satisfies Meta<typeof TeamHeader>
