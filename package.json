@@ -140,7 +140,7 @@
     "vite": "^6.0.4",
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-lib-inject-css": "^2.2.1",
-    "vitest": "^3.0.2"
+    "vitest": "^3.0.3"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.31"
