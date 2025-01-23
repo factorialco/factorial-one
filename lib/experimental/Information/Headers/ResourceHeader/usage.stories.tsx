@@ -419,7 +419,7 @@ export const Default: Story = {
   args: {
     title: "Product Designer",
     description:
-      "Open position on our team, seeking an experienced product designer to lead design initiatives.",
+      "We are excited to announce an open position on our team for an experienced product designer to lead design initiatives. As a key member of our design team, you will be responsible for crafting intuitive and visually appealing user experiences that align with our company's vision and goals. Your expertise in product design will help drive innovation and improvement across our product suite, ensuring that our users have a seamless and engaging experience. If you are passionate about design and have a proven track record of delivering high-quality design solutions, we encourage you to apply for this exciting opportunity to join our dynamic team.",
     status: {
       label: "Status",
       text: "Published",
