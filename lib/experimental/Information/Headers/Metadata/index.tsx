@@ -145,7 +145,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
   )
 }
 
-export const Metadata = memo( function Metadata({ items }: MetadataProps) {
+export const Metadata = memo(function Metadata({ items }: MetadataProps) {
   return (
     <div className="flex flex-col items-start gap-x-3 gap-y-0 md:flex-row md:flex-wrap md:items-center">
       {items.map((item, index) => (
