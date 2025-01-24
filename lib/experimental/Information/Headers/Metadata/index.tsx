@@ -12,7 +12,7 @@ import { MobileDropdown } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
-import { useState } from "react"
+import { memo, useState } from "react"
 
 type MetadataItemValue =
   | { type: "text"; content: string }
@@ -33,7 +33,7 @@ interface MetadataItem {
 }
 
 interface MetadataProps {
-  items?: MetadataItem[]
+  items: MetadataItem[]
 }
 
 function MetadataValue({ item }: { item: MetadataItem }) {
@@ -145,9 +145,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
   )
 }
 
-export function Metadata({ items }: MetadataProps) {
-  if (!items?.length) return null
-
+export const Metadata = memo(function Metadata({ items }: MetadataProps) {
   return (
     <div className="flex flex-col items-start gap-x-3 gap-y-0 md:flex-row md:flex-wrap md:items-center">
       {items.map((item, index) => (
@@ -163,6 +161,6 @@ export function Metadata({ items }: MetadataProps) {
       ))}
     </div>
   )
-}
+})
 
 export type { MetadataAction, MetadataItem, MetadataItemValue }

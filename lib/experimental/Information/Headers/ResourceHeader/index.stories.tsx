@@ -59,6 +59,13 @@ export const Default: Story = {
   },
 }
 
+export const Simple: Story = {
+  args: {
+    ...Default.args,
+    status: undefined,
+  },
+}
+
 export const Metadata: Story = {
   args: {
     ...Default.args,
@@ -131,6 +138,8 @@ export const WithOtherActions: Story = {
       {
         label: "Promote",
         onClick: fn(),
+        disabled: true,
+        tooltip: "Recharge your account",
       },
     ],
     otherActions: [

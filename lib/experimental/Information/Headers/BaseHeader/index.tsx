@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import {
   Avatar,
   AvatarVariant,
@@ -13,6 +13,8 @@ import {
   DropdownItem,
   MobileDropdown,
 } from "@/experimental/Navigation/Dropdown"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { Fragment, memo } from "react"
 import { Metadata, MetadataAction, MetadataItem } from "../Metadata"
 
 interface BaseHeaderProps {
@@ -22,7 +24,7 @@ interface BaseHeaderProps {
   eyebrow?: React.ReactNode
   primaryAction?: PrimaryAction
   secondaryActions?: SecondaryAction[]
-  otherActions?: DropdownItem[]
+  otherActions?: (DropdownItem & { isVisible?: boolean })[]
   status?: {
     label: string
     text: string
@@ -32,16 +34,36 @@ interface BaseHeaderProps {
   metadata?: MetadataItem[]
 }
 
+const isVisible = (action: { isVisible?: boolean }) =>
+  action.isVisible !== false
+
+const ButtonWithTooltip = memo(function ButtonWithTooltip({
+  tooltip,
+  ...buttonProps
+}: ButtonProps & { tooltip?: string }) {
+  if (tooltip) {
+    const Wrapper = buttonProps.disabled ? "span" : Fragment
+    return (
+      <Tooltip description={tooltip}>
+        <Wrapper>
+          <Button {...buttonProps} />
+        </Wrapper>
+      </Tooltip>
+    )
+  }
+  return <Button {...buttonProps} />
+})
+
 export function BaseHeader({
   title,
   avatar,
   description,
   eyebrow,
   primaryAction,
-  secondaryActions,
-  otherActions,
+  secondaryActions = [],
+  otherActions = [],
   status,
-  metadata,
+  metadata = [],
 }: BaseHeaderProps) {
   const allMetadata = status
     ? [
@@ -55,9 +77,15 @@ export function BaseHeader({
           actions: status.actions,
           hideLabel: true,
         },
-        ...(metadata ?? []),
+        ...metadata,
       ]
     : metadata
+
+  const visibleSecondaryActions = secondaryActions.filter(isVisible)
+  const visibleOtherActions = otherActions.filter(isVisible)
+  const isPrimaryActionVisible = primaryAction && isVisible(primaryAction)
+  const hasSecondaryActions = visibleSecondaryActions.length > 0
+  const hasOtherActions = visibleOtherActions.length > 0
 
   return (
     <div className="flex flex-col gap-3 px-6 pb-5 pt-3">
@@ -84,73 +112,83 @@ export function BaseHeader({
             )}
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 md:hidden">
-          {allMetadata && <Metadata items={allMetadata} />}
-        </div>
+        {allMetadata.length > 0 && (
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 md:hidden">
+            <Metadata items={allMetadata} />
+          </div>
+        )}
         <div className="flex w-full shrink-0 flex-wrap items-center gap-x-2 gap-y-3 md:w-fit md:flex-row-reverse md:gap-y-2 md:overflow-x-auto">
-          {primaryAction && (
+          {isPrimaryActionVisible && (
             <>
               <div className="hidden md:block">
-                <Button
+                <ButtonWithTooltip
                   label={primaryAction.label}
                   onClick={primaryAction.onClick}
                   variant="default"
                   icon={primaryAction.icon}
+                  disabled={primaryAction.disabled}
+                  tooltip={primaryAction.tooltip}
                 />
               </div>
               <div className="w-full md:hidden [&>*]:w-full">
-                <Button
+                <ButtonWithTooltip
                   label={primaryAction.label}
                   onClick={primaryAction.onClick}
                   variant="default"
                   icon={primaryAction.icon}
                   size="lg"
+                  disabled={primaryAction.disabled}
+                  tooltip={primaryAction.tooltip}
                 />
               </div>
             </>
           )}
-          {primaryAction && (secondaryActions || otherActions) && (
-            <div className="mx-1 hidden h-4 w-px bg-f1-background-secondary md:block" />
-          )}
-          {secondaryActions &&
-            secondaryActions.map((action) => (
-              <>
-                <div className="hidden md:block">
-                  <Button
-                    key={action.label}
-                    label={action.label}
-                    onClick={action.onClick}
-                    variant={action.variant ?? "outline"}
-                    icon={action.icon}
-                  />
-                </div>
-                <div className="w-full md:hidden [&>*]:w-full">
-                  <Button
-                    key={action.label}
-                    label={action.label}
-                    onClick={action.onClick}
-                    variant={action.variant ?? "outline"}
-                    icon={action.icon}
-                    size="lg"
-                  />
-                </div>
-              </>
-            ))}
-          {otherActions && otherActions.length > 0 && (
+          {isPrimaryActionVisible &&
+            (hasSecondaryActions || hasOtherActions) && (
+              <div className="mx-1 hidden h-4 w-px bg-f1-background-secondary md:block" />
+            )}
+          {visibleSecondaryActions.map((action) => (
+            <Fragment key={action.label}>
+              <div className="hidden md:block">
+                <ButtonWithTooltip
+                  label={action.label}
+                  onClick={action.onClick}
+                  variant={action.variant ?? "outline"}
+                  icon={action.icon}
+                  disabled={action.disabled}
+                  tooltip={action.tooltip}
+                />
+              </div>
+              <div className="w-full md:hidden [&>*]:w-full">
+                <ButtonWithTooltip
+                  label={action.label}
+                  onClick={action.onClick}
+                  variant={action.variant ?? "outline"}
+                  icon={action.icon}
+                  size="lg"
+                  disabled={action.disabled}
+                  tooltip={action.tooltip}
+                />
+              </div>
+            </Fragment>
+          ))}
+          {visibleOtherActions.length > 0 && (
             <>
               <div className="hidden md:block">
-                <Dropdown items={otherActions} />
+                <Dropdown items={visibleOtherActions} />
               </div>
               <div className="w-full md:hidden">
-                <MobileDropdown items={otherActions} />
+                <MobileDropdown items={visibleOtherActions} />
               </div>
             </>
           )}
         </div>
       </div>
-      <div className="hidden flex-wrap items-center gap-x-3 gap-y-1 md:block">
-        {allMetadata && <Metadata items={allMetadata} />}
-      </div>
+      {allMetadata.length > 0 && (
+        <div className="hidden flex-wrap items-center gap-x-3 gap-y-1 md:block">
+          <Metadata items={allMetadata} />
+        </div>
+      )}
     </div>
   )
 }
