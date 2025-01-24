@@ -96,6 +96,7 @@ export function BaseHeader({
                   onClick={primaryAction.onClick}
                   variant="default"
                   icon={primaryAction.icon}
+                  disabled={primaryAction.disabled}
                 />
               </div>
               <div className="w-full md:hidden [&>*]:w-full">
@@ -105,6 +106,7 @@ export function BaseHeader({
                   variant="default"
                   icon={primaryAction.icon}
                   size="lg"
+                  disabled={primaryAction.disabled}
                 />
               </div>
             </>
@@ -122,6 +124,7 @@ export function BaseHeader({
                     onClick={action.onClick}
                     variant={action.variant ?? "outline"}
                     icon={action.icon}
+                    disabled={action.disabled}
                   />
                 </div>
                 <div className="w-full md:hidden [&>*]:w-full">
@@ -132,6 +135,7 @@ export function BaseHeader({
                     variant={action.variant ?? "outline"}
                     icon={action.icon}
                     size="lg"
+                    disabled={action.disabled}
                   />
                 </div>
               </>
