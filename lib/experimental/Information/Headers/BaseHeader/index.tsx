@@ -1,4 +1,4 @@
-import { Button } from "@/components/Actions/Button"
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import {
   Avatar,
   AvatarVariant,
@@ -13,6 +13,8 @@ import {
   DropdownItem,
   MobileDropdown,
 } from "@/experimental/Navigation/Dropdown"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { Fragment, memo } from "react"
 import { Metadata, MetadataAction, MetadataItem } from "../Metadata"
 
 interface BaseHeaderProps {
@@ -31,6 +33,23 @@ interface BaseHeaderProps {
   }
   metadata?: MetadataItem[]
 }
+
+const ButtonWithTooltip = memo(function ButtonWithTooltip({
+  tooltip,
+  ...buttonProps
+}: ButtonProps & { tooltip?: string }) {
+  if (tooltip) {
+    const Wrapper = buttonProps.disabled ? "span" : Fragment
+    return (
+      <Tooltip description={tooltip}>
+        <Wrapper>
+          <Button {...buttonProps} />
+        </Wrapper>
+      </Tooltip>
+    )
+  }
+  return <Button {...buttonProps} />
+})
 
 export function BaseHeader({
   title,
@@ -91,22 +110,24 @@ export function BaseHeader({
           {primaryAction && (
             <>
               <div className="hidden md:block">
-                <Button
+                <ButtonWithTooltip
                   label={primaryAction.label}
                   onClick={primaryAction.onClick}
                   variant="default"
                   icon={primaryAction.icon}
                   disabled={primaryAction.disabled}
+                  tooltip={primaryAction.tooltip}
                 />
               </div>
               <div className="w-full md:hidden [&>*]:w-full">
-                <Button
+                <ButtonWithTooltip
                   label={primaryAction.label}
                   onClick={primaryAction.onClick}
                   variant="default"
                   icon={primaryAction.icon}
                   size="lg"
                   disabled={primaryAction.disabled}
+                  tooltip={primaryAction.tooltip}
                 />
               </div>
             </>
@@ -118,17 +139,18 @@ export function BaseHeader({
             secondaryActions.map((action) => (
               <>
                 <div className="hidden md:block">
-                  <Button
+                  <ButtonWithTooltip
                     key={action.label}
                     label={action.label}
                     onClick={action.onClick}
                     variant={action.variant ?? "outline"}
                     icon={action.icon}
                     disabled={action.disabled}
+                    tooltip={action.tooltip}
                   />
                 </div>
                 <div className="w-full md:hidden [&>*]:w-full">
-                  <Button
+                  <ButtonWithTooltip
                     key={action.label}
                     label={action.label}
                     onClick={action.onClick}
@@ -136,6 +158,7 @@ export function BaseHeader({
                     icon={action.icon}
                     size="lg"
                     disabled={action.disabled}
+                    tooltip={action.tooltip}
                   />
                 </div>
               </>

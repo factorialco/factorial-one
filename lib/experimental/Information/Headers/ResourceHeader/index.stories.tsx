@@ -132,6 +132,7 @@ export const WithOtherActions: Story = {
         label: "Promote",
         onClick: fn(),
         disabled: true,
+        tooltip: "Recharge your account",
       },
     ],
     otherActions: [

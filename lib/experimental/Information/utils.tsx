@@ -5,6 +5,7 @@ export interface PrimaryAction {
   icon?: IconType
   onClick: () => void
   disabled?: boolean
+  tooltip?: string
 }
 
 export interface SecondaryAction extends PrimaryAction {
