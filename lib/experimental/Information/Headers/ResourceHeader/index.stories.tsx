@@ -59,6 +59,14 @@ export const Default: Story = {
   },
 }
 
+export const Simple: Story = {
+  args: {
+    ...Default.args,
+    status: undefined
+  },
+}
+
+
 export const Metadata: Story = {
   args: {
     ...Default.args,

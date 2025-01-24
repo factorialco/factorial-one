@@ -6,6 +6,7 @@ export interface PrimaryAction {
   onClick: () => void
   disabled?: boolean
   tooltip?: string
+  isVisible?: boolean
 }
 
 export interface SecondaryAction extends PrimaryAction {
