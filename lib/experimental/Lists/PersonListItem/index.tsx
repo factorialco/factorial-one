@@ -15,33 +15,21 @@ export type PersonListItemProps = {
     avatarBadge?: Omit<BadgeProps, "size">
   }
   description?: string
+  bottomTags: Omit<RawTagProps, "noBorder">[]
+  rightTag?: DotTagProps
+  actions?: {
+    primary?: {
+      icon?: IconType
+      label: string
+      onClick: () => void
+    }
+    secondary?: {
+      icon: IconType
+      onClick: () => void
+    }
+  }
   onClick: () => void
-} & (
-  | {
-      description: string
-    }
-  | {
-      tags: Omit<RawTagProps, "noBorder">[]
-    }
-) &
-  (
-    | {
-        tag: DotTagProps
-      }
-    | {
-        actions: {
-          primary?: {
-            icon?: IconType
-            label: string
-            onClick: () => void
-          }
-          secondary?: {
-            icon: IconType
-            onClick: () => void
-          }
-        }
-      }
-  )
+}
 
 export const PersonListItem = React.forwardRef<
   HTMLDivElement,
@@ -73,17 +61,17 @@ export const PersonListItem = React.forwardRef<
             className="text-f1-icon-secondary"
           />
         </div>
-        {"tags" in props && (
+        {"bottomTags" in props && (
           <div className="-ml-1.5 flex flex-row items-center text-f1-foreground-secondary [&>div]:-mr-1">
-            {props.tags.map((tag, i) => (
+            {props.bottomTags.map((tag, i) => (
               <>
                 <RawTag key={tag.text} {...tag} noBorder />
-                {i < props.tags.length - 1 && <span>·</span>}
+                {i < props.bottomTags.length - 1 && <span>·</span>}
               </>
             ))}
           </div>
         )}
-        {"description" in props && (
+        {"description" in props && props.description && (
           <p className="truncate text-f1-foreground-secondary">
             {props.description}
           </p>
@@ -91,10 +79,12 @@ export const PersonListItem = React.forwardRef<
       </div>
 
       <div className="flex flex-row items-center justify-between gap-2">
-        {"tag" in props && <DotTag {...props.tag} />}
+        {"rightTag" in props && props.rightTag && (
+          <DotTag {...props.rightTag} />
+        )}
         {"actions" in props && (
           <div className="flex flex-1 flex-row items-center justify-end gap-2">
-            {props.actions.primary && (
+            {props.actions?.primary && (
               <Button
                 variant="outline"
                 onClick={props.actions.primary.onClick}
@@ -103,7 +93,7 @@ export const PersonListItem = React.forwardRef<
               />
             )}
 
-            {props.actions.secondary && (
+            {props.actions?.secondary && (
               <Button
                 variant="outline"
                 onClick={props.actions.secondary.onClick}

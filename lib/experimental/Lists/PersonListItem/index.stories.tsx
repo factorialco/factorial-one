@@ -23,7 +23,7 @@ export const Default: Story = {
       },
     },
     description: "Software Engineer",
-    tag: {
+    rightTag: {
       text: "Parental leave",
       color: "army",
     },
@@ -59,7 +59,7 @@ export const WithTags: Story = {
       lastName: "Wilson",
       avatarUrl: "https://i.pravatar.cc/300",
     },
-    tags: [
+    bottomTags: [
       { text: "Label", icon: Placeholder },
       { text: "Label", icon: Placeholder },
       { text: "Label", icon: Placeholder },
