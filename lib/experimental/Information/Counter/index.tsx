@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import { cva, type VariantProps } from "class-variance-authority"
 
 const counterVariants = cva(
@@ -30,5 +31,9 @@ type CounterProps = {
 export function Counter({ size, type, value, maxValue }: CounterProps) {
   const displayValue = maxValue && value > maxValue ? `+${maxValue}` : value
 
-  return <div className={counterVariants({ size, type })}>{displayValue}</div>
+  return (
+    <div className={cn("text-f1-foreground", counterVariants({ size, type }))}>
+      {displayValue}
+    </div>
+  )
 }

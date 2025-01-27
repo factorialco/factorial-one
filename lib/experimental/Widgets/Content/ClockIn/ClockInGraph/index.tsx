@@ -62,11 +62,13 @@ export function ClockInGraph({
 
       {/* Time display */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-semibold">{time}</span>
+        <span className="text-2xl font-semibold text-f1-foreground">
+          {time}
+        </span>
       </div>
 
       {/* Labels */}
-      <div className="absolute bottom-3 flex w-full justify-between px-8">
+      <div className="absolute bottom-3 flex w-full justify-between px-8 text-f1-foreground-secondary">
         <span className="text-sm font-medium opacity-60">{primaryLabel}</span>
         <span className="text-sm font-medium opacity-60">{secondaryLabel}</span>
       </div>
