@@ -12,6 +12,8 @@ const defaultLabels = {
   resume: "Resume",
   remainingTime: "Remaining time",
   overtime: "Overtime",
+  selectLocation: "Select location",
+  selectProject: "Select project",
 }
 
 describe("ClockInControls", () => {

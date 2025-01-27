@@ -1,9 +1,5 @@
-import * as React from "react";
 import type { SVGProps } from "react";
 import { Ref, forwardRef } from "react";
-const SvgInfoCircle = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" ref={ref} {...props}>
-  <path fillRule="evenodd" clipRule="evenodd" d="M16.6666 10C16.6666 13.6819 13.6819 16.6667 9.99998 16.6667C6.31808 16.6667 3.33331 13.6819 3.33331 10C3.33331 6.3181 6.31808 3.33333 9.99998 3.33333C13.6819 3.33333 16.6666 6.3181 16.6666 10ZM9.29169 7.375C9.29169 6.9838 9.60882 6.66667 10 6.66667C10.3912 6.66667 10.7084 6.9838 10.7084 7.375C10.7084 7.7662 10.3912 8.08333 10 8.08333C9.60882 8.08333 9.29169 7.7662 9.29169 7.375ZM10 8.93333C10.359 8.93333 10.65 9.22435 10.65 9.58333L10.65 12.5C10.65 12.859 10.359 13.15 10 13.15C9.64101 13.15 9.35 12.859 9.35 12.5V9.58333C9.35 9.22435 9.64101 8.93333 10 8.93333Z" fill="currentColor" />
-</svg>;
-
+const SvgInfoCircle = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" ref={ref} {...props}><path fill="currentColor" fillRule="evenodd" d="M20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12ZM11.35 9.10001C11.35 9.45899 11.641 9.75001 12 9.75001C12.359 9.75001 12.65 9.45899 12.65 9.10001V9.00001C12.65 8.64102 12.359 8.35001 12 8.35001C11.641 8.35001 11.35 8.64102 11.35 9.00001V9.10001ZM11.35 15.1C11.35 15.459 11.641 15.75 12 15.75C12.359 15.75 12.65 15.459 12.65 15.1V12.1C12.65 11.741 12.359 11.45 12 11.45C11.641 11.45 11.35 11.741 11.35 12.1L11.35 15.1Z" clipRule="evenodd" vectorEffect="non-scaling-stroke" /></svg>;
 const ForwardRef = forwardRef(SvgInfoCircle);
 export default ForwardRef;

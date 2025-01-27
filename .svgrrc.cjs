@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   prettier: false,
+  jsxRuntime: "automatic",
   ref: true,
   typescript: true,
   dimensions: false,

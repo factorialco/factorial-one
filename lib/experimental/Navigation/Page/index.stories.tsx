@@ -11,6 +11,9 @@ import { HomeLayout } from "@/experimental/PageLayouts/HomeLayout"
 import { Default as DefaultHomeLayoutStory } from "@/experimental/PageLayouts/HomeLayout/index.stories"
 import { StandardLayout } from "@/experimental/PageLayouts/StandardLayout"
 import { Briefcase } from "@/icons/app"
+import { ComponentProps } from "react"
+
+type TabsProps = ComponentProps<typeof Tabs>
 
 const meta: Meta<typeof Page> = {
   component: Page,
@@ -45,7 +48,7 @@ export const Default: Story = {
           module={defaultModule}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
@@ -67,12 +70,16 @@ export const WithBreadcrumbs: Story = {
         <PageHeader
           module={defaultModule}
           breadcrumbs={[
-            { label: "Employees", href: "/employees" },
-            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+            { id: "employees", label: "Employees", href: "/employees" },
+            {
+              id: "employee",
+              label: "Ainhoa Aznar Lago",
+              href: "/employees/123",
+            },
           ]}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
@@ -94,8 +101,12 @@ export const WithBreadcrumbsAndStatus: Story = {
         <PageHeader
           module={defaultModule}
           breadcrumbs={[
-            { label: "Employees", href: "/employees" },
-            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+            { id: "employees", label: "Employees", href: "/employees" },
+            {
+              id: "employee",
+              label: "Ainhoa Aznar Lago",
+              href: "/employees/123",
+            },
           ]}
           statusTag={{
             text: "Draft",
@@ -104,7 +115,7 @@ export const WithBreadcrumbsAndStatus: Story = {
           }}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
@@ -141,7 +152,7 @@ export const WithNavigation: Story = {
           }}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
@@ -183,7 +194,7 @@ export const WithNavigationAndStatus: Story = {
           }}
           actions={HeaderStories.WithActions.args?.actions}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (
@@ -207,15 +218,19 @@ export const Embedded: Story = {
           module={defaultModule}
           embedded
           breadcrumbs={[
-            { label: "Employees", href: "/employees" },
-            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+            { id: "employees", label: "Employees", href: "/employees" },
+            {
+              id: "employee",
+              label: "Ainhoa Aznar Lago",
+              href: "/employees/123",
+            },
           ]}
           statusTag={{
             text: "Published",
             variant: "positive",
           }}
         />
-        <Tabs {...TabsStories.Primary.args} />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
       </>
     ),
     children: (

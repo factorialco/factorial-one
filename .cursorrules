@@ -135,7 +135,8 @@ Testing:
 
 - `npm run vitest`: Run Vitest in watch mode for development
 - `npm run vitest:ci`: Run Vitest tests once for CI
-- `npm run test-storybook`: Run Storybook tests
+- `npm run test-storybook`: Run all Storybook tests
+- `npm run test-storybook -- filename` to run a single storybook test.
 
 Linting and Formatting:
 

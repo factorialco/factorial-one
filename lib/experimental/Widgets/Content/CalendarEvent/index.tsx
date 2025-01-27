@@ -125,7 +125,7 @@ export const CalendarEvent = forwardRef<HTMLDivElement, CalendarEventProps>(
                   {label}
                 </p>
               )}
-              <p className="line-clamp-3 font-medium">
+              <p className="line-clamp-3 font-medium text-f1-foreground">
                 {title}
                 {!!subtitle && (
                   <span className="pl-1 font-normal text-f1-foreground-secondary">{`· ${subtitle}`}</span>

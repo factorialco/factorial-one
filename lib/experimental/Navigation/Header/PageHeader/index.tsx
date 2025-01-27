@@ -1,6 +1,5 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
@@ -96,7 +95,12 @@ export function PageHeader({
   const { sidebarState, toggleSidebar } = useSidebar()
 
   const breadcrumbsTree: BreadcrumbItemType[] = [
-    { label: module.name, href: module.href, icon: module.icon },
+    {
+      id: module.href,
+      label: module.name,
+      href: module.href,
+      icon: module.icon,
+    },
     ...breadcrumbs,
   ]
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
@@ -112,10 +116,7 @@ export function PageHeader({
     <div
       className={cn(
         "flex items-center justify-between px-5 py-4 xs:px-6",
-        embedded ? "h-12" : "h-16",
-        hasNavigation &&
-          !embedded &&
-          "border-b border-dashed border-transparent border-b-f1-border"
+        embedded ? "h-12" : "h-16"
       )}
     >
       <div className="flex flex-grow items-center">
@@ -163,7 +164,6 @@ export function PageHeader({
                 </Link>
               </div>
             )}
-          {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
           {embedded && hasNavigation ? (
             <div className="text-lg font-semibold text-f1-foreground">
               {"loading" in lastBreadcrumb ? (
@@ -172,12 +172,11 @@ export function PageHeader({
                 lastBreadcrumb.label
               )}
             </div>
-          ) : breadcrumbsTree.length > 1 ? (
-            <Breadcrumbs breadcrumbs={breadcrumbsTree} />
           ) : (
-            <div className="text-xl font-semibold text-f1-foreground">
-              {module.name}
-            </div>
+            <Breadcrumbs
+              key={breadcrumbsTree[0].id}
+              breadcrumbs={breadcrumbsTree}
+            />
           )}
         </div>
       </div>

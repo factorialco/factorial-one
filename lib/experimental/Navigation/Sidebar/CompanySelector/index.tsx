@@ -1,7 +1,7 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Select } from "@/experimental/Forms/Fields/Select"
+import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { CompanyAvatar } from "@/experimental/Information/Avatars/CompanyAvatar"
-import { AvatarVariant } from "@/experimental/Information/Avatars/utils"
 import { ChevronDown, Circle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
@@ -53,7 +53,7 @@ export function CompanySelector({
 
   if (companies.length + (additionalOptions?.length || 0) === 1) {
     return (
-      <div className="p-1.5">
+      <div className="p-1.5" style={{ maxWidth: "168px" }}>
         <SelectedCompanyLabel
           company={selectedCompany}
           withNotification={withNotification}

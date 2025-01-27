@@ -1,43 +1,55 @@
+import { I18nProvider } from "@/lib/i18n-provider"
+import { defaultTranslations } from "@/lib/i18n-provider-defaults"
+import {
+  Platform,
+  UserPlatformProvider,
+} from "@/lib/user-platform/UserPlatformProvider"
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 import { Shortcut } from "."
 
+const renderShortcut = (
+  keys: string[],
+  { platform = "mac" }: { platform?: Platform } = {}
+) => {
+  return render(
+    <UserPlatformProvider platform={platform}>
+      <I18nProvider translations={defaultTranslations}>
+        <Shortcut keys={keys} />
+      </I18nProvider>
+    </UserPlatformProvider>
+  )
+}
+
 describe("Shortcut", () => {
   it("renders all keys in the correct order", () => {
-    render(<Shortcut keys={["A", "B"]} />)
+    renderShortcut(["A", "B"])
 
-    const keys = screen.getAllByRole("generic")
-    expect(keys).toHaveLength(2)
-    expect(keys[0]).toHaveTextContent("A")
-    expect(keys[1]).toHaveTextContent("B")
+    expect(screen.getByText("A")).toBeInTheDocument()
+    expect(screen.getByText("B")).toBeInTheDocument()
   })
 
-  it("renders special keys with icons", () => {
-    render(<Shortcut keys={["cmd", "K"]} />)
+  it("renders special keys", () => {
+    renderShortcut(["cmd", "K"])
 
-    const keys = screen.getAllByRole("generic")
-    expect(keys).toHaveLength(2)
-    expect(keys[0].querySelector("svg")).toBeInTheDocument()
-    expect(keys[1]).toHaveTextContent("K")
+    expect(screen.getByText("⌘")).toBeInTheDocument()
+    expect(screen.getByText("K")).toBeInTheDocument()
   })
 
   it("handles mixed case input", () => {
-    render(<Shortcut keys={["CMD", "k"]} />)
+    renderShortcut(["CMD", "k"])
 
-    const keys = screen.getAllByRole("generic")
-    expect(keys).toHaveLength(2)
-    expect(keys[0].querySelector("svg")).toBeInTheDocument()
-    expect(keys[1]).toHaveTextContent("k")
+    expect(screen.getByText("⌘")).toBeInTheDocument()
+    expect(screen.getByText("k")).toBeInTheDocument()
   })
 
-  it("renders with default and inverse variants", () => {
-    const { container, rerender } = render(<Shortcut keys={["A"]} />)
-    const defaultHtml = container.innerHTML
+  it("returns null when platform is unknown", () => {
+    const { container } = renderShortcut(["A"], { platform: "unknown" })
+    expect(container.innerHTML).toBe("")
+  })
 
-    rerender(<Shortcut keys={["A"]} variant="inverse" />)
-    const inverseHtml = container.innerHTML
-
-    // Verify that the variants render differently
-    expect(defaultHtml).not.toBe(inverseHtml)
+  it("returns null when platform is mobile", () => {
+    const { container } = renderShortcut(["A"], { platform: "mobile" })
+    expect(container.innerHTML).toBe("")
   })
 })

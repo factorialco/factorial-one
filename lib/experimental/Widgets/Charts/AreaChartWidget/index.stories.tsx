@@ -1,4 +1,4 @@
-import type { Meta } from "@storybook/react"
+import type { Meta, StoryObj } from "@storybook/react"
 
 import { AreaChartProps } from "@/components/Charts/AreaChart"
 import AreaChartStory from "@/components/Charts/AreaChart/index.stories"
@@ -24,10 +24,11 @@ const meta: Meta<typeof AreaChartWidget> = {
 }
 
 export default meta
+type Story = StoryObj<typeof meta>
 
-export const Default = {}
+export const Default: Story = {}
 
-export const WithYAxis = {
+export const WithYAxis: Story = {
   args: {
     header: {
       ...containerStoryArgs.header,
@@ -42,7 +43,7 @@ export const WithYAxis = {
   },
 }
 
-export const WithComment = {
+export const WithComment: Story = {
   args: {
     header: {
       ...containerStoryArgs.header,
@@ -58,7 +59,7 @@ export const WithComment = {
   },
 }
 
-export const WithBlur = {
+export const WithBlur: Story = {
   args: {
     canBeBlurred: true,
     header: {

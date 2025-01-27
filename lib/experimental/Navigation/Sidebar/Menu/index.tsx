@@ -83,7 +83,7 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
 
   if (category.isRoot) {
     return (
-      <div className="flex flex-col gap-1 pb-3">
+      <div className="flex flex-col gap-0.5">
         {category.items.map((item, index) => (
           <MenuItem key={index} item={item} />
         ))}
@@ -95,8 +95,8 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
       <CollapsibleTrigger
         className={cn(
-          "flex w-full cursor-pointer items-center justify-between border-t border-dashed border-transparent border-t-f1-border px-1.5 pb-2 pt-4 text-sm font-semibold uppercase tracking-wide text-f1-foreground-secondary",
-          focusRing("focus-visible:rounded-md")
+          "flex w-full cursor-pointer items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary hover:bg-f1-background-secondary",
+          focusRing("focus-visible:ring-inset")
         )}
       >
         {category.title}
@@ -104,17 +104,18 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
           initial={false}
           animate={{ rotate: isOpen ? 0 : -90 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.1 }}
+          className="h-3 w-3"
         >
           <Icon
             icon={ChevronDown}
-            size="sm"
+            size="xs"
             className="text-f1-icon-secondary"
           />
         </motion.div>
       </CollapsibleTrigger>
       <CollapsibleContent
         forceMount
-        className="flex flex-col gap-1 overflow-hidden pb-2"
+        className="flex flex-col gap-1 overflow-hidden"
       >
         <motion.div
           initial={{ height: 0, opacity: 0 }}
@@ -129,7 +130,7 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
             ease: [0.165, 0.84, 0.44, 1],
           }}
         >
-          <div className="flex flex-col gap-1 pb-3">
+          <div className="flex flex-col gap-0.5">
             {category.items.map((item, index) => (
               <MenuItem key={index} item={item} />
             ))}
@@ -142,7 +143,7 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
 
 export function Menu({ tree }: MenuProps) {
   return (
-    <div className="w-full bg-transparent px-3">
+    <div className="flex w-full flex-col gap-3 bg-transparent px-3">
       {tree.map((category, index) => (
         <CategoryItem key={index} category={category} />
       ))}

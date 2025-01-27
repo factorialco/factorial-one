@@ -164,7 +164,7 @@ export const BaseCommunityPost = ({
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 text-f1-foreground">
             <p className="text-xl font-semibold">{title}</p>
             {description && <PostDescription content={description} collapsed />}
           </div>
