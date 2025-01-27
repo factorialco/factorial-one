@@ -62,10 +62,15 @@ export const PersonListItem = React.forwardRef<
           />
         </div>
         {"bottomTags" in props && (
-          <div className="-ml-1.5 flex flex-row items-center text-f1-foreground-secondary [&>div]:-mr-1">
+          <div className="-ml-1.5 flex flex-row items-center [&>div]:-mr-1">
             {props.bottomTags.map((tag, i) => (
               <>
-                <RawTag key={tag.text} {...tag} noBorder />
+                <RawTag
+                  key={tag.text}
+                  {...tag}
+                  className="text-f1-foreground-secondary"
+                  noBorder
+                />
                 {i < props.bottomTags.length - 1 && <span>·</span>}
               </>
             ))}

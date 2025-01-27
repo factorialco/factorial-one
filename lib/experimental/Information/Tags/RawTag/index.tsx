@@ -10,17 +10,19 @@ export type RawTagProps = {
   additionalAccesibleText?: string
   icon?: IconType
   noBorder?: boolean
+  className?: string
 }
 
 export const RawTag = forwardRef<HTMLDivElement, RawTagProps>(
-  ({ text, additionalAccesibleText, icon, noBorder }, ref) => {
+  ({ text, additionalAccesibleText, icon, noBorder, className }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
     return (
       <BaseTag
         ref={ref}
         className={cn(
-          !noBorder && "border-[1px] border-solid border-f1-border-secondary"
+          !noBorder && "border-[1px] border-solid border-f1-border-secondary",
+          className
         )}
         left={
           icon ? (
