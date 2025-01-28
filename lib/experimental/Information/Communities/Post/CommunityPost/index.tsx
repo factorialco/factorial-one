@@ -9,6 +9,7 @@ import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
 import { PostDescription, PostDescriptionProps } from "../PostDescription"
 import { PostEvent, PostEventProps } from "../PostEvent"
+import { isVideo } from "./video"
 
 export type CommunityPostProps = {
   id: string
@@ -26,7 +27,7 @@ export type CommunityPostProps = {
 
   title: string
   description?: PostDescriptionProps["content"]
-  imageUrl?: string
+  mediaUrl?: string
 
   event?: PostEventProps
 
@@ -56,7 +57,7 @@ export const BaseCommunityPost = ({
   title,
   description,
   onClick,
-  imageUrl,
+  mediaUrl,
   event,
   counters,
   reactions,
@@ -169,15 +170,21 @@ export const BaseCommunityPost = ({
             {description && <PostDescription content={description} collapsed />}
           </div>
         </div>
-        {imageUrl && !event && (
+        {mediaUrl && !event && (
           <div className="relative aspect-video overflow-hidden rounded-xl md:w-2/3">
-            <img
-              src={imageUrl}
-              role="presentation"
-              loading="lazy"
-              className="aspect-video h-full w-full object-cover"
-            />
-            <Skeleton className="absolute inset-0 h-full w-full" />
+            {isVideo(mediaUrl) ? (
+              <video controls className="h-full w-full object-cover">
+                <source src={mediaUrl} />
+              </video>
+            ) : (
+              <img
+                src={mediaUrl}
+                role="presentation"
+                loading="lazy"
+                className="aspect-video h-full w-full object-cover"
+              />
+            )}
+            <Skeleton className="absolute inset-0 -z-10 h-full w-full" />
           </div>
         )}
         {event && (
