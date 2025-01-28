@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: "22.x"
           cache: pnpm
-      - run: pnpm ci
+      - run: pnpm install
       - name: Run Chromatic
         id: chromatic
         uses: chromaui/action@latest
