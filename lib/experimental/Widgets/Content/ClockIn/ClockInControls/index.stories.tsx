@@ -119,3 +119,21 @@ export const WithLongProjectName: Story = {
     projectName: "Bolt’s project with a very long name",
   },
 }
+
+export const ClockedOutWithSomeTime: Story = {
+  args: {
+    remainingMinutes: 320,
+    data: [
+      {
+        from: new Date("2024-03-20T09:02:00"),
+        to: new Date("2024-03-20T12:00:00"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2024-03-20T12:00:00"),
+        to: new Date("2024-03-20T12:00:00"),
+        variant: "clocked-out",
+      },
+    ],
+  },
+}
