@@ -9,7 +9,7 @@ import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
 import { PostDescription, PostDescriptionProps } from "../PostDescription"
 import { PostEvent, PostEventProps } from "../PostEvent"
-import { isVideo } from "./helpers"
+import { isVideo } from "./video"
 
 export type CommunityPostProps = {
   id: string
