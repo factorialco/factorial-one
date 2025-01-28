@@ -18,16 +18,16 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "21.x"
-          cache: "npm"
+          node-version: "22.x"
+          cache: pnpm
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
       - name: Install Playwright
         run: npx playwright install --with-deps
       - name: Build Storybook
-        run: npm run build-storybook --quiet
+        run: pnpm run build-storybook --quiet
       - name: Serve Storybook and run tests
         run: |
           npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
             "npx http-server storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:6006 && npm run test-storybook"
+            "npx wait-on tcp:6006 && pnpm run test-storybook"

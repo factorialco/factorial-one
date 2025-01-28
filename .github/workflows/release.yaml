@@ -11,10 +11,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "21.x"
-          cache: npm
-      - run: npm ci
-      - run: npm run build
+          node-version: "22.x"
+          cache: pnpm
+      - run: pnpm ci
+      - run: pnpm run build
       - run: echo node_modules > .gitignore
       - uses: JS-DevTools/npm-publish@v3
         if: github.ref == 'refs/heads/main'

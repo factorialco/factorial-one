@@ -25,9 +25,9 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: "21.x"
-          cache: npm
-      - run: npm ci
+          node-version: "22.x"
+          cache: pnpm
+      - run: pnpm ci
       - name: Run Chromatic
         id: chromatic
         uses: chromaui/action@latest
