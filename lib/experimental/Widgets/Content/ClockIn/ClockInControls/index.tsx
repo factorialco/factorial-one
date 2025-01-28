@@ -72,6 +72,7 @@ export interface ClockInControlsProps {
     name: string
     icon: IconType
   }
+  canShowBreakButton?: boolean
   projectName?: string
   /** Callback when Clock In button is clicked */
   onClockIn?: () => void
@@ -94,6 +95,7 @@ export function ClockInControls({
   onClockIn,
   onClockOut,
   onBreak,
+  canShowBreakButton = true,
   onClickProjectSelector,
   onClickLocationSelector,
 }: ClockInControlsProps) {
@@ -157,13 +159,15 @@ export function ClockInControls({
 
               {status === "clocked-in" && (
                 <>
-                  <Button
-                    onClick={onBreak}
-                    label={labels.break}
-                    variant="neutral"
-                    icon={SolidPause}
-                    hideLabel
-                  />
+                  {canShowBreakButton && (
+                    <Button
+                      onClick={onBreak}
+                      label={labels.break}
+                      variant="neutral"
+                      icon={SolidPause}
+                      hideLabel
+                    />
+                  )}
                   <Button
                     onClick={onClockOut}
                     label={labels.clockOut}
