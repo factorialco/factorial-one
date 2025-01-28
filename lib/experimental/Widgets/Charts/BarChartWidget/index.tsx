@@ -11,7 +11,7 @@ const BarChartContainer = forwardRef<
     <ChartContainer
       ref={ref}
       {...props}
-      chart={<BarChart aspect={null} yAxis={{ hide: true }} {...props.chart} />}
+      chart={<BarChart yAxis={{ hide: true }} {...props.chart} />}
     />
   )
 })
