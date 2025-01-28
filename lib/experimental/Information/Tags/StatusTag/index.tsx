@@ -7,7 +7,7 @@ type Variant = "neutral" | "info" | "positive" | "warning" | "critical"
 
 export type StatusVariant = Variant
 
-interface Props {
+export interface StatusTagProps {
   text: string
   variant: Variant
   /**
@@ -17,7 +17,7 @@ interface Props {
   additionalAccesibleText?: string
 }
 
-export const StatusTag = forwardRef<HTMLDivElement, Props>(
+export const StatusTag = forwardRef<HTMLDivElement, StatusTagProps>(
   ({ text, additionalAccesibleText, variant }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 

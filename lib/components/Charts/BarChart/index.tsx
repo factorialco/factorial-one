@@ -27,11 +27,24 @@ import { fixedForwardRef } from "../utils/forwardRef"
 import { prepareData } from "../utils/muncher"
 import { ChartPropsBase } from "../utils/types"
 
+type ChartDataPoint<K extends ChartConfig> = {
+  label: string
+  values: {
+    [key in keyof K]: number
+  }
+}
+
+type ActivePayload<K> = Array<{
+  name: keyof K
+  value: number
+}>
+
 export type BarChartProps<K extends ChartConfig = ChartConfig> =
   ChartPropsBase<K> & {
     type?: "simple" | "stacked" | "stacked-by-sign"
     label?: boolean
     legend?: boolean
+    onClick?: (data: ChartDataPoint<K>) => void
   }
 
 const _BarChart = <K extends ChartConfig>(
@@ -44,6 +57,7 @@ const _BarChart = <K extends ChartConfig>(
     type = "simple",
     aspect,
     legend,
+    onClick,
   }: BarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -72,6 +86,22 @@ const _BarChart = <K extends ChartConfig>(
           top: label ? 24 : 0,
         }}
         stackOffset={type === "stacked-by-sign" ? "sign" : undefined}
+        onClick={(data) => {
+          if (!onClick || !data.activeLabel || !data.activePayload) {
+            return
+          }
+
+          const chartData = {
+            label: data.activeLabel,
+            values: {},
+          } as ChartDataPoint<K>
+
+          for (const payload of data.activePayload as ActivePayload<K>) {
+            chartData.values[payload.name] = payload.value
+          }
+
+          onClick(chartData)
+        }}
       >
         <ChartTooltip
           cursor
