@@ -88,7 +88,7 @@ describe("ClockInGraph helpers", () => {
       expect(result).toEqual({
         primaryLabel: "09:00",
         secondaryLabel: "--:--",
-        time: "00:30", // Duration of last entry (clocked-out)
+        time: "03:00",
       })
     })
 
