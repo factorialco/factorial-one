@@ -1,4 +1,4 @@
-import { cva } from "class-variance-authority"
+import { cva } from "cva"
 import * as React from "react"
 import {
   createContext,
@@ -92,33 +92,29 @@ export const XRayProvider: React.FC<{ children: ReactNode }> = ({
 
 type TypeVariant = Record<ComponentTypes, string>
 
-const wrapperVariants = cva(
-  "outline-opacity-50 pointer-events-none absolute z-40 outline-dashed",
-  {
-    variants: {
-      type: {
-        layout: "outline-red-500",
-        info: "outline-blue-500",
-        action: "outline-green-600",
-        form: "outline-purple-600",
-      } satisfies TypeVariant,
-    },
-  }
-)
+const wrapperVariants = cva({
+  base: "outline-opacity-50 pointer-events-none absolute z-40 outline-dashed",
+  variants: {
+    type: {
+      layout: "outline-red-500",
+      info: "outline-blue-500",
+      action: "outline-green-600",
+      form: "outline-purple-600",
+    } satisfies TypeVariant,
+  },
+})
 
-const tagVariants = cva(
-  "absolute z-40 bg-opacity-50 px-2 py-1 text-sm uppercase",
-  {
-    variants: {
-      type: {
-        layout: "bg-red-500 text-white",
-        info: "bg-blue-500 text-white",
-        action: "bg-green-600 text-white",
-        form: "bg-purple-600 text-white",
-      } satisfies TypeVariant,
-    },
-  }
-)
+const tagVariants = cva({
+  base: "absolute z-40 bg-opacity-50 px-2 py-1 text-sm uppercase",
+  variants: {
+    type: {
+      layout: "bg-red-500 text-white",
+      info: "bg-blue-500 text-white",
+      action: "bg-green-600 text-white",
+      form: "bg-purple-600 text-white",
+    } satisfies TypeVariant,
+  },
+})
 
 export const useComponentXRay = <R extends HTMLElement | SVGElement>(
   meta: ComponentMetadata,

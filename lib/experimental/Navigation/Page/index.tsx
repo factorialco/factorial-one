@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 
 interface PageProps {
   children?: React.ReactNode
@@ -23,24 +23,22 @@ export function Page({ children, header, embedded = false }: PageProps) {
 
 Page.displayName = "Page"
 
-const daytimePageVariants = cva(
-  "pointer-events-none absolute inset-0 h-screen max-h-[1000px] opacity-[0.08]",
-  {
-    variants: {
-      period: {
-        morning:
-          "bg-gradient-to-bl from-[#E51943] from-20% via-[#F97316] via-35% to-transparent to-50%",
-        afternoon:
-          "bg-gradient-to-bl from-[#5596F6] from-20% via-[#10B881] via-35% to-transparent to-50%",
-        evening:
-          "bg-gradient-to-bl from-[#3739A8] from-20% via-[#CB6687] via-35% to-transparent to-50%",
-      },
+const daytimePageVariants = cva({
+  base: "pointer-events-none absolute inset-0 h-screen max-h-[1000px] opacity-[0.08]",
+  variants: {
+    period: {
+      morning:
+        "bg-gradient-to-bl from-[#E51943] from-20% via-[#F97316] via-35% to-transparent to-50%",
+      afternoon:
+        "bg-gradient-to-bl from-[#5596F6] from-20% via-[#10B881] via-35% to-transparent to-50%",
+      evening:
+        "bg-gradient-to-bl from-[#3739A8] from-20% via-[#CB6687] via-35% to-transparent to-50%",
     },
-    defaultVariants: {
-      period: "morning",
-    },
-  }
-)
+  },
+  defaultVariants: {
+    period: "morning",
+  },
+})
 
 export interface DaytimePageProps
   extends VariantProps<typeof daytimePageVariants> {

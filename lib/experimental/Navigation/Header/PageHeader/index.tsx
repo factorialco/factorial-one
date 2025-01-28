@@ -8,7 +8,6 @@ import { ChevronDown, ChevronLeft, ChevronUp, Menu } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
-import { cva } from "class-variance-authority"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 import { Dropdown } from "../../Dropdown"
@@ -239,15 +238,14 @@ export function PageHeader({
   )
 }
 
-const pageActionButtonVariants = cva(
-  "inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
-)
-
 function PageAction({ action }: { action: PageAction }): ReactElement {
   if ("actions" in action) {
     return (
       <Dropdown items={action.actions}>
-        <button title={action.label} className={pageActionButtonVariants()}>
+        <button
+          title={action.label}
+          className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
+        >
           <Icon icon={action.icon} size="md" />
         </button>
       </Dropdown>
@@ -258,7 +256,7 @@ function PageAction({ action }: { action: PageAction }): ReactElement {
     <Link
       href={action.href}
       title={action.label}
-      className={pageActionButtonVariants()}
+      className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
     >
       <Icon icon={action.icon} size="md" />
     </Link>

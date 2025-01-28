@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 
 export type ColumnNumber = 1 | 2 | 3 | 4 | 6
 export type PeekVariant = `peek${ColumnNumber}`
@@ -11,7 +11,7 @@ export interface CarouselBreakpoints {
   lg?: ColumnNumber
 }
 
-export const carouselItemVariants = cva("", {
+export const carouselItemVariants = cva({
   variants: {
     peek: { true: "", false: "" },
     default: {

@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import { parse } from "twemoji-parser"
 
 interface ParseObject {
@@ -7,7 +7,7 @@ interface ParseObject {
   text: string
 }
 
-const emojiVariants = cva("", {
+const emojiVariants = cva({
   variants: {
     size: {
       xs: "h-3 w-3",

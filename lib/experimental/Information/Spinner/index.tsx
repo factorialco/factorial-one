@@ -1,22 +1,20 @@
 import { cn } from "@/lib/utils"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import { motion } from "framer-motion"
 
-const spinnerVariants = cva(
-  "flex select-none items-center justify-center text-f1-foreground-secondary",
-  {
-    variants: {
-      size: {
-        small: "h-4 w-4 [&_circle]:stroke-[4]",
-        medium: "h-8 w-8 [&_circle]:stroke-[2.6]",
-        large: "h-12 w-12 [&_circle]:stroke-2",
-      },
+const spinnerVariants = cva({
+  base: "flex select-none items-center justify-center text-f1-foreground-secondary",
+  variants: {
+    size: {
+      small: "h-4 w-4 [&_circle]:stroke-[4]",
+      medium: "h-8 w-8 [&_circle]:stroke-[2.6]",
+      large: "h-12 w-12 [&_circle]:stroke-2",
     },
-    defaultVariants: {
-      size: "medium",
-    },
-  }
-)
+  },
+  defaultVariants: {
+    size: "medium",
+  },
+})
 
 interface SpinnerProps extends VariantProps<typeof spinnerVariants> {
   className?: string

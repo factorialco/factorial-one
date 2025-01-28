@@ -22,7 +22,7 @@ import {
 } from "@/ui/card"
 import { Separator } from "@/ui/separator"
 import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import React, { forwardRef, ReactNode, useEffect } from "react"
 
 export interface WidgetProps {
@@ -198,7 +198,7 @@ const Container = forwardRef<
   )
 })
 
-const skeletonVariants = cva("", {
+const skeletonVariants = cva({
   variants: {
     height: {
       sm: "h-36",

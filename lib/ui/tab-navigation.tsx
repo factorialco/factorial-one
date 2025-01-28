@@ -1,7 +1,7 @@
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import * as NavigationMenuPrimitives from "@radix-ui/react-navigation-menu"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import { LayoutGroup, motion } from "framer-motion"
 import * as React from "react"
 import { useId } from "react"
@@ -24,20 +24,18 @@ function getSubtree(
   })
 }
 
-const tabNavigationVariants = cva(
-  "relative flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap px-6 py-3 [scrollbar-width:none] before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-f1-border-secondary before:content-[''] [&::-webkit-scrollbar]:hidden",
-  {
-    variants: {
-      secondary: {
-        true: "bg-f1-foreground/[.02] dark:bg-f1-foreground/[.02]",
-        false: "bg-f1-background-transparent pt-1",
-      },
+const tabNavigationVariants = cva({
+  base: "relative flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap px-6 py-3 [scrollbar-width:none] before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-f1-border-secondary before:content-[''] [&::-webkit-scrollbar]:hidden",
+  variants: {
+    secondary: {
+      true: "bg-f1-foreground/[.02] dark:bg-f1-foreground/[.02]",
+      false: "bg-f1-background-transparent pt-1",
     },
-    defaultVariants: {
-      secondary: false,
-    },
-  }
-)
+  },
+  defaultVariants: {
+    secondary: false,
+  },
+})
 
 interface TabNavigationProps
   extends React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitives.Root>,
@@ -68,25 +66,23 @@ const TabNavigation = React.forwardRef<
 
 TabNavigation.displayName = "TabNavigation"
 
-const tabNavigationLinkVariants = cva(
-  "flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 font-medium transition-all",
-  {
-    variants: {
-      secondary: {
-        true: "group-hover:ring-f1-border group-data-[active=true]:bg-f1-background-inverse-secondary group-data-[active=true]:text-f1-foreground group-data-[active=true]:ring-f1-border",
-        false:
-          "bg-f1-background-transparent group-hover:bg-f1-background-tertiary group-hover:text-f1-foreground group-data-[active=true]:bg-f1-background-tertiary group-data-[active=true]:text-f1-foreground",
-      },
-      disabled: {
-        true: "pointer-events-none text-f1-foreground-disabled",
-      },
+const tabNavigationLinkVariants = cva({
+  base: "flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 font-medium transition-all",
+  variants: {
+    secondary: {
+      true: "group-hover:ring-f1-border group-data-[active=true]:bg-f1-background-inverse-secondary group-data-[active=true]:text-f1-foreground group-data-[active=true]:ring-f1-border",
+      false:
+        "bg-f1-background-transparent group-hover:bg-f1-background-tertiary group-hover:text-f1-foreground group-data-[active=true]:bg-f1-background-tertiary group-data-[active=true]:text-f1-foreground",
     },
-    defaultVariants: {
-      secondary: false,
-      disabled: false,
+    disabled: {
+      true: "pointer-events-none text-f1-foreground-disabled",
     },
-  }
-)
+  },
+  defaultVariants: {
+    secondary: false,
+    disabled: false,
+  },
+})
 
 interface TabNavigationLinkProps
   extends Omit<
