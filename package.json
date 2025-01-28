@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one",
-  "version": "0.0.2-0",
+  "version": "0.0.2-1",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
