@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import React from "react"
 import { BoxProps, BoxRef, FlexBox } from "../_FlexBox"
 import { gaps } from "../shared"
 
-const splitVariants = cva("flex-row", {
+const splitVariants = cva({
+  base: "flex-row",
   variants: {
     gap: {
       ...gaps,

@@ -130,7 +130,7 @@ export const AppLayout: React.FC<{ children: React.ReactNode }> = ({
         </ScrollArea>
       </Stack>
       <Stack overflow="hidden" className="rounded-sm bg-f1-background shadow">
-        <Stack gap={null} className="h-full overflow-hidden">
+        <Stack className="h-full overflow-hidden">
           <Split paddingX="p-4" paddingY="p-4" alignItems="center" shrink>
             <Stack grow paddingX="p-2">
               <div className="text-sm font-medium text-f1-foreground">

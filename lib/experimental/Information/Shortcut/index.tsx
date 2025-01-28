@@ -1,4 +1,4 @@
-import { VariantProps, cva } from "class-variance-authority"
+import { type VariantProps, cva } from "cva"
 
 import { Icon, IconProps } from "@/components/Utilities/Icon"
 import { Windows } from "@/icons/app"
@@ -9,22 +9,20 @@ import {
 } from "@/lib/user-platform/UserPlatformProvider"
 import { cn } from "@/lib/utils"
 
-const shortcutVariants = cva(
-  "flex h-5 min-w-[1ch] items-center justify-center rounded-xs border border-solid py-0.5 font-sans text-sm font-semibold leading-none",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-f1-border-secondary bg-f1-background-tertiary text-f1-foreground-secondary",
-        inverse:
-          "border-f1-border-inverse text-f1-foreground-inverse-secondary",
-      },
+const shortcutVariants = cva({
+  base: "flex h-5 min-w-[1ch] items-center justify-center rounded-xs border border-solid py-0.5 font-sans text-sm font-semibold leading-none",
+
+  variants: {
+    variant: {
+      default:
+        "border-f1-border-secondary bg-f1-background-tertiary text-f1-foreground-secondary",
+      inverse: "border-f1-border-inverse text-f1-foreground-inverse-secondary",
     },
-    defaultVariants: {
-      variant: "default",
-    },
-  }
-)
+  },
+  defaultVariants: {
+    variant: "default",
+  },
+})
 
 interface ShortcutProps extends VariantProps<typeof shortcutVariants> {
   keys: string[]

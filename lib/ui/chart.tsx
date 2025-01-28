@@ -3,9 +3,9 @@ import { useLayoutEffect, useMemo, useState } from "react"
 import * as RechartsPrimitive from "recharts"
 
 import { cn } from "@/lib/utils"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 
-const variants = cva("", {
+const variants = cva({
   variants: {
     aspect: {
       square: "aspect-square",

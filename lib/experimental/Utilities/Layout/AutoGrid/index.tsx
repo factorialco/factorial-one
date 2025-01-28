@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import React from "react"
 import { gaps } from "../shared"
 
-const contentVariants = cva("grid grid-cols-1", {
+const contentVariants = cva({
+  base: "grid grid-cols-1",
   variants: {
     tileSize: {
       // The amount of columns and autoflow when paginating is an issue if we
