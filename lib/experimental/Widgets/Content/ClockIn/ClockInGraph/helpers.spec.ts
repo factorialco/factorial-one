@@ -87,7 +87,7 @@ describe("ClockInGraph helpers", () => {
       const result = getLabels({ data: mockData })
       expect(result).toEqual({
         primaryLabel: "09:00",
-        secondaryLabel: "12:00",
+        secondaryLabel: "--:--",
         time: "00:30", // Duration of last entry (clocked-out)
       })
     })
@@ -118,6 +118,36 @@ describe("ClockInGraph helpers", () => {
         primaryLabel: "09:00",
         secondaryLabel: "17:00", // Last clocked-in end time
         time: "08:00",
+      })
+    })
+
+    it("should show correct time when clocked out of past clock-ins", () => {
+      const mockData = [
+        createMockEntry("09:00", "12:00", "clocked-in"),
+        createMockEntry("12:00", "12:00", "clocked-out"),
+      ]
+
+      const result = getLabels({ data: mockData, remainingMinutes: 0 })
+
+      expect(result).toEqual({
+        primaryLabel: "09:00",
+        secondaryLabel: "12:00",
+        time: "03:00",
+      })
+    })
+
+    it("should not show secondary label when clocked out but has remaining minutes", () => {
+      const mockData = [
+        createMockEntry("09:00", "12:00", "clocked-in"),
+        createMockEntry("12:00", "12:00", "clocked-out"),
+      ]
+
+      const result = getLabels({ data: mockData, remainingMinutes: 30 })
+
+      expect(result).toEqual({
+        primaryLabel: "09:00",
+        secondaryLabel: "--:--",
+        time: "03:00",
       })
     })
   })
