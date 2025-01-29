@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one",
-  "version": "0.0.2-0",
+  "version": "0.0.2-3",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -21,8 +21,8 @@
     "dev": "storybook dev -p 6006",
     "dev:docs": "DOCS_MODE=true pnpm run dev",
     "start": "pnpm run dev",
-    "build:vite": "tsc --project ./tsconfig-build.json && BUILD_TYPES=true vite build && pnpm run build:tailwind && run-p build-icons",
-    "build": "tsup && pnpm run build:tailwind && run-p build-icons",
+    "build": "tsc --project ./tsconfig-build.json && BUILD_TYPES=true vite build && pnpm run build:tailwind && run-p build-icons",
+    "build:tsup": "tsup && pnpm run build:tailwind && run-p build-icons",
     "build-icons": "tsc --project ./tsconfig-build-icons.json",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
