@@ -13,15 +13,17 @@ type Props = {
   | {
       left: ReactNode
       text?: string
+      right?: ReactNode
     }
   | {
       left?: ReactNode
       text: string
+      right?: ReactNode
     }
 )
 
 export const BaseTag = forwardRef<HTMLDivElement, Props>(
-  ({ left, text, additionalAccesibleText, onClick, className }, ref) => (
+  ({ left, text, right, additionalAccesibleText, onClick, className }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -38,6 +40,7 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
       {additionalAccesibleText && (
         <span className="sr-only">{additionalAccesibleText}</span>
       )}
+      {right}
     </div>
   )
 )
