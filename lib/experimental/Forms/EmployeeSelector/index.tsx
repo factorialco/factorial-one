@@ -8,7 +8,8 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { Checkbox } from "@/ui/checkbox"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDebounceValue } from "usehooks-ts"
 
 export type EmployeeSelectorEntity = {
   id: number
@@ -91,25 +92,27 @@ const EmployeeListItem = ({
 
 const EmployeeSelectorContent = ({
   employees,
+  search,
+  onSelect,
+  onRemove,
+  onClear,
+  onSelectAll,
+  onSearch,
+  selectedEmployees,
 }: {
   employees: EmployeeSelectorEntity[]
+  search: string
+  onSelect: (employee: EmployeeSelectorEntity) => void
+  onRemove: (employee: EmployeeSelectorEntity) => void
+  onClear: () => void
+  onSelectAll: () => void
+  onSearch: (search: string) => void
+  selectedEmployees: EmployeeSelectorEntity[]
 }) => {
-  const [selectedEmployees, setSelectedEmployees] = useState<
-    EmployeeSelectorEntity[]
-  >([])
-
-  const onSelect = (employee: EmployeeSelectorEntity) => {
-    setSelectedEmployees([...selectedEmployees, employee])
-  }
-
-  const onRemove = (employee: EmployeeSelectorEntity) => {
-    setSelectedEmployees(selectedEmployees.filter((e) => e.id !== employee.id))
-  }
-
   return (
     <div className="flex">
       <div className="flex w-96 flex-col rounded-l-xl border-0 border-r-[1px] border-solid border-f1-border-secondary">
-        <div className="flex flex-1 justify-between p-2">
+        <div className="flex justify-between p-2">
           <div
             className={cn(
               "flex items-center justify-between rounded bg-f1-background-inverse-secondary p-1.5 ring-1 ring-inset ring-f1-border-secondary transition-all hover:ring-f1-border-hover"
@@ -121,11 +124,13 @@ const EmployeeSelectorContent = ({
                 type="text"
                 className="w-full border-none bg-transparent text-f1-foreground-secondary outline-none"
                 placeholder="Search..."
+                value={search}
+                onChange={(e) => onSearch(e.target.value)}
               />
             </div>
           </div>
         </div>
-        <div className="flex max-h-96 flex-col justify-start gap-1 pl-3 pr-2">
+        <div className="flex-grow-1 flex h-96 flex-col justify-start gap-1 pl-3 pr-2">
           <ScrollArea className="-mr-2 h-full">
             {employees.map((employee) => (
               <EmployeeListItem
@@ -145,14 +150,14 @@ const EmployeeSelectorContent = ({
           }}
         >
           <div className="flex flex-1 justify-between p-2">
-            <Button variant="outline" size="sm">
-              Select all
+            <Button variant="outline" size="sm" onClick={onSelectAll}>
+              Select all ({employees.length})
             </Button>
             <Button
               variant="ghost"
               size="sm"
               disabled={selectedEmployees.length === 0}
-              onClick={() => setSelectedEmployees([])}
+              onClick={onClear}
             >
               Clear
             </Button>
@@ -166,11 +171,14 @@ const EmployeeSelectorContent = ({
             "linear-gradient(270deg, rgba(250, 251, 252, 0) 50%, #FAFBFC 100%)",
         }}
       >
-        <div className="flex flex-col">
+        <div className="flex h-full flex-col">
           <span className="mt-1 p-3 text-f1-foreground-secondary">
             {selectedEmployees.length} selected
           </span>
-          <ScrollArea className="h-full px-3">
+          <ScrollArea
+            className="mr-1 px-3"
+            style={{ height: "calc(24rem + 40px)" }}
+          >
             {selectedEmployees.map((employee) => (
               <EmployeeListTag
                 key={employee.id}
@@ -194,6 +202,57 @@ export const EmployeeSelector = ({
   employees,
   placeholder,
 }: EmployeeSelectorProps) => {
+  const [selectedEmployees, setSelectedEmployees] = useState<
+    EmployeeSelectorEntity[]
+  >([])
+  const [filteredEmployees, setFilteredEmployees] =
+    useState<EmployeeSelectorEntity[]>(employees)
+
+  const [search, setSearch] = useState("")
+  const [debouncedSearch, setDebouncedSearch] = useDebounceValue("", 300)
+
+  const onSelect = (employee: EmployeeSelectorEntity) => {
+    setSelectedEmployees([...selectedEmployees, employee])
+  }
+
+  const onRemove = (employee: EmployeeSelectorEntity) => {
+    setSelectedEmployees(selectedEmployees.filter((e) => e.id !== employee.id))
+  }
+
+  const onClear = () => {
+    setSelectedEmployees([])
+  }
+
+  const onSelectAll = () => {
+    const newSelectedEmployees = [
+      ...selectedEmployees,
+      ...filteredEmployees.filter(
+        (employee) =>
+          !selectedEmployees.some((selected) => selected.id === employee.id)
+      ),
+    ]
+    setSelectedEmployees(newSelectedEmployees)
+  }
+
+  const onSearch = (search: string) => {
+    setSearch(search)
+    setDebouncedSearch(search)
+  }
+
+  useEffect(() => {
+    if (!debouncedSearch) {
+      setFilteredEmployees(employees)
+    } else {
+      setFilteredEmployees(
+        employees.filter((employee) =>
+          employee.firstName
+            .toLowerCase()
+            .includes(debouncedSearch.toLowerCase())
+        )
+      )
+    }
+  }, [debouncedSearch, employees])
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -213,7 +272,16 @@ export const EmployeeSelector = ({
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-full rounded-xl border-[1px] border-solid border-f1-border-secondary p-0">
-        <EmployeeSelectorContent employees={employees} />
+        <EmployeeSelectorContent
+          employees={filteredEmployees}
+          onSelect={onSelect}
+          onRemove={onRemove}
+          onClear={onClear}
+          onSelectAll={onSelectAll}
+          selectedEmployees={selectedEmployees}
+          search={search}
+          onSearch={onSearch}
+        />
       </PopoverContent>
     </Popover>
   )
