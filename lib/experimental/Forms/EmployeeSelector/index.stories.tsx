@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { ComponentProps } from "react"
-import { EmployeeSelector } from "."
-import { famousEmployees } from "./employee.factory.spec"
+import { AvatarNameSelector } from "."
+import { famousEmployees } from "./avatar-name.factory.spec"
 
 const meta: Meta = {
-  component: EmployeeSelector,
+  component: AvatarNameSelector,
   parameters: {
     layout: "centered",
   },
@@ -18,10 +18,10 @@ const meta: Meta = {
     ),
   ],
   args: {
-    employees: famousEmployees,
+    entities: famousEmployees,
     placeholder: "Select employees...",
-  } satisfies ComponentProps<typeof EmployeeSelector>,
-} satisfies Meta<typeof EmployeeSelector>
+  } satisfies ComponentProps<typeof AvatarNameSelector>,
+} satisfies Meta<typeof AvatarNameSelector>
 
 export default meta
 type Story = StoryObj<typeof meta>
