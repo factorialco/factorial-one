@@ -8,11 +8,21 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { Checkbox } from "@/ui/checkbox"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
+import { useState } from "react"
+
+export type EmployeeSelectorEntity = {
+  id: number
+  firstName: string
+  lastName?: string
+  avatarUrl?: string
+}
 
 const EmployeeListTag = ({
-  person,
+  employee,
+  onRemove,
 }: {
-  person: { firstName: string; lastName: string; avatarUrl: string }
+  employee: EmployeeSelectorEntity
+  onRemove: (employee: EmployeeSelectorEntity) => void
 }) => {
   return (
     <div className="pb-2">
@@ -23,8 +33,8 @@ const EmployeeListTag = ({
         )}
         left={
           <BaseAvatar
-            src={person.avatarUrl}
-            name={person.firstName + " " + person.lastName}
+            src={employee.avatarUrl}
+            name={employee.firstName + " " + employee.lastName}
             size="xsmall"
             type="rounded"
           />
@@ -34,18 +44,25 @@ const EmployeeListTag = ({
             icon={Cross}
             size="sm"
             className="ml-auto cursor-pointer text-f1-icon-secondary"
+            onClick={() => onRemove(employee)}
           />
         }
-        text={`${person.firstName} ${person.lastName}`}
+        text={`${employee.firstName} ${employee.lastName}`}
       />
     </div>
   )
 }
 
 const EmployeeListItem = ({
-  person,
+  employee,
+  selected,
+  onSelect,
+  onRemove,
 }: {
-  person: { firstName: string; lastName: string; avatarUrl: string }
+  employee: EmployeeSelectorEntity
+  selected: boolean
+  onSelect: (employee: EmployeeSelectorEntity) => void
+  onRemove: (employee: EmployeeSelectorEntity) => void
 }) => {
   return (
     <div
@@ -53,22 +70,42 @@ const EmployeeListItem = ({
       style={{ width: "calc(100% - 12px)" }}
     >
       <PersonAvatar
-        src={person.avatarUrl}
-        firstName={person.firstName}
-        lastName={person.lastName}
+        src={employee.avatarUrl}
+        firstName={employee.firstName}
+        lastName={employee.lastName ?? ""}
         size="xsmall"
       />
       <div className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-row items-center gap-1">
-          <span className="truncate font-medium">{`${person.firstName} ${person.lastName}`}</span>
+          <span className="truncate font-medium">{`${employee.firstName} ${employee.lastName}`}</span>
         </div>
       </div>
-      <Checkbox className="ml-auto data-[state=checked]:bg-f1-foreground-selected data-[state=checked]:text-f1-foreground-inverse" />
+      <Checkbox
+        checked={selected}
+        onClick={() => (selected ? onRemove(employee) : onSelect(employee))}
+        className="ml-auto data-[state=checked]:bg-f1-foreground-selected data-[state=checked]:text-f1-foreground-inverse"
+      />
     </div>
   )
 }
 
-const EmployeeSelectorContent = () => {
+const EmployeeSelectorContent = ({
+  employees,
+}: {
+  employees: EmployeeSelectorEntity[]
+}) => {
+  const [selectedEmployees, setSelectedEmployees] = useState<
+    EmployeeSelectorEntity[]
+  >([])
+
+  const onSelect = (employee: EmployeeSelectorEntity) => {
+    setSelectedEmployees([...selectedEmployees, employee])
+  }
+
+  const onRemove = (employee: EmployeeSelectorEntity) => {
+    setSelectedEmployees(selectedEmployees.filter((e) => e.id !== employee.id))
+  }
+
   return (
     <div className="flex">
       <div className="flex w-96 flex-col rounded-l-xl border-0 border-r-[1px] border-solid border-f1-border-secondary">
@@ -90,55 +127,15 @@ const EmployeeSelectorContent = () => {
         </div>
         <div className="flex max-h-96 flex-col justify-start gap-1 pl-3 pr-2">
           <ScrollArea className="-mr-2 h-full">
-            <EmployeeListItem
-              person={{
-                firstName: "John",
-                lastName: "Smith",
-                avatarUrl: "https://i.pravatar.cc/300",
-              }}
-            />
-            <EmployeeListItem
-              person={{
-                firstName: "Sarah",
-                lastName: "Johnson",
-                avatarUrl: "https://i.pravatar.cc/301",
-              }}
-            />
-            <EmployeeListItem
-              person={{
-                firstName: "Emma",
-                lastName: "Stone",
-                avatarUrl: "https://i.pravatar.cc/302",
-              }}
-            />
-            <EmployeeListItem
-              person={{
-                firstName: "Jessica",
-                lastName: "Jones",
-                avatarUrl: "https://i.pravatar.cc/303",
-              }}
-            />
-            <EmployeeListItem
-              person={{
-                firstName: "Michael",
-                lastName: "Brown",
-                avatarUrl: "https://i.pravatar.cc/304",
-              }}
-            />
-            <EmployeeListItem
-              person={{
-                firstName: "David",
-                lastName: "Williams",
-                avatarUrl: "https://i.pravatar.cc/305",
-              }}
-            />
-            <EmployeeListItem
-              person={{
-                firstName: "Olivia",
-                lastName: "Davis",
-                avatarUrl: "https://i.pravatar.cc/306",
-              }}
-            />
+            {employees.map((employee) => (
+              <EmployeeListItem
+                key={employee.id}
+                employee={employee}
+                onSelect={onSelect}
+                onRemove={onRemove}
+                selected={selectedEmployees.includes(employee)}
+              />
+            ))}
           </ScrollArea>
         </div>
         <div
@@ -151,7 +148,12 @@ const EmployeeSelectorContent = () => {
             <Button variant="outline" size="sm">
               Select all
             </Button>
-            <Button variant="ghost" size="sm" disabled>
+            <Button
+              variant="ghost"
+              size="sm"
+              disabled={selectedEmployees.length === 0}
+              onClick={() => setSelectedEmployees([])}
+            >
               Clear
             </Button>
           </div>
@@ -166,23 +168,16 @@ const EmployeeSelectorContent = () => {
       >
         <div className="flex flex-col">
           <span className="mt-1 p-3 text-f1-foreground-secondary">
-            2 selected
+            {selectedEmployees.length} selected
           </span>
           <ScrollArea className="h-full px-3">
-            <EmployeeListTag
-              person={{
-                firstName: "John",
-                lastName: "Smith",
-                avatarUrl: "https://i.pravatar.cc/300",
-              }}
-            />
-            <EmployeeListTag
-              person={{
-                firstName: "Sarah",
-                lastName: "Johnson",
-                avatarUrl: "https://i.pravatar.cc/301",
-              }}
-            />
+            {selectedEmployees.map((employee) => (
+              <EmployeeListTag
+                key={employee.id}
+                employee={employee}
+                onRemove={onRemove}
+              />
+            ))}
           </ScrollArea>
         </div>
       </div>
@@ -190,13 +185,21 @@ const EmployeeSelectorContent = () => {
   )
 }
 
-export const EmployeeSelector = () => {
+export interface EmployeeSelectorProps {
+  employees: EmployeeSelectorEntity[]
+  placeholder: string
+}
+
+export const EmployeeSelector = ({
+  employees,
+  placeholder,
+}: EmployeeSelectorProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
         <div className="flex justify-between rounded border border-solid border-f1-border p-2">
           <span className="my-auto pl-2 text-f1-foreground-secondary">
-            Select...
+            {placeholder}
           </span>
           <div className="p-0.5">
             <div className="h-[16px] w-[16px]">
@@ -210,7 +213,7 @@ export const EmployeeSelector = () => {
         </div>
       </PopoverTrigger>
       <PopoverContent className="w-full rounded-xl border-[1px] border-solid border-f1-border-secondary p-0">
-        <EmployeeSelectorContent />
+        <EmployeeSelectorContent employees={employees} />
       </PopoverContent>
     </Popover>
   )

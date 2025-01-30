@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { ComponentProps } from "react"
 import { EmployeeSelector } from "."
+import { famousEmployees } from "./employee.factory.spec"
 
 const meta: Meta = {
   component: EmployeeSelector,
@@ -18,12 +18,8 @@ const meta: Meta = {
     ),
   ],
   args: {
-    header: {
-      title: "A widget",
-      subtitle: "2024",
-      count: 2,
-    },
-    children: <Placeholder>Put your content in there</Placeholder>,
+    employees: famousEmployees,
+    placeholder: "Select employees...",
   } satisfies ComponentProps<typeof EmployeeSelector>,
 } satisfies Meta<typeof EmployeeSelector>
 
