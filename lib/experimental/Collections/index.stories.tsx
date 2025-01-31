@@ -501,41 +501,6 @@ export const WithPreselectedFilters: Story = {
   },
 }
 
-export const LoadingStateExample: Story = {
-  render: () => {
-    const dataSource = useDataSource({
-      properties,
-      filters,
-      fetchData: (_) => {
-        return new Promise<typeof mockUsers>((resolve) => {
-          setTimeout(() => {
-            resolve(mockUsers)
-          }, 5000) // Long delay to show loading state
-        })
-      },
-    })
-
-    return (
-      <DataCollection
-        source={dataSource}
-        visualizations={[
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { key: "name", label: "Name" },
-                { key: "email", label: "Email" },
-                { key: "role", label: "Role" },
-                { key: "department", label: "Department" },
-              ],
-            },
-          },
-        ]}
-      />
-    )
-  },
-}
-
 const JsonVisualization = ({
   source,
 }: {
@@ -552,7 +517,7 @@ const JsonVisualization = ({
   }
 
   return (
-    <pre className="bg-muted overflow-auto rounded-lg p-4">
+    <pre className="overflow-auto rounded-lg bg-f1-background-info p-4">
       <code>{JSON.stringify(data, null, 2)}</code>
     </pre>
   )
@@ -595,6 +560,12 @@ export const WithCustomJsonView: Story = {
         source={dataSource}
         visualizations={[
           {
+            type: "custom",
+            label: "JSON View",
+            icon: Code,
+            component: ({ source }) => <JsonVisualization source={source} />,
+          },
+          {
             type: "table",
             options: {
               columns: [
@@ -615,12 +586,6 @@ export const WithCustomJsonView: Story = {
                 { key: "department", label: "Department" },
               ],
             },
-          },
-          {
-            type: "custom",
-            label: "JSON View",
-            icon: Code,
-            component: JsonVisualization,
           },
         ]}
       />
