@@ -100,18 +100,10 @@ export const AvatarNameSelectorContent = ({
               const selected = groupView
                 ? (entity.subItems ?? []).length ===
                   selectedEntity?.subItems?.length
-                : selectedEntities.includes(entity)
+                : !!selectedEntities.find((el) => el.id === entity.id)
               const partialSelected = groupView
                 ? !selected && (selectedEntity?.subItems?.length ?? 0) > 0
                 : selected
-              console.log(
-                entity,
-                selectedEntities,
-                entities,
-                selectedEntity,
-                selected,
-                partialSelected
-              )
               return (
                 <>
                   <AvatarNameListItem

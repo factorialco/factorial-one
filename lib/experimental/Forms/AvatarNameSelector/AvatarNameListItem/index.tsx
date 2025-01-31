@@ -156,7 +156,9 @@ export const AvatarNameListItem = ({
       </div>
       {expanded &&
         entity.subItems?.map((subItem) => {
-          const selected = selectedEntity?.subItems?.includes(subItem)
+          const selected = !!selectedEntity?.subItems?.find(
+            (el) => el.id === subItem.id
+          )
 
           return (
             <AvatarNameListItemSingleContent

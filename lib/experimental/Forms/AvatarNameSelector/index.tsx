@@ -9,6 +9,40 @@ import {
   AvatarNameSelectorProps,
 } from "./types"
 
+function transformSelection(
+  prevSelected: AvatarNamedEntity[],
+  newGroupView: boolean
+): AvatarNamedEntity[] {
+  if (newGroupView) {
+    return prevSelected
+      .map((parent) => {
+        if (parent.subItems && parent.subItems.length > 0) {
+          return {
+            ...parent,
+          }
+        }
+        return null
+      })
+      .filter(Boolean) as AvatarNamedEntity[]
+  } else {
+    const newSelection: AvatarNamedEntity[] = []
+
+    prevSelected.forEach((parent) => {
+      if (parent.subItems && parent.subItems.length > 0) {
+        parent.subItems.forEach((sub) => {
+          newSelection.push({
+            id: sub.id,
+            name: sub.name,
+            subItems: [],
+          })
+        })
+      }
+    })
+
+    return newSelection
+  }
+}
+
 export const AvatarNameSelector = ({
   entities,
   groups,
@@ -92,23 +126,63 @@ export const AvatarNameSelector = ({
   }
 
   const onClear = () => {
-    setSelectedEntities(
-      selectedEntities.filter(
-        (selected) =>
-          !filteredEntities.find((filtered) => filtered.id === selected.id)
+    const updatedSelected = [...selectedEntities]
+
+    filteredEntities.forEach((filteredEntity) => {
+      const existingIndex = updatedSelected.findIndex(
+        (sel) => sel.id === filteredEntity.id
       )
-    )
+
+      if (existingIndex === -1) return
+
+      const existingEntity = updatedSelected[existingIndex]
+
+      const filteredSubs = filteredEntity.subItems ?? []
+      if (filteredSubs.length > 0) {
+        const newSubItems =
+          existingEntity.subItems?.filter(
+            (sub) => !filteredSubs.some((f) => f.id === sub.id)
+          ) ?? []
+
+        if (newSubItems.length === 0) {
+          updatedSelected.splice(existingIndex, 1)
+        } else {
+          updatedSelected[existingIndex] = {
+            ...existingEntity,
+            subItems: newSubItems,
+          }
+        }
+      } else {
+        updatedSelected.splice(existingIndex, 1)
+      }
+    })
+
+    setSelectedEntities(updatedSelected)
   }
 
   const onSelectAll = () => {
-    const newSelectedEntities = [
-      ...selectedEntities,
-      ...filteredEntities.filter(
-        (entity) =>
-          !selectedEntities.some((selected) => selected.id === entity.id)
-      ),
-    ]
-    setSelectedEntities(newSelectedEntities)
+    const newSelected = [...selectedEntities]
+
+    filteredEntities.forEach((entity) => {
+      const existingEntity = newSelected.find((sel) => sel.id === entity.id)
+
+      if (!existingEntity) {
+        newSelected.push({
+          ...entity,
+          subItems: entity.subItems || [],
+        })
+      } else {
+        const mergedSubItems = Array.from(
+          new Set([
+            ...(existingEntity.subItems ?? []),
+            ...(entity.subItems ?? []),
+          ])
+        )
+        existingEntity.subItems = mergedSubItems
+      }
+    })
+
+    setSelectedEntities(newSelected)
   }
 
   const onSearch = (search: string) => {
@@ -173,6 +247,12 @@ export const AvatarNameSelector = ({
       }
     }
   }, [debouncedSearch, entities, groupView])
+
+  useEffect(() => {
+    setSelectedEntities((prevSelected) =>
+      transformSelection(prevSelected, groupView)
+    )
+  }, [selectedGroup, groupView])
 
   return (
     <Popover>
