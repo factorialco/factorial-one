@@ -192,3 +192,10 @@ export const MultipleWidths: Story = {
     showDots: false,
   },
 }
+
+export const FewItemsWithColumns: Story = {
+  args: {
+    ...CustomColumns.args,
+    children: SLIDES.slice(0, 2),
+  },
+}
