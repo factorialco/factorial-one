@@ -1,4 +1,8 @@
-import HomeIcon from "@/icons/app/Home"
+import {
+  Home as HomeIcon,
+  Office as OfficeIcon,
+  Suitcase as SuitcaseIcon,
+} from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ClockInControls } from "."
 
@@ -22,10 +26,24 @@ const meta: Meta<typeof ClockInControls> = {
   tags: ["autodocs"],
   args: {
     labels: defaultLabels,
-    location: {
-      name: "Home",
-      icon: HomeIcon,
-    },
+    locations: [
+      {
+        id: "1",
+        name: "Home",
+        icon: HomeIcon,
+      },
+      {
+        id: "2",
+        name: "Business Trip",
+        icon: SuitcaseIcon,
+      },
+      {
+        id: "3",
+        name: "Office",
+        icon: OfficeIcon,
+      },
+    ],
+    locationId: "1",
     projectName: "Bolt’s project",
   },
   render: (args) => (
@@ -109,7 +127,7 @@ export const Collapsed: Story = {
 
 export const WithNoLocationOrProject: Story = {
   args: {
-    location: undefined,
+    locationId: undefined,
     projectName: undefined,
   },
 }

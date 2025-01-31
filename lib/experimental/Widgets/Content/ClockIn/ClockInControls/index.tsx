@@ -1,54 +1,18 @@
 import { Button } from "@/components/Actions/Button"
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { IconType } from "@/components/Utilities/Icon"
+import { Select } from "@/experimental/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import {
-  DropdownDefault,
   SolidPause,
   SolidPlay,
   SolidStop,
   Suitcase as SuitcaseIcon,
 } from "@/icons/app"
-import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
+import { useState } from "react"
 import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
 import { getInfo } from "./helpers"
-
-function Selector({
-  text,
-  placeholder,
-  icon,
-  onClick,
-}: {
-  text?: string
-  placeholder: string
-  icon?: IconType
-  onClick?: () => void
-}) {
-  return (
-    <div
-      className="flex cursor-default flex-row items-center gap-1 rounded-xs px-1 hover:bg-f1-background-hover"
-      onClick={onClick}
-    >
-      {icon && (
-        <div className="translate-y-0.5">
-          <Icon icon={icon} className="text-f1-icon" />
-        </div>
-      )}
-      <span
-        className={cn(
-          "font-medium",
-          text ? "text-f1-foreground" : "text-f1-foreground-secondary"
-        )}
-      >
-        {text ?? placeholder}
-      </span>
-      <div className="translate-y-[3px]">
-        <Icon icon={DropdownDefault} />
-      </div>
-    </div>
-  )
-}
-
+import Selector from "./Selector"
 export interface ClockInControlsProps {
   /** Optional remaining time in minutes */
   remainingMinutes?: number
@@ -68,10 +32,12 @@ export interface ClockInControlsProps {
     selectLocation: string
     selectProject: string
   }
-  location?: {
+  locationId?: string
+  locations: {
+    id: string
     name: string
     icon: IconType
-  }
+  }[]
   canShowBreakButton?: boolean
   projectName?: string
   /** Callback when Clock In button is clicked */
@@ -82,22 +48,20 @@ export interface ClockInControlsProps {
   onBreak?: () => void
   /** Callback when Project Selector is clicked */
   onClickProjectSelector?: () => void
-  /** Callback when Location Selector is clicked */
-  onClickLocationSelector?: () => void
 }
 
 export function ClockInControls({
   remainingMinutes,
   data = [],
   labels,
-  location,
+  locationId,
+  locations,
   projectName,
   onClockIn,
   onClockOut,
   onBreak,
   canShowBreakButton = true,
   onClickProjectSelector,
-  onClickLocationSelector,
 }: ClockInControlsProps) {
   const { status, statusText, subtitle, statusColor } = getInfo({
     data,
@@ -106,6 +70,18 @@ export function ClockInControls({
   })
 
   const showLocationAndProjectSelectors = status === "clocked-out"
+
+  const location = locations.find((location) => location.id === locationId)
+
+  const locationOptions = locations.map((location) => ({
+    value: location.id,
+    label: location.name,
+    icon: location.icon,
+  }))
+
+  const [locationPickerOpen, setLocationPickerOpen] = useState(false)
+
+  console.log({ locationPickerOpen })
 
   return (
     <div className="@container">
@@ -199,12 +175,24 @@ export function ClockInControls({
         <div className="mt-6 flex flex-row flex-wrap items-center justify-center gap-2 @xs:justify-start">
           {showLocationAndProjectSelectors ? (
             <>
-              <Selector
-                text={location?.name}
-                placeholder={labels.selectLocation}
-                icon={location?.icon}
-                onClick={onClickLocationSelector}
-              />
+              {locations.length && (
+                <Select
+                  value={locationId}
+                  options={locationOptions}
+                  onChange={() => {}}
+                  open={locationPickerOpen}
+                  placeholder="Placeholder here"
+                  onOpenChange={setLocationPickerOpen}
+                >
+                  <div>
+                    <Selector
+                      text={location?.name}
+                      placeholder={labels.selectLocation}
+                      icon={location?.icon}
+                    />
+                  </div>
+                </Select>
+              )}
               <Selector
                 text={projectName}
                 placeholder={labels.selectProject}
