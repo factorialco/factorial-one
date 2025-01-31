@@ -49,7 +49,7 @@ export const WithActions: Story = {
     items: [
       {
         label: "Email",
-        value: { type: "text", content: "mario@confetti.fantasy" },
+        value: { type: "text", content: "info@factorial.co" },
         actions: [
           {
             label: "Copy",

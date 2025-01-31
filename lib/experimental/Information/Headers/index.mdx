@@ -81,7 +81,7 @@ Designed to display information about a team.
 
 - - Keep titles concise and descriptive, with 2-5 words and no punctuation
 - Write descriptions with meaningful context in 1-2 sentences
-- Use action verbs in {verb + noun} format (e.g., "Edit profile" instead of
+- Use action verbs in [verb + noun] format (e.g., "Edit profile" instead of
   "Profile edition"). Capitalize only the first word unless it's a proper noun
   (e.g., "Add to Factorial")
 - Ensure metadata labels are clear and consistent across the application
@@ -140,6 +140,13 @@ characteristics:
 
 ### Variants
 
+1. **Text**: Display a descriptive piece of information or a textual identifier
+   related to the resource.
+2. **Avatar**: Represents entities that can be visualized with an avatar icon.
+   (User, company and team)
+3. **Status**: Represent a state or situation associated with the resource, such
+   as "Active," "Inactive," "Pending.”, etc.
+
 ### Guidelines
 
 #### Best practices
@@ -150,22 +157,22 @@ characteristics:
 4. Use clear, concise descriptions
 5. Include relevant actions based on context
 
-#### Uses cases
-
 ### Behavior
 
 #### Hover interactions
 
-<Canvas of={MetadataStories.WithActions} />
-
 The metadata fields reveal action options on hover. Each metadata can be
 configured to show relevant actions based on the content type and use case.
+
+<Canvas of={MetadataStories.WithActions} />
 
 When hovering over a metadata field, one or more of these actions may be
 displayed:
 
 - **Inline Edit**: Enables direct editing of the field content
 - **Quick Copy**: Provides one-click copying of exact values (ideal for
-  financial data, IBANs, account numbers)
+  financial data, IBANs, account numbers)  
+  By default, the copy button will be placed on the right and the edit button on
+  the left whenever they appear together within the same metadata.
 - **Side Panel**: Opens a detailed view or complex editing interface
 - **Tooltip Info**: Shows additional information or context when needed
