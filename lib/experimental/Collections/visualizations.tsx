@@ -39,7 +39,6 @@ export type VisualizationProps<
   Filters extends FiltersDefinition,
 > = {
   visualizations?: ReadonlyArray<Visualization<Schema, Filters>>
-  defaultVisualization?: number
 }
 
 /**
@@ -79,7 +78,6 @@ export const VisualizationSelector = <
           <Button
             key={visualization.type}
             variant={isSelected ? "default" : "outline"}
-            size="sm"
             onClick={() => onVisualizationChange(index)}
             label={i18n.collections.visualizations[visualization.type]}
             icon={Icon}

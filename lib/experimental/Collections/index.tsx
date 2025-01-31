@@ -70,7 +70,6 @@ export const useDataSource = <
  *
  * @param source - The data source containing properties, filters, and data fetching capabilities
  * @param visualizations - Array of available visualization options (e.g., table, card view)
- * @param defaultVisualization - The index of the default visualization to show
  *
  * @returns A JSX element containing:
  * - Filter controls (if filters are defined)
@@ -83,16 +82,13 @@ export const DataCollection = <
 >({
   source,
   visualizations,
-  defaultVisualization = 0,
 }: {
   source: DataSource<Schema, Filters>
   visualizations: ReadonlyArray<Visualization<Schema, Filters>>
-  defaultVisualization?: number
 }): JSX.Element => {
   const { filters, currentFilters, setCurrentFilters } = source
   const fields = filters?.fields
-  const [currentVisualization, setCurrentVisualization] =
-    useState(defaultVisualization)
+  const [currentVisualization, setCurrentVisualization] = useState(0)
 
   return (
     <div className="flex flex-col gap-4">

@@ -87,10 +87,8 @@ const filters: { fields: UserFilters } = {
 // Example component using useDataSource
 const ExampleComponent = ({
   useObservable = false,
-  defaultVisualization = 0,
 }: {
   useObservable?: boolean
-  defaultVisualization?: number
 }) => {
   const dataSource = useDataSource({
     properties,
@@ -180,7 +178,6 @@ const ExampleComponent = ({
             },
           },
         ]}
-        defaultVisualization={defaultVisualization}
       />
     </div>
   )
@@ -192,13 +189,7 @@ const meta = {
   parameters: {
     layout: "padded",
   },
-  argTypes: {
-    defaultVisualization: {
-      control: "radio",
-      options: [0, 1],
-      labels: ["Table", "Cards"],
-    },
-  },
+  argTypes: {},
 } satisfies Meta<typeof ExampleComponent>
 
 export default meta
@@ -440,7 +431,6 @@ export const CustomCardProperties: Story = {
 export const SwitchableVisualizations: Story = {
   args: {
     useObservable: false,
-    defaultVisualization: 0,
   },
 }
 
@@ -448,7 +438,6 @@ export const SwitchableVisualizations: Story = {
 export const WithObservableData: Story = {
   args: {
     useObservable: true,
-    defaultVisualization: 0,
   },
 }
 
