@@ -152,7 +152,7 @@
     "vitest": "^3.0.4"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.31"
+    "@rollup/rollup-linux-x64-gnu": "^4.32"
   },
   "dependencies": {
     "cva": "1.0.0-beta.3",
