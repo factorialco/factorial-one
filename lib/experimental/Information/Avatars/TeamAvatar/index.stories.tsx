@@ -16,18 +16,6 @@ const meta: Meta<typeof TeamAvatar> = {
     name: "Design",
     size: "medium",
   },
-  parameters: {
-    a11y: {
-      config: {
-        rules: [
-          {
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
-    },
-  },
 }
 
 export default meta

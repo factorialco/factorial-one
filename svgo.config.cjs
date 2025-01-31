@@ -6,6 +6,7 @@ module.exports = {
       name: "preset-default",
       params: {
         overrides: {
+          removeTitle: false,
           mergePaths: false,
           convertPathData: false,
           convertTransform: false,

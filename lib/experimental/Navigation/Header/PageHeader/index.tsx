@@ -1,6 +1,5 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
@@ -9,7 +8,6 @@ import { ChevronDown, ChevronLeft, ChevronUp, Menu } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
-import { cva } from "class-variance-authority"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 import { Dropdown } from "../../Dropdown"
@@ -96,7 +94,12 @@ export function PageHeader({
   const { sidebarState, toggleSidebar } = useSidebar()
 
   const breadcrumbsTree: BreadcrumbItemType[] = [
-    { label: module.name, href: module.href, icon: module.icon },
+    {
+      id: module.href,
+      label: module.name,
+      href: module.href,
+      icon: module.icon,
+    },
     ...breadcrumbs,
   ]
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
@@ -112,10 +115,7 @@ export function PageHeader({
     <div
       className={cn(
         "flex items-center justify-between px-5 py-4 xs:px-6",
-        embedded ? "h-12" : "h-16",
-        hasNavigation &&
-          !embedded &&
-          "border-b border-dashed border-transparent border-b-f1-border"
+        embedded ? "h-12" : "h-16"
       )}
     >
       <div className="flex flex-grow items-center">
@@ -163,7 +163,6 @@ export function PageHeader({
                 </Link>
               </div>
             )}
-          {!hasNavigation && <ModuleAvatar icon={module.icon} size="lg" />}
           {embedded && hasNavigation ? (
             <div className="text-lg font-semibold text-f1-foreground">
               {"loading" in lastBreadcrumb ? (
@@ -172,12 +171,11 @@ export function PageHeader({
                 lastBreadcrumb.label
               )}
             </div>
-          ) : breadcrumbsTree.length > 1 ? (
-            <Breadcrumbs breadcrumbs={breadcrumbsTree} />
           ) : (
-            <div className="text-xl font-semibold text-f1-foreground">
-              {module.name}
-            </div>
+            <Breadcrumbs
+              key={breadcrumbsTree[0].id}
+              breadcrumbs={breadcrumbsTree}
+            />
           )}
         </div>
       </div>
@@ -240,15 +238,14 @@ export function PageHeader({
   )
 }
 
-const pageActionButtonVariants = cva(
-  "inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
-)
-
 function PageAction({ action }: { action: PageAction }): ReactElement {
   if ("actions" in action) {
     return (
       <Dropdown items={action.actions}>
-        <button title={action.label} className={pageActionButtonVariants()}>
+        <button
+          title={action.label}
+          className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
+        >
           <Icon icon={action.icon} size="md" />
         </button>
       </Dropdown>
@@ -259,7 +256,7 @@ function PageAction({ action }: { action: PageAction }): ReactElement {
     <Link
       href={action.href}
       title={action.label}
-      className={pageActionButtonVariants()}
+      className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
     >
       <Icon icon={action.icon} size="md" />
     </Link>

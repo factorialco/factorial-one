@@ -70,8 +70,12 @@ export const WithBreadcrumbs: Story = {
         <PageHeader
           module={defaultModule}
           breadcrumbs={[
-            { label: "Employees", href: "/employees" },
-            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+            { id: "employees", label: "Employees", href: "/employees" },
+            {
+              id: "employee",
+              label: "Ainhoa Aznar Lago",
+              href: "/employees/123",
+            },
           ]}
           actions={HeaderStories.WithActions.args?.actions}
         />
@@ -97,8 +101,12 @@ export const WithBreadcrumbsAndStatus: Story = {
         <PageHeader
           module={defaultModule}
           breadcrumbs={[
-            { label: "Employees", href: "/employees" },
-            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+            { id: "employees", label: "Employees", href: "/employees" },
+            {
+              id: "employee",
+              label: "Ainhoa Aznar Lago",
+              href: "/employees/123",
+            },
           ]}
           statusTag={{
             text: "Draft",
@@ -210,8 +218,12 @@ export const Embedded: Story = {
           module={defaultModule}
           embedded
           breadcrumbs={[
-            { label: "Employees", href: "/employees" },
-            { label: "Ainhoa Aznar Lago", href: "/employees/123" },
+            { id: "employees", label: "Employees", href: "/employees" },
+            {
+              id: "employee",
+              label: "Ainhoa Aznar Lago",
+              href: "/employees/123",
+            },
           ]}
           statusTag={{
             text: "Published",

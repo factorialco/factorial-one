@@ -1,9 +1,11 @@
 import { cn, focusRing } from "@/lib/utils"
-import { motion, MotionConfig } from "framer-motion"
-import { FrameProvider, useSidebar } from "./FrameProvider"
+import { AnimatePresence, motion, MotionConfig } from "framer-motion"
 
 import { useReducedMotion } from "@/lib/a11y"
-import { AnimatePresence } from "framer-motion"
+import { useI18n } from "@/lib/i18n-provider"
+
+import { FrameProvider, useSidebar } from "./FrameProvider"
+
 interface ApplicationFrameProps {
   banner?: React.ReactNode
   sidebar: React.ReactNode
@@ -25,14 +27,15 @@ export function ApplicationFrame({
 }
 
 const SkipToContentButton = ({ contentId }: { contentId?: string }) => {
+  const translations = useI18n()
   return (
     <a
       href={`#${contentId}`}
       className={focusRing(
-        "absolute z-50 -translate-y-full translate-x-4 rounded-md bg-f1-background px-4 py-2.5 text-base font-medium text-f1-foreground no-underline transition-transform duration-200 focus-visible:translate-y-4"
+        "absolute z-50 -translate-y-[1000px] translate-x-4 rounded-md bg-f1-background px-4 py-2.5 text-base font-medium text-f1-foreground no-underline transition-transform duration-200 focus-visible:translate-y-4"
       )}
     >
-      Skip to content
+      {translations.actions.skipToContent}
     </a>
   )
 }

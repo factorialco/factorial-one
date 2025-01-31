@@ -2,10 +2,16 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { Textarea } from "@/ui/textarea"
 import { Form, FormActions } from "."
+import Checkbox from "../Fields/Checkbox"
 import { Input } from "../Fields/Input"
 import { Select } from "../Fields/Select"
 import { FormField } from "../FormField"
-import { buildFormSchema, stringField, useFormSchema } from "../lib/useForm"
+import {
+  booleanField,
+  buildFormSchema,
+  stringField,
+  useFormSchema,
+} from "../lib/useForm"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -37,6 +43,7 @@ export const Default: Story = {
       passwordConfirmation: stringField(),
       bio: stringField().max(500),
       tag: stringField(),
+      acceptedTerms: booleanField(),
     }).refine((data) => data.password === data.passwordConfirmation, {
       message: "Passwords do not match",
       path: ["passwordConfirmation"],
@@ -49,6 +56,7 @@ export const Default: Story = {
           username: "",
           fullName: "",
           email: "",
+          acceptedTerms: false,
         },
       },
       async (data) => {
@@ -70,7 +78,11 @@ export const Default: Story = {
           name="username"
         >
           {(field) => (
-            <Input placeholder="A username must be all letters" {...field} />
+            <Input
+              placeholder="A username must be all letters"
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
           )}
         </FormField>
 
@@ -80,7 +92,12 @@ export const Default: Story = {
           control={form.control}
           name="fullName"
         >
-          {(field) => <Input {...field} />}
+          {(field) => (
+            <Input
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -89,7 +106,13 @@ export const Default: Story = {
           control={form.control}
           name="email"
         >
-          {(field) => <Input type="email" {...field} />}
+          {(field) => (
+            <Input
+              type="email"
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -98,7 +121,13 @@ export const Default: Story = {
           control={form.control}
           name="password"
         >
-          {(field) => <Input type="password" {...field} />}
+          {(field) => (
+            <Input
+              type="password"
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -107,7 +136,13 @@ export const Default: Story = {
           control={form.control}
           name="passwordConfirmation"
         >
-          {(field) => <Input type="password" {...field} />}
+          {(field) => (
+            <Input
+              type="password"
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -116,7 +151,12 @@ export const Default: Story = {
           control={form.control}
           name="bio"
         >
-          {(field) => <Textarea {...field} />}
+          {(field) => (
+            <Textarea
+              {...field}
+              value={field.value ? String(field.value) : undefined}
+            />
+          )}
         </FormField>
 
         <FormField
@@ -128,11 +168,27 @@ export const Default: Story = {
           {(field) => (
             <Select
               {...field}
+              value={field.value ? String(field.value) : undefined}
               placeholder="Select something"
               options={[
                 { label: "Foo", value: "foo" },
                 { label: "Bar", value: "bar" },
               ]}
+            />
+          )}
+        </FormField>
+
+        <FormField
+          label="Accept terms"
+          description="Accept terms and conditions"
+          control={form.control}
+          name="acceptedTerms"
+        >
+          {(field) => (
+            <Checkbox
+              {...field}
+              onCheckedChange={field.onChange}
+              value={String(field.value)}
             />
           )}
         </FormField>

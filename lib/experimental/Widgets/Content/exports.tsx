@@ -1,3 +1,4 @@
+export * from "./CalendarEvent"
 export * from "./CalendarEventList"
 export * from "./CategoryBarSection"
 export * from "./ClockIn/exports"

@@ -61,7 +61,7 @@ export const WithCustomTrigger: Story = {
   },
   render: (args) => (
     <Dropdown {...args}>
-      <button>
+      <button aria-label="Open user menu">
         <PersonAvatar
           src="https://github.com/dani-moreno.png"
           firstName="Dani"
@@ -74,12 +74,7 @@ export const WithCustomTrigger: Story = {
   parameters: {
     a11y: {
       config: {
-        rules: [
-          {
-            id: "button-name",
-            enabled: false,
-          },
-        ],
+        rules: [],
       },
     },
   },

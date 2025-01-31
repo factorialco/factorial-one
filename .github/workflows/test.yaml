@@ -16,13 +16,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: "21.x"
-          cache: "npm"
+          node-version: "22.x"
+          cache: pnpm
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
       - name: Run type checking
-        run: npm run tsc
+        run: pnpm run tsc
       - name: Run tests
-        run: npm run vitest:ci
+        run: pnpm run vitest:ci

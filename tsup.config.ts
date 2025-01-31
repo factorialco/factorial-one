@@ -12,4 +12,5 @@ export default defineConfig({
   clean: true,
   outDir: "dist",
   tsconfig: "tsconfig-build.json",
+  external: ["react/jsx-runtime", "react", "react-dom"]
 })
