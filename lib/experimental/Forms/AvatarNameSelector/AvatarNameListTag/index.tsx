@@ -5,12 +5,12 @@ import { Cross } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { AvatarNamedEntity, AvatarNamedSubEntity } from "../types"
 
-const AvatarNameListTagContent = ({
+const AvatarNameListTagContent = <T extends { avatar?: string; name: string }>({
   entity,
   onRemove,
 }: {
-  entity: AvatarNamedEntity | AvatarNamedSubEntity
-  onRemove?: (entity: AvatarNamedEntity | AvatarNamedSubEntity) => void
+  entity: T
+  onRemove?: (entity: T) => void
 }) => {
   return (
     <div className="pb-[6px]">
@@ -62,9 +62,12 @@ export const AvatarNameListTag = ({
       {groupView &&
         subItemsSelected.map((el) => (
           <AvatarNameListTagContent
-            key={el.id}
-            entity={el}
-            onRemove={(subItem) => onSubItemRemove?.(subItem)}
+            key={el.subId}
+            entity={{
+              avatar: el.subAvatar,
+              name: el.subName,
+            }}
+            onRemove={() => onSubItemRemove?.(el)}
           />
         ))}
     </>
