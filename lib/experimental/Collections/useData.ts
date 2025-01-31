@@ -55,7 +55,7 @@ export function useData<
     return () => {
       cleanup?.()
     }
-  }, [source.currentFilters, source.fetchData])
+  }, [source])
 
   return {
     data,
