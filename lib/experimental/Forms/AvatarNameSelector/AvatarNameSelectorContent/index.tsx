@@ -97,12 +97,17 @@ export const AvatarNameSelectorContent = ({
               const selectedEntity = selectedEntities.find(
                 (el) => el.id === entity.id
               )
+              const selectedSubItems = (entity.subItems ?? []).filter(
+                (subItem) =>
+                  selectedEntity?.subItems?.some(
+                    (selectedSubItem) => selectedSubItem.subId === subItem.subId
+                  )
+              )
               const selected = groupView
-                ? (entity.subItems ?? []).length ===
-                  selectedEntity?.subItems?.length
+                ? (entity.subItems?.length ?? 0) === selectedSubItems.length
                 : !!selectedEntities.find((el) => el.id === entity.id)
               const partialSelected = groupView
-                ? !selected && (selectedEntity?.subItems?.length ?? 0) > 0
+                ? !selected && selectedSubItems.length > 0
                 : selected
               return (
                 <>
