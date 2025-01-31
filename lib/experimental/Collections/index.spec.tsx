@@ -1,10 +1,14 @@
 import { render, renderHook, screen, waitFor } from "@testing-library/react"
+import { Code } from "lucide-react"
 import { describe, expect, test } from "vitest"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
 import { I18nProvider } from "../../lib/i18n-provider"
 import { defaultTranslations } from "../../lib/i18n-provider-defaults"
+import type { FiltersDefinition } from "./Filters/types"
 import type { StringPropertySchema } from "./properties"
+import type { DataSource } from "./types"
+import { useData } from "./useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
@@ -278,5 +282,66 @@ describe("Collections", () => {
     )
 
     expect(result.current).toBeDefined()
+  })
+
+  test("renders with custom visualization", async () => {
+    type CustomVisualizationProps = {
+      source: DataSource<UserSchema, FiltersDefinition>
+    }
+
+    const CustomComponent = ({ source }: CustomVisualizationProps) => {
+      const { data } = useData({ source })
+
+      return (
+        <div data-testid="custom-visualization">
+          {data?.map((user) => (
+            <div key={user.email} className="custom-item">
+              <h3>{user.name}</h3>
+              <p>
+                {user.role} - {user.department}
+              </p>
+            </div>
+          ))}
+        </div>
+      )
+    }
+
+    const { result } = renderHook(
+      () =>
+        useDataSource({
+          properties,
+          fetchData: () =>
+            new Observable<typeof mockUsers>((observer) => {
+              observer.next(mockUsers)
+              return () => {}
+            }),
+        }),
+      { wrapper: TestWrapper }
+    )
+
+    render(
+      <TestWrapper>
+        <DataCollection
+          source={result.current}
+          visualizations={[
+            {
+              type: "custom",
+              label: "Custom View",
+              icon: Code,
+              component: CustomComponent,
+            },
+          ]}
+        />
+      </TestWrapper>
+    )
+
+    await waitFor(() => {
+      expect(screen.getByTestId("custom-visualization")).toBeInTheDocument()
+      expect(screen.getByText("John Doe")).toBeInTheDocument()
+      expect(
+        screen.getByText("Senior Engineer - Engineering")
+      ).toBeInTheDocument()
+      expect(screen.getByText("Product Manager - Product")).toBeInTheDocument()
+    })
   })
 })
