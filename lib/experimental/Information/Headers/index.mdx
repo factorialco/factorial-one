@@ -20,7 +20,7 @@ actions they can perform.
 
 ### Purpose
 
-- Provide immediate context about the current resource the user is viewing
+- - Provide immediate context about the current resource the user is viewing
 - Centralize primary and secondary actions related to the resource
 - Display crucial metadata and status information
 - Create a consistent navigation pattern across different resource types
@@ -29,8 +29,6 @@ actions they can perform.
 
 <Canvas of={ResourceHeaderStories.Default} meta={ResourceHeaderStories} />
 <Controls of={ResourceHeaderStories.Default} />
-
-### Use case
 
 ### Common actions
 
@@ -50,29 +48,30 @@ actions they can perform.
 #### Destructive
 
 - Positioned far left of all buttons
-- Always requires a
-  [confirmation dialog](https://www.figma.com/design/pZzg1KTe9lpKTSGPUZa8OJ/Web-Components?node-id=1382-56231&t=qHSbsLBajafKBawc-1)
+- Always requires a confirmation dialog
 - Must include the trash icon (🗑)
 - Uses a critical button type with a "danger" color
 
 ## Variants
 
-The Resource Header is designed to adapt to different types of content,
-providing a clear and relevant presentation based on the context.
+The Resource Header is designed to adapt to different resource types, ensuring a
+clear and contextually relevant presentation of the information.
 
 ### Person
 
-Designed for individual users.
+Designed to display information about an individual user.
 
 <Canvas of={PersonHeaderStories.Default} />
 
 ### Company
 
-Designed for company, client and other entity profiles.
+Designed to display information about a company, client, or other entity.
 
 <Canvas of={CompanyHeaderStories.Default} />
 
 ### Team
+
+Designed to display information about a team.
 
 <Canvas of={TeamHeaderStories.Default} />
 
@@ -80,11 +79,11 @@ Designed for company, client and other entity profiles.
 
 ### Content best practices
 
-- Keep titles concise and descriptive (recommended: 2-5 words)
-- Write descriptions that provide meaningful context (recommended: 1-2
-  sentences)
-- Use action verbs for button labels (e.g., "Edit profile" instead of "Profile
-  edition")
+- - Keep titles concise and descriptive, with 2-5 words and no punctuation
+- Write descriptions with meaningful context in 1-2 sentences
+- Use action verbs in {verb + noun} format (e.g., "Edit profile" instead of
+  "Profile edition"). Capitalize only the first word unless it's a proper noun
+  (e.g., "Add to Factorial")
 - Ensure metadata labels are clear and consistent across the application
 
 ### Design best practices
