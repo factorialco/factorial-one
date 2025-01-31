@@ -5,6 +5,8 @@ import { DoDonts } from "@/lib/storybook-utils/do-donts"
 import * as ResourceHeaderStories from "./ResourceHeader/index.stories"
 import * as PersonHeaderStories from "./PersonHeader/index.stories"
 import * as CompanyHeaderStories from "./CompanyHeader/index.stories"
+import * as TeamHeaderStories from "./TeamHeader/index.stories"
+import * as MetadataStories from "./Metadata/index.stories"
 
 # Resource header
 
@@ -70,16 +72,9 @@ Designed for company, client and other entity profiles.
 
 <Canvas of={CompanyHeaderStories.Default} />
 
-### Bank Account
-
-Designed to display information about a bank account.
-
-- Subtitle: Used for account names or additional context.
-- Title: Used for balances or key numbers.
-
 ### Team
 
-For teams avatars.
+<Canvas of={TeamHeaderStories.Default} />
 
 ## Guidelines
 
@@ -103,6 +98,12 @@ For teams avatars.
       "Show the current status and important metadata of a resource",
       "Create consistent navigation patterns across resource detail pages",
     ],
+    children: (
+      <img
+        src="../../../../../../storybook-assets/docs/headers/do.png"
+        alt="Don't use the resource header in the main module page"
+      />
+    ),
   }}
   dont={{
     description: "Don't use Resource Header when:",
@@ -112,8 +113,14 @@ For teams avatars.
       "You need minimal identification without actions or metadata",
       "You're creating a dashboard overview",
     ],
+    children: (
+      <img
+        src="../../../../../../storybook-assets/docs/headers/dont.png"
+        alt="Don't use the resource header in the main module page"
+      />
+    ),
   }}
-/> s
+/>
 
 ## Resource metadata
 
@@ -129,6 +136,8 @@ characteristics:
 - Each pair consists of a label (grey text) followed by the corresponding data
 - Multiple pairs can be displayed in a row (Recommended maximum: 5)
 - Interactive elements within the metadata can trigger specific actions
+
+<Canvas of={MetadataStories.Default} />
 
 ### Variants
 
@@ -148,6 +157,8 @@ characteristics:
 
 #### Hover interactions
 
+<Canvas of={MetadataStories.WithActions} />
+
 The metadata fields reveal action options on hover. Each metadata can be
 configured to show relevant actions based on the content type and use case.
 
@@ -159,9 +170,3 @@ displayed:
   financial data, IBANs, account numbers)
 - **Side Panel**: Opens a detailed view or complex editing interface
 - **Tooltip Info**: Shows additional information or context when needed
-
-#### Uses cases
-
-## Related content
-
-### Related components
