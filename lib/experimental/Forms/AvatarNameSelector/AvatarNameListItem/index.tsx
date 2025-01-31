@@ -24,10 +24,11 @@ const AvatarNameListItemSingleContent = ({
   const lastName = name.slice(1).join(" ")
 
   return (
-    <div
+    <label
+      aria-label={entity.name}
       className={
         marginLeft +
-        " mr-3 flex flex-row flex-wrap items-center gap-2 rounded-md border p-2" +
+        " mr-3 flex flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:cursor-pointer" +
         " hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold"
       }
     >
@@ -51,7 +52,7 @@ const AvatarNameListItemSingleContent = ({
           borderColor: selected ? "hsl(var(--selected-50))" : undefined,
         }}
       />
-    </div>
+    </label>
   )
 }
 
@@ -102,40 +103,43 @@ export const AvatarNameListItem = ({
   return (
     <>
       <div className="ml-3 mr-3 flex flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold">
-        <div className="flex flex-row items-center gap-2">
-          <Icon
-            icon={expanded ? ChevronDown : ChevronRight}
-            className="cursor-pointer text-f1-foreground-secondary"
-            onClick={onExpand}
-          />
+        <Icon
+          icon={expanded ? ChevronDown : ChevronRight}
+          className="cursor-pointer text-f1-foreground-secondary"
+          onClick={onExpand}
+        />
+        <label
+          aria-label={entity.name}
+          className="flex flex-1 flex-row items-center gap-2"
+        >
           <Icon
             icon={LogoAvatar}
             className="rounded-xs bg-f1-foreground-secondary text-f1-foreground-inverse"
           />
-        </div>
 
-        <div className="flex flex-1 flex-col">
-          <div className="flex flex-1 flex-row items-center gap-2">
-            <span className="truncate font-medium">{`${entity.name}`}</span>
-            <Counter value={entity.subItems?.length ?? 0} />
+          <div className="flex flex-1 flex-col">
+            <div className="flex flex-1 flex-row items-center gap-2">
+              <span className="truncate font-medium">{`${entity.name}`}</span>
+              <Counter value={entity.subItems?.length ?? 0} />
+            </div>
           </div>
-        </div>
-        <Checkbox
-          checked={checked}
-          onClick={() => (selected ? onRemove(entity) : onSelect(entity))}
-          className="ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse"
-          partial={partialSelected}
-          style={{
-            backgroundColor: selected
-              ? "hsl(var(--selected-50))"
-              : "hsl(var(--background))",
-            color:
-              !selected && partialSelected
+          <Checkbox
+            checked={checked}
+            onClick={() => (selected ? onRemove(entity) : onSelect(entity))}
+            className="ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse"
+            partial={partialSelected}
+            style={{
+              backgroundColor: selected
                 ? "hsl(var(--selected-50))"
-                : undefined,
-            borderColor: checked ? "hsl(var(--selected-50))" : undefined,
-          }}
-        />
+                : "hsl(var(--background))",
+              color:
+                !selected && partialSelected
+                  ? "hsl(var(--selected-50))"
+                  : undefined,
+              borderColor: checked ? "hsl(var(--selected-50))" : undefined,
+            }}
+          />
+        </label>
       </div>
       {expanded &&
         entity.subItems?.map((subItem) => {
