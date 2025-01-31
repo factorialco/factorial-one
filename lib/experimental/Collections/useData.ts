@@ -34,11 +34,12 @@ export function useData<
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState<Array<SourceData<Schema, Filters>>>([])
 
+  const { fetchData, currentFilters } = source
   useEffect(() => {
     let cleanup: (() => void) | undefined
     ;(async () => {
       setIsLoading(true)
-      const result = source.fetchData({ filters: source.currentFilters })
+      const result = fetchData({ filters: currentFilters })
 
       if (result instanceof Observable) {
         const subscription = result.subscribe((data) => {
@@ -55,7 +56,7 @@ export function useData<
     return () => {
       cleanup?.()
     }
-  }, [source])
+  }, [fetchData, currentFilters])
 
   return {
     data,
