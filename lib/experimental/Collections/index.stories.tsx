@@ -1,4 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
+import { Code } from "lucide-react"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
 import type {
@@ -6,6 +7,7 @@ import type {
   SearchFilterDefinition,
 } from "./Filters/types"
 import { StringPropertySchema } from "./properties"
+import { useData } from "./useData"
 
 // Example schema for a user entity
 type UserSchema = {
@@ -527,6 +529,98 @@ export const LoadingStateExample: Story = {
                 { key: "department", label: "Department" },
               ],
             },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+const JsonVisualization = ({
+  source,
+}: {
+  source: ReturnType<typeof useDataSource<UserSchema, UserFilters>>
+}) => {
+  const { data, isLoading } = useData({ source })
+
+  if (isLoading) {
+    return (
+      <pre className="bg-muted overflow-auto rounded-lg p-4">
+        <code>Loading...</code>
+      </pre>
+    )
+  }
+
+  return (
+    <pre className="bg-muted overflow-auto rounded-lg p-4">
+      <code>{JSON.stringify(data, null, 2)}</code>
+    </pre>
+  )
+}
+
+export const WithCustomJsonView: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      properties,
+      filters,
+      fetchData: ({ filters }) => {
+        return new Observable<typeof mockUsers>((observer) => {
+          let filteredUsers = [...mockUsers]
+
+          const searchValue = filters.search
+          if (typeof searchValue === "string") {
+            const searchLower = searchValue.toLowerCase()
+            filteredUsers = filteredUsers.filter(
+              (user) =>
+                user.name.toLowerCase().includes(searchLower) ||
+                user.email.toLowerCase().includes(searchLower)
+            )
+          }
+
+          const departmentValue = filters.department
+          if (Array.isArray(departmentValue) && departmentValue.length > 0) {
+            filteredUsers = filteredUsers.filter((user) =>
+              departmentValue.includes(user.department)
+            )
+          }
+
+          observer.next(filteredUsers)
+          return () => {}
+        })
+      },
+    })
+
+    return (
+      <DataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { key: "name", label: "Name" },
+                { key: "email", label: "Email" },
+                { key: "role", label: "Role" },
+                { key: "department", label: "Department" },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { key: "name", label: "Name" },
+                { key: "email", label: "Email" },
+                { key: "role", label: "Role" },
+                { key: "department", label: "Department" },
+              ],
+            },
+          },
+          {
+            type: "custom",
+            label: "JSON View",
+            icon: Code,
+            component: JsonVisualization,
           },
         ]}
       />

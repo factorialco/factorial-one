@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { useI18n } from "@/lib/i18n-provider"
-import { LayoutGrid, Table } from "lucide-react"
+import { LayoutGrid, LucideIcon, Table } from "lucide-react"
 import type { CardVisualizationOptions } from "./Card"
 import { CardCollection } from "./Card"
 import type { FiltersDefinition } from "./Filters/types"
@@ -10,7 +10,7 @@ import type { CollectionSchema, DataSource, SourceData } from "./types"
 
 /**
  * Represents a visualization configuration for displaying collection data.
- * Supports different visualization types (card or table) with their respective options.
+ * Supports different visualization types (card, table, or custom) with their respective options.
  *
  * @template Schema - The schema type extending CollectionSchema
  * @template Filters - The filters type extending FiltersDefinition
@@ -26,6 +26,12 @@ export type Visualization<
   | {
       type: "table"
       options: TableVisualizationOptions<SourceData<Schema, Filters>>
+    }
+  | {
+      type: "custom"
+      label: string
+      icon: LucideIcon
+      component: (props: { source: DataSource<Schema, Filters> }) => JSX.Element
     }
 
 /**
@@ -72,14 +78,23 @@ export const VisualizationSelector = <
     <div className="flex gap-2">
       {visualizations.map((visualization, index) => {
         const isSelected = currentVisualization === index
-        const Icon = visualization.type === "table" ? Table : LayoutGrid
+        const Icon =
+          visualization.type === "custom"
+            ? visualization.icon
+            : visualization.type === "table"
+              ? Table
+              : LayoutGrid
 
         return (
           <Button
             key={visualization.type}
             variant={isSelected ? "default" : "outline"}
             onClick={() => onVisualizationChange(index)}
-            label={i18n.collections.visualizations[visualization.type]}
+            label={
+              visualization.type === "custom"
+                ? visualization.label
+                : i18n.collections.visualizations[visualization.type]
+            }
             icon={Icon}
           />
         )
@@ -126,5 +141,7 @@ export const VisualizationRenderer = <
           cardProperties={visualization.options.cardProperties}
         />
       )
+    case "custom":
+      return visualization.component({ source })
   }
 }
