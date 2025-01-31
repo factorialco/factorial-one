@@ -1,5 +1,5 @@
 import { render, renderHook, screen, waitFor } from "@testing-library/react"
-import { Code } from "lucide-react"
+import { LayoutGrid } from "lucide-react"
 import { describe, expect, test } from "vitest"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
@@ -327,7 +327,7 @@ describe("Collections", () => {
             {
               type: "custom",
               label: "Custom View",
-              icon: Code,
+              icon: LayoutGrid,
               component: CustomComponent,
             },
           ]}

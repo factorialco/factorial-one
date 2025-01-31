@@ -1,6 +1,7 @@
 import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
 import { useI18n } from "@/lib/i18n-provider"
-import { LayoutGrid, LucideIcon, Table } from "lucide-react"
+import { LayoutGrid, Table } from "lucide-react"
 import type { CardVisualizationOptions } from "./Card"
 import { CardCollection } from "./Card"
 import type { FiltersDefinition } from "./Filters/types"
@@ -30,7 +31,7 @@ export type Visualization<
   | {
       type: "custom"
       label: string
-      icon: LucideIcon
+      icon: IconType
       component: (props: { source: DataSource<Schema, Filters> }) => JSX.Element
     }
 
