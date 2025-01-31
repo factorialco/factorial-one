@@ -48,6 +48,10 @@ export const AvatarNameSelector = ({
   onGroupChange,
   placeholder,
   selectedGroup,
+  searchPlaceholder,
+  selectAllLabel,
+  clearLabel,
+  selectedLabel
 }: AvatarNameSelectorProps) => {
   const [selectedEntities, setSelectedEntities] = useState<AvatarNamedEntity[]>(
     []
@@ -275,6 +279,11 @@ export const AvatarNameSelector = ({
           search={search}
           onSearch={onSearch}
           onToggleExpand={onToggleExpand}
+          searchPlaceholder={searchPlaceholder}
+          selectAllLabel={selectAllLabel}
+          clearLabel={clearLabel}
+          selectedLabel={selectedLabel}
+
         />
       </PopoverContent>
     </Popover>
