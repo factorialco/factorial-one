@@ -33,7 +33,7 @@
 }
 
 .FactorialOneTextEditor .TextEditorTheme__h3 {
-  @apply m-0 mt-2.5 p-0;
+  @apply m-0 mt-2.5 p-0 text-base;
 }
 
 .FactorialOneTextEditor .TextEditorTheme__textBold {
