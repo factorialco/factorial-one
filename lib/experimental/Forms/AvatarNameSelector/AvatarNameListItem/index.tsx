@@ -1,3 +1,4 @@
+import { Button } from "@/components/Actions/Button"
 import { Icon } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/exports"
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
@@ -17,7 +18,7 @@ const AvatarNameListItemSingleContent = ({
   selected: boolean
   onSelect: (entity: AvatarNamedEntity) => void
   onRemove: (entity: AvatarNamedEntity) => void
-  marginLeft: "ml-3" | "ml-10"
+  marginLeft: "ml-3" | "ml-11"
 }) => {
   const name = entity.name.split(" ")
   const firstName = name[0]
@@ -103,11 +104,16 @@ export const AvatarNameListItem = ({
   return (
     <>
       <div className="ml-3 mr-3 flex flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold">
-        <Icon
+        <Button
+          round={true}
+          hideLabel={true}
           icon={expanded ? ChevronDown : ChevronRight}
-          className="cursor-pointer text-f1-foreground-secondary"
           onClick={onExpand}
+          label={expanded ? "Collapse" : "Expand"}
+          size="sm"
+          variant="ghost"
         />
+
         <label
           aria-label={entity.name}
           className="flex flex-1 flex-row items-center gap-2"
@@ -148,7 +154,7 @@ export const AvatarNameListItem = ({
           return (
             <AvatarNameListItemSingleContent
               key={entity.id + "-" + subItem.id}
-              marginLeft="ml-10"
+              marginLeft="ml-11"
               entity={subItem}
               selected={selected ?? false}
               onSelect={(subItem) => onSubItemSelect?.(entity, subItem)}
