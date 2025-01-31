@@ -1,5 +1,5 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { AvatarNameSelectorContent } from "./AvatarNameSelectorContent"
 import { AvatarNameSelectorTrigger } from "./AvatarNameSelectorTrigger"
@@ -92,7 +92,12 @@ export const AvatarNameSelector = ({
   }
 
   const onClear = () => {
-    setSelectedEntities([])
+    setSelectedEntities(
+      selectedEntities.filter(
+        (selected) =>
+          !filteredEntities.find((filtered) => filtered.id === selected.id)
+      )
+    )
   }
 
   const onSelectAll = () => {
@@ -119,19 +124,55 @@ export const AvatarNameSelector = ({
     )
   }
 
+  const groupView = useMemo(
+    () => entities.some((entity) => entity.subItems),
+    [entities]
+  )
+
   useEffect(() => {
     if (!debouncedSearch) {
       setFilteredEntities(entities)
     } else {
-      setFilteredEntities(
-        entities.filter((entity) =>
-          entity.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+      if (groupView) {
+        setFilteredEntities(
+          entities
+            .filter(
+              (entity) =>
+                entity.name
+                  .toLowerCase()
+                  .includes(debouncedSearch.toLowerCase()) ||
+                entity.subItems?.some((subItem) =>
+                  subItem.name
+                    .toLowerCase()
+                    .includes(debouncedSearch.toLowerCase())
+                )
+            )
+            .map((entity) => {
+              const someSubItem = entity.subItems?.some((subItem) =>
+                subItem.name
+                  .toLowerCase()
+                  .includes(debouncedSearch.toLowerCase())
+              )
+              return {
+                ...entity,
+                expanded: someSubItem,
+                subItems: entity.subItems?.filter((subItem) =>
+                  subItem.name
+                    .toLowerCase()
+                    .includes(debouncedSearch.toLowerCase())
+                ),
+              }
+            })
         )
-      )
+      } else {
+        setFilteredEntities(
+          entities.filter((entity) =>
+            entity.name.toLowerCase().includes(debouncedSearch.toLowerCase())
+          )
+        )
+      }
     }
-  }, [debouncedSearch, entities])
-
-  const groupView = entities.some((entity) => entity.subItems)
+  }, [debouncedSearch, entities, groupView])
 
   return (
     <Popover>

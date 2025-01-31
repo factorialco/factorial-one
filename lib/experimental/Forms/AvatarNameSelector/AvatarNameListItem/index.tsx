@@ -5,6 +5,7 @@ import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import LogoAvatar from "@/icons/app/LogoAvatar"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import Checkbox from "../../Fields/Checkbox"
+import { HighlightText } from "../AvatarNameHighLightText"
 import { AvatarNamedEntity, AvatarNamedSubEntity } from "../types"
 
 const AvatarNameListItemSingleContent = ({
@@ -13,12 +14,14 @@ const AvatarNameListItemSingleContent = ({
   onSelect,
   onRemove,
   marginLeft,
+  search,
 }: {
   entity: AvatarNamedEntity
   selected: boolean
   onSelect: (entity: AvatarNamedEntity) => void
   onRemove: (entity: AvatarNamedEntity) => void
   marginLeft: "ml-3" | "ml-11"
+  search: string
 }) => {
   const name = entity.name.split(" ")
   const firstName = name[0]
@@ -41,7 +44,7 @@ const AvatarNameListItemSingleContent = ({
       />
       <div className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-row items-center gap-2">
-          <span className="truncate font-medium">{`${entity.name}`}</span>
+          <HighlightText text={entity.name} search={search} />
         </div>
       </div>
       <Checkbox
@@ -60,6 +63,7 @@ const AvatarNameListItemSingleContent = ({
 export const AvatarNameListItem = ({
   groupView,
   expanded,
+  search,
   entity,
   selected,
   partialSelected,
@@ -76,6 +80,7 @@ export const AvatarNameListItem = ({
   selected: boolean
   partialSelected: boolean
   selectedEntity?: AvatarNamedEntity
+  search: string
   onSelect: (entity: AvatarNamedEntity) => void
   onRemove: (entity: AvatarNamedEntity) => void
   onSubItemSelect: (
@@ -93,6 +98,7 @@ export const AvatarNameListItem = ({
       <AvatarNameListItemSingleContent
         marginLeft="ml-3"
         entity={entity}
+        search={search}
         selected={selected}
         onSelect={onSelect}
         onRemove={onRemove}
@@ -122,14 +128,12 @@ export const AvatarNameListItem = ({
             icon={LogoAvatar}
             className="rounded-xs bg-f1-foreground-secondary text-f1-foreground-inverse"
           />
-
           <div className="flex flex-1 flex-col">
             <div className="flex flex-1 flex-row items-center gap-2">
-              <span className="truncate font-medium">{`${entity.name}`}</span>
+              <HighlightText text={entity.name} search={search} />
               <Counter value={entity.subItems?.length ?? 0} />
             </div>
           </div>
-
           <Checkbox
             checked={checked}
             onClick={() => (selected ? onRemove(entity) : onSelect(entity))}
@@ -160,6 +164,7 @@ export const AvatarNameListItem = ({
               selected={selected ?? false}
               onSelect={(subItem) => onSubItemSelect?.(entity, subItem)}
               onRemove={(subItem) => onSubItemRemove?.(entity, subItem)}
+              search={search}
             />
           )
         })}

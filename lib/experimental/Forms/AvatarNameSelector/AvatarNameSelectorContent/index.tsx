@@ -57,6 +57,11 @@ export const AvatarNameSelectorContent = ({
         0
       )
     : selectedEntities.length
+
+  const totalFilteredEntities = groupView
+    ? entities.reduce((acc, entity) => acc + (entity.subItems?.length ?? 0), 0)
+    : entities.length
+
   return (
     <div className="flex">
       <div className="flex w-96 flex-col rounded-l-xl border-0 border-r-[1px] border-solid border-f1-border-secondary">
@@ -112,6 +117,7 @@ export const AvatarNameSelectorContent = ({
                   <AvatarNameListItem
                     expanded={entity.expanded ?? false}
                     onExpand={() => onToggleExpand(entity)}
+                    search={search}
                     groupView={groupView}
                     key={entity.id}
                     entity={entity}
@@ -139,7 +145,7 @@ export const AvatarNameSelectorContent = ({
         >
           <div className="flex flex-1 justify-between p-2">
             <Button variant="outline" size="sm" onClick={onSelectAll}>
-              Select all ({entities.length})
+              Select all {search ? `(${totalFilteredEntities})` : ""}
             </Button>
             <Button
               variant="ghost"
@@ -147,7 +153,7 @@ export const AvatarNameSelectorContent = ({
               disabled={selectedEntities.length === 0}
               onClick={onClear}
             >
-              Clear
+              Clear {search ? `(${totalFilteredEntities})` : ""}
             </Button>
           </div>
         </div>
