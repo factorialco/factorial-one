@@ -15,6 +15,23 @@ const GROUP_DATA = {
   workplaces: workplaceWithEmployees,
 }
 
+const defaultArgs = {
+  entities: [],
+  placeholder: "Select employees...",
+  searchPlaceholder: "Search...",
+  selectAllLabel: "Select all",
+  clearLabel: "Clear",
+  selectedLabel: "selected",
+  groups: [
+    { label: "Employees", value: "all" },
+    { label: "Teams", value: "teams" },
+    { label: "Workplaces", value: "workplaces" },
+  ],
+  selectedGroup: "all",
+  onGroupChange: fn(),
+}
+
+
 const meta: Meta<typeof AvatarNameSelector> = {
   component: AvatarNameSelector,
   parameters: {
@@ -29,15 +46,7 @@ const meta: Meta<typeof AvatarNameSelector> = {
     ),
   ],
   args: {
-    entities: [],
-    placeholder: "Select employees...",
-    groups: [
-      { label: "Employees", value: "all" },
-      { label: "Teams", value: "teams" },
-      { label: "Workplaces", value: "workplaces" },
-    ],
-    selectedGroup: "all",
-    onGroupChange: fn(),
+    ...defaultArgs,
   } satisfies ComponentProps<typeof AvatarNameSelector>,
   render: (props) => {
     const [selectedGroup, setSelectedGroup] = useState<string>(
@@ -62,13 +71,7 @@ export const Default: Story = {}
 
 export const WithSelectedGroup: Story = {
   args: {
-    entities: [],
-    placeholder: "Select employees...",
-    groups: [
-      { label: "Employees", value: "all" },
-      { label: "Teams", value: "teams" },
-      { label: "Workplaces", value: "workplaces" },
-    ],
+    ...defaultArgs,
     selectedGroup: "teams",
     onGroupChange: fn(),
   } satisfies ComponentProps<typeof AvatarNameSelector>,

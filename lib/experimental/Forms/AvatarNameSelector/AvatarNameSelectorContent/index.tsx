@@ -28,6 +28,10 @@ export const AvatarNameSelectorContent = ({
   selectedEntities,
   onGroupChange,
   onToggleExpand,
+  searchPlaceholder,
+  selectAllLabel,
+  clearLabel,
+  selectedLabel,
 }: {
   groupView: boolean
   entities: AvatarNamedEntity[]
@@ -50,6 +54,10 @@ export const AvatarNameSelectorContent = ({
   selectedEntities: AvatarNamedEntity[]
   onGroupChange: (key: string | null) => void
   onToggleExpand: (entity: AvatarNamedEntity) => void
+  searchPlaceholder?: string
+  selectAllLabel?: string
+  clearLabel?: string
+  selectedLabel?: string
 }) => {
   const totalSelectedSubItems = groupView
     ? selectedEntities.reduce(
@@ -76,7 +84,7 @@ export const AvatarNameSelectorContent = ({
               <input
                 type="text"
                 className="w-full border-none bg-transparent text-f1-foreground-secondary outline-none"
-                placeholder="Search..."
+                placeholder={searchPlaceholder}
                 value={search}
                 onChange={(e) => onSearch(e.target.value)}
               />
@@ -86,7 +94,6 @@ export const AvatarNameSelectorContent = ({
             <Select
               onChange={onGroupChange}
               options={groups}
-              placeholder="Select a group"
               value={selectedGroup}
             />
           </div>
@@ -134,26 +141,33 @@ export const AvatarNameSelectorContent = ({
             })}
           </ScrollArea>
         </div>
-        <div
-          className="rounded-bl-xl border-0 border-t-[1px] border-solid border-f1-border-secondary"
-          style={{
-            backgroundColor: "hsla(var(--white-70))",
-          }}
-        >
-          <div className="flex flex-1 justify-between p-2">
-            <Button variant="outline" size="sm" onClick={onSelectAll}>
-              Select all {search ? `(${totalFilteredEntities})` : ""}
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              disabled={selectedEntities.length === 0}
-              onClick={onClear}
-            >
-              Clear {search ? `(${totalFilteredEntities})` : ""}
-            </Button>
+        {(selectAllLabel || clearLabel) && (
+          <div
+            className="rounded-bl-xl border-0 border-t-[1px] border-solid border-f1-border-secondary"
+            style={{
+              backgroundColor: "hsla(var(--white-70))",
+            }}
+          >
+            <div className="flex flex-1 justify-between p-2">
+              {selectAllLabel && (
+
+                <Button variant="outline" size="sm" onClick={onSelectAll}>
+                  {selectAllLabel} {search ? `(${totalFilteredEntities})` : ""}
+                </Button>
+              )}
+              {clearLabel && (
+                <Button
+                variant="ghost"
+                size="sm"
+                disabled={selectedEntities.length === 0}
+                onClick={onClear}
+                >
+                  {clearLabel} {search ? `(${totalFilteredEntities})` : ""}
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div
         className="w-56 rounded-r-xl"
@@ -162,12 +176,14 @@ export const AvatarNameSelectorContent = ({
             "linear-gradient(270deg, rgba(250, 251, 252, 0) 50%, #FAFBFC 100%)",
         }}
       >
-        <div className="flex h-full flex-col">
-          <span className="mt-1 p-3 text-f1-foreground-secondary">
-            {totalSelectedSubItems} selected
-          </span>
+        <div className="flex h-full flex-col mt-1 p-3 gap-3">
+          {selectedLabel && (
+            <span className="text-f1-foreground-secondary">
+              {totalSelectedSubItems} {selectedLabel}
+            </span>
+          )}
           <ScrollArea
-            className="mr-1 px-3"
+            className="mr-1"
             style={{ height: "calc(24rem + 40px)" }}
           >
             {selectedEntities.map((entity) => (
