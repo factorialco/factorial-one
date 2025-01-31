@@ -4,7 +4,7 @@ import { fn } from "@storybook/test"
 import { ComponentProps } from "react"
 import { AvatarNameListTag } from "."
 import { famousEmployees } from "../avatar-name.factory.spec"
-import { teamsWithEmployees } from "../teams-avatar-name.factory.spec"
+import { teamsWithEmployees } from "../groups-avatar-name.factory.spec"
 
 const meta: Meta = {
   component: AvatarNameListTag,
