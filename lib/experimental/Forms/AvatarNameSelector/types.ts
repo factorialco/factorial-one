@@ -1,7 +1,7 @@
 export type AvatarNamedSubEntity = {
-  id: number
-  name: string
-  avatar?: string
+  subId: number
+  subName: string
+  subAvatar?: string
 }
 
 export type AvatarNamedEntity = {

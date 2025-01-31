@@ -11,36 +11,35 @@ import {
 
 function transformSelection(
   prevSelected: AvatarNamedEntity[],
-  newGroupView: boolean
+  entities: AvatarNamedEntity[]
 ): AvatarNamedEntity[] {
-  if (newGroupView) {
-    return prevSelected
+  const oldWasGroupView = prevSelected.some((entity) => entity.subItems)
+  const newIsGroupView = entities.some((entity) => entity.subItems)
+
+  const selectedLeafs = oldWasGroupView
+    ? prevSelected
+        .flatMap((entity) => entity.subItems ?? [])
+        .map((el) => ({ id: el.subId, name: el.subName }) as AvatarNamedEntity)
+    : prevSelected
+
+  if (newIsGroupView) {
+    return entities
       .map((parent) => {
         if (parent.subItems && parent.subItems.length > 0) {
           return {
             ...parent,
+            subItems: parent.subItems.filter(
+              (el) => !!selectedLeafs.find((leaf) => leaf.id === el.subId)
+            ),
           }
         }
-        return null
+        return parent
       })
-      .filter(Boolean) as AvatarNamedEntity[]
-  } else {
-    const newSelection: AvatarNamedEntity[] = []
-
-    prevSelected.forEach((parent) => {
-      if (parent.subItems && parent.subItems.length > 0) {
-        parent.subItems.forEach((sub) => {
-          newSelection.push({
-            id: sub.id,
-            name: sub.name,
-            subItems: [],
-          })
-        })
-      }
-    })
-
-    return newSelection
+      .filter((el) => !!el.subItems && el.subItems.length > 0)
   }
+  return entities.filter(
+    (el) => !!selectedLeafs.find((leaf) => leaf.id === el.id)
+  )
 }
 
 export const AvatarNameSelector = ({
@@ -92,7 +91,7 @@ export const AvatarNameSelector = ({
         e.id === parentEntity.id
           ? {
               ...e,
-              subItems: e.subItems?.filter((s) => s.id !== entity.id),
+              subItems: e.subItems?.filter((s) => s.subId !== entity.subId),
             }
           : e
       )
@@ -141,7 +140,7 @@ export const AvatarNameSelector = ({
       if (filteredSubs.length > 0) {
         const newSubItems =
           existingEntity.subItems?.filter(
-            (sub) => !filteredSubs.some((f) => f.id === sub.id)
+            (sub) => !filteredSubs.some((f) => f.subId === sub.subId)
           ) ?? []
 
         if (newSubItems.length === 0) {
@@ -216,14 +215,14 @@ export const AvatarNameSelector = ({
                   .toLowerCase()
                   .includes(debouncedSearch.toLowerCase()) ||
                 entity.subItems?.some((subItem) =>
-                  subItem.name
+                  subItem.subName
                     .toLowerCase()
                     .includes(debouncedSearch.toLowerCase())
                 )
             )
             .map((entity) => {
               const someSubItem = entity.subItems?.some((subItem) =>
-                subItem.name
+                subItem.subName
                   .toLowerCase()
                   .includes(debouncedSearch.toLowerCase())
               )
@@ -231,7 +230,7 @@ export const AvatarNameSelector = ({
                 ...entity,
                 expanded: someSubItem,
                 subItems: entity.subItems?.filter((subItem) =>
-                  subItem.name
+                  subItem.subName
                     .toLowerCase()
                     .includes(debouncedSearch.toLowerCase())
                 ),
@@ -250,9 +249,9 @@ export const AvatarNameSelector = ({
 
   useEffect(() => {
     setSelectedEntities((prevSelected) =>
-      transformSelection(prevSelected, groupView)
+      transformSelection(prevSelected, entities)
     )
-  }, [selectedGroup, groupView])
+  }, [entities])
 
   return (
     <Popover>

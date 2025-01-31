@@ -157,17 +157,21 @@ export const AvatarNameListItem = ({
       {expanded &&
         entity.subItems?.map((subItem) => {
           const selected = !!selectedEntity?.subItems?.find(
-            (el) => el.id === subItem.id
+            (el) => el.subId === subItem.subId
           )
 
           return (
             <AvatarNameListItemSingleContent
-              key={entity.id + "-" + subItem.id}
+              key={entity.id + "-" + subItem.subId}
               marginLeft="ml-11"
-              entity={subItem}
+              entity={{
+                id: subItem.subId,
+                avatar: subItem.subAvatar,
+                name: subItem.subName,
+              }}
               selected={selected ?? false}
-              onSelect={(subItem) => onSubItemSelect?.(entity, subItem)}
-              onRemove={(subItem) => onSubItemRemove?.(entity, subItem)}
+              onSelect={() => onSubItemSelect?.(entity, subItem)}
+              onRemove={() => onSubItemRemove?.(entity, subItem)}
               search={search}
             />
           )
