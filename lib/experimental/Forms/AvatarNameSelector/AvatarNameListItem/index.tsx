@@ -129,6 +129,7 @@ export const AvatarNameListItem = ({
               <Counter value={entity.subItems?.length ?? 0} />
             </div>
           </div>
+
           <Checkbox
             checked={checked}
             onClick={() => (selected ? onRemove(entity) : onSelect(entity))}
