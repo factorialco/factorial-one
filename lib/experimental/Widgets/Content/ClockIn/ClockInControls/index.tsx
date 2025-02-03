@@ -184,7 +184,7 @@ export function ClockInControls({
                   open={locationPickerOpen}
                   onOpenChange={setLocationPickerOpen}
                 >
-                  <div>
+                  <div aria-label="Select location">
                     <Selector
                       text={location?.name}
                       placeholder={labels.selectLocation}
