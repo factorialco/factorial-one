@@ -1,11 +1,12 @@
 import * as Icon from "@/icons/app/"
 import type { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
 import { CompanyHeader } from "./index"
 
 const meta: Meta<typeof CompanyHeader> = {
   component: CompanyHeader,
   parameters: {
-    layout: "centered",
+    layout: "padded",
   },
 }
 
@@ -18,21 +19,28 @@ export const Default: Story = {
     name: "Factorial",
     description: "HR Software to Empower Your Team",
     src: "https://github.com/factorialco.png",
-    primaryAction: {
-      label: "Edit",
-      icon: Icon.Pencil,
-      onClick: () => console.log("Edit clicked"),
-    },
     secondaryActions: [
       {
-        label: "Promote",
-        onClick: () => console.log("Promote clicked"),
+        label: "Edit client",
+        icon: Icon.Pencil,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        label: "Legal name",
+        value: { type: "text", content: "Everyday Software S.L." },
+        actions: [
+          {
+            label: "Copy",
+            icon: Icon.LayersFront,
+            onClick: fn(),
+          },
+        ],
       },
       {
-        label: "Remove",
-        icon: Icon.Delete,
-        variant: "critical",
-        onClick: () => console.log("Remove clicked"),
+        label: "Tax identification number",
+        value: { type: "text", content: "B-675254394" },
       },
     ],
   },

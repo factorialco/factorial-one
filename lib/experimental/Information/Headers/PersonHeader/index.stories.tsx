@@ -1,13 +1,11 @@
 import * as Icon from "@/icons/app/"
-import { LayersFront, Pencil } from "@/icons/app/"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { PersonHeader } from "./index"
-
 const meta: Meta<typeof PersonHeader> = {
   component: PersonHeader,
   parameters: {
-    layout: "centered",
+    layout: "padded",
   },
 }
 
@@ -17,40 +15,47 @@ type Story = StoryObj<typeof PersonHeader>
 
 export const Default: Story = {
   args: {
-    firstName: "Josep Jaume",
-    lastName: "Rey",
-    description: "Chief Confetti Officer",
-    src: "https://github.com/josepjaume.png",
-    primaryAction: {
-      label: "Edit",
-      icon: Icon.Pencil,
-      onClick: () => console.log("Edit clicked"),
-    },
-    secondaryActions: [
-      {
-        label: "Promote",
-        onClick: () => console.log("Promote clicked"),
-      },
-      {
-        label: "Remove",
-        icon: Icon.Delete,
-        variant: "critical",
-        onClick: () => console.log("Remove clicked"),
-      },
-    ],
+    firstName: "René",
+    lastName: "Galindo",
+    description: "Product Design Lead",
+    src: "https://github.com/renegalindo.png",
     metadata: [
       {
-        label: "Email",
-        value: { type: "text", content: "josep@confetti.com" },
+        label: "Manager",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "person",
+            firstName: "Ilya",
+            lastName: "Zayats",
+            src: "https://github.com/somebody32.png",
+          },
+          text: "ilya Zayats",
+        },
+      },
+      {
+        label: "Team",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "team",
+            name: "Product design",
+          },
+          text: "Product design",
+        },
+      },
+      {
+        label: "Phone",
+        value: { type: "text", content: "+34 675 254 394" },
         actions: [
           {
-            label: "Edit",
-            icon: Pencil,
+            label: "Chat in WhatsApp",
+            icon: Icon.WhatsappChat,
             onClick: fn(),
           },
           {
             label: "Copy",
-            icon: LayersFront,
+            icon: Icon.LayersFront,
             onClick: fn(),
           },
         ],
