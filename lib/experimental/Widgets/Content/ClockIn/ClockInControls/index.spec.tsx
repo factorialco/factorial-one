@@ -18,7 +18,14 @@ const defaultLabels = {
 
 describe("ClockInControls", () => {
   it("renders clocked out state when no data", () => {
-    render(<ClockInControls data={[]} labels={defaultLabels} />)
+    render(
+      <ClockInControls
+        data={[]}
+        labels={defaultLabels}
+        locations={[]}
+        onChangeLocationId={() => {}}
+      />
+    )
     expect(screen.getByText(defaultLabels.clockedOut)).toBeInTheDocument()
     expect(screen.getByText(defaultLabels.clockIn)).toBeInTheDocument()
   })
@@ -34,6 +41,8 @@ describe("ClockInControls", () => {
             variant: "clocked-in",
           },
         ]}
+        locations={[]}
+        onChangeLocationId={() => {}}
       />
     )
     expect(screen.getByText(defaultLabels.clockedIn)).toBeInTheDocument()
@@ -50,6 +59,8 @@ describe("ClockInControls", () => {
             variant: "break",
           },
         ]}
+        locations={[]}
+        onChangeLocationId={() => {}}
       />
     )
     expect(screen.getByText(defaultLabels.onBreak)).toBeInTheDocument()
@@ -68,6 +79,8 @@ describe("ClockInControls", () => {
             variant: "clocked-in",
           },
         ]}
+        locations={[]}
+        onChangeLocationId={() => {}}
       />
     )
     expect(
@@ -87,6 +100,8 @@ describe("ClockInControls", () => {
             variant: "clocked-in",
           },
         ]}
+        locations={[]}
+        onChangeLocationId={() => {}}
       />
     )
     expect(
@@ -97,7 +112,13 @@ describe("ClockInControls", () => {
   it("calls onClockIn when clock in button is clicked", () => {
     const onClockIn = vi.fn()
     render(
-      <ClockInControls data={[]} labels={defaultLabels} onClockIn={onClockIn} />
+      <ClockInControls
+        data={[]}
+        labels={defaultLabels}
+        onClockIn={onClockIn}
+        locations={[]}
+        onChangeLocationId={() => {}}
+      />
     )
     screen.getByText(defaultLabels.clockIn).click()
     expect(onClockIn).toHaveBeenCalled()

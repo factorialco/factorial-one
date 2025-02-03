@@ -9,10 +9,11 @@ import {
   Suitcase as SuitcaseIcon,
 } from "@/icons/app"
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { Dispatch, useState } from "react"
 import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
 import { getInfo } from "./helpers"
 import Selector from "./Selector"
+
 export interface ClockInControlsProps {
   /** Optional remaining time in minutes */
   remainingMinutes?: number
@@ -33,6 +34,7 @@ export interface ClockInControlsProps {
     selectProject: string
   }
   locationId?: string
+  onChangeLocationId: Dispatch<string>
   locations: {
     id: string
     name: string
@@ -62,6 +64,7 @@ export function ClockInControls({
   onBreak,
   canShowBreakButton = true,
   onClickProjectSelector,
+  onChangeLocationId,
 }: ClockInControlsProps) {
   const { status, statusText, subtitle, statusColor } = getInfo({
     data,
@@ -80,8 +83,6 @@ export function ClockInControls({
   }))
 
   const [locationPickerOpen, setLocationPickerOpen] = useState(false)
-
-  console.log({ locationPickerOpen })
 
   return (
     <div className="@container">
@@ -179,9 +180,8 @@ export function ClockInControls({
                 <Select
                   value={locationId}
                   options={locationOptions}
-                  onChange={() => {}}
+                  onChange={onChangeLocationId}
                   open={locationPickerOpen}
-                  placeholder="Placeholder here"
                   onOpenChange={setLocationPickerOpen}
                 >
                   <div>
