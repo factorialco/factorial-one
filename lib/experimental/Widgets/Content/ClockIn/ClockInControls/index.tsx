@@ -1,5 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Select } from "@/experimental/Forms/Fields/Select"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import {
   DropdownDefault,
@@ -10,6 +11,7 @@ import {
 } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
+import { Dispatch, useState } from "react"
 import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
 import { getInfo } from "./helpers"
 
@@ -49,6 +51,13 @@ function Selector({
   )
 }
 
+interface BreakType {
+  id: string
+  name: string
+  description?: string
+  icon?: IconType
+}
+
 export interface ClockInControlsProps {
   /** Optional remaining time in minutes */
   remainingMinutes?: number
@@ -72,6 +81,8 @@ export interface ClockInControlsProps {
     name: string
     icon: IconType
   }
+  breakTypes?: BreakType[]
+  onChangeBreakTypeId?: Dispatch<string>
   canShowBreakButton?: boolean
   projectName?: string
   /** Callback when Clock In button is clicked */
@@ -79,7 +90,7 @@ export interface ClockInControlsProps {
   /** Callback when Clock Out button is clicked */
   onClockOut?: () => void
   /** Callback when Break button is clicked */
-  onBreak?: () => void
+  onBreak?: (breakTypeId?: string) => void
   /** Callback when Project Selector is clicked */
   onClickProjectSelector?: () => void
   /** Callback when Location Selector is clicked */
@@ -95,6 +106,8 @@ export function ClockInControls({
   onClockIn,
   onClockOut,
   onBreak,
+  breakTypes,
+  onChangeBreakTypeId,
   canShowBreakButton = true,
   onClickProjectSelector,
   onClickLocationSelector,
@@ -106,6 +119,29 @@ export function ClockInControls({
   })
 
   const showLocationAndProjectSelectors = status === "clocked-out"
+
+  const breakTypeOptions = breakTypes?.map((breakType) => ({
+    value: breakType.id,
+    label: breakType.name,
+    description: breakType.description,
+    icon: breakType.icon,
+  }))
+
+  const [breakTypePickerOpen, setBreakTypePickerOpen] = useState(false)
+
+  const handleClickBreakButton = () => {
+    if (breakTypeOptions?.length && !breakTypePickerOpen) {
+      setBreakTypePickerOpen(true)
+    } else if (!breakTypeOptions?.length) {
+      onBreak?.()
+    }
+  }
+
+  const handleChangeBreakType = (value: string) => {
+    onChangeBreakTypeId?.(value)
+    setBreakTypePickerOpen(false)
+    onBreak?.(value)
+  }
 
   return (
     <div className="@container">
@@ -160,13 +196,35 @@ export function ClockInControls({
               {status === "clocked-in" && (
                 <>
                   {canShowBreakButton && (
-                    <Button
-                      onClick={onBreak}
-                      label={labels.break}
-                      variant="neutral"
-                      icon={SolidPause}
-                      hideLabel
-                    />
+                    <>
+                      {breakTypeOptions?.length && onChangeBreakTypeId ? (
+                        <Select
+                          value=""
+                          options={breakTypeOptions}
+                          onChange={handleChangeBreakType}
+                          open={breakTypePickerOpen}
+                          onOpenChange={setBreakTypePickerOpen}
+                        >
+                          <div aria-label="Select break type">
+                            <Button
+                              // onClick={handleClickBreakButton}
+                              label={labels.break}
+                              variant="neutral"
+                              icon={SolidPause}
+                              hideLabel
+                            />
+                          </div>
+                        </Select>
+                      ) : (
+                        <Button
+                          onClick={handleClickBreakButton}
+                          label={labels.break}
+                          variant="neutral"
+                          icon={SolidPause}
+                          hideLabel
+                        />
+                      )}
+                    </>
                   )}
                   <Button
                     onClick={onClockOut}
