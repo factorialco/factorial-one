@@ -40,6 +40,10 @@ export interface ClockInControlsProps {
     name: string
     icon: IconType
   }[]
+  canShowProject?: boolean
+  canShowLocation?: boolean
+  locationSelectorDisabled?: boolean
+  projectSelectorDisabled?: boolean
   canShowBreakButton?: boolean
   projectName?: string
   /** Callback when Clock In button is clicked */
@@ -58,6 +62,10 @@ export function ClockInControls({
   labels,
   locationId,
   locations,
+  canShowProject = true,
+  canShowLocation = true,
+  locationSelectorDisabled = false,
+  projectSelectorDisabled = false,
   projectName,
   onClockIn,
   onClockOut,
@@ -73,6 +81,16 @@ export function ClockInControls({
   })
 
   const showLocationAndProjectSelectors = status === "clocked-out"
+
+  const canSelectLocation =
+    showLocationAndProjectSelectors &&
+    locations.length &&
+    !locationSelectorDisabled &&
+    canShowLocation
+  const canSelectProject =
+    showLocationAndProjectSelectors &&
+    !projectSelectorDisabled &&
+    canShowProject
 
   const location = locations.find((location) => location.id === locationId)
 
@@ -174,37 +192,43 @@ export function ClockInControls({
           <ClockInGraph data={data} remainingMinutes={remainingMinutes} />
         </div>
         <div className="mt-6 flex flex-row flex-wrap items-center justify-center gap-2 @xs:justify-start">
-          {showLocationAndProjectSelectors ? (
-            <>
-              {locations.length && (
-                <Select
-                  value={locationId}
-                  options={locationOptions}
-                  onChange={onChangeLocationId}
-                  open={locationPickerOpen}
-                  onOpenChange={setLocationPickerOpen}
-                >
-                  <div aria-label="Select location">
-                    <Selector
-                      text={location?.name}
-                      placeholder={labels.selectLocation}
-                      icon={location?.icon}
-                    />
-                  </div>
-                </Select>
-              )}
-              <Selector
-                text={projectName}
-                placeholder={labels.selectProject}
-                icon={SuitcaseIcon}
-                onClick={onClickProjectSelector}
-              />
-            </>
+          {canSelectLocation ? (
+            <Select
+              value={locationId}
+              options={locationOptions}
+              onChange={onChangeLocationId}
+              open={locationPickerOpen}
+              onOpenChange={setLocationPickerOpen}
+              disabled={locationSelectorDisabled}
+            >
+              <div aria-label="Select location">
+                <Selector
+                  text={location?.name}
+                  placeholder={labels.selectLocation}
+                  icon={location?.icon}
+                />
+              </div>
+            </Select>
           ) : (
-            <>
-              {location && <RawTag text={location.name} icon={location.icon} />}
-              {projectName && <RawTag text={projectName} icon={SuitcaseIcon} />}
-            </>
+            canShowLocation && (
+              <>
+                <RawTag text={location?.name} icon={location?.icon} />
+              </>
+            )
+          )}
+          {canSelectProject ? (
+            <Selector
+              text={projectName}
+              placeholder={labels.selectProject}
+              icon={SuitcaseIcon}
+              onClick={onClickProjectSelector}
+            />
+          ) : (
+            canShowProject && (
+              <>
+                <RawTag text={projectName} icon={SuitcaseIcon} />
+              </>
+            )
           )}
         </div>
       </div>

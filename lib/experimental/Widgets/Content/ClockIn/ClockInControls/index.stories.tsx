@@ -155,3 +155,19 @@ export const ClockedOutWithSomeTime: Story = {
     ],
   },
 }
+
+export const WithDisabledSelectors: Story = {
+  args: {
+    ...ClockedOut.args,
+    locationSelectorDisabled: true,
+    projectSelectorDisabled: true,
+  },
+}
+
+export const WithHiddenLocationAndProject: Story = {
+  args: {
+    ...ClockedOut.args,
+    canShowLocation: false,
+    canShowProject: false,
+  },
+}
