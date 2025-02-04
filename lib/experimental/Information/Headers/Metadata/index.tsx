@@ -33,7 +33,11 @@ interface MetadataItem {
 }
 
 interface MetadataProps {
-  items: MetadataItem[]
+  /**
+   * Everything is not a MetadataItem is ignored.
+   * Undefined and boolean enable conditional items
+   **/
+  items: (MetadataItem | undefined | boolean)[]
 }
 
 function MetadataValue({ item }: { item: MetadataItem }) {
@@ -146,12 +150,13 @@ function MetadataItem({ item }: { item: MetadataItem }) {
 }
 
 export const Metadata = memo(function Metadata({ items }: MetadataProps) {
+  const cleanedItems = items.filter((item) => typeof item === "object")
   return (
     <div className="flex flex-col items-start gap-x-3 gap-y-0 md:flex-row md:flex-wrap md:items-center">
-      {items.map((item, index) => (
+      {cleanedItems.map((item, index) => (
         <>
           <MetadataItem key={`item-${index}`} item={item} />
-          {index < items.length - 1 && (
+          {index < cleanedItems.length - 1 && (
             <div
               key={`separator-${index}`}
               className="hidden h-4 w-[1px] bg-f1-border md:block"
