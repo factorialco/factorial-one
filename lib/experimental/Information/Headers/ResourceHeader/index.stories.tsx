@@ -14,7 +14,34 @@ import { ResourceHeader } from "./index"
 const meta: Meta<typeof ResourceHeader> = {
   component: ResourceHeader,
   parameters: {
-    layout: "centered",
+    layout: "padded",
+  },
+  argTypes: {
+    title: {
+      description: "Main heading identifying the resource",
+    },
+    description: {
+      description: "Supporting text providing additional context",
+    },
+    status: {
+      description: "Visual indicator of the resource's current state",
+    },
+    metadata: {
+      description:
+        "Horizontal list of key-value pairs showing relevant information",
+    },
+    primaryAction: {
+      description:
+        "Main button representing the most important action available for the resource",
+    },
+    secondaryActions: {
+      description:
+        "Complementary set of lower-priority actions offering additional but less frequent functionalities",
+    },
+    otherActions: {
+      description:
+        "Expandable menu containing additional operations and advanced options",
+    },
   },
 }
 
@@ -26,7 +53,7 @@ export const Default: Story = {
   args: {
     title: "Senior Product Designer",
     description:
-      "Open position on our team, seeking an experienced product designer to lead design initiatives",
+      "Seeking an experienced product designer to lead design initiatives",
     status: {
       label: "Status",
       text: "Published",
@@ -39,21 +66,46 @@ export const Default: Story = {
         },
       ],
     },
-    primaryAction: {
-      label: "Edit",
-      icon: Icon.Pencil,
-      onClick: fn(),
-    },
     secondaryActions: [
       {
-        label: "Promote",
+        label: "Edit",
+        icon: Icon.Pencil,
         onClick: fn(),
       },
       {
-        label: "Remove",
+        label: "Unlist",
         icon: Icon.Delete,
         variant: "critical",
         onClick: fn(),
+      },
+    ],
+    otherActions: [
+      {
+        label: "Archive",
+        icon: Icon.Archive,
+        onClick: fn(),
+      },
+      {
+        label: "Copy URL",
+        icon: Icon.LayersFront,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        label: "Location",
+        value: { type: "text", content: "Barcelona, Spain" },
+      },
+      {
+        label: "Team",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "team",
+            name: "Product design",
+          },
+          text: "Product design",
+        },
       },
     ],
   },

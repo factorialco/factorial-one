@@ -1,11 +1,12 @@
+import * as Icon from "@/icons/app/"
 import { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
 import { TeamHeader } from "."
 
 const meta = {
-  title: "Experimental/Information/Headers/TeamHeader",
   component: TeamHeader,
   parameters: {
-    layout: "centered",
+    layout: "padded",
   },
   tags: ["autodocs"],
 } satisfies Meta<typeof TeamHeader>
@@ -15,9 +16,70 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    name: "Engineering Team",
-    description:
-      "Frontend development team responsible for core product features",
+    name: "Product designers",
+    description: "Rectangle drawers and post-it stickers",
+    primaryAction: {
+      label: "Add members",
+      icon: Icon.Add,
+      onClick: fn(),
+    },
+    secondaryActions: [
+      {
+        label: "Edit",
+        icon: Icon.Pencil,
+        onClick: fn(),
+      },
+    ],
+    otherActions: [
+      {
+        label: "Export",
+        icon: Icon.Download,
+        onClick: fn(),
+      },
+      {
+        label: "Share",
+        icon: Icon.ExternalLink,
+        onClick: fn(),
+      },
+      "separator",
+      {
+        label: "Delete",
+        icon: Icon.Delete,
+        critical: true,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        label: "Team leader",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "person",
+            firstName: "Josep Jaume",
+            lastName: "Rey",
+            src: "https://github.com/josepjaume.png",
+          },
+          text: "Josep Jaume Rey",
+        },
+        actions: [
+          {
+            label: "Edit",
+            icon: Icon.Pencil,
+            onClick: fn(),
+          },
+          {
+            label: "Comment",
+            icon: Icon.Comment,
+            onClick: fn(),
+          },
+        ],
+      },
+      {
+        label: "Members",
+        value: { type: "text", content: "22" },
+      },
+    ],
   },
 }
 
