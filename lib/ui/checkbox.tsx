@@ -6,9 +6,9 @@ import * as React from "react"
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
-    partial?: boolean
+    indeterminate?: boolean
   }
->(({ className, partial, ...props }, ref) => (
+>(({ className, indeterminate, ...props }, ref) => (
   <div className="flex items-center gap-4">
     <CheckboxPrimitive.Root
       ref={ref}
@@ -23,7 +23,7 @@ const Checkbox = React.forwardRef<
       onCheckedChange={props.onCheckedChange}
     >
       <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
-        {partial ? (
+        {indeterminate ? (
           <Minus className="h-3 w-3" />
         ) : (
           <Check className="h-3 w-3" />

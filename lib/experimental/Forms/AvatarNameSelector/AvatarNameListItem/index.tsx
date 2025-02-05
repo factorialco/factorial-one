@@ -137,9 +137,9 @@ export const AvatarNameListItem = ({
           {entity.subItems?.length && (
             <Checkbox
               checked={checked}
+              indeterminate={partialSelected}
               onClick={() => (selected ? onRemove(entity) : onSelect(entity))}
               className="ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse"
-              partial={partialSelected}
               style={{
                 backgroundColor: selected
                   ? "hsl(var(--selected-50))"
