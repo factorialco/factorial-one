@@ -1,4 +1,4 @@
-import { famousEmployeesAsSubItems } from "./avatar-name.factory.spec"
+import { famousEmployeesAsSubItems } from "./avatar-name.factory"
 import { AvatarNamedEntity } from "./types"
 
 export const teamsWithEmployees: AvatarNamedEntity[] = [

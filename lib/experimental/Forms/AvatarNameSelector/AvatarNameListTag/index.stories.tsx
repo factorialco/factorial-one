@@ -3,8 +3,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { ComponentProps } from "react"
 import { AvatarNameListTag } from "."
-import { famousEmployees } from "../avatar-name.factory.spec"
-import { teamsWithEmployees } from "../groups-avatar-name.factory.spec"
+import { famousEmployees } from "../avatar-name.factory"
+import { teamsWithEmployees } from "../groups-avatar-name.factory"
 
 const meta: Meta = {
   component: AvatarNameListTag,

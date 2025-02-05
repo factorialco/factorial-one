@@ -3,11 +3,11 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { ComponentProps, useState } from "react"
 import { AvatarNameSelector } from "."
-import { famousEmployees } from "./avatar-name.factory.spec"
+import { famousEmployees } from "./avatar-name.factory"
 import {
   teamsWithEmployees,
   workplaceWithEmployees,
-} from "./groups-avatar-name.factory.spec"
+} from "./groups-avatar-name.factory"
 
 const GROUP_DATA = {
   all: famousEmployees,
