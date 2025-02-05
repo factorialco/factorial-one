@@ -3,6 +3,7 @@ import { EmojiAvatar } from "."
 
 const meta: Meta<typeof EmojiAvatar> = {
   component: EmojiAvatar,
+  title: "Avatars/EmojiAvatar",
   tags: ["autodocs"],
   argTypes: {
     size: {

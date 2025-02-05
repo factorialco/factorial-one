@@ -4,6 +4,7 @@ import { PersonTag } from "."
 
 const meta: Meta = {
   component: PersonTag,
+  title: "Tag/PersonTag",
   parameters: {
     layout: "centered",
     tags: ["autodocs"],

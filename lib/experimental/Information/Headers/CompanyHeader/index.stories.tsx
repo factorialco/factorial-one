@@ -4,6 +4,7 @@ import { fn } from "@storybook/test"
 import { CompanyHeader } from "./index"
 
 const meta: Meta<typeof CompanyHeader> = {
+  title: "ResourceHeader/CompanyHeader",
   component: CompanyHeader,
   parameters: {
     layout: "padded",

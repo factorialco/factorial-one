@@ -4,6 +4,7 @@ import { CommunityPost } from "."
 
 const meta: Meta<typeof CommunityPost> = {
   component: CommunityPost,
+  title: "Communities/Post/CommunityPost",
 }
 
 export default meta

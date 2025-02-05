@@ -4,6 +4,7 @@ import { fn } from "@storybook/test"
 import { TeamHeader } from "."
 
 const meta = {
+  title: "ResourceHeader/TeamHeader",
   component: TeamHeader,
   parameters: {
     layout: "padded",

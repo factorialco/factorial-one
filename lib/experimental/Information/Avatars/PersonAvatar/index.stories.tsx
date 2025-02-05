@@ -5,6 +5,7 @@ import { PersonAvatar } from "."
 
 const meta: Meta<typeof PersonAvatar> = {
   component: PersonAvatar,
+  title: "Avatars/PersonAvatar",
   tags: ["autodocs"],
   argTypes: {
     size: {

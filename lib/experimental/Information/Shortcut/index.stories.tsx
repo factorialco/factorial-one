@@ -4,6 +4,7 @@ import { Shortcut } from "."
 
 const meta = {
   component: Shortcut,
+  title: "Shortcut",
   parameters: {
     layout: "centered",
     design: {

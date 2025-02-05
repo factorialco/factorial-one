@@ -3,10 +3,12 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { PersonHeader } from "./index"
 const meta: Meta<typeof PersonHeader> = {
+  title: "ResourceHeader/PersonHeader",
   component: PersonHeader,
   parameters: {
     layout: "padded",
   },
+  tags: ["alpha"],
 }
 
 export default meta

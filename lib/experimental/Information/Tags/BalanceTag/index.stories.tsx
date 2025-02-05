@@ -4,6 +4,7 @@ import { BalanceTag } from "."
 
 const meta: Meta = {
   component: BalanceTag,
+  title: "Tag/BalanceTag",
   parameters: {
     layout: "centered",
     tags: ["autodocs"],

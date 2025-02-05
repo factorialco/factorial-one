@@ -3,12 +3,12 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Alert, AlertDescription, AlertTitle } from "."
 
 const meta = {
+  title: "Alert",
   component: Alert,
   parameters: {
     layout: "padded",
   },
   tags: ["autodocs"],
-  args: {},
 } satisfies Meta<typeof Alert>
 
 export default meta

@@ -4,6 +4,7 @@ import { HighlightBanner } from "./index"
 
 const meta: Meta<typeof HighlightBanner> = {
   component: HighlightBanner,
+  title: "Communities/HighlightBanner",
   tags: ["autodocs"],
   parameters: {
     layout: "centered",

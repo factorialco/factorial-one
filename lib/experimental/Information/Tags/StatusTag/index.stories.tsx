@@ -4,6 +4,7 @@ import { StatusTag } from "."
 
 const meta: Meta = {
   component: StatusTag,
+  title: "Tag/StatusTag",
   parameters: {
     layout: "centered",
     tags: ["autodocs"],

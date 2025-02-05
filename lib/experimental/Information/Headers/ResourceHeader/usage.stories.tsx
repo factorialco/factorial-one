@@ -20,6 +20,7 @@ import { fn } from "@storybook/test"
 import { ResourceHeader } from "./index"
 
 const meta: Meta<typeof ResourceHeader> = {
+  title: "ResourceHeader/ResourceHeader/Usage",
   component: ResourceHeader,
   parameters: {
     layout: "fullscreen",

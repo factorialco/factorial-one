@@ -4,6 +4,7 @@ import cat from "../../../../../../storybook-assets/cat.jpeg"
 
 const meta: Meta<typeof PostEvent> = {
   component: PostEvent,
+  title: "Communities/Post/PostEvent",
 }
 
 export default meta

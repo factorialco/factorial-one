@@ -4,6 +4,7 @@ import { CompanyTag } from "."
 
 const meta: Meta = {
   component: CompanyTag,
+  title: "Tag/CompanyTag",
   parameters: {
     layout: "centered",
     tags: ["autodocs"],

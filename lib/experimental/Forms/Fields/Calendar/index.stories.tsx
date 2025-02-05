@@ -7,6 +7,7 @@ import { Calendar } from "."
 
 const meta = {
   component: Calendar,
+  title: "Calendar",
   parameters: {
     layout: "centered",
     a11y: {

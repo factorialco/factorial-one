@@ -5,6 +5,7 @@ import { RawTag } from "."
 
 const meta: Meta = {
   component: RawTag,
+  title: "Tag/RawTag",
   parameters: {
     layout: "centered",
     tags: ["autodocs"],

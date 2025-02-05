@@ -4,6 +4,7 @@ import { AlertTag } from "."
 
 const meta: Meta = {
   component: AlertTag,
+  title: "Tag/AlertTag",
   parameters: {
     layout: "centered",
     tags: ["autodocs"],
