@@ -150,17 +150,16 @@ export const AvatarNameSelectorContent = ({
           >
             <div className="flex flex-1 justify-between p-2">
               {selectAllLabel && (
-
                 <Button variant="outline" size="sm" onClick={onSelectAll}>
                   {selectAllLabel} {search ? `(${totalFilteredEntities})` : ""}
                 </Button>
               )}
               {clearLabel && (
                 <Button
-                variant="ghost"
-                size="sm"
-                disabled={selectedEntities.length === 0}
-                onClick={onClear}
+                  variant="ghost"
+                  size="sm"
+                  disabled={selectedEntities.length === 0}
+                  onClick={onClear}
                 >
                   {clearLabel} {search ? `(${totalFilteredEntities})` : ""}
                 </Button>
@@ -176,16 +175,13 @@ export const AvatarNameSelectorContent = ({
             "linear-gradient(270deg, rgba(250, 251, 252, 0) 50%, #FAFBFC 100%)",
         }}
       >
-        <div className="flex h-full flex-col mt-1 p-3 gap-3">
+        <div className="mt-1 flex h-full flex-col gap-3 p-3">
           {selectedLabel && (
             <span className="text-f1-foreground-secondary">
               {totalSelectedSubItems} {selectedLabel}
             </span>
           )}
-          <ScrollArea
-            className="mr-1"
-            style={{ height: "calc(24rem + 40px)" }}
-          >
+          <ScrollArea className="mr-1" style={{ height: "calc(24rem + 40px)" }}>
             {selectedEntities.map((entity) => (
               <AvatarNameListTag
                 groupView={groupView}
