@@ -23,4 +23,8 @@ export interface AvatarNameSelectorProps {
   selectedGroup: string
   placeholder: string
   onGroupChange: (value: string | null) => void
+  searchPlaceholder?: string
+  selectAllLabel?: string
+  clearLabel?: string
+  selectedLabel?: string
 }
