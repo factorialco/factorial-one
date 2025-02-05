@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { PropsWithChildren, useEffect, useRef, useState } from "react"
 
-const SPACE_FOR_WIDGET_SHADOW = 28
+export const SPACE_FOR_WIDGET_SHADOW = 28
 
 export const DynamicCarousel = ({ children }: PropsWithChildren) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -71,28 +71,34 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
     }
   }, [])
 
+  let maskImageStyle = ""
+  if (canScrollPrev && canScrollNext) {
+    maskImageStyle = `linear-gradient(to right, transparent 0px, transparent ${SPACE_FOR_WIDGET_SHADOW}px, black ${2 * SPACE_FOR_WIDGET_SHADOW}px, black calc(100% - ${2 * SPACE_FOR_WIDGET_SHADOW}px), transparent calc(100% - ${SPACE_FOR_WIDGET_SHADOW}px), transparent 100%)`
+  } else if (canScrollPrev && !canScrollNext) {
+    maskImageStyle = `linear-gradient(to right, transparent 0px, transparent ${SPACE_FOR_WIDGET_SHADOW}px, black ${2 * SPACE_FOR_WIDGET_SHADOW}px, black 100%)`
+  } else if (!canScrollPrev && canScrollNext) {
+    maskImageStyle = `linear-gradient(to right, black 0px, black calc(100% - ${2 * SPACE_FOR_WIDGET_SHADOW}px), transparent calc(100% - ${SPACE_FOR_WIDGET_SHADOW}px), transparent 100%)`
+  } else {
+    maskImageStyle = "none"
+  }
+
   return (
     <div className="relative">
       <div
         ref={scrollContainerRef}
         className="relative flex gap-4 overflow-x-auto overflow-y-visible scroll-smooth"
         style={{
-          scrollbarWidth: "none", // Para Firefox
-          msOverflowStyle: "none", // Para IE y Edge
+          scrollbarWidth: "none", // Firefox
+          msOverflowStyle: "none", // IE & Edge
           margin: `-${SPACE_FOR_WIDGET_SHADOW}px`,
           padding: `${SPACE_FOR_WIDGET_SHADOW}px`,
           height: `calc(100% + ${SPACE_FOR_WIDGET_SHADOW * 2}px)`,
           width: `calc(100% + ${SPACE_FOR_WIDGET_SHADOW * 2}px)`,
+          maskImage: maskImageStyle,
+          WebkitMaskImage: maskImageStyle,
         }}
       >
-        <style>
-          {`
-              /* Para ocultar scrollbar en Chrome, Safari y Edge */
-              .no-scrollbar::-webkit-scrollbar {
-                display: none;
-              }
-            `}
-        </style>
+        <style></style>
         {Array.isArray(children)
           ? children.map((child, index) => (
               <div
@@ -113,33 +119,6 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
             )}
       </div>
 
-      {/* Gradientes dinámicos para los bordes */}
-      {canScrollPrev && (
-        <div
-          className={cn(
-            "w-[60px]",
-            "absolute",
-            "h-full",
-            "top-0",
-            "bg-gradient-to-l from-transparent from-0% to-f1-background to-100%"
-          )}
-          style={{ left: `-${SPACE_FOR_WIDGET_SHADOW}px` }}
-        ></div>
-      )}
-      {canScrollNext && (
-        <div
-          className={cn(
-            "w-[60px]",
-            "absolute",
-            "h-full",
-            "top-0",
-            "bg-gradient-to-r from-transparent from-0% to-f1-background to-100%"
-          )}
-          style={{ right: `-${SPACE_FOR_WIDGET_SHADOW}px` }}
-        ></div>
-      )}
-
-      {/* Botón Izquierdo dinámico */}
       {canScrollPrev && (
         <Button
           size="sm"
@@ -156,7 +135,6 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
         </Button>
       )}
 
-      {/* Botón Derecho dinámico */}
       {canScrollNext && (
         <Button
           size="sm"
