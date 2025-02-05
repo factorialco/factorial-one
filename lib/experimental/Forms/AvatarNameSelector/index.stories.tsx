@@ -31,7 +31,6 @@ const defaultArgs = {
   onGroupChange: fn(),
 }
 
-
 const meta: Meta<typeof AvatarNameSelector> = {
   component: AvatarNameSelector,
   parameters: {

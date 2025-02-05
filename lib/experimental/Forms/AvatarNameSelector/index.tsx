@@ -51,7 +51,7 @@ export const AvatarNameSelector = ({
   searchPlaceholder,
   selectAllLabel,
   clearLabel,
-  selectedLabel
+  selectedLabel,
 }: AvatarNameSelectorProps) => {
   const [selectedEntities, setSelectedEntities] = useState<AvatarNamedEntity[]>(
     []
@@ -283,7 +283,6 @@ export const AvatarNameSelector = ({
           selectAllLabel={selectAllLabel}
           clearLabel={clearLabel}
           selectedLabel={selectedLabel}
-
         />
       </PopoverContent>
     </Popover>
