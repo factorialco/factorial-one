@@ -1,4 +1,4 @@
-import { Icon } from "@/components/Utilities/Icon"
+import { Button } from "@/components/Actions/Button"
 import { BaseAvatar } from "@/experimental/Information/Avatars/BaseAvatar"
 import { BaseTag } from "@/experimental/Information/Tags/BaseTag"
 import { Cross } from "@/icons/app"
@@ -28,12 +28,16 @@ const AvatarNameListTagContent = <T extends { avatar?: string; name: string }>({
           />
         }
         right={
-          <Icon
-            icon={Cross}
-            size="sm"
-            className="ml-auto cursor-pointer text-f1-icon-secondary"
-            onClick={() => onRemove?.(entity)}
-          />
+          <div className="ml-auto">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onRemove?.(entity)}
+              icon={Cross}
+              label="Remove"
+              hideLabel
+            />
+          </div>
         }
         text={entity.name}
       />
