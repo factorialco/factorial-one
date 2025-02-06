@@ -32,7 +32,7 @@ interface MetadataItem {
   hideLabel?: boolean
 }
 
-interface MetadataProps {
+export interface MetadataProps {
   /**
    * Everything is not a MetadataItem is ignored.
    * Undefined and boolean enable conditional items
