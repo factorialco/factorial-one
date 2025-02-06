@@ -73,7 +73,9 @@ const SelectValue = ({ item }: { item: SelectItemObject<string> }) => {
 }
 
 const defaultTrigger =
-  "flex h-10 w-full items-center justify-between rounded-md border border-solid border-f1-border bg-f1-background pl-3 pr-2 py-2.5 transition-colors placeholder:text-f1-foreground-secondary hover:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1"
+  "flex h-10 w-full items-center justify-between rounded-md border border-solid border-f1-border " +
+  "bg-f1-background pl-3 pr-2 py-2.5 transition-colors placeholder:text-f1-foreground-secondary " +
+  "hover:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1"
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
   function Select(
