@@ -88,6 +88,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
         onFocus={() => isAction && setIsActive(true)}
         onBlur={() => isAction && setIsActive(false)}
         className="relative flex h-5 w-fit items-center hover:cursor-default"
+        aria-label={`${item.label} actions`}
       >
         <div
           className={cn(
