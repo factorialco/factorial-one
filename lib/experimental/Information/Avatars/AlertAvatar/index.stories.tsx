@@ -4,7 +4,7 @@ import { AlertAvatar } from "./index"
 const meta: Meta<typeof AlertAvatar> = {
   component: AlertAvatar,
   title: "Avatars/AlertAvatar",
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
 }
 
 export default meta

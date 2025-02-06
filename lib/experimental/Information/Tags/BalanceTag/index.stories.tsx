@@ -7,7 +7,7 @@ const meta: Meta = {
   title: "Tag/BalanceTag",
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
+    tags: ["autodocs", "alpha"],
   },
   args: {
     text: "2% · 1.522,48 €",

@@ -7,7 +7,7 @@ const meta: Meta = {
   title: "Tag/StatusTag",
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
+    tags: ["autodocs", "alpha"],
   },
   args: {
     text: "Label",

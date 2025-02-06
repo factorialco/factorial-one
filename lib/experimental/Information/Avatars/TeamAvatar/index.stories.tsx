@@ -6,7 +6,7 @@ import { TeamAvatar } from "."
 const meta: Meta<typeof TeamAvatar> = {
   component: TeamAvatar,
   title: "Avatars/TeamAvatar",
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   argTypes: {
     size: {
       control: "select",

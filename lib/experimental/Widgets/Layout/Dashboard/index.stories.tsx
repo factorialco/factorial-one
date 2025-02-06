@@ -38,6 +38,7 @@ const widgets = [
 /* eslint-enable react/jsx-key */
 
 const meta = {
+  title: "Widgets/Layout/Dashboard",
   component: Dashboard,
   tags: ["autodocs"],
   argTypes: {

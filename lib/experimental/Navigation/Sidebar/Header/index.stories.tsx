@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { SidebarHeader } from "./index"
 
 const meta = {
+  title: "Sidebar/Header",
   component: SidebarHeader,
   tags: ["autodocs"],
 } satisfies Meta<typeof SidebarHeader>

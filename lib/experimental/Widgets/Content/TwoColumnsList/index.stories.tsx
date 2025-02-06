@@ -4,6 +4,7 @@ import { TwoColumnsList } from "."
 import { ProgressBarDuo } from "../ProgressBarDuo"
 
 const meta: Meta = {
+  title: "Widgets/Content/TwoColumnsList",
   component: TwoColumnsList,
   parameters: {
     layout: "centered",

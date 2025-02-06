@@ -5,6 +5,7 @@ import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { FullscreenLayout } from "."
 
 const meta = {
+  title: "Layout/FullscreenLayout",
   component: FullscreenLayout,
   tags: ["autodocs"],
   decorators: [PageDecorator],

@@ -7,7 +7,7 @@ const meta: Meta = {
   title: "Tag/CompanyTag",
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
+    tags: ["autodocs", "alpha"],
   },
   args: {
     companyName: "Factorial",

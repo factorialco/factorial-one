@@ -4,6 +4,7 @@ import { Placeholder as PlaceholderIcon } from "@/icons/app"
 import { WidgetEmptyState } from "."
 
 const meta: Meta<typeof WidgetEmptyState> = {
+  title: "Widgets/WidgetEmptyState",
   component: WidgetEmptyState,
   parameters: {
     tags: ["autodocs"],

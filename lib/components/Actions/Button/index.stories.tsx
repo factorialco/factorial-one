@@ -8,6 +8,7 @@ import Save from "@/icons/app/Save"
 import { Button } from "."
 
 const meta = {
+  title: "Button",
   component: Button,
   parameters: {
     layout: "centered",

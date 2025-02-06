@@ -8,6 +8,7 @@ import { ComponentProps } from "react"
 import { Icon } from "."
 
 const meta = {
+  title: "Icon",
   component: Icon,
   argTypes: {
     icon: {

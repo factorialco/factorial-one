@@ -7,7 +7,7 @@ const meta: Meta = {
   title: "Tag/TeamTag",
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
+    tags: ["autodocs", "alpha"],
   },
   args: {
     teamName: "Team Foundations",

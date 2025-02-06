@@ -5,7 +5,7 @@ import { Input } from "."
 const meta = {
   component: Input,
   title: "Input",
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     type: "text",
     disabled: false,

@@ -41,6 +41,7 @@ const widgets = [
 ]
 
 const meta = {
+  title: "Layout/HomeLayout",
   component: HomeLayout,
   tags: ["autodocs"],
   args: {

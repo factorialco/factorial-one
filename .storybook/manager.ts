@@ -1,6 +1,5 @@
 import { addons } from "@storybook/manager-api"
 import {
-  defaultConfig,
   renderLabel,
   type TagBadgeParameters,
 } from "storybook-addon-tag-badges"
@@ -13,19 +12,17 @@ addons.setConfig({
   },
   tagBadges: [
     {
-      tags: "desi",
+      tags: "alpha",
       badge: {
-        text: "Desi 🐸",
-        bgColor: "#001c13",
-        fgColor: "#e0eb0b",
-        tooltip: "This component can catch flies!",
+        text: "Alpha",
+        bgColor: "#FEF2EA",
+        fgColor: "#AC5820",
+        borderColor: "#FFD19A",
       },
       display: {
         sidebar: ["component", "docs", "group"],
         toolbar: true,
       },
     },
-    // Place the default config after your custom matchers.
-    ...defaultConfig,
   ] satisfies TagBadgeParameters,
 })

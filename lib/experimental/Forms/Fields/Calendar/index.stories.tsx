@@ -16,7 +16,7 @@ const meta = {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     defaultMonth: new Date(2024, 10, 15),
   },

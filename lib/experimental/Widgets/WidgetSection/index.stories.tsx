@@ -4,6 +4,7 @@ import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { WidgetSection } from "."
 
 const meta: Meta = {
+  title: "Widgets/WidgetSection",
   component: WidgetSection,
   parameters: {
     layout: "centered",

@@ -4,6 +4,7 @@ import heart from "../../../../assets/icons/app/heart.svg"
 import { Image } from "."
 
 const meta = {
+  title: "Image",
   component: Image,
   parameters: {
     layout: "centered",

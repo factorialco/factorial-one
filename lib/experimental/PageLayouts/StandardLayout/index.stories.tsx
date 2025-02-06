@@ -5,6 +5,7 @@ import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { StandardLayout } from "."
 
 const meta = {
+  title: "Layout/StandardLayout",
   component: StandardLayout,
   tags: ["autodocs"],
   decorators: [PageDecorator],

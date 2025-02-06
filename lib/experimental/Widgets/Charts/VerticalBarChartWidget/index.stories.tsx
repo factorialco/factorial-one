@@ -6,6 +6,7 @@ import { VerticalBarChartWidget } from "."
 import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
 
 const meta = {
+  title: "Widgets/Charts/VerticalBarChartWidget",
   component: VerticalBarChartWidget,
   parameters: {
     layout: "centered",

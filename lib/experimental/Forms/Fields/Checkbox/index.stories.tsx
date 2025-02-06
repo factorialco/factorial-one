@@ -3,7 +3,7 @@ import Checkbox from "."
 
 const meta = {
   component: Checkbox,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   title: "Checkbox",
 } satisfies Meta<typeof Checkbox>
 

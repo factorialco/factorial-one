@@ -3,6 +3,7 @@ import { ComponentProps } from "react"
 import { Widget } from "."
 
 const meta: Meta<ComponentProps<typeof Widget.Skeleton>> = {
+  title: "Widgets/Widget/Skeleton",
   component: Widget.Skeleton,
   parameters: {
     layout: "centered",

@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { WidgetHighlightButton, WidgetHighlightButtonProps } from "./index"
 
 const meta: Meta<WidgetHighlightButtonProps> = {
+  title: "Widgets/Content/Highlights/WidgetHighlightButton",
   component: WidgetHighlightButton,
   tags: ["autodocs"],
   parameters: {

@@ -4,6 +4,7 @@ import { ComponentProps } from "react"
 import { Link } from "."
 
 const meta = {
+  title: "Link",
   component: Link,
   parameters: {
     layout: "centered",

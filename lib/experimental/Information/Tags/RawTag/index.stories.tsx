@@ -8,7 +8,7 @@ const meta: Meta = {
   title: "Tag/RawTag",
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
+    tags: ["autodocs", "alpha"],
   },
   args: {
     text: "Label",

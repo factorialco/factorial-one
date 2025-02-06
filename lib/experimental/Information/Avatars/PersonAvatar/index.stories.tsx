@@ -6,7 +6,7 @@ import { PersonAvatar } from "."
 const meta: Meta<typeof PersonAvatar> = {
   component: PersonAvatar,
   title: "Avatars/PersonAvatar",
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   argTypes: {
     size: {
       control: "select",

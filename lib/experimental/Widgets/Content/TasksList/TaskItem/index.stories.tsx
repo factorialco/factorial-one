@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { TaskItem, TaskItemProps } from "./index"
 
 const meta: Meta<TaskItemProps> = {
+  title: "Widgets/Content/TasksList/TaskItem",
   component: TaskItem,
   tags: ["autodocs"],
   parameters: {

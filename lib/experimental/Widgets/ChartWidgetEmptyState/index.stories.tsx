@@ -4,6 +4,7 @@ import { Add } from "@/icons/app"
 import { ChartWidgetEmptyState } from "."
 
 const meta: Meta<typeof ChartWidgetEmptyState> = {
+  title: "Widgets/EmptyState",
   component: ChartWidgetEmptyState,
   parameters: {
     tags: ["autodocs"],

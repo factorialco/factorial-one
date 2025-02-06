@@ -3,6 +3,7 @@ import { RadialProgressWidget } from "."
 import { WidgetDecorator } from "../storybook-utils"
 
 const meta = {
+  title: "Widgets/Charts/RadialProgressWidget",
   component: RadialProgressWidget,
   parameters: {
     layout: "centered",

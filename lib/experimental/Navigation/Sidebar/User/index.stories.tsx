@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { User } from "."
 
 const meta = {
+  title: "Sidebar/User",
   component: User,
   tags: ["autodocs"],
 } satisfies Meta<typeof User>

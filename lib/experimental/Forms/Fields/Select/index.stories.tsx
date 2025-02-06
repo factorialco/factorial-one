@@ -5,6 +5,7 @@ import { Select } from "."
 import { Appearance, Circle, Desktop } from "@/icons/app"
 
 const meta: Meta = {
+  title: "Select",
   component: Select,
   parameters: {
     a11y: {
@@ -38,7 +39,7 @@ const meta: Meta = {
     ],
     disabled: false,
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
 } satisfies Meta<typeof Select>
 
 export default meta

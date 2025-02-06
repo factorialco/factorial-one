@@ -4,7 +4,9 @@ import { usePrivacyMode } from "@/lib/privacyMode"
 import type { Meta, StoryObj } from "@storybook/react"
 import { PrivateBox } from "."
 
-const meta: Meta = {}
+const meta: Meta = {
+  title: "PrivateBox",
+}
 
 type Story = StoryObj
 

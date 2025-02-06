@@ -20,6 +20,7 @@ const taskCategories = [
 ]
 
 const meta = {
+  title: "Widgets/Content/IndicatorsList",
   component: IndicatorsList,
   parameters: {
     layout: "centered",

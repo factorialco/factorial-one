@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { WidgetInboxListItem, WidgetInboxListItemProps } from "./index"
 
 const meta: Meta<WidgetInboxListItemProps> = {
+  title: "Widgets/Content/ListItems/WidgetInboxListItem",
   component: WidgetInboxListItem,
   tags: ["autodocs"],
   parameters: {

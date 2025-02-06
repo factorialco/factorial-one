@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { CompanySelector } from "./index"
 
 const meta: Meta<typeof CompanySelector> = {
+  title: "Sidebar/CompanySelector",
   component: CompanySelector,
   tags: ["autodocs"],
   decorators: [

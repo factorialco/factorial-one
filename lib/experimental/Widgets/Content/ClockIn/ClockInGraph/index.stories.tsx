@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { ClockInGraph } from "."
 
 const meta: Meta<typeof ClockInGraph> = {
-  title: "Components/ClockInGraph",
+  title: "Widgets/Content/ClockIn/ClockInGraph",
   component: ClockInGraph,
   tags: ["autodocs"],
   args: {

@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { CalendarEventList } from "."
 
 const meta: Meta = {
+  title: "Widgets/Content/CalendarEventList",
   component: CalendarEventList,
   parameters: {
     layout: "centered",

@@ -6,6 +6,7 @@ import { ComponentProps } from "react"
 import { Widget } from "."
 
 const meta: Meta = {
+  title: "Widgets/Widget",
   component: Widget,
   parameters: {
     layout: "centered",

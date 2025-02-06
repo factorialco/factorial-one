@@ -6,6 +6,7 @@ import { Meta, StoryObj } from "@storybook/react"
 import { Carousel } from "."
 
 const meta: Meta<typeof Carousel> = {
+  title: "Carousel/Carousel",
   component: Carousel,
   argTypes: {
     autoplay: { control: "boolean" },
@@ -13,6 +14,7 @@ const meta: Meta<typeof Carousel> = {
     showArrows: { control: "boolean" },
     showPeek: { control: "boolean" },
   },
+  tags: ["autodocs", "alpha"],
 }
 
 export default meta

@@ -113,16 +113,50 @@ const preview: Preview = {
       },
     },
     options: {
-      storySort: {
-        order: [
-          "Introduction",
-          "How to contribute?",
-          "Foundations",
-          ["Colors", "Typography", "Spacing", "Borders", "Shadows"],
-          "Components",
-          "Experimental",
-          "Playground",
-        ],
+      /*
+       * Sort all the components and experimental stories in an aplhabetical order, but keep
+       * Introduction, How to contribute, Foundations, and Playground in specific order
+       */
+      storySort: (a, b) => {
+        const topLevelOrder = [
+          "introduction",
+          "how-to-contribute",
+          "foundations",
+          "playground",
+        ]
+
+        const aId = a.title.toLowerCase()
+        const bId = b.title.toLowerCase()
+
+        const aIndex = topLevelOrder.indexOf(aId)
+        const bIndex = topLevelOrder.indexOf(bId)
+
+        if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex
+        if (aIndex !== -1) return -1
+        if (bIndex !== -1) return 1
+
+        const isAFoundation = aId.startsWith("foundations/")
+        const isBFoundation = bId.startsWith("foundations/")
+
+        if (isAFoundation || isBFoundation) {
+          if (isAFoundation && isBFoundation) {
+            const foundationOrder = [
+              "colors",
+              "typography",
+              "spacing",
+              "borders",
+              "shadows",
+            ]
+            const aFoundationIndex = foundationOrder.indexOf(aId.split("/")[1])
+            const bFoundationIndex = foundationOrder.indexOf(bId.split("/")[1])
+            if (aFoundationIndex !== -1 && bFoundationIndex !== -1) {
+              return aFoundationIndex - bFoundationIndex
+            }
+          }
+          return isAFoundation ? -1 : 1
+        }
+
+        return a.title.localeCompare(b.title)
       },
     },
     darkMode: {

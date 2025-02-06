@@ -6,6 +6,7 @@ import { AreaChartWidget } from "."
 import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
 
 const meta: Meta<typeof AreaChartWidget> = {
+  title: "Widgets/Charts/AreaChartWidget",
   component: AreaChartWidget,
   parameters: {
     layout: "centered",

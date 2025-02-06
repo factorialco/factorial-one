@@ -13,6 +13,7 @@ const DETAILS_ITEMS_ARGS = DetailsItemsListStories.default
   .args as ComponentProps<typeof DetailsItemsList>
 
 const meta = {
+  title: "Layout/OverviewLayout",
   component: OverviewLayout,
   tags: ["autodocs"],
   decorators: [PageDecorator],

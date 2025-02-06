@@ -7,7 +7,7 @@ const meta: Meta = {
   title: "Tag/AlertTag",
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
+    tags: ["autodocs", "alpha"],
   },
   args: {
     text: "Info",
