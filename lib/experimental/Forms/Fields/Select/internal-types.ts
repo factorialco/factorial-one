@@ -4,9 +4,10 @@ import type { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 export type SelectItemObject<T> = {
   value: T
   label: string
-  icon?: IconType
   description?: string
-  avatar?: AvatarVariant
-}
+} & (
+  | { avatar: AvatarVariant; icon?: never }
+  | { icon: IconType; avatar?: never }
+)
 
 export type SelectItemProps<T> = SelectItemObject<T> | "separator"
