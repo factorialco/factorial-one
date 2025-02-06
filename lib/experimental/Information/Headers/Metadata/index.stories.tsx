@@ -40,6 +40,25 @@ export const Default: Story = {
           variant: "warning",
         },
       },
+      {
+        label: "Type",
+        value: {
+          type: "List",
+          variant: "person",
+          avatars: [
+            {
+              type: "person",
+              firstName: "Josep Jaume",
+              lastName: "Rey",
+            },
+            {
+              type: "person",
+              firstName: "Nik",
+              lastName: "Lopin",
+            },
+          ],
+        },
+      },
     ],
   },
 }
