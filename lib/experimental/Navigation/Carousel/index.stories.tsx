@@ -193,6 +193,35 @@ export const MultipleWidths: Story = {
   },
 }
 
+export const RandomWithColumns: Story = {
+  decorators: [
+    (Story) => (
+      <div className="h-full w-full p-6">
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+    columns: { default: 1 },
+  },
+  args: {
+    showArrows: true,
+    children: SLIDES_RANDOM,
+    showPeek: true,
+    showDots: false,
+    columns: {
+      xs: 2,
+      sm: 3,
+      md: 3,
+      lg: 3,
+    },
+  },
+}
+
 export const FewItemsWithColumns: Story = {
   args: {
     ...CustomColumns.args,

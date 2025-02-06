@@ -7,6 +7,7 @@ import useEmblaCarousel, {
 } from "embla-carousel-react"
 import * as React from "react"
 
+import { SPACE_FOR_WIDGET_SHADOW } from "@/experimental/Navigation/Carousel/DynamicCarousel"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 
@@ -155,10 +156,25 @@ const CarouselContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
+  const maskImageStyle = `linear-gradient(to right, transparent 0px, transparent ${SPACE_FOR_WIDGET_SHADOW / 2}px, black ${SPACE_FOR_WIDGET_SHADOW}px, black calc(100% - ${SPACE_FOR_WIDGET_SHADOW}px), transparent calc(100% - ${SPACE_FOR_WIDGET_SHADOW / 2}px), transparent 100%)`
+
   const { carouselRef, orientation } = useCarousel()
 
   return (
-    <div ref={carouselRef} className="overflow-hidden">
+    <div
+      ref={carouselRef}
+      className="overflow-hidden"
+      style={{
+        scrollbarWidth: "none", // For Firefox
+        msOverflowStyle: "none", // For IE and Edge
+        margin: `-${SPACE_FOR_WIDGET_SHADOW}px`,
+        padding: `${SPACE_FOR_WIDGET_SHADOW}px`,
+        height: `calc(100% + ${SPACE_FOR_WIDGET_SHADOW * 2}px)`,
+        width: `calc(100% + ${SPACE_FOR_WIDGET_SHADOW * 2}px)`,
+        maskImage: maskImageStyle,
+        WebkitMaskImage: maskImageStyle,
+      }}
+    >
       <div
         ref={ref}
         className={cn(
