@@ -1,8 +1,6 @@
-import { Icon, IconType } from "@/components/Utilities/Icon"
-import {
-  Avatar,
-  AvatarVariant,
-} from "@/experimental/Information/Avatars/Avatar"
+import { Icon } from "@/components/Utilities/Icon"
+import { F1SearchBox } from "@/experimental/Forms/Fields/F1SearchBox"
+import { Avatar } from "@/experimental/Information/Avatars/Avatar"
 import { ChevronDown } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
@@ -13,17 +11,8 @@ import {
   SelectTrigger,
   SelectValue as SelectValuePrimitive,
 } from "@/ui/select"
-import { forwardRef } from "react"
-
-type SelectItemObject<T> = {
-  value: T
-  label: string
-  icon?: IconType
-  description?: string
-  avatar?: AvatarVariant
-}
-
-type SelectItemProps<T> = SelectItemObject<T> | "separator"
+import { forwardRef, useMemo, useState } from "react"
+import type { SelectItemObject, SelectItemProps } from "./internal-types"
 
 type SelectProps<T> = {
   placeholder?: string
@@ -33,7 +22,13 @@ type SelectProps<T> = {
   children?: React.ReactNode
   disabled?: boolean
   open?: boolean
+  showSearchBox?: boolean
+  searchBoxPlaceholder?: string
+  onSearchChange?: (value: string) => void
+  externalSearch?: boolean
+  searchValue?: string
   onOpenChange?: (open: boolean) => void
+  searchEmptyMessage?: string
 }
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
@@ -72,22 +67,49 @@ const SelectValue = ({ item }: { item: SelectItemObject<string> }) => {
   )
 }
 
+const SelectOptions = ({
+  options,
+  emptyMessage,
+}: {
+  options: SelectProps<string>["options"]
+  emptyMessage?: string
+}) => {
+  return (
+    <>
+      {options.filter((option) => option !== "separator").length ? (
+        options.map((option, index) =>
+          option === "separator" ? (
+            <SelectSeparator key={`separator-${index}`} />
+          ) : (
+            <SelectItem key={option.value} item={option} />
+          )
+        )
+      ) : (
+        <p className="p-2 text-center">{emptyMessage}</p>
+      )}
+    </>
+  )
+}
+
 const defaultTrigger =
-  "flex h-10 w-full items-center justify-between rounded-md border border-solid border-f1-border " +
-  "bg-f1-background pl-3 pr-2 py-2.5 transition-colors placeholder:text-f1-foreground-secondary " +
-  "hover:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1"
+  "flex h-10 w-full items-center justify-between rounded-md border border-solid border-f1-border bg-f1-background pl-3 pr-2 py-2.5 transition-colors placeholder:text-f1-foreground-secondary hover:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1"
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
   function Select(
     {
       placeholder,
-      options,
+      options = [],
       onChange,
       value,
       children,
       disabled,
       open,
       onOpenChange,
+      showSearchBox,
+      onSearchChange,
+      searchBoxPlaceholder,
+      externalSearch,
+      searchEmptyMessage,
       ...props
     },
     ref
@@ -96,6 +118,28 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
       (option): option is Exclude<typeof option, "separator"> =>
         option !== "separator" && option.value === value
     )
+
+    const [searchValue, setSearchValue] = useState(props.searchValue)
+
+    const filteredOptions = useMemo(() => {
+      if (externalSearch) {
+        return options
+      }
+
+      const res = options.filter(
+        (option) =>
+          option == "separator" ||
+          !searchValue ||
+          option.label.toLowerCase().includes(searchValue.toLowerCase())
+      )
+
+      return res
+    }, [options, externalSearch, searchValue])
+
+    const onSearchChangeLocal = (value: string) => {
+      setSearchValue(value)
+      onSearchChange?.(value)
+    }
 
     return (
       <SelectPrimitive
@@ -126,13 +170,21 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
           )}
         </SelectTrigger>
         <SelectContent>
-          {options.map((option, index) =>
-            option === "separator" ? (
-              <SelectSeparator key={`separator-${index}`} />
-            ) : (
-              <SelectItem key={option.value} item={option} />
-            )
+          {showSearchBox && (
+            <div className="p-3">
+              <F1SearchBox
+                placeholder={searchBoxPlaceholder}
+                onChange={onSearchChangeLocal}
+                clearable
+                value={props.searchValue}
+                key="search-input"
+              />
+            </div>
           )}
+          <SelectOptions
+            options={filteredOptions}
+            emptyMessage={searchEmptyMessage}
+          />
         </SelectContent>
       </SelectPrimitive>
     )
