@@ -67,7 +67,7 @@ export const SectionHeader = ({
           <div className="hidden md:block">
             <Button
               label={action.label}
-              variant="ghost"
+              variant="outline"
               icon={action.icon}
               size="md"
               onClick={action.onClick}
