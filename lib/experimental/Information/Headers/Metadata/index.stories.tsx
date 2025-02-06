@@ -66,6 +66,13 @@ export const Default: Story = {
           },
         ],
       },
+      {
+        label: "Type",
+        value: {
+          type: "tag-list",
+          tags: ["Manager", "Direct report", "Self review", "Peer"],
+        },
+      },
     ],
   },
 }

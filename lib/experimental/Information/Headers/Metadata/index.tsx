@@ -4,6 +4,7 @@ import {
   Avatar,
   AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
+import { RawTag } from "@/experimental/Information/Tags/exports"
 import {
   StatusTag,
   StatusVariant,
@@ -19,6 +20,7 @@ type MetadataItemValue =
   | { type: "avatar"; variant: AvatarVariant; text: string }
   | { type: "status"; label: string; variant: StatusVariant }
   | { type: "data-list"; data: string[] }
+  | { type: "tag-list"; tags: string[] }
 
 type MetadataAction = {
   icon: IconType
@@ -79,9 +81,27 @@ function MetadataValue({
           )}
         </div>
       ) : (
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-col gap-1.5">
           {item.value.data.map((data) => (
             <span key={data}>{data}</span>
+          ))}
+        </div>
+      )
+
+    case "tag-list":
+      return collapse ? (
+        <div className="flex flex-wrap items-center justify-center gap-1 font-medium">
+          <RawTag text={item.value.tags[0]} />
+          {item.value.tags.length > 1 && (
+            <span className="tabular-nums text-f1-foreground-secondary">
+              +{item.value.tags.length - 1}
+            </span>
+          )}
+        </div>
+      ) : (
+        <div className="-mt-0.5 flex flex-col gap-1 [&>div]:w-fit">
+          {item.value.tags.map((tag) => (
+            <RawTag key={tag} text={tag} />
           ))}
         </div>
       )
@@ -90,8 +110,10 @@ function MetadataValue({
 
 function MetadataItem({ item }: { item: MetadataItem }) {
   const [isActive, setIsActive] = useState(false)
+  const isList =
+    item.value.type === "data-list" || item.value.type === "tag-list"
   const isAction = item.actions?.length
-  const hasHover = isAction || item.value.type === "data-list"
+  const hasHover = isAction || isList
 
   return (
     <div className="flex h-8 items-center gap-2">
@@ -139,14 +161,21 @@ function MetadataItem({ item }: { item: MetadataItem }) {
           {isActive && hasHover && (
             <motion.div
               className={cn(
-                "absolute -left-1.5 -top-1.5 z-50 hidden items-start justify-center gap-1.5 whitespace-nowrap rounded-sm bg-f1-background px-1.5 py-1 shadow-md ring-1 ring-inset ring-f1-border-secondary md:flex"
+                "absolute -left-1.5 -top-1.5 z-50 hidden items-start justify-center gap-1.5 whitespace-nowrap rounded-sm bg-f1-background py-1 pl-1.5 shadow-md ring-1 ring-inset ring-f1-border-secondary md:flex",
+                !isList && "h-8 items-start",
+                isAction ? "pr-1" : "pr-1.5"
               )}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
             >
-              <div className="flex items-start pt-0.5 font-medium text-f1-foreground">
+              <div
+                className={cn(
+                  "flex h-6 items-center font-medium text-f1-foreground",
+                  isList && "h-auto items-start pt-0.5"
+                )}
+              >
                 <MetadataValue item={item} />
               </div>
               {isAction && (
