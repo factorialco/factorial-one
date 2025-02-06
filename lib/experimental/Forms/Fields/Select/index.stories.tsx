@@ -12,6 +12,25 @@ const meta: Meta = {
       skipCi: true,
     },
   },
+  argTypes: {
+    showSearchBox: {
+      description:
+        "Shows a search box. The component will filter the items by name and by description unless searchFunc will be in use",
+    },
+    externalSearch: {
+      description:
+        "Disable the internal filtering when the search box delegating the filtering in the parent. Useful for async data",
+    },
+    searchValue: {
+      description: "Default value for the search box",
+    },
+    searchEmptyMessage: {
+      description: "Message to show when filter returns no results",
+    },
+    searchBoxPlaceholder: {
+      description: "Placeholder for the search box",
+    },
+  },
   args: {
     placeholder: "Select a theme",
     onChange: fn(),
@@ -38,6 +57,7 @@ const meta: Meta = {
       },
     ],
     disabled: false,
+    showSearchBox: false,
   },
   tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof Select>
@@ -46,6 +66,14 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+export const WithSearchBox: Story = {
+  args: {
+    showSearchBox: true,
+    searchEmptyMessage: "No results found",
+    searchBoxPlaceholder: "Search for a theme",
+  },
+}
 
 export const WithCustomTrigger: Story = {
   args: {
