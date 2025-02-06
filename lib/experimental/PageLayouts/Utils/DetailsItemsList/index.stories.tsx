@@ -5,9 +5,7 @@ import { DetailsItemsList } from "."
 const meta: Meta = {
   title: "DetailsItemsList",
   component: DetailsItemsList,
-  parameters: {
-    tags: ["autodocs", "alpha"],
-  },
+  tags: ["autodocs", "alpha"],
   args: {
     title: "Details",
     details: [
