@@ -11,10 +11,10 @@ import {
   SelectTrigger,
   SelectValue as SelectValuePrimitive,
 } from "@/ui/select"
-import { forwardRef, useMemo, useState } from "react"
+import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
 import type { SelectItemObject, SelectItemProps } from "./internal-types"
 
-type SelectProps<T> = {
+export type SelectProps<T> = {
   placeholder?: string
   onChange: (value: T) => void
   value?: T
@@ -119,7 +119,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
         option !== "separator" && option.value === value
     )
 
-    const [searchValue, setSearchValue] = useState(props.searchValue)
+    const searchInputRef = useRef<HTMLInputElement>(null)
+
+    const [searchValue, setSearchValue] = useState(props.searchValue || "")
 
     const filteredOptions = useMemo(() => {
       if (externalSearch) {
@@ -133,21 +135,44 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
           option.label.toLowerCase().includes(searchValue.toLowerCase())
       )
 
+      setTimeout(() => {
+        searchInputRef.current?.focus()
+      }, 0)
+
       return res
     }, [options, externalSearch, searchValue])
+
+    useEffect(() => {
+      if (open) {
+        searchInputRef.current?.focus()
+      }
+    }, [open])
 
     const onSearchChangeLocal = (value: string) => {
       setSearchValue(value)
       onSearchChange?.(value)
     }
 
+    const onValueChange = (value: string) => {
+      // Resets the search value when the option is selected
+      setSearchValue("")
+      onChange?.(value)
+    }
+
+    const onOpenChangeLocal = (open: boolean) => {
+      onOpenChange?.(open)
+      setTimeout(() => {
+        searchInputRef.current?.focus()
+      }, 0)
+    }
+
     return (
       <SelectPrimitive
-        onValueChange={onChange}
+        onValueChange={onValueChange}
         value={value}
         disabled={disabled}
         open={open}
-        onOpenChange={onOpenChange}
+        onOpenChange={onOpenChangeLocal}
         {...props}
       >
         <SelectTrigger ref={ref} asChild>
@@ -176,8 +201,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
                 placeholder={searchBoxPlaceholder}
                 onChange={onSearchChangeLocal}
                 clearable
-                value={props.searchValue}
+                value={searchValue}
                 key="search-input"
+                ref={searchInputRef}
               />
             </div>
           )}

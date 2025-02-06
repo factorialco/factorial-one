@@ -1,12 +1,38 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
-import { Select } from "."
+import { Select, SelectProps } from "."
 
 import { Appearance, Circle, Desktop } from "@/icons/app"
+import { useState } from "react"
+
+// Wraps the Select component with a hook to show the selected value
+const SelectWithHooks = (props: SelectProps<string>) => {
+  const [value, setValue] = useState("")
+  const [, setSearchValue] = useState("")
+  // Sets a click handler to change the label's value
+  const handleOnChange = (value: string) => {
+    setValue(value)
+    console.log("value", value)
+  }
+
+  const handleOnSearchChange = (value: string) => {
+    setSearchValue(value)
+    console.log("searchValue", value)
+  }
+
+  return (
+    <Select
+      {...props}
+      value={value}
+      onChange={handleOnChange}
+      onSearchChange={handleOnSearchChange}
+    />
+  )
+}
 
 const meta: Meta = {
   title: "Select",
-  component: Select,
+  component: SelectWithHooks,
   parameters: {
     a11y: {
       skipCi: true,
