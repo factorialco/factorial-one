@@ -14,7 +14,7 @@ import { ResourceHeader } from "./index"
 const meta: Meta<typeof ResourceHeader> = {
   title: "ResourceHeader/ResourceHeader",
   component: ResourceHeader,
-  tags: ["alpha"],
+  tags: ["stable"],
   parameters: {
     layout: "padded",
   },

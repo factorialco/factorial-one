@@ -34,7 +34,7 @@ const widgets = [
 const meta = {
   title: "Widgets/Layout/WidgetStrip",
   component: WidgetStrip,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     children: Array.from({ length: 4 }, (_, i) => widgets[i % widgets.length]),
   },

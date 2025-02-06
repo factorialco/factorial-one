@@ -6,6 +6,7 @@ import { PrivateBox } from "."
 
 const meta: Meta = {
   title: "PrivateBox",
+  tags: ["autodocs", "alpha"],
 }
 
 type Story = StoryObj

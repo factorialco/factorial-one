@@ -6,7 +6,7 @@ const meta: Meta = {
   title: "DetailsItemsList",
   component: DetailsItemsList,
   parameters: {
-    tags: ["autodocs"],
+    tags: ["autodocs", "alpha"],
   },
   args: {
     title: "Details",

@@ -40,7 +40,7 @@ const widgets = [
 const meta = {
   title: "Widgets/Layout/Dashboard",
   component: Dashboard,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   argTypes: {
     widgetWidth: {
       control: "select",

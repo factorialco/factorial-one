@@ -6,9 +6,9 @@ import {
 import { WidgetSimpleList, WidgetSimpleListProps } from "./index"
 
 const meta: Meta<WidgetSimpleListProps> = {
-  title: "Widgets/Content/Lists/WidgetSimpleList",
+  title: "Widgets/WidgetSimpleList",
   component: WidgetSimpleList,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
   },

@@ -6,9 +6,9 @@ import { ProgressBarDuo } from "../ProgressBarDuo"
 const meta: Meta = {
   title: "Widgets/Content/TwoColumnsList",
   component: TwoColumnsList,
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     list: [

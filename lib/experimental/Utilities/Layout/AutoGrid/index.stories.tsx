@@ -6,7 +6,7 @@ import { AutoGrid } from "."
 const meta = {
   title: "AutoGrid",
   component: AutoGrid,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     tileSize: "md",
     gap: "4",

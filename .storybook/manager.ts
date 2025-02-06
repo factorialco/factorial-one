@@ -24,5 +24,18 @@ addons.setConfig({
         toolbar: true,
       },
     },
+    {
+      tags: "stable",
+      badge: {
+        text: "Stable",
+        bgColor: "#E7F7F2",
+        fgColor: "#0B7D58",
+        borderColor: "#D6F1DF",
+      },
+      display: {
+        sidebar: false,
+        toolbar: true,
+      },
+    },
   ] satisfies TagBadgeParameters,
 })

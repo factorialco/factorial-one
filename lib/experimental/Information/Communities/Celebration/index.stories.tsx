@@ -7,6 +7,7 @@ const meta: Meta<typeof Celebration> = {
   parameters: {
     layout: "centered",
   },
+  tags: ["autodocs", "alpha"],
 }
 
 export default meta

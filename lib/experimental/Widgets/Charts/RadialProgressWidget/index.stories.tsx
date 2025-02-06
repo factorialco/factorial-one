@@ -8,7 +8,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     header: {
       title: "A Radial Progress Chart",

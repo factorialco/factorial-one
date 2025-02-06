@@ -6,9 +6,9 @@ import { CalendarEvent } from "."
 const meta: Meta = {
   title: "Widgets/Content/CalendarEvent",
   component: CalendarEvent,
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     label: "Overtime",

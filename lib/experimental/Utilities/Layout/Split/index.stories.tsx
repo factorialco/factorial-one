@@ -6,7 +6,7 @@ import { Split } from "."
 const meta = {
   title: "Split",
   component: Split,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     gap: "4",
   },

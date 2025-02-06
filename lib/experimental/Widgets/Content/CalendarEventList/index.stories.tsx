@@ -5,9 +5,9 @@ import { CalendarEventList } from "."
 const meta: Meta = {
   title: "Widgets/Content/CalendarEventList",
   component: CalendarEventList,
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     events: [

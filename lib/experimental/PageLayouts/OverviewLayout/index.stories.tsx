@@ -15,7 +15,7 @@ const DETAILS_ITEMS_ARGS = DetailsItemsListStories.default
 const meta = {
   title: "Layout/OverviewLayout",
   component: OverviewLayout,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   decorators: [PageDecorator],
   args: {
     children: <Placeholder className="h-[450px]">Main</Placeholder>,

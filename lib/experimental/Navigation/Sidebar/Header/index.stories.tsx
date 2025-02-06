@@ -5,7 +5,7 @@ import { SidebarHeader } from "./index"
 const meta = {
   title: "Sidebar/Header",
   component: SidebarHeader,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
 } satisfies Meta<typeof SidebarHeader>
 
 export default meta

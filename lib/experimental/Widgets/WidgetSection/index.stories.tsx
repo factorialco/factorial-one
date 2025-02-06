@@ -6,9 +6,9 @@ import { WidgetSection } from "."
 const meta: Meta = {
   title: "Widgets/WidgetSection",
   component: WidgetSection,
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     title: "Worked / Planned hours",

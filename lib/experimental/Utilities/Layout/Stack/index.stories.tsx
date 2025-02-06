@@ -6,7 +6,7 @@ import { Stack } from "."
 const meta = {
   title: "Stack",
   component: Stack,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   render: (args) => (
     <Stack {...args}>
       {Array.from({ length: 10 }).map((_, i) => (

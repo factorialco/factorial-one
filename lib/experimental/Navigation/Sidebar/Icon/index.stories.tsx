@@ -4,7 +4,7 @@ import { SidebarIcon } from "."
 const meta: Meta<typeof SidebarIcon> = {
   title: "Sidebar/Icon",
   component: SidebarIcon,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
 }
 
 export default meta

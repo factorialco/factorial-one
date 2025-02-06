@@ -8,7 +8,6 @@ const meta: Meta<typeof PersonHeader> = {
   parameters: {
     layout: "padded",
   },
-  tags: ["alpha"],
 }
 
 export default meta
