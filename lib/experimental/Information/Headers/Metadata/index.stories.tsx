@@ -40,6 +40,32 @@ export const Default: Story = {
           variant: "warning",
         },
       },
+      {
+        label: "Type",
+        value: {
+          type: "data-list",
+          data: ["Manager", "Direct report", "Self review", "Peer"],
+        },
+      },
+      {
+        label: "Type",
+        value: {
+          type: "data-list",
+          data: ["Manager", "Direct report", "Self review", "Peer"],
+        },
+        actions: [
+          {
+            label: "Copy",
+            icon: Icon.LayersFront,
+            onClick: fn(),
+          },
+          {
+            label: "Edit",
+            icon: Icon.Pencil,
+            onClick: fn(),
+          },
+        ],
+      },
     ],
   },
 }
