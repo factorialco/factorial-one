@@ -61,7 +61,7 @@ export const AvatarList = ({ avatars, size = "medium", type }: Props) => {
     <div className={avatarListVariants({ size })}>
       {avatars.map((avatar, index) => (
         <div
-          className="flex h-fit w-fit items-center justify-center overflow-hidden"
+          className="flex h-fit w-fit shrink-0 items-center justify-center overflow-hidden"
           key={index}
           style={
             index !== avatars.length - 1
