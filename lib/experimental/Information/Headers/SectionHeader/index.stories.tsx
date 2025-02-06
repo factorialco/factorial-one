@@ -7,6 +7,28 @@ const meta: Meta<typeof SectionHeader> = {
   parameters: {
     layout: "padded",
   },
+  argTypes: {
+    title: {
+      description: "Main heading text",
+    },
+    description: {
+      description: "Description text below the title",
+    },
+    action: {
+      description: "Optional action button",
+    },
+    help: {
+      description: "Optional help link, usually to a Help Center article",
+    },
+    separator: {
+      description:
+        "If specified, a separator will be displayed above or below the content",
+      control: {
+        type: "select",
+        options: ["top", "bottom"],
+      },
+    },
+  },
 }
 
 export default meta

@@ -6,18 +6,22 @@ import { cn, focusRing } from "@/lib/utils"
 type Props = {
   /** Main heading text */
   title: string
+
   /** Description text below the title */
   description: string
+
   /** Optional action button */
   action?: Pick<ButtonProps, "label" | "onClick"> & {
     icon?: IconType
   }
+
   /** Optional help link, usually to a Help Center article */
   help?: {
     label: string
     href: string
   }
-  /** Optional separator */
+
+  /** If specified, a separator will be displayed above or below the content */
   separator?: "top" | "bottom"
 }
 
@@ -46,6 +50,7 @@ export const SectionHeader = ({
             <a
               href={help.href}
               target="_blank"
+              rel="noreferrer"
               className={cn(
                 "flex items-center gap-1 rounded-sm bg-f1-background-secondary px-2 py-0.5 text-base font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary-hover [&>svg]:text-f1-foreground-secondary",
                 focusRing()
