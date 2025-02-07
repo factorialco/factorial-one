@@ -35,52 +35,29 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
   function scrollNext() {
     const container = scrollContainerRef.current
     if (!container) return
-    const itemOffsetsRef = Array.from(container.children).map(
-      (child) => (child as HTMLElement).offsetLeft
-    )
 
-    const { scrollLeft } = container
-    const offsets = itemOffsetsRef
-
-    let nextOffset = offsets.find(
-      (o) => o > scrollLeft + SPACE_FOR_WIDGET_SHADOW + GAP
-    )
-    if (!nextOffset) {
-      nextOffset = container.scrollWidth
-    } else {
-      nextOffset = nextOffset - SPACE_FOR_WIDGET_SHADOW - GAP
-    }
-    container.scrollTo({ left: nextOffset, behavior: "smooth" })
+    container.scrollBy({
+      left: container.clientWidth,
+      behavior: "smooth",
+    })
   }
 
   function scrollPrev() {
     const container = scrollContainerRef.current
     if (!container) return
 
-    const itemOffsetsRef = Array.from(container.children).map(
-      (child) => (child as HTMLElement).offsetLeft
-    )
-
-    const { scrollLeft } = container
-    const offsets = [...itemOffsetsRef].reverse()
-
-    let prevOffset = offsets.find((o) => o < scrollLeft)
-    if (!prevOffset) {
-      prevOffset = 0
-    } else {
-      prevOffset = Math.max(0, prevOffset - SPACE_FOR_WIDGET_SHADOW - GAP)
-    }
-
-    container.scrollTo({ left: prevOffset, behavior: "smooth" })
+    container.scrollBy({
+      left: -container.clientWidth,
+      behavior: "smooth",
+    })
   }
 
   const updateScrollState = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } =
-        scrollContainerRef.current
-      setCanScrollPrev(scrollLeft > 0)
-      setCanScrollNext(scrollLeft + clientWidth < scrollWidth)
-    }
+    if (!scrollContainerRef.current) return
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
+
+    setCanScrollPrev(scrollLeft > SPACE_FOR_WIDGET_SHADOW + GAP)
+    setCanScrollNext(scrollLeft + clientWidth < scrollWidth)
   }
 
   let maskImageStyle = ""
@@ -108,6 +85,7 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
           width: `calc(100% + ${SPACE_FOR_WIDGET_SHADOW * 2}px)`,
           maskImage: maskImageStyle,
           WebkitMaskImage: maskImageStyle,
+          scrollSnapType: "x mandatory",
         }}
       >
         {Array.isArray(children)
@@ -115,7 +93,11 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
               <div
                 key={index}
                 className="flex-shrink-0"
-                style={{ scrollSnapAlign: "start" }}
+                style={{
+                  scrollSnapAlign: "start",
+                  scrollSnapStop: "always",
+                  scrollMarginLeft: SPACE_FOR_WIDGET_SHADOW + GAP + "px",
+                }}
               >
                 {child}
               </div>
@@ -123,7 +105,11 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
           : children && (
               <div
                 className="flex-shrink-0"
-                style={{ scrollSnapAlign: "start" }}
+                style={{
+                  scrollSnapAlign: "start",
+                  scrollSnapStop: "always",
+                  scrollMarginLeft: SPACE_FOR_WIDGET_SHADOW + GAP + "px",
+                }}
               >
                 {children}
               </div>
