@@ -68,7 +68,7 @@ export const Default: Story = {
     },
 
     primaryAction: {
-      label: "publish",
+      label: "Publish",
       icon: Icon.ArrowUp,
       onClick: fn(),
     },
