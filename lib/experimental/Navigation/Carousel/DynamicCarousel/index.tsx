@@ -138,7 +138,7 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
           round
           className={cn(
             "absolute opacity-100 transition-all",
-            "-left-4 top-1/2 -translate-y-1/2"
+            "-left-4 top-1/2 -translate-y-1/2 rounded-lg"
           )}
           onClick={scrollPrev}
         >
@@ -154,7 +154,7 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
           round
           className={cn(
             "absolute opacity-100 transition-all",
-            "-right-4 top-1/2 -translate-y-1/2"
+            "-right-4 top-1/2 -translate-y-1/2 rounded-lg"
           )}
           onClick={scrollNext}
         >
