@@ -12,7 +12,7 @@ import { fn } from "@storybook/test"
 import { ResourceHeader } from "./index"
 
 const meta: Meta<typeof ResourceHeader> = {
-  title: "ResourceHeader/ResourceHeader",
+  title: "ResourceHeader",
   component: ResourceHeader,
   tags: ["stable"],
   parameters: {
