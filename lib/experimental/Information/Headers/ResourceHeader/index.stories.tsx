@@ -58,8 +58,8 @@ export const Default: Story = {
       "Seeking an experienced product designer to lead design initiatives",
     status: {
       label: "Status",
-      text: "Published",
-      variant: "positive",
+      text: "Draft",
+      variant: "neutral",
       actions: [
         {
           label: "Edit",
@@ -68,19 +68,20 @@ export const Default: Story = {
         },
       ],
     },
+
+    primaryAction: {
+      label: "Publish",
+      icon: Icon.ArrowUp,
+      onClick: fn(),
+    },
     secondaryActions: [
       {
         label: "Edit",
         icon: Icon.Pencil,
         onClick: fn(),
       },
-      {
-        label: "Unlist",
-        icon: Icon.Delete,
-        variant: "critical",
-        onClick: fn(),
-      },
     ],
+
     otherActions: [
       {
         label: "Archive",
@@ -92,7 +93,15 @@ export const Default: Story = {
         icon: Icon.LayersFront,
         onClick: fn(),
       },
+      "separator",
+      {
+        label: "Unlist",
+        icon: Icon.Delete,
+        critical: true,
+        onClick: fn(),
+      },
     ],
+
     metadata: [
       {
         label: "Location",
