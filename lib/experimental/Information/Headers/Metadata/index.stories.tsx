@@ -43,7 +43,7 @@ export const Default: Story = {
       {
         label: "Type",
         value: {
-          type: "List",
+          type: "list",
           variant: "person",
           avatars: [
             {

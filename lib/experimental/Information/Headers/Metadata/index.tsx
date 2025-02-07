@@ -19,7 +19,7 @@ type MetadataItemValue =
   | { type: "text"; content: string }
   | { type: "avatar"; variant: AvatarVariant; text: string }
   | { type: "status"; label: string; variant: StatusVariant }
-  | { type: "List"; variant: AvatarVariant["type"]; avatars: AvatarVariant[] }
+  | { type: "list"; variant: AvatarVariant["type"]; avatars: AvatarVariant[] }
 
 type MetadataAction = {
   icon: IconType
@@ -55,7 +55,7 @@ function MetadataValue({ item }: { item: MetadataItem }) {
       )
     case "status":
       return <StatusTag text={item.value.label} variant={item.value.variant} />
-    case "List":
+    case "list":
       return (
         <AvatarList
           avatars={item.value.avatars}
