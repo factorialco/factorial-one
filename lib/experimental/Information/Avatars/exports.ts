@@ -1,5 +1,6 @@
 export * from "./AlertAvatar"
 export * from "./Avatar"
+export * from "./AvatarList"
 export * from "./CompanyAvatar"
 export * from "./DateAvatar"
 export * from "./PersonAvatar"

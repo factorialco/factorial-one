@@ -15,7 +15,7 @@ import {
 } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { Fragment, memo } from "react"
-import { Metadata, MetadataAction, MetadataItem } from "../Metadata"
+import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
 
 interface BaseHeaderProps {
   title: string
@@ -31,7 +31,7 @@ interface BaseHeaderProps {
     variant: StatusVariant
     actions?: MetadataAction[]
   }
-  metadata?: MetadataItem[]
+  metadata?: MetadataProps["items"]
 }
 
 const isVisible = (action: { isVisible?: boolean }) =>
@@ -65,21 +65,19 @@ export function BaseHeader({
   status,
   metadata = [],
 }: BaseHeaderProps) {
-  const allMetadata = status
-    ? [
-        {
-          label: status.label,
-          value: {
-            type: "status" as const,
-            label: status.text,
-            variant: status.variant,
-          },
-          actions: status.actions,
-          hideLabel: true,
-        },
-        ...metadata,
-      ]
-    : metadata
+  const allMetadata: BaseHeaderProps["metadata"] = [
+    status && {
+      label: status.label,
+      value: {
+        type: "status" as const,
+        label: status.text,
+        variant: status.variant,
+      },
+      actions: status.actions,
+      hideLabel: true,
+    },
+    ...metadata,
+  ]
 
   const visibleSecondaryActions = secondaryActions.filter(isVisible)
   const visibleOtherActions = otherActions.filter(isVisible)
