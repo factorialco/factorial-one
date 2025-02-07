@@ -63,7 +63,6 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
 
     const { scrollLeft } = container
     const offsets = [...itemOffsetsRef].reverse()
-    console.log("scrollLeft", scrollLeft)
 
     let prevOffset = offsets.find((o) => o < scrollLeft)
     if (!prevOffset) {
