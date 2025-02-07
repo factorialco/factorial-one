@@ -6,9 +6,10 @@
   #storybook-docs h5:not(.docs-story *),
   #storybook-docs h6:not(.docs-story *) {
     font-weight: 500 !important;
-    color: #0d1625 !important;
+    color: #211f26 !important;
     line-height: 1.25 !important;
     letter-spacing: 0 !important;
+    font-family: "Inter", sans-serif !important;
   }
 
   #storybook-docs h1:not(.docs-story *) {
@@ -30,20 +31,35 @@
   #storybook-docs h3:not(.docs-story *) {
     font-size: 24px !important;
     margin-bottom: 12px !important;
-    margin-top: 16px !important;
+    margin-top: 20px !important;
     border-bottom: none !important;
+  }
+
+  #storybook-docs
+    h3:not(.docs-story *)
+    + p:not(.docs-story *)
+    ~ h3:not(.docs-story *) {
+    margin-bottom: 4px !important;
   }
 
   #storybook-docs h4:not(.docs-story *) {
     font-size: 20px !important;
     margin-bottom: 12px !important;
-    margin-top: 16px !important;
+    margin-top: 20px !important;
     border-bottom: none !important;
   }
 
-  #storybook-docs p:not(.docs-story *) {
+  #storybook-docs h3:not(.docs-story *) + h4:not(.docs-story *) {
+    margin-top: 8px !important;
+  }
+
+  #storybook-docs p:not(.docs-story *, .docblock-argstable-body *) {
     font-size: 16px;
     line-height: 1.5;
+    color: #65636d !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+    font-family: "Inter", sans-serif !important;
   }
 
   #storybook-docs ul:not(.docs-story *, .toc-list) {
@@ -51,9 +67,16 @@
     margin-bottom: 8px !important;
   }
 
+  #storybook-docs ol:not(.docs-story *) + h3:not(.docs-story *) {
+    margin-top: 32px !important;
+  }
+
   #storybook-docs li:not(.docs-story *) {
     font-size: 16px;
     line-height: 1.5;
+    color: #65636d !important;
+    font-weight: 400 !important;
+    font-family: "Inter", sans-serif !important;
   }
 
   #storybook-docs a.sbdocs-a:not(.docs-story *) {
@@ -183,7 +206,7 @@
   }
 
   body.dark #storybook-docs > div {
-    background: transparent !important;
+    background: #0d1625 !important;
   }
 
   body.dark .toc-list {
