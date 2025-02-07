@@ -19,9 +19,15 @@ import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
 
 interface BaseHeaderProps {
   title: string
-  avatar?: AvatarVariant
+  avatar?:
+    | {
+        type: "generic"
+        name: string
+        src?: string
+      }
+    | AvatarVariant
+
   description?: string
-  eyebrow?: React.ReactNode
   primaryAction?: PrimaryAction
   secondaryActions?: SecondaryAction[]
   otherActions?: (DropdownItem & { isVisible?: boolean })[]
@@ -58,7 +64,6 @@ export function BaseHeader({
   title,
   avatar,
   description,
-  eyebrow,
   primaryAction,
   secondaryActions = [],
   otherActions = [],
@@ -91,15 +96,17 @@ export function BaseHeader({
         <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-center">
           {avatar && (
             <div className="flex items-start">
-              <Avatar avatar={avatar} size="large" />
+              <Avatar
+                avatar={{
+                  ...(avatar.type === "generic"
+                    ? { ...avatar, type: "company" }
+                    : avatar),
+                }}
+                size="large"
+              />
             </div>
           )}
           <div className="flex flex-col gap-1">
-            {eyebrow && (
-              <div className="text-lg text-f1-foreground-secondary">
-                {eyebrow}
-              </div>
-            )}
             <span className="text-xl font-semibold text-f1-foreground">
               {title}
             </span>
