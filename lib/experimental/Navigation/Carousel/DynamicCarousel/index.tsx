@@ -56,7 +56,7 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
     if (!scrollContainerRef.current) return
     const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
 
-    setCanScrollPrev(scrollLeft > SPACE_FOR_WIDGET_SHADOW + GAP)
+    setCanScrollPrev(scrollLeft > 0)
     setCanScrollNext(scrollLeft + clientWidth < scrollWidth)
   }
 
