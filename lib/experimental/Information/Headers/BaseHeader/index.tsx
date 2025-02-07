@@ -19,7 +19,14 @@ import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
 
 interface BaseHeaderProps {
   title: string
-  avatar?: AvatarVariant
+  avatar?:
+    | {
+        type: "generic"
+        name: string
+        src?: string
+      }
+    | AvatarVariant
+
   description?: string
   primaryAction?: PrimaryAction
   secondaryActions?: SecondaryAction[]
@@ -89,7 +96,14 @@ export function BaseHeader({
         <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-center">
           {avatar && (
             <div className="flex items-start">
-              <Avatar avatar={avatar} size="large" />
+              <Avatar
+                avatar={{
+                  ...(avatar.type === "generic"
+                    ? { ...avatar, type: "company" }
+                    : avatar),
+                }}
+                size="large"
+              />
             </div>
           )}
           <div className="flex flex-col gap-1">
