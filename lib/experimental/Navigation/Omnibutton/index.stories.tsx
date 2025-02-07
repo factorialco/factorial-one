@@ -14,7 +14,7 @@ const meta: Meta<typeof OmniButton> = {
       </div>
     ),
   ],
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "deprecated"],
 }
 
 export default meta

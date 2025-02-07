@@ -14,10 +14,11 @@ addons.setConfig({
     {
       tags: "alpha",
       badge: {
-        text: "Alpha",
-        bgColor: "#FEF2EA",
-        fgColor: "#AC5820",
-        borderColor: "#FFD19A",
+        text: "🚧",
+        bgColor: "transparent",
+        fgColor: "#000000",
+        borderColor: "transparent",
+        tooltip: "Experimental",
       },
       display: {
         sidebar: ["component", "docs", "group"],
@@ -27,13 +28,28 @@ addons.setConfig({
     {
       tags: "stable",
       badge: {
-        text: "Stable",
-        bgColor: "#E7F7F2",
-        fgColor: "#0B7D58",
-        borderColor: "#D6F1DF",
+        text: "✅",
+        bgColor: "transparent",
+        fgColor: "#000000",
+        borderColor: "transparent",
+        tooltip: "Stable",
       },
       display: {
         sidebar: false,
+        toolbar: true,
+      },
+    },
+    {
+      tags: "deprecated",
+      badge: {
+        text: "⛔",
+        bgColor: "transparent",
+        fgColor: "#000000",
+        borderColor: "transparent",
+        tooltip: "Deprecated",
+      },
+      display: {
+        sidebar: ["component", "docs", "group"],
         toolbar: true,
       },
     },
