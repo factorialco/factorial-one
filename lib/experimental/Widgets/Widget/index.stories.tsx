@@ -6,11 +6,12 @@ import { ComponentProps } from "react"
 import { Widget } from "."
 
 const meta: Meta = {
+  title: "Widgets/Widget",
   component: Widget,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   decorators: [
     (Story) => (
       <div className="w-full min-w-72 max-w-96">

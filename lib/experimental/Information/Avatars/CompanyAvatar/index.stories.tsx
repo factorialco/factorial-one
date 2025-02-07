@@ -5,7 +5,8 @@ import { CompanyAvatar } from "."
 
 const meta: Meta<typeof CompanyAvatar> = {
   component: CompanyAvatar,
-  tags: ["autodocs"],
+  title: "Avatars/CompanyAvatar",
+  tags: ["autodocs", "alpha"],
   argTypes: {
     size: {
       control: "select",

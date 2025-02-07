@@ -4,9 +4,10 @@ import { TeamTag } from "."
 
 const meta: Meta = {
   component: TeamTag,
+  title: "Tag/TeamTag",
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     teamName: "Team Foundations",

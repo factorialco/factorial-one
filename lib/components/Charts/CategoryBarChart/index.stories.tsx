@@ -2,6 +2,7 @@ import type { Meta } from "@storybook/react"
 import { CategoryBarChart } from "."
 
 const meta = {
+  title: "Charts/CategoryBarChart",
   component: CategoryBarChart,
   tags: ["autodocs"],
   args: {

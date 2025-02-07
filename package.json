@@ -142,6 +142,7 @@
     "prettier-plugin-tailwindcss": "^0.6.10",
     "react-syntax-highlighter": "^15.6.1",
     "storybook": "8.5.2",
+    "storybook-addon-tag-badges": "^1.4.0",
     "storybook-dark-mode": "^4.0.2",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",

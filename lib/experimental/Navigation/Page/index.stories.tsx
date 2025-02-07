@@ -16,8 +16,9 @@ import { ComponentProps } from "react"
 type TabsProps = ComponentProps<typeof Tabs>
 
 const meta: Meta<typeof Page> = {
+  title: "Page",
   component: Page,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "fullscreen",
   },

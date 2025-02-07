@@ -6,11 +6,12 @@ import { LineChartWidget } from "."
 import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
 
 const meta = {
+  title: "Widgets/Charts/LineChartWidget",
   component: LineChartWidget,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     ...containerStoryArgs,
     header: {

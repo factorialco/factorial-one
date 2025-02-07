@@ -6,11 +6,12 @@ import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
+  title: "ScrollArea",
   component: ScrollArea,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {},
 } satisfies Meta<typeof ScrollArea>
 

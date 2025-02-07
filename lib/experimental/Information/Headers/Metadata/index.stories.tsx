@@ -4,6 +4,7 @@ import { fn } from "@storybook/test"
 import { Metadata } from "."
 
 const meta: Meta<typeof Metadata> = {
+  title: "ResourceHeader/Metadata",
   component: Metadata,
   parameters: {
     layout: "padded",

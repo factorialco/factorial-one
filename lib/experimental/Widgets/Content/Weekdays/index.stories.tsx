@@ -3,10 +3,11 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Weekdays } from "."
 
 const meta: Meta = {
+  title: "Widgets/Content/Weekdays",
   component: Weekdays,
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     activatedDays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],

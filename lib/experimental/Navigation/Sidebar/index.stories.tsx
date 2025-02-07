@@ -11,8 +11,9 @@ import { User } from "./User"
 import * as UserStories from "./User/index.stories"
 
 const meta: Meta<typeof Sidebar> = {
+  title: "Sidebar",
   component: Sidebar,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
   },

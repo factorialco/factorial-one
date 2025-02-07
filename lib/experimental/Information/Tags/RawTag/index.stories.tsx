@@ -5,9 +5,10 @@ import { RawTag } from "."
 
 const meta: Meta = {
   component: RawTag,
+  title: "Tag/RawTag",
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     text: "Label",

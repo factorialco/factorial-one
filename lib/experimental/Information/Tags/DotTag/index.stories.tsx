@@ -4,9 +4,10 @@ import { DotTag } from "."
 
 const meta: Meta = {
   component: DotTag,
+  title: "Tag/DotTag",
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     text: "Label",

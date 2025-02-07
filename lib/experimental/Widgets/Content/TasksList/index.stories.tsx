@@ -3,8 +3,9 @@ import { fn } from "@storybook/test"
 import { TasksList, TasksListProps } from "./index"
 
 const meta: Meta<TasksListProps> = {
+  title: "TasksList",
   component: TasksList,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
   },

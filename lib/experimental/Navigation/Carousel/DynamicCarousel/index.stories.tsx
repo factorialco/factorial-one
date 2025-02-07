@@ -6,7 +6,9 @@ import { Meta, StoryObj } from "@storybook/react"
 import { DynamicCarousel } from "."
 
 const meta: Meta<typeof DynamicCarousel> = {
+  title: "Carousel/DynamicCarousel",
   component: DynamicCarousel,
+  tags: ["autodocs", "alpha"],
 }
 
 export default meta

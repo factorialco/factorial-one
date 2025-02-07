@@ -4,6 +4,7 @@ import { LogoAvatar } from "@/icons/app"
 import { Dialog } from "."
 
 const meta = {
+  title: "Dialog",
   component: Dialog,
   parameters: {
     layout: "fullscreen",
@@ -18,7 +19,7 @@ const meta = {
     children: <span>Dialog Content</span>,
     open: true,
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
 } satisfies Meta<typeof Dialog>
 
 export default meta

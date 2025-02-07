@@ -4,8 +4,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Dropdown } from "."
 
 const meta: Meta<typeof Dropdown> = {
+  title: "Dropdown",
   component: Dropdown,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
 }
 
 export default meta

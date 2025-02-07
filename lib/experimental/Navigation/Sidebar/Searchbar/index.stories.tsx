@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { SearchBar } from "."
 
 const meta = {
+  title: "Sidebar/SearchBar",
   component: SearchBar,
   parameters: {
     layout: "centered",
@@ -14,7 +15,7 @@ const meta = {
       </div>
     ),
   ],
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
 } satisfies Meta<typeof SearchBar>
 
 export default meta

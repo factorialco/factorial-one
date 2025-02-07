@@ -3,7 +3,8 @@ import { DateAvatar } from "."
 
 const meta: Meta<typeof DateAvatar> = {
   component: DateAvatar,
-  tags: ["autodocs"],
+  title: "Avatars/DateAvatar",
+  tags: ["autodocs", "alpha"],
 }
 
 export default meta

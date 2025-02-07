@@ -7,6 +7,7 @@ import { Calendar } from "."
 
 const meta = {
   component: Calendar,
+  title: "Calendar",
   parameters: {
     layout: "centered",
     a11y: {
@@ -15,7 +16,7 @@ const meta = {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     defaultMonth: new Date(2024, 10, 15),
   },

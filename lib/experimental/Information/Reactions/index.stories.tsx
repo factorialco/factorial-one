@@ -3,7 +3,8 @@ import { Reactions } from "."
 
 const meta: Meta<typeof Reactions> = {
   component: Reactions,
-  tags: ["autodocs"],
+  title: "Reactions",
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "centered",
   },

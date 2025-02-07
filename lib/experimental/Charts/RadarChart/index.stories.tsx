@@ -12,8 +12,9 @@ const dataConfig = {
 }
 
 const meta: Meta<typeof RadarChart<typeof dataConfig>> = {
+  title: "Charts/RadarChart",
   component: RadarChart,
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     dataConfig,
     data: [

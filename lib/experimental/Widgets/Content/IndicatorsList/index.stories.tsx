@@ -20,11 +20,12 @@ const taskCategories = [
 ]
 
 const meta = {
+  title: "Widgets/Content/IndicatorsList",
   component: IndicatorsList,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   args: {
     items: taskCategories,
   },

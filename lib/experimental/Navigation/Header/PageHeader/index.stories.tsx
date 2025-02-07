@@ -3,8 +3,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { PageHeader } from "."
 
 const meta = {
-  title: "Navigation/Header/PageHeader",
+  title: "Header/PageHeader",
   component: PageHeader,
+  tags: ["autodocs", "alpha"],
   parameters: {
     layout: "fullscreen",
     a11y: {
