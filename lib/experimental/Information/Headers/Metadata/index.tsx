@@ -99,7 +99,12 @@ function MetadataValue({
           )}
         </div>
       ) : (
-        <div className="-mt-0.5 flex flex-col gap-1 [&>div]:w-fit">
+        <div
+          className={cn(
+            "flex flex-col gap-1 [&>div]:w-fit",
+            item.value.tags.length > 1 && "-mt-[3px]"
+          )}
+        >
           {item.value.tags.map((tag) => (
             <RawTag key={tag} text={tag} />
           ))}
@@ -111,7 +116,8 @@ function MetadataValue({
 function MetadataItem({ item }: { item: MetadataItem }) {
   const [isActive, setIsActive] = useState(false)
   const isList =
-    item.value.type === "data-list" || item.value.type === "tag-list"
+    (item.value.type === "data-list" && item.value.data.length > 1) ||
+    (item.value.type === "tag-list" && item.value.tags.length > 1)
   const isAction = item.actions?.length
   const hasHover = isAction || isList
 

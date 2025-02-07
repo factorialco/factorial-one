@@ -70,7 +70,21 @@ export const Default: Story = {
         label: "Type",
         value: {
           type: "tag-list",
-          tags: ["Manager", "Direct report", "Self review", "Peer"],
+          tags: ["Tasks"],
+        },
+        actions: [
+          {
+            label: "Copy",
+            icon: Icon.LayersFront,
+            onClick: fn(),
+          },
+        ],
+      },
+      {
+        label: "Type",
+        value: {
+          type: "tag-list",
+          tags: ["Projects", "Recruitment", "Tasks"],
         },
       },
     ],
