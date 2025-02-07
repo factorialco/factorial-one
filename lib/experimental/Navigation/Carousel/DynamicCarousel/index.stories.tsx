@@ -17,12 +17,15 @@ const randomClasses = ["h-full", "h-64", "h-32", "w-32", "w-full", "w-64"]
 
 const SLIDES_RANDOM = [
   <BarChartWidget key="widget" chart={BarChartStory.args as BarChartProps} />,
-  <BarChartWidget key="widget" chart={BarChartStory.args as BarChartProps} />,
+  <BarChartWidget key="widget2" chart={BarChartStory.args as BarChartProps} />,
   ...Array.from({ length: 6 }, (_, i) => {
     const randomHeight = randomClasses[Math.floor(i / 2)]
     const randomWidth = randomClasses[Math.floor(i / 2) + 3]
     return (
-      <Placeholder key={i + 1} className={`${randomHeight} ${randomWidth}`}>
+      <Placeholder
+        key={`widget${i + 2}`}
+        className={`${randomHeight} ${randomWidth}`}
+      >
         Slide {i + 1} ({randomHeight} {randomWidth})
       </Placeholder>
     )
