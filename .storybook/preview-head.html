@@ -1,11 +1,15 @@
 <style>
   #storybook-docs h1:not(.docs-story *),
   #storybook-docs h2:not(.docs-story *),
-  #storybook-docs h3:not(.docs-story *) {
+  #storybook-docs h3:not(.docs-story *),
+  #storybook-docs h4:not(.docs-story *),
+  #storybook-docs h5:not(.docs-story *),
+  #storybook-docs h6:not(.docs-story *) {
     font-weight: 500 !important;
-    color: #0d1625 !important;
+    color: #211f26 !important;
     line-height: 1.25 !important;
     letter-spacing: 0 !important;
+    font-family: "Inter", sans-serif !important;
   }
 
   #storybook-docs h1:not(.docs-story *) {
@@ -14,10 +18,65 @@
   }
 
   #storybook-docs h2:not(.docs-story *) {
-    font-size: 26px !important;
+    font-size: 32px !important;
     margin-bottom: 12px !important;
     margin-top: 48px !important;
     border-bottom: none !important;
+  }
+
+  #storybook-docs h1:not(.docs-story *) + h2:not(.docs-story *) {
+    margin-top: 24px !important;
+  }
+
+  #storybook-docs h3:not(.docs-story *) {
+    font-size: 24px !important;
+    margin-bottom: 12px !important;
+    margin-top: 20px !important;
+    border-bottom: none !important;
+  }
+
+  #storybook-docs
+    h3:not(.docs-story *)
+    + p:not(.docs-story *)
+    ~ h3:not(.docs-story *) {
+    margin-bottom: 4px !important;
+  }
+
+  #storybook-docs h4:not(.docs-story *) {
+    font-size: 20px !important;
+    margin-bottom: 12px !important;
+    margin-top: 20px !important;
+    border-bottom: none !important;
+  }
+
+  #storybook-docs h3:not(.docs-story *) + h4:not(.docs-story *) {
+    margin-top: 8px !important;
+  }
+
+  #storybook-docs p:not(.docs-story *, .docblock-argstable-body *) {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #65636d !important;
+    font-weight: 400 !important;
+    margin: 0 !important;
+    font-family: "Inter", sans-serif !important;
+  }
+
+  #storybook-docs ul:not(.docs-story *, .toc-list) {
+    margin-top: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  #storybook-docs ol:not(.docs-story *) + h3:not(.docs-story *) {
+    margin-top: 32px !important;
+  }
+
+  #storybook-docs li:not(.docs-story *) {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #65636d !important;
+    font-weight: 400 !important;
+    font-family: "Inter", sans-serif !important;
   }
 
   #storybook-docs a.sbdocs-a:not(.docs-story *) {
@@ -37,6 +96,10 @@
     padding: 8px !important;
     border-radius: 12px !important;
     box-shadow: 0px 2px 20px rgba(13, 22, 37, 0.04) !important;
+  }
+
+  .sbdocs-wrapper {
+    padding-top: 32px !important;
   }
 
   .sbdocs-preview:not(.docs-story *) {
@@ -63,24 +126,33 @@
     background: #fff;
   }
 
-  .sb-unstyled tbody>tr:nth-child(even)>td:not(.docs-story td),
-  .docblock-argstable-body>tr:nth-child(even)>td {
+  .sb-unstyled tbody > tr:nth-child(even) > td:not(.docs-story td),
+  .docblock-argstable-body > tr:nth-child(even) > td {
     background: #fafbfc !important;
   }
 
-  .sb-unstyled tbody>tr:not(:last-child)>td:not(.docs-story td),
-  .docblock-argstable-body>tr:not(:last-child)>td {
+  .sb-unstyled tbody > tr:not(:last-child) > td:not(.docs-story td),
+  .docblock-argstable-body > tr:not(:last-child) > td {
     border-bottom: #dce0e5 1px solid !important;
   }
 
-  .sb-unstyled thead>tr>th:not(.docs-story th) {
+  .sb-unstyled thead > tr > th:not(.docs-story th) {
     padding: 10px 20px;
     color: #647084;
     text-align: left;
   }
 
-  .sb-unstyled tbody>tr>td:not(.docs-story td) {
+  .sb-unstyled tbody > tr > td:not(.docs-story td) {
     padding: 16px 20px;
+  }
+
+  .toc-wrapper {
+    padding-right: 16px !important;
+    font-size: 12px !important;
+  }
+
+  .toc-list li {
+    font-size: 12px !important;
   }
 
   input[type="radio"] {
@@ -123,9 +195,9 @@
     color: #fff !important;
   }
 
-  body.dark #storybook-docs h1>a,
-  body.dark #storybook-docs h2>a,
-  body.dark #storybook-docs h3>a {
+  body.dark #storybook-docs h1 > a,
+  body.dark #storybook-docs h2 > a,
+  body.dark #storybook-docs h3 > a {
     float: left;
     line-height: inherit;
     padding-right: 10px;
@@ -133,8 +205,8 @@
     color: #647084;
   }
 
-  body.dark #storybook-docs>div {
-    background: transparent !important;
+  body.dark #storybook-docs > div {
+    background: #0d1625 !important;
   }
 
   body.dark .toc-list {
@@ -151,7 +223,7 @@
     border-left-color: #647084 !important;
   }
 
-  body.dark .toc-list .toc-list-item>a.is-active-link {
+  body.dark .toc-list .toc-list-item > a.is-active-link {
     color: #fff !important;
   }
 
@@ -166,8 +238,8 @@
     border: #161f30 4px solid;
   }
 
-  body.dark .sb-unstyled thead>tr>th,
-  body.dark .docblock-argstable-head>tr>th>span {
+  body.dark .sb-unstyled thead > tr > th,
+  body.dark .docblock-argstable-head > tr > th > span {
     color: #a1abbd !important;
   }
 
@@ -177,13 +249,13 @@
     background: #0d1625;
   }
 
-  body.dark .sb-unstyled tbody>tr:nth-child(even)>td,
-  body.dark .docblock-argstable-body>tr:nth-child(even)>td {
+  body.dark .sb-unstyled tbody > tr:nth-child(even) > td,
+  body.dark .docblock-argstable-body > tr:nth-child(even) > td {
     background: #111a2a !important;
   }
 
-  body.dark .sb-unstyled tbody>tr:not(:last-child)>td,
-  body.dark .docblock-argstable-body>tr:not(:last-child)>td {
+  body.dark .sb-unstyled tbody > tr:not(:last-child) > td,
+  body.dark .docblock-argstable-body > tr:not(:last-child) > td {
     border-bottom: #172031 1px solid !important;
   }
 
