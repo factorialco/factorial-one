@@ -8,10 +8,11 @@ import { teamsWithEmployees } from "../groups-avatar-name.factory"
 
 const meta: Meta = {
   component: AvatarNameListItem,
+  title: "AvatarNameSelector/AvatarNameListItem",
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "alpha"],
   decorators: [
     (Story) => (
       <div className="w-full min-w-72 max-w-96">
