@@ -146,6 +146,7 @@ const preview: Preview = {
               "spacing",
               "borders",
               "shadows",
+              "icons",
             ]
             const aFoundationIndex = foundationOrder.indexOf(aId.split("/")[1])
             const bFoundationIndex = foundationOrder.indexOf(bId.split("/")[1])
