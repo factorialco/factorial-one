@@ -146,6 +146,11 @@ const _BarChart = <K extends ChartConfig>(
                       ? Object.values(values)?.[0]
                       : undefined
 
+                  const normalizedValue =
+                    value !== undefined && yAxis.tickFormatter
+                      ? yAxis.tickFormatter(`${value}`)
+                      : value.toLocaleString()
+
                   return (
                     <g transform={`translate(${x},${y})`}>
                       <text
@@ -165,7 +170,7 @@ const _BarChart = <K extends ChartConfig>(
                           textAnchor="middle"
                           className="!fill-f1-foreground text-sm font-medium"
                         >
-                          {value}
+                          {normalizedValue}
                         </text>
                       )}
                     </g>
