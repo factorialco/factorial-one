@@ -4,7 +4,7 @@ import { Textarea } from "."
 const meta = {
   title: "TextArea",
   component: Textarea,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   args: {
     disabled: false,
     placeholder: "Placeholder text here",

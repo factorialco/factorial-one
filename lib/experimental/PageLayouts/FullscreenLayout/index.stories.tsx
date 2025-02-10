@@ -7,7 +7,7 @@ import { FullscreenLayout } from "."
 const meta = {
   title: "Layout/FullscreenLayout",
   component: FullscreenLayout,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   decorators: [PageDecorator],
   args: {
     children: <Placeholder>Content</Placeholder>,

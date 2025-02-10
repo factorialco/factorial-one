@@ -39,7 +39,7 @@ const meta: Meta = {
     ],
     disabled: false,
   },
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof Select>
 
 export default meta

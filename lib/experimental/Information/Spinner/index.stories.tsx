@@ -7,7 +7,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof Spinner>
 
 export default meta

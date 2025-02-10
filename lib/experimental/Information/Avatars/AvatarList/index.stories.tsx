@@ -4,7 +4,7 @@ import { AvatarList } from "./index"
 const meta: Meta<typeof AvatarList> = {
   component: AvatarList,
   title: "Avatars/AvatarList",
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   args: {
     size: "medium",
     type: "person",

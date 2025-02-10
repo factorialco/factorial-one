@@ -8,7 +8,7 @@ import Breadcrumbs, { BreadcrumbItemType } from "./index"
 const meta: Meta<typeof Breadcrumbs> = {
   title: "Header/Breadcrumbs",
   component: Breadcrumbs,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta

@@ -7,7 +7,7 @@ import { StandardLayout } from "."
 const meta = {
   title: "Layout/StandardLayout",
   component: StandardLayout,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   decorators: [PageDecorator],
   args: {
     children: (

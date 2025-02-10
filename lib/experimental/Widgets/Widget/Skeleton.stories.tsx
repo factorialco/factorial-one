@@ -5,7 +5,7 @@ import { Widget } from "."
 const meta: Meta<ComponentProps<typeof Widget.Skeleton>> = {
   title: "Widgets/Widget/Skeleton",
   component: Widget.Skeleton,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
   },

@@ -7,7 +7,7 @@ import { PersonListItem } from "./index"
 const meta = {
   title: "PersonListItem",
   component: PersonListItem,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof PersonListItem>
 
 export default meta

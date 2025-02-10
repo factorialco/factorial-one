@@ -12,7 +12,7 @@ addons.setConfig({
   },
   tagBadges: [
     {
-      tags: "alpha",
+      tags: "experimental",
       badge: {
         text: "🚧",
         bgColor: "transparent",

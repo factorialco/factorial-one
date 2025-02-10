@@ -12,7 +12,7 @@ const children: React.ReactNode = (
 const meta = {
   title: "ToggleGroup",
   component: ToggleGroup,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   args: {
     type: "multiple",
     children,
