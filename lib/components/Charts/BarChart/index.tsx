@@ -45,6 +45,7 @@ export type BarChartProps<K extends ChartConfig = ChartConfig> =
     label?: boolean
     legend?: boolean
     showValueUnderLabel?: boolean
+    highlightLastBar?: boolean
     onClick?: (data: ChartDataPoint<K>) => void
   }
 
@@ -59,12 +60,25 @@ const _BarChart = <K extends ChartConfig>(
     aspect,
     legend,
     showValueUnderLabel = false,
+    highlightLastBar = false,
     onClick,
   }: BarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const bars = Object.keys(dataConfig) as (keyof ChartConfig)[]
-  const preparedData = prepareData(data)
+  const preparedData = prepareData(data).map((item, index, array) => {
+    if (highlightLastBar && bars.length === 1 && !dataConfig[bars[0]]?.color) {
+      return {
+        ...item,
+        fill:
+          index === array.length - 1
+            ? autoColor(0)
+            : `hsl(${autoColor(0, false)} / 0.5)`,
+      }
+    }
+
+    return item
+  })
   const maxLabelWidth = Math.max(
     ...preparedData.flatMap((el) =>
       bars.map((key) =>
@@ -171,7 +185,11 @@ const _BarChart = <K extends ChartConfig>(
                 ? "stack"
                 : undefined
             }
-            fill={dataConfig[key].color || autoColor(index)}
+            fill={
+              highlightLastBar
+                ? (((data: { fill: string }) => data.fill) as unknown as string)
+                : (dataConfig[key].color ?? autoColor(index))
+            }
             radius={type === "stacked-by-sign" ? [4, 4, 0, 0] : 4}
             maxBarSize={32}
           >
