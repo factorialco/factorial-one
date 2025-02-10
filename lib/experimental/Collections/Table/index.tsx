@@ -1,3 +1,4 @@
+import { Link } from "@/components/Actions/Link"
 import { Skeleton } from "@/ui/skeleton"
 import {
   Table,
@@ -11,14 +12,18 @@ import type { FiltersDefinition } from "../Filters/types"
 import { CollectionProps, CollectionSchema, SourceData } from "../types"
 import { useData } from "../useData"
 
-export type TableColumnDefinition<T> = {
+export type TableColumnDefinition<T extends Record<string, unknown>> = {
   label: string
-  key: keyof T
+  key: Extract<keyof T, string>
   render?: (item: T) => string
 }
 
-export type TableVisualizationOptions<T> = {
+export type TableVisualizationOptions<T extends Record<string, unknown>> = {
   columns: ReadonlyArray<TableColumnDefinition<T>>
+  link?: (item: T) => {
+    label: string
+    url: string
+  }
 }
 
 export const TableCollection = <
@@ -27,6 +32,7 @@ export const TableCollection = <
 >({
   columns,
   source,
+  link,
 }: CollectionProps<
   Schema,
   Filters,
@@ -34,14 +40,13 @@ export const TableCollection = <
 >) => {
   const { data, isLoading } = useData<Schema, Filters>({ source })
 
-  const renderValue = (
-    item: SourceData<Schema, Filters>,
-    column: TableColumnDefinition<SourceData<Schema, Filters>>
-  ) => {
-    if (column.render) {
-      return column.render(item)
-    }
-    return String(item[column.key])
+  const TableActionCell = ({ item }: { item: SourceData<Schema, Filters> }) => {
+    const linkInfo = link!(item)
+    return (
+      <TableCell key="actions">
+        <Link href={linkInfo.url}>{linkInfo.label}</Link>
+      </TableCell>
+    )
   }
 
   return (
@@ -51,26 +56,29 @@ export const TableCollection = <
           {columns.map((column) => (
             <TableHead key={String(column.key)}>{column.label}</TableHead>
           ))}
+          {link && <TableHead key="actions">Actions</TableHead>}
         </TableRow>
       </TableHeader>
       <TableBody>
         {isLoading
           ? Array.from({ length: 4 }).map((_, i) => (
-              <TableRow key={i}>
+              <TableRow key={`loading-${i}`}>
                 {columns.map((column) => (
                   <TableCell key={String(column.key)}>
                     <Skeleton className="h-4 w-full" />
                   </TableCell>
                 ))}
+                {link && <TableCell key="actions">Actions</TableCell>}
               </TableRow>
             ))
           : data.map((item, index) => (
-              <TableRow key={index}>
+              <TableRow key={`row-${index}`}>
                 {columns.map((column) => (
                   <TableCell key={String(column.key)}>
-                    {renderValue(item, column)}
+                    {column.render?.(item) ?? String(item[column.key])}
                   </TableCell>
                 ))}
+                {link && <TableActionCell item={item} />}
               </TableRow>
             ))}
       </TableBody>

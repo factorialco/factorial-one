@@ -20,8 +20,8 @@ import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
  *
  * @param properties - The schema properties defining the data structure
  * @param filters - Optional filter configurations for the collection
- * @param initialCurrentFilters - Initial state of the filters
- * @param fetchDataFn - Function to fetch data with the current filters
+ * @param currentFilters - Initial state of the filters
+ * @param fetchData - Function to fetch data with the current filters
  *
  * @returns A DataSource object containing:
  * - properties: The schema properties
@@ -94,21 +94,21 @@ export const DataCollection = <
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
         {fields && (
-          <Filters<Filters>
+          <Filters
             definition={fields}
             filters={currentFilters}
             onChange={setCurrentFilters}
           />
         )}
         {visualizations && visualizations.length > 1 && (
-          <VisualizationSelector<Schema, Filters>
+          <VisualizationSelector
             visualizations={visualizations}
             currentVisualization={currentVisualization}
             onVisualizationChange={setCurrentVisualization}
           />
         )}
       </div>
-      <VisualizationRenderer<Schema, Filters>
+      <VisualizationRenderer
         visualization={visualizations[currentVisualization]}
         source={source}
       />
