@@ -19,7 +19,7 @@ const meta = {
     },
     size: {
       control: "radio",
-      options: ["sm", "md", "lg"],
+      options: ["xs", "sm", "md", "lg"],
       description: "Size of the icon",
     },
   },
