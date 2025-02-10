@@ -9,7 +9,7 @@ const meta: Meta = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
       <div className="w-full min-w-72 max-w-96">

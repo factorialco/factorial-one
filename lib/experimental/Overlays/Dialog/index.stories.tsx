@@ -19,7 +19,7 @@ const meta = {
     children: <span>Dialog Content</span>,
     open: true,
   },
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof Dialog>
 
 export default meta

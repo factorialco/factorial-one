@@ -5,7 +5,7 @@ import { ModuleAvatar } from "."
 const meta: Meta<typeof ModuleAvatar> = {
   component: ModuleAvatar,
   title: "Avatars/ModuleAvatar",
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   argTypes: {
     size: {
       control: "radio",

@@ -5,7 +5,7 @@ import { Tooltip } from "."
 const meta: Meta<typeof Tooltip> = {
   title: "Tooltip",
   component: Tooltip,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
       <div className="flex h-32 items-center justify-center p-6">{Story()}</div>

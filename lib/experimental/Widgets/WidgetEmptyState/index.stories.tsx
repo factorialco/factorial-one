@@ -6,7 +6,7 @@ import { WidgetEmptyState } from "."
 const meta: Meta<typeof WidgetEmptyState> = {
   title: "Widgets/WidgetEmptyState",
   component: WidgetEmptyState,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   args: {
     title: "Title",
     description: "Description",

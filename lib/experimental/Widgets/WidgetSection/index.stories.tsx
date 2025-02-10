@@ -6,7 +6,7 @@ import { WidgetSection } from "."
 const meta: Meta = {
   title: "Widgets/WidgetSection",
   component: WidgetSection,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
   },

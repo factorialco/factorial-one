@@ -4,7 +4,7 @@ import { ClockInGraph } from "."
 const meta: Meta<typeof ClockInGraph> = {
   title: "ClockInGraph",
   component: ClockInGraph,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   args: {
     remainingMinutes: 60 * 4 + 39,
     data: [],
