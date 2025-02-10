@@ -15,13 +15,19 @@ import {
 } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { Fragment, memo } from "react"
-import { Metadata, MetadataAction, MetadataItem } from "../Metadata"
+import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
 
 interface BaseHeaderProps {
   title: string
-  avatar?: AvatarVariant
+  avatar?:
+    | {
+        type: "generic"
+        name: string
+        src?: string
+      }
+    | AvatarVariant
+
   description?: string
-  eyebrow?: React.ReactNode
   primaryAction?: PrimaryAction
   secondaryActions?: SecondaryAction[]
   otherActions?: (DropdownItem & { isVisible?: boolean })[]
@@ -31,7 +37,7 @@ interface BaseHeaderProps {
     variant: StatusVariant
     actions?: MetadataAction[]
   }
-  metadata?: MetadataItem[]
+  metadata?: MetadataProps["items"]
 }
 
 const isVisible = (action: { isVisible?: boolean }) =>
@@ -58,28 +64,25 @@ export function BaseHeader({
   title,
   avatar,
   description,
-  eyebrow,
   primaryAction,
   secondaryActions = [],
   otherActions = [],
   status,
   metadata = [],
 }: BaseHeaderProps) {
-  const allMetadata = status
-    ? [
-        {
-          label: status.label,
-          value: {
-            type: "status" as const,
-            label: status.text,
-            variant: status.variant,
-          },
-          actions: status.actions,
-          hideLabel: true,
-        },
-        ...metadata,
-      ]
-    : metadata
+  const allMetadata: BaseHeaderProps["metadata"] = [
+    status && {
+      label: status.label,
+      value: {
+        type: "status" as const,
+        label: status.text,
+        variant: status.variant,
+      },
+      actions: status.actions,
+      hideLabel: true,
+    },
+    ...metadata,
+  ]
 
   const visibleSecondaryActions = secondaryActions.filter(isVisible)
   const visibleOtherActions = otherActions.filter(isVisible)
@@ -93,15 +96,17 @@ export function BaseHeader({
         <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-center">
           {avatar && (
             <div className="flex items-start">
-              <Avatar avatar={avatar} size="large" />
+              <Avatar
+                avatar={{
+                  ...(avatar.type === "generic"
+                    ? { ...avatar, type: "company" }
+                    : avatar),
+                }}
+                size="large"
+              />
             </div>
           )}
           <div className="flex flex-col gap-1">
-            {eyebrow && (
-              <div className="text-lg text-f1-foreground-secondary">
-                {eyebrow}
-              </div>
-            )}
             <span className="text-xl font-semibold text-f1-foreground">
               {title}
             </span>

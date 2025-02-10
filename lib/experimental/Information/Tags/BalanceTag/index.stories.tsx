@@ -4,9 +4,10 @@ import { BalanceTag } from "."
 
 const meta: Meta = {
   component: BalanceTag,
+  title: "Tag/BalanceTag",
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     text: "2% · 1.522,48 €",

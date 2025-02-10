@@ -12,7 +12,9 @@ import { fn } from "@storybook/test"
 import { ResourceHeader } from "./index"
 
 const meta: Meta<typeof ResourceHeader> = {
+  title: "ResourceHeader",
   component: ResourceHeader,
+  tags: ["stable"],
   parameters: {
     layout: "padded",
   },
@@ -56,8 +58,8 @@ export const Default: Story = {
       "Seeking an experienced product designer to lead design initiatives",
     status: {
       label: "Status",
-      text: "Published",
-      variant: "positive",
+      text: "Draft",
+      variant: "neutral",
       actions: [
         {
           label: "Edit",
@@ -66,19 +68,20 @@ export const Default: Story = {
         },
       ],
     },
+
+    primaryAction: {
+      label: "Publish",
+      icon: Icon.ArrowUp,
+      onClick: fn(),
+    },
     secondaryActions: [
       {
         label: "Edit",
         icon: Icon.Pencil,
         onClick: fn(),
       },
-      {
-        label: "Unlist",
-        icon: Icon.Delete,
-        variant: "critical",
-        onClick: fn(),
-      },
     ],
+
     otherActions: [
       {
         label: "Archive",
@@ -90,7 +93,15 @@ export const Default: Story = {
         icon: Icon.LayersFront,
         onClick: fn(),
       },
+      "separator",
+      {
+        label: "Unlist",
+        icon: Icon.Delete,
+        critical: true,
+        onClick: fn(),
+      },
     ],
+
     metadata: [
       {
         label: "Location",
@@ -211,6 +222,182 @@ export const WithOtherActions: Story = {
         icon: Archive,
         critical: true,
         onClick: fn(),
+      },
+    ],
+  },
+}
+
+export const CompanyHeader: Story = {
+  args: {
+    title: "Factorial",
+    description: "HR Software to Empower Your Team",
+    avatar: {
+      type: "company",
+      name: "Factorial",
+      src: "https://github.com/factorialco.png",
+    },
+    secondaryActions: [
+      {
+        label: "Edit client",
+        icon: Icon.Pencil,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        label: "Legal name",
+        value: { type: "text", content: "Everyday Software S.L." },
+        actions: [
+          {
+            label: "Copy",
+            icon: Icon.LayersFront,
+            onClick: fn(),
+          },
+        ],
+      },
+      {
+        label: "Tax identification number",
+        value: { type: "text", content: "B-675254394" },
+      },
+    ],
+  },
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
+}
+
+export const PersonHeader: Story = {
+  args: {
+    title: "René Galindo",
+    description: "Product Design Lead",
+    avatar: {
+      type: "person",
+      firstName: "René",
+      lastName: "Galindo",
+      src: "https://github.com/renegalindo.png",
+    },
+    metadata: [
+      {
+        label: "Manager",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "person",
+            firstName: "Ilya",
+            lastName: "Zayats",
+            src: "https://github.com/somebody32.png",
+          },
+          text: "ilya Zayats",
+        },
+      },
+      {
+        label: "Team",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "team",
+            name: "Product design",
+          },
+          text: "Product design",
+        },
+      },
+      {
+        label: "Phone",
+        value: { type: "text", content: "+34 675 254 394" },
+        actions: [
+          {
+            label: "Chat in WhatsApp",
+            icon: Icon.WhatsappChat,
+            onClick: fn(),
+          },
+          {
+            label: "Copy",
+            icon: Icon.LayersFront,
+            onClick: fn(),
+          },
+        ],
+      },
+    ],
+  },
+}
+
+export const TeamHeader: Story = {
+  args: {
+    title: "Product designers",
+    description: "Rectangle drawers and post-it stickers",
+    avatar: {
+      type: "team",
+      name: "Product designers",
+    },
+    primaryAction: {
+      label: "Add members",
+      icon: Icon.Add,
+      onClick: fn(),
+    },
+    secondaryActions: [
+      {
+        label: "Edit",
+        icon: Icon.Pencil,
+        onClick: fn(),
+      },
+    ],
+    otherActions: [
+      {
+        label: "Export",
+        icon: Icon.Download,
+        onClick: fn(),
+      },
+      {
+        label: "Share",
+        icon: Icon.ExternalLink,
+        onClick: fn(),
+      },
+      "separator",
+      {
+        label: "Delete",
+        icon: Icon.Delete,
+        critical: true,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        label: "Team leader",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "person",
+            firstName: "Josep Jaume",
+            lastName: "Rey",
+            src: "https://github.com/josepjaume.png",
+          },
+          text: "Josep Jaume Rey",
+        },
+        actions: [
+          {
+            label: "Edit",
+            icon: Icon.Pencil,
+            onClick: fn(),
+          },
+          {
+            label: "Comment",
+            icon: Icon.Comment,
+            onClick: fn(),
+          },
+        ],
+      },
+      {
+        label: "Members",
+        value: { type: "text", content: "22" },
       },
     ],
   },

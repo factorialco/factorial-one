@@ -8,6 +8,7 @@ import { ComponentProps } from "react"
 import { Icon } from "."
 
 const meta = {
+  title: "Icon",
   component: Icon,
   argTypes: {
     icon: {
@@ -25,7 +26,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "stable"],
 } satisfies Meta<ComponentProps<typeof Icon>>
 
 export default meta

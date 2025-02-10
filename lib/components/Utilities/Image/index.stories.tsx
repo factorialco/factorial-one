@@ -4,11 +4,12 @@ import heart from "../../../../assets/icons/app/heart.svg"
 import { Image } from "."
 
 const meta = {
+  title: "Image",
   component: Image,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "stable"],
   args: {
     src: heart,
     width: 100,

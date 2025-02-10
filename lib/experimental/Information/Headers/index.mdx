@@ -3,10 +3,9 @@ import LinkTo from "@storybook/addon-links/react"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 import * as ResourceHeaderStories from "./ResourceHeader/index.stories"
-import * as PersonHeaderStories from "./PersonHeader/index.stories"
-import * as CompanyHeaderStories from "./CompanyHeader/index.stories"
-import * as TeamHeaderStories from "./TeamHeader/index.stories"
 import * as MetadataStories from "./Metadata/index.stories"
+
+<Meta title="ResourceHeader" />
 
 # Resource header
 
@@ -61,19 +60,19 @@ clear and contextually relevant presentation of the information.
 
 Designed to display information about an individual user.
 
-<Canvas of={PersonHeaderStories.Default} />
+<Canvas of={ResourceHeaderStories.PersonHeader} />
 
 ### Company
 
 Designed to display information about a company, client, or other entity.
 
-<Canvas of={CompanyHeaderStories.Default} />
+<Canvas of={ResourceHeaderStories.CompanyHeader} />
 
 ### Team
 
 Designed to display information about a team.
 
-<Canvas of={TeamHeaderStories.Default} />
+<Canvas of={ResourceHeaderStories.TeamHeader} />
 
 ## Guidelines
 
@@ -146,6 +145,8 @@ characteristics:
    (User, company and team)
 3. **Status**: Represent a state or situation associated with the resource, such
    as "Active," "Inactive," "Pending.”, etc.
+4. **List**: Display team members, task owners, or people associated with a
+   specific resource.
 
 ### Guidelines
 

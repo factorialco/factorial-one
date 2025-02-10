@@ -10,7 +10,7 @@ const config: StorybookConfig = {
     },
     {
       directory: "../lib/experimental",
-      titlePrefix: "Experimental",
+      titlePrefix: "Components",
     },
     ...(process.env.PUBLIC_BUILD
       ? []
@@ -30,6 +30,7 @@ const config: StorybookConfig = {
     "@storybook/addon-themes",
     "storybook-dark-mode",
     "@chromatic-com/storybook",
+    "storybook-addon-tag-badges",
   ],
   framework: {
     name: "@storybook/react-vite",

@@ -4,6 +4,7 @@ import {
   Avatar,
   AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
+import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
 import {
   StatusTag,
   StatusVariant,
@@ -18,6 +19,7 @@ type MetadataItemValue =
   | { type: "text"; content: string }
   | { type: "avatar"; variant: AvatarVariant; text: string }
   | { type: "status"; label: string; variant: StatusVariant }
+  | { type: "list"; variant: AvatarVariant["type"]; avatars: AvatarVariant[] }
 
 type MetadataAction = {
   icon: IconType
@@ -32,7 +34,7 @@ interface MetadataItem {
   hideLabel?: boolean
 }
 
-interface MetadataProps {
+export interface MetadataProps {
   /**
    * Everything is not a MetadataItem is ignored.
    * Undefined and boolean enable conditional items
@@ -53,6 +55,14 @@ function MetadataValue({ item }: { item: MetadataItem }) {
       )
     case "status":
       return <StatusTag text={item.value.label} variant={item.value.variant} />
+    case "list":
+      return (
+        <AvatarList
+          avatars={item.value.avatars}
+          size="xsmall"
+          type={item.value.variant}
+        />
+      )
   }
 }
 
@@ -78,6 +88,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
         onFocus={() => isAction && setIsActive(true)}
         onBlur={() => isAction && setIsActive(false)}
         className="relative flex h-5 w-fit items-center hover:cursor-default"
+        aria-label={`${item.label} actions`}
       >
         <div
           className={cn(

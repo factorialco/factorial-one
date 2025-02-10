@@ -4,6 +4,8 @@ import { CommunityPost } from "."
 
 const meta: Meta<typeof CommunityPost> = {
   component: CommunityPost,
+  title: "Communities/Post/CommunityPost",
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta

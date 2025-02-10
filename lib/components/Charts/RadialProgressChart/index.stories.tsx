@@ -2,6 +2,7 @@ import type { Meta } from "@storybook/react"
 import { RadialProgressChart } from "."
 
 const meta: Meta<typeof RadialProgressChart> = {
+  title: "Charts/RadialProgressChart",
   component: RadialProgressChart,
   tags: ["autodocs"],
   args: {

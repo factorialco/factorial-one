@@ -6,6 +6,7 @@ import { Meta, StoryObj } from "@storybook/react"
 import { Carousel } from "."
 
 const meta: Meta<typeof Carousel> = {
+  title: "Carousel/Carousel",
   component: Carousel,
   argTypes: {
     autoplay: { control: "boolean" },
@@ -13,6 +14,7 @@ const meta: Meta<typeof Carousel> = {
     showArrows: { control: "boolean" },
     showPeek: { control: "boolean" },
   },
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -190,6 +192,35 @@ export const MultipleWidths: Story = {
     children: SLIDES_RANDOM,
     showPeek: true,
     showDots: false,
+  },
+}
+
+export const RandomWithColumns: Story = {
+  decorators: [
+    (Story) => (
+      <div className="h-full w-full p-6">
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    autoplay: { control: "boolean" },
+    showDots: { control: "boolean" },
+    showArrows: { control: "boolean" },
+    showPeek: { control: "boolean" },
+    columns: { default: 1 },
+  },
+  args: {
+    showArrows: true,
+    children: SLIDES_RANDOM,
+    showPeek: true,
+    showDots: false,
+    columns: {
+      xs: 2,
+      sm: 3,
+      md: 3,
+      lg: 3,
+    },
   },
 }
 

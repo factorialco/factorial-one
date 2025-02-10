@@ -4,6 +4,7 @@ import { fn } from "@storybook/test"
 import { Metadata } from "."
 
 const meta: Meta<typeof Metadata> = {
+  title: "ResourceHeader/Metadata",
   component: Metadata,
   parameters: {
     layout: "padded",
@@ -38,6 +39,25 @@ export const Default: Story = {
           type: "status",
           label: "Status",
           variant: "warning",
+        },
+      },
+      {
+        label: "Type",
+        value: {
+          type: "list",
+          variant: "person",
+          avatars: [
+            {
+              type: "person",
+              firstName: "Josep Jaume",
+              lastName: "Rey",
+            },
+            {
+              type: "person",
+              firstName: "Nik",
+              lastName: "Lopin",
+            },
+          ],
         },
       },
     ],
