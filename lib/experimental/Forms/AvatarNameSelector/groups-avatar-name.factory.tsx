@@ -1,3 +1,4 @@
+import avatar from "../../../../storybook-assets/avatar.jpeg"
 import { famousEmployeesAsSubItems } from "./avatar-name.factory"
 import { AvatarNamedEntity } from "./types"
 
@@ -5,24 +6,24 @@ export const teamsWithEmployees: AvatarNamedEntity[] = [
   {
     id: 51,
     name: "Engineering",
-    avatar: "https://i.pravatar.cc/301",
+    avatar: avatar,
     subItems: getEmployeesFromRange(0, 12),
   },
   {
     id: 52,
     name: "Design",
-    avatar: "https://i.pravatar.cc/302",
+    avatar: avatar,
     subItems: getEmployeesFromRange(12, 22),
   },
   {
     id: 53,
     name: "Marketing",
-    avatar: "https://i.pravatar.cc/303",
+    avatar: avatar,
   },
   {
     id: 54,
     name: "Sales",
-    avatar: "https://i.pravatar.cc/304",
+    avatar: avatar,
     subItems: getEmployeesFromRange(22, 30),
   },
 ]
