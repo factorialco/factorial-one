@@ -20,11 +20,13 @@ const Wrapper: React.FC<WrapperProps> = ({ onClick, children }) => {
   const className =
     "block rounded-lg border border-solid border-transparent p-[1px] -m-1"
 
+  console.log({ onClick })
+
   return onClick ? (
     <a
       className={cn(
         className,
-        "focus:border-f1-background-selected-bold focus:outline-none"
+        "cursor-pointer focus:border-f1-background-selected-bold focus:outline-none"
       )}
       onClick={onClick}
       tabIndex={0}
@@ -47,7 +49,12 @@ export function WidgetHighlightButton({
 }: Props) {
   return (
     <Wrapper onClick={onClick}>
-      <div className="flex cursor-pointer flex-col gap-0.5 rounded-md border border-solid border-f1-border-secondary px-3 py-2.5 hover:border-f1-border-hover">
+      <div
+        className={cn(
+          "flex flex-col gap-0.5 rounded-md border border-solid border-f1-border-secondary px-3 py-2.5",
+          onClick && "hover:border-f1-border-hover"
+        )}
+      >
         <div className="flex flex-row items-center">
           <p className="line-clamp-1 flex-1 text-f1-foreground-secondary">
             {label}

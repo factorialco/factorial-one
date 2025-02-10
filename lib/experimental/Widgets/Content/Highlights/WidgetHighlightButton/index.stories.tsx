@@ -37,3 +37,10 @@ export const WithLongTitle: Story = {
     label: "This item will show a really really long title",
   },
 }
+
+export const WithoutOnClick: Story = {
+  args: {
+    ...Default.args,
+    onClick: undefined,
+  },
+}
