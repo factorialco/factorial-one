@@ -5,7 +5,7 @@ import { DetailsItemsList } from "."
 const meta: Meta = {
   title: "DetailsItemsList",
   component: DetailsItemsList,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   args: {
     title: "Details",
     details: [

@@ -6,7 +6,7 @@ import { ChartWidgetEmptyState } from "."
 const meta: Meta<typeof ChartWidgetEmptyState> = {
   title: "Widgets/EmptyState",
   component: ChartWidgetEmptyState,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   args: {
     title: "Performance",
     content: "See how Hugo's performance evolved over time",

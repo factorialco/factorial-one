@@ -4,7 +4,7 @@ import { PostDescription } from "."
 const meta: Meta<typeof PostDescription> = {
   component: PostDescription,
   title: "Communities/Post/PostDescription",
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta

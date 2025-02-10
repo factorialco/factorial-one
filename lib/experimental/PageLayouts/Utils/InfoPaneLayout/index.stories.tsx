@@ -11,7 +11,7 @@ import { InfoPaneLayout } from "."
 const meta = {
   title: "InfoPaneLayout",
   component: InfoPaneLayout,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   decorators: [PageDecorator],
   args: {
     children: (

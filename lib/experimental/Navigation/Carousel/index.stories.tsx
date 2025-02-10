@@ -14,7 +14,7 @@ const meta: Meta<typeof Carousel> = {
     showArrows: { control: "boolean" },
     showPeek: { control: "boolean" },
   },
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta

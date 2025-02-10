@@ -6,7 +6,7 @@ import { Dropdown } from "."
 const meta: Meta<typeof Dropdown> = {
   title: "Dropdown",
   component: Dropdown,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta

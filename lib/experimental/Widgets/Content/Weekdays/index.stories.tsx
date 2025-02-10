@@ -5,7 +5,7 @@ import { Weekdays } from "."
 const meta: Meta = {
   title: "Widgets/Content/Weekdays",
   component: Weekdays,
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
   },

@@ -8,7 +8,7 @@ const meta: Meta<typeof Badge> = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta

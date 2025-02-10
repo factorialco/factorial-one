@@ -8,7 +8,7 @@ const meta = {
   parameters: {
     layout: "padded",
   },
-  tags: ["autodocs", "alpha"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof Alert>
 
 export default meta
@@ -36,7 +36,8 @@ export const Positive: Story = {
     <Alert {...props}>
       <AlertTitle>Training completed!</AlertTitle>
       <AlertDescription>
-        You successfully completed the training ‘Eat. Sleep. Command Z. Repeat’.
+        You successfully completed the training &apos;Eat. Sleep. Command Z.
+        Repeat&apos;.
       </AlertDescription>
     </Alert>
   ),
