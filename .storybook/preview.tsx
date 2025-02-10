@@ -90,7 +90,7 @@ const preview: Preview = {
     backgrounds: {
       default: "content",
       values: [
-        { name: "content", value: "hsl(var(--background))" },
+        { name: "content", value: "hsl(var(--neutral-0))" },
         { name: "page", value: "hsl(var(--page-background))" },
       ],
     },
@@ -161,8 +161,6 @@ const preview: Preview = {
     },
     darkMode: {
       stylePreview: true,
-      current: "light",
-      disable: true,
     },
   },
   tags: ["autodocs"],
