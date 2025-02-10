@@ -44,6 +44,7 @@ export type BarChartProps<K extends ChartConfig = ChartConfig> =
     type?: "simple" | "stacked" | "stacked-by-sign"
     label?: boolean
     legend?: boolean
+    showValueUnderLabel?: boolean
     onClick?: (data: ChartDataPoint<K>) => void
   }
 
@@ -57,6 +58,7 @@ const _BarChart = <K extends ChartConfig>(
     type = "simple",
     aspect,
     legend,
+    showValueUnderLabel = false,
     onClick,
   }: BarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
@@ -84,6 +86,7 @@ const _BarChart = <K extends ChartConfig>(
           left: yAxis && !yAxis.hide ? 0 : 12,
           right: 12,
           top: label ? 24 : 0,
+          bottom: showValueUnderLabel ? 24 : 12,
         }}
         stackOffset={type === "stacked-by-sign" ? "sign" : undefined}
         onClick={(data) => {
@@ -114,7 +117,49 @@ const _BarChart = <K extends ChartConfig>(
           width={yAxis.width ?? maxLabelWidth + 20}
           hide={yAxis.hide}
         />
-        <XAxis {...xAxisProps(xAxis)} hide={xAxis?.hide} />
+        <XAxis
+          {...xAxisProps(xAxis)}
+          hide={xAxis?.hide}
+          tick={
+            showValueUnderLabel
+              ? (props) => {
+                  const { x, y, payload } = props
+                  const values =
+                    data.find((d) => d.label === payload.value)?.values || ""
+
+                  const value =
+                    Object.keys(values).length === 1
+                      ? Object.values(values)?.[0]
+                      : undefined
+
+                  return (
+                    <g transform={`translate(${x},${y})`}>
+                      <text
+                        x={0}
+                        y={0}
+                        dy={12}
+                        textAnchor="middle"
+                        className="text-sm font-medium !text-f1-foreground-secondary"
+                      >
+                        {payload.value}
+                      </text>
+                      {!!value && (
+                        <text
+                          x={0}
+                          y={0}
+                          dy={28}
+                          textAnchor="middle"
+                          className="!fill-f1-foreground text-sm font-medium"
+                        >
+                          {value}
+                        </text>
+                      )}
+                    </g>
+                  )
+                }
+              : undefined
+          }
+        />
 
         {bars.map((key, index) => (
           <Bar
