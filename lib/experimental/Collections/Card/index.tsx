@@ -3,6 +3,7 @@ import { Skeleton } from "@/ui/skeleton"
 import type { FiltersDefinition } from "../Filters/types"
 import { CollectionProps, CollectionSchema, SourceData } from "../types"
 import { useData } from "../useData"
+import { renderValue } from "../utils"
 
 export type CardPropertyDefinition<T> = {
   label: string
@@ -12,6 +13,7 @@ export type CardPropertyDefinition<T> = {
 
 export type CardVisualizationOptions<T> = {
   cardProperties: ReadonlyArray<CardPropertyDefinition<T>>
+  titleProperty?: CardPropertyDefinition<T>
 }
 
 export const CardCollection = <
@@ -19,6 +21,7 @@ export const CardCollection = <
   Filters extends FiltersDefinition,
 >({
   cardProperties,
+  titleProperty,
   source,
 }: CollectionProps<
   Schema,
@@ -26,16 +29,10 @@ export const CardCollection = <
   CardVisualizationOptions<SourceData<Schema, Filters>>
 >) => {
   const { data, isLoading } = useData<Schema, Filters>(source)
-
-  const renderValue = (
-    item: SourceData<Schema, Filters>,
-    property: CardPropertyDefinition<SourceData<Schema, Filters>>
-  ) => {
-    if (property.render) {
-      return property.render(item)
-    }
-    return String(item[property.key])
-  }
+  const effectiveTitleProperty = titleProperty || cardProperties[0]
+  const remainingProperties = titleProperty
+    ? cardProperties
+    : cardProperties.slice(1)
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -60,10 +57,12 @@ export const CardCollection = <
         : data.map((item, index) => (
             <Card key={index}>
               <CardHeader>
-                <CardTitle>{renderValue(item, cardProperties[0])}</CardTitle>
+                <CardTitle>
+                  {renderValue(item, effectiveTitleProperty)}
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                {cardProperties.slice(1).map((property) => (
+                {remainingProperties.map((property) => (
                   <div key={String(property.key)} className="space-y-1">
                     <div className="text-muted-foreground text-sm font-medium">
                       {property.label}

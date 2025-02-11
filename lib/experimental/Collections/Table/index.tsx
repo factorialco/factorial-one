@@ -11,6 +11,7 @@ import {
 import type { FiltersDefinition } from "../Filters/types"
 import { CollectionProps, CollectionSchema, SourceData } from "../types"
 import { useData } from "../useData"
+import { renderValue } from "../utils"
 
 export type TableColumnDefinition<T extends Record<string, unknown>> = {
   label: string
@@ -75,7 +76,7 @@ export const TableCollection = <
               <TableRow key={`row-${index}`}>
                 {columns.map((column) => (
                   <TableCell key={String(column.key)}>
-                    {column.render?.(item) ?? String(item[column.key])}
+                    {renderValue(item, column)}
                   </TableCell>
                 ))}
                 {link && <TableActionCell item={item} />}
