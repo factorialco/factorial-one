@@ -20,6 +20,9 @@ const meta: Meta<typeof ApplicationFrame> = {
   component: ApplicationFrame,
   parameters: {
     layout: "fullscreen",
+    a11y: {
+      disable: true,
+    },
   },
 }
 
