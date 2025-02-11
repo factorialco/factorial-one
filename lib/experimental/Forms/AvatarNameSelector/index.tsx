@@ -262,7 +262,7 @@ export const AvatarNameSelector = ({
       <PopoverTrigger className="w-full">
         <AvatarNameSelectorTrigger placeholder={placeholder} />
       </PopoverTrigger>
-      <PopoverContent className="w-full rounded-xl border-[1px] border-solid border-f1-border-secondary p-0">
+      <PopoverContent className="w-full rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0">
         <AvatarNameSelectorContent
           groupView={groupView}
           entities={filteredEntities}
