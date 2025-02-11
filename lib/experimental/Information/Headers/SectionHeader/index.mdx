@@ -3,7 +3,7 @@ import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
 import LinkTo from "@storybook/addon-links/react"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
-import * as SectionHeaderStories from "./Headers/SectionHeader/index.stories"
+import * as SectionHeaderStories from "./index.stories"
 
 <Meta title="SectionHeader" />
 
@@ -93,4 +93,4 @@ proporcionar contexto continuo a los usuarios mientras navegan por el contenido.
 Puede incluir elementos interactivos, como enlaces a documentación o botones de
 acción específicos.
 
-<Canvas of={SectionHeaderStories.WithActions} />
+<Canvas of={SectionHeaderStories.NoAction} />
