@@ -99,59 +99,55 @@ describe("CardCollection", () => {
 
   describe("features", () => {
     it("uses titleProperty when provided", async () => {
-      const titleProperty = { key: "role" as const, label: "Role" }
-
       render(
         <CardCollection<TestSchema, TestFilters>
           cardProperties={testCardProperties}
-          titleProperty={titleProperty}
+          titleProperty="name"
           source={createTestSource()}
         />
       )
 
       await waitFor(() => {
-        // Title should be the role
+        // Title should be the name
         testData.forEach((item) => {
           const titleElement = screen
             .getAllByRole("heading")
-            .find((heading) => heading.textContent === item.role)
+            .find((heading) => heading.textContent === item.name)
           expect(titleElement).toBeInTheDocument()
         })
       })
     })
 
     it("displays all properties correctly when using titleProperty", async () => {
-      const titleProperty = { key: "role" as const, label: "Role" }
-
       render(
         <CardCollection<TestSchema, TestFilters>
           cardProperties={testCardProperties}
-          titleProperty={titleProperty}
+          titleProperty="name"
           source={createTestSource()}
         />
       )
 
       await waitFor(() => {
-        // Title (role) should be in a heading
+        // Title (name) should be in a heading
         testData.forEach((item) => {
           const titleElement = screen
             .getAllByRole("heading")
-            .find((heading) => heading.textContent === item.role)
+            .find((heading) => heading.textContent === item.name)
           expect(titleElement).toBeInTheDocument()
 
-          // Each card should have name and email with their labels
-          const nameLabels = screen.getAllByText("Name")
+          // Each card should have email and role with their labels
           const emailLabels = screen.getAllByText("Email")
-          expect(nameLabels.length).toBe(testData.length)
+          const roleLabels = screen.getAllByText("Role")
           expect(emailLabels.length).toBe(testData.length)
+          expect(roleLabels.length).toBe(testData.length)
 
           // Each card should show the actual values
-          expect(screen.getByText(item.name)).toBeInTheDocument()
           expect(screen.getByText(item.email)).toBeInTheDocument()
+          expect(screen.getByText(item.role)).toBeInTheDocument()
 
-          // Role should only appear in headings, not in the content area
-          const roleLabels = screen.queryAllByText("Role")
-          roleLabels.forEach((label) => {
+          // Name should only appear in headings, not in the content area
+          const nameLabels = screen.queryAllByText("Name")
+          nameLabels.forEach((label) => {
             const isInHeading = !!label.closest('[role="heading"]')
             const isInContent = label.classList.contains(
               "text-muted-foreground"
