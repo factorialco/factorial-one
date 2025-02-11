@@ -92,7 +92,11 @@ const CategoryItem = ({ category }: { category: MenuCategory }) => {
   }
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+    <Collapsible
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      className="flex w-full flex-col gap-0.5"
+    >
       <CollapsibleTrigger
         className={cn(
           "flex w-full cursor-pointer items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary hover:bg-f1-background-secondary",
