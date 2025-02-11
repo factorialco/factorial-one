@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react"
-import { describe, expect, it } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 import { TableCollection } from "."
 import type { FiltersDefinition } from "../Filters/types"
 import type { NumberPropertySchema, StringPropertySchema } from "../properties"
@@ -29,129 +29,173 @@ const testColumns = [
   { key: "email" as const, label: "Email" },
 ]
 
-const testSource: DataSource<TestSchema, TestFilters> = {
+const createTestSource = (
+  data: Person[] = testData,
+  error?: Error
+): DataSource<TestSchema, TestFilters> => ({
   properties: {
     id: { type: "number" },
     name: { type: "string" },
     email: { type: "string" },
   },
   currentFilters: {},
-  setCurrentFilters: () => {},
-  fetchData: async () => testData,
-}
+  setCurrentFilters: vi.fn(),
+  fetchData: async () => {
+    if (error) throw error
+    return data
+  },
+})
 
 describe("TableCollection", () => {
-  it("renders table with data", async () => {
-    render(
-      <TableCollection<TestSchema, TestFilters>
-        columns={testColumns}
-        source={testSource}
-      />
-    )
+  describe("rendering", () => {
+    it("meets accessibility requirements", () => {
+      render(
+        <TableCollection<TestSchema, TestFilters>
+          columns={testColumns}
+          source={createTestSource()}
+        />
+      )
 
-    // Initially shows loading state
-    const loadingCells = screen.getAllByRole("cell")
-    expect(loadingCells[0].querySelector(".animate-pulse")).toBeInTheDocument()
-
-    // Wait for loading state to disappear
-    await waitFor(() => {
-      expect(
-        screen.queryByRole("cell")?.querySelector(".animate-pulse")
-      ).not.toBeInTheDocument()
+      // Check for proper ARIA roles and labels
+      expect(screen.getByRole("table")).toBeInTheDocument()
+      expect(screen.getAllByRole("columnheader")).toHaveLength(2)
+      // Use getAllByRole since we have both thead and tbody
+      expect(screen.getAllByRole("rowgroup")).toHaveLength(2)
     })
 
-    // Verify all data is rendered
-    for (const item of testData) {
-      expect(screen.getByText(item.name)).toBeInTheDocument()
-      expect(screen.getByText(item.email)).toBeInTheDocument()
-    }
+    it("shows loading state initially", () => {
+      render(
+        <TableCollection<TestSchema, TestFilters>
+          columns={testColumns}
+          source={createTestSource()}
+        />
+      )
+
+      const loadingRows = screen.getAllByRole("row")
+      // Header row + 4 loading rows
+      expect(loadingRows).toHaveLength(5)
+
+      // Look for skeleton elements by their class name
+      const skeletons = document.getElementsByClassName("animate-pulse")
+      expect(skeletons.length).toBe(8) // 4 rows * 2 columns
+    })
+
+    it("renders table with data after loading", async () => {
+      render(
+        <TableCollection<TestSchema, TestFilters>
+          columns={testColumns}
+          source={createTestSource()}
+        />
+      )
+
+      // Wait for loading state to disappear by checking for actual data
+      await waitFor(() => {
+        expect(screen.getByText(testData[0].name)).toBeInTheDocument()
+      })
+
+      // Verify table structure
+      expect(screen.getByRole("table")).toBeInTheDocument()
+      expect(screen.getAllByRole("columnheader")).toHaveLength(2)
+
+      // Verify data rendering
+      testData.forEach((item) => {
+        expect(screen.getByText(item.name)).toBeInTheDocument()
+        expect(screen.getByText(item.email)).toBeInTheDocument()
+      })
+    })
   })
 
-  it("renders custom column formatting", async () => {
-    const columnsWithCustomRender = [
-      ...testColumns,
-      {
-        key: "name" as const,
-        label: "Custom",
-        render: (item: Person) => `Custom: ${item.name}`,
-      },
-    ]
+  describe("features", () => {
+    it("renders custom column formatting", async () => {
+      const columnsWithCustomRender = [
+        testColumns[0], // Keep original name column
+        {
+          key: "name" as const,
+          label: "Custom",
+          render: (item: Person) => `Custom: ${item.name}`,
+        },
+      ]
 
-    render(
-      <TableCollection<TestSchema, TestFilters>
-        columns={columnsWithCustomRender}
-        source={testSource}
-      />
-    )
+      render(
+        <TableCollection<TestSchema, TestFilters>
+          columns={columnsWithCustomRender}
+          source={createTestSource()}
+        />
+      )
 
-    // Wait for loading state to disappear
-    await waitFor(() => {
-      expect(
-        screen.queryByRole("cell")?.querySelector(".animate-pulse")
-      ).not.toBeInTheDocument()
+      await waitFor(() => {
+        testData.forEach((item) => {
+          expect(screen.getByText(`Custom: ${item.name}`)).toBeInTheDocument()
+        })
+      })
     })
 
-    // Verify custom rendered content
-    for (const item of testData) {
-      expect(screen.getByText(`Custom: ${item.name}`)).toBeInTheDocument()
-    }
+    it("renders links with correct attributes", async () => {
+      render(
+        <TableCollection<TestSchema, TestFilters>
+          columns={testColumns}
+          source={createTestSource()}
+          link={(item) => ({
+            label: `View ${item.name}`,
+            url: `/users/${item.id}`,
+          })}
+        />
+      )
+
+      await waitFor(() => {
+        expect(screen.getAllByRole("link")).toHaveLength(testData.length)
+        testData.forEach((item) => {
+          const link = screen.getByText(`View ${item.name}`)
+          expect(link.closest("a")).toHaveAttribute("href", `/users/${item.id}`)
+        })
+      })
+    })
   })
 
-  it("renders links for each row", async () => {
-    render(
-      <TableCollection<TestSchema, TestFilters>
-        columns={testColumns}
-        source={testSource}
-        link={(item) => ({
-          label: `View ${item.name}`,
-          url: `/users/${item.id}`,
-        })}
-      />
-    )
+  describe("edge cases", () => {
+    it("handles empty data gracefully", async () => {
+      render(
+        <TableCollection<TestSchema, TestFilters>
+          columns={testColumns}
+          source={createTestSource([])}
+        />
+      )
 
-    // Wait for loading state to disappear
-    await waitFor(() => {
-      expect(
-        screen.queryByRole("cell")?.querySelector(".animate-pulse")
-      ).not.toBeInTheDocument()
+      // Wait for loading state to finish
+      await waitFor(() => {
+        const rows = screen.getAllByRole("row")
+        expect(rows).toHaveLength(1) // Just the header row
+      })
+
+      // Headers should still be present
+      expect(screen.getAllByRole("columnheader")).toHaveLength(2)
     })
 
-    // Verify links are rendered correctly
-    for (const item of testData) {
-      const link = screen.getByText(`View ${item.name}`)
-      expect(link).toBeInTheDocument()
-      expect(link.closest("a")).toHaveAttribute("href", `/users/${item.id}`)
-    }
-  })
+    it("handles error states appropriately", async () => {
+      const consoleError = vi
+        .spyOn(console, "error")
+        .mockImplementation(() => {})
 
-  it("renders empty state when no data is provided", async () => {
-    const emptySource: DataSource<TestSchema, TestFilters> = {
-      ...testSource,
-      fetchData: async () => [],
-    }
+      render(
+        <TableCollection<TestSchema, TestFilters>
+          columns={testColumns}
+          source={createTestSource([], new Error("Failed to fetch data"))}
+        />
+      )
 
-    render(
-      <TableCollection<TestSchema, TestFilters>
-        columns={testColumns}
-        source={emptySource}
-      />
-    )
+      // Wait for loading state to finish
+      await waitFor(() => {
+        const rows = screen.getAllByRole("row")
+        expect(rows).toHaveLength(1) // Just the header row
+      })
 
-    // Headers should be present
-    expect(screen.getByText("Name")).toBeInTheDocument()
-    expect(screen.getByText("Email")).toBeInTheDocument()
+      // Verify error was logged
+      expect(consoleError).toHaveBeenCalledWith(
+        "Error fetching data:",
+        expect.any(Error)
+      )
 
-    // Wait for loading state to disappear
-    await waitFor(() => {
-      expect(
-        screen.queryByRole("cell")?.querySelector(".animate-pulse")
-      ).not.toBeInTheDocument()
+      consoleError.mockRestore()
     })
-
-    // Verify no data rows are present
-    for (const item of testData) {
-      expect(screen.queryByText(item.name)).not.toBeInTheDocument()
-      expect(screen.queryByText(item.email)).not.toBeInTheDocument()
-    }
   })
 })
