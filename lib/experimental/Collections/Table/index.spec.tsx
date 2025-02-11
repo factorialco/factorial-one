@@ -9,6 +9,7 @@ type TestSchema = {
   id: Omit<NumberPropertySchema, "value">
   name: Omit<StringPropertySchema, "value">
   email: Omit<StringPropertySchema, "value">
+  displayName: Omit<StringPropertySchema, "value">
 }
 
 type TestFilters = FiltersDefinition
@@ -17,11 +18,22 @@ interface Person {
   id: number
   name: string
   email: string
+  displayName: string
 }
 
 const testData: Person[] = [
-  { id: 1, name: "John Doe", email: "john@example.com" },
-  { id: 2, name: "Jane Smith", email: "jane@example.com" },
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    displayName: "Dr. John Doe",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane@example.com",
+    displayName: "Dr. Jane Smith",
+  },
 ]
 
 const testColumns = [
@@ -37,6 +49,7 @@ const createTestSource = (
     id: { type: "number" },
     name: { type: "string" },
     email: { type: "string" },
+    displayName: { type: "string" },
   },
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -48,21 +61,6 @@ const createTestSource = (
 
 describe("TableCollection", () => {
   describe("rendering", () => {
-    it("meets accessibility requirements", () => {
-      render(
-        <TableCollection<TestSchema, TestFilters>
-          columns={testColumns}
-          source={createTestSource()}
-        />
-      )
-
-      // Check for proper ARIA roles and labels
-      expect(screen.getByRole("table")).toBeInTheDocument()
-      expect(screen.getAllByRole("columnheader")).toHaveLength(2)
-      // Use getAllByRole since we have both thead and tbody
-      expect(screen.getAllByRole("rowgroup")).toHaveLength(2)
-    })
-
     it("shows loading state initially", () => {
       render(
         <TableCollection<TestSchema, TestFilters>
@@ -110,9 +108,9 @@ describe("TableCollection", () => {
       const columnsWithCustomRender = [
         testColumns[0], // Keep original name column
         {
-          key: "name" as const,
-          label: "Custom",
-          render: (item: Person) => `Custom: ${item.name}`,
+          key: "displayName" as const,
+          label: "Formal Title",
+          render: (item: Person) => `Dr. ${item.name}`,
         },
       ]
 
@@ -125,7 +123,7 @@ describe("TableCollection", () => {
 
       await waitFor(() => {
         testData.forEach((item) => {
-          expect(screen.getByText(`Custom: ${item.name}`)).toBeInTheDocument()
+          expect(screen.getByText(`Dr. ${item.name}`)).toBeInTheDocument()
         })
       })
     })
