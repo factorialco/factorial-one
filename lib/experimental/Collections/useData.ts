@@ -30,33 +30,65 @@ import { CollectionSchema, DataSource, SourceData } from "./types"
 export function useData<
   Schema extends CollectionSchema,
   Filters extends FiltersDefinition,
->({ source }: { source: DataSource<Schema, Filters> }) {
-  const [isLoading, setIsLoading] = useState(false)
+>(
+  source: DataSource<Schema, Filters>,
+  {
+    filters = {},
+  }: {
+    filters?: Partial<Filters>
+  } = {}
+) {
+  const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState<Array<SourceData<Schema, Filters>>>([])
 
   const { fetchData, currentFilters } = source
-  useEffect(() => {
-    let cleanup: (() => void) | undefined
-    ;(async () => {
-      setIsLoading(true)
-      const result = fetchData({ filters: currentFilters })
 
-      if (result instanceof Observable) {
-        const subscription = result.subscribe((data) => {
-          setData(data)
+  useEffect(() => {
+    let isMounted = true
+    let cleanup: (() => void) | undefined
+
+    const fetchDataAndUpdate = async () => {
+      try {
+        const result = fetchData({ filters: { ...currentFilters, ...filters } })
+
+        if (result instanceof Observable) {
+          const subscription = result.subscribe({
+            next: (newData) => {
+              if (isMounted) {
+                setData(newData)
+                setIsLoading(false)
+              }
+            },
+            error: (error) => {
+              console.error("Error in observable:", error)
+              if (isMounted) {
+                setIsLoading(false)
+              }
+            },
+          })
+          cleanup = () => subscription.unsubscribe()
+        } else {
+          const resolvedData = await result
+          if (isMounted) {
+            setData(resolvedData)
+            setIsLoading(false)
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error)
+        if (isMounted) {
           setIsLoading(false)
-        })
-        cleanup = () => subscription.unsubscribe()
-      } else {
-        setData(await result)
-        setIsLoading(false)
+        }
       }
-    })()
+    }
+
+    fetchDataAndUpdate()
 
     return () => {
+      isMounted = false
       cleanup?.()
     }
-  }, [fetchData, currentFilters])
+  }, [fetchData, currentFilters, filters])
 
   return {
     data,
