@@ -37,9 +37,9 @@ const testData: Person[] = [
 ]
 
 const testCardProperties = [
-  { key: "name" as const, label: "Name" },
-  { key: "email" as const, label: "Email" },
-  { key: "role" as const, label: "Role" },
+  { key: "name" as const },
+  { key: "email" as const },
+  { key: "role" as const },
 ]
 
 const createTestSource = (
@@ -47,10 +47,10 @@ const createTestSource = (
   error?: Error
 ): DataSource<TestSchema, TestFilters> => ({
   properties: {
-    id: { type: "number" },
-    name: { type: "string" },
-    email: { type: "string" },
-    role: { type: "string" },
+    id: { type: "number", label: "ID" },
+    name: { type: "string", label: "Name" },
+    email: { type: "string", label: "Email" },
+    role: { type: "string", label: "Role" },
   },
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -160,10 +160,8 @@ describe("CardCollection", () => {
 
     it("renders custom property formatting", async () => {
       const propertiesWithCustomRender = [
-        testCardProperties[0],
         {
           key: "email" as const,
-          label: "Contact",
           render: (item: Person) => `📧 ${item.email}`,
         },
         testCardProperties[2],
