@@ -14,7 +14,6 @@ import { useData } from "../useData"
 import { renderValue } from "../utils"
 
 export type TableColumnDefinition<T extends Record<string, unknown>> = {
-  label: string
   key: Extract<keyof T, string>
   render?: (item: T) => string
 }
@@ -55,7 +54,9 @@ export const TableCollection = <
       <TableHeader>
         <TableRow>
           {columns.map((column) => (
-            <TableHead key={String(column.key)}>{column.label}</TableHead>
+            <TableHead key={String(column.key)}>
+              {source.properties[column.key].label}
+            </TableHead>
           ))}
           {link && <TableHead key="actions">Actions</TableHead>}
         </TableRow>

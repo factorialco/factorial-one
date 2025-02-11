@@ -33,31 +33,38 @@ import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 export const useDataSource = <
   Schema extends CollectionSchema,
   Filters extends FiltersDefinition,
->({
-  properties,
-  filters,
-  currentFilters: initialCurrentFilters,
-  fetchData: fetchDataFn,
-}: {
-  properties: Schema
-  filters?: { fields?: Filters }
-  currentFilters?: FiltersState<Filters>
-  fetchData: (options: {
-    filters: FiltersState<Filters>
-  }) => DataSourceResult<SourceData<Schema, Filters>>
-}): DataSource<Schema, Filters> => {
+>(
+  {
+    properties,
+    filters,
+    currentFilters: initialCurrentFilters,
+    fetchData,
+  }: {
+    properties: Schema
+    filters?: { fields?: Filters }
+    currentFilters?: FiltersState<Filters>
+    fetchData: (options: {
+      filters: FiltersState<Filters>
+    }) => DataSourceResult<SourceData<Schema, Filters>>
+  },
+  deps: ReadonlyArray<unknown> = []
+): DataSource<Schema, Filters> => {
   const [currentFilters, setCurrentFilters] = useState<FiltersState<Filters>>(
     (initialCurrentFilters ?? {}) as FiltersState<Filters>
   )
-
-  const fetchData = useMemo(() => fetchDataFn, [fetchDataFn])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedFetchData = useMemo(() => fetchData, deps)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedProperties = useMemo(() => properties, deps)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedFilters = useMemo(() => filters ?? {}, deps)
 
   return {
-    properties,
-    filters: filters ?? {},
+    properties: memoizedProperties,
+    filters: memoizedFilters ?? {},
     currentFilters,
     setCurrentFilters,
-    fetchData,
+    fetchData: memoizedFetchData,
   }
 }
 

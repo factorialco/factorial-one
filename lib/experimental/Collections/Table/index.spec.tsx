@@ -36,20 +36,17 @@ const testData: Person[] = [
   },
 ]
 
-const testColumns = [
-  { key: "name" as const, label: "Name" },
-  { key: "email" as const, label: "Email" },
-]
+const testColumns = [{ key: "name" as const }, { key: "email" as const }]
 
 const createTestSource = (
   data: Person[] = testData,
   error?: Error
 ): DataSource<TestSchema, TestFilters> => ({
   properties: {
-    id: { type: "number" },
-    name: { type: "string" },
-    email: { type: "string" },
-    displayName: { type: "string" },
+    id: { type: "number", label: "ID" },
+    name: { type: "string", label: "Name" },
+    email: { type: "string", label: "Email" },
+    displayName: { type: "string", label: "Display Name" },
   },
   currentFilters: {},
   setCurrentFilters: vi.fn(),

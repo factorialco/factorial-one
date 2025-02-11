@@ -7,6 +7,7 @@ import type {
   SearchFilterDefinition,
 } from "./Filters/types"
 import { StringPropertySchema } from "./properties"
+import { ExtractDataType } from "./types"
 import { useData } from "./useData"
 
 // Example schema for a user entity
@@ -20,15 +21,19 @@ type UserSchema = {
 const properties: UserSchema = {
   name: {
     type: "string",
+    label: "Name",
   },
   email: {
     type: "string",
+    label: "Email",
   },
   role: {
     type: "string",
+    label: "Role",
   },
   department: {
     type: "string",
+    label: "Department",
   },
 }
 
@@ -97,7 +102,7 @@ const ExampleComponent = ({
     filters,
     fetchData: useObservable
       ? ({ filters }) => {
-          return new Observable<typeof mockUsers>((observer) => {
+          return new Observable<Array<(typeof mockUsers)[0]>>((observer) => {
             let filteredUsers = [...mockUsers]
 
             const searchValue = filters.search
@@ -122,7 +127,7 @@ const ExampleComponent = ({
           })
         }
       : ({ filters }) => {
-          return new Promise<typeof mockUsers>((resolve) => {
+          return new Promise<Array<(typeof mockUsers)[0]>>((resolve) => {
             setTimeout(() => {
               let filteredUsers = [...mockUsers]
 
@@ -161,10 +166,10 @@ const ExampleComponent = ({
             type: "table",
             options: {
               columns: [
-                { key: "name", label: "Name" },
-                { key: "email", label: "Email" },
-                { key: "role", label: "Role" },
-                { key: "department", label: "Department" },
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
               ],
             },
           },
@@ -172,10 +177,10 @@ const ExampleComponent = ({
             type: "card",
             options: {
               cardProperties: [
-                { key: "name", label: "Name" },
-                { key: "email", label: "Email" },
-                { key: "role", label: "Role" },
-                { key: "department", label: "Department" },
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
               ],
             },
           },
@@ -239,10 +244,10 @@ export const BasicTableView: Story = {
             type: "table",
             options: {
               columns: [
-                { key: "name", label: "Name" },
-                { key: "email", label: "Email" },
-                { key: "role", label: "Role" },
-                { key: "department", label: "Department" },
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
               ],
             },
           },
@@ -293,10 +298,10 @@ export const BasicCardView: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { key: "name", label: "Name" },
-                { key: "email", label: "Email" },
-                { key: "role", label: "Role" },
-                { key: "department", label: "Department" },
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
               ],
             },
           },
@@ -350,22 +355,18 @@ export const CustomTableColumns: Story = {
               columns: [
                 {
                   key: "name",
-                  label: "Name",
                   render: (item) => `👤 ${item.name}`,
                 },
                 {
                   key: "email",
-                  label: "Email",
                   render: (item) => `📧 ${item.email}`,
                 },
                 {
                   key: "role",
-                  label: "Role",
                   render: (item) => `💼 ${item.role}`,
                 },
                 {
                   key: "department",
-                  label: "Department",
                   render: (item) => `🏢 ${item.department}`,
                 },
               ],
@@ -417,10 +418,7 @@ export const CustomCardProperties: Story = {
           {
             type: "card",
             options: {
-              cardProperties: [
-                { key: "name", label: "Name" },
-                { key: "role", label: "Role" },
-              ],
+              cardProperties: [{ key: "name" }, { key: "role" }],
             },
           },
         ]}
@@ -433,13 +431,6 @@ export const CustomCardProperties: Story = {
 export const SwitchableVisualizations: Story = {
   args: {
     useObservable: false,
-  },
-}
-
-// Examples with different data sources
-export const WithObservableData: Story = {
-  args: {
-    useObservable: true,
   },
 }
 
@@ -488,10 +479,10 @@ export const WithPreselectedFilters: Story = {
             type: "table",
             options: {
               columns: [
-                { key: "name", label: "Name" },
-                { key: "email", label: "Email" },
-                { key: "role", label: "Role" },
-                { key: "department", label: "Department" },
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
               ],
             },
           },
@@ -506,7 +497,7 @@ const JsonVisualization = ({
 }: {
   source: ReturnType<typeof useDataSource<UserSchema, UserFilters>>
 }) => {
-  const { data, isLoading } = useData({ source })
+  const { data, isLoading } = useData(source)
 
   if (isLoading) {
     return (
@@ -569,10 +560,10 @@ export const WithCustomJsonView: Story = {
             type: "table",
             options: {
               columns: [
-                { key: "name", label: "Name" },
-                { key: "email", label: "Email" },
-                { key: "role", label: "Role" },
-                { key: "department", label: "Department" },
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
               ],
             },
           },
@@ -580,10 +571,124 @@ export const WithCustomJsonView: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { key: "name", label: "Name" },
-                { key: "email", label: "Email" },
-                { key: "role", label: "Role" },
-                { key: "department", label: "Department" },
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+// Example usage with table visualization
+export const WithTableVisualization: Story = {
+  render: () => {
+    const source = useDataSource({
+      properties,
+      filters,
+      fetchData: () =>
+        new Observable<Array<ExtractDataType<UserSchema>>>((observer) => {
+          setTimeout(() => {
+            observer.next(mockUsers)
+            observer.complete()
+          }, 1000)
+        }),
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+// Example usage with card visualization
+export const WithCardVisualization: Story = {
+  render: () => {
+    const source = useDataSource({
+      properties,
+      filters,
+      fetchData: () =>
+        new Observable<Array<ExtractDataType<UserSchema>>>((observer) => {
+          setTimeout(() => {
+            observer.next(mockUsers)
+            observer.complete()
+          }, 1000)
+        }),
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+// Example usage with multiple visualizations
+export const WithMultipleVisualizations: Story = {
+  render: () => {
+    const source = useDataSource({
+      properties,
+      filters,
+      fetchData: () =>
+        new Observable<Array<ExtractDataType<UserSchema>>>((observer) => {
+          setTimeout(() => {
+            observer.next(mockUsers)
+            observer.complete()
+          }, 1000)
+        }),
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [{ key: "name" }, { key: "email" }],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { key: "name" },
+                { key: "email" },
+                { key: "role" },
+                { key: "department" },
               ],
             },
           },

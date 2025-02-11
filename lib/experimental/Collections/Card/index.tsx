@@ -6,7 +6,6 @@ import { useData } from "../useData"
 import { renderValue } from "../utils"
 
 export type CardPropertyDefinition<T> = {
-  label: string
   key: keyof T
   render?: (item: T) => string
 }
@@ -68,7 +67,7 @@ export const CardCollection = <
                 {remainingProperties.map((property) => (
                   <div key={String(property.key)} className="space-y-1">
                     <div className="text-muted-foreground text-sm font-medium">
-                      {property.label}
+                      {source.properties[property.key].label}
                     </div>
                     <div className="text-sm">{renderValue(item, property)}</div>
                   </div>

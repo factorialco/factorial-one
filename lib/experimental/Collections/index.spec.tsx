@@ -23,10 +23,10 @@ type UserSchema = {
 }
 
 const properties: UserSchema = {
-  name: { type: "string" },
-  email: { type: "string" },
-  role: { type: "string" },
-  department: { type: "string" },
+  name: { type: "string", label: "Name" },
+  email: { type: "string", label: "Email" },
+  role: { type: "string", label: "Role" },
+  department: { type: "string", label: "Department" },
 }
 
 const mockUsers = [
@@ -55,6 +55,7 @@ describe("Collections", () => {
           properties: {
             name: {
               type: "string",
+              label: "Name",
             },
           },
           filters: {
@@ -88,7 +89,7 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [{ key: "name", label: "Name" }],
+                columns: [{ key: "name" }],
               },
             },
           ]}
@@ -121,19 +122,13 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [
-                  { key: "name", label: "Name" },
-                  { key: "email", label: "Email" },
-                ],
+                columns: [{ key: "name" }, { key: "email" }],
               },
             },
             {
               type: "card",
               options: {
-                cardProperties: [
-                  { key: "name", label: "Name" },
-                  { key: "email", label: "Email" },
-                ],
+                cardProperties: [{ key: "name" }, { key: "email" }],
               },
             },
           ]}
@@ -170,10 +165,7 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [
-                  { key: "name", label: "Name" },
-                  { key: "role", label: "Role" },
-                ],
+                columns: [{ key: "name" }, { key: "role" }],
               },
             },
           ]}
@@ -241,10 +233,7 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [
-                  { key: "name", label: "Name" },
-                  { key: "department", label: "Department" },
-                ],
+                columns: [{ key: "name" }, { key: "department" }],
               },
             },
           ]}
@@ -264,7 +253,7 @@ describe("Collections", () => {
       () =>
         useDataSource({
           properties: {
-            name: { type: "string" },
+            name: { type: "string", label: "Name" },
           },
           fetchData: async () => [{ name: "John" }],
         }),
@@ -279,7 +268,7 @@ describe("Collections", () => {
       () =>
         useDataSource({
           properties: {
-            name: { type: "string" },
+            name: { type: "string", label: "Name" },
           },
           // @ts-expect-error Property 'name' should be string but got number
           fetchData: async () => [{ name: 123 }],
