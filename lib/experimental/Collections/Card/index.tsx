@@ -13,7 +13,7 @@ export type CardPropertyDefinition<T> = {
 
 export type CardVisualizationOptions<T> = {
   cardProperties: ReadonlyArray<CardPropertyDefinition<T>>
-  titleProperty?: CardPropertyDefinition<T>
+  titleProperty?: CardPropertyDefinition<T>["key"]
 }
 
 export const CardCollection = <
@@ -29,9 +29,12 @@ export const CardCollection = <
   CardVisualizationOptions<SourceData<Schema, Filters>>
 >) => {
   const { data, isLoading } = useData<Schema, Filters>(source)
-  const effectiveTitleProperty = titleProperty || cardProperties[0]
+  const effectiveTitleProperty = titleProperty
+    ? cardProperties.find((prop) => prop.key === titleProperty) ||
+      cardProperties[0]
+    : cardProperties[0]
   const remainingProperties = titleProperty
-    ? cardProperties
+    ? cardProperties.filter((prop) => prop.key !== titleProperty)
     : cardProperties.slice(1)
 
   return (
