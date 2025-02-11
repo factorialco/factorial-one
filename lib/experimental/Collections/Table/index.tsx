@@ -38,7 +38,7 @@ export const TableCollection = <
   Filters,
   TableVisualizationOptions<SourceData<Schema, Filters>>
 >) => {
-  const { data, isLoading } = useData<Schema, Filters>({ source })
+  const { data, isLoading } = useData<Schema, Filters>(source)
 
   const TableActionCell = ({ item }: { item: SourceData<Schema, Filters> }) => {
     const linkInfo = link!(item)

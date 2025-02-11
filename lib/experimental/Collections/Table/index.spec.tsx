@@ -25,8 +25,8 @@ const testData: Person[] = [
 ]
 
 const testColumns = [
-  { key: "name" as const, label: "Name", id: "name" },
-  { key: "email" as const, label: "Email", id: "email" },
+  { key: "name" as const, label: "Name" },
+  { key: "email" as const, label: "Email" },
 ]
 
 const testSource: DataSource<TestSchema, TestFilters> = {
@@ -53,16 +53,18 @@ describe("TableCollection", () => {
     const loadingCells = screen.getAllByRole("cell")
     expect(loadingCells[0].querySelector(".animate-pulse")).toBeInTheDocument()
 
-    // Wait for data to load
+    // Wait for loading state to disappear
     await waitFor(() => {
-      expect(screen.getByText("John Doe")).toBeInTheDocument()
+      expect(
+        screen.queryByRole("cell")?.querySelector(".animate-pulse")
+      ).not.toBeInTheDocument()
     })
 
     // Verify all data is rendered
-    testData.forEach((item) => {
+    for (const item of testData) {
       expect(screen.getByText(item.name)).toBeInTheDocument()
       expect(screen.getByText(item.email)).toBeInTheDocument()
-    })
+    }
   })
 
   it("renders custom column formatting", async () => {
@@ -71,7 +73,6 @@ describe("TableCollection", () => {
       {
         key: "name" as const,
         label: "Custom",
-        id: "custom",
         render: (item: Person) => `Custom: ${item.name}`,
       },
     ]
@@ -83,14 +84,17 @@ describe("TableCollection", () => {
       />
     )
 
-    // Wait for data to load
+    // Wait for loading state to disappear
     await waitFor(() => {
-      expect(screen.getByText("Custom: John Doe")).toBeInTheDocument()
+      expect(
+        screen.queryByRole("cell")?.querySelector(".animate-pulse")
+      ).not.toBeInTheDocument()
     })
 
-    testData.forEach((item) => {
+    // Verify custom rendered content
+    for (const item of testData) {
       expect(screen.getByText(`Custom: ${item.name}`)).toBeInTheDocument()
-    })
+    }
   })
 
   it("renders links for each row", async () => {
@@ -105,16 +109,19 @@ describe("TableCollection", () => {
       />
     )
 
-    // Wait for data to load
+    // Wait for loading state to disappear
     await waitFor(() => {
-      expect(screen.getByText("View John Doe")).toBeInTheDocument()
+      expect(
+        screen.queryByRole("cell")?.querySelector(".animate-pulse")
+      ).not.toBeInTheDocument()
     })
 
-    testData.forEach((item) => {
+    // Verify links are rendered correctly
+    for (const item of testData) {
       const link = screen.getByText(`View ${item.name}`)
       expect(link).toBeInTheDocument()
       expect(link.closest("a")).toHaveAttribute("href", `/users/${item.id}`)
-    })
+    }
   })
 
   it("renders empty state when no data is provided", async () => {
@@ -134,13 +141,17 @@ describe("TableCollection", () => {
     expect(screen.getByText("Name")).toBeInTheDocument()
     expect(screen.getByText("Email")).toBeInTheDocument()
 
-    // Wait for loading to complete
+    // Wait for loading state to disappear
     await waitFor(() => {
-      // Verify no data rows are present
-      testData.forEach((item) => {
-        expect(screen.queryByText(item.name)).not.toBeInTheDocument()
-        expect(screen.queryByText(item.email)).not.toBeInTheDocument()
-      })
+      expect(
+        screen.queryByRole("cell")?.querySelector(".animate-pulse")
+      ).not.toBeInTheDocument()
     })
+
+    // Verify no data rows are present
+    for (const item of testData) {
+      expect(screen.queryByText(item.name)).not.toBeInTheDocument()
+      expect(screen.queryByText(item.email)).not.toBeInTheDocument()
+    }
   })
 })

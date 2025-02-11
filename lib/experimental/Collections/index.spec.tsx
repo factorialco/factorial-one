@@ -48,7 +48,10 @@ describe("Collections", () => {
   test("renders with basic search filter", async () => {
     const { result } = renderHook(
       () =>
-        useDataSource({
+        useDataSource<
+          { name: Omit<StringPropertySchema, "value"> },
+          { name: { type: "search"; label: string } }
+        >({
           properties: {
             name: {
               type: "string",
@@ -60,13 +63,12 @@ describe("Collections", () => {
             },
           },
           fetchData: async ({ filters }) => {
-            // @ts-expect-error Property 'email' does not exist on type '{ name?: string | undefined; }'
-            if (filters.email) {
+            if ("email" in filters) {
               throw new Error("Email is not a valid filter")
             }
 
             return mockUsers.filter((user) => {
-              if (filters.name) {
+              if (filters.name && typeof filters.name === "string") {
                 return user.name
                   .toLowerCase()
                   .includes(filters.name.toLowerCase())
@@ -94,6 +96,7 @@ describe("Collections", () => {
       </TestWrapper>
     )
 
+    // Wait for content to be loaded
     await waitFor(() => {
       expect(screen.getByText("John Doe")).toBeInTheDocument()
       expect(screen.getByText("Jane Smith")).toBeInTheDocument()
@@ -103,7 +106,7 @@ describe("Collections", () => {
   test("renders with multiple visualizations", async () => {
     const { result } = renderHook(
       () =>
-        useDataSource({
+        useDataSource<UserSchema, FiltersDefinition>({
           properties,
           fetchData: async () => mockUsers,
         }),
@@ -138,6 +141,7 @@ describe("Collections", () => {
       </TestWrapper>
     )
 
+    // Wait for content to be loaded
     await waitFor(() => {
       expect(screen.getByText("john@example.com")).toBeInTheDocument()
       expect(screen.getByText("jane@example.com")).toBeInTheDocument()
@@ -147,7 +151,7 @@ describe("Collections", () => {
   test("handles observable data source", async () => {
     const { result } = renderHook(
       () =>
-        useDataSource({
+        useDataSource<UserSchema, FiltersDefinition>({
           properties,
           fetchData: () =>
             new Observable<typeof mockUsers>((observer) => {
@@ -177,6 +181,7 @@ describe("Collections", () => {
       </TestWrapper>
     )
 
+    // Wait for content to be loaded
     await waitFor(() => {
       expect(screen.getByText("Senior Engineer")).toBeInTheDocument()
       expect(screen.getByText("Product Manager")).toBeInTheDocument()
@@ -186,7 +191,7 @@ describe("Collections", () => {
   test("handles multiple filter types", async () => {
     const { result } = renderHook(
       () =>
-        useDataSource({
+        useDataSource<UserSchema, FiltersDefinition>({
           properties,
           filters: {
             fields: {
@@ -207,7 +212,7 @@ describe("Collections", () => {
           fetchData: async ({ filters }) => {
             let filtered = [...mockUsers]
 
-            if (filters.search) {
+            if (filters.search && typeof filters.search === "string") {
               const searchLower = filters.search.toLowerCase()
               filtered = filtered.filter(
                 (user) =>
@@ -247,6 +252,7 @@ describe("Collections", () => {
       </TestWrapper>
     )
 
+    // Wait for content to be loaded
     await waitFor(() => {
       expect(screen.getByText("John Doe")).toBeInTheDocument()
       expect(screen.getByText("Engineering")).toBeInTheDocument()
@@ -290,7 +296,7 @@ describe("Collections", () => {
     }
 
     const CustomComponent = ({ source }: CustomVisualizationProps) => {
-      const { data } = useData({ source })
+      const { data } = useData(source)
 
       return (
         <div data-testid="custom-visualization">
@@ -308,7 +314,7 @@ describe("Collections", () => {
 
     const { result } = renderHook(
       () =>
-        useDataSource({
+        useDataSource<UserSchema, FiltersDefinition>({
           properties,
           fetchData: () =>
             new Observable<typeof mockUsers>((observer) => {

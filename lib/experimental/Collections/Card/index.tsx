@@ -25,7 +25,7 @@ export const CardCollection = <
   Filters,
   CardVisualizationOptions<SourceData<Schema, Filters>>
 >) => {
-  const { data, isLoading } = useData<Schema, Filters>({ source })
+  const { data, isLoading } = useData<Schema, Filters>(source)
 
   const renderValue = (
     item: SourceData<Schema, Filters>,
