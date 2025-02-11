@@ -1,0 +1,96 @@
+import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
+
+import LinkTo from "@storybook/addon-links/react"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
+
+import * as SectionHeaderStories from "./Headers/SectionHeader/index.stories"
+
+<Meta title="SectionHeader" />
+
+# Section Header
+
+## Introducción
+
+### Definición
+
+El `Section Header` es un componente utilizado para organizar y presentar
+contenido en secciones distintas dentro de la interfaz de Factorial. Proporciona
+una estructura consistente para mostrar información jerárquica con títulos,
+descripciones y elementos opcionales.
+
+### Propósito
+
+- Estructurar y organizar secciones de contenido.
+- Proporcionar una jerarquía visual clara.
+- Agregar información contextual cuando sea necesario.
+- Habilitar interacciones básicas relacionadas con el contenido de la sección,
+  como enlaces de ayuda o acciones complementarias.
+
+## Anatomía
+
+<Canvas of={SectionHeaderStories.Default} meta={SectionHeaderStories} />
+<Controls of={SectionHeaderStories.Default} />
+
+### Elementos principales
+
+- **Título de sección (obligatorio)**: Texto principal de encabezado.
+- **Texto descriptivo (opcional)**: Texto de apoyo que proporciona contexto
+  adicional.
+- **Enlace al centro de ayuda (opcional)**: Enlace a documentación relacionada.
+- **Botón fantasma (opcional)**: Acción complementaria específica de la sección.
+
+## Casos de uso
+
+El `Section Header` debe utilizarse cuando sea necesario introducir una nueva
+sección de contenido, proporcionar una organización jerárquica simple o agregar
+un contexto básico a una sección específica.
+
+## Guías de uso
+
+### Mejores prácticas de contenido
+
+- Mantener los títulos concisos y descriptivos.
+- Usar `sentence case` en títulos y descripciones.
+- Utilizar descripciones solo cuando aporten valor adicional.
+
+### Mejores prácticas de diseño
+
+<DoDonts
+  do={{
+    description: "Usa el Section Header cuando necesites:",
+    guidelines: [
+      "Introducir una nueva sección de contenido.",
+      "Proporcionar una organización jerárquica simple.",
+      "Agregar contexto básico a una sección específica.",
+      "Enlazar a documentación de ayuda cuando sea relevante.",
+    ],
+    children: (
+      <img
+        src="docs/headers/section-header-do.png"
+        alt="Ejemplo de uso correcto del Section Header"
+      />
+    ),
+  }}
+  dont={{
+    description: "No uses el Section Header cuando:",
+    guidelines: [
+      "La información ya está presente en el módulo de encabezado.",
+      "No hay una necesidad clara de jerarquía visual.",
+    ],
+    children: (
+      <img
+        src="docs/headers/section-header-dont.png"
+        alt="Ejemplo de uso incorrecto del Section Header"
+      />
+    ),
+  }}
+/>
+
+## Comportamiento
+
+El `Section Header` se mantiene fijo en la parte superior de la sección para
+proporcionar contexto continuo a los usuarios mientras navegan por el contenido.
+Puede incluir elementos interactivos, como enlaces a documentación o botones de
+acción específicos.
+
+<Canvas of={SectionHeaderStories.WithActions} />
