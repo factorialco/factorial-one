@@ -76,25 +76,27 @@ export const AvatarNameSelectorContent = ({
         <div className="flex justify-between gap-2 p-2">
           <div
             className={cn(
-              "flex flex-1 items-center justify-between rounded border-[1px] border-solid border-f1-border bg-f1-background-inverse-secondary p-1.5 transition-all hover:border-f1-border-hover focus:border-f1-border-hover"
+              "flex flex-1 items-center justify-between rounded-[10px] border-[1px] border-solid border-f1-border bg-f1-background-inverse-secondary px-2 py-0.5 transition-all focus-within:border-f1-border-hover hover:border-f1-border-hover"
             )}
           >
-            <div className="flex items-center gap-1">
+            <div className="flex justify-between gap-1">
               <Icon icon={Search} size="md" />
               <input
                 type="text"
-                className="w-full border-none bg-transparent text-f1-foreground-secondary outline-none"
+                className="w-full border-none bg-transparent text-f1-foreground-secondary focus:outline-none"
                 placeholder={searchPlaceholder}
                 value={search}
                 onChange={(e) => onSearch(e.target.value)}
               />
             </div>
           </div>
+
           <div className="flex-1">
             <Select
               onChange={onGroupChange}
               options={groups}
               value={selectedGroup}
+              className="h-8 rounded-[10px] py-[5px]"
             />
           </div>
         </div>
@@ -117,26 +119,25 @@ export const AvatarNameSelectorContent = ({
                 ? !selected && selectedSubItems.length > 0
                 : selected
               return (
-                <>
-                  <AvatarNameListItem
-                    expanded={entity.expanded ?? false}
-                    onExpand={() => onToggleExpand(entity)}
-                    search={search}
-                    groupView={groupView}
-                    key={entity.id}
-                    entity={entity}
-                    selectedEntity={selectedEntity}
-                    onSelect={onSelect}
-                    onRemove={onRemove}
-                    onSubItemRemove={onSubItemRemove}
-                    onSubItemSelect={onSubItemSelect}
-                    selected={selected}
-                    partialSelected={partialSelected}
-                  />
-                  {groupView && (
-                    <div className="h-[1px] w-full bg-f1-border-secondary" />
-                  )}
-                </>
+                <AvatarNameListItem
+                  expanded={entity.expanded ?? false}
+                  onExpand={() => onToggleExpand(entity)}
+                  search={search}
+                  groupView={groupView}
+                  key={entity.id}
+                  entity={entity}
+                  selectedEntity={selectedEntity}
+                  onSelect={onSelect}
+                  onRemove={onRemove}
+                  onSubItemRemove={onSubItemRemove}
+                  onSubItemSelect={onSubItemSelect}
+                  selected={selected}
+                  partialSelected={partialSelected}
+                  showGroupIcon={
+                    groups.find((el) => el.value === selectedGroup)?.type ===
+                    "team"
+                  }
+                />
               )
             })}
           </ScrollArea>
@@ -150,8 +151,13 @@ export const AvatarNameSelectorContent = ({
           >
             <div className="flex flex-1 justify-between p-2">
               {selectAllLabel && (
-                <Button variant="outline" size="sm" onClick={onSelectAll}>
-                  {selectAllLabel} {search ? `(${totalFilteredEntities})` : ""}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onSelectAll}
+                  title={selectAllLabel + ` (${totalFilteredEntities})`}
+                >
+                  {selectAllLabel}
                 </Button>
               )}
               {clearLabel && (
@@ -160,8 +166,9 @@ export const AvatarNameSelectorContent = ({
                   size="sm"
                   disabled={selectedEntities.length === 0}
                   onClick={onClear}
+                  title={clearLabel + ` (${totalFilteredEntities})`}
                 >
-                  {clearLabel} {search ? `(${totalFilteredEntities})` : ""}
+                  {clearLabel}
                 </Button>
               )}
             </div>
@@ -175,13 +182,16 @@ export const AvatarNameSelectorContent = ({
             "linear-gradient(270deg, rgba(250, 251, 252, 0) 50%, #FAFBFC 100%)",
         }}
       >
-        <div className="mt-1 flex h-full flex-col gap-3 p-3">
+        <div className="mt-1 flex h-full flex-col gap-3 p-3 pb-0">
           {selectedLabel && (
             <span className="text-f1-foreground-secondary">
               {totalSelectedSubItems} {selectedLabel}
             </span>
           )}
-          <ScrollArea className="mr-1" style={{ height: "calc(24rem + 40px)" }}>
+          <ScrollArea
+            className="-mr-3 pr-3"
+            style={{ height: "calc(24rem + 40px)" }}
+          >
             {selectedEntities.map((entity) => (
               <AvatarNameListTag
                 groupView={groupView}

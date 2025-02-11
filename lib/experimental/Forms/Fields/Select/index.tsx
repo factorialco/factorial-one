@@ -31,6 +31,7 @@ export type SelectProps<T> = {
   searchValue?: string
   onOpenChange?: (open: boolean) => void
   searchEmptyMessage?: string
+  className?: string
 }
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
@@ -112,6 +113,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
       searchBoxPlaceholder,
       externalSearch,
       searchEmptyMessage,
+      className,
       ...props
     },
     ref
@@ -182,6 +184,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
             <button
               className={cn(
                 defaultTrigger,
+                className,
                 focusRing("focus-visible:border-f1-border-hover")
               )}
             >
@@ -190,7 +193,11 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
               </SelectValuePrimitive>
               <div className="flex h-6 w-6 items-center justify-center">
                 <div className="h-4 w-4 rounded-2xs bg-f1-background-secondary">
-                  <Icon icon={ChevronDown} size="xs" />
+                  <Icon
+                    icon={ChevronDown}
+                    size="sm"
+                    className="rounded-2xs bg-f1-background-secondary p-0.5"
+                  />
                 </div>
               </div>
             </button>

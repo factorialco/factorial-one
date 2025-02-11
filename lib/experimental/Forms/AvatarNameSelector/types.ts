@@ -15,6 +15,7 @@ export type AvatarNamedEntity = {
 export type AvatarNamedGroup = {
   value: string
   label: string
+  type?: "avatar" | "team"
 }
 
 export interface AvatarNameSelectorProps {
