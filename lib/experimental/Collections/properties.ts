@@ -5,6 +5,8 @@
 interface BasePropertySchema {
   type: unknown
   value: unknown
+  /** Human-readable label for the property */
+  label: string
 }
 
 /**
