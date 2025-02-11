@@ -16,7 +16,7 @@ const AvatarNameListTagContent = <T extends { avatar?: string; name: string }>({
     <div className="pb-[6px]">
       <BaseTag
         className={cn(
-          "w-auto gap-1 border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]",
+          "max-w-54 w-fit gap-1 text-ellipsis border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]",
           "rounded-full"
         )}
         left={
@@ -31,7 +31,7 @@ const AvatarNameListTagContent = <T extends { avatar?: string; name: string }>({
           <Icon
             icon={Cross}
             size="sm"
-            className="ml-auto cursor-pointer text-f1-icon-secondary"
+            className="cursor-pointer text-f1-icon-secondary"
             onClick={() => onRemove?.(entity)}
           />
         }

@@ -20,7 +20,7 @@ const AvatarNameListItemSingleContent = ({
   selected: boolean
   onSelect: (entity: AvatarNamedEntity) => void
   onRemove: (entity: AvatarNamedEntity) => void
-  marginLeft: "ml-3" | "ml-11"
+  marginLeft: "ml-1" | "ml-9"
   search: string
 }) => {
   const name = entity.name.split(" ")
@@ -32,7 +32,7 @@ const AvatarNameListItemSingleContent = ({
       aria-label={entity.name}
       className={
         marginLeft +
-        " mr-3 flex flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:cursor-pointer" +
+        " mr-3 flex flex-row flex-wrap items-center gap-2 rounded-[10px] border p-2 hover:cursor-pointer" +
         " hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold"
       }
     >
@@ -68,6 +68,7 @@ export const AvatarNameListItem = ({
   onSubItemRemove,
   onExpand,
   onSubItemSelect,
+  showGroupIcon = false,
 }: {
   entity: AvatarNamedEntity
   groupView: boolean
@@ -76,6 +77,7 @@ export const AvatarNameListItem = ({
   partialSelected: boolean
   selectedEntity?: AvatarNamedEntity
   search: string
+  showGroupIcon?: boolean
   onSelect: (entity: AvatarNamedEntity) => void
   onRemove: (entity: AvatarNamedEntity) => void
   onSubItemSelect: (
@@ -91,7 +93,7 @@ export const AvatarNameListItem = ({
   if (!groupView) {
     return (
       <AvatarNameListItemSingleContent
-        marginLeft="ml-3"
+        marginLeft="ml-1"
         entity={entity}
         search={search}
         selected={selected}
@@ -101,10 +103,12 @@ export const AvatarNameListItem = ({
     )
   }
 
+  if (!entity.subItems?.length) return null
+
   const checked = selected || partialSelected
   return (
     <>
-      <div className="ml-3 mr-3 flex flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold">
+      <div className="ml-1 mr-3 flex flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold">
         <Button
           round={true}
           hideLabel={true}
@@ -119,13 +123,15 @@ export const AvatarNameListItem = ({
           aria-label={entity.name}
           className="flex flex-1 flex-row items-center gap-2"
         >
-          <Icon
-            icon={LogoAvatar}
-            className="rounded-xs bg-f1-foreground-secondary text-f1-foreground-inverse"
-          />
+          {showGroupIcon && (
+            <Icon
+              icon={LogoAvatar}
+              className="rounded-xs bg-f1-foreground-secondary text-f1-foreground-inverse"
+            />
+          )}
           <div className="flex flex-1 flex-col">
             <div className="flex flex-1 flex-row items-center gap-2">
-              <HighlightText text={entity.name} search={search} />
+              <HighlightText semiBold text={entity.name} search={search} />
               <Counter value={entity.subItems?.length ?? 0} />
             </div>
           </div>
@@ -149,7 +155,7 @@ export const AvatarNameListItem = ({
           return (
             <AvatarNameListItemSingleContent
               key={entity.id + "-" + subItem.subId}
-              marginLeft="ml-11"
+              marginLeft="ml-9"
               entity={{
                 id: subItem.subId,
                 avatar: subItem.subAvatar,
@@ -162,6 +168,8 @@ export const AvatarNameListItem = ({
             />
           )
         })}
+
+      <div className="h-[1px] w-full bg-f1-border-secondary" />
     </>
   )
 }

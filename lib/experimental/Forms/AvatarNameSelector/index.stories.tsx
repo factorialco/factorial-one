@@ -8,6 +8,7 @@ import {
   teamsWithEmployees,
   workplaceWithEmployees,
 } from "./groups-avatar-name.factory"
+import { AvatarNamedGroup } from "./types"
 
 const GROUP_DATA = {
   all: famousEmployees,
@@ -23,10 +24,10 @@ const defaultArgs = {
   clearLabel: "Clear",
   selectedLabel: "selected",
   groups: [
-    { label: "Employees", value: "all" },
-    { label: "Teams", value: "teams" },
-    { label: "Workplaces", value: "workplaces" },
-  ],
+    { label: "None", value: "all", type: "avatar" },
+    { label: "Team", value: "teams", type: "team" },
+    { label: "Workplace", value: "workplaces" },
+  ] as AvatarNamedGroup[],
   selectedGroup: "all",
   onGroupChange: fn(),
 }
