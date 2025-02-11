@@ -21,7 +21,7 @@ const meta: Meta<typeof ApplicationFrame> = {
   parameters: {
     layout: "fullscreen",
     a11y: {
-      disable: true,
+      skipCi: true,
     },
   },
 }
