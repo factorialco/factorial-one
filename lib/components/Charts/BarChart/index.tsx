@@ -47,6 +47,7 @@ export type BarChartProps<K extends ChartConfig = ChartConfig> =
     showValueUnderLabel?: boolean
     highlightLastBar?: boolean
     onClick?: (data: ChartDataPoint<K>) => void
+    hideTooltip?: boolean
   }
 
 const _BarChart = <K extends ChartConfig>(
@@ -57,6 +58,7 @@ const _BarChart = <K extends ChartConfig>(
     yAxis = { hide: true },
     label = false,
     type = "simple",
+    hideTooltip = false,
     aspect,
     legend,
     showValueUnderLabel = false,
@@ -120,10 +122,14 @@ const _BarChart = <K extends ChartConfig>(
           onClick(chartData)
         }}
       >
-        <ChartTooltip
-          cursor
-          content={<ChartTooltipContent yAxisFormatter={yAxis.tickFormatter} />}
-        />
+        {hideTooltip && (
+          <ChartTooltip
+            cursor
+            content={
+              <ChartTooltipContent yAxisFormatter={yAxis.tickFormatter} />
+            }
+          />
+        )}
         <CartesianGrid {...cartesianGridProps()} />
         <YAxis
           {...yAxisProps(yAxis)}
