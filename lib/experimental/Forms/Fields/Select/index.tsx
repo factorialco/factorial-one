@@ -12,12 +12,14 @@ import {
   SelectValue as SelectValuePrimitive,
 } from "@/ui/select"
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
-import type { SelectItemObject, SelectItemProps } from "./internal-types"
+import type { SelectItemObject, SelectItemProps } from "./types"
+export * from "./types"
 
 export type SelectProps<T> = {
   placeholder?: string
   onChange: (value: T) => void
   value?: T
+  defaultItem?: SelectItemObject<T>
   options: SelectItemProps<T>[]
   children?: React.ReactNode
   disabled?: boolean
@@ -195,18 +197,20 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
           )}
         </SelectTrigger>
         <SelectContent>
-          {showSearchBox && (
-            <div className="p-3">
-              <F1SearchBox
-                placeholder={searchBoxPlaceholder}
-                onChange={onSearchChangeLocal}
-                clearable
-                value={searchValue}
-                key="search-input"
-                ref={searchInputRef}
-              />
-            </div>
-          )}
+          <SelectContent.Top>
+            {showSearchBox && (
+              <div className="p-3 pb-2">
+                <F1SearchBox
+                  placeholder={searchBoxPlaceholder}
+                  onChange={onSearchChangeLocal}
+                  clearable
+                  value={searchValue}
+                  key="search-input"
+                  ref={searchInputRef}
+                />
+              </div>
+            )}
+          </SelectContent.Top>
           <SelectOptions
             options={filteredOptions}
             emptyMessage={searchEmptyMessage}

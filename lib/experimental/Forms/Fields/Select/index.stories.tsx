@@ -81,6 +81,12 @@ const meta: Meta = {
         icon: Desktop,
         description: "A theme that adapts to the system's default appearance",
       },
+      ...Array.from({ length: 10 }, (_, i) => ({
+        value: `option-${i}`,
+        label: `Option ${i}`,
+        icon: Circle,
+        description: `Description for option ${i}`,
+      })),
     ],
     disabled: false,
     showSearchBox: false,

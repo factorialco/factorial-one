@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 import { Select } from "./index"
-import type { SelectItemProps } from "./internal-types"
+import type { SelectItemProps } from "./types"
 
 const mockOptions: SelectItemProps<string>[] = [
   {
