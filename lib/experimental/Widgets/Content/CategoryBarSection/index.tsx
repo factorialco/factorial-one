@@ -2,6 +2,7 @@ import {
   CategoryBarChart,
   CategoryBarProps,
 } from "@/components/Charts/CategoryBarChart"
+import { cn } from "@/lib/utils"
 
 interface CategoryBarSectionProps {
   title: string
@@ -35,7 +36,14 @@ export function CategoryBarSection({
       </div>
       {!!helpText && (
         <div className="mt-1">
-          <span className="text-sm">{helpText}</span>
+          <span
+            className={cn(
+              "text-f1-foreground",
+              legend ? "text-sm" : "text-base"
+            )}
+          >
+            {helpText}
+          </span>
         </div>
       )}
     </div>
