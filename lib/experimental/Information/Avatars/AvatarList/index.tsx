@@ -1,3 +1,4 @@
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { sizes } from "@/ui/avatar"
 import { cva } from "cva"
 import { Avatar, AvatarVariant } from "../Avatar"
@@ -54,27 +55,54 @@ type Props = {
   avatars: AvatarVariant[]
   size?: (typeof sizes)[number]
   type?: AvatarType
+
+  /**
+   * Whether to show a tooltip in each avatar.
+   * @default false
+   */
+  showTooltip?: boolean
 }
 
-export const AvatarList = ({ avatars, size = "medium", type }: Props) => {
+export const AvatarList = ({
+  avatars,
+  size = "medium",
+  type,
+  showTooltip = false,
+}: Props) => {
   return (
     <div className={avatarListVariants({ size })}>
-      {avatars.map((avatar, index) => (
-        <div
-          className="flex h-fit w-fit shrink-0 items-center justify-center overflow-hidden"
-          key={index}
-          style={
-            index !== avatars.length - 1
-              ? {
-                  clipPath:
-                    CLIP_MASK[type === "person" ? "rounded" : "base"][size],
-                }
-              : undefined
-          }
-        >
-          <Avatar avatar={avatar} size={size} />
-        </div>
-      ))}
+      {avatars.map((avatar, index) => {
+        const displayName =
+          avatar.type === "person"
+            ? `${avatar.firstName} ${avatar.lastName}`
+            : avatar.name
+
+        const clippedAvatar = (
+          <div
+            className="flex h-fit w-fit shrink-0 items-center justify-center"
+            style={
+              index !== avatars.length - 1
+                ? {
+                    clipPath:
+                      CLIP_MASK[type === "person" ? "rounded" : "base"][size],
+                  }
+                : undefined
+            }
+          >
+            <Avatar avatar={avatar} size={size} />
+          </div>
+        )
+
+        return (
+          <div key={index}>
+            {showTooltip ? (
+              <Tooltip label={displayName}>{clippedAvatar}</Tooltip>
+            ) : (
+              clippedAvatar
+            )}
+          </div>
+        )
+      })}
     </div>
   )
 }
