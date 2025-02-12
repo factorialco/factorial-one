@@ -1,7 +1,8 @@
 import { Home, Settings } from "@/icons/app"
-import { render, within } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import Breadcrumbs from "."
+import Breadcrumbs, { BreadcrumbItemType } from "."
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
@@ -237,5 +238,66 @@ describe("Breadcrumbs", () => {
         expect(item.closest("a")).toBeNull()
       })
     })
+  })
+
+  it("renders select type breadcrumb correctly", async () => {
+    const breadcrumbs = [
+      { id: "home", label: "Home", href: "/" },
+      {
+        id: "select",
+        type: "select" as const,
+        options: [
+          { value: "1", label: "Option 1" },
+          { value: "2", label: "Option 2" },
+        ],
+        value: "1",
+        onChange: vi.fn(),
+      },
+    ]
+
+    const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
+    const nav = container.querySelector("nav")
+    expect(nav).toBeInTheDocument()
+
+    // Check if home link is rendered
+    const homeLink = within(nav!).getByText("Home")
+    expect(homeLink).toBeInTheDocument()
+
+    // Check if select is rendered with correct value
+    const select = within(nav!).getByText("Option 1")
+    expect(select).toBeInTheDocument()
+    expect(select.closest('[role="combobox"]')).toBeInTheDocument()
+  })
+
+  it("renders select type breadcrumb with searchbox", async () => {
+    const onChange = vi.fn()
+    const breadcrumbs: BreadcrumbItemType[] = [
+      { id: "home", label: "Home", href: "/" },
+      {
+        id: "select",
+        type: "select",
+        searchbox: true,
+        options: [
+          { value: "1", label: "Option 1" },
+          { value: "2", label: "Option 2" },
+        ],
+        value: "1",
+        onChange,
+      },
+    ]
+
+    const user = userEvent.setup()
+    render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
+
+    // Open select
+    await user.click(screen.getByRole("combobox"))
+
+    // Check if searchbox is rendered
+    const searchbox = screen.getByRole("searchbox")
+    expect(searchbox).toBeInTheDocument()
+
+    // Test selection
+    await user.click(screen.getByText("Option 2"))
+    expect(onChange).toHaveBeenCalledWith("2")
   })
 })
