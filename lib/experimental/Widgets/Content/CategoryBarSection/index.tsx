@@ -9,6 +9,7 @@ interface CategoryBarSectionProps {
   data: CategoryBarProps["data"]
   helpText?: string
   legend?: boolean
+  hideTooltip?: boolean
 }
 
 export function CategoryBarSection({
@@ -17,6 +18,7 @@ export function CategoryBarSection({
   data,
   helpText,
   legend = false,
+  hideTooltip = false,
 }: CategoryBarSectionProps) {
   return (
     <div>
@@ -25,7 +27,11 @@ export function CategoryBarSection({
         <span className="text-xl text-f1-foreground-secondary">{subtitle}</span>
       </div>
       <div className="mt-2">
-        <CategoryBarChart data={data} legend={legend} />
+        <CategoryBarChart
+          data={data}
+          legend={legend}
+          hideTooltip={hideTooltip}
+        />
       </div>
       {!!helpText && (
         <div className="mt-1">
