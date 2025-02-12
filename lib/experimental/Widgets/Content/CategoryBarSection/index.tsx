@@ -35,7 +35,7 @@ export function CategoryBarSection({
         />
       </div>
       {!!helpText && (
-        <div className="mt-1">
+        <div className={legend ? "mt-1" : "mt-2"}>
           <span
             className={cn(
               "text-f1-foreground",
