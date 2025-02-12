@@ -8,13 +8,13 @@ import {
   User,
 } from "@/experimental/exports"
 import { ApplicationFrame } from "@/experimental/Navigation/ApplicationFrame"
-import * as SidebarHeaderStories from "@/experimental/Navigation/Sidebar/Header/index.stories"
 import { Sidebar } from "@/experimental/Navigation/Sidebar/Sidebar"
 import * as Icons from "@/icons/app"
 import * as ModuleIcons from "@/icons/modules"
 import { useNavigation } from "@/lib/linkHandler"
 import type { Meta, StoryObj } from "@storybook/react"
 import React from "react"
+import * as MenuConfig from "./menu"
 const meta: Meta<typeof ApplicationFrame> = {
   title: "Mockups/Grouping",
   component: ApplicationFrame,
@@ -34,6 +34,7 @@ export const Default: Story = {
   decorators: [
     (Story) => {
       const { isActive } = useNavigation()
+      const [companySelected, setCompanySelected] = React.useState("1")
 
       const findActiveMenuItem = (tree: MenuCategory[]) => {
         for (const category of tree) {
@@ -75,377 +76,47 @@ export const Default: Story = {
         Spaces: ModuleIcons.Spaces,
         Software: ModuleIcons.Software,
         Workflows: ModuleIcons.Workflows,
+        Benefits: ModuleIcons.Benefits,
+        Accounting: ModuleIcons.Finance,
       }
 
-      const menuTreeNone = [
-        {
-          title: "Root",
-          id: "root",
-          items: [
-            {
-              label: "Home",
-              icon: Icons.Home,
-              href: "/",
-              exactMatch: true,
-            },
-            {
-              label: "Inbox",
-              icon: Icons.Envelope,
-              href: "/inbox",
-              badge: 6,
-            },
-            {
-              label: "Discover Factorial",
-              icon: Icons.Sparkles,
-              href: "/discover",
-            },
-          ],
-          isRoot: true,
-        },
-        {
-          title: "Personal",
-          id: "personal",
-          items: [
-            { label: "Me", icon: Icons.Person, href: "/me" },
-            {
-              label: "Clock in",
-              icon: Icons.Clock,
-              href: "/clock-in",
-            },
-            {
-              label: "Time off",
-              icon: Icons.PalmTree,
-              href: "/time-off",
-            },
-            {
-              label: "Tasks",
-              icon: Icons.CheckCircleLine,
-              href: "/tasks",
-            },
-            {
-              label: "My documents",
-              icon: Icons.Folder,
-              href: "/my-documents",
-            },
-            {
-              label: "My goals",
-              icon: Icons.Flag,
-              href: "/my-goals",
-            },
-            {
-              label: "My training",
-              icon: Icons.BookOpen,
-              href: "/my-training",
-            },
-            {
-              label: "My spending",
-              icon: Icons.Wallet,
-              href: "/my-spending",
-            },
-            {
-              label: "Kudos",
-              icon: Icons.Heart,
-              href: "/kudos",
-            },
-          ],
-          isOpen: true,
-        },
-        {
-          title: "Company",
-          id: "company",
-          items: [
-            {
-              label: "Organization",
-              icon: Icons.People,
-              href: "/organization",
-            },
-            {
-              label: "Calendar",
-              icon: Icons.Calendar,
-              href: "/calendar",
-            },
-            {
-              label: "Recruitment",
-              icon: Icons.SearchPerson,
-              href: "/recruitment",
-            },
-            {
-              label: "Performance",
-              icon: Icons.Graph,
-              href: "/performance",
-            },
-            {
-              label: "Engagement",
-              icon: Icons.MessageHeart,
-              href: "/engagement",
-            },
-            {
-              label: "Training",
-              icon: Icons.BookOpen,
-              href: "/training",
-            },
-            {
-              label: "Time tracking",
-              icon: Icons.Timer,
-              href: "/time-tracking",
-            },
-            {
-              label: "Projects",
-              icon: Icons.Suitcase,
-              href: "/projects",
-            },
-            {
-              label: "Analytics",
-              icon: Icons.BarGraph,
-              href: "/analytics",
-            },
-            {
-              label: "Finance",
-              icon: Icons.MoneyBag,
-              href: "/finance",
-            },
-            {
-              label: "Spending",
-              icon: Icons.Wallet,
-              href: "/spending",
-            },
-            {
-              label: "Payroll",
-              icon: Icons.Money,
-              href: "/payroll",
-            },
-            {
-              label: "Documents",
-              icon: Icons.Folder,
-              href: "/documents",
-            },
-            {
-              label: "Shifts",
-              icon: Icons.Schedule,
-              href: "/shifts",
-            },
-            {
-              label: "Spaces",
-              icon: Icons.Building,
-              href: "/spaces",
-            },
-            {
-              label: "Software",
-              icon: Icons.Desktop,
-              href: "/software",
-            },
-            {
-              label: "Workflows",
-              icon: Icons.Split,
-              href: "/workflows",
-            },
-          ],
-          isOpen: true,
-        },
-      ]
+      type GroupingType = "none" | "bundles"
+      type MenuStructure = {
+        none: MenuCategory[]
+        bundles: MenuCategory[]
+      }
 
-      const menuTreeBundles = [
-        {
-          title: "Root",
-          id: "root",
-          items: [
-            {
-              label: "Home",
-              icon: Icons.Home,
-              href: "/",
-              exactMatch: true,
-            },
-            {
-              label: "Inbox",
-              icon: Icons.Envelope,
-              href: "/inbox",
-              badge: 6,
-            },
-            {
-              label: "Discover Factorial",
-              icon: Icons.Sparkles,
-              href: "/discover",
-            },
-          ],
-          isRoot: true,
-        },
-        {
-          title: "Personal",
-          id: "personal",
-          items: [
-            { label: "Me", icon: Icons.Person, href: "/me" },
-            {
-              label: "Clock in",
-              icon: Icons.Clock,
-              href: "/clock-in",
-            },
-            {
-              label: "Time off",
-              icon: Icons.PalmTree,
-              href: "/time-off",
-            },
-            {
-              label: "Tasks",
-              icon: Icons.CheckCircleLine,
-              href: "/tasks",
-            },
-            {
-              label: "My documents",
-              icon: Icons.Folder,
-              href: "/my-documents",
-            },
-            {
-              label: "My goals",
-              icon: Icons.Flag,
-              href: "/my-goals",
-            },
-            {
-              label: "My training",
-              icon: Icons.BookOpen,
-              href: "/my-training",
-            },
-            {
-              label: "My spending",
-              icon: Icons.Wallet,
-              href: "/my-spending",
-            },
-            {
-              label: "Kudos",
-              icon: Icons.Heart,
-              href: "/kudos",
-            },
-          ],
-          isOpen: true,
-        },
-        {
-          title: "General",
-          id: "bundle-general",
-          items: [
-            {
-              label: "Organization",
-              icon: Icons.People,
-              href: "/organization",
-            },
-            {
-              label: "Documents",
-              icon: Icons.Folder,
-              href: "/documents",
-            },
-            {
-              label: "Analytics",
-              icon: Icons.BarGraph,
-              href: "/analytics",
-            },
-            {
-              label: "Spaces",
-              icon: Icons.Building,
-              href: "/spaces",
-            },
-            {
-              label: "Software",
-              icon: Icons.Desktop,
-              href: "/software",
-            },
-            {
-              label: "Workflows",
-              icon: Icons.Split,
-              href: "/workflows",
-            },
-          ],
-          isOpen: true,
-        },
-        {
-          title: "Operations",
-          id: "operations",
-          items: [
-            {
-              label: "Calendar",
-              icon: Icons.Calendar,
-              href: "/calendar",
-            },
-            {
-              label: "Time tracking",
-              icon: Icons.Timer,
-              href: "/time-tracking",
-            },
-            {
-              label: "Shifts",
-              icon: Icons.Schedule,
-              href: "/shifts",
-            },
-            {
-              label: "Payroll",
-              icon: Icons.Money,
-              href: "/payroll",
-            },
-          ],
-          isOpen: true,
-        },
-        {
-          title: "Talent",
-          id: "talent",
-          items: [
-            {
-              label: "Recruitment",
-              icon: Icons.SearchPerson,
-              href: "/recruitment",
-            },
-            {
-              label: "Performance",
-              icon: Icons.Graph,
-              href: "/performance",
-            },
-            {
-              label: "Engagement",
-              icon: Icons.MessageHeart,
-              href: "/engagement",
-            },
-            {
-              label: "Training",
-              icon: Icons.BookOpen,
-              href: "/training",
-            },
-          ],
-          isOpen: true,
-        },
-        {
-          title: "Spending",
-          id: "spending",
-          items: [
-            {
-              label: "Finance",
-              icon: Icons.MoneyBag,
-              href: "/finance",
-            },
-            {
-              label: "Spending",
-              icon: Icons.Wallet,
-              href: "/spending",
-            },
-            {
-              label: "Projects",
-              icon: Icons.Suitcase,
-              href: "/projects",
-            },
-          ],
-          isOpen: true,
-        },
-      ]
+      const getCompanyMenus = (companyId: string): MenuStructure => {
+        switch (companyId) {
+          case "1": // Factorial
+            return {
+              none: MenuConfig.menuTreeNone,
+              bundles: MenuConfig.menuTreeBundles,
+            }
+          case "2": // Dazlog
+            return {
+              none: MenuConfig.dazlogMenuTreeNone,
+              bundles: MenuConfig.menuTreeBundles,
+            }
+          default:
+            return {
+              none: MenuConfig.menuTreeNone,
+              bundles: MenuConfig.menuTreeBundles,
+            }
+        }
+      }
 
-      const [menuTree, setMenuTree] = React.useState(menuTreeNone)
-      const [selectedDropdown, setSelectedDropdown] = React.useState(
-        menuTree === menuTreeNone ? "None" : "Bundles"
-      )
+      const [selectedDropdown, setSelectedDropdown] = React.useState<
+        "None" | "Bundles"
+      >("None")
+      const menuTree =
+        getCompanyMenus(companySelected)[
+          selectedDropdown.toLowerCase() as GroupingType
+        ]
       const activeMenuItem = findActiveMenuItem(menuTree)
 
-      const handleDropdownClick = (value: string) => {
-        if (value === "None") {
-          setMenuTree(menuTreeNone)
-          setSelectedDropdown("None")
-        } else {
-          setMenuTree(menuTreeBundles)
-          setSelectedDropdown("Bundles")
-        }
+      const handleDropdownClick = (value: "None" | "Bundles") => {
+        setSelectedDropdown(value)
       }
 
       const dropdownItems = [
@@ -465,7 +136,26 @@ export const Default: Story = {
         <ApplicationFrame
           sidebar={
             <Sidebar
-              header={<SidebarHeader {...SidebarHeaderStories.Default.args} />}
+              header={
+                <SidebarHeader
+                  companies={[
+                    {
+                      id: "1",
+                      name: "Factorial",
+                      logo: "https://github.com/factorialco.png",
+                    },
+                    {
+                      id: "2",
+                      name: "Dazlog",
+                      logo: "https://github.com/dazlog.png",
+                    },
+                    { id: "3", name: "Acme Corp" },
+                  ]}
+                  selected={companySelected}
+                  onChange={(company) => setCompanySelected(company)}
+                  isExpanded={true}
+                />
+              }
               body={<Menu tree={menuTree} dropdownItems={dropdownItems} />}
               footer={
                 <User
