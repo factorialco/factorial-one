@@ -1,5 +1,5 @@
-import { Button, ButtonProps } from "@/components/Actions/Button"
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Button, type ButtonProps } from "@/components/Actions/Button"
+import { Icon, type IconType } from "@/components/Utilities/Icon"
 import ExternalLink from "@/icons/app/ExternalLink"
 import { cn, focusRing } from "@/lib/utils"
 
@@ -10,13 +10,13 @@ type Props = {
   /** Description text below the title */
   description: string
 
-  /** Optional action button */
+  /**  Complementary action specific to the section */
   action?: Pick<ButtonProps, "label" | "onClick"> & {
     icon?: IconType
   }
 
-  /** Optional help link, usually to a Help Center article */
-  help?: {
+  /** Optional Link to related documentation (Help center or other link))*/
+  supportButton?: {
     label: string
     href: string
   }
@@ -29,7 +29,7 @@ export const SectionHeader = ({
   title,
   description,
   action,
-  help,
+  supportButton,
   separator,
 }: Props) => {
   return (
@@ -45,10 +45,10 @@ export const SectionHeader = ({
           <h2 className="text-lg font-semibold text-f1-foreground">{title}</h2>
           <p className="text-f1-foreground-secondary">{description}</p>
         </div>
-        {help && (
+        {supportButton && (
           <div className="w-fit">
             <a
-              href={help.href}
+              href={supportButton.href}
               target="_blank"
               rel="noreferrer"
               className={cn(
@@ -56,7 +56,7 @@ export const SectionHeader = ({
                 focusRing()
               )}
             >
-              {help.label}
+              {supportButton.label}
               <Icon icon={ExternalLink} size="sm" />
             </a>
           </div>
@@ -87,5 +87,3 @@ export const SectionHeader = ({
     </div>
   )
 }
-
-SectionHeader.displayName = "SectionHeader"
