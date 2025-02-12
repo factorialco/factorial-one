@@ -16,7 +16,6 @@ type Props = {
   }
 
   /** Optional Link to related documentation (Help center or other link))*/
-
   supportButton?: {
     label: string
     href: string
