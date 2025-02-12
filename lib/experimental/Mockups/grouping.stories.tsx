@@ -126,7 +126,7 @@ export const Default: Story = {
 
       const [selectedDropdown, setSelectedDropdown] = React.useState<
         "None" | "Bundles"
-      >("None")
+      >("Bundles")
       const menuTree =
         getCompanyMenus(companySelected)[
           selectedDropdown.toLowerCase() as GroupingType
@@ -181,7 +181,7 @@ export const Default: Story = {
                   selected={companySelected}
                   onChange={(company) => {
                     setCompanySelected(company)
-                    setSelectedDropdown("None")
+                    setSelectedDropdown("Bundles")
                   }}
                   isExpanded={true}
                 />
