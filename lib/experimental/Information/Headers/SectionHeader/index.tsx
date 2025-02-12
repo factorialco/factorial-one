@@ -1,5 +1,5 @@
-import { Button, ButtonProps } from "@/components/Actions/Button"
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Button, type ButtonProps } from "@/components/Actions/Button"
+import { Icon, type IconType } from "@/components/Utilities/Icon"
 import ExternalLink from "@/icons/app/ExternalLink"
 import { cn, focusRing } from "@/lib/utils"
 
@@ -10,12 +10,12 @@ type Props = {
   /** Description text below the title */
   description: string
 
-  /** Optional action button */
+  /**  Complementary action specific to the section */
   action?: Pick<ButtonProps, "label" | "onClick"> & {
     icon?: IconType
   }
 
-  /** Optional help link, usually to a Help Center article */
+  /** Optional Link to related documentation (Help center or other link))*/
   supportButton?: {
     label: string
     href: string
@@ -87,5 +87,3 @@ export const SectionHeader = ({
     </div>
   )
 }
-
-SectionHeader.displayName = "SectionHeader"

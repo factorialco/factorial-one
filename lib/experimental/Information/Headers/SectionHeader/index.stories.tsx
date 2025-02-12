@@ -4,7 +4,7 @@ import { fn } from "@storybook/test"
 import { SectionHeader } from "."
 const meta: Meta<typeof SectionHeader> = {
   component: SectionHeader,
-  title: "SectionHeader",
+  title: "Section header",
   tags: ["experimental"],
   parameters: {
     layout: "padded",
