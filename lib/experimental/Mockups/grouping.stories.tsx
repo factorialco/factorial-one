@@ -13,8 +13,13 @@ import * as Icons from "@/icons/app"
 import * as ModuleIcons from "@/icons/modules"
 import { useNavigation } from "@/lib/linkHandler"
 import type { Meta, StoryObj } from "@storybook/react"
+import { AnimatePresence, motion } from "framer-motion"
 import React from "react"
-import * as MenuConfig from "./menu"
+import * as MenuConfigOne from "./menu1"
+import * as MenuConfigTwo from "./menu2"
+import * as MenuConfigThree from "./menu3"
+import * as MenuConfigFour from "./menu4"
+
 const meta: Meta<typeof ApplicationFrame> = {
   title: "Mockups/Grouping",
   component: ApplicationFrame,
@@ -37,7 +42,10 @@ export const Default: Story = {
       const [companySelected, setCompanySelected] = React.useState("1")
 
       const findActiveMenuItem = (tree: MenuCategory[]) => {
+        if (!Array.isArray(tree)) return null
+
         for (const category of tree) {
+          if (!category?.items) continue
           const activeItem = category.items.find((item) =>
             isActive(item.href, { exact: item.exactMatch })
           )
@@ -50,7 +58,7 @@ export const Default: Story = {
         Home: ModuleIcons.Home,
         Inbox: ModuleIcons.Inbox,
         "Discover Factorial": ModuleIcons.Discover,
-        Me: ModuleIcons.Profile,
+        Profile: ModuleIcons.Profile,
         "Clock in": ModuleIcons.ClockIn,
         "Time off": ModuleIcons.TimeOff,
         Tasks: ModuleIcons.Tasks,
@@ -88,20 +96,30 @@ export const Default: Story = {
 
       const getCompanyMenus = (companyId: string): MenuStructure => {
         switch (companyId) {
-          case "1": // Factorial
+          case "1": // Full CrossFit
             return {
-              none: MenuConfig.menuTreeNone,
-              bundles: MenuConfig.menuTreeBundles,
+              none: MenuConfigOne.menuTreeNone,
+              bundles: MenuConfigOne.menuTreeBundles,
             }
-          case "2": // Dazlog
+          case "2": // CHC Energia
             return {
-              none: MenuConfig.dazlogMenuTreeNone,
-              bundles: MenuConfig.menuTreeBundles,
+              none: MenuConfigTwo.menuTreeNone,
+              bundles: MenuConfigTwo.menuTreeBundles,
+            }
+          case "3": // Patterson Group
+            return {
+              none: MenuConfigThree.menuTreeNone,
+              bundles: MenuConfigThree.menuTreeBundles,
+            }
+          case "4": // Factorial
+            return {
+              none: MenuConfigFour.menuTreeNone,
+              bundles: MenuConfigFour.menuTreeBundles,
             }
           default:
             return {
-              none: MenuConfig.menuTreeNone,
-              bundles: MenuConfig.menuTreeBundles,
+              none: MenuConfigOne.menuTreeNone,
+              bundles: MenuConfigOne.menuTreeBundles,
             }
         }
       }
@@ -112,7 +130,7 @@ export const Default: Story = {
       const menuTree =
         getCompanyMenus(companySelected)[
           selectedDropdown.toLowerCase() as GroupingType
-        ]
+        ] || []
       const activeMenuItem = findActiveMenuItem(menuTree)
 
       const handleDropdownClick = (value: "None" | "Bundles") => {
@@ -141,22 +159,46 @@ export const Default: Story = {
                   companies={[
                     {
                       id: "1",
-                      name: "Factorial",
-                      logo: "https://github.com/factorialco.png",
+                      name: "Full CrossFit",
+                      logo: "https://github.com/zen-browser.png",
                     },
                     {
                       id: "2",
-                      name: "Dazlog",
-                      logo: "https://github.com/dazlog.png",
+                      name: "CHC Energía",
+                      logo: "https://github.com/codacy.png",
                     },
-                    { id: "3", name: "Acme Corp" },
+                    {
+                      id: "3",
+                      name: "Patterson Group",
+                      logo: "https://github.com/hoppscotch.png",
+                    },
+                    {
+                      id: "4",
+                      name: "Factorial",
+                      logo: "https://github.com/factorialco.png",
+                    },
                   ]}
                   selected={companySelected}
-                  onChange={(company) => setCompanySelected(company)}
+                  onChange={(company) => {
+                    setCompanySelected(company)
+                    setSelectedDropdown("None")
+                  }}
                   isExpanded={true}
                 />
               }
-              body={<Menu tree={menuTree} dropdownItems={dropdownItems} />}
+              body={
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={companySelected}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu tree={menuTree} dropdownItems={dropdownItems} />
+                  </motion.div>
+                </AnimatePresence>
+              }
               footer={
                 <User
                   firstName="René"

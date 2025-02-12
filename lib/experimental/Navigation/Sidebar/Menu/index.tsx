@@ -30,6 +30,7 @@ export interface MenuCategory {
 interface MenuProps {
   tree: MenuCategory[]
   dropdownItems?: DropdownItem[]
+  isLarge?: boolean
 }
 
 const MenuItemContent = ({
@@ -83,9 +84,11 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
 const CategoryItem = ({
   category,
   dropdownItems,
+  isLarge,
 }: {
   category: MenuCategory
   dropdownItems?: DropdownItem[]
+  isLarge: boolean
 }) => {
   const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
   const shouldReduceMotion = useReducedMotion()
@@ -134,7 +137,7 @@ const CategoryItem = ({
                 className="text-f1-icon-secondary"
               />
             </motion.div>
-            {category.id !== "personal" && dropdownItems && (
+            {category.id !== "personal" && dropdownItems && isLarge && (
               <div onClick={(e) => e.stopPropagation()}>
                 <Dropdown
                   items={dropdownItems}
@@ -189,7 +192,7 @@ const CategoryItem = ({
   )
 }
 
-export function Menu({ tree, dropdownItems }: MenuProps) {
+export function Menu({ tree, dropdownItems, isLarge = false }: MenuProps) {
   return (
     <div className="flex w-full flex-col gap-3 bg-transparent px-3">
       {tree.map((category, index) => (
@@ -197,6 +200,7 @@ export function Menu({ tree, dropdownItems }: MenuProps) {
           key={index}
           category={category}
           dropdownItems={dropdownItems}
+          isLarge={true}
         />
       ))}
     </div>
