@@ -72,8 +72,8 @@ export const AvatarNameSelectorContent = ({
 
   return (
     <div className="flex">
-      <div className="flex w-96 flex-col rounded-l-xl border-0 border-r-[1px] border-solid border-f1-border-secondary">
-        <div className="flex h-[48px] justify-between gap-2 rounded-tl-xl border-0 border-b-[1px] border-solid border-f1-border-secondary bg-f1-background/30 p-2 backdrop-blur-sm">
+      <div className="flex w-96 flex-col rounded-l-xl border-0">
+        <div className="flex h-[48px] justify-between gap-2 rounded-tl-xl border-0 border-b-[1px] border-r-[1px] border-solid border-f1-border-secondary bg-f1-background/30 p-2 backdrop-blur-2xl">
           <div
             className={cn(
               "flex flex-1 items-center justify-between rounded-[10px] border-[1px] border-solid border-f1-border px-2 py-0.5 transition-all focus-within:border-f1-border-hover hover:border-f1-border-hover"
@@ -100,7 +100,7 @@ export const AvatarNameSelectorContent = ({
             />
           </div>
         </div>
-        <div className="flex-grow-1 flex h-96 flex-col justify-start gap-1 bg-f1-background pr-2">
+        <div className="flex-grow-1 flex h-96 flex-col justify-start gap-1 border-0 border-r-[1px] border-solid border-f1-border-secondary bg-f1-background pr-2">
           <ScrollArea className="-mr-2 h-full">
             {entities.map((entity) => {
               const selectedEntity = selectedEntities.find(
@@ -143,7 +143,7 @@ export const AvatarNameSelectorContent = ({
           </ScrollArea>
         </div>
         {(selectAllLabel || clearLabel) && (
-          <div className="rounded-bl-xl border-0 border-t-[1px] border-solid border-f1-border-secondary bg-f1-background/30 backdrop-blur-sm">
+          <div className="rounded-bl-xl border-0 border-r-[1px] border-t-[1px] border-solid border-f1-border-secondary bg-f1-background/30 backdrop-blur-2xl">
             <div className="flex flex-1 justify-between p-2">
               {selectAllLabel && (
                 <Button
@@ -171,17 +171,17 @@ export const AvatarNameSelectorContent = ({
         )}
       </div>
       <div className="w-56 flex-col rounded-r-xl">
-        <div className="flex h-[48px] rounded-tr-xl border-0 border-b-[1px] border-solid border-f1-border-secondary bg-f1-background/30 p-3 backdrop-blur-sm">
+        <div className="flex h-[48px] rounded-tr-xl border-0 border-b-[1px] border-solid border-f1-border-secondary bg-f1-background/30 p-3 backdrop-blur-2xl">
           {selectedLabel && (
             <span className="my-auto text-f1-foreground-secondary">
               {totalSelectedSubItems} {selectedLabel}
             </span>
           )}
         </div>
-        <div className="mt-1 flex flex-col gap-3 rounded-br-xl bg-f1-background p-3 pb-0">
+        <div className="flex flex-col gap-3 rounded-br-xl bg-f1-background px-3 pb-0">
           <ScrollArea
-            className="-mr-3 pr-3"
-            style={{ height: "calc(24rem + 25px)" }}
+            className="-mr-3 pr-3 pt-1.5"
+            style={{ height: "calc(24rem + 40px)" }}
           >
             {selectedEntities.map((entity) => (
               <AvatarNameListTag
