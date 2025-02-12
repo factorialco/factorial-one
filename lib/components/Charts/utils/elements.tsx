@@ -32,6 +32,7 @@ export const yAxisProps = (
   tickLine: false,
   axisLine: false,
   tickMargin: 8,
+  ticks: config?.ticks,
   tickCount: config?.tickCount,
   tickFormatter: config?.tickFormatter,
 })

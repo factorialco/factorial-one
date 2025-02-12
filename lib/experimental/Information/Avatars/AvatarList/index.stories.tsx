@@ -59,3 +59,16 @@ export const Teams: Story = {
     ],
   },
 }
+
+export const WithTooltip: Story = {
+  args: {
+    showTooltip: true,
+  },
+}
+
+export const CompaniesWithTooltip: Story = {
+  args: {
+    ...Companies.args,
+    showTooltip: true,
+  },
+}
