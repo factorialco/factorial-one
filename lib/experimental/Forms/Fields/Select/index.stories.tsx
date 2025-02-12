@@ -7,11 +7,11 @@ import { useState } from "react"
 
 // Wraps the Select component with a hook to show the selected value
 const SelectWithHooks = (props: SelectProps<string>) => {
-  const [value, setValue] = useState("")
+  const [localValue, setLocalValue] = useState(props.value)
   const [, setSearchValue] = useState("")
   // Sets a click handler to change the label's value
   const handleOnChange = (value: string) => {
-    setValue(value)
+    setLocalValue(value)
     console.log("value", value)
   }
 
@@ -23,7 +23,7 @@ const SelectWithHooks = (props: SelectProps<string>) => {
   return (
     <Select
       {...props}
-      value={value}
+      value={localValue}
       onChange={handleOnChange}
       onSearchChange={handleOnSearchChange}
     />
