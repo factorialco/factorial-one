@@ -19,6 +19,10 @@ const config: StorybookConfig = {
             directory: "../src/playground",
             titlePrefix: "Playground",
           },
+          {
+            directory: "../lib/ui",
+            titlePrefix: "🔒 Internal",
+          },
         ]),
   ],
   staticDirs: ["../public"],

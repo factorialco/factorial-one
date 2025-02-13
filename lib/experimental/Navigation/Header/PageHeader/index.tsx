@@ -11,7 +11,11 @@ import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 import { Dropdown } from "../../Dropdown"
-import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
+import Breadcrumbs, {
+  BreadcrumbItemTypeText,
+  BreadcrumbLoadingItemType,
+  type BreadcrumbItemType,
+} from "../Breadcrumbs"
 
 export type PageAction = {
   label: string
@@ -51,11 +55,18 @@ type HeaderProps = {
     variant: StatusVariant
     tooltip?: string
   }
-  breadcrumbs?: BreadcrumbItemType[]
   actions?: PageAction[]
-  embedded?: boolean
   navigation?: NavigationProps
-}
+} & (
+  | {
+      embedded: true
+      breadcrumbs?: (BreadcrumbLoadingItemType | BreadcrumbItemTypeText)[]
+    }
+  | {
+      embedded?: false
+      breadcrumbs?: BreadcrumbItemType[]
+    }
+)
 
 function PageNavigationLink({
   icon,
@@ -105,10 +116,14 @@ export function PageHeader({
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
   const hasActions = !embedded && actions.length > 0
-  const showBackButton = embedded && hasNavigation
   const lastBreadcrumb = breadcrumbsTree[breadcrumbsTree.length - 1]
-  const parentBreadcrumb = hasNavigation
-    ? breadcrumbsTree[breadcrumbsTree.length - 2]
+  const parentBreadcrumb:
+    | BreadcrumbItemTypeText
+    | BreadcrumbLoadingItemType
+    | null = hasNavigation
+    ? (breadcrumbsTree[breadcrumbsTree.length - 2] as
+        | BreadcrumbItemTypeText
+        | BreadcrumbLoadingItemType)
     : null
 
   return (
@@ -148,7 +163,8 @@ export function PageHeader({
             embedded && hasNavigation && "justify-center"
           )}
         >
-          {showBackButton &&
+          {embedded &&
+            hasNavigation &&
             parentBreadcrumb &&
             !("loading" in parentBreadcrumb) && (
               <div className="absolute left-4">
@@ -168,7 +184,8 @@ export function PageHeader({
               {"loading" in lastBreadcrumb ? (
                 <Skeleton className="h-4 w-24" />
               ) : (
-                lastBreadcrumb.label
+                // lastBreadcrumb is BreadcrumbItemTypeText | BreadcrumbLoadingItemType as em
+                ("label" in lastBreadcrumb && lastBreadcrumb.label) || ""
               )}
             </div>
           ) : (
