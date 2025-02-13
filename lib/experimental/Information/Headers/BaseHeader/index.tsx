@@ -14,7 +14,11 @@ import {
   MobileDropdown,
 } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { Fragment, memo } from "react"
+import { useI18n } from "@/lib/i18n-provider"
+import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import { Fragment, memo, useEffect, useRef, useState } from "react"
+import { useResizeObserver } from "usehooks-ts"
 import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
 
 interface BaseHeaderProps {
@@ -83,6 +87,28 @@ export function BaseHeader({
     },
     ...metadata,
   ]
+
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
+  const [needsTruncation, setNeedsTruncation] = useState(false)
+  const translations = useI18n()
+
+  /*
+    Checks if the description is long enough to be truncated
+  */
+  const [descriptionRef, measureRef] = [
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+  ]
+  const [descriptionSize, measureSize] = [
+    useResizeObserver({ ref: descriptionRef }),
+    useResizeObserver({ ref: measureRef }),
+  ]
+
+  useEffect(() => {
+    if (measureSize.height && descriptionSize.height) {
+      setNeedsTruncation(measureSize.height > descriptionSize.height)
+    }
+  }, [measureSize.height, descriptionSize.height])
 
   const visibleSecondaryActions = secondaryActions.filter(isVisible)
   const visibleOtherActions = otherActions.filter(isVisible)
