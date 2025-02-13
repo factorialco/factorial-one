@@ -15,7 +15,6 @@ export const rootItems = [
     label: "Inbox",
     icon: Icons.Envelope,
     href: "/inbox",
-    badge: 6,
   },
   {
     label: "Discover Factorial",
