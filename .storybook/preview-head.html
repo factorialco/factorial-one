@@ -53,7 +53,7 @@
     margin-top: 8px !important;
   }
 
-  #storybook-docs p:not(.docs-story *, .docblock-argstable-body *) {
+  #storybook-docs p:not(.docs-story *, .docblock-argstable-body *, table *) {
     font-size: 16px;
     line-height: 1.5;
     color: #65636d !important;
@@ -192,6 +192,11 @@
 
   input[type="radio"]:checked::before {
     transform: scale(1);
+  }
+
+  .rejt-tree {
+    max-width: 240px;
+    overflow-x: scroll;
   }
 
   /* -- DARK -- */
