@@ -402,3 +402,11 @@ export const TeamHeader: Story = {
     ],
   },
 }
+
+export const WithLongDescription: Story = {
+  args: {
+    ...Default.args,
+    description:
+      "This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated.",
+  },
+}

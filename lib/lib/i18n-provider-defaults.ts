@@ -5,6 +5,8 @@ const defaultTranslations = {
     save: "Save",
     cancel: "Cancel",
     skipToContent: "Skip to Content",
+    showAll: "Show all",
+    showLess: "Show less",
   },
   shortcut: "Shortcut",
 }
