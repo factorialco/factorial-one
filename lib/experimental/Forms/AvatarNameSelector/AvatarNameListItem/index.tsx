@@ -15,7 +15,7 @@ interface Props {
   selected: boolean
   onSelect: (entity: AvatarNamedEntity) => void
   onRemove: (entity: AvatarNamedEntity) => void
-  marginLeft: "ml-1.5" | "ml-10"
+  marginLeft: "ml-1.5" | "ml-8"
   search: string
   singleSelector?: boolean
 }
@@ -238,7 +238,17 @@ export const AvatarNameListItem = ({
   const checked = selected || partialSelected
   return (
     <>
-      <div className="ml-1 mr-3 flex flex-row flex-wrap items-center gap-2 rounded-md border">
+      <div className="ml-2 mr-3 flex flex-row flex-wrap items-center gap-0 rounded-md border">
+        <Button
+          round={true}
+          hideLabel={true}
+          icon={expanded ? ChevronDown : ChevronRight}
+          onClick={onExpand}
+          label={expanded ? "Collapse" : "Expand"}
+          size="sm"
+          variant="ghost"
+          tabIndex={-1}
+        />
         <label
           aria-label={entity.name}
           tabIndex={0}
@@ -249,16 +259,6 @@ export const AvatarNameListItem = ({
           }}
           className="flex flex-1 flex-row items-center gap-2 rounded-[10px] border p-2 hover:cursor-pointer hover:bg-f1-background-hover focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-f1-border-selected-bold"
         >
-          <Button
-            round={true}
-            hideLabel={true}
-            icon={expanded ? ChevronDown : ChevronRight}
-            onClick={onExpand}
-            label={expanded ? "Collapse" : "Expand"}
-            size="sm"
-            variant="ghost"
-            tabIndex={-1}
-          />
           {showGroupIcon && (
             <Icon
               icon={LogoAvatar}
@@ -301,7 +301,7 @@ export const AvatarNameListItem = ({
           return (
             <AvatarNameListItemSingleContent
               key={entity.id + "-" + subItem.subId}
-              marginLeft="ml-10"
+              marginLeft="ml-8"
               entity={{
                 id: subItem.subId,
                 avatar: subItem.subAvatar,
