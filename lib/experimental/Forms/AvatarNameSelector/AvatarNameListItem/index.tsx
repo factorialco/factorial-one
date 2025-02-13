@@ -101,7 +101,6 @@ export const AvatarNameListItemSingleContent = ({
       onClick={handleLabelClick}
       onKeyDown={handleKeyDown}
       tabIndex={0}
-      role="button"
       aria-pressed={selected}
       aria-label={entity.name}
       className={cn(
