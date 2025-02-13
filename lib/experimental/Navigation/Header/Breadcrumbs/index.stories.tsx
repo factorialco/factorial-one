@@ -6,8 +6,9 @@ import { useState } from "react"
 import Breadcrumbs, { BreadcrumbItemType } from "./index"
 
 const meta: Meta<typeof Breadcrumbs> = {
+  title: "Header/Breadcrumbs",
   component: Breadcrumbs,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -63,6 +64,37 @@ export const LoadingLastTwoItems: Story = {
       },
       { id: "loading-1", label: "Loading", loading: true },
       { id: "loading-2", label: "Loading", loading: true },
+    ],
+  },
+}
+
+export const WithSelectBreadcrumb: Story = {
+  args: {
+    breadcrumbs: [
+      {
+        id: "recruitment",
+        label: "Recruitment",
+        href: "/recruitment",
+        icon: Recruitment,
+      },
+      {
+        id: "offers",
+        label: "Offers",
+        href: "/offers",
+      },
+      {
+        id: "my-entity",
+        type: "select",
+        searchbox: true,
+        options: Array.from({ length: 10 }, (_, idx) => ({
+          value: idx.toString(),
+          label: `Offer ${idx}`,
+        })),
+        value: "1",
+        onChange: (value) => {
+          console.log("WithSelectBreadcrumb value", value)
+        },
+      },
     ],
   },
 }

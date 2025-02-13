@@ -4,6 +4,7 @@ import {
   Avatar,
   AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
+import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
 import {
   StatusTag,
   StatusVariant,
@@ -12,12 +13,13 @@ import { MobileDropdown } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
-import { useState } from "react"
+import { memo, useState } from "react"
 
 type MetadataItemValue =
   | { type: "text"; content: string }
   | { type: "avatar"; variant: AvatarVariant; text: string }
   | { type: "status"; label: string; variant: StatusVariant }
+  | { type: "list"; variant: AvatarVariant["type"]; avatars: AvatarVariant[] }
 
 type MetadataAction = {
   icon: IconType
@@ -32,8 +34,12 @@ interface MetadataItem {
   hideLabel?: boolean
 }
 
-interface MetadataProps {
-  items?: MetadataItem[]
+export interface MetadataProps {
+  /**
+   * Everything is not a MetadataItem is ignored.
+   * Undefined and boolean enable conditional items
+   **/
+  items: (MetadataItem | undefined | boolean)[]
 }
 
 function MetadataValue({ item }: { item: MetadataItem }) {
@@ -49,6 +55,14 @@ function MetadataValue({ item }: { item: MetadataItem }) {
       )
     case "status":
       return <StatusTag text={item.value.label} variant={item.value.variant} />
+    case "list":
+      return (
+        <AvatarList
+          avatars={item.value.avatars}
+          size="xsmall"
+          type={item.value.variant}
+        />
+      )
   }
 }
 
@@ -74,6 +88,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
         onFocus={() => isAction && setIsActive(true)}
         onBlur={() => isAction && setIsActive(false)}
         className="relative flex h-5 w-fit items-center hover:cursor-default"
+        aria-label={`${item.label} actions`}
       >
         <div
           className={cn(
@@ -145,15 +160,14 @@ function MetadataItem({ item }: { item: MetadataItem }) {
   )
 }
 
-export function Metadata({ items }: MetadataProps) {
-  if (!items?.length) return null
-
+export const Metadata = memo(function Metadata({ items }: MetadataProps) {
+  const cleanedItems = items.filter((item) => typeof item === "object")
   return (
     <div className="flex flex-col items-start gap-x-3 gap-y-0 md:flex-row md:flex-wrap md:items-center">
-      {items.map((item, index) => (
+      {cleanedItems.map((item, index) => (
         <>
           <MetadataItem key={`item-${index}`} item={item} />
-          {index < items.length - 1 && (
+          {index < cleanedItems.length - 1 && (
             <div
               key={`separator-${index}`}
               className="hidden h-4 w-[1px] bg-f1-border md:block"
@@ -163,6 +177,6 @@ export function Metadata({ items }: MetadataProps) {
       ))}
     </div>
   )
-}
+})
 
 export type { MetadataAction, MetadataItem, MetadataItemValue }

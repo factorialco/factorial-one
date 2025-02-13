@@ -4,8 +4,9 @@ import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { Stack } from "."
 
 const meta = {
+  title: "Stack",
   component: Stack,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   render: (args) => (
     <Stack {...args}>
       {Array.from({ length: 10 }).map((_, i) => (

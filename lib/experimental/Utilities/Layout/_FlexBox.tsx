@@ -1,8 +1,9 @@
 import { cn } from "@/lib/utils"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import { forwardRef } from "react"
 
-const boxVariants = cva("flex", {
+const boxVariants = cva({
+  base: "flex",
   variants: {
     overflow: {
       hidden: "overflow-hidden",

@@ -18,3 +18,11 @@ vi.stubGlobal("matchMedia", (query) => ({
   removeEventListener: vi.fn(),
   dispatchEvent: vi.fn(),
 }))
+
+// Add pointer event polyfills for testing environment
+if (typeof window !== "undefined") {
+  window.HTMLElement.prototype.hasPointerCapture = () => false
+  window.HTMLElement.prototype.setPointerCapture = () => {}
+  window.HTMLElement.prototype.releasePointerCapture = () => {}
+  window.HTMLElement.prototype.scrollIntoView = () => {}
+}

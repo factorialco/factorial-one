@@ -3,8 +3,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { WidgetHighlightButton, WidgetHighlightButtonProps } from "./index"
 
 const meta: Meta<WidgetHighlightButtonProps> = {
+  title: "Widgets/WidgetHighlightButton",
   component: WidgetHighlightButton,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
   },
@@ -34,5 +35,12 @@ export const WithLongTitle: Story = {
   args: {
     ...Default.args,
     label: "This item will show a really really long title",
+  },
+}
+
+export const WithoutOnClick: Story = {
+  args: {
+    ...Default.args,
+    onClick: undefined,
   },
 }

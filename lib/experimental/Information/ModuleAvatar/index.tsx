@@ -1,37 +1,33 @@
 import { IconType } from "@/components/Utilities/Icon"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 
-const moduleAvatarVariants = cva(
-  "relative flex shrink-0 items-center justify-center",
-  {
-    variants: {
-      size: {
-        sm: "h-5 w-5",
-        md: "h-6 w-6",
-        lg: "h-8 w-8",
-      },
+const moduleAvatarVariants = cva({
+  base: "relative flex shrink-0 items-center justify-center",
+  variants: {
+    size: {
+      sm: "h-5 w-5",
+      md: "h-6 w-6",
+      lg: "h-8 w-8",
     },
-    defaultVariants: {
-      size: "md",
-    },
-  }
-)
+  },
+  defaultVariants: {
+    size: "md",
+  },
+})
 
-const iconSizeVariants = cva(
-  "relative text-f1-foreground-inverse drop-shadow",
-  {
-    variants: {
-      size: {
-        sm: "h-[14px] w-[14px]",
-        md: "h-[18px] w-[18px]",
-        lg: "h-6 w-6",
-      },
+const iconSizeVariants = cva({
+  base: "relative text-f1-foreground-inverse drop-shadow",
+  variants: {
+    size: {
+      sm: "h-[14px] w-[14px]",
+      md: "h-[18px] w-[18px]",
+      lg: "h-6 w-6",
     },
-    defaultVariants: {
-      size: "md",
-    },
-  }
-)
+  },
+  defaultVariants: {
+    size: "md",
+  },
+})
 
 export interface ModuleAvatarProps
   extends VariantProps<typeof moduleAvatarVariants> {

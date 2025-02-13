@@ -12,9 +12,38 @@ import { fn } from "@storybook/test"
 import { ResourceHeader } from "./index"
 
 const meta: Meta<typeof ResourceHeader> = {
+  title: "Resource header",
   component: ResourceHeader,
+  tags: ["stable"],
   parameters: {
     layout: "padded",
+  },
+  argTypes: {
+    title: {
+      description: "Main heading identifying the resource",
+    },
+    description: {
+      description: "Supporting text providing additional context",
+    },
+    status: {
+      description: "Visual indicator of the resource's current state",
+    },
+    metadata: {
+      description:
+        "Horizontal list of key-value pairs showing relevant information",
+    },
+    primaryAction: {
+      description:
+        "Main button representing the most important action available for the resource",
+    },
+    secondaryActions: {
+      description:
+        "Complementary set of lower-priority actions offering additional but less frequent functionalities",
+    },
+    otherActions: {
+      description:
+        "Expandable menu containing additional operations and advanced options",
+    },
   },
 }
 
@@ -26,11 +55,11 @@ export const Default: Story = {
   args: {
     title: "Senior Product Designer",
     description:
-      "Open position on our team, seeking an experienced product designer to lead design initiatives",
+      "Seeking an experienced product designer to lead design initiatives",
     status: {
       label: "Status",
-      text: "Published",
-      variant: "positive",
+      text: "Draft",
+      variant: "neutral",
       actions: [
         {
           label: "Edit",
@@ -39,23 +68,64 @@ export const Default: Story = {
         },
       ],
     },
+
     primaryAction: {
-      label: "Edit",
-      icon: Icon.Pencil,
+      label: "Publish",
+      icon: Icon.ArrowUp,
       onClick: fn(),
     },
     secondaryActions: [
       {
-        label: "Promote",
-        onClick: fn(),
-      },
-      {
-        label: "Remove",
-        icon: Icon.Delete,
-        variant: "critical",
+        label: "Edit",
+        icon: Icon.Pencil,
         onClick: fn(),
       },
     ],
+
+    otherActions: [
+      {
+        label: "Archive",
+        icon: Icon.Archive,
+        onClick: fn(),
+      },
+      {
+        label: "Copy URL",
+        icon: Icon.LayersFront,
+        onClick: fn(),
+      },
+      "separator",
+      {
+        label: "Unlist",
+        icon: Icon.Delete,
+        critical: true,
+        onClick: fn(),
+      },
+    ],
+
+    metadata: [
+      {
+        label: "Location",
+        value: { type: "text", content: "Barcelona, Spain" },
+      },
+      {
+        label: "Team",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "team",
+            name: "Product design",
+          },
+          text: "Product design",
+        },
+      },
+    ],
+  },
+}
+
+export const Simple: Story = {
+  args: {
+    ...Default.args,
+    status: undefined,
   },
 }
 
@@ -131,6 +201,8 @@ export const WithOtherActions: Story = {
       {
         label: "Promote",
         onClick: fn(),
+        disabled: true,
+        tooltip: "Recharge your account",
       },
     ],
     otherActions: [
@@ -155,10 +227,178 @@ export const WithOtherActions: Story = {
   },
 }
 
-export const LongDescription: Story = {
+export const CompanyHeader: Story = {
   args: {
-    ...Default.args,
-    description:
-      "We are excited to announce an open position on our team for an experienced product designer to lead design initiatives. As a key member of our design team, you will be responsible for crafting intuitive and visually appealing user experiences that align with our company's vision and goals. Your expertise in product design will help drive innovation and improvement across our product suite, ensuring that our users have a seamless and engaging experience. If you are passionate about design and have a proven track record of delivering high-quality design solutions, we encourage you to apply for this exciting opportunity to join our dynamic team.",
+    title: "Factorial",
+    description: "HR Software to Empower Your Team",
+    avatar: {
+      type: "company",
+      name: "Factorial",
+      src: "https://github.com/factorialco.png",
+    },
+    secondaryActions: [
+      {
+        label: "Edit client",
+        icon: Icon.Pencil,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        label: "Legal name",
+        value: { type: "text", content: "Everyday Software S.L." },
+        actions: [
+          {
+            label: "Copy",
+            icon: Icon.LayersFront,
+            onClick: fn(),
+          },
+        ],
+      },
+      {
+        label: "Tax identification number",
+        value: { type: "text", content: "B-675254394" },
+      },
+    ],
+  },
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
+}
+
+export const PersonHeader: Story = {
+  args: {
+    title: "René Galindo",
+    description: "Product Design Lead",
+    avatar: {
+      type: "person",
+      firstName: "René",
+      lastName: "Galindo",
+      src: "https://github.com/renegalindo.png",
+    },
+    metadata: [
+      {
+        label: "Manager",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "person",
+            firstName: "Ilya",
+            lastName: "Zayats",
+            src: "https://github.com/somebody32.png",
+          },
+          text: "ilya Zayats",
+        },
+      },
+      {
+        label: "Team",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "team",
+            name: "Product design",
+          },
+          text: "Product design",
+        },
+      },
+      {
+        label: "Phone",
+        value: { type: "text", content: "+34 675 254 394" },
+        actions: [
+          {
+            label: "Chat in WhatsApp",
+            icon: Icon.WhatsappChat,
+            onClick: fn(),
+          },
+          {
+            label: "Copy",
+            icon: Icon.LayersFront,
+            onClick: fn(),
+          },
+        ],
+      },
+    ],
+  },
+}
+
+export const TeamHeader: Story = {
+  args: {
+    title: "Product designers",
+    description: "Rectangle drawers and post-it stickers",
+    avatar: {
+      type: "team",
+      name: "Product designers",
+    },
+    primaryAction: {
+      label: "Add members",
+      icon: Icon.Add,
+      onClick: fn(),
+    },
+    secondaryActions: [
+      {
+        label: "Edit",
+        icon: Icon.Pencil,
+        onClick: fn(),
+      },
+    ],
+    otherActions: [
+      {
+        label: "Export",
+        icon: Icon.Download,
+        onClick: fn(),
+      },
+      {
+        label: "Share",
+        icon: Icon.ExternalLink,
+        onClick: fn(),
+      },
+      "separator",
+      {
+        label: "Delete",
+        icon: Icon.Delete,
+        critical: true,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        label: "Team leader",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "person",
+            firstName: "Josep Jaume",
+            lastName: "Rey",
+            src: "https://github.com/josepjaume.png",
+          },
+          text: "Josep Jaume Rey",
+        },
+        actions: [
+          {
+            label: "Edit",
+            icon: Icon.Pencil,
+            onClick: fn(),
+          },
+          {
+            label: "Comment",
+            icon: Icon.Comment,
+            onClick: fn(),
+          },
+        ],
+      },
+      {
+        label: "Members",
+        value: { type: "text", content: "22" },
+      },
+    ],
   },
 }

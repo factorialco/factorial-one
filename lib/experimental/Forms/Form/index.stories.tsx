@@ -16,7 +16,8 @@ import {
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const meta = {
-  tags: ["autodocs"],
+  title: "Form",
+  tags: ["autodocs", "experimental"],
   parameters: {
     a11y: {
       skipCi: true,

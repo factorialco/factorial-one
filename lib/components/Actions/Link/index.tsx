@@ -6,10 +6,11 @@ import {
   useNavigation,
 } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import { forwardRef } from "react"
 
-const linkVariants = cva("inline-flex flex-row items-center gap-1 text-base", {
+const linkVariants = cva({
+  base: "inline-flex flex-row items-center gap-1 text-base",
   variants: {
     variant: {
       text: "text-inherit no-underline",

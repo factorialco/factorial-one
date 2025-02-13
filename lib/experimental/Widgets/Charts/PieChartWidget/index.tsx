@@ -10,7 +10,7 @@ export const PieChartWidget = withSkeleton(
         <ChartContainer
           ref={ref}
           {...props}
-          chart={<PieChart aspect={null} {...props.chart} />}
+          chart={<PieChart {...props.chart} />}
         />
       )
     }

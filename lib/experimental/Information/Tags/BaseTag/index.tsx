@@ -13,19 +13,21 @@ type Props = {
   | {
       left: ReactNode
       text?: string
+      right?: ReactNode
     }
   | {
       left?: ReactNode
       text: string
+      right?: ReactNode
     }
 )
 
 export const BaseTag = forwardRef<HTMLDivElement, Props>(
-  ({ left, text, additionalAccesibleText, onClick, className }, ref) => (
+  ({ left, text, right, additionalAccesibleText, onClick, className }, ref) => (
     <div
       ref={ref}
       className={cn(
-        "line-clamp-1 flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-2 text-base font-medium",
+        "line-clamp-1 flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-2 text-base font-medium text-f1-foreground",
         onClick && "cursor-pointer hover:bg-f1-background-hover",
         !text && "aspect-square w-6 items-center justify-center p-1",
         !left ? "pl-2" : "pl-1",
@@ -38,6 +40,7 @@ export const BaseTag = forwardRef<HTMLDivElement, Props>(
       {additionalAccesibleText && (
         <span className="sr-only">{additionalAccesibleText}</span>
       )}
+      {right}
     </div>
   )
 )

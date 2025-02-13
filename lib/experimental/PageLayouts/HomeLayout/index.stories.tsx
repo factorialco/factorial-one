@@ -41,8 +41,9 @@ const widgets = [
 ]
 
 const meta = {
+  title: "Layout/HomeLayout",
   component: HomeLayout,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   args: {
     children: (
       <div>

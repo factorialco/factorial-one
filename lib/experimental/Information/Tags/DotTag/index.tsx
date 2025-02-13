@@ -18,12 +18,12 @@ type NewColor = Extract<
   | "camel"
 >
 
-interface Props {
+export interface DotTagProps {
   text: string
   color: NewColor
 }
 
-export const DotTag = forwardRef<HTMLDivElement, Props>(
+export const DotTag = forwardRef<HTMLDivElement, DotTagProps>(
   ({ text, color }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 

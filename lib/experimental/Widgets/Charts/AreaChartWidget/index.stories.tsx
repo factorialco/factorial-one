@@ -6,12 +6,13 @@ import { AreaChartWidget } from "."
 import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
 
 const meta: Meta<typeof AreaChartWidget> = {
+  title: "Widgets/Charts/AreaChartWidget",
   component: AreaChartWidget,
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
     chromatic: { diffThreshold: 0.5 },
   },
-  tags: ["autodocs"],
   args: {
     ...containerStoryArgs,
     header: {

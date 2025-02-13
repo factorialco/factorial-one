@@ -3,6 +3,8 @@ import { PostDescription } from "."
 
 const meta: Meta<typeof PostDescription> = {
   component: PostDescription,
+  title: "Communities/Post/PostDescription",
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -21,6 +23,7 @@ export const Default: Story = {
     content: `
   <h1 class="TextEditorTheme__h1">Welcome to Our Text Editor!</h1>
   <h2 class="TextEditorTheme__h2">Overview</h2>
+  <h3 class="TextEditorTheme__h3">H3 Example here</h3>
   <p class="TextEditorTheme__paragraph TextEditorTheme__ltr">
     This editor is packed with features to style your text effortlessly. Explore the amazing formatting options, from <span class="TextEditorTheme__textBold">bold</span>, <span class="TextEditorTheme__textItalic">italic</span>, and <span class="TextEditorTheme__textUnderline">underline</span> to more advanced text styles like <span class="TextEditorTheme__textStrikethrough">strikethrough</span> or <span class="TextEditorTheme__textUnderlineStrikethrough">combined underline and strikethrough</span>.
   </p>

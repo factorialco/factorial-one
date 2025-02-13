@@ -5,6 +5,7 @@ type BaseHeaderProps = ComponentProps<typeof BaseHeader>
 
 type Props = {} & Pick<
   BaseHeaderProps,
+  | "avatar"
   | "title"
   | "description"
   | "primaryAction"
@@ -15,6 +16,7 @@ type Props = {} & Pick<
 >
 
 export const ResourceHeader = ({
+  avatar,
   title,
   description,
   primaryAction,
@@ -25,6 +27,7 @@ export const ResourceHeader = ({
 }: Props) => {
   return (
     <BaseHeader
+      avatar={avatar}
       title={title}
       description={description}
       primaryAction={primaryAction}

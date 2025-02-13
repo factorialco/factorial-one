@@ -12,6 +12,7 @@ const dataConfig = {
 }
 
 const meta: Meta<typeof AreaChart<typeof dataConfig>> = {
+  title: "Charts/AreaChart",
   component: AreaChart,
   tags: ["autodocs"],
   args: {
