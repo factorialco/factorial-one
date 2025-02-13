@@ -40,6 +40,10 @@ const _CategoryBarChart = (
                 : percentage.toFixed(1)
             }
 
+            if (percentage === 0) {
+              return null
+            }
+
             return (
               <Tooltip key={category.name}>
                 <TooltipTrigger
