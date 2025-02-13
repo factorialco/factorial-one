@@ -14,7 +14,11 @@ import {
   MobileDropdown,
 } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { Fragment, memo } from "react"
+import { useI18n } from "@/lib/i18n-provider"
+import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import { Fragment, memo, useEffect, useRef, useState } from "react"
+import { useResizeObserver } from "usehooks-ts"
 import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
 
 interface BaseHeaderProps {
@@ -84,6 +88,28 @@ export function BaseHeader({
     ...metadata,
   ]
 
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
+  const [needsTruncation, setNeedsTruncation] = useState(false)
+  const translations = useI18n()
+
+  /*
+    Checks if the description is long enough to be truncated
+  */
+  const [descriptionRef, measureRef] = [
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+  ]
+  const [descriptionSize, measureSize] = [
+    useResizeObserver({ ref: descriptionRef }),
+    useResizeObserver({ ref: measureRef }),
+  ]
+
+  useEffect(() => {
+    if (measureSize.height && descriptionSize.height) {
+      setNeedsTruncation(measureSize.height > descriptionSize.height)
+    }
+  }, [measureSize.height, descriptionSize.height])
+
   const visibleSecondaryActions = secondaryActions.filter(isVisible)
   const visibleOtherActions = otherActions.filter(isVisible)
   const isPrimaryActionVisible = primaryAction && isVisible(primaryAction)
@@ -93,7 +119,7 @@ export function BaseHeader({
   return (
     <div className="flex flex-col gap-3 px-6 pb-5 pt-3">
       <div className="flex flex-col items-start justify-start gap-4 md:flex-row">
-        <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-center">
+        <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-start">
           {avatar && (
             <div className="flex items-start">
               <Avatar
@@ -111,8 +137,49 @@ export function BaseHeader({
               {title}
             </span>
             {description && (
-              <div className="text-lg text-f1-foreground-secondary">
-                {description}
+              <div className="flex max-w-[640px] flex-col gap-1">
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: isDescriptionExpanded
+                      ? (measureSize.height ?? descriptionSize.height)
+                      : (descriptionSize.height ?? "3rem"),
+                  }}
+                  transition={{
+                    duration: 0.15,
+                    ease: [0.165, 0.84, 0.44, 1],
+                  }}
+                  className="overflow-hidden"
+                >
+                  <div
+                    ref={descriptionRef}
+                    className={cn(
+                      "text-lg text-f1-foreground-secondary",
+                      !isDescriptionExpanded && "line-clamp-2"
+                    )}
+                  >
+                    {description}
+                  </div>
+                  <div
+                    ref={measureRef}
+                    className="invisible text-lg text-f1-foreground-secondary"
+                    aria-hidden="true"
+                  >
+                    {description}
+                  </div>
+                </motion.div>
+                {(needsTruncation || isDescriptionExpanded) && (
+                  <button
+                    onClick={() =>
+                      setIsDescriptionExpanded(!isDescriptionExpanded)
+                    }
+                    className="relative w-fit font-medium text-f1-foreground after:absolute after:-bottom-0.5 after:left-0 after:right-0 after:h-[1.5px] after:bg-f1-border after:transition-all after:content-[''] hover:after:bg-f1-border-hover"
+                  >
+                    {isDescriptionExpanded
+                      ? translations.actions.showLess
+                      : translations.actions.showAll}
+                  </button>
+                )}
               </div>
             )}
           </div>
