@@ -17,7 +17,6 @@ export const AvatarNameSelectorSearcher = ({
   disabled?: boolean
 }) => {
   const handleKeyDown = (ev: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log("handleKeyDown", ev)
     if (ev.key === "ArrowDown") {
       ev.preventDefault()
       ev.stopPropagation()
