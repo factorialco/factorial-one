@@ -7,7 +7,7 @@ export const AvatarNameSelectorTrigger = ({
   placeholder: string
 }) => {
   return (
-    <div className="flex justify-between rounded border border-solid border-f1-border p-2">
+    <div className="flex cursor-pointer justify-between rounded border border-solid border-f1-border p-2">
       <span className="my-auto pl-2 text-f1-foreground-secondary">
         {placeholder}
       </span>

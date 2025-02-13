@@ -32,6 +32,7 @@ const meta: Meta = {
     onExpand: fn(),
     expanded: false,
     search: "",
+    singleSelector: false,
   } satisfies ComponentProps<typeof AvatarNameListItem>,
 } satisfies Meta<typeof AvatarNameListItem>
 
