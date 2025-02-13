@@ -123,7 +123,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "axe-playwright": "^2.0.3",
-    "chromatic": "^11.25.1",
+    "chromatic": "^11.25.2",
     "emoji-mart": "^5.6.0",
     "eslint": "^9.18.0",
     "eslint-plugin-react": "^7.37.4",
