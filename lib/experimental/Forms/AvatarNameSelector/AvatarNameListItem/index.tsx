@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function focusNextFocusable(currentElement: HTMLElement) {
-  const focusableSelectors = 'label[tabindex]:not([tabindex="-1"])'
+  const focusableSelectors = '[data-avatarname-navigator-element="true"]'
   const allFocusable = Array.from(
     document.querySelectorAll(focusableSelectors)
   ) as HTMLElement[]
@@ -35,7 +35,7 @@ export function focusNextFocusable(currentElement: HTMLElement) {
 }
 
 export function focusPreviousFocusable(currentElement: HTMLElement) {
-  const focusableSelectors = 'label[tabindex]:not([tabindex="-1"])'
+  const focusableSelectors = '[data-avatarname-navigator-element="true"]'
   const allFocusable = Array.from(
     document.querySelectorAll(focusableSelectors)
   ) as HTMLElement[]
@@ -47,7 +47,6 @@ export function focusPreviousFocusable(currentElement: HTMLElement) {
     allFocusable[allFocusable.length - 1].focus()
   }
 }
-
 export const AvatarNameListItemSingleContent = ({
   entity,
   selected,
@@ -100,13 +99,13 @@ export const AvatarNameListItemSingleContent = ({
     <label
       onClick={handleLabelClick}
       onKeyDown={handleKeyDown}
-      tabIndex={0}
       aria-pressed={selected}
       aria-label={entity.name}
+      data-avatarname-navigator-element="true"
       className={cn(
         marginLeft,
         "mr-3 flex flex-row flex-wrap items-center gap-2 rounded-[10px] border p-2 hover:cursor-pointer",
-        "hover:bg-f1-background-hover focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-f1-border-selected-bold",
+        "focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-f1-border-selected-bold hover:bg-f1-background-hover",
         selected && singleSelector
           ? "bg-f1-background-selected-bold/10 transition-colors dark:bg-f1-background-selected-bold/20"
           : ""
@@ -128,7 +127,6 @@ export const AvatarNameListItemSingleContent = ({
       {!singleSelector && (
         <Checkbox
           checked={selected}
-          tabIndex={-1}
           onClick={(ev) => {
             ev.preventDefault()
           }}
@@ -250,13 +248,13 @@ export const AvatarNameListItem = ({
         />
         <label
           aria-label={entity.name}
-          tabIndex={0}
           onKeyDown={handleKeyDown}
+          data-avatarname-navigator-element="true"
           onClick={(ev) => {
             ev.preventDefault()
             onExpand()
           }}
-          className="flex flex-1 flex-row items-center gap-2 rounded-[10px] border p-2 hover:cursor-pointer hover:bg-f1-background-hover focus:outline focus:outline-1 focus:-outline-offset-1 focus:outline-f1-border-selected-bold"
+          className="flex flex-1 flex-row items-center gap-2 rounded-[10px] border p-2 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-f1-border-selected-bold hover:cursor-pointer hover:bg-f1-background-hover"
         >
           {showGroupIcon && (
             <Icon
@@ -272,7 +270,6 @@ export const AvatarNameListItem = ({
           </div>
           {!singleSelector && (
             <Checkbox
-              tabIndex={-1}
               checked={checked}
               onClick={handleGroupClick}
               indeterminate={partialSelected}
