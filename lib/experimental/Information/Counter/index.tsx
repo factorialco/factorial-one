@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
 
 const counterVariants = cva({
-  base: "inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums",
+  base: "inline-flex select-none items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums",
   variants: {
     size: {
       md: "min-w-5 p-0.5",
