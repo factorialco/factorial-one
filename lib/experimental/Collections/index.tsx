@@ -59,10 +59,17 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters ?? {}, deps)
 
+  // To avoid unnecessary re-renders, we memoize the currentFilters
+  const stableCurrentFilters = useMemo(
+    () => currentFilters,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify(currentFilters)]
+  )
+
   return {
     properties: memoizedProperties,
     filters: memoizedFilters ?? {},
-    currentFilters,
+    currentFilters: stableCurrentFilters,
     setCurrentFilters,
     fetchData: memoizedFetchData,
   }

@@ -33,7 +33,7 @@ export function useData<
 >(
   source: DataSource<Schema, Filters>,
   {
-    filters = {},
+    filters,
   }: {
     filters?: Partial<Filters>
   } = {}
@@ -46,6 +46,7 @@ export function useData<
   useEffect(() => {
     let isMounted = true
     let cleanup: (() => void) | undefined
+    setIsLoading(true)
 
     const fetchDataAndUpdate = async () => {
       try {
