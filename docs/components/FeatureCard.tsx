@@ -1,24 +1,35 @@
-import React from "react"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { useState } from "react"
 
 interface FeatureCardProps {
-  icon: React.ElementType
+  icon: IconType
   title: string
   description: string
   href: string
 }
 
 export function FeatureCard({
-  icon: Icon,
+  icon,
   title,
   description,
   href,
 }: FeatureCardProps) {
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
-    <div className="rounded-lg border border-solid border-f1-border bg-f1-background shadow transition-all hover:border-f1-border-hover hover:shadow-md dark:border-f1-border-secondary dark:hover:border-f1-border">
+    <div
+      className="rounded-lg border border-solid border-f1-border bg-f1-background transition-all hover:shadow dark:border-f1-border-secondary dark:hover:border-f1-border"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <a href={href} className="block h-full p-6 no-underline">
         <div className="mb-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-f1-background-secondary dark:bg-f1-background-secondary">
-            <Icon className="h-6 w-6 text-f1-icon dark:text-f1-foreground-inverse" />
+            <Icon
+              icon={icon}
+              state={isHovered ? "animate" : "normal"}
+              className="h-6 w-6 text-f1-icon dark:text-f1-foreground-inverse"
+            />
           </div>
         </div>
         <h4 className="mb-2 text-xl font-semibold text-f1-foreground dark:text-f1-foreground-inverse">
