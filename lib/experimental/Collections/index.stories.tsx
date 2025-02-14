@@ -590,10 +590,29 @@ export const WithTableVisualization: Story = {
     const source = useDataSource({
       properties,
       filters,
-      fetchData: () =>
+      fetchData: ({ filters }) =>
         new Observable<Array<ExtractDataType<UserSchema>>>((observer) => {
           setTimeout(() => {
-            observer.next(mockUsers)
+            let filteredUsers = [...mockUsers]
+
+            const searchValue = filters.search
+            if (typeof searchValue === "string") {
+              const searchLower = searchValue.toLowerCase()
+              filteredUsers = filteredUsers.filter(
+                (user) =>
+                  user.name.toLowerCase().includes(searchLower) ||
+                  user.email.toLowerCase().includes(searchLower)
+              )
+            }
+
+            const departmentValue = filters.department
+            if (Array.isArray(departmentValue) && departmentValue.length > 0) {
+              filteredUsers = filteredUsers.filter((user) =>
+                departmentValue.includes(user.department)
+              )
+            }
+
+            observer.next(filteredUsers)
             observer.complete()
           }, 1000)
         }),
