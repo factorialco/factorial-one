@@ -99,7 +99,6 @@ export const AvatarNameListItemSingleContent = ({
     <label
       onClick={handleLabelClick}
       onKeyDown={handleKeyDown}
-      aria-pressed={selected}
       aria-label={entity.name}
       data-avatarname-navigator-element="true"
       className={cn(
@@ -237,8 +236,8 @@ export const AvatarNameListItem = ({
     <>
       <div className="ml-2 mr-3 flex flex-row flex-wrap items-center gap-0 rounded-md border">
         <Button
-          round={true}
-          hideLabel={true}
+          round
+          hideLabel
           icon={expanded ? ChevronDown : ChevronRight}
           onClick={onExpand}
           label={expanded ? "Collapse" : "Expand"}
