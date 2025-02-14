@@ -98,9 +98,9 @@ CardInfo.displayName = "CardInfo"
 const CardLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithoutRef<"a">
->(({ className, title, ...props }) => {
+>(({ className, title, ...props }, ref) => {
   return (
-    <Link className={className} aria-label={title} {...props}>
+    <Link ref={ref} className={className} aria-label={title} {...props}>
       <Button
         icon={ChevronRight}
         label={title ?? ""}
