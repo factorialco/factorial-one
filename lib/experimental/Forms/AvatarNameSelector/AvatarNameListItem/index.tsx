@@ -123,19 +123,20 @@ export const AvatarNameListItemSingleContent = ({
         </div>
       </div>
 
-      {!singleSelector && (
-        <Checkbox
-          checked={selected}
-          onClick={(ev) => {
-            ev.preventDefault()
-          }}
-          className="pointer-events-none ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse"
-          style={{
-            backgroundColor: selected ? "hsl(var(--selected-50))" : undefined,
-            borderColor: selected ? "hsl(var(--selected-50))" : undefined,
-          }}
-        />
-      )}
+      <Checkbox
+        checked={selected}
+        onClick={(ev) => {
+          ev.preventDefault()
+        }}
+        className={cn(
+          "pointer-events-none ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
+          singleSelector ? "opacity-0" : ""
+        )}
+        style={{
+          backgroundColor: selected ? "hsl(var(--selected-50))" : undefined,
+          borderColor: selected ? "hsl(var(--selected-50))" : undefined,
+        }}
+      />
 
       {singleSelector && selected && (
         <Icon className="text-f1-icon-selected" icon={CheckCircle} size="md" />
@@ -267,24 +268,25 @@ export const AvatarNameListItem = ({
               <Counter value={entity.subItems?.length ?? 0} />
             </div>
           </div>
-          {!singleSelector && (
-            <Checkbox
-              checked={checked}
-              onClick={handleGroupClick}
-              indeterminate={partialSelected}
-              className="ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse"
-              style={{
-                backgroundColor: selected
+          <Checkbox
+            checked={checked}
+            onClick={handleGroupClick}
+            indeterminate={partialSelected}
+            className={cn(
+              "ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
+              singleSelector ? "opacity-0" : ""
+            )}
+            style={{
+              backgroundColor: selected
+                ? "hsl(var(--selected-50))"
+                : "hsl(var(--background))",
+              color:
+                !selected && partialSelected
                   ? "hsl(var(--selected-50))"
-                  : "hsl(var(--background))",
-                color:
-                  !selected && partialSelected
-                    ? "hsl(var(--selected-50))"
-                    : undefined,
-                borderColor: checked ? "hsl(var(--selected-50))" : undefined,
-              }}
-            />
-          )}
+                  : undefined,
+              borderColor: checked ? "hsl(var(--selected-50))" : undefined,
+            }}
+          />
         </label>
       </div>
       {expanded &&
