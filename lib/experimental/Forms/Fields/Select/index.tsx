@@ -56,9 +56,12 @@ const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   )
 }
 
-const SelectValue = ({ item }: { item: SelectItemObject<string> }) => {
+const SelectValue = forwardRef<
+  HTMLDivElement,
+  { item: SelectItemObject<string> }
+>(function SelectValue({ item }, ref) {
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-1.5" ref={ref}>
       {item.icon && (
         <div className="h-5 shrink-0 text-f1-icon">
           <Icon icon={item.icon} />
@@ -67,7 +70,7 @@ const SelectValue = ({ item }: { item: SelectItemObject<string> }) => {
       {item.label}
     </div>
   )
-}
+})
 
 const SelectOptions = ({
   options,

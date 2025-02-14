@@ -182,10 +182,10 @@ const Container = forwardRef<
           .filter(isRealNode)
           .map((child, index) => {
             return (
-              <>
+              <React.Fragment key={index}>
                 {index > 0 && <Separator bare />}
                 {child}
-              </>
+              </React.Fragment>
             )
           })}
       </CardContent>
