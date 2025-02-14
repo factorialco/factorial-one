@@ -87,7 +87,10 @@ export type DataSourceResult<T> = Promise<Array<T>> | Observable<Array<T>>
  * Defines the schema structure for a collection.
  * Each property in the schema must conform to PropertySchema without a value field.
  */
-export type CollectionSchema = Record<string, Omit<PropertySchema, "value">>
+export type CollectionSchema = Record<
+  string,
+  ExtractPropertyOptions<PropertySchema>
+>
 
 /**
  * Extracts the concrete data type from a collection's schema and filters.
