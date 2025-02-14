@@ -6,7 +6,7 @@ import { DataCollection, useDataSource } from "."
 import { I18nProvider } from "../../lib/i18n-provider"
 import { defaultTranslations } from "../../lib/i18n-provider-defaults"
 import type { FiltersDefinition } from "./Filters/types"
-import type { StringPropertySchema } from "./properties"
+import type { ExtractPropertyOptions, StringPropertySchema } from "./properties"
 import type { DataSource } from "./types"
 import { useData } from "./useData"
 
@@ -16,10 +16,10 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 
 // Example schema for a user entity
 type UserSchema = {
-  name: Omit<StringPropertySchema, "value">
-  email: Omit<StringPropertySchema, "value">
-  role: Omit<StringPropertySchema, "value">
-  department: Omit<StringPropertySchema, "value">
+  name: ExtractPropertyOptions<StringPropertySchema>
+  email: ExtractPropertyOptions<StringPropertySchema>
+  role: ExtractPropertyOptions<StringPropertySchema>
+  department: ExtractPropertyOptions<StringPropertySchema>
 }
 
 const properties: UserSchema = {
@@ -49,7 +49,7 @@ describe("Collections", () => {
     const { result } = renderHook(
       () =>
         useDataSource<
-          { name: Omit<StringPropertySchema, "value"> },
+          { name: ExtractPropertyOptions<StringPropertySchema> },
           { name: { type: "search"; label: string } }
         >({
           properties: {
