@@ -59,8 +59,6 @@ export const AvatarNameSelectorContent = ({
       />
       {!loading && !singleSelector && (
         <AvatarNameSelectorSecondaryContent
-          groupView={groupView}
-          onRemove={onRemove}
           onSubItemRemove={onSubItemRemove}
           selectedEntities={selectedEntities}
           selectedLabel={selectedLabel}

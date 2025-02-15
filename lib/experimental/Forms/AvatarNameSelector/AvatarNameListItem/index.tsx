@@ -2,9 +2,11 @@ import { Button } from "@/components/Actions/Button"
 import { Icon } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/exports"
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { VirtualList2 } from "@/experimental/Navigation/VirtualList2"
 import { CheckCircle } from "@/icons/app"
 import LogoAvatar from "@/icons/app/LogoAvatar"
 import { cn } from "@/lib/utils"
+import { VirtualItem } from "@tanstack/react-virtual"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { Checkbox } from "../../Fields/Checkbox"
 import { HighlightText } from "../AvatarNameHighLightText"
@@ -15,12 +17,17 @@ interface Props {
   selected: boolean
   onSelect: (entity: AvatarNamedEntity) => void
   onRemove: (entity: AvatarNamedEntity) => void
-  marginLeft: "ml-1.5" | "ml-8"
+  marginLeft: "ml-0" | "ml-6"
   search: string
   singleSelector?: boolean
+  goToFirst?: () => void
+  goToLast?: () => void
 }
 
-export function focusNextFocusable(currentElement: HTMLElement) {
+export function focusNextFocusable(
+  currentElement: HTMLElement,
+  goToFirst?: () => void
+) {
   const focusableSelectors = '[data-avatarname-navigator-element="true"]'
   const allFocusable = Array.from(
     document.querySelectorAll(focusableSelectors)
@@ -30,11 +37,14 @@ export function focusNextFocusable(currentElement: HTMLElement) {
   if (currentIndex >= 0 && currentIndex < allFocusable.length - 1) {
     allFocusable[currentIndex + 1].focus()
   } else if (allFocusable.length > 0) {
-    allFocusable[0].focus()
+    goToFirst?.()
   }
 }
 
-export function focusPreviousFocusable(currentElement: HTMLElement) {
+export function focusPreviousFocusable(
+  currentElement: HTMLElement,
+  goToLast?: () => void
+) {
   const focusableSelectors = '[data-avatarname-navigator-element="true"]'
   const allFocusable = Array.from(
     document.querySelectorAll(focusableSelectors)
@@ -44,7 +54,7 @@ export function focusPreviousFocusable(currentElement: HTMLElement) {
   if (currentIndex > 0) {
     allFocusable[currentIndex - 1].focus()
   } else if (allFocusable.length > 0) {
-    allFocusable[allFocusable.length - 1].focus()
+    goToLast?.()
   }
 }
 export const AvatarNameListItemSingleContent = ({
@@ -54,6 +64,8 @@ export const AvatarNameListItemSingleContent = ({
   onRemove,
   marginLeft,
   search,
+  goToFirst,
+  goToLast,
   singleSelector = false,
 }: Props) => {
   const nameParts = entity.name.split(" ")
@@ -87,61 +99,67 @@ export const AvatarNameListItemSingleContent = ({
     } else if (ev.key === "ArrowDown") {
       ev.preventDefault()
       ev.stopPropagation()
-      focusNextFocusable(ev.currentTarget)
+      focusNextFocusable(ev.currentTarget, goToFirst)
     } else if (ev.key === "ArrowUp") {
       ev.preventDefault()
       ev.stopPropagation()
-      focusPreviousFocusable(ev.currentTarget)
+      focusPreviousFocusable(ev.currentTarget, goToLast)
     }
   }
 
   return (
-    <label
-      onClick={handleLabelClick}
-      onKeyDown={handleKeyDown}
-      aria-label={entity.name}
-      data-avatarname-navigator-element="true"
-      className={cn(
-        marginLeft,
-        "mr-3 flex flex-row flex-wrap items-center gap-2 rounded-[10px] border p-2 hover:cursor-pointer",
-        "focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-f1-border-selected-bold hover:bg-f1-background-hover",
-        selected && singleSelector
-          ? "bg-f1-background-selected-bold/10 transition-colors dark:bg-f1-background-selected-bold/20"
-          : ""
-      )}
-    >
-      <PersonAvatar
-        src={entity.avatar}
-        firstName={firstName}
-        lastName={lastName}
-        size="xsmall"
-      />
-
-      <div className="flex flex-1 flex-col">
-        <div className="flex flex-1 flex-row items-center gap-2">
-          <HighlightText text={entity.name} search={search} />
-        </div>
-      </div>
-
-      <Checkbox
-        checked={selected}
-        onClick={(ev) => {
-          ev.preventDefault()
-        }}
+    <div className="w-full pl-1">
+      <label
+        onClick={handleLabelClick}
+        onKeyDown={handleKeyDown}
+        aria-label={entity.name}
+        data-avatarname-navigator-element="true"
         className={cn(
-          "pointer-events-none ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
-          singleSelector ? "opacity-0" : ""
+          marginLeft,
+          "flex flex-row flex-wrap items-center gap-2 rounded-[10px] border p-2 hover:cursor-pointer",
+          "focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-f1-border-selected-bold hover:bg-f1-background-hover",
+          selected && singleSelector
+            ? "bg-f1-background-selected-bold/10 transition-colors dark:bg-f1-background-selected-bold/20"
+            : ""
         )}
-        style={{
-          backgroundColor: selected ? "hsl(var(--selected-50))" : undefined,
-          borderColor: selected ? "hsl(var(--selected-50))" : undefined,
-        }}
-      />
+      >
+        <PersonAvatar
+          src={entity.avatar}
+          firstName={firstName}
+          lastName={lastName}
+          size="xsmall"
+        />
 
-      {singleSelector && selected && (
-        <Icon className="text-f1-icon-selected" icon={CheckCircle} size="md" />
-      )}
-    </label>
+        <div className="flex flex-1 flex-col">
+          <div className="flex flex-1 flex-row items-center gap-2">
+            <HighlightText text={entity.name} search={search} />
+          </div>
+        </div>
+
+        <Checkbox
+          checked={selected}
+          onClick={(ev) => {
+            ev.preventDefault()
+          }}
+          className={cn(
+            "pointer-events-none ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
+            singleSelector ? "opacity-0" : ""
+          )}
+          style={{
+            backgroundColor: selected ? "hsl(var(--selected-50))" : undefined,
+            borderColor: selected ? "hsl(var(--selected-50))" : undefined,
+          }}
+        />
+
+        {singleSelector && selected && (
+          <Icon
+            className="text-f1-icon-selected"
+            icon={CheckCircle}
+            size="md"
+          />
+        )}
+      </label>
+    </div>
   )
 }
 
@@ -158,6 +176,9 @@ export const AvatarNameListItem = ({
   onSubItemRemove,
   onExpand,
   onSubItemSelect,
+  goToFirst,
+  goToLast,
+  hideLine = false,
   showGroupIcon = false,
   singleSelector = false,
 }: {
@@ -181,17 +202,22 @@ export const AvatarNameListItem = ({
   ) => void
   onExpand: () => void
   singleSelector: boolean
+  hideLine?: boolean
+  goToFirst?: () => void
+  goToLast?: () => void
 }) => {
   if (!groupView) {
     return (
       <AvatarNameListItemSingleContent
-        marginLeft="ml-1.5"
+        marginLeft="ml-0"
         entity={entity}
         search={search}
         selected={selected}
         onSelect={onSelect}
         onRemove={onRemove}
         singleSelector={singleSelector}
+        goToFirst={goToFirst}
+        goToLast={goToLast}
       />
     )
   }
@@ -216,11 +242,11 @@ export const AvatarNameListItem = ({
     } else if (ev.key === "ArrowDown") {
       ev.preventDefault()
       ev.stopPropagation()
-      focusNextFocusable(ev.currentTarget)
+      focusNextFocusable(ev.currentTarget, goToFirst)
     } else if (ev.key === "ArrowUp") {
       ev.preventDefault()
       ev.stopPropagation()
-      focusPreviousFocusable(ev.currentTarget)
+      focusPreviousFocusable(ev.currentTarget, goToLast)
     }
   }
 
@@ -235,7 +261,7 @@ export const AvatarNameListItem = ({
   const checked = selected || partialSelected
   return (
     <>
-      <div className="ml-2 mr-3 flex flex-row flex-wrap items-center gap-0 rounded-md border">
+      <div className="flex w-full flex-row flex-wrap items-center gap-0 rounded-md border pl-1">
         <Button
           round
           hideLabel
@@ -262,11 +288,9 @@ export const AvatarNameListItem = ({
               className="rounded-xs bg-f1-foreground-secondary text-f1-foreground-inverse"
             />
           )}
-          <div className="flex flex-1 flex-col">
-            <div className="flex flex-1 flex-row items-center gap-2">
-              <HighlightText semiBold text={entity.name} search={search} />
-              <Counter value={entity.subItems?.length ?? 0} />
-            </div>
+          <div className="flex flex-grow flex-row items-center gap-2">
+            <HighlightText semiBold text={entity.name} search={search} />
+            <Counter value={entity.subItems?.length ?? 0} />
           </div>
           <Checkbox
             checked={checked}
@@ -289,31 +313,41 @@ export const AvatarNameListItem = ({
           />
         </label>
       </div>
-      {expanded &&
-        entity.subItems?.map((subItem) => {
-          const selected = !!selectedEntity?.subItems?.find(
-            (el) => el.subId === subItem.subId
-          )
+      {expanded && entity.subItems && entity.subItems.length && (
+        <VirtualList2
+          height={Math.min(348, entity.subItems.length * 36)} // total height less the parent, to make it visible
+          itemCount={entity.subItems.length}
+          itemSize={36}
+          renderer={(vi?: VirtualItem) => {
+            if (!vi) return <></>
+            const subItem = entity.subItems![vi.index]
+            const selected = !!selectedEntity?.subItems?.find(
+              (el) => el.subId === subItem.subId
+            )
 
-          return (
-            <AvatarNameListItemSingleContent
-              key={entity.id + "-" + subItem.subId}
-              marginLeft="ml-8"
-              entity={{
-                id: subItem.subId,
-                avatar: subItem.subAvatar,
-                name: subItem.subName,
-              }}
-              selected={selected ?? false}
-              onSelect={() => onSubItemSelect?.(entity, subItem)}
-              onRemove={() => onSubItemRemove?.(entity, subItem)}
-              search={search}
-              singleSelector={singleSelector}
-            />
-          )
-        })}
+            return (
+              <AvatarNameListItemSingleContent
+                key={entity.id + "-" + subItem.subId}
+                marginLeft="ml-6"
+                entity={{
+                  id: subItem.subId,
+                  avatar: subItem.subAvatar,
+                  name: subItem.subName,
+                }}
+                selected={selected ?? false}
+                onSelect={() => onSubItemSelect?.(entity, subItem)}
+                onRemove={() => onSubItemRemove?.(entity, subItem)}
+                search={search}
+                singleSelector={singleSelector}
+                goToFirst={goToFirst}
+                goToLast={goToLast}
+              />
+            )
+          }}
+        />
+      )}
 
-      <div className="h-[1px] w-full bg-f1-border-secondary" />
+      {!hideLine && <div className="h-[1px] w-full bg-f1-border-secondary" />}
     </>
   )
 }
