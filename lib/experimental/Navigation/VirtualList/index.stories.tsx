@@ -1,25 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { VirtualItem } from "@tanstack/react-virtual"
 import { VirtualList } from "."
 
-interface ItemObj {
-  a: number
-  b: number
-}
-
-const generateItems = (count: number): ItemObj[] => {
-  return Array.from({ length: count }, (_, index) => ({
-    a: index + 1,
-    b: Math.floor(Math.random() * 10) + 1,
-  }))
-}
-
-const meta: Meta<typeof VirtualList<ItemObj>> = {
-  title: "VirtualList",
+const meta: Meta<typeof VirtualList> = {
+  title: "VirtualList2",
   component: VirtualList,
   tags: ["autodocs", "experimental"],
   argTypes: {
     renderer: { table: { disable: true } },
-    items: { table: { disable: true } },
     itemCount: { table: { disable: true } },
   },
 }
@@ -27,16 +15,15 @@ const meta: Meta<typeof VirtualList<ItemObj>> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const ItemComponent = (item?: ItemObj) => {
-  return (
-    <div className="h-[32px] w-[200px]">{`${item?.a} + ${item?.b} = ${(item?.a ?? 0) + (item?.b ?? 0)}`}</div>
-  )
+const ItemComponent = (vi?: VirtualItem) => {
+  console.log("received: ", vi)
+  if (!vi) return <></>
+  return <div className="w-[200px]">Row {vi.key + ""}</div>
 }
 
 export const Default: Story = {
   args: {
     renderer: ItemComponent,
-    items: generateItems(100000),
     itemSize: 32,
     itemCount: 100000,
     height: 400,

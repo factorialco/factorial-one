@@ -2,12 +2,13 @@ import { Button } from "@/components/Actions/Button"
 import { Icon } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/exports"
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
-import { VirtualList2 } from "@/experimental/Navigation/VirtualList2"
+import { VirtualList } from "@/experimental/Navigation/VirtualList"
 import { CheckCircle } from "@/icons/app"
 import LogoAvatar from "@/icons/app/LogoAvatar"
 import { cn } from "@/lib/utils"
 import { VirtualItem } from "@tanstack/react-virtual"
 import { ChevronDown, ChevronRight } from "lucide-react"
+import { forwardRef } from "react"
 import { Checkbox } from "../../Fields/Checkbox"
 import { HighlightText } from "../AvatarNameHighLightText"
 import { AvatarNamedEntity, AvatarNamedSubEntity } from "../types"
@@ -163,191 +164,202 @@ export const AvatarNameListItemSingleContent = ({
   )
 }
 
-export const AvatarNameListItem = ({
-  groupView,
-  expanded,
-  search,
-  entity,
-  selected,
-  partialSelected,
-  selectedEntity,
-  onSelect,
-  onRemove,
-  onSubItemRemove,
-  onExpand,
-  onSubItemSelect,
-  goToFirst,
-  goToLast,
-  hideLine = false,
-  showGroupIcon = false,
-  singleSelector = false,
-}: {
-  entity: AvatarNamedEntity
-  groupView: boolean
-  expanded: boolean
-  selected: boolean
-  partialSelected: boolean
-  selectedEntity?: AvatarNamedEntity
-  search: string
-  showGroupIcon?: boolean
-  onSelect: (entity: AvatarNamedEntity) => void
-  onRemove: (entity: AvatarNamedEntity) => void
-  onSubItemSelect: (
-    entity: AvatarNamedEntity,
-    subItem: AvatarNamedSubEntity
-  ) => void
-  onSubItemRemove: (
-    entity: AvatarNamedEntity,
-    subItem: AvatarNamedSubEntity
-  ) => void
-  onExpand: () => void
-  singleSelector: boolean
-  hideLine?: boolean
-  goToFirst?: () => void
-  goToLast?: () => void
-}) => {
-  if (!groupView) {
-    return (
-      <AvatarNameListItemSingleContent
-        marginLeft="ml-0"
-        entity={entity}
-        search={search}
-        selected={selected}
-        onSelect={onSelect}
-        onRemove={onRemove}
-        singleSelector={singleSelector}
-        goToFirst={goToFirst}
-        goToLast={goToLast}
-      />
-    )
-  }
-
-  const handleKeyDown = (ev: React.KeyboardEvent<HTMLLabelElement>) => {
-    if (ev.key === " ") {
-      ev.preventDefault()
-      ev.stopPropagation()
-      onExpand()
-    } else if (ev.key === "Enter") {
-      ev.preventDefault()
-      ev.stopPropagation()
-      if (!selected || partialSelected) {
-        onSelect(entity)
-      }
-    } else if (ev.key === "Backspace") {
-      ev.preventDefault()
-      ev.stopPropagation()
-      if (selected || partialSelected) {
-        onRemove(entity)
-      }
-    } else if (ev.key === "ArrowDown") {
-      ev.preventDefault()
-      ev.stopPropagation()
-      focusNextFocusable(ev.currentTarget, goToFirst)
-    } else if (ev.key === "ArrowUp") {
-      ev.preventDefault()
-      ev.stopPropagation()
-      focusPreviousFocusable(ev.currentTarget, goToLast)
-    }
-  }
-
-  const handleGroupClick = () => {
-    if (singleSelector) return
-    if (selected) onRemove(entity)
-    else onSelect(entity)
-  }
-
-  if (!entity.subItems?.length) return null
-
-  const checked = selected || partialSelected
-  return (
-    <>
-      <div className="flex w-full flex-row flex-wrap items-center gap-0 rounded-md border pl-1">
-        <Button
-          round
-          hideLabel
-          icon={expanded ? ChevronDown : ChevronRight}
-          onClick={onExpand}
-          label={expanded ? "Collapse" : "Expand"}
-          size="sm"
-          variant="ghost"
-          tabIndex={-1}
+const AvatarNameListItem = forwardRef(
+  (
+    {
+      groupView,
+      expanded,
+      search,
+      entity,
+      selected,
+      partialSelected,
+      selectedEntity,
+      onSelect,
+      onRemove,
+      onSubItemRemove,
+      onExpand,
+      onSubItemSelect,
+      goToFirst,
+      goToLast,
+      hideLine = false,
+      showGroupIcon = false,
+      singleSelector = false,
+    }: {
+      entity: AvatarNamedEntity
+      groupView: boolean
+      expanded: boolean
+      selected: boolean
+      partialSelected: boolean
+      selectedEntity?: AvatarNamedEntity
+      search: string
+      showGroupIcon?: boolean
+      onSelect: (entity: AvatarNamedEntity) => void
+      onRemove: (entity: AvatarNamedEntity) => void
+      onSubItemSelect: (
+        entity: AvatarNamedEntity,
+        subItem: AvatarNamedSubEntity
+      ) => void
+      onSubItemRemove: (
+        entity: AvatarNamedEntity,
+        subItem: AvatarNamedSubEntity
+      ) => void
+      onExpand: () => void
+      singleSelector: boolean
+      hideLine?: boolean
+      goToFirst?: () => void
+      goToLast?: () => void
+    },
+    ref: React.ForwardedRef<HTMLDivElement>
+  ) => {
+    if (!groupView) {
+      return (
+        <AvatarNameListItemSingleContent
+          marginLeft="ml-0"
+          entity={entity}
+          search={search}
+          selected={selected}
+          onSelect={onSelect}
+          onRemove={onRemove}
+          singleSelector={singleSelector}
+          goToFirst={goToFirst}
+          goToLast={goToLast}
         />
-        <label
-          aria-label={entity.name}
-          onKeyDown={handleKeyDown}
-          data-avatarname-navigator-element="true"
-          onClick={(ev) => {
-            ev.preventDefault()
-            onExpand()
-          }}
-          className="flex flex-1 flex-row items-center gap-2 rounded-[10px] border p-2 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-f1-border-selected-bold hover:cursor-pointer hover:bg-f1-background-hover"
-        >
-          {showGroupIcon && (
-            <Icon
-              icon={LogoAvatar}
-              className="rounded-xs bg-f1-foreground-secondary text-f1-foreground-inverse"
-            />
-          )}
-          <div className="flex flex-grow flex-row items-center gap-2">
-            <HighlightText semiBold text={entity.name} search={search} />
-            <Counter value={entity.subItems?.length ?? 0} />
-          </div>
-          <Checkbox
-            checked={checked}
-            onClick={handleGroupClick}
-            indeterminate={partialSelected}
-            className={cn(
-              "ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
-              singleSelector ? "opacity-0" : ""
+      )
+    }
+
+    const handleKeyDown = (ev: React.KeyboardEvent<HTMLLabelElement>) => {
+      if (ev.key === " ") {
+        ev.preventDefault()
+        ev.stopPropagation()
+        onExpand()
+      } else if (ev.key === "Enter") {
+        ev.preventDefault()
+        ev.stopPropagation()
+        if (!selected || partialSelected) {
+          onSelect(entity)
+        }
+      } else if (ev.key === "Backspace") {
+        ev.preventDefault()
+        ev.stopPropagation()
+        if (selected || partialSelected) {
+          onRemove(entity)
+        }
+      } else if (ev.key === "ArrowDown") {
+        ev.preventDefault()
+        ev.stopPropagation()
+        focusNextFocusable(ev.currentTarget, goToFirst)
+      } else if (ev.key === "ArrowUp") {
+        ev.preventDefault()
+        ev.stopPropagation()
+        focusPreviousFocusable(ev.currentTarget, goToLast)
+      }
+    }
+
+    const handleGroupClick = (ev: React.MouseEvent) => {
+      if (singleSelector) return
+      if (selected) onRemove(entity)
+      else onSelect(entity)
+      ev.stopPropagation()
+    }
+
+    if (!entity.subItems?.length) return null
+
+    const checked = selected || partialSelected
+    return (
+      <>
+        <div className="flex w-full flex-row flex-wrap items-center gap-0 rounded-md border pl-1">
+          <Button
+            round
+            hideLabel
+            icon={expanded ? ChevronDown : ChevronRight}
+            onClick={onExpand}
+            label={expanded ? "Collapse" : "Expand"}
+            size="sm"
+            variant="ghost"
+            tabIndex={-1}
+          />
+          <label
+            aria-label={entity.name}
+            onKeyDown={handleKeyDown}
+            data-avatarname-navigator-element="true"
+            onClick={(ev) => {
+              ev.preventDefault()
+              onExpand()
+            }}
+            className="flex flex-1 flex-row items-center gap-2 rounded-[10px] border p-2 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-f1-border-selected-bold hover:cursor-pointer hover:bg-f1-background-hover"
+          >
+            {showGroupIcon && (
+              <Icon
+                icon={LogoAvatar}
+                className="rounded-xs bg-f1-foreground-secondary text-f1-foreground-inverse"
+              />
             )}
-            style={{
-              backgroundColor: selected
-                ? "hsl(var(--selected-50))"
-                : "hsl(var(--background))",
-              color:
-                !selected && partialSelected
+            <div className="flex flex-grow flex-row items-center gap-2">
+              <HighlightText semiBold text={entity.name} search={search} />
+              <Counter value={entity.subItems?.length ?? 0} />
+            </div>
+            <Checkbox
+              checked={checked}
+              onClick={handleGroupClick}
+              indeterminate={partialSelected}
+              className={cn(
+                "ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
+                singleSelector ? "opacity-0" : ""
+              )}
+              style={{
+                backgroundColor: selected
                   ? "hsl(var(--selected-50))"
-                  : undefined,
-              borderColor: checked ? "hsl(var(--selected-50))" : undefined,
+                  : "hsl(var(--background))",
+                color:
+                  !selected && partialSelected
+                    ? "hsl(var(--selected-50))"
+                    : undefined,
+                borderColor: checked ? "hsl(var(--selected-50))" : undefined,
+              }}
+            />
+          </label>
+        </div>
+        {expanded && entity.subItems && entity.subItems.length && (
+          <VirtualList
+            ref={ref}
+            height={Math.min(348, entity.subItems.length * 36)} // total height less the parent, to make it visible
+            itemCount={entity.subItems.length}
+            itemSize={36}
+            renderer={(vi?: VirtualItem) => {
+              if (!vi) return <></>
+              const subItem = entity.subItems![vi.index]
+              const selected = !!selectedEntity?.subItems?.find(
+                (el) => el.subId === subItem.subId
+              )
+
+              return (
+                <AvatarNameListItemSingleContent
+                  key={entity.id + "-" + subItem.subId}
+                  marginLeft="ml-6"
+                  entity={{
+                    id: subItem.subId,
+                    avatar: subItem.subAvatar,
+                    name: subItem.subName,
+                  }}
+                  selected={selected ?? false}
+                  onSelect={() => onSubItemSelect?.(entity, subItem)}
+                  onRemove={() => onSubItemRemove?.(entity, subItem)}
+                  search={search}
+                  singleSelector={singleSelector}
+                  goToFirst={goToFirst}
+                  goToLast={goToLast}
+                />
+              )
             }}
           />
-        </label>
-      </div>
-      {expanded && entity.subItems && entity.subItems.length && (
-        <VirtualList2
-          height={Math.min(348, entity.subItems.length * 36)} // total height less the parent, to make it visible
-          itemCount={entity.subItems.length}
-          itemSize={36}
-          renderer={(vi?: VirtualItem) => {
-            if (!vi) return <></>
-            const subItem = entity.subItems![vi.index]
-            const selected = !!selectedEntity?.subItems?.find(
-              (el) => el.subId === subItem.subId
-            )
+        )}
 
-            return (
-              <AvatarNameListItemSingleContent
-                key={entity.id + "-" + subItem.subId}
-                marginLeft="ml-6"
-                entity={{
-                  id: subItem.subId,
-                  avatar: subItem.subAvatar,
-                  name: subItem.subName,
-                }}
-                selected={selected ?? false}
-                onSelect={() => onSubItemSelect?.(entity, subItem)}
-                onRemove={() => onSubItemRemove?.(entity, subItem)}
-                search={search}
-                singleSelector={singleSelector}
-                goToFirst={goToFirst}
-                goToLast={goToLast}
-              />
-            )
-          }}
-        />
-      )}
+        {!hideLine && <div className="h-[1px] w-full bg-f1-border-secondary" />}
+      </>
+    )
+  }
+)
 
-      {!hideLine && <div className="h-[1px] w-full bg-f1-border-secondary" />}
-    </>
-  )
-}
+AvatarNameListItem.displayName = "AvatarNameListItem"
+
+export { AvatarNameListItem }

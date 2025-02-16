@@ -1,18 +1,22 @@
-import { VirtualList2 } from "@/experimental/Navigation/VirtualList2"
+import { VirtualList } from "@/experimental/Navigation/VirtualList"
 import { useMemo } from "react"
 import { AvatarNameListTag } from "../../AvatarNameListTag"
 import { AvatarNamedEntity, AvatarNamedSubEntity } from "../../types"
 
 export type FlattenedItem = {
-  parent: AvatarNamedEntity
+  parent: AvatarNamedEntity | null
   subItem: AvatarNamedSubEntity
 }
 
 export const AvatarNameSelectorSecondaryContent = ({
+  groupView,
   onSubItemRemove,
+  onRemove,
   selectedEntities,
   selectedLabel,
 }: {
+  groupView: boolean
+  onRemove: (entity: AvatarNamedEntity) => void
   onSubItemRemove: (
     parentEntity: AvatarNamedEntity,
     entity: AvatarNamedSubEntity
@@ -21,13 +25,22 @@ export const AvatarNameSelectorSecondaryContent = ({
   selectedLabel?: string
 }) => {
   const flattenedList = useMemo<FlattenedItem[]>(() => {
-    return selectedEntities.flatMap((entity) =>
-      (entity.subItems ?? []).map((subItem) => ({
-        parent: entity,
-        subItem,
-      }))
-    )
-  }, [selectedEntities])
+    return !groupView
+      ? selectedEntities.map((el) => ({
+          parent: null,
+          subItem: {
+            subId: el.id,
+            subName: el.name,
+            subAvatar: el.avatar,
+          } as AvatarNamedSubEntity,
+        }))
+      : selectedEntities.flatMap((entity) =>
+          (entity.subItems ?? []).map((subItem) => ({
+            parent: entity,
+            subItem,
+          }))
+        )
+  }, [groupView, selectedEntities])
 
   const totalSelectedSubItems = flattenedList.length
 
@@ -41,7 +54,7 @@ export const AvatarNameSelectorSecondaryContent = ({
         )}
       </div>
       <div className="flex flex-col gap-3 rounded-br-xl bg-f1-background pb-0 pl-2">
-        <VirtualList2
+        <VirtualList
           height={419}
           itemCount={totalSelectedSubItems}
           itemSize={30}
@@ -50,12 +63,17 @@ export const AvatarNameSelectorSecondaryContent = ({
             if (!current) {
               return <></>
             }
-
             return (
               <AvatarNameListTag
                 entity={current.subItem}
                 onRemove={() =>
-                  onSubItemRemove?.(current.parent, current.subItem)
+                  current.parent
+                    ? onSubItemRemove?.(current.parent, current.subItem)
+                    : onRemove({
+                        id: current.subItem.subId,
+                        name: current.subItem.subName,
+                        avatar: current.subItem.subAvatar,
+                      })
                 }
               />
             )
