@@ -1,10 +1,9 @@
 import { Spinner } from "@/experimental/exports"
-import { VirtualList2 } from "@/experimental/Navigation/VirtualList2"
+import { VirtualList } from "@/experimental/Navigation/VirtualList"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { VirtualItem } from "@tanstack/react-virtual"
 import React, { useCallback, useEffect, useMemo } from "react"
-import { FixedSizeList } from "react-window"
 import { Select } from "../../../Fields/Select"
 import { AvatarNameListItem } from "../../AvatarNameListItem"
 import {
@@ -67,7 +66,7 @@ export const AvatarNameSelectorMainContent = ({
   singleSelector?: boolean
   loading?: boolean
 }) => {
-  const ref = React.useRef<FixedSizeList<AvatarNamedEntity> | null>(null)
+  const ref = React.useRef<HTMLDivElement | null>(null)
 
   const totalFilteredEntities = useMemo(
     () =>
@@ -84,26 +83,28 @@ export const AvatarNameSelectorMainContent = ({
     !loading && !singleSelector && (selectAllLabel || clearLabel)
 
   const goToFirst = useCallback(() => {
-    ref.current?.scrollToItem(0, "start")
+    ref.current?.scrollTo({
+      top: 0,
+    })
     setTimeout(() => {
       const focusableSelectors = '[data-avatarname-navigator-element="true"]'
       const allFocusable = Array.from(
         document.querySelectorAll(focusableSelectors)
       ) as HTMLElement[]
       allFocusable[0]?.focus()
-    }, 100)
+    }, 0)
   }, [])
 
   const goToLast = useCallback(() => {
-    ref.current?.scrollToItem(totalFilteredEntities - 1, "end")
+    ref.current?.scrollTo({ top: ref.current?.scrollHeight })
     setTimeout(() => {
       const focusableSelectors = '[data-avatarname-navigator-element="true"]'
       const allFocusable = Array.from(
         document.querySelectorAll(focusableSelectors)
       ) as HTMLElement[]
       allFocusable[allFocusable.length - 1]?.focus()
-    }, 100)
-  }, [totalFilteredEntities])
+    }, 0)
+  }, [])
 
   const itemRenderer = useCallback(
     (vi?: VirtualItem) => {
@@ -231,11 +232,12 @@ export const AvatarNameSelectorMainContent = ({
         {!loading && !!totalFilteredEntities && (
           <div className="h-full">
             {!groupView ? (
-              <VirtualList2
+              <VirtualList
                 height={384}
                 itemCount={entities.length}
                 itemSize={36}
                 renderer={itemRenderer}
+                ref={ref}
               />
             ) : (
               <div className="scrollbar-macos h-full overflow-auto">
@@ -277,6 +279,7 @@ export const AvatarNameSelectorMainContent = ({
                       }
                       singleSelector={singleSelector}
                       hideLine={index === entities.length - 1}
+                      ref={ref}
                     />
                   )
                 })}
