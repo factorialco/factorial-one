@@ -62,7 +62,7 @@ function ApplicationFrameContent({
           <div className="relative isolate flex h-full">
             <AnimatePresence>
               {sidebarState === "unlocked" && (
-                <motion.div
+                <motion.nav
                   className={cn("fixed inset-0 z-[5] bg-f1-background-bold", {
                     hidden: !isSmallScreen,
                   })}
