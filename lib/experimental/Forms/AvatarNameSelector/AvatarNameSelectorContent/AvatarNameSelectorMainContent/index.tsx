@@ -3,7 +3,7 @@ import { VirtualList } from "@/experimental/Navigation/VirtualList"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import { VirtualItem } from "@tanstack/react-virtual"
-import React, { useCallback, useEffect, useMemo } from "react"
+import React, { useCallback, useMemo } from "react"
 import { Select } from "../../../Fields/Select"
 import { AvatarNameListItem } from "../../AvatarNameListItem"
 import {
@@ -164,18 +164,6 @@ export const AvatarNameSelectorMainContent = ({
     ]
   )
 
-  useEffect(() => {
-    console.log("*Changing entities")
-  }, [entities])
-
-  useEffect(() => {
-    console.log("*Changing loading")
-  }, [loading])
-
-  useEffect(() => {
-    console.log("*Changing totalFilteredEntities")
-  }, [totalFilteredEntities])
-
   return (
     <div
       className={cn(
@@ -258,6 +246,7 @@ export const AvatarNameSelectorMainContent = ({
                   const partialSelected = groupView
                     ? !selected && selectedSubItems.length > 0
                     : selected
+
                   return (
                     <AvatarNameListItem
                       expanded={entity.expanded ?? false}
