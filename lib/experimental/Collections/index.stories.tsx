@@ -6,16 +6,19 @@ import type {
   InFilterDefinition,
   SearchFilterDefinition,
 } from "./Filters/types"
-import { StringPropertySchema } from "./properties"
+import { EnumPropertySchema, StringPropertySchema } from "./properties"
 import { ExtractDataType } from "./types"
 import { useData } from "./useData"
+
+const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
+type Department = (typeof DEPARTMENTS)[number]
 
 // Example schema for a user entity
 type UserSchema = {
   name: Omit<StringPropertySchema, "value">
   email: Omit<StringPropertySchema, "value">
   role: Omit<StringPropertySchema, "value">
-  department: Omit<StringPropertySchema, "value">
+  department: Omit<EnumPropertySchema<typeof DEPARTMENTS>, "value">
 }
 
 const properties: UserSchema = {
@@ -32,43 +35,51 @@ const properties: UserSchema = {
     label: "Role",
   },
   department: {
-    type: "string",
+    type: "enum",
     label: "Department",
+    values: DEPARTMENTS,
   },
 }
 
+type User = {
+  name: string
+  email: string
+  role: string
+  department: Department
+}
+
 // Mock data
-const mockUsers = [
+const mockUsers: User[] = [
   {
     name: "John Doe",
     email: "john@example.com",
     role: "Senior Engineer",
-    department: "Engineering",
+    department: DEPARTMENTS[0],
   },
   {
     name: "Jane Smith",
     email: "jane@example.com",
     role: "Product Manager",
-    department: "Product",
+    department: DEPARTMENTS[1],
   },
   {
     name: "Bob Johnson",
     email: "bob@example.com",
     role: "Designer",
-    department: "Design",
+    department: DEPARTMENTS[2],
   },
   {
     name: "Alice Williams",
     email: "alice@example.com",
     role: "Marketing Lead",
-    department: "Marketing",
+    department: DEPARTMENTS[3],
   },
 ]
 
 // Define our filter types explicitly
 type UserFilters = {
   search: SearchFilterDefinition
-  department: InFilterDefinition<string>
+  department: InFilterDefinition<Department>
 }
 
 // Example filter definition
@@ -81,12 +92,7 @@ const filters: { fields: UserFilters } = {
     department: {
       type: "in",
       label: "Department",
-      options: [
-        { value: "Engineering", label: "Engineering" },
-        { value: "Product", label: "Product" },
-        { value: "Design", label: "Design" },
-        { value: "Marketing", label: "Marketing" },
-      ],
+      options: DEPARTMENTS.map((value) => ({ value, label: value })),
     },
   },
 }
@@ -118,7 +124,7 @@ const ExampleComponent = ({
             const departmentValue = filters.department
             if (Array.isArray(departmentValue) && departmentValue.length > 0) {
               filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.includes(user.department)
+                departmentValue.some((d) => d === user.department)
               )
             }
 
@@ -147,7 +153,7 @@ const ExampleComponent = ({
                 departmentValue.length > 0
               ) {
                 filteredUsers = filteredUsers.filter((user) =>
-                  departmentValue.includes(user.department)
+                  departmentValue.some((d) => d === user.department)
                 )
               }
 
@@ -226,7 +232,7 @@ export const BasicTableView: Story = {
             const departmentValue = filters.department
             if (Array.isArray(departmentValue) && departmentValue.length > 0) {
               filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.includes(user.department)
+                departmentValue.some((d) => d === user.department)
               )
             }
 
@@ -280,7 +286,7 @@ export const BasicCardView: Story = {
             const departmentValue = filters.department
             if (Array.isArray(departmentValue) && departmentValue.length > 0) {
               filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.includes(user.department)
+                departmentValue.some((d) => d === user.department)
               )
             }
 
@@ -335,7 +341,7 @@ export const CustomTableColumns: Story = {
             const departmentValue = filters.department
             if (Array.isArray(departmentValue) && departmentValue.length > 0) {
               filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.includes(user.department)
+                departmentValue.some((d) => d === user.department)
               )
             }
 
@@ -401,7 +407,7 @@ export const CustomCardProperties: Story = {
             const departmentValue = filters.department
             if (Array.isArray(departmentValue) && departmentValue.length > 0) {
               filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.includes(user.department)
+                departmentValue.some((d) => d === user.department)
               )
             }
 
@@ -461,7 +467,7 @@ export const WithPreselectedFilters: Story = {
             const departmentValue = filters.department
             if (Array.isArray(departmentValue) && departmentValue.length > 0) {
               filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.includes(user.department)
+                departmentValue.some((d) => d === user.department)
               )
             }
 
@@ -536,7 +542,7 @@ export const WithCustomJsonView: Story = {
           const departmentValue = filters.department
           if (Array.isArray(departmentValue) && departmentValue.length > 0) {
             filteredUsers = filteredUsers.filter((user) =>
-              departmentValue.includes(user.department)
+              departmentValue.some((d) => d === user.department)
             )
           }
 
@@ -608,7 +614,7 @@ export const WithTableVisualization: Story = {
             const departmentValue = filters.department
             if (Array.isArray(departmentValue) && departmentValue.length > 0) {
               filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.includes(user.department)
+                departmentValue.some((d) => d === user.department)
               )
             }
 

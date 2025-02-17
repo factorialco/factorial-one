@@ -37,6 +37,17 @@ export interface DatePropertySchema extends BasePropertySchema {
 }
 
 /**
+ * Schema definition for date properties.
+ * Used for temporal values in the collection.
+ */
+export interface EnumPropertySchema<T extends readonly string[]>
+  extends BasePropertySchema {
+  type: "enum"
+  values: T
+  value: T[number]
+}
+
+/**
  * Union type of all available property schemas.
  * Used to constrain property definitions to supported types.
  */
@@ -44,6 +55,7 @@ export type PropertySchema =
   | NumberPropertySchema
   | StringPropertySchema
   | DatePropertySchema
+  | EnumPropertySchema<string[]>
 
 /**
  * Maps property types to their corresponding value types.
