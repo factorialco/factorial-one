@@ -92,7 +92,7 @@ export const AvatarNameSelectorMainContent = ({
         document.querySelectorAll(focusableSelectors)
       ) as HTMLElement[]
       allFocusable[0]?.focus()
-    }, 0)
+    }, 100)
   }, [])
 
   const goToLast = useCallback(() => {
@@ -103,7 +103,7 @@ export const AvatarNameSelectorMainContent = ({
         document.querySelectorAll(focusableSelectors)
       ) as HTMLElement[]
       allFocusable[allFocusable.length - 1]?.focus()
-    }, 0)
+    }, 100)
   }, [])
 
   const itemRenderer = useCallback(
