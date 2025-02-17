@@ -13,7 +13,7 @@ export const AvatarNameListTag = ({
   onRemove: (entity: AvatarNamedSubEntity) => void
 }) => {
   return (
-    <div className="pt-1.5">
+    <div className="pr-2 pt-1.5">
       <BaseTag
         className={cn(
           "max-w-54 w-fit gap-1 text-ellipsis border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]",

@@ -10,7 +10,9 @@ import {
 } from "./types"
 
 function extractLeafs(list: AvatarNamedEntity[]) {
-  const oldWasGroupView = list.some((entity) => entity.subItems)
+  const oldWasGroupView = list.some(
+    (entity) => entity.subItems && entity.subItems.length > 0
+  )
   return oldWasGroupView
     ? list
         .flatMap((entity) => entity.subItems ?? [])
@@ -22,8 +24,9 @@ function transformSelection(
   prevSelected: AvatarNamedEntity[],
   entities: AvatarNamedEntity[]
 ): AvatarNamedEntity[] {
-  const newIsGroupView = entities.some((entity) => entity.subItems)
-
+  const newIsGroupView = entities.some(
+    (entity) => entity.subItems && entity.subItems.length > 0
+  )
   const selectedLeafs = extractLeafs(prevSelected)
 
   if (newIsGroupView) {
@@ -238,7 +241,8 @@ export const AvatarNameSelector = ({
   }
 
   const groupView = useMemo(
-    () => entities.some((entity) => entity.subItems),
+    () =>
+      entities.some((entity) => entity.subItems && entity.subItems.length > 0),
     [entities]
   )
 
@@ -288,9 +292,10 @@ export const AvatarNameSelector = ({
   }, [debouncedSearch, entities, groupView])
 
   useEffect(() => {
-    setSelectedEntities((prevSelected) =>
-      transformSelection(prevSelected, entities)
-    )
+    setSelectedEntities((prevSelected) => {
+      const trans = transformSelection(prevSelected, entities)
+      return trans
+    })
   }, [entities])
 
   return (
