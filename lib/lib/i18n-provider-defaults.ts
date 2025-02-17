@@ -1,6 +1,9 @@
 export type TranslationsType = typeof defaultTranslations
 
 const defaultTranslations = {
+  navigation: {
+    sidebar: "Main navigation",
+  },
   actions: {
     save: "Save",
     cancel: "Cancel",
