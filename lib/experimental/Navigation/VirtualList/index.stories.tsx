@@ -3,7 +3,7 @@ import { VirtualItem } from "@tanstack/react-virtual"
 import { VirtualList } from "."
 
 const meta: Meta<typeof VirtualList> = {
-  title: "VirtualList2",
+  title: "VirtualList",
   component: VirtualList,
   tags: ["autodocs", "experimental"],
   argTypes: {
@@ -15,10 +15,12 @@ const meta: Meta<typeof VirtualList> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const ItemComponent = (vi?: VirtualItem) => {
-  console.log("received: ", vi)
-  if (!vi) return <></>
-  return <div className="w-[200px]">Row {vi.key + ""}</div>
+const ItemComponent = (vi: VirtualItem) => {
+  return (
+    <div className="w-[200px]" tabIndex={0}>
+      Row {vi.key + ""}
+    </div>
+  )
 }
 
 export const Default: Story = {
