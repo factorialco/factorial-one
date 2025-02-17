@@ -6,7 +6,6 @@ import { DataCollection, useDataSource } from "."
 import { I18nProvider } from "../../lib/i18n-provider"
 import { defaultTranslations } from "../../lib/i18n-provider-defaults"
 import type { FiltersDefinition } from "./Filters/types"
-import type { ExtractPropertyOptions, StringPropertySchema } from "./properties"
 import type { DataSource } from "./types"
 import { useData } from "./useData"
 
@@ -14,44 +13,13 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
 )
 
-// Example schema for a user entity
-type UserSchema = {
-  name: ExtractPropertyOptions<StringPropertySchema>
-  email: ExtractPropertyOptions<StringPropertySchema>
-  role: ExtractPropertyOptions<StringPropertySchema>
-  department: ExtractPropertyOptions<StringPropertySchema>
-}
-
-const properties: UserSchema = {
-  name: { type: "string", label: "Name" },
-  email: { type: "string", label: "Email" },
-  role: { type: "string", label: "Role" },
-  department: { type: "string", label: "Department" },
-}
-
-const mockUsers = [
-  {
-    name: "John Doe",
-    email: "john@example.com",
-    role: "Senior Engineer",
-    department: "Engineering",
-  },
-  {
-    name: "Jane Smith",
-    email: "jane@example.com",
-    role: "Product Manager",
-    department: "Product",
-  },
-]
-
 describe("Collections", () => {
   test("renders with basic search filter", async () => {
+    const mockData = [{ name: "John Doe" }, { name: "Jane Smith" }]
+
     const { result } = renderHook(
       () =>
-        useDataSource<
-          { name: ExtractPropertyOptions<StringPropertySchema> },
-          { name: { type: "search"; label: string } }
-        >({
+        useDataSource({
           properties: {
             name: {
               type: "string",
@@ -68,7 +36,7 @@ describe("Collections", () => {
               throw new Error("Email is not a valid filter")
             }
 
-            return mockUsers.filter((user) => {
+            return mockData.filter((user) => {
               if (filters.name && typeof filters.name === "string") {
                 return user.name
                   .toLowerCase()
@@ -97,7 +65,6 @@ describe("Collections", () => {
       </TestWrapper>
     )
 
-    // Wait for content to be loaded
     await waitFor(() => {
       expect(screen.getByText("John Doe")).toBeInTheDocument()
       expect(screen.getByText("Jane Smith")).toBeInTheDocument()
@@ -107,9 +74,15 @@ describe("Collections", () => {
   test("renders with multiple visualizations", async () => {
     const { result } = renderHook(
       () =>
-        useDataSource<UserSchema, FiltersDefinition>({
-          properties,
-          fetchData: async () => mockUsers,
+        useDataSource({
+          properties: {
+            name: { type: "string", label: "Name" },
+            email: { type: "string", label: "Email" },
+          },
+          fetchData: async () => [
+            { name: "John Doe", email: "john@example.com" },
+            { name: "Jane Smith", email: "jane@example.com" },
+          ],
         }),
       { wrapper: TestWrapper }
     )
@@ -136,7 +109,6 @@ describe("Collections", () => {
       </TestWrapper>
     )
 
-    // Wait for content to be loaded
     await waitFor(() => {
       expect(screen.getByText("john@example.com")).toBeInTheDocument()
       expect(screen.getByText("jane@example.com")).toBeInTheDocument()
@@ -146,13 +118,21 @@ describe("Collections", () => {
   test("handles observable data source", async () => {
     const { result } = renderHook(
       () =>
-        useDataSource<UserSchema, FiltersDefinition>({
-          properties,
+        useDataSource({
+          properties: {
+            name: { type: "string", label: "Name" },
+            role: { type: "string", label: "Role" },
+          },
           fetchData: () =>
-            new Observable<typeof mockUsers>((observer) => {
-              observer.next(mockUsers)
-              return () => {}
-            }),
+            new Observable<Array<{ name: string; role: string }>>(
+              (observer) => {
+                observer.next([
+                  { name: "John Doe", role: "Senior Engineer" },
+                  { name: "Jane Smith", role: "Product Manager" },
+                ])
+                return () => {}
+              }
+            ),
         }),
       { wrapper: TestWrapper }
     )
@@ -173,7 +153,6 @@ describe("Collections", () => {
       </TestWrapper>
     )
 
-    // Wait for content to be loaded
     await waitFor(() => {
       expect(screen.getByText("Senior Engineer")).toBeInTheDocument()
       expect(screen.getByText("Product Manager")).toBeInTheDocument()
@@ -181,10 +160,27 @@ describe("Collections", () => {
   })
 
   test("handles multiple filter types", async () => {
+    const mockData = [
+      {
+        name: "John Doe",
+        email: "john@example.com",
+        department: "Engineering",
+      },
+      {
+        name: "Jane Smith",
+        email: "jane@example.com",
+        department: "Product",
+      },
+    ]
+
     const { result } = renderHook(
       () =>
-        useDataSource<UserSchema, FiltersDefinition>({
-          properties,
+        useDataSource({
+          properties: {
+            name: { type: "string", label: "Name" },
+            email: { type: "string", label: "Email" },
+            department: { type: "string", label: "Department" },
+          },
           filters: {
             fields: {
               search: {
@@ -202,7 +198,7 @@ describe("Collections", () => {
             },
           },
           fetchData: async ({ filters }) => {
-            let filtered = [...mockUsers]
+            let filtered = [...mockData]
 
             if (filters.search && typeof filters.search === "string") {
               const searchLower = filters.search.toLowerCase()
@@ -241,7 +237,6 @@ describe("Collections", () => {
       </TestWrapper>
     )
 
-    // Wait for content to be loaded
     await waitFor(() => {
       expect(screen.getByText("John Doe")).toBeInTheDocument()
       expect(screen.getByText("Engineering")).toBeInTheDocument()
@@ -280,20 +275,34 @@ describe("Collections", () => {
   })
 
   test("renders with custom visualization", async () => {
-    type CustomVisualizationProps = {
-      source: DataSource<UserSchema, FiltersDefinition>
+    type Schema = {
+      name: { type: "string"; label: string }
+      role: { type: "string"; label: string }
+      department: { type: "string"; label: string }
+      email: { type: "string"; label: string }
     }
 
-    const CustomComponent = ({ source }: CustomVisualizationProps) => {
+    type Item = {
+      name: string
+      role: string
+      department: string
+      email: string
+    }
+
+    const CustomComponent = ({
+      source,
+    }: {
+      source: DataSource<Schema, FiltersDefinition>
+    }) => {
       const { data } = useData(source)
 
       return (
         <div data-testid="custom-visualization">
-          {data?.map((user) => (
-            <div key={user.email} className="custom-item">
-              <h3>{user.name}</h3>
+          {data?.map((item: Item) => (
+            <div key={item.email} className="custom-item">
+              <h3>{item.name}</h3>
               <p>
-                {user.role} - {user.department}
+                {item.role} - {item.department}
               </p>
             </div>
           ))}
@@ -303,11 +312,29 @@ describe("Collections", () => {
 
     const { result } = renderHook(
       () =>
-        useDataSource<UserSchema, FiltersDefinition>({
-          properties,
+        useDataSource({
+          properties: {
+            name: { type: "string", label: "Name" },
+            role: { type: "string", label: "Role" },
+            department: { type: "string", label: "Department" },
+            email: { type: "string", label: "Email" },
+          },
           fetchData: () =>
-            new Observable<typeof mockUsers>((observer) => {
-              observer.next(mockUsers)
+            new Observable<Item[]>((observer) => {
+              observer.next([
+                {
+                  name: "John Doe",
+                  role: "Senior Engineer",
+                  department: "Engineering",
+                  email: "john@example.com",
+                },
+                {
+                  name: "Jane Smith",
+                  role: "Product Manager",
+                  department: "Product",
+                  email: "jane@example.com",
+                },
+              ])
               return () => {}
             }),
         }),
