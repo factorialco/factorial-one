@@ -109,7 +109,7 @@ export const AvatarNameListItemSingleContent = ({
   }
 
   return (
-    <div className="w-full pl-1">
+    <div className="w-full pl-1 pr-1">
       <label
         onClick={handleLabelClick}
         onKeyDown={handleKeyDown}
@@ -267,7 +267,7 @@ const AvatarNameListItem = forwardRef(
     const checked = selected || partialSelected
     return (
       <>
-        <div className="flex w-full flex-row flex-wrap items-center gap-0 rounded-md border pl-1">
+        <div className="flex w-full flex-row flex-wrap items-center gap-0 rounded-md border pl-1 pr-1">
           <Button
             round
             hideLabel
