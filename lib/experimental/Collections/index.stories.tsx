@@ -2,26 +2,12 @@ import { Meta, StoryObj } from "@storybook/react"
 import { Code } from "lucide-react"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
-import type {
-  InFilterDefinition,
-  SearchFilterDefinition,
-} from "./Filters/types"
-import { EnumPropertySchema, StringPropertySchema } from "./properties"
 import { ExtractDataType } from "./types"
 import { useData } from "./useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
-type Department = (typeof DEPARTMENTS)[number]
 
-// Example schema for a user entity
-type UserSchema = {
-  name: Omit<StringPropertySchema, "value">
-  email: Omit<StringPropertySchema, "value">
-  role: Omit<StringPropertySchema, "value">
-  department: Omit<EnumPropertySchema<typeof DEPARTMENTS>, "value">
-}
-
-const properties: UserSchema = {
+const properties = {
   name: {
     type: "string",
     label: "Name",
@@ -39,17 +25,10 @@ const properties: UserSchema = {
     label: "Department",
     values: DEPARTMENTS,
   },
-}
-
-type User = {
-  name: string
-  email: string
-  role: string
-  department: Department
-}
+} as const
 
 // Mock data
-const mockUsers: User[] = [
+const mockUsers = [
   {
     name: "John Doe",
     email: "john@example.com",
@@ -76,14 +55,8 @@ const mockUsers: User[] = [
   },
 ]
 
-// Define our filter types explicitly
-type UserFilters = {
-  search: SearchFilterDefinition
-  department: InFilterDefinition<Department>
-}
-
 // Example filter definition
-const filters: { fields: UserFilters } = {
+const filters = {
   fields: {
     search: {
       type: "search",
@@ -95,7 +68,7 @@ const filters: { fields: UserFilters } = {
       options: DEPARTMENTS.map((value) => ({ value, label: value })),
     },
   },
-}
+} as const
 
 // Example component using useDataSource
 const ExampleComponent = ({
@@ -501,7 +474,9 @@ export const WithPreselectedFilters: Story = {
 const JsonVisualization = ({
   source,
 }: {
-  source: ReturnType<typeof useDataSource<UserSchema, UserFilters>>
+  source: ReturnType<
+    typeof useDataSource<typeof properties, (typeof filters)["fields"]>
+  >
 }) => {
   const { data, isLoading } = useData(source)
 
@@ -597,31 +572,36 @@ export const WithTableVisualization: Story = {
       properties,
       filters,
       fetchData: ({ filters }) =>
-        new Observable<Array<ExtractDataType<UserSchema>>>((observer) => {
-          setTimeout(() => {
-            let filteredUsers = [...mockUsers]
+        new Observable<Array<ExtractDataType<typeof properties>>>(
+          (observer) => {
+            setTimeout(() => {
+              let filteredUsers = [...mockUsers]
 
-            const searchValue = filters.search
-            if (typeof searchValue === "string") {
-              const searchLower = searchValue.toLowerCase()
-              filteredUsers = filteredUsers.filter(
-                (user) =>
-                  user.name.toLowerCase().includes(searchLower) ||
-                  user.email.toLowerCase().includes(searchLower)
-              )
-            }
+              const searchValue = filters.search
+              if (typeof searchValue === "string") {
+                const searchLower = searchValue.toLowerCase()
+                filteredUsers = filteredUsers.filter(
+                  (user) =>
+                    user.name.toLowerCase().includes(searchLower) ||
+                    user.email.toLowerCase().includes(searchLower)
+                )
+              }
 
-            const departmentValue = filters.department
-            if (Array.isArray(departmentValue) && departmentValue.length > 0) {
-              filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.some((d) => d === user.department)
-              )
-            }
+              const departmentValue = filters.department
+              if (
+                Array.isArray(departmentValue) &&
+                departmentValue.length > 0
+              ) {
+                filteredUsers = filteredUsers.filter((user) =>
+                  departmentValue.some((d) => d === user.department)
+                )
+              }
 
-            observer.next(filteredUsers)
-            observer.complete()
-          }, 1000)
-        }),
+              observer.next(filteredUsers)
+              observer.complete()
+            }, 1000)
+          }
+        ),
     })
 
     return (
@@ -652,12 +632,14 @@ export const WithCardVisualization: Story = {
       properties,
       filters,
       fetchData: () =>
-        new Observable<Array<ExtractDataType<UserSchema>>>((observer) => {
-          setTimeout(() => {
-            observer.next(mockUsers)
-            observer.complete()
-          }, 1000)
-        }),
+        new Observable<Array<ExtractDataType<typeof properties>>>(
+          (observer) => {
+            setTimeout(() => {
+              observer.next(mockUsers)
+              observer.complete()
+            }, 1000)
+          }
+        ),
     })
 
     return (
@@ -688,12 +670,14 @@ export const WithMultipleVisualizations: Story = {
       properties,
       filters,
       fetchData: () =>
-        new Observable<Array<ExtractDataType<UserSchema>>>((observer) => {
-          setTimeout(() => {
-            observer.next(mockUsers)
-            observer.complete()
-          }, 1000)
-        }),
+        new Observable<Array<ExtractDataType<typeof properties>>>(
+          (observer) => {
+            setTimeout(() => {
+              observer.next(mockUsers)
+              observer.complete()
+            }, 1000)
+          }
+        ),
     })
 
     return (
