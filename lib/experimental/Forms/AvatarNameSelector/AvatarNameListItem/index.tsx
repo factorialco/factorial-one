@@ -90,11 +90,7 @@ export const AvatarNameListItemSingleContent = ({
       ev.stopPropagation()
       if (!selected) {
         onSelect(entity)
-      }
-    } else if (ev.key === "Backspace") {
-      ev.preventDefault()
-      ev.stopPropagation()
-      if (selected) {
+      } else if (selected) {
         onRemove(entity)
       }
     } else if (ev.key === "ArrowDown") {
@@ -237,11 +233,7 @@ const AvatarNameListItem = forwardRef(
         ev.stopPropagation()
         if (!selected || partialSelected) {
           onSelect(entity)
-        }
-      } else if (ev.key === "Backspace") {
-        ev.preventDefault()
-        ev.stopPropagation()
-        if (selected || partialSelected) {
+        } else if (selected) {
           onRemove(entity)
         }
       } else if (ev.key === "ArrowDown") {
