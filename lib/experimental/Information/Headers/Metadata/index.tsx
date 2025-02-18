@@ -61,6 +61,8 @@ function MetadataValue({ item }: { item: MetadataItem }) {
           avatars={item.value.avatars}
           size="xsmall"
           type={item.value.variant}
+          max={3}
+          showTooltip
         />
       )
   }

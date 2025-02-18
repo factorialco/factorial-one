@@ -156,6 +156,7 @@
     "@rollup/rollup-linux-x64-gnu": "^4.34"
   },
   "dependencies": {
+    "@radix-ui/react-hover-card": "^1.1.6",
     "cva": "1.0.0-beta.3",
     "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.5.1",
