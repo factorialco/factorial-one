@@ -2,12 +2,7 @@ import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
 import { Select } from "@/experimental/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
-import {
-  SolidPause,
-  SolidPlay,
-  SolidStop,
-  Suitcase as SuitcaseIcon,
-} from "@/icons/app"
+import { SolidPause, SolidPlay, SolidStop } from "@/icons/app"
 import { motion } from "framer-motion"
 import { Dispatch, useState } from "react"
 import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
@@ -40,12 +35,12 @@ export interface ClockInControlsProps {
     name: string
     icon: IconType
   }[]
-  canShowProject?: boolean
+  // canShowProject?: boolean
   canShowLocation?: boolean
   locationSelectorDisabled?: boolean
-  projectSelectorDisabled?: boolean
+  // projectSelectorDisabled?: boolean
   canShowBreakButton?: boolean
-  projectName?: string
+  // projectName?: string
   /** Callback when Clock In button is clicked */
   onClockIn?: () => void
   /** Callback when Clock Out button is clicked */
@@ -53,7 +48,7 @@ export interface ClockInControlsProps {
   /** Callback when Break button is clicked */
   onBreak?: () => void
   /** Callback when Project Selector is clicked */
-  onClickProjectSelector?: () => void
+  // onClickProjectSelector?: () => void
 }
 
 export function ClockInControls({
@@ -62,16 +57,16 @@ export function ClockInControls({
   labels,
   locationId,
   locations,
-  canShowProject = true,
+  // canShowProject = true,
   canShowLocation = true,
   locationSelectorDisabled = false,
-  projectSelectorDisabled = false,
-  projectName,
+  // projectSelectorDisabled = false,
+  // projectName,
   onClockIn,
   onClockOut,
   onBreak,
   canShowBreakButton = true,
-  onClickProjectSelector,
+  // onClickProjectSelector,
   onChangeLocationId,
 }: ClockInControlsProps) {
   const { status, statusText, subtitle, statusColor } = getInfo({
@@ -87,10 +82,10 @@ export function ClockInControls({
     locations.length &&
     !locationSelectorDisabled &&
     canShowLocation
-  const canSelectProject =
-    showLocationAndProjectSelectors &&
-    !projectSelectorDisabled &&
-    canShowProject
+  // const canSelectProject =
+  //   showLocationAndProjectSelectors &&
+  //   !projectSelectorDisabled &&
+  //   canShowProject
 
   const location = locations.find((location) => location.id === locationId)
 
@@ -216,7 +211,7 @@ export function ClockInControls({
               </>
             )
           )}
-          {canSelectProject ? (
+          {/* {canSelectProject ? (
             <Selector
               text={projectName}
               placeholder={labels.selectProject}
@@ -229,7 +224,7 @@ export function ClockInControls({
                 <RawTag text={projectName} icon={SuitcaseIcon} />
               </>
             )
-          )}
+          )} */}
         </div>
       </div>
     </div>
