@@ -12,9 +12,8 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 import { Dropdown } from "../../Dropdown"
 import Breadcrumbs, {
-  BreadcrumbItemTypeText,
-  BreadcrumbLoadingItemType,
   type BreadcrumbItemType,
+  BreadcrumbSelectItemType,
 } from "../Breadcrumbs"
 
 export type PageAction = {
@@ -57,16 +56,15 @@ type HeaderProps = {
   }
   actions?: PageAction[]
   navigation?: NavigationProps
-} & (
-  | {
-      embedded: true
-      breadcrumbs?: (BreadcrumbLoadingItemType | BreadcrumbItemTypeText)[]
-    }
-  | {
-      embedded?: false
-      breadcrumbs?: BreadcrumbItemType[]
-    }
-)
+  embedded?: boolean
+  // The select the only can be the last item in the breadcrumbs
+  breadcrumbs?:
+    | [
+        ...Exclude<BreadcrumbItemType, BreadcrumbSelectItemType>[],
+        BreadcrumbItemType,
+      ]
+    | []
+}
 
 function PageNavigationLink({
   icon,
@@ -104,7 +102,7 @@ export function PageHeader({
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
-  const breadcrumbsTree: BreadcrumbItemType[] = [
+  const breadcrumbsTree: typeof breadcrumbs = [
     {
       id: module.href,
       label: module.name,
@@ -117,13 +115,11 @@ export function PageHeader({
   const hasNavigation = breadcrumbs.length > 0
   const hasActions = !embedded && actions.length > 0
   const lastBreadcrumb = breadcrumbsTree[breadcrumbsTree.length - 1]
-  const parentBreadcrumb:
-    | BreadcrumbItemTypeText
-    | BreadcrumbLoadingItemType
-    | null = hasNavigation
-    ? (breadcrumbsTree[breadcrumbsTree.length - 2] as
-        | BreadcrumbItemTypeText
-        | BreadcrumbLoadingItemType)
+  const parentBreadcrumb = hasNavigation
+    ? (breadcrumbsTree[breadcrumbsTree.length - 2] as Exclude<
+        BreadcrumbItemType,
+        BreadcrumbSelectItemType
+      >)
     : null
 
   return (
@@ -184,8 +180,7 @@ export function PageHeader({
               {"loading" in lastBreadcrumb ? (
                 <Skeleton className="h-4 w-24" />
               ) : (
-                // lastBreadcrumb is BreadcrumbItemTypeText | BreadcrumbLoadingItemType as em
-                ("label" in lastBreadcrumb && lastBreadcrumb.label) || ""
+                lastBreadcrumb.label
               )}
             </div>
           ) : (

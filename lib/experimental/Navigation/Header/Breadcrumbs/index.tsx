@@ -28,7 +28,11 @@ import {
   BreadcrumbSelectProps,
 } from "./internal/BreadcrumbSelect"
 
-export type BreadcrumbBaseItemType = { id: string; loading?: boolean }
+export type BreadcrumbBaseItemType = {
+  id: string
+  loading?: boolean
+  label: string
+}
 export type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
   loading: true
 }
