@@ -63,7 +63,7 @@ const FiltersWithState = () => {
 
   return (
     <Filters
-      definition={sampleDefinition}
+      schema={sampleDefinition}
       filters={filters}
       onChange={setFilters}
     />
@@ -86,7 +86,7 @@ const FiltersWithInitialState = () => {
 
   return (
     <Filters
-      definition={sampleDefinition}
+      schema={sampleDefinition}
       filters={filters}
       onChange={setFilters}
     />
@@ -101,7 +101,7 @@ type Story = StoryObj<typeof Filters>
 
 export const Default: Story = {
   args: {
-    definition: sampleDefinition,
+    schema: sampleDefinition,
     filters: {},
   },
 }
@@ -113,7 +113,7 @@ export const Default: Story = {
  */
 export const WithUrlSerialization: Story = {
   args: {
-    definition: sampleDefinition,
+    schema: sampleDefinition,
   },
   render: (args) => {
     const [filters, setFilters] = useState(() => {

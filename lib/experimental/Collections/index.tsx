@@ -41,7 +41,7 @@ export const useDataSource = <
     fetchData,
   }: {
     properties: Schema
-    filters?: { fields?: Filters }
+    filters?: Filters
     currentFilters?: FiltersState<Filters>
     fetchData: (options: {
       filters: FiltersState<Filters>
@@ -57,7 +57,7 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedProperties = useMemo(() => properties, deps)
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedFilters = useMemo(() => filters ?? {}, deps)
+  const memoizedFilters = useMemo(() => filters, deps)
 
   // To avoid unnecessary re-renders, we memoize the currentFilters
   const stableCurrentFilters = useMemo(
@@ -68,7 +68,7 @@ export const useDataSource = <
 
   return {
     properties: memoizedProperties,
-    filters: memoizedFilters ?? {},
+    filters: memoizedFilters,
     currentFilters: stableCurrentFilters,
     setCurrentFilters,
     fetchData: memoizedFetchData,
@@ -101,15 +101,14 @@ export const DataCollection = <
   visualizations: ReadonlyArray<Visualization<Schema, Filters>>
 }): JSX.Element => {
   const { filters, currentFilters, setCurrentFilters } = source
-  const fields = filters?.fields
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between">
-        {fields && (
+        {filters && (
           <Filters
-            definition={fields}
+            schema={filters}
             filters={currentFilters}
             onChange={setCurrentFilters}
           />

@@ -74,7 +74,7 @@ const ExampleComponent = ({
 }: {
   useObservable?: boolean
 }) => {
-  const dataSource = useDataSource({
+  const dataSource = useDataSource<typeof properties, typeof filters>({
     properties,
     filters,
     fetchData: useObservable
@@ -182,7 +182,7 @@ type Story = StoryObj<typeof meta>
 // Basic examples with single visualization
 export const BasicTableView: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataSource<typeof properties, typeof filters>({
       properties,
       filters,
       fetchData: ({ filters }) => {
@@ -236,7 +236,7 @@ export const BasicTableView: Story = {
 
 export const BasicCardView: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataSource<typeof properties, typeof filters>({
       properties,
       filters,
       fetchData: ({ filters }) => {
@@ -291,7 +291,7 @@ export const BasicCardView: Story = {
 // Examples with customized visualizations
 export const CustomTableColumns: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataSource<typeof properties, typeof filters>({
       properties,
       filters,
       fetchData: ({ filters }) => {
@@ -357,7 +357,7 @@ export const CustomTableColumns: Story = {
 
 export const CustomCardProperties: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataSource<typeof properties, typeof filters>({
       properties,
       filters,
       fetchData: ({ filters }) => {
@@ -414,7 +414,7 @@ export const SwitchableVisualizations: Story = {
 // Examples with filters and loading states
 export const WithPreselectedFilters: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataSource<typeof properties, typeof filters>({
       properties,
       filters,
       currentFilters: {
@@ -493,7 +493,7 @@ const JsonVisualization = ({
 
 export const WithCustomJsonView: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const dataSource = useDataSource<typeof properties, typeof filters>({
       properties,
       filters,
       fetchData: ({ filters }) => {
@@ -564,7 +564,7 @@ export const WithCustomJsonView: Story = {
 // Example usage with table visualization
 export const WithTableVisualization: Story = {
   render: () => {
-    const source = useDataSource({
+    const source = useDataSource<typeof properties, typeof filters>({
       properties,
       filters,
       fetchData: ({ filters }) =>
@@ -624,7 +624,7 @@ export const WithTableVisualization: Story = {
 // Example usage with card visualization
 export const WithCardVisualization: Story = {
   render: () => {
-    const source = useDataSource({
+    const source = useDataSource<typeof properties, typeof filters>({
       properties,
       filters,
       fetchData: () =>
@@ -662,7 +662,7 @@ export const WithCardVisualization: Story = {
 // Example usage with multiple visualizations
 export const WithMultipleVisualizations: Story = {
   render: () => {
-    const source = useDataSource({
+    const source = useDataSource<typeof properties, typeof filters>({
       properties,
       filters,
       fetchData: () =>

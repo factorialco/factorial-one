@@ -26,9 +26,7 @@ describe("Filters", () => {
       const user = userEvent.setup()
       const onChange = vi.fn()
 
-      render(
-        <Filters definition={definition} filters={{}} onChange={onChange} />
-      )
+      render(<Filters schema={definition} filters={{}} onChange={onChange} />)
 
       // Open filter popover
       await user.click(screen.getByRole("button", { name: /filters/i }))
@@ -53,7 +51,7 @@ describe("Filters", () => {
       // Render with initial state
       render(
         <Filters
-          definition={definition}
+          schema={definition}
           filters={{
             search: "test",
             department: ["engineering"],
@@ -81,9 +79,7 @@ describe("Filters", () => {
       const user = userEvent.setup()
       const onChange = vi.fn()
 
-      render(
-        <Filters definition={definition} filters={{}} onChange={onChange} />
-      )
+      render(<Filters schema={definition} filters={{}} onChange={onChange} />)
 
       // Open and configure filter
       await user.click(screen.getByRole("button", { name: /filters/i }))
@@ -115,7 +111,7 @@ describe("Filters", () => {
 
       render(
         <Filters
-          definition={definition}
+          schema={definition}
           filters={{
             department: ["engineering"],
             search: "test",
@@ -140,9 +136,7 @@ describe("Filters", () => {
       const user = userEvent.setup()
       const onChange = vi.fn()
 
-      render(
-        <Filters definition={definition} filters={{}} onChange={onChange} />
-      )
+      render(<Filters schema={definition} filters={{}} onChange={onChange} />)
 
       // Open and configure filter
       await user.click(screen.getByRole("button", { name: /filters/i }))
@@ -174,7 +168,7 @@ describe("Filters Type Safety", () => {
     // Valid usage - this should type check
     render(
       <Filters
-        definition={
+        schema={
           {
             status: {
               type: "in",
@@ -193,7 +187,7 @@ describe("Filters Type Safety", () => {
 
     render(
       <Filters
-        definition={
+        schema={
           {
             status: {
               // @ts-expect-error - Invalid filter type in definition
@@ -209,7 +203,7 @@ describe("Filters Type Safety", () => {
 
     render(
       <Filters
-        definition={
+        schema={
           {
             // @ts-expect-error - Missing options in "in" filter
             status: {
@@ -225,7 +219,7 @@ describe("Filters Type Safety", () => {
 
     render(
       <Filters
-        definition={
+        schema={
           {
             status: {
               type: "in",
@@ -245,7 +239,7 @@ describe("Filters Type Safety", () => {
 
     render(
       <Filters
-        definition={
+        schema={
           {
             status: {
               type: "in",
@@ -265,7 +259,7 @@ describe("Filters Type Safety", () => {
 
     render(
       <Filters
-        definition={
+        schema={
           {
             status: {
               type: "in",
@@ -285,7 +279,7 @@ describe("Filters Type Safety", () => {
 
     render(
       <Filters
-        definition={
+        schema={
           {
             // @ts-expect-error - Missing required options in "in" filter
             status: {

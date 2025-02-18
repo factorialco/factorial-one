@@ -15,7 +15,7 @@ import type { FiltersDefinition, FiltersState } from "./types"
  */
 interface FiltersProps<Definition extends FiltersDefinition> {
   /** The definition of available filters and their configurations */
-  definition: Definition
+  schema: Definition
   /** Current state of applied filters */
   filters: FiltersState<Definition>
   /** Callback fired when filters are changed */
@@ -50,7 +50,7 @@ interface FiltersProps<Definition extends FiltersDefinition> {
  * ```
  */
 export function Filters<Definition extends FiltersDefinition>({
-  definition,
+  schema,
   filters: value,
   onChange,
 }: FiltersProps<Definition>) {
@@ -111,7 +111,7 @@ export function Filters<Definition extends FiltersDefinition>({
             <div className="flex max-h-[80vh] flex-col">
               <div className="flex min-h-0 flex-1">
                 <FilterList
-                  definition={definition}
+                  definition={schema}
                   tempFilters={tempFilters}
                   selectedFilterKey={selectedFilterKey}
                   onFilterSelect={setSelectedFilterKey}
@@ -120,7 +120,7 @@ export function Filters<Definition extends FiltersDefinition>({
                 {selectedFilterKey && (
                   <FilterContent
                     selectedFilterKey={selectedFilterKey}
-                    definition={definition}
+                    definition={schema}
                     tempFilters={tempFilters}
                     onFilterChange={handleFilterChange}
                   />
@@ -144,7 +144,7 @@ export function Filters<Definition extends FiltersDefinition>({
 
         <AnimatePresence presenceAffectsLayout initial={false}>
           {(Object.keys(value) as Array<keyof Definition>).map((key) => {
-            const filter = definition[key]
+            const filter = schema[key]
             if (!value[key]) return null
 
             return (

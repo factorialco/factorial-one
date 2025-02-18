@@ -64,9 +64,10 @@ export type FiltersDefinition<Keys extends string = string> = Record<
 /**
  * Configuration options for filters, including optional default field.
  */
-export type FilterOptions<FilterKeys extends string> = {
-  fields?: Record<FilterKeys, FilterDefinition>
-}
+export type FilterOptions<FilterKeys extends string> = Record<
+  FilterKeys,
+  FilterDefinition
+>
 
 /**
  * Extracts the current filters type from filter options.

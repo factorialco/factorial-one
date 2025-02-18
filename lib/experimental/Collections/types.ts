@@ -16,7 +16,7 @@ export type DataSourceDefinition<
   Filters extends FiltersDefinition,
 > = {
   properties: Schema
-  filters?: { fields?: Filters }
+  filters?: Filters
 }
 
 /**
