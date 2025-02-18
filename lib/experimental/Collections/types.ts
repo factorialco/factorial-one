@@ -15,7 +15,9 @@ export type DataSourceDefinition<
   Schema extends CollectionSchema,
   Filters extends FiltersDefinition,
 > = {
+  /** Schema properties defining the data structure */
   properties: Schema
+  /** Available filter configurations */
   filters?: Filters
 }
 
@@ -55,6 +57,7 @@ export type CollectionProps<
 
 /**
  * Represents a data source with filtering capabilities and data fetching functionality.
+ * Extends DataSourceDefinition with runtime properties for state management and data fetching.
  * @template Schema - The schema defining the properties of the collection
  * @template Filters - The available filter configurations for the collection
  */
