@@ -4,8 +4,7 @@ import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import type {
   CollectionSchema,
   DataSource,
-  DataSourceResult,
-  SourceData,
+  DataSourceDefinition,
 } from "./types"
 import type { Visualization } from "./visualizations"
 import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
@@ -38,22 +37,15 @@ export const useDataSource = <
     properties,
     filters,
     currentFilters: initialCurrentFilters,
-    fetchData,
-  }: {
-    properties: Schema
-    filters?: Filters
-    currentFilters?: FiltersState<Filters>
-    fetchData: (options: {
-      filters: FiltersState<Filters>
-    }) => DataSourceResult<SourceData<Schema, Filters>>
-  },
+    dataAdapter,
+  }: DataSourceDefinition<Schema, Filters>,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<Schema, Filters> => {
   const [currentFilters, setCurrentFilters] = useState<FiltersState<Filters>>(
     (initialCurrentFilters ?? {}) as FiltersState<Filters>
   )
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedFetchData = useMemo(() => fetchData, deps)
+  const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedProperties = useMemo(() => properties, deps)
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,7 +63,7 @@ export const useDataSource = <
     filters: memoizedFilters,
     currentFilters: stableCurrentFilters,
     setCurrentFilters,
-    fetchData: memoizedFetchData,
+    dataAdapter: memoizedDataAdapter,
   }
 }
 

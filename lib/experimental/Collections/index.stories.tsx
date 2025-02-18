@@ -74,38 +74,13 @@ const ExampleComponent = ({
 }: {
   useObservable?: boolean
 }) => {
-  const dataSource = useDataSource<typeof properties, typeof filters>({
+  const dataSource = useDataSource({
     properties,
     filters,
-    fetchData: useObservable
-      ? ({ filters }) => {
-          return new Observable<Array<(typeof mockUsers)[0]>>((observer) => {
-            let filteredUsers = [...mockUsers]
-
-            const searchValue = filters.search
-            if (typeof searchValue === "string") {
-              const searchLower = searchValue.toLowerCase()
-              filteredUsers = filteredUsers.filter(
-                (user) =>
-                  user.name.toLowerCase().includes(searchLower) ||
-                  user.email.toLowerCase().includes(searchLower)
-              )
-            }
-
-            const departmentValue = filters.department
-            if (Array.isArray(departmentValue) && departmentValue.length > 0) {
-              filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.some((d) => d === user.department)
-              )
-            }
-
-            observer.next(filteredUsers)
-            return () => {}
-          })
-        }
-      : ({ filters }) => {
-          return new Promise<Array<(typeof mockUsers)[0]>>((resolve) => {
-            setTimeout(() => {
+    dataAdapter: {
+      fetchData: useObservable
+        ? ({ filters }) => {
+            return new Observable<Array<(typeof mockUsers)[0]>>((observer) => {
               let filteredUsers = [...mockUsers]
 
               const searchValue = filters.search
@@ -128,10 +103,40 @@ const ExampleComponent = ({
                 )
               }
 
-              resolve(filteredUsers)
-            }, 500)
-          })
-        },
+              observer.next(filteredUsers)
+              return () => {}
+            })
+          }
+        : ({ filters }) => {
+            return new Promise<Array<(typeof mockUsers)[0]>>((resolve) => {
+              setTimeout(() => {
+                let filteredUsers = [...mockUsers]
+
+                const searchValue = filters.search
+                if (typeof searchValue === "string") {
+                  const searchLower = searchValue.toLowerCase()
+                  filteredUsers = filteredUsers.filter(
+                    (user) =>
+                      user.name.toLowerCase().includes(searchLower) ||
+                      user.email.toLowerCase().includes(searchLower)
+                  )
+                }
+
+                const departmentValue = filters.department
+                if (
+                  Array.isArray(departmentValue) &&
+                  departmentValue.length > 0
+                ) {
+                  filteredUsers = filteredUsers.filter((user) =>
+                    departmentValue.some((d) => d === user.department)
+                  )
+                }
+
+                resolve(filteredUsers)
+              }, 500)
+            })
+          },
+    },
   })
 
   return (
@@ -182,34 +187,39 @@ type Story = StoryObj<typeof meta>
 // Basic examples with single visualization
 export const BasicTableView: Story = {
   render: () => {
-    const dataSource = useDataSource<typeof properties, typeof filters>({
+    const dataSource = useDataSource({
       properties,
       filters,
-      fetchData: ({ filters }) => {
-        return new Promise<typeof mockUsers>((resolve) => {
-          setTimeout(() => {
-            let filteredUsers = [...mockUsers]
+      dataAdapter: {
+        fetchData: ({ filters }) => {
+          return new Promise<typeof mockUsers>((resolve) => {
+            setTimeout(() => {
+              let filteredUsers = [...mockUsers]
 
-            const searchValue = filters.search
-            if (typeof searchValue === "string") {
-              const searchLower = searchValue.toLowerCase()
-              filteredUsers = filteredUsers.filter(
-                (user) =>
-                  user.name.toLowerCase().includes(searchLower) ||
-                  user.email.toLowerCase().includes(searchLower)
-              )
-            }
+              const searchValue = filters.search
+              if (typeof searchValue === "string") {
+                const searchLower = searchValue.toLowerCase()
+                filteredUsers = filteredUsers.filter(
+                  (user) =>
+                    user.name.toLowerCase().includes(searchLower) ||
+                    user.email.toLowerCase().includes(searchLower)
+                )
+              }
 
-            const departmentValue = filters.department
-            if (Array.isArray(departmentValue) && departmentValue.length > 0) {
-              filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.some((d) => d === user.department)
-              )
-            }
+              const departmentValue = filters.department
+              if (
+                Array.isArray(departmentValue) &&
+                departmentValue.length > 0
+              ) {
+                filteredUsers = filteredUsers.filter((user) =>
+                  departmentValue.some((d) => d === user.department)
+                )
+              }
 
-            resolve(filteredUsers)
-          }, 500)
-        })
+              resolve(filteredUsers)
+            }, 500)
+          })
+        },
       },
     })
 
@@ -236,34 +246,39 @@ export const BasicTableView: Story = {
 
 export const BasicCardView: Story = {
   render: () => {
-    const dataSource = useDataSource<typeof properties, typeof filters>({
+    const dataSource = useDataSource({
       properties,
       filters,
-      fetchData: ({ filters }) => {
-        return new Promise<typeof mockUsers>((resolve) => {
-          setTimeout(() => {
-            let filteredUsers = [...mockUsers]
+      dataAdapter: {
+        fetchData: ({ filters }) => {
+          return new Promise<typeof mockUsers>((resolve) => {
+            setTimeout(() => {
+              let filteredUsers = [...mockUsers]
 
-            const searchValue = filters.search
-            if (typeof searchValue === "string") {
-              const searchLower = searchValue.toLowerCase()
-              filteredUsers = filteredUsers.filter(
-                (user) =>
-                  user.name.toLowerCase().includes(searchLower) ||
-                  user.email.toLowerCase().includes(searchLower)
-              )
-            }
+              const searchValue = filters.search
+              if (typeof searchValue === "string") {
+                const searchLower = searchValue.toLowerCase()
+                filteredUsers = filteredUsers.filter(
+                  (user) =>
+                    user.name.toLowerCase().includes(searchLower) ||
+                    user.email.toLowerCase().includes(searchLower)
+                )
+              }
 
-            const departmentValue = filters.department
-            if (Array.isArray(departmentValue) && departmentValue.length > 0) {
-              filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.some((d) => d === user.department)
-              )
-            }
+              const departmentValue = filters.department
+              if (
+                Array.isArray(departmentValue) &&
+                departmentValue.length > 0
+              ) {
+                filteredUsers = filteredUsers.filter((user) =>
+                  departmentValue.some((d) => d === user.department)
+                )
+              }
 
-            resolve(filteredUsers)
-          }, 500)
-        })
+              resolve(filteredUsers)
+            }, 500)
+          })
+        },
       },
     })
 
@@ -291,34 +306,39 @@ export const BasicCardView: Story = {
 // Examples with customized visualizations
 export const CustomTableColumns: Story = {
   render: () => {
-    const dataSource = useDataSource<typeof properties, typeof filters>({
+    const dataSource = useDataSource({
       properties,
       filters,
-      fetchData: ({ filters }) => {
-        return new Promise<typeof mockUsers>((resolve) => {
-          setTimeout(() => {
-            let filteredUsers = [...mockUsers]
+      dataAdapter: {
+        fetchData: ({ filters }) => {
+          return new Promise<typeof mockUsers>((resolve) => {
+            setTimeout(() => {
+              let filteredUsers = [...mockUsers]
 
-            const searchValue = filters.search
-            if (typeof searchValue === "string") {
-              const searchLower = searchValue.toLowerCase()
-              filteredUsers = filteredUsers.filter(
-                (user) =>
-                  user.name.toLowerCase().includes(searchLower) ||
-                  user.email.toLowerCase().includes(searchLower)
-              )
-            }
+              const searchValue = filters.search
+              if (typeof searchValue === "string") {
+                const searchLower = searchValue.toLowerCase()
+                filteredUsers = filteredUsers.filter(
+                  (user) =>
+                    user.name.toLowerCase().includes(searchLower) ||
+                    user.email.toLowerCase().includes(searchLower)
+                )
+              }
 
-            const departmentValue = filters.department
-            if (Array.isArray(departmentValue) && departmentValue.length > 0) {
-              filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.some((d) => d === user.department)
-              )
-            }
+              const departmentValue = filters.department
+              if (
+                Array.isArray(departmentValue) &&
+                departmentValue.length > 0
+              ) {
+                filteredUsers = filteredUsers.filter((user) =>
+                  departmentValue.some((d) => d === user.department)
+                )
+              }
 
-            resolve(filteredUsers)
-          }, 500)
-        })
+              resolve(filteredUsers)
+            }, 500)
+          })
+        },
       },
     })
 
@@ -357,34 +377,39 @@ export const CustomTableColumns: Story = {
 
 export const CustomCardProperties: Story = {
   render: () => {
-    const dataSource = useDataSource<typeof properties, typeof filters>({
+    const dataSource = useDataSource({
       properties,
       filters,
-      fetchData: ({ filters }) => {
-        return new Promise<typeof mockUsers>((resolve) => {
-          setTimeout(() => {
-            let filteredUsers = [...mockUsers]
+      dataAdapter: {
+        fetchData: ({ filters }) => {
+          return new Promise<typeof mockUsers>((resolve) => {
+            setTimeout(() => {
+              let filteredUsers = [...mockUsers]
 
-            const searchValue = filters.search
-            if (typeof searchValue === "string") {
-              const searchLower = searchValue.toLowerCase()
-              filteredUsers = filteredUsers.filter(
-                (user) =>
-                  user.name.toLowerCase().includes(searchLower) ||
-                  user.email.toLowerCase().includes(searchLower)
-              )
-            }
+              const searchValue = filters.search
+              if (typeof searchValue === "string") {
+                const searchLower = searchValue.toLowerCase()
+                filteredUsers = filteredUsers.filter(
+                  (user) =>
+                    user.name.toLowerCase().includes(searchLower) ||
+                    user.email.toLowerCase().includes(searchLower)
+                )
+              }
 
-            const departmentValue = filters.department
-            if (Array.isArray(departmentValue) && departmentValue.length > 0) {
-              filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.some((d) => d === user.department)
-              )
-            }
+              const departmentValue = filters.department
+              if (
+                Array.isArray(departmentValue) &&
+                departmentValue.length > 0
+              ) {
+                filteredUsers = filteredUsers.filter((user) =>
+                  departmentValue.some((d) => d === user.department)
+                )
+              }
 
-            resolve(filteredUsers)
-          }, 500)
-        })
+              resolve(filteredUsers)
+            }, 500)
+          })
+        },
       },
     })
 
@@ -414,37 +439,42 @@ export const SwitchableVisualizations: Story = {
 // Examples with filters and loading states
 export const WithPreselectedFilters: Story = {
   render: () => {
-    const dataSource = useDataSource<typeof properties, typeof filters>({
+    const dataSource = useDataSource({
       properties,
       filters,
       currentFilters: {
         department: ["Engineering"],
       },
-      fetchData: ({ filters }) => {
-        return new Promise<typeof mockUsers>((resolve) => {
-          setTimeout(() => {
-            let filteredUsers = [...mockUsers]
+      dataAdapter: {
+        fetchData: ({ filters }) => {
+          return new Promise<typeof mockUsers>((resolve) => {
+            setTimeout(() => {
+              let filteredUsers = [...mockUsers]
 
-            const searchValue = filters.search
-            if (typeof searchValue === "string") {
-              const searchLower = searchValue.toLowerCase()
-              filteredUsers = filteredUsers.filter(
-                (user) =>
-                  user.name.toLowerCase().includes(searchLower) ||
-                  user.email.toLowerCase().includes(searchLower)
-              )
-            }
+              const searchValue = filters.search
+              if (typeof searchValue === "string") {
+                const searchLower = searchValue.toLowerCase()
+                filteredUsers = filteredUsers.filter(
+                  (user) =>
+                    user.name.toLowerCase().includes(searchLower) ||
+                    user.email.toLowerCase().includes(searchLower)
+                )
+              }
 
-            const departmentValue = filters.department
-            if (Array.isArray(departmentValue) && departmentValue.length > 0) {
-              filteredUsers = filteredUsers.filter((user) =>
-                departmentValue.some((d) => d === user.department)
-              )
-            }
+              const departmentValue = filters.department
+              if (
+                Array.isArray(departmentValue) &&
+                departmentValue.length > 0
+              ) {
+                filteredUsers = filteredUsers.filter((user) =>
+                  departmentValue.some((d) => d === user.department)
+                )
+              }
 
-            resolve(filteredUsers)
-          }, 500)
-        })
+              resolve(filteredUsers)
+            }, 500)
+          })
+        },
       },
     })
 
@@ -493,33 +523,35 @@ const JsonVisualization = ({
 
 export const WithCustomJsonView: Story = {
   render: () => {
-    const dataSource = useDataSource<typeof properties, typeof filters>({
+    const dataSource = useDataSource({
       properties,
       filters,
-      fetchData: ({ filters }) => {
-        return new Observable<typeof mockUsers>((observer) => {
-          let filteredUsers = [...mockUsers]
+      dataAdapter: {
+        fetchData: ({ filters }) => {
+          return new Observable<typeof mockUsers>((observer) => {
+            let filteredUsers = [...mockUsers]
 
-          const searchValue = filters.search
-          if (typeof searchValue === "string") {
-            const searchLower = searchValue.toLowerCase()
-            filteredUsers = filteredUsers.filter(
-              (user) =>
-                user.name.toLowerCase().includes(searchLower) ||
-                user.email.toLowerCase().includes(searchLower)
-            )
-          }
+            const searchValue = filters.search
+            if (typeof searchValue === "string") {
+              const searchLower = searchValue.toLowerCase()
+              filteredUsers = filteredUsers.filter(
+                (user) =>
+                  user.name.toLowerCase().includes(searchLower) ||
+                  user.email.toLowerCase().includes(searchLower)
+              )
+            }
 
-          const departmentValue = filters.department
-          if (Array.isArray(departmentValue) && departmentValue.length > 0) {
-            filteredUsers = filteredUsers.filter((user) =>
-              departmentValue.some((d) => d === user.department)
-            )
-          }
+            const departmentValue = filters.department
+            if (Array.isArray(departmentValue) && departmentValue.length > 0) {
+              filteredUsers = filteredUsers.filter((user) =>
+                departmentValue.some((d) => d === user.department)
+              )
+            }
 
-          observer.next(filteredUsers)
-          return () => {}
-        })
+            observer.next(filteredUsers)
+            return () => {}
+          })
+        },
       },
     })
 
@@ -564,40 +596,42 @@ export const WithCustomJsonView: Story = {
 // Example usage with table visualization
 export const WithTableVisualization: Story = {
   render: () => {
-    const source = useDataSource<typeof properties, typeof filters>({
+    const source = useDataSource({
       properties,
       filters,
-      fetchData: ({ filters }) =>
-        new Observable<Array<ExtractDataType<typeof properties>>>(
-          (observer) => {
-            setTimeout(() => {
-              let filteredUsers = [...mockUsers]
+      dataAdapter: {
+        fetchData: ({ filters }) =>
+          new Observable<Array<ExtractDataType<typeof properties>>>(
+            (observer) => {
+              setTimeout(() => {
+                let filteredUsers = [...mockUsers]
 
-              const searchValue = filters.search
-              if (typeof searchValue === "string") {
-                const searchLower = searchValue.toLowerCase()
-                filteredUsers = filteredUsers.filter(
-                  (user) =>
-                    user.name.toLowerCase().includes(searchLower) ||
-                    user.email.toLowerCase().includes(searchLower)
-                )
-              }
+                const searchValue = filters.search
+                if (typeof searchValue === "string") {
+                  const searchLower = searchValue.toLowerCase()
+                  filteredUsers = filteredUsers.filter(
+                    (user) =>
+                      user.name.toLowerCase().includes(searchLower) ||
+                      user.email.toLowerCase().includes(searchLower)
+                  )
+                }
 
-              const departmentValue = filters.department
-              if (
-                Array.isArray(departmentValue) &&
-                departmentValue.length > 0
-              ) {
-                filteredUsers = filteredUsers.filter((user) =>
-                  departmentValue.some((d) => d === user.department)
-                )
-              }
+                const departmentValue = filters.department
+                if (
+                  Array.isArray(departmentValue) &&
+                  departmentValue.length > 0
+                ) {
+                  filteredUsers = filteredUsers.filter((user) =>
+                    departmentValue.some((d) => d === user.department)
+                  )
+                }
 
-              observer.next(filteredUsers)
-              observer.complete()
-            }, 1000)
-          }
-        ),
+                observer.next(filteredUsers)
+                observer.complete()
+              }, 1000)
+            }
+          ),
+      },
     })
 
     return (
@@ -624,18 +658,20 @@ export const WithTableVisualization: Story = {
 // Example usage with card visualization
 export const WithCardVisualization: Story = {
   render: () => {
-    const source = useDataSource<typeof properties, typeof filters>({
+    const source = useDataSource({
       properties,
       filters,
-      fetchData: () =>
-        new Observable<Array<ExtractDataType<typeof properties>>>(
-          (observer) => {
-            setTimeout(() => {
-              observer.next(mockUsers)
-              observer.complete()
-            }, 1000)
-          }
-        ),
+      dataAdapter: {
+        fetchData: () =>
+          new Observable<Array<ExtractDataType<typeof properties>>>(
+            (observer) => {
+              setTimeout(() => {
+                observer.next(mockUsers)
+                observer.complete()
+              }, 1000)
+            }
+          ),
+      },
     })
 
     return (
@@ -662,18 +698,20 @@ export const WithCardVisualization: Story = {
 // Example usage with multiple visualizations
 export const WithMultipleVisualizations: Story = {
   render: () => {
-    const source = useDataSource<typeof properties, typeof filters>({
+    const source = useDataSource({
       properties,
       filters,
-      fetchData: () =>
-        new Observable<Array<ExtractDataType<typeof properties>>>(
-          (observer) => {
-            setTimeout(() => {
-              observer.next(mockUsers)
-              observer.complete()
-            }, 1000)
-          }
-        ),
+      dataAdapter: {
+        fetchData: () =>
+          new Observable<Array<ExtractDataType<typeof properties>>>(
+            (observer) => {
+              setTimeout(() => {
+                observer.next(mockUsers)
+                observer.complete()
+              }, 1000)
+            }
+          ),
+      },
     })
 
     return (

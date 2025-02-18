@@ -19,6 +19,19 @@ export type DataSourceDefinition<
   properties: Schema
   /** Available filter configurations */
   filters?: Filters
+  /** Current state of applied filters */
+  currentFilters?: FiltersState<Filters>
+
+  dataAdapter: {
+    /**
+     * Fetches data based on the provided filter options
+     * @param options - Object containing filter state to apply
+     * @returns Promise or Observable containing the filtered data
+     */
+    fetchData: (options: {
+      filters: FiltersState<Filters>
+    }) => DataSourceResult<ExtractDataType<Schema>>
+  }
 }
 
 /**
@@ -69,14 +82,6 @@ export type DataSource<
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
   setCurrentFilters: React.Dispatch<React.SetStateAction<FiltersState<Filters>>>
-  /**
-   * Fetches data based on the provided filter options
-   * @param options - Object containing filter state to apply
-   * @returns Promise or Observable containing the filtered data
-   */
-  fetchData: (options: {
-    filters: FiltersState<Filters>
-  }) => DataSourceResult<ExtractDataType<Schema>>
 }
 
 /**

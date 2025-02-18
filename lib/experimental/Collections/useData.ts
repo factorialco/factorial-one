@@ -41,7 +41,10 @@ export function useData<
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState<Array<SourceData<Schema, Filters>>>([])
 
-  const { fetchData, currentFilters } = source
+  const {
+    dataAdapter: { fetchData },
+    currentFilters,
+  } = source
 
   useEffect(() => {
     let isMounted = true

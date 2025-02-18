@@ -54,9 +54,11 @@ const createTestSource = (
   },
   currentFilters: {},
   setCurrentFilters: vi.fn(),
-  fetchData: async () => {
-    if (error) throw error
-    return data
+  dataAdapter: {
+    fetchData: async () => {
+      if (error) throw error
+      return data
+    },
   },
 })
 

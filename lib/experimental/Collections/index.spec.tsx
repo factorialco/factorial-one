@@ -27,23 +27,23 @@ describe("Collections", () => {
             },
           },
           filters: {
-            fields: {
-              name: { type: "search", label: "Name" },
-            },
+            name: { type: "search", label: "Name" },
           },
-          fetchData: async ({ filters }) => {
-            if ("email" in filters) {
-              throw new Error("Email is not a valid filter")
-            }
-
-            return mockData.filter((user) => {
-              if (filters.name && typeof filters.name === "string") {
-                return user.name
-                  .toLowerCase()
-                  .includes(filters.name.toLowerCase())
+          dataAdapter: {
+            fetchData: async ({ filters }) => {
+              if ("email" in filters) {
+                throw new Error("Email is not a valid filter")
               }
-              return true
-            })
+
+              return mockData.filter((user) => {
+                if (filters.name && typeof filters.name === "string") {
+                  return user.name
+                    .toLowerCase()
+                    .includes(filters.name.toLowerCase())
+                }
+                return true
+              })
+            },
           },
         }),
       { wrapper: TestWrapper }
@@ -79,10 +79,12 @@ describe("Collections", () => {
             name: { type: "string", label: "Name" },
             email: { type: "string", label: "Email" },
           },
-          fetchData: async () => [
-            { name: "John Doe", email: "john@example.com" },
-            { name: "Jane Smith", email: "jane@example.com" },
-          ],
+          dataAdapter: {
+            fetchData: async () => [
+              { name: "John Doe", email: "john@example.com" },
+              { name: "Jane Smith", email: "jane@example.com" },
+            ],
+          },
         }),
       { wrapper: TestWrapper }
     )
@@ -123,16 +125,18 @@ describe("Collections", () => {
             name: { type: "string", label: "Name" },
             role: { type: "string", label: "Role" },
           },
-          fetchData: () =>
-            new Observable<Array<{ name: string; role: string }>>(
-              (observer) => {
-                observer.next([
-                  { name: "John Doe", role: "Senior Engineer" },
-                  { name: "Jane Smith", role: "Product Manager" },
-                ])
-                return () => {}
-              }
-            ),
+          dataAdapter: {
+            fetchData: () =>
+              new Observable<Array<{ name: string; role: string }>>(
+                (observer) => {
+                  observer.next([
+                    { name: "John Doe", role: "Senior Engineer" },
+                    { name: "Jane Smith", role: "Product Manager" },
+                  ])
+                  return () => {}
+                }
+              ),
+          },
         }),
       { wrapper: TestWrapper }
     )
@@ -182,40 +186,40 @@ describe("Collections", () => {
             department: { type: "string", label: "Department" },
           },
           filters: {
-            fields: {
-              search: {
-                type: "search",
-                label: "Search",
-              },
-              department: {
-                type: "in",
-                label: "Department",
-                options: [
-                  { value: "Engineering", label: "Engineering" },
-                  { value: "Product", label: "Product" },
-                ],
-              },
+            search: {
+              type: "search",
+              label: "Search",
+            },
+            department: {
+              type: "in",
+              label: "Department",
+              options: [
+                { value: "Engineering", label: "Engineering" },
+                { value: "Product", label: "Product" },
+              ],
             },
           },
-          fetchData: async ({ filters }) => {
-            let filtered = [...mockData]
+          dataAdapter: {
+            fetchData: async ({ filters }) => {
+              let filtered = [...mockData]
 
-            if (filters.search && typeof filters.search === "string") {
-              const searchLower = filters.search.toLowerCase()
-              filtered = filtered.filter(
-                (user) =>
-                  user.name.toLowerCase().includes(searchLower) ||
-                  user.email.toLowerCase().includes(searchLower)
-              )
-            }
+              if (filters.search && typeof filters.search === "string") {
+                const searchLower = filters.search.toLowerCase()
+                filtered = filtered.filter(
+                  (user) =>
+                    user.name.toLowerCase().includes(searchLower) ||
+                    user.email.toLowerCase().includes(searchLower)
+                )
+              }
 
-            if (filters.department && filters.department.length > 0) {
-              filtered = filtered.filter((user) =>
-                filters.department?.includes(user.department)
-              )
-            }
+              if (filters.department && filters.department.length > 0) {
+                filtered = filtered.filter((user) =>
+                  filters.department?.includes(user.department)
+                )
+              }
 
-            return filtered
+              return filtered
+            },
           },
         }),
       { wrapper: TestWrapper }
@@ -250,7 +254,9 @@ describe("Collections", () => {
           properties: {
             name: { type: "string", label: "Name" },
           },
-          fetchData: async () => [{ name: "John" }],
+          dataAdapter: {
+            fetchData: async () => [{ name: "John" }],
+          },
         }),
       { wrapper: TestWrapper }
     )
@@ -265,8 +271,10 @@ describe("Collections", () => {
           properties: {
             name: { type: "string", label: "Name" },
           },
-          // @ts-expect-error Property 'name' should be string but got number
-          fetchData: async () => [{ name: 123 }],
+          dataAdapter: {
+            // @ts-expect-error Property 'name' should be string but got number
+            fetchData: async () => [{ name: 123 }],
+          },
         }),
       { wrapper: TestWrapper }
     )
@@ -319,24 +327,26 @@ describe("Collections", () => {
             department: { type: "string", label: "Department" },
             email: { type: "string", label: "Email" },
           },
-          fetchData: () =>
-            new Observable<Item[]>((observer) => {
-              observer.next([
-                {
-                  name: "John Doe",
-                  role: "Senior Engineer",
-                  department: "Engineering",
-                  email: "john@example.com",
-                },
-                {
-                  name: "Jane Smith",
-                  role: "Product Manager",
-                  department: "Product",
-                  email: "jane@example.com",
-                },
-              ])
-              return () => {}
-            }),
+          dataAdapter: {
+            fetchData: () =>
+              new Observable<Item[]>((observer) => {
+                observer.next([
+                  {
+                    name: "John Doe",
+                    role: "Senior Engineer",
+                    department: "Engineering",
+                    email: "john@example.com",
+                  },
+                  {
+                    name: "Jane Smith",
+                    role: "Product Manager",
+                    department: "Product",
+                    email: "jane@example.com",
+                  },
+                ])
+                return () => {}
+              }),
+          },
         }),
       { wrapper: TestWrapper }
     )
