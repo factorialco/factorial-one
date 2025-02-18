@@ -44,6 +44,13 @@ export const Module: Story = {
     size: "lg",
     icon: ModuleIcons.Calendar,
   },
+  argTypes: {
+    icon: {
+      control: "select",
+      options: Object.keys(ModuleIcons),
+      mapping: ModuleIcons,
+    },
+  },
 }
 
 export const Animated: Story = {
