@@ -19,6 +19,8 @@ const meta: Meta = {
   ],
   args: {
     placeholder: "Select employees...",
+    selected: "employees selected",
+    selectedAvatarName: [],
   } satisfies ComponentProps<typeof AvatarNameSelectorTrigger>,
 } satisfies Meta<typeof AvatarNameSelectorTrigger>
 

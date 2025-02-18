@@ -53,7 +53,8 @@ export const AvatarNameSelector = ({
   entities,
   groups,
   onGroupChange,
-  placeholder,
+  triggerPlaceholder,
+  triggerSelected,
   selectedGroup,
   searchPlaceholder,
   selectAllLabel,
@@ -61,13 +62,14 @@ export const AvatarNameSelector = ({
   selectedLabel,
   notFoundTitle,
   notFoundSubtitle,
+  selectedAvatarName,
   onSelect: onSelectProp,
   loading = false,
   singleSelector = false,
   ...props
 }: AvatarNameSelectorProps) => {
   const [selectedEntities, setSelectedEntities] = useState<AvatarNamedEntity[]>(
-    []
+    selectedAvatarName ?? []
   )
   const [filteredEntities, setFilteredEntities] =
     useState<AvatarNamedEntity[]>(entities)
@@ -298,10 +300,19 @@ export const AvatarNameSelector = ({
     })
   }, [entities])
 
+  const onOpenChange = (open: boolean) => {
+    if (!open) setSelectedEntities(selectedAvatarName ?? [])
+    props.onOpenChange?.(open)
+  }
+
   return (
-    <Popover {...props}>
+    <Popover {...props} onOpenChange={onOpenChange}>
       <PopoverTrigger className="w-full">
-        <AvatarNameSelectorTrigger placeholder={placeholder} />
+        <AvatarNameSelectorTrigger
+          placeholder={triggerPlaceholder}
+          selected={triggerSelected}
+          selectedAvatarName={selectedEntities}
+        />
       </PopoverTrigger>
       <PopoverContent className="w-full rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0">
         <AvatarNameSelectorContent
