@@ -96,6 +96,30 @@ const filterUsers = (
   return filteredUsers
 }
 
+// Utility functions for data fetching
+type FiltersType = typeof filters
+
+const createObservableDataFetch = (delay = 0) => {
+  return ({ filters }: { filters: FiltersState<FiltersType> }) =>
+    new Observable<Array<ExtractDataType<typeof properties>>>((observer) => {
+      const timeoutId = setTimeout(() => {
+        observer.next(filterUsers(mockUsers, filters))
+        observer.complete()
+      }, delay)
+
+      return () => clearTimeout(timeoutId)
+    })
+}
+
+const createPromiseDataFetch = (delay = 500) => {
+  return ({ filters }: { filters: FiltersState<FiltersType> }) =>
+    new Promise<Array<ExtractDataType<typeof properties>>>((resolve) => {
+      setTimeout(() => {
+        resolve(filterUsers(mockUsers, filters))
+      }, delay)
+    })
+}
+
 // Example component using useDataSource
 const ExampleComponent = ({
   useObservable = false,
@@ -107,19 +131,8 @@ const ExampleComponent = ({
     filters,
     dataAdapter: {
       fetchData: useObservable
-        ? ({ filters }) => {
-            return new Observable<Array<(typeof mockUsers)[0]>>((observer) => {
-              observer.next(filterUsers(mockUsers, filters))
-              return () => {}
-            })
-          }
-        : ({ filters }) => {
-            return new Promise<Array<(typeof mockUsers)[0]>>((resolve) => {
-              setTimeout(() => {
-                resolve(filterUsers(mockUsers, filters))
-              }, 500)
-            })
-          },
+        ? createObservableDataFetch()
+        : createPromiseDataFetch(),
     },
   })
 
@@ -175,13 +188,7 @@ export const BasicTableView: Story = {
       properties,
       filters,
       dataAdapter: {
-        fetchData: ({ filters }) => {
-          return new Promise<typeof mockUsers>((resolve) => {
-            setTimeout(() => {
-              resolve(filterUsers(mockUsers, filters))
-            }, 500)
-          })
-        },
+        fetchData: createPromiseDataFetch(),
       },
     })
 
@@ -212,13 +219,7 @@ export const BasicCardView: Story = {
       properties,
       filters,
       dataAdapter: {
-        fetchData: ({ filters }) => {
-          return new Promise<typeof mockUsers>((resolve) => {
-            setTimeout(() => {
-              resolve(filterUsers(mockUsers, filters))
-            }, 500)
-          })
-        },
+        fetchData: createPromiseDataFetch(),
       },
     })
 
@@ -250,13 +251,7 @@ export const CustomTableColumns: Story = {
       properties,
       filters,
       dataAdapter: {
-        fetchData: ({ filters }) => {
-          return new Promise<typeof mockUsers>((resolve) => {
-            setTimeout(() => {
-              resolve(filterUsers(mockUsers, filters))
-            }, 500)
-          })
-        },
+        fetchData: createPromiseDataFetch(),
       },
     })
 
@@ -299,13 +294,7 @@ export const CustomCardProperties: Story = {
       properties,
       filters,
       dataAdapter: {
-        fetchData: ({ filters }) => {
-          return new Promise<typeof mockUsers>((resolve) => {
-            setTimeout(() => {
-              resolve(filterUsers(mockUsers, filters))
-            }, 500)
-          })
-        },
+        fetchData: createPromiseDataFetch(),
       },
     })
 
@@ -342,13 +331,7 @@ export const WithPreselectedFilters: Story = {
         department: ["Engineering"],
       },
       dataAdapter: {
-        fetchData: ({ filters }) => {
-          return new Promise<typeof mockUsers>((resolve) => {
-            setTimeout(() => {
-              resolve(filterUsers(mockUsers, filters))
-            }, 500)
-          })
-        },
+        fetchData: createPromiseDataFetch(),
       },
     })
 
@@ -401,12 +384,7 @@ export const WithCustomJsonView: Story = {
       properties,
       filters,
       dataAdapter: {
-        fetchData: ({ filters }) => {
-          return new Observable<typeof mockUsers>((observer) => {
-            observer.next(filterUsers(mockUsers, filters))
-            return () => {}
-          })
-        },
+        fetchData: createObservableDataFetch(),
       },
     })
 
@@ -455,15 +433,7 @@ export const WithTableVisualization: Story = {
       properties,
       filters,
       dataAdapter: {
-        fetchData: ({ filters }) =>
-          new Observable<Array<ExtractDataType<typeof properties>>>(
-            (observer) => {
-              setTimeout(() => {
-                observer.next(filterUsers(mockUsers, filters))
-                observer.complete()
-              }, 1000)
-            }
-          ),
+        fetchData: createObservableDataFetch(1000),
       },
     })
 
