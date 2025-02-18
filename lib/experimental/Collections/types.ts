@@ -21,7 +21,6 @@ export type DataSourceDefinition<
   filters?: Filters
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
-
   dataAdapter: {
     /**
      * Fetches data based on the provided filter options
