@@ -62,7 +62,6 @@ function MetadataValue({ item }: { item: MetadataItem }) {
           size="xsmall"
           type={item.value.variant}
           max={3}
-          showTooltip
         />
       )
   }
