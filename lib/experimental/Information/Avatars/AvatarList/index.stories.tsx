@@ -66,6 +66,7 @@ const meta: Meta<typeof AvatarList> = {
     size: "medium",
     type: "person",
     avatars: getDummyAvatars(3, "person"),
+    noTooltip: false,
   },
   parameters: {
     layout: "centered",
@@ -94,19 +95,6 @@ export const Teams: Story = {
   },
 }
 
-export const WithTooltip: Story = {
-  args: {
-    showTooltip: true,
-  },
-}
-
-export const CompaniesWithTooltip: Story = {
-  args: {
-    ...Companies.args,
-    showTooltip: true,
-  },
-}
-
 export const WithMaxAvatars: Story = {
   args: {
     ...Default.args,
@@ -120,12 +108,5 @@ export const CompaniesWithMaxAvatars: Story = {
     ...Companies.args,
     avatars: getDummyAvatars(50, "company"),
     max: 3,
-  },
-}
-
-export const WithMaxAvatarsAndTooltip: Story = {
-  args: {
-    ...WithMaxAvatars.args,
-    showTooltip: true,
   },
 }

@@ -58,10 +58,10 @@ type Props = {
   type?: AvatarType
 
   /**
-   * Whether to show a tooltip in each avatar.
+   * Whether to hide tooltips in each avatar.
    * @default false
    */
-  showTooltip?: boolean
+  noTooltip?: boolean
 
   /**
    * The maximum number of avatars to display.
@@ -74,7 +74,7 @@ export const AvatarList = ({
   avatars,
   size = "medium",
   type,
-  showTooltip = false,
+  noTooltip = false,
   max = 3,
 }: Props) => {
   const visibleAvatars = avatars.slice(0, max)
@@ -108,10 +108,10 @@ export const AvatarList = ({
 
         return (
           <div key={index}>
-            {showTooltip ? (
-              <Tooltip label={displayName}>{clippedAvatar}</Tooltip>
-            ) : (
+            {noTooltip ? (
               clippedAvatar
+            ) : (
+              <Tooltip label={displayName}>{clippedAvatar}</Tooltip>
             )}
           </div>
         )
@@ -121,7 +121,7 @@ export const AvatarList = ({
           count={remainingCount}
           size={size}
           type={type === "person" ? "rounded" : "base"}
-          list={showTooltip ? remainingAvatars : undefined}
+          list={noTooltip ? undefined : remainingAvatars}
         />
       )}
     </div>
