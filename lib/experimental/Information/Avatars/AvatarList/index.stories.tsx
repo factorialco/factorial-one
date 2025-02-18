@@ -72,3 +72,37 @@ export const CompaniesWithTooltip: Story = {
     showTooltip: true,
   },
 }
+
+export const WithMaxAvatars: Story = {
+  args: {
+    ...Default.args,
+    avatars: Array(50)
+      .fill(0)
+      .map((_, index: number) => ({
+        type: "person" as const,
+        firstName: `Employee ${index + 1}`,
+        lastName: "Surname",
+      })),
+    max: 3,
+  },
+}
+
+export const CompaniesWithMaxAvatars: Story = {
+  args: {
+    ...Companies.args,
+    avatars: Array(50)
+      .fill(0)
+      .map((_, index: number) => ({
+        type: "company" as const,
+        name: `Company ${index + 1}`,
+      })),
+    max: 3,
+  },
+}
+
+export const WithMaxAvatarsAndTooltip: Story = {
+  args: {
+    ...WithMaxAvatars.args,
+    showTooltip: true,
+  },
+}

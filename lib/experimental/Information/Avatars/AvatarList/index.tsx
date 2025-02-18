@@ -2,6 +2,7 @@ import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { sizes } from "@/ui/avatar"
 import { cva } from "cva"
 import { Avatar, AvatarVariant } from "../Avatar"
+import { MaxCounter } from "./MaxCounter"
 
 type AvatarType = AvatarVariant["type"]
 
@@ -61,6 +62,12 @@ type Props = {
    * @default false
    */
   showTooltip?: boolean
+
+  /**
+   * The maximum number of avatars to display.
+   * @default 3
+   */
+  max?: number
 }
 
 export const AvatarList = ({
@@ -68,10 +75,16 @@ export const AvatarList = ({
   size = "medium",
   type,
   showTooltip = false,
+  max = 3,
 }: Props) => {
+  const visibleAvatars = avatars.slice(0, max)
+  const remainingAvatars = avatars.slice(max)
+  const remainingCount = avatars.length - max
+  const showCounter = remainingCount > 0
+
   return (
     <div className={avatarListVariants({ size })}>
-      {avatars.map((avatar, index) => {
+      {visibleAvatars.map((avatar, index) => {
         const displayName =
           avatar.type === "person"
             ? `${avatar.firstName} ${avatar.lastName}`
@@ -103,6 +116,14 @@ export const AvatarList = ({
           </div>
         )
       })}
+      {showCounter && (
+        <MaxCounter
+          count={remainingCount}
+          size={size}
+          type={type === "person" ? "rounded" : "base"}
+          list={showTooltip ? remainingAvatars : undefined}
+        />
+      )}
     </div>
   )
 }
