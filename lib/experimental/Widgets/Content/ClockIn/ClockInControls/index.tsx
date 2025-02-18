@@ -35,20 +35,15 @@ export interface ClockInControlsProps {
     name: string
     icon: IconType
   }[]
-  canShowProject?: boolean
   canShowLocation?: boolean
   locationSelectorDisabled?: boolean
-  projectSelectorDisabled?: boolean
   canShowBreakButton?: boolean
-  projectName?: string
   /** Callback when Clock In button is clicked */
   onClockIn?: () => void
   /** Callback when Clock Out button is clicked */
   onClockOut?: () => void
   /** Callback when Break button is clicked */
   onBreak?: () => void
-  /** Callback when Project Selector is clicked */
-  // onClickProjectSelector?: () => void
 }
 
 export function ClockInControls({
@@ -208,20 +203,6 @@ export function ClockInControls({
               </>
             )
           )}
-          {/* {canSelectProject ? (
-            <Selector
-              text={projectName}
-              placeholder={labels.selectProject}
-              icon={SuitcaseIcon}
-              onClick={onClickProjectSelector}
-            />
-          ) : (
-            canShowProject && (
-              <>
-                <RawTag text={projectName} icon={SuitcaseIcon} />
-              </>
-            )
-          )} */}
         </div>
       </div>
     </div>
