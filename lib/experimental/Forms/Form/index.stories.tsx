@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { Textarea } from "@/ui/textarea"
+import { z } from "zod"
 import { Form, FormActions } from "."
 import Checkbox from "../Fields/Checkbox"
 import { Input } from "../Fields/Input"
@@ -270,6 +271,181 @@ export const AsyncSubmit: Story = {
 
         <FormActions form={form} submitLabel="Create" />
       </Form>
+    )
+  },
+}
+
+export const MultipleTypeSchema: Story = {
+  render() {
+    const animalSchema = z.object({
+      name: z.string(),
+      eating: z.boolean(),
+    })
+
+    const fishSchema = animalSchema.merge(
+      z.object({
+        type: z.literal("fish"),
+        swimming: z.boolean(),
+      })
+    )
+
+    const dogSchema = animalSchema.merge(
+      z.object({
+        type: z.literal("dog"),
+        running: z.boolean(),
+      })
+    )
+
+    const fishForm = useFormSchema(
+      fishSchema,
+      {
+        defaultValues: {
+          name: "Nemo",
+          eating: false,
+          type: "fish",
+          swimming: true,
+          // running: false this will trigger an error. TS will let you know this is not valid for this schema.
+        },
+      },
+      async (data) => {
+        alert(`Form has been submitted: ${JSON.stringify(data)}`)
+
+        return {
+          success: true,
+        }
+      }
+    )
+
+    const dogForm = useFormSchema(
+      dogSchema,
+      {
+        defaultValues: {
+          name: "Fluffy",
+          type: "dog",
+          eating: false,
+          running: true,
+        },
+      },
+      async (data) => {
+        alert(`Form has been submitted: ${JSON.stringify(data)}`)
+
+        return {
+          success: true,
+        }
+      }
+    )
+
+    return (
+      <div>
+        <div>
+          <h3>Fish form:</h3>
+          <Form {...fishForm}>
+            <FormField
+              label="Name"
+              description="Write a name"
+              control={fishForm.control}
+              name="name"
+            >
+              {(field) => (
+                <Input
+                  placeholder="Try 'taken' as a username"
+                  {...field}
+                  value={String(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label="Eating"
+              description="Is the animal eating?"
+              control={fishForm.control}
+              name="eating"
+            >
+              {(field) => (
+                <Checkbox
+                  {...field}
+                  onCheckedChange={field.onChange}
+                  value={String(field.value)}
+                  checked={Boolean(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label="Swimming"
+              description="Is the animal swimming?"
+              control={fishForm.control}
+              name="swimming"
+            >
+              {(field) => (
+                <Checkbox
+                  {...field}
+                  onCheckedChange={field.onChange}
+                  value={String(field.value)}
+                  checked={Boolean(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormActions form={fishForm} submitLabel="Create" />
+          </Form>
+        </div>
+
+        <br />
+        <div>
+          <h3>Dog form:</h3>
+          <Form {...dogForm}>
+            <FormField
+              label="Name"
+              description="Write a name"
+              control={dogForm.control}
+              name="name"
+            >
+              {(field) => (
+                <Input
+                  placeholder="Try 'taken' as a username"
+                  {...field}
+                  value={String(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label="Eating"
+              description="Is the animal eating?"
+              control={dogForm.control}
+              name="eating"
+            >
+              {(field) => (
+                <Checkbox
+                  {...field}
+                  onCheckedChange={field.onChange}
+                  value={String(field.value)}
+                  checked={Boolean(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label="Running"
+              description="Is the animal running?"
+              control={dogForm.control}
+              name="running"
+            >
+              {(field) => (
+                <Checkbox
+                  {...field}
+                  onCheckedChange={field.onChange}
+                  value={String(field.value)}
+                  checked={Boolean(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormActions form={dogForm} submitLabel="Create" />
+          </Form>
+        </div>
+      </div>
     )
   },
 }
