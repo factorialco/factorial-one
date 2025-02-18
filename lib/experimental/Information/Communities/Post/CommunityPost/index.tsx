@@ -6,7 +6,6 @@ import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { EllipsisHorizontal } from "@/icons/app"
 import { getAgo } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
-import { useIsStorybook } from "@/lib/storybook-utils/isStorybook"
 import { Skeleton } from "@/ui/skeleton"
 import { PostDescription, PostDescriptionProps } from "../PostDescription"
 import { PostEvent, PostEventProps } from "../PostEvent"
@@ -45,6 +44,8 @@ export type CommunityPostProps = {
     onClick: () => void
   }
 
+  noVideoPreload?: boolean
+
   onClick: (id: string) => void
 
   dropdownItems?: DropdownItem[]
@@ -65,14 +66,13 @@ export const BaseCommunityPost = ({
   inLabel,
   comment,
   dropdownItems,
+  noVideoPreload = false,
 }: CommunityPostProps) => {
   const countersDisplay = [counters.views, counters.comments]
     .filter(Boolean)
     .join(" · ")
 
   const ago = getAgo(createdAt)
-
-  const isStorybook = useIsStorybook()
 
   const handleClick = () => {
     onClick(id)
@@ -184,7 +184,7 @@ export const BaseCommunityPost = ({
                 controls
                 className="h-full w-full object-cover"
                 onClick={handleVideoClick}
-                preload={isStorybook ? "none" : "auto"}
+                preload={noVideoPreload ? "none" : "auto"}
               >
                 <source src={mediaUrl} />
               </video>
