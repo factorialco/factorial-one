@@ -263,8 +263,8 @@ importers:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.5.1)
       axe-playwright:
-        specifier: ^2.0.3
-        version: 2.0.3(playwright@1.50.0)
+        specifier: ^2.1.0
+        version: 2.1.0(playwright@1.50.0)
       chromatic:
         specifier: ^11.25.2
         version: 11.25.2
@@ -2597,8 +2597,8 @@ packages:
     peerDependencies:
       axe-core: '>=3'
 
-  axe-playwright@2.0.3:
-    resolution: {integrity: sha512-s7iI2okyHHsD3XZK4RMJtTy2UASkNWLQtnzLuaHiK3AWkERf+cqZJqkxb7O4b56fnbib9YnZVRByTl92ME3o6g==}
+  axe-playwright@2.1.0:
+    resolution: {integrity: sha512-tY48SX56XaAp16oHPyD4DXpybz8Jxdz9P7exTjF/4AV70EGUavk+1fUPWirM0OYBR+YyDx6hUeDvuHVA6fB9YA==}
     peerDependencies:
       playwright: '>1.0.0'
 
@@ -8412,7 +8412,7 @@ snapshots:
       axe-core: 4.10.2
       mustache: 4.2.0
 
-  axe-playwright@2.0.3(playwright@1.50.0):
+  axe-playwright@2.1.0(playwright@1.50.0):
     dependencies:
       '@types/junit-report-builder': 3.0.2
       axe-core: 4.10.2
