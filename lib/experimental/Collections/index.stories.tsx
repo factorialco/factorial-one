@@ -57,16 +57,14 @@ const mockUsers = [
 
 // Example filter definition
 const filters = {
-  fields: {
-    search: {
-      type: "search",
-      label: "Search",
-    },
-    department: {
-      type: "in",
-      label: "Department",
-      options: DEPARTMENTS.map((value) => ({ value, label: value })),
-    },
+  search: {
+    type: "search",
+    label: "Search",
+  },
+  department: {
+    type: "in",
+    label: "Department",
+    options: DEPARTMENTS.map((value) => ({ value, label: value })),
   },
 } as const
 
@@ -474,9 +472,7 @@ export const WithPreselectedFilters: Story = {
 const JsonVisualization = ({
   source,
 }: {
-  source: ReturnType<
-    typeof useDataSource<typeof properties, (typeof filters)["fields"]>
-  >
+  source: ReturnType<typeof useDataSource<typeof properties, typeof filters>>
 }) => {
   const { data, isLoading } = useData(source)
 
