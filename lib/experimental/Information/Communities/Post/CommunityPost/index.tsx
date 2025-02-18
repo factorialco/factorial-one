@@ -173,7 +173,11 @@ export const BaseCommunityPost = ({
         {mediaUrl && !event && (
           <div className="relative aspect-video overflow-hidden rounded-xl md:w-2/3">
             {isVideo(mediaUrl) ? (
-              <video controls className="h-full w-full object-cover">
+              <video
+                controls
+                className="h-full w-full object-cover"
+                data-chromatic="ignore"
+              >
                 <source src={mediaUrl} />
               </video>
             ) : (
