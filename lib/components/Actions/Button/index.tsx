@@ -14,6 +14,7 @@ export type ButtonProps = Pick<
   loading?: boolean
   icon?: IconType
   hideLabel?: boolean
+  tabIndex?: number
 }
 
 const iconVariants = cva({

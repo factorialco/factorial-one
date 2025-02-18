@@ -9,18 +9,25 @@ import {
   AvatarNameSelectorProps,
 } from "./types"
 
+function extractLeafs(list: AvatarNamedEntity[]) {
+  const oldWasGroupView = list.some(
+    (entity) => entity.subItems && entity.subItems.length > 0
+  )
+  return oldWasGroupView
+    ? list
+        .flatMap((entity) => entity.subItems ?? [])
+        .map((el) => ({ id: el.subId, name: el.subName }) as AvatarNamedEntity)
+    : list
+}
+
 function transformSelection(
   prevSelected: AvatarNamedEntity[],
   entities: AvatarNamedEntity[]
 ): AvatarNamedEntity[] {
-  const oldWasGroupView = prevSelected.some((entity) => entity.subItems)
-  const newIsGroupView = entities.some((entity) => entity.subItems)
-
-  const selectedLeafs = oldWasGroupView
-    ? prevSelected
-        .flatMap((entity) => entity.subItems ?? [])
-        .map((el) => ({ id: el.subId, name: el.subName }) as AvatarNamedEntity)
-    : prevSelected
+  const newIsGroupView = entities.some(
+    (entity) => entity.subItems && entity.subItems.length > 0
+  )
+  const selectedLeafs = extractLeafs(prevSelected)
 
   if (newIsGroupView) {
     return entities
@@ -46,15 +53,23 @@ export const AvatarNameSelector = ({
   entities,
   groups,
   onGroupChange,
-  placeholder,
+  triggerPlaceholder,
+  triggerSelected,
   selectedGroup,
   searchPlaceholder,
   selectAllLabel,
   clearLabel,
   selectedLabel,
+  notFoundTitle,
+  notFoundSubtitle,
+  selectedAvatarName,
+  onSelect: onSelectProp,
+  loading = false,
+  singleSelector = false,
+  ...props
 }: AvatarNameSelectorProps) => {
   const [selectedEntities, setSelectedEntities] = useState<AvatarNamedEntity[]>(
-    []
+    selectedAvatarName ?? []
   )
   const [filteredEntities, setFilteredEntities] =
     useState<AvatarNamedEntity[]>(entities)
@@ -67,10 +82,11 @@ export const AvatarNameSelector = ({
       const alreadySelected = prevSelectedEntities.find(
         (e) => e.id === entity.id
       )
+      let newSelectedEntities
       if (!alreadySelected) {
-        return [...prevSelectedEntities, entity]
+        newSelectedEntities = [...prevSelectedEntities, entity]
       } else {
-        return prevSelectedEntities.map((e) =>
+        newSelectedEntities = prevSelectedEntities.map((e) =>
           e.id === entity.id
             ? {
                 ...e,
@@ -79,27 +95,12 @@ export const AvatarNameSelector = ({
             : e
         )
       }
-    })
-  }
-
-  const onRemove = (entity: AvatarNamedEntity) => {
-    setSelectedEntities(selectedEntities.filter((e) => e.id !== entity.id))
-  }
-
-  const onSubItemRemove = (
-    parentEntity: AvatarNamedEntity,
-    entity: AvatarNamedSubEntity
-  ) => {
-    setSelectedEntities(
-      selectedEntities.map((e) =>
-        e.id === parentEntity.id
-          ? {
-              ...e,
-              subItems: e.subItems?.filter((s) => s.subId !== entity.subId),
-            }
-          : e
+      onSelectProp(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (singleSelector ? entity : newSelectedEntities) as any
       )
-    )
+      return singleSelector ? [entity] : newSelectedEntities
+    })
   }
 
   const onSubItemSelect = (
@@ -109,23 +110,59 @@ export const AvatarNameSelector = ({
     const existingSelectedEntity = selectedEntities.find(
       (e) => e.id === parentEntity.id
     )
+    let newSelectedEntities
     if (existingSelectedEntity) {
-      setSelectedEntities(
-        selectedEntities.map((e) =>
-          e.id === parentEntity.id
-            ? {
-                ...e,
-                subItems: [...(e.subItems ?? []), entity],
-              }
-            : e
-        )
+      newSelectedEntities = selectedEntities.map((e) =>
+        e.id === parentEntity.id
+          ? {
+              ...e,
+              subItems: [...(e.subItems ?? []), entity],
+            }
+          : e
       )
     } else {
-      setSelectedEntities([
+      newSelectedEntities = [
         ...selectedEntities,
         { ...parentEntity, subItems: [entity] },
-      ])
+      ]
     }
+
+    onSelectProp(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (singleSelector ? entity : newSelectedEntities) as any
+    )
+
+    setSelectedEntities(newSelectedEntities)
+  }
+
+  const onRemove = (entity: AvatarNamedEntity) => {
+    const newSelectedEntities = selectedEntities.filter(
+      (e) => e.id !== entity.id
+    )
+    setSelectedEntities(newSelectedEntities)
+    onSelectProp(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      singleSelector ? null : (newSelectedEntities as any)
+    )
+  }
+
+  const onSubItemRemove = (
+    parentEntity: AvatarNamedEntity,
+    entity: AvatarNamedSubEntity
+  ) => {
+    const newSelectedEntities = selectedEntities.map((e) =>
+      e.id === parentEntity.id
+        ? {
+            ...e,
+            subItems: e.subItems?.filter((s) => s.subId !== entity.subId),
+          }
+        : e
+    )
+    setSelectedEntities(newSelectedEntities)
+    onSelectProp(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      singleSelector ? null : (newSelectedEntities as any)
+    )
   }
 
   const onClear = () => {
@@ -161,6 +198,8 @@ export const AvatarNameSelector = ({
     })
 
     setSelectedEntities(updatedSelected)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (!singleSelector) onSelectProp(updatedSelected as any)
   }
 
   const onSelectAll = () => {
@@ -186,6 +225,8 @@ export const AvatarNameSelector = ({
     })
 
     setSelectedEntities(newSelected)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (!singleSelector) onSelectProp(newSelected as any)
   }
 
   const onSearch = (search: string) => {
@@ -202,7 +243,8 @@ export const AvatarNameSelector = ({
   }
 
   const groupView = useMemo(
-    () => entities.some((entity) => entity.subItems),
+    () =>
+      entities.some((entity) => entity.subItems && entity.subItems.length > 0),
     [entities]
   )
 
@@ -252,17 +294,27 @@ export const AvatarNameSelector = ({
   }, [debouncedSearch, entities, groupView])
 
   useEffect(() => {
-    setSelectedEntities((prevSelected) =>
-      transformSelection(prevSelected, entities)
-    )
+    setSelectedEntities((prevSelected) => {
+      const trans = transformSelection(prevSelected, entities)
+      return trans
+    })
   }, [entities])
 
+  const onOpenChange = (open: boolean) => {
+    if (!open) setSelectedEntities(selectedAvatarName ?? [])
+    props.onOpenChange?.(open)
+  }
+
   return (
-    <Popover>
+    <Popover {...props} onOpenChange={onOpenChange}>
       <PopoverTrigger className="w-full">
-        <AvatarNameSelectorTrigger placeholder={placeholder} />
+        <AvatarNameSelectorTrigger
+          placeholder={triggerPlaceholder}
+          selected={triggerSelected}
+          selectedAvatarName={selectedEntities}
+        />
       </PopoverTrigger>
-      <PopoverContent className="w-full rounded-xl border-[1px] border-solid border-f1-border-secondary p-0">
+      <PopoverContent className="w-full rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0">
         <AvatarNameSelectorContent
           groupView={groupView}
           entities={filteredEntities}
@@ -283,6 +335,10 @@ export const AvatarNameSelector = ({
           selectAllLabel={selectAllLabel}
           clearLabel={clearLabel}
           selectedLabel={selectedLabel}
+          singleSelector={singleSelector}
+          loading={loading}
+          notFoundTitle={notFoundTitle}
+          notFoundSubtitle={notFoundSubtitle}
         />
       </PopoverContent>
     </Popover>

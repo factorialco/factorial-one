@@ -79,6 +79,10 @@
     --chart-6: 278 47% 58%;
     --chart-7: 191 16% 47%;
     --chart-8: 202 61% 27%;
+
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: rgba(0, 0, 0, 0.4);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.6);
   }
 
   .dark {
@@ -154,9 +158,38 @@
     --chart-6: 278 47% 58%;
     --chart-7: 191 16% 47%;
     --chart-8: 202 61% 27%;
+
+    --scrollbar-track: transparent;
+    --scrollbar-thumb: rgba(255, 255, 255, 0.4);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.6);
   }
 }
 
 body {
   @apply font-sans text-base text-f1-foreground antialiased;
+}
+
+.scrollbar-macos {
+  /* For Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.scrollbar-macos::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-macos::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+.scrollbar-macos::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.scrollbar-macos::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
 }
