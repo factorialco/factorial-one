@@ -127,6 +127,7 @@ export const WithVideo: Story = {
     event: undefined,
     mediaUrl:
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    noVideoPreload: true,
   },
 }
 
