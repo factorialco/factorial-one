@@ -6,6 +6,7 @@ import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { EllipsisHorizontal } from "@/icons/app"
 import { getAgo } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
+import { useIsStorybook } from "@/lib/storybook-utils/isStorybook"
 import { Skeleton } from "@/ui/skeleton"
 import { PostDescription, PostDescriptionProps } from "../PostDescription"
 import { PostEvent, PostEventProps } from "../PostEvent"
@@ -71,8 +72,14 @@ export const BaseCommunityPost = ({
 
   const ago = getAgo(createdAt)
 
+  const isStorybook = useIsStorybook()
+
   const handleClick = () => {
     onClick(id)
+  }
+
+  const handleVideoClick = (event: React.MouseEvent<HTMLVideoElement>) => {
+    event.stopPropagation()
   }
 
   const authorFullName = `${author.firstName} ${author.lastName}`
@@ -173,7 +180,12 @@ export const BaseCommunityPost = ({
         {mediaUrl && !event && (
           <div className="relative aspect-video overflow-hidden rounded-xl md:w-2/3">
             {isVideo(mediaUrl) ? (
-              <video controls className="h-full w-full object-cover">
+              <video
+                controls
+                className="h-full w-full object-cover"
+                onClick={handleVideoClick}
+                preload={isStorybook ? "none" : "auto"}
+              >
                 <source src={mediaUrl} />
               </video>
             ) : (

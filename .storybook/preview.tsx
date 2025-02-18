@@ -16,6 +16,8 @@ import { defaultTranslations } from "../lib/lib/i18n-provider-defaults"
 
 MotionGlobalConfig.skipAnimations = isChromatic()
 
+window["IS_STORYBOOK"] = true
+
 export const withTheme = () => {
   // eslint-disable-next-line react/display-name
   return (Story) => {
