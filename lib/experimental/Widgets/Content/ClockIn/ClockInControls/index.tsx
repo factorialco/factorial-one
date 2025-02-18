@@ -35,12 +35,12 @@ export interface ClockInControlsProps {
     name: string
     icon: IconType
   }[]
-  // canShowProject?: boolean
+  canShowProject?: boolean
   canShowLocation?: boolean
   locationSelectorDisabled?: boolean
-  // projectSelectorDisabled?: boolean
+  projectSelectorDisabled?: boolean
   canShowBreakButton?: boolean
-  // projectName?: string
+  projectName?: string
   /** Callback when Clock In button is clicked */
   onClockIn?: () => void
   /** Callback when Clock Out button is clicked */
@@ -57,11 +57,8 @@ export function ClockInControls({
   labels,
   locationId,
   locations,
-  // canShowProject = true,
   canShowLocation = true,
   locationSelectorDisabled = false,
-  // projectSelectorDisabled = false,
-  // projectName,
   onClockIn,
   onClockOut,
   onBreak,
