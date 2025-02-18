@@ -22,7 +22,8 @@ const GROUP_DATA = {
 
 const defaultArgs: AvatarNameSelectorMultipleProps = {
   entities: [],
-  placeholder: "Select employees...",
+  triggerPlaceholder: "Select employees...",
+  triggerSelected: "employees selected",
   searchPlaceholder: "Search...",
   selectAllLabel: "Select all",
   clearLabel: "Clear",

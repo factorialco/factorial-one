@@ -25,7 +25,8 @@ interface AvatarNameSelectorCommonProps
   entities: AvatarNamedEntity[]
   groups: AvatarNamedGroup[]
   selectedGroup: string
-  placeholder: string
+  triggerPlaceholder: string
+  triggerSelected: string
   notFoundTitle: string
   notFoundSubtitle: string
   onGroupChange: (value: string | null) => void
@@ -34,6 +35,7 @@ interface AvatarNameSelectorCommonProps
   selectAllLabel?: string
   clearLabel?: string
   selectedLabel?: string
+  selectedAvatarName?: AvatarNamedEntity[]
 }
 
 export interface AvatarNameSelectorSingleProps

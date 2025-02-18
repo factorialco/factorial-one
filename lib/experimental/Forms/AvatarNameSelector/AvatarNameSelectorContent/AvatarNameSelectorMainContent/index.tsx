@@ -187,7 +187,7 @@ export const AvatarNameSelectorMainContent = ({
           />
         </div>
         <div className="flex-1">
-          {(!singleSelector || !groups || !groups.length) && (
+          {groups && groups.length > 1 && (
             <Select
               disabled={loading}
               onChange={onGroupChange}
@@ -209,7 +209,7 @@ export const AvatarNameSelectorMainContent = ({
             <Spinner />
           </div>
         )}
-        {!totalFilteredEntities && (
+        {!loading && !totalFilteredEntities && (
           <div className="flex h-full w-full flex-col items-center justify-center gap-0.5">
             <span className="text-lg font-medium">{notFoundTitle}</span>
             <span className="text-f1-foreground-secondary">
