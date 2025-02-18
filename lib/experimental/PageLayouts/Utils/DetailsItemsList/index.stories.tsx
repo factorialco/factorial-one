@@ -36,7 +36,7 @@ const meta: Meta = {
         title: "Workable days",
         content: {
           type: "weekdays",
-          activatedDays: ["Monday", "Tuesday", "Wednesday"],
+          activatedDays: [0, 1, 2],
         },
         spacingAtTheBottom: true,
       },
