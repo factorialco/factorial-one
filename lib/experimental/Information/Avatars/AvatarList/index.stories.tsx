@@ -65,21 +65,7 @@ const meta: Meta<typeof AvatarList> = {
   args: {
     size: "medium",
     type: "person",
-    avatars: [
-      {
-        type: "person",
-        firstName: "Nik",
-        lastName: "Lopin",
-        src: "https://github.com/nlopin.png",
-      },
-      {
-        type: "person",
-        firstName: "Josep Jaume",
-        lastName: "Rey",
-        src: "https://github.com/josepjaume.png",
-      },
-      { type: "person", firstName: "Saúl", lastName: "Domínguez" },
-    ],
+    avatars: getDummyAvatars(3, "person"),
   },
   parameters: {
     layout: "centered",
@@ -96,15 +82,7 @@ export const Companies: Story = {
   args: {
     size: "medium",
     type: "company",
-    avatars: [
-      {
-        type: "company",
-        name: "Factorial",
-        src: "https://github.com/factorialco.png",
-      },
-      { type: "company", name: "Itnig" },
-      { type: "company", name: "Another cool company" },
-    ],
+    avatars: getDummyAvatars(3, "company"),
   },
 }
 
@@ -112,11 +90,7 @@ export const Teams: Story = {
   args: {
     size: "medium",
     type: "team",
-    avatars: [
-      { type: "team", name: "Designers" },
-      { type: "team", name: "Engineering" },
-      { type: "team", name: "Product Management" },
-    ],
+    avatars: getDummyAvatars(3, "team"),
   },
 }
 
