@@ -14,24 +14,6 @@
     "tailwind.config.ts",
     "postcss.config.js"
   ],
-  "exports": {
-    ".": {
-      "development": "./lib/factorial-one.ts",
-      "default": "./dist/factorial-one.js"
-    },
-    "./experimental": {
-      "development": "./lib/experimental/exports.ts",
-      "default": "./dist/experimental.js"
-    },
-    "./icons/*": {
-      "development": "./lib/icons/*",
-      "default": "./icons/*"
-    },
-    "./styles.css": {
-      "development": "./",
-      "default": "./dist/styles.scss"
-    }
-  },
   "sideEffects": [
     "**/*.css"
   ],
