@@ -5,10 +5,11 @@ import { AvatarNameSelectorTrigger } from "."
 
 const meta: Meta = {
   component: AvatarNameSelectorTrigger,
+  title: "AvatarNameSelector/AvatarNameSelectorTrigger",
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
       <div className="w-full min-w-72 max-w-96">

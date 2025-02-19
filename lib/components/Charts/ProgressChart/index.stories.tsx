@@ -2,6 +2,7 @@ import type { Meta } from "@storybook/react"
 import { ProgressBar } from "."
 
 const meta: Meta<typeof ProgressBar> = {
+  title: "Charts/ProgressChart",
   component: ProgressBar,
   tags: ["autodocs"],
   args: {

@@ -14,14 +14,24 @@ import {
   MobileDropdown,
 } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { Fragment, memo } from "react"
-import { Metadata, MetadataAction, MetadataItem } from "../Metadata"
+import { useI18n } from "@/lib/i18n-provider"
+import { cn } from "@/lib/utils"
+import { motion } from "framer-motion"
+import { Fragment, memo, useEffect, useRef, useState } from "react"
+import { useResizeObserver } from "usehooks-ts"
+import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
 
 interface BaseHeaderProps {
   title: string
-  avatar?: AvatarVariant
+  avatar?:
+    | {
+        type: "generic"
+        name: string
+        src?: string
+      }
+    | AvatarVariant
+
   description?: string
-  eyebrow?: React.ReactNode
   primaryAction?: PrimaryAction
   secondaryActions?: SecondaryAction[]
   otherActions?: (DropdownItem & { isVisible?: boolean })[]
@@ -31,7 +41,7 @@ interface BaseHeaderProps {
     variant: StatusVariant
     actions?: MetadataAction[]
   }
-  metadata?: MetadataItem[]
+  metadata?: MetadataProps["items"]
 }
 
 const isVisible = (action: { isVisible?: boolean }) =>
@@ -58,28 +68,47 @@ export function BaseHeader({
   title,
   avatar,
   description,
-  eyebrow,
   primaryAction,
   secondaryActions = [],
   otherActions = [],
   status,
   metadata = [],
 }: BaseHeaderProps) {
-  const allMetadata = status
-    ? [
-        {
-          label: status.label,
-          value: {
-            type: "status" as const,
-            label: status.text,
-            variant: status.variant,
-          },
-          actions: status.actions,
-          hideLabel: true,
-        },
-        ...metadata,
-      ]
-    : metadata
+  const allMetadata: BaseHeaderProps["metadata"] = [
+    status && {
+      label: status.label,
+      value: {
+        type: "status" as const,
+        label: status.text,
+        variant: status.variant,
+      },
+      actions: status.actions,
+      hideLabel: true,
+    },
+    ...metadata,
+  ]
+
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
+  const [needsTruncation, setNeedsTruncation] = useState(false)
+  const translations = useI18n()
+
+  /*
+    Checks if the description is long enough to be truncated
+  */
+  const [descriptionRef, measureRef] = [
+    useRef<HTMLDivElement>(null),
+    useRef<HTMLDivElement>(null),
+  ]
+  const [descriptionSize, measureSize] = [
+    useResizeObserver({ ref: descriptionRef }),
+    useResizeObserver({ ref: measureRef }),
+  ]
+
+  useEffect(() => {
+    if (measureSize.height && descriptionSize.height) {
+      setNeedsTruncation(measureSize.height > descriptionSize.height)
+    }
+  }, [measureSize.height, descriptionSize.height])
 
   const visibleSecondaryActions = secondaryActions.filter(isVisible)
   const visibleOtherActions = otherActions.filter(isVisible)
@@ -90,24 +119,67 @@ export function BaseHeader({
   return (
     <div className="flex flex-col gap-3 px-6 pb-5 pt-3">
       <div className="flex flex-col items-start justify-start gap-4 md:flex-row">
-        <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-center">
+        <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-start">
           {avatar && (
             <div className="flex items-start">
-              <Avatar avatar={avatar} size="large" />
+              <Avatar
+                avatar={{
+                  ...(avatar.type === "generic"
+                    ? { ...avatar, type: "company" }
+                    : avatar),
+                }}
+                size="large"
+              />
             </div>
           )}
           <div className="flex flex-col gap-1">
-            {eyebrow && (
-              <div className="text-lg text-f1-foreground-secondary">
-                {eyebrow}
-              </div>
-            )}
             <span className="text-xl font-semibold text-f1-foreground">
               {title}
             </span>
             {description && (
-              <div className="text-lg text-f1-foreground-secondary">
-                {description}
+              <div className="flex max-w-[640px] flex-col gap-1">
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: isDescriptionExpanded
+                      ? (measureSize.height ?? descriptionSize.height)
+                      : (descriptionSize.height ?? "3rem"),
+                  }}
+                  transition={{
+                    duration: 0.15,
+                    ease: [0.165, 0.84, 0.44, 1],
+                  }}
+                  className="overflow-hidden"
+                >
+                  <div
+                    ref={descriptionRef}
+                    className={cn(
+                      "text-lg text-f1-foreground-secondary",
+                      !isDescriptionExpanded && "line-clamp-2"
+                    )}
+                  >
+                    {description}
+                  </div>
+                  <div
+                    ref={measureRef}
+                    className="invisible text-lg text-f1-foreground-secondary"
+                    aria-hidden="true"
+                  >
+                    {description}
+                  </div>
+                </motion.div>
+                {(needsTruncation || isDescriptionExpanded) && (
+                  <button
+                    onClick={() =>
+                      setIsDescriptionExpanded(!isDescriptionExpanded)
+                    }
+                    className="relative w-fit font-medium text-f1-foreground after:absolute after:-bottom-0.5 after:left-0 after:right-0 after:h-[1.5px] after:bg-f1-border after:transition-all after:content-[''] hover:after:bg-f1-border-hover"
+                  >
+                    {isDescriptionExpanded
+                      ? translations.actions.showLess
+                      : translations.actions.showAll}
+                  </button>
+                )}
               </div>
             )}
           </div>

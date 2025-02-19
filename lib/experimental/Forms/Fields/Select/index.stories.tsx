@@ -1,14 +1,60 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
-import { Select } from "."
+import { Select, SelectProps } from "."
 
 import { Appearance, Circle, Desktop } from "@/icons/app"
+import { useState } from "react"
+
+// Wraps the Select component with a hook to show the selected value
+const SelectWithHooks = (props: SelectProps<string>) => {
+  const [localValue, setLocalValue] = useState(props.value)
+  const [, setSearchValue] = useState("")
+  // Sets a click handler to change the label's value
+  const handleOnChange = (value: string) => {
+    setLocalValue(value)
+    console.log("value", value)
+  }
+
+  const handleOnSearchChange = (value: string) => {
+    setSearchValue(value)
+    console.log("searchValue", value)
+  }
+
+  return (
+    <Select
+      {...props}
+      value={localValue}
+      onChange={handleOnChange}
+      onSearchChange={handleOnSearchChange}
+    />
+  )
+}
 
 const meta: Meta = {
-  component: Select,
+  title: "Select",
+  component: SelectWithHooks,
   parameters: {
     a11y: {
       skipCi: true,
+    },
+  },
+  argTypes: {
+    showSearchBox: {
+      description:
+        "Shows a search box. The component will filter the items by name and by description unless searchFunc will be in use",
+    },
+    externalSearch: {
+      description:
+        "Disable the internal filtering when the search box delegating the filtering in the parent. Useful for async data",
+    },
+    searchValue: {
+      description: "Default value for the search box",
+    },
+    searchEmptyMessage: {
+      description: "Message to show when filter returns no results",
+    },
+    searchBoxPlaceholder: {
+      description: "Placeholder for the search box",
     },
   },
   args: {
@@ -35,16 +81,31 @@ const meta: Meta = {
         icon: Desktop,
         description: "A theme that adapts to the system's default appearance",
       },
+      ...Array.from({ length: 10 }, (_, i) => ({
+        value: `option-${i}`,
+        label: `Option ${i}`,
+        icon: Circle,
+        description: `Description for option ${i}`,
+      })),
     ],
     disabled: false,
+    showSearchBox: false,
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof Select>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+export const WithSearchBox: Story = {
+  args: {
+    showSearchBox: true,
+    searchEmptyMessage: "No results found",
+    searchBoxPlaceholder: "Search for a theme",
+  },
+}
 
 export const WithCustomTrigger: Story = {
   args: {

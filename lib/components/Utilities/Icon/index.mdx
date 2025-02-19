@@ -1,56 +1,52 @@
-/_ "title": "Icons" _/
-
-import { Meta, Title, IconGallery, IconItem, Canvas } from "@storybook/blocks"
-
-import { Icon as IconExample } from "./"
-import ChartLine from "@/icons/app/ChartLine"
-
+import { Meta, Canvas, Controls } from "@storybook/blocks"
+import LinkTo from "@storybook/addon-links/react"
 import * as IconStories from "./index.stories"
-import * as AppIcons from "@/icons/app"
-import * as ModuleIcons from "@/icons/modules"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
-<Meta of={IconStories} />
+<Meta title="Icon" />
 
-# Icons
+# Icon
 
-## App Icons
+The Icon component is used to display an icon from the
+[Icons library](/docs/foundations-icons--documentation).
 
-<Canvas
-  of={IconStories.App}
-  sourceState="shown"
-  source={{
-    transform: (code) => {
-      return `
-import { ChartLine } from "@factorial-one/icons/app"
+## Anatomy
 
-${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={ChartLine")}` }}}
+<Canvas of={IconStories.App} />
+<Controls of={IconStories.App} />
+
+## Usage
+
+### Import
+
+Import the Icon component and the icon you want to display. Then, pass the icon
+to the Icon component as a prop.
+
+{/* prettier-ignore */}
+```jsx
+import { Icon } from "@/components/Utilities/Icon"
+import { Archive } from "@/icons/app"
+
+<Icon icon={Archive} size="md" />
+```
+
+<DoDonts
+  do={{
+    description: "Use the Icon component to display an icon.",
+  }}
+  dont={{
+    description: "Use the icon directly, without the Icon component.",
+  }}
 />
 
-<IconGallery>
-  {Object.keys(AppIcons).map((iconName) => (
-    <IconItem key={iconName} name={iconName}>
-      <IconExample size="large" icon={AppIcons[iconName]} />
-    </IconItem>
-  ))}
-</IconGallery>
+### Color
 
-## Module Icons
+The Icon will be displayed with the color of the text. You can change the color
+using the `className` prop, or setting a text color for the container. Please
+use
+[one of the specific color tokens](/docs/foundations-colors--documentation#icon)
+for icons.
 
-<Canvas
-  of={IconStories.Module}
-  sourceState="shown"
-  source={{
-    transform: (code) => {
-      return `
-import { Calendar } from "@factorial-one/icons/modules"
-
-${code.toString().replace(/icon=\{\s*\{[^}]+\}\s*\}/m, "icon={Calendar")}` }}}
-/>
-
-<IconGallery>
-  {Object.keys(ModuleIcons).map((iconName) => (
-    <IconItem key={iconName} name={iconName}>
-      <IconExample size="large" icon={ModuleIcons[iconName]} />
-    </IconItem>
-  ))}
-</IconGallery>
+```jsx
+<Icon icon={Archive} className="text-f1-icon-secondary" />
+```

@@ -5,9 +5,9 @@ import avatar from "../../../../storybook-assets/avatar.jpeg"
 import { PersonListItem } from "./index"
 
 const meta = {
-  title: "Experimental/Lists/PersonListItem",
+  title: "PersonListItem",
   component: PersonListItem,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof PersonListItem>
 
 export default meta

@@ -4,6 +4,8 @@ import { CommunityPost } from "."
 
 const meta: Meta<typeof CommunityPost> = {
   component: CommunityPost,
+  title: "Communities/Post/CommunityPost",
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -125,6 +127,7 @@ export const WithVideo: Story = {
     event: undefined,
     mediaUrl:
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    noVideoPreload: true,
   },
 }
 

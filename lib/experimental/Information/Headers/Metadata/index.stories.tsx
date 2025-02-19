@@ -4,6 +4,7 @@ import { fn } from "@storybook/test"
 import { Metadata } from "."
 
 const meta: Meta<typeof Metadata> = {
+  title: "Resource header/Metadata",
   component: Metadata,
   parameters: {
     layout: "padded",
@@ -43,48 +44,40 @@ export const Default: Story = {
       {
         label: "Type",
         value: {
-          type: "data-list",
-          data: ["Manager", "Direct report", "Self review", "Peer"],
-        },
-      },
-      {
-        label: "Type",
-        value: {
-          type: "data-list",
-          data: ["Manager", "Direct report", "Self review", "Peer"],
-        },
-        actions: [
-          {
-            label: "Copy",
-            icon: Icon.LayersFront,
-            onClick: fn(),
-          },
-          {
-            label: "Edit",
-            icon: Icon.Pencil,
-            onClick: fn(),
-          },
-        ],
-      },
-      {
-        label: "Type",
-        value: {
-          type: "tag-list",
-          tags: ["Tasks"],
-        },
-        actions: [
-          {
-            label: "Copy",
-            icon: Icon.LayersFront,
-            onClick: fn(),
-          },
-        ],
-      },
-      {
-        label: "Type",
-        value: {
-          type: "tag-list",
-          tags: ["Projects", "Recruitment", "Tasks"],
+          type: "list",
+          variant: "person",
+          avatars: [
+            {
+              type: "person",
+              firstName: "Josep Jaume",
+              lastName: "Rey",
+            },
+            {
+              type: "person",
+              firstName: "Nik",
+              lastName: "Lopin",
+            },
+            {
+              type: "person",
+              firstName: "Josep Jaume",
+              lastName: "Rey",
+            },
+            {
+              type: "person",
+              firstName: "Nik",
+              lastName: "Lopin",
+            },
+            {
+              type: "person",
+              firstName: "Josep Jaume",
+              lastName: "Rey",
+            },
+            {
+              type: "person",
+              firstName: "Nik",
+              lastName: "Lopin",
+            },
+          ],
         },
       },
     ],

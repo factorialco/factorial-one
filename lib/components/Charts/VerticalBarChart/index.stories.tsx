@@ -8,6 +8,7 @@ const dataConfig = {
 }
 
 const meta: Meta<typeof VerticalBarChart<typeof dataConfig>> = {
+  title: "Charts/VerticalBarChart",
   component: VerticalBarChart,
   tags: ["autodocs"],
   decorators: [

@@ -4,9 +4,10 @@ import { CompanyTag } from "."
 
 const meta: Meta = {
   component: CompanyTag,
+  title: "Tag/CompanyTag",
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     companyName: "Factorial",

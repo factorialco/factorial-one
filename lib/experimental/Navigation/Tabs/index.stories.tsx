@@ -16,8 +16,9 @@ const secondaryTabItems = [
 ]
 
 const meta: Meta<typeof Tabs> = {
+  title: "Tabs",
   component: Tabs,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   argTypes: {
     secondary: {
       control: "boolean",

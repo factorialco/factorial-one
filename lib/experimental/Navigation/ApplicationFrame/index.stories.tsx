@@ -7,8 +7,9 @@ import * as SidebarStories from "../Sidebar/index.stories"
 import { Sidebar } from "../Sidebar/Sidebar"
 
 const meta: Meta<typeof ApplicationFrame> = {
+  title: "ApplicationFrame",
   component: ApplicationFrame,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "fullscreen",
   },

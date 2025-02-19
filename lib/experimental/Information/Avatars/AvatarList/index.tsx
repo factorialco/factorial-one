@@ -1,6 +1,8 @@
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { sizes } from "@/ui/avatar"
 import { cva } from "cva"
 import { Avatar, AvatarVariant } from "../Avatar"
+import { MaxCounter } from "./MaxCounter"
 
 type AvatarType = AvatarVariant["type"]
 
@@ -54,27 +56,74 @@ type Props = {
   avatars: AvatarVariant[]
   size?: (typeof sizes)[number]
   type?: AvatarType
+
+  /**
+   * Whether to hide tooltips in each avatar.
+   * @default false
+   */
+  noTooltip?: boolean
+
+  /**
+   * The maximum number of avatars to display.
+   * @default 3
+   */
+  max?: number
 }
 
-export const AvatarList = ({ avatars, size = "medium", type }: Props) => {
+export const AvatarList = ({
+  avatars,
+  size = "medium",
+  type,
+  noTooltip = false,
+  max = 3,
+}: Props) => {
+  const visibleAvatars = avatars.slice(0, max)
+  const remainingAvatars = avatars.slice(max)
+  const remainingCount = avatars.length - max
+  const showCounter = remainingCount > 0
+
   return (
     <div className={avatarListVariants({ size })}>
-      {avatars.map((avatar, index) => (
-        <div
-          className="flex h-fit w-fit shrink-0 items-center justify-center overflow-hidden"
-          key={index}
-          style={
-            index !== avatars.length - 1
-              ? {
-                  clipPath:
-                    CLIP_MASK[type === "person" ? "rounded" : "base"][size],
-                }
-              : undefined
-          }
-        >
-          <Avatar avatar={avatar} size={size} />
-        </div>
-      ))}
+      {visibleAvatars.map((avatar, index) => {
+        const displayName =
+          avatar.type === "person"
+            ? `${avatar.firstName} ${avatar.lastName}`
+            : avatar.name
+
+        const clippedAvatar = (
+          <div
+            className="flex h-fit w-fit shrink-0 items-center justify-center"
+            style={
+              index !== avatars.length - 1
+                ? {
+                    clipPath:
+                      CLIP_MASK[type === "person" ? "rounded" : "base"][size],
+                  }
+                : undefined
+            }
+          >
+            <Avatar avatar={avatar} size={size} />
+          </div>
+        )
+
+        return (
+          <div key={index}>
+            {noTooltip ? (
+              clippedAvatar
+            ) : (
+              <Tooltip label={displayName}>{clippedAvatar}</Tooltip>
+            )}
+          </div>
+        )
+      })}
+      {showCounter && (
+        <MaxCounter
+          count={remainingCount}
+          size={size}
+          type={type === "person" ? "rounded" : "base"}
+          list={noTooltip ? undefined : remainingAvatars}
+        />
+      )}
     </div>
   )
 }

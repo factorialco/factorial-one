@@ -100,6 +100,10 @@ Utilities:
 - clsx and tailwind-merge for class management
 - date-fns for date manipulation
 - usehooks-ts for common React hooks
+- Built-in i18n support:
+  - `useI18n` hook for translations
+  - `defaultTranslations` with common UI strings
+  - Type-safe translations with `TranslationsType`
 
 Performance Guidelines
 
