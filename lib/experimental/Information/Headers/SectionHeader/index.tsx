@@ -13,6 +13,7 @@ type Props = {
   /**  Complementary action specific to the section */
   action?: Pick<ButtonProps, "label" | "onClick"> & {
     icon?: IconType
+    variant?: "default" | "outline"
   }
 
   /** Optional Link to related documentation (Help center or other link))*/
@@ -67,7 +68,7 @@ export const SectionHeader = ({
           <div className="hidden md:block">
             <Button
               label={action.label}
-              variant="outline"
+              variant={action.variant ?? "outline"}
               icon={action.icon}
               size="md"
               onClick={action.onClick}
@@ -76,7 +77,7 @@ export const SectionHeader = ({
           <div className="w-full md:hidden [&>button]:w-full">
             <Button
               label={action.label}
-              variant="outline"
+              variant={action.variant ?? "outline"}
               icon={action.icon}
               size="lg"
               onClick={action.onClick}
