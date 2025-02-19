@@ -80,6 +80,30 @@ export const Default: Story = {
           ],
         },
       },
+      {
+        label: "Data list",
+        value: {
+          type: "data-list",
+          data: Array(50)
+            .fill(["Manager", "Direct report", "Self review", "Peer"])
+            .flat(),
+        },
+        actions: [
+          {
+            label: "Copy",
+            icon: Icon.LayersFront,
+            onClick: fn(),
+          },
+        ],
+      },
+      {
+        label: "Tag list",
+        value: {
+          type: "tag-list",
+          tags: ["Projects", "Recruitment", "Tasks"],
+        },
+        actions: [{ label: "Copy", icon: Icon.LayersFront, onClick: fn() }],
+      },
     ],
   },
 }

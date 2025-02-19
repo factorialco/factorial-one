@@ -179,7 +179,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
           {isActive && hasHover && (
             <motion.div
               className={cn(
-                "absolute -left-1.5 -top-1.5 z-50 hidden items-start justify-center gap-1.5 whitespace-nowrap rounded-sm bg-f1-background py-1 pl-1.5 shadow-md ring-1 ring-inset ring-f1-border-secondary md:flex",
+                "absolute -left-1.5 -top-1.5 z-50 hidden max-h-[80vh] items-start justify-center gap-1.5 overflow-y-scroll whitespace-nowrap rounded-sm bg-f1-background py-1 pl-1.5 shadow-md ring-1 ring-inset ring-f1-border-secondary md:flex",
                 !isList && "h-8 items-start",
                 isAction ? "pr-1" : "pr-1.5"
               )}
