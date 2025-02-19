@@ -11,10 +11,8 @@ import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 import { Dropdown } from "../../Dropdown"
-import Breadcrumbs, {
-  type BreadcrumbItemType,
-  BreadcrumbSelectItemType,
-} from "../Breadcrumbs"
+
+import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
 export type PageAction = {
   label: string
@@ -57,13 +55,7 @@ type HeaderProps = {
   actions?: PageAction[]
   navigation?: NavigationProps
   embedded?: boolean
-  // The select the only can be the last item in the breadcrumbs
-  breadcrumbs?:
-    | [
-        ...Exclude<BreadcrumbItemType, BreadcrumbSelectItemType>[],
-        BreadcrumbItemType,
-      ]
-    | []
+  breadcrumbs?: BreadcrumbItemType[]
 }
 
 function PageNavigationLink({
@@ -116,10 +108,7 @@ export function PageHeader({
   const hasActions = !embedded && actions.length > 0
   const lastBreadcrumb = breadcrumbsTree[breadcrumbsTree.length - 1]
   const parentBreadcrumb = hasNavigation
-    ? (breadcrumbsTree[breadcrumbsTree.length - 2] as Exclude<
-        BreadcrumbItemType,
-        BreadcrumbSelectItemType
-      >)
+    ? breadcrumbsTree[breadcrumbsTree.length - 2]
     : null
 
   return (
