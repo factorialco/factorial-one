@@ -5,3 +5,4 @@
 
 - [Getting started](./getting-started.md)
 - [Local Development](./development.md)
+  - [Using factorial-one without build it](./using-factorial-one-source)

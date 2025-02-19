@@ -22,3 +22,6 @@ import { Button } from "@factorialco/factorial-one"
 ```
 
 And that's it!
+
+Related:
+- [Using factorial one source](./using-factorial-one-source)

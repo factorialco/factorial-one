@@ -15,7 +15,7 @@ export default defineConfig({
           dts({
             include: ["lib", "src"],
             exclude: ["**/*.stories.tsx"],
-            rollupTypes: true
+            rollupTypes: true,
           }),
         ]
       : []),
@@ -37,9 +37,11 @@ export default defineConfig({
       },
       formats: ["es"],
     },
+    outDir: "dist/lib",
     copyPublicDir: false,
     rollupOptions: {
       external: ["react/jsx-runtime", "react", "react-dom"],
+      maxParallelFileOps: 100, // Workaround to fix rebuild https://github.com/vitejs/vite/issues/19410#issuecomment-2661835482
       output: {
         globals: {
           react: "React",

@@ -12,7 +12,7 @@
     // Types should go into this directory.
     // Removing this would place the .d.ts files
     // next to the .js files
-    "outDir": "icons",
+    "outDir": "dist/icons",
     "jsx": "react-jsx",
     "noEmit": false,
     "allowImportingTsExtensions": false,

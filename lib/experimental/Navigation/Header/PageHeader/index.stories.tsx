@@ -143,6 +143,29 @@ export const WithBreadcrumbs: Story = {
   },
 }
 
+export const WithSelectBreadcrumb: Story = {
+  args: {
+    module: defaultModule,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
+      {
+        type: "select",
+        id: "employee",
+        label: "Ainhoa Aznar Lago",
+        searchbox: true,
+        options: Array.from({ length: 10 }, (_, idx) => ({
+          value: idx.toString(),
+          label: `Offer ${idx}`,
+        })),
+        value: "1",
+        onChange: (value) => {
+          console.log("WithSelectBreadcrumb value", value)
+        },
+      },
+    ],
+  },
+}
+
 export const WithEverything: Story = {
   args: {
     module: defaultModule,

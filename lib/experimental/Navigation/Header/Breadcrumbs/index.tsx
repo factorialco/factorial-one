@@ -28,7 +28,7 @@ import {
   BreadcrumbSelectProps,
 } from "./internal/BreadcrumbSelect"
 
-export type BreadcrumbBaseItemType = {
+export type BreadcrumbBaseItemType = NavigationItem & {
   id: string
   loading?: boolean
   label: string
@@ -36,10 +36,9 @@ export type BreadcrumbBaseItemType = {
 export type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
   loading: true
 }
-export type BreadcrumbItemTypeText = BreadcrumbBaseItemType &
-  (NavigationItem & {
-    icon?: IconType
-  })
+export type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
+  icon?: IconType
+}
 
 export type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
   type: "select"
@@ -53,7 +52,7 @@ export type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
 
 export type BreadcrumbItemType =
   | BreadcrumbLoadingItemType
-  | BreadcrumbItemTypeText
+  | BreadcrumbNavItemType
   | BreadcrumbSelectItemType
 
 interface BreadcrumbState {
@@ -200,6 +199,7 @@ const BreadcrumbContent = React.forwardRef<
     </motion.div>
   )
 
+  // Different renders depending on the breadcrumbtype
   const contents: Record<ContentType, React.ReactNode> = {
     loading: <BreadcrumbSkeleton />,
     select: "type" in item && item.type === "select" && (
@@ -218,7 +218,10 @@ const BreadcrumbContent = React.forwardRef<
     ),
     link: (
       <ShadBreadcrumbLink asChild className="p-0">
-        <Link {...("href" in item ? item : {})} className="block">
+        <Link
+          {...("href" in item ? (item as BreadcrumbNavItemType) : {})}
+          className="block"
+        >
           {content}
         </Link>
       </ShadBreadcrumbLink>
