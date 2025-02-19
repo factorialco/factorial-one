@@ -3,7 +3,7 @@ import { Celebration } from "."
 
 const meta: Meta<typeof Celebration> = {
   component: Celebration,
-  title: "Communities/Celebration",
+  title: "Home/Communities/Celebration",
   parameters: {
     layout: "centered",
   },

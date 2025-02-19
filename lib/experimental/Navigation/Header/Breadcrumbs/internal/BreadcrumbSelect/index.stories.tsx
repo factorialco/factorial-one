@@ -2,9 +2,9 @@ import { Search } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { BreadcrumbSelect } from "."
 const meta: Meta<typeof BreadcrumbSelect> = {
-  title: "Header/Breadcrumbs/BreadcrumbSelect",
+  title: "Navigation/BreadcrumbSelect",
   component: BreadcrumbSelect,
-  tags: ["autodocs", "internal"],
+  tags: ["autodocs"],
 }
 
 export default meta

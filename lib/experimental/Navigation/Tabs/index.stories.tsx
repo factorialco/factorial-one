@@ -16,7 +16,7 @@ const secondaryTabItems = [
 ]
 
 const meta: Meta<typeof Tabs> = {
-  title: "Tabs",
+  title: "Navigation/Tabs",
   component: Tabs,
   tags: ["autodocs", "experimental"],
   argTypes: {

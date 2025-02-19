@@ -21,7 +21,7 @@ const defaultLabels = {
 }
 
 const meta: Meta<typeof ClockInControls> = {
-  title: "ClockInControls",
+  title: "Home/ClockInControls",
   component: ClockInControls,
   tags: ["autodocs", "experimental"],
   args: {
