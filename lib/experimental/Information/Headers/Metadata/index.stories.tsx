@@ -57,6 +57,26 @@ export const Default: Story = {
               firstName: "Nik",
               lastName: "Lopin",
             },
+            {
+              type: "person",
+              firstName: "Josep Jaume",
+              lastName: "Rey",
+            },
+            {
+              type: "person",
+              firstName: "Nik",
+              lastName: "Lopin",
+            },
+            {
+              type: "person",
+              firstName: "Josep Jaume",
+              lastName: "Rey",
+            },
+            {
+              type: "person",
+              firstName: "Nik",
+              lastName: "Lopin",
+            },
           ],
         },
       },

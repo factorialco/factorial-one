@@ -44,7 +44,6 @@ const meta: Meta<typeof ClockInControls> = {
       },
     ],
     locationId: "1",
-    projectName: "Bolt’s project",
   },
   render: (args) => (
     <div className="max-w-[350px]">
@@ -128,13 +127,6 @@ export const Collapsed: Story = {
 export const WithNoLocationOrProject: Story = {
   args: {
     locationId: undefined,
-    projectName: undefined,
-  },
-}
-
-export const WithLongProjectName: Story = {
-  args: {
-    projectName: "Bolt’s project with a very long name",
   },
 }
 
@@ -160,7 +152,6 @@ export const WithDisabledSelectors: Story = {
   args: {
     ...ClockedOut.args,
     locationSelectorDisabled: true,
-    projectSelectorDisabled: true,
   },
 }
 
@@ -168,6 +159,5 @@ export const WithHiddenLocationAndProject: Story = {
   args: {
     ...ClockedOut.args,
     canShowLocation: false,
-    canShowProject: false,
   },
 }

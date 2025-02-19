@@ -51,3 +51,14 @@ export const NoAction: Story = {
     },
   },
 }
+
+export const PrimaryAction: Story = {
+  args: {
+    ...Default.args,
+    action: {
+      label: "Add template",
+      icon: Icon.Add,
+      variant: "default",
+    },
+  },
+}

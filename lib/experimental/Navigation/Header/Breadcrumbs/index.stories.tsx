@@ -90,6 +90,7 @@ export const WithSelectBreadcrumb: Story = {
           value: idx.toString(),
           label: `Offer ${idx}`,
         })),
+        label: `Offer 1`,
         value: "1",
         onChange: (value) => {
           console.log("WithSelectBreadcrumb value", value)

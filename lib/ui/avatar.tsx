@@ -24,7 +24,7 @@ export const color = [
   "camel",
 ] as const
 
-const avatarVariants = cva({
+export const avatarVariants = cva({
   base: "relative flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold ring-1 ring-inset ring-f1-border-secondary",
   variants: {
     size: {
