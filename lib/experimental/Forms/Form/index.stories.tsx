@@ -1,10 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { AutoGrid } from "@/experimental/Utilities/Layout/AutoGrid"
+import { Button } from "@/factorial-one"
 import { Textarea } from "@/ui/textarea"
-import { z } from "zod"
+import { UseFormReturn } from "react-hook-form"
+import { number, z } from "zod"
 import { Form, FormActions } from "."
 import Checkbox from "../Fields/Checkbox"
 import { Input } from "../Fields/Input"
+import { NumberInput } from "../Fields/NumberInput"
 import { Select } from "../Fields/Select"
 import { FormField } from "../FormField"
 import { useFormSchema } from "../lib/useForm"
@@ -14,11 +18,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 const meta = {
   title: "Form",
   tags: ["autodocs", "experimental"],
-  parameters: {
-    a11y: {
-      skipCi: true,
-    },
-  },
+  parameters: { a11y: { skipCi: true } },
   args: {},
 } satisfies Meta<typeof Form>
 
@@ -63,9 +63,7 @@ export const Default: Story = {
         await sleep(2000)
         alert(`Form has been submitted: ${JSON.stringify(data)}`)
 
-        return {
-          success: true,
-        }
+        return { success: true }
       }
     )
 
@@ -215,9 +213,7 @@ export const AsyncFieldValidation: Story = {
       await sleep(1000)
       alert("Form has been submitted")
 
-      return {
-        success: true,
-      }
+      return { success: true }
     })
 
     return (
@@ -241,9 +237,7 @@ export const AsyncFieldValidation: Story = {
 
 export const AsyncSubmit: Story = {
   render() {
-    const schema = z.object({
-      comment: z.string(),
-    })
+    const schema = z.object({ comment: z.string() })
 
     const form = useFormSchema(schema, {}, async () => {
       await sleep(2000)
@@ -251,9 +245,7 @@ export const AsyncSubmit: Story = {
       return {
         success: false,
         rootMessage: "Server error",
-        errors: {
-          comment: "Couln't create comment",
-        },
+        errors: { comment: "Couln't create comment" },
       }
     })
 
@@ -276,23 +268,14 @@ export const AsyncSubmit: Story = {
 
 export const MultipleTypeSchema: Story = {
   render() {
-    const animalSchema = z.object({
-      name: z.string(),
-      eating: z.boolean(),
-    })
+    const animalSchema = z.object({ name: z.string(), eating: z.boolean() })
 
     const fishSchema = animalSchema.merge(
-      z.object({
-        type: z.literal("fish"),
-        swimming: z.boolean(),
-      })
+      z.object({ type: z.literal("fish"), swimming: z.boolean() })
     )
 
     const dogSchema = animalSchema.merge(
-      z.object({
-        type: z.literal("dog"),
-        running: z.boolean(),
-      })
+      z.object({ type: z.literal("dog"), running: z.boolean() })
     )
 
     const fishForm = useFormSchema(
@@ -309,9 +292,7 @@ export const MultipleTypeSchema: Story = {
       async (data) => {
         alert(`Form has been submitted: ${JSON.stringify(data)}`)
 
-        return {
-          success: true,
-        }
+        return { success: true }
       }
     )
 
@@ -328,9 +309,7 @@ export const MultipleTypeSchema: Story = {
       async (data) => {
         alert(`Form has been submitted: ${JSON.stringify(data)}`)
 
-        return {
-          success: true,
-        }
+        return { success: true }
       }
     )
 
@@ -445,6 +424,182 @@ export const MultipleTypeSchema: Story = {
           </Form>
         </div>
       </div>
+    )
+  },
+}
+
+export const NestedSchemas: Story = {
+  render() {
+    // SCHEMAS
+    const itemSchema = z.object({
+      quantity: number().min(1),
+      price: number().min(0),
+      comment: z.string().optional(),
+    })
+
+    const schema = z.object({
+      total: number().min(0),
+      items: itemSchema.array().nonempty(),
+    })
+
+    // TYPES
+    type FormType = UseFormReturn<z.infer<typeof schema>>
+    type SubFormType = UseFormReturn<z.infer<typeof itemSchema>>
+
+    // FORM definitions
+    const form = useFormSchema(
+      schema,
+      { defaultValues: { items: [], total: 0 } },
+      async (data) => {
+        alert(`Form has been submitted: ${JSON.stringify(data)}`)
+
+        return { success: true }
+      }
+    )
+
+    interface SubFormProps {
+      form: FormType
+    }
+
+    const SubForm = ({ form }: SubFormProps) => {
+      const subForm = useFormSchema(
+        itemSchema,
+        { defaultValues: {} },
+        async (_data) => {
+          return { success: true }
+        }
+      )
+
+      subForm.watch("quantity")
+      subForm.watch("price")
+      subForm.watch("comment")
+
+      const addItem = (quantity: number, price: number, comment?: string) => {
+        form.setValue("items", [
+          ...form.getValues().items,
+          { quantity: quantity, price: price, comment: comment },
+        ])
+
+        form.trigger()
+      }
+
+      const handleAddItem = (subForm: SubFormType) => {
+        const { quantity, price, comment } = subForm.getValues()
+
+        subForm.trigger().then(() => {
+          const valid =
+            !subForm.getFieldState("quantity").error &&
+            !subForm.getFieldState("price").error &&
+            !subForm.getFieldState("comment").error
+
+          if (!valid) {
+            if (subForm.getFieldState("quantity").error) {
+              alert(
+                "Quantity " + subForm.getFieldState("quantity").error?.message
+              )
+            }
+
+            if (subForm.getFieldState("price").error) {
+              alert("Price " + subForm.getFieldState("price").error?.message)
+            }
+
+            if (subForm.getFieldState("comment").error) {
+              alert(
+                "Comment " + subForm.getFieldState("comment").error?.message
+              )
+            }
+          } else {
+            addItem(quantity, price, comment)
+          }
+        })
+      }
+
+      return (
+        <div>
+          <AutoGrid gap="4">
+            <FormField
+              label=""
+              description="Quantity"
+              control={subForm.control}
+              name="quantity"
+            >
+              {(field) => (
+                <NumberInput
+                  {...field}
+                  step={1}
+                  value={Number(field.value) || 0}
+                  locale="en-US"
+                  onChange={(value) => {
+                    subForm.setValue("quantity", Number(value))
+                  }}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label=""
+              description="Price"
+              control={subForm.control}
+              name="price"
+            >
+              {(field) => (
+                <NumberInput
+                  {...field}
+                  value={Number(field.value) || 0}
+                  locale="en-US"
+                  onChange={(value) => {
+                    subForm.setValue("price", Number(value))
+                  }}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label=""
+              description="Write something about this item"
+              control={subForm.control}
+              name="comment"
+            >
+              {(field) => <Input placeholder="Add your comment" {...field} />}
+            </FormField>
+
+            <div className="mt-3">
+              <Button
+                variant="neutral"
+                label="Add an item"
+                type="button"
+                onClick={(event) => {
+                  event.preventDefault()
+                  handleAddItem(subForm)
+                }}
+              />
+            </div>
+          </AutoGrid>
+        </div>
+      )
+    }
+
+    return (
+      <Form {...form}>
+        <SubForm form={form} />
+
+        {form
+          .getValues()
+          .items.map((item: z.infer<typeof itemSchema>, index: number) => {
+            return (
+              <div key={index}>
+                {item.quantity} x {item.price} Comment: {item.comment}
+              </div>
+            )
+          })}
+
+        {form.formState.errors.items && (
+          <div>{form.formState.errors.items.message}</div>
+        )}
+        <div className="mt-3">
+          <FormActions form={form} submitLabel="Submit" />
+        </div>
+      </Form>
     )
   },
 }
