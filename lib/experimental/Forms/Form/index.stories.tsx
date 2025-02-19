@@ -7,12 +7,7 @@ import Checkbox from "../Fields/Checkbox"
 import { Input } from "../Fields/Input"
 import { Select } from "../Fields/Select"
 import { FormField } from "../FormField"
-import {
-  booleanField,
-  buildFormSchema,
-  stringField,
-  useFormSchema,
-} from "../lib/useForm"
+import { useFormSchema } from "../lib/useForm"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
@@ -32,24 +27,27 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render() {
-    const schema = buildFormSchema({
-      username: stringField()
-        .min(2)
-        .max(10)
-        .refine((username) => username !== "admin", {
-          message: "Username cannot be admin",
-        }),
-      fullName: stringField().min(6).max(50),
-      email: stringField().email(),
-      password: stringField().min(8).max(50),
-      passwordConfirmation: stringField(),
-      bio: stringField().max(500),
-      tag: stringField(),
-      acceptedTerms: booleanField(),
-    }).refine((data) => data.password === data.passwordConfirmation, {
-      message: "Passwords do not match",
-      path: ["passwordConfirmation"],
-    })
+    const schema = z
+      .object({
+        username: z
+          .string()
+          .min(2)
+          .max(10)
+          .refine((username) => username !== "admin", {
+            message: "Username cannot be admin",
+          }),
+        fullName: z.string().min(6).max(50),
+        email: z.string().email(),
+        password: z.string().min(8).max(50),
+        passwordConfirmation: z.string(),
+        bio: z.string().max(500),
+        tag: z.string(),
+        acceptedTerms: z.boolean(),
+      })
+      .refine((data) => data.password === data.passwordConfirmation, {
+        message: "Passwords do not match",
+        path: ["passwordConfirmation"],
+      })
 
     const form = useFormSchema(
       schema,
@@ -203,8 +201,8 @@ export const Default: Story = {
 
 export const AsyncFieldValidation: Story = {
   render() {
-    const schema = buildFormSchema({
-      username: stringField().refine(
+    const schema = z.object({
+      username: z.string().refine(
         async (username) => {
           await sleep(200)
           return username !== "taken"
@@ -243,8 +241,8 @@ export const AsyncFieldValidation: Story = {
 
 export const AsyncSubmit: Story = {
   render() {
-    const schema = buildFormSchema({
-      comment: stringField(),
+    const schema = z.object({
+      comment: z.string(),
     })
 
     const form = useFormSchema(schema, {}, async () => {
