@@ -56,7 +56,7 @@ export interface CalendarEventProps {
   leftTags?: Tag[]
   rightTags?: Tag[]
   fromDate?: Date
-  toDate: Date
+  toDate?: Date
   noBackground?: boolean
 }
 
