@@ -1,10 +1,5 @@
 import { Observable } from "zen-observable-ts"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
-import type {
-  ExtractPropertyOptions,
-  ExtractPropertyType,
-  PropertySchema,
-} from "./properties"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
@@ -37,16 +32,6 @@ export type DataSourceDefinition<
  * @template Filters - The available filter configurations for the collection
  */
 export type ExtractPropertyKeys<RecordType> = keyof RecordType
-
-/**
- * Transforms a schema of property options into a type-safe object structure.
- * @template Properties - Record of property options defining the data structure
- */
-export type ExtractDataType<
-  Properties extends Record<string, ExtractPropertyOptions<PropertySchema>>,
-> = {
-  [K in keyof Properties]: ExtractPropertyType<Properties[K]>
-}
 
 /**
  * Props for the Collection component.
