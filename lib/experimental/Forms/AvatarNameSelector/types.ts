@@ -30,12 +30,15 @@ interface AvatarNameSelectorCommonProps
   notFoundTitle: string
   notFoundSubtitle: string
   onGroupChange: (value: string | null) => void
+  zIndex?: number
   loading?: boolean
   searchPlaceholder?: string
   selectAllLabel?: string
   clearLabel?: string
   selectedLabel?: string
   selectedAvatarName?: AvatarNamedEntity[]
+  alwaysOpen?: boolean
+  width?: number
 }
 
 export interface AvatarNameSelectorSingleProps
