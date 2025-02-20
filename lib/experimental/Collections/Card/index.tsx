@@ -1,40 +1,31 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
+import { ReactNode } from "react"
 import type { FiltersDefinition } from "../Filters/types"
-import { CollectionProps, CollectionSchema, SourceData } from "../types"
+import { CollectionProps } from "../types"
 import { useData } from "../useData"
 import { renderValue } from "../utils"
 
 export type CardPropertyDefinition<T> = {
-  key: keyof T
-  render?: (item: T) => string
+  label: string
+  render: (item: T) => ReactNode
 }
 
 export type CardVisualizationOptions<T> = {
   cardProperties: ReadonlyArray<CardPropertyDefinition<T>>
-  titleProperty?: CardPropertyDefinition<T>["key"]
+  title: (record: T) => string
 }
 
-export const CardCollection = <
-  Schema extends CollectionSchema,
-  Filters extends FiltersDefinition,
->({
+export const CardCollection = <RecordType, Filters extends FiltersDefinition>({
   cardProperties,
-  titleProperty,
+  title,
   source,
 }: CollectionProps<
-  Schema,
+  RecordType,
   Filters,
-  CardVisualizationOptions<SourceData<Schema, Filters>>
+  CardVisualizationOptions<RecordType>
 >) => {
-  const { data, isLoading } = useData<Schema, Filters>(source)
-  const effectiveTitleProperty = titleProperty
-    ? cardProperties.find((prop) => prop.key === titleProperty) ||
-      cardProperties[0]
-    : cardProperties[0]
-  const remainingProperties = titleProperty
-    ? cardProperties.filter((prop) => prop.key !== titleProperty)
-    : cardProperties.slice(1)
+  const { data, isLoading } = useData<RecordType, Filters>(source)
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -48,7 +39,7 @@ export const CardCollection = <
               </CardHeader>
               <CardContent className="space-y-2">
                 {cardProperties.map((property) => (
-                  <div key={String(property.key)} className="space-y-1">
+                  <div key={String(property.label)} className="space-y-1">
                     <Skeleton className="h-3 w-1/4" />
                     <Skeleton className="h-3 w-1/2" />
                   </div>
@@ -59,15 +50,13 @@ export const CardCollection = <
         : data.map((item, index) => (
             <Card key={index}>
               <CardHeader>
-                <CardTitle>
-                  {renderValue(item, effectiveTitleProperty)}
-                </CardTitle>
+                <CardTitle>{title(item)}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                {remainingProperties.map((property) => (
-                  <div key={String(property.key)} className="space-y-1">
+                {cardProperties.map((property) => (
+                  <div key={String(property.label)} className="space-y-1">
                     <div className="text-muted-foreground text-sm font-medium">
-                      {source.properties[property.key].label}
+                      {property.label}
                     </div>
                     <div className="text-sm">{renderValue(item, property)}</div>
                   </div>

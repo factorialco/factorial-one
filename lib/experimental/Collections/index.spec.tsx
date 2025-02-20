@@ -20,12 +20,6 @@ describe("Collections", () => {
     const { result } = renderHook(
       () =>
         useDataSource({
-          properties: {
-            name: {
-              type: "string",
-              label: "Name",
-            },
-          },
           filters: {
             name: { type: "search", label: "Name" },
           },
@@ -57,7 +51,7 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [{ key: "name" }],
+                columns: [{ label: "name", render: (item) => item.name }],
               },
             },
           ]}
@@ -75,10 +69,6 @@ describe("Collections", () => {
     const { result } = renderHook(
       () =>
         useDataSource({
-          properties: {
-            name: { type: "string", label: "Name" },
-            email: { type: "string", label: "Email" },
-          },
           dataAdapter: {
             fetchData: async () => [
               { name: "John Doe", email: "john@example.com" },
@@ -97,7 +87,10 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [{ key: "name" }, { key: "email" }],
+                columns: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Email", render: (item) => item.email },
+                ],
               },
             },
             {
