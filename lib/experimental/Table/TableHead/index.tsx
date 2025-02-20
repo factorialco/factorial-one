@@ -4,9 +4,11 @@ import { ArrowDown, InfoCircleLine } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import { TableHead as TableHeadRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "framer-motion"
+import { useTable } from "../utils/TableContext"
 
 export interface TableHeadProps {
   children: React.ReactNode
+  sticky?: boolean
   sortState?: "none" | "asc" | "desc"
   onSortClick?: () => void
   info?: string
@@ -17,9 +19,27 @@ export function TableHead({
   sortState = "none",
   onSortClick,
   info,
+  sticky = false,
 }: TableHeadProps) {
+  const { isScrolled } = useTable()
+
   return (
-    <TableHeadRoot className="group" tabIndex={0}>
+    <TableHeadRoot
+      className={cn("group", {
+        "sticky left-0 z-10 bg-f1-background": sticky,
+      })}
+      tabIndex={sticky ? 0 : undefined}
+    >
+      <AnimatePresence>
+        {isScrolled && sticky && (
+          <motion.div
+            className="absolute inset-y-0 -right-4 h-full w-4 bg-gradient-to-r from-f1-foreground-secondary to-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
+      </AnimatePresence>
       <div className="flex items-center gap-1">
         {children}
         {onSortClick && (

@@ -7,6 +7,9 @@ import {
   Table as TableRoot,
   TableRow as TableRowRoot,
 } from "@/ui/table"
+import { useState } from "react"
+import { useIntersectionObserver } from "usehooks-ts"
+import { TableContext } from "../utils/TableContext"
 
 import { TableCell } from "../TableCell"
 import { TableHead } from "../TableHead"
@@ -15,7 +18,25 @@ export interface TableProps {
 }
 
 function TableBase({ children }: TableProps) {
-  return <TableRoot className="w-full">{children}</TableRoot>
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [leftRef, isAtLeft] = useIntersectionObserver({
+    threshold: 1,
+  })
+
+  return (
+    <TableContext.Provider value={{ isScrolled: !isAtLeft, setIsScrolled }}>
+      <div className="relative w-full overflow-auto">
+        <TableRoot>
+          <div
+            ref={leftRef}
+            className="h-full w-px bg-f1-foreground"
+            aria-hidden="true"
+          />
+          {children}
+        </TableRoot>
+      </div>
+    </TableContext.Provider>
+  )
 }
 
 export function TableHeader({ children }: TableProps) {
@@ -49,35 +70,39 @@ interface TableSkeletonProps {
 
 function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
   return (
-    <TableRoot
-      className="cursor-progress"
-      role="presentation"
-      aria-hidden="true"
+    <TableContext.Provider
+      value={{ isScrolled: false, setIsScrolled: () => {} }}
     >
-      <TableHeaderRoot>
-        <TableRowRoot>
-          {Array.from({ length: columns }).map((_, i) => (
-            <TableHead key={`skeleton-header-${i}`}>
-              <Skeleton className="h-4 w-[80px]" />
-            </TableHead>
-          ))}
-        </TableRowRoot>
-      </TableHeaderRoot>
-      <TableBodyRoot>
-        {Array.from({ length: 5 }).map((_, rowIndex) => (
-          <TableRowRoot
-            key={`skeleton-row-${rowIndex}`}
-            className="hover:bg-transparent"
-          >
-            {Array.from({ length: columns }).map((_, colIndex) => (
-              <TableCell key={`skeleton-cell-${rowIndex}-${colIndex}`}>
+      <TableRoot
+        className="cursor-progress"
+        role="presentation"
+        aria-hidden="true"
+      >
+        <TableHeaderRoot>
+          <TableRowRoot>
+            {Array.from({ length: columns }).map((_, i) => (
+              <TableHead key={`skeleton-header-${i}`}>
                 <Skeleton className="h-4 w-[80px]" />
-              </TableCell>
+              </TableHead>
             ))}
           </TableRowRoot>
-        ))}
-      </TableBodyRoot>
-    </TableRoot>
+        </TableHeaderRoot>
+        <TableBodyRoot>
+          {Array.from({ length: 5 }).map((_, rowIndex) => (
+            <TableRowRoot
+              key={`skeleton-row-${rowIndex}`}
+              className="hover:bg-transparent"
+            >
+              {Array.from({ length: columns }).map((_, colIndex) => (
+                <TableCell key={`skeleton-cell-${rowIndex}-${colIndex}`}>
+                  <Skeleton className="h-4 w-[80px]" />
+                </TableCell>
+              ))}
+            </TableRowRoot>
+          ))}
+        </TableBodyRoot>
+      </TableRoot>
+    </TableContext.Provider>
   )
 }
 

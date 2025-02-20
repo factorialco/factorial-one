@@ -1,3 +1,7 @@
+import {
+  StatusTag,
+  type StatusVariant,
+} from "@/experimental/Information/Tags/exports"
 import type { Meta, StoryObj } from "@storybook/react"
 import React from "react"
 import {
@@ -24,6 +28,12 @@ const sampleData = [
     name: "Nik Lopin",
     email: "nik@example.com",
     role: "Admin",
+    joined: "2024-01-01",
+    manager: "Eliseo Juan Quintanilla",
+    status: {
+      label: "Active",
+      variant: "positive" as StatusVariant,
+    },
     selected: false,
   },
   {
@@ -31,6 +41,12 @@ const sampleData = [
     name: "Josep Jaume Rey",
     email: "jj@example.com",
     role: "User",
+    joined: "2024-01-01",
+    manager: "Eliseo Juan Quintanilla",
+    status: {
+      label: "Active",
+      variant: "positive" as StatusVariant,
+    },
     selected: true,
   },
   {
@@ -38,6 +54,12 @@ const sampleData = [
     name: "Saúl Domínguez",
     email: "saul@example.com",
     role: "Editor",
+    joined: "2024-01-01",
+    manager: "Eliseo Juan Quintanilla",
+    status: {
+      label: "Promoted",
+      variant: "warning" as StatusVariant,
+    },
     selected: true,
   },
   {
@@ -45,6 +67,12 @@ const sampleData = [
     name: "Desirée Navarro",
     email: "desi@example.com",
     role: "Editor",
+    joined: "2024-01-01",
+    manager: "René Galindo",
+    status: {
+      label: "Active",
+      variant: "positive" as StatusVariant,
+    },
     selected: false,
   },
 ]
@@ -202,17 +230,17 @@ export const SortableHeader: Story = {
   },
 }
 
-export const LongTable: Story = {
+export const StickyTable: Story = {
   render: () => (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Name</TableHead>
+          <TableHead sticky>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Role</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead>Role</TableHead>
+          <TableHead>Joined</TableHead>
+          <TableHead>Manager</TableHead>
+          <TableHead>Status</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Role</TableHead>
@@ -227,12 +255,19 @@ export const LongTable: Story = {
       <TableBody>
         {sampleData.map((row) => (
           <TableRow key={row.id}>
-            <TableCell>{row.name}</TableCell>
+            <TableCell sticky>{row.name}</TableCell>
             <TableCell>{row.email}</TableCell>
             <TableCell>{row.role}</TableCell>
-            <TableCell>{row.name}</TableCell>
-            <TableCell>{row.email}</TableCell>
-            <TableCell>{row.role}</TableCell>
+            <TableCell>{row.joined}</TableCell>
+            <TableCell>{row.manager}</TableCell>
+            <TableCell>
+              <div className="w-fit">
+                <StatusTag
+                  text={row.status.label}
+                  variant={row.status.variant}
+                />
+              </div>
+            </TableCell>
             <TableCell>{row.name}</TableCell>
             <TableCell>{row.email}</TableCell>
             <TableCell>{row.role}</TableCell>
