@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
 import { Filters } from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
-import type { DataSource, DataSourceDefinition, TRecordType } from "./types"
+import type { DataSource, DataSourceDefinition, RecordType } from "./types"
 import type { Visualization } from "./visualizations"
 import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 
@@ -26,16 +26,16 @@ import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
  * - fetchData: Function to fetch data with the current filters
  */
 export const useDataSource = <
-  RecordType extends TRecordType,
+  T extends RecordType,
   Filters extends FiltersDefinition,
 >(
   {
     filters,
     currentFilters: initialCurrentFilters = {},
     dataAdapter,
-  }: DataSourceDefinition<RecordType, Filters>,
+  }: DataSourceDefinition<T, Filters>,
   deps: ReadonlyArray<unknown> = []
-): DataSource<RecordType, Filters> => {
+): DataSource<T, Filters> => {
   const [currentFilters, setCurrentFilters] = useState<FiltersState<Filters>>(
     initialCurrentFilters
   )
@@ -65,12 +65,15 @@ export const useDataSource = <
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export const DataCollection = <RecordType, Filters extends FiltersDefinition>({
+export const DataCollection = <
+  T extends RecordType,
+  Filters extends FiltersDefinition,
+>({
   source,
   visualizations,
 }: {
-  source: DataSource<RecordType, Filters>
-  visualizations: ReadonlyArray<Visualization<RecordType, Filters>>
+  source: DataSource<T, Filters>
+  visualizations: ReadonlyArray<Visualization<T, Filters>>
 }): JSX.Element => {
   const { filters, currentFilters, setCurrentFilters } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)

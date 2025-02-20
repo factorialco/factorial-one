@@ -6,7 +6,7 @@ import type { DataSource } from "../types"
 
 type TestFilters = FiltersDefinition
 
-interface Person {
+type Person = {
   id: number
   name: string
   email: string

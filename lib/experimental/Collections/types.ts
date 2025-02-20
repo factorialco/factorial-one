@@ -7,30 +7,27 @@ import type { FiltersDefinition, FiltersState } from "./Filters/types"
  * @template Filters - The available filter configurations for the collection
  */
 export type DataSourceDefinition<
-  RecordType,
+  T extends RecordType,
   Filters extends FiltersDefinition,
 > = {
   /** Available filter configurations */
   filters?: Filters
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
-  dataAdapter: {
-    /**
-     * Fetches data based on the provided filter options
-     * @param options - Object containing filter state to apply
-     * @returns Promise or Observable containing the filtered data
-     */
-    fetchData: (options: {
-      filters: FiltersState<Filters>
-    }) => DataSourceResult<RecordType>
-  }
+  dataAdapter: DataAdapter<T, Filters>
+}
+
+type DataAdapter<T extends RecordType, Filters extends FiltersDefinition> = {
+  fetchData: (options: {
+    filters: FiltersState<Filters>
+  }) => DataSourceResult<T>
 }
 
 /**
  * Represents a record type with string keys and unknown values.
  * This type is used to represent the data structure of a collection.
  */
-export type TRecordType = Record<string, unknown>
+export type RecordType = Record<string, unknown>
 
 /**
  * Extracts the property keys from a collection schema and its filters.
@@ -46,11 +43,11 @@ export type ExtractPropertyKeys<RecordType> = keyof RecordType
  * @template VisualizationOptions - Additional options for visualizing the collection
  */
 export type CollectionProps<
-  RecordType,
+  T extends RecordType,
   Filters extends FiltersDefinition,
   VisualizationOptions extends object,
 > = {
-  source: DataSource<RecordType, Filters>
+  source: DataSource<T, Filters>
 } & VisualizationOptions
 
 /**
@@ -60,9 +57,9 @@ export type CollectionProps<
  * @template Filters - The available filter configurations for the collection
  */
 export type DataSource<
-  RecordType,
+  T extends RecordType,
   Filters extends FiltersDefinition,
-> = DataSourceDefinition<RecordType, Filters> & {
+> = DataSourceDefinition<T, Filters> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */

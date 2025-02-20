@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/ui/table"
 import type { FiltersDefinition } from "../Filters/types"
-import { CollectionProps } from "../types"
+import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
 
@@ -23,18 +23,17 @@ export type TableVisualizationOptions<T> = {
   }
 }
 
-export const TableCollection = <RecordType, Filters extends FiltersDefinition>({
+export const TableCollection = <
+  T extends RecordType,
+  Filters extends FiltersDefinition,
+>({
   columns,
   source,
   link,
-}: CollectionProps<
-  RecordType,
-  Filters,
-  TableVisualizationOptions<RecordType>
->) => {
-  const { data, isLoading } = useData<RecordType, Filters>(source)
+}: CollectionProps<T, Filters, TableVisualizationOptions<T>>) => {
+  const { data, isLoading } = useData<T, Filters>(source)
 
-  const TableActionCell = ({ item }: { item: RecordType }) => {
+  const TableActionCell = ({ item }: { item: T }) => {
     const linkInfo = link!(item)
     return (
       <TableCell key="actions">

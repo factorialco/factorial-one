@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Observable } from "zen-observable-ts"
 import type { FiltersDefinition } from "./Filters/types"
-import { DataSource } from "./types"
+import { DataSource, RecordType } from "./types"
 
 /**
  * A React hook that manages data fetching and state for a collection data source.
@@ -27,8 +27,11 @@ import { DataSource } from "./types"
  * }
  * ```
  */
-export function useData<RecordType, Filters extends FiltersDefinition>(
-  source: DataSource<RecordType, Filters>,
+export function useData<
+  T extends RecordType,
+  Filters extends FiltersDefinition,
+>(
+  source: DataSource<T, Filters>,
   {
     filters,
   }: {
@@ -36,7 +39,7 @@ export function useData<RecordType, Filters extends FiltersDefinition>(
   } = {}
 ) {
   const [isLoading, setIsLoading] = useState(true)
-  const [data, setData] = useState<Array<RecordType>>([])
+  const [data, setData] = useState<Array<T>>([])
 
   const {
     dataAdapter: { fetchData },

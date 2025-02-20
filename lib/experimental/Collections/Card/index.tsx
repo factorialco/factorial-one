@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
 import type { FiltersDefinition } from "../Filters/types"
-import { CollectionProps } from "../types"
+import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
 
@@ -12,16 +12,15 @@ export type CardVisualizationOptions<T> = {
   title: (record: T) => string
 }
 
-export const CardCollection = <RecordType, Filters extends FiltersDefinition>({
+export const CardCollection = <
+  T extends RecordType,
+  Filters extends FiltersDefinition,
+>({
   cardProperties,
   title,
   source,
-}: CollectionProps<
-  RecordType,
-  Filters,
-  CardVisualizationOptions<RecordType>
->) => {
-  const { data, isLoading } = useData<RecordType, Filters>(source)
+}: CollectionProps<T, Filters, CardVisualizationOptions<T>>) => {
+  const { data, isLoading } = useData<T, Filters>(source)
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

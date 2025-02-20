@@ -7,7 +7,7 @@ import { CardCollection } from "./Card"
 import type { FiltersDefinition } from "./Filters/types"
 import type { TableVisualizationOptions } from "./Table"
 import { TableCollection } from "./Table"
-import type { DataSource } from "./types"
+import type { DataSource, RecordType } from "./types"
 
 /**
  * Represents a visualization configuration for displaying collection data.
@@ -16,22 +16,23 @@ import type { DataSource } from "./types"
  * @template Schema - The schema type extending CollectionSchema
  * @template Filters - The filters type extending FiltersDefinition
  */
-export type Visualization<RecordType, Filters extends FiltersDefinition> =
+export type Visualization<
+  T extends RecordType,
+  Filters extends FiltersDefinition,
+> =
   | {
       type: "card"
-      options: CardVisualizationOptions<RecordType>
+      options: CardVisualizationOptions<T>
     }
   | {
       type: "table"
-      options: TableVisualizationOptions<RecordType>
+      options: TableVisualizationOptions<T>
     }
   | {
       type: "custom"
       label: string
       icon: IconType
-      component: (props: {
-        source: DataSource<RecordType, Filters>
-      }) => JSX.Element
+      component: (props: { source: DataSource<T, Filters> }) => JSX.Element
     }
 
 /**
@@ -41,10 +42,10 @@ export type Visualization<RecordType, Filters extends FiltersDefinition> =
  * @template Filters - The filters type extending FiltersDefinition
  */
 export type VisualizationProps<
-  RecordType,
+  T extends RecordType,
   Filters extends FiltersDefinition,
 > = {
-  visualizations?: ReadonlyArray<Visualization<RecordType, Filters>>
+  visualizations?: ReadonlyArray<Visualization<T, Filters>>
 }
 
 /**
@@ -61,14 +62,14 @@ export type VisualizationProps<
  * @returns A row of buttons for switching between visualizations
  */
 export const VisualizationSelector = <
-  RecordType,
+  T extends RecordType,
   Filters extends FiltersDefinition,
 >({
   visualizations,
   currentVisualization,
   onVisualizationChange,
 }: {
-  visualizations: ReadonlyArray<Visualization<RecordType, Filters>>
+  visualizations: ReadonlyArray<Visualization<T, Filters>>
   currentVisualization: number
   onVisualizationChange: (index: number) => void
 }): JSX.Element => {
@@ -117,26 +118,26 @@ export const VisualizationSelector = <
  * @returns The rendered visualization component (TableCollection or CardCollection)
  */
 export const VisualizationRenderer = <
-  RecordType,
+  T extends RecordType,
   Filters extends FiltersDefinition,
 >({
   visualization,
   source,
 }: {
-  visualization: Visualization<RecordType, Filters>
-  source: DataSource<RecordType, Filters>
+  visualization: Visualization<T, Filters>
+  source: DataSource<T, Filters>
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
       return (
-        <TableCollection<RecordType, Filters>
+        <TableCollection<T, Filters>
           source={source}
           {...visualization.options}
         />
       )
     case "card":
       return (
-        <CardCollection<RecordType, Filters>
+        <CardCollection<T, Filters>
           source={source}
           {...visualization.options}
         />
