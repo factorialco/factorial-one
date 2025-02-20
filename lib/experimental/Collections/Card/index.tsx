@@ -1,15 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
-import { ReactNode } from "react"
 import type { FiltersDefinition } from "../Filters/types"
 import { CollectionProps } from "../types"
 import { useData } from "../useData"
-import { renderValue } from "../utils"
+import { PropertyDefinition, renderValue } from "../utils"
 
-export type CardPropertyDefinition<T> = {
-  label: string
-  render: (item: T) => ReactNode
-}
+export type CardPropertyDefinition<T> = PropertyDefinition<T>
 
 export type CardVisualizationOptions<T> = {
   cardProperties: ReadonlyArray<CardPropertyDefinition<T>>

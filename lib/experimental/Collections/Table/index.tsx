@@ -11,12 +11,9 @@ import {
 import type { FiltersDefinition } from "../Filters/types"
 import { CollectionProps } from "../types"
 import { useData } from "../useData"
-import { renderValue } from "../utils"
+import { PropertyDefinition, renderValue } from "../utils"
 
-export type TableColumnDefinition<T> = {
-  label: string
-  render: (item: T) => string
-}
+export type TableColumnDefinition<T> = PropertyDefinition<T>
 
 export type TableVisualizationOptions<T> = {
   columns: ReadonlyArray<TableColumnDefinition<T>>

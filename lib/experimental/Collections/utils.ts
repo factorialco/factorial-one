@@ -1,6 +1,6 @@
 import { ReactNode } from "react"
 
-type PropertyDefinition<T> = {
+export type PropertyDefinition<T> = {
   label: string
   render: (item: T) => ReactNode
 }
