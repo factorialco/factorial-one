@@ -158,7 +158,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
             !isAction && "block"
           )}
         >
-          <MetadataValue item={item} collapse={true} />
+          <MetadataValue item={item} collapse />
         </div>
         {isAction && (
           <div className="w-full md:hidden">
@@ -171,7 +171,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
                 })) ?? []
               }
             >
-              <MetadataValue item={item} collapse={true} />
+              <MetadataValue item={item} collapse />
             </MobileDropdown>
           </div>
         )}
