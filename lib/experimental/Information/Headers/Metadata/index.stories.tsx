@@ -88,13 +88,6 @@ export const Default: Story = {
             .fill(["Manager", "Direct report", "Self review", "Peer"])
             .flat(),
         },
-        actions: [
-          {
-            label: "Copy",
-            icon: Icon.LayersFront,
-            onClick: fn(),
-          },
-        ],
       },
       {
         label: "Tag list",
@@ -102,7 +95,6 @@ export const Default: Story = {
           type: "tag-list",
           tags: ["Projects", "Recruitment", "Tasks"],
         },
-        actions: [{ label: "Copy", icon: Icon.LayersFront, onClick: fn() }],
       },
     ],
   },
