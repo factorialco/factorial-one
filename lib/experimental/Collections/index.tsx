@@ -40,8 +40,6 @@ export const useDataSource = <
     (initialCurrentFilters ?? {}) as FiltersState<Filters>
   )
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
   // To avoid unnecessary re-renders, we memoize the currentFilters
@@ -55,7 +53,7 @@ export const useDataSource = <
     filters: memoizedFilters,
     currentFilters: stableCurrentFilters,
     setCurrentFilters,
-    dataAdapter: memoizedDataAdapter,
+    dataAdapter,
   }
 }
 
