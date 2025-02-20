@@ -13,7 +13,7 @@ import type { FiltersDefinition, FiltersState } from "./types"
  * Props for the Filters component.
  * @template Definition - The type defining the structure of available filters
  */
-interface FiltersProps<Definition extends FiltersDefinition> {
+export interface FiltersProps<Definition extends FiltersDefinition> {
   /** The definition of available filters and their configurations */
   schema: Definition
   /** Current state of applied filters */
