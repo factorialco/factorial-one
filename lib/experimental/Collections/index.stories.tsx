@@ -1,3 +1,4 @@
+import { Link } from "@/components/Actions/Link"
 import { Meta, StoryObj } from "@storybook/react"
 import { Code } from "lucide-react"
 import { Observable } from "zen-observable-ts"
@@ -221,7 +222,7 @@ export const BasicCardView: Story = {
 }
 
 // Examples with customized visualizations
-export const CustomTableColumns: Story = {
+export const ComponentsAsCells: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
@@ -238,10 +239,18 @@ export const CustomTableColumns: Story = {
             type: "table",
             options: {
               columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
+                { label: "Name", render: (item) => `👤  ${item.name}` },
+                {
+                  label: "Email",
+                  render: (item) => (
+                    <Link href={`mailto:${item.email}`}>{item.email}</Link>
+                  ),
+                },
+                { label: "Role", render: (item) => `💼  ${item.role}` },
+                {
+                  label: "Department",
+                  render: (item) => `🏢 ${item.department}`,
+                },
               ],
             },
           },
