@@ -31,27 +31,20 @@ export const useDataSource = <
 >(
   {
     filters,
-    currentFilters: initialCurrentFilters,
+    currentFilters: initialCurrentFilters = {},
     dataAdapter,
   }: DataSourceDefinition<RecordType, Filters>,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<RecordType, Filters> => {
   const [currentFilters, setCurrentFilters] = useState<FiltersState<Filters>>(
-    (initialCurrentFilters ?? {}) as FiltersState<Filters>
+    initialCurrentFilters
   )
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
-  // To avoid unnecessary re-renders, we memoize the currentFilters
-  const stableCurrentFilters = useMemo(
-    () => currentFilters,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [JSON.stringify(currentFilters)]
-  )
-
   return {
     filters: memoizedFilters,
-    currentFilters: stableCurrentFilters,
+    currentFilters,
     setCurrentFilters,
     dataAdapter,
   }
