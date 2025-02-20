@@ -27,6 +27,12 @@ export type DataSourceDefinition<
 }
 
 /**
+ * Represents a record type with string keys and unknown values.
+ * This type is used to represent the data structure of a collection.
+ */
+export type TRecordType = Record<string, unknown>
+
+/**
  * Extracts the property keys from a collection schema and its filters.
  * @template Schema - The schema defining the properties of the collection
  * @template Filters - The available filter configurations for the collection

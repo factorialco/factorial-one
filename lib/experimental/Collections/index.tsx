@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
 import { Filters } from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
-import type { DataSource, DataSourceDefinition } from "./types"
+import type { DataSource, DataSourceDefinition, TRecordType } from "./types"
 import type { Visualization } from "./visualizations"
 import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 
@@ -25,7 +25,10 @@ import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
  * - setCurrentFilters: Function to update the filter state
  * - fetchData: Function to fetch data with the current filters
  */
-export const useDataSource = <RecordType, Filters extends FiltersDefinition>(
+export const useDataSource = <
+  RecordType extends TRecordType,
+  Filters extends FiltersDefinition,
+>(
   {
     filters,
     currentFilters: initialCurrentFilters,
