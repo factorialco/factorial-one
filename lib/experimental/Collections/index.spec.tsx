@@ -29,7 +29,7 @@ describe("Collections", () => {
                 throw new Error("Email is not a valid filter")
               }
 
-              return mockData.filter((user) => {
+              const records = mockData.filter((user) => {
                 if (filters.name && typeof filters.name === "string") {
                   return user.name
                     .toLowerCase()
@@ -37,6 +37,8 @@ describe("Collections", () => {
                 }
                 return true
               })
+
+              return { records }
             },
           },
         }),
@@ -70,10 +72,12 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: async () => [
-              { name: "John Doe", email: "john@example.com" },
-              { name: "Jane Smith", email: "jane@example.com" },
-            ],
+            fetchData: async () => ({
+              records: [
+                { name: "John Doe", email: "john@example.com" },
+                { name: "Jane Smith", email: "jane@example.com" },
+              ],
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -120,15 +124,17 @@ describe("Collections", () => {
         useDataSource({
           dataAdapter: {
             fetchData: () =>
-              new Observable<Array<{ name: string; role: string }>>(
-                (observer) => {
-                  observer.next([
+              new Observable<{
+                records: Array<{ name: string; role: string }>
+              }>((observer) => {
+                observer.next({
+                  records: [
                     { name: "John Doe", role: "Senior Engineer" },
                     { name: "Jane Smith", role: "Product Manager" },
-                  ])
-                  return () => {}
-                }
-              ),
+                  ],
+                })
+                return () => {}
+              }),
           },
         }),
       { wrapper: TestWrapper }
@@ -209,7 +215,7 @@ describe("Collections", () => {
                 )
               }
 
-              return filtered
+              return { records: filtered }
             },
           },
         }),
@@ -246,7 +252,7 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: async () => [{ name: "John" }],
+            fetchData: async () => ({ records: [{ name: "John" }] }),
           },
         }),
       { wrapper: TestWrapper }
@@ -289,21 +295,23 @@ describe("Collections", () => {
         useDataSource({
           dataAdapter: {
             fetchData: () =>
-              new Observable<Item[]>((observer) => {
-                observer.next([
-                  {
-                    name: "John Doe",
-                    role: "Senior Engineer",
-                    department: "Engineering",
-                    email: "john@example.com",
-                  },
-                  {
-                    name: "Jane Smith",
-                    role: "Product Manager",
-                    department: "Product",
-                    email: "jane@example.com",
-                  },
-                ])
+              new Observable<{ records: Item[] }>((observer) => {
+                observer.next({
+                  records: [
+                    {
+                      name: "John Doe",
+                      role: "Senior Engineer",
+                      department: "Engineering",
+                      email: "john@example.com",
+                    },
+                    {
+                      name: "Jane Smith",
+                      role: "Product Manager",
+                      department: "Product",
+                      email: "jane@example.com",
+                    },
+                  ],
+                })
                 return () => {}
               }),
           },

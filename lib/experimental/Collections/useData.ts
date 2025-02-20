@@ -56,7 +56,7 @@ export function useData<RecordType, Filters extends FiltersDefinition>(
           const subscription = result.subscribe({
             next: (newData) => {
               if (isMounted) {
-                setData(newData)
+                setData(newData.records)
                 setIsLoading(false)
               }
             },
@@ -71,7 +71,7 @@ export function useData<RecordType, Filters extends FiltersDefinition>(
         } else {
           const resolvedData = await result
           if (isMounted) {
-            setData(resolvedData)
+            setData(resolvedData.records)
             setIsLoading(false)
           }
         }

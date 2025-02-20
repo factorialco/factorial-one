@@ -42,7 +42,7 @@ const createTestSource = (
   dataAdapter: {
     fetchData: async () => {
       if (error) throw error
-      return data
+      return { records: data }
     },
   },
 })

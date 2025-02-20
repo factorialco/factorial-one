@@ -74,4 +74,6 @@ export type DataSource<
  * Can be either a Promise or an Observable of an array of items.
  * @template T - The type of items in the result set
  */
-export type DataSourceResult<T> = Promise<Array<T>> | Observable<Array<T>>
+export type DataSourceResult<T> = PromiseOrObservable<{ records: Array<T> }>
+
+type PromiseOrObservable<T> = Promise<T> | Observable<T>

@@ -81,21 +81,23 @@ type FiltersType = typeof filters
 
 const createObservableDataFetch = (delay = 0) => {
   return ({ filters }: { filters: FiltersState<FiltersType> }) =>
-    new Observable<Array<(typeof mockUsers)[number]>>((observer) => {
-      const timeoutId = setTimeout(() => {
-        observer.next(filterUsers(mockUsers, filters))
-        observer.complete()
-      }, delay)
+    new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
+      (observer) => {
+        const timeoutId = setTimeout(() => {
+          observer.next({ records: filterUsers(mockUsers, filters) })
+          observer.complete()
+        }, delay)
 
-      return () => clearTimeout(timeoutId)
-    })
+        return () => clearTimeout(timeoutId)
+      }
+    )
 }
 
 const createPromiseDataFetch = (delay = 500) => {
   return ({ filters }: { filters: FiltersState<FiltersType> }) =>
-    new Promise<Array<(typeof mockUsers)[number]>>((resolve) => {
+    new Promise<{ records: Array<(typeof mockUsers)[number]> }>((resolve) => {
       setTimeout(() => {
-        resolve(filterUsers(mockUsers, filters))
+        resolve({ records: filterUsers(mockUsers, filters) })
       }, delay)
     })
 }
@@ -436,12 +438,14 @@ export const WithCardVisualization: Story = {
       filters,
       dataAdapter: {
         fetchData: () =>
-          new Observable<Array<(typeof mockUsers)[number]>>((observer) => {
-            setTimeout(() => {
-              observer.next(mockUsers)
-              observer.complete()
-            }, 1000)
-          }),
+          new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
+            (observer) => {
+              setTimeout(() => {
+                observer.next({ records: mockUsers })
+                observer.complete()
+              }, 1000)
+            }
+          ),
       },
     })
 
@@ -473,12 +477,14 @@ export const WithMultipleVisualizations: Story = {
       filters,
       dataAdapter: {
         fetchData: () =>
-          new Observable<Array<(typeof mockUsers)[number]>>((observer) => {
-            setTimeout(() => {
-              observer.next(mockUsers)
-              observer.complete()
-            }, 1000)
-          }),
+          new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
+            (observer) => {
+              setTimeout(() => {
+                observer.next({ records: mockUsers })
+                observer.complete()
+              }, 1000)
+            }
+          ),
       },
     })
 
