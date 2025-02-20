@@ -2,15 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import { TableCollection } from "."
 import type { FiltersDefinition } from "../Filters/types"
-import type { NumberPropertySchema, StringPropertySchema } from "../properties"
 import type { DataSource } from "../types"
-
-type TestSchema = {
-  id: Omit<NumberPropertySchema, "value">
-  name: Omit<StringPropertySchema, "value">
-  email: Omit<StringPropertySchema, "value">
-  displayName: Omit<StringPropertySchema, "value">
-}
 
 type TestFilters = FiltersDefinition
 
@@ -36,18 +28,15 @@ const testData: Person[] = [
   },
 ]
 
-const testColumns = [{ key: "name" as const }, { key: "email" as const }]
+const testColumns = [
+  { label: "name", render: (item: Person) => item.name },
+  { label: "email", render: (item: Person) => item.email },
+]
 
 const createTestSource = (
   data: Person[] = testData,
   error?: Error
-): DataSource<TestSchema, TestFilters> => ({
-  properties: {
-    id: { type: "number", label: "ID" },
-    name: { type: "string", label: "Name" },
-    email: { type: "string", label: "Email" },
-    displayName: { type: "string", label: "Display Name" },
-  },
+): DataSource<Person, TestFilters> => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
   dataAdapter: {
@@ -62,7 +51,7 @@ describe("TableCollection", () => {
   describe("rendering", () => {
     it("shows loading state initially", () => {
       render(
-        <TableCollection<TestSchema, TestFilters>
+        <TableCollection<Person, TestFilters>
           columns={testColumns}
           source={createTestSource()}
         />
@@ -79,7 +68,7 @@ describe("TableCollection", () => {
 
     it("renders table with data after loading", async () => {
       render(
-        <TableCollection<TestSchema, TestFilters>
+        <TableCollection<Person, TestFilters>
           columns={testColumns}
           source={createTestSource()}
         />
@@ -114,7 +103,7 @@ describe("TableCollection", () => {
       ]
 
       render(
-        <TableCollection<TestSchema, TestFilters>
+        <TableCollection<Person, TestFilters>
           columns={columnsWithCustomRender}
           source={createTestSource()}
         />
@@ -129,7 +118,7 @@ describe("TableCollection", () => {
 
     it("renders links with correct attributes", async () => {
       render(
-        <TableCollection<TestSchema, TestFilters>
+        <TableCollection<Person, TestFilters>
           columns={testColumns}
           source={createTestSource()}
           link={(item) => ({
@@ -152,7 +141,7 @@ describe("TableCollection", () => {
   describe("edge cases", () => {
     it("handles empty data gracefully", async () => {
       render(
-        <TableCollection<TestSchema, TestFilters>
+        <TableCollection<Person, TestFilters>
           columns={testColumns}
           source={createTestSource([])}
         />
@@ -174,7 +163,7 @@ describe("TableCollection", () => {
         .mockImplementation(() => {})
 
       render(
-        <TableCollection<TestSchema, TestFilters>
+        <TableCollection<Person, TestFilters>
           columns={testColumns}
           source={createTestSource([], new Error("Failed to fetch data"))}
         />

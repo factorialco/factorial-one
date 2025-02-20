@@ -2,15 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import { CardCollection } from "."
 import type { FiltersDefinition } from "../Filters/types"
-import type { NumberPropertySchema, StringPropertySchema } from "../properties"
 import type { DataSource } from "../types"
-
-type TestSchema = {
-  id: Omit<NumberPropertySchema, "value">
-  name: Omit<StringPropertySchema, "value">
-  email: Omit<StringPropertySchema, "value">
-  role: Omit<StringPropertySchema, "value">
-}
 
 type TestFilters = FiltersDefinition
 
@@ -37,21 +29,14 @@ const testData: Person[] = [
 ]
 
 const testCardProperties = [
-  { key: "name" as const },
-  { key: "email" as const },
-  { key: "role" as const },
+  { label: "Email", render: (item: Person) => item.email },
+  { label: "Role", render: (item: Person) => item.role },
 ]
 
 const createTestSource = (
   data: Person[] = testData,
   error?: Error
-): DataSource<TestSchema, TestFilters> => ({
-  properties: {
-    id: { type: "number", label: "ID" },
-    name: { type: "string", label: "Name" },
-    email: { type: "string", label: "Email" },
-    role: { type: "string", label: "Role" },
-  },
+): DataSource<Person, TestFilters> => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
   dataAdapter: {
@@ -66,8 +51,12 @@ describe("CardCollection", () => {
   describe("rendering", () => {
     it("shows loading state initially", () => {
       render(
-        <CardCollection<TestSchema, TestFilters>
-          cardProperties={testCardProperties}
+        <CardCollection<Person, TestFilters>
+          title={(item) => item.name}
+          cardProperties={[
+            { label: "Email", render: (item) => item.email },
+            { label: "Role", render: (item) => item.role },
+          ]}
           source={createTestSource()}
         />
       )
@@ -79,7 +68,8 @@ describe("CardCollection", () => {
 
     it("renders cards with data after loading", async () => {
       render(
-        <CardCollection<TestSchema, TestFilters>
+        <CardCollection<Person, TestFilters>
+          title={(item) => item.name}
           cardProperties={testCardProperties}
           source={createTestSource()}
         />
@@ -102,9 +92,9 @@ describe("CardCollection", () => {
   describe("features", () => {
     it("uses titleProperty when provided", async () => {
       render(
-        <CardCollection<TestSchema, TestFilters>
+        <CardCollection<Person, TestFilters>
+          title={(item) => item.name}
           cardProperties={testCardProperties}
-          titleProperty="name"
           source={createTestSource()}
         />
       )
@@ -122,9 +112,9 @@ describe("CardCollection", () => {
 
     it("displays all properties correctly when using titleProperty", async () => {
       render(
-        <CardCollection<TestSchema, TestFilters>
+        <CardCollection<Person, TestFilters>
+          title={(item) => item.name}
           cardProperties={testCardProperties}
-          titleProperty="name"
           source={createTestSource()}
         />
       )
@@ -162,15 +152,13 @@ describe("CardCollection", () => {
 
     it("renders custom property formatting", async () => {
       const propertiesWithCustomRender = [
-        {
-          key: "email" as const,
-          render: (item: Person) => `📧 ${item.email}`,
-        },
-        testCardProperties[2],
+        { label: "Email", render: (item: Person) => `📧 ${item.email}` },
+        { label: "Role", render: (item: Person) => item.role },
       ]
 
       render(
-        <CardCollection<TestSchema, TestFilters>
+        <CardCollection<Person, TestFilters>
+          title={(item) => item.name}
           cardProperties={propertiesWithCustomRender}
           source={createTestSource()}
         />
@@ -187,7 +175,8 @@ describe("CardCollection", () => {
   describe("edge cases", () => {
     it("handles empty data gracefully", async () => {
       render(
-        <CardCollection<TestSchema, TestFilters>
+        <CardCollection<Person, TestFilters>
+          title={(item) => item.name}
           cardProperties={testCardProperties}
           source={createTestSource([])}
         />
@@ -206,7 +195,8 @@ describe("CardCollection", () => {
         .mockImplementation(() => {})
 
       render(
-        <CardCollection<TestSchema, TestFilters>
+        <CardCollection<Person, TestFilters>
+          title={(item) => item.name}
           cardProperties={testCardProperties}
           source={createTestSource([], new Error("Failed to fetch data"))}
         />
