@@ -10,13 +10,17 @@ export const HighlightText = ({
   semiBold?: boolean
 }) => {
   if (!search)
-    return <span className={cn(semiBold ? "font-semibold" : "")}>{text}</span>
+    return (
+      <span className={cn("line-clamp-1", semiBold ? "font-semibold" : "")}>
+        {text}
+      </span>
+    )
 
   const regex = new RegExp(`(${search})`, "gi")
   const parts = text.split(regex)
 
   return (
-    <span className={cn(semiBold ? "font-semibold" : "")}>
+    <span className={cn("line-clamp-1", semiBold ? "font-semibold" : "")}>
       {parts.map((part, index) =>
         part.toLowerCase() === search.toLowerCase() ? (
           <span

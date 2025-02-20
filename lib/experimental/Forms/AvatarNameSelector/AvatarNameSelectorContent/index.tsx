@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import {
   AvatarNamedEntity,
   AvatarNamedGroup,
@@ -6,12 +7,17 @@ import {
 import { AvatarNameSelectorMainContent } from "./AvatarNameSelectorMainContent"
 import { AvatarNameSelectorSecondaryContent } from "./AvatarNameSelectorSecondaryContent"
 
+const breakpointToShowEmployeeList = 500
+const totalDefaultWidth = 520
+const asideWidth = 210
+
 export const AvatarNameSelectorContent = ({
   groupView,
   onRemove,
   onSubItemRemove,
   selectedEntities,
   selectedLabel,
+  width,
   singleSelector = false,
   loading = false,
   ...props
@@ -39,6 +45,7 @@ export const AvatarNameSelectorContent = ({
   onToggleExpand: (entity: AvatarNamedEntity) => void
   notFoundTitle: string
   notFoundSubtitle: string
+  width?: number
   searchPlaceholder?: string
   selectAllLabel?: string
   clearLabel?: string
@@ -46,18 +53,30 @@ export const AvatarNameSelectorContent = ({
   singleSelector?: boolean
   loading?: boolean
 }) => {
+  const blockSecondaryContent =
+    (width ?? totalDefaultWidth) < breakpointToShowEmployeeList
+  const isExpanded =
+    !loading &&
+    !singleSelector &&
+    !blockSecondaryContent &&
+    selectedEntities.length > 0
+  const defaultWidth = width ?? totalDefaultWidth
+  const finalWidthMain = isExpanded ? defaultWidth - asideWidth : defaultWidth
+
   return (
-    <div className="flex">
-      <AvatarNameSelectorMainContent
-        {...props}
-        groupView={groupView}
-        onRemove={onRemove}
-        onSubItemRemove={onSubItemRemove}
-        selectedEntities={selectedEntities}
-        singleSelector={singleSelector}
-        loading={loading}
-      />
-      {!loading && !singleSelector && (
+    <div
+      className="relative overflow-hidden"
+      style={{
+        height: singleSelector ? "435px" : "473px",
+        width: defaultWidth,
+      }}
+    >
+      <div
+        className="absolute right-0 top-0"
+        style={{
+          width: asideWidth + "px",
+        }}
+      >
         <AvatarNameSelectorSecondaryContent
           groupView={groupView}
           onRemove={onRemove}
@@ -65,7 +84,23 @@ export const AvatarNameSelectorContent = ({
           selectedEntities={selectedEntities}
           selectedLabel={selectedLabel}
         />
-      )}
+      </div>
+      <motion.div
+        className="absolute left-0"
+        initial={{ width: finalWidthMain + 1 }}
+        animate={{ width: finalWidthMain + 1 }}
+        transition={{ delay: 0, duration: 0.3 }}
+      >
+        <AvatarNameSelectorMainContent
+          {...props}
+          groupView={groupView}
+          onRemove={onRemove}
+          onSubItemRemove={onSubItemRemove}
+          selectedEntities={selectedEntities}
+          singleSelector={singleSelector}
+          loading={loading}
+        />
+      </motion.div>
     </div>
   )
 }

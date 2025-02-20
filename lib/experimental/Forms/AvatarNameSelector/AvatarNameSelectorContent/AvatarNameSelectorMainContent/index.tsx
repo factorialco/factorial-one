@@ -34,6 +34,7 @@ export const AvatarNameSelectorMainContent = ({
   clearLabel,
   notFoundTitle,
   notFoundSubtitle,
+  className,
   singleSelector = false,
   loading = false,
 }: {
@@ -60,6 +61,7 @@ export const AvatarNameSelectorMainContent = ({
   onToggleExpand: (entity: AvatarNamedEntity) => void
   notFoundTitle: string
   notFoundSubtitle: string
+  className?: string
   searchPlaceholder?: string
   selectAllLabel?: string
   clearLabel?: string
@@ -167,8 +169,9 @@ export const AvatarNameSelectorMainContent = ({
   return (
     <div
       className={cn(
-        "flex w-96 flex-col rounded-l-xl border-0",
-        singleSelector || loading ? "rounded-r-xl" : ""
+        "flex w-full flex-col rounded-l-xl border-0",
+        singleSelector || loading ? "rounded-r-xl" : "",
+        className
       )}
     >
       <header
@@ -186,8 +189,8 @@ export const AvatarNameSelectorMainContent = ({
             goToLast={goToLast}
           />
         </div>
-        <div className="flex-1">
-          {groups && groups.length > 1 && (
+        {groups && groups.length > 1 && (
+          <div className="flex-1">
             <Select
               disabled={loading}
               onChange={onGroupChange}
@@ -195,8 +198,8 @@ export const AvatarNameSelectorMainContent = ({
               value={selectedGroup}
               className="h-8 rounded-[10px] bg-transparent py-[5px] text-f1-foreground-secondary"
             />
-          )}
-        </div>
+          </div>
+        )}
       </header>
       <section
         className={cn(

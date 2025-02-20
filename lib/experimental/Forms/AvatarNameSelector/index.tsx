@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
@@ -64,6 +65,7 @@ export const AvatarNameSelector = ({
   notFoundSubtitle,
   selectedAvatarName,
   onSelect: onSelectProp,
+  width,
   loading = false,
   singleSelector = false,
   ...props
@@ -305,16 +307,13 @@ export const AvatarNameSelector = ({
     props.onOpenChange?.(open)
   }
 
-  return (
-    <Popover {...props} onOpenChange={onOpenChange}>
-      <PopoverTrigger className="w-full">
-        <AvatarNameSelectorTrigger
-          placeholder={triggerPlaceholder}
-          selected={triggerSelected}
-          selectedAvatarName={selectedEntities}
-        />
-      </PopoverTrigger>
-      <PopoverContent className="w-full rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0">
+  if (props.alwaysOpen) {
+    return (
+      <div
+        className={cn(
+          "scrollbar-macos relative w-full overflow-auto rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0"
+        )}
+      >
         <AvatarNameSelectorContent
           groupView={groupView}
           entities={filteredEntities}
@@ -339,6 +338,51 @@ export const AvatarNameSelector = ({
           loading={loading}
           notFoundTitle={notFoundTitle}
           notFoundSubtitle={notFoundSubtitle}
+          width={width}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <Popover {...props} onOpenChange={onOpenChange}>
+      <PopoverTrigger className="w-full">
+        <AvatarNameSelectorTrigger
+          placeholder={triggerPlaceholder}
+          selected={triggerSelected}
+          selectedAvatarName={selectedEntities}
+        />
+      </PopoverTrigger>
+      <PopoverContent
+        className={cn(
+          "scrollbar-macos relative w-full overflow-auto rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0"
+        )}
+      >
+        <AvatarNameSelectorContent
+          groupView={groupView}
+          entities={filteredEntities}
+          groups={groups}
+          onGroupChange={onGroupChange}
+          selectedGroup={selectedGroup}
+          onSelect={onSelect}
+          onRemove={onRemove}
+          onSubItemRemove={onSubItemRemove}
+          onSubItemSelect={onSubItemSelect}
+          onClear={onClear}
+          onSelectAll={onSelectAll}
+          selectedEntities={selectedEntities}
+          search={search}
+          onSearch={onSearch}
+          onToggleExpand={onToggleExpand}
+          searchPlaceholder={searchPlaceholder}
+          selectAllLabel={selectAllLabel}
+          clearLabel={clearLabel}
+          selectedLabel={selectedLabel}
+          singleSelector={singleSelector}
+          loading={loading}
+          notFoundTitle={notFoundTitle}
+          notFoundSubtitle={notFoundSubtitle}
+          width={width}
         />
       </PopoverContent>
     </Popover>

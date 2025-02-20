@@ -50,7 +50,7 @@ const meta: Meta<typeof AvatarNameSelector> = {
   tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
-      <div className="h-[520px] w-full min-w-72 max-w-96">
+      <div className="h-[520px] w-full">
         <Story />
       </div>
     ),
@@ -65,16 +65,18 @@ const meta: Meta<typeof AvatarNameSelector> = {
     )
 
     return (
-      <AvatarNameSelector
-        {...props}
-        loading={loading}
-        entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
-        selectedGroup={selectedGroup}
-        onGroupChange={(value) => setSelectedGroup(value ?? "all")}
-        onOpenChange={(open) =>
-          open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
-        }
-      />
+      <div className="w-64">
+        <AvatarNameSelector
+          {...props}
+          loading={loading}
+          entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+          selectedGroup={selectedGroup}
+          onGroupChange={(value) => setSelectedGroup(value ?? "all")}
+          onOpenChange={(open) =>
+            open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
+          }
+        />
+      </div>
     )
   },
 }
@@ -98,4 +100,35 @@ export const SingleSelector = {
     onSelect: fn(),
     singleSelector: true,
   } as AvatarNameSelectorProps,
+}
+
+export const AlwaysOpen = {
+  args: {
+    ...defaultArgs,
+    onSelect: fn(),
+    singleSelector: false,
+    loading: false,
+    alwaysOpen: true,
+  } as AvatarNameSelectorProps,
+  render: (props: any) => {
+    const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [selectedGroup, setSelectedGroup] = useState<string>(
+      props.selectedGroup ?? "all"
+    )
+
+    return (
+      <div className="w-[522px]">
+        <AvatarNameSelector
+          {...props}
+          loading={loading}
+          entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+          selectedGroup={selectedGroup}
+          onGroupChange={(value) => setSelectedGroup(value ?? "all")}
+          onOpenChange={(open) =>
+            open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
+          }
+        />
+      </div>
+    )
+  },
 }
