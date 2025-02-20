@@ -135,7 +135,6 @@ const ExampleComponent = ({
             options: {
               title: (item) => item.name,
               cardProperties: [
-                { label: "Name", render: (item) => item.name },
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
@@ -208,7 +207,6 @@ export const BasicCardView: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { label: "Name", render: (item) => item.name },
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
@@ -269,10 +267,7 @@ export const CustomCardProperties: Story = {
           {
             type: "card",
             options: {
-              cardProperties: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Role", render: (item) => item.role },
-              ],
+              cardProperties: [{ label: "Role", render: (item) => item.role }],
               title: (item) => item.name,
             },
           },
@@ -381,7 +376,6 @@ export const WithCustomJsonView: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { label: "Name", render: (item) => item.name },
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
@@ -450,7 +444,6 @@ export const WithCardVisualization: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { label: "Name", render: (item) => item.name },
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
@@ -497,7 +490,6 @@ export const WithMultipleVisualizations: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { label: "Name", render: (item) => item.name },
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
