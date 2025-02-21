@@ -1,8 +1,9 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { render, renderHook, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import { TableCollection } from "."
 import type { FiltersDefinition } from "../Filters/types"
 import type { DataSource } from "../types"
+import { useData } from "../useData"
 
 type TestFilters = FiltersDefinition
 
@@ -158,14 +159,13 @@ describe("TableCollection", () => {
     })
 
     it("handles error states appropriately", async () => {
-      const consoleError = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {})
+      const errorMessage = "Failed to fetch data"
+      const error = new Error(errorMessage)
 
       render(
         <TableCollection<Person, TestFilters>
           columns={testColumns}
-          source={createTestSource([], new Error("Failed to fetch data"))}
+          source={createTestSource([], error)}
         />
       )
 
@@ -175,13 +175,17 @@ describe("TableCollection", () => {
         expect(rows).toHaveLength(1) // Just the header row
       })
 
-      // Verify error was logged
-      expect(consoleError).toHaveBeenCalledWith(
-        "Error fetching data:",
-        expect.any(Error)
-      )
+      // Headers should still be present
+      expect(screen.getAllByRole("columnheader")).toHaveLength(2)
 
-      consoleError.mockRestore()
+      // Verify error state
+      const { result } = renderHook(() => useData(createTestSource([], error)))
+      await waitFor(() => {
+        expect(result.current.error).toEqual({
+          message: "Error fetching data",
+          cause: error,
+        })
+      })
     })
   })
 
