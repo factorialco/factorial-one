@@ -9,16 +9,13 @@ import {
   TableRow,
 } from "@/ui/table"
 import type { FiltersDefinition } from "../Filters/types"
-import { CollectionProps, CollectionSchema, SourceData } from "../types"
+import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
-import { renderValue } from "../utils"
+import { PropertyDefinition, renderValue } from "../utils"
 
-export type TableColumnDefinition<T extends Record<string, unknown>> = {
-  key: Extract<keyof T, string>
-  render?: (item: T) => string
-}
+export type TableColumnDefinition<T> = PropertyDefinition<T>
 
-export type TableVisualizationOptions<T extends Record<string, unknown>> = {
+export type TableVisualizationOptions<T> = {
   columns: ReadonlyArray<TableColumnDefinition<T>>
   link?: (item: T) => {
     label: string
@@ -27,20 +24,16 @@ export type TableVisualizationOptions<T extends Record<string, unknown>> = {
 }
 
 export const TableCollection = <
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >({
   columns,
   source,
   link,
-}: CollectionProps<
-  Schema,
-  Filters,
-  TableVisualizationOptions<SourceData<Schema, Filters>>
->) => {
-  const { data, isLoading } = useData<Schema, Filters>(source)
+}: CollectionProps<Record, Filters, TableVisualizationOptions<Record>>) => {
+  const { data, isLoading } = useData<Record, Filters>(source)
 
-  const TableActionCell = ({ item }: { item: SourceData<Schema, Filters> }) => {
+  const TableActionCell = ({ item }: { item: Record }) => {
     const linkInfo = link!(item)
     return (
       <TableCell key="actions">
@@ -54,9 +47,7 @@ export const TableCollection = <
       <TableHeader>
         <TableRow>
           {columns.map((column) => (
-            <TableHead key={String(column.key)}>
-              {source.properties[column.key].label}
-            </TableHead>
+            <TableHead key={String(column.label)}>{column.label}</TableHead>
           ))}
           {link && <TableHead key="actions">Actions</TableHead>}
         </TableRow>
@@ -66,7 +57,7 @@ export const TableCollection = <
           ? Array.from({ length: 4 }).map((_, i) => (
               <TableRow key={`loading-${i}`}>
                 {columns.map((column) => (
-                  <TableCell key={String(column.key)}>
+                  <TableCell key={String(column.label)}>
                     <Skeleton className="h-4 w-full" />
                   </TableCell>
                 ))}
@@ -76,7 +67,7 @@ export const TableCollection = <
           : data.map((item, index) => (
               <TableRow key={`row-${index}`}>
                 {columns.map((column) => (
-                  <TableCell key={String(column.key)}>
+                  <TableCell key={String(column.label)}>
                     {renderValue(item, column)}
                   </TableCell>
                 ))}

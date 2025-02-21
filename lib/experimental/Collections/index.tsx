@@ -1,11 +1,7 @@
 import { useMemo, useState } from "react"
 import { Filters } from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
-import type {
-  CollectionSchema,
-  DataSource,
-  DataSourceDefinition,
-} from "./types"
+import type { DataSource, DataSourceDefinition, RecordType } from "./types"
 import type { Visualization } from "./visualizations"
 import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 
@@ -30,40 +26,27 @@ import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
  * - fetchData: Function to fetch data with the current filters
  */
 export const useDataSource = <
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >(
   {
-    properties,
     filters,
-    currentFilters: initialCurrentFilters,
+    currentFilters: initialCurrentFilters = {},
     dataAdapter,
-  }: DataSourceDefinition<Schema, Filters>,
+  }: DataSourceDefinition<Record, Filters>,
   deps: ReadonlyArray<unknown> = []
-): DataSource<Schema, Filters> => {
+): DataSource<Record, Filters> => {
   const [currentFilters, setCurrentFilters] = useState<FiltersState<Filters>>(
-    (initialCurrentFilters ?? {}) as FiltersState<Filters>
+    initialCurrentFilters
   )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedProperties = useMemo(() => properties, deps)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
-  // To avoid unnecessary re-renders, we memoize the currentFilters
-  const stableCurrentFilters = useMemo(
-    () => currentFilters,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [JSON.stringify(currentFilters)]
-  )
-
   return {
-    properties: memoizedProperties,
     filters: memoizedFilters,
-    currentFilters: stableCurrentFilters,
+    currentFilters,
     setCurrentFilters,
-    dataAdapter: memoizedDataAdapter,
+    dataAdapter,
   }
 }
 
@@ -83,14 +66,14 @@ export const useDataSource = <
  * - The selected visualization of the data
  */
 export const DataCollection = <
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >({
   source,
   visualizations,
 }: {
-  source: DataSource<Schema, Filters>
-  visualizations: ReadonlyArray<Visualization<Schema, Filters>>
+  source: DataSource<Record, Filters>
+  visualizations: ReadonlyArray<Visualization<Record, Filters>>
 }): JSX.Element => {
   const { filters, currentFilters, setCurrentFilters } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)

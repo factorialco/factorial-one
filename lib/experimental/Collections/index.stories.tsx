@@ -1,32 +1,12 @@
+import { Link } from "@/components/Actions/Link"
 import { Meta, StoryObj } from "@storybook/react"
 import { Code } from "lucide-react"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
 import { FiltersState } from "./Filters/types"
-import { ExtractDataType } from "./types"
 import { useData } from "./useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
-
-const properties = {
-  name: {
-    type: "string",
-    label: "Name",
-  },
-  email: {
-    type: "string",
-    label: "Email",
-  },
-  role: {
-    type: "string",
-    label: "Role",
-  },
-  department: {
-    type: "enum",
-    label: "Department",
-    values: DEPARTMENTS,
-  },
-} as const
 
 // Example filter definition
 const filters = {
@@ -101,21 +81,23 @@ type FiltersType = typeof filters
 
 const createObservableDataFetch = (delay = 0) => {
   return ({ filters }: { filters: FiltersState<FiltersType> }) =>
-    new Observable<Array<ExtractDataType<typeof properties>>>((observer) => {
-      const timeoutId = setTimeout(() => {
-        observer.next(filterUsers(mockUsers, filters))
-        observer.complete()
-      }, delay)
+    new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
+      (observer) => {
+        const timeoutId = setTimeout(() => {
+          observer.next({ records: filterUsers(mockUsers, filters) })
+          observer.complete()
+        }, delay)
 
-      return () => clearTimeout(timeoutId)
-    })
+        return () => clearTimeout(timeoutId)
+      }
+    )
 }
 
 const createPromiseDataFetch = (delay = 500) => {
   return ({ filters }: { filters: FiltersState<FiltersType> }) =>
-    new Promise<Array<ExtractDataType<typeof properties>>>((resolve) => {
+    new Promise<{ records: Array<(typeof mockUsers)[number]> }>((resolve) => {
       setTimeout(() => {
-        resolve(filterUsers(mockUsers, filters))
+        resolve({ records: filterUsers(mockUsers, filters) })
       }, delay)
     })
 }
@@ -127,7 +109,6 @@ const ExampleComponent = ({
   useObservable?: boolean
 }) => {
   const dataSource = useDataSource({
-    properties,
     filters,
     dataAdapter: {
       fetchData: useObservable
@@ -145,21 +126,21 @@ const ExampleComponent = ({
             type: "table",
             options: {
               columns: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
             },
           },
           {
             type: "card",
             options: {
+              title: (item) => item.name,
               cardProperties: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
             },
           },
@@ -185,7 +166,6 @@ type Story = StoryObj<typeof meta>
 export const BasicTableView: Story = {
   render: () => {
     const dataSource = useDataSource({
-      properties,
       filters,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -200,10 +180,10 @@ export const BasicTableView: Story = {
             type: "table",
             options: {
               columns: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
             },
           },
@@ -216,7 +196,6 @@ export const BasicTableView: Story = {
 export const BasicCardView: Story = {
   render: () => {
     const dataSource = useDataSource({
-      properties,
       filters,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -231,11 +210,11 @@ export const BasicCardView: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
+              title: (item) => item.name,
             },
           },
         ]}
@@ -245,10 +224,9 @@ export const BasicCardView: Story = {
 }
 
 // Examples with customized visualizations
-export const CustomTableColumns: Story = {
+export const ComponentsAsCells: Story = {
   render: () => {
     const dataSource = useDataSource({
-      properties,
       filters,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -263,20 +241,16 @@ export const CustomTableColumns: Story = {
             type: "table",
             options: {
               columns: [
+                { label: "Name", render: (item) => `👤  ${item.name}` },
                 {
-                  key: "name",
-                  render: (item) => `👤 ${item.name}`,
+                  label: "Email",
+                  render: (item) => (
+                    <Link href={`mailto:${item.email}`}>{item.email}</Link>
+                  ),
                 },
+                { label: "Role", render: (item) => `💼  ${item.role}` },
                 {
-                  key: "email",
-                  render: (item) => `📧 ${item.email}`,
-                },
-                {
-                  key: "role",
-                  render: (item) => `💼 ${item.role}`,
-                },
-                {
-                  key: "department",
+                  label: "Department",
                   render: (item) => `🏢 ${item.department}`,
                 },
               ],
@@ -291,7 +265,6 @@ export const CustomTableColumns: Story = {
 export const CustomCardProperties: Story = {
   render: () => {
     const dataSource = useDataSource({
-      properties,
       filters,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -305,7 +278,8 @@ export const CustomCardProperties: Story = {
           {
             type: "card",
             options: {
-              cardProperties: [{ key: "name" }, { key: "role" }],
+              cardProperties: [{ label: "Role", render: (item) => item.role }],
+              title: (item) => item.name,
             },
           },
         ]}
@@ -325,7 +299,6 @@ export const SwitchableVisualizations: Story = {
 export const WithPreselectedFilters: Story = {
   render: () => {
     const dataSource = useDataSource({
-      properties,
       filters,
       currentFilters: {
         department: ["Engineering"],
@@ -343,10 +316,10 @@ export const WithPreselectedFilters: Story = {
             type: "table",
             options: {
               columns: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
             },
           },
@@ -359,7 +332,9 @@ export const WithPreselectedFilters: Story = {
 const JsonVisualization = ({
   source,
 }: {
-  source: ReturnType<typeof useDataSource<typeof properties, typeof filters>>
+  source: ReturnType<
+    typeof useDataSource<(typeof mockUsers)[number], typeof filters>
+  >
 }) => {
   const { data, isLoading } = useData(source)
 
@@ -381,7 +356,6 @@ const JsonVisualization = ({
 export const WithCustomJsonView: Story = {
   render: () => {
     const dataSource = useDataSource({
-      properties,
       filters,
       dataAdapter: {
         fetchData: createObservableDataFetch(),
@@ -402,10 +376,10 @@ export const WithCustomJsonView: Story = {
             type: "table",
             options: {
               columns: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
             },
           },
@@ -413,11 +387,11 @@ export const WithCustomJsonView: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
+              title: (item) => item.name,
             },
           },
         ]}
@@ -430,7 +404,6 @@ export const WithCustomJsonView: Story = {
 export const WithTableVisualization: Story = {
   render: () => {
     const source = useDataSource({
-      properties,
       filters,
       dataAdapter: {
         fetchData: createObservableDataFetch(1000),
@@ -445,10 +418,10 @@ export const WithTableVisualization: Story = {
             type: "table",
             options: {
               columns: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
             },
           },
@@ -462,14 +435,13 @@ export const WithTableVisualization: Story = {
 export const WithCardVisualization: Story = {
   render: () => {
     const source = useDataSource({
-      properties,
       filters,
       dataAdapter: {
         fetchData: () =>
-          new Observable<Array<ExtractDataType<typeof properties>>>(
+          new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
             (observer) => {
               setTimeout(() => {
-                observer.next(mockUsers)
+                observer.next({ records: mockUsers })
                 observer.complete()
               }, 1000)
             }
@@ -485,11 +457,11 @@ export const WithCardVisualization: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
+              title: (item) => item.name,
             },
           },
         ]}
@@ -502,14 +474,13 @@ export const WithCardVisualization: Story = {
 export const WithMultipleVisualizations: Story = {
   render: () => {
     const source = useDataSource({
-      properties,
       filters,
       dataAdapter: {
         fetchData: () =>
-          new Observable<Array<ExtractDataType<typeof properties>>>(
+          new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
             (observer) => {
               setTimeout(() => {
-                observer.next(mockUsers)
+                observer.next({ records: mockUsers })
                 observer.complete()
               }, 1000)
             }
@@ -524,18 +495,21 @@ export const WithMultipleVisualizations: Story = {
           {
             type: "table",
             options: {
-              columns: [{ key: "name" }, { key: "email" }],
+              columns: [
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+              ],
             },
           },
           {
             type: "card",
             options: {
               cardProperties: [
-                { key: "name" },
-                { key: "email" },
-                { key: "role" },
-                { key: "department" },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
+              title: (item) => item.name,
             },
           },
         ]}

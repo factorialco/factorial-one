@@ -20,12 +20,6 @@ describe("Collections", () => {
     const { result } = renderHook(
       () =>
         useDataSource({
-          properties: {
-            name: {
-              type: "string",
-              label: "Name",
-            },
-          },
           filters: {
             name: { type: "search", label: "Name" },
           },
@@ -35,7 +29,7 @@ describe("Collections", () => {
                 throw new Error("Email is not a valid filter")
               }
 
-              return mockData.filter((user) => {
+              const records = mockData.filter((user) => {
                 if (filters.name && typeof filters.name === "string") {
                   return user.name
                     .toLowerCase()
@@ -43,6 +37,8 @@ describe("Collections", () => {
                 }
                 return true
               })
+
+              return { records }
             },
           },
         }),
@@ -57,7 +53,7 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [{ key: "name" }],
+                columns: [{ label: "name", render: (item) => item.name }],
               },
             },
           ]}
@@ -75,15 +71,13 @@ describe("Collections", () => {
     const { result } = renderHook(
       () =>
         useDataSource({
-          properties: {
-            name: { type: "string", label: "Name" },
-            email: { type: "string", label: "Email" },
-          },
           dataAdapter: {
-            fetchData: async () => [
-              { name: "John Doe", email: "john@example.com" },
-              { name: "Jane Smith", email: "jane@example.com" },
-            ],
+            fetchData: async () => ({
+              records: [
+                { name: "John Doe", email: "john@example.com" },
+                { name: "Jane Smith", email: "jane@example.com" },
+              ],
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -97,13 +91,20 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [{ key: "name" }, { key: "email" }],
+                columns: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Email", render: (item) => item.email },
+                ],
               },
             },
             {
               type: "card",
               options: {
-                cardProperties: [{ key: "name" }, { key: "email" }],
+                cardProperties: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Email", render: (item) => item.email },
+                ],
+                title: (item) => item.name,
               },
             },
           ]}
@@ -121,21 +122,19 @@ describe("Collections", () => {
     const { result } = renderHook(
       () =>
         useDataSource({
-          properties: {
-            name: { type: "string", label: "Name" },
-            role: { type: "string", label: "Role" },
-          },
           dataAdapter: {
             fetchData: () =>
-              new Observable<Array<{ name: string; role: string }>>(
-                (observer) => {
-                  observer.next([
+              new Observable<{
+                records: Array<{ name: string; role: string }>
+              }>((observer) => {
+                observer.next({
+                  records: [
                     { name: "John Doe", role: "Senior Engineer" },
                     { name: "Jane Smith", role: "Product Manager" },
-                  ])
-                  return () => {}
-                }
-              ),
+                  ],
+                })
+                return () => {}
+              }),
           },
         }),
       { wrapper: TestWrapper }
@@ -149,7 +148,10 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [{ key: "name" }, { key: "role" }],
+                columns: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Role", render: (item) => item.role },
+                ],
               },
             },
           ]}
@@ -180,11 +182,6 @@ describe("Collections", () => {
     const { result } = renderHook(
       () =>
         useDataSource({
-          properties: {
-            name: { type: "string", label: "Name" },
-            email: { type: "string", label: "Email" },
-            department: { type: "string", label: "Department" },
-          },
           filters: {
             search: {
               type: "search",
@@ -218,7 +215,7 @@ describe("Collections", () => {
                 )
               }
 
-              return filtered
+              return { records: filtered }
             },
           },
         }),
@@ -233,7 +230,10 @@ describe("Collections", () => {
             {
               type: "table",
               options: {
-                columns: [{ key: "name" }, { key: "department" }],
+                columns: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Department", render: (item) => item.department },
+                ],
               },
             },
           ]}
@@ -251,29 +251,8 @@ describe("Collections", () => {
     const { result } = renderHook(
       () =>
         useDataSource({
-          properties: {
-            name: { type: "string", label: "Name" },
-          },
           dataAdapter: {
-            fetchData: async () => [{ name: "John" }],
-          },
-        }),
-      { wrapper: TestWrapper }
-    )
-
-    expect(result.current).toBeDefined()
-  })
-
-  test("it fails when data has wrong property types", () => {
-    const { result } = renderHook(
-      () =>
-        useDataSource({
-          properties: {
-            name: { type: "string", label: "Name" },
-          },
-          dataAdapter: {
-            // @ts-expect-error Property 'name' should be string but got number
-            fetchData: async () => [{ name: 123 }],
+            fetchData: async () => ({ records: [{ name: "John" }] }),
           },
         }),
       { wrapper: TestWrapper }
@@ -283,13 +262,6 @@ describe("Collections", () => {
   })
 
   test("renders with custom visualization", async () => {
-    type Schema = {
-      name: { type: "string"; label: string }
-      role: { type: "string"; label: string }
-      department: { type: "string"; label: string }
-      email: { type: "string"; label: string }
-    }
-
     type Item = {
       name: string
       role: string
@@ -300,13 +272,13 @@ describe("Collections", () => {
     const CustomComponent = ({
       source,
     }: {
-      source: DataSource<Schema, FiltersDefinition>
+      source: DataSource<Item, FiltersDefinition>
     }) => {
       const { data } = useData(source)
 
       return (
         <div data-testid="custom-visualization">
-          {data?.map((item: Item) => (
+          {data?.map((item) => (
             <div key={item.email} className="custom-item">
               <h3>{item.name}</h3>
               <p>
@@ -321,29 +293,25 @@ describe("Collections", () => {
     const { result } = renderHook(
       () =>
         useDataSource({
-          properties: {
-            name: { type: "string", label: "Name" },
-            role: { type: "string", label: "Role" },
-            department: { type: "string", label: "Department" },
-            email: { type: "string", label: "Email" },
-          },
           dataAdapter: {
             fetchData: () =>
-              new Observable<Item[]>((observer) => {
-                observer.next([
-                  {
-                    name: "John Doe",
-                    role: "Senior Engineer",
-                    department: "Engineering",
-                    email: "john@example.com",
-                  },
-                  {
-                    name: "Jane Smith",
-                    role: "Product Manager",
-                    department: "Product",
-                    email: "jane@example.com",
-                  },
-                ])
+              new Observable<{ records: Item[] }>((observer) => {
+                observer.next({
+                  records: [
+                    {
+                      name: "John Doe",
+                      role: "Senior Engineer",
+                      department: "Engineering",
+                      email: "john@example.com",
+                    },
+                    {
+                      name: "Jane Smith",
+                      role: "Product Manager",
+                      department: "Product",
+                      email: "jane@example.com",
+                    },
+                  ],
+                })
                 return () => {}
               }),
           },

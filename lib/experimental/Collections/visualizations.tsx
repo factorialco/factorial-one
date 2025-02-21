@@ -7,45 +7,55 @@ import { CardCollection } from "./Card"
 import type { FiltersDefinition } from "./Filters/types"
 import type { TableVisualizationOptions } from "./Table"
 import { TableCollection } from "./Table"
-import type { CollectionSchema, DataSource, SourceData } from "./types"
+import type { DataSource, RecordType } from "./types"
 
 /**
  * Represents a visualization configuration for displaying collection data.
  * Supports different visualization types (card, table, or custom) with their respective options.
  *
- * @template Schema - The schema type extending CollectionSchema
+ * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
  */
 export type Visualization<
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 > =
   | {
+      /** Card-based visualization type */
       type: "card"
-      options: CardVisualizationOptions<SourceData<Schema, Filters>>
+      /** Configuration options for card visualization */
+      options: CardVisualizationOptions<Record>
     }
   | {
+      /** Table-based visualization type */
       type: "table"
-      options: TableVisualizationOptions<SourceData<Schema, Filters>>
+      /** Configuration options for table visualization */
+      options: TableVisualizationOptions<Record>
     }
   | {
+      /** Custom visualization type */
       type: "custom"
+      /** Human-readable label for the visualization */
       label: string
+      /** Icon to represent the visualization in UI */
       icon: IconType
-      component: (props: { source: DataSource<Schema, Filters> }) => JSX.Element
+      /** Custom component to render the visualization */
+      component: (props: { source: DataSource<Record, Filters> }) => JSX.Element
     }
 
 /**
  * Props interface for components that support multiple visualizations.
+ * Used to configure how data can be displayed in different formats.
  *
- * @template Schema - The schema type extending CollectionSchema
+ * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
  */
 export type VisualizationProps<
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 > = {
-  visualizations?: ReadonlyArray<Visualization<Schema, Filters>>
+  /** Array of available visualization configurations */
+  visualizations?: ReadonlyArray<Visualization<Record, Filters>>
 }
 
 /**
@@ -62,14 +72,14 @@ export type VisualizationProps<
  * @returns A row of buttons for switching between visualizations
  */
 export const VisualizationSelector = <
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >({
   visualizations,
   currentVisualization,
   onVisualizationChange,
 }: {
-  visualizations: ReadonlyArray<Visualization<Schema, Filters>>
+  visualizations: ReadonlyArray<Visualization<Record, Filters>>
   currentVisualization: number
   onVisualizationChange: (index: number) => void
 }): JSX.Element => {
@@ -118,28 +128,28 @@ export const VisualizationSelector = <
  * @returns The rendered visualization component (TableCollection or CardCollection)
  */
 export const VisualizationRenderer = <
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >({
   visualization,
   source,
 }: {
-  visualization: Visualization<Schema, Filters>
-  source: DataSource<Schema, Filters>
+  visualization: Visualization<Record, Filters>
+  source: DataSource<Record, Filters>
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
       return (
-        <TableCollection<Schema, Filters>
+        <TableCollection<Record, Filters>
           source={source}
-          columns={visualization.options.columns}
+          {...visualization.options}
         />
       )
     case "card":
       return (
-        <CardCollection<Schema, Filters>
+        <CardCollection<Record, Filters>
           source={source}
-          cardProperties={visualization.options.cardProperties}
+          {...visualization.options}
         />
       )
     case "custom":
