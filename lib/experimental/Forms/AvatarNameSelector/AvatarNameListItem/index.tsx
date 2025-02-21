@@ -4,7 +4,7 @@ import { Counter } from "@/experimental/exports"
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import LogoAvatar from "@/icons/app/LogoAvatar"
 import { ChevronDown, ChevronRight } from "lucide-react"
-import Checkbox from "../../Fields/Checkbox"
+import { Checkbox } from "../../Fields/Checkbox"
 import { HighlightText } from "../AvatarNameHighLightText"
 import { AvatarNamedEntity, AvatarNamedSubEntity } from "../types"
 
@@ -49,12 +49,7 @@ const AvatarNameListItemSingleContent = ({
       </div>
       <Checkbox
         checked={selected}
-        onClick={() => (selected ? onRemove(entity) : onSelect(entity))}
-        className="ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse"
-        style={{
-          backgroundColor: selected ? "hsl(var(--selected-50))" : undefined,
-          borderColor: selected ? "hsl(var(--selected-50))" : undefined,
-        }}
+        onCheckedChange={() => (selected ? onRemove(entity) : onSelect(entity))}
       />
     </label>
   )
@@ -138,18 +133,9 @@ export const AvatarNameListItem = ({
             <Checkbox
               checked={checked}
               indeterminate={partialSelected}
-              onClick={() => (selected ? onRemove(entity) : onSelect(entity))}
-              className="ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse"
-              style={{
-                backgroundColor: selected
-                  ? "hsl(var(--selected-50))"
-                  : "hsl(var(--background))",
-                color:
-                  !selected && partialSelected
-                    ? "hsl(var(--selected-50))"
-                    : undefined,
-                borderColor: checked ? "hsl(var(--selected-50))" : undefined,
-              }}
+              onCheckedChange={() =>
+                selected ? onRemove(entity) : onSelect(entity)
+              }
             />
           )}
         </label>
