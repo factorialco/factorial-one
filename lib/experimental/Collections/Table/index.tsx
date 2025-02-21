@@ -1,4 +1,3 @@
-import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
 import { Skeleton } from "@/ui/skeleton"
 import {
@@ -10,6 +9,7 @@ import {
   TableRow,
 } from "@/ui/table"
 import type { FiltersDefinition } from "../Filters/types"
+import { Pagination } from "../Pagination"
 import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
@@ -80,28 +80,11 @@ export const TableCollection = <
         </TableBody>
       </Table>
       {paginationInfo && (
-        <>
-          <div>Current page: {paginationInfo?.currentPage}</div>
-          <div>Total: {paginationInfo?.total}</div>
-          <div className="mt-4 flex gap-2">
-            {Array.from({ length: paginationInfo.pagesCount }).map((_, i) => {
-              const pageNumber = i + 1
-              return (
-                <Button
-                  key={`page-${pageNumber}`}
-                  variant={
-                    pageNumber === paginationInfo.currentPage
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => setPage(pageNumber)}
-                  label={pageNumber.toString()}
-                />
-              )
-            })}
-          </div>
-          {isLoading && <div>Loading...</div>}
-        </>
+        <Pagination
+          paginationInfo={paginationInfo}
+          isLoading={isLoading}
+          onPageChange={setPage}
+        />
       )}
     </>
   )

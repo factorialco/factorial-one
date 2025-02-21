@@ -3,9 +3,90 @@ import { Observable } from "zen-observable-ts"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { DataSource, PromiseOrObservable, RecordType } from "./types"
 
-export type DataError = {
+/**
+ * Represents an error that occurred during data fetching
+ */
+export interface DataError {
   message: string
   cause?: unknown
+}
+
+/**
+ * Response structure for paginated data
+ */
+interface PaginatedResult<T> {
+  records: T[]
+  total: number
+  currentPage: number
+  perPage: number
+  pagesCount: number
+}
+
+/**
+ * Response structure for non-paginated data
+ */
+interface SimpleResult<T> {
+  records: T[]
+}
+
+/**
+ * Hook options for useData
+ */
+interface UseDataOptions<Filters extends FiltersDefinition> {
+  filters?: Partial<Filters>
+}
+
+/**
+ * Pagination state and controls
+ */
+interface PaginationInfo {
+  total: number
+  currentPage: number
+  perPage: number
+  pagesCount: number
+}
+
+/**
+ * Hook return type for useData
+ */
+interface UseDataReturn<Record> {
+  data: Array<Record>
+  isInitialLoading: boolean
+  isLoading: boolean
+  error: DataError | null
+  paginationInfo: PaginationInfo | null
+  setPage: (page: number) => void
+}
+
+/**
+ * Custom hook for handling data fetching state
+ */
+function useDataFetchState<Record>() {
+  const [isInitialLoading, setIsInitialLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+  const [data, setData] = useState<Array<Record>>([])
+  const [error, setError] = useState<DataError | null>(null)
+
+  return {
+    isInitialLoading,
+    setIsInitialLoading,
+    isLoading,
+    setIsLoading,
+    data,
+    setData,
+    error,
+    setError,
+  }
+}
+
+/**
+ * Custom hook for handling pagination state
+ */
+function usePaginationState() {
+  const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
+    null
+  )
+  return { paginationInfo, setPaginationInfo }
 }
 
 /**
@@ -13,25 +94,21 @@ export type DataError = {
  * Handles both Promise-based and Observable-based data streams, providing a consistent
  * interface for data loading states and results.
  *
- * @template Schema - The schema type extending CollectionSchema
+ * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
  *
  * @param source - The data source object containing fetchData and filter state
+ * @param options - Optional configuration options
  *
- * @returns An object containing:
- * - data: The current array of data items
- * - isInitialLoading: A boolean indicating whether data is currently being fetched
- * - error: Error information if the fetch failed
- * - isLoading: A boolean indicating if a fetch is in progress
- * - paginationInfo: Pagination details if enabled
- * - setPage: Function to change the current page
+ * @returns An object containing data state and pagination controls
  *
  * @example
  * ```tsx
  * const MyComponent = ({ source }) => {
- *   const { data, isInitialLoading, error, isLoading, paginationInfo, setPage } = useData({ source })
+ *   const { data, isInitialLoading, error } = useData({ source })
  *
  *   if (isInitialLoading) return <Loading />
+ *   if (error) return <Error message={error.message} />
  *   return <DataList items={data} />
  * }
  * ```
@@ -41,117 +118,104 @@ export function useData<
   Filters extends FiltersDefinition,
 >(
   source: DataSource<Record, Filters>,
-  {
-    filters,
-  }: {
-    filters?: Partial<Filters>
-  } = {}
-) {
-  const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [data, setData] = useState<Array<Record>>([])
-  const [error, setError] = useState<DataError | null>(null)
+  { filters }: UseDataOptions<Filters> = {}
+): UseDataReturn<Record> {
   const { dataAdapter, currentFilters } = source
-  const [isLoading, setIsLoading] = useState(false)
-
-  const mergedFilters = useMemo(() => {
-    return { ...currentFilters, ...filters }
-  }, [currentFilters, filters])
-
-  const [paginationInfo, setPaginationInfo] = useState<{
-    total: number
-    currentPage: number
-    perPage: number
-    pagesCount: number
-  } | null>(null)
-
   const cleanup = useRef<(() => void) | undefined>()
+
+  const {
+    isInitialLoading,
+    setIsInitialLoading,
+    isLoading,
+    setIsLoading,
+    data,
+    setData,
+    error,
+    setError,
+  } = useDataFetchState<Record>()
+
+  const { paginationInfo, setPaginationInfo } = usePaginationState()
+
+  const mergedFilters = useMemo(
+    () => ({ ...currentFilters, ...filters }),
+    [currentFilters, filters]
+  )
+
+  const handleFetchSuccess = useCallback(
+    (result: PaginatedResult<Record> | SimpleResult<Record>) => {
+      setData(result.records)
+      setError(null)
+
+      if ("total" in result) {
+        setPaginationInfo({
+          total: result.total,
+          currentPage: result.currentPage,
+          perPage: result.perPage,
+          pagesCount: result.pagesCount,
+        })
+      }
+
+      setIsInitialLoading(false)
+      setIsLoading(false)
+    },
+    [setData, setError, setPaginationInfo, setIsInitialLoading, setIsLoading]
+  )
+
+  const handleFetchError = useCallback(
+    (error: unknown) => {
+      setError({
+        message: "Error fetching data",
+        cause: error,
+      })
+      setIsInitialLoading(false)
+      setIsLoading(false)
+    },
+    [setError, setIsInitialLoading, setIsLoading]
+  )
 
   const fetchDataAndUpdate = useCallback(
     async (filters: FiltersState<Filters>, currentPage = 1) => {
       try {
-        type PaginatedResult = {
-          records: Record[]
-          total: number
-          currentPage: number
-          perPage: number
-          pagesCount: number
-        }
-        type SimpleResult = { records: Record[] }
-
-        const fetcher: () =>
-          | PromiseOrObservable<PaginatedResult>
-          | PromiseOrObservable<SimpleResult> =
+        const fetcher = (): PromiseOrObservable<
+          PaginatedResult<Record> | SimpleResult<Record>
+        > =>
           dataAdapter.paginationType === "pages"
-            ? () =>
-                dataAdapter.fetchData({
-                  filters,
-                  pagination: { currentPage, perPage: dataAdapter.perPage },
-                })
-            : () => dataAdapter.fetchData({ filters })
+            ? dataAdapter.fetchData({
+                filters,
+                pagination: { currentPage, perPage: dataAdapter.perPage },
+              })
+            : dataAdapter.fetchData({ filters })
 
         const result = fetcher()
 
         if (result instanceof Observable) {
           const subscription = result.subscribe({
-            next: (newData: PaginatedResult | SimpleResult) => {
-              setData(newData.records)
-              setError(null)
-
-              if ("total" in newData) {
-                setPaginationInfo({
-                  total: newData.total,
-                  currentPage: newData.currentPage,
-                  perPage: newData.perPage,
-                  pagesCount: newData.pagesCount,
-                })
-              }
-              setIsInitialLoading(false)
-              setIsLoading(false)
-            },
-            error: (error) => {
-              setError({
-                message: "Error fetching data",
-                cause: error,
-              })
-              setIsInitialLoading(false)
-              setIsLoading(false)
-            },
+            next: handleFetchSuccess,
+            error: handleFetchError,
           })
           cleanup.current = () => subscription.unsubscribe()
         } else {
           const resolvedData = await result
-          setData(resolvedData.records)
-          setError(null)
-
-          if ("total" in resolvedData) {
-            setPaginationInfo({
-              total: resolvedData.total,
-              currentPage: resolvedData.currentPage,
-              perPage: resolvedData.perPage,
-              pagesCount: resolvedData.pagesCount,
-            })
-          }
-          setIsInitialLoading(false)
-          setIsLoading(false)
+          handleFetchSuccess(resolvedData)
         }
       } catch (error) {
-        setError({
-          message: "Error fetching data",
-          cause: error,
-        })
-        setIsInitialLoading(false)
-        setIsLoading(false)
+        handleFetchError(error)
       }
     },
-    [dataAdapter]
+    [dataAdapter, handleFetchSuccess, handleFetchError]
   )
 
   const setPage = useCallback(
     (page: number) => {
+      // Return early if trying to set the same page
+      if (paginationInfo?.currentPage === page) {
+        return
+      }
+
       setIsLoading(true)
       fetchDataAndUpdate(mergedFilters, page)
     },
-    [fetchDataAndUpdate, mergedFilters, setIsLoading]
+    [fetchDataAndUpdate, mergedFilters, setIsLoading, paginationInfo]
   )
 
   useEffect(() => {
@@ -167,9 +231,9 @@ export function useData<
   return {
     data,
     isInitialLoading,
-    paginationInfo,
-    setPage,
     isLoading,
     error,
+    paginationInfo,
+    setPage,
   }
 }
