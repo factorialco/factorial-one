@@ -6,7 +6,7 @@ import { TableHead as TableHeadRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "framer-motion"
 import { useTable } from "../utils/TableContext"
 
-export interface TableHeadProps {
+interface TableHeadProps {
   children: React.ReactNode
   sticky?: boolean
   sortState?: "none" | "asc" | "desc"

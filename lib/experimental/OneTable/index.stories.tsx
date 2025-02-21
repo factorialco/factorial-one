@@ -5,7 +5,7 @@ import {
 import type { Meta, StoryObj } from "@storybook/react"
 import React from "react"
 import {
-  Table,
+  OneTable,
   TableBody,
   TableCell,
   TableHead,
@@ -13,14 +13,14 @@ import {
   TableRow,
 } from "."
 
-const meta: Meta<typeof Table> = {
+const meta: Meta<typeof OneTable> = {
   title: "Table",
-  component: Table,
+  component: OneTable,
   tags: ["experimental"],
 }
 
 export default meta
-type Story = StoryObj<typeof Table>
+type Story = StoryObj<typeof OneTable>
 
 const sampleData = [
   {
@@ -79,7 +79,7 @@ const sampleData = [
 
 export const Default: Story = {
   render: () => (
-    <Table>
+    <OneTable>
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
@@ -96,13 +96,13 @@ export const Default: Story = {
           </TableRow>
         ))}
       </TableBody>
-    </Table>
+    </OneTable>
   ),
 }
 
 export const Check: Story = {
   render: () => (
-    <Table>
+    <OneTable>
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
@@ -119,13 +119,13 @@ export const Check: Story = {
           </TableRow>
         ))}
       </TableBody>
-    </Table>
+    </OneTable>
   ),
 }
 
 export const InfoHeader: Story = {
   render: () => (
-    <Table>
+    <OneTable>
       <TableHeader>
         <TableRow>
           <TableHead info="Legal name of the employee">Name</TableHead>
@@ -144,7 +144,7 @@ export const InfoHeader: Story = {
           </TableRow>
         ))}
       </TableBody>
-    </Table>
+    </OneTable>
   ),
 }
 
@@ -187,7 +187,7 @@ export const SortableHeader: Story = {
     }, [sortConfig])
 
     return (
-      <Table>
+      <OneTable>
         <TableHeader>
           <TableRow>
             <TableHead
@@ -225,14 +225,14 @@ export const SortableHeader: Story = {
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </OneTable>
     )
   },
 }
 
 export const StickyTable: Story = {
   render: () => (
-    <Table>
+    <OneTable>
       <TableHeader>
         <TableRow>
           <TableHead sticky>Name</TableHead>
@@ -280,10 +280,10 @@ export const StickyTable: Story = {
           </TableRow>
         ))}
       </TableBody>
-    </Table>
+    </OneTable>
   ),
 }
 
 export const Skeleton: Story = {
-  render: () => <Table.Skeleton columns={3} />,
+  render: () => <OneTable.Skeleton columns={3} />,
 }

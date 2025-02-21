@@ -1,11 +1,9 @@
 import { withSkeleton } from "@/lib/skeleton"
-import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import {
   TableBody as TableBodyRoot,
   TableHeader as TableHeaderRoot,
   Table as TableRoot,
-  TableRow as TableRowRoot,
 } from "@/ui/table"
 import { useState } from "react"
 import { useIntersectionObserver } from "usehooks-ts"
@@ -13,6 +11,8 @@ import { TableContext } from "../utils/TableContext"
 
 import { TableCell } from "../TableCell"
 import { TableHead } from "../TableHead"
+import { TableRow } from "../TableRow"
+
 export interface TableProps {
   children: React.ReactNode
 }
@@ -47,23 +47,6 @@ export function TableBody({ children }: TableProps) {
   return <TableBodyRoot>{children}</TableBodyRoot>
 }
 
-export interface TableRowProps {
-  children: React.ReactNode
-  selected?: boolean
-}
-
-export function TableRow({ children, selected }: TableRowProps) {
-  return (
-    <TableRowRoot
-      className={cn(
-        selected && "bg-f1-background-selected hover:bg-f1-background-selected"
-      )}
-    >
-      {children}
-    </TableRowRoot>
-  )
-}
-
 interface TableSkeletonProps {
   columns?: number
 }
@@ -79,17 +62,17 @@ function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
         aria-hidden="true"
       >
         <TableHeaderRoot>
-          <TableRowRoot>
+          <TableRow>
             {Array.from({ length: columns }).map((_, i) => (
               <TableHead key={`skeleton-header-${i}`}>
                 <Skeleton className="h-4 w-[80px]" />
               </TableHead>
             ))}
-          </TableRowRoot>
+          </TableRow>
         </TableHeaderRoot>
         <TableBodyRoot>
           {Array.from({ length: 5 }).map((_, rowIndex) => (
-            <TableRowRoot
+            <TableRow
               key={`skeleton-row-${rowIndex}`}
               className="hover:bg-transparent"
             >
@@ -98,7 +81,7 @@ function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
                   <Skeleton className="h-4 w-[80px]" />
                 </TableCell>
               ))}
-            </TableRowRoot>
+            </TableRow>
           ))}
         </TableBodyRoot>
       </TableRoot>
@@ -106,4 +89,4 @@ function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
   )
 }
 
-export const Table = withSkeleton(TableBase, TableSkeleton)
+export const OneTable = withSkeleton(TableBase, TableSkeleton)
