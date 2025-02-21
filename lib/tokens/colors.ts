@@ -174,7 +174,10 @@ export const f1Colors = {
     },
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.1)",
-      bold: "hsl(var(--selected-50))",
+      bold: {
+        DEFAULT: "hsl(var(--selected-50))",
+        hover: "hsl(var(--selected-60))",
+      },
     },
     overlay: {
       DEFAULT: "hsl(var(--neutral-40))",
