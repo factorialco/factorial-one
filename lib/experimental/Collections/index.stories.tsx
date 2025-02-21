@@ -517,3 +517,71 @@ export const WithMultipleVisualizations: Story = {
     )
   },
 }
+
+// Generate more mock data for pagination example
+const generateMockUsers = (count: number) => {
+  return Array.from({ length: count }, (_, index) => ({
+    name: `User ${index + 1}`,
+    email: `user${index + 1}@example.com`,
+    role:
+      index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
+    department: DEPARTMENTS[index % DEPARTMENTS.length],
+  }))
+}
+
+const paginatedMockUsers = generateMockUsers(50)
+
+// Example with pagination
+export const WithPagination: Story = {
+  render: () => {
+    const source = useDataSource({
+      filters,
+      dataAdapter: {
+        paginationType: "pages",
+        perPage: 10,
+        fetchData: ({ pagination }) =>
+          new Promise<{
+            records: Array<(typeof mockUsers)[number]>
+            total: number
+            currentPage: number
+            perPage: number
+            pagesCount: number
+          }>((resolve) => {
+            const { currentPage = 1, perPage = 10 } = pagination || {}
+            const startIndex = (currentPage - 1) * perPage
+            const endIndex = startIndex + perPage
+            const paginatedData = paginatedMockUsers.slice(startIndex, endIndex)
+
+            setTimeout(() => {
+              resolve({
+                records: paginatedData,
+                total: paginatedMockUsers.length,
+                currentPage,
+                perPage,
+                pagesCount: Math.ceil(paginatedMockUsers.length / perPage),
+              })
+            }, 500)
+          }),
+      },
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}

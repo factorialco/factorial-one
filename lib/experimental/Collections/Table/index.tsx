@@ -1,3 +1,4 @@
+import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
 import { Skeleton } from "@/ui/skeleton"
 import {
@@ -31,7 +32,10 @@ export const TableCollection = <
   source,
   link,
 }: CollectionProps<Record, Filters, TableVisualizationOptions<Record>>) => {
-  const { data, isLoading } = useData<Record, Filters>(source)
+  const { data, isLoading, paginationInfo, setPage, isPageLoading } = useData<
+    Record,
+    Filters
+  >(source)
 
   const TableActionCell = ({ item }: { item: Record }) => {
     const linkInfo = link!(item)
@@ -43,38 +47,64 @@ export const TableCollection = <
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          {columns.map((column) => (
-            <TableHead key={String(column.label)}>{column.label}</TableHead>
-          ))}
-          {link && <TableHead key="actions">Actions</TableHead>}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {isLoading
-          ? Array.from({ length: 4 }).map((_, i) => (
-              <TableRow key={`loading-${i}`}>
-                {columns.map((column) => (
-                  <TableCell key={String(column.label)}>
-                    <Skeleton className="h-4 w-full" />
-                  </TableCell>
-                ))}
-                {link && <TableCell key="actions">Actions</TableCell>}
-              </TableRow>
-            ))
-          : data.map((item, index) => (
-              <TableRow key={`row-${index}`}>
-                {columns.map((column) => (
-                  <TableCell key={String(column.label)}>
-                    {renderValue(item, column)}
-                  </TableCell>
-                ))}
-                {link && <TableActionCell item={item} />}
-              </TableRow>
+    <>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {columns.map((column) => (
+              <TableHead key={String(column.label)}>{column.label}</TableHead>
             ))}
-      </TableBody>
-    </Table>
+            {link && <TableHead key="actions">Actions</TableHead>}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {isLoading
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <TableRow key={`loading-${i}`}>
+                  {columns.map((column) => (
+                    <TableCell key={String(column.label)}>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                  ))}
+                  {link && <TableCell key="actions">Actions</TableCell>}
+                </TableRow>
+              ))
+            : data.map((item, index) => (
+                <TableRow key={`row-${index}`}>
+                  {columns.map((column) => (
+                    <TableCell key={String(column.label)}>
+                      {renderValue(item, column)}
+                    </TableCell>
+                  ))}
+                  {link && <TableActionCell item={item} />}
+                </TableRow>
+              ))}
+        </TableBody>
+      </Table>
+      {paginationInfo && (
+        <>
+          <div>Current page: {paginationInfo?.currentPage}</div>
+          <div>Total: {paginationInfo?.total}</div>
+          <div className="mt-4 flex gap-2">
+            {Array.from({ length: paginationInfo.pagesCount }).map((_, i) => {
+              const pageNumber = i + 1
+              return (
+                <Button
+                  key={`page-${pageNumber}`}
+                  variant={
+                    pageNumber === paginationInfo.currentPage
+                      ? "default"
+                      : "outline"
+                  }
+                  onClick={() => setPage(pageNumber)}
+                  label={pageNumber.toString()}
+                />
+              )
+            })}
+          </div>
+          {isPageLoading && <div>Loading...</div>}
+        </>
+      )}
+    </>
   )
 }

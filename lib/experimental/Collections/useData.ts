@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Observable } from "zen-observable-ts"
-import type { FiltersDefinition } from "./Filters/types"
+import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { DataSource, PromiseOrObservable, RecordType } from "./types"
 
 /**
@@ -41,6 +41,7 @@ export function useData<
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState<Array<Record>>([])
   const { dataAdapter, currentFilters } = source
+  const [isPageLoading, setIsPageLoading] = useState(false)
 
   const mergedFilters = useMemo(() => {
     return { ...currentFilters, ...filters }
@@ -56,8 +57,7 @@ export function useData<
   const cleanup = useRef<(() => void) | undefined>()
 
   const fetchDataAndUpdate = useCallback(
-    async (currentPage = 1) => {
-      setIsLoading(true)
+    async (filters: FiltersState<Filters>, currentPage = 1) => {
       try {
         type PaginatedResult = {
           records: Record[]
@@ -74,10 +74,10 @@ export function useData<
           dataAdapter.paginationType === "pages"
             ? () =>
                 dataAdapter.fetchData({
-                  filters: mergedFilters,
+                  filters,
                   pagination: { currentPage, perPage: dataAdapter.perPage },
                 })
-            : () => dataAdapter.fetchData({ filters: mergedFilters })
+            : () => dataAdapter.fetchData({ filters })
 
         const result = fetcher()
 
@@ -99,6 +99,7 @@ export function useData<
             error: (error) => {
               console.error("Error in observable:", error)
               setIsLoading(false)
+              setIsPageLoading(false)
             },
           })
           cleanup.current = () => subscription.unsubscribe()
@@ -115,34 +116,39 @@ export function useData<
             })
           }
           setIsLoading(false)
+          setIsPageLoading(false)
         }
       } catch (error) {
         console.error("Error fetching data:", error)
         setIsLoading(false)
+        setIsPageLoading(false)
       }
     },
-    [dataAdapter, mergedFilters]
+    [dataAdapter]
   )
 
   const setPage = useCallback(
     (page: number) => {
-      fetchDataAndUpdate(page)
+      setIsPageLoading(true)
+      fetchDataAndUpdate(mergedFilters, page)
     },
-    [fetchDataAndUpdate]
+    [fetchDataAndUpdate, mergedFilters, setIsPageLoading]
   )
 
   useEffect(() => {
-    fetchDataAndUpdate()
+    setIsLoading(true)
+    fetchDataAndUpdate({})
 
     return () => {
       cleanup.current?.()
     }
-  }, [fetchDataAndUpdate])
+  }, [fetchDataAndUpdate, mergedFilters])
 
   return {
     data,
     isLoading,
     paginationInfo,
     setPage,
+    isPageLoading,
   }
 }
