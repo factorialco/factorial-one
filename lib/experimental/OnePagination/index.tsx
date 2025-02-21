@@ -25,13 +25,14 @@ interface OnePaginationProps {
   /**
    * The callback function to handle page change
    */
-
   onPageChange?: (page: number) => void
+
   /**
    * Whether to show the controls
    * @default true
    */
   showControls?: boolean
+
   /**
    * Accessible label for the pagination navigation
    * @default "Page navigation"
