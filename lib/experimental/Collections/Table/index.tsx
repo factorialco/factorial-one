@@ -24,16 +24,16 @@ export type TableVisualizationOptions<T> = {
 }
 
 export const TableCollection = <
-  T extends RecordType,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >({
   columns,
   source,
   link,
-}: CollectionProps<T, Filters, TableVisualizationOptions<T>>) => {
-  const { data, isLoading } = useData<T, Filters>(source)
+}: CollectionProps<Record, Filters, TableVisualizationOptions<Record>>) => {
+  const { data, isLoading } = useData<Record, Filters>(source)
 
-  const TableActionCell = ({ item }: { item: T }) => {
+  const TableActionCell = ({ item }: { item: Record }) => {
     const linkInfo = link!(item)
     return (
       <TableCell key="actions">

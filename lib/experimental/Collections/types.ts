@@ -3,11 +3,11 @@ import type { FiltersDefinition, FiltersState } from "./Filters/types"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
- * @template T - The type of records in the collection
+ * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  */
 export type DataSourceDefinition<
-  T extends RecordType,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 > = {
   /** Available filter configurations */
@@ -15,19 +15,22 @@ export type DataSourceDefinition<
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
   /** Data adapter responsible for fetching and managing data */
-  dataAdapter: DataAdapter<T, Filters>
+  dataAdapter: DataAdapter<Record, Filters>
 }
 
 /**
  * Defines the interface for data fetching and management.
- * @template T - The type of records in the collection
+ * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  */
-type DataAdapter<T extends RecordType, Filters extends FiltersDefinition> = {
+type DataAdapter<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+> = {
   /** Function to fetch data based on the current filter state */
   fetchData: (options: {
     filters: FiltersState<Filters>
-  }) => DataSourceResult<T>
+  }) => DataSourceResult<Record>
 }
 
 /**
@@ -44,29 +47,29 @@ export type ExtractPropertyKeys<RecordType> = keyof RecordType
 
 /**
  * Props for the Collection component.
- * @template T - The type of records in the collection
+ * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  * @template VisualizationOptions - Additional options for visualizing the collection
  */
 export type CollectionProps<
-  T extends RecordType,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
   VisualizationOptions extends object,
 > = {
   /** The data source configuration and state */
-  source: DataSource<T, Filters>
+  source: DataSource<Record, Filters>
 } & VisualizationOptions
 
 /**
  * Represents a data source with filtering capabilities and data fetching functionality.
  * Extends DataSourceDefinition with runtime properties for state management.
- * @template T - The type of records in the collection
+ * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  */
 export type DataSource<
-  T extends RecordType,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
-> = DataSourceDefinition<T, Filters> & {
+> = DataSourceDefinition<Record, Filters> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */

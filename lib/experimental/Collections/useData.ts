@@ -28,10 +28,10 @@ import { DataSource, RecordType } from "./types"
  * ```
  */
 export function useData<
-  T extends RecordType,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >(
-  source: DataSource<T, Filters>,
+  source: DataSource<Record, Filters>,
   {
     filters,
   }: {
@@ -39,7 +39,7 @@ export function useData<
   } = {}
 ) {
   const [isLoading, setIsLoading] = useState(true)
-  const [data, setData] = useState<Array<T>>([])
+  const [data, setData] = useState<Array<Record>>([])
 
   const {
     dataAdapter: { fetchData },

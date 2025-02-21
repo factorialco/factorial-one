@@ -26,16 +26,16 @@ import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
  * - fetchData: Function to fetch data with the current filters
  */
 export const useDataSource = <
-  T extends RecordType,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >(
   {
     filters,
     currentFilters: initialCurrentFilters = {},
     dataAdapter,
-  }: DataSourceDefinition<T, Filters>,
+  }: DataSourceDefinition<Record, Filters>,
   deps: ReadonlyArray<unknown> = []
-): DataSource<T, Filters> => {
+): DataSource<Record, Filters> => {
   const [currentFilters, setCurrentFilters] = useState<FiltersState<Filters>>(
     initialCurrentFilters
   )
@@ -66,14 +66,14 @@ export const useDataSource = <
  * - The selected visualization of the data
  */
 export const DataCollection = <
-  T extends RecordType,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >({
   source,
   visualizations,
 }: {
-  source: DataSource<T, Filters>
-  visualizations: ReadonlyArray<Visualization<T, Filters>>
+  source: DataSource<Record, Filters>
+  visualizations: ReadonlyArray<Visualization<Record, Filters>>
 }): JSX.Element => {
   const { filters, currentFilters, setCurrentFilters } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)

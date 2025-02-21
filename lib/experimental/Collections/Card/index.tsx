@@ -13,14 +13,14 @@ export type CardVisualizationOptions<T> = {
 }
 
 export const CardCollection = <
-  T extends RecordType,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 >({
   cardProperties,
   title,
   source,
-}: CollectionProps<T, Filters, CardVisualizationOptions<T>>) => {
-  const { data, isLoading } = useData<T, Filters>(source)
+}: CollectionProps<Record, Filters, CardVisualizationOptions<Record>>) => {
+  const { data, isLoading } = useData<Record, Filters>(source)
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
