@@ -123,7 +123,7 @@ export function OnePagination({
     pages.push(totalPages)
 
     return pages
-  }, [currentPage, totalPages, visibleRange])
+  }, [currentPage, totalPages, visibleRange, isIndeterminate])
 
   return (
     <PaginationRoot>
