@@ -6,7 +6,7 @@ import { useState } from "react"
 import Breadcrumbs, { BreadcrumbItemType } from "./index"
 
 const meta: Meta<typeof Breadcrumbs> = {
-  title: "Header/Breadcrumbs",
+  title: "Navigation/Breadcrumbs",
   component: Breadcrumbs,
   tags: ["autodocs", "experimental"],
 }
