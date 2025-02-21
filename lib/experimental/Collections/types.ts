@@ -26,12 +26,29 @@ export type DataSourceDefinition<
 type DataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-> = {
-  /** Function to fetch data based on the current filter state */
-  fetchData: (options: {
-    filters: FiltersState<Filters>
-  }) => DataSourceResult<Record>
-}
+> =
+  | {
+      paginationType?: "none"
+      /** Function to fetch data based on the current filter state */
+      fetchData: (options: {
+        filters: FiltersState<Filters>
+      }) => PromiseOrObservable<{ records: Array<Record> }>
+    }
+  | {
+      paginationType: "pages"
+      perPage: number
+      /** Function to fetch data based on the current filter state */
+      fetchData: (options: {
+        filters: FiltersState<Filters>
+        pagination: { currentPage: number; perPage: number }
+      }) => PromiseOrObservable<{
+        records: Array<Record>
+        total: number
+        currentPage: number
+        perPage: number
+        pagesCount: number
+      }>
+    }
 
 /**
  * Represents a record type with string keys and unknown values.
@@ -77,14 +94,7 @@ export type DataSource<
 }
 
 /**
- * Represents the result of a data source fetch operation.
- * Can be either a Promise or an Observable of an array of items.
- * @template T - The type of items in the result set
- */
-export type DataSourceResult<T> = PromiseOrObservable<{ records: Array<T> }>
-
-/**
  * Utility type for handling both Promise and Observable return types.
  * @template T - The type of the value being promised or observed
  */
-type PromiseOrObservable<T> = Promise<T> | Observable<T>
+export type PromiseOrObservable<T> = Promise<T> | Observable<T>
