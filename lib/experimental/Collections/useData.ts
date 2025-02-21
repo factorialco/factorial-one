@@ -3,6 +3,11 @@ import { Observable } from "zen-observable-ts"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { DataSource, PromiseOrObservable, RecordType } from "./types"
 
+export type DataError = {
+  message: string
+  cause?: unknown
+}
+
 /**
  * A React hook that manages data fetching and state for a collection data source.
  * Handles both Promise-based and Observable-based data streams, providing a consistent
@@ -16,11 +21,15 @@ import { DataSource, PromiseOrObservable, RecordType } from "./types"
  * @returns An object containing:
  * - data: The current array of data items
  * - isInitialLoading: A boolean indicating whether data is currently being fetched
+ * - error: Error information if the fetch failed
+ * - isLoading: A boolean indicating if a fetch is in progress
+ * - paginationInfo: Pagination details if enabled
+ * - setPage: Function to change the current page
  *
  * @example
  * ```tsx
  * const MyComponent = ({ source }) => {
- *   const { data, isInitialLoading } = useData({ source })
+ *   const { data, isInitialLoading, error, isLoading, paginationInfo, setPage } = useData({ source })
  *
  *   if (isInitialLoading) return <Loading />
  *   return <DataList items={data} />
@@ -40,6 +49,7 @@ export function useData<
 ) {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
   const [data, setData] = useState<Array<Record>>([])
+  const [error, setError] = useState<DataError | null>(null)
   const { dataAdapter, currentFilters } = source
   const [isLoading, setIsLoading] = useState(false)
 
@@ -85,6 +95,7 @@ export function useData<
           const subscription = result.subscribe({
             next: (newData: PaginatedResult | SimpleResult) => {
               setData(newData.records)
+              setError(null)
 
               if ("total" in newData) {
                 setPaginationInfo({
@@ -95,9 +106,13 @@ export function useData<
                 })
               }
               setIsInitialLoading(false)
+              setIsLoading(false)
             },
             error: (error) => {
-              console.error("Error in observable:", error)
+              setError({
+                message: "Error fetching data",
+                cause: error,
+              })
               setIsInitialLoading(false)
               setIsLoading(false)
             },
@@ -106,6 +121,7 @@ export function useData<
         } else {
           const resolvedData = await result
           setData(resolvedData.records)
+          setError(null)
 
           if ("total" in resolvedData) {
             setPaginationInfo({
@@ -119,7 +135,10 @@ export function useData<
           setIsLoading(false)
         }
       } catch (error) {
-        console.error("Error fetching data:", error)
+        setError({
+          message: "Error fetching data",
+          cause: error,
+        })
         setIsInitialLoading(false)
         setIsLoading(false)
       }
@@ -150,5 +169,6 @@ export function useData<
     paginationInfo,
     setPage,
     isLoading,
+    error,
   }
 }
