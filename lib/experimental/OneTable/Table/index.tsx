@@ -1,18 +1,15 @@
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
-import {
-  TableBody as TableBodyRoot,
-  TableHeader as TableHeaderRoot,
-  Table as TableRoot,
-} from "@/ui/table"
+import { Table as TableRoot } from "@/ui/table"
 import { useState } from "react"
 import { useIntersectionObserver } from "usehooks-ts"
 import { TableContext } from "../utils/TableContext"
 
+import { TableBody } from "../TableBody"
 import { TableCell } from "../TableCell"
 import { TableHead } from "../TableHead"
+import { TableHeader } from "../TableHeader"
 import { TableRow } from "../TableRow"
-
 export interface TableProps {
   children: React.ReactNode
 }
@@ -39,14 +36,6 @@ function TableBase({ children }: TableProps) {
   )
 }
 
-export function TableHeader({ children }: TableProps) {
-  return <TableHeaderRoot>{children}</TableHeaderRoot>
-}
-
-export function TableBody({ children }: TableProps) {
-  return <TableBodyRoot>{children}</TableBodyRoot>
-}
-
 interface TableSkeletonProps {
   columns?: number
 }
@@ -61,7 +50,7 @@ function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
         role="presentation"
         aria-hidden="true"
       >
-        <TableHeaderRoot>
+        <TableHeader>
           <TableRow>
             {Array.from({ length: columns }).map((_, i) => (
               <TableHead key={`skeleton-header-${i}`}>
@@ -69,8 +58,8 @@ function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
               </TableHead>
             ))}
           </TableRow>
-        </TableHeaderRoot>
-        <TableBodyRoot>
+        </TableHeader>
+        <TableBody>
           {Array.from({ length: 5 }).map((_, rowIndex) => (
             <TableRow
               key={`skeleton-row-${rowIndex}`}
@@ -83,7 +72,7 @@ function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
               ))}
             </TableRow>
           ))}
-        </TableBodyRoot>
+        </TableBody>
       </TableRoot>
     </TableContext.Provider>
   )
