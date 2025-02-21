@@ -26,3 +26,17 @@ import { OnePagination } from "@factorialco/factorial-one/dist/experimental"
 ### Without Controls
 
 <Canvas of={PaginationStories.WithoutControls} />
+
+### Custom Visible Range
+
+You can customize the number of pages to show with the `visibleRange` prop.
+
+<Canvas of={PaginationStories.CustomVisibleRange} />
+
+### Indeterminate
+
+If the number of pages cannot be accurately determined, set the `totalPages`
+prop to `0`. This will remove the button numbers and rely solely on the arrow
+icon buttons to navigate.
+
+<Canvas of={PaginationStories.Indeterminate} />

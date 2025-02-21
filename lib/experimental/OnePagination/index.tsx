@@ -12,32 +12,38 @@ import { useCallback, useMemo } from "react"
 
 interface OnePaginationProps {
   /**
-   * The total number of pages
+   * The total number of pages. Pass 0 if the total is unknown.
    */
   totalPages: number
 
   /**
-   * The current page
+   * The current page.
    * @default 1
    */
   currentPage?: number
 
   /**
-   * The callback function to handle page change
+   * The callback function to handle page change.
    */
   onPageChange?: (page: number) => void
 
   /**
-   * Whether to show the controls
+   * Whether to show the controls.
    * @default true
    */
   showControls?: boolean
 
   /**
-   * Accessible label for the pagination navigation
+   * Accessible label for the pagination navigation.
    * @default "Page navigation"
    */
   ariaLabel?: string
+
+  /**
+   * The number of pages to show on the sides of the current page.
+   * @default 3
+   */
+  visibleRange?: number
 }
 
 export function OnePagination({
@@ -46,45 +52,78 @@ export function OnePagination({
   onPageChange,
   showControls = true,
   ariaLabel = "Page navigation",
+  visibleRange = 3,
 }: OnePaginationProps) {
+  const isIndeterminate = totalPages === 0
+
   const handlePageChange = useCallback(
     (page: number) => {
-      if (page >= 1 && page <= totalPages && onPageChange) {
+      if (
+        onPageChange &&
+        (isIndeterminate || (page >= 1 && page <= totalPages))
+      ) {
         onPageChange(page)
       }
     },
-    [onPageChange, totalPages]
+    [onPageChange, totalPages, isIndeterminate]
   )
 
   const getPageNumbers = useMemo(() => {
+    if (isIndeterminate) return []
+
     const pages: (number | string)[] = []
 
-    if (totalPages <= 7) {
+    if (totalPages <= 5) {
       return Array.from({ length: totalPages }, (_, i) => i + 1)
     }
 
-    const addPageRange = (start: number, end: number) => {
-      for (let i = start; i <= end; i++) {
-        pages.push(i)
-      }
+    pages.push(1)
+
+    // Calculate the range to show around current page
+    const sidePages = Math.floor(visibleRange / 2)
+    let rangeStart = currentPage - sidePages
+    let rangeEnd = currentPage + sidePages
+
+    // Adjust range if current page is near the start
+    if (currentPage <= sidePages + 2) {
+      rangeStart = 2
+      rangeEnd = rangeStart + visibleRange - 1
+      pages.push(
+        ...Array.from(
+          { length: rangeEnd - rangeStart + 1 },
+          (_, i) => i + rangeStart
+        )
+      )
+      pages.push("...")
     }
 
-    pages.push(1) // Always show first page
-
-    if (currentPage <= 3) {
-      addPageRange(2, 4)
-      pages.push("...", totalPages)
-    } else if (currentPage >= totalPages - 2) {
+    // Adjust range if current page is near the end
+    else if (currentPage >= totalPages - sidePages - 1) {
+      rangeStart = totalPages - visibleRange - 1
+      rangeEnd = totalPages - 1
       pages.push("...")
-      addPageRange(totalPages - 3, totalPages)
-    } else {
-      pages.push("...")
-      addPageRange(currentPage - 1, currentPage + 1)
-      pages.push("...", totalPages)
+      pages.push(
+        ...Array.from(
+          { length: rangeEnd - rangeStart + 1 },
+          (_, i) => i + rangeStart
+        )
+      )
     }
+
+    // Handle middle cases
+    else {
+      pages.push("...")
+      pages.push(
+        ...Array.from({ length: visibleRange }, (_, i) => i + rangeStart)
+      )
+      pages.push("...")
+    }
+
+    // Always add last page
+    pages.push(totalPages)
 
     return pages
-  }, [currentPage, totalPages])
+  }, [currentPage, totalPages, visibleRange])
 
   return (
     <PaginationRoot>
@@ -107,38 +146,39 @@ export function OnePagination({
           </PaginationItem>
         )}
 
-        {getPageNumbers.map((page, index) => (
-          <PaginationItem
-            key={index}
-            className={cn("hidden sm:flex", page === currentPage && "flex")}
-          >
-            {page === "..." ? (
-              <PaginationEllipsis />
-            ) : (
-              <PaginationLink
-                aria-current={page === currentPage ? "page" : undefined}
-                isActive={page === currentPage}
-                onClick={() => handlePageChange(page as number)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handlePageChange(page as number)
-                  }
-                }}
-                tabIndex={0}
-              >
-                {page}
-              </PaginationLink>
-            )}
-          </PaginationItem>
-        ))}
+        {!isIndeterminate &&
+          getPageNumbers.map((page, index) => (
+            <PaginationItem
+              key={index}
+              className={cn("hidden sm:flex", page === currentPage && "flex")}
+            >
+              {page === "..." ? (
+                <PaginationEllipsis />
+              ) : (
+                <PaginationLink
+                  aria-current={page === currentPage ? "page" : undefined}
+                  isActive={page === currentPage}
+                  onClick={() => handlePageChange(page as number)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handlePageChange(page as number)
+                    }
+                  }}
+                  tabIndex={0}
+                >
+                  {page}
+                </PaginationLink>
+              )}
+            </PaginationItem>
+          ))}
 
         {showControls && (
           <PaginationItem>
             <PaginationNext
-              aria-disabled={currentPage === totalPages}
-              tabIndex={currentPage === totalPages ? -1 : 0}
+              aria-disabled={!isIndeterminate && currentPage === totalPages}
+              tabIndex={!isIndeterminate && currentPage === totalPages ? -1 : 0}
               className={
-                currentPage === totalPages
+                !isIndeterminate && currentPage === totalPages
                   ? "pointer-events-none opacity-50"
                   : ""
               }

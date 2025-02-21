@@ -15,27 +15,33 @@ const meta: Meta<typeof OnePagination> = {
   },
   argTypes: {
     totalPages: {
-      description: "The total number of pages",
-      control: false,
+      description: "The total number of pages. Pass 0 if the total is unknown.",
+      control: "number",
     },
     currentPage: {
-      description: "The current page",
+      description: "The current page.",
       defaultValue: { summary: 1 },
-      control: false,
+      control: "number",
     },
     onPageChange: {
-      description: "The callback function to handle page change",
+      description: "The callback function to handle page change.",
       control: false,
     },
     showControls: {
-      description: "Whether to show the controls",
+      description: "Whether to show the controls.",
       defaultValue: { summary: true },
-      control: false,
+      control: "boolean",
     },
     ariaLabel: {
-      description: "Accessible label for the pagination navigation",
+      description: "Accessible label for the pagination navigation.",
       defaultValue: { summary: "Page navigation" },
-      control: false,
+      control: "text",
+    },
+    visibleRange: {
+      description:
+        "The number of pages to show on each side of the current page.",
+      defaultValue: { summary: 3 },
+      control: "number",
     },
   },
   tags: ["autodocs", "experimental"],
@@ -45,11 +51,11 @@ export default meta
 type Story = StoryObj<typeof OnePagination>
 
 export const Default: Story = {
-  render: () => {
-    const [currentPage, setCurrentPage] = useState(1)
+  render: (args) => {
+    const [currentPage, setCurrentPage] = useState(args.currentPage)
     return (
       <OnePagination
-        totalPages={10}
+        {...args}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
       />
@@ -58,11 +64,14 @@ export const Default: Story = {
 }
 
 export const LongList: Story = {
-  render: () => {
-    const [currentPage, setCurrentPage] = useState(1)
+  args: {
+    totalPages: 100,
+  },
+  render: (args) => {
+    const [currentPage, setCurrentPage] = useState(args.currentPage)
     return (
       <OnePagination
-        totalPages={100}
+        {...args}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
       />
@@ -74,5 +83,48 @@ export const WithoutControls: Story = {
   args: {
     totalPages: 10,
     showControls: false,
+  },
+  render: (args) => {
+    const [currentPage, setCurrentPage] = useState(args.currentPage)
+    return (
+      <OnePagination
+        {...args}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
+    )
+  },
+}
+
+export const CustomVisibleRange: Story = {
+  args: {
+    totalPages: 20,
+    visibleRange: 5,
+  },
+  render: (args) => {
+    const [currentPage, setCurrentPage] = useState(args.currentPage)
+    return (
+      <OnePagination
+        {...args}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
+    )
+  },
+}
+
+export const Indeterminate: Story = {
+  args: {
+    totalPages: 0,
+  },
+  render: (args) => {
+    const [currentPage, setCurrentPage] = useState(args.currentPage)
+    return (
+      <OnePagination
+        {...args}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
+    )
   },
 }
