@@ -156,7 +156,8 @@ export function useData<
 
   useEffect(() => {
     setIsLoading(true)
-    fetchDataAndUpdate({})
+    // Always fetch page 1 when filters change
+    fetchDataAndUpdate(mergedFilters, 1)
 
     return () => {
       cleanup.current?.()

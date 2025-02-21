@@ -4,6 +4,12 @@ import { Code } from "lucide-react"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
 import { FilterDefinition, FiltersState } from "./Filters/types"
+import {
+  BaseResponse,
+  DataAdapter,
+  PaginatedResponse,
+  RecordType,
+} from "./types"
 import { useData } from "./useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
@@ -50,9 +56,11 @@ const mockUsers = [
 ]
 
 // Helper function to filter users based on filters
-const filterUsers = (
-  users: typeof mockUsers,
-  filterValues: FiltersState<typeof filters>
+const filterUsers = <
+  T extends RecordType & { name: string; email: string; department: string },
+>(
+  users: T[],
+  filterValues: FiltersState<FiltersType>
 ) => {
   let filteredUsers = [...users]
 
@@ -441,7 +449,11 @@ type DataAdapterOptions<TRecord> = {
 }
 
 function createDataAdapter<
-  TRecord,
+  TRecord extends RecordType & {
+    name: string
+    email: string
+    department: string
+  },
   TFilters extends Record<string, FilterDefinition<unknown>>,
 >({
   data,
@@ -449,19 +461,20 @@ function createDataAdapter<
   useObservable = false,
   paginationType,
   perPage = 10,
-}: DataAdapterOptions<TRecord>) {
+}: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters> {
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
     pagination?: { currentPage?: number; perPage?: number }
-  ) => {
+  ): BaseResponse<TRecord> | PaginatedResponse<TRecord> => {
     const filteredRecords = filterUsers(
-      records as typeof mockUsers,
+      records,
       filters as FiltersState<FiltersType>
-    ) as TRecord[]
+    )
 
     if (paginationType === "pages" && pagination) {
       const { currentPage = 1, perPage: pageSize = perPage } = pagination
+      const pagesCount = Math.ceil(filteredRecords.length / pageSize)
       const startIndex = (currentPage - 1) * pageSize
       const endIndex = startIndex + pageSize
 
@@ -470,60 +483,61 @@ function createDataAdapter<
         total: filteredRecords.length,
         currentPage,
         perPage: pageSize,
-        pagesCount: Math.ceil(filteredRecords.length / pageSize),
+        pagesCount,
       }
     }
 
     return { records: filteredRecords }
   }
 
-  type DataAdapterReturn = {
-    fetchData: (options: {
-      filters: FiltersState<TFilters>
-      pagination?: { currentPage?: number; perPage?: number }
-    }) =>
-      | Promise<ReturnType<typeof filterData>>
-      | Observable<ReturnType<typeof filterData>>
-  } & (typeof paginationType extends "pages"
-    ? { paginationType: "pages"; perPage: number }
-    : Record<string, never>)
-
-  if (useObservable) {
-    return {
-      ...(paginationType === "pages" ? { paginationType, perPage } : {}),
+  if (paginationType === "pages") {
+    const adapter: DataAdapter<TRecord, TFilters> = {
+      paginationType: "pages",
+      perPage,
       fetchData: ({
         filters,
         pagination,
       }: {
         filters: FiltersState<TFilters>
-        pagination?: { currentPage?: number; perPage?: number }
-      }) =>
-        new Observable<ReturnType<typeof filterData>>((observer) => {
-          const timeoutId = setTimeout(() => {
-            observer.next(filterData(data, filters, pagination))
-            observer.complete()
-          }, delay)
+        pagination: { currentPage: number; perPage: number }
+      }) => {
+        const fetch = () =>
+          filterData(data, filters, pagination) as PaginatedResponse<TRecord>
 
-          return () => clearTimeout(timeoutId)
-        }),
-    } as DataAdapterReturn
+        return useObservable
+          ? new Observable<PaginatedResponse<TRecord>>((observer) => {
+              const timeoutId = setTimeout(() => {
+                observer.next(fetch())
+                observer.complete()
+              }, delay)
+              return () => clearTimeout(timeoutId)
+            })
+          : new Promise<PaginatedResponse<TRecord>>((resolve) => {
+              setTimeout(() => resolve(fetch()), delay)
+            })
+      },
+    }
+    return adapter
   }
 
-  return {
-    ...(paginationType === "pages" ? { paginationType, perPage } : {}),
-    fetchData: ({
-      filters,
-      pagination,
-    }: {
-      filters: FiltersState<TFilters>
-      pagination?: { currentPage?: number; perPage?: number }
-    }) =>
-      new Promise<ReturnType<typeof filterData>>((resolve) => {
-        setTimeout(() => {
-          resolve(filterData(data, filters, pagination))
-        }, delay)
-      }),
-  } as DataAdapterReturn
+  const adapter: DataAdapter<TRecord, TFilters> = {
+    fetchData: ({ filters }: { filters: FiltersState<TFilters> }) => {
+      const fetch = () => filterData(data, filters) as BaseResponse<TRecord>
+
+      return useObservable
+        ? new Observable<BaseResponse<TRecord>>((observer) => {
+            const timeoutId = setTimeout(() => {
+              observer.next(fetch())
+              observer.complete()
+            }, delay)
+            return () => clearTimeout(timeoutId)
+          })
+        : new Promise<BaseResponse<TRecord>>((resolve) => {
+            setTimeout(() => resolve(fetch()), delay)
+          })
+    },
+  }
+  return adapter
 }
 
 // Example usage with card visualization
