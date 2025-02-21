@@ -19,19 +19,85 @@ export type DataSourceDefinition<
 }
 
 /**
- * Defines the interface for data fetching and management.
+ * Base response type for collection data
  * @template Record - The type of records in the collection
- * @template Filters - The available filter configurations for the collection
  */
-type DataAdapter<
+export type BaseResponse<Record> = {
+  records: Record[]
+}
+
+export type PaginationInfo = {
+  total: number
+  currentPage: number
+  perPage: number
+  pagesCount: number
+}
+
+/**
+ * Response type for paginated collection data
+ * @template Record - The type of records in the collection
+ */
+export type PaginatedResponse<Record> = BaseResponse<Record> & PaginationInfo
+
+/**
+ * Base options for data fetching
+ * @template Filters - The available filter configurations
+ */
+export type BaseFetchOptions<Filters extends FiltersDefinition> = {
+  filters: FiltersState<Filters>
+}
+
+/**
+ * Options for paginated data fetching
+ * @template Filters - The available filter configurations
+ */
+export type PaginatedFetchOptions<Filters extends FiltersDefinition> =
+  BaseFetchOptions<Filters> & {
+    pagination: { currentPage: number; perPage: number }
+  }
+
+/**
+ * Base data adapter configuration
+ * @template Record - The type of records in the collection
+ * @template Filters - The available filter configurations
+ */
+export type BaseDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
 > = {
-  /** Function to fetch data based on the current filter state */
-  fetchData: (options: {
-    filters: FiltersState<Filters>
-  }) => DataSourceResult<Record>
+  paginationType?: never
+  fetchData: (
+    options: BaseFetchOptions<Filters>
+  ) => Promise<BaseResponse<Record>> | Observable<BaseResponse<Record>>
 }
+
+/**
+ * Paginated data adapter configuration
+ * @template Record - The type of records in the collection
+ * @template Filters - The available filter configurations
+ */
+export type PaginatedDataAdapter<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+> = {
+  paginationType: "pages"
+  perPage?: number
+  fetchData: (
+    options: PaginatedFetchOptions<Filters>
+  ) =>
+    | Promise<PaginatedResponse<Record>>
+    | Observable<PaginatedResponse<Record>>
+}
+
+/**
+ * Combined type for all possible data adapter configurations
+ * @template Record - The type of records in the collection
+ * @template Filters - The available filter configurations
+ */
+export type DataAdapter<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+> = BaseDataAdapter<Record, Filters> | PaginatedDataAdapter<Record, Filters>
 
 /**
  * Represents a record type with string keys and unknown values.
@@ -77,14 +143,7 @@ export type DataSource<
 }
 
 /**
- * Represents the result of a data source fetch operation.
- * Can be either a Promise or an Observable of an array of items.
- * @template T - The type of items in the result set
- */
-export type DataSourceResult<T> = PromiseOrObservable<{ records: Array<T> }>
-
-/**
  * Utility type for handling both Promise and Observable return types.
  * @template T - The type of the value being promised or observed
  */
-type PromiseOrObservable<T> = Promise<T> | Observable<T>
+export type PromiseOrObservable<T> = Promise<T> | Observable<T>
