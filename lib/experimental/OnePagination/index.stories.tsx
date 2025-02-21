@@ -43,6 +43,12 @@ const meta: Meta<typeof OnePagination> = {
       defaultValue: { summary: 3 },
       control: "number",
     },
+    hasNextPage: {
+      description:
+        "Used in indeterminate state (totalPages = 0) to indicate if there are more pages available.",
+      defaultValue: { summary: true },
+      control: "boolean",
+    },
   },
   tags: ["autodocs", "experimental"],
 }
@@ -119,11 +125,15 @@ export const Indeterminate: Story = {
   },
   render: (args) => {
     const [currentPage, setCurrentPage] = useState(args.currentPage)
+    const MAX_PAGES = 5 // Simulating a maximum of 5 pages
+    const hasNextPage = currentPage ? currentPage < MAX_PAGES : true
+
     return (
       <OnePagination
         {...args}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
+        hasNextPage={hasNextPage}
       />
     )
   },

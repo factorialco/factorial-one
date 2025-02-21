@@ -44,6 +44,12 @@ interface OnePaginationProps {
    * @default 3
    */
   visibleRange?: number
+
+  /**
+   * Used in indeterminate state (totalPages = 0) to indicate if there are more pages available.
+   * @default true
+   */
+  hasNextPage?: boolean
 }
 
 export function OnePagination({
@@ -53,6 +59,7 @@ export function OnePagination({
   showControls = true,
   ariaLabel = "Page navigation",
   visibleRange = 3,
+  hasNextPage = true,
 }: OnePaginationProps) {
   const isIndeterminate = totalPages === 0
 
@@ -175,10 +182,21 @@ export function OnePagination({
         {showControls && (
           <PaginationItem>
             <PaginationNext
-              aria-disabled={!isIndeterminate && currentPage === totalPages}
-              tabIndex={!isIndeterminate && currentPage === totalPages ? -1 : 0}
+              aria-disabled={
+                !isIndeterminate ? currentPage === totalPages : !hasNextPage
+              }
+              tabIndex={
+                !isIndeterminate
+                  ? currentPage === totalPages
+                    ? -1
+                    : 0
+                  : !hasNextPage
+                    ? -1
+                    : 0
+              }
               className={
-                !isIndeterminate && currentPage === totalPages
+                (!isIndeterminate && currentPage === totalPages) ||
+                (!hasNextPage && isIndeterminate)
                   ? "pointer-events-none opacity-50"
                   : ""
               }
