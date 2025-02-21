@@ -20,11 +20,11 @@ export const CardCollection = <
   title,
   source,
 }: CollectionProps<Record, Filters, CardVisualizationOptions<Record>>) => {
-  const { data, isLoading } = useData<Record, Filters>(source)
+  const { data, isInitialLoading } = useData<Record, Filters>(source)
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      {isLoading
+      {isInitialLoading
         ? Array.from({ length: 8 }).map((_, i) => (
             <Card key={i}>
               <CardHeader>

@@ -32,10 +32,8 @@ export const TableCollection = <
   source,
   link,
 }: CollectionProps<Record, Filters, TableVisualizationOptions<Record>>) => {
-  const { data, isLoading, paginationInfo, setPage, isPageLoading } = useData<
-    Record,
-    Filters
-  >(source)
+  const { data, isLoading, paginationInfo, setPage, isInitialLoading } =
+    useData<Record, Filters>(source)
 
   const TableActionCell = ({ item }: { item: Record }) => {
     const linkInfo = link!(item)
@@ -58,7 +56,7 @@ export const TableCollection = <
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isLoading
+          {isInitialLoading
             ? Array.from({ length: 4 }).map((_, i) => (
                 <TableRow key={`loading-${i}`}>
                   {columns.map((column) => (
@@ -102,7 +100,7 @@ export const TableCollection = <
               )
             })}
           </div>
-          {isPageLoading && <div>Loading...</div>}
+          {isLoading && <div>Loading...</div>}
         </>
       )}
     </>

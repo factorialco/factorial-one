@@ -28,7 +28,7 @@ type DataAdapter<
   Filters extends FiltersDefinition,
 > =
   | {
-      paginationType?: "none"
+      paginationType?: never
       /** Function to fetch data based on the current filter state */
       fetchData: (options: {
         filters: FiltersState<Filters>
