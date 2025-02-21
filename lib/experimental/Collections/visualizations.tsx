@@ -13,7 +13,7 @@ import type { DataSource, RecordType } from "./types"
  * Represents a visualization configuration for displaying collection data.
  * Supports different visualization types (card, table, or custom) with their respective options.
  *
- * @template Schema - The schema type extending CollectionSchema
+ * @template T - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
  */
 export type Visualization<
@@ -21,30 +21,40 @@ export type Visualization<
   Filters extends FiltersDefinition,
 > =
   | {
+      /** Card-based visualization type */
       type: "card"
+      /** Configuration options for card visualization */
       options: CardVisualizationOptions<T>
     }
   | {
+      /** Table-based visualization type */
       type: "table"
+      /** Configuration options for table visualization */
       options: TableVisualizationOptions<T>
     }
   | {
+      /** Custom visualization type */
       type: "custom"
+      /** Human-readable label for the visualization */
       label: string
+      /** Icon to represent the visualization in UI */
       icon: IconType
+      /** Custom component to render the visualization */
       component: (props: { source: DataSource<T, Filters> }) => JSX.Element
     }
 
 /**
  * Props interface for components that support multiple visualizations.
+ * Used to configure how data can be displayed in different formats.
  *
- * @template Schema - The schema type extending CollectionSchema
+ * @template T - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
  */
 export type VisualizationProps<
   T extends RecordType,
   Filters extends FiltersDefinition,
 > = {
+  /** Array of available visualization configurations */
   visualizations?: ReadonlyArray<Visualization<T, Filters>>
 }
 

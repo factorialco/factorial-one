@@ -3,7 +3,7 @@ import type { FiltersDefinition, FiltersState } from "./Filters/types"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
- * @template Schema - The schema defining the properties of the collection
+ * @template T - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  */
 export type DataSourceDefinition<
@@ -14,10 +14,17 @@ export type DataSourceDefinition<
   filters?: Filters
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
+  /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<T, Filters>
 }
 
+/**
+ * Defines the interface for data fetching and management.
+ * @template T - The type of records in the collection
+ * @template Filters - The available filter configurations for the collection
+ */
 type DataAdapter<T extends RecordType, Filters extends FiltersDefinition> = {
+  /** Function to fetch data based on the current filter state */
   fetchData: (options: {
     filters: FiltersState<Filters>
   }) => DataSourceResult<T>
@@ -30,15 +37,14 @@ type DataAdapter<T extends RecordType, Filters extends FiltersDefinition> = {
 export type RecordType = Record<string, unknown>
 
 /**
- * Extracts the property keys from a collection schema and its filters.
- * @template Schema - The schema defining the properties of the collection
- * @template Filters - The available filter configurations for the collection
+ * Extracts the property keys from a record type.
+ * @template RecordType - The type containing the properties to extract
  */
 export type ExtractPropertyKeys<RecordType> = keyof RecordType
 
 /**
  * Props for the Collection component.
- * @template Schema - The schema defining the properties of the collection
+ * @template T - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  * @template VisualizationOptions - Additional options for visualizing the collection
  */
@@ -47,13 +53,14 @@ export type CollectionProps<
   Filters extends FiltersDefinition,
   VisualizationOptions extends object,
 > = {
+  /** The data source configuration and state */
   source: DataSource<T, Filters>
 } & VisualizationOptions
 
 /**
  * Represents a data source with filtering capabilities and data fetching functionality.
- * Extends DataSourceDefinition with runtime properties for state management and data fetching.
- * @template Schema - The schema defining the properties of the collection
+ * Extends DataSourceDefinition with runtime properties for state management.
+ * @template T - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  */
 export type DataSource<
@@ -73,4 +80,8 @@ export type DataSource<
  */
 export type DataSourceResult<T> = PromiseOrObservable<{ records: Array<T> }>
 
+/**
+ * Utility type for handling both Promise and Observable return types.
+ * @template T - The type of the value being promised or observed
+ */
 type PromiseOrObservable<T> = Promise<T> | Observable<T>
