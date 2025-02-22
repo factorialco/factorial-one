@@ -8,6 +8,7 @@ import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
 import { AnimatePresence, motion, Reorder } from "framer-motion"
 import React, { useRef } from "react"
 import { NavigationItem } from "../../utils"
+import { DragProvider, useDragContext } from "./DragContext"
 
 export interface MenuItem extends NavigationItem {
   icon: IconType
@@ -88,15 +89,14 @@ const CategoryItem = ({
   dragConstraints,
 }: CategoryItemProps) => {
   const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
-  const [isDragging, setIsDragging] = React.useState(false)
   const shouldReduceMotion = useReducedMotion()
   const wasDragging = useRef(false)
+  const { isDragging, setIsDragging } = useDragContext()
 
   const handleClick = () => {
-    if (!wasDragging.current) {
+    if (!isDragging && !wasDragging.current) {
       setIsOpen(!isOpen)
     }
-    wasDragging.current = false
   }
 
   const handleDragStart = () => {
@@ -106,6 +106,9 @@ const CategoryItem = ({
 
   const handleDragEnd = () => {
     setIsDragging(false)
+    setTimeout(() => {
+      wasDragging.current = false
+    }, 0)
   }
 
   const content = (
@@ -122,12 +125,12 @@ const CategoryItem = ({
         <div className="group relative flex items-center">
           <div
             className={cn(
-              "group relative flex w-full cursor-pointer items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary hover:bg-f1-background-secondary",
-              isDragging && "cursor-grabbing bg-f1-background-secondary",
-              isSortable && "cursor-grab",
+              "group relative flex w-full items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary transition-colors hover:cursor-pointer hover:bg-f1-background-secondary",
+              isDragging && "hover:cursor-grabbing",
+              isDragging && wasDragging.current && "bg-f1-background-secondary",
               focusRing("focus-visible:ring-inset")
             )}
-            onClick={handleClick}
+            onClick={!isDragging ? handleClick : undefined}
           >
             {category.title}
             <motion.div
@@ -146,7 +149,10 @@ const CategoryItem = ({
         </div>
         <CollapsibleContent
           forceMount
-          className="flex flex-col gap-1 overflow-hidden"
+          className={cn(
+            "flex flex-col gap-1 overflow-hidden",
+            isDragging && "pointer-events-none"
+          )}
         >
           <motion.div
             initial={{ height: 0, opacity: 0 }}
@@ -154,14 +160,18 @@ const CategoryItem = ({
               height: isOpen ? "auto" : 0,
               opacity: isOpen ? 1 : 0,
               visibility: isOpen ? "visible" : "hidden",
-              pointerEvents: isOpen ? "auto" : "none",
             }}
             transition={{
               duration: shouldReduceMotion ? 0 : 0.15,
               ease: [0.165, 0.84, 0.44, 1],
             }}
           >
-            <div className="flex flex-col gap-0.5">
+            <div
+              className={cn(
+                "flex flex-col gap-0.5",
+                isDragging && !wasDragging.current && "pointer-events-none"
+              )}
+            >
               {category.items.map((item, index) => (
                 <MenuItem key={index} item={item} />
               ))}
@@ -218,14 +228,46 @@ export function Menu({ tree }: MenuProps) {
   )
 
   return (
-    <>
+    <DragProvider>
+      <MenuContent
+        nonSortableItems={nonSortableItems}
+        sortableItems={sortableItems}
+        setSortableItems={setSortableItems}
+        containerRef={containerRef}
+      />
+    </DragProvider>
+  )
+}
+
+function MenuContent({
+  nonSortableItems,
+  sortableItems,
+  setSortableItems,
+  containerRef,
+}: {
+  nonSortableItems: MenuCategory[]
+  sortableItems: MenuCategory[]
+  setSortableItems: (items: MenuCategory[]) => void
+  containerRef: React.RefObject<HTMLDivElement>
+}) {
+  const { isDragging } = useDragContext()
+
+  return (
+    <div
+      className={cn(
+        "relative",
+        isDragging && "cursor-grabbing [&_*]:cursor-grabbing"
+      )}
+    >
       <div className="flex w-full flex-col gap-3 bg-transparent px-3">
         {nonSortableItems.map((category, index) => (
           <CategoryItem key={`fixed-${index}`} category={category} />
         ))}
       </div>
       <div
-        className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3 [&_li]:list-none"
+        className={cn(
+          "mt-3 flex w-full flex-col gap-3 bg-transparent px-3 [&_li]:list-none"
+        )}
         ref={containerRef}
       >
         <Reorder.Group
@@ -246,6 +288,6 @@ export function Menu({ tree }: MenuProps) {
           </AnimatePresence>
         </Reorder.Group>
       </div>
-    </>
+    </div>
   )
 }
