@@ -27,18 +27,20 @@ const personalItems = [
   },
 ]
 
-export const menuTreeNone = [
+export const menuTree = [
   {
     title: "Root",
     id: "root",
     items: rootItems,
     isRoot: true,
+    isSortable: false,
   },
   {
     title: "Personal",
     id: "personal",
     items: personalItems,
     isOpen: true,
+    isSortable: false,
   },
   {
     title: "Company",
@@ -59,80 +61,9 @@ export const menuTreeNone = [
         icon: Icons.Folder,
         href: "/documents",
       },
-      {
-        label: "Time tracking",
-        icon: Icons.Timer,
-        href: "/time-tracking",
-      },
-      {
-        label: "Shifts",
-        icon: Icons.Schedule,
-        href: "/shifts",
-      },
-      {
-        label: "Payroll",
-        icon: Icons.Money,
-        href: "/payroll",
-      },
-      {
-        label: "Performance",
-        icon: Icons.Graph,
-        href: "/performance",
-      },
-      {
-        label: "Analytics",
-        icon: Icons.BarGraph,
-        href: "/analytics",
-      },
-      {
-        label: "Workflows",
-        icon: Icons.Split,
-        href: "/workflows",
-      },
-      {
-        label: "Settings",
-        icon: Icons.Settings,
-        href: "/settings",
-      },
     ],
     isOpen: true,
-  },
-]
-
-export const menuTreeBundles = [
-  {
-    title: "Root",
-    id: "root",
-    items: rootItems,
-    isRoot: true,
-  },
-  {
-    title: "Personal",
-    id: "personal",
-    items: personalItems,
-    isOpen: true,
-  },
-  {
-    title: "General",
-    id: "general",
-    items: [
-      {
-        label: "Organization",
-        icon: Icons.People,
-        href: "/organization",
-      },
-      {
-        label: "Calendar",
-        icon: Icons.Calendar,
-        href: "/calendar",
-      },
-      {
-        label: "Documents",
-        icon: Icons.Folder,
-        href: "/documents",
-      },
-    ],
-    isOpen: true,
+    isSortable: true,
   },
   {
     title: "Operations",
@@ -155,6 +86,7 @@ export const menuTreeBundles = [
       },
     ],
     isOpen: true,
+    isSortable: true,
   },
   {
     title: "Talent",
@@ -167,6 +99,7 @@ export const menuTreeBundles = [
       },
     ],
     isOpen: true,
+    isSortable: true,
   },
   {
     title: "More",
@@ -189,5 +122,6 @@ export const menuTreeBundles = [
       },
     ],
     isOpen: true,
+    isSortable: true,
   },
 ]

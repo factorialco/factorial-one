@@ -17,7 +17,7 @@ export const rootItems = [
     href: "/inbox",
   },
   {
-    label: "Discover Factorial",
+    label: "Discover",
     icon: Icons.Sparkles,
     href: "/discover",
   },

@@ -19,7 +19,7 @@ import * as MenuConfigOne from "./menu1"
 import * as MenuConfigTwo from "./menu2"
 import * as MenuConfigThree from "./menu3"
 import * as MenuConfigFour from "./menu4"
-
+import * as MenuConfigFive from "./menu5"
 const meta: Meta<typeof ApplicationFrame> = {
   title: "Mockups/Grouping",
   component: ApplicationFrame,
@@ -88,67 +88,25 @@ export const Default: Story = {
         Accounting: ModuleIcons.Finance,
       }
 
-      type GroupingType = "none" | "bundles"
-      type MenuStructure = {
-        none: MenuCategory[]
-        bundles: MenuCategory[]
-      }
-
-      const getCompanyMenus = (companyId: string): MenuStructure => {
+      const getCompanyMenu = (companyId: string): MenuCategory[] => {
         switch (companyId) {
           case "1": // Full CrossFit
-            return {
-              none: MenuConfigOne.menuTreeNone,
-              bundles: MenuConfigOne.menuTreeBundles,
-            }
+            return MenuConfigOne.menuTree
           case "2": // CHC Energia
-            return {
-              none: MenuConfigTwo.menuTreeNone,
-              bundles: MenuConfigTwo.menuTreeBundles,
-            }
+            return MenuConfigTwo.menuTree
           case "3": // Patterson Group
-            return {
-              none: MenuConfigThree.menuTreeNone,
-              bundles: MenuConfigThree.menuTreeBundles,
-            }
+            return MenuConfigThree.menuTree
           case "4": // Factorial
-            return {
-              none: MenuConfigFour.menuTreeNone,
-              bundles: MenuConfigFour.menuTreeBundles,
-            }
+            return MenuConfigFour.menuTree
+          case "5": // Blank Page
+            return MenuConfigFive.menuTree
           default:
-            return {
-              none: MenuConfigOne.menuTreeNone,
-              bundles: MenuConfigOne.menuTreeBundles,
-            }
+            return MenuConfigOne.menuTree
         }
       }
 
-      const [selectedDropdown, setSelectedDropdown] = React.useState<
-        "None" | "Bundles"
-      >("Bundles")
-      const menuTree =
-        getCompanyMenus(companySelected)[
-          selectedDropdown.toLowerCase() as GroupingType
-        ] || []
+      const menuTree = getCompanyMenu(companySelected)
       const activeMenuItem = findActiveMenuItem(menuTree)
-
-      const handleDropdownClick = (value: "None" | "Bundles") => {
-        setSelectedDropdown(value)
-      }
-
-      const dropdownItems = [
-        {
-          label: "None",
-          onClick: () => handleDropdownClick("None"),
-          selected: selectedDropdown === "None",
-        },
-        {
-          label: "Bundles",
-          onClick: () => handleDropdownClick("Bundles"),
-          selected: selectedDropdown === "Bundles",
-        },
-      ]
 
       return (
         <ApplicationFrame
@@ -177,11 +135,15 @@ export const Default: Story = {
                       name: "Factorial",
                       logo: "https://github.com/factorialco.png",
                     },
+                    {
+                      id: "5",
+                      name: "Blank Page",
+                      logo: "https://github.com/codefactor-io.png",
+                    },
                   ]}
                   selected={companySelected}
                   onChange={(company) => {
                     setCompanySelected(company)
-                    setSelectedDropdown("Bundles")
                   }}
                   isExpanded={true}
                 />
@@ -195,7 +157,7 @@ export const Default: Story = {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Menu tree={menuTree} dropdownItems={dropdownItems} />
+                    <Menu tree={menuTree} />
                   </motion.div>
                 </AnimatePresence>
               }

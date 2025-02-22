@@ -45,18 +45,20 @@ const personalItems = [
   },
 ]
 
-export const menuTreeNone = [
+export const menuTree = [
   {
     title: "Root",
     id: "root",
     items: rootItems,
     isRoot: true,
+    isSortable: false,
   },
   {
     title: "Personal",
     id: "personal",
     items: personalItems,
     isOpen: true,
+    isSortable: false,
   },
   {
     title: "Company",
@@ -78,129 +80,6 @@ export const menuTreeNone = [
         href: "/documents",
       },
       {
-        label: "Projects",
-        icon: Icons.Suitcase,
-        href: "/projects",
-      },
-      {
-        label: "Spaces",
-        icon: Icons.Building,
-        href: "/spaces",
-      },
-      {
-        label: "Software",
-        icon: Icons.Desktop,
-        href: "/software",
-      },
-      {
-        label: "Time tracking",
-        icon: Icons.Timer,
-        href: "/time-tracking",
-      },
-      {
-        label: "Shifts",
-        icon: Icons.Schedule,
-        href: "/shifts",
-      },
-      {
-        label: "Benefits",
-        icon: Icons.HoldHeart,
-        href: "/benefits",
-      },
-      {
-        label: "Payroll",
-        icon: Icons.Money,
-        href: "/payroll",
-      },
-      {
-        label: "Performance",
-        icon: Icons.Graph,
-        href: "/performance",
-      },
-      {
-        label: "Recruitment",
-        icon: Icons.SearchPerson,
-        href: "/recruitment",
-      },
-
-      {
-        label: "Engagement",
-        icon: Icons.MessageHeart,
-        href: "/engagement",
-      },
-      {
-        label: "Training",
-        icon: Icons.BookOpen,
-        href: "/training",
-      },
-      {
-        label: "Accounting",
-        icon: Icons.MoneyBag,
-        href: "/accounting",
-      },
-      {
-        label: "Spending",
-        icon: Icons.Wallet,
-        href: "/spending",
-      },
-      {
-        label: "Analytics",
-        icon: Icons.BarGraph,
-        href: "/analytics",
-      },
-      {
-        label: "Workflows",
-        icon: Icons.Split,
-        href: "/workflows",
-      },
-      {
-        label: "Settings",
-        icon: Icons.Settings,
-        href: "/settings",
-      },
-    ],
-    isOpen: true,
-  },
-]
-
-export const menuTreeBundles = [
-  {
-    title: "Root",
-    id: "root",
-    items: rootItems,
-    isRoot: true,
-  },
-  {
-    title: "Personal",
-    id: "personal",
-    items: personalItems,
-    isOpen: true,
-  },
-  {
-    title: "General",
-    id: "general",
-    items: [
-      {
-        label: "Organization",
-        icon: Icons.People,
-        href: "/organization",
-      },
-      {
-        label: "Calendar",
-        icon: Icons.Calendar,
-        href: "/calendar",
-      },
-      {
-        label: "Documents",
-        icon: Icons.Folder,
-        href: "/documents",
-      },
-      {
-        label: "Projects",
-        icon: Icons.Suitcase,
-        href: "/projects",
-      },
-      {
         label: "Spaces",
         icon: Icons.Building,
         href: "/spaces",
@@ -212,6 +91,7 @@ export const menuTreeBundles = [
       },
     ],
     isOpen: true,
+    isSortable: true,
   },
   {
     title: "Operations",
@@ -228,6 +108,11 @@ export const menuTreeBundles = [
         href: "/shifts",
       },
       {
+        label: "Projects",
+        icon: Icons.Suitcase,
+        href: "/projects",
+      },
+      {
         label: "Benefits",
         icon: Icons.HoldHeart,
         href: "/benefits",
@@ -239,6 +124,7 @@ export const menuTreeBundles = [
       },
     ],
     isOpen: true,
+    isSortable: true,
   },
   {
     title: "Talent",
@@ -266,6 +152,7 @@ export const menuTreeBundles = [
       },
     ],
     isOpen: true,
+    isSortable: true,
   },
   {
     title: "Finance",
@@ -283,6 +170,7 @@ export const menuTreeBundles = [
       },
     ],
     isOpen: true,
+    isSortable: true,
   },
   {
     title: "More",
@@ -305,5 +193,6 @@ export const menuTreeBundles = [
       },
     ],
     isOpen: true,
+    isSortable: true,
   },
 ]

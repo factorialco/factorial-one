@@ -1,55 +1,40 @@
 import * as Icons from "@/icons/app"
-import { rootItems } from "./menu"
 
-// Patterson Group
-
-const personalItems = [
-  { label: "Profile", icon: Icons.Person, href: "/profile" },
-  {
-    label: "Clock in",
-    icon: Icons.Clock,
-    href: "/clock-in",
-  },
-  {
-    label: "Time off",
-    icon: Icons.PalmTree,
-    href: "/time-off",
-  },
-  {
-    label: "Tasks",
-    icon: Icons.CheckCircleLine,
-    href: "/tasks",
-  },
-  {
-    label: "My documents",
-    icon: Icons.Folder,
-    href: "/my-documents",
-  },
-  {
-    label: "My training",
-    icon: Icons.BookOpen,
-    href: "/my-training",
-  },
-  {
-    label: "My spending",
-    icon: Icons.Wallet,
-    href: "/my-spending",
-  },
-]
+// Blank Page
 
 export const menuTree = [
   {
     title: "Root",
     id: "root",
-    items: rootItems,
+    items: [
+      {
+        label: "Home",
+        icon: Icons.Home,
+        href: "/",
+        exactMatch: true,
+      },
+      {
+        label: "Inbox",
+        icon: Icons.Envelope,
+        href: "/inbox",
+      },
+      {
+        label: "Calendar",
+        icon: Icons.Calendar,
+        href: "/calendar",
+      },
+      {
+        label: "Tasks",
+        icon: Icons.CheckCircleLine,
+        href: "/tasks",
+      },
+      {
+        label: "Discover",
+        icon: Icons.Rocket,
+        href: "/discover",
+      },
+    ],
     isRoot: true,
-    isSortable: false,
-  },
-  {
-    title: "Personal",
-    id: "personal",
-    items: personalItems,
-    isOpen: true,
     isSortable: false,
   },
   {
@@ -62,18 +47,23 @@ export const menuTree = [
         href: "/organization",
       },
       {
-        label: "Calendar",
-        icon: Icons.Calendar,
-        href: "/calendar",
-      },
-      {
         label: "Documents",
         icon: Icons.Folder,
         href: "/documents",
       },
+      {
+        label: "Spaces",
+        icon: Icons.Building,
+        href: "/spaces",
+      },
+      {
+        label: "Software",
+        icon: Icons.Desktop,
+        href: "/software",
+      },
     ],
     isOpen: true,
-    isSortable: true,
+    isSortable: false,
   },
   {
     title: "Operations",
@@ -90,6 +80,16 @@ export const menuTree = [
         href: "/shifts",
       },
       {
+        label: "Projects",
+        icon: Icons.Suitcase,
+        href: "/projects",
+      },
+      {
+        label: "Benefits",
+        icon: Icons.HoldHeart,
+        href: "/benefits",
+      },
+      {
         label: "Payroll",
         icon: Icons.Money,
         href: "/payroll",
@@ -102,6 +102,11 @@ export const menuTree = [
     title: "Talent",
     id: "talent",
     items: [
+      {
+        label: "Recruitment",
+        icon: Icons.SearchPerson,
+        href: "/recruitment",
+      },
       {
         label: "Performance",
         icon: Icons.Graph,
@@ -125,6 +130,11 @@ export const menuTree = [
     title: "Finance",
     id: "finance",
     items: [
+      {
+        label: "Accounting",
+        icon: Icons.MoneyBag,
+        href: "/accounting",
+      },
       {
         label: "Spending",
         icon: Icons.Wallet,

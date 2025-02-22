@@ -17,21 +17,23 @@ const personalItems = [
   },
 ]
 
-export const menuTreeNone = [
+export const menuTree = [
   {
     title: "Root",
     id: "root",
     items: rootItems,
     isRoot: true,
+    isSortable: false,
   },
   {
     title: "Personal",
     id: "personal",
     items: personalItems,
     isOpen: true,
+    isSortable: false,
   },
   {
-    title: "Company",
+    title: "Compoany",
     id: "company",
     items: [
       {
@@ -49,60 +51,9 @@ export const menuTreeNone = [
         icon: Icons.Folder,
         href: "/documents",
       },
-      {
-        label: "Analytics",
-        icon: Icons.BarGraph,
-        href: "/analytics",
-      },
-      {
-        label: "Workflows",
-        icon: Icons.Split,
-        href: "/workflows",
-      },
-      {
-        label: "Settings",
-        icon: Icons.Settings,
-        href: "/settings",
-      },
     ],
     isOpen: true,
-  },
-]
-
-export const menuTreeBundles = [
-  {
-    title: "Root",
-    id: "root",
-    items: rootItems,
-    isRoot: true,
-  },
-  {
-    title: "Personal",
-    id: "personal",
-    items: personalItems,
-    isOpen: true,
-  },
-  {
-    title: "General",
-    id: "general",
-    items: [
-      {
-        label: "Organization",
-        icon: Icons.People,
-        href: "/organization",
-      },
-      {
-        label: "Calendar",
-        icon: Icons.Calendar,
-        href: "/calendar",
-      },
-      {
-        label: "Documents",
-        icon: Icons.Folder,
-        href: "/documents",
-      },
-    ],
-    isOpen: true,
+    isSortable: true,
   },
   {
     title: "More",
@@ -125,5 +76,6 @@ export const menuTreeBundles = [
       },
     ],
     isOpen: true,
+    isSortable: true,
   },
 ]

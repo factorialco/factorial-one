@@ -1,17 +1,12 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
-import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
-import { ChevronDown, Menu as MenuIcon } from "@/icons/app"
+import { ChevronDown } from "@/icons/app"
 import { useReducedMotion } from "@/lib/a11y"
 import { Link, useNavigation } from "@/lib/linkHandler"
 import { cn, focusRing } from "@/lib/utils"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/ui/collapsible"
-import { AnimatePresence, motion } from "framer-motion"
-import React from "react"
+import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
+import { AnimatePresence, motion, Reorder } from "framer-motion"
+import React, { useRef } from "react"
 import { NavigationItem } from "../../utils"
 
 export interface MenuItem extends NavigationItem {
@@ -25,11 +20,11 @@ export interface MenuCategory {
   items: MenuItem[]
   isRoot?: boolean
   isOpen?: boolean
+  isSortable?: boolean
 }
 
 interface MenuProps {
   tree: MenuCategory[]
-  dropdownItems?: DropdownItem[]
   isLarge?: boolean
 }
 
@@ -81,46 +76,58 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
   )
 }
 
+interface CategoryItemProps {
+  category: MenuCategory
+  isSortable?: boolean
+  dragConstraints?: React.RefObject<HTMLDivElement>
+}
+
 const CategoryItem = ({
   category,
-  dropdownItems,
-}: {
-  category: MenuCategory
-  dropdownItems?: DropdownItem[]
-}) => {
+  isSortable,
+  dragConstraints,
+}: CategoryItemProps) => {
   const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
+  const [isDragging, setIsDragging] = React.useState(false)
   const shouldReduceMotion = useReducedMotion()
-  const [openDropdown, setOpenDropdown] = React.useState(false)
+  const wasDragging = useRef(false)
 
-  if (category.isRoot) {
-    return (
-      <div className="flex flex-col gap-0.5">
-        {category.items.map((item, index) => (
-          <MenuItem key={index} item={item} />
-        ))}
-      </div>
-    )
+  const handleClick = () => {
+    if (!wasDragging.current) {
+      setIsOpen(!isOpen)
+    }
+    wasDragging.current = false
   }
 
-  return (
-    <AnimatePresence>
-      <motion.div
-        id={category.id}
-        key={category.id}
-        initial={{ opacity: 0, translateY: -20 }}
-        animate={{ opacity: 1, translateY: 0 }}
-        transition={{
-          opacity: { duration: 0.3 },
-          translateY: { duration: 0.2, ease: "easeInOut" },
-        }}
-      >
-        <Collapsible open={isOpen} onOpenChange={setIsOpen} key={category.id}>
-          <CollapsibleTrigger
+  const handleDragStart = () => {
+    setIsDragging(true)
+    wasDragging.current = true
+  }
+
+  const handleDragEnd = () => {
+    setIsDragging(false)
+  }
+
+  const content = (
+    <motion.div
+      initial={{ opacity: 0, translateY: -20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{
+        opacity: { duration: 0.3 },
+        translateY: { duration: 0.2, ease: "easeInOut" },
+      }}
+      className={cn("backdrop-blur-[6px]")}
+    >
+      <Collapsible open={isOpen}>
+        <div className="group relative flex items-center">
+          <div
             className={cn(
               "group relative flex w-full cursor-pointer items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary hover:bg-f1-background-secondary",
-              openDropdown && "bg-f1-background-secondary",
+              isDragging && "cursor-grabbing bg-f1-background-secondary",
+              isSortable && "cursor-grab",
               focusRing("focus-visible:ring-inset")
             )}
+            onClick={handleClick}
           >
             {category.title}
             <motion.div
@@ -135,71 +142,110 @@ const CategoryItem = ({
                 className="text-f1-icon-secondary"
               />
             </motion.div>
-            {category.id !== "personal" && dropdownItems && (
-              <div onClick={(e) => e.stopPropagation()}>
-                <Dropdown
-                  items={dropdownItems}
-                  title="Group by"
-                  open={openDropdown}
-                  onOpenChange={setOpenDropdown}
-                  key={category.id}
-                >
-                  <div
-                    className={cn(
-                      "absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-sm text-f1-icon opacity-0 transition-all hover:bg-f1-background-secondary hover:text-f1-icon-bold group-hover:opacity-100",
-                      openDropdown &&
-                        "bg-f1-background-secondary text-f1-icon-bold opacity-100"
-                    )}
-                    onClick={(e) => {
-                      e.stopPropagation()
-                    }}
-                  >
-                    <Icon icon={MenuIcon} size="sm" />
-                  </div>
-                </Dropdown>
-              </div>
-            )}
-          </CollapsibleTrigger>
-          <CollapsibleContent
-            forceMount
-            className="flex flex-col gap-1 overflow-hidden"
+          </div>
+        </div>
+        <CollapsibleContent
+          forceMount
+          className="flex flex-col gap-1 overflow-hidden"
+        >
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{
+              height: isOpen ? "auto" : 0,
+              opacity: isOpen ? 1 : 0,
+              visibility: isOpen ? "visible" : "hidden",
+              pointerEvents: isOpen ? "auto" : "none",
+            }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.15,
+              ease: [0.165, 0.84, 0.44, 1],
+            }}
           >
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{
-                height: isOpen ? "auto" : 0,
-                opacity: isOpen ? 1 : 0,
-                visibility: isOpen ? "visible" : "hidden",
-                pointerEvents: isOpen ? "auto" : "none",
-              }}
-              transition={{
-                duration: shouldReduceMotion ? 0 : 0.15,
-                ease: [0.165, 0.84, 0.44, 1],
-              }}
-            >
-              <div className="flex flex-col gap-0.5">
-                {category.items.map((item, index) => (
-                  <MenuItem key={index} item={item} />
-                ))}
-              </div>
-            </motion.div>
-          </CollapsibleContent>
-        </Collapsible>
-      </motion.div>
-    </AnimatePresence>
+            <div className="flex flex-col gap-0.5">
+              {category.items.map((item, index) => (
+                <MenuItem key={index} item={item} />
+              ))}
+            </div>
+          </motion.div>
+        </CollapsibleContent>
+      </Collapsible>
+    </motion.div>
+  )
+
+  if (!isSortable) return content
+
+  return (
+    <Reorder.Item
+      id={category.id}
+      value={category}
+      dragConstraints={dragConstraints}
+      dragElastic={0.1}
+      className="relative"
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{
+        opacity: 0,
+        scale: 0.95,
+        filter: "blur(8px)",
+      }}
+      transition={{
+        opacity: { duration: 0.2, ease: "easeInOut" },
+        filter: { duration: 0.1, ease: "easeInOut" },
+        scale: {
+          duration: 0.2,
+          ease: [0.175, 0.885, 0.32, 1.275],
+        },
+      }}
+      whileDrag={{
+        scale: 1.04,
+        cursor: "grabbing",
+      }}
+    >
+      {content}
+    </Reorder.Item>
   )
 }
 
-export function Menu({ tree, dropdownItems }: MenuProps) {
+export function Menu({ tree }: MenuProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const nonSortableItems = tree.filter(
+    (category) => category.isSortable === false
+  )
+  const [sortableItems, setSortableItems] = React.useState(
+    tree.filter((category) => category.isSortable !== false)
+  )
+
   return (
-    <div className="flex w-full flex-col gap-3 bg-transparent px-3">
-      {tree.map((category, index) => (
-        <CategoryItem
-          key={index}
-          category={category}
-          dropdownItems={dropdownItems}
-        />
-      ))}
-    </div>
+    <>
+      <div className="flex w-full flex-col gap-3 bg-transparent px-3">
+        {nonSortableItems.map((category, index) => (
+          <CategoryItem key={`fixed-${index}`} category={category} />
+        ))}
+      </div>
+      <div
+        className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3 [&_li]:list-none"
+        ref={containerRef}
+      >
+        <Reorder.Group
+          axis="y"
+          values={sortableItems}
+          onReorder={setSortableItems}
+          className="flex flex-col gap-3"
+        >
+          <AnimatePresence>
+            {sortableItems.map((category) => (
+              <CategoryItem
+                key={category.id}
+                category={category}
+                isSortable={true}
+                dragConstraints={containerRef}
+              />
+            ))}
+          </AnimatePresence>
+        </Reorder.Group>
+      </div>
+    </>
   )
 }
