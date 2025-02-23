@@ -86,7 +86,7 @@ export const menuTree = [
       },
       {
         label: "Benefits",
-        icon: Icons.HoldHeart,
+        icon: Icons.Present,
         href: "/benefits",
       },
       {

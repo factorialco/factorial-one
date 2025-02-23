@@ -119,7 +119,6 @@ const CategoryItem = ({
         opacity: { duration: 0.3 },
         translateY: { duration: 0.2, ease: "easeInOut" },
       }}
-      className={cn("backdrop-blur-[6px]")}
     >
       <Collapsible open={isOpen}>
         <div className="group relative flex items-center">
@@ -190,7 +189,6 @@ const CategoryItem = ({
       value={category}
       dragConstraints={dragConstraints}
       dragElastic={0.1}
-      className="relative"
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       initial={{ opacity: 1 }}
@@ -212,6 +210,7 @@ const CategoryItem = ({
         scale: 1.04,
         cursor: "grabbing",
       }}
+      className={cn("relative backdrop-blur-sm")}
     >
       {content}
     </Reorder.Item>
