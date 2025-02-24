@@ -55,11 +55,7 @@ export const AvatarNameSelectorContent = ({
 }) => {
   const blockSecondaryContent =
     (width ?? totalDefaultWidth) < breakpointToShowEmployeeList
-  const isExpanded =
-    !loading &&
-    !singleSelector &&
-    !blockSecondaryContent &&
-    selectedEntities.length > 0
+  const isExpanded = !loading && !singleSelector && !blockSecondaryContent
   const defaultWidth = width ?? totalDefaultWidth
   const finalWidthMain = isExpanded ? defaultWidth - asideWidth : defaultWidth
 

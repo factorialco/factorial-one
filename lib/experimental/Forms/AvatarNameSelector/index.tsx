@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { AvatarNameSelectorContent } from "./AvatarNameSelectorContent"
 import { AvatarNameSelectorTrigger } from "./AvatarNameSelectorTrigger"
@@ -307,9 +307,24 @@ export const AvatarNameSelector = ({
     props.onOpenChange?.(open)
   }
 
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerWidth, setContainerWidth] = useState(0)
+
+  useLayoutEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth)
+      }
+    }
+    updateWidth()
+    window.addEventListener("resize", updateWidth)
+    return () => window.removeEventListener("resize", updateWidth)
+  }, [])
+
   if (props.alwaysOpen) {
     return (
       <div
+        ref={containerRef}
         className={cn(
           "scrollbar-macos relative w-full overflow-auto rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0"
         )}
@@ -338,7 +353,7 @@ export const AvatarNameSelector = ({
           loading={loading}
           notFoundTitle={notFoundTitle}
           notFoundSubtitle={notFoundSubtitle}
-          width={width}
+          width={containerWidth - 2}
         />
       </div>
     )

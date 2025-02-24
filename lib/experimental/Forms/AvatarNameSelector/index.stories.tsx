@@ -110,6 +110,7 @@ export const AlwaysOpen = {
     loading: false,
     alwaysOpen: true,
   } as AvatarNameSelectorProps,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render: (props: any) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
     const [selectedGroup, setSelectedGroup] = useState<string>(
@@ -117,7 +118,7 @@ export const AlwaysOpen = {
     )
 
     return (
-      <div className="w-[522px]">
+      <div className="w-[600px]">
         <AvatarNameSelector
           {...props}
           loading={loading}
