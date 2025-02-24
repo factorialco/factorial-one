@@ -1,4 +1,10 @@
 import type { StorybookConfig } from "@storybook/react-vite"
+import * as process from "node:process"
+
+// We should add the STORYBOOK_ prefix to make sure that the environment variables are in browser mode (for example manager.ts file)
+if (process.env.PUBLIC_BUILD) {
+  process.env.STORYBOOK_PUBLIC_BUILD = process.env.PUBLIC_BUILD
+}
 
 const config: StorybookConfig = {
   stories: [
@@ -12,7 +18,7 @@ const config: StorybookConfig = {
       directory: "../lib/experimental",
       titlePrefix: "Components",
     },
-    ...(process.env.PUBLIC_BUILD
+    ...(process.env.STORYBOOK_PUBLIC_BUILD
       ? []
       : [
           {
@@ -42,7 +48,10 @@ const config: StorybookConfig = {
   },
   docs: {
     defaultName: "Documentation",
-    docsMode: process.env.PUBLIC_BUILD || process.env.DOCS_MODE ? true : false,
+    docsMode:
+      process.env.STORYBOOK_PUBLIC_BUILD || process.env.DOCS_MODE
+        ? true
+        : false,
   },
   typescript: {
     reactDocgen: "react-docgen-typescript",
