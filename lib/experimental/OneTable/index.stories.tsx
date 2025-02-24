@@ -5,6 +5,7 @@ import {
   StatusTag,
   type StatusVariant,
 } from "@/experimental/Information/Tags/exports"
+import { OnePagination } from "@/experimental/OnePagination"
 import type { Meta, StoryObj } from "@storybook/react"
 import React, { useState } from "react"
 import {
@@ -451,5 +452,60 @@ export const Summatory: Story = {
         </TableRow>
       </TableBody>
     </OneTable>
+  ),
+}
+
+export const Footer: Story = {
+  render: () => (
+    <>
+      <OneTable>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sampleData.map((row) => (
+            <TableRow key={row.id}>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  <PersonAvatar
+                    firstName={row.name.split(" ")[0]}
+                    lastName={row.name.split(" ")[1]}
+                    size="small"
+                  />
+                  <span className="font-medium">{row.name}</span>
+                </div>
+              </TableCell>
+              <TableCell>{row.email}</TableCell>
+              <TableCell>
+                <div className="w-fit">
+                  <RawTag text={row.role} />
+                </div>
+              </TableCell>
+              <TableCell>
+                <div className="w-fit">
+                  <StatusTag
+                    text={row.status.label}
+                    variant={row.status.variant}
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </OneTable>
+      <div className="flex w-full items-center justify-between py-3">
+        <span className="shrink-0 text-f1-foreground-secondary">
+          1-4 of 100
+        </span>
+        <div className="flex items-center">
+          <OnePagination totalPages={10} currentPage={1} />
+        </div>
+      </div>
+    </>
   ),
 }
