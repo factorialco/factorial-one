@@ -1,4 +1,6 @@
+import { PersonAvatar } from "@/experimental/Information/Avatars/exports"
 import {
+  RawTag,
   StatusTag,
   type StatusVariant,
 } from "@/experimental/Information/Tags/exports"
@@ -85,14 +87,36 @@ export const Default: Story = {
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Role</TableHead>
+          <TableHead>Status</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {sampleData.map((row) => (
           <TableRow key={row.id}>
-            <TableCell>{row.name}</TableCell>
+            <TableCell>
+              <div className="flex items-center gap-2">
+                <PersonAvatar
+                  firstName={row.name.split(" ")[0]}
+                  lastName={row.name.split(" ")[1]}
+                  size="small"
+                />
+                <span className="font-medium">{row.name}</span>
+              </div>
+            </TableCell>
             <TableCell>{row.email}</TableCell>
-            <TableCell>{row.role}</TableCell>
+            <TableCell>
+              <div className="w-fit">
+                <RawTag text={row.role} />
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="w-fit">
+                <StatusTag
+                  text={row.status.label}
+                  variant={row.status.variant}
+                />
+              </div>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -286,4 +310,105 @@ export const StickyTable: Story = {
 
 export const Skeleton: Story = {
   render: () => <OneTable.Skeleton columns={3} />,
+}
+
+const summatoryData = [
+  {
+    day: "Monday",
+    productA: "1.200,00 €",
+    productB: "850,00 €",
+    productC: "1.500,00 €",
+  },
+  {
+    day: "Tuesday",
+    productA: "1.350,00 €",
+    productB: "900,00 €",
+    productC: "1.750,00 €",
+  },
+  {
+    day: "Wednesday",
+    productA: "1.500,00 €",
+    productB: "1.000,00 €",
+    productC: "1.600,00 €",
+  },
+  {
+    day: "Thursday",
+    productA: "1.400,00 €",
+    productB: "950,00 €",
+    productC: "1.700,00 €",
+  },
+  {
+    day: "Friday",
+    productA: "1.600,00 €",
+    productB: "1.100,00 €",
+    productC: "1.800,00 €",
+  },
+]
+
+export const Summatory: Story = {
+  render: () => (
+    <OneTable>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Day</TableHead>
+          <TableHead>
+            <div className="w-full text-right">Product A Sales</div>
+          </TableHead>
+          <TableHead>
+            <div className="w-full text-right">Product B Sales</div>
+          </TableHead>
+          <TableHead>
+            <div className="w-full text-right">Product C Sales</div>
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {summatoryData.map((row) => (
+          <TableRow key={row.day}>
+            <TableCell>
+              <span className="font-medium">{row.day}</span>
+            </TableCell>
+            <TableCell>
+              <div className="w-full text-right tabular-nums">
+                {row.productA}
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="w-full text-right tabular-nums">
+                {row.productB}
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="w-full text-right tabular-nums">
+                {row.productC}
+              </div>
+            </TableCell>
+          </TableRow>
+        ))}
+        <TableRow>
+          <TableCell>
+            <span className="font-medium">Total</span>
+          </TableCell>
+          <TableCell>
+            <div className="flex w-full items-center justify-end gap-1">
+              <span className="text-f1-foreground-secondary">sum</span>
+              <span className="font-medium tabular-nums">7.050,00 €</span>
+            </div>
+          </TableCell>
+          <TableCell>
+            <div className="flex w-full items-center justify-end gap-1">
+              <span className="text-f1-foreground-secondary">sum</span>
+              <span className="font-medium tabular-nums">4.800,00 €</span>
+            </div>
+          </TableCell>
+          <TableCell>
+            <div className="flex w-full items-center justify-end gap-1">
+              <span className="text-f1-foreground-secondary">sum</span>
+              <span className="font-medium tabular-nums">8.350,00 €</span>
+            </div>
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </OneTable>
+  ),
 }
