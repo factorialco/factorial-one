@@ -18,7 +18,11 @@ import "@factorialco/factorial-one/styles.css"
 import "@factorialco/factorial-one/fonts.js"
 
 // In any of your components
-import { Button } from "@factorialco/factorial-one"
+import {Button} from "@factorialco/factorial-one"
 ```
 
 And that's it!
+
+Related:
+
+- [Using factorial one source](development/using-factorial-one-source.md)
