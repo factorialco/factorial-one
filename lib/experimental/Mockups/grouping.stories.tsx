@@ -1,4 +1,4 @@
-import { IconType } from "@/components/Utilities/Icon/"
+import { IconType } from "@/components/Utilities/Icon"
 import {
   Menu,
   MenuCategory,
@@ -8,6 +8,7 @@ import {
   User,
 } from "@/experimental/exports"
 import { ApplicationFrame } from "@/experimental/Navigation/ApplicationFrame"
+import { DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { Sidebar } from "@/experimental/Navigation/Sidebar/Sidebar"
 import * as Icons from "@/icons/app"
 import * as ModuleIcons from "@/icons/modules"
@@ -20,6 +21,7 @@ import * as MenuConfigTwo from "./menu2"
 import * as MenuConfigThree from "./menu3"
 import * as MenuConfigFour from "./menu4"
 import * as MenuConfigFive from "./menu5"
+
 const meta: Meta<typeof ApplicationFrame> = {
   title: "Mockups/Grouping",
   component: ApplicationFrame,
@@ -108,6 +110,54 @@ export const Default: Story = {
       const menuTree = getCompanyMenu(companySelected)
       const activeMenuItem = findActiveMenuItem(menuTree)
 
+      const getUserOptions = (companyId?: string): DropdownItem[] => {
+        const baseOptions = (() => {
+          switch (companyId) {
+            case "5":
+              return [
+                {
+                  label: "Profile",
+                  href: "/profile",
+                  icon: Icons.Person,
+                },
+                {
+                  label: "Preferences",
+                  href: "/preferences",
+                  icon: Icons.Sliders,
+                },
+                {
+                  label: "Notifications",
+                  href: "/notifications",
+                  icon: Icons.Bell,
+                },
+              ]
+
+            default:
+              return [
+                {
+                  label: "Preferences",
+                  href: "/preferences",
+                  icon: Icons.Sliders,
+                },
+                {
+                  label: "Notifications",
+                  href: "/notifications",
+                  icon: Icons.Bell,
+                },
+                "separator",
+                {
+                  label: "Logout",
+                  href: "/logout",
+                  icon: Icons.Exit,
+                  critical: true,
+                },
+              ]
+          }
+        })()
+
+        return [...baseOptions] as DropdownItem[]
+      }
+
       return (
         <ApplicationFrame
           sidebar={
@@ -146,6 +196,28 @@ export const Default: Story = {
                     setCompanySelected(company)
                   }}
                   isExpanded={true}
+                  additionalOptions={
+                    companySelected === "5"
+                      ? [
+                          {
+                            label: "Preferences",
+                            value: "preferences",
+                            icon: Icons.Sliders,
+                          },
+                          {
+                            label: "Settings",
+                            value: "settings",
+                            icon: Icons.Settings,
+                          },
+                          {
+                            label: "Logout",
+                            value: "logout",
+                            icon: Icons.Exit,
+                            critical: true,
+                          },
+                        ]
+                      : undefined
+                  }
                 />
               }
               body={
@@ -157,7 +229,7 @@ export const Default: Story = {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Menu tree={menuTree} />
+                    <Menu tree={menuTree} isFinal={companySelected === "5"} />
                   </motion.div>
                 </AnimatePresence>
               }
@@ -166,25 +238,7 @@ export const Default: Story = {
                   firstName="René"
                   lastName="Galindo"
                   avatarUrl="https://github.com/renegalindo.png"
-                  options={[
-                    {
-                      label: "Preferences",
-                      href: "/preferences",
-                      icon: Icons.Sliders,
-                    },
-                    {
-                      label: "Notifications",
-                      href: "/notifications",
-                      icon: Icons.Bell,
-                    },
-                    "separator",
-                    {
-                      label: "Logout",
-                      href: "/logout",
-                      icon: Icons.Exit,
-                      critical: true,
-                    },
-                  ]}
+                  options={getUserOptions(companySelected)}
                 />
               }
             />

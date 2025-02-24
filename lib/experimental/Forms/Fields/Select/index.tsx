@@ -21,6 +21,7 @@ type SelectItemObject<T> = {
   icon?: IconType
   description?: string
   avatar?: AvatarVariant
+  critical?: boolean
 }
 
 type SelectItemProps<T> = SelectItemObject<T> | "separator"
@@ -38,16 +39,28 @@ type SelectProps<T> = {
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   return (
-    <SelectItemPrimitive value={item.value}>
-      <div className="flex items-start gap-1.5">
+    <SelectItemPrimitive value={item.value} className="max-h-[36px]">
+      <div className="flex max-h-[36px] items-start gap-1.5">
         {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
         {item.icon && (
-          <div className="text-f1-icon">
+          <div
+            className={cn(
+              "text-f1-icon",
+              item.critical && "text-f1-icon-critical"
+            )}
+          >
             <Icon icon={item.icon} />
           </div>
         )}
         <div className="flex flex-col">
-          <span className="font-medium">{item.label}</span>
+          <span
+            className={cn(
+              "font-medium",
+              item.critical && "text-f1-foreground-critical"
+            )}
+          >
+            {item.label}
+          </span>
           {item.description && (
             <div className="text-f1-foreground-secondary">
               {item.description}

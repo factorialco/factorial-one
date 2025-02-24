@@ -63,7 +63,7 @@ export const menuTree = [
       },
     ],
     isOpen: true,
-    isSortable: false,
+    isSortable: true,
   },
   {
     title: "Operations",

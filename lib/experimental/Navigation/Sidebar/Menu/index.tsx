@@ -1,12 +1,15 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Avatar } from "@/experimental/Information/Avatars/exports"
 import { Counter } from "@/experimental/Information/Counter"
+import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import * as Icons from "@/icons/app"
 import { ChevronDown } from "@/icons/app"
 import { useReducedMotion } from "@/lib/a11y"
 import { Link, useNavigation } from "@/lib/linkHandler"
 import { cn, focusRing } from "@/lib/utils"
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
 import { AnimatePresence, motion, Reorder } from "framer-motion"
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
 import { NavigationItem } from "../../utils"
 import { DragProvider, useDragContext } from "./DragContext"
 
@@ -27,6 +30,7 @@ export interface MenuCategory {
 interface MenuProps {
   tree: MenuCategory[]
   isLarge?: boolean
+  isFinal?: boolean
 }
 
 const MenuItemContent = ({
@@ -127,7 +131,8 @@ const CategoryItem = ({
               "group relative flex w-full items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary transition-colors hover:cursor-pointer hover:bg-f1-background-secondary",
               isDragging && "hover:cursor-grabbing",
               isDragging && wasDragging.current && "bg-f1-background-secondary",
-              focusRing("focus-visible:ring-inset")
+              focusRing("focus-visible:ring-inset"),
+              category.isRoot && "hidden"
             )}
             onClick={!isDragging ? handleClick : undefined}
           >
@@ -217,7 +222,7 @@ const CategoryItem = ({
   )
 }
 
-export function Menu({ tree }: MenuProps) {
+export function Menu({ tree, isFinal }: MenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const nonSortableItems = tree.filter(
     (category) => category.isSortable === false
@@ -233,8 +238,97 @@ export function Menu({ tree }: MenuProps) {
         sortableItems={sortableItems}
         setSortableItems={setSortableItems}
         containerRef={containerRef}
+        isFinal={isFinal}
       />
     </DragProvider>
+  )
+}
+
+type FavoriteItemProps = {
+  label: string
+  icon?: {
+    icon: IconType
+    className?: string
+  }
+  avatar?:
+    | {
+        type: "person"
+        firstName: string
+        lastName: string
+        src?: string
+      }
+    | {
+        type: "team" | "company"
+        name: string
+        src?: string
+      }
+}
+
+const FavoriteItem = ({
+  label,
+  icon,
+  avatar,
+  onRemove,
+  onMoveUp,
+  onMoveDown,
+  isFirst,
+  isLast,
+}: FavoriteItemProps & {
+  onRemove: (label: string) => void
+  onMoveUp: (label: string) => void
+  onMoveDown: (label: string) => void
+  isFirst: boolean
+  isLast: boolean
+}) => {
+  const dropdownItems = [
+    ...(isFirst
+      ? []
+      : [
+          {
+            label: "Move up",
+            icon: Icons.ArrowUp,
+            onClick: () => onMoveUp(label),
+          },
+        ]),
+    ...(isLast
+      ? []
+      : [
+          {
+            label: "Move down",
+            icon: Icons.ArrowDown,
+            onClick: () => onMoveDown(label),
+          },
+        ]),
+    ...(!isFirst || !isLast ? ["separator" as const] : []),
+    {
+      label: "Remove favorite",
+      icon: Icons.Delete,
+      critical: true,
+      onClick: () => onRemove(label),
+    },
+  ]
+
+  return (
+    <div className="group flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between gap-1.5 font-medium text-f1-foreground">
+        <div className="flex gap-1.5">
+          {icon && (
+            <Icon
+              icon={icon.icon}
+              size="md"
+              className={cn("transition-colors", icon.className)}
+            />
+          )}
+          {avatar && <Avatar avatar={avatar} size="xsmall" />}
+          <span>{label}</span>
+        </div>
+        <Dropdown items={dropdownItems}>
+          <div className="flex size-6 items-center justify-center rounded-xs text-f1-icon opacity-0 transition-all hover:bg-f1-background-secondary hover:text-f1-icon-bold group-hover:opacity-100 data-[state=open]:bg-f1-background-secondary data-[state=open]:text-f1-icon-bold data-[state=open]:opacity-100">
+            <Icon icon={Icons.EllipsisHorizontal} size="md" />
+          </div>
+        </Dropdown>
+      </div>
+    </div>
   )
 }
 
@@ -243,13 +337,74 @@ function MenuContent({
   sortableItems,
   setSortableItems,
   containerRef,
+  isFinal,
 }: {
   nonSortableItems: MenuCategory[]
   sortableItems: MenuCategory[]
   setSortableItems: (items: MenuCategory[]) => void
   containerRef: React.RefObject<HTMLDivElement>
+  isFinal?: boolean
 }) {
   const { isDragging } = useDragContext()
+
+  const FavoriteList: FavoriteItemProps[] = [
+    {
+      label: "Product designer",
+      icon: { icon: Icons.SearchPerson },
+    },
+    {
+      label: "René Galindo",
+      avatar: {
+        type: "person",
+        firstName: "René",
+        lastName: "Galindo",
+        src: "https://github.com/renegalindo.png",
+      },
+    },
+    {
+      label: "Dani Moreno",
+      avatar: {
+        type: "person",
+        firstName: "Dani",
+        lastName: "Moreno",
+        src: "https://github.com/dani-moreno.png",
+      },
+    },
+    {
+      label: "Design Team",
+      avatar: {
+        type: "team",
+        name: "Design team",
+      },
+    },
+  ]
+  const [favorites, setFavorites] = useState(FavoriteList)
+
+  const removeFavorite = (label: string) => {
+    setFavorites(favorites.filter((favorite) => favorite.label !== label))
+  }
+
+  const moveFavorite = (label: string, direction: "up" | "down") => {
+    const index = favorites.findIndex((favorite) => favorite.label === label)
+    const offset = direction === "up" ? -1 : 1
+
+    if (
+      (direction === "up" && index > 0) ||
+      (direction === "down" && index < favorites.length - 1)
+    ) {
+      const newFavorites = [...favorites]
+      ;[newFavorites[index], newFavorites[index + offset]] = [
+        newFavorites[index + offset],
+        newFavorites[index],
+      ]
+      setFavorites(newFavorites)
+    }
+  }
+
+  const moveFavoriteUp = (label: string) => moveFavorite(label, "up")
+  const moveFavoriteDown = (label: string) => moveFavorite(label, "down")
+
+  const favoritesRef = useRef<HTMLDivElement>(null)
 
   return (
     <div
@@ -259,10 +414,86 @@ function MenuContent({
       )}
     >
       <div className="flex w-full flex-col gap-3 bg-transparent px-3">
-        {nonSortableItems.map((category, index) => (
-          <CategoryItem key={`fixed-${index}`} category={category} />
-        ))}
+        {nonSortableItems
+          .filter((category) => category.isRoot)
+          .map((category, index) => (
+            <CategoryItem key={`fixed-${index}`} category={category} />
+          ))}
       </div>
+
+      {isFinal && (
+        <div className="mt-3 flex w-full flex-col bg-transparent px-3">
+          <div className="flex w-full cursor-pointer items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary transition-colors hover:bg-f1-background-secondary">
+            Favorites
+            <Icon
+              icon={Icons.ChevronDown}
+              size="xs"
+              className="text-f1-icon-secondary"
+            />
+          </div>
+          <Reorder.Group
+            axis="y"
+            values={favorites}
+            onReorder={setFavorites}
+            className="flex list-none flex-col gap-0.5"
+            ref={favoritesRef}
+          >
+            <AnimatePresence>
+              {favorites.map((item, index) => (
+                <Reorder.Item
+                  key={item.label}
+                  value={item}
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.95,
+                    filter: "blur(8px)",
+                  }}
+                  transition={{
+                    opacity: { duration: 0.2, ease: "easeInOut" },
+                    filter: { duration: 0.1, ease: "easeInOut" },
+                    scale: {
+                      duration: 0.2,
+                      ease: [0.175, 0.885, 0.32, 1.275],
+                    },
+                  }}
+                  whileDrag={{
+                    scale: 1.04,
+                    cursor: "grabbing",
+                  }}
+                  className={cn(
+                    "relative cursor-pointer rounded py-1 pl-1.5 pr-1",
+                    "backdrop-blur transition-colors",
+                    "hover:bg-f1-background-secondary",
+                    "data-[dragging=true]:bg-f1-background-secondary"
+                  )}
+                  dragConstraints={favoritesRef}
+                  dragElastic={0.1}
+                >
+                  <FavoriteItem
+                    {...item}
+                    onRemove={removeFavorite}
+                    onMoveUp={moveFavoriteUp}
+                    onMoveDown={moveFavoriteDown}
+                    isFirst={index === 0}
+                    isLast={index === favorites.length - 1}
+                  />
+                </Reorder.Item>
+              ))}
+            </AnimatePresence>
+          </Reorder.Group>
+        </div>
+      )}
+
+      <div className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3">
+        {nonSortableItems
+          .filter((category) => !category.isRoot)
+          .map((category, index) => (
+            <CategoryItem key={`fixed-${index}`} category={category} />
+          ))}
+      </div>
+
       <div
         className={cn(
           "mt-3 flex w-full flex-col gap-3 bg-transparent px-3 [&_li]:list-none"
