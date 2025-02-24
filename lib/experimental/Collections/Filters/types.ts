@@ -1,5 +1,6 @@
 /**
  * Base definition for all filter types.
+ * Provides common properties that all filters must implement.
  */
 export type BaseFilterDefinition = {
   /** Human-readable label for the filter */
@@ -8,18 +9,24 @@ export type BaseFilterDefinition = {
 
 /**
  * Multi-select filter that allows selecting from predefined options.
+ * Used for filtering based on a set of discrete values.
  * @template T - Type of values that can be selected
  */
 export type InFilterDefinition<T = unknown> = BaseFilterDefinition & {
+  /** Identifies this as an "in" type filter */
   type: "in"
+  /** Available options for selection */
   options: Array<{
+    /** The value used for filtering */
     value: T
+    /** Human-readable label for the option */
     label: string
   }>
 }
 
 /**
  * Free-text search filter.
+ * Used for performing text-based searches across specified fields.
  */
 export type SearchFilterDefinition = BaseFilterDefinition & {
   /** Identifies this as a "search" type filter */
@@ -28,6 +35,7 @@ export type SearchFilterDefinition = BaseFilterDefinition & {
 
 /**
  * Union of all available filter types.
+ * @template T - Type of values for the InFilterDefinition
  */
 export type FilterDefinition<T = unknown> =
   | InFilterDefinition<T>
@@ -35,8 +43,9 @@ export type FilterDefinition<T = unknown> =
 
 /**
  * Extracts the appropriate value type for a given filter:
- * - InFilter -> T[]
- * - SearchFilter -> string
+ * - InFilter -> Array of selected values of type T
+ * - SearchFilter -> Search string
+ * @template T - The filter definition type
  */
 export type FilterValue<T extends FilterDefinition> =
   T extends InFilterDefinition<infer U>
@@ -47,6 +56,8 @@ export type FilterValue<T extends FilterDefinition> =
 
 /**
  * Current state of all filters in a collection.
+ * Maps filter keys to their current values.
+ * @template Definition - Record of filter definitions
  */
 export type FiltersState<Definition extends Record<string, FilterDefinition>> =
   {
@@ -55,6 +66,8 @@ export type FiltersState<Definition extends Record<string, FilterDefinition>> =
 
 /**
  * Record of filter definitions for a collection.
+ * Maps filter keys to their respective definitions.
+ * @template Keys - String literal type for filter keys
  */
 export type FiltersDefinition<Keys extends string = string> = Record<
   Keys,
@@ -62,7 +75,8 @@ export type FiltersDefinition<Keys extends string = string> = Record<
 >
 
 /**
- * Configuration options for filters, including optional default field.
+ * Configuration options for filters.
+ * @template FilterKeys - String literal type for filter keys
  */
 export type FilterOptions<FilterKeys extends string> = Record<
   FilterKeys,
@@ -71,6 +85,8 @@ export type FilterOptions<FilterKeys extends string> = Record<
 
 /**
  * Extracts the current filters type from filter options.
+ * Creates a type mapping filter keys to their respective value types.
+ * @template F - The filter options type
  */
 export type CurrentFilters<F extends FilterOptions<string>> = F extends {
   fields: Record<infer K extends string, FilterDefinition>

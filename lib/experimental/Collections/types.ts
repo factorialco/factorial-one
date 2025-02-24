@@ -1,82 +1,75 @@
 import { Observable } from "zen-observable-ts"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
-import type {
-  ExtractPropertyOptions,
-  ExtractPropertyType,
-  PropertySchema,
-} from "./properties"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
- * @template Schema - The schema defining the properties of the collection
+ * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  */
 export type DataSourceDefinition<
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
 > = {
-  /** Schema properties defining the data structure */
-  properties: Schema
   /** Available filter configurations */
   filters?: Filters
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
-  dataAdapter: {
-    /**
-     * Fetches data based on the provided filter options
-     * @param options - Object containing filter state to apply
-     * @returns Promise or Observable containing the filtered data
-     */
-    fetchData: (options: {
-      filters: FiltersState<Filters>
-    }) => DataSourceResult<ExtractDataType<Schema>>
-  }
+  /** Data adapter responsible for fetching and managing data */
+  dataAdapter: DataAdapter<Record, Filters>
 }
 
 /**
- * Extracts the property keys from a collection schema and its filters.
- * @template Schema - The schema defining the properties of the collection
+ * Defines the interface for data fetching and management.
+ * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  */
-export type ExtractPropertyKeys<
-  Schema extends CollectionSchema,
+type DataAdapter<
+  Record extends RecordType,
   Filters extends FiltersDefinition,
-> = keyof DataSourceDefinition<Schema, Filters>["properties"]
+> = {
+  /** Function to fetch data based on the current filter state */
+  fetchData: (options: {
+    filters: FiltersState<Filters>
+  }) => DataSourceResult<Record>
+}
 
 /**
- * Transforms a schema of property options into a type-safe object structure.
- * @template Properties - Record of property options defining the data structure
+ * Represents a record type with string keys and unknown values.
+ * This type is used to represent the data structure of a collection.
  */
-export type ExtractDataType<
-  Properties extends Record<string, ExtractPropertyOptions<PropertySchema>>,
-> = {
-  [K in keyof Properties]: ExtractPropertyType<Properties[K]>
-}
+export type RecordType = Record<string, unknown>
+
+/**
+ * Extracts the property keys from a record type.
+ * @template RecordType - The type containing the properties to extract
+ */
+export type ExtractPropertyKeys<RecordType> = keyof RecordType
 
 /**
  * Props for the Collection component.
- * @template Schema - The schema defining the properties of the collection
+ * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  * @template VisualizationOptions - Additional options for visualizing the collection
  */
 export type CollectionProps<
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
   VisualizationOptions extends object,
 > = {
-  source: DataSource<Schema, Filters>
+  /** The data source configuration and state */
+  source: DataSource<Record, Filters>
 } & VisualizationOptions
 
 /**
  * Represents a data source with filtering capabilities and data fetching functionality.
- * Extends DataSourceDefinition with runtime properties for state management and data fetching.
- * @template Schema - The schema defining the properties of the collection
+ * Extends DataSourceDefinition with runtime properties for state management.
+ * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  */
 export type DataSource<
-  Schema extends CollectionSchema,
+  Record extends RecordType,
   Filters extends FiltersDefinition,
-> = DataSourceDefinition<Schema, Filters> & {
+> = DataSourceDefinition<Record, Filters> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
@@ -88,23 +81,10 @@ export type DataSource<
  * Can be either a Promise or an Observable of an array of items.
  * @template T - The type of items in the result set
  */
-export type DataSourceResult<T> = Promise<Array<T>> | Observable<Array<T>>
+export type DataSourceResult<T> = PromiseOrObservable<{ records: Array<T> }>
 
 /**
- * Defines the schema structure for a collection.
- * Each property in the schema must conform to PropertySchema without a value field.
+ * Utility type for handling both Promise and Observable return types.
+ * @template T - The type of the value being promised or observed
  */
-export type CollectionSchema = Record<
-  string,
-  ExtractPropertyOptions<PropertySchema>
->
-
-/**
- * Extracts the concrete data type from a collection's schema and filters.
- * @template Schema - The schema defining the properties of the collection
- * @template Filters - The available filter configurations for the collection
- */
-export type SourceData<
-  Schema extends CollectionSchema,
-  Filters extends FiltersDefinition,
-> = ExtractDataType<DataSource<Schema, Filters>["properties"]>
+type PromiseOrObservable<T> = Promise<T> | Observable<T>
