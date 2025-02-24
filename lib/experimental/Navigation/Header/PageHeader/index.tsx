@@ -13,7 +13,6 @@ import { ReactElement } from "react"
 import { Dropdown } from "../../Dropdown"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
-
 export type PageAction = {
   label: string
   icon: IconType
