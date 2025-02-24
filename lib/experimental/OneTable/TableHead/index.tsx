@@ -26,7 +26,7 @@ export function TableHead({
   return (
     <TableHeadRoot
       className={cn("group", {
-        "sticky left-0 z-10 bg-f1-background": sticky,
+        "sticky left-0 z-10 bg-f1-background": sticky && isScrolled,
       })}
       tabIndex={sticky ? 0 : undefined}
     >

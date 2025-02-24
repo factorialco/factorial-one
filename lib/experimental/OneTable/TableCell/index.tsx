@@ -14,7 +14,7 @@ export function TableCell({ children, sticky = false }: TableCellProps) {
   return (
     <TableCellRoot
       className={cn({
-        "sticky left-0 z-10 bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-full before:w-full before:bg-f1-background before:transition-all before:content-[''] group-hover:before:bg-f1-background-hover":
+        "sticky left-0 z-10 bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-[calc(100%-1px)] before:w-full before:bg-f1-background before:transition-all before:content-[''] group-hover:before:bg-f1-background-hover":
           sticky && isScrolled,
       })}
     >
