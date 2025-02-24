@@ -4,6 +4,7 @@ import { cn, focusRing } from "@/lib/utils"
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
 import { AnimatePresence, motion } from "framer-motion"
 import * as React from "react"
+import { useId } from "react"
 
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
@@ -12,7 +13,7 @@ const Checkbox = React.forwardRef<
   }
 >(({ className, indeterminate, disabled, ...props }, ref) => {
   // Generate a unique ID if one isn't provided
-  const uniqueId = React.useId()
+  const uniqueId = useId()
   const checkboxId = props.id || uniqueId
 
   return (
