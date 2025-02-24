@@ -1,3 +1,4 @@
+import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { PersonAvatar } from "@/experimental/Information/Avatars/exports"
 import {
   RawTag,
@@ -5,7 +6,7 @@ import {
   type StatusVariant,
 } from "@/experimental/Information/Tags/exports"
 import type { Meta, StoryObj } from "@storybook/react"
-import React from "react"
+import React, { useState } from "react"
 import {
   OneTable,
   TableBody,
@@ -125,26 +126,66 @@ export const Default: Story = {
 }
 
 export const Check: Story = {
-  render: () => (
-    <OneTable>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead>Role</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {sampleData.map((row) => (
-          <TableRow key={row.id} selected={row.selected}>
-            <TableCell>{row.name}</TableCell>
-            <TableCell>{row.email}</TableCell>
-            <TableCell>{row.role}</TableCell>
+  render: () => {
+    const [selectedRows, setSelectedRows] = useState<Record<string, boolean>>(
+      () => ({
+        [sampleData[0].id]: true,
+        [sampleData[2].id]: true,
+      })
+    )
+
+    const selectedCount = Object.values(selectedRows).filter(Boolean).length
+    const isAllSelected = selectedCount === sampleData.length
+    const isPartiallySelected =
+      selectedCount > 0 && selectedCount < sampleData.length
+
+    const handleSelectAll = (checked: boolean) => {
+      const newSelected = {} as Record<string, boolean>
+      sampleData.forEach((row) => {
+        newSelected[row.id] = checked
+      })
+      setSelectedRows(newSelected)
+    }
+
+    return (
+      <OneTable>
+        <TableHeader>
+          <TableRow>
+            <TableHead>
+              <Checkbox
+                checked={isAllSelected || isPartiallySelected}
+                indeterminate={isPartiallySelected}
+                onCheckedChange={handleSelectAll}
+              />
+            </TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </OneTable>
-  ),
+        </TableHeader>
+        <TableBody>
+          {sampleData.map((row) => (
+            <TableRow key={row.id} selected={selectedRows[row.id]}>
+              <TableCell>
+                <Checkbox
+                  checked={!!selectedRows[row.id]}
+                  onCheckedChange={(checked) => {
+                    setSelectedRows((prev) => ({
+                      ...prev,
+                      [row.id]: checked,
+                    }))
+                  }}
+                />
+              </TableCell>
+              <TableCell>{row.name}</TableCell>
+              <TableCell>{row.email}</TableCell>
+              <TableCell>{row.role}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </OneTable>
+    )
+  },
 }
 
 export const InfoHeader: Story = {

@@ -15,7 +15,7 @@ export interface TableProps {
 }
 
 function TableBase({ children }: TableProps) {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [_, setIsScrolled] = useState(false)
   const [leftRef, isAtLeft] = useIntersectionObserver({
     threshold: 1,
   })
