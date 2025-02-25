@@ -1,0 +1,33 @@
+name: 'Setup Node and pnpm'
+description: 'Setup Node.js and pnpm, install dependencies and build'
+inputs:
+  node-version:
+    description: 'Node.js version'
+    required: false
+    default: '20.x'
+  registry:
+    description: 'Registry URL'
+    required: false
+    default: 'https://npm.pkg.github.com'
+  scope:
+    description: 'Scope'
+    required: false
+    default: '@factorialco'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: ${{ inputs.registry }}
+        scope: ${{ inputs.scope }}
+
+    - name: Install pnpm
+      run: npm install -g pnpm
+      shell: bash
+
+    - name: Install dependencies
+      run: pnpm install
+      shell: bash
