@@ -5,12 +5,12 @@ const config: StorybookConfig = {
     "../docs/Introduction.mdx",
     "../docs/**/*.mdx",
     {
-      directory: "../lib/components",
-      titlePrefix: "Components",
+      directory: "../lib/core",
+      titlePrefix: "Core",
     },
     {
-      directory: "../lib/experimental",
-      titlePrefix: "Components",
+      directory: "../lib/domain",
+      titlePrefix: "Domain",
     },
     ...(process.env.PUBLIC_BUILD
       ? []
@@ -20,7 +20,7 @@ const config: StorybookConfig = {
             titlePrefix: "Playground",
           },
           {
-            directory: "../lib/ui",
+            directory: "../lib/internal",
             titlePrefix: "🔒 Internal",
           },
         ]),

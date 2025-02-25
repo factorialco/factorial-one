@@ -1,0 +1,18 @@
+import type { Meta, StoryObj } from "@storybook/react"
+import { SidebarIcon } from "./index.tsx"
+
+const meta: Meta<typeof SidebarIcon> = {
+  title: "Sidebar/Icon",
+  component: SidebarIcon,
+  tags: ["autodocs", "experimental"],
+}
+
+export default meta
+
+type Story = StoryObj<typeof SidebarIcon>
+
+export const Default: Story = {
+  args: {
+    isExpanded: true,
+  },
+}

@@ -16,13 +16,17 @@ import {
 import React from "react"
 import { useXRay } from "../lib/lib/xray"
 
-import { Button } from "@/components/exports"
-import { Split, Stack } from "@/experimental/exports"
+import { Button } from "@/core/components"
+import { Split, Stack } from "@/core/components/experimental"
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/core/internal/popover"
+import { ScrollArea } from "@/core/internal/scrollarea"
 import Add from "@/icons/app/Add"
 import Ellipsis from "@/icons/app/Ellipsis"
-import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
-import { ScrollArea } from "@/ui/scrollarea"
 
 const Title: React.FC<{ title: string }> = ({ title }) => (
   <div className="flex h-14 items-center gap-2 px-3 font-medium text-f1-foreground">

@@ -1,5 +1,5 @@
-import { Page } from "@/experimental/Navigation/Page"
-import * as PageStories from "../../experimental/Navigation/Page/index.stories"
+import { Page } from "@/core/components/experimental/Navigation/Page"
+import * as PageStories from "@/core/components/experimental/Navigation/Page/index.stories"
 
 export const PageDecorator = (Story: React.ComponentType) => (
   <div className="flex h-[600px] w-full flex-row">

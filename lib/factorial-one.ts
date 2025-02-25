@@ -1,2 +1,3 @@
-export * from "./components/exports"
+export * from "./core"
+export * from "./domain"
 export * from "./lib/exports"

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss"
 
-import { baseColors, f1Colors } from "./lib/tokens/colors"
+import { baseColors, f1Colors } from "./lib/core/tokens/colors"
 import { absoluteSpacing, relativeSpacing } from "./tailwind/spacing"
 
 export default {

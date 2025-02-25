@@ -3,7 +3,7 @@ import { defineConfig } from "tsup"
 export default defineConfig({
   entry: {
     "factorial-one": "lib/factorial-one.ts",
-    experimental: "lib/experimental/exports.ts",
+    experimental: "lib/experimental/index.ts",
   },
   format: ["esm"],
   dts: true,
@@ -12,5 +12,5 @@ export default defineConfig({
   clean: true,
   outDir: "dist",
   tsconfig: "tsconfig-build.json",
-  external: ["react/jsx-runtime", "react", "react-dom"]
+  external: ["react/jsx-runtime", "react", "react-dom"],
 })

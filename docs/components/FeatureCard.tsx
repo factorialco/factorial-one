@@ -1,5 +1,5 @@
-import { Icon, IconType } from "@/components/Utilities/Icon"
 import { useState } from "react"
+import { Icon, IconType } from "../../lib/core/components/utility/Icon"
 
 interface FeatureCardProps {
   icon: IconType

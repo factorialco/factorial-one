@@ -1,7 +1,7 @@
-import { ChartItem } from "@/components/Charts/utils/types"
-import { AreaChartWidget } from "@/experimental/Widgets/Charts/AreaChartWidget"
-import { ChartWidgetEmptyState } from "@/experimental/Widgets/ChartWidgetEmptyState"
-import { ChartConfig } from "@/ui/chart"
+import { ChartItem } from "@/core/components/charts/utils/types"
+import { ChartConfig } from "@/core/internal/chart"
+import { AreaChartWidget } from "@/domain/components/widgets/Charts/AreaChartWidget"
+import { ChartWidgetEmptyState } from "@/domain/components/widgets/ChartWidgetEmptyState"
 import { ComponentProps, forwardRef } from "react"
 
 export interface PerformanceInsightType {

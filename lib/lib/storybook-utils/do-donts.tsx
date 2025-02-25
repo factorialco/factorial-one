@@ -1,4 +1,4 @@
-import { StatusTag } from "@/experimental/Information/Tags/exports"
+import { StatusTag } from "@/core/components/experimental/Information/Tags/exports"
 import { FC, ReactNode } from "react"
 
 interface DoDontsProps {

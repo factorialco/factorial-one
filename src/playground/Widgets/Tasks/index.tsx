@@ -1,6 +1,6 @@
-import { IndicatorsList } from "@/experimental/Widgets/Content/IndicatorsList"
-import { TasksList } from "@/experimental/Widgets/Content/TasksList"
-import { Widget } from "@/experimental/Widgets/Widget"
+import { IndicatorsList } from "@/domain/components/widgets/Content/IndicatorsList"
+import { TasksList } from "@/domain/components/widgets/Content/TasksList"
+import { Widget } from "@/domain/components/widgets/Widget"
 import { forwardRef } from "react"
 
 export interface TasksInsightData {

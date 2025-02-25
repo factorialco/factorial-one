@@ -1,8 +1,11 @@
-import { Icon as IconComponent, IconType } from "@/components/Utilities/Icon"
 import * as Icons from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils.ts"
 import { AnimatePresence, motion } from "framer-motion"
 import { useMemo, useState } from "react"
+import {
+  Icon as IconComponent,
+  IconType,
+} from "../../lib/core/components/utility/Icon"
 
 type IconEntry = {
   name: string

@@ -15,7 +15,7 @@ export default defineConfig({
           dts({
             include: ["lib", "src"],
             exclude: ["**/*.stories.tsx"],
-            rollupTypes: true
+            rollupTypes: true,
           }),
         ]
       : []),
@@ -30,7 +30,7 @@ export default defineConfig({
     lib: {
       entry: {
         ["factorial-one"]: resolve(__dirname, "lib/factorial-one.ts"),
-        ["experimental"]: resolve(__dirname, "lib/experimental/exports.ts"),
+        ["experimental"]: resolve(__dirname, "lib/experimental/index.ts"),
       },
       fileName: (_, entryName) => {
         return `${entryName}.js`

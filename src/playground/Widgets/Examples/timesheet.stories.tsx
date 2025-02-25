@@ -1,6 +1,6 @@
-import { CategoryBarSection } from "@/experimental/Widgets/Content/CategoryBarSection"
-import { Widget } from "@/experimental/Widgets/Widget"
-import { WidgetSection } from "@/experimental/Widgets/WidgetSection"
+import { CategoryBarSection } from "@/domain/components/widgets/Content/CategoryBarSection"
+import { Widget } from "@/domain/components/widgets/Widget"
+import { WidgetSection } from "@/domain/components/widgets/WidgetSection"
 import type { Meta, StoryObj } from "@storybook/react"
 
 const meta = {
