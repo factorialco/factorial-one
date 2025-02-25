@@ -1,3 +1,4 @@
+import { Button } from "@/components/Actions/Button"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { PersonAvatar } from "@/experimental/Information/Avatars/exports"
 import {
@@ -5,7 +6,9 @@ import {
   StatusTag,
   type StatusVariant,
 } from "@/experimental/Information/Tags/exports"
+import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { OnePagination } from "@/experimental/OnePagination"
+import { Delete, Ellipsis, Pencil } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import React, { useState } from "react"
 import {
@@ -152,7 +155,7 @@ export const Check: Story = {
       <OneTable>
         <TableHeader>
           <TableRow>
-            <TableHead>
+            <TableHead width="fit">
               <Checkbox
                 checked={isAllSelected || isPartiallySelected}
                 indeterminate={isPartiallySelected}
@@ -507,5 +510,79 @@ export const Footer: Story = {
         </div>
       </div>
     </>
+  ),
+}
+
+export const Actions: Story = {
+  render: () => (
+    <OneTable>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead width="fit" hidden>
+            Actions
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sampleData.map((row) => (
+          <TableRow key={row.id}>
+            <TableCell>
+              <div className="flex items-center gap-2">
+                <PersonAvatar
+                  firstName={row.name.split(" ")[0]}
+                  lastName={row.name.split(" ")[1]}
+                  size="small"
+                />
+                <span className="font-medium">{row.name}</span>
+              </div>
+            </TableCell>
+            <TableCell>{row.email}</TableCell>
+            <TableCell>
+              <div className="w-fit">
+                <RawTag text={row.role} />
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="w-fit">
+                <StatusTag
+                  text={row.status.label}
+                  variant={row.status.variant}
+                />
+              </div>
+            </TableCell>
+            <TableCell>
+              <Dropdown
+                items={[
+                  {
+                    label: "Edit",
+                    icon: Pencil,
+                    onClick: () => {},
+                  },
+                  {
+                    label: "Delete",
+                    icon: Delete,
+                    onClick: () => {},
+                    critical: true,
+                  },
+                ]}
+              >
+                <Button
+                  hideLabel
+                  variant="ghost"
+                  icon={Ellipsis}
+                  onClick={() => {}}
+                  round
+                  label="Actions"
+                />
+              </Dropdown>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </OneTable>
   ),
 }

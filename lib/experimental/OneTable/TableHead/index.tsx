@@ -5,9 +5,16 @@ import { cn, focusRing } from "@/lib/utils"
 import { TableHead as TableHeadRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "framer-motion"
 import { useTable } from "../utils/TableContext"
+import { ColumnWidth, columnWidths } from "../utils/sizes"
 
 interface TableHeadProps {
   children: React.ReactNode
+
+  /**
+   * The width of the header cell. If not provided, the width will be "auto"
+   * @default "auto"
+   */
+  width?: ColumnWidth
 
   /**
    * When true, the header cell will stick to the left side of the table when scrolling horizontally
@@ -33,14 +40,22 @@ interface TableHeadProps {
    * that shows this text in a tooltip when hovered.
    */
   info?: string
+
+  /**
+   * When true, the header cell will not be visible.
+   * @default false
+   */
+  hidden?: boolean
 }
 
 export function TableHead({
   children,
+  width = "auto",
   sortState = "none",
   onSortClick,
   info,
   sticky = false,
+  hidden = false,
 }: TableHeadProps) {
   const { isScrolled } = useTable()
 
@@ -103,10 +118,14 @@ export function TableHead({
 
   return (
     <TableHeadRoot
-      className={cn("group", {
-        "sticky left-0 z-10 bg-f1-background": sticky && isScrolled,
-      })}
+      className={cn(
+        "group",
+        sticky && isScrolled && "sticky left-0 z-10 bg-f1-background",
+        hidden && "after:hidden"
+      )}
       tabIndex={sticky ? 0 : undefined}
+      style={{ width: columnWidths[width] }}
+      role={hidden ? "presentation" : undefined}
     >
       <AnimatePresence>
         {isScrolled && sticky && (
@@ -118,13 +137,14 @@ export function TableHead({
           />
         )}
       </AnimatePresence>
-      {info ? (
-        <Tooltip label={info}>
-          <div>{content}</div>
-        </Tooltip>
-      ) : (
-        content
-      )}
+      {!hidden &&
+        (info ? (
+          <Tooltip label={info}>
+            <div>{content}</div>
+          </Tooltip>
+        ) : (
+          content
+        ))}
     </TableHeadRoot>
   )
 }

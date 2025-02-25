@@ -67,10 +67,7 @@ function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
         </TableHeader>
         <TableBody>
           {Array.from({ length: 5 }).map((_, rowIndex) => (
-            <TableRow
-              key={`skeleton-row-${rowIndex}`}
-              className="hover:bg-transparent"
-            >
+            <TableRow key={`skeleton-row-${rowIndex}`}>
               {Array.from({ length: columns }).map((_, colIndex) => (
                 <TableCell key={`skeleton-cell-${rowIndex}-${colIndex}`}>
                   <Skeleton className="h-4 w-[80px]" />
