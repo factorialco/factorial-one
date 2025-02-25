@@ -1,7 +1,6 @@
-import { Button } from "@/components/Actions/Button"
 import { getAvatarColor } from "@/experimental/Information/Avatars/BaseAvatar/utils"
 import { PersonAvatar } from "@/experimental/Information/Avatars/exports"
-import Reaction from "@/icons/app/Reaction"
+import { Picker } from "@/experimental/Information/Reactions/Picker"
 import { cn } from "@/lib/utils"
 import { BACKGROUND_COLORS } from "../types"
 
@@ -10,6 +9,8 @@ type CelebrationAvatarProps = {
   lastName: string
   src?: string
   canReact: boolean
+  lastEmojiReaction?: string
+  onReactionSelect?: (emoji: string) => void
 }
 
 export function CelebrationAvatar({
@@ -17,6 +18,8 @@ export function CelebrationAvatar({
   lastName,
   src,
   canReact,
+  lastEmojiReaction,
+  onReactionSelect,
 }: CelebrationAvatarProps) {
   return (
     <div
@@ -58,13 +61,11 @@ export function CelebrationAvatar({
           </div>
           {canReact && (
             <div className="absolute -right-0.5 bottom-0.5">
-              <Button
-                label="React"
-                hideLabel
-                round
-                variant="neutral"
+              <Picker
+                lastEmojiReaction={lastEmojiReaction}
+                onSelect={onReactionSelect}
                 size="sm"
-                icon={Reaction}
+                variant="neutral"
               />
             </div>
           )}

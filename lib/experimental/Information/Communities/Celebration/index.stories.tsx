@@ -53,6 +53,23 @@ export const Default: Story = {
   ),
 }
 
+export const WithReaction: Story = {
+  render: () => (
+    <div className="w-48">
+      <Celebration
+        link="/"
+        firstName="Saul"
+        lastName="Dominguez"
+        src="https://github.com/sauldom102.png"
+        type="birthday"
+        typeLabel="Birthday"
+        date={exampleDate}
+        lastEmojiReaction="😍"
+      />
+    </div>
+  ),
+}
+
 export const NoImage: Story = {
   decorators: [
     (Story) => (

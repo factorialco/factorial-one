@@ -1,4 +1,5 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
+import { EmojiImage } from "@/factorial-one"
 import { Button as ShadcnButton } from "@/ui/button"
 import { cva } from "cva"
 import { ComponentProps, forwardRef, useState } from "react"
@@ -13,6 +14,7 @@ export type ButtonProps = Pick<
   label: string
   loading?: boolean
   icon?: IconType
+  emoji?: string
   hideLabel?: boolean
 }
 
@@ -59,6 +61,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     disabled,
     loading: forceLoading,
     icon,
+    emoji,
     variant = "default",
     size = "md",
     ...props
@@ -105,6 +108,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
           }
         />
       )}
+      {emoji && <EmojiImage emoji={emoji} size={size === "sm" ? "sm" : "md"} />}
       {!hideLabel && label}
     </ShadcnButton>
   )

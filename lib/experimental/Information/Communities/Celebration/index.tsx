@@ -5,6 +5,7 @@ import { Link } from "@/lib/linkHandler"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn, focusRing } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
+import { useEffect, useState } from "react"
 import { CelebrationAvatar } from "./components/avatar"
 import { useConfetti } from "./hooks/useConfetti"
 import { EMOJI_MAP } from "./types"
@@ -15,6 +16,8 @@ export type CelebrationProps = {
   lastName: string
   src?: string
   canReact?: boolean
+  lastEmojiReaction?: string
+  onReactionSelect?: (emoji: string) => void
   type?: "birthday" | "anniversary" | "first-day"
   typeLabel: string
   date: Date
@@ -26,10 +29,23 @@ export const BaseCelebration = ({
   lastName,
   src,
   canReact = true,
+  lastEmojiReaction,
+  onReactionSelect,
   type,
   typeLabel,
   date,
 }: CelebrationProps) => {
+  const [lastReaction, setLastReaction] = useState(lastEmojiReaction)
+
+  useEffect(() => {
+    setLastReaction(lastEmojiReaction)
+  }, [lastEmojiReaction])
+
+  const handleReactionSelect = (emoji: string) => {
+    setLastReaction(emoji)
+    onReactionSelect?.(emoji)
+  }
+
   const shouldReduceMotion = useReducedMotion()
   const { canvasRef, handleMouseEnter, handleMouseLeave } =
     useConfetti(shouldReduceMotion)
@@ -59,6 +75,8 @@ export const BaseCelebration = ({
           lastName={lastName}
           src={src}
           canReact={canReact}
+          lastEmojiReaction={lastReaction}
+          onReactionSelect={handleReactionSelect}
         />
       </div>
       <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
