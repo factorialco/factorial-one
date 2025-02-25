@@ -8,50 +8,12 @@
   "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
   "files": [
     "assets",
+    "icons",
     "dist",
     "styles.css",
     "tailwind.config.ts",
     "postcss.config.js"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/lib/factorial-one.d.ts",
-      "default": "./dist/lib/factorial-one.js"
-    },
-    "./experimental": {
-      "types": "./lib/experimental/lib/exports.d.ts",
-      "default": "./dist/lib/experimental.js"
-    },
-    "./icons/animated": {
-      "types": "./dist/icons/animated/index.d.ts",
-      "default": "./dist/icons/animated/index.js"
-    },
-    "./icons/animated/*": {
-      "types": "./dist/icons/animated/*.d.ts",
-      "default": "./dist/icons/animated/*.js"
-    },
-    "./icons/app": {
-      "types": "./dist/icons/app/index.d.ts",
-      "default": "./dist/icons/app/index.js"
-    },
-    "./icons/app/*": {
-      "types": "./dist/icons/app/*.d.ts",
-      "default": "./dist/icons/app/*.js"
-    },
-    "./icons/modules": {
-      "types": "./dist/icons/modules/index.d.ts",
-      "default": "./dist/icons/modules/index.js"
-    },
-    "./icons/modules/*": {
-      "types": "./dist/icons/modules/*.d.ts",
-      "default": "./dist/icons/modules/*.js"
-    },
-    "./icons/*": {
-      "types": "./dist/icons/*",
-      "default": "./dist/icons/*"
-    },
-    "./styles.css": "./dist/styles.css"
-  },
   "sideEffects": [
     "**/*.css"
   ],
@@ -59,12 +21,10 @@
     "dev": "storybook dev -p 6006",
     "dev:docs": "DOCS_MODE=true pnpm run dev",
     "start": "pnpm run dev",
-    "build": "tsc --project ./tsconfig-build.json && pnpm run build:tailwind && run-p build-icons && BUILD_TYPES=true vite build",
+    "build": "tsc --project ./tsconfig-build.json && BUILD_TYPES=true vite build && pnpm run build:tailwind && run-p build-icons",
     "build:tsup": "tsup && pnpm run build:tailwind && run-p build-icons",
     "build-icons": "tsc --project ./tsconfig-build-icons.json",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
-    "build:watch": "pnpm build --watch",
-    "dev:coder": "pnpm build --watch -- --buildSync",
     "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
     "lint-fix": "pnpm run lint -- --fix",
     "preview": "vite preview",
@@ -162,10 +122,8 @@
     "@typescript-eslint/parser": "^8.24.1",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
-    "chalk": "^5.4.1",
     "axe-playwright": "^2.1.0",
     "chromatic": "^11.25.2",
-    "consola": "^3.4.0",
     "emoji-mart": "^5.6.0",
     "eslint": "^9.21.0",
     "eslint-plugin-react": "^7.37.4",
@@ -192,8 +150,7 @@
     "vite": "^6.1.1",
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-lib-inject-css": "^2.2.1",
-    "vitest": "^3.0.5",
-    "dotenv": "^16.4.7"
+    "vitest": "^3.0.5"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.34"
