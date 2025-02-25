@@ -76,7 +76,6 @@ export const Default: Story = {
                                 <PersonAvatar
                                   firstName="René"
                                   lastName="Galindo"
-                                  src="https://github.com/renegalindo.png"
                                   size="medium"
                                 />
                               </motion.div>
@@ -156,7 +155,6 @@ export const Default: Story = {
                             <PersonAvatar
                               firstName="René"
                               lastName="Galindo"
-                              src="https://github.com/renegalindo.png"
                               size="xsmall"
                             />
                           </motion.div>
