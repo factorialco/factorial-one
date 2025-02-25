@@ -1,4 +1,4 @@
-import { CategoryBarSection } from "@/domain/components/widgets/Content/CategoryBarSection"
+import { CategoryBarSection } from "@/domain/components/widgets/content/CategoryBarSection"
 import { Widget } from "@/domain/components/widgets/Widget"
 import { WidgetSection } from "@/domain/components/widgets/WidgetSection"
 import type { Meta, StoryObj } from "@storybook/react"

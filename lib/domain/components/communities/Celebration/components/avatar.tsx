@@ -1,6 +1,6 @@
 import { Button } from "@/core/components/actions/Button"
-import { getAvatarColor } from "@/core/components/experimental/Information/Avatars/BaseAvatar/utils.ts"
-import { PersonAvatar } from "@/core/components/experimental/Information/Avatars/exports.ts"
+import { getAvatarColor } from "@/core/components/experimental/information/avatars/BaseAvatar/utils.ts"
+import { PersonAvatar } from "@/core/components/experimental/information/avatars/exports.ts"
 import Reaction from "@/icons/app/Reaction.tsx"
 import { cn } from "@/lib/utils.ts"
 import { BACKGROUND_COLORS } from "../types.ts"

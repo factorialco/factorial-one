@@ -1,6 +1,6 @@
 import { ChartItem } from "@/core/components/charts/utils/types"
 import { ChartConfig } from "@/core/internal/chart"
-import { AreaChartWidget } from "@/domain/components/widgets/Charts/AreaChartWidget"
+import { AreaChartWidget } from "@/domain/components/widgets/charts/AreaChartWidget"
 import { ChartWidgetEmptyState } from "@/domain/components/widgets/ChartWidgetEmptyState"
 import { ComponentProps, forwardRef } from "react"
 

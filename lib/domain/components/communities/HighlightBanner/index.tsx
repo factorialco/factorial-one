@@ -1,6 +1,6 @@
-import { ModuleAvatar } from "@/core/components/experimental/Information/ModuleAvatar"
-import { Kudos } from "@/icons/modules"
+import { ModuleAvatar } from "@/core/components/experimental/information/ModuleAvatar"
 import { Button } from "@/core/internal/button.tsx"
+import { Kudos } from "@/icons/modules"
 
 type HighlightBannerProps = {
   title: string

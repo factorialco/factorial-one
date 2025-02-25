@@ -1,9 +1,9 @@
+import { Select } from "@/core/components/experimental/forms/fields/Select"
 import { Icon } from "@/core/components/utility/Icon"
 import { Button } from "@/core/internal/button.tsx"
 import { ScrollArea } from "@/core/internal/scrollarea.tsx"
 import { Search } from "@/icons/app"
 import { cn } from "@/lib/utils.ts"
-import { Select } from "../../../../core/components/experimental/Forms/Fields/Select"
 import { AvatarNameListItem } from "../AvatarNameListItem"
 import { AvatarNameListTag } from "../AvatarNameListTag"
 import {

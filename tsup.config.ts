@@ -3,7 +3,7 @@ import { defineConfig } from "tsup"
 export default defineConfig({
   entry: {
     "factorial-one": "lib/factorial-one.ts",
-    experimental: "lib/experimental/index.ts",
+    experimental: "lib/core/components/experimental/index.ts",
   },
   format: ["esm"],
   dts: true,

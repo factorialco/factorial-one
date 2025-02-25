@@ -9,11 +9,7 @@ import { FC, PropsWithChildren, useEffect, useState } from "react"
 import { DARK_MODE_EVENT_NAME } from "storybook-dark-mode"
 import lightTheme, { darkTheme } from "./FactorialOne"
 import { DOCS_RENDERED } from "@storybook/core-events"
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/core/components/experimental/Information/Alert"
+import { Alert, AlertDescription, AlertTitle } from "@/core/components/Alert"
 
 const channel = addons.getChannel()
 

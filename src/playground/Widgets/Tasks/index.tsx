@@ -1,5 +1,5 @@
-import { IndicatorsList } from "@/domain/components/widgets/Content/IndicatorsList"
-import { TasksList } from "@/domain/components/widgets/Content/TasksList"
+import { IndicatorsList } from "@/domain/components/widgets/content/IndicatorsList"
+import { TasksList } from "@/domain/components/widgets/content/TasksList"
 import { Widget } from "@/domain/components/widgets/Widget"
 import { forwardRef } from "react"
 

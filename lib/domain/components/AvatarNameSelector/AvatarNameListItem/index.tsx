@@ -1,10 +1,10 @@
 import { Button } from "@/core/components/actions/Button"
 import { Counter } from "@/core/components/experimental"
-import { PersonAvatar } from "@/core/components/experimental/Information/Avatars/PersonAvatar"
+import { Checkbox } from "@/core/components/experimental/forms/fields/Checkbox"
+import { PersonAvatar } from "@/core/components/experimental/information/avatars/PersonAvatar"
 import { Icon } from "@/core/components/utility/Icon"
 import LogoAvatar from "@/icons/app/LogoAvatar.tsx"
 import { ChevronDown, ChevronRight } from "lucide-react"
-import { Checkbox } from "../../../../core/components/experimental/Forms/Fields/Checkbox"
 import { HighlightText } from "../AvatarNameHighLightText"
 import { AvatarNamedEntity, AvatarNamedSubEntity } from "../types.ts"
 

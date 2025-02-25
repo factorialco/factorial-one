@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import { TableCollection } from "./index.tsx"
 import type { FiltersDefinition } from "../Filters/types.ts"
 import type { DataSource } from "../types.ts"
+import { TableCollection } from "./index.tsx"
 
 type TestFilters = FiltersDefinition
 
@@ -58,7 +58,7 @@ describe("TableCollection", () => {
       )
 
       const loadingRows = screen.getAllByRole("row")
-      // Header row + 4 loading rows
+      // header row + 4 loading rows
       expect(loadingRows).toHaveLength(5)
 
       // Look for skeleton elements by their class name
@@ -153,7 +153,7 @@ describe("TableCollection", () => {
         expect(rows).toHaveLength(1) // Just the header row
       })
 
-      // Headers should still be present
+      // headers should still be present
       expect(screen.getAllByRole("columnheader")).toHaveLength(2)
     })
 

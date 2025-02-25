@@ -1,6 +1,6 @@
 import { Button, ButtonProps } from "@/core/components/actions/Button"
-import { AlertAvatar } from "@/core/components/experimental/Information/Avatars/AlertAvatar"
-import { EmojiAvatar } from "@/core/components/experimental/Information/Avatars/EmojiAvatar"
+import { AlertAvatar } from "@/core/components/experimental/information/avatars/AlertAvatar"
+import { EmojiAvatar } from "@/core/components/experimental/information/avatars/EmojiAvatar"
 import { IconType } from "@/core/components/utility/Icon"
 
 type Action = {

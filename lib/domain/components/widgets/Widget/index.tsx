@@ -1,11 +1,11 @@
 import { Button, ButtonProps } from "@/core/components/actions/Button"
-import { Counter } from "@/core/components/experimental/Information/Counter"
-import { AlertTag } from "@/core/components/experimental/Information/Tags/AlertTag"
+import { Counter } from "@/core/components/experimental/information/Counter"
+import { AlertTag } from "@/core/components/experimental/information/tags/AlertTag"
 import {
   StatusTag,
   StatusVariant,
-} from "@/core/components/experimental/Information/Tags/StatusTag"
-import { PrivateBox } from "@/core/components/experimental/Utilities/PrivateBox"
+} from "@/core/components/experimental/information/tags/StatusTag"
+import { PrivateBox } from "@/core/components/experimental/utilities/PrivateBox"
 import {
   Card,
   CardComment,

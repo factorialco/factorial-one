@@ -7,7 +7,7 @@ import useEmblaCarousel, {
 } from "embla-carousel-react"
 import * as React from "react"
 
-import { SPACE_FOR_WIDGET_SHADOW } from "@/core/components/experimental/Navigation/Carousel/DynamicCarousel"
+import { SPACE_FOR_WIDGET_SHADOW } from "@/core/components/experimental/navigation/Carousel/DynamicCarousel"
 import { Button } from "@/core/internal/button.tsx"
 import { cn } from "@/lib/utils.ts"
 

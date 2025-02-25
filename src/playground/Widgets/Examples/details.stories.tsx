@@ -1,12 +1,12 @@
 import {
   PersonTag,
   TeamTag,
-} from "@/core/components/experimental/Information/Tags/exports"
+} from "@/core/components/experimental/information/tags"
 import {
   DetailsItem,
   DetailsItemType,
-} from "@/core/components/experimental/PageLayouts/Utils/DetailsItem"
-import { Weekdays } from "@/domain/components/widgets/Content/Weekdays"
+} from "@/core/components/experimental/pageLayouts/Utils/DetailsItem"
+import { Weekdays } from "@/domain/components/widgets/content/Weekdays"
 import { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps } from "react"
 

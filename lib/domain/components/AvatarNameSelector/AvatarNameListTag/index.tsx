@@ -1,5 +1,5 @@
-import { BaseAvatar } from "@/core/components/experimental/Information/Avatars/BaseAvatar"
-import { BaseTag } from "@/core/components/experimental/Information/Tags/BaseTag"
+import { BaseAvatar } from "@/core/components/experimental/information/avatars/BaseAvatar"
+import { BaseTag } from "@/core/components/experimental/information/tags/BaseTag"
 import { Icon } from "@/core/components/utility/Icon"
 import { Cross } from "@/icons/app"
 import { cn } from "@/lib/utils.ts"
