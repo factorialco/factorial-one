@@ -195,3 +195,12 @@ export const IconButtonGroup: Story = {
     </div>
   ),
 }
+
+export const OnlyEmoji: Story = {
+  args: {
+    emoji: "🥰",
+    label: "🥰",
+    variant: "neutral",
+    hideLabel: true,
+  },
+}
