@@ -8,9 +8,30 @@ import { useTable } from "../utils/TableContext"
 
 interface TableHeadProps {
   children: React.ReactNode
+
+  /**
+   * When true, the header cell will stick to the left side of the table when scrolling horizontally
+   * @default false
+   */
   sticky?: boolean
+
+  /**
+   * The current sort direction of this column. "none" indicates no sorting,
+   * "asc" sorts ascending (A-Z, 1-9), and "desc" sorts descending (Z-A, 9-1)
+   * @default "none"
+   */
   sortState?: "none" | "asc" | "desc"
+
+  /**
+   * Callback fired when the sort button is clicked.
+   * Use this to handle toggling between sort states.
+   */
   onSortClick?: () => void
+
+  /**
+   * Optional tooltip text. When provided, displays an info icon next to the header content
+   * that shows this text in a tooltip when hovered.
+   */
   info?: string
 }
 
@@ -23,23 +44,8 @@ export function TableHead({
 }: TableHeadProps) {
   const { isScrolled } = useTable()
 
-  return (
-    <TableHeadRoot
-      className={cn("group", {
-        "sticky left-0 z-10 bg-f1-background": sticky && isScrolled,
-      })}
-      tabIndex={sticky ? 0 : undefined}
-    >
-      <AnimatePresence>
-        {isScrolled && sticky && (
-          <motion.div
-            className="absolute inset-y-0 -right-4 h-full w-4 bg-gradient-to-r from-f1-foreground-secondary to-transparent"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.1 }}
-            exit={{ opacity: 0 }}
-          />
-        )}
-      </AnimatePresence>
+  const content = (
+    <>
       <div className="flex items-center gap-1">
         {children}
         {onSortClick && (
@@ -87,13 +93,38 @@ export function TableHead({
           </motion.button>
         )}
         {info && (
-          <Tooltip label={info}>
-            <div className="flex h-5 w-5 items-center justify-center">
-              <Icon icon={InfoCircleLine} size="xs" />
-            </div>
-          </Tooltip>
+          <div className="flex h-6 w-6 items-center justify-center text-f1-foreground-secondary">
+            <Icon icon={InfoCircleLine} size="sm" />
+          </div>
         )}
       </div>
+    </>
+  )
+
+  return (
+    <TableHeadRoot
+      className={cn("group", {
+        "sticky left-0 z-10 bg-f1-background": sticky && isScrolled,
+      })}
+      tabIndex={sticky ? 0 : undefined}
+    >
+      <AnimatePresence>
+        {isScrolled && sticky && (
+          <motion.div
+            className="absolute inset-y-0 -right-4 h-full w-4 bg-gradient-to-r from-f1-foreground-secondary to-transparent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
+      </AnimatePresence>
+      {info ? (
+        <Tooltip label={info}>
+          <div>{content}</div>
+        </Tooltip>
+      ) : (
+        content
+      )}
     </TableHeadRoot>
   )
 }

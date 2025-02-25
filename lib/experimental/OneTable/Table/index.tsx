@@ -10,6 +10,7 @@ import { TableCell } from "../TableCell"
 import { TableHead } from "../TableHead"
 import { TableHeader } from "../TableHeader"
 import { TableRow } from "../TableRow"
+
 export interface TableProps {
   children: React.ReactNode
 }
@@ -37,6 +38,11 @@ function TableBase({ children }: TableProps) {
 }
 
 interface TableSkeletonProps {
+  /**
+   * The number of columns to display in the skeleton loading state.
+   * Each column will contain a loading placeholder.
+   * @default 5
+   */
   columns?: number
 }
 

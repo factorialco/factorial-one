@@ -5,6 +5,11 @@ import { useTable } from "../utils/TableContext"
 
 interface TableCellProps {
   children: React.ReactNode
+
+  /**
+   * When true, the cell will stick to the left side of the table when scrolling horizontally
+   * @default false
+   */
   sticky?: boolean
 }
 
