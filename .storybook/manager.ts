@@ -53,5 +53,19 @@ addons.setConfig({
         toolbar: true,
       },
     },
+    {
+      tags: "internal",
+      badge: {
+        text: "🔒",
+        bgColor: "transparent",
+        fgColor: "#000000",
+        borderColor: "transparent",
+        tooltip: "Internal",
+      },
+      display: {
+        sidebar: ["component", "docs", "group"],
+        toolbar: true,
+      },
+    },
   ] satisfies TagBadgeParameters,
 })

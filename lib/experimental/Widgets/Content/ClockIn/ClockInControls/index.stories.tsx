@@ -1,4 +1,8 @@
-import HomeIcon from "@/icons/app/Home"
+import {
+  Home as HomeIcon,
+  Office as OfficeIcon,
+  Suitcase as SuitcaseIcon,
+} from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ClockInControls } from "."
 
@@ -22,11 +26,24 @@ const meta: Meta<typeof ClockInControls> = {
   tags: ["autodocs", "experimental"],
   args: {
     labels: defaultLabels,
-    location: {
-      name: "Home",
-      icon: HomeIcon,
-    },
-    projectName: "Bolt’s project",
+    locations: [
+      {
+        id: "1",
+        name: "Home",
+        icon: HomeIcon,
+      },
+      {
+        id: "2",
+        name: "Business Trip",
+        icon: SuitcaseIcon,
+      },
+      {
+        id: "3",
+        name: "Office",
+        icon: OfficeIcon,
+      },
+    ],
+    locationId: "1",
   },
   render: (args) => (
     <div className="max-w-[350px]">
@@ -109,14 +126,7 @@ export const Collapsed: Story = {
 
 export const WithNoLocationOrProject: Story = {
   args: {
-    location: undefined,
-    projectName: undefined,
-  },
-}
-
-export const WithLongProjectName: Story = {
-  args: {
-    projectName: "Bolt’s project with a very long name",
+    locationId: undefined,
   },
 }
 
@@ -135,5 +145,19 @@ export const ClockedOutWithSomeTime: Story = {
         variant: "clocked-out",
       },
     ],
+  },
+}
+
+export const WithDisabledSelectors: Story = {
+  args: {
+    ...ClockedOut.args,
+    locationSelectorDisabled: true,
+  },
+}
+
+export const WithHiddenLocationAndProject: Story = {
+  args: {
+    ...ClockedOut.args,
+    canShowLocation: false,
   },
 }

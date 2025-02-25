@@ -68,6 +68,38 @@ export const LoadingLastTwoItems: Story = {
   },
 }
 
+export const WithSelectBreadcrumb: Story = {
+  args: {
+    breadcrumbs: [
+      {
+        id: "recruitment",
+        label: "Recruitment",
+        href: "/recruitment",
+        icon: Recruitment,
+      },
+      {
+        id: "offers",
+        label: "Offers",
+        href: "/offers",
+      },
+      {
+        id: "my-entity",
+        type: "select",
+        searchbox: true,
+        options: Array.from({ length: 10 }, (_, idx) => ({
+          value: idx.toString(),
+          label: `Offer ${idx}`,
+        })),
+        label: `Offer 1`,
+        value: "1",
+        onChange: (value) => {
+          console.log("WithSelectBreadcrumb value", value)
+        },
+      },
+    ],
+  },
+}
+
 export const LongBreadcrumbs: Story = {
   args: {
     breadcrumbs: [

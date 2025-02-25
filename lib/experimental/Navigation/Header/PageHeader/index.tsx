@@ -11,6 +11,7 @@ import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 import { Dropdown } from "../../Dropdown"
+
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
 export type PageAction = {
@@ -51,10 +52,10 @@ type HeaderProps = {
     variant: StatusVariant
     tooltip?: string
   }
-  breadcrumbs?: BreadcrumbItemType[]
   actions?: PageAction[]
-  embedded?: boolean
   navigation?: NavigationProps
+  embedded?: boolean
+  breadcrumbs?: BreadcrumbItemType[]
 }
 
 function PageNavigationLink({
@@ -93,7 +94,7 @@ export function PageHeader({
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
-  const breadcrumbsTree: BreadcrumbItemType[] = [
+  const breadcrumbsTree: typeof breadcrumbs = [
     {
       id: module.href,
       label: module.name,
@@ -105,7 +106,6 @@ export function PageHeader({
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
   const hasActions = !embedded && actions.length > 0
-  const showBackButton = embedded && hasNavigation
   const lastBreadcrumb = breadcrumbsTree[breadcrumbsTree.length - 1]
   const parentBreadcrumb = hasNavigation
     ? breadcrumbsTree[breadcrumbsTree.length - 2]
@@ -148,7 +148,8 @@ export function PageHeader({
             embedded && hasNavigation && "justify-center"
           )}
         >
-          {showBackButton &&
+          {embedded &&
+            hasNavigation &&
             parentBreadcrumb &&
             !("loading" in parentBreadcrumb) && (
               <div className="absolute left-4">

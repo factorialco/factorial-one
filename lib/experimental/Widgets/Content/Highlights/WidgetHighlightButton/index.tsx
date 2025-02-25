@@ -20,8 +20,6 @@ const Wrapper: React.FC<WrapperProps> = ({ onClick, children }) => {
   const className =
     "block rounded-lg border border-solid border-transparent p-[1px] -m-1"
 
-  console.log({ onClick })
-
   return onClick ? (
     <a
       className={cn(

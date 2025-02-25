@@ -57,7 +57,43 @@ export const Default: Story = {
               firstName: "Nik",
               lastName: "Lopin",
             },
+            {
+              type: "person",
+              firstName: "Josep Jaume",
+              lastName: "Rey",
+            },
+            {
+              type: "person",
+              firstName: "Nik",
+              lastName: "Lopin",
+            },
+            {
+              type: "person",
+              firstName: "Josep Jaume",
+              lastName: "Rey",
+            },
+            {
+              type: "person",
+              firstName: "Nik",
+              lastName: "Lopin",
+            },
           ],
+        },
+      },
+      {
+        label: "Data list",
+        value: {
+          type: "data-list",
+          data: Array(50)
+            .fill(["Manager", "Direct report", "Self review", "Peer"])
+            .flat(),
+        },
+      },
+      {
+        label: "Tag list",
+        value: {
+          type: "tag-list",
+          tags: ["Projects", "Recruitment", "Tasks"],
         },
       },
     ],

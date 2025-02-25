@@ -2,6 +2,7 @@ import {
   CategoryBarChart,
   CategoryBarProps,
 } from "@/components/Charts/CategoryBarChart"
+import { cn } from "@/lib/utils"
 
 interface CategoryBarSectionProps {
   title: string
@@ -9,6 +10,7 @@ interface CategoryBarSectionProps {
   data: CategoryBarProps["data"]
   helpText?: string
   legend?: boolean
+  hideTooltip?: boolean
 }
 
 export function CategoryBarSection({
@@ -17,6 +19,7 @@ export function CategoryBarSection({
   data,
   helpText,
   legend = false,
+  hideTooltip = false,
 }: CategoryBarSectionProps) {
   return (
     <div>
@@ -25,11 +28,22 @@ export function CategoryBarSection({
         <span className="text-xl text-f1-foreground-secondary">{subtitle}</span>
       </div>
       <div className="mt-2">
-        <CategoryBarChart data={data} legend={legend} />
+        <CategoryBarChart
+          data={data}
+          legend={legend}
+          hideTooltip={hideTooltip}
+        />
       </div>
       {!!helpText && (
-        <div className="mt-1">
-          <span className="text-sm">{helpText}</span>
+        <div className={legend ? "mt-1" : "mt-2"}>
+          <span
+            className={cn(
+              "text-f1-foreground",
+              legend ? "text-sm" : "text-base"
+            )}
+          >
+            {helpText}
+          </span>
         </div>
       )}
     </div>

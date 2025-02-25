@@ -19,7 +19,7 @@ const meta = {
     },
     size: {
       control: "radio",
-      options: ["sm", "md", "lg"],
+      options: ["xs", "sm", "md", "lg"],
       description: "Size of the icon",
     },
   },
@@ -43,6 +43,13 @@ export const Module: Story = {
   args: {
     size: "lg",
     icon: ModuleIcons.Calendar,
+  },
+  argTypes: {
+    icon: {
+      control: "select",
+      options: Object.keys(ModuleIcons),
+      mapping: ModuleIcons,
+    },
   },
 }
 

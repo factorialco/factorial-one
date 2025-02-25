@@ -1,6 +1,63 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { AvatarList } from "./index"
 
+const dummyPeople = [
+  {
+    type: "person" as const,
+    firstName: "Nik",
+    lastName: "Lopin",
+    src: "https://github.com/nlopin.png",
+  },
+  {
+    type: "person" as const,
+    firstName: "Josep Jaume",
+    lastName: "Rey",
+    src: "https://github.com/josepjaume.png",
+  },
+  {
+    type: "person" as const,
+    firstName: "Saúl",
+    lastName: "Domínguez",
+  },
+]
+
+const dummyCompanies = [
+  {
+    type: "company" as const,
+    name: "Factorial",
+    src: "https://github.com/factorialco.png",
+  },
+  {
+    type: "company" as const,
+    name: "Itnig",
+  },
+  {
+    type: "company" as const,
+    name: "Another cool company",
+  },
+]
+
+const dummyTeams = [
+  { type: "team" as const, name: "Designers" },
+  { type: "team" as const, name: "Engineering" },
+  { type: "team" as const, name: "Product Management" },
+]
+
+function getDummyAvatars(
+  count: number,
+  type: "person" | "company" | "team" = "person"
+) {
+  const sourceData = {
+    person: dummyPeople,
+    company: dummyCompanies,
+    team: dummyTeams,
+  }[type]
+
+  return Array.from({ length: count }, (_, index) => ({
+    ...sourceData[index % sourceData.length],
+  }))
+}
+
 const meta: Meta<typeof AvatarList> = {
   component: AvatarList,
   title: "Avatars/AvatarList",
@@ -8,21 +65,11 @@ const meta: Meta<typeof AvatarList> = {
   args: {
     size: "medium",
     type: "person",
-    avatars: [
-      {
-        type: "person",
-        firstName: "Nik",
-        lastName: "Lopin",
-        src: "https://github.com/nlopin.png",
-      },
-      {
-        type: "person",
-        firstName: "Josep Jaume",
-        lastName: "Rey",
-        src: "https://github.com/josepjaume.png",
-      },
-      { type: "person", firstName: "Saúl", lastName: "Domínguez" },
-    ],
+    avatars: getDummyAvatars(3, "person"),
+    noTooltip: false,
+  },
+  parameters: {
+    layout: "centered",
   },
 } satisfies Meta<typeof AvatarList>
 
@@ -36,15 +83,7 @@ export const Companies: Story = {
   args: {
     size: "medium",
     type: "company",
-    avatars: [
-      {
-        type: "company",
-        name: "Factorial",
-        src: "https://github.com/factorialco.png",
-      },
-      { type: "company", name: "Itnig" },
-      { type: "company", name: "Another cool company" },
-    ],
+    avatars: getDummyAvatars(3, "company"),
   },
 }
 
@@ -52,23 +91,22 @@ export const Teams: Story = {
   args: {
     size: "medium",
     type: "team",
-    avatars: [
-      { type: "team", name: "Designers" },
-      { type: "team", name: "Engineering" },
-      { type: "team", name: "Product Management" },
-    ],
+    avatars: getDummyAvatars(3, "team"),
   },
 }
 
-export const WithTooltip: Story = {
+export const WithMaxAvatars: Story = {
   args: {
-    showTooltip: true,
+    ...Default.args,
+    avatars: getDummyAvatars(50, "person"),
+    max: 3,
   },
 }
 
-export const CompaniesWithTooltip: Story = {
+export const CompaniesWithMaxAvatars: Story = {
   args: {
     ...Companies.args,
-    showTooltip: true,
+    avatars: getDummyAvatars(50, "company"),
+    max: 3,
   },
 }
