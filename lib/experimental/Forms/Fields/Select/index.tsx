@@ -16,7 +16,6 @@ import {
 } from "@/ui/select"
 
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
-import type { SelectItemObject, SelectItemProps } from "./types"
 export * from "./types"
 
 type SelectItemObject<T> = {
