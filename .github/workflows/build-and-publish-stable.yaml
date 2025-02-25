@@ -1,0 +1,45 @@
+name: Build and publish [STABLE]
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+
+  publish-npm:
+    needs: release-please
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    if: ${{ needs.release-please.outputs.release_created }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Setup Node and pnpm
+        uses: ./.github/actions/setup-node-pnpm
+
+      - name: Build
+        run: pnpm build
+
+      - name: Publish to registry
+        run: pnpm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
