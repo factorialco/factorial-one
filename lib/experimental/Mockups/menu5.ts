@@ -52,6 +52,11 @@ export const menuTree = [
         href: "/documents",
       },
       {
+        label: "Analytics",
+        icon: Icons.BarGraph,
+        href: "/analytics",
+      },
+      {
         label: "Spaces",
         icon: Icons.Building,
         href: "/spaces",
@@ -139,29 +144,6 @@ export const menuTree = [
         label: "Spending",
         icon: Icons.Wallet,
         href: "/spending",
-      },
-    ],
-    isOpen: true,
-    isSortable: true,
-  },
-  {
-    title: "More",
-    id: "more",
-    items: [
-      {
-        label: "Analytics",
-        icon: Icons.BarGraph,
-        href: "/analytics",
-      },
-      {
-        label: "Workflows",
-        icon: Icons.Split,
-        href: "/workflows",
-      },
-      {
-        label: "Settings",
-        icon: Icons.Settings,
-        href: "/settings",
       },
     ],
     isOpen: true,
