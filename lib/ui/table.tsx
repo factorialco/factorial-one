@@ -80,7 +80,9 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "rounded px-3 py-2.5 text-left align-middle font-medium text-f1-foreground-secondary transition-colors hover:bg-f1-background-hover",
+      "relative px-3 py-2.5 text-left align-middle font-medium text-f1-foreground-secondary",
+      "after:pointer-events-none after:absolute after:inset-1 after:rounded after:bg-transparent after:transition-colors after:content-[''] hover:after:bg-f1-background-hover",
+      "before:pointer-events-none before:absolute before:inset-0 before:h-screen before:bg-f1-background-hover before:opacity-0 before:transition-opacity before:content-[''] hover:before:opacity-100",
       className
     )}
     {...props}
