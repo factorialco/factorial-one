@@ -1,4 +1,5 @@
 export * from "./ApplicationFrame"
+export { useSidebar } from "./ApplicationFrame/FrameProvider"
 export * from "./Carousel"
 export * from "./Dropdown"
 export * from "./Header"
