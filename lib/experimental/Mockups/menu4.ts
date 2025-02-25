@@ -80,6 +80,11 @@ export const menuTree = [
         href: "/documents",
       },
       {
+        label: "Projects",
+        icon: Icons.Suitcase,
+        href: "/projects",
+      },
+      {
         label: "Spaces",
         icon: Icons.Building,
         href: "/spaces",
@@ -106,11 +111,6 @@ export const menuTree = [
         label: "Shifts",
         icon: Icons.Schedule,
         href: "/shifts",
-      },
-      {
-        label: "Projects",
-        icon: Icons.Suitcase,
-        href: "/projects",
       },
       {
         label: "Benefits",

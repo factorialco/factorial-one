@@ -33,7 +33,7 @@ export const menuTree = [
     isSortable: false,
   },
   {
-    title: "Compoany",
+    title: "Company",
     id: "company",
     items: [
       {
