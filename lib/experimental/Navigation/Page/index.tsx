@@ -61,7 +61,7 @@ export function DaytimePage({
     >
       <div className={daytimePageVariants({ period })} />
       {header && <div className="flex flex-col">{header}</div>}
-      <div className="isolate flex w-full flex-1 flex-col overflow-auto [&>*]:flex-1">
+      <div className="isolate flex w-full flex-1 flex-col [&>*]:flex-1">
         {children}
       </div>
     </div>

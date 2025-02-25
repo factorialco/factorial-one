@@ -36,7 +36,10 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function HomeLayout(
       </div>
     ))
     return (
-      <div ref={ref} className="flex flex-col gap-6 px-3 pb-3 pt-2">
+      <div
+        ref={ref}
+        className="flex flex-col gap-6 px-5 pb-5 pt-4 md:px-3 md:pb-3 md:pt-2"
+      >
         {canShowContent && (
           <>
             <Carousel
