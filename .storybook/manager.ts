@@ -9,6 +9,15 @@ addons.setConfig({
     showRoots: true,
     collapsedRoots: ["playground"],
     renderLabel,
+    filters: {
+      internal: (item) => {
+        return (
+          !process.env.STORYBOOK_PUBLIC_BUILD ||
+          !item.tags?.includes("internal")
+        )
+      },
+      noSidebar: (item) => !item.tags?.includes("no-sidebar"),
+    },
   },
   tagBadges: [
     {

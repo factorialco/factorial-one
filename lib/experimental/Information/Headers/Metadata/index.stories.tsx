@@ -9,6 +9,7 @@ const meta: Meta<typeof Metadata> = {
   parameters: {
     layout: "padded",
   },
+  tags: ["no-sidebar"],
 }
 
 export default meta
