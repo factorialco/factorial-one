@@ -1,6 +1,9 @@
-import { Icon } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { F1SearchBox } from "@/experimental/Forms/Fields/F1SearchBox"
-import { Avatar } from "@/experimental/Information/Avatars/Avatar"
+import {
+  Avatar,
+  AvatarVariant,
+} from "@/experimental/Information/Avatars/Avatar"
 import { ChevronDown } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
