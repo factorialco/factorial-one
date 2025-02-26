@@ -1,11 +1,11 @@
 import { DateAvatar } from "@/experimental/Information/Avatars/DateAvatar/"
 import { useReducedMotion } from "@/lib/a11y"
-import { EmojiImage } from "@/lib/emojis"
+import { EmojiImage, useEmojiConfetti } from "@/lib/emojis"
 import { Link } from "@/lib/linkHandler"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn, focusRing } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CelebrationAvatar } from "./components/avatar"
 import { useConfetti } from "./hooks/useConfetti"
 import { EMOJI_MAP } from "./types"
@@ -37,6 +37,10 @@ export const BaseCelebration = ({
 }: CelebrationProps) => {
   const [lastReaction, setLastReaction] = useState(lastEmojiReaction)
 
+  const pickerRef = useRef<HTMLDivElement>(null)
+
+  const { fireEmojiConfetti } = useEmojiConfetti()
+
   useEffect(() => {
     setLastReaction(lastEmojiReaction)
   }, [lastEmojiReaction])
@@ -44,6 +48,7 @@ export const BaseCelebration = ({
   const handleReactionSelect = (emoji: string) => {
     setLastReaction(emoji)
     onReactionSelect?.(emoji)
+    fireEmojiConfetti(emoji, pickerRef)
   }
 
   const shouldReduceMotion = useReducedMotion()
@@ -77,6 +82,7 @@ export const BaseCelebration = ({
           canReact={canReact}
           lastEmojiReaction={lastReaction}
           onReactionSelect={handleReactionSelect}
+          pickerRef={pickerRef}
         />
       </div>
       <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
