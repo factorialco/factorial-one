@@ -2,6 +2,7 @@ import { getAvatarColor } from "@/experimental/Information/Avatars/BaseAvatar/ut
 import { PersonAvatar } from "@/experimental/Information/Avatars/exports"
 import { Picker } from "@/experimental/Information/Reactions/Picker"
 import { cn } from "@/lib/utils"
+import { RefObject } from "react"
 import { BACKGROUND_COLORS } from "../types"
 
 type CelebrationAvatarProps = {
@@ -11,6 +12,7 @@ type CelebrationAvatarProps = {
   canReact: boolean
   lastEmojiReaction?: string
   onReactionSelect?: (emoji: string) => void
+  pickerRef?: RefObject<HTMLDivElement>
 }
 
 export function CelebrationAvatar({
@@ -20,6 +22,7 @@ export function CelebrationAvatar({
   canReact,
   lastEmojiReaction,
   onReactionSelect,
+  pickerRef,
 }: CelebrationAvatarProps) {
   return (
     <div
@@ -60,7 +63,7 @@ export function CelebrationAvatar({
             />
           </div>
           {canReact && (
-            <div className="absolute -right-0.5 bottom-0.5">
+            <div ref={pickerRef} className="absolute -right-0.5 bottom-0.5">
               <Picker
                 lastEmojiReaction={lastEmojiReaction}
                 onSelect={onReactionSelect}

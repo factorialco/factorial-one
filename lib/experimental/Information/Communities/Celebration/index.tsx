@@ -5,7 +5,7 @@ import { Link } from "@/lib/linkHandler"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn, focusRing } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CelebrationAvatar } from "./components/avatar"
 import { useConfetti } from "./hooks/useConfetti"
 import { EMOJI_MAP } from "./types"
@@ -36,6 +36,8 @@ export const BaseCelebration = ({
   date,
 }: CelebrationProps) => {
   const [lastReaction, setLastReaction] = useState(lastEmojiReaction)
+
+  const pickerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setLastReaction(lastEmojiReaction)
@@ -81,6 +83,7 @@ export const BaseCelebration = ({
           canReact={canReact}
           lastEmojiReaction={lastReaction}
           onReactionSelect={handleReactionSelect}
+          pickerRef={pickerRef}
         />
       </div>
       <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
