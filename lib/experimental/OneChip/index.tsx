@@ -12,7 +12,8 @@ export const chipVariants = cva({
   variants: {
     variant: {
       default: "",
-      selected: "bg-f1-background-selected-secondary border-f1-border-selected",
+      selected:
+        "bg-f1-background-selected-secondary border-f1-border-selected text-f1-foreground-selected",
     },
   },
   defaultVariants: {
