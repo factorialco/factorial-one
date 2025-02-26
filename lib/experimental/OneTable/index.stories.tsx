@@ -160,6 +160,8 @@ export const Check: Story = {
                 checked={isAllSelected || isPartiallySelected}
                 indeterminate={isPartiallySelected}
                 onCheckedChange={handleSelectAll}
+                title="Select all"
+                hideLabel
               />
             </TableHead>
             <TableHead>Name</TableHead>
@@ -179,6 +181,8 @@ export const Check: Story = {
                       [row.id]: checked,
                     }))
                   }}
+                  title={`Select ${row.name}`}
+                  hideLabel
                 />
               </TableCell>
               <TableCell>{row.name}</TableCell>

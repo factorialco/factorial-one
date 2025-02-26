@@ -38,6 +38,12 @@ interface CheckboxProps {
    * The value of the checkbox
    */
   value?: string
+
+  /**
+   * Whether to hide the label
+   * @default false
+   */
+  hideLabel?: boolean
 }
 
 export function Checkbox({
@@ -48,6 +54,7 @@ export function Checkbox({
   indeterminate = false,
   checked = false,
   value,
+  hideLabel = false,
 }: CheckboxProps) {
   return (
     <CheckboxRoot
@@ -58,6 +65,7 @@ export function Checkbox({
       indeterminate={indeterminate}
       checked={checked}
       value={value}
+      hideLabel={hideLabel}
     />
   )
 }
