@@ -29,7 +29,7 @@ type SimpleResult<T> = T[]
  * Hook options for useData
  */
 interface UseDataOptions<Filters extends FiltersDefinition> {
-  filters?: Partial<Filters>
+  filters?: Partial<FiltersState<Filters>>
 }
 
 /**
@@ -185,6 +185,13 @@ export function useData<
             : dataAdapter.fetchData({ filters })
 
         const result = fetcher()
+
+        // Handle synchronous data
+        if (!(result instanceof Promise || result instanceof Observable)) {
+          handleFetchSuccess(result)
+          return
+        }
+
         const observable: Observable<DataType<ResultType>> =
           result instanceof Observable ? result : promiseToObservable(result)
 

@@ -70,6 +70,7 @@ export type BaseDataAdapter<
   fetchData: (
     options: BaseFetchOptions<Filters>
   ) =>
+    | BaseResponse<Record>
     | Promise<BaseResponse<Record>>
     | Observable<PromiseState<BaseResponse<Record>>>
 }
@@ -88,6 +89,7 @@ export type PaginatedDataAdapter<
   fetchData: (
     options: PaginatedFetchOptions<Filters>
   ) =>
+    | PaginatedResponse<Record>
     | Promise<PaginatedResponse<Record>>
     | Observable<PromiseState<PaginatedResponse<Record>>>
 }
@@ -149,4 +151,7 @@ export type DataSource<
  * Utility type for handling both Promise and Observable return types.
  * @template T - The type of the value being promised or observed
  */
-export type PromiseOrObservable<T> = Promise<T> | Observable<PromiseState<T>>
+export type PromiseOrObservable<T> =
+  | T
+  | Promise<T>
+  | Observable<PromiseState<T>>
