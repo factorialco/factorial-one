@@ -82,6 +82,7 @@ const TableHead = React.forwardRef<
     className={cn(
       "relative px-3 py-2.5 text-left align-middle font-medium text-f1-foreground-secondary",
       "after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-1 after:rounded after:bg-transparent after:transition-colors after:content-[''] hover:after:bg-f1-background-hover",
+      "[&:has([role=checkbox])]:px-2 [&:has([role=checkbox])]:hover:after:bg-transparent",
       className
     )}
     {...props}
@@ -95,7 +96,11 @@ const TableCell = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <td
     ref={ref}
-    className={cn("relative whitespace-nowrap p-3 align-middle", className)}
+    className={cn(
+      "relative whitespace-nowrap p-3 align-middle",
+      "[&:has([role=checkbox])]:px-2",
+      className
+    )}
     {...props}
   />
 ))

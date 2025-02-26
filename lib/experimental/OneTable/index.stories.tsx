@@ -224,7 +224,7 @@ export const InfoHeader: Story = {
 type SortState = "asc" | "desc" | undefined
 type SortColumn = "name" | "email" | "role"
 
-export const SortableHeader: Story = {
+export const Sortable: Story = {
   render: () => {
     const [sortConfig, setSortConfig] = React.useState<{
       column: SortColumn | null
@@ -303,7 +303,7 @@ export const SortableHeader: Story = {
   },
 }
 
-export const StickyTable: Story = {
+export const StickyColumn: Story = {
   render: () => (
     <OneTable>
       <TableHeader>
