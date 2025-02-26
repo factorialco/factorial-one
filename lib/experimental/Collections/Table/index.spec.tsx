@@ -41,9 +41,9 @@ const createTestSource = (
   currentFilters: {},
   setCurrentFilters: vi.fn(),
   dataAdapter: {
-    fetchData: async () => {
+    fetchData: async ({ filters: _filters }) => {
       if (error) throw error
-      return { records: data }
+      return data
     },
   },
 })

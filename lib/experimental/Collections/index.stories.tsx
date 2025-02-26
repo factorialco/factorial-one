@@ -3,13 +3,9 @@ import { Meta, StoryObj } from "@storybook/react"
 import { Code } from "lucide-react"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
+import { PromiseState } from "../../lib/promise-to-observable"
 import { FilterDefinition, FiltersState } from "./Filters/types"
-import {
-  BaseResponse,
-  DataAdapter,
-  PaginatedResponse,
-  RecordType,
-} from "./types"
+import { DataAdapter, PaginatedResponse, RecordType } from "./types"
 import { useData } from "./useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
@@ -89,23 +85,31 @@ type FiltersType = typeof filters
 
 const createObservableDataFetch = (delay = 0) => {
   return ({ filters }: { filters: FiltersState<FiltersType> }) =>
-    new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
-      (observer) => {
-        const timeoutId = setTimeout(() => {
-          observer.next({ records: filterUsers(mockUsers, filters) })
-          observer.complete()
-        }, delay)
+    new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
+      observer.next({
+        loading: true,
+        error: null,
+        data: null,
+      })
 
-        return () => clearTimeout(timeoutId)
-      }
-    )
+      const timeoutId = setTimeout(() => {
+        observer.next({
+          loading: false,
+          error: null,
+          data: filterUsers(mockUsers, filters),
+        })
+        observer.complete()
+      }, delay)
+
+      return () => clearTimeout(timeoutId)
+    })
 }
 
 const createPromiseDataFetch = (delay = 500) => {
   return ({ filters }: { filters: FiltersState<FiltersType> }) =>
-    new Promise<{ records: Array<(typeof mockUsers)[number]> }>((resolve) => {
+    new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
-        resolve({ records: filterUsers(mockUsers, filters) })
+        resolve(filterUsers(mockUsers, filters))
       }, delay)
     })
 }
@@ -465,7 +469,7 @@ function createDataAdapter<
     records: TRecord[],
     filters: FiltersState<TFilters>,
     pagination?: { currentPage?: number; perPage?: number }
-  ): BaseResponse<TRecord> | PaginatedResponse<TRecord> => {
+  ): TRecord[] | PaginatedResponse<TRecord> => {
     const filteredRecords = filterUsers(
       records,
       filters as FiltersState<FiltersType>
@@ -486,7 +490,7 @@ function createDataAdapter<
       }
     }
 
-    return { records: filteredRecords }
+    return filteredRecords
   }
 
   if (paginationType === "pages") {
@@ -504,13 +508,25 @@ function createDataAdapter<
           filterData(data, filters, pagination) as PaginatedResponse<TRecord>
 
         return useObservable
-          ? new Observable<PaginatedResponse<TRecord>>((observer) => {
-              const timeoutId = setTimeout(() => {
-                observer.next(fetch())
-                observer.complete()
-              }, delay)
-              return () => clearTimeout(timeoutId)
-            })
+          ? new Observable<PromiseState<PaginatedResponse<TRecord>>>(
+              (observer) => {
+                observer.next({
+                  loading: true,
+                  error: null,
+                  data: null,
+                })
+
+                const timeoutId = setTimeout(() => {
+                  observer.next({
+                    loading: false,
+                    error: null,
+                    data: fetch(),
+                  })
+                  observer.complete()
+                }, delay)
+                return () => clearTimeout(timeoutId)
+              }
+            )
           : new Promise<PaginatedResponse<TRecord>>((resolve) => {
               setTimeout(() => resolve(fetch()), delay)
             })
@@ -521,17 +537,27 @@ function createDataAdapter<
 
   const adapter: DataAdapter<TRecord, TFilters> = {
     fetchData: ({ filters }: { filters: FiltersState<TFilters> }) => {
-      const fetch = () => filterData(data, filters) as BaseResponse<TRecord>
+      const fetch = () => filterData(data, filters) as TRecord[]
 
       return useObservable
-        ? new Observable<BaseResponse<TRecord>>((observer) => {
+        ? new Observable<PromiseState<TRecord[]>>((observer) => {
+            observer.next({
+              loading: true,
+              error: null,
+              data: null,
+            })
+
             const timeoutId = setTimeout(() => {
-              observer.next(fetch())
+              observer.next({
+                loading: false,
+                error: null,
+                data: fetch(),
+              })
               observer.complete()
             }, delay)
             return () => clearTimeout(timeoutId)
           })
-        : new Promise<BaseResponse<TRecord>>((resolve) => {
+        : new Promise<TRecord[]>((resolve) => {
             setTimeout(() => resolve(fetch()), delay)
           })
     },
@@ -578,18 +604,27 @@ export const WithCardVisualization: Story = {
 // Example usage with multiple visualizations
 export const WithMultipleVisualizations: Story = {
   render: () => {
-    const source = useDataSource({
+    type MockUser = (typeof mockUsers)[number]
+    const source = useDataSource<MockUser, typeof filters>({
       filters,
       dataAdapter: {
         fetchData: () =>
-          new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
-            (observer) => {
-              setTimeout(() => {
-                observer.next({ records: mockUsers })
-                observer.complete()
-              }, 1000)
-            }
-          ),
+          new Observable<PromiseState<MockUser[]>>((observer) => {
+            observer.next({
+              loading: true,
+              error: null,
+              data: null,
+            })
+
+            setTimeout(() => {
+              observer.next({
+                loading: false,
+                error: null,
+                data: mockUsers,
+              })
+              observer.complete()
+            }, 1000)
+          }),
       },
     })
 
@@ -601,8 +636,8 @@ export const WithMultipleVisualizations: Story = {
             type: "table",
             options: {
               columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
+                { label: "Name", render: (item: MockUser) => item.name },
+                { label: "Email", render: (item: MockUser) => item.email },
               ],
             },
           },
@@ -610,11 +645,14 @@ export const WithMultipleVisualizations: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
+                { label: "Email", render: (item: MockUser) => item.email },
+                { label: "Role", render: (item: MockUser) => item.role },
+                {
+                  label: "Department",
+                  render: (item: MockUser) => item.department,
+                },
               ],
-              title: (item) => item.name,
+              title: (item: MockUser) => item.name,
             },
           },
         ]}
@@ -650,6 +688,48 @@ export const WithPagination: Story = {
         paginationType: "pages",
         perPage: 10,
       }),
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+              title: (item) => item.name,
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+// Example with synchronous data
+export const WithSynchronousData: Story = {
+  render: () => {
+    const source = useDataSource({
+      filters,
+      dataAdapter: {
+        fetchData: ({ filters }) => filterUsers(mockUsers, filters),
+      },
     })
 
     return (
