@@ -1,4 +1,4 @@
-name: Build and publish [ALPHA]
+name: Build and Publish [ALPHA]
 
 on:
   issue_comment:
@@ -57,54 +57,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Remove old alpha versions
-        run: |
-          # Get the alpha versions and their publish dates
-          PACKAGE_FULL_NAME=$(node -p "require('./package.json').name")
-          ALPHA_INFO=$(npm view $PACKAGE_FULL_NAME time --json | jq 'to_entries | map(select(.key | contains("-alpha"))) | map({version: .key, date: .value})')
-          CURRENT_DATE=$(date +%s)
-          
-          REMOVE_DAYS=5
-          # days in seconds
-          REMOVE_DAYS_IN_SECONDS=$((REMOVE_DAYS * 24 * 60 * 60))
-          
-          echo "Removing alpha versions $REMOVE_DAYS days old or older"
-          
-          # Process each alpha version
-          echo "$ALPHA_INFO" | jq -c '.[]' | while read -r VERSION_DATA; do
-            VERSION=$(echo "$VERSION_DATA" | jq -r '.version')
-          
-            PUBLISH_DATE=$(echo "$VERSION_DATA" | jq -r '.date')          
-            PUBLISH_DATE_SECONDS=$(date -d "$PUBLISH_DATE" +%s)
-          
-            DIFF_SECONDS=$((CURRENT_DATE - PUBLISH_DATE_SECONDS))
-          
-            if [ $DIFF_SECONDS -gt $REMOVE_DAYS_IN_SECONDS ]; then
-              echo "Removing version $VERSION published at $PUBLISH_DATE"
-          
-              # Split the string using the '/' character
-              ORG="${PACKAGE_FULL_NAME#@}"   # Remove the '@' from the start
-              ORG="${ORG%%/*}"          # Extract the part before the first '/'  
-              PACKAGE="${PACKAGE_FULL_NAME#*/}"  # Remove everything before the first '/' (including the '/')
-          
-              # Get the version id from the version name
-              VERSION_ID=$(curl -s -H "Authorization: Bearer $GITHUB_TOKEN" \
-                "https://api.github.com/orgs/$ORG/packages/npm/$PACKAGE/versions" | \
-                jq -r ".[] | select(.name == \"$VERSION\") | .id")
-          
-              # Delete the version using github api as npm unpublish is not supported in github registry          
-              DELETE_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X DELETE \
-                -H "Authorization: Bearer $GITHUB_TOKEN" \
-                  "https://api.github.com/orgs/$ORG/packages/npm/$PACKAGE/versions/$VERSION_ID")
-          
-              # Check for errors based on the HTTP status code
-              if [ "$DELETE_RESPONSE" -ge 200 ] && [ "$DELETE_RESPONSE" -lt 300 ]; then
-                echo "Successfully deleted version $VERSION_TO_DELETE"
-              else
-                echo "Error deleting version $VERSION_TO_DELETE: HTTP $DELETE_RESPONSE"
-                exit 1
-              fi
-            fi
-          done
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: ./.github/actions/cleanup-alpha-versions
+        with:
+          token: ${{ github.token }}
+          days: 5
