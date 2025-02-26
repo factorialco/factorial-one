@@ -1,0 +1,140 @@
+name: 'Cleanup Alpha Versions'
+description: 'Remove alpha versions from GitHub Packages based on age or PR number'
+
+inputs:
+  days:
+    description: 'Remove alpha versions older than this many days'
+    required: false
+  pr-number:
+    description: 'PR number to remove alpha versions for'
+    required: false
+  token:
+    description: 'GitHub token with packages write permission'
+    required: true
+    default: ${{ github.token }}
+  package-name:
+    description: 'NPM package name (defaults to package.json name)'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        registry-url: 'https://npm.pkg.github.com'
+
+    - name: Cleanup Alpha Versions
+      shell: bash
+      run: |
+        # Get the package name (either from input or package.json)
+        if [[ -z "${{ inputs.package-name }}" ]]; then
+          PACKAGE_FULL_NAME=$(node -p "require('./package.json').name")
+        else
+          PACKAGE_FULL_NAME="${{ inputs.package-name }}"
+        fi
+        
+        echo "Working with package: $PACKAGE_FULL_NAME"
+        
+        # Get the alpha versions and their publish dates
+        ALPHA_INFO=$(npm view $PACKAGE_FULL_NAME time --json | jq 'to_entries | map(select(.key | contains("-alpha"))) | map({version: .key, date: .value})')
+        CURRENT_DATE=$(date +%s)
+        
+        # Extract organization and package name
+        ORG="${PACKAGE_FULL_NAME#@}"   # Remove the '@' from the start
+        ORG="${ORG%%/*}"               # Extract the part before the first '/'  
+        PACKAGE="${PACKAGE_FULL_NAME#*/}"  # Remove everything before the first '/' (including the '/')
+        
+        echo "Organization: $ORG, Package: $PACKAGE"
+        
+        # Fetch all versions to have complete information
+        ALL_VERSIONS=$(curl -s -H "Authorization: Bearer ${{ inputs.token }}" \
+          "https://api.github.com/orgs/$ORG/packages/npm/$PACKAGE/versions")
+        
+        if [ -z "$ALL_VERSIONS" ] || [ "$ALL_VERSIONS" == "null" ]; then
+          echo "Error: Could not fetch versions for $PACKAGE_FULL_NAME"
+          echo "Response: $ALL_VERSIONS"
+          exit 1
+        fi
+        
+        # Calculate days in seconds if provided
+        REMOVE_DAYS="${{ inputs.days }}"
+        if [ -n "$REMOVE_DAYS" ]; then
+          REMOVE_DAYS_IN_SECONDS=$((REMOVE_DAYS * 24 * 60 * 60))
+          echo "Will remove alpha versions $REMOVE_DAYS days old or older"
+        else
+          echo "No days filter specified"
+        fi
+        
+        # PR number if provided
+        PR_NUMBER="${{ inputs.pr-number }}"
+        if [ -n "$PR_NUMBER" ]; then
+          echo "Will remove alpha versions for PR #$PR_NUMBER"
+        fi
+        
+        # If neither filter is provided, we'll remove all alpha versions
+        if [ -z "$REMOVE_DAYS" ] && [ -z "$PR_NUMBER" ]; then
+          echo "No filters specified - will remove ALL alpha versions"
+        fi
+        
+        # Process each alpha version
+        echo "$ALPHA_INFO" | jq -c '.[]' | while read -r VERSION_DATA; do
+          VERSION=$(echo "$VERSION_DATA" | jq -r '.version')
+          PUBLISH_DATE=$(echo "$VERSION_DATA" | jq -r '.date')
+          PUBLISH_DATE_SECONDS=$(date -d "$PUBLISH_DATE" +%s || date -j -f "%Y-%m-%dT%H:%M:%S.000Z" "$PUBLISH_DATE" +%s)
+        
+          # Get the version ID
+          VERSION_INFO=$(echo "$ALL_VERSIONS" | jq -r ".[] | select(.name == \"$VERSION\")")
+          VERSION_ID=$(echo "$VERSION_INFO" | jq -r '.id')
+        
+          if [ -z "$VERSION_ID" ] || [ "$VERSION_ID" == "null" ]; then
+            echo "Warning: Could not find ID for version $VERSION"
+            continue
+          fi
+        
+          # Extract PR number if present in version tag (e.g., "1.0.0-alpha.pr123.1")
+          VERSION_PR_NUMBER=$(echo "$VERSION" | grep -oP 'pr\K[0-9]+' || echo "")
+        
+          SHOULD_DELETE=false
+          DELETE_REASON=""
+        
+          # Case 1: Filter by PR number
+          if [ -n "$PR_NUMBER" ] && [ -n "$VERSION_PR_NUMBER" ]; then
+            if [ "$VERSION_PR_NUMBER" -eq "$PR_NUMBER" ]; then
+              SHOULD_DELETE=true
+              DELETE_REASON="matches PR #$PR_NUMBER"
+            fi
+          # Case 2: Filter by age
+          elif [ -n "$REMOVE_DAYS" ]; then
+            DIFF_SECONDS=$((CURRENT_DATE - PUBLISH_DATE_SECONDS))
+            if [ $DIFF_SECONDS -gt $REMOVE_DAYS_IN_SECONDS ]; then
+              SHOULD_DELETE=true
+              DELETE_REASON="is $((DIFF_SECONDS / 86400)) days old (> $REMOVE_DAYS days)"
+            fi
+          # Case 3: No filters - delete all alpha versions
+          elif [ -z "$PR_NUMBER" ] && [ -z "$REMOVE_DAYS" ]; then
+            SHOULD_DELETE=true
+            DELETE_REASON="matches deletion criteria (all alpha versions)"
+          fi
+        
+          # Delete the version if it matches any criteria
+          if [ "$SHOULD_DELETE" = true ]; then
+            echo "Removing version $VERSION published at $PUBLISH_DATE ($DELETE_REASON)"
+        
+            # Delete the version using github api
+            DELETE_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X DELETE \
+              -H "Authorization: Bearer ${{ inputs.token }}" \
+              "https://api.github.com/orgs/$ORG/packages/npm/$PACKAGE/versions/$VERSION_ID")
+        
+            # Check for errors based on the HTTP status code
+            if [ "$DELETE_RESPONSE" -ge 200 ] && [ "$DELETE_RESPONSE" -lt 300 ]; then
+              echo "✅ Successfully deleted version $VERSION"
+            else
+              echo "❌ Error deleting version $VERSION: HTTP $DELETE_RESPONSE"
+              # Don't exit on error, try to delete as many as possible
+            fi        
+          fi
+        done
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.token }}
