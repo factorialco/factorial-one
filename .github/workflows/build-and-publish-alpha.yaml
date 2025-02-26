@@ -1,4 +1,4 @@
-name: Build and publish [ALPHA]
+name: Build and Publish [ALPHA]
 
 on:
   issue_comment:
