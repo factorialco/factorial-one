@@ -1,6 +1,6 @@
 import { DateAvatar } from "@/experimental/Information/Avatars/DateAvatar/"
 import { useReducedMotion } from "@/lib/a11y"
-import { EmojiImage, useEmojiConfetti } from "@/lib/emojis"
+import { EmojiImage } from "@/lib/emojis"
 import { Link } from "@/lib/linkHandler"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn, focusRing } from "@/lib/utils"
@@ -39,8 +39,6 @@ export const BaseCelebration = ({
 
   const pickerRef = useRef<HTMLDivElement>(null)
 
-  const { fireEmojiConfetti } = useEmojiConfetti()
-
   useEffect(() => {
     setLastReaction(lastEmojiReaction)
   }, [lastEmojiReaction])
@@ -48,7 +46,6 @@ export const BaseCelebration = ({
   const handleReactionSelect = (emoji: string) => {
     setLastReaction(emoji)
     onReactionSelect?.(emoji)
-    fireEmojiConfetti(emoji, pickerRef)
   }
 
   const shouldReduceMotion = useReducedMotion()

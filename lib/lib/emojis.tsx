@@ -1,5 +1,6 @@
 import confetti from "canvas-confetti"
 import { cva, type VariantProps } from "cva"
+import { motion } from "framer-motion"
 import { RefObject, useCallback } from "react"
 import { parse } from "twemoji-parser"
 import { useReducedMotion } from "./a11y"
@@ -31,15 +32,28 @@ export interface EmojiImageProps extends VariantProps<typeof emojiVariants> {
 export function EmojiImage({ emoji, size }: EmojiImageProps) {
   const emojiEntity = parseEmoji(emoji)
 
+  const motionProps = {
+    initial: { scale: 0.75 },
+    animate: {
+      scale: 1,
+    },
+    exit: { scale: 0.75 },
+    transition: { duration: 0.6, ease: [0.175, 0.885, 0.32, 1.275] },
+  }
+
   return emojiEntity ? (
-    <img
+    <motion.img
+      key={emojiEntity.url}
       src={emojiEntity.url}
       alt={emoji}
       className={emojiVariants({ size })}
       draggable={false}
+      {...motionProps}
     />
   ) : (
-    <span>{emoji}</span>
+    <motion.span key={emoji} {...motionProps}>
+      {emoji}
+    </motion.span>
   )
 }
 
