@@ -4,7 +4,7 @@ import { Check } from "@/icons/app"
 import { DataList } from "."
 
 const meta: Meta<typeof DataList> = {
-  title: "DataList",
+  title: "List/DataList",
   component: DataList,
   tags: ["autodocs", "experimental"],
   args: {

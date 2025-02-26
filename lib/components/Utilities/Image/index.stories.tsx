@@ -9,7 +9,7 @@ const meta = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs", "stable"],
+  tags: ["autodocs", "stable", "no-sidebar"],
   args: {
     src: heart,
     width: 100,

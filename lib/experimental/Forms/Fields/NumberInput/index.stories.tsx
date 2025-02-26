@@ -5,7 +5,7 @@ import { NumberInput } from "."
 
 const meta = {
   render: (props) => <NumberInput key={JSON.stringify(props)} {...props} />,
-  title: "NumberInput",
+  title: "Input/Number",
   component: NumberInput,
   tags: ["autodocs", "experimental"],
   args: {

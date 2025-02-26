@@ -5,7 +5,7 @@ import { User } from "."
 const meta = {
   title: "Sidebar/User",
   component: User,
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "experimental", "no-sidebar"],
 } satisfies Meta<typeof User>
 
 export default meta
