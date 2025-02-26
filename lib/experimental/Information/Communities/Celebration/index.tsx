@@ -58,6 +58,10 @@ export const BaseCelebration = ({
   return (
     <Link
       href={link}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}
       className={cn(
         "relative flex flex-col rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary no-underline transition-shadow hover:shadow",
         focusRing()
