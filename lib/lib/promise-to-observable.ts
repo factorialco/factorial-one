@@ -41,3 +41,37 @@ export function promiseToObservable<T>(
     }
   })
 }
+
+export function observableToPromiseState<T>(
+  source: Observable<T>
+): Observable<PromiseState<T>> {
+  return new Observable((observer) => {
+    observer.next({
+      loading: true,
+      error: null,
+      data: null,
+    })
+
+    return source.subscribe({
+      next: (data) => {
+        observer.next({
+          loading: false,
+          error: null,
+          data,
+        })
+        observer.complete()
+      },
+      error: (error) => {
+        observer.next({
+          loading: false,
+          error,
+          data: null,
+        })
+        observer.complete()
+      },
+      complete: () => {
+        observer.complete()
+      },
+    })
+  })
+}

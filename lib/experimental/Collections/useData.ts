@@ -1,5 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Observable } from "zen-observable-ts"
+import {
+  observableToPromiseState,
+  PromiseState,
+  promiseToObservable,
+} from "../../lib/promise-to-observable"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import {
   DataSource,
@@ -167,12 +172,12 @@ export function useData<
     [setError, setIsInitialLoading, setIsLoading]
   )
 
+  type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
+
   const fetchDataAndUpdate = useCallback(
     async (filters: FiltersState<Filters>, currentPage = 1) => {
       try {
-        const fetcher = (): PromiseOrObservable<
-          PaginatedResponse<Record> | SimpleResult<Record>
-        > =>
+        const fetcher = (): PromiseOrObservable<ResultType> =>
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 filters,
@@ -181,22 +186,33 @@ export function useData<
             : dataAdapter.fetchData({ filters })
 
         const result = fetcher()
+        const observable: Observable<PromiseState<ResultType>> =
+          result instanceof Observable
+            ? observableToPromiseState(result)
+            : promiseToObservable(result)
 
-        if (result instanceof Observable) {
-          const subscription = result.subscribe({
-            next: handleFetchSuccess,
-            error: handleFetchError,
-          })
-          cleanup.current = () => subscription.unsubscribe()
-        } else {
-          const resolvedData = await result
-          handleFetchSuccess(resolvedData)
-        }
+        const subscription = observable.subscribe({
+          next: (state) => {
+            if (state.loading) {
+              setIsLoading(true)
+            } else if (state.error) {
+              handleFetchError(state.error)
+            } else if (state.data) {
+              handleFetchSuccess(state.data)
+            }
+          },
+          error: handleFetchError,
+          complete: () => {
+            cleanup.current = undefined
+          },
+        })
+
+        cleanup.current = () => subscription.unsubscribe()
       } catch (error) {
         handleFetchError(error)
       }
     },
-    [dataAdapter, handleFetchSuccess, handleFetchError]
+    [dataAdapter, handleFetchSuccess, handleFetchError, setIsLoading]
   )
 
   const setPage = useCallback(
