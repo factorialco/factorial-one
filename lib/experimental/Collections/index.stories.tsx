@@ -721,3 +721,45 @@ export const WithPagination: Story = {
     )
   },
 }
+
+// Example with synchronous data
+export const WithSynchronousData: Story = {
+  render: () => {
+    const source = useDataSource({
+      filters,
+      dataAdapter: {
+        fetchData: ({ filters }) => filterUsers(mockUsers, filters),
+      },
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+              title: (item) => item.name,
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
