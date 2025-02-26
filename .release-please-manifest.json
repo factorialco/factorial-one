@@ -1,0 +1,5 @@
+{
+  "pull-request-header": "Factorial-one release ${version} 🚀",
+  "pull-request-title-pattern": "\uD83D\uDE80 \uD83E\uDD16 Factorial-one: release ${version} ",
+  ".": "0.0.3"
+}
