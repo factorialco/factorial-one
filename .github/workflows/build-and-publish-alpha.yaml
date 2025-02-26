@@ -65,8 +65,9 @@ jobs:
           
           REMOVE_DAYS=5
           # days in seconds
-          #REMOVE_DAYS_IN_SECONDS=$((REMOVE_DAYS * 24 * 60 * 60))
-          REMOVE_DAYS_IN_SECONDS=$((60))
+          REMOVE_DAYS_IN_SECONDS=$((REMOVE_DAYS * 24 * 60 * 60))
+          
+          echo "Removing alpha versions $REMOVE_DAYS days old or older"
           
           # Process each alpha version
           echo "$ALPHA_INFO" | jq -c '.[]' | while read -r VERSION_DATA; do
