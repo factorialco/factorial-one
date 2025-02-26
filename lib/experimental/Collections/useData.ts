@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Observable } from "zen-observable-ts"
 import {
-  observableToPromiseState,
   PromiseState,
   promiseToObservable,
 } from "../../lib/promise-to-observable"
@@ -24,9 +23,7 @@ export interface DataError {
 /**
  * Response structure for non-paginated data
  */
-interface SimpleResult<T> {
-  records: T[]
-}
+type SimpleResult<T> = T[]
 
 /**
  * Hook options for useData
@@ -56,6 +53,8 @@ interface UseDataReturn<Record> {
   paginationInfo: PaginationInfo | null
   setPage: (page: number) => void
 }
+
+type DataType<T> = PromiseState<T>
 
 /**
  * Custom hook for handling data fetching state
@@ -142,18 +141,18 @@ export function useData<
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<Record> | SimpleResult<Record>) => {
-      setData(result.records)
-      setError(null)
-
-      if ("total" in result) {
+      if ("records" in result) {
+        setData(result.records)
         setPaginationInfo({
           total: result.total,
           currentPage: result.currentPage,
           perPage: result.perPage,
           pagesCount: result.pagesCount,
         })
+      } else {
+        setData(result)
       }
-
+      setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
     },
@@ -186,10 +185,8 @@ export function useData<
             : dataAdapter.fetchData({ filters })
 
         const result = fetcher()
-        const observable: Observable<PromiseState<ResultType>> =
-          result instanceof Observable
-            ? observableToPromiseState(result)
-            : promiseToObservable(result)
+        const observable: Observable<DataType<ResultType>> =
+          result instanceof Observable ? result : promiseToObservable(result)
 
         const subscription = observable.subscribe({
           next: (state) => {
