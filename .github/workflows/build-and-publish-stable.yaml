@@ -1,9 +1,13 @@
-name: Build and publish [STABLE]
+name: Build and Publish [STABLE]
 
 on:
   push:
     branches:
       - main
+  issue_comment:
+    types: [ created ]
+  pull_request:
+    types: [ opened, synchronize ]
 
 jobs:
   release-please:
@@ -11,13 +15,19 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
+          target-branch: chore/publish-as-package
+      - name: Auto-merge Release PR
+        uses: peter-evans/enable-pull-request-automerge@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.release.outputs.pr }}
+          merge-method: squash
 
   publish-npm:
     needs: release-please
@@ -25,7 +35,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    if: ${{ needs.release-please.outputs.release_created }}
+    if: ${{ needs.release-please.outputs.prs_created }}
 
     steps:
       - uses: actions/checkout@v4
@@ -42,4 +52,11 @@ jobs:
         run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Cleanup PR alpha versions
+        uses: ./.github/actions/cleanup-alpha-versions
+        if: ${{ github.event.pull_request.number }}
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pr-number: ${{ github.event.pull_request.number }} # PR that triggered the workflow
 
