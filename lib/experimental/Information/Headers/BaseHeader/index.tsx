@@ -118,8 +118,18 @@ export function BaseHeader({
 
   return (
     <div className="flex flex-col gap-3 px-6 pb-5 pt-3">
-      <div className="flex flex-col items-start justify-start gap-4 md:flex-row">
-        <div className="flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-start">
+      <div
+        className={cn(
+          "flex flex-col items-start justify-start gap-4 md:flex-row",
+          !description && "md:items-center"
+        )}
+      >
+        <div
+          className={cn(
+            "flex grow flex-col items-start justify-start gap-3 md:flex-row md:items-start",
+            !description && "md:items-center"
+          )}
+        >
           {avatar && (
             <div className="flex items-start">
               <Avatar
@@ -146,7 +156,7 @@ export function BaseHeader({
                       : (descriptionSize.height ?? "3rem"),
                   }}
                   transition={{
-                    duration: 0.15,
+                    duration: needsTruncation ? 0.15 : 0,
                     ease: [0.165, 0.84, 0.44, 1],
                   }}
                   className="overflow-hidden"
