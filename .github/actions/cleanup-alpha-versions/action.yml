@@ -1,0 +1,192 @@
+name: 'Cleanup Alpha Versions'
+description: 'Remove alpha versions from GitHub Packages based on age or PR number'
+
+inputs:
+  days:
+    description: 'Remove alpha versions older than this many days'
+    required: false
+  pr-number:
+    description: 'PR number to remove alpha versions for'
+    required: false
+  token:
+    description: 'GitHub token with packages write permission'
+    required: true
+    default: ${{ github.token }}
+  package-name:
+    description: 'NPM package name (defaults to package.json name)'
+    required: false
+  keep-latest:
+    description: 'Keep the latest X alpha versions (works alongside days and pr-number filters)'
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        registry-url: 'https://npm.pkg.github.com'
+
+    - name: Cleanup Alpha Versions
+      shell: bash
+      run: |
+        # Get the package name (either from input or package.json)
+        if [[ -z "${{ inputs.package-name }}" ]]; then
+          PACKAGE_FULL_NAME=$(node -p "require('./package.json').name")
+        else
+          PACKAGE_FULL_NAME="${{ inputs.package-name }}"
+        fi
+        
+        echo "Working with package: $PACKAGE_FULL_NAME"
+        
+        # Extract organization and package name
+        ORG="${PACKAGE_FULL_NAME#@}"   # Remove the '@' from the start
+        ORG="${ORG%%/*}"               # Extract the part before the first '/'  
+        PACKAGE="${PACKAGE_FULL_NAME#*/}"  # Remove everything before the first '/' (including the '/')
+        
+        echo "Organization: $ORG, Package: $PACKAGE"
+        
+        # Get the alpha versions and their publish dates
+        ALPHA_INFO=$(npm view $PACKAGE_FULL_NAME time --json | jq 'to_entries | map(select(.key | contains("-alpha"))) | map({version: .key, date: .value})')
+
+        # If there's no alpha versions, exit early
+        if [ -z "$ALPHA_INFO" ] || [ "$ALPHA_INFO" == "[]" ]; then
+          echo "No alpha versions found for package $PACKAGE_FULL_NAME"
+          exit 0
+        fi
+        
+        # Fetch all versions to have complete information
+        ALL_VERSIONS=$(curl -s -H "Authorization: Bearer ${{ inputs.token }}" \
+          "https://api.github.com/orgs/$ORG/packages/npm/$PACKAGE/versions")
+
+        if [ -z "$ALL_VERSIONS" ] || [ "$ALL_VERSIONS" == "null" ]; then
+          echo "Error: Could not fetch versions for $PACKAGE_FULL_NAME"
+          echo "Response: $ALL_VERSIONS"
+          exit 1
+        fi
+        
+        # Init variables from inputs
+        REMOVE_DAYS="${{ inputs.days }}"
+        PR_NUMBER="${{ inputs.pr-number }}"
+        KEEP_LATEST="${{ inputs.keep-latest }}"
+        CURRENT_DATE=$(date +%s)
+        
+        # Log what we're doing
+        echo "Filter settings:"
+        [ -n "$REMOVE_DAYS" ] && echo "- Remove versions older than $REMOVE_DAYS days"
+        [ -n "$PR_NUMBER" ] && echo "- Remove versions for PR #$PR_NUMBER"
+        [ -n "$KEEP_LATEST" ] && echo "- Keep the latest $KEEP_LATEST versions"
+        [ -z "$REMOVE_DAYS" ] && [ -z "$PR_NUMBER" ] && [ -z "$KEEP_LATEST" ] && echo "- No filters - will remove ALL alpha versions"
+        
+        # ---------- Step 1: Create a filtered list of versions to consider ----------
+        # First, create a file with all alpha versions and their info
+        echo "$ALPHA_INFO" | jq -c '.[]' > all_versions.json
+        
+        # If PR filter is active, create filtered list for just that PR
+        if [ -n "$PR_NUMBER" ]; then
+          cat all_versions.json | while read -r VERSION_DATA; do
+            VERSION=$(echo "$VERSION_DATA" | jq -r '.version')
+            PR_NUM=$(echo "$VERSION" | grep -oP 'pr\K[0-9]+' || echo "")
+        
+            if [ -n "$PR_NUM" ] && [ "$PR_NUM" -eq "$PR_NUMBER" ]; then
+              echo "$VERSION_DATA" >> filtered_versions.json
+            fi
+          done
+        else
+          # If no PR filter, use all alpha versions
+          cp all_versions.json filtered_versions.json
+        fi
+        
+        # If days filter is active, remove versions newer than cutoff
+        if [ -n "$REMOVE_DAYS" ]; then
+          REMOVE_DAYS_IN_SECONDS=$((REMOVE_DAYS * 24 * 60 * 60))
+        
+          if [ -f "filtered_versions.json" ]; then
+            rm -f temp_filtered.json
+        
+            cat filtered_versions.json | while read -r VERSION_DATA; do
+              VERSION=$(echo "$VERSION_DATA" | jq -r '.version')
+              PUBLISH_DATE=$(echo "$VERSION_DATA" | jq -r '.date')
+              PUBLISH_DATE_SECONDS=$(date -d "$PUBLISH_DATE" +%s 2>/dev/null || date -j -f "%Y-%m-%dT%H:%M:%S.000Z" "$PUBLISH_DATE" +%s 2>/dev/null)
+        
+              DIFF_SECONDS=$((CURRENT_DATE - PUBLISH_DATE_SECONDS))
+              if [ $DIFF_SECONDS -gt $REMOVE_DAYS_IN_SECONDS ]; then
+                echo "$VERSION_DATA" >> temp_filtered.json
+              fi
+            done
+        
+            if [ -f "temp_filtered.json" ]; then
+              mv temp_filtered.json filtered_versions.json
+            else
+              # No versions match our date criteria
+              echo "No versions match the days filter"
+              rm filtered_versions.json
+              touch filtered_versions.json
+            fi
+          fi
+        fi
+        
+        # ---------- Step 2: Handle keep-latest if specified ----------
+        if [ -n "$KEEP_LATEST" ] && [ -f "filtered_versions.json" ] && [ -s "filtered_versions.json" ]; then
+          # First, sort filtered versions by date (newest first)
+          cat filtered_versions.json | jq -s 'sort_by(.date) | reverse' > sorted_versions.json
+        
+          # Calculate how many to keep vs delete
+          TOTAL_VERSIONS=$(cat sorted_versions.json | jq 'length')
+        
+          if [ "$TOTAL_VERSIONS" -le "$KEEP_LATEST" ]; then
+            echo "Found $TOTAL_VERSIONS versions, which is <= $KEEP_LATEST to keep. Nothing to delete."
+            # Clear the filtered list since we're keeping all
+            rm filtered_versions.json
+            touch filtered_versions.json
+          else
+            # Keep only versions beyond the keep-latest count
+            cat sorted_versions.json | jq ".[${KEEP_LATEST}:]" > to_delete.json
+        
+            # If we have versions to delete, replace filtered list
+            if [ -s "to_delete.json" ]; then
+              rm filtered_versions.json
+              cat to_delete.json | jq -c '.[]' > filtered_versions.json
+            fi
+          fi
+        fi
+        
+        # ---------- Step 3: Delete all versions in our final filtered list ----------
+        if [ -f "filtered_versions.json" ] && [ -s "filtered_versions.json" ]; then
+          echo "The following versions will be deleted:"
+          cat filtered_versions.json | while read -r VERSION_DATA; do
+            VERSION=$(echo "$VERSION_DATA" | jq -r '.version')
+            PUBLISH_DATE=$(echo "$VERSION_DATA" | jq -r '.date')
+            echo "- $VERSION (published $PUBLISH_DATE)"
+        
+            # Get version ID
+            VERSION_INFO=$(echo "$ALL_VERSIONS" | jq -r ".[] | select(.name == \"$VERSION\")")
+            VERSION_ID=$(echo "$VERSION_INFO" | jq -r '.id')
+        
+            if [ -z "$VERSION_ID" ] || [ "$VERSION_ID" == "null" ]; then
+              echo "  Warning: Could not find ID for version $VERSION"
+              continue
+            fi
+        
+            # Delete the version
+            DELETE_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X DELETE \
+              -H "Authorization: Bearer ${{ inputs.token }}" \
+              "https://api.github.com/orgs/$ORG/packages/npm/$PACKAGE/versions/$VERSION_ID")
+        
+            # Check for errors based on the HTTP status code
+            if [ "$DELETE_RESPONSE" -ge 200 ] && [ "$DELETE_RESPONSE" -lt 300 ]; then
+              echo "  ✅ Successfully deleted version $VERSION"
+            else
+              echo "  ❌ Error deleting version $VERSION: HTTP $DELETE_RESPONSE"
+            fi
+          done
+        else
+          echo "No versions to delete based on the specified criteria."
+        fi
+        
+        # Clean up temp files
+        rm -f all_versions.json filtered_versions.json sorted_versions.json to_delete.json
+
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.token }}
