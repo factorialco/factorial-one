@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/ui/table"
+import { OnePagination } from "../../OnePagination"
 import type { FiltersDefinition } from "../Filters/types"
 import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
@@ -31,7 +32,10 @@ export const TableCollection = <
   source,
   link,
 }: CollectionProps<Record, Filters, TableVisualizationOptions<Record>>) => {
-  const { data, isLoading } = useData<Record, Filters>(source)
+  const { data, paginationInfo, setPage, isInitialLoading } = useData<
+    Record,
+    Filters
+  >(source)
 
   const TableActionCell = ({ item }: { item: Record }) => {
     const linkInfo = link!(item)
@@ -43,38 +47,47 @@ export const TableCollection = <
   }
 
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          {columns.map((column) => (
-            <TableHead key={String(column.label)}>{column.label}</TableHead>
-          ))}
-          {link && <TableHead key="actions">Actions</TableHead>}
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {isLoading
-          ? Array.from({ length: 4 }).map((_, i) => (
-              <TableRow key={`loading-${i}`}>
-                {columns.map((column) => (
-                  <TableCell key={String(column.label)}>
-                    <Skeleton className="h-4 w-full" />
-                  </TableCell>
-                ))}
-                {link && <TableCell key="actions">Actions</TableCell>}
-              </TableRow>
-            ))
-          : data.map((item, index) => (
-              <TableRow key={`row-${index}`}>
-                {columns.map((column) => (
-                  <TableCell key={String(column.label)}>
-                    {renderValue(item, column)}
-                  </TableCell>
-                ))}
-                {link && <TableActionCell item={item} />}
-              </TableRow>
+    <>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {columns.map((column) => (
+              <TableHead key={String(column.label)}>{column.label}</TableHead>
             ))}
-      </TableBody>
-    </Table>
+            {link && <TableHead key="actions">Actions</TableHead>}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {isInitialLoading
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <TableRow key={`loading-${i}`}>
+                  {columns.map((column) => (
+                    <TableCell key={String(column.label)}>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                  ))}
+                  {link && <TableCell key="actions">Actions</TableCell>}
+                </TableRow>
+              ))
+            : data.map((item, index) => (
+                <TableRow key={`row-${index}`}>
+                  {columns.map((column) => (
+                    <TableCell key={String(column.label)}>
+                      {renderValue(item, column)}
+                    </TableCell>
+                  ))}
+                  {link && <TableActionCell item={item} />}
+                </TableRow>
+              ))}
+        </TableBody>
+      </Table>
+      {paginationInfo && (
+        <OnePagination
+          totalPages={paginationInfo.pagesCount}
+          currentPage={paginationInfo.currentPage}
+          onPageChange={setPage}
+        />
+      )}
+    </>
   )
 }
