@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Observable } from "zen-observable-ts"
+import {
+  PromiseState,
+  promiseToObservable,
+} from "../../lib/promise-to-observable"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import {
   DataSource,
@@ -19,15 +23,13 @@ export interface DataError {
 /**
  * Response structure for non-paginated data
  */
-interface SimpleResult<T> {
-  records: T[]
-}
+type SimpleResult<T> = T[]
 
 /**
  * Hook options for useData
  */
 interface UseDataOptions<Filters extends FiltersDefinition> {
-  filters?: Partial<Filters>
+  filters?: Partial<FiltersState<Filters>>
 }
 
 /**
@@ -51,6 +53,8 @@ interface UseDataReturn<Record> {
   paginationInfo: PaginationInfo | null
   setPage: (page: number) => void
 }
+
+type DataType<T> = PromiseState<T>
 
 /**
  * Custom hook for handling data fetching state
@@ -137,18 +141,18 @@ export function useData<
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<Record> | SimpleResult<Record>) => {
-      setData(result.records)
-      setError(null)
-
-      if ("total" in result) {
+      if ("records" in result) {
+        setData(result.records)
         setPaginationInfo({
           total: result.total,
           currentPage: result.currentPage,
           perPage: result.perPage,
           pagesCount: result.pagesCount,
         })
+      } else {
+        setData(result)
       }
-
+      setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
     },
@@ -167,12 +171,12 @@ export function useData<
     [setError, setIsInitialLoading, setIsLoading]
   )
 
+  type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
+
   const fetchDataAndUpdate = useCallback(
     async (filters: FiltersState<Filters>, currentPage = 1) => {
       try {
-        const fetcher = (): PromiseOrObservable<
-          PaginatedResponse<Record> | SimpleResult<Record>
-        > =>
+        const fetcher = (): PromiseOrObservable<ResultType> =>
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 filters,
@@ -182,21 +186,37 @@ export function useData<
 
         const result = fetcher()
 
-        if (result instanceof Observable) {
-          const subscription = result.subscribe({
-            next: handleFetchSuccess,
-            error: handleFetchError,
-          })
-          cleanup.current = () => subscription.unsubscribe()
-        } else {
-          const resolvedData = await result
-          handleFetchSuccess(resolvedData)
+        // Handle synchronous data
+        if (!(result instanceof Promise || result instanceof Observable)) {
+          handleFetchSuccess(result)
+          return
         }
+
+        const observable: Observable<DataType<ResultType>> =
+          result instanceof Observable ? result : promiseToObservable(result)
+
+        const subscription = observable.subscribe({
+          next: (state) => {
+            if (state.loading) {
+              setIsLoading(true)
+            } else if (state.error) {
+              handleFetchError(state.error)
+            } else if (state.data) {
+              handleFetchSuccess(state.data)
+            }
+          },
+          error: handleFetchError,
+          complete: () => {
+            cleanup.current = undefined
+          },
+        })
+
+        cleanup.current = () => subscription.unsubscribe()
       } catch (error) {
         handleFetchError(error)
       }
     },
-    [dataAdapter, handleFetchSuccess, handleFetchError]
+    [dataAdapter, handleFetchSuccess, handleFetchError, setIsLoading]
   )
 
   const setPage = useCallback(

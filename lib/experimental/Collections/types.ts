@@ -1,4 +1,5 @@
 import { Observable } from "zen-observable-ts"
+import { PromiseState } from "../../lib/promise-to-observable"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 
 /**
@@ -22,9 +23,7 @@ export type DataSourceDefinition<
  * Base response type for collection data
  * @template Record - The type of records in the collection
  */
-export type BaseResponse<Record> = {
-  records: Record[]
-}
+export type BaseResponse<Record> = Record[]
 
 export type PaginationInfo = {
   total: number
@@ -37,7 +36,9 @@ export type PaginationInfo = {
  * Response type for paginated collection data
  * @template Record - The type of records in the collection
  */
-export type PaginatedResponse<Record> = BaseResponse<Record> & PaginationInfo
+export type PaginatedResponse<Record> = {
+  records: Record[]
+} & PaginationInfo
 
 /**
  * Base options for data fetching
@@ -68,7 +69,10 @@ export type BaseDataAdapter<
   paginationType?: never
   fetchData: (
     options: BaseFetchOptions<Filters>
-  ) => Promise<BaseResponse<Record>> | Observable<BaseResponse<Record>>
+  ) =>
+    | BaseResponse<Record>
+    | Promise<BaseResponse<Record>>
+    | Observable<PromiseState<BaseResponse<Record>>>
 }
 
 /**
@@ -85,8 +89,9 @@ export type PaginatedDataAdapter<
   fetchData: (
     options: PaginatedFetchOptions<Filters>
   ) =>
+    | PaginatedResponse<Record>
     | Promise<PaginatedResponse<Record>>
-    | Observable<PaginatedResponse<Record>>
+    | Observable<PromiseState<PaginatedResponse<Record>>>
 }
 
 /**
@@ -146,4 +151,7 @@ export type DataSource<
  * Utility type for handling both Promise and Observable return types.
  * @template T - The type of the value being promised or observed
  */
-export type PromiseOrObservable<T> = Promise<T> | Observable<T>
+export type PromiseOrObservable<T> =
+  | T
+  | Promise<T>
+  | Observable<PromiseState<T>>

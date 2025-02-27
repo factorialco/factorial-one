@@ -4,7 +4,7 @@ import { CommunityPost } from "."
 
 const meta: Meta<typeof CommunityPost> = {
   component: CommunityPost,
-  title: "Communities/Post/CommunityPost",
+  title: "Home/Communities/Post/CommunityPost",
   tags: ["autodocs", "experimental"],
 }
 

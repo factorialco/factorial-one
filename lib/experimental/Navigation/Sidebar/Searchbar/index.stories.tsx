@@ -15,7 +15,7 @@ const meta = {
       </div>
     ),
   ],
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "experimental", "no-sidebar"],
 } satisfies Meta<typeof SearchBar>
 
 export default meta
