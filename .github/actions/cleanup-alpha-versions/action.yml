@@ -87,9 +87,8 @@ runs:
         if [ -n "$PR_NUMBER" ]; then
           cat all_versions.json | while read -r VERSION_DATA; do
             VERSION=$(echo "$VERSION_DATA" | jq -r '.version')
-            PR_NUM=$(echo "$VERSION" | grep -oP 'pr\K[0-9]+' || echo "")
         
-            if [ -n "$PR_NUM" ] && [ "$PR_NUM" -eq "$PR_NUMBER" ]; then
+            if echo "$VERSION" | grep -q ".pr-$PR_NUMBER-"; then
               echo "$VERSION_DATA" >> filtered_versions.json
             fi
           done
@@ -144,6 +143,7 @@ runs:
             # Keep only versions beyond the keep-latest count
             cat sorted_versions.json | jq ".[${KEEP_LATEST}:]" > to_delete.json
         
+            cat to_delete.json
             # If we have versions to delete, replace filtered list
             if [ -s "to_delete.json" ]; then
               rm filtered_versions.json
@@ -165,6 +165,9 @@ runs:
             VERSION_ID=$(echo "$VERSION_INFO" | jq -r '.id')
         
             if [ -z "$VERSION_ID" ] || [ "$VERSION_ID" == "null" ]; then
+              echo "+++++++++++++++++++++++++++++++++"
+              echo $ALL_VERSIONS
+              echo "+++++++++++++++++++++++++++++++++"
               echo "  Warning: Could not find ID for version $VERSION"
               continue
             fi

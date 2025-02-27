@@ -15,6 +15,8 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    env:
+      BRANCH: chore/publish-as-package # ${{ github.event.repository.default_branch }}
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       pr: ${{ steps.release.outputs.pr }}
@@ -24,30 +26,23 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
-          target-branch: chore/publish-as-package
+          target-branch: ${{ env.BRANCH }}
 
-  auto-approve-merge:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.pr }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - name: Approve Release PR
-        uses: juliangruber/approve-pull-request-action@v2
+      - uses: actions/checkout@v4
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ fromJson(needs.release-please.outputs.pr).number }}
+          ref: ${{ github.event.repository.default_branch }}
+
       - name: Merge PR
-        uses: juliangruber/merge-pull-request-action@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ fromJson(needs.release-please.outputs.pr).number }}
-          method: squash
+        run: |
+          echo "PR: $PR_NUMBER"
+          gh pr merge $PR_NUMBER --squash --admin
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
+
 
   publish-npm:
-    needs: [ release-please, auto-approve-merge ]
+    needs: [ release-please ]
     runs-on: ubuntu-latest
     permissions:
       contents: read
