@@ -163,9 +163,6 @@ describe("Filters", () => {
       // Find all close buttons in the document
       const closeButtons = screen.getAllByRole("button", { name: "Close" })
 
-      // Find the department filter text to identify which close button to click
-      const departmentText = screen.getByText(/department:/i)
-
       // Click the first close button (assuming it's the department filter's close button)
       await user.click(closeButtons[0])
 
