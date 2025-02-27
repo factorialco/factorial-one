@@ -7,19 +7,26 @@ based in [convention commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
 ### Stable versions
 
-When a PR is merged into the `main` branch, the CI will automatically will check the commit messages, bump the version
-in consequence and publish a new version of the package to the github package registry.
+When a PR is merged into the `main` branch, the CI will automatically will check the commit messages, bump the version,
+update the changelog file, and create a release in github with the new version.
+
+Any new release (automatic or manual) triggers a workflow that will publish it to the github package registry.
 
 ### Experimental (alpha) versions
 
 When a PR is created any commit into the PR will trigger the build and publish process, but the version will be marked
 as
-`alpha` and the version will be `x.y.z-alpha.<pr-number>-<commit-sha>`. Where the `pr-number` is the number of the PR
+`alpha` and the version will be `x.y.z-alpha.pr-<pr-number>-<date>-<commit-sha>`. Where the `pr-number` is the number of
+the PR
 and the commit sha is the sha of the commit that triggered the build.
 
 Those versions are not meant to be used in production, but to be tested and reviewed by the team.
 
-Those version are ephemeral and will be deleted after the PR is closed of after some time (TBD).
+**Those versions are ephemeral** :
+
+- We will delete all the alpha version of a PR once the PR is closed (merged or not)
+- We will only keep the last 3 versions of each PR
+- We will delete any alpha version older than 5 days
 
 ## Conventional Commits
 

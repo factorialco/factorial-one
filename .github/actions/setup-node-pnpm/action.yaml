@@ -4,7 +4,7 @@ inputs:
   node-version:
     description: 'Node.js version'
     required: false
-    default: '20.x'
+    default: '22.x'
   registry:
     description: 'Registry URL'
     required: false
@@ -23,6 +23,7 @@ runs:
         node-version: ${{ inputs.node-version }}
         registry-url: ${{ inputs.registry }}
         scope: ${{ inputs.scope }}
+        cache: pnpm
 
     - name: Install pnpm
       run: npm install -g pnpm

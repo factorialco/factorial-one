@@ -60,9 +60,4 @@ jobs:
           pr-number: ${{ github.event.pull_request.number }}
           keep-latest: 3
 
-      - name: Remove old alpha versions of any PR
-        uses: ./.github/actions/cleanup-alpha-versions
-        with:
-          token: ${{ github.token }}
-          days: 5
 
