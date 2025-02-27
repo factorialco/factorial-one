@@ -16,7 +16,6 @@ export type ButtonProps = Pick<
   icon?: IconType
   emoji?: string
   hideLabel?: boolean
-  tabIndex?: number
 }
 
 const iconVariants = cva({

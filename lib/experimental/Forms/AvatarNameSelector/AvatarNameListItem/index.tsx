@@ -268,7 +268,6 @@ const AvatarNameListItem = forwardRef(
             label={expanded ? "Collapse" : "Expand"}
             size="sm"
             variant="ghost"
-            tabIndex={-1}
           />
           <label
             aria-label={entity.name}
