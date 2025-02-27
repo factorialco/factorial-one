@@ -264,24 +264,24 @@
     background: #161f30 !important;
   }
 
-  body.dark .sb-unstyled table,
+  body.dark .sb-unstyled table:not(.docs-story table),
   body.dark .docblock-argstable {
     background: #161f30;
     border: #161f30 4px solid;
   }
 
-  body.dark .sb-unstyled thead > tr > th,
+  body.dark .sb-unstyled thead:not(.docs-story thead) > tr > th,
   body.dark .docblock-argstable-head > tr > th > span {
     color: #a1abbd !important;
   }
 
-  body.dark .sb-unstyled tbody,
+  body.dark .sb-unstyled tbody:not(.docs-story tbody),
   body.dark .docblock-argstable-body {
     outline: none !important;
     background: #0d1625;
   }
 
-  body.dark .sb-unstyled tbody > tr > td,
+  body.dark .sb-unstyled tbody:not(.docs-story tbody) > tr > td,
   body.dark .docblock-argstable-body > tr > td > span {
     color: #a1abbd !important;
   }
@@ -305,17 +305,21 @@
     box-shadow: none !important;
   }
 
-  body.dark .sb-unstyled tbody > tr:nth-child(even) > td,
+  body.dark .sb-unstyled tbody:not(.docs-story tbody) > tr:nth-child(even) > td,
   body.dark .docblock-argstable-body > tr:nth-child(even) > td {
     background: #0d1625 !important;
   }
 
-  body.dark .sb-unstyled tbody > tr:nth-child(odd) > td,
+  body.dark .sb-unstyled tbody:not(.docs-story tbody) > tr:nth-child(odd) > td,
   body.dark .docblock-argstable-body > tr:nth-child(odd) > td {
     background: #111a2a !important;
   }
 
-  body.dark .sb-unstyled tbody > tr:not(:last-child) > td,
+  body.dark
+    .sb-unstyled
+    tbody:not(.docs-story tbody)
+    > tr:not(:last-child)
+    > td,
   body.dark .docblock-argstable-body > tr:not(:last-child) > td {
     border-bottom: #172031 1px solid !important;
   }

@@ -10,8 +10,9 @@ const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> & {
     indeterminate?: boolean
+    hideLabel?: boolean
   }
->(({ className, indeterminate, disabled, ...props }, ref) => {
+>(({ className, indeterminate, disabled, hideLabel, ...props }, ref) => {
   // Generate a unique ID if one isn't provided
   const uniqueId = useId()
   const checkboxId = props.id || uniqueId
@@ -23,6 +24,7 @@ const Checkbox = React.forwardRef<
         ref={ref}
         id={checkboxId}
         name={checkboxId}
+        aria-label={props.title}
         className={cn(
           "h-5 w-5 shrink-0 rounded-xs border border-solid border-f1-border text-f1-foreground-selected transition-[background-color,border-color] hover:border-f1-border-hover data-[state=checked]:bg-f1-background-selected-bold data-[state=checked]:text-f1-foreground-inverse hover:data-[state=checked]:border-transparent",
           disabled && "cursor-not-allowed opacity-50 hover:border-f1-border",
@@ -59,7 +61,7 @@ const Checkbox = React.forwardRef<
           </CheckboxPrimitive.Indicator>
         </AnimatePresence>
       </CheckboxPrimitive.Root>
-      {props.title && (
+      {props.title && !hideLabel && (
         <label
           htmlFor={checkboxId}
           className={cn(
