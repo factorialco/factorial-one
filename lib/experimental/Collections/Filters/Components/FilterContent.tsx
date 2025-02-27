@@ -55,6 +55,22 @@ export function FilterContent<Definition extends FiltersDefinition>({
       ? (filter as InFilterDefinition<unknown>).options.filter(matchesSearch)
       : []
 
+  const handleSelectAll = () => {
+    if (filter.type === "in") {
+      const allValues = filteredContent.map((option) => option.value)
+      const currentValues = (currentValue ?? []) as unknown[]
+      const newValues = [...currentValues]
+
+      allValues.forEach((value) => {
+        if (!newValues.includes(value)) {
+          newValues.push(value)
+        }
+      })
+
+      onFilterChange(selectedFilterKey, newValues)
+    }
+  }
+
   return (
     <div className="relative flex w-full flex-col gap-1">
       <div className="relative flex h-full flex-col justify-between overflow-y-auto">
@@ -71,7 +87,12 @@ export function FilterContent<Definition extends FiltersDefinition>({
               icon={Search}
               clearable
             />
-            <Button variant="outline" label="Select all" />
+            <Button
+              variant="outline"
+              label="Select all"
+              onClick={handleSelectAll}
+              disabled={filter.type !== "in" || filteredContent.length === 0}
+            />
           </div>
           {filter.type === "in" && (
             <InFilter
