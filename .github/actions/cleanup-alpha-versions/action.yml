@@ -144,6 +144,7 @@ runs:
             # Keep only versions beyond the keep-latest count
             cat sorted_versions.json | jq ".[${KEEP_LATEST}:]" > to_delete.json
         
+            cat to_delete.json
             # If we have versions to delete, replace filtered list
             if [ -s "to_delete.json" ]; then
               rm filtered_versions.json
@@ -151,6 +152,8 @@ runs:
             fi
           fi
         fi
+        
+        cat filtered_versions.json
         
         # ---------- Step 3: Delete all versions in our final filtered list ----------
         if [ -f "filtered_versions.json" ] && [ -s "filtered_versions.json" ]; then
