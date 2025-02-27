@@ -9,7 +9,7 @@ import { ComponentProps } from "react"
 import { InfoPaneLayout } from "."
 
 const meta = {
-  title: "InfoPaneLayout",
+  title: "Layout/InfoPaneLayout",
   component: InfoPaneLayout,
   tags: ["autodocs", "experimental"],
   decorators: [PageDecorator],

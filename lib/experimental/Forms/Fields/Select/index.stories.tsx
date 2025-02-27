@@ -31,7 +31,7 @@ const SelectWithHooks = (props: SelectProps<string>) => {
 }
 
 const meta: Meta = {
-  title: "Select",
+  title: "Input/Select",
   component: SelectWithHooks,
   parameters: {
     a11y: {

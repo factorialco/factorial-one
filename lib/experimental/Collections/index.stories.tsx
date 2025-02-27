@@ -3,7 +3,9 @@ import { Meta, StoryObj } from "@storybook/react"
 import { Code } from "lucide-react"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
-import { FiltersState } from "./Filters/types"
+import { PromiseState } from "../../lib/promise-to-observable"
+import { FilterDefinition, FiltersState } from "./Filters/types"
+import { DataAdapter, PaginatedResponse, RecordType } from "./types"
 import { useData } from "./useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
@@ -50,9 +52,11 @@ const mockUsers = [
 ]
 
 // Helper function to filter users based on filters
-const filterUsers = (
-  users: typeof mockUsers,
-  filterValues: FiltersState<typeof filters>
+const filterUsers = <
+  T extends RecordType & { name: string; email: string; department: string },
+>(
+  users: T[],
+  filterValues: FiltersState<FiltersType>
 ) => {
   let filteredUsers = [...users]
 
@@ -81,23 +85,31 @@ type FiltersType = typeof filters
 
 const createObservableDataFetch = (delay = 0) => {
   return ({ filters }: { filters: FiltersState<FiltersType> }) =>
-    new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
-      (observer) => {
-        const timeoutId = setTimeout(() => {
-          observer.next({ records: filterUsers(mockUsers, filters) })
-          observer.complete()
-        }, delay)
+    new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
+      observer.next({
+        loading: true,
+        error: null,
+        data: null,
+      })
 
-        return () => clearTimeout(timeoutId)
-      }
-    )
+      const timeoutId = setTimeout(() => {
+        observer.next({
+          loading: false,
+          error: null,
+          data: filterUsers(mockUsers, filters),
+        })
+        observer.complete()
+      }, delay)
+
+      return () => clearTimeout(timeoutId)
+    })
 }
 
 const createPromiseDataFetch = (delay = 500) => {
   return ({ filters }: { filters: FiltersState<FiltersType> }) =>
-    new Promise<{ records: Array<(typeof mockUsers)[number]> }>((resolve) => {
+    new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
-        resolve({ records: filterUsers(mockUsers, filters) })
+        resolve(filterUsers(mockUsers, filters))
       }, delay)
     })
 }
@@ -151,7 +163,7 @@ const ExampleComponent = ({
 }
 
 const meta = {
-  title: "Experimental/Collections/DataSource",
+  title: "Data Collection/DataSource",
   component: ExampleComponent,
   parameters: {
     layout: "padded",
@@ -431,22 +443,141 @@ export const WithTableVisualization: Story = {
   },
 }
 
+interface DataAdapterOptions<TRecord> {
+  data: TRecord[]
+  delay?: number
+  useObservable?: boolean
+  paginationType?: "pages"
+  perPage?: number
+}
+
+function createDataAdapter<
+  TRecord extends RecordType & {
+    name: string
+    email: string
+    department: string
+  },
+  TFilters extends Record<string, FilterDefinition<unknown>>,
+>({
+  data,
+  delay = 500,
+  useObservable = false,
+  paginationType,
+  perPage = 10,
+}: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters> {
+  const filterData = (
+    records: TRecord[],
+    filters: FiltersState<TFilters>,
+    pagination?: { currentPage?: number; perPage?: number }
+  ): TRecord[] | PaginatedResponse<TRecord> => {
+    const filteredRecords = filterUsers(
+      records,
+      filters as FiltersState<FiltersType>
+    )
+
+    if (paginationType === "pages" && pagination) {
+      const { currentPage = 1, perPage: pageSize = perPage } = pagination
+      const pagesCount = Math.ceil(filteredRecords.length / pageSize)
+      const startIndex = (currentPage - 1) * pageSize
+      const endIndex = startIndex + pageSize
+
+      return {
+        records: filteredRecords.slice(startIndex, endIndex),
+        total: filteredRecords.length,
+        currentPage,
+        perPage: pageSize,
+        pagesCount,
+      }
+    }
+
+    return filteredRecords
+  }
+
+  if (paginationType === "pages") {
+    const adapter: DataAdapter<TRecord, TFilters> = {
+      paginationType: "pages",
+      perPage: undefined,
+      fetchData: ({
+        filters,
+        pagination,
+      }: {
+        filters: FiltersState<TFilters>
+        pagination: { currentPage: number; perPage: number }
+      }) => {
+        const fetch = () =>
+          filterData(data, filters, pagination) as PaginatedResponse<TRecord>
+
+        return useObservable
+          ? new Observable<PromiseState<PaginatedResponse<TRecord>>>(
+              (observer) => {
+                observer.next({
+                  loading: true,
+                  error: null,
+                  data: null,
+                })
+
+                const timeoutId = setTimeout(() => {
+                  observer.next({
+                    loading: false,
+                    error: null,
+                    data: fetch(),
+                  })
+                  observer.complete()
+                }, delay)
+                return () => clearTimeout(timeoutId)
+              }
+            )
+          : new Promise<PaginatedResponse<TRecord>>((resolve) => {
+              setTimeout(() => resolve(fetch()), delay)
+            })
+      },
+    }
+    return adapter
+  }
+
+  const adapter: DataAdapter<TRecord, TFilters> = {
+    fetchData: ({ filters }: { filters: FiltersState<TFilters> }) => {
+      const fetch = () => filterData(data, filters) as TRecord[]
+
+      return useObservable
+        ? new Observable<PromiseState<TRecord[]>>((observer) => {
+            observer.next({
+              loading: true,
+              error: null,
+              data: null,
+            })
+
+            const timeoutId = setTimeout(() => {
+              observer.next({
+                loading: false,
+                error: null,
+                data: fetch(),
+              })
+              observer.complete()
+            }, delay)
+            return () => clearTimeout(timeoutId)
+          })
+        : new Promise<TRecord[]>((resolve) => {
+            setTimeout(() => resolve(fetch()), delay)
+          })
+    },
+  }
+  return adapter
+}
+
 // Example usage with card visualization
 export const WithCardVisualization: Story = {
   render: () => {
     const source = useDataSource({
       filters,
-      dataAdapter: {
-        fetchData: () =>
-          new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
-            (observer) => {
-              setTimeout(() => {
-                observer.next({ records: mockUsers })
-                observer.complete()
-              }, 1000)
-            }
-          ),
-      },
+      dataAdapter: createDataAdapter<
+        (typeof mockUsers)[number],
+        typeof filters
+      >({
+        data: mockUsers,
+        delay: 1000,
+        useObservable: true,
+      }),
     })
 
     return (
@@ -473,18 +604,131 @@ export const WithCardVisualization: Story = {
 // Example usage with multiple visualizations
 export const WithMultipleVisualizations: Story = {
   render: () => {
-    const source = useDataSource({
+    type MockUser = (typeof mockUsers)[number]
+    const source = useDataSource<MockUser, typeof filters>({
       filters,
       dataAdapter: {
         fetchData: () =>
-          new Observable<{ records: Array<(typeof mockUsers)[number]> }>(
-            (observer) => {
-              setTimeout(() => {
-                observer.next({ records: mockUsers })
-                observer.complete()
-              }, 1000)
-            }
-          ),
+          new Observable<PromiseState<MockUser[]>>((observer) => {
+            observer.next({
+              loading: true,
+              error: null,
+              data: null,
+            })
+
+            setTimeout(() => {
+              observer.next({
+                loading: false,
+                error: null,
+                data: mockUsers,
+              })
+              observer.complete()
+            }, 1000)
+          }),
+      },
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { label: "Name", render: (item: MockUser) => item.name },
+                { label: "Email", render: (item: MockUser) => item.email },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { label: "Email", render: (item: MockUser) => item.email },
+                { label: "Role", render: (item: MockUser) => item.role },
+                {
+                  label: "Department",
+                  render: (item: MockUser) => item.department,
+                },
+              ],
+              title: (item: MockUser) => item.name,
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+// Generate more mock data for pagination example
+const generateMockUsers = (count: number) => {
+  return Array.from({ length: count }, (_, index) => ({
+    name: `User ${index + 1}`,
+    email: `user${index + 1}@example.com`,
+    role:
+      index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
+    department: DEPARTMENTS[index % DEPARTMENTS.length],
+  }))
+}
+
+const paginatedMockUsers = generateMockUsers(50)
+
+// Example with pagination
+export const WithPagination: Story = {
+  render: () => {
+    const source = useDataSource({
+      filters,
+      dataAdapter: createDataAdapter<
+        (typeof mockUsers)[number],
+        typeof filters
+      >({
+        data: paginatedMockUsers,
+        delay: 500,
+        paginationType: "pages",
+        perPage: 10,
+      }),
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+              title: (item) => item.name,
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+// Example with synchronous data
+export const WithSynchronousData: Story = {
+  render: () => {
+    const source = useDataSource({
+      filters,
+      dataAdapter: {
+        fetchData: ({ filters }) => filterUsers(mockUsers, filters),
       },
     })
 
@@ -498,6 +742,8 @@ export const WithMultipleVisualizations: Story = {
               columns: [
                 { label: "Name", render: (item) => item.name },
                 { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
               ],
             },
           },

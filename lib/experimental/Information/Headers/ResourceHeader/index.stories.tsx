@@ -410,3 +410,56 @@ export const WithLongDescription: Story = {
       "This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated. This is a long description that will be truncated.",
   },
 }
+
+export const NoDescription: Story = {
+  args: {
+    title: "Product designers",
+    avatar: {
+      type: "team",
+      name: "Product designers",
+    },
+    primaryAction: {
+      label: "Add members",
+      icon: Icon.Add,
+      onClick: fn(),
+    },
+    secondaryActions: [
+      {
+        label: "Edit",
+        icon: Icon.Pencil,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        label: "Team leader",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "person",
+            firstName: "Josep Jaume",
+            lastName: "Rey",
+            src: "https://github.com/josepjaume.png",
+          },
+          text: "Josep Jaume Rey",
+        },
+        actions: [
+          {
+            label: "Edit",
+            icon: Icon.Pencil,
+            onClick: fn(),
+          },
+          {
+            label: "Comment",
+            icon: Icon.Comment,
+            onClick: fn(),
+          },
+        ],
+      },
+      {
+        label: "Members",
+        value: { type: "text", content: "22" },
+      },
+    ],
+  },
+}

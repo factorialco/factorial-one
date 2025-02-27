@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { CategoryBarSection } from "./index"
 
 const meta: Meta<typeof CategoryBarSection> = {
-  title: "CategoryBarSection",
+  title: "Profile/CategoryBarSection",
   component: CategoryBarSection,
   tags: ["autodocs", "experimental"],
   parameters: {

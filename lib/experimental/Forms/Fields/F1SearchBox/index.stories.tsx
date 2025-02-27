@@ -4,7 +4,7 @@ import { F1SearchBox } from "."
 
 const meta = {
   component: F1SearchBox,
-  title: "Forms/Fields/F1SearchBox",
+  title: "Input/Search",
   parameters: {
     layout: "centered",
     docs: {

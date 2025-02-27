@@ -9,7 +9,7 @@ import { Sidebar } from "../Sidebar/Sidebar"
 const meta: Meta<typeof ApplicationFrame> = {
   title: "ApplicationFrame",
   component: ApplicationFrame,
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "experimental", "no-sidebar"],
   parameters: {
     layout: "fullscreen",
   },

@@ -50,6 +50,10 @@ export function Picker({
         side="bottom"
         align="start"
         className="w-fit border-none bg-transparent p-2 shadow-none"
+        onClick={(event) => {
+          event.preventDefault()
+          event.stopPropagation()
+        }}
       >
         <EmojiPicker
           data={data}

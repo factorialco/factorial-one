@@ -13,7 +13,7 @@ import * as UserStories from "./User/index.stories"
 const meta: Meta<typeof Sidebar> = {
   title: "Sidebar",
   component: Sidebar,
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "experimental", "no-sidebar"],
   parameters: {
     layout: "centered",
   },

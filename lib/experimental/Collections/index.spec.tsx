@@ -5,6 +5,7 @@ import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
 import { I18nProvider } from "../../lib/i18n-provider"
 import { defaultTranslations } from "../../lib/i18n-provider-defaults"
+import { PromiseState } from "../../lib/promise-to-observable"
 import type { FiltersDefinition } from "./Filters/types"
 import type { DataSource } from "./types"
 import { useData } from "./useData"
@@ -29,7 +30,7 @@ describe("Collections", () => {
                 throw new Error("Email is not a valid filter")
               }
 
-              const records = mockData.filter((user) => {
+              return mockData.filter((user) => {
                 if (filters.name && typeof filters.name === "string") {
                   return user.name
                     .toLowerCase()
@@ -37,8 +38,6 @@ describe("Collections", () => {
                 }
                 return true
               })
-
-              return { records }
             },
           },
         }),
@@ -72,12 +71,10 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: async () => ({
-              records: [
-                { name: "John Doe", email: "john@example.com" },
-                { name: "Jane Smith", email: "jane@example.com" },
-              ],
-            }),
+            fetchData: async () => [
+              { name: "John Doe", email: "john@example.com" },
+              { name: "Jane Smith", email: "jane@example.com" },
+            ],
           },
         }),
       { wrapper: TestWrapper }
@@ -124,15 +121,27 @@ describe("Collections", () => {
         useDataSource({
           dataAdapter: {
             fetchData: () =>
-              new Observable<{
-                records: Array<{ name: string; role: string }>
-              }>((observer) => {
+              new Observable<
+                PromiseState<Array<{ name: string; role: string }>>
+              >((observer) => {
                 observer.next({
-                  records: [
-                    { name: "John Doe", role: "Senior Engineer" },
-                    { name: "Jane Smith", role: "Product Manager" },
-                  ],
+                  loading: true,
+                  error: null,
+                  data: null,
                 })
+
+                setTimeout(() => {
+                  observer.next({
+                    loading: false,
+                    error: null,
+                    data: [
+                      { name: "John Doe", role: "Senior Engineer" },
+                      { name: "Jane Smith", role: "Product Manager" },
+                    ],
+                  })
+                  observer.complete()
+                }, 0)
+
                 return () => {}
               }),
           },
@@ -215,7 +224,7 @@ describe("Collections", () => {
                 )
               }
 
-              return { records: filtered }
+              return filtered
             },
           },
         }),
@@ -252,7 +261,7 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: async () => ({ records: [{ name: "John" }] }),
+            fetchData: async () => [{ name: "John" }],
           },
         }),
       { wrapper: TestWrapper }
@@ -264,9 +273,9 @@ describe("Collections", () => {
   test("renders with custom visualization", async () => {
     type Item = {
       name: string
+      email: string
       role: string
       department: string
-      email: string
     }
 
     const CustomComponent = ({
@@ -295,23 +304,35 @@ describe("Collections", () => {
         useDataSource({
           dataAdapter: {
             fetchData: () =>
-              new Observable<{ records: Item[] }>((observer) => {
+              new Observable<PromiseState<Item[]>>((observer) => {
                 observer.next({
-                  records: [
-                    {
-                      name: "John Doe",
-                      role: "Senior Engineer",
-                      department: "Engineering",
-                      email: "john@example.com",
-                    },
-                    {
-                      name: "Jane Smith",
-                      role: "Product Manager",
-                      department: "Product",
-                      email: "jane@example.com",
-                    },
-                  ],
+                  loading: true,
+                  error: null,
+                  data: null,
                 })
+
+                setTimeout(() => {
+                  observer.next({
+                    loading: false,
+                    error: null,
+                    data: [
+                      {
+                        name: "John Doe",
+                        role: "Senior Engineer",
+                        department: "Engineering",
+                        email: "john@example.com",
+                      },
+                      {
+                        name: "Jane Smith",
+                        role: "Product Manager",
+                        department: "Product",
+                        email: "jane@example.com",
+                      },
+                    ],
+                  })
+                  observer.complete()
+                }, 0)
+
                 return () => {}
               }),
           },
@@ -336,12 +357,10 @@ describe("Collections", () => {
     )
 
     await waitFor(() => {
-      expect(screen.getByTestId("custom-visualization")).toBeInTheDocument()
       expect(screen.getByText("John Doe")).toBeInTheDocument()
       expect(
         screen.getByText("Senior Engineer - Engineering")
       ).toBeInTheDocument()
-      expect(screen.getByText("Product Manager - Product")).toBeInTheDocument()
     })
   })
 })

@@ -1,11 +1,9 @@
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { useReducedMotion } from "@/lib/a11y"
-import { EmojiImage, getEmojiLabel } from "@/lib/emojis"
+import { EmojiImage, getEmojiLabel, useEmojiConfetti } from "@/lib/emojis"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import NumberFlow from "@number-flow/react"
-import confetti from "canvas-confetti"
-import { useCallback, useRef, useState } from "react"
+import { useRef, useState } from "react"
 
 interface User {
   name: string
@@ -29,32 +27,7 @@ export function Reaction({
   const [isActive, setIsActive] = useState(hasReacted)
   const [count, setCount] = useState(initialCount)
   const buttonRef = useRef<HTMLButtonElement>(null)
-  const shouldReduceMotion = useReducedMotion()
-
-  const fireConfetti = useCallback(() => {
-    const button = buttonRef.current
-    if (button) {
-      const rect = button.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
-      const centerY = rect.top
-
-      confetti({
-        particleCount: 5,
-        gravity: 0.8,
-        spread: 45,
-        startVelocity: 12,
-        ticks: 30,
-        flat: true,
-        origin: {
-          x: centerX / window.innerWidth,
-          y: centerY / window.innerHeight,
-        },
-        shapes: [confetti.shapeFromText({ text: emoji })],
-        scalar: 1.5,
-        disableForReducedMotion: shouldReduceMotion,
-      })
-    }
-  }, [emoji, shouldReduceMotion])
+  const { fireEmojiConfetti } = useEmojiConfetti()
 
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement>,
@@ -65,8 +38,8 @@ export function Reaction({
     setIsActive(!isActive)
     onInteraction?.(emoji)
 
-    if (!isActive && !shouldReduceMotion) {
-      fireConfetti()
+    if (!isActive) {
+      fireEmojiConfetti(emoji, buttonRef)
     }
   }
 

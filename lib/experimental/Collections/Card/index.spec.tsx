@@ -1,8 +1,9 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { render, renderHook, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import { CardCollection } from "."
 import type { FiltersDefinition } from "../Filters/types"
 import type { DataSource } from "../types"
+import { useData } from "../useData"
 
 type Person = {
   id: number
@@ -38,9 +39,9 @@ const createTestSource = (
   currentFilters: {},
   setCurrentFilters: vi.fn(),
   dataAdapter: {
-    fetchData: async () => {
+    fetchData: async ({ filters: _filters }) => {
       if (error) throw error
-      return { records: data }
+      return data
     },
   },
 })
@@ -188,27 +189,24 @@ describe("CardCollection", () => {
     })
 
     it("handles error states appropriately", async () => {
-      const consoleError = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {})
+      const error = new Error("Failed to fetch data")
 
       render(
         <CardCollection<Person, FiltersDefinition>
           title={(item) => item.name}
           cardProperties={testCardProperties}
-          source={createTestSource([], new Error("Failed to fetch data"))}
+          source={createTestSource([], error)}
         />
       )
 
-      // Wait for loading state to finish and verify error was logged
+      // Wait for loading state to finish and verify error state
+      const { result } = renderHook(() => useData(createTestSource([], error)))
       await waitFor(() => {
-        expect(consoleError).toHaveBeenCalledWith(
-          "Error fetching data:",
-          expect.any(Error)
-        )
+        expect(result.current.error).toEqual({
+          message: "Error fetching data",
+          cause: error,
+        })
       })
-
-      consoleError.mockRestore()
     })
   })
 })
