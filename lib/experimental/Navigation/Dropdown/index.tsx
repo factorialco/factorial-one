@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
-import { EllipsisHorizontal } from "@/icons/app"
+import { CheckCircle, EllipsisHorizontal } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import {
@@ -29,6 +29,7 @@ export type DropdownItemObject = NavigationItem & {
   description?: string
   critical?: boolean
   avatar?: AvatarVariant
+  selected?: boolean
 }
 
 type DropdownProps = {
@@ -36,14 +37,19 @@ type DropdownProps = {
   icon?: IconType
   size?: ButtonProps["size"]
   children?: React.ReactNode
+  title?: string
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
   const { label: _label, ...props } = item
 
   const itemClass = cn(
-    "flex items-start gap-1.5 w-full",
-    item.critical && "text-f1-foreground-critical"
+    "relative flex items-start gap-1.5 w-full",
+    item.critical && "text-f1-foreground-critical",
+    item.selected &&
+      "after:bg-f1-background-selected after:opacity-100 hover:after:bg-f1-background-selected"
   )
 
   return (
@@ -61,7 +67,14 @@ const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
         </Link>
       ) : (
         <div className={itemClass}>
-          <DropdownItemContent item={item} />
+          <>
+            <DropdownItemContent item={item} />
+            {item.selected && (
+              <div className="absolute right-2.5 top-2 h-5 w-5 text-f1-icon-selected">
+                <Icon icon={CheckCircle} size="md" />
+              </div>
+            )}
+          </>
         </div>
       )}
     </DropdownMenuItem>
@@ -73,9 +86,31 @@ export function Dropdown({
   icon = EllipsisHorizontal,
   size,
   children,
+  title,
+  open,
+  onOpenChange,
 }: DropdownProps) {
+  const [isOpen, setIsOpen] = useState(open)
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setIsOpen(newOpen)
+    onOpenChange?.(newOpen)
+  }
+
+  const wrappedItems = items.map((item) =>
+    item === "separator"
+      ? item
+      : {
+          ...item,
+          onClick: () => {
+            item.onClick?.()
+            handleOpenChange(false)
+          },
+        }
+  )
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open ?? isOpen} onOpenChange={handleOpenChange}>
       <DropdownMenuTrigger asChild>
         {children || (
           <Button
@@ -89,7 +124,12 @@ export function Dropdown({
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
-        {items.map((item, index) =>
+        {title && (
+          <div className="flex h-8 w-full items-center justify-start px-3 py-2 text-sm font-medium text-f1-foreground-secondary">
+            {title}
+          </div>
+        )}
+        {wrappedItems.map((item, index) =>
           item === "separator" ? (
             <DropdownMenuSeparator key={index} />
           ) : (
