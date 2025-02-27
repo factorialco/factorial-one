@@ -56,7 +56,7 @@ export function FilterList<Definition extends FiltersDefinition>({
                 </AnimatePresence>
               </div>
               {hasValue && (
-                <div className="absolute right-1 top-1 flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+                <div className="absolute right-1 top-1 flex items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover:opacity-100 group-focus-visible:opacity-100">
                   <Button
                     label="Reset"
                     variant="ghost"
