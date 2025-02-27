@@ -44,6 +44,8 @@ export interface ClockInControlsProps {
   onClockOut?: () => void
   /** Callback when Break button is clicked */
   onBreak?: () => void
+  canShowProject?: boolean
+  projectSelectorElement?: React.ReactNode
 }
 
 export function ClockInControls({
@@ -60,6 +62,8 @@ export function ClockInControls({
   canShowBreakButton = true,
   // onClickProjectSelector,
   onChangeLocationId,
+  canShowProject = true,
+  projectSelectorElement,
 }: ClockInControlsProps) {
   const { status, statusText, subtitle, statusColor } = getInfo({
     data,
@@ -180,28 +184,34 @@ export function ClockInControls({
         </div>
         <div className="mt-6 flex flex-row flex-wrap items-center justify-center gap-2 @xs:justify-start">
           {canSelectLocation ? (
-            <Select
-              value={locationId}
-              options={locationOptions}
-              onChange={onChangeLocationId}
-              open={locationPickerOpen}
-              onOpenChange={setLocationPickerOpen}
-              disabled={locationSelectorDisabled}
-            >
-              <div aria-label="Select location">
-                <Selector
-                  text={location?.name}
-                  placeholder={labels.selectLocation}
-                  icon={location?.icon}
-                />
-              </div>
-            </Select>
+            <>
+              <Select
+                value={locationId}
+                options={locationOptions}
+                onChange={onChangeLocationId}
+                open={locationPickerOpen}
+                onOpenChange={setLocationPickerOpen}
+                disabled={locationSelectorDisabled}
+              >
+                <div aria-label="Select location">
+                  <Selector
+                    text={location?.name}
+                    placeholder={labels.selectLocation}
+                    icon={location?.icon}
+                  />
+                </div>
+              </Select>
+              {canShowProject && projectSelectorElement}
+            </>
           ) : (
-            canShowLocation && (
-              <>
-                <RawTag text={location?.name} icon={location?.icon} />
-              </>
-            )
+            <>
+              {canShowLocation && location && (
+                <>
+                  <RawTag text={location.name} icon={location.icon} />
+                </>
+              )}
+              {canShowProject && projectSelectorElement}
+            </>
           )}
         </div>
       </div>

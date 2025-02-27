@@ -126,6 +126,14 @@ export const Collapsed: Story = {
 
 export const WithNoLocationOrProject: Story = {
   args: {
+    remainingMinutes: 4 * 60 + 39,
+    data: [
+      {
+        from: new Date("2024-03-20T09:02:00"),
+        to: new Date("2024-03-20T12:23:00"),
+        variant: "clocked-in",
+      },
+    ],
     locationId: undefined,
   },
 }
