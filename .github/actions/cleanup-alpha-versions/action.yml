@@ -83,6 +83,10 @@ runs:
         # First, create a file with all alpha versions and their info
         echo "$ALPHA_INFO" | jq -c '.[]' > all_versions.json
         
+        echo "=================================="
+        cat all_versions.json
+        echo "=================================="
+        
         # If PR filter is active, create filtered list for just that PR
         if [ -n "$PR_NUMBER" ]; then
           cat all_versions.json | while read -r VERSION_DATA; do
@@ -97,6 +101,10 @@ runs:
           # If no PR filter, use all alpha versions
           cp all_versions.json filtered_versions.json
         fi
+        
+        echo "=================================="
+        cat filtered_versions.json
+        echo "=================================="
         
         # If days filter is active, remove versions newer than cutoff
         if [ -n "$REMOVE_DAYS" ]; then
@@ -144,6 +152,7 @@ runs:
             # Keep only versions beyond the keep-latest count
             cat sorted_versions.json | jq ".[${KEEP_LATEST}:]" > to_delete.json
         
+            cat to_delete.json
             # If we have versions to delete, replace filtered list
             if [ -s "to_delete.json" ]; then
               rm filtered_versions.json
