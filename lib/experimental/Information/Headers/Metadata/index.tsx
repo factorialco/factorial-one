@@ -5,6 +5,7 @@ import {
   AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
 import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
+import { DotTag, NewColor } from "@/experimental/Information/Tags/DotTag"
 import { RawTag } from "@/experimental/Information/Tags/exports"
 import {
   StatusTag,
@@ -23,6 +24,7 @@ type MetadataItemValue =
   | { type: "list"; variant: AvatarVariant["type"]; avatars: AvatarVariant[] }
   | { type: "data-list"; data: string[] }
   | { type: "tag-list"; tags: string[] }
+  | { type: "dot-tag"; label: string; color: NewColor }
 
 type MetadataAction = {
   icon: IconType
@@ -121,6 +123,9 @@ function MetadataValue({
           ))}
         </div>
       )
+
+    case "dot-tag":
+      return <DotTag text={item.value.label} color={item.value.color} />
   }
 }
 
