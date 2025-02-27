@@ -114,15 +114,15 @@ export function Filters<Definition extends FiltersDefinition>({
           <PopoverContent
             className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
             align="start"
+            side="bottom"
           >
-            <div className="flex max-h-[200px] flex-col">
+            <div className="flex h-[min(448px,80vh)] flex-col">
               <div className="flex min-h-0 flex-1">
                 <FilterList
                   definition={schema}
                   tempFilters={tempFilters}
                   selectedFilterKey={selectedFilterKey}
                   onFilterSelect={setSelectedFilterKey}
-                  onFilterClear={handleClearFilter}
                 />
                 {selectedFilterKey && (
                   <FilterContent
@@ -130,6 +130,7 @@ export function Filters<Definition extends FiltersDefinition>({
                     definition={schema}
                     tempFilters={tempFilters}
                     onFilterChange={handleFilterChange}
+                    onFilterClear={handleClearFilter}
                   />
                 )}
               </div>

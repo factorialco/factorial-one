@@ -1,5 +1,5 @@
 import { cn, focusRing } from "@/lib/utils"
-import { X } from "lucide-react"
+import { AnimatePresence, motion } from "framer-motion"
 import type { FiltersDefinition, FiltersState } from "../types"
 
 interface FilterListProps<Definition extends FiltersDefinition> {
@@ -7,7 +7,6 @@ interface FilterListProps<Definition extends FiltersDefinition> {
   tempFilters: FiltersState<Definition>
   selectedFilterKey: keyof Definition | null
   onFilterSelect: (key: keyof Definition) => void
-  onFilterClear: (key: keyof Definition) => void
 }
 
 export function FilterList<Definition extends FiltersDefinition>({
@@ -15,11 +14,10 @@ export function FilterList<Definition extends FiltersDefinition>({
   tempFilters,
   selectedFilterKey,
   onFilterSelect,
-  onFilterClear,
 }: FilterListProps<Definition>) {
   return (
     <div className="w-[224px] shrink-0 border border-solid border-transparent border-r-f1-border-secondary">
-      <div className="flex w-full flex-col gap-1 overflow-y-auto p-2">
+      <div className="flex h-full w-full flex-col gap-1 overflow-y-auto p-2">
         {Object.entries(definition).map(([key, filter]) => {
           const hasValue =
             tempFilters[key] &&
@@ -39,15 +37,16 @@ export function FilterList<Definition extends FiltersDefinition>({
               onClick={() => onFilterSelect(key as keyof Definition)}
             >
               <span>{filter.label}</span>
-              {hasValue && (
-                <X
-                  className="ml-2 h-3 w-3 shrink-0 opacity-60 hover:opacity-100"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    onFilterClear(key as keyof Definition)
-                  }}
-                />
-              )}
+              <AnimatePresence>
+                {hasValue && (
+                  <motion.div
+                    className="mr-0.5 h-2 w-2 rounded-full bg-f1-background-selected-bold"
+                    initial={{ opacity: 0, scale: 0.7 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.7 }}
+                  />
+                )}
+              </AnimatePresence>
             </button>
           )
         })}
