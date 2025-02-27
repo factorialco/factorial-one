@@ -4,7 +4,7 @@ import { OnePagination } from "."
 
 const meta: Meta<typeof OnePagination> = {
   component: OnePagination,
-  title: "Pagination",
+  title: "Data Collection/Pagination",
   parameters: {
     layout: "centered",
   },

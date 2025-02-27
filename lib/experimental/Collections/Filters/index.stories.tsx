@@ -12,7 +12,7 @@ import {
 } from "./utils"
 
 const meta = {
-  title: "Experimental/Collections/Filters",
+  title: "Data Collection/Filters",
   component: Filters,
 } satisfies Meta<typeof Filters>
 

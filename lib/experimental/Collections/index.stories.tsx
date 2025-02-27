@@ -163,7 +163,7 @@ const ExampleComponent = ({
 }
 
 const meta = {
-  title: "Experimental/Collections/DataSource",
+  title: "Data Collection/DataSource",
   component: ExampleComponent,
   parameters: {
     layout: "padded",

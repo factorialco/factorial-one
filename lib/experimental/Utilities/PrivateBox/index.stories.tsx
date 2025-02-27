@@ -5,7 +5,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { PrivateBox } from "."
 
 const meta: Meta = {
-  title: "PrivateBox",
+  title: "Profile/PrivateBox",
   tags: ["autodocs", "experimental"],
 }
 

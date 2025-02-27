@@ -4,7 +4,7 @@ import { Input } from "."
 
 const meta = {
   component: Input,
-  title: "Input",
+  title: "Input/Text",
   tags: ["autodocs", "experimental"],
   args: {
     type: "text",
