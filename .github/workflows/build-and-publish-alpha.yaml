@@ -53,14 +53,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Remove old alpha versions of any PR
-        uses: ./.github/actions/cleanup-alpha-versions
-        with:
-          token: ${{ github.token }}
-          days: 5
-      - name: Remove old alpha versions
+      - name: Keep only latest 3 alpha versions for this PR
         uses: ./.github/actions/cleanup-alpha-versions
         with:
           token: ${{ github.token }}
           pr-number: ${{ github.event.pull_request.number }}
           keep-latest: 3
+
+      - name: Remove old alpha versions of any PR
+        uses: ./.github/actions/cleanup-alpha-versions
+        with:
+          token: ${{ github.token }}
+          days: 5
+
