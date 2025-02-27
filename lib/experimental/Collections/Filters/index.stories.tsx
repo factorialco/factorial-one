@@ -54,6 +54,27 @@ const sampleDefinition: FiltersDefinition = {
       { value: "remote", label: "Remote" },
     ],
   },
+  role: {
+    type: "in",
+    label: "Role",
+    options: [
+      { value: "engineer", label: "Software Engineer" },
+      { value: "designer", label: "Product Designer" },
+      { value: "manager", label: "Product Manager" },
+      { value: "analyst", label: "Data Analyst" },
+      { value: "marketer", label: "Marketing Specialist" },
+      { value: "sales", label: "Sales Representative" },
+      { value: "hr", label: "Human Resources Specialist" },
+      { value: "finance", label: "Financial Analyst" },
+      { value: "customer_support", label: "Customer Support Specialist" },
+      { value: "legal", label: "Legal Counsel" },
+      { value: "operations", label: "Operations Manager" },
+      { value: "research", label: "Research Scientist" },
+      { value: "product", label: "Product Manager" },
+      { value: "security", label: "Security Specialist" },
+      { value: "other", label: "Other" },
+    ],
+  },
 }
 
 const FiltersWithState = () => {
