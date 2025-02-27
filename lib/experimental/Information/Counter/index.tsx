@@ -2,15 +2,14 @@ import { cn } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
 
 const counterVariants = cva({
-  base: "inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums",
+  base: "inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all",
   variants: {
     size: {
       md: "min-w-5 p-0.5",
       sm: "min-w-4 px-0.5",
     },
     type: {
-      default:
-        "border border-solid border-f1-border bg-f1-background-secondary",
+      default: "bg-f1-background-secondary outline outline-1 outline-f1-border",
       selected: "bg-f1-background-selected-bold text-f1-foreground-inverse",
       bold: "bg-f1-background-accent-bold text-f1-foreground-inverse",
     },
