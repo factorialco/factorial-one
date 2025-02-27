@@ -11,7 +11,7 @@ export const Preset = ({ label, number, onClick, selected }: PresetProps) => {
   return (
     <button
       className={cn(
-        "flex cursor-default appearance-none items-center gap-2 rounded px-2.5 py-1.5 font-medium outline outline-1 outline-f1-border transition-all",
+        "flex cursor-default appearance-none items-center gap-2 rounded px-2.5 py-1.5 font-medium text-f1-foreground outline outline-1 outline-f1-border transition-all",
         "focus:outline focus:outline-1",
         number && "pr-1.5",
         onClick && "cursor-pointer hover:outline-f1-border-hover",
