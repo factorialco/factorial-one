@@ -25,7 +25,7 @@ const sampleDefinition: FiltersDefinition = {
     options: [
       {
         value: "engineering",
-        label: "Engineering with quite a long label that should be truncated",
+        label: "Engineering",
       },
       { value: "marketing", label: "Marketing" },
       { value: "sales", label: "Sales" },
