@@ -63,7 +63,13 @@ export function CelebrationAvatar({
             />
           </div>
           {canReact && (
-            <div ref={pickerRef} className="absolute -right-0.5 bottom-0.5">
+            <div
+              ref={pickerRef}
+              className={cn(
+                "absolute -right-0.5",
+                src ? "bottom-0.5" : "-bottom-[3px]"
+              )}
+            >
               <Picker
                 lastEmojiReaction={lastEmojiReaction}
                 onSelect={onReactionSelect}
