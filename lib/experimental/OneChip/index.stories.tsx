@@ -87,7 +87,7 @@ export const WithAvatar: Story = {
       src: "https://github.com/dani-moreno.png",
     },
   },
-  render: (args) => (
+  render: ({ icon: _icon, ...args }) => (
     <div className="flex gap-2">
       <Chip {...args} />
       <Chip

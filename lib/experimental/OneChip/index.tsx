@@ -1,7 +1,7 @@
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Icon, type IconType } from "@/components/Utilities/Icon"
 import {
   Avatar,
-  AvatarVariant,
+  type AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
 import { CrossedCircle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
@@ -13,7 +13,7 @@ export const chipVariants = cva({
     variant: {
       default: "",
       selected:
-        "border-f1-border-selected bg-f1-background-selected-secondary text-f1-foreground-selected",
+        "bg-f1-background-selected-secondary border-f1-border-selected text-f1-foreground-selected",
     },
   },
   defaultVariants: {
@@ -21,27 +21,39 @@ export const chipVariants = cva({
   },
 })
 
-interface ChipProps extends VariantProps<typeof chipVariants> {
+interface BaseChipProps extends VariantProps<typeof chipVariants> {
   /**
    * The label of the chip
-   */
+   * */
   label: string
 
   /**
    * If defined, the close icon will be displayed and the chip will be clickable
-   */
+   * */
   onClose?: () => void
-
-  /**
-   * If defined, an avatar will be displayed in the chip
-   */
-  avatar?: AvatarVariant
-
-  /**
-   * If defined, an icon will be displayed in the chip
-   */
-  icon?: IconType
 }
+
+type ChipVariants =
+  | {
+      /**
+       * If defined, an avatar will be displayed in the chip
+       * */
+      avatar: AvatarVariant
+      icon?: undefined
+    }
+  | {
+      /**
+       * If defined, an icon will be displayed in the chip
+       * */
+      icon: IconType
+      avatar?: undefined
+    }
+  | {
+      avatar?: undefined
+      icon?: undefined
+    }
+
+export type ChipProps = BaseChipProps & ChipVariants
 
 export const Chip = ({ label, variant, onClose, avatar, icon }: ChipProps) => {
   return (
@@ -66,7 +78,7 @@ export const Chip = ({ label, variant, onClose, avatar, icon }: ChipProps) => {
           className={cn(
             "-m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full [&_svg]:text-f1-icon-secondary [&_svg]:transition-colors [&_svg]:hover:text-f1-icon [&_svg]:focus:text-f1-icon",
             variant === "selected" &&
-              "[&_svg]:text-f1-icon-selected [&_svg]:hover:text-f1-icon-selected-hover [&_svg]:focus:text-f1-icon-selected-hover",
+              "[&_svg]:hover:text-f1-icon-selected-hover [&_svg]:focus:text-f1-icon-selected-hover [&_svg]:text-f1-icon-selected",
             focusRing()
           )}
           tabIndex={0}
