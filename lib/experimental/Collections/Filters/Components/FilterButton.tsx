@@ -1,8 +1,7 @@
 "use client"
 
-import { Button } from "@/ui/button"
 import { motion } from "framer-motion"
-import { X } from "lucide-react"
+import { Chip } from "../../../OneChip"
 import type { FiltersDefinition } from "../types"
 
 /**
@@ -22,6 +21,46 @@ export function FilterButton<Definition extends FiltersDefinition>({
   onSelect,
   onRemove,
 }: FilterButtonProps<Definition>) {
+  // Handle "in" type filters (multi-select)
+  if (filter.type === "in") {
+    const selectedValues = (value ?? []) as unknown[]
+    if (selectedValues.length === 0) return null
+
+    const getSelectedOptionLabel = (selectedValue: unknown): string => {
+      const option = filter.options.find((opt) => opt.value === selectedValue)
+      return option?.label ?? String(selectedValue)
+    }
+
+    const firstSelectedLabel = getSelectedOptionLabel(selectedValues[0])
+    const remainingCount = selectedValues.length - 1
+    const hasMultipleSelections = remainingCount > 0
+
+    const label = hasMultipleSelections
+      ? `${filter.label}: ${firstSelectedLabel} +${remainingCount}`
+      : `${filter.label}: ${firstSelectedLabel}`
+
+    return (
+      <motion.div
+        layout
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{ type: "spring", duration: 0.2 }}
+      >
+        <Chip
+          variant="selected"
+          label={label}
+          onClose={onRemove}
+          onClick={onSelect}
+        />
+      </motion.div>
+    )
+  }
+
+  // Handle "search" type filters
+  const searchValue = (value ?? "") as string
+  const label = `${filter.label}: ${searchValue}`
+
   return (
     <motion.div
       layout
@@ -30,21 +69,12 @@ export function FilterButton<Definition extends FiltersDefinition>({
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ type: "spring", duration: 0.2 }}
     >
-      <Button variant="outline" className="gap-1" onClick={onSelect}>
-        <span>{filter.label}:</span>
-        {filter.type === "in" && (
-          <span>{((value ?? []) as unknown[]).length} selected</span>
-        )}
-        {filter.type === "search" && <span>{(value ?? "") as string}</span>}
-        <X
-          className="ml-1 h-3 w-3 shrink-0 opacity-60 hover:opacity-100"
-          onClick={(e) => {
-            e.stopPropagation()
-            onRemove()
-          }}
-          aria-label="Remove"
-        />
-      </Button>
+      <Chip
+        variant="selected"
+        label={label}
+        onClose={onRemove}
+        onClick={onSelect}
+      />
     </motion.div>
   )
 }

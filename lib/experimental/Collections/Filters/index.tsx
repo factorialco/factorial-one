@@ -101,7 +101,7 @@ export function Filters<Definition extends FiltersDefinition>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex items-center gap-2">
         <Popover open={isOpen} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild>
             <Button
@@ -123,6 +123,7 @@ export function Filters<Definition extends FiltersDefinition>({
                   tempFilters={tempFilters}
                   selectedFilterKey={selectedFilterKey}
                   onFilterSelect={setSelectedFilterKey}
+                  onFilterClear={handleClearFilter}
                 />
                 {selectedFilterKey && (
                   <FilterContent
@@ -130,17 +131,11 @@ export function Filters<Definition extends FiltersDefinition>({
                     definition={schema}
                     tempFilters={tempFilters}
                     onFilterChange={handleFilterChange}
-                    onFilterClear={handleClearFilter}
                   />
                 )}
               </div>
 
               <div className="flex items-center justify-end gap-2 border-solid border-transparent border-t-f1-border-secondary px-3 py-2">
-                <Button
-                  variant="outline"
-                  onClick={() => setIsOpen(false)}
-                  label={i18n.filters.cancel}
-                />
                 <Button
                   onClick={handleApplyFilters}
                   label={i18n.filters.applyFilters}
@@ -150,6 +145,11 @@ export function Filters<Definition extends FiltersDefinition>({
           </PopoverContent>
         </Popover>
 
+        <div className="rounded-sm bg-f1-background-secondary px-2 py-1.5">
+          Here should be the presets
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
         <AnimatePresence presenceAffectsLayout initial={false}>
           {(Object.keys(value) as Array<keyof Definition>).map((key) => {
             const filter = schema[key]

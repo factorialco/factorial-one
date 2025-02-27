@@ -23,7 +23,10 @@ const sampleDefinition: FiltersDefinition = {
     type: "in",
     label: "Department",
     options: [
-      { value: "engineering", label: "Engineering" },
+      {
+        value: "engineering",
+        label: "Engineering with quite a long label that should be truncated",
+      },
       { value: "marketing", label: "Marketing" },
       { value: "sales", label: "Sales" },
       { value: "hr", label: "Human Resources" },
