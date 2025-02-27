@@ -13,7 +13,7 @@ export const chipVariants = cva({
     variant: {
       default: "",
       selected:
-        "bg-f1-background-selected-secondary border-f1-border-selected text-f1-foreground-selected",
+        "border-f1-border-selected bg-f1-background-selected-secondary text-f1-foreground-selected",
     },
   },
   defaultVariants: {
@@ -78,7 +78,7 @@ export const Chip = ({ label, variant, onClose, avatar, icon }: ChipProps) => {
           className={cn(
             "-m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full [&_svg]:text-f1-icon-secondary [&_svg]:transition-colors [&_svg]:hover:text-f1-icon [&_svg]:focus:text-f1-icon",
             variant === "selected" &&
-              "[&_svg]:hover:text-f1-icon-selected-hover [&_svg]:focus:text-f1-icon-selected-hover [&_svg]:text-f1-icon-selected",
+              "[&_svg]:text-f1-icon-selected [&_svg]:hover:text-f1-icon-selected-hover [&_svg]:focus:text-f1-icon-selected-hover",
             focusRing()
           )}
           tabIndex={0}
