@@ -62,7 +62,7 @@ export const WithClose: Story = {
     }
 
     return (
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {chips.map((chip) => (
           <Chip
             key={chip.id}
@@ -88,7 +88,7 @@ export const WithAvatar: Story = {
     },
   },
   render: ({ icon: _icon, ...args }) => (
-    <div className="flex gap-2">
+    <div className="flex flex-wrap gap-2">
       <Chip {...args} />
       <Chip
         {...args}
@@ -135,7 +135,7 @@ export const SelectedWithClose: Story = {
     }
 
     return (
-      <div className="flex gap-2">
+      <div className="flex flex-wrap gap-2">
         {chips.map((chip) => (
           <Chip
             key={chip.id}
