@@ -56,6 +56,39 @@ The commit contains the following structural elements, to communicate intent to 
 
 [Read more about Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#examples)
 
+## Accessing to the package
+
+The package is published in the github package registry and is a private package so you need to be authenticated to in
+the registry to install it.
+
+To install the package you need to create a `.npmrc` file in your home directory with the following content:
+
+```
+@factorialco:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+```
+
+You can get the token from your [github account settings](https://github.com/settings/tokens).
+It must be a classic token with the `read:packages` scope.
+
+> Remember to don't share the token with anyone and don't commit it to the repository
+
+### Accessing the package in a CI/CD pipeline
+
+You need to add `.npmrc` file in repository with the following content:
+
+```
+@factorialco/factorial-one:registry=https://npm.pkg.github.com
+```
+
+To be able to install the `factorial-one` package in a CI/CD pipeline you need to ask us to add your repository to the
+list
+of "[Manage Actions Access](https://github.com/orgs/factorialco/packages/npm/factorial-one/settings)"
+
+Remember to set the env variable `NODE_AUTH_TOKEN` with the value of `${{secrets.GITHUB_TOKEN}}` in your CI/CD pipeline
+use the authentication to access the package.
+
+
 
 
 

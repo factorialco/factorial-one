@@ -24,7 +24,6 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-
       - uses: ./.github/actions/setup-node-pnpm
         name: Setup Node and pnpm
 
