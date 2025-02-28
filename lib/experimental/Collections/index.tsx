@@ -80,7 +80,7 @@ export const DataCollection = <
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-start justify-between">
         {filters && (
           <Filters
             schema={filters}
