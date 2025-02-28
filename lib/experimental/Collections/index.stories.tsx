@@ -193,7 +193,11 @@ export const BasicTableView: Story = {
             options: {
               columns: [
                 { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
+                {
+                  label: "Email",
+                  info: "Work email",
+                  render: (item) => item.email,
+                },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
               ],
