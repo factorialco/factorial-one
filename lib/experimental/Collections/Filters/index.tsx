@@ -149,27 +149,29 @@ export function Filters<Definition extends FiltersDefinition>({
           Here should be the presets
         </div> */}
       </div>
-      <div className="flex flex-wrap items-center gap-2">
-        <AnimatePresence presenceAffectsLayout initial={false}>
-          {(Object.keys(value) as Array<keyof Definition>).map((key) => {
-            const filter = schema[key]
-            if (!value[key]) return null
+      {Object.keys(value).length > 0 && (
+        <div className="flex flex-wrap items-center gap-2">
+          <AnimatePresence presenceAffectsLayout initial={false}>
+            {(Object.keys(value) as Array<keyof Definition>).map((key) => {
+              const filter = schema[key]
+              if (!value[key]) return null
 
-            return (
-              <FilterButton
-                key={String(key)}
-                filter={filter}
-                value={value[key]}
-                onSelect={() => {
-                  setSelectedFilterKey(key)
-                  setIsOpen(true)
-                }}
-                onRemove={() => handleRemoveFilter(key)}
-              />
-            )
-          })}
-        </AnimatePresence>
-      </div>
+              return (
+                <FilterButton
+                  key={String(key)}
+                  filter={filter}
+                  value={value[key]}
+                  onSelect={() => {
+                    setSelectedFilterKey(key)
+                    setIsOpen(true)
+                  }}
+                  onRemove={() => handleRemoveFilter(key)}
+                />
+              )
+            })}
+          </AnimatePresence>
+        </div>
+      )}
     </div>
   )
 }
