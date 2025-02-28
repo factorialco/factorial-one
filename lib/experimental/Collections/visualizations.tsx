@@ -1,7 +1,9 @@
 import { Button } from "@/components/Actions/Button"
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Kanban, Sliders, Table } from "@/icons/app"
 import { useI18n } from "@/lib/i18n-provider"
-import { LayoutGrid, Table } from "lucide-react"
+import { cn, focusRing } from "@/lib/utils"
+import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import type { CardVisualizationOptions } from "./Card"
 import { CardCollection } from "./Card"
 import type { FiltersDefinition } from "./Filters/types"
@@ -87,29 +89,55 @@ export const VisualizationSelector = <
 
   return (
     <div className="flex gap-2">
-      {visualizations.map((visualization, index) => {
-        const isSelected = currentVisualization === index
-        const Icon =
-          visualization.type === "custom"
-            ? visualization.icon
-            : visualization.type === "table"
-              ? Table
-              : LayoutGrid
-
-        return (
+      <Popover>
+        <PopoverTrigger asChild>
           <Button
-            key={visualization.type}
-            variant={isSelected ? "default" : "outline"}
-            onClick={() => onVisualizationChange(index)}
-            label={
-              visualization.type === "custom"
-                ? visualization.label
-                : i18n.collections.visualizations[visualization.type]
-            }
-            icon={Icon}
+            variant="outline"
+            label="Filters"
+            icon={Sliders}
+            onClick={() => {}}
+            hideLabel
+            round
           />
-        )
-      })}
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-[280px] rounded-md border border-solid border-f1-border-secondary p-2"
+          align="end"
+        >
+          <div className="grid grid-cols-2">
+            {visualizations.map((visualization, index) => {
+              const isSelected = currentVisualization === index
+              const IconVisualization: IconType =
+                visualization.type === "custom"
+                  ? visualization.icon
+                  : visualization.type === "table"
+                    ? Table
+                    : Kanban
+
+              const label =
+                visualization.type === "custom"
+                  ? visualization.label
+                  : i18n.collections.visualizations[visualization.type]
+
+              return (
+                <button
+                  className={cn(
+                    "flex w-full flex-col items-center justify-center gap-1 rounded-sm p-2 font-medium text-f1-foreground-secondary transition-colors",
+                    isSelected &&
+                      "bg-f1-background-secondary text-f1-foreground",
+                    focusRing()
+                  )}
+                  key={visualization.type}
+                  onClick={() => onVisualizationChange(index)}
+                >
+                  <Icon icon={IconVisualization} />
+                  {label}
+                </button>
+              )
+            })}
+          </div>
+        </PopoverContent>
+      </Popover>
     </div>
   )
 }

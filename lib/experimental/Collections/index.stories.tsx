@@ -1,6 +1,6 @@
 import { Link } from "@/components/Actions/Link"
+import { Code } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react"
-import { Code } from "lucide-react"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
 import { PromiseState } from "../../lib/promise-to-observable"
