@@ -65,7 +65,7 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
             }}
           >
             <span className="line-clamp-1 w-fit text-left">{option.label}</span>
-            <Checkbox checked={isSelected} presentational />
+            <Checkbox checked={isSelected} presentational hideLabel />
           </button>
         )
       })}
