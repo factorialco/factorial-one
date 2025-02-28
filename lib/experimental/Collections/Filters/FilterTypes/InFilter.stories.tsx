@@ -107,7 +107,7 @@ const AsyncOptionsExample = () => {
                 { value: "user3", label: "Bob Johnson" },
                 { value: "user4", label: "Alice Williams" },
               ])
-            }, 1000)
+            }, 5000)
           })
         },
       }}
