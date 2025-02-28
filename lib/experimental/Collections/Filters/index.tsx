@@ -154,6 +154,7 @@ export function Filters<Definition extends FiltersDefinition>({
             <Preset
               key={index}
               label={preset.label}
+              selected={JSON.stringify(preset.filter) === JSON.stringify(value)}
               onClick={() => onChange(preset.filter)}
             />
           ))}

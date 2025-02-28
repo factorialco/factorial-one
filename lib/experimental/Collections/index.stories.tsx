@@ -14,7 +14,7 @@ import { DataCollection, useDataSource } from "."
 import { PromiseState } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import { FilterDefinition, FiltersState } from "./Filters/types"
-import { DataAdapter, PaginatedResponse, RecordType } from "./types"
+import { DataAdapter, PaginatedResponse, Presets, RecordType } from "./types"
 import { useData } from "./useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
@@ -31,6 +31,34 @@ const filters = {
     options: DEPARTMENTS.map((value) => ({ value, label: value })),
   },
 } as const
+
+// Define presets for the filters
+const filterPresets: Presets<typeof filters> = [
+  {
+    label: "Engineering Team",
+    filter: {
+      department: ["Engineering"],
+    },
+  },
+  {
+    label: "Product Team",
+    filter: {
+      department: ["Product"],
+    },
+  },
+  {
+    label: "Design Team",
+    filter: {
+      department: ["Design"],
+    },
+  },
+  {
+    label: "Marketing Team",
+    filter: {
+      department: ["Marketing"],
+    },
+  },
+]
 
 // Mock data
 const mockUsers = [
@@ -138,11 +166,14 @@ const createPromiseDataFetch = (delay = 500) => {
 // Example component using useDataSource
 const ExampleComponent = ({
   useObservable = false,
+  usePresets = false,
 }: {
   useObservable?: boolean
+  usePresets?: boolean
 }) => {
   const dataSource = useDataSource({
     filters,
+    presets: usePresets ? filterPresets : undefined,
     actions: (item) => [
       {
         label: "Edit",
@@ -219,7 +250,16 @@ const meta = {
   parameters: {
     layout: "padded",
   },
-  argTypes: {},
+  argTypes: {
+    useObservable: {
+      control: "boolean",
+      description: "Use Observable for data fetching",
+    },
+    usePresets: {
+      control: "boolean",
+      description: "Include filter presets",
+    },
+  },
 } satisfies Meta<typeof ExampleComponent>
 
 export default meta
@@ -230,6 +270,7 @@ export const BasicTableView: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
+      presets: filterPresets,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
@@ -250,38 +291,41 @@ export const BasicTableView: Story = {
           label: item.isStarred ? "Remove Star" : "Star User",
           icon: Star,
           onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
         },
         {
           label: "Delete",
           icon: Delete,
-          critical: true,
           onClick: () => console.log(`Deleting ${item.name}`),
-          enabled: item.department === "Engineering",
+          critical: true,
+          description: "Permanently remove user",
+          enabled:
+            item.department === "Engineering" && item.status === "active",
         },
       ],
     })
 
     return (
-      <DataCollection
-        source={dataSource}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                { label: "Name", render: (item) => item.name },
-                {
-                  label: "Email",
-                  info: "Work email",
-                  render: (item) => item.email,
-                },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
+      <div className="space-y-4">
+        <DataCollection
+          source={dataSource}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  { label: "Name", render: (item) => item.name },
+                  { label: "Email", render: (item) => item.email },
+                  { label: "Role", render: (item) => item.role },
+                  { label: "Department", render: (item) => item.department },
+                ],
+              },
             },
-          },
-        ]}
-      />
+          ]}
+        />
+      </div>
     )
   },
 }
@@ -371,6 +415,7 @@ export const CustomCardProperties: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
+      presets: filterPresets,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
@@ -397,6 +442,7 @@ export const CustomCardProperties: Story = {
 export const SwitchableVisualizations: Story = {
   args: {
     useObservable: false,
+    usePresets: true,
   },
 }
 
@@ -405,6 +451,7 @@ export const WithPreselectedFilters: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
+      presets: filterPresets,
       currentFilters: {
         department: ["Engineering"],
       },
@@ -522,6 +569,7 @@ export const WithTableVisualization: Story = {
   render: () => {
     const source = useDataSource({
       filters,
+      presets: filterPresets,
       dataAdapter: {
         fetchData: createObservableDataFetch(1000),
       },
@@ -675,6 +723,7 @@ export const WithCardVisualization: Story = {
   render: () => {
     const source = useDataSource({
       filters,
+      presets: filterPresets,
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
         typeof filters
@@ -716,6 +765,7 @@ export const WithMultipleVisualizations: Story = {
       ActionsDefinition<MockUser>
     >({
       filters,
+      presets: filterPresets,
       dataAdapter: {
         fetchData: () =>
           new Observable<PromiseState<MockUser[]>>((observer) => {
@@ -791,6 +841,7 @@ export const WithPagination: Story = {
   render: () => {
     const source = useDataSource({
       filters,
+      presets: filterPresets,
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
         typeof filters
@@ -839,6 +890,7 @@ export const WithSynchronousData: Story = {
   render: () => {
     const source = useDataSource({
       filters,
+      presets: filterPresets,
       dataAdapter: {
         fetchData: ({ filters }) => filterUsers(mockUsers, filters),
       },
@@ -859,17 +911,6 @@ export const WithSynchronousData: Story = {
               ],
             },
           },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
         ]}
       />
     )
@@ -881,6 +922,7 @@ export const WithAdvancedActions: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
+      presets: filterPresets,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
@@ -974,5 +1016,20 @@ export const WithAdvancedActions: Story = {
         ]}
       />
     )
+  },
+}
+
+// Example with presets only
+export const WithPresets: Story = {
+  args: {
+    usePresets: true,
+  },
+}
+
+// Example with presets and observable data
+export const WithPresetsAndObservable: Story = {
+  args: {
+    useObservable: true,
+    usePresets: true,
   },
 }
