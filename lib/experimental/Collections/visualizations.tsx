@@ -4,6 +4,7 @@ import { Kanban, Sliders, Table } from "@/icons/app"
 import { useI18n } from "@/lib/i18n-provider"
 import { cn, focusRing } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
+import { useState } from "react"
 import { ActionsDefinition } from "./actions"
 import type { CardVisualizationOptions } from "./Card"
 import { CardCollection } from "./Card"
@@ -92,11 +93,17 @@ export const VisualizationSelector = <
   onVisualizationChange: (index: number) => void
 }): JSX.Element => {
   const i18n = useI18n()
+  const [open, setOpen] = useState(false)
+
+  const handleVisualizationChange = (index: number) => {
+    setOpen(false)
+    onVisualizationChange(index)
+  }
 
   return (
     <div className="flex gap-2">
-      <Popover>
-        <PopoverTrigger asChild>
+      <Popover open={open}>
+        <PopoverTrigger asChild onClick={() => setOpen(!open)}>
           <Button
             variant="outline"
             label="Filters"
@@ -134,7 +141,7 @@ export const VisualizationSelector = <
                     focusRing()
                   )}
                   key={visualization.type}
-                  onClick={() => onVisualizationChange(index)}
+                  onClick={() => handleVisualizationChange(index)}
                 >
                   <Icon icon={IconVisualization} />
                   {label}
