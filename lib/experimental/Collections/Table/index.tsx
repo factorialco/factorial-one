@@ -45,7 +45,6 @@ export const TableCollection = <
     )
   }
 
-  // If loading, render the skeleton component
   if (isInitialLoading) {
     return <OneTable.Skeleton columns={columns.length + (link ? 1 : 0)} />
   }
