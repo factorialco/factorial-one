@@ -2,6 +2,7 @@ import { act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
 import type { PromiseState } from "../../lib/promise-to-observable"
+import { ActionsDefinition } from "./actions"
 import type { FiltersState } from "./Filters/types"
 import type {
   BaseDataAdapter,
@@ -39,7 +40,7 @@ const createMockDataSource = (
     | Promise<BaseResponse<TestRecord>>
     | Observable<PromiseState<BaseResponse<TestRecord>>>,
   paginationType?: "pages"
-): DataSource<TestRecord, TestFilters> => {
+): DataSource<TestRecord, TestFilters, ActionsDefinition<TestRecord>> => {
   const baseAdapter: BaseDataAdapter<TestRecord, TestFilters> = {
     fetchData,
   }

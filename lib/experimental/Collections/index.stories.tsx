@@ -1,9 +1,18 @@
 import { Link } from "@/components/Actions/Link"
-import { Code } from "@/icons/app"
+import {
+  Ai,
+  ArrowRight,
+  Delete,
+  Download,
+  Pencil,
+  Share,
+  Star,
+} from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
 import { PromiseState } from "../../lib/promise-to-observable"
+import { ActionsDefinition } from "./actions"
 import { FilterDefinition, FiltersState } from "./Filters/types"
 import { DataAdapter, PaginatedResponse, RecordType } from "./types"
 import { useData } from "./useData"
@@ -26,28 +35,40 @@ const filters = {
 // Mock data
 const mockUsers = [
   {
+    id: "user-1",
     name: "John Doe",
     email: "john@example.com",
     role: "Senior Engineer",
     department: DEPARTMENTS[0],
+    status: "active",
+    isStarred: true,
   },
   {
+    id: "user-2",
     name: "Jane Smith",
     email: "jane@example.com",
     role: "Product Manager",
     department: DEPARTMENTS[1],
+    status: "active",
+    isStarred: false,
   },
   {
+    id: "user-3",
     name: "Bob Johnson",
     email: "bob@example.com",
     role: "Designer",
     department: DEPARTMENTS[2],
+    status: "inactive",
+    isStarred: false,
   },
   {
+    id: "user-4",
     name: "Alice Williams",
     email: "alice@example.com",
     role: "Marketing Lead",
     department: DEPARTMENTS[3],
+    status: "active",
+    isStarred: true,
   },
 ]
 
@@ -122,6 +143,36 @@ const ExampleComponent = ({
 }) => {
   const dataSource = useDataSource({
     filters,
+    actions: (item) => [
+      {
+        label: "Edit",
+        icon: Pencil,
+        onClick: () => console.log(`Editing ${item.name}`),
+        description: "Modify user information",
+      },
+      {
+        label: "View Profile",
+        icon: Ai,
+        onClick: () => console.log(`Viewing ${item.name}'s profile`),
+      },
+      "separator",
+      {
+        label: item.isStarred ? "Remove Star" : "Star User",
+        icon: Star,
+        onClick: () => console.log(`Toggling star for ${item.name}`),
+        description: item.isStarred
+          ? "Remove from favorites"
+          : "Add to favorites",
+      },
+      {
+        label: "Delete",
+        icon: Delete,
+        onClick: () => console.log(`Deleting ${item.name}`),
+        critical: true,
+        description: "Permanently remove user",
+        enabled: item.department === "Engineering" && item.status === "active",
+      },
+    ],
     dataAdapter: {
       fetchData: useObservable
         ? createObservableDataFetch()
@@ -182,6 +233,32 @@ export const BasicTableView: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      actions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+          description: "Modify user information",
+        },
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+        },
+        "separator",
+        {
+          label: item.isStarred ? "Remove Star" : "Star User",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+        },
+        {
+          label: "Delete",
+          icon: Delete,
+          critical: true,
+          onClick: () => console.log(`Deleting ${item.name}`),
+          enabled: item.department === "Engineering",
+        },
+      ],
     })
 
     return (
@@ -216,6 +293,18 @@ export const BasicCardView: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      actions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+        },
+        {
+          label: "Share",
+          icon: Share,
+          onClick: () => console.log(`Sharing ${item.name}`),
+        },
+      ],
     })
 
     return (
@@ -349,7 +438,11 @@ const JsonVisualization = ({
   source,
 }: {
   source: ReturnType<
-    typeof useDataSource<(typeof mockUsers)[number], typeof filters>
+    typeof useDataSource<
+      (typeof mockUsers)[number],
+      typeof filters,
+      ActionsDefinition<(typeof mockUsers)[number]>
+    >
   >
 }) => {
   const { data, isLoading } = useData(source)
@@ -385,7 +478,7 @@ export const WithCustomJsonView: Story = {
           {
             type: "custom",
             label: "JSON View",
-            icon: Code,
+            icon: Ai,
             component: ({ source }) => <JsonVisualization source={source} />,
           },
           {
@@ -609,7 +702,11 @@ export const WithCardVisualization: Story = {
 export const WithMultipleVisualizations: Story = {
   render: () => {
     type MockUser = (typeof mockUsers)[number]
-    const source = useDataSource<MockUser, typeof filters>({
+    const source = useDataSource<
+      MockUser,
+      typeof filters,
+      ActionsDefinition<MockUser>
+    >({
       filters,
       dataAdapter: {
         fetchData: () =>
@@ -668,11 +765,14 @@ export const WithMultipleVisualizations: Story = {
 // Generate more mock data for pagination example
 const generateMockUsers = (count: number) => {
   return Array.from({ length: count }, (_, index) => ({
+    id: `user-${index + 1}`,
     name: `User ${index + 1}`,
     email: `user${index + 1}@example.com`,
     role:
       index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
     department: DEPARTMENTS[index % DEPARTMENTS.length],
+    status: index % 5 === 0 ? "inactive" : "active",
+    isStarred: index % 3 === 0,
   }))
 }
 
@@ -760,6 +860,107 @@ export const WithSynchronousData: Story = {
                 { label: "Department", render: (item) => item.department },
               ],
               title: (item) => item.name,
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+// Add a new story specifically showcasing different action types
+export const WithAdvancedActions: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      filters,
+      dataAdapter: {
+        fetchData: createPromiseDataFetch(),
+      },
+      actions: (item) => [
+        // Basic actions
+        {
+          label: "View Details",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}`),
+          description: "See complete user information",
+        },
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+        },
+        "separator",
+        // Conditional actions based on item state
+        ...(item.status === "active"
+          ? [
+              {
+                label: "Deactivate User",
+                icon: Delete,
+                onClick: () => console.log(`Deactivating ${item.name}`),
+                description: "Temporarily disable account",
+              } as const,
+            ]
+          : [
+              {
+                label: "Activate User",
+                icon: ArrowRight,
+                onClick: () => console.log(`Activating ${item.name}`),
+                description: "Re-enable account",
+              } as const,
+            ]),
+        // Conditional visibility
+        {
+          label: "Download Data",
+          icon: Download,
+          onClick: () => console.log(`Downloading data for ${item.name}`),
+          enabled: item.status === "active",
+        },
+        // Critical action with confirmation
+        {
+          label: "Delete Permanently",
+          icon: Delete,
+          onClick: () => {
+            if (confirm(`Are you sure you want to delete ${item.name}?`)) {
+              console.log(`Deleting ${item.name}`)
+            }
+          },
+          critical: true,
+          description: "This action cannot be undone",
+          enabled: item.department === "Engineering",
+        },
+        // Toggle action
+        {
+          label: item.isStarred ? "Remove Star" : "Add Star",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
+        },
+        // Copy action
+        {
+          label: "Duplicate User",
+          icon: Share,
+          onClick: () => console.log(`Duplicating ${item.name}`),
+          description: "Create a copy of this user",
+        },
+      ],
+    })
+
+    return (
+      <DataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { label: "Name", render: (item) => item.name },
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+                { label: "Status", render: (item) => item.status },
+              ],
             },
           },
         ]}

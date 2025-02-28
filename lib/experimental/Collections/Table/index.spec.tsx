@@ -1,6 +1,10 @@
+import { I18nProvider } from "@/lib/i18n-provider"
+import { defaultTranslations } from "@/lib/i18n-provider-defaults"
 import { render, renderHook, screen, waitFor } from "@testing-library/react"
+import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { TableCollection } from "."
+import { ActionsDefinition } from "../actions"
 import type { FiltersDefinition } from "../Filters/types"
 import type { DataSource } from "../types"
 import { useData } from "../useData"
@@ -37,7 +41,7 @@ const testColumns = [
 const createTestSource = (
   data: Person[] = testData,
   error?: Error
-): DataSource<Person, TestFilters> => ({
+): DataSource<Person, TestFilters, ActionsDefinition<Person>> => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
   dataAdapter: {
@@ -48,14 +52,21 @@ const createTestSource = (
   },
 })
 
+// Test wrapper component that provides I18nProvider
+const TestWrapper = ({ children }: { children: ReactNode }) => (
+  <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
+)
+
 describe("TableCollection", () => {
   describe("rendering", () => {
     it("shows loading state initially", () => {
       render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createTestSource()}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={testColumns}
+            source={createTestSource()}
+          />
+        </TestWrapper>
       )
 
       // The OneTable.Skeleton component uses aria-hidden="true" and role="presentation"
@@ -72,10 +83,12 @@ describe("TableCollection", () => {
 
     it("renders table with data after loading", async () => {
       render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createTestSource()}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={testColumns}
+            source={createTestSource()}
+          />
+        </TestWrapper>
       )
 
       // Wait for loading state to disappear by checking for actual data
@@ -107,10 +120,12 @@ describe("TableCollection", () => {
       ]
 
       render(
-        <TableCollection<Person, TestFilters>
-          columns={columnsWithCustomRender}
-          source={createTestSource()}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={columnsWithCustomRender}
+            source={createTestSource()}
+          />
+        </TestWrapper>
       )
 
       await waitFor(() => {
@@ -119,36 +134,17 @@ describe("TableCollection", () => {
         })
       })
     })
-
-    it("renders links with correct attributes", async () => {
-      render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createTestSource()}
-          link={(item) => ({
-            label: `View ${item.name}`,
-            url: `/users/${item.id}`,
-          })}
-        />
-      )
-
-      await waitFor(() => {
-        expect(screen.getAllByRole("link")).toHaveLength(testData.length)
-        testData.forEach((item) => {
-          const link = screen.getByText(`View ${item.name}`)
-          expect(link.closest("a")).toHaveAttribute("href", `/users/${item.id}`)
-        })
-      })
-    })
   })
 
   describe("edge cases", () => {
     it("handles empty data gracefully", async () => {
       render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createTestSource([])}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={testColumns}
+            source={createTestSource([])}
+          />
+        </TestWrapper>
       )
 
       // Wait for loading state to finish
@@ -166,10 +162,12 @@ describe("TableCollection", () => {
       const error = new Error(errorMessage)
 
       render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createTestSource([], error)}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={testColumns}
+            source={createTestSource([], error)}
+          />
+        </TestWrapper>
       )
 
       // Wait for loading state to finish
@@ -182,7 +180,12 @@ describe("TableCollection", () => {
       expect(screen.getAllByRole("columnheader")).toHaveLength(2)
 
       // Verify error state
-      const { result } = renderHook(() => useData(createTestSource([], error)))
+      const { result } = renderHook(
+        () => useData(createTestSource([], error)),
+        {
+          wrapper: TestWrapper,
+        }
+      )
       await waitFor(() => {
         expect(result.current.error).toEqual({
           message: "Error fetching data",
@@ -196,7 +199,7 @@ describe("TableCollection", () => {
     const createPaginatedTestSource = (
       totalItems = 50,
       itemsPerPage = 10
-    ): DataSource<Person, TestFilters> => ({
+    ): DataSource<Person, TestFilters, ActionsDefinition<Person>> => ({
       currentFilters: {},
       setCurrentFilters: vi.fn(),
       dataAdapter: {
@@ -227,10 +230,12 @@ describe("TableCollection", () => {
 
     it("renders pagination controls when pagination is enabled", async () => {
       render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createPaginatedTestSource()}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={testColumns}
+            source={createPaginatedTestSource()}
+          />
+        </TestWrapper>
       )
 
       await waitFor(() => {
@@ -243,10 +248,12 @@ describe("TableCollection", () => {
 
     it("shows loading state when switching pages", async () => {
       render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createPaginatedTestSource()}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={testColumns}
+            source={createPaginatedTestSource()}
+          />
+        </TestWrapper>
       )
 
       // Wait for initial load
@@ -266,10 +273,12 @@ describe("TableCollection", () => {
 
     it("displays correct data for each page", async () => {
       render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createPaginatedTestSource()}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={testColumns}
+            source={createPaginatedTestSource()}
+          />
+        </TestWrapper>
       )
 
       // Check first page
@@ -291,10 +300,12 @@ describe("TableCollection", () => {
 
     it("handles edge case with single page", async () => {
       render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createPaginatedTestSource(5, 10)}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={testColumns}
+            source={createPaginatedTestSource(5, 10)}
+          />
+        </TestWrapper>
       )
 
       await waitFor(() => {
@@ -310,10 +321,12 @@ describe("TableCollection", () => {
 
     it("handles edge case with empty data", async () => {
       render(
-        <TableCollection<Person, TestFilters>
-          columns={testColumns}
-          source={createPaginatedTestSource(0, 10)}
-        />
+        <TestWrapper>
+          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+            columns={testColumns}
+            source={createPaginatedTestSource(0, 10)}
+          />
+        </TestWrapper>
       )
 
       await waitFor(() => {

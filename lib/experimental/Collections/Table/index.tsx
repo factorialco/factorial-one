@@ -1,4 +1,3 @@
-import { Link } from "@/components/Actions/Link"
 import { OnePagination } from "@/experimental/OnePagination"
 import {
   OneTable,
@@ -8,7 +7,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/experimental/OneTable"
+import { useI18n } from "@/lib/i18n-provider"
+import { ActionsDropdown } from "../Actions/Dropdown"
 import type { FiltersDefinition } from "../Filters/types"
+import { ActionsDefinition } from "../actions"
 import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
@@ -17,36 +19,32 @@ export type TableColumnDefinition<T> = PropertyDefinition<T>
 
 export type TableVisualizationOptions<T> = {
   columns: ReadonlyArray<TableColumnDefinition<T>>
-  link?: (item: T) => {
-    label: string
-    url: string
-  }
 }
 
 export const TableCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Actions extends ActionsDefinition<Record>,
 >({
   columns,
   source,
-  link,
-}: CollectionProps<Record, Filters, TableVisualizationOptions<Record>>) => {
+}: CollectionProps<
+  Record,
+  Filters,
+  Actions,
+  TableVisualizationOptions<Record>
+>) => {
+  const t = useI18n()
+
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
     Record,
     Filters
   >(source)
 
-  const TableActionCell = ({ item }: { item: Record }) => {
-    const linkInfo = link!(item)
-    return (
-      <TableCell key="actions">
-        <Link href={linkInfo.url}>{linkInfo.label}</Link>
-      </TableCell>
-    )
-  }
-
   if (isInitialLoading) {
-    return <OneTable.Skeleton columns={columns.length + (link ? 1 : 0)} />
+    return (
+      <OneTable.Skeleton columns={columns.length + (source.actions ? 1 : 0)} />
+    )
   }
 
   return (
@@ -59,7 +57,11 @@ export const TableCollection = <
                 {column.label}
               </TableHead>
             ))}
-            {link && <TableHead key="actions">Actions</TableHead>}
+            {source.actions && (
+              <TableHead key="actions" width="fit" hidden>
+                {t.collections.actions.actions}
+              </TableHead>
+            )}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -70,7 +72,11 @@ export const TableCollection = <
                   {renderValue(item, column)}
                 </TableCell>
               ))}
-              {link && <TableActionCell item={item} />}
+              {source.actions && (
+                <TableCell key="actions">
+                  <ActionsDropdown item={item} actions={source.actions} />
+                </TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
