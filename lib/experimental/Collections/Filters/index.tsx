@@ -145,9 +145,9 @@ export function Filters<Definition extends FiltersDefinition>({
           </PopoverContent>
         </Popover>
 
-        <div className="rounded-sm bg-f1-background-secondary px-2 py-1.5">
+        {/* <div className="rounded-sm bg-f1-background-secondary px-2 py-1.5">
           Here should be the presets
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-wrap items-center gap-2">
         <AnimatePresence presenceAffectsLayout initial={false}>
