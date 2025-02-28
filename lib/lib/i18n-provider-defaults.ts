@@ -15,6 +15,9 @@ export const defaultTranslations = {
     cancel: "Cancel",
   },
   collections: {
+    actions: {
+      actions: "Actions",
+    },
     visualizations: {
       table: "Table view",
       card: "Card view",

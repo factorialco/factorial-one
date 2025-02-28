@@ -6,6 +6,7 @@ import { DataCollection, useDataSource } from "."
 import { I18nProvider } from "../../lib/i18n-provider"
 import { defaultTranslations } from "../../lib/i18n-provider-defaults"
 import { PromiseState } from "../../lib/promise-to-observable"
+import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition } from "./Filters/types"
 import type { DataSource } from "./types"
 import { useData } from "./useData"
@@ -281,9 +282,9 @@ describe("Collections", () => {
     const CustomComponent = ({
       source,
     }: {
-      source: DataSource<Item, FiltersDefinition>
+      source: DataSource<Item, FiltersDefinition, ActionsDefinition<Item>>
     }) => {
-      const { data } = useData(source)
+      const { data } = useData<Item, FiltersDefinition>(source)
 
       return (
         <div data-testid="custom-visualization">

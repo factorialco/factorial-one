@@ -1,7 +1,9 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
 import { useMemo } from "react"
 import { OnePagination } from "../../OnePagination"
+import { ActionsDefinition } from "../actions"
+import { ActionsDropdown } from "../Actions/Dropdown"
 import type { FiltersDefinition } from "../Filters/types"
 import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
@@ -17,11 +19,17 @@ export type CardVisualizationOptions<T> = {
 export const CardCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Actions extends ActionsDefinition<Record>,
 >({
   cardProperties,
   title,
   source,
-}: CollectionProps<Record, Filters, CardVisualizationOptions<Record>>) => {
+}: CollectionProps<
+  Record,
+  Filters,
+  Actions,
+  CardVisualizationOptions<Record>
+>) => {
   // We override this to force a perPage of 24 (unless set at the dataAdapter
   // level), which is a multiple of 2, 3 and 4 This is to ensure that the cards
   // are always aligned in a grid
@@ -81,6 +89,11 @@ export const CardCollection = <
                     </div>
                   ))}
                 </CardContent>
+                {source.actions && (
+                  <CardFooter className="justify-end">
+                    <ActionsDropdown item={item} actions={source.actions} />
+                  </CardFooter>
+                )}
               </Card>
             ))}
       </div>

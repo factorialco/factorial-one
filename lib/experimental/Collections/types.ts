@@ -1,6 +1,7 @@
 import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { ActionsDefinition } from "./actions"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
@@ -10,9 +11,11 @@ import type { FiltersDefinition, FiltersState } from "./Filters/types"
 export type DataSourceDefinition<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Actions extends ActionsDefinition<Record>,
 > = {
   /** Available filter configurations */
   filters?: Filters
+  actions?: Actions
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
   /** Data adapter responsible for fetching and managing data */
@@ -125,10 +128,11 @@ export type ExtractPropertyKeys<RecordType> = keyof RecordType
 export type CollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Actions extends ActionsDefinition<Record>,
   VisualizationOptions extends object,
 > = {
   /** The data source configuration and state */
-  source: DataSource<Record, Filters>
+  source: DataSource<Record, Filters, Actions>
 } & VisualizationOptions
 
 /**
@@ -140,7 +144,8 @@ export type CollectionProps<
 export type DataSource<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-> = DataSourceDefinition<Record, Filters> & {
+  Actions extends ActionsDefinition<Record>,
+> = DataSourceDefinition<Record, Filters, Actions> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
