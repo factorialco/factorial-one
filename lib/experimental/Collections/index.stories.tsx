@@ -469,6 +469,14 @@ export const WithCustomJsonView: Story = {
       dataAdapter: {
         fetchData: createObservableDataFetch(),
       },
+      presets: [
+        {
+          label: "Engineers",
+          filter: {
+            department: ["Engineering"],
+          },
+        },
+      ],
     })
 
     return (
