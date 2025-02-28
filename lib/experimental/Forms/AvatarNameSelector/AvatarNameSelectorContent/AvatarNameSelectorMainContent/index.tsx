@@ -10,6 +10,7 @@ import {
   AvatarNamedEntity,
   AvatarNamedGroup,
   AvatarNamedSubEntity,
+  FlattenedItem,
 } from "../../types"
 import { AvatarNameSelectorSearcher } from "./AvatarNameSelectorSearcher"
 
@@ -109,8 +110,7 @@ export const AvatarNameSelectorMainContent = ({
   }, [])
 
   const itemRenderer = useCallback(
-    (vi?: VirtualItem) => {
-      if (!vi) return <></>
+    (vi: VirtualItem) => {
       const entity = entities[vi.index]
       const selectedEntity = selectedEntities.find((el) => el.id === entity.id)
       const selectedSubItems = (entity.subItems ?? []).filter((subItem) =>
@@ -132,11 +132,8 @@ export const AvatarNameSelectorMainContent = ({
           groupView={groupView}
           key={entity.id}
           entity={entity}
-          selectedEntity={selectedEntity}
           onSelect={onSelect}
           onRemove={onRemove}
-          onSubItemRemove={onSubItemRemove}
-          onSubItemSelect={onSubItemSelect}
           selected={selected}
           partialSelected={partialSelected}
           showGroupIcon={
@@ -156,8 +153,6 @@ export const AvatarNameSelectorMainContent = ({
       groups,
       onRemove,
       onSelect,
-      onSubItemRemove,
-      onSubItemSelect,
       onToggleExpand,
       search,
       selectedEntities,
@@ -165,6 +160,142 @@ export const AvatarNameSelectorMainContent = ({
       singleSelector,
     ]
   )
+
+  const flattenedList = useMemo<FlattenedItem[]>(() => {
+    return !groupView
+      ? entities.map((el) => ({
+          parent: null,
+          subItem: {
+            subId: el.id,
+            subName: el.name,
+            subAvatar: el.avatar,
+          } as AvatarNamedSubEntity,
+        }))
+      : entities
+          .flatMap((entity) => [
+            {
+              parent: null,
+              subItem: {
+                subId: entity.id,
+                subName: entity.name,
+                subAvatar: entity.avatar,
+                expanded: entity.expanded,
+                subItems: entity.subItems,
+              },
+            },
+            ...(entity.subItems ?? []).map((subItem) => ({
+              parent: entity,
+              subItem,
+            })),
+          ])
+          .filter(
+            (el) =>
+              (!el.parent || el.parent.expanded) &&
+              (!!el.parent ||
+                (!!el.subItem.subItems && el.subItem.subItems.length > 0))
+          )
+  }, [groupView, entities])
+
+  const itemFlattenedRenderer = useCallback(
+    (vi: VirtualItem) => {
+      const parent = flattenedList[vi.index].parent
+      const subItem = flattenedList[vi.index].subItem
+      if (!parent) {
+        const recoveredEntity: AvatarNamedEntity = {
+          id: subItem.subId,
+          name: subItem.subName,
+          avatar: subItem.subAvatar,
+          subItems: subItem.subItems,
+          expanded: subItem.expanded,
+        }
+        const selectedEntity = selectedEntities.find(
+          (el) => el.id === recoveredEntity.id
+        )
+        const selectedSubItems = (recoveredEntity?.subItems ?? []).filter(
+          (subItem) =>
+            selectedEntity?.subItems?.some(
+              (selectedSubItem) => selectedSubItem.subId === subItem.subId
+            )
+        )
+        const selected =
+          (recoveredEntity.subItems?.length ?? 0) === selectedSubItems.length
+        const partialSelected = !selected && selectedSubItems.length > 0
+
+        return (
+          <AvatarNameListItem
+            groupView
+            expanded={recoveredEntity.expanded ?? false}
+            onExpand={() => onToggleExpand(recoveredEntity)}
+            search={search}
+            key={"group-" + recoveredEntity.id}
+            entity={recoveredEntity}
+            onSelect={onSelect}
+            onRemove={onRemove}
+            selected={selected}
+            partialSelected={partialSelected}
+            showGroupIcon={
+              groups.find((el) => el.value === selectedGroup)?.type === "team"
+            }
+            singleSelector={singleSelector}
+            goToFirst={goToFirst}
+            goToLast={goToLast}
+            hideLine={vi.index === flattenedList.length - 1}
+          />
+        )
+      }
+      const selectedParentEntity = selectedEntities.find(
+        (el) => el.id === parent.id
+      )
+      const selectedSubItems = (parent?.subItems ?? []).filter((subItem) =>
+        selectedParentEntity?.subItems?.some(
+          (selectedSubItem) => selectedSubItem.subId === subItem.subId
+        )
+      )
+      const selected = !!selectedSubItems.find(
+        (el) => el.subId === subItem.subId
+      )
+      return (
+        <AvatarNameListItem
+          expanded={false}
+          onExpand={() => null}
+          search={search}
+          groupView={false}
+          key={"subitem-" + subItem.subId}
+          entity={{
+            id: subItem.subId,
+            name: subItem.subName,
+            avatar: subItem.subAvatar,
+          }}
+          onSelect={() => onSubItemSelect(parent, subItem)}
+          onRemove={() => onSubItemRemove(parent, subItem)}
+          selected={selected}
+          partialSelected={false}
+          singleSelector={singleSelector}
+          goToFirst={goToFirst}
+          goToLast={goToLast}
+          isChild
+        />
+      )
+    },
+    [
+      flattenedList,
+      selectedEntities,
+      search,
+      singleSelector,
+      goToFirst,
+      goToLast,
+      onSelect,
+      onRemove,
+      groups,
+      onToggleExpand,
+      selectedGroup,
+      onSubItemSelect,
+      onSubItemRemove,
+    ]
+  )
+
+  const totalFlattenedItems = flattenedList.length
+  console.log(totalFlattenedItems)
 
   return (
     <div
@@ -231,51 +362,15 @@ export const AvatarNameSelectorMainContent = ({
                 ref={ref}
               />
             ) : (
-              <div className="scrollbar-macos h-full overflow-auto">
-                {entities.map((entity, index) => {
-                  const selectedEntity = selectedEntities.find(
-                    (el) => el.id === entity.id
-                  )
-                  const selectedSubItems = (entity.subItems ?? []).filter(
-                    (subItem) =>
-                      selectedEntity?.subItems?.some(
-                        (selectedSubItem) =>
-                          selectedSubItem.subId === subItem.subId
-                      )
-                  )
-                  const selected = groupView
-                    ? (entity.subItems?.length ?? 0) === selectedSubItems.length
-                    : !!selectedEntities.find((el) => el.id === entity.id)
-                  const partialSelected = groupView
-                    ? !selected && selectedSubItems.length > 0
-                    : selected
-
-                  return (
-                    <AvatarNameListItem
-                      expanded={entity.expanded ?? false}
-                      onExpand={() => onToggleExpand(entity)}
-                      search={search}
-                      groupView={groupView}
-                      key={entity.id}
-                      entity={entity}
-                      selectedEntity={selectedEntity}
-                      onSelect={onSelect}
-                      onRemove={onRemove}
-                      onSubItemRemove={onSubItemRemove}
-                      onSubItemSelect={onSubItemSelect}
-                      selected={selected}
-                      partialSelected={partialSelected}
-                      showGroupIcon={
-                        groups.find((el) => el.value === selectedGroup)
-                          ?.type === "team"
-                      }
-                      singleSelector={singleSelector}
-                      hideLine={index === entities.length - 1}
-                      ref={ref}
-                    />
-                  )
-                })}
-              </div>
+              <VirtualList
+                height={384}
+                itemCount={totalFlattenedItems}
+                itemSize={(index) =>
+                  flattenedList[index].parent === null ? 39 : 36
+                }
+                renderer={itemFlattenedRenderer}
+                ref={ref}
+              />
             )}
           </div>
         )}

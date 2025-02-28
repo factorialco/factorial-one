@@ -2,12 +2,11 @@ import { VirtualList } from "@/experimental/Navigation/VirtualList"
 import { motion } from "framer-motion"
 import { useMemo } from "react"
 import { AvatarNameListTag } from "../../AvatarNameListTag"
-import { AvatarNamedEntity, AvatarNamedSubEntity } from "../../types"
-
-export type FlattenedItem = {
-  parent: AvatarNamedEntity | null
-  subItem: AvatarNamedSubEntity
-}
+import {
+  AvatarNamedEntity,
+  AvatarNamedSubEntity,
+  FlattenedItem,
+} from "../../types"
 
 export const AvatarNameSelectorSecondaryContent = ({
   groupView,

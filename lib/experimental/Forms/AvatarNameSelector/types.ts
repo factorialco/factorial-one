@@ -41,6 +41,13 @@ interface AvatarNameSelectorCommonProps
   width?: number
 }
 
+export type FlattenedItem = {
+  parent: AvatarNamedEntity | null
+  subItem: AvatarNamedSubEntity & {
+    expanded?: boolean
+    subItems?: AvatarNamedSubEntity[]
+  }
+}
 export interface AvatarNameSelectorSingleProps
   extends AvatarNameSelectorCommonProps {
   onSelect: (entity: AvatarNamedEntity | null) => void

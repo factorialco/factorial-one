@@ -5,7 +5,7 @@ import React, { forwardRef } from "react"
 type VirtualListProps = {
   height: number
   itemCount: number
-  itemSize: number
+  itemSize: number | ((index: number) => number)
   renderer: (item: VirtualItem) => JSX.Element
   className?: string
 }
@@ -26,7 +26,7 @@ const VirtualList = forwardRef<HTMLDivElement, VirtualListProps>(
     const rowVirtualizer = useVirtualizer({
       count: itemCount,
       getScrollElement: () => parentRef.current,
-      estimateSize: () => itemSize,
+      estimateSize: typeof itemSize === "number" ? () => itemSize : itemSize,
       overscan: 5,
     })
 
