@@ -2,8 +2,11 @@ import { Icon } from "@/components/Utilities/Icon"
 import { PersonAvatar } from "@/experimental/exports"
 import { ChevronDown } from "@/icons/app"
 import { useMemo } from "react"
-import { FlattenedItem } from "../AvatarNameSelectorContent/AvatarNameSelectorSecondaryContent"
-import { AvatarNamedEntity, AvatarNamedSubEntity } from "../types"
+import {
+  AvatarNamedEntity,
+  AvatarNamedSubEntity,
+  FlattenedItem,
+} from "../types"
 
 export const AvatarNameSelectorTrigger = ({
   placeholder,
