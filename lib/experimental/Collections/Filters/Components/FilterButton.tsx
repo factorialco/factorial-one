@@ -43,8 +43,15 @@ function InFilterButton<T>({
   if (selectedValues.length === 0) return null
 
   const getSelectedOptionLabel = (selectedValue: T): string => {
-    const option = filter.options.find((opt) => opt.value === selectedValue)
-    return option?.label ?? String(selectedValue)
+    // Check if options is an array or a function
+    if (Array.isArray(filter.options)) {
+      const option = filter.options.find((opt) => opt.value === selectedValue)
+      return option?.label ?? String(selectedValue)
+    } else {
+      // For function-based options, we can't access them synchronously
+      // Return a fallback string representation
+      return String(selectedValue)
+    }
   }
 
   const firstSelectedLabel = getSelectedOptionLabel(selectedValues[0])

@@ -22,6 +22,10 @@ export const defaultTranslations = {
       table: "Table view",
       card: "Card view",
     },
+    filters: {
+      failedToLoadOptions: "Failed to load options",
+      retry: "Retry",
+    },
   },
   shortcut: "Shortcut",
 } as const
