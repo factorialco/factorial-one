@@ -55,7 +55,9 @@ export const TableCollection = <
         <TableHeader>
           <TableRow>
             {columns.map((column) => (
-              <TableHead key={String(column.label)}>{column.label}</TableHead>
+              <TableHead key={String(column.label)} info={column.info}>
+                {column.label}
+              </TableHead>
             ))}
             {link && <TableHead key="actions">Actions</TableHead>}
           </TableRow>

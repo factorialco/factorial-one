@@ -2,6 +2,7 @@ import { ReactNode } from "react"
 
 export type PropertyDefinition<T> = {
   label: string
+  info?: string
   render: (item: T) => ReactNode
 }
 
