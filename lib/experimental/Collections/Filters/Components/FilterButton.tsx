@@ -129,7 +129,12 @@ export function FilterButton<Definition extends FiltersDefinition>({
       // 1. filter is InFilterDefinition<T>
       // 2. value must be T[] | undefined (based on FilterValue type)
       // The type assertion is safe because it's guarded by the discriminated union
-      const inFilterValue = value as unknown[] | undefined
+      if (!Array.isArray(value) && value !== undefined) {
+        throw new Error(
+          `Expected array value for "in" filter type, got ${typeof value}`
+        )
+      }
+      const inFilterValue = value
 
       return (
         <InFilterButton
@@ -146,7 +151,7 @@ export function FilterButton<Definition extends FiltersDefinition>({
       // 1. filter is SearchFilterDefinition
       // 2. value must be string | undefined (based on FilterValue type)
       // The type assertion is safe because it's guarded by the discriminated union
-      const searchValue = value as string | undefined
+      const searchValue = String(value)
 
       return (
         <SearchFilterButton
