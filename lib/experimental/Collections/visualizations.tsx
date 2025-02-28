@@ -4,6 +4,7 @@ import { Kanban, Sliders, Table } from "@/icons/app"
 import { useI18n } from "@/lib/i18n-provider"
 import { cn, focusRing } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
+import { ActionsDefinition } from "./actions"
 import type { CardVisualizationOptions } from "./Card"
 import { CardCollection } from "./Card"
 import type { FiltersDefinition } from "./Filters/types"
@@ -21,6 +22,7 @@ import type { DataSource, RecordType } from "./types"
 export type Visualization<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Actions extends ActionsDefinition<Record>,
 > =
   | {
       /** Card-based visualization type */
@@ -42,7 +44,9 @@ export type Visualization<
       /** Icon to represent the visualization in UI */
       icon: IconType
       /** Custom component to render the visualization */
-      component: (props: { source: DataSource<Record, Filters> }) => JSX.Element
+      component: (props: {
+        source: DataSource<Record, Filters, Actions>
+      }) => JSX.Element
     }
 
 /**
@@ -55,9 +59,10 @@ export type Visualization<
 export type VisualizationProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Actions extends ActionsDefinition<Record>,
 > = {
   /** Array of available visualization configurations */
-  visualizations?: ReadonlyArray<Visualization<Record, Filters>>
+  visualizations?: ReadonlyArray<Visualization<Record, Filters, Actions>>
 }
 
 /**
@@ -76,12 +81,13 @@ export type VisualizationProps<
 export const VisualizationSelector = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Actions extends ActionsDefinition<Record>,
 >({
   visualizations,
   currentVisualization,
   onVisualizationChange,
 }: {
-  visualizations: ReadonlyArray<Visualization<Record, Filters>>
+  visualizations: ReadonlyArray<Visualization<Record, Filters, Actions>>
   currentVisualization: number
   onVisualizationChange: (index: number) => void
 }): JSX.Element => {
@@ -158,24 +164,25 @@ export const VisualizationSelector = <
 export const VisualizationRenderer = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Actions extends ActionsDefinition<Record>,
 >({
   visualization,
   source,
 }: {
-  visualization: Visualization<Record, Filters>
-  source: DataSource<Record, Filters>
+  visualization: Visualization<Record, Filters, Actions>
+  source: DataSource<Record, Filters, Actions>
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
       return (
-        <TableCollection<Record, Filters>
+        <TableCollection<Record, Filters, Actions>
           source={source}
           {...visualization.options}
         />
       )
     case "card":
       return (
-        <CardCollection<Record, Filters>
+        <CardCollection<Record, Filters, Actions>
           source={source}
           {...visualization.options}
         />

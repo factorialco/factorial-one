@@ -4,6 +4,7 @@ import {
   PromiseState,
   promiseToObservable,
 } from "../../lib/promise-to-observable"
+import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import {
   DataSource,
@@ -115,7 +116,7 @@ export function useData<
   Record extends RecordType,
   Filters extends FiltersDefinition,
 >(
-  source: DataSource<Record, Filters>,
+  source: DataSource<Record, Filters, ActionsDefinition<Record>>,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
   const { dataAdapter, currentFilters } = source

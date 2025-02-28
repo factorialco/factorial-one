@@ -78,7 +78,7 @@ export const DataCollection = <
   visualizations,
 }: {
   source: DataSource<Record, Filters, Actions>
-  visualizations: ReadonlyArray<Visualization<Record, Filters>>
+  visualizations: ReadonlyArray<Visualization<Record, Filters, Actions>>
 }): JSX.Element => {
   const { filters, currentFilters, setCurrentFilters } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
