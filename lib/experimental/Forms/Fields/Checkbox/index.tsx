@@ -44,6 +44,12 @@ interface CheckboxProps {
    * @default false
    */
   hideLabel?: boolean
+
+  /**
+   * Whether the checkbox is only presentational, so it does not have functionality
+   * @default false
+   */
+  presentational?: boolean
 }
 
 export function Checkbox({
@@ -55,6 +61,7 @@ export function Checkbox({
   checked = false,
   value,
   hideLabel = false,
+  presentational = false,
 }: CheckboxProps) {
   return (
     <CheckboxRoot
@@ -66,6 +73,7 @@ export function Checkbox({
       checked={checked}
       value={value}
       hideLabel={hideLabel}
+      tabIndex={presentational ? -1 : undefined}
     />
   )
 }

@@ -28,6 +28,11 @@ interface BaseChipProps extends VariantProps<typeof chipVariants> {
   label: string
 
   /**
+   * If defined, the chip will be clickable
+   * */
+  onClick?: () => void
+
+  /**
    * If defined, the close icon will be displayed and the chip will be clickable
    * */
   onClose?: () => void
@@ -55,7 +60,14 @@ type ChipVariants =
 
 export type ChipProps = BaseChipProps & ChipVariants
 
-export const Chip = ({ label, variant, onClose, avatar, icon }: ChipProps) => {
+export const Chip = ({
+  label,
+  variant,
+  onClick,
+  onClose,
+  avatar,
+  icon,
+}: ChipProps) => {
   return (
     <div
       className={cn(
@@ -63,8 +75,17 @@ export const Chip = ({ label, variant, onClose, avatar, icon }: ChipProps) => {
         onClose && "pr-1.5",
         avatar && "pl-0.5",
         avatar && avatar?.type !== "person" && "rounded-sm",
-        icon && !avatar && "pl-1.5"
+        icon && !avatar && "pl-1.5",
+        onClick && "cursor-pointer",
+        onClick && focusRing()
       )}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          onClick?.()
+        }
+      }}
+      tabIndex={onClick ? 0 : undefined}
     >
       {avatar && <Avatar avatar={avatar} size="xsmall" />}
       <div className="flex items-center gap-0.5">
@@ -74,7 +95,10 @@ export const Chip = ({ label, variant, onClose, avatar, icon }: ChipProps) => {
       {onClose && (
         <button
           type="button"
-          onClick={onClose}
+          onClick={(e) => {
+            e.stopPropagation()
+            onClose()
+          }}
           className={cn(
             "-m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full [&_svg]:text-f1-icon-secondary [&_svg]:transition-colors [&_svg]:hover:text-f1-icon [&_svg]:focus:text-f1-icon",
             variant === "selected" &&

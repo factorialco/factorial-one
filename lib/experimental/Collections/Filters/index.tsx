@@ -1,8 +1,8 @@
 import { Button } from "@/components/Actions/Button"
+import { Filter } from "@/icons/app"
 import { useI18n } from "@/lib/i18n-provider"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { AnimatePresence } from "framer-motion"
-import { Filter } from "lucide-react"
 import { useState } from "react"
 import { FilterButton } from "./Components/FilterButton"
 import { FilterContent } from "./Components/FilterContent"
@@ -58,7 +58,11 @@ export function Filters<Definition extends FiltersDefinition>({
   const [isOpen, setIsOpen] = useState(false)
   const [selectedFilterKey, setSelectedFilterKey] = useState<
     keyof Definition | null
-  >(null)
+  >(() => {
+    // Get the first key from the schema if available
+    const firstKey = Object.keys(schema)[0] as keyof Definition
+    return firstKey || null
+  })
   const [tempFilters, setTempFilters] =
     useState<FiltersState<Definition>>(value)
 
@@ -97,7 +101,7 @@ export function Filters<Definition extends FiltersDefinition>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex items-center gap-2">
         <Popover open={isOpen} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild>
             <Button
@@ -107,8 +111,12 @@ export function Filters<Definition extends FiltersDefinition>({
               label={i18n.filters.label}
             />
           </PopoverTrigger>
-          <PopoverContent className="w-[600px] p-0" align="start">
-            <div className="flex max-h-[80vh] flex-col">
+          <PopoverContent
+            className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
+            align="start"
+            side="bottom"
+          >
+            <div className="flex h-[min(448px,80vh)] flex-col">
               <div className="flex min-h-0 flex-1">
                 <FilterList
                   definition={schema}
@@ -127,12 +135,7 @@ export function Filters<Definition extends FiltersDefinition>({
                 )}
               </div>
 
-              <div className="flex items-center justify-end gap-2 border-t p-2">
-                <Button
-                  variant="outline"
-                  onClick={() => setIsOpen(false)}
-                  label={i18n.filters.cancel}
-                />
+              <div className="flex items-center justify-end gap-2 border-solid border-transparent border-t-f1-border-secondary px-3 py-2">
                 <Button
                   onClick={handleApplyFilters}
                   label={i18n.filters.applyFilters}
@@ -142,6 +145,11 @@ export function Filters<Definition extends FiltersDefinition>({
           </PopoverContent>
         </Popover>
 
+        {/* <div className="rounded-sm bg-f1-background-secondary px-2 py-1.5">
+          Here should be the presets
+        </div> */}
+      </div>
+      <div className="flex flex-wrap items-center gap-2">
         <AnimatePresence presenceAffectsLayout initial={false}>
           {(Object.keys(value) as Array<keyof Definition>).map((key) => {
             const filter = schema[key]

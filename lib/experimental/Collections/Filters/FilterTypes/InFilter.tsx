@@ -1,6 +1,7 @@
 "use client"
 
-import { Button } from "@/ui/button"
+import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { cn, focusRing } from "@/lib/utils"
 import type { InFilterDefinition } from "../types"
 
 /**
@@ -45,14 +46,16 @@ interface InFilterProps<T> {
  */
 export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
   return (
-    <div className="space-y-2">
+    <div className="flex w-full flex-col gap-1">
       {filter.options.map((option) => {
         const isSelected = value.includes(option.value)
         return (
-          <Button
+          <button
             key={String(option.value)}
-            variant={isSelected ? "default" : "ghost"}
-            className="w-full justify-start"
+            className={cn(
+              "flex w-full appearance-none items-center justify-between rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
+              focusRing()
+            )}
             onClick={() => {
               onChange(
                 isSelected
@@ -61,9 +64,9 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
               )
             }}
           >
-            <div className="mr-2">{isSelected ? "✓" : " "}</div>
-            {option.label}
-          </Button>
+            <span className="line-clamp-1 w-fit text-left">{option.label}</span>
+            <Checkbox checked={isSelected} presentational hideLabel />
+          </button>
         )
       })}
     </div>

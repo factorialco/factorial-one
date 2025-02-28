@@ -1,8 +1,16 @@
 "use client"
 
+import { Button } from "@/components/Actions/Button"
+import { Search } from "@/icons/app"
+import { Input } from "@/ui/input"
+import { ChangeEvent, useDeferredValue, useEffect, useState } from "react"
 import { InFilter } from "../FilterTypes/InFilter"
 import { SearchFilter } from "../FilterTypes/SearchFilter"
-import type { FiltersDefinition, FiltersState } from "../types"
+import type {
+  FiltersDefinition,
+  FiltersState,
+  InFilterDefinition,
+} from "../types"
 
 interface FilterContentProps<Definition extends FiltersDefinition> {
   selectedFilterKey: keyof Definition | null
@@ -17,18 +25,78 @@ export function FilterContent<Definition extends FiltersDefinition>({
   tempFilters,
   onFilterChange,
 }: FilterContentProps<Definition>) {
+  const [searchTerm, setSearchTerm] = useState("")
+  const deferredSearchTerm = useDeferredValue(searchTerm)
+
+  useEffect(() => {
+    setSearchTerm("")
+  }, [selectedFilterKey])
+
   if (!selectedFilterKey) return null
 
   const filter = definition[selectedFilterKey]
   const currentValue = tempFilters[selectedFilterKey]
 
+  const matchesSearch = (item: unknown) => {
+    if (!deferredSearchTerm) return true
+    if (typeof item === "string") {
+      return item.toLowerCase().includes(deferredSearchTerm.toLowerCase())
+    }
+    if (typeof item === "object" && item && "label" in item) {
+      return (item.label as string)
+        .toLowerCase()
+        .includes(deferredSearchTerm.toLowerCase())
+    }
+    return false
+  }
+
+  const filteredContent =
+    filter.type === "in"
+      ? (filter as InFilterDefinition<unknown>).options.filter(matchesSearch)
+      : []
+
+  const handleSelectAll = () => {
+    if (filter.type === "in") {
+      const allValues = filteredContent.map((option) => option.value)
+      const currentValues = (currentValue ?? []) as unknown[]
+      const newValues = [...currentValues]
+
+      allValues.forEach((value) => {
+        if (!newValues.includes(value)) {
+          newValues.push(value)
+        }
+      })
+
+      onFilterChange(selectedFilterKey, newValues)
+    }
+  }
+
   return (
-    <div className="flex-1">
-      <div className="overflow-auto p-4">
-        <div className="pr-4">
+    <div className="relative flex w-full flex-col gap-1">
+      <div className="relative flex h-full flex-col justify-between overflow-y-auto">
+        <div className="flex flex-col gap-2 p-2">
+          <div className="flex gap-3">
+            <Input
+              type="search"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setSearchTerm(e.target.value)
+              }
+              className="h-8 rounded"
+              icon={Search}
+              clearable
+            />
+            <Button
+              variant="outline"
+              label="Select all"
+              onClick={handleSelectAll}
+              disabled={filter.type !== "in" || filteredContent.length === 0}
+            />
+          </div>
           {filter.type === "in" && (
             <InFilter
-              filter={filter}
+              filter={{ ...filter, options: filteredContent }}
               value={(currentValue ?? []) as unknown[]}
               onChange={(value) => onFilterChange(selectedFilterKey, value)}
             />
