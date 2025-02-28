@@ -324,3 +324,205 @@ export const WithPresetsAndUrlSerialization: Story = {
     )
   },
 }
+
+/**
+ * This example demonstrates how filters can be used with async options.
+ * The "Users" filter loads options asynchronously with a simulated delay.
+ */
+export const WithAsyncOptions: Story = {
+  render: () => {
+    type AsyncDefinitionType = {
+      department: {
+        type: "in"
+        label: string
+        options: Array<{ value: string; label: string }>
+      }
+      users: {
+        type: "in"
+        label: string
+        options: () => Promise<Array<{ value: string; label: string }>>
+      }
+      status: {
+        type: "in"
+        label: string
+        options: () => Array<{ value: string; label: string }>
+      }
+      search: {
+        type: "search"
+        label: string
+      }
+    }
+
+    const [filters, setFilters] = useState<FiltersState<AsyncDefinitionType>>(
+      {}
+    )
+
+    const asyncDefinition: AsyncDefinitionType = {
+      department: {
+        type: "in",
+        label: "Department",
+        options: [
+          { value: "engineering", label: "Engineering" },
+          { value: "marketing", label: "Marketing" },
+          { value: "sales", label: "Sales" },
+          { value: "hr", label: "Human Resources" },
+        ],
+      },
+      users: {
+        type: "in",
+        label: "Users",
+        options: async () => {
+          // Simulate API call with a delay
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve([
+                { value: "user1", label: "John Doe" },
+                { value: "user2", label: "Jane Smith" },
+                { value: "user3", label: "Bob Johnson" },
+                { value: "user4", label: "Alice Williams" },
+                { value: "user5", label: "Michael Brown" },
+              ])
+            }, 1500)
+          })
+        },
+      },
+      status: {
+        type: "in",
+        label: "Status",
+        // Sync function example
+        options: () => [
+          { value: "active", label: "Active" },
+          { value: "inactive", label: "Inactive" },
+          { value: "pending", label: "Pending" },
+        ],
+      },
+      search: {
+        type: "search",
+        label: "Search",
+      },
+    }
+
+    return (
+      <div className="w-[600px]">
+        <Filters
+          schema={asyncDefinition}
+          filters={filters}
+          onChange={setFilters}
+        />
+      </div>
+    )
+  },
+}
+
+/**
+ * This example demonstrates how filters can be used with a large number of async options,
+ * showcasing the search functionality for filtering through many options.
+ */
+export const WithLargeAsyncOptions: Story = {
+  render: () => {
+    type LargeAsyncDefinitionType = {
+      countries: {
+        type: "in"
+        label: string
+        options: () => Promise<Array<{ value: string; label: string }>>
+      }
+      search: {
+        type: "search"
+        label: string
+      }
+    }
+
+    const [filters, setFilters] = useState<
+      FiltersState<LargeAsyncDefinitionType>
+    >({})
+
+    // Generate a large list of countries
+    const generateCountries = () => {
+      const countries = [
+        { value: "us", label: "United States" },
+        { value: "ca", label: "Canada" },
+        { value: "mx", label: "Mexico" },
+        { value: "br", label: "Brazil" },
+        { value: "ar", label: "Argentina" },
+        { value: "uk", label: "United Kingdom" },
+        { value: "fr", label: "France" },
+        { value: "de", label: "Germany" },
+        { value: "it", label: "Italy" },
+        { value: "es", label: "Spain" },
+        { value: "pt", label: "Portugal" },
+        { value: "ru", label: "Russia" },
+        { value: "cn", label: "China" },
+        { value: "jp", label: "Japan" },
+        { value: "kr", label: "South Korea" },
+        { value: "in", label: "India" },
+        { value: "au", label: "Australia" },
+        { value: "nz", label: "New Zealand" },
+        { value: "za", label: "South Africa" },
+        { value: "eg", label: "Egypt" },
+        { value: "ng", label: "Nigeria" },
+        { value: "ke", label: "Kenya" },
+        { value: "sa", label: "Saudi Arabia" },
+        { value: "ae", label: "United Arab Emirates" },
+        { value: "il", label: "Israel" },
+        { value: "tr", label: "Turkey" },
+        { value: "th", label: "Thailand" },
+        { value: "vn", label: "Vietnam" },
+        { value: "my", label: "Malaysia" },
+        { value: "sg", label: "Singapore" },
+        { value: "id", label: "Indonesia" },
+        { value: "ph", label: "Philippines" },
+        { value: "se", label: "Sweden" },
+        { value: "no", label: "Norway" },
+        { value: "dk", label: "Denmark" },
+        { value: "fi", label: "Finland" },
+        { value: "nl", label: "Netherlands" },
+        { value: "be", label: "Belgium" },
+        { value: "ch", label: "Switzerland" },
+        { value: "at", label: "Austria" },
+        { value: "gr", label: "Greece" },
+        { value: "pl", label: "Poland" },
+        { value: "cz", label: "Czech Republic" },
+        { value: "hu", label: "Hungary" },
+        { value: "ro", label: "Romania" },
+        { value: "bg", label: "Bulgaria" },
+        { value: "hr", label: "Croatia" },
+        { value: "rs", label: "Serbia" },
+        { value: "ua", label: "Ukraine" },
+      ]
+      return countries
+    }
+
+    const largeAsyncDefinition: LargeAsyncDefinitionType = {
+      countries: {
+        type: "in",
+        label: "Countries",
+        options: async () => {
+          // Simulate API call with a delay
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve(generateCountries())
+            }, 1000)
+          })
+        },
+      },
+      search: {
+        type: "search",
+        label: "Search",
+      },
+    }
+
+    return (
+      <div className="w-[600px]">
+        <p className="mb-4 text-sm text-f1-foreground-secondary">
+          This example loads a large list of countries asynchronously. Open the
+          Countries filter and use the search field to filter the options.
+        </p>
+        <Filters
+          schema={largeAsyncDefinition}
+          filters={filters}
+          onChange={setFilters}
+        />
+      </div>
+    )
+  },
+}

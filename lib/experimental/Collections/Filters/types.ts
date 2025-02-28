@@ -8,6 +8,17 @@ export type BaseFilterDefinition = {
 }
 
 /**
+ * Option type for InFilter
+ * @template T - Type of value
+ */
+export type FilterOption<T = unknown> = {
+  /** The value used for filtering */
+  value: T
+  /** Human-readable label for the option */
+  label: string
+}
+
+/**
  * Multi-select filter that allows selecting from predefined options.
  * Used for filtering based on a set of discrete values.
  * @template T - Type of values that can be selected
@@ -15,13 +26,15 @@ export type BaseFilterDefinition = {
 export type InFilterDefinition<T = unknown> = BaseFilterDefinition & {
   /** Identifies this as an "in" type filter */
   type: "in"
-  /** Available options for selection */
-  options: Array<{
-    /** The value used for filtering */
-    value: T
-    /** Human-readable label for the option */
-    label: string
-  }>
+  /**
+   * Available options for selection.
+   * Can be either:
+   * - An array of options
+   * - A function that returns an array of options (sync or async)
+   */
+  options:
+    | Array<FilterOption<T>>
+    | (() => Array<FilterOption<T>> | Promise<Array<FilterOption<T>>>)
 }
 
 /**
