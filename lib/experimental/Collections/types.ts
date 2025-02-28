@@ -15,12 +15,18 @@ export type DataSourceDefinition<
 > = {
   /** Available filter configurations */
   filters?: Filters
+  presets?: Presets<Filters>
   actions?: Actions
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters>
 }
+
+export type Presets<Filters extends FiltersDefinition> = Array<{
+  label: string
+  filter: FiltersState<Filters>
+}>
 
 /**
  * Base response type for collection data

@@ -36,6 +36,7 @@ export const useDataSource = <
     currentFilters: initialCurrentFilters = {},
     dataAdapter,
     actions,
+    presets,
   }: DataSourceDefinition<Record, Filters, Actions>,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<Record, Filters, Actions> => {
@@ -51,6 +52,7 @@ export const useDataSource = <
     setCurrentFilters,
     dataAdapter,
     actions,
+    presets,
   }
 }
 
@@ -90,6 +92,7 @@ export const DataCollection = <
           <Filters
             schema={filters}
             filters={currentFilters}
+            presets={source.presets}
             onChange={setCurrentFilters}
           />
         )}

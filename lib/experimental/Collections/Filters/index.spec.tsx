@@ -232,6 +232,236 @@ describe("Filters", () => {
   })
 })
 
+describe("Presets", () => {
+  it("renders preset buttons when presets are provided", async () => {
+    const onChange = vi.fn()
+    const presets = [
+      {
+        label: "Engineering Only",
+        filter: { department: ["engineering" as const] },
+      },
+      {
+        label: "Design Only",
+        filter: { department: ["design" as const] },
+      },
+    ]
+
+    render(
+      <Filters
+        schema={definition}
+        filters={{}}
+        presets={presets}
+        onChange={onChange}
+      />
+    )
+
+    // Verify preset buttons are rendered
+    expect(screen.getByText("Engineering Only")).toBeInTheDocument()
+    expect(screen.getByText("Design Only")).toBeInTheDocument()
+  })
+
+  it("applies preset filters when a preset is clicked", async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    const presets = [
+      {
+        label: "Engineering Only",
+        filter: { department: ["engineering" as const] },
+      },
+      {
+        label: "Design Only",
+        filter: { department: ["design" as const] },
+      },
+    ]
+
+    render(
+      <Filters
+        schema={definition}
+        filters={{}}
+        presets={presets}
+        onChange={onChange}
+      />
+    )
+
+    // Click on a preset
+    await user.click(screen.getByText("Engineering Only"))
+
+    // Verify the preset's filter was applied
+    expect(onChange).toHaveBeenCalledWith({ department: ["engineering"] })
+  })
+
+  it("marks a preset as selected when its filter matches the current filters", async () => {
+    const onChange = vi.fn()
+    const presets = [
+      {
+        label: "Engineering Only",
+        filter: { department: ["engineering" as const] },
+      },
+      {
+        label: "Design Only",
+        filter: { department: ["design" as const] },
+      },
+    ]
+
+    // Render with filters matching the first preset
+    render(
+      <Filters
+        schema={definition}
+        filters={{ department: ["engineering"] }}
+        presets={presets}
+        onChange={onChange}
+      />
+    )
+
+    // Get the preset elements
+    const engineeringPreset = screen
+      .getByText("Engineering Only")
+      .closest("label")
+    const designPreset = screen.getByText("Design Only").closest("label")
+
+    // Verify the Engineering preset has the selected class
+    expect(engineeringPreset).toHaveClass("bg-f1-background-selected-secondary")
+    expect(engineeringPreset).toHaveClass("text-f1-foreground-selected")
+
+    // Verify the Design preset doesn't have the selected class
+    expect(designPreset).not.toHaveClass("bg-f1-background-selected-secondary")
+    expect(designPreset).not.toHaveClass("text-f1-foreground-selected")
+  })
+
+  it("switches between presets when clicking different preset buttons", async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    const presets = [
+      {
+        label: "Engineering Only",
+        filter: { department: ["engineering" as const] },
+      },
+      {
+        label: "Design Only",
+        filter: { department: ["design" as const] },
+      },
+    ]
+
+    const { rerender } = render(
+      <Filters
+        schema={definition}
+        filters={{}}
+        presets={presets}
+        onChange={onChange}
+      />
+    )
+
+    // Click on the first preset
+    await user.click(screen.getByText("Engineering Only"))
+    expect(onChange).toHaveBeenCalledWith({ department: ["engineering"] })
+
+    // Simulate the update
+    rerender(
+      <Filters
+        schema={definition}
+        filters={{ department: ["engineering"] }}
+        presets={presets}
+        onChange={onChange}
+      />
+    )
+
+    // Reset the mock to track new calls
+    onChange.mockReset()
+
+    // Click on the second preset
+    await user.click(screen.getByText("Design Only"))
+    expect(onChange).toHaveBeenCalledWith({ department: ["design"] })
+  })
+
+  it("combines preset filters with manual filter changes", async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    const presets = [
+      {
+        label: "Engineering Only",
+        filter: { department: ["engineering" as const] },
+      },
+    ]
+
+    const { rerender } = render(
+      <Filters
+        schema={definition}
+        filters={{}}
+        presets={presets}
+        onChange={onChange}
+      />
+    )
+
+    // Apply a preset
+    await user.click(screen.getByText("Engineering Only"))
+    expect(onChange).toHaveBeenCalledWith({ department: ["engineering"] })
+
+    // Simulate the update
+    rerender(
+      <Filters
+        schema={definition}
+        filters={{ department: ["engineering"] }}
+        presets={presets}
+        onChange={onChange}
+      />
+    )
+
+    // Reset the mock to track new calls
+    onChange.mockReset()
+
+    // Open filter popover to add a search filter
+    await user.click(screen.getByRole("button", { name: /filters/i }))
+    await user.click(screen.getByText("Search"))
+
+    // Type in the search field
+    const searchInput = screen.getByRole("textbox")
+    await user.type(searchInput, "test query")
+
+    // Apply the filter
+    await user.click(screen.getByRole("button", { name: /apply filters/i }))
+
+    // Verify both the preset filter and the new search filter are applied
+    expect(onChange).toHaveBeenCalledWith({
+      department: ["engineering"],
+      search: "test query",
+    })
+  })
+
+  it("handles presets with multiple filter types", async () => {
+    const user = userEvent.setup()
+    const onChange = vi.fn()
+    const presets = [
+      {
+        label: "Engineering Search",
+        filter: {
+          department: ["engineering" as const],
+          search: "code",
+        },
+      },
+    ]
+
+    render(
+      <Filters
+        schema={definition}
+        filters={{}}
+        presets={presets}
+        onChange={onChange}
+      />
+    )
+
+    // Click on the preset
+    await user.click(screen.getByText("Engineering Search"))
+
+    // Verify both filters were applied
+    expect(onChange).toHaveBeenCalledWith({
+      department: ["engineering"],
+      search: "code",
+    })
+
+    // Verify the UI would show both filters (if we had rerendered with the new state)
+  })
+})
+
 // Type safety tests
 describe("Filters Type Safety", () => {
   it.skip("should enforce type safety in props", () => {
@@ -359,6 +589,60 @@ describe("Filters Type Safety", () => {
           } as const
         }
         filters={{}}
+        onChange={() => {}}
+      />
+    )
+  })
+
+  it.skip("should enforce type safety in presets", () => {
+    // Valid usage - this should type check
+    render(
+      <Filters
+        schema={
+          {
+            status: {
+              type: "in",
+              label: "Status",
+              options: [
+                { value: "active", label: "Active" },
+                { value: "inactive", label: "Inactive" },
+              ],
+            },
+          } as const
+        }
+        filters={{}}
+        presets={[
+          {
+            label: "Active Only",
+            filter: { status: ["active"] },
+          },
+        ]}
+        onChange={() => {}}
+      />
+    )
+
+    render(
+      <Filters
+        schema={
+          {
+            status: {
+              type: "in",
+              label: "Status",
+              options: [
+                { value: "active", label: "Active" },
+                { value: "inactive", label: "Inactive" },
+              ],
+            },
+          } as const
+        }
+        filters={{}}
+        presets={[
+          {
+            label: "Invalid Preset",
+            // @ts-expect-error - Invalid filter key in preset
+            filter: { invalid: ["something"] },
+          },
+        ]}
         onChange={() => {}}
       />
     )

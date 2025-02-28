@@ -1,9 +1,11 @@
 import { Button } from "@/components/Actions/Button"
+import { Preset } from "@/experimental/OnePreset"
 import { Filter } from "@/icons/app"
 import { useI18n } from "@/lib/i18n-provider"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { AnimatePresence } from "framer-motion"
 import { useState } from "react"
+import { Presets } from "../types"
 import { FilterButton } from "./Components/FilterButton"
 import { FilterContent } from "./Components/FilterContent"
 import { FilterList } from "./Components/FilterList"
@@ -18,6 +20,7 @@ export interface FiltersProps<Definition extends FiltersDefinition> {
   schema: Definition
   /** Current state of applied filters */
   filters: FiltersState<Definition>
+  presets?: Presets<Definition>
   /** Callback fired when filters are changed */
   onChange: (value: FiltersState<Definition>) => void
 }
@@ -51,6 +54,7 @@ export interface FiltersProps<Definition extends FiltersDefinition> {
  */
 export function Filters<Definition extends FiltersDefinition>({
   schema,
+  presets,
   filters: value,
   onChange,
 }: FiltersProps<Definition>) {
@@ -145,9 +149,15 @@ export function Filters<Definition extends FiltersDefinition>({
           </PopoverContent>
         </Popover>
 
-        {/* <div className="rounded-sm bg-f1-background-secondary px-2 py-1.5">
-          Here should be the presets
-        </div> */}
+        {presets &&
+          presets.map((preset, index) => (
+            <Preset
+              key={index}
+              label={preset.label}
+              selected={JSON.stringify(preset.filter) === JSON.stringify(value)}
+              onClick={() => onChange(preset.filter)}
+            />
+          ))}
       </div>
       {Object.keys(value).length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
