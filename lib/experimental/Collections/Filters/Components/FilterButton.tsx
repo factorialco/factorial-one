@@ -1,6 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
+import { ReactElement } from "react"
 import { Chip } from "../../../OneChip"
 import type {
   FilterValue,
@@ -120,7 +121,7 @@ export function FilterButton<Definition extends FiltersDefinition>({
   value: FilterValue<Definition[keyof Definition]> | undefined
   onSelect: () => void
   onRemove: () => void
-}) {
+}): ReactElement {
   // Type-safe rendering based on filter type using discriminated unions
   switch (filter.type) {
     case "in": {
@@ -155,13 +156,6 @@ export function FilterButton<Definition extends FiltersDefinition>({
           onRemove={onRemove}
         />
       )
-    }
-
-    default: {
-      // Exhaustiveness check - this catches any future filter types that
-      // might be added without updating this component
-      const _exhaustiveCheck: never = filter
-      return null
     }
   }
 }
