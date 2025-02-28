@@ -62,6 +62,7 @@ export function Checkbox({
   value,
   hideLabel = false,
   presentational = false,
+  ...rest
 }: CheckboxProps) {
   return (
     <CheckboxRoot
@@ -74,6 +75,7 @@ export function Checkbox({
       value={value}
       hideLabel={hideLabel}
       tabIndex={presentational ? -1 : undefined}
+      {...rest}
     />
   )
 }

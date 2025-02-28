@@ -21,7 +21,7 @@ interface InFilterProps<T> {
 
 /**
  * A multi-select filter component that allows users to select multiple options from a predefined list.
- * Renders a list of buttons that can be toggled on/off to include/exclude values.
+ * Renders a list of checkboxes that can be toggled on/off to include/exclude values.
  *
  * Features:
  * - Visual indication of selected state
@@ -145,14 +145,20 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
   }
 
   return (
-    <div className="flex w-full flex-col gap-1">
+    <div
+      className="flex w-full flex-col gap-1"
+      role="group"
+      aria-label={filter.label}
+    >
       {options.map((option) => {
         const isSelected = value.includes(option.value)
+        const optionId = `option-${String(option.value)}`
+
         return (
-          <button
+          <div
             key={String(option.value)}
             className={cn(
-              "flex w-full appearance-none items-center justify-between rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
+              "flex w-full cursor-pointer appearance-none items-center justify-between rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
               focusRing()
             )}
             onClick={() => {
@@ -164,8 +170,14 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
             }}
           >
             <span className="line-clamp-1 w-fit text-left">{option.label}</span>
-            <Checkbox checked={isSelected} presentational hideLabel />
-          </button>
+            <Checkbox
+              id={optionId}
+              title={option.label}
+              checked={isSelected}
+              presentational
+              hideLabel
+            />
+          </div>
         )
       })}
     </div>

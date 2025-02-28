@@ -64,7 +64,7 @@ export function FilterContent<Definition extends FiltersDefinition>({
         setFilteredOptions(loadedOptions)
       }
     }
-  }, [selectedFilterKey, deferredSearchTerm, loadedOptions])
+  }, [selectedFilterKey, deferredSearchTerm, loadedOptions, definition])
 
   // Load options from static array or function
   useEffect(() => {
