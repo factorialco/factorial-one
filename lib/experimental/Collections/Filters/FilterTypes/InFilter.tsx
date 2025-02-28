@@ -2,6 +2,7 @@
 
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { Spinner } from "@/experimental/Information/Spinner"
+import { useI18n } from "@/lib/i18n-provider"
 import { cn, focusRing } from "@/lib/utils"
 import { useEffect, useMemo, useState } from "react"
 import type { FilterOption, InFilterDefinition } from "../types"
@@ -77,6 +78,8 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
   const [isLoading, setIsLoading] = useState(isAsyncOptions)
   const [error, setError] = useState<Error | null>(null)
 
+  const i18n = useI18n()
+
   // Determine which options to use for rendering
   const options = isAsyncOptions ? asyncOptions : syncOptions
 
@@ -117,7 +120,9 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
   if (error) {
     return (
       <div className="text-f1-foreground-destructive flex w-full flex-col items-center justify-center gap-2 py-4">
-        <p className="text-sm">Failed to load options</p>
+        <p className="text-sm">
+          {i18n.collections.filters.failedToLoadOptions}
+        </p>
         <button
           className={cn(
             "text-f1-foreground-primary text-xs underline",
@@ -130,7 +135,7 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
             setIsLoading(true)
           }}
         >
-          Retry
+          {i18n.collections.filters.retry}
         </button>
       </div>
     )
