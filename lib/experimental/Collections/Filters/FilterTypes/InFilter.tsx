@@ -104,7 +104,7 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
     }
 
     loadOptions()
-  }, [filter.options, isAsyncOptions])
+  }, [filter, filter.options, isAsyncOptions])
 
   if (isLoading) {
     return (
