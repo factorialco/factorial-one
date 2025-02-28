@@ -21,6 +21,9 @@ export const defaultTranslations = {
     visualizations: {
       table: "Table view",
       card: "Card view",
+      pagination: {
+        of: "of",
+      },
     },
     filters: {
       failedToLoadOptions: "Failed to load options",

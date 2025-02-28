@@ -82,11 +82,18 @@ export const TableCollection = <
         </TableBody>
       </OneTable>
       {paginationInfo && (
-        <OnePagination
-          totalPages={paginationInfo.pagesCount}
-          currentPage={paginationInfo.currentPage}
-          onPageChange={setPage}
-        />
+        <div className="flex w-full items-center justify-between py-3">
+          <span className="shrink-0 text-f1-foreground-secondary">
+            {`${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(paginationInfo.currentPage * paginationInfo.perPage, paginationInfo.total)} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
+          </span>
+          <div className="flex items-center">
+            <OnePagination
+              totalPages={paginationInfo.pagesCount}
+              currentPage={paginationInfo.currentPage}
+              onPageChange={setPage}
+            />
+          </div>
+        </div>
       )}
     </>
   )
