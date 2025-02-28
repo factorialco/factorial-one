@@ -1,14 +1,13 @@
 import { Link } from "@/components/Actions/Link"
-import { Skeleton } from "@/ui/skeleton"
+import { OnePagination } from "@/experimental/OnePagination"
 import {
-  Table,
+  OneTable,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-} from "@/ui/table"
-import { OnePagination } from "../../OnePagination"
+} from "@/experimental/OneTable"
 import type { FiltersDefinition } from "../Filters/types"
 import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
@@ -46,9 +45,13 @@ export const TableCollection = <
     )
   }
 
+  if (isInitialLoading) {
+    return <OneTable.Skeleton columns={columns.length + (link ? 1 : 0)} />
+  }
+
   return (
     <>
-      <Table>
+      <OneTable>
         <TableHeader>
           <TableRow>
             {columns.map((column) => (
@@ -58,29 +61,18 @@ export const TableCollection = <
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isInitialLoading
-            ? Array.from({ length: 4 }).map((_, i) => (
-                <TableRow key={`loading-${i}`}>
-                  {columns.map((column) => (
-                    <TableCell key={String(column.label)}>
-                      <Skeleton className="h-4 w-full" />
-                    </TableCell>
-                  ))}
-                  {link && <TableCell key="actions">Actions</TableCell>}
-                </TableRow>
-              ))
-            : data.map((item, index) => (
-                <TableRow key={`row-${index}`}>
-                  {columns.map((column) => (
-                    <TableCell key={String(column.label)}>
-                      {renderValue(item, column)}
-                    </TableCell>
-                  ))}
-                  {link && <TableActionCell item={item} />}
-                </TableRow>
+          {data.map((item, index) => (
+            <TableRow key={`row-${index}`}>
+              {columns.map((column) => (
+                <TableCell key={String(column.label)}>
+                  {renderValue(item, column)}
+                </TableCell>
               ))}
+              {link && <TableActionCell item={item} />}
+            </TableRow>
+          ))}
         </TableBody>
-      </Table>
+      </OneTable>
       {paginationInfo && (
         <OnePagination
           totalPages={paginationInfo.pagesCount}
