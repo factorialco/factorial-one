@@ -81,7 +81,14 @@ export const TableCollection = <
                 </TableCell>
               ))}
               {source.actions && (
-                <TableCell key="actions">
+                <TableCell
+                  key="actions"
+                  href={
+                    "href" in item && typeof item.href === "string"
+                      ? item.href
+                      : undefined
+                  }
+                >
                   <ActionsDropdown item={item} actions={source.actions} />
                 </TableCell>
               )}

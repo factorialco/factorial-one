@@ -54,7 +54,8 @@ export function TableCell({
       <div
         className={cn(
           "[&:has([role=checkbox])]:relative [&:has([role=checkbox])]:z-[1]",
-          "[&:has([type=button])]:relative [&:has([type=button])]:z-[1]"
+          "[&:has([type=button])]:relative [&:has([type=button])]:z-[1]",
+          "[&:has(a)]:relative [&:has(a)]:z-[1]"
         )}
       >
         {children}
