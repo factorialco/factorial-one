@@ -126,10 +126,14 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        trail: {
+          to: { offsetDistance: "100%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        trail: "trail 8s infinite linear",
       },
       containers: {
         "8xl": "96rem",
