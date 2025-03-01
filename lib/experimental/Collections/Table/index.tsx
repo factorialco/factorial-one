@@ -71,6 +71,11 @@ export const TableCollection = <
                 <TableCell
                   key={String(column.label)}
                   firstCell={cellIndex === 0}
+                  href={
+                    "href" in item && typeof item.href === "string"
+                      ? item.href
+                      : undefined
+                  }
                 >
                   {renderValue(item, column)}
                 </TableCell>
