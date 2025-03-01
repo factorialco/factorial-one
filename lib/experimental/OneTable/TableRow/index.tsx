@@ -17,6 +17,7 @@ export function TableRow({ children, selected, className }: TableRowProps) {
       )}
     >
       {children}
+      <div className="absolute inset-0 [.group:has(a:focus)_&]:bg-f1-background-hover" />
     </TableRowRoot>
   )
 }
