@@ -67,8 +67,11 @@ export const TableCollection = <
         <TableBody>
           {data.map((item, index) => (
             <TableRow key={`row-${index}`}>
-              {columns.map((column) => (
-                <TableCell key={String(column.label)}>
+              {columns.map((column, cellIndex) => (
+                <TableCell
+                  key={String(column.label)}
+                  firstCell={cellIndex === 0}
+                >
                   {renderValue(item, column)}
                 </TableCell>
               ))}
