@@ -185,6 +185,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
         <SelectTrigger ref={ref} asChild>
           {children || (
             <button
+              aria-label="Select unfoldable"
               className={cn(
                 defaultTrigger,
                 className,

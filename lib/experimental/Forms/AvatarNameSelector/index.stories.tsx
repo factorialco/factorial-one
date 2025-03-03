@@ -1,6 +1,8 @@
 import type { Meta } from "@storybook/react"
 
+import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { fn } from "@storybook/test"
+import { ChevronDown, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { AvatarNameSelector } from "."
 import { famousEmployees } from "./avatar-name.factory"
@@ -159,7 +161,7 @@ export const WithCustomTrigger = {
       props.selectedGroup ?? "all"
     )
     const [numSelected, setNumSelected] = useState<number>(0)
-    const [, setOpen] = useState<boolean>(false)
+    const [open, setOpen] = useState<boolean>(false)
 
     return (
       <div className="w-[600px]">
@@ -179,6 +181,7 @@ export const WithCustomTrigger = {
           }
         >
           <div className="flex justify-start gap-2">
+            <RawTag icon={open ? ChevronDown : ChevronRight} />
             <span className="my-auto">{`${numSelected} selected`}</span>
           </div>
         </AvatarNameSelector>
