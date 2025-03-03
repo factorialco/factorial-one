@@ -1,4 +1,3 @@
-import { motion } from "framer-motion"
 import {
   AvatarNamedEntity,
   AvatarNamedGroup,
@@ -83,11 +82,9 @@ export const AvatarNameSelectorContent = ({
           disabled={props.disabled}
         />
       </div>
-      <motion.div
+      <div
         className="absolute left-0"
-        initial={{ width: finalWidthMain + 1 }}
-        animate={{ width: finalWidthMain + 1 }}
-        transition={{ delay: 0, duration: 0.3 }}
+        style={{ width: finalWidthMain + 1 + "px" }}
       >
         <AvatarNameSelectorMainContent
           {...props}
@@ -99,7 +96,7 @@ export const AvatarNameSelectorContent = ({
           loading={loading}
           disabled={props.disabled}
         />
-      </motion.div>
+      </div>
     </div>
   )
 }

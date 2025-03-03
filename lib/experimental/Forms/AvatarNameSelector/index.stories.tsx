@@ -117,6 +117,12 @@ export const AlwaysOpen = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render: (props: any) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [selected, setSelected] = useState<AvatarNamedEntity[]>([
+      {
+        ...famousEmployees[0],
+      },
+      { ...famousEmployees[1] },
+    ])
     const [selectedGroup, setSelectedGroup] = useState<string>(
       props.selectedGroup ?? "all"
     )
@@ -132,6 +138,11 @@ export const AlwaysOpen = {
           onOpenChange={(open) =>
             open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
           }
+          selectedAvatarName={selected}
+          onSelect={(selection: AvatarNamedEntity[]) => {
+            setSelected(selection)
+            props.onSelect(selection)
+          }}
         />
       </div>
     )
