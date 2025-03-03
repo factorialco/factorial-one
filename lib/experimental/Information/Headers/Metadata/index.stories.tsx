@@ -97,6 +97,14 @@ export const Default: Story = {
           tags: ["Projects", "Recruitment", "Tasks"],
         },
       },
+      {
+        label: "Type",
+        value: {
+          type: "dot-tag",
+          label: "Dot tag",
+          color: "malibu",
+        },
+      },
     ],
   },
 }
