@@ -81,6 +81,10 @@ export const AvatarNameSelector = ({
   const [search, setSearch] = useState("")
   const [debouncedSearch, setDebouncedSearch] = useDebounceValue("", 300)
 
+  useEffect(() => {
+    setSelectedEntities(selectedAvatarName ?? [])
+  }, [selectedAvatarName])
+
   const onSelect = (entity: AvatarNamedEntity) => {
     setSelectedEntities((prevSelectedEntities) => {
       const alreadySelected = prevSelectedEntities.find(
