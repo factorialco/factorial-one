@@ -183,7 +183,7 @@ export const WithCustomTrigger = {
           <div className="flex justify-start gap-2">
             <Button
               icon={open ? ChevronDown : ChevronRight}
-              hideLabel
+              aria-label="unfold"
               round
               size="sm"
               label={`${numSelected} selected`}
