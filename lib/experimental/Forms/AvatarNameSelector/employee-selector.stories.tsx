@@ -223,7 +223,6 @@ export const Default: Story = {
     }
 
     const onSelect = (el: AvatarNamedEntity[] | AvatarNamedEntity | null) => {
-      console.log("Selecting: ", el)
       setSelectedEmployees(Array.isArray(el) ? el : el ? [el] : [])
     }
 

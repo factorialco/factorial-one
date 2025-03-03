@@ -303,7 +303,6 @@ export const AvatarNameSelectorMainContent = ({
   )
 
   const totalFlattenedItems = flattenedList.length
-  console.log(totalFlattenedItems)
 
   return (
     <div
