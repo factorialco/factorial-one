@@ -65,35 +65,31 @@ export const TableCollection = <
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item, index) => (
-            <TableRow key={`row-${index}`}>
-              {columns.map((column, cellIndex) => (
-                <TableCell
-                  key={String(column.label)}
-                  firstCell={cellIndex === 0}
-                  href={
-                    "href" in item && typeof item.href === "string"
-                      ? item.href
-                      : undefined
-                  }
-                >
-                  {renderValue(item, column)}
-                </TableCell>
-              ))}
-              {source.actions && (
-                <TableCell
-                  key="actions"
-                  href={
-                    "href" in item && typeof item.href === "string"
-                      ? item.href
-                      : undefined
-                  }
-                >
-                  <ActionsDropdown item={item} actions={source.actions} />
-                </TableCell>
-              )}
-            </TableRow>
-          ))}
+          {data.map((item, index) => {
+            const itemHref =
+              "href" in item && typeof item.href === "string"
+                ? item.href
+                : undefined
+
+            return (
+              <TableRow key={`row-${index}`}>
+                {columns.map((column, cellIndex) => (
+                  <TableCell
+                    key={String(column.label)}
+                    firstCell={cellIndex === 0}
+                    href={itemHref}
+                  >
+                    {renderValue(item, column)}
+                  </TableCell>
+                ))}
+                {source.actions && (
+                  <TableCell key="actions" href={itemHref}>
+                    <ActionsDropdown item={item} actions={source.actions} />
+                  </TableCell>
+                )}
+              </TableRow>
+            )
+          })}
         </TableBody>
       </OneTable>
       {paginationInfo && (
