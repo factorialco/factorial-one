@@ -52,6 +52,7 @@ export const AvatarNameSelectorContent = ({
   selectedLabel?: string
   singleSelector?: boolean
   loading?: boolean
+  disabled?: boolean
 }) => {
   const blockSecondaryContent =
     (width ?? totalDefaultWidth) < breakpointToShowEmployeeList
@@ -79,6 +80,7 @@ export const AvatarNameSelectorContent = ({
           onSubItemRemove={onSubItemRemove}
           selectedEntities={selectedEntities}
           selectedLabel={selectedLabel}
+          disabled={props.disabled}
         />
       </div>
       <motion.div
@@ -95,6 +97,7 @@ export const AvatarNameSelectorContent = ({
           selectedEntities={selectedEntities}
           singleSelector={singleSelector}
           loading={loading}
+          disabled={props.disabled}
         />
       </motion.div>
     </div>

@@ -38,6 +38,7 @@ export const AvatarNameSelectorMainContent = ({
   className,
   singleSelector = false,
   loading = false,
+  disabled = false,
 }: {
   groupView: boolean
   entities: AvatarNamedEntity[]
@@ -57,7 +58,7 @@ export const AvatarNameSelectorMainContent = ({
   onClear: () => void
   onSelectAll: () => void
   onSearch: (search: string) => void
-  selectedEntities: AvatarNamedEntity[]
+  selectedEntities?: AvatarNamedEntity[]
   onGroupChange: (key: string | null) => void
   onToggleExpand: (entity: AvatarNamedEntity) => void
   notFoundTitle: string
@@ -68,6 +69,7 @@ export const AvatarNameSelectorMainContent = ({
   clearLabel?: string
   singleSelector?: boolean
   loading?: boolean
+  disabled?: boolean
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null)
 
@@ -112,7 +114,9 @@ export const AvatarNameSelectorMainContent = ({
   const itemRenderer = useCallback(
     (vi: VirtualItem) => {
       const entity = entities[vi.index]
-      const selectedEntity = selectedEntities.find((el) => el.id === entity.id)
+      const selectedEntity = (selectedEntities ?? []).find(
+        (el) => el.id === entity.id
+      )
       const selectedSubItems = (entity.subItems ?? []).filter((subItem) =>
         selectedEntity?.subItems?.some(
           (selectedSubItem) => selectedSubItem.subId === subItem.subId
@@ -120,7 +124,7 @@ export const AvatarNameSelectorMainContent = ({
       )
       const selected = groupView
         ? (entity.subItems?.length ?? 0) === selectedSubItems.length
-        : !!selectedEntities.find((el) => el.id === entity.id)
+        : !!(selectedEntities ?? []).find((el) => el.id === entity.id)
       const partialSelected = groupView
         ? !selected && selectedSubItems.length > 0
         : selected
@@ -142,10 +146,12 @@ export const AvatarNameSelectorMainContent = ({
           singleSelector={singleSelector}
           goToFirst={goToFirst}
           goToLast={goToLast}
+          disabled={disabled}
         />
       )
     },
     [
+      disabled,
       entities,
       goToFirst,
       goToLast,
@@ -208,7 +214,7 @@ export const AvatarNameSelectorMainContent = ({
           subItems: subItem.subItems,
           expanded: subItem.expanded,
         }
-        const selectedEntity = selectedEntities.find(
+        const selectedEntity = (selectedEntities ?? []).find(
           (el) => el.id === recoveredEntity.id
         )
         const selectedSubItems = (recoveredEntity?.subItems ?? []).filter(
@@ -240,10 +246,11 @@ export const AvatarNameSelectorMainContent = ({
             goToFirst={goToFirst}
             goToLast={goToLast}
             hideLine={vi.index === flattenedList.length - 1}
+            disabled={disabled}
           />
         )
       }
-      const selectedParentEntity = selectedEntities.find(
+      const selectedParentEntity = (selectedEntities ?? []).find(
         (el) => el.id === parent.id
       )
       const selectedSubItems = (parent?.subItems ?? []).filter((subItem) =>
@@ -287,6 +294,7 @@ export const AvatarNameSelectorMainContent = ({
       onSelect,
       onRemove,
       groups,
+      disabled,
       onToggleExpand,
       selectedGroup,
       onSubItemSelect,
@@ -366,7 +374,7 @@ export const AvatarNameSelectorMainContent = ({
                 height={384}
                 itemCount={totalFlattenedItems}
                 itemSize={(index) =>
-                  flattenedList[index].parent === null ? 39 : 36
+                  flattenedList[index].parent === null ? 37 : 36
                 }
                 renderer={itemFlattenedRenderer}
                 ref={ref}
@@ -380,6 +388,7 @@ export const AvatarNameSelectorMainContent = ({
           <div className="flex flex-1 justify-between p-2">
             {selectAllLabel && (
               <Button
+                disabled={disabled}
                 variant="outline"
                 size="sm"
                 onClick={onSelectAll}
@@ -392,7 +401,9 @@ export const AvatarNameSelectorMainContent = ({
               <Button
                 variant="ghost"
                 size="sm"
-                disabled={selectedEntities.length === 0}
+                disabled={
+                  disabled || !selectedEntities || selectedEntities.length === 0
+                }
                 onClick={onClear}
                 title={clearLabel + ` (${totalFilteredEntities})`}
               >

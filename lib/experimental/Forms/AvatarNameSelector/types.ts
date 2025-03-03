@@ -30,6 +30,7 @@ interface AvatarNameSelectorCommonProps
   notFoundTitle: string
   notFoundSubtitle: string
   onGroupChange: (value: string | null) => void
+  disabled?: boolean
   zIndex?: number
   loading?: boolean
   searchPlaceholder?: string

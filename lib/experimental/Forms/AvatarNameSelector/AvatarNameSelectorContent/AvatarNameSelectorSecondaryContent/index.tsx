@@ -14,6 +14,7 @@ export const AvatarNameSelectorSecondaryContent = ({
   onRemove,
   selectedEntities,
   selectedLabel,
+  disabled = false,
 }: {
   groupView: boolean
   onRemove: (entity: AvatarNamedEntity) => void
@@ -23,6 +24,7 @@ export const AvatarNameSelectorSecondaryContent = ({
   ) => void
   selectedEntities: AvatarNamedEntity[]
   selectedLabel?: string
+  disabled?: boolean
 }) => {
   const flattenedList = useMemo<FlattenedItem[]>(() => {
     return !groupView
@@ -74,6 +76,7 @@ export const AvatarNameSelectorSecondaryContent = ({
             return (
               <AvatarNameListTag
                 entity={current.subItem}
+                disabled={disabled}
                 onRemove={() =>
                   current.parent
                     ? onSubItemRemove?.(current.parent, current.subItem)

@@ -68,6 +68,7 @@ export const AvatarNameSelector = ({
   width,
   loading = false,
   singleSelector = false,
+  disabled = false,
   children,
   ...props
 }: AvatarNameSelectorProps & { children?: React.ReactNode }) => {
@@ -355,6 +356,7 @@ export const AvatarNameSelector = ({
           notFoundTitle={notFoundTitle}
           notFoundSubtitle={notFoundSubtitle}
           width={containerWidth - 2}
+          disabled={disabled}
         />
       </div>
     )
@@ -362,7 +364,7 @@ export const AvatarNameSelector = ({
 
   return (
     <Popover {...props} onOpenChange={onOpenChange}>
-      <PopoverTrigger className="w-full">
+      <PopoverTrigger className="w-full" disabled={disabled}>
         {children ? (
           children
         ) : (
@@ -370,6 +372,7 @@ export const AvatarNameSelector = ({
             placeholder={triggerPlaceholder}
             selected={triggerSelected}
             selectedAvatarName={selectedEntities}
+            disabled={disabled}
           />
         )}
       </PopoverTrigger>
@@ -403,6 +406,7 @@ export const AvatarNameSelector = ({
           notFoundTitle={notFoundTitle}
           notFoundSubtitle={notFoundSubtitle}
           width={width}
+          disabled={disabled}
         />
       </PopoverContent>
     </Popover>

@@ -8,9 +8,11 @@ import { AvatarNamedSubEntity } from "../types"
 export const AvatarNameListTag = ({
   entity,
   onRemove,
+  disabled = false,
 }: {
   entity: AvatarNamedSubEntity
   onRemove: (entity: AvatarNamedSubEntity) => void
+  disabled?: boolean
 }) => {
   return (
     <div className="pr-2 pt-1.5">
@@ -28,12 +30,14 @@ export const AvatarNameListTag = ({
           />
         }
         right={
-          <Icon
-            icon={Cross}
-            size="sm"
-            className="cursor-pointer text-f1-icon-secondary"
-            onClick={() => onRemove?.(entity)}
-          />
+          !disabled && (
+            <Icon
+              icon={Cross}
+              size="sm"
+              className="cursor-pointer text-f1-icon-secondary"
+              onClick={() => onRemove?.(entity)}
+            />
+          )
         }
         text={entity.subName}
       />

@@ -20,6 +20,7 @@ interface Props {
   singleSelector?: boolean
   goToFirst?: () => void
   goToLast?: () => void
+  disabled?: boolean
 }
 
 export function focusNextFocusable(
@@ -66,6 +67,7 @@ export const AvatarNameListItemSingleContent = ({
   goToFirst,
   goToLast,
   singleSelector = false,
+  disabled = false,
 }: Props) => {
   const nameParts = entity.name.split(" ")
   const firstName = nameParts[0] || ""
@@ -74,7 +76,7 @@ export const AvatarNameListItemSingleContent = ({
   const handleLabelClick = (ev: React.MouseEvent<HTMLLabelElement>) => {
     ev.preventDefault()
     ev.stopPropagation()
-
+    if (disabled) return
     if (selected) {
       onRemove(entity)
     } else {
@@ -86,6 +88,7 @@ export const AvatarNameListItemSingleContent = ({
     if (ev.key === "Enter" || ev.key === " ") {
       ev.preventDefault()
       ev.stopPropagation()
+      if (disabled) return
       if (!selected) {
         onSelect(entity)
       } else if (selected) {
@@ -133,6 +136,7 @@ export const AvatarNameListItemSingleContent = ({
 
         <Checkbox
           checked={selected}
+          disabled={disabled}
           onClick={(ev) => {
             ev.preventDefault()
           }}
@@ -174,6 +178,7 @@ const AvatarNameListItem = ({
   hideLine = false,
   showGroupIcon = false,
   singleSelector = false,
+  disabled = false,
 }: {
   entity: AvatarNamedEntity
   groupView: boolean
@@ -190,6 +195,7 @@ const AvatarNameListItem = ({
   hideLine?: boolean
   goToFirst?: () => void
   goToLast?: () => void
+  disabled?: boolean
 }) => {
   if (!groupView) {
     return (
@@ -203,6 +209,7 @@ const AvatarNameListItem = ({
         singleSelector={singleSelector}
         goToFirst={goToFirst}
         goToLast={goToLast}
+        disabled={disabled}
       />
     )
   }
@@ -215,6 +222,7 @@ const AvatarNameListItem = ({
     } else if (ev.key === "Enter") {
       ev.preventDefault()
       ev.stopPropagation()
+      if (disabled) return
       if (!selected || partialSelected) {
         onSelect(entity)
       } else if (selected) {
@@ -232,6 +240,7 @@ const AvatarNameListItem = ({
   }
 
   const handleGroupClick = (ev: React.MouseEvent) => {
+    if (disabled) return
     if (singleSelector) return
     if (selected) onRemove(entity)
     else onSelect(entity)
@@ -275,6 +284,7 @@ const AvatarNameListItem = ({
           </div>
           <Checkbox
             checked={checked}
+            disabled={disabled}
             onClick={handleGroupClick}
             indeterminate={partialSelected}
             className={cn(

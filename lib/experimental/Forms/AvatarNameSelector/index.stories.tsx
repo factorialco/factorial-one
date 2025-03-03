@@ -32,6 +32,7 @@ const defaultArgs: AvatarNameSelectorMultipleProps = {
   clearLabel: "Clear",
   selectedLabel: "selected",
   notFoundTitle: "No results found",
+  disabled: false,
   notFoundSubtitle: "Try searching with a different term.",
   groups: [
     { label: "None", value: "all", type: "avatar" },

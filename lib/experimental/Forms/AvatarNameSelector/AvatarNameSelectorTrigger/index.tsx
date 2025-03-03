@@ -1,6 +1,7 @@
 import { Icon } from "@/components/Utilities/Icon"
 import { PersonAvatar } from "@/experimental/exports"
 import { ChevronDown } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import { useMemo } from "react"
 import {
   AvatarNamedEntity,
@@ -12,9 +13,11 @@ export const AvatarNameSelectorTrigger = ({
   placeholder,
   selected,
   selectedAvatarName,
+  disabled = false,
 }: {
   placeholder: string
   selected: string
+  disabled?: boolean
   selectedAvatarName: AvatarNamedEntity[]
 }) => {
   const groupView = useMemo(
@@ -43,7 +46,12 @@ export const AvatarNameSelectorTrigger = ({
   }, [groupView, selectedAvatarName])
 
   return (
-    <div className="flex cursor-pointer justify-between rounded border border-solid border-f1-border p-2">
+    <div
+      className={cn(
+        "flex cursor-pointer justify-between rounded border border-solid border-f1-border p-2",
+        disabled ? "to-f1-background-secondary" : ""
+      )}
+    >
       <span className="my-auto pl-1 text-f1-foreground-secondary">
         {flattenedList.length === 0 ? (
           placeholder
