@@ -1,8 +1,6 @@
 import type { Meta } from "@storybook/react"
 
-import { Button } from "@/components/Actions/Button"
 import { fn } from "@storybook/test"
-import { ChevronDown, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { AvatarNameSelector } from "."
 import { famousEmployees } from "./avatar-name.factory"
@@ -161,7 +159,7 @@ export const WithCustomTrigger = {
       props.selectedGroup ?? "all"
     )
     const [numSelected, setNumSelected] = useState<number>(0)
-    const [open, setOpen] = useState<boolean>(false)
+    const [, setOpen] = useState<boolean>(false)
 
     return (
       <div className="w-[600px]">
@@ -181,13 +179,6 @@ export const WithCustomTrigger = {
           }
         >
           <div className="flex justify-start gap-2">
-            <Button
-              icon={open ? ChevronDown : ChevronRight}
-              aria-label="unfold"
-              round
-              size="sm"
-              label={`${numSelected} selected`}
-            />
             <span className="my-auto">{`${numSelected} selected`}</span>
           </div>
         </AvatarNameSelector>
