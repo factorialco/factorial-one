@@ -1,3 +1,4 @@
+import { useI18n } from "@/lib/i18n-provider"
 import { cn } from "@/lib/utils"
 import { TableCell as TableCellRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "framer-motion"
@@ -31,6 +32,7 @@ export function TableCell({
   sticky = false,
 }: TableCellProps) {
   const { isScrolled } = useTable()
+  const { actions } = useI18n()
 
   return (
     <TableCellRoot
@@ -66,7 +68,7 @@ export function TableCell({
           className="absolute inset-0 block"
           tabIndex={firstCell ? undefined : -1}
         >
-          <span className="sr-only">View</span>
+          <span className="sr-only">{actions.view}</span>
         </a>
       )}
     </TableCellRoot>
