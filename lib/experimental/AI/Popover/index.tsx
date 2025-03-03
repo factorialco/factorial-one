@@ -1,9 +1,28 @@
 import { Button } from "@/components/Actions/Button"
 import { Cross } from "@/icons/app"
+import { cn } from "@/lib/utils"
+import { AIIcon } from "../AIIcon"
+import Noise from "./texture.png"
 
-export const AIBox = () => {
+interface AIBoxProps {
+  hiddenBorder?: boolean
+}
+
+export const AIBox = ({ hiddenBorder = true }: AIBoxProps) => {
   return (
-    <div className="relative h-[320px] w-[400px] overflow-hidden rounded-xl border border-solid border-f1-border-secondary bg-[#FDEDD5]/50 shadow-md">
+    <div
+      className={cn(
+        "relative h-[320px] w-[400px] rounded-xl border border-solid border-f1-border-secondary bg-[#FDEDD5]/50 shadow-md ring-1 ring-inset ring-f1-border-secondary",
+        hiddenBorder && "overflow-hidden"
+      )}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-30"
+        style={{
+          backgroundImage: `url(${Noise})`,
+          backgroundRepeat: "repeat",
+        }}
+      />
       <div className="absolute inset-0 -z-10 opacity-[0.25] [&>div]:mix-blend-soft-light">
         <div
           className="animate-trail h-[300px] w-[300px] bg-[#5154F7] blur-3xl"
@@ -43,7 +62,10 @@ export const AIBox = () => {
       </div>
       <div className="flex h-full flex-col">
         <div className="flex items-center justify-between px-3 py-2 font-medium text-[#6143A7]">
-          <span>Create smart rule</span>
+          <div className="flex items-center gap-2">
+            <AIIcon className="h-6 w-6" />
+            <span>Create smart rule</span>
+          </div>
           <Button
             variant="neutral"
             icon={Cross}
