@@ -27,11 +27,10 @@ const meta: Meta = {
     selected: false,
     onSelect: fn(),
     onRemove: fn(),
-    onSubItemRemove: fn(),
-    onSubItemSelect: fn(),
     onExpand: fn(),
     expanded: false,
     search: "",
+    singleSelector: false,
   } satisfies ComponentProps<typeof AvatarNameListItem>,
 } satisfies Meta<typeof AvatarNameListItem>
 
@@ -49,8 +48,6 @@ export const GroupViewSelected: Story = {
     onSelect: fn(),
     onRemove: fn(),
     onExpand: fn(),
-    onSubItemRemove: fn(),
-    onSubItemSelect: fn(),
     expanded: false,
   },
 }
@@ -64,8 +61,6 @@ export const GroupViewPartial: Story = {
     onSelect: fn(),
     onRemove: fn(),
     onExpand: fn(),
-    onSubItemRemove: fn(),
-    onSubItemSelect: fn(),
     expanded: false,
   },
 }
