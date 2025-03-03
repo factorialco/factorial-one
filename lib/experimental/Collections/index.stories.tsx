@@ -70,6 +70,7 @@ const mockUsers = [
     department: DEPARTMENTS[0],
     status: "active",
     isStarred: true,
+    href: "/users/john-doe",
   },
   {
     id: "user-2",
@@ -79,6 +80,7 @@ const mockUsers = [
     department: DEPARTMENTS[1],
     status: "active",
     isStarred: false,
+    href: "/users/jane-smith",
   },
   {
     id: "user-3",
@@ -88,6 +90,7 @@ const mockUsers = [
     department: DEPARTMENTS[2],
     status: "inactive",
     isStarred: false,
+    href: "/users/bob-johnson",
   },
   {
     id: "user-4",
@@ -97,6 +100,7 @@ const mockUsers = [
     department: DEPARTMENTS[3],
     status: "active",
     isStarred: true,
+    href: "/users/alice-williams",
   },
 ]
 
@@ -831,6 +835,7 @@ const generateMockUsers = (count: number) => {
     department: DEPARTMENTS[index % DEPARTMENTS.length],
     status: index % 5 === 0 ? "inactive" : "active",
     isStarred: index % 3 === 0,
+    href: `/users/user-${index + 1}`,
   }))
 }
 

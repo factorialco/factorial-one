@@ -17,6 +17,7 @@ export function TableRow({ children, selected, className }: TableRowProps) {
       )}
     >
       {children}
+      <div className="pointer-events-none absolute inset-0 [.group:has(a:focus)_&]:rounded-sm [.group:has(a:focus)_&]:ring-1 [.group:has(a:focus)_&]:ring-inset [.group:has(a:focus)_&]:ring-f1-ring" />
     </TableRowRoot>
   )
 }
