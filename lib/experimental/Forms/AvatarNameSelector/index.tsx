@@ -68,8 +68,9 @@ export const AvatarNameSelector = ({
   width,
   loading = false,
   singleSelector = false,
+  children,
   ...props
-}: AvatarNameSelectorProps) => {
+}: AvatarNameSelectorProps & { children?: React.ReactNode }) => {
   const [selectedEntities, setSelectedEntities] = useState<AvatarNamedEntity[]>(
     selectedAvatarName ?? []
   )
@@ -362,11 +363,15 @@ export const AvatarNameSelector = ({
   return (
     <Popover {...props} onOpenChange={onOpenChange}>
       <PopoverTrigger className="w-full">
-        <AvatarNameSelectorTrigger
-          placeholder={triggerPlaceholder}
-          selected={triggerSelected}
-          selectedAvatarName={selectedEntities}
-        />
+        {children ? (
+          children
+        ) : (
+          <AvatarNameSelectorTrigger
+            placeholder={triggerPlaceholder}
+            selected={triggerSelected}
+            selectedAvatarName={selectedEntities}
+          />
+        )}
       </PopoverTrigger>
       <PopoverContent
         className={cn(

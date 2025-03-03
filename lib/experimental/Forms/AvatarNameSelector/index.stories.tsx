@@ -1,6 +1,8 @@
 import type { Meta } from "@storybook/react"
 
+import { Button } from "@/components/Actions/Button"
 import { fn } from "@storybook/test"
+import { ChevronDown, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { AvatarNameSelector } from "."
 import { famousEmployees } from "./avatar-name.factory"
@@ -9,6 +11,7 @@ import {
   workplaceWithEmployees,
 } from "./groups-avatar-name.factory"
 import {
+  AvatarNamedEntity,
   AvatarNamedGroup,
   AvatarNameSelectorMultipleProps,
   AvatarNameSelectorProps,
@@ -129,6 +132,53 @@ export const AlwaysOpen = {
             open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
           }
         />
+      </div>
+    )
+  },
+}
+
+export const WithCustomTrigger = {
+  args: {
+    ...defaultArgs,
+    onSelect: fn(),
+  } as AvatarNameSelectorProps,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  render: (props: any) => {
+    const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [selectedGroup, setSelectedGroup] = useState<string>(
+      props.selectedGroup ?? "all"
+    )
+    const [numSelected, setNumSelected] = useState<number>(0)
+    const [open, setOpen] = useState<boolean>(false)
+
+    return (
+      <div className="w-[600px]">
+        <AvatarNameSelector
+          {...props}
+          loading={loading}
+          entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+          selectedGroup={selectedGroup}
+          onGroupChange={(value) => setSelectedGroup(value ?? "all")}
+          onOpenChange={(open) => {
+            if (open) setTimeout(() => setLoading(false), 500)
+            else setLoading(true)
+            setOpen(open)
+          }}
+          onSelect={(selection: AvatarNamedEntity[]) =>
+            setNumSelected(selection.length)
+          }
+        >
+          <div className="flex justify-start gap-2">
+            <Button
+              icon={open ? ChevronDown : ChevronRight}
+              hideLabel
+              round
+              size="sm"
+              label={`${numSelected} selected`}
+            />
+            <span className="my-auto">{`${numSelected} selected`}</span>
+          </div>
+        </AvatarNameSelector>
       </div>
     )
   },
