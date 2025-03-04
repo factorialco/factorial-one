@@ -602,10 +602,10 @@ export const Grouping: Story = {
       <OneTable>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Role</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead width="30">Name</TableHead>
+            <TableHead width="30">Email</TableHead>
+            <TableHead width="20">Role</TableHead>
+            <TableHead width="20">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
