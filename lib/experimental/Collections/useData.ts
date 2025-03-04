@@ -168,6 +168,8 @@ export function useData<
       })
       setIsInitialLoading(false)
       setIsLoading(false)
+      // Clear the cleanup reference when an error occurs
+      cleanup.current = undefined
     },
     [setError, setIsInitialLoading, setIsLoading]
   )
@@ -177,6 +179,12 @@ export function useData<
   const fetchDataAndUpdate = useCallback(
     async (filters: FiltersState<Filters>, currentPage = 1) => {
       try {
+        // Clean up any existing subscription before creating a new one
+        if (cleanup.current) {
+          cleanup.current()
+          cleanup.current = undefined
+        }
+
         const fetcher = (): PromiseOrObservable<ResultType> =>
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
