@@ -194,7 +194,7 @@ export function useData<
         }
 
         const observable: Observable<DataType<ResultType>> =
-          result instanceof Observable ? result : promiseToObservable(result)
+          "subscribe" in result ? result : promiseToObservable(result)
 
         const subscription = observable.subscribe({
           next: (state) => {
