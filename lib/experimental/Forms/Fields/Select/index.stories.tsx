@@ -37,6 +37,13 @@ const meta: Meta = {
     a11y: {
       skipCi: true,
     },
+    docs: {
+      description: {
+        component:
+          "<p>Renders an select input field with a list of options to choose from.</p>" +
+          "<p>The list is virtualized so can handle large amount of items</p>",
+      },
+    },
   },
   argTypes: {
     showSearchBox: {
@@ -55,6 +62,19 @@ const meta: Meta = {
     },
     searchBoxPlaceholder: {
       description: "Placeholder for the search box",
+    },
+    options: {
+      description:
+        "<p>Array of options to show in the select. Each option can its an object of type `SelectItemObject` or `'separator'`" +
+        " to render a separator line</p>" +
+        "```" +
+        "type SelectItemObject<T> = {\n" +
+        "  value: T\n" +
+        "  label: string\n" +
+        "  description?: string\n" +
+        "  avatar?: AvatarVariant\n" +
+        "  icon?: IconType\n" +
+        "}```",
     },
   },
   args: {
@@ -81,12 +101,6 @@ const meta: Meta = {
         icon: Desktop,
         description: "A theme that adapts to the system's default appearance",
       },
-      ...Array.from({ length: 10 }, (_, i) => ({
-        value: `option-${i}`,
-        label: `Option ${i}`,
-        icon: Circle,
-        description: `Description for option ${i}`,
-      })),
     ],
     disabled: false,
     showSearchBox: false,
@@ -104,6 +118,22 @@ export const WithSearchBox: Story = {
     showSearchBox: true,
     searchEmptyMessage: "No results found",
     searchBoxPlaceholder: "Search for a theme",
+  },
+}
+
+export const LargeList: Story = {
+  args: {
+    ...WithSearchBox.args,
+    options: [
+      ...(meta.args?.options || []),
+      "separator",
+      ...Array.from({ length: 10000 }, (_, i) => ({
+        value: `option-${i}`,
+        label: `Option ${i}`,
+        icon: Circle,
+        description: `Description for option ${i}`,
+      })),
+    ],
   },
 }
 

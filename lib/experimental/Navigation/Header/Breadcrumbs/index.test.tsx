@@ -16,7 +16,7 @@ describe("Breadcrumbs", () => {
     // Mock getBoundingClientRect for width calculations
     Element.prototype.getBoundingClientRect = vi.fn(() => ({
       width: 1000,
-      height: 0,
+      height: 200,
       top: 0,
       left: 0,
       bottom: 0,

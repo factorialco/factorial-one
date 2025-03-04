@@ -1,7 +1,7 @@
 import { Search } from "@/icons/app"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Select } from "./index"
 import type { SelectItemProps } from "./types"
 
@@ -25,6 +25,23 @@ const mockOptions: SelectItemProps<string>[] = [
 ]
 
 describe("Select", () => {
+  beforeEach(() => {
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
+      () => ({
+        width: 120,
+        height: 120,
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        x: 0,
+        y: 0,
+
+        toJSON: () => {},
+      })
+    )
+  })
+
   it("renders with placeholder", () => {
     render(
       <Select
