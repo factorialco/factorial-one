@@ -90,7 +90,7 @@ const Container = forwardRef<
     <Card
       className={cn(
         fullHeight ? "h-full" : "",
-        "relative flex gap-4 border-f1-border-secondary"
+        "relative flex gap-3 border-f1-border-secondary"
       )}
       ref={ref}
     >
