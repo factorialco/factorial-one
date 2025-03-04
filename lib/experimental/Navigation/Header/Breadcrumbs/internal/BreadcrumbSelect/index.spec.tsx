@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import { BreadcrumbSelect } from "."
 
 const mockOptions = [
@@ -11,7 +11,22 @@ const mockOptions = [
 
 const mockOnChange = vi.fn()
 
-describe("F1BreadcrumbSelect", () => {
+describe("BreadcrumbSelect", () => {
+  beforeEach(() => {
+    // Mock getBoundingClientRect for width calculations
+    Element.prototype.getBoundingClientRect = vi.fn(() => ({
+      width: 1000,
+      height: 200,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    }))
+  })
+
   it("renders with default value", () => {
     render(
       <BreadcrumbSelect
