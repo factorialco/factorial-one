@@ -1038,3 +1038,39 @@ export const WithPresetsAndObservable: Story = {
     usePresets: true,
   },
 }
+
+export const WithCustomColumnWidths: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      filters,
+      dataAdapter: {
+        fetchData: createPromiseDataFetch(),
+      },
+    })
+
+    return (
+      <div className="space-y-4">
+        <DataCollection
+          source={dataSource}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  { label: "Name", width: "40", render: (item) => item.name },
+                  { label: "Email", width: "20", render: (item) => item.email },
+                  { label: "Role", width: "20", render: (item) => item.role },
+                  {
+                    label: "Department",
+                    width: "20",
+                    render: (item) => item.department,
+                  },
+                ],
+              },
+            },
+          ]}
+        />
+      </div>
+    )
+  },
+}
