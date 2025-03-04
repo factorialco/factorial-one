@@ -116,14 +116,9 @@ const filters: Record<string, FilterDefinition | CustomSearchFilterDefinition> =
         label: value.charAt(0).toUpperCase() + value.slice(1).replace("_", " "),
       })),
     },
-    roleSearch: {
-      type: "search" as const,
-      label: "Role",
-      placeholder: "Filter by role",
-    },
-    level: {
+    role: {
       type: "in" as const,
-      label: "Level",
+      label: "Role",
       options: ROLE_LEVELS.map((value) => ({ value, label: value })),
     },
     location: {
@@ -154,24 +149,6 @@ const filterPresets: Presets<typeof filters> = [
     },
   },
   {
-    label: "Product Team",
-    filter: {
-      department: ["Product"],
-    },
-  },
-  {
-    label: "Design Team",
-    filter: {
-      department: ["Design"],
-    },
-  },
-  {
-    label: "Marketing Team",
-    filter: {
-      department: ["Marketing"],
-    },
-  },
-  {
     label: "Active Engineers",
     filter: {
       department: ["Engineering"],
@@ -181,7 +158,7 @@ const filterPresets: Presets<typeof filters> = [
   {
     label: "Senior+ Level",
     filter: {
-      level: ["Senior", "Lead", "Manager", "Director", "VP", "C-Level"],
+      role: ["Senior", "Lead", "Manager", "Director", "VP", "C-Level"],
     },
   },
   {
@@ -206,7 +183,7 @@ const filterPresets: Presets<typeof filters> = [
     label: "Senior Remote Engineers",
     filter: {
       department: ["Engineering"],
-      level: ["Senior", "Lead"],
+      role: ["Senior", "Lead"],
       location: ["Remote"],
     },
   },
