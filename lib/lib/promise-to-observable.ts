@@ -2,8 +2,8 @@ import { Observable } from "zen-observable-ts"
 
 export interface PromiseState<T> {
   loading: boolean
-  error: Error | null
-  data: T | null
+  error?: Error | null
+  data?: T | null
 }
 
 export function promiseToObservable<T>(
