@@ -149,38 +149,19 @@
 
 <script>
   ;(function () {
-    // Function to apply the styles when in production mode
-    function applyProductionStyles() {
-      const style = document.createElement("style")
-      style.textContent = `
-        #list-item-tag-no-sidebar,
-        #list-item-tag-play-fn,
-        #list-item-tag-internal {
-          display: none;
-        }
-      `
-      document.head.appendChild(style)
-    }
-
-    // Check if CONFIG_TYPE is already set
-    if (window["CONFIG_TYPE"] === "PRODUCTION") {
-      applyProductionStyles()
-      return
-    }
-
-    // If not set yet, wait for DOMContentLoaded which happens after most scripts run
-    window.addEventListener("DOMContentLoaded", function () {
+    // hide internal tags in production builds menu
+    setTimeout(function () {
       if (window["CONFIG_TYPE"] === "PRODUCTION") {
-        applyProductionStyles()
-        return
+        const style = document.createElement("style")
+        style.textContent = `
+          #list-item-tag-no-sidebar,
+          #list-item-tag-play-fn,
+          #list-item-tag-internal {
+            display: none;
+          }
+        `
+        document.head.appendChild(style)
       }
-
-      // If still not set, use a short delay to check again after everything is loaded
-      setTimeout(function () {
-        if (window["CONFIG_TYPE"] === "PRODUCTION") {
-          applyProductionStyles()
-        }
-      }, 1000)
-    })
+    }, 100)
   })()
 </script>
