@@ -96,12 +96,6 @@
     box-shadow: none;
   }
 
-  #list-item-tag-no-sidebar,
-  #list-item-tag-play-fn,
-  #list-item-tag-internal {
-    display: none;
-  }
-
   /* -- DARK -- */
 
   body.dark,
@@ -152,3 +146,20 @@
     color: #647084;
   }
 </style>
+
+<script>
+  ;(function () {
+    // Hide internal tags in production builds menu
+    if (window["CONFIG_TYPE"] === "PRODUCTION") {
+      const style = document.createElement("style")
+      style.textContent = `
+        #list-item-tag-no-sidebar,
+        #list-item-tag-play-fn,
+        #list-item-tag-internal {
+          display: none;
+        }
+      `
+      document.head.appendChild(style)
+    }
+  })()
+</script>
