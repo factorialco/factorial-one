@@ -105,59 +105,65 @@ export function Filters<Definition extends FiltersDefinition>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Popover open={isOpen} onOpenChange={handleOpenChange}>
-          <PopoverTrigger asChild>
-            <Button
-              icon={Filter}
-              variant="outline"
-              hideLabel
-              label={i18n.filters.label}
-            />
-          </PopoverTrigger>
-          <PopoverContent
-            className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
-            align="start"
-            side="bottom"
-          >
-            <div className="flex h-[min(448px,80vh)] flex-col">
-              <div className="flex min-h-0 flex-1">
-                <FilterList
-                  definition={schema}
-                  tempFilters={tempFilters}
-                  selectedFilterKey={selectedFilterKey}
-                  onFilterSelect={setSelectedFilterKey}
-                  onFilterClear={handleClearFilter}
-                />
-                {selectedFilterKey && (
-                  <FilterContent
-                    selectedFilterKey={selectedFilterKey}
+      <div className="flex items-center justify-start gap-2">
+        <div className="self-start">
+          <Popover open={isOpen} onOpenChange={handleOpenChange}>
+            <PopoverTrigger asChild>
+              <Button
+                icon={Filter}
+                variant="outline"
+                hideLabel
+                label={i18n.filters.label}
+              />
+            </PopoverTrigger>
+            <PopoverContent
+              className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
+              align="start"
+              side="bottom"
+            >
+              <div className="flex h-[min(448px,80vh)] flex-col">
+                <div className="flex min-h-0 flex-1">
+                  <FilterList
                     definition={schema}
                     tempFilters={tempFilters}
-                    onFilterChange={handleFilterChange}
+                    selectedFilterKey={selectedFilterKey}
+                    onFilterSelect={setSelectedFilterKey}
+                    onFilterClear={handleClearFilter}
                   />
-                )}
-              </div>
+                  {selectedFilterKey && (
+                    <FilterContent
+                      selectedFilterKey={selectedFilterKey}
+                      definition={schema}
+                      tempFilters={tempFilters}
+                      onFilterChange={handleFilterChange}
+                    />
+                  )}
+                </div>
 
-              <div className="flex items-center justify-end gap-2 border-solid border-transparent border-t-f1-border-secondary px-3 py-2">
-                <Button
-                  onClick={handleApplyFilters}
-                  label={i18n.filters.applyFilters}
-                />
+                <div className="flex flex-wrap items-center justify-end gap-2 border-solid border-transparent border-t-f1-border-secondary px-3 py-2">
+                  <Button
+                    onClick={handleApplyFilters}
+                    label={i18n.filters.applyFilters}
+                  />
+                </div>
               </div>
-            </div>
-          </PopoverContent>
-        </Popover>
+            </PopoverContent>
+          </Popover>
+        </div>
 
-        {presets &&
-          presets.map((preset, index) => (
-            <Preset
-              key={index}
-              label={preset.label}
-              selected={JSON.stringify(preset.filter) === JSON.stringify(value)}
-              onClick={() => onChange(preset.filter)}
-            />
-          ))}
+        <div className="flex flex-wrap gap-2">
+          {presets &&
+            presets.map((preset, index) => (
+              <Preset
+                key={index}
+                label={preset.label}
+                selected={
+                  JSON.stringify(preset.filter) === JSON.stringify(value)
+                }
+                onClick={() => onChange(preset.filter)}
+              />
+            ))}
+        </div>
       </div>
       {Object.keys(value).length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
