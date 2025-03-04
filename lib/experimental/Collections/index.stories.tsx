@@ -1128,6 +1128,23 @@ export const WithMultipleVisualizations: Story = {
   },
 }
 
+// Generate additional mock users for pagination example
+const paginatedMockUsers: UserData[] = [
+  ...mockUsers,
+  // Add 20 more users based on the existing ones (cycling through them)
+  ...Array.from({ length: 20 }, (_, i) => {
+    const originalUser = mockUsers[i % mockUsers.length]
+    const index = i + mockUsers.length + 1
+    return {
+      ...originalUser,
+      id: `user-${index}`,
+      name: `User ${index}`,
+      email: `user${index}@example.com`,
+      // Keep all other properties the same as the original user to maintain type compatibility
+    }
+  }),
+]
+
 // Example with pagination
 export const WithPagination: Story = {
   render: () => {
@@ -1993,9 +2010,6 @@ function createTypeSafeDataAdapter<TFilters extends FiltersDefinition>(
     useObservable: options.useObservable,
   })
 }
-
-// Update the paginated mock users to match UserData
-const paginatedMockUsers: UserData[] = mockUsers.map((user) => ({ ...user }))
 
 // Modify the PaginatedTable story
 export const PaginatedTable: Story = {
