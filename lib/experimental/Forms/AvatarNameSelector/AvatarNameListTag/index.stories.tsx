@@ -4,7 +4,7 @@ import { fn } from "@storybook/test"
 import { ComponentProps } from "react"
 import { AvatarNameListTag } from "."
 import { famousEmployees } from "../avatar-name.factory"
-import { teamsWithEmployees } from "../groups-avatar-name.factory"
+import { mapAvatarNamedEntityToSubentity } from "../utils"
 
 const meta: Meta = {
   component: AvatarNameListTag,
@@ -21,10 +21,7 @@ const meta: Meta = {
     ),
   ],
   args: {
-    entity: famousEmployees[0],
-    groupView: false,
-    subItemsSelected: [],
-    onSubItemRemove: fn(),
+    entity: mapAvatarNamedEntityToSubentity(famousEmployees[0]),
     onRemove: fn(),
   } satisfies ComponentProps<typeof AvatarNameListTag>,
 } satisfies Meta<typeof AvatarNameListTag>
@@ -33,13 +30,3 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
-
-export const GroupView: Story = {
-  args: {
-    entity: teamsWithEmployees[0],
-    groupView: true,
-    subItemsSelected: teamsWithEmployees[0].subItems,
-    onSubItemRemove: fn(),
-    onRemove: fn(),
-  },
-}
