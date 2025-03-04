@@ -7,6 +7,9 @@ import { Icon } from "../../lib/components/Utilities/Icon"
 type OneMetaProps = {
   title: string
   maturity: {
+    /**
+     * Direct link to Figma Component or null if it doesn't exist
+     */
     figmaComponent: string | null
     /**
      * Whether the component has unit and screenshot tests
