@@ -53,7 +53,11 @@ export const TableCollection = <
         <TableHeader>
           <TableRow>
             {columns.map((column) => (
-              <TableHead key={String(column.label)} info={column.info}>
+              <TableHead
+                key={String(column.label)}
+                info={column.info}
+                width={column.width}
+              >
                 {column.label}
               </TableHead>
             ))}
