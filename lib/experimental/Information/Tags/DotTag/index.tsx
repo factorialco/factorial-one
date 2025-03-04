@@ -3,7 +3,7 @@ import { baseColors } from "@/tokens/colors"
 import { forwardRef } from "react"
 import { BaseTag } from "../BaseTag"
 
-type NewColor = Extract<
+export type NewColor = Extract<
   keyof typeof baseColors,
   | "viridian"
   | "malibu"

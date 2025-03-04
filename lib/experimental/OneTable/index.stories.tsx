@@ -590,3 +590,83 @@ export const Actions: Story = {
     </OneTable>
   ),
 }
+
+export const WithLinks: Story = {
+  render: () => (
+    <OneTable>
+      <TableHeader>
+        <TableRow>
+          <TableHead width="fit">
+            <Checkbox checked={false} title="Select all" hideLabel />
+          </TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead width="fit" hidden>
+            Actions
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sampleData.map((row) => (
+          <TableRow key={row.id}>
+            <TableCell firstCell href="/">
+              <Checkbox checked={false} title="Select" hideLabel />
+            </TableCell>
+            <TableCell href="/">
+              <div className="flex items-center gap-2">
+                <PersonAvatar
+                  firstName={row.name.split(" ")[0]}
+                  lastName={row.name.split(" ")[1]}
+                  size="small"
+                />
+                <span className="font-medium">{row.name}</span>
+              </div>
+            </TableCell>
+            <TableCell href="/">{row.email}</TableCell>
+            <TableCell href="/">
+              <div className="w-fit">
+                <RawTag text={row.role} />
+              </div>
+            </TableCell>
+            <TableCell href="/">
+              <div className="w-fit">
+                <StatusTag
+                  text={row.status.label}
+                  variant={row.status.variant}
+                />
+              </div>
+            </TableCell>
+            <TableCell href="/">
+              <Dropdown
+                items={[
+                  {
+                    label: "Edit",
+                    icon: Pencil,
+                    onClick: () => {},
+                  },
+                  {
+                    label: "Delete",
+                    icon: Delete,
+                    onClick: () => {},
+                    critical: true,
+                  },
+                ]}
+              >
+                <Button
+                  hideLabel
+                  variant="ghost"
+                  icon={Ellipsis}
+                  onClick={() => {}}
+                  round
+                  label="Actions"
+                />
+              </Dropdown>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </OneTable>
+  ),
+}

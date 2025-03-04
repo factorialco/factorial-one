@@ -117,6 +117,9 @@ export default {
       colors: {
         f1: f1Colors,
       },
+      zIndex: {
+        "50": "1250",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
