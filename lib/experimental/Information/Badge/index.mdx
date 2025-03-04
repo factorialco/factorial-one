@@ -1,9 +1,20 @@
 import { Canvas, Meta, Unstyled } from "@storybook/blocks"
 import * as BadgeStories from "./index.stories"
+import { OneMeta } from "~/docs/components/OneMeta"
 
-<Meta of={BadgeStories} />
-
-# Badge
+<OneMeta
+  of={BadgeStories}
+  maturity={{
+    figmaComponent:
+      "https://www.figma.com/design/pZzg1KTe9lpKTSGPUZa8OJ/Web-Components?node-id=2378-105583&t=1Q0nr9ZJG6p9bJyy-0",
+    documentation: false,
+    composableApi: false,
+    responsive: true,
+    tested: false,
+    accessibility: false,
+  }}
+  title="Badge"
+/>
 
 Badges are compact visual indicators. They provide quick visual cues to users
 about the state or nature of an item.
