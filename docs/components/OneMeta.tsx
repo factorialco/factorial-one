@@ -50,7 +50,7 @@ export const OneMeta = ({ title, maturity, ...rest }: OneMetaProps) => {
       <Meta {...rest} />
       <Title>{title}</Title>
       <Unstyled>
-        <div className="mb-6 flex flex-wrap items-center gap-2 *:flex *:items-center *:text-sm">
+        <div className="mb-6 flex flex-wrap items-center gap-2.5 *:flex *:items-center *:text-sm">
           {maturity.figmaComponent && (
             <a
               href={maturity.figmaComponent}
