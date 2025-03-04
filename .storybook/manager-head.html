@@ -146,3 +146,22 @@
     color: #647084;
   }
 </style>
+
+<script>
+  ;(function () {
+    // hide internal tags in production builds menu
+    setTimeout(function () {
+      if (window["CONFIG_TYPE"] === "PRODUCTION") {
+        const style = document.createElement("style")
+        style.textContent = `
+          #list-item-tag-no-sidebar,
+          #list-item-tag-play-fn,
+          #list-item-tag-internal {
+            display: none;
+          }
+        `
+        document.head.appendChild(style)
+      }
+    }, 100)
+  })()
+</script>
