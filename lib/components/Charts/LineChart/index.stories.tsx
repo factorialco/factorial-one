@@ -95,7 +95,8 @@ export const MultipleLines: Meta<typeof LineChart<typeof multiDataConfig>> = {
    This story demonstrates a Recharts LineChart with custom event markers.
    - Event markers are grouped by date.
    - Aggregated labels (the names of events) are rendered directly 
-     above each vertical line—outside the chart.
+     above each vertical line (outside the main chart area) using CSS
+     line clamping so that overflowing text shows an ellipsis.
    - Markers are highlighted on hover/click, and clicking a marker
      displays a details "card" with the event info.
 ------------------------------------------------------------------- */
@@ -108,7 +109,7 @@ const chartData = [
   { date: "2023-04-01", performance: 75 },
 ]
 
-// Individual events. Note that multiple events can share the same date.
+// Individual events. Multiple events can share the same date.
 const events = [
   {
     date: "2023-02-01",
@@ -129,9 +130,18 @@ const events = [
     label: "Change in role",
     meta: <span>Promoted to Senior Developer</span>,
   },
+  {
+    date: "2023-03-01",
+    label: "Change in role",
+    meta: <span>Promoted to Senior Developer</span>,
+  },
+  {
+    date: "2023-03-01",
+    label: "Change in role",
+    meta: <span>Promoted to Senior Developer</span>,
+  },
 ]
 
-// Type for grouped events.
 interface GroupedEvent {
   date: string
   events: typeof events
@@ -140,6 +150,7 @@ interface GroupedEvent {
 interface CustomEventMarkersProps {
   xScale: (value: any) => number
   height: number
+  offset: { top: number; left: number }
   selectedGroup: GroupedEvent | null
   onSelectGroup: (group: GroupedEvent | null) => void
 }
@@ -147,6 +158,7 @@ interface CustomEventMarkersProps {
 const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
   xScale,
   height,
+  offset,
   selectedGroup,
   onSelectGroup,
 }) => {
@@ -174,7 +186,6 @@ const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
         const isHighlighted =
           (selectedGroup && selectedGroup.date === group.date) ||
           (hoveredGroup && hoveredGroup.date === group.date)
-        // Aggregate event labels.
         const aggregatedLabel = group.events.map((e) => e.label).join(", ")
 
         return (
@@ -182,9 +193,9 @@ const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
             {/* Vertical dashed event line */}
             <line
               x1={x}
-              y1={0}
+              y1={offset.top}
               x2={x}
-              y2={height}
+              y2={offset.top + height}
               stroke={isHighlighted ? "blue" : "red"}
               strokeDasharray="3 3"
               strokeWidth={isHighlighted ? 3 : 1}
@@ -192,7 +203,7 @@ const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
             {/* Invisible rectangle for a broader hover/click area */}
             <rect
               x={x - 5}
-              y={0}
+              y={offset.top}
               width={10}
               height={height}
               fill="transparent"
@@ -201,8 +212,13 @@ const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
               onMouseLeave={() => setHoveredGroup(null)}
               onClick={() => onSelectGroup(group)}
             />
-            {/* Aggregated event labels displayed directly above the line (outside the graph) */}
-            <foreignObject x={x - 50} y={-45} width={100} height={45}>
+            {/* Aggregated event labels displayed directly above the line (outside the chart) */}
+            <foreignObject
+              x={x - 50}
+              y={offset.top - 45}
+              width={100}
+              height={45}
+            >
               <div
                 style={{
                   fontSize: "12px",
@@ -211,6 +227,9 @@ const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
                   overflow: "hidden",
                   textAlign: "center",
                   whiteSpace: "normal",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 3,
+                  WebkitBoxOrient: "vertical",
                 }}
               >
                 {aggregatedLabel}
@@ -231,7 +250,10 @@ const LineChartWithEventCard: React.FC = () => {
       {/* Chart Container */}
       <div style={{ flex: 1 }}>
         <ResponsiveContainer width="100%" height={200}>
-          <RechartsLineChart data={chartData}>
+          <RechartsLineChart
+            data={chartData}
+            margin={{ top: 50, right: 20, left: 20, bottom: 20 }}
+          >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
             <YAxis />
@@ -243,13 +265,14 @@ const LineChartWithEventCard: React.FC = () => {
               activeDot={{ r: 8 }}
             />
             <Customized
-              component={({ xAxisMap, height }) => {
+              component={({ xAxisMap, height, offset }) => {
                 const xAxis = Object.values(xAxisMap)[0]
                 const xScale = xAxis.scale
                 return (
                   <CustomEventMarkers
                     xScale={xScale}
                     height={height}
+                    offset={offset}
                     selectedGroup={selectedGroup}
                     onSelectGroup={setSelectedGroup}
                   />
