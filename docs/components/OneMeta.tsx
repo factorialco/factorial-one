@@ -1,7 +1,7 @@
 import { Meta, Title, Unstyled } from "@storybook/blocks"
 
 import { ComponentProps } from "react"
-import { Check, Cross, ExternalLink } from "../../icons/app"
+import { Check, Cross, ExternalLink } from "../../lib/icons/app"
 import { Icon } from "../../lib/components/Utilities/Icon"
 
 type OneMetaProps = {
@@ -42,7 +42,7 @@ const Status = ({ value }: { value: boolean }) => (
   <div>
     <Icon
       icon={value ? Check : Cross}
-      className={value ? "" : "translate-y-0.5"}
+      className={value ? "translate-y-[1px]" : "translate-y-0.5"}
     />
   </div>
 )
