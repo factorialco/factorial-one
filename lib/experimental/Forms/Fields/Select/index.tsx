@@ -1,6 +1,9 @@
-import { Icon } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { F1SearchBox } from "@/experimental/Forms/Fields/F1SearchBox"
-import { Avatar } from "@/experimental/Information/Avatars/Avatar"
+import {
+  Avatar,
+  AvatarVariant,
+} from "@/experimental/Information/Avatars/Avatar"
 import { ChevronDown } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
@@ -11,9 +14,20 @@ import {
   SelectTrigger,
   SelectValue as SelectValuePrimitive,
 } from "@/ui/select"
+
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
-import type { SelectItemObject, SelectItemProps } from "./types"
 export * from "./types"
+
+type SelectItemObject<T> = {
+  value: T
+  label: string
+  icon?: IconType
+  description?: string
+  avatar?: AvatarVariant
+  critical?: boolean
+}
+
+type SelectItemProps<T> = SelectItemObject<T> | "separator"
 
 export type SelectProps<T> = {
   placeholder?: string
@@ -36,16 +50,28 @@ export type SelectProps<T> = {
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   return (
-    <SelectItemPrimitive value={item.value}>
-      <div className="flex items-start gap-1.5">
+    <SelectItemPrimitive value={item.value} className="max-h-[36px]">
+      <div className="flex max-h-[36px] items-start gap-1.5">
         {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
         {item.icon && (
-          <div className="text-f1-icon">
+          <div
+            className={cn(
+              "text-f1-icon",
+              item.critical && "text-f1-icon-critical"
+            )}
+          >
             <Icon icon={item.icon} />
           </div>
         )}
         <div className="flex flex-col">
-          <span className="font-medium">{item.label}</span>
+          <span
+            className={cn(
+              "font-medium",
+              item.critical && "text-f1-foreground-critical"
+            )}
+          >
+            {item.label}
+          </span>
           {item.description && (
             <div className="text-f1-foreground-secondary">
               {item.description}

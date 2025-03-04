@@ -26,6 +26,7 @@ export type CompanySelectorProps = {
     icon?: IconType
     description?: string
     onClick?: () => void
+    critical?: boolean
   }[]
 }
 
