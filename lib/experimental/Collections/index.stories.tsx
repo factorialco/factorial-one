@@ -1560,47 +1560,6 @@ export const EnhancedFiltersAndData: Story = {
       },
     }
 
-    // Enhanced presets
-    const _enhancedPresets = [
-      {
-        label: "Active Engineering Team",
-        filter: {
-          department: ["Engineering"],
-          status: ["active"],
-        },
-      },
-      {
-        label: "Product & Design",
-        filter: {
-          department: ["Product", "Design"],
-        },
-      },
-      {
-        label: "New Hires (Onboarding)",
-        filter: {
-          status: ["onboarding"],
-        },
-      },
-      {
-        label: "Remote Workers",
-        filter: {
-          location: ["Remote"],
-        },
-      },
-      {
-        label: "San Francisco Office",
-        filter: {
-          location: ["San Francisco"],
-        },
-      },
-      {
-        label: "On Leave",
-        filter: {
-          status: ["on_leave"],
-        },
-      },
-    ]
-
     // Large enhanced presets
     const largeEnhancedPresets = [
       {
