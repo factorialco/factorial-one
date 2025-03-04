@@ -19,13 +19,7 @@ import {
   FiltersState,
   SearchFilterDefinition,
 } from "./Filters/types"
-import {
-  DataAdapter,
-  PaginatedFetchOptions,
-  PaginatedResponse,
-  Presets,
-  RecordType,
-} from "./types"
+import { DataAdapter, PaginatedResponse, Presets, RecordType } from "./types"
 import { useData } from "./useData"
 
 // Extended filter type definitions
@@ -186,6 +180,128 @@ const filterPresets: Presets<typeof filters> = [
       department: ["Engineering"],
       role: ["Senior", "Lead"],
       location: ["Remote"],
+    },
+  },
+]
+
+// Small preset set (3-5 presets)
+const smallFilterPresets: Presets<typeof filters> = [
+  {
+    label: "Engineering Team",
+    filter: {
+      department: ["Engineering"],
+    },
+  },
+  {
+    label: "Active Users",
+    filter: {
+      status: ["active"],
+    },
+  },
+  {
+    label: "Remote Workers",
+    filter: {
+      location: ["Remote"],
+    },
+  },
+  {
+    label: "Starred Users",
+    filter: {
+      starredStatus: ["starred"],
+    },
+  },
+]
+
+// Large preset set (10+ presets)
+const largeFilterPresets: Presets<typeof filters> = [
+  {
+    label: "Engineering Team",
+    filter: {
+      department: ["Engineering"],
+    },
+  },
+  {
+    label: "Product Team",
+    filter: {
+      department: ["Product"],
+    },
+  },
+  {
+    label: "Design Team",
+    filter: {
+      department: ["Design"],
+    },
+  },
+  {
+    label: "Marketing Team",
+    filter: {
+      department: ["Marketing"],
+    },
+  },
+  {
+    label: "Sales Team",
+    filter: {
+      department: ["Sales"],
+    },
+  },
+  {
+    label: "Customer Support Team",
+    filter: {
+      department: ["Customer Support"],
+    },
+  },
+  {
+    label: "HR Team",
+    filter: {
+      department: ["HR"],
+    },
+  },
+  {
+    label: "Finance Team",
+    filter: {
+      department: ["Finance"],
+    },
+  },
+  {
+    label: "Active Users",
+    filter: {
+      status: ["active"],
+    },
+  },
+  {
+    label: "Inactive Users",
+    filter: {
+      status: ["inactive"],
+    },
+  },
+  {
+    label: "Onboarding Users",
+    filter: {
+      status: ["onboarding"],
+    },
+  },
+  {
+    label: "On Leave",
+    filter: {
+      status: ["on_leave"],
+    },
+  },
+  {
+    label: "Remote Workers",
+    filter: {
+      location: ["Remote"],
+    },
+  },
+  {
+    label: "New York Office",
+    filter: {
+      location: ["New York"],
+    },
+  },
+  {
+    label: "San Francisco Office",
+    filter: {
+      location: ["San Francisco"],
     },
   },
 ]
@@ -488,13 +604,21 @@ const createPromiseDataFetch = (delay = 500) => {
 const ExampleComponent = ({
   useObservable = false,
   usePresets = false,
+  presetSize = "default",
 }: {
   useObservable?: boolean
   usePresets?: boolean
+  presetSize?: "small" | "default" | "large"
 }) => {
   const dataSource = useDataSource({
     filters,
-    presets: usePresets ? filterPresets : undefined,
+    presets: usePresets
+      ? presetSize === "small"
+        ? smallFilterPresets
+        : presetSize === "large"
+          ? largeFilterPresets
+          : filterPresets
+      : undefined,
     actions: (item) => [
       {
         label: "Edit",
@@ -579,6 +703,11 @@ const meta = {
     usePresets: {
       control: "boolean",
       description: "Include filter presets",
+    },
+    presetSize: {
+      control: "select",
+      options: ["small", "default", "large"],
+      description: "Preset size",
     },
   },
 } satisfies Meta<typeof ExampleComponent>
@@ -806,11 +935,7 @@ const JsonVisualization = ({
   source,
 }: {
   source: ReturnType<
-    typeof useDataSource<
-      (typeof mockUsers)[number],
-      typeof filters,
-      ActionsDefinition<(typeof mockUsers)[number]>
-    >
+    typeof useDataSource<UserData, FiltersType, ActionsDefinition<UserData>>
   >
 }) => {
   const { data, isLoading } = useData(source)
@@ -1345,6 +1470,23 @@ export const WithAdvancedActions: Story = {
 export const WithPresets: Story = {
   args: {
     usePresets: true,
+    presetSize: "default",
+  },
+}
+
+// Example with small presets
+export const WithSmallPresets: Story = {
+  args: {
+    usePresets: true,
+    presetSize: "small",
+  },
+}
+
+// Example with large presets that will overflow
+export const WithLargePresets: Story = {
+  args: {
+    usePresets: true,
+    presetSize: "large",
   },
 }
 
@@ -1353,6 +1495,7 @@ export const WithPresetsAndObservable: Story = {
   args: {
     useObservable: true,
     usePresets: true,
+    presetSize: "default",
   },
 }
 
@@ -1418,7 +1561,7 @@ export const EnhancedFiltersAndData: Story = {
     }
 
     // Enhanced presets
-    const enhancedPresets = [
+    const _enhancedPresets = [
       {
         label: "Active Engineering Team",
         filter: {
@@ -1448,6 +1591,95 @@ export const EnhancedFiltersAndData: Story = {
         label: "San Francisco Office",
         filter: {
           location: ["San Francisco"],
+        },
+      },
+      {
+        label: "On Leave",
+        filter: {
+          status: ["on_leave"],
+        },
+      },
+    ]
+
+    // Large enhanced presets
+    const largeEnhancedPresets = [
+      {
+        label: "Active Engineering Team",
+        filter: {
+          department: ["Engineering"],
+          status: ["active"],
+        },
+      },
+      {
+        label: "Product & Design",
+        filter: {
+          department: ["Product", "Design"],
+        },
+      },
+      {
+        label: "Marketing Team",
+        filter: {
+          department: ["Marketing"],
+        },
+      },
+      {
+        label: "Sales Team",
+        filter: {
+          department: ["Sales"],
+        },
+      },
+      {
+        label: "Customer Support Team",
+        filter: {
+          department: ["Customer Support"],
+        },
+      },
+      {
+        label: "HR Department",
+        filter: {
+          department: ["HR"],
+        },
+      },
+      {
+        label: "Finance Department",
+        filter: {
+          department: ["Finance"],
+        },
+      },
+      {
+        label: "New Hires (Onboarding)",
+        filter: {
+          status: ["onboarding"],
+        },
+      },
+      {
+        label: "Remote Workers",
+        filter: {
+          location: ["Remote"],
+        },
+      },
+      {
+        label: "New York Office",
+        filter: {
+          location: ["New York"],
+        },
+      },
+      {
+        label: "San Francisco Office",
+        filter: {
+          location: ["San Francisco"],
+        },
+      },
+      {
+        label: "London Office",
+        filter: {
+          location: ["London"],
+        },
+      },
+      {
+        label: "Tokyo Office",
+        filter: {
+          location: ["Tokyo"],
         },
       },
       {
@@ -1592,7 +1824,7 @@ export const EnhancedFiltersAndData: Story = {
       },
     ]
 
-    // Properly type the filterEnhancedUsers function
+    // Enhanced filter function
     const filterEnhancedUsers = (
       users: MockUser[],
       filterValues: FiltersState<FiltersType>
@@ -1637,134 +1869,231 @@ export const EnhancedFiltersAndData: Story = {
       return filteredUsers
     }
 
-    // Enhanced data adapter with proper typing and corrected paginationType
-    const enhancedDataAdapter: DataAdapter<MockUser, FiltersType> = {
-      fetchData: ({
-        filters,
-        pagination = { currentPage: 1, perPage: 10 },
-      }: PaginatedFetchOptions<FiltersType>) => {
-        return new Promise<PaginatedResponse<MockUser>>((resolve) => {
-          setTimeout(() => {
-            const filteredUsers = filterEnhancedUsers(enhancedUsers, filters)
-            const totalUsers = filteredUsers.length
-            const { currentPage, perPage } = pagination
+    return (
+      <div className="space-y-6">
+        <h2 className="font-bold text-2xl">
+          Enhanced Collection with Custom Filters and Presets
+        </h2>
+        <div className="rounded-lg border">
+          <DataCollection
+            source={useDataSource({
+              filters: enhancedFilters,
+              presets: largeEnhancedPresets,
+              dataAdapter: {
+                fetchData: ({
+                  filters,
+                  pagination = { currentPage: 1, perPage: 10 },
+                }: {
+                  filters: FiltersState<typeof enhancedFilters>
+                  pagination?: { currentPage: number; perPage: number }
+                }) => {
+                  const filtered = filterEnhancedUsers(enhancedUsers, filters)
+                  return Promise.resolve({
+                    records: filtered,
+                    total: filtered.length,
+                    currentPage: pagination.currentPage,
+                    perPage: pagination.perPage,
+                    pagesCount: Math.ceil(filtered.length / pagination.perPage),
+                  })
+                },
+                paginationType: "pages",
+                perPage: 10,
+              },
+              actions: (item: MockUser) => [
+                {
+                  label: "View Profile",
+                  icon: Pencil,
+                  onClick: () => console.log(`Viewing ${item.name}'s profile`),
+                },
+              ],
+            })}
+            visualizations={[
+              {
+                type: "table",
+                options: {
+                  columns: [
+                    { label: "Name", render: (item: MockUser) => item.name },
+                    { label: "Email", render: (item: MockUser) => item.email },
+                    {
+                      label: "Department",
+                      render: (item: MockUser) => item.department,
+                    },
+                    {
+                      label: "Status",
+                      render: (item: MockUser) => item.status,
+                    },
+                    {
+                      label: "Location",
+                      render: (item: MockUser) => item.location,
+                    },
+                  ],
+                },
+              },
+            ]}
+          />
+        </div>
+      </div>
+    )
+  },
+}
 
-            // Return data in the expected PaginatedResponse format
-            resolve({
-              records: filteredUsers,
-              total: totalUsers,
-              currentPage: currentPage,
-              perPage: perPage,
-              pagesCount: Math.ceil(totalUsers / perPage),
-            })
-          }, 500)
-        })
+// Also create a new example with a small set of presets
+export const EnhancedFiltersWithSmallPresets: Story = {
+  render: () => {
+    // Extended department options for more variety
+    const extendedDepartments = [
+      "Engineering",
+      "Product",
+      "Design",
+      "Marketing",
+      "Sales",
+      "Customer Support",
+      "HR",
+      "Finance",
+    ]
+
+    const statusOptions = [
+      "active",
+      "inactive",
+      "onboarding",
+      "on_leave",
+      "terminated",
+    ]
+
+    const locationOptions = [
+      "Remote",
+      "New York",
+      "San Francisco",
+      "London",
+      "Tokyo",
+      "Berlin",
+      "Sydney",
+    ]
+
+    // Create enhanced filters
+    const enhancedFilters = {
+      search: {
+        type: "search" as const,
+        label: "Search",
+        placeholder: "Search by name, email, or role",
       },
-      paginationType: "pages",
-      perPage: 10,
+      department: {
+        type: "in" as const,
+        label: "Department",
+        options: extendedDepartments.map((value) => ({ value, label: value })),
+      },
+      status: {
+        type: "in" as const,
+        label: "Status",
+        options: statusOptions.map((value) => ({
+          value,
+          label:
+            value.charAt(0).toUpperCase() + value.slice(1).replace("_", " "),
+        })),
+      },
+      location: {
+        type: "in" as const,
+        label: "Location",
+        options: locationOptions.map((value) => ({ value, label: value })),
+      },
     }
 
-    // Set up data source
-    const dataSource = useDataSource({
-      filters: enhancedFilters,
-      presets: enhancedPresets,
-      dataAdapter: enhancedDataAdapter,
-      actions: (item) => [
-        {
-          label: "Edit User",
-          icon: Pencil,
-          onClick: () => console.log(`Editing ${item.name}`),
-          description: "Modify user information",
+    // Small enhanced presets (3-5)
+    const smallEnhancedPresets = [
+      {
+        label: "Engineering Team",
+        filter: {
+          department: ["Engineering"],
         },
-        {
-          label: "View Profile",
-          icon: Ai,
-          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+      },
+      {
+        label: "Active Users",
+        filter: {
+          status: ["active"],
         },
-        "separator",
-        {
-          label: item.isStarred ? "Remove Star" : "Add Star",
-          icon: Star,
-          onClick: () => console.log(`Toggling star for ${item.name}`),
-          description: item.isStarred
-            ? "Remove from favorites"
-            : "Add to favorites",
+      },
+      {
+        label: "Remote Workers",
+        filter: {
+          location: ["Remote"],
         },
-        {
-          label: item.status === "active" ? "Deactivate" : "Activate",
-          icon: item.status === "active" ? Delete : ArrowRight,
-          onClick: () => console.log(`Toggling active status for ${item.name}`),
-          description:
-            item.status === "active"
-              ? "Set user as inactive"
-              : "Set user as active",
-        },
-        {
-          label: "Generate Report",
-          icon: Download,
-          onClick: () => console.log(`Generating report for ${item.name}`),
-          enabled: item.status === "active",
-        },
-      ],
-    })
+      },
+    ]
+
+    // Use the same enhanced users as in the previous example
+    const enhancedUsers: MockUser[] = mockUsers
+
+    // Enhanced filter function
+    const filterEnhancedUsers = (
+      users: MockUser[],
+      filterValues: FiltersState<typeof enhancedFilters>
+    ) => {
+      return filterUsers(users, filterValues)
+    }
 
     return (
       <div className="space-y-6">
-        <h2 className="text-xl font-semibold">
-          Enhanced Collection with Multiple Filters and Presets
+        <h2 className="font-bold text-2xl">
+          Enhanced Collection with Small Preset Set
         </h2>
-        <p className="text-gray-600 text-sm">
-          This example showcases a collection with extended data, multiple
-          filter types, and various presets to explore data in different ways.
-        </p>
-        <DataCollection
-          source={dataSource}
-          visualizations={[
-            {
-              type: "table",
-              options: {
-                columns: [
-                  { label: "Name", render: (item) => item.name },
-                  { label: "Email", render: (item) => item.email },
-                  { label: "Role", render: (item) => item.role },
-                  { label: "Department", render: (item) => item.department },
-                  {
-                    label: "Status",
-                    render: (item) => (
-                      <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusClass(item.status)}`}
-                      >
-                        {formatStatusText(item.status)}
-                      </span>
-                    ),
-                  },
-                ],
+        <div className="rounded-lg border">
+          <DataCollection
+            source={useDataSource({
+              filters: enhancedFilters,
+              presets: smallEnhancedPresets,
+              dataAdapter: {
+                fetchData: ({
+                  filters,
+                  pagination = { currentPage: 1, perPage: 10 },
+                }: {
+                  filters: FiltersState<typeof enhancedFilters>
+                  pagination?: { currentPage: number; perPage: number }
+                }) => {
+                  const filtered = filterEnhancedUsers(enhancedUsers, filters)
+                  return Promise.resolve({
+                    records: filtered,
+                    total: filtered.length,
+                    currentPage: pagination.currentPage,
+                    perPage: pagination.perPage,
+                    pagesCount: Math.ceil(filtered.length / pagination.perPage),
+                  })
+                },
+                paginationType: "pages",
+                perPage: 10,
               },
-            },
-            {
-              type: "card",
-              options: {
-                title: (item) => item.name,
-                cardProperties: [
-                  { label: "Email", render: (item) => item.email },
-                  { label: "Role", render: (item) => item.role },
-                  { label: "Department", render: (item) => item.department },
-                  {
-                    label: "Status",
-                    render: (item) => (
-                      <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${getStatusClass(item.status)}`}
-                      >
-                        {formatStatusText(item.status)}
-                      </span>
-                    ),
-                  },
-                  { label: "Location", render: (item) => item.location },
-                ],
+              actions: (item: MockUser) => [
+                {
+                  label: "View Profile",
+                  icon: Pencil,
+                  onClick: () => console.log(`Viewing ${item.name}'s profile`),
+                },
+              ],
+            })}
+            visualizations={[
+              {
+                type: "table",
+                options: {
+                  columns: [
+                    { label: "Name", render: (item: MockUser) => item.name },
+                    { label: "Email", render: (item: MockUser) => item.email },
+                    {
+                      label: "Department",
+                      render: (item: MockUser) => item.department,
+                    },
+                    {
+                      label: "Status",
+                      render: (item: MockUser) => item.status,
+                    },
+                    {
+                      label: "Location",
+                      render: (item: MockUser) => item.location,
+                    },
+                  ],
+                },
               },
-            },
-          ]}
-        />
+            ]}
+          />
+        </div>
       </div>
     )
   },
