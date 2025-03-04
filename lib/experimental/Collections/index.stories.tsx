@@ -54,6 +54,7 @@ interface MockUser extends Record<string, unknown> {
   isStarred: boolean
   startDate?: string
   projects?: string[]
+  href?: string // URL for user details page
 }
 
 // Define department and status types
@@ -203,6 +204,7 @@ const mockUsers = [
     isStarred: true,
     startDate: "2020-01-15",
     projects: ["Project Alpha", "Project Beta"],
+    href: "/users/john-doe",
   },
   {
     id: "user-2",
@@ -216,6 +218,7 @@ const mockUsers = [
     isStarred: false,
     startDate: "2019-05-20",
     projects: ["Project Gamma"],
+    href: "/users/jane-smith",
   },
   {
     id: "user-3",
@@ -228,6 +231,7 @@ const mockUsers = [
     location: LOCATIONS[2], // San Francisco
     isStarred: false,
     startDate: "2021-03-10",
+    href: "/users/bob-johnson",
     projects: ["Project Delta"],
   },
   {
@@ -242,6 +246,7 @@ const mockUsers = [
     isStarred: true,
     startDate: "2018-11-05",
     projects: ["Project Epsilon", "Project Zeta"],
+    href: "/users/alice-williams",
   },
   {
     id: "user-5",
@@ -255,6 +260,7 @@ const mockUsers = [
     isStarred: true,
     startDate: "2019-08-12",
     projects: ["Project Alpha", "Project Kappa"],
+    href: "/users/michael-chen",
   },
   {
     id: "user-6",
@@ -268,6 +274,7 @@ const mockUsers = [
     isStarred: false,
     startDate: "2020-04-18",
     projects: ["Project Delta", "Project Theta"],
+    href: "/users/sarah-johnson",
   },
   {
     id: "user-7",
@@ -281,6 +288,7 @@ const mockUsers = [
     isStarred: false,
     startDate: "2021-01-25",
     projects: ["Project Iota"],
+    href: "/users/david-rodriguez",
   },
   {
     id: "user-8",
@@ -294,6 +302,7 @@ const mockUsers = [
     isStarred: false,
     startDate: "2022-06-01",
     projects: ["Project Lambda"],
+    href: "/users/emma-wilson",
   },
   {
     id: "user-9",
@@ -307,6 +316,7 @@ const mockUsers = [
     isStarred: true,
     startDate: "2017-03-15",
     projects: ["Project Alpha", "Project Omega"],
+    href: "/users/james-taylor",
   },
   {
     id: "user-10",
@@ -320,6 +330,7 @@ const mockUsers = [
     isStarred: false,
     startDate: "2019-11-10",
     projects: ["Project Pi"],
+    href: "/users/sophia-martinez",
   },
   {
     id: "user-11",
@@ -333,6 +344,7 @@ const mockUsers = [
     isStarred: false,
     startDate: "2022-09-01",
     projects: ["Project Rho"],
+    href: "/users/ryan-oconnor",
   },
   {
     id: "user-12",
@@ -346,6 +358,7 @@ const mockUsers = [
     isStarred: true,
     startDate: "2020-02-28",
     projects: ["Project Sigma", "Project Tau"],
+    href: "/users/olivia-brown",
   },
 ]
 
