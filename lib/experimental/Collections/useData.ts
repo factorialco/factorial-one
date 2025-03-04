@@ -188,7 +188,7 @@ export function useData<
         const result = fetcher()
 
         // Handle synchronous data
-        if (!(result instanceof Promise || result instanceof Observable)) {
+        if (!("then" in result || "subscribe" in result)) {
           handleFetchSuccess(result)
           return
         }
