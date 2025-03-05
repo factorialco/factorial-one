@@ -181,7 +181,13 @@ const filterUsers = <
 type FiltersType = typeof filters
 
 const createObservableDataFetch = (delay = 0) => {
-  return ({ filters }: { filters: FiltersState<FiltersType> }) =>
+  return ({
+    filters,
+    sortings: sortingsState,
+  }: {
+    filters: FiltersState<FiltersType>
+    sortings: SortingsState<typeof sortings>
+  }) =>
     new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
       observer.next({
         loading: true,
@@ -193,7 +199,7 @@ const createObservableDataFetch = (delay = 0) => {
         observer.next({
           loading: false,
           error: null,
-          data: filterUsers(mockUsers, filters, null),
+          data: filterUsers(mockUsers, filters, sortingsState),
         })
         observer.complete()
       }, delay)
@@ -280,10 +286,23 @@ const ExampleComponent = ({
                 {
                   label: "Name",
                   render: (item) => item.name,
+                  sorting: "name",
                 },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
               ],
             },
           },
@@ -424,6 +443,8 @@ export const BasicCardView: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
+      sortings,
+      presets: filterPresets,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
@@ -467,6 +488,8 @@ export const ComponentsAsCells: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
+      sortings,
+      presets: filterPresets,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
@@ -480,17 +503,27 @@ export const ComponentsAsCells: Story = {
             type: "table",
             options: {
               columns: [
-                { label: "Name", render: (item) => `👤  ${item.name}` },
+                {
+                  label: "Name",
+                  render: (item) => `👤  ${item.name}`,
+                  sorting: "name",
+                },
                 {
                   label: "Email",
                   render: (item) => (
                     <Link href={`mailto:${item.email}`}>{item.email}</Link>
                   ),
+                  sorting: "email",
                 },
-                { label: "Role", render: (item) => `💼  ${item.role}` },
+                {
+                  label: "Role",
+                  render: (item) => `💼  ${item.role}`,
+                  sorting: "role",
+                },
                 {
                   label: "Department",
                   render: (item) => `🏢 ${item.department}`,
+                  sorting: "department",
                 },
               ],
             },
@@ -505,6 +538,7 @@ export const CustomCardProperties: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
+      sortings,
       presets: filterPresets,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -530,10 +564,7 @@ export const CustomCardProperties: Story = {
 
 // Examples with multiple visualizations
 export const SwitchableVisualizations: Story = {
-  args: {
-    useObservable: false,
-    usePresets: true,
-  },
+  render: () => <ExampleComponent />,
 }
 
 // Examples with filters and loading states
@@ -541,6 +572,7 @@ export const WithPreselectedFilters: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
+      sortings,
       presets: filterPresets,
       currentFilters: {
         department: ["Engineering"],
@@ -621,17 +653,10 @@ export const WithCustomJsonView: Story = {
     const dataSource = useDataSource({
       filters,
       sortings,
+      presets: filterPresets,
       dataAdapter: {
-        fetchData: createObservableDataFetch(),
+        fetchData: createPromiseDataFetch(),
       },
-      presets: [
-        {
-          label: "Engineers",
-          filter: {
-            department: ["Engineering"],
-          },
-        },
-      ],
     })
 
     return (
@@ -681,10 +706,16 @@ export const WithTableVisualization: Story = {
   render: () => {
     const source = useDataSource({
       filters,
+      sortings,
       presets: filterPresets,
-      dataAdapter: {
-        fetchData: createObservableDataFetch(1000),
-      },
+      dataAdapter: createDataAdapter<
+        (typeof mockUsers)[number],
+        typeof filters,
+        typeof sortings
+      >({
+        data: mockUsers,
+        delay: 500,
+      }),
     })
 
     return (
@@ -695,10 +726,26 @@ export const WithTableVisualization: Story = {
             type: "table",
             options: {
               columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
               ],
             },
           },
@@ -734,26 +781,95 @@ function createDataAdapter<
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
+    sortingsState: SortingsState<TSortings>,
     pagination?: { currentPage?: number; perPage?: number }
   ): TRecord[] | PaginatedResponse<TRecord> => {
-    const filteredRecords = filterUsers(
-      records,
-      filters as FiltersState<FiltersType>,
-      null
-    )
+    let filteredRecords = [...records]
 
-    if (paginationType === "pages" && pagination) {
-      const { currentPage = 1, perPage: pageSize = perPage } = pagination
-      const pagesCount = Math.ceil(filteredRecords.length / pageSize)
+    // Apply text search if available
+    if (
+      "search" in filters &&
+      typeof filters.search === "string" &&
+      filters.search.trim() !== ""
+    ) {
+      const searchTerm = (filters.search as string).toLowerCase()
+      filteredRecords = filteredRecords.filter(
+        (record) =>
+          record.name.toLowerCase().includes(searchTerm) ||
+          record.email.toLowerCase().includes(searchTerm)
+      )
+    }
+
+    // Apply department filter if available
+    if (
+      "department" in filters &&
+      Array.isArray(filters.department) &&
+      filters.department.length > 0
+    ) {
+      filteredRecords = filteredRecords.filter((record) =>
+        (filters.department as string[]).includes(record.department)
+      )
+    }
+
+    // Apply sorting if available
+    if (sortingsState) {
+      const sortField = sortingsState.field as keyof TRecord
+      const sortDirection = sortingsState.direction
+
+      filteredRecords.sort((a, b) => {
+        const aValue = a[sortField]
+        const bValue = b[sortField]
+
+        // Handle string comparisons
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          return sortDirection === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue)
+        }
+
+        // Handle number comparisons
+        if (typeof aValue === "number" && typeof bValue === "number") {
+          return sortDirection === "asc" ? aValue - bValue : bValue - aValue
+        }
+
+        // Handle boolean comparisons
+        if (typeof aValue === "boolean" && typeof bValue === "boolean") {
+          return sortDirection === "asc"
+            ? aValue === bValue
+              ? 0
+              : aValue
+                ? 1
+                : -1
+            : aValue === bValue
+              ? 0
+              : aValue
+                ? -1
+                : 1
+        }
+
+        // Default case: use string representation
+        return sortDirection === "asc"
+          ? String(aValue).localeCompare(String(bValue))
+          : String(bValue).localeCompare(String(aValue))
+      })
+    }
+
+    // Apply pagination if needed
+    if (pagination && paginationType === "pages") {
+      const { currentPage = 1 } = pagination
+      const pageSize = pagination.perPage || perPage
       const startIndex = (currentPage - 1) * pageSize
-      const endIndex = startIndex + pageSize
+      const paginatedRecords = filteredRecords.slice(
+        startIndex,
+        startIndex + pageSize
+      )
 
       return {
-        records: filteredRecords.slice(startIndex, endIndex),
+        records: paginatedRecords,
         total: filteredRecords.length,
         currentPage,
         perPage: pageSize,
-        pagesCount,
+        pagesCount: Math.ceil(filteredRecords.length / pageSize),
       }
     }
 
@@ -763,72 +879,115 @@ function createDataAdapter<
   if (paginationType === "pages") {
     const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
       paginationType: "pages",
-      perPage: undefined,
-      fetchData: ({
-        filters,
-        pagination,
-      }: {
-        filters: FiltersState<TFilters>
-        pagination: { currentPage: number; perPage: number }
-      }) => {
-        const fetch = () =>
-          filterData(data, filters, pagination) as PaginatedResponse<TRecord>
+      perPage,
+      fetchData: ({ filters, sortings, pagination }) => {
+        if (useObservable) {
+          return new Observable<PromiseState<PaginatedResponse<TRecord>>>(
+            (observer) => {
+              observer.next({
+                loading: true,
+                error: null,
+                data: null,
+              })
 
-        return useObservable
-          ? new Observable<PromiseState<PaginatedResponse<TRecord>>>(
-              (observer) => {
-                observer.next({
-                  loading: true,
-                  error: null,
-                  data: null,
-                })
+              setTimeout(() => {
+                const fetch = () =>
+                  filterData(
+                    data,
+                    filters,
+                    sortings,
+                    pagination
+                  ) as PaginatedResponse<TRecord>
 
-                const timeoutId = setTimeout(() => {
+                try {
                   observer.next({
                     loading: false,
                     error: null,
                     data: fetch(),
                   })
                   observer.complete()
-                }, delay)
-                return () => clearTimeout(timeoutId)
-              }
-            )
-          : new Promise<PaginatedResponse<TRecord>>((resolve) => {
-              setTimeout(() => resolve(fetch()), delay)
-            })
+                } catch (error) {
+                  observer.next({
+                    loading: false,
+                    error:
+                      error instanceof Error ? error : new Error(String(error)),
+                    data: null,
+                  })
+                  observer.complete()
+                }
+              }, delay)
+            }
+          )
+        }
+
+        return new Promise<PaginatedResponse<TRecord>>((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              resolve(
+                filterData(
+                  data,
+                  filters,
+                  sortings,
+                  pagination
+                ) as PaginatedResponse<TRecord>
+              )
+            } catch (error) {
+              reject(error)
+            }
+          }, delay)
+        })
       },
     }
+
     return adapter
   }
 
   const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
-    fetchData: ({ filters }: { filters: FiltersState<TFilters> }) => {
-      const fetch = () => filterData(data, filters, undefined) as TRecord[]
+    fetchData: ({ filters, sortings }) => {
+      if (useObservable) {
+        return new Observable<PromiseState<TRecord[]>>((observer) => {
+          observer.next({
+            loading: true,
+            error: null,
+            data: null,
+          })
 
-      return useObservable
-        ? new Observable<PromiseState<TRecord[]>>((observer) => {
-            observer.next({
-              loading: true,
-              error: null,
-              data: null,
-            })
+          setTimeout(() => {
+            try {
+              const fetch = () =>
+                filterData(data, filters, sortings) as TRecord[]
 
-            const timeoutId = setTimeout(() => {
               observer.next({
                 loading: false,
                 error: null,
                 data: fetch(),
               })
               observer.complete()
-            }, delay)
-            return () => clearTimeout(timeoutId)
-          })
-        : new Promise<TRecord[]>((resolve) => {
-            setTimeout(() => resolve(fetch()), delay)
-          })
+            } catch (error) {
+              observer.next({
+                loading: false,
+                error:
+                  error instanceof Error ? error : new Error(String(error)),
+                data: null,
+              })
+              observer.complete()
+            }
+          }, delay)
+        })
+      }
+
+      return new Promise<TRecord[]>((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            resolve(filterData(data, filters, sortings) as TRecord[])
+          } catch (error) {
+            reject(error)
+          }
+        }, delay)
+      })
     },
   }
+
   return adapter
 }
 
@@ -838,6 +997,7 @@ export const WithCardVisualization: Story = {
     const source = useDataSource({
       filters,
       presets: filterPresets,
+      sortings,
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
         typeof filters,
@@ -873,35 +1033,18 @@ export const WithCardVisualization: Story = {
 // Example usage with multiple visualizations
 export const WithMultipleVisualizations: Story = {
   render: () => {
-    type MockUser = (typeof mockUsers)[number]
-    const source = useDataSource<
-      MockUser,
-      typeof filters,
-      typeof sortings,
-      ActionsDefinition<MockUser>
-    >({
+    const source = useDataSource({
       filters,
-      sortings,
       presets: filterPresets,
-      dataAdapter: {
-        fetchData: () =>
-          new Observable<PromiseState<MockUser[]>>((observer) => {
-            observer.next({
-              loading: true,
-              error: null,
-              data: null,
-            })
-
-            setTimeout(() => {
-              observer.next({
-                loading: false,
-                error: null,
-                data: mockUsers,
-              })
-              observer.complete()
-            }, 1000)
-          }),
-      },
+      sortings,
+      dataAdapter: createDataAdapter<
+        (typeof mockUsers)[number],
+        typeof filters,
+        typeof sortings
+      >({
+        data: mockUsers,
+        delay: 500,
+      }),
     })
 
     return (
@@ -914,79 +1057,24 @@ export const WithMultipleVisualizations: Story = {
               columns: [
                 {
                   label: "Name",
-                  render: (item: MockUser) => item.name,
+                  render: (item) => item.name,
+                  sorting: "name",
                 },
-                { label: "Email", render: (item: MockUser) => item.email },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item: MockUser) => item.email },
-                { label: "Role", render: (item: MockUser) => item.role },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
                 {
                   label: "Department",
-                  render: (item: MockUser) => item.department,
+                  render: (item) => item.department,
+                  sorting: "department",
                 },
-              ],
-              title: (item: MockUser) => item.name,
-            },
-          },
-        ]}
-      />
-    )
-  },
-}
-
-// Generate more mock data for pagination example
-const generateMockUsers = (count: number) => {
-  return Array.from({ length: count }, (_, index) => ({
-    id: `user-${index + 1}`,
-    name: `User ${index + 1}`,
-    email: `user${index + 1}@example.com`,
-    role:
-      index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
-    department: DEPARTMENTS[index % DEPARTMENTS.length],
-    status: index % 5 === 0 ? "inactive" : "active",
-    isStarred: index % 3 === 0,
-    href: `/users/user-${index + 1}`,
-  }))
-}
-
-const paginatedMockUsers = generateMockUsers(50)
-
-// Example with pagination
-export const WithPagination: Story = {
-  render: () => {
-    const source = useDataSource({
-      filters,
-      presets: filterPresets,
-      dataAdapter: createDataAdapter<
-        (typeof mockUsers)[number],
-        typeof filters,
-        typeof sortings
-      >({
-        data: paginatedMockUsers,
-        delay: 500,
-        paginationType: "pages",
-        perPage: 10,
-      }),
-    })
-
-    return (
-      <DataCollection
-        source={source}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
               ],
             },
           },
@@ -1007,14 +1095,101 @@ export const WithPagination: Story = {
   },
 }
 
-// Example with synchronous data
+// Fix the generateMockUsers function to use the correct department types
+const generateMockUsers = (count: number) => {
+  return Array.from({ length: count }).map((_, index) => ({
+    id: `user-${index + 1}`,
+    name: `User ${index + 1}`,
+    email: `user${index + 1}@example.com`,
+    role:
+      index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
+    department: DEPARTMENTS[index % DEPARTMENTS.length],
+    status: index % 5 === 0 ? "inactive" : "active",
+    isStarred: index % 3 === 0,
+    href: `/users/user-${index + 1}`,
+  }))
+}
+
+export const WithPagination: Story = {
+  render: () => {
+    // Create a fixed set of paginated users so we're not regenerating them on every render
+    const paginatedMockUsers = generateMockUsers(50)
+
+    const source = useDataSource({
+      filters,
+      presets: filterPresets,
+      sortings,
+      dataAdapter: createDataAdapter<
+        (typeof mockUsers)[number],
+        typeof filters,
+        typeof sortings
+      >({
+        data: paginatedMockUsers,
+        delay: 500,
+        paginationType: "pages",
+        perPage: 10,
+      }),
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+              title: (item) => item.name,
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
 export const WithSynchronousData: Story = {
   render: () => {
     const source = useDataSource({
       filters,
+      sortings,
       presets: filterPresets,
       dataAdapter: {
-        fetchData: ({ filters }) => filterUsers(mockUsers, filters, null),
+        fetchData: ({ filters, sortings }) => {
+          // Ensure sortings are properly applied
+          return filterUsers(mockUsers, filters, sortings)
+        },
       },
     })
 
@@ -1026,10 +1201,26 @@ export const WithSynchronousData: Story = {
             type: "table",
             options: {
               columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
               ],
             },
           },
@@ -1039,11 +1230,11 @@ export const WithSynchronousData: Story = {
   },
 }
 
-// Add a new story specifically showcasing different action types
 export const WithAdvancedActions: Story = {
   render: () => {
-    const dataSource = useDataSource({
+    const source = useDataSource({
       filters,
+      sortings,
       presets: filterPresets,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -1121,73 +1312,38 @@ export const WithAdvancedActions: Story = {
 
     return (
       <DataCollection
-        source={dataSource}
+        source={source}
         visualizations={[
           {
             type: "table",
             options: {
               columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
                 { label: "Status", render: (item) => item.status },
               ],
             },
           },
         ]}
       />
-    )
-  },
-}
-
-// Example with presets only
-export const WithPresets: Story = {
-  args: {
-    usePresets: true,
-  },
-}
-
-// Example with presets and observable data
-export const WithPresetsAndObservable: Story = {
-  args: {
-    useObservable: true,
-    usePresets: true,
-  },
-}
-
-export const WithCustomColumnWidths: Story = {
-  render: () => {
-    const dataSource = useDataSource({
-      filters,
-      dataAdapter: {
-        fetchData: createPromiseDataFetch(),
-      },
-    })
-
-    return (
-      <div className="space-y-4">
-        <DataCollection
-          source={dataSource}
-          visualizations={[
-            {
-              type: "table",
-              options: {
-                columns: [
-                  { label: "Name", width: "40", render: (item) => item.name },
-                  { label: "Email", width: "20", render: (item) => item.email },
-                  { label: "Role", width: "20", render: (item) => item.role },
-                  {
-                    label: "Department",
-                    width: "20",
-                    render: (item) => item.department,
-                  },
-                ],
-              },
-            },
-          ]}
-        />
-      </div>
     )
   },
 }
