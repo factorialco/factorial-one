@@ -130,21 +130,40 @@ const filterUsers = <
       const aValue = a[sortingState.field]
       const bValue = b[sortingState.field]
 
-      // Handle different types appropriately
+      // Handle string comparisons
       if (typeof aValue === "string" && typeof bValue === "string") {
         return sortingState.direction === "asc"
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue)
       }
 
-      // For other types (like numbers), use generic comparison
+      // Handle number comparisons
+      if (typeof aValue === "number" && typeof bValue === "number") {
+        return sortingState.direction === "asc"
+          ? aValue - bValue
+          : bValue - aValue
+      }
+
+      // Handle boolean comparisons
+      if (typeof aValue === "boolean" && typeof bValue === "boolean") {
+        // false comes before true when ascending
+        return sortingState.direction === "asc"
+          ? aValue === bValue
+            ? 0
+            : aValue
+              ? 1
+              : -1
+          : aValue === bValue
+            ? 0
+            : aValue
+              ? -1
+              : 1
+      }
+
+      // Default case: use string representation
       return sortingState.direction === "asc"
-        ? aValue > bValue
-          ? 1
-          : -1
-        : bValue > aValue
-          ? 1
-          : -1
+        ? String(aValue).localeCompare(String(bValue))
+        : String(bValue).localeCompare(String(aValue))
     })
   }
 
@@ -319,6 +338,9 @@ export const BasicTableView: Story = {
         email: {
           label: "Email",
         },
+        role: {
+          label: "Role",
+        },
         department: {
           label: "Department",
         },
@@ -373,9 +395,21 @@ export const BasicTableView: Story = {
                     render: (item) => item.name,
                     sorting: "name",
                   },
-                  { label: "Email", render: (item) => item.email },
-                  { label: "Role", render: (item) => item.role },
-                  { label: "Department", render: (item) => item.department },
+                  {
+                    label: "Email",
+                    render: (item) => item.email,
+                    sorting: "email",
+                  },
+                  {
+                    label: "Role",
+                    render: (item) => item.role,
+                    sorting: "role",
+                  },
+                  {
+                    label: "Department",
+                    render: (item) => item.department,
+                    sorting: "department",
+                  },
                 ],
               },
             },
@@ -547,6 +581,9 @@ const sortings = {
   },
   department: {
     label: "Department",
+  },
+  role: {
+    label: "Role",
   },
 } as const
 
