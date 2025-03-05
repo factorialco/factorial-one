@@ -55,7 +55,8 @@ export const CardCollection = <
 
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
     Record,
-    Filters
+    Filters,
+    Sortings
   >(overridenSource)
 
   return (

@@ -158,13 +158,9 @@ function usePaginationState() {
 export function useData<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
 >(
-  source: DataSource<
-    Record,
-    Filters,
-    SortingsDefinition,
-    ActionsDefinition<Record>
-  >,
+  source: DataSource<Record, Filters, Sortings, ActionsDefinition<Record>>,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
   const { dataAdapter, currentFilters, currentSortings } = source

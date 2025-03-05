@@ -50,8 +50,11 @@ export const TableCollection = <
 
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
     Record,
-    Filters
+    Filters,
+    Sortings
   >(source)
+
+  const { currentSortings, setCurrentSortings } = source
 
   if (isInitialLoading) {
     return (
@@ -69,6 +72,24 @@ export const TableCollection = <
                 key={String(column.label)}
                 info={column.info}
                 width={column.width}
+                sortState={
+                  column.sorting
+                    ? currentSortings.find((s) => s.field === column.sorting)
+                        ?.direction
+                    : undefined
+                }
+                onSortClick={() => {
+                  if (!column.sorting) return
+                  setCurrentSortings((prev) => {
+                    const existingSorting = prev.find(
+                      (s) => s.field === column.sorting
+                    )
+                    const sorting = column.sorting as Sortings[number]
+                    return existingSorting?.direction === "asc"
+                      ? [{ field: sorting, direction: "desc" }]
+                      : [{ field: sorting, direction: "asc" }]
+                  })
+                }}
               >
                 {column.label}
               </TableHead>
