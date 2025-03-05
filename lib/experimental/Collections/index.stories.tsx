@@ -14,7 +14,7 @@ import { DataCollection, useDataSource } from "."
 import { PromiseState } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import { FilterDefinition, FiltersState } from "./Filters/types"
-import { SortingsDefinition } from "./sortings"
+import { SortingsDefinition, sortable } from "./sortings"
 import { DataAdapter, PaginatedResponse, Presets, RecordType } from "./types"
 import { useData } from "./useData"
 
@@ -286,7 +286,7 @@ export const BasicTableView: Story = {
     const dataSource = useDataSource({
       filters,
       presets: filterPresets,
-      sortings: ["name"] as const,
+      sortings: sortable("name", "test"),
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
@@ -501,7 +501,7 @@ export const WithPreselectedFilters: Story = {
   },
 }
 
-const sortings = ["name"] as const
+const sortings = sortable("name")
 
 const JsonVisualization = ({
   source,
