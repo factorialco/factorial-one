@@ -383,12 +383,24 @@ const CarouselDots = React.forwardRef<
             scrollbarWidth: "none",
             overscrollBehavior: "none",
           }}
+          tabIndex={0}
+          aria-label="Carousel pagination"
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") {
+              e.preventDefault()
+              api?.scrollPrev()
+            } else if (e.key === "ArrowRight") {
+              e.preventDefault()
+              api?.scrollNext()
+            }
+          }}
         >
           {allDots.map((i) => (
             <button
               key={i}
               className="group/dot flex h-4 w-4 flex-shrink-0 items-center justify-center p-0"
               aria-label={`Go to slide ${i + 1}`}
+              aria-current={i === currentSlide ? "true" : undefined}
               onClick={() => api?.scrollTo(i)}
               tabIndex={-1}
             >
