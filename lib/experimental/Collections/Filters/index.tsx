@@ -20,6 +20,7 @@ export interface FiltersProps<Definition extends FiltersDefinition> {
   schema: Definition
   /** Current state of applied filters */
   filters: FiltersState<Definition>
+  /** Optional preset configurations that users can select */
   presets?: Presets<Definition>
   /** Callback fired when filters are changed */
   onChange: (value: FiltersState<Definition>) => void
@@ -27,30 +28,63 @@ export interface FiltersProps<Definition extends FiltersDefinition> {
 
 /**
  * A comprehensive filtering interface that manages multiple filter types.
- * Provides a popover interface for configuration and displays active filters as chips.
+ * Provides a popover interface for filter configuration and displays active filters as chips.
+ *
+ * The component supports multiple filter types through a unified interface:
+ * - "in" type filters: Multi-select filters with predefined options
+ * - "search" type filters: Free-text search filters
  *
  * Features:
- * - Search and multi-select filters
- * - Temporary state until explicitly applied
- * - Animated filter chips
+ * - Search and multi-select filters with type safety
+ * - Temporary filter state that's only applied when explicitly confirmed
+ * - Animated filter chips for active filters
+ * - Support for filter presets for quick selection of common filter combinations
+ * - Responsive design for different viewport sizes
+ *
+ * The component maintains a temporary state of filters that are only applied
+ * when the user explicitly clicks the "Apply Filters" button, allowing for
+ * a more controlled filtering experience.
+ *
+ * @template Definition - The type defining the structure of available filters
  *
  * @example
  * ```tsx
+ * // Example with multiple filter types and presets
  * <Filters
- *   definition={{
+ *   schema={{
  *     department: {
  *       type: "in",
  *       label: "Department",
  *       options: [
  *         { value: "engineering", label: "Engineering" },
- *         { value: "marketing", label: "Marketing" }
+ *         { value: "marketing", label: "Marketing" },
+ *         { value: "sales", label: "Sales" }
  *       ]
+ *     },
+ *     search: {
+ *       type: "search",
+ *       label: "Search"
  *     }
  *   }}
- *   filters={{}}
+ *   filters={{
+ *     department: ["engineering"]
+ *   }}
+ *   presets={[
+ *     {
+ *       label: "Engineering Only",
+ *       filter: { department: ["engineering"] }
+ *     },
+ *     {
+ *       label: "Sales & Marketing",
+ *       filter: { department: ["sales", "marketing"] }
+ *     }
+ *   ]}
  *   onChange={setFilters}
  * />
  * ```
+ *
+ * @see {@link FiltersDefinition} for detailed schema structure
+ * @see {@link FiltersState} for the structure of filter state
  */
 export function Filters<Definition extends FiltersDefinition>({
   schema,

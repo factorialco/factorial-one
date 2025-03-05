@@ -19,6 +19,7 @@ import type { DataSource, RecordType } from "./types"
  *
  * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
+ * @template Actions - The actions type extending ActionsDefinition
  */
 export type Visualization<
   Record extends RecordType,
@@ -56,6 +57,7 @@ export type Visualization<
  *
  * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
+ * @template Actions - The actions type extending ActionsDefinition
  */
 export type VisualizationProps<
   Record extends RecordType,
@@ -70,8 +72,9 @@ export type VisualizationProps<
  * A component that renders a selector for switching between different visualization types.
  * Provides buttons for each available visualization with appropriate icons.
  *
- * @template Schema - The schema type extending CollectionSchema
+ * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
+ * @template Actions - The actions type extending ActionsDefinition
  *
  * @param visualizations - Array of available visualizations
  * @param currentVisualization - Index of the currently selected visualization
@@ -157,16 +160,17 @@ export const VisualizationSelector = <
 
 /**
  * A component that renders the selected visualization for a collection.
- * Handles switching between different visualization types (table or card view)
+ * Handles switching between different visualization types (table, card, or custom view)
  * and passes appropriate props to the specific visualization component.
  *
- * @template Schema - The schema type extending CollectionSchema
+ * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
+ * @template Actions - The actions type extending ActionsDefinition
  *
  * @param visualization - The configuration for the current visualization
  * @param source - The data source to visualize
  *
- * @returns The rendered visualization component (TableCollection or CardCollection)
+ * @returns The rendered visualization component (TableCollection, CardCollection, or custom component)
  */
 export const VisualizationRenderer = <
   Record extends RecordType,
