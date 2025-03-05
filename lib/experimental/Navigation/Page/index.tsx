@@ -15,7 +15,7 @@ export function Page({ children, header, embedded = false }: PageProps) {
   return (
     <div
       className={`flex w-full flex-col overflow-hidden ${
-        embedded ? "" : "rounded-xl"
+        embedded ? "" : "xs:rounded-xl"
       } bg-f1-page ring-1 ring-inset ring-f1-border-secondary`}
     >
       {header && <div className="flex flex-col">{header}</div>}
@@ -68,7 +68,7 @@ export function DaytimePage({
   return (
     <div
       className={`relative flex w-full flex-col overflow-hidden ${
-        embedded ? "" : "rounded-xl"
+        embedded ? "" : "xs:rounded-xl"
       } bg-f1-page shadow`}
     >
       <div className={daytimePageVariants({ period })} />

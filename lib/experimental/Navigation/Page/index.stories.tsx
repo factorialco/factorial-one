@@ -26,9 +26,7 @@ const meta: Meta<typeof Page> = {
   decorators: [
     (Story) => (
       <ApplicationFrame sidebar={null}>
-        <div className="flex-grow bg-f1-background-tertiary p-2">
-          <Story />
-        </div>
+        <Story />
       </ApplicationFrame>
     ),
   ],
