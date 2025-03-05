@@ -14,7 +14,7 @@ type Props = {
 
 const CAROUSEL_COLUMNS = {
   xs: 1,
-  sm: 1,
+  sm: 2,
   md: 2,
   lg: 2,
 } as const
