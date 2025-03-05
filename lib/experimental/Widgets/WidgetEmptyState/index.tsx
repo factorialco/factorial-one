@@ -30,7 +30,7 @@ export function WidgetEmptyState({
   }
 
   return (
-    <div className="flex min-h-56 flex-col items-center justify-center p-8">
+    <div className="flex min-h-56 flex-grow flex-col items-center justify-center p-8">
       {emoji ? (
         <EmojiAvatar emoji={emoji} size="lg" />
       ) : (
