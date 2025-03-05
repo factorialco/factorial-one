@@ -8,6 +8,7 @@ import { defaultTranslations } from "../../lib/i18n-provider-defaults"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition } from "./Filters/types"
+import { SortingsDefinition } from "./sortings"
 import type { DataSource } from "./types"
 import { useData } from "./useData"
 
@@ -282,9 +283,16 @@ describe("Collections", () => {
     const CustomComponent = ({
       source,
     }: {
-      source: DataSource<Item, FiltersDefinition, ActionsDefinition<Item>>
+      source: DataSource<
+        Item,
+        FiltersDefinition,
+        SortingsDefinition,
+        ActionsDefinition<Item>
+      >
     }) => {
-      const { data } = useData<Item, FiltersDefinition>(source)
+      const { data } = useData<Item, FiltersDefinition, SortingsDefinition>(
+        source
+      )
 
       return (
         <div data-testid="custom-visualization">
