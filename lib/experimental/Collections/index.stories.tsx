@@ -14,7 +14,7 @@ import { DataCollection, useDataSource } from "."
 import { PromiseState } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import { FilterDefinition, FiltersState } from "./Filters/types"
-import { SortingsDefinition } from "./sortings"
+import { SortingsDefinition, SortingsState } from "./sortings"
 import { DataAdapter, PaginatedResponse, Presets, RecordType } from "./types"
 import { useData } from "./useData"
 
@@ -110,7 +110,8 @@ const filterUsers = <
   T extends RecordType & { name: string; email: string; department: string },
 >(
   users: T[],
-  filterValues: FiltersState<FiltersType>
+  filterValues: FiltersState<FiltersType>,
+  sortingState: SortingsState<typeof sortings>
 ) => {
   let filteredUsers = [...users]
 
@@ -122,6 +123,29 @@ const filterUsers = <
         user.name.toLowerCase().includes(searchLower) ||
         user.email.toLowerCase().includes(searchLower)
     )
+  }
+
+  if (sortingState) {
+    filteredUsers = filteredUsers.sort((a, b) => {
+      const aValue = a[sortingState.field]
+      const bValue = b[sortingState.field]
+
+      // Handle different types appropriately
+      if (typeof aValue === "string" && typeof bValue === "string") {
+        return sortingState.direction === "asc"
+          ? aValue.localeCompare(bValue)
+          : bValue.localeCompare(aValue)
+      }
+
+      // For other types (like numbers), use generic comparison
+      return sortingState.direction === "asc"
+        ? aValue > bValue
+          ? 1
+          : -1
+        : bValue > aValue
+          ? 1
+          : -1
+    })
   }
 
   const departmentValue = filterValues.department
@@ -150,7 +174,7 @@ const createObservableDataFetch = (delay = 0) => {
         observer.next({
           loading: false,
           error: null,
-          data: filterUsers(mockUsers, filters),
+          data: filterUsers(mockUsers, filters, null),
         })
         observer.complete()
       }, delay)
@@ -160,10 +184,16 @@ const createObservableDataFetch = (delay = 0) => {
 }
 
 const createPromiseDataFetch = (delay = 500) => {
-  return ({ filters }: { filters: FiltersState<FiltersType> }) =>
+  return ({
+    filters,
+    sortings: sortingsState,
+  }: {
+    filters: FiltersState<FiltersType>
+    sortings: SortingsState<typeof sortings>
+  }) =>
     new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
-        resolve(filterUsers(mockUsers, filters))
+        resolve(filterUsers(mockUsers, filters, sortingsState))
       }, delay)
     })
 }
@@ -659,7 +689,8 @@ function createDataAdapter<
   ): TRecord[] | PaginatedResponse<TRecord> => {
     const filteredRecords = filterUsers(
       records,
-      filters as FiltersState<FiltersType>
+      filters as FiltersState<FiltersType>,
+      null
     )
 
     if (paginationType === "pages" && pagination) {
@@ -724,7 +755,7 @@ function createDataAdapter<
 
   const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
     fetchData: ({ filters }: { filters: FiltersState<TFilters> }) => {
-      const fetch = () => filterData(data, filters) as TRecord[]
+      const fetch = () => filterData(data, filters, undefined) as TRecord[]
 
       return useObservable
         ? new Observable<PromiseState<TRecord[]>>((observer) => {
@@ -934,7 +965,7 @@ export const WithSynchronousData: Story = {
       filters,
       presets: filterPresets,
       dataAdapter: {
-        fetchData: ({ filters }) => filterUsers(mockUsers, filters),
+        fetchData: ({ filters }) => filterUsers(mockUsers, filters, null),
       },
     })
 

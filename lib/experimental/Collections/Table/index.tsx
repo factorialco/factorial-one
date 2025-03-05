@@ -89,10 +89,12 @@ export const TableCollection = <
                 info={column.info}
                 width={column.width}
                 sortState={
-                  column.sorting &&
-                  source.sortings &&
-                  currentSortings?.field === column.sorting
-                    ? currentSortings.direction
+                  column.sorting && source.sortings
+                    ? currentSortings === null
+                      ? "none"
+                      : currentSortings?.field === column.sorting
+                        ? currentSortings.direction
+                        : "none"
                     : undefined
                 }
                 onSortClick={
@@ -103,12 +105,21 @@ export const TableCollection = <
                         const sorting = column.sorting
 
                         setCurrentSortings(() => {
-                          return {
-                            field: sorting,
-                            direction:
-                              currentSortings?.direction === "asc"
-                                ? ("desc" as const)
-                                : ("asc" as const),
+                          if (
+                            !currentSortings ||
+                            currentSortings.field !== sorting
+                          ) {
+                            return {
+                              field: sorting,
+                              direction: "asc",
+                            }
+                          } else if (currentSortings.direction === "asc") {
+                            return {
+                              field: sorting,
+                              direction: "desc",
+                            }
+                          } else {
+                            return null
                           }
                         })
                       }
