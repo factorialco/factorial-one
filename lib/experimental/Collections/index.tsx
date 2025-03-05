@@ -50,6 +50,7 @@ export const useDataSource = <
     dataAdapter,
     actions,
     presets,
+    sortings,
   }: DataSourceDefinition<Record, Filters, Sortings, Actions>,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<Record, Filters, Sortings, Actions> => {
@@ -57,9 +58,8 @@ export const useDataSource = <
     initialCurrentFilters
   )
 
-  const [currentSortings, setCurrentSortings] = useState<
-    SortingsState<Sortings>
-  >(() => [])
+  const [currentSortings, setCurrentSortings] =
+    useState<SortingsState<Sortings>>(null)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
@@ -71,6 +71,7 @@ export const useDataSource = <
     dataAdapter,
     actions,
     presets,
+    sortings,
     currentSortings,
     setCurrentSortings,
   }

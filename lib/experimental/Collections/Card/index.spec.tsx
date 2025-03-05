@@ -45,7 +45,7 @@ const createTestSource = (
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
-  currentSortings: [],
+  currentSortings: null,
   setCurrentSortings: vi.fn(),
   dataAdapter: {
     fetchData: async ({ filters: _filters }) => {

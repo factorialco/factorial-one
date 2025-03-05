@@ -84,7 +84,7 @@ const createMockDataSource = (
     dataAdapter: paginationType === "pages" ? paginatedAdapter : baseAdapter,
     currentFilters: {},
     setCurrentFilters: vi.fn(),
-    currentSortings: [],
+    currentSortings: null,
     setCurrentSortings: vi.fn(),
   }
 }
@@ -366,7 +366,7 @@ describe("useData", () => {
         },
         currentFilters: {},
         setCurrentFilters: vi.fn(),
-        currentSortings: [],
+        currentSortings: null,
         setCurrentSortings: vi.fn(),
       }
 

@@ -1,9 +1,9 @@
 export type SortingsDefinition = Record<string, true>
 
-export type SortingsState<Definition extends SortingsDefinition> = Array<{
+export type SortingsState<Definition extends SortingsDefinition> = {
   field: keyof Definition
   direction: "asc" | "desc"
-}>
+} | null
 
 /**
  * Helper function to create typesafe sortings definition without requiring 'as const'

@@ -20,9 +20,7 @@ export type WithOptionalSorting<
   Record,
   Sortings extends SortingsDefinition,
 > = PropertyDefinition<Record> & {
-  sorting?: Sortings extends readonly [] | undefined
-    ? never
-    : SortingKey<Sortings>
+  sorting?: SortingKey<Sortings>
 }
 
 export type TableColumnDefinition<
@@ -91,26 +89,31 @@ export const TableCollection = <
                 info={column.info}
                 width={column.width}
                 sortState={
-                  column.sorting && source.sortings
-                    ? currentSortings.find((s) => s.field === column.sorting)
-                        ?.direction
+                  column.sorting &&
+                  source.sortings &&
+                  currentSortings?.field === column.sorting
+                    ? currentSortings.direction
                     : undefined
                 }
-                onSortClick={() => {
-                  if (!column.sorting || !source.sortings) return
+                onSortClick={
+                  column.sorting
+                    ? () => {
+                        if (!column.sorting) return
 
-                  // Use the SortingKey type to handle both array and object sortings
-                  const sorting = column.sorting as SortingKey<Sortings>
+                        const sorting = column.sorting
 
-                  setCurrentSortings((prev) => {
-                    const existingSorting = prev.find(
-                      (s) => s.field === sorting
-                    )
-                    return existingSorting?.direction === "asc"
-                      ? [{ field: sorting, direction: "desc" }]
-                      : [{ field: sorting, direction: "asc" }]
-                  })
-                }}
+                        setCurrentSortings(() => {
+                          return {
+                            field: sorting,
+                            direction:
+                              currentSortings?.direction === "asc"
+                                ? ("desc" as const)
+                                : ("asc" as const),
+                          }
+                        })
+                      }
+                    : undefined
+                }
               >
                 {column.label}
               </TableHead>
