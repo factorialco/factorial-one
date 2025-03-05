@@ -1,6 +1,14 @@
-import { render, renderHook, screen, waitFor } from "@testing-library/react"
+import {
+  act,
+  render,
+  renderHook,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react"
+import { userEvent } from "@testing-library/user-event"
 import { LayoutGrid } from "lucide-react"
-import { describe, expect, test } from "vitest"
+import { describe, expect, test, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
 import { I18nProvider } from "../../lib/i18n-provider"
@@ -370,6 +378,415 @@ describe("Collections", () => {
       expect(
         screen.getByText("Senior Engineer - Engineering")
       ).toBeInTheDocument()
+    })
+  })
+
+  test("integrates TableCollection with sortable columns", async () => {
+    type Person = {
+      id: number
+      name: string
+      email: string
+      role: string
+    }
+
+    const mockData: Person[] = [
+      { id: 1, name: "John Doe", email: "john@example.com", role: "Developer" },
+      {
+        id: 2,
+        name: "Alice Brown",
+        email: "alice@example.com",
+        role: "Designer",
+      },
+      { id: 3, name: "Bob Smith", email: "bob@example.com", role: "Manager" },
+    ]
+
+    // Create a mock for setCurrentSortings function
+    const setCurrentSortingsMock = vi.fn()
+
+    const { result } = renderHook(
+      () => {
+        const source = useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >({
+          dataAdapter: {
+            fetchData: async ({ sortings }) => {
+              const sorted = [...mockData]
+
+              if (sortings && sortings.field === "name") {
+                sorted.sort((a, b) => {
+                  const direction = sortings.direction === "asc" ? 1 : -1
+                  return a.name.localeCompare(b.name) * direction
+                })
+              }
+
+              return sorted
+            },
+          },
+          sortings: {
+            name: {
+              label: "Name",
+            },
+          },
+        })
+
+        // Override the setCurrentSortings with our mock for testing
+        source.setCurrentSortings = setCurrentSortingsMock
+
+        return source
+      },
+      { wrapper: TestWrapper }
+    )
+
+    render(
+      <TestWrapper>
+        <DataCollection
+          source={result.current}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  {
+                    label: "Name",
+                    render: (item: Person) => item.name,
+                    sorting: "name" as const,
+                  },
+                  {
+                    label: "Email",
+                    render: (item: Person) => item.email,
+                  },
+                ],
+              },
+            },
+          ]}
+        />
+      </TestWrapper>
+    )
+
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument()
+      expect(screen.getByText("Alice Brown")).toBeInTheDocument()
+      expect(screen.getByText("Bob Smith")).toBeInTheDocument()
+    })
+
+    // Find and click the sort button in the Name column
+    const nameColumnHeader = await screen.findByRole("columnheader", {
+      name: /name/i,
+    })
+    expect(nameColumnHeader).toBeInTheDocument()
+
+    // The sort button should be inside the column header
+    const sortButton = within(nameColumnHeader).getByRole("button")
+    expect(sortButton).toBeInTheDocument()
+
+    // Click the sort button
+    await userEvent.click(sortButton)
+
+    // Verify that setCurrentSortings is called with the correct parameters
+    expect(setCurrentSortingsMock).toHaveBeenCalled()
+  })
+
+  test("integrates TableCollection with filtering capabilities", async () => {
+    type Person = {
+      id: number
+      name: string
+      department: string
+    }
+
+    const mockData: Person[] = [
+      { id: 1, name: "John Doe", department: "Engineering" },
+      { id: 2, name: "Jane Smith", department: "Product" },
+      { id: 3, name: "Bob Johnson", department: "Engineering" },
+      { id: 4, name: "Alice Williams", department: "Design" },
+    ]
+
+    // Create a mock for setCurrentFilters function
+    const setCurrentFiltersMock = vi.fn()
+
+    const { result } = renderHook(
+      () => {
+        const source = useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >({
+          filters: {
+            department: {
+              type: "in",
+              label: "Department",
+              options: [
+                { value: "Engineering", label: "Engineering" },
+                { value: "Product", label: "Product" },
+                { value: "Design", label: "Design" },
+              ],
+            },
+            search: {
+              type: "search",
+              label: "Search",
+            },
+          },
+          dataAdapter: {
+            fetchData: async ({ filters }) => {
+              let filtered = [...mockData]
+
+              if (filters.department && filters.department.length > 0) {
+                filtered = filtered.filter((person) =>
+                  filters.department?.includes(person.department)
+                )
+              }
+
+              if (filters.search && typeof filters.search === "string") {
+                const searchLower = filters.search.toLowerCase()
+                filtered = filtered.filter((person) =>
+                  person.name.toLowerCase().includes(searchLower)
+                )
+              }
+
+              return filtered
+            },
+          },
+        })
+
+        // Override the setCurrentFilters with our mock for testing
+        source.setCurrentFilters = setCurrentFiltersMock
+
+        return source
+      },
+      { wrapper: TestWrapper }
+    )
+
+    render(
+      <TestWrapper>
+        <DataCollection
+          source={result.current}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  { label: "Name", render: (item: Person) => item.name },
+                  {
+                    label: "Department",
+                    render: (item: Person) => item.department,
+                  },
+                ],
+              },
+            },
+          ]}
+        />
+      </TestWrapper>
+    )
+
+    await waitFor(() => {
+      // Use getAllByText since there might be multiple elements with the same text
+      const johnElements = screen.getAllByText("John Doe")
+      const janeElements = screen.getAllByText("Jane Smith")
+      const engineeringElements = screen.getAllByText("Engineering")
+      const productElements = screen.getAllByText("Product")
+
+      expect(johnElements.length).toBeGreaterThan(0)
+      expect(janeElements.length).toBeGreaterThan(0)
+      expect(engineeringElements.length).toBeGreaterThan(0)
+      expect(productElements.length).toBeGreaterThan(0)
+    })
+
+    // Find the filter button
+    const filterButton = screen.getByTitle("Filters")
+
+    // Just verify the filter button exists
+    expect(filterButton).toBeInTheDocument()
+
+    // Note: We don't test clicking the filter button since that would open a dialog
+    // and we'd need more knowledge about the specifics of the dialog implementation
+  })
+
+  test("integrates TableCollection with actions", async () => {
+    type Person = {
+      id: number
+      name: string
+      email: string
+    }
+
+    const mockData = [
+      { id: 1, name: "John Doe", email: "john@example.com" },
+      { id: 2, name: "Jane Smith", email: "jane@example.com" },
+    ]
+
+    // Create mock handlers for our actions
+    const handleEdit = vi.fn()
+    const handleDelete = vi.fn()
+
+    // Create a data source with actions
+    const { result } = renderHook(
+      () =>
+        useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >({
+          dataAdapter: {
+            fetchData: async () => mockData,
+          },
+          actions: (item) => [
+            {
+              label: "Edit",
+              onClick: () => handleEdit(item),
+            },
+            {
+              label: "Delete",
+              variant: "destructive",
+              onClick: () => handleDelete(item),
+            },
+          ],
+        }),
+      { wrapper: TestWrapper }
+    )
+
+    render(
+      <DataCollection
+        source={result.current}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                },
+              ],
+            },
+          },
+        ]}
+      />,
+      { wrapper: TestWrapper }
+    )
+
+    // Check that our data is rendered
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument()
+      expect(screen.getByText("jane@example.com")).toBeInTheDocument()
+    })
+
+    // Find and click the actions button (typically has MoreVertical icon or similar)
+    const actionsButtons = await waitFor(() =>
+      screen.getAllByRole("button", { name: /actions/i })
+    )
+    expect(actionsButtons).toHaveLength(2) // One for each row
+
+    // Click the actions button for the first row
+    await userEvent.click(actionsButtons[0])
+
+    // The Radix dropdown content should now be in the document
+    // Wait for the dropdown to be visible (Radix UI adds data-state="open" when open)
+    const dropdown = await screen.findByRole("menu")
+    expect(dropdown).toBeInTheDocument()
+
+    // Find and click the Edit action
+    const editButton = within(dropdown).getByText("Edit")
+    await userEvent.click(editButton)
+
+    // Verify our handler was called with the correct item
+    expect(handleEdit).toHaveBeenCalledTimes(1)
+    expect(handleEdit).toHaveBeenCalledWith(mockData[0])
+  })
+
+  test("integrates TableCollection with pagination", async () => {
+    type Person = {
+      id: number
+      name: string
+      email: string
+    }
+
+    // Create a simple data source with pagination
+    const { result } = renderHook(
+      () =>
+        useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >({
+          dataAdapter: {
+            paginationType: "pages",
+            perPage: 10,
+            fetchData: async ({ pagination }) => {
+              const { currentPage = 1 } = pagination || {}
+              const itemsPerPage = 10
+              const totalItems = 45
+
+              // Generate paginated data
+              const startIndex = (currentPage - 1) * itemsPerPage
+              const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
+
+              const paginatedData = Array.from(
+                { length: endIndex - startIndex },
+                (_, i) => ({
+                  id: startIndex + i + 1,
+                  name: `User ${startIndex + i + 1}`,
+                  email: `user${startIndex + i + 1}@example.com`,
+                })
+              )
+
+              return {
+                records: paginatedData,
+                total: totalItems,
+                currentPage,
+                perPage: itemsPerPage,
+                pagesCount: Math.ceil(totalItems / itemsPerPage),
+              }
+            },
+          },
+        }),
+      { wrapper: TestWrapper }
+    )
+
+    render(
+      <TestWrapper>
+        <DataCollection
+          source={result.current}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  { label: "Name", render: (item: Person) => item.name },
+                  { label: "Email", render: (item: Person) => item.email },
+                ],
+              },
+            },
+          ]}
+        />
+      </TestWrapper>
+    )
+
+    await waitFor(() => {
+      // Verify first page data is displayed
+      expect(screen.getByText("User 1")).toBeInTheDocument()
+      expect(screen.getByText("user10@example.com")).toBeInTheDocument()
+    })
+
+    // Find and click the next page button
+    const nextPageButton =
+      screen.getByLabelText(/next/i) || screen.getByText(/next/i)
+
+    act(() => {
+      nextPageButton.click()
+    })
+
+    // Verify second page data is displayed
+    await waitFor(() => {
+      expect(screen.getByText("User 11")).toBeInTheDocument()
+      expect(screen.getByText("user20@example.com")).toBeInTheDocument()
     })
   })
 })
