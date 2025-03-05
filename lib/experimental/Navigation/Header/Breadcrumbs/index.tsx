@@ -186,7 +186,7 @@ const BreadcrumbContent = React.forwardRef<
       className={cn(
         "flex items-center gap-2 px-1.5",
         isFirst && "pl-0",
-        isOnly && "text-xl font-semibold"
+        isOnly && "text-2xl font-semibold"
       )}
       transition={{ duration: 0.15 }}
     >

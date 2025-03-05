@@ -31,8 +31,8 @@ export const avatarVariants = cva({
       xsmall: "size-5 rounded-xs text-sm",
       small: "size-6 rounded-sm text-sm",
       medium: "size-8 rounded",
-      large: "size-14 rounded-xl text-xl",
-      xlarge: "size-18 rounded-[20px] text-2xl",
+      large: "size-14 rounded-xl text-2xl",
+      xlarge: "size-18 rounded-[20px] text-3xl",
     } satisfies Record<(typeof sizes)[number], string>,
     type: {
       base: "",
