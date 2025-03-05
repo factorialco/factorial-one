@@ -16,14 +16,19 @@ import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
 
-export type TableColumnDefinition<T> = PropertyDefinition<T>
+export type TableColumnDefinition<
+  Record,
+  Sortings extends SortingsDefinition,
+> = PropertyDefinition<Record> & {
+  sorting?: Sortings[number]
+}
 
 export type TableVisualizationOptions<
-  T extends RecordType,
+  Record extends RecordType,
   _Filters extends FiltersDefinition,
-  _Sortings extends SortingsDefinition,
+  Sortings extends SortingsDefinition,
 > = {
-  columns: ReadonlyArray<TableColumnDefinition<T>>
+  columns: ReadonlyArray<TableColumnDefinition<Record, Sortings>>
 }
 
 export const TableCollection = <
