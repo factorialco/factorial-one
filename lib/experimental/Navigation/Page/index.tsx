@@ -109,7 +109,12 @@ export function DaytimePage({
           </div>
         </div>
       )}
-      <div className="isolate flex w-full flex-1 flex-col overflow-y-auto [&>*]:flex-1">
+      <div
+        className={cn(
+          "isolate flex w-full flex-1 flex-col overflow-y-auto overflow-x-hidden [&>*]:flex-1",
+          isSmallScreen && "-mt-3"
+        )}
+      >
         {children}
       </div>
     </div>
