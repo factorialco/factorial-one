@@ -6,6 +6,7 @@ import {
 } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { SortingsDefinition } from "./sortings"
 import {
   DataSource,
   PaginatedResponse,
@@ -158,7 +159,12 @@ export function useData<
   Record extends RecordType,
   Filters extends FiltersDefinition,
 >(
-  source: DataSource<Record, Filters, ActionsDefinition<Record>>,
+  source: DataSource<
+    Record,
+    Filters,
+    SortingsDefinition,
+    ActionsDefinition<Record>
+  >,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
   const { dataAdapter, currentFilters } = source
@@ -231,9 +237,10 @@ export function useData<
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 filters,
+                sortings: {},
                 pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
               })
-            : dataAdapter.fetchData({ filters })
+            : dataAdapter.fetchData({ filters, sortings: {} })
 
         const result = fetcher()
 

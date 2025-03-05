@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest"
 import { CardCollection } from "."
 import { ActionsDefinition } from "../actions"
 import type { FiltersDefinition } from "../Filters/types"
+import { SortingsDefinition } from "../sortings"
 import type { DataSource } from "../types"
 import { useData } from "../useData"
 
@@ -36,7 +37,12 @@ const testCardProperties = [
 const createTestSource = (
   data: Person[] = testData,
   error?: Error
-): DataSource<Person, FiltersDefinition, ActionsDefinition<Person>> => ({
+): DataSource<
+  Person,
+  FiltersDefinition,
+  SortingsDefinition,
+  ActionsDefinition<Person>
+> => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
   dataAdapter: {
@@ -51,7 +57,12 @@ describe("CardCollection", () => {
   describe("rendering", () => {
     it("shows loading state initially", () => {
       render(
-        <CardCollection<Person, FiltersDefinition, ActionsDefinition<Person>>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >
           title={(item) => item.name}
           cardProperties={[
             { label: "Email", render: (item) => item.email },
@@ -68,7 +79,12 @@ describe("CardCollection", () => {
 
     it("renders cards with data after loading", async () => {
       render(
-        <CardCollection<Person, FiltersDefinition, ActionsDefinition<Person>>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >
           title={(item) => item.name}
           cardProperties={testCardProperties}
           source={createTestSource()}
@@ -92,7 +108,12 @@ describe("CardCollection", () => {
   describe("features", () => {
     it("uses titleProperty when provided", async () => {
       render(
-        <CardCollection<Person, FiltersDefinition, ActionsDefinition<Person>>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >
           title={(item) => item.name}
           cardProperties={testCardProperties}
           source={createTestSource()}
@@ -112,7 +133,12 @@ describe("CardCollection", () => {
 
     it("displays all properties correctly when using titleProperty", async () => {
       render(
-        <CardCollection<Person, FiltersDefinition, ActionsDefinition<Person>>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >
           title={(item) => item.name}
           cardProperties={testCardProperties}
           source={createTestSource()}
@@ -157,7 +183,12 @@ describe("CardCollection", () => {
       ]
 
       render(
-        <CardCollection<Person, FiltersDefinition, ActionsDefinition<Person>>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >
           title={(item) => item.name}
           cardProperties={propertiesWithCustomRender}
           source={createTestSource()}
@@ -175,7 +206,12 @@ describe("CardCollection", () => {
   describe("edge cases", () => {
     it("handles empty data gracefully", async () => {
       render(
-        <CardCollection<Person, FiltersDefinition, ActionsDefinition<Person>>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >
           title={(item) => item.name}
           cardProperties={testCardProperties}
           source={createTestSource([])}
@@ -193,7 +229,12 @@ describe("CardCollection", () => {
       const error = new Error("Failed to fetch data")
 
       render(
-        <CardCollection<Person, FiltersDefinition, ActionsDefinition<Person>>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >
           title={(item) => item.name}
           cardProperties={testCardProperties}
           source={createTestSource([], error)}

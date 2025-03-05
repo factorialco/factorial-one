@@ -6,6 +6,7 @@ import { describe, expect, it, vi } from "vitest"
 import { TableCollection } from "."
 import { ActionsDefinition } from "../actions"
 import type { FiltersDefinition } from "../Filters/types"
+import { SortingsDefinition } from "../sortings"
 import type { DataSource } from "../types"
 import { useData } from "../useData"
 
@@ -41,7 +42,12 @@ const testColumns = [
 const createTestSource = (
   data: Person[] = testData,
   error?: Error
-): DataSource<Person, TestFilters, ActionsDefinition<Person>> => ({
+): DataSource<
+  Person,
+  TestFilters,
+  SortingsDefinition,
+  ActionsDefinition<Person>
+> => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
   dataAdapter: {
@@ -62,7 +68,12 @@ describe("TableCollection", () => {
     it("shows loading state initially", () => {
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={testColumns}
             source={createTestSource()}
           />
@@ -84,7 +95,12 @@ describe("TableCollection", () => {
     it("renders table with data after loading", async () => {
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={testColumns}
             source={createTestSource()}
           />
@@ -121,7 +137,12 @@ describe("TableCollection", () => {
 
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={columnsWithCustomRender}
             source={createTestSource()}
           />
@@ -140,7 +161,12 @@ describe("TableCollection", () => {
     it("handles empty data gracefully", async () => {
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={testColumns}
             source={createTestSource([])}
           />
@@ -163,7 +189,12 @@ describe("TableCollection", () => {
 
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={testColumns}
             source={createTestSource([], error)}
           />
@@ -199,7 +230,12 @@ describe("TableCollection", () => {
     const createPaginatedTestSource = (
       totalItems = 50,
       itemsPerPage = 10
-    ): DataSource<Person, TestFilters, ActionsDefinition<Person>> => ({
+    ): DataSource<
+      Person,
+      TestFilters,
+      SortingsDefinition,
+      ActionsDefinition<Person>
+    > => ({
       currentFilters: {},
       setCurrentFilters: vi.fn(),
       dataAdapter: {
@@ -231,7 +267,12 @@ describe("TableCollection", () => {
     it("renders pagination controls when pagination is enabled", async () => {
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={testColumns}
             source={createPaginatedTestSource()}
           />
@@ -249,7 +290,12 @@ describe("TableCollection", () => {
     it("shows loading state when switching pages", async () => {
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={testColumns}
             source={createPaginatedTestSource()}
           />
@@ -274,7 +320,12 @@ describe("TableCollection", () => {
     it("displays correct data for each page", async () => {
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={testColumns}
             source={createPaginatedTestSource()}
           />
@@ -301,7 +352,12 @@ describe("TableCollection", () => {
     it("handles edge case with single page", async () => {
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={testColumns}
             source={createPaginatedTestSource(5, 10)}
           />
@@ -322,7 +378,12 @@ describe("TableCollection", () => {
     it("handles edge case with empty data", async () => {
       render(
         <TestWrapper>
-          <TableCollection<Person, TestFilters, ActionsDefinition<Person>>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
             columns={testColumns}
             source={createPaginatedTestSource(0, 10)}
           />

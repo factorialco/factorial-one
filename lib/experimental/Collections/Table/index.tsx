@@ -11,19 +11,25 @@ import { useI18n } from "@/lib/i18n-provider"
 import { ActionsDropdown } from "../Actions/Dropdown"
 import type { FiltersDefinition } from "../Filters/types"
 import { ActionsDefinition } from "../actions"
+import { SortingsDefinition } from "../sortings"
 import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
 
 export type TableColumnDefinition<T> = PropertyDefinition<T>
 
-export type TableVisualizationOptions<T> = {
+export type TableVisualizationOptions<
+  T extends RecordType,
+  _Filters extends FiltersDefinition,
+  _Sortings extends SortingsDefinition,
+> = {
   columns: ReadonlyArray<TableColumnDefinition<T>>
 }
 
 export const TableCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
   Actions extends ActionsDefinition<Record>,
 >({
   columns,
@@ -31,8 +37,9 @@ export const TableCollection = <
 }: CollectionProps<
   Record,
   Filters,
+  Sortings,
   Actions,
-  TableVisualizationOptions<Record>
+  TableVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
 
