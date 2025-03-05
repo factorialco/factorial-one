@@ -14,6 +14,7 @@ import { DataCollection, useDataSource } from "."
 import { PromiseState } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import { FilterDefinition, FiltersState } from "./Filters/types"
+import { SortingsDefinition } from "./sortings"
 import { DataAdapter, PaginatedResponse, Presets, RecordType } from "./types"
 import { useData } from "./useData"
 
@@ -492,6 +493,7 @@ const JsonVisualization = ({
     typeof useDataSource<
       (typeof mockUsers)[number],
       typeof filters,
+      SortingsDefinition,
       ActionsDefinition<(typeof mockUsers)[number]>
     >
   >
@@ -621,7 +623,11 @@ function createDataAdapter<
   useObservable = false,
   paginationType,
   perPage = 10,
-}: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters> {
+}: DataAdapterOptions<TRecord>): DataAdapter<
+  TRecord,
+  TFilters,
+  SortingsDefinition
+> {
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
@@ -651,7 +657,7 @@ function createDataAdapter<
   }
 
   if (paginationType === "pages") {
-    const adapter: DataAdapter<TRecord, TFilters> = {
+    const adapter: DataAdapter<TRecord, TFilters, SortingsDefinition> = {
       paginationType: "pages",
       perPage: undefined,
       fetchData: ({
@@ -692,7 +698,7 @@ function createDataAdapter<
     return adapter
   }
 
-  const adapter: DataAdapter<TRecord, TFilters> = {
+  const adapter: DataAdapter<TRecord, TFilters, SortingsDefinition> = {
     fetchData: ({ filters }: { filters: FiltersState<TFilters> }) => {
       const fetch = () => filterData(data, filters) as TRecord[]
 
@@ -766,6 +772,7 @@ export const WithMultipleVisualizations: Story = {
     const source = useDataSource<
       MockUser,
       typeof filters,
+      SortingsDefinition,
       ActionsDefinition<MockUser>
     >({
       filters,

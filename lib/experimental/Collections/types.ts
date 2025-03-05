@@ -205,6 +205,12 @@ export type DataSource<
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
   setCurrentFilters: React.Dispatch<React.SetStateAction<FiltersState<Filters>>>
+  /** Current state of applied sortings */
+  currentSortings: SortingsState<Sortings>
+  /** Function to update the current sortings state */
+  setCurrentSortings: React.Dispatch<
+    React.SetStateAction<SortingsState<Sortings>>
+  >
 }
 
 /**

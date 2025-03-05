@@ -34,6 +34,13 @@ const mockData: TestRecord[] = [
   { id: 2, name: "Test 2" },
 ]
 
+type TestSource = DataSource<
+  TestRecord,
+  TestFilters,
+  SortingsDefinition,
+  ActionsDefinition<TestRecord>
+>
+
 const createMockDataSource = (
   fetchData: (
     options: BaseFetchOptions<TestFilters, SortingsDefinition>
@@ -42,12 +49,7 @@ const createMockDataSource = (
     | Promise<BaseResponse<TestRecord>>
     | Observable<PromiseState<BaseResponse<TestRecord>>>,
   paginationType?: "pages"
-): DataSource<
-  TestRecord,
-  TestFilters,
-  SortingsDefinition,
-  ActionsDefinition<TestRecord>
-> => {
+): TestSource => {
   const baseAdapter: BaseDataAdapter<
     TestRecord,
     TestFilters,
@@ -82,6 +84,8 @@ const createMockDataSource = (
     dataAdapter: paginationType === "pages" ? paginatedAdapter : baseAdapter,
     currentFilters: {},
     setCurrentFilters: vi.fn(),
+    currentSortings: [],
+    setCurrentSortings: vi.fn(),
   }
 }
 
@@ -362,19 +366,12 @@ describe("useData", () => {
         },
         currentFilters: {},
         setCurrentFilters: vi.fn(),
+        currentSortings: [],
+        setCurrentSortings: vi.fn(),
       }
 
       // Render the hook
-      const { result } = renderHook(() =>
-        useData(
-          source as DataSource<
-            TestRecord,
-            TestFilters,
-            SortingsDefinition,
-            ActionsDefinition<TestRecord>
-          >
-        )
-      )
+      const { result } = renderHook(() => useData(source))
 
       // Wait for initial data to load
       await act(async () => {

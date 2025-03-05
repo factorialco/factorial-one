@@ -50,6 +50,8 @@ const createTestSource = (
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
+  currentSortings: [],
+  setCurrentSortings: vi.fn(),
   dataAdapter: {
     fetchData: async ({ filters: _filters }) => {
       if (error) throw error
@@ -238,6 +240,8 @@ describe("TableCollection", () => {
     > => ({
       currentFilters: {},
       setCurrentFilters: vi.fn(),
+      currentSortings: [],
+      setCurrentSortings: vi.fn(),
       dataAdapter: {
         paginationType: "pages",
         perPage: itemsPerPage,

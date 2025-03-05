@@ -2,7 +2,7 @@ import { useMemo, useState } from "react"
 import { ActionsDefinition } from "./actions"
 import { Filters } from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
-import { SortingsDefinition } from "./sortings"
+import { SortingsDefinition, SortingsState } from "./sortings"
 import type { DataSource, DataSourceDefinition, RecordType } from "./types"
 import type { Visualization } from "./visualizations"
 import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
@@ -41,6 +41,7 @@ import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 export const useDataSource = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
   Actions extends ActionsDefinition<Record>,
 >(
   {
@@ -49,12 +50,17 @@ export const useDataSource = <
     dataAdapter,
     actions,
     presets,
-  }: DataSourceDefinition<Record, Filters, SortingsDefinition, Actions>,
+  }: DataSourceDefinition<Record, Filters, Sortings, Actions>,
   deps: ReadonlyArray<unknown> = []
-): DataSource<Record, Filters, SortingsDefinition, Actions> => {
+): DataSource<Record, Filters, Sortings, Actions> => {
   const [currentFilters, setCurrentFilters] = useState<FiltersState<Filters>>(
     initialCurrentFilters
   )
+
+  const [currentSortings, setCurrentSortings] = useState<
+    SortingsState<Sortings>
+  >(() => [])
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
@@ -65,6 +71,8 @@ export const useDataSource = <
     dataAdapter,
     actions,
     presets,
+    currentSortings,
+    setCurrentSortings,
   }
 }
 

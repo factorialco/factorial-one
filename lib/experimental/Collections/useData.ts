@@ -167,7 +167,7 @@ export function useData<
   >,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
-  const { dataAdapter, currentFilters } = source
+  const { dataAdapter, currentFilters, currentSortings } = source
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
@@ -237,10 +237,10 @@ export function useData<
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 filters,
-                sortings: {},
+                sortings: currentSortings,
                 pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
               })
-            : dataAdapter.fetchData({ filters, sortings: {} })
+            : dataAdapter.fetchData({ filters, sortings: currentSortings })
 
         const result = fetcher()
 
@@ -274,7 +274,13 @@ export function useData<
         handleFetchError(error)
       }
     },
-    [dataAdapter, handleFetchSuccess, handleFetchError, setIsLoading]
+    [
+      handleFetchError,
+      dataAdapter,
+      currentSortings,
+      handleFetchSuccess,
+      setIsLoading,
+    ]
   )
 
   const setPage = useCallback(
