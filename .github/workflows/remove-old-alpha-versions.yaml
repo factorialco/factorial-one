@@ -1,0 +1,20 @@
+name: "Remove all alpha versions"
+
+on:
+  schedule:
+    - cron: "0 9 * * 1-5" # every weekday (Mon-fri) at 9am
+
+jobs:
+  clear-alpha-versions:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Remove old alpha versions of any PR
+        uses: ./.github/actions/cleanup-alpha-versions
+        with:
+          token: ${{ github.token }}
+          days: 5
+

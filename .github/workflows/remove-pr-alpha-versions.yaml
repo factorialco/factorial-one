@@ -1,4 +1,4 @@
-name: Build and Publish [ALPHA]
+name: Remove PR alpha versions on close
 
 on:
   pull_request:
@@ -19,10 +19,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pr-number: ${{ github.event.pull_request.number }} # PR that triggered the workflow
-
-      - name: Remove old alpha versions of any PR
-        uses: ./.github/actions/cleanup-alpha-versions
-        with:
-          token: ${{ github.token }}
-          days: 5
 
