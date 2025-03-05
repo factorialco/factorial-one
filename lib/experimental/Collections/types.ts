@@ -24,6 +24,8 @@ export type DataSourceDefinition<
   actions?: Actions
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
+  /** Available sorting fields. If not provided, sorting is not allowed. */
+  sortings?: Sortings
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters, Sortings>
 }

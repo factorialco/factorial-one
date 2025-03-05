@@ -176,7 +176,14 @@ const ExampleComponent = ({
   useObservable?: boolean
   usePresets?: boolean
 }) => {
-  const dataSource = useDataSource({
+  type MockUser = (typeof mockUsers)[number]
+
+  const dataSource = useDataSource<
+    MockUser,
+    typeof filters,
+    readonly [],
+    ActionsDefinition<MockUser>
+  >({
     filters,
     presets: usePresets ? filterPresets : undefined,
     actions: (item) => [
@@ -225,7 +232,10 @@ const ExampleComponent = ({
             type: "table",
             options: {
               columns: [
-                { label: "Name", render: (item) => item.name },
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                },
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
@@ -276,6 +286,7 @@ export const BasicTableView: Story = {
     const dataSource = useDataSource({
       filters,
       presets: filterPresets,
+      sortings: ["name"] as const,
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
@@ -321,7 +332,11 @@ export const BasicTableView: Story = {
               type: "table",
               options: {
                 columns: [
-                  { label: "Name", render: (item) => item.name },
+                  {
+                    label: "Name",
+                    render: (item) => item.name,
+                    sorting: "name",
+                  },
                   { label: "Email", render: (item) => item.email },
                   { label: "Role", render: (item) => item.role },
                   { label: "Department", render: (item) => item.department },
@@ -486,6 +501,8 @@ export const WithPreselectedFilters: Story = {
   },
 }
 
+const sortings = ["name"] as const
+
 const JsonVisualization = ({
   source,
 }: {
@@ -493,7 +510,7 @@ const JsonVisualization = ({
     typeof useDataSource<
       (typeof mockUsers)[number],
       typeof filters,
-      SortingsDefinition,
+      typeof sortings,
       ActionsDefinition<(typeof mockUsers)[number]>
     >
   >
@@ -519,6 +536,7 @@ export const WithCustomJsonView: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
+      sortings,
       dataAdapter: {
         fetchData: createObservableDataFetch(),
       },
@@ -546,7 +564,11 @@ export const WithCustomJsonView: Story = {
             type: "table",
             options: {
               columns: [
-                { label: "Name", render: (item) => item.name },
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                },
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
@@ -617,17 +639,14 @@ function createDataAdapter<
     department: string
   },
   TFilters extends Record<string, FilterDefinition<unknown>>,
+  TSortings extends SortingsDefinition,
 >({
   data,
   delay = 500,
   useObservable = false,
   paginationType,
   perPage = 10,
-}: DataAdapterOptions<TRecord>): DataAdapter<
-  TRecord,
-  TFilters,
-  SortingsDefinition
-> {
+}: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters, TSortings> {
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
@@ -657,7 +676,7 @@ function createDataAdapter<
   }
 
   if (paginationType === "pages") {
-    const adapter: DataAdapter<TRecord, TFilters, SortingsDefinition> = {
+    const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
       paginationType: "pages",
       perPage: undefined,
       fetchData: ({
@@ -698,7 +717,7 @@ function createDataAdapter<
     return adapter
   }
 
-  const adapter: DataAdapter<TRecord, TFilters, SortingsDefinition> = {
+  const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
     fetchData: ({ filters }: { filters: FiltersState<TFilters> }) => {
       const fetch = () => filterData(data, filters) as TRecord[]
 
@@ -736,7 +755,8 @@ export const WithCardVisualization: Story = {
       presets: filterPresets,
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
-        typeof filters
+        typeof filters,
+        typeof sortings
       >({
         data: mockUsers,
         delay: 1000,
@@ -772,10 +792,11 @@ export const WithMultipleVisualizations: Story = {
     const source = useDataSource<
       MockUser,
       typeof filters,
-      SortingsDefinition,
+      typeof sortings,
       ActionsDefinition<MockUser>
     >({
       filters,
+      sortings,
       presets: filterPresets,
       dataAdapter: {
         fetchData: () =>
@@ -806,7 +827,10 @@ export const WithMultipleVisualizations: Story = {
             type: "table",
             options: {
               columns: [
-                { label: "Name", render: (item: MockUser) => item.name },
+                {
+                  label: "Name",
+                  render: (item: MockUser) => item.name,
+                },
                 { label: "Email", render: (item: MockUser) => item.email },
               ],
             },
@@ -856,7 +880,8 @@ export const WithPagination: Story = {
       presets: filterPresets,
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
-        typeof filters
+        typeof filters,
+        typeof sortings
       >({
         data: paginatedMockUsers,
         delay: 500,

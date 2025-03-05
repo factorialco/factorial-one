@@ -16,12 +16,17 @@ import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
 
-export type TableColumnDefinition<
+export type WithOptionalSorting<
   Record,
   Sortings extends SortingsDefinition,
 > = PropertyDefinition<Record> & {
-  sorting?: Sortings[number]
+  sorting?: Sortings extends readonly [] | undefined ? never : Sortings[number]
 }
+
+export type TableColumnDefinition<
+  Record,
+  Sortings extends SortingsDefinition,
+> = WithOptionalSorting<Record, Sortings>
 
 export type TableVisualizationOptions<
   Record extends RecordType,
@@ -62,6 +67,17 @@ export const TableCollection = <
     )
   }
 
+  // Enforce that sorting is only used when sortings are defined
+  if (!source.sortings) {
+    columns.forEach((column) => {
+      if (column.sorting) {
+        console.warn(
+          "Sorting is defined on a column but no sortings are provided in the data source"
+        )
+      }
+    })
+  }
+
   return (
     <>
       <OneTable>
@@ -73,18 +89,18 @@ export const TableCollection = <
                 info={column.info}
                 width={column.width}
                 sortState={
-                  column.sorting
+                  column.sorting && source.sortings
                     ? currentSortings.find((s) => s.field === column.sorting)
                         ?.direction
                     : undefined
                 }
                 onSortClick={() => {
-                  if (!column.sorting) return
+                  if (!column.sorting || !source.sortings) return
+                  const sorting = column.sorting as Sortings[number]
                   setCurrentSortings((prev) => {
                     const existingSorting = prev.find(
-                      (s) => s.field === column.sorting
+                      (s) => s.field === sorting
                     )
-                    const sorting = column.sorting as Sortings[number]
                     return existingSorting?.direction === "asc"
                       ? [{ field: sorting, direction: "desc" }]
                       : [{ field: sorting, direction: "asc" }]
