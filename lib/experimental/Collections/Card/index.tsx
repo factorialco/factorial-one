@@ -5,13 +5,18 @@ import { OnePagination } from "../../OnePagination"
 import { ActionsDefinition } from "../actions"
 import { ActionsDropdown } from "../Actions/Dropdown"
 import type { FiltersDefinition } from "../Filters/types"
+import { SortingsDefinition } from "../sortings"
 import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
 
-export type CardVisualizationOptions<T> = {
+export type CardVisualizationOptions<
+  T,
+  _Filters extends FiltersDefinition,
+  _Sortings extends SortingsDefinition,
+> = {
   cardProperties: ReadonlyArray<CardPropertyDefinition<T>>
   title: (record: T) => string
 }
@@ -19,6 +24,7 @@ export type CardVisualizationOptions<T> = {
 export const CardCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
   Actions extends ActionsDefinition<Record>,
 >({
   cardProperties,
@@ -27,8 +33,9 @@ export const CardCollection = <
 }: CollectionProps<
   Record,
   Filters,
+  Sortings,
   Actions,
-  CardVisualizationOptions<Record>
+  CardVisualizationOptions<Record, Filters, Sortings>
 >) => {
   // We override this to force a perPage of 24 (unless set at the dataAdapter
   // level), which is a multiple of 2, 3 and 4 This is to ensure that the cards
@@ -48,7 +55,8 @@ export const CardCollection = <
 
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
     Record,
-    Filters
+    Filters,
+    Sortings
   >(overridenSource)
 
   return (
