@@ -65,8 +65,6 @@ export function DaytimePage({
 }: DaytimePageProps) {
   const { sidebarState, toggleSidebar, isSmallScreen } = useSidebar()
 
-  console.log({ isSmallScreen })
-
   return (
     <div
       className={`relative flex w-full flex-col overflow-hidden ${
@@ -101,7 +99,7 @@ export function DaytimePage({
               />
               <p
                 className={cn(
-                  isSmallScreen ? "text-lg" : "text-xl",
+                  isSmallScreen ? "text-lg" : "text-2xl",
                   "font-semibold text-f1-foreground"
                 )}
               >
