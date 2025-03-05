@@ -184,7 +184,7 @@ export type CollectionProps<
 export type DataSource<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Actions extends ActionsDefinition<Record>,
+  Actions extends ActionsDefinition<Record> = ActionsDefinition<Record>,
 > = DataSourceDefinition<Record, Filters, Actions> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>

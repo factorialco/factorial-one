@@ -24,7 +24,7 @@ import type { DataSource, RecordType } from "./types"
 export type Visualization<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Actions extends ActionsDefinition<Record>,
+  Actions extends ActionsDefinition<Record> = ActionsDefinition<Record>,
 > =
   | {
       /** Card-based visualization type */
