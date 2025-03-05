@@ -11,7 +11,7 @@ import { useI18n } from "@/lib/i18n-provider"
 import { ActionsDropdown } from "../Actions/Dropdown"
 import type { FiltersDefinition } from "../Filters/types"
 import { ActionsDefinition } from "../actions"
-import { SortingsDefinition } from "../sortings"
+import { SortingKey, SortingsDefinition } from "../sortings"
 import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
@@ -20,7 +20,9 @@ export type WithOptionalSorting<
   Record,
   Sortings extends SortingsDefinition,
 > = PropertyDefinition<Record> & {
-  sorting?: Sortings extends readonly [] | undefined ? never : Sortings[number]
+  sorting?: Sortings extends readonly [] | undefined
+    ? never
+    : SortingKey<Sortings>
 }
 
 export type TableColumnDefinition<
@@ -96,7 +98,10 @@ export const TableCollection = <
                 }
                 onSortClick={() => {
                   if (!column.sorting || !source.sortings) return
-                  const sorting = column.sorting as Sortings[number]
+
+                  // Use the SortingKey type to handle both array and object sortings
+                  const sorting = column.sorting as SortingKey<Sortings>
+
                   setCurrentSortings((prev) => {
                     const existingSorting = prev.find(
                       (s) => s.field === sorting
@@ -148,7 +153,10 @@ export const TableCollection = <
       {paginationInfo && (
         <div className="flex w-full items-center justify-between py-3">
           <span className="shrink-0 text-f1-foreground-secondary">
-            {`${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(paginationInfo.currentPage * paginationInfo.perPage, paginationInfo.total)} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
+            {`${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
+              paginationInfo.currentPage * paginationInfo.perPage,
+              paginationInfo.total
+            )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
           </span>
           <div className="flex items-center">
             <OnePagination

@@ -22,14 +22,31 @@ A data source is created using the `useDataSource` hook and provides:
 
 ### Sorting API
 
-Collections supports type-safe sorting with the `sortable` helper function:
+Collections supports type-safe sorting with two approaches:
+
+1. Using the `sortable` helper function:
 
 ```tsx
 import { sortable } from "@/experimental/Collections/sortings"
 
 // Create a type-safe sortings definition
 const sortings = sortable("name", "email", "department")
+```
 
+2. Using an object-based approach (recommended):
+
+```tsx
+// Create a type-safe sortings definition with an object
+const sortings = { name: true, email: true, department: true } as const
+```
+
+Both approaches provide proper TypeScript inference for your sortable fields.
+The object-based approach offers cleaner syntax and provides better type safety
+with explicit keys.
+
+The data source can then use these sortings:
+
+```tsx
 const dataSource = useDataSource({
   filters,
   // Pass the sortings to useDataSource
@@ -38,17 +55,6 @@ const dataSource = useDataSource({
     fetchData: createPromiseDataFetch(),
   },
 })
-```
-
-This approach provides proper TypeScript inference without needing to use
-`as const`:
-
-```tsx
-// ❌ Old approach (avoid)
-const sortings = ["name", "email"] as const
-
-// ✅ New approach (preferred)
-const sortings = sortable("name", "email")
 ```
 
 ## Visualizations

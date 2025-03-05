@@ -1,7 +1,7 @@
-export type SortingsDefinition = readonly string[]
+export type SortingsDefinition = Record<string, true>
 
 export type SortingsState<Definition extends SortingsDefinition> = Array<{
-  field: Definition[number]
+  field: keyof Definition
   direction: "asc" | "desc"
 }>
 
@@ -15,8 +15,17 @@ export type SortingsState<Definition extends SortingsDefinition> = Array<{
  *
  * // You can now use:
  * sortings: sortable("name", "email")
+ *
+ * // Or with the object approach:
+ * sortings: { name: true, email: true } as const
  * ```
  */
 export function sortable<T extends string>(...fields: T[]): readonly T[] {
   return fields
 }
+
+/**
+ * Type helper to extract keys from a SortingsDefinition
+ */
+export type SortingKey<Definition extends SortingsDefinition> =
+  Definition extends readonly string[] ? Definition[number] : keyof Definition

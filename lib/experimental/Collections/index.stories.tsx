@@ -14,7 +14,7 @@ import { DataCollection, useDataSource } from "."
 import { PromiseState } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import { FilterDefinition, FiltersState } from "./Filters/types"
-import { SortingsDefinition, sortable } from "./sortings"
+import { SortingsDefinition } from "./sortings"
 import { DataAdapter, PaginatedResponse, Presets, RecordType } from "./types"
 import { useData } from "./useData"
 
@@ -178,15 +178,11 @@ const ExampleComponent = ({
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
-  const dataSource = useDataSource<
-    MockUser,
-    typeof filters,
-    readonly [],
-    ActionsDefinition<MockUser>
-  >({
+  const dataSource = useDataSource({
     filters,
     presets: usePresets ? filterPresets : undefined,
-    actions: (item) => [
+    sortings,
+    actions: (item: MockUser) => [
       {
         label: "Edit",
         icon: Pencil,
@@ -286,7 +282,11 @@ export const BasicTableView: Story = {
     const dataSource = useDataSource({
       filters,
       presets: filterPresets,
-      sortings: sortable("name", "test"),
+      sortings: {
+        name: true,
+        email: true,
+        department: true,
+      },
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
@@ -501,7 +501,12 @@ export const WithPreselectedFilters: Story = {
   },
 }
 
-const sortings = sortable("name")
+// Example of using the object-based approach (recommended)
+const sortings = {
+  name: true,
+  email: true,
+  department: true,
+} as const
 
 const JsonVisualization = ({
   source,
