@@ -221,7 +221,7 @@ const CarouselPrevious = React.forwardRef<
     <div
       className={cn(
         "absolute flex h-6 w-6 items-center justify-center rounded-sm bg-f1-background opacity-0 backdrop-blur-sm transition-opacity group-hover/carousel:opacity-100",
-        !canScrollPrev && "disabled:opacity-0",
+        !canScrollPrev && "opacity-0 group-hover/carousel:opacity-0",
         orientation === "horizontal"
           ? "-left-3 top-1/2 -translate-y-1/2"
           : "-top-3 left-1/2 -translate-x-1/2 rotate-90"
@@ -259,7 +259,7 @@ const CarouselNext = React.forwardRef<
     <div
       className={cn(
         "absolute flex h-6 w-6 items-center justify-center rounded-sm bg-f1-background opacity-0 backdrop-blur-sm transition-opacity group-hover/carousel:opacity-100",
-        !canScrollNext && "disabled:opacity-0",
+        !canScrollNext && "opacity-0 group-hover/carousel:opacity-0",
         orientation === "horizontal"
           ? "-right-3 top-1/2 -translate-y-1/2"
           : "-bottom-3 left-1/2 -translate-x-1/2 rotate-90"
@@ -325,6 +325,25 @@ const CarouselDots = React.forwardRef<
     })
   }, [currentSlide])
 
+  // Prevent user scrolling
+  React.useEffect(() => {
+    const container = dotsContainerRef.current
+    if (!container) return
+
+    const preventScroll = (e: Event) => {
+      e.preventDefault()
+      e.stopPropagation()
+    }
+
+    container.addEventListener("wheel", preventScroll, { passive: false })
+    container.addEventListener("touchmove", preventScroll, { passive: false })
+
+    return () => {
+      container.removeEventListener("wheel", preventScroll)
+      container.removeEventListener("touchmove", preventScroll)
+    }
+  }, [])
+
   if (numberOfSlides <= 1) {
     return null
   }
@@ -359,7 +378,7 @@ const CarouselDots = React.forwardRef<
       >
         <div
           ref={dotsContainerRef}
-          className="pointer-events-none flex w-full touch-none select-none gap-0 overflow-x-scroll"
+          className="flex w-full gap-0 overflow-x-scroll"
           style={{
             scrollbarWidth: "none",
             overscrollBehavior: "none",
@@ -371,6 +390,7 @@ const CarouselDots = React.forwardRef<
               className="group/dot flex h-4 w-4 flex-shrink-0 items-center justify-center p-0"
               aria-label={`Go to slide ${i + 1}`}
               onClick={() => api?.scrollTo(i)}
+              tabIndex={-1}
             >
               <div
                 className={cn(
