@@ -1,3 +1,8 @@
+import { Button } from "@/components/Actions/Button"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
+import Menu from "@/icons/app/Menu"
+import { cn } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
 
 interface PageProps {
@@ -43,7 +48,12 @@ const daytimePageVariants = cva({
 export interface DaytimePageProps
   extends VariantProps<typeof daytimePageVariants> {
   children?: React.ReactNode
-  header?: React.ReactNode
+  header?: {
+    title: string
+    employeeFirstName: string
+    employeeLastName: string
+    employeeAvatar?: string
+  }
   embedded?: boolean
 }
 
@@ -53,6 +63,10 @@ export function DaytimePage({
   period,
   embedded = false,
 }: DaytimePageProps) {
+  const { sidebarState, toggleSidebar, isSmallScreen } = useSidebar()
+
+  console.log({ isSmallScreen })
+
   return (
     <div
       className={`relative flex w-full flex-col overflow-hidden ${
@@ -60,7 +74,43 @@ export function DaytimePage({
       } bg-f1-page shadow`}
     >
       <div className={daytimePageVariants({ period })} />
-      {header && <div className="flex flex-col">{header}</div>}
+      {header && (
+        <div className="@container">
+          <div className="flex flex-row items-center gap-2 px-5 py-4 @5xl:px-6">
+            {(isSmallScreen || sidebarState === "hidden") && (
+              <Button
+                variant="ghost"
+                onClick={toggleSidebar}
+                label="Open main menu"
+                icon={Menu}
+                hideLabel
+                round
+              />
+            )}
+            <div
+              className={cn(
+                "flex flex-row items-center",
+                isSmallScreen ? "gap-1.5" : "gap-2"
+              )}
+            >
+              <PersonAvatar
+                src={header.employeeAvatar}
+                firstName={header.employeeFirstName}
+                lastName={header.employeeLastName}
+                size={isSmallScreen ? "small" : "medium"}
+              />
+              <p
+                className={cn(
+                  isSmallScreen ? "text-lg" : "text-xl",
+                  "font-semibold text-f1-foreground"
+                )}
+              >
+                {header.title}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="isolate flex w-full flex-1 flex-col overflow-y-auto [&>*]:flex-1">
         {children}
       </div>

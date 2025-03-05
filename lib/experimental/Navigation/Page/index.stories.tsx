@@ -12,6 +12,7 @@ import { Default as DefaultHomeLayoutStory } from "@/experimental/PageLayouts/Ho
 import { StandardLayout } from "@/experimental/PageLayouts/StandardLayout"
 import { Briefcase } from "@/icons/app"
 import { ComponentProps } from "react"
+import { ApplicationFrame } from "../ApplicationFrame"
 
 type TabsProps = ComponentProps<typeof Tabs>
 
@@ -24,9 +25,11 @@ const meta: Meta<typeof Page> = {
   },
   decorators: [
     (Story) => (
-      <div className="bg-f1-background-tertiary p-2">
-        <Story />
-      </div>
+      <ApplicationFrame sidebar={null}>
+        <div className="flex-grow bg-f1-background-tertiary p-2">
+          <Story />
+        </div>
+      </ApplicationFrame>
     ),
   ],
 }
@@ -259,11 +262,12 @@ export const DaytimeHomeLayout: Story = {
   render: ({ period }) => (
     <DaytimePage
       period={period}
-      header={
-        <div className="px-3 py-4 lg:px-6">
-          <p className="text-xl font-semibold">Good morning, Saul!</p>
-        </div>
-      }
+      header={{
+        employeeFirstName: "Saul",
+        employeeLastName: "Goodman",
+        title: "Good morning, Saul!",
+        employeeAvatar: "https://github.com/sauldom102.png",
+      }}
     >
       <HomeLayout {...DefaultHomeLayoutStory.args} />
     </DaytimePage>
