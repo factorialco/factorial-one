@@ -313,9 +313,15 @@ export const BasicTableView: Story = {
       filters,
       presets: filterPresets,
       sortings: {
-        name: true,
-        email: true,
-        department: true,
+        name: {
+          label: "Name",
+        },
+        email: {
+          label: "Email",
+        },
+        department: {
+          label: "Department",
+        },
       },
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -533,9 +539,15 @@ export const WithPreselectedFilters: Story = {
 
 // Example of using the object-based approach (recommended)
 const sortings = {
-  name: true,
-  email: true,
-  department: true,
+  name: {
+    label: "Name",
+  },
+  email: {
+    label: "Email",
+  },
+  department: {
+    label: "Department",
+  },
 } as const
 
 const JsonVisualization = ({

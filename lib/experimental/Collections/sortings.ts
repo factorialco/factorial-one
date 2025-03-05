@@ -1,4 +1,9 @@
-export type SortingsDefinition = Record<string, true>
+export type SortingsDefinition = Record<
+  string,
+  {
+    label: string
+  }
+>
 
 export type SortingsState<Definition extends SortingsDefinition> = {
   field: keyof Definition
