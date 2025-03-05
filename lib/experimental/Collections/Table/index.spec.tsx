@@ -1,6 +1,13 @@
 import { I18nProvider } from "@/lib/i18n-provider"
 import { defaultTranslations } from "@/lib/i18n-provider-defaults"
-import { render, renderHook, screen, waitFor } from "@testing-library/react"
+import {
+  act,
+  render,
+  renderHook,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react"
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { TableCollection } from "."
@@ -398,6 +405,315 @@ describe("TableCollection", () => {
         // With empty data, there should be no pagination controls
         expect(screen.queryByRole("navigation")).not.toBeInTheDocument()
       })
+    })
+  })
+
+  describe("sorting", () => {
+    it("allows sorting by column with a sorting key", async () => {
+      // Create a modified source with sorting capability
+      const sortableSource = {
+        ...createTestSource(),
+        currentSortings: null,
+        setCurrentSortings: vi.fn(),
+        sortings: {
+          name: { label: "Name" },
+          email: { label: "Email" },
+        },
+      }
+
+      // Create columns with sorting keys
+      const columnsWithSorting = [
+        {
+          label: "name",
+          render: (item: Person) => item.name,
+          sorting: "name" as const,
+        },
+        {
+          label: "email",
+          render: (item: Person) => item.email,
+          sorting: "email" as const,
+        },
+      ]
+
+      render(
+        <TestWrapper>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
+            columns={columnsWithSorting}
+            source={sortableSource}
+          />
+        </TestWrapper>
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText(testData[0].name)).toBeInTheDocument()
+      })
+
+      // Get the header cells - we need to find the th element that contains the name text
+      const headerCells = screen.getAllByRole("columnheader")
+      const nameHeader = headerCells.find((cell) =>
+        cell.textContent?.includes("name")
+      )
+
+      // Verify column headers have sort buttons and aria-sort attribute
+      expect(nameHeader).toHaveAttribute("aria-sort", "none")
+    })
+
+    it("calls setCurrentSortings when a sortable column is clicked", async () => {
+      // Given a table with sortable columns
+      const setCurrentSortingsMock = vi.fn()
+
+      const modifiedSource = {
+        ...createTestSource(),
+        currentSortings: null,
+        setCurrentSortings: setCurrentSortingsMock,
+        sortings: {
+          name: { label: "Name" },
+        },
+      }
+
+      render(
+        <TestWrapper>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
+            columns={[
+              {
+                label: "name",
+                render: (item: Person) => item.name,
+                sorting: "name" as const,
+              },
+              {
+                label: "email",
+                render: (item: Person) => item.email,
+              },
+            ]}
+            source={modifiedSource}
+          />
+        </TestWrapper>
+      )
+
+      // Wait for the table to load and verify it's rendered
+      await waitFor(() => {
+        expect(screen.getByText(testData[0].name)).toBeInTheDocument()
+      })
+
+      // Find the header with the sortable column
+      const headers = screen.getAllByRole("columnheader")
+      const nameHeader = headers[0]
+      const sortButton = within(nameHeader).queryByRole("button")
+
+      // When we click the sort button
+      act(() => {
+        if (sortButton) {
+          ;(sortButton as HTMLButtonElement).click()
+        }
+      })
+
+      // Then setCurrentSortings should be called with a function
+      expect(setCurrentSortingsMock).toHaveBeenCalled()
+
+      // Execute the function passed to setCurrentSortings
+      const setStateFn = setCurrentSortingsMock.mock.calls[0][0]
+      const result = setStateFn()
+
+      // Check the result of the function
+      expect(result).toEqual({
+        field: "name",
+        direction: "asc",
+      })
+    })
+
+    it("toggles sort direction when clicking the same column twice", async () => {
+      // Given a table with sortings already applied
+      const setCurrentSortingsMock = vi.fn()
+
+      const modifiedSource = {
+        ...createTestSource(),
+        currentSortings: {
+          field: "name",
+          direction: "asc" as const,
+        },
+        setCurrentSortings: setCurrentSortingsMock,
+        sortings: {
+          name: { label: "Name" },
+        },
+      }
+
+      render(
+        <TestWrapper>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
+            columns={[
+              {
+                label: "name",
+                render: (item: Person) => item.name,
+                sorting: "name" as const,
+              },
+              {
+                label: "email",
+                render: (item: Person) => item.email,
+              },
+            ]}
+            source={modifiedSource}
+          />
+        </TestWrapper>
+      )
+
+      // Wait for the table to load and verify it's rendered
+      await waitFor(() => {
+        expect(screen.getByText(testData[0].name)).toBeInTheDocument()
+      })
+
+      // Find the header with the sortable column
+      const headers = screen.getAllByRole("columnheader")
+      const nameHeader = headers[0]
+      const sortButton = within(nameHeader).queryByRole("button")
+
+      // Check that aria-sort is correctly set to "ascending"
+      expect(nameHeader).toHaveAttribute("aria-sort", "ascending")
+
+      // When we click the sort button again
+      act(() => {
+        if (sortButton) {
+          ;(sortButton as HTMLButtonElement).click()
+        }
+      })
+
+      // Then setCurrentSortings should be called with a function
+      expect(setCurrentSortingsMock).toHaveBeenCalled()
+
+      // Execute the function passed to setCurrentSortings
+      const setStateFn = setCurrentSortingsMock.mock.calls[0][0]
+      const result = setStateFn()
+
+      // Check the result of the function
+      expect(result).toEqual({
+        field: "name",
+        direction: "desc",
+      })
+    })
+
+    it("clears sorting when clicking a sorted column in desc order", async () => {
+      // Given a table with desc sortings already applied
+      const setCurrentSortingsMock = vi.fn()
+
+      const modifiedSource = {
+        ...createTestSource(),
+        currentSortings: {
+          field: "name",
+          direction: "desc" as const,
+        },
+        setCurrentSortings: setCurrentSortingsMock,
+        sortings: {
+          name: { label: "Name" },
+        },
+      }
+
+      render(
+        <TestWrapper>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
+            columns={[
+              {
+                label: "name",
+                render: (item: Person) => item.name,
+                sorting: "name" as const,
+              },
+              {
+                label: "email",
+                render: (item: Person) => item.email,
+              },
+            ]}
+            source={modifiedSource}
+          />
+        </TestWrapper>
+      )
+
+      // Wait for the table to load and verify it's rendered
+      await waitFor(() => {
+        expect(screen.getByText(testData[0].name)).toBeInTheDocument()
+      })
+
+      // Find the header with the sortable column
+      const headers = screen.getAllByRole("columnheader")
+      const nameHeader = headers[0]
+      const sortButton = within(nameHeader).queryByRole("button")
+
+      // Check that aria-sort is correctly set to "descending"
+      expect(nameHeader).toHaveAttribute("aria-sort", "descending")
+
+      // When we click the sort button again
+      act(() => {
+        if (sortButton) {
+          ;(sortButton as HTMLButtonElement).click()
+        }
+      })
+
+      // Then setCurrentSortings should be called with a function
+      expect(setCurrentSortingsMock).toHaveBeenCalled()
+
+      // Execute the function passed to setCurrentSortings
+      const setStateFn = setCurrentSortingsMock.mock.calls[0][0]
+      const result = setStateFn()
+
+      // Check the result of the function
+      expect(result).toBeNull()
+    })
+
+    it("warns when sorting is used without sortings defined in source", async () => {
+      // Spy on console.warn
+      const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
+
+      // Create columns with sorting but don't provide sortings in source
+      const columnsWithSorting = [
+        {
+          label: "name",
+          render: (item: Person) => item.name,
+          sorting: "name" as const,
+        },
+      ]
+
+      render(
+        <TestWrapper>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ActionsDefinition<Person>
+          >
+            columns={columnsWithSorting}
+            source={createTestSource()} // No sortings defined
+          />
+        </TestWrapper>
+      )
+
+      await waitFor(() => {
+        expect(screen.getByText(testData[0].name)).toBeInTheDocument()
+      })
+
+      // Verify warning was logged
+      expect(consoleSpy).toHaveBeenCalledWith(
+        "Sorting is defined on a column but no sortings are provided in the data source"
+      )
+
+      // Clean up mock
+      consoleSpy.mockRestore()
     })
   })
 })
