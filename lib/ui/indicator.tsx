@@ -13,7 +13,7 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
   function Indicator({ content, label, icon, color }, ref) {
     return (
       <div key={label} className="grid-row-2 col-span-1 grid" ref={ref}>
-        <p className="text-2xl font-semibold">{content}</p>
+        <p className="text-3xl font-semibold">{content}</p>
         <div className="flex items-center gap-1">
           <p
             className="line-clamp-1 text-f1-foreground-secondary"

@@ -62,7 +62,7 @@ export function ClockInGraph({
 
       {/* Time display */}
       <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-semibold tabular-nums text-f1-foreground">
+        <span className="text-3xl font-semibold tabular-nums text-f1-foreground">
           {time}
         </span>
       </div>
