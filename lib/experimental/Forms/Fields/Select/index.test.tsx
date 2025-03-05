@@ -11,16 +11,31 @@ const mockOptions: SelectItemProps<string>[] = [
     label: "Option 1",
     icon: Search,
     description: "Description 1",
+    item: {
+      id: "option1",
+      name: "Option 1",
+      description: "Description 1",
+    },
   },
   {
     value: "option2",
     label: "Option 2",
+    item: {
+      id: "option2",
+      name: "Option 2",
+      description: "Description 2",
+    },
   },
   "separator" as const,
   {
     value: "option3",
     label: "Option 3",
     description: "Description 3",
+    item: {
+      id: "option3",
+      name: "Option 3",
+      description: "Description 3",
+    },
   },
 ]
 
@@ -63,18 +78,6 @@ describe("Select", () => {
     expect(screen.getByText("Option 2")).toBeInTheDocument()
     expect(screen.getByText("Option 3")).toBeInTheDocument()
     expect(screen.getByText("Description 1")).toBeInTheDocument()
-  })
-
-  it("calls onChange when option is selected", async () => {
-    const handleChange = vi.fn()
-    const user = userEvent.setup()
-
-    render(<Select options={mockOptions} onChange={handleChange} />)
-
-    await user.click(screen.getByRole("combobox"))
-    await user.click(screen.getByText("Option 1"))
-
-    expect(handleChange).toHaveBeenCalledWith("option1")
   })
 
   it("displays selected value", () => {
@@ -165,5 +168,49 @@ describe("Select", () => {
     )
 
     expect(screen.getByText("Custom Trigger")).toBeInTheDocument()
+  })
+
+  it("calls onChange when option is selected with item", async () => {
+    const handleChange = vi.fn()
+    const user = userEvent.setup()
+
+    render(<Select options={mockOptions} onChange={handleChange} />)
+
+    await user.click(screen.getByRole("combobox"))
+    await user.click(screen.getByText("Option 1"))
+
+    expect(handleChange).toHaveBeenCalledWith("option1", {
+      id: "option1",
+      name: "Option 1",
+      description: "Description 1",
+    })
+  })
+
+  it("calls onChange when option is selected without item", async () => {
+    const handleChange = vi.fn()
+    const user = userEvent.setup()
+
+    const mockOptions: SelectItemProps<string>[] = [
+      {
+        value: "option1",
+        label: "Option 1",
+      },
+      {
+        value: "option2",
+        label: "Option 2",
+      },
+      "separator" as const,
+      {
+        value: "option3",
+        label: "Option 3",
+      },
+    ]
+
+    render(<Select options={mockOptions} onChange={handleChange} />)
+
+    await user.click(screen.getByRole("combobox"))
+    await user.click(screen.getByText("Option 1"))
+
+    expect(handleChange).toHaveBeenCalledWith("option1", undefined)
   })
 })

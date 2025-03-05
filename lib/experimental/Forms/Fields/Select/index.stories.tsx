@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { Select, SelectProps } from "."
 
+import { IconType } from "@/components/Utilities/Icon"
 import { Appearance, Circle, Desktop } from "@/icons/app"
 import { useState } from "react"
 
@@ -10,9 +11,9 @@ const SelectWithHooks = (props: SelectProps<string>) => {
   const [localValue, setLocalValue] = useState(props.value)
   const [, setSearchValue] = useState("")
   // Sets a click handler to change the label's value
-  const handleOnChange = (value: string) => {
+  const handleOnChange = (value: string, item?: Record<string, string>) => {
     setLocalValue(value)
-    console.log("value", value)
+    console.log("selected value:", value, "- selected item:", item)
   }
 
   const handleOnSearchChange = (value: string) => {
@@ -29,6 +30,30 @@ const SelectWithHooks = (props: SelectProps<string>) => {
     />
   )
 }
+
+const icons: Record<string, IconType> = {
+  light: Circle,
+  dark: Appearance,
+  system: Desktop,
+}
+const items = [
+  {
+    id: "light",
+    name: "Light",
+    description: "A bright and airy theme for a visually appealing interface",
+    extra: 123,
+  },
+  {
+    id: "dark",
+    name: "Dark",
+    description: "A sleek and modern theme for a sophisticated look",
+  },
+  {
+    id: "system",
+    name: "System",
+    description: "A theme that adapts to the system's default appearance",
+  },
+]
 
 const meta: Meta = {
   title: "Input/Select",
@@ -74,34 +99,27 @@ const meta: Meta = {
         "  description?: string\n" +
         "  avatar?: AvatarVariant\n" +
         "  icon?: IconType\n" +
+        "  item?: unknown\n" +
         "}```",
+    },
+    onChange: {
+      description:
+        "Function to handle the change event. Returns the value of the selected option, and the item object if it exists",
     },
   },
   args: {
     placeholder: "Select a theme",
     onChange: fn(),
     value: "light",
-    options: [
-      {
-        value: "light",
-        label: "Light",
-        icon: Circle,
-        description:
-          "A bright and airy theme for a visually appealing interface",
-      },
-      {
-        value: "dark",
-        label: "Dark",
-        icon: Appearance,
-        description: "A sleek and modern theme for a sophisticated look",
-      },
-      {
-        value: "system",
-        label: "System",
-        icon: Desktop,
-        description: "A theme that adapts to the system's default appearance",
-      },
-    ],
+    options: items.map((item) => {
+      return {
+        value: item.id,
+        label: item.name,
+        icon: icons[item.id],
+        description: item.description,
+        item,
+      }
+    }),
     disabled: false,
     showSearchBox: false,
   },

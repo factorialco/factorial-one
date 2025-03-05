@@ -17,12 +17,13 @@ import type { SelectItemObject, SelectItemProps } from "./types"
 
 export * from "./types"
 
-export type SelectProps<T> = {
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Allow to pass anything as item */
+export type SelectProps<T, R = any> = {
   placeholder?: string
-  onChange: (value: T) => void
+  onChange: (value: T, item?: R) => void
   value?: T
-  defaultItem?: SelectItemObject<T>
-  options: SelectItemProps<T>[]
+  defaultItem?: SelectItemObject<T, R>
+  options: SelectItemProps<T, R>[]
   children?: React.ReactNode
   disabled?: boolean
   open?: boolean
@@ -142,7 +143,13 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
     const onValueChange = (value: string) => {
       // Resets the search value when the option is selected
       setSearchValue("")
-      onChange?.(value)
+      onChange?.(
+        value,
+        options.find(
+          (option): option is SelectItemObject<string> =>
+            typeof option === "object" && option.value === value
+        )?.item
+      )
     }
 
     const onOpenChangeLocal = (open: boolean) => {
@@ -162,7 +169,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
                 item: <SelectSeparator key={`separator-${index}`} />,
               }
             : {
-                height: 64,
+                height: option.description ? 64 : 32,
                 item: <SelectItem key={option.value} item={option} />,
                 value: option.value,
               }
