@@ -2,6 +2,7 @@
 import react from "@vitejs/plugin-react"
 import { consola } from "consola"
 import dotenv from "dotenv"
+import { spawnSync } from "node:child_process"
 import path, { resolve } from "path"
 import { defineConfig, Plugin } from "vite"
 import dts from "vite-plugin-dts"
@@ -39,6 +40,12 @@ if (buildSync) {
     .join(":")
 
   extraPlugins.push(
+    {
+      name: "build-tailwind",
+      async closeBundle() {
+        spawnSync("pnpm", ["build:tailwind"], { stdio: "inherit" })
+      },
+    },
     buildSyncPlugin({
       target,
     })
@@ -76,7 +83,7 @@ export default defineConfig({
       },
       formats: ["es"],
     },
-    outDir: "dist/lib",
+    outDir: "dist",
     copyPublicDir: false,
     rollupOptions: {
       external: ["react/jsx-runtime", "react", "react-dom"],

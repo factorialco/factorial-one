@@ -58,12 +58,17 @@ export function buildSyncPlugin(pluginConfig: CoderSyncPluginConfig) {
       )
       try {
         const start = Date.now()
-        spawnSync("rsync", [
+        const { output, status } = spawnSync("rsync", [
           "-avz",
           "--delete",
           ...sources,
           pluginConfig.target,
         ])
+
+        if (status) {
+          throw new Error(output.join("\n"))
+        }
+
         consola.success(
           consolaPrefix,
           "Files synced in ",
