@@ -161,7 +161,7 @@ const Container = forwardRef<
                 <div className="mb-0.5 text-sm text-f1-foreground-secondary">
                   {summary.label}
                 </div>
-                <div className="flex flex-row items-end gap-0.5 text-xl font-semibold">
+                <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
                   {!!summary.prefixUnit && (
                     <div className="text-lg font-medium">
                       {summary.prefixUnit}

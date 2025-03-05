@@ -8,8 +8,9 @@ export type BaseFilterDefinition = {
 }
 
 /**
- * Option type for InFilter
- * @template T - Type of value
+ * Represents a selectable option in filter components.
+ * Used primarily with InFilterDefinition.
+ * @template T - Type of the underlying value
  */
 export type FilterOption<T = unknown> = {
   /** The value used for filtering */
@@ -48,6 +49,7 @@ export type SearchFilterDefinition = BaseFilterDefinition & {
 
 /**
  * Union of all available filter types.
+ * Used to define possible filter configurations in a collection.
  * @template T - Type of values for the InFilterDefinition
  */
 export type FilterDefinition<T = unknown> =
@@ -58,6 +60,8 @@ export type FilterDefinition<T = unknown> =
  * Extracts the appropriate value type for a given filter:
  * - InFilter -> Array of selected values of type T
  * - SearchFilter -> Search string
+ *
+ * This type is used to ensure type safety when working with filter values.
  * @template T - The filter definition type
  */
 export type FilterValue<T extends FilterDefinition> =
@@ -70,6 +74,7 @@ export type FilterValue<T extends FilterDefinition> =
 /**
  * Current state of all filters in a collection.
  * Maps filter keys to their current values.
+ * This represents the active filter selections at any given time.
  * @template Definition - Record of filter definitions
  */
 export type FiltersState<Definition extends Record<string, FilterDefinition>> =
@@ -80,6 +85,7 @@ export type FiltersState<Definition extends Record<string, FilterDefinition>> =
 /**
  * Record of filter definitions for a collection.
  * Maps filter keys to their respective definitions.
+ * Used to configure the available filters for a collection.
  * @template Keys - String literal type for filter keys
  */
 export type FiltersDefinition<Keys extends string = string> = Record<
@@ -88,7 +94,8 @@ export type FiltersDefinition<Keys extends string = string> = Record<
 >
 
 /**
- * Configuration options for filters.
+ * Configuration options for filters in a collection.
+ * Defines the structure and behavior of available filters.
  * @template FilterKeys - String literal type for filter keys
  */
 export type FilterOptions<FilterKeys extends string> = Record<
@@ -99,6 +106,7 @@ export type FilterOptions<FilterKeys extends string> = Record<
 /**
  * Extracts the current filters type from filter options.
  * Creates a type mapping filter keys to their respective value types.
+ * Used for type-safe access to filter values.
  * @template F - The filter options type
  */
 export type CurrentFilters<F extends FilterOptions<string>> = F extends {
