@@ -161,7 +161,7 @@ export const VirtualizedItems: Story = {
   args: {
     options: Array.from({ length: 10000 }, (_, i) => ({
       value: `option-${i}`,
-      label: `Op ${i}`,
+      label: `Option 123123 ${i}`,
     })),
   },
 }

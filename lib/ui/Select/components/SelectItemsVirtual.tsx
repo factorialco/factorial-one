@@ -23,6 +23,12 @@ export const SelectItemsVirtual = ({
     count: items.length,
     getScrollElement: () => parentRef.current,
     estimateSize: (i: number) => items[i].height,
+    initialOffset:
+      positionIndex !== undefined
+        ? items
+            .slice(0, positionIndex)
+            .reduce((acc, item) => acc + item.height, 0)
+        : 0,
     overscan: 5,
   })
 
@@ -40,44 +46,43 @@ export const SelectItemsVirtual = ({
     [virtualizer]
   )
 
-  // Scroll to the selected item
-  useEffect(() => {
-    if (positionIndex !== undefined) {
-      scrollToIndex(positionIndex)
-      setTimeout(() => {
-        scrollToIndex(positionIndex)
-      }, 1)
-    }
-  }, [positionIndex, scrollToIndex])
-
-  // Measure the virtual items
+  /* Recalculate measures when the items change */
   useEffect(() => {
     virtualizer.measure()
-  }, [virtualizer, items])
+    if (positionIndex !== undefined) {
+      setTimeout(() => scrollToIndex(positionIndex), 1)
+    }
+  }, [virtualizer, parentRef.current, items, positionIndex, scrollToIndex])
+
+  const virtualItems = virtualizer.getVirtualItems()
 
   return (
     <div
       style={{
-        height: `${virtualizer.getTotalSize()}px`,
+        height: virtualizer.getTotalSize(),
         width: "100%",
         position: "relative",
       }}
     >
-      {virtualizer.getVirtualItems().map((virtualItem) => (
-        <div
-          key={virtualItem.key}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            height: `${virtualItem.size}px`,
-            width: "100%",
-            transform: `translateY(${virtualItem.start}px)`,
-          }}
-        >
-          {items[virtualItem.index].item}
-        </div>
-      ))}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
+        }}
+      >
+        {virtualItems.map((virtualItem) => (
+          <div
+            key={virtualItem.key}
+            data-index={virtualItem.index}
+            ref={virtualizer.measureElement}
+          >
+            {items[virtualItem.index].item}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
