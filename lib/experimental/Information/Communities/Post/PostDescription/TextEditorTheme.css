@@ -25,15 +25,15 @@
 }
 
 .FactorialOneTextEditor .TextEditorTheme__h1 {
-  @apply m-0 mb-3 p-0 text-xl font-semibold;
+  @apply m-0 mb-3 p-0 text-lg font-semibold;
 }
 
 .FactorialOneTextEditor .TextEditorTheme__h2 {
-  @apply m-0 mt-2.5 p-0 text-lg;
+  @apply m-0 mt-2.5 p-0 text-lg font-medium;
 }
 
 .FactorialOneTextEditor .TextEditorTheme__h3 {
-  @apply m-0 mt-2.5 p-0 text-base;
+  @apply m-0 mt-2.5 p-0 text-base font-semibold;
 }
 
 .FactorialOneTextEditor .TextEditorTheme__textBold {
