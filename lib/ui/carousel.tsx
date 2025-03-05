@@ -139,7 +139,7 @@ const Carousel = React.forwardRef<
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}
-          className={cn("relative", className)}
+          className={cn("group/carousel relative", className)}
           role="region"
           aria-roledescription="carousel"
           {...props}
@@ -218,26 +218,33 @@ const CarouselPrevious = React.forwardRef<
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
-    <Button
-      ref={ref}
-      size="sm"
-      variant={variant}
-      round
+    <div
       className={cn(
-        "absolute opacity-100 transition-all",
+        "absolute flex h-6 w-6 items-center justify-center rounded-sm bg-f1-background opacity-0 backdrop-blur-sm transition-opacity group-hover/carousel:opacity-100",
         !canScrollPrev && "disabled:opacity-0",
         orientation === "horizontal"
           ? "-left-3 top-1/2 -translate-y-1/2"
-          : "-top-3 left-1/2 -translate-x-1/2 rotate-90",
-        className
+          : "-top-3 left-1/2 -translate-x-1/2 rotate-90"
       )}
-      disabled={!canScrollPrev}
-      onClick={scrollPrev}
-      {...props}
     >
-      <Icon size="sm" icon={ArrowLeft} />
-      <span className="sr-only">Previous</span>
-    </Button>
+      <Button
+        ref={ref}
+        size="sm"
+        variant={variant}
+        round
+        className={cn(
+          "absolute opacity-100 transition-all",
+
+          className
+        )}
+        disabled={!canScrollPrev}
+        onClick={scrollPrev}
+        {...props}
+      >
+        <Icon size="sm" icon={ArrowLeft} />
+        <span className="sr-only">Previous</span>
+      </Button>
+    </div>
   )
 })
 CarouselPrevious.displayName = "CarouselPrevious"
@@ -249,26 +256,29 @@ const CarouselNext = React.forwardRef<
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (
-    <Button
-      ref={ref}
-      size="sm"
-      variant={variant}
-      round
+    <div
       className={cn(
-        "absolute opacity-100 transition-all",
+        "absolute flex h-6 w-6 items-center justify-center rounded-sm bg-f1-background opacity-0 backdrop-blur-sm transition-opacity group-hover/carousel:opacity-100",
         !canScrollNext && "disabled:opacity-0",
         orientation === "horizontal"
           ? "-right-3 top-1/2 -translate-y-1/2"
-          : "-bottom-3 left-1/2 -translate-x-1/2 rotate-90",
-        className
+          : "-bottom-3 left-1/2 -translate-x-1/2 rotate-90"
       )}
-      disabled={!canScrollNext}
-      onClick={scrollNext}
-      {...props}
     >
-      <Icon size="sm" icon={ArrowRight} />
-      <span className="sr-only">Next</span>
-    </Button>
+      <Button
+        ref={ref}
+        size="sm"
+        variant={variant}
+        round
+        className={cn("absolute opacity-100 transition-all", className)}
+        disabled={!canScrollNext}
+        onClick={scrollNext}
+        {...props}
+      >
+        <Icon size="sm" icon={ArrowRight} />
+        <span className="sr-only">Next</span>
+      </Button>
+    </div>
   )
 })
 CarouselNext.displayName = "CarouselNext"
@@ -276,9 +286,11 @@ CarouselNext.displayName = "CarouselNext"
 const CarouselDots = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->((props, ref) => {
+>(({ ...props }, ref) => {
   const { api } = useCarousel()
   const [, setUpdate] = React.useState(false)
+  const dotsContainerRef = React.useRef<HTMLDivElement>(null)
+
   const forceUpdate = React.useCallback(() => {
     setUpdate((prev) => !prev)
   }, [])
@@ -298,30 +310,82 @@ const CarouselDots = React.forwardRef<
   const numberOfSlides = api?.scrollSnapList().length || 0
   const currentSlide = api?.selectedScrollSnap() || 0
 
-  if (numberOfSlides > 1) {
-    return (
-      <div
-        ref={ref}
-        className={cn("flex justify-center gap-2", props.className)}
-      >
-        {Array.from({ length: numberOfSlides }, (_, i) => (
-          <Button
-            key={i}
-            className={cn("h-2 w-2 rounded-full p-0 transition-all", {
-              "bg-f1-background-inverse hover:scale-110 hover:bg-f1-foreground-secondary":
-                i === currentSlide,
-              "bg-f1-background-secondary-hover hover:scale-110 hover:bg-f1-background-secondary-hover":
-                i !== currentSlide,
-            })}
-            aria-label={`Go to slide ${i + 1}`}
-            onClick={() => api?.scrollTo(i)}
-          />
-        ))}
-      </div>
-    )
-  } else {
-    return <></>
+  React.useEffect(() => {
+    if (!dotsContainerRef.current) return
+
+    const container = dotsContainerRef.current
+    const dotWidth = 16
+
+    const scrollTo =
+      currentSlide * dotWidth - container.clientWidth / 2 + dotWidth / 2
+
+    container.scrollTo({
+      left: scrollTo,
+      behavior: "smooth",
+    })
+  }, [currentSlide])
+
+  if (numberOfSlides <= 1) {
+    return null
   }
+
+  const maxDots = numberOfSlides > 5 ? 5 : numberOfSlides
+  const allDots = Array.from({ length: numberOfSlides }, (_, i) => i)
+  const visibleDotsWidth = Math.min(maxDots, numberOfSlides) * 16
+
+  const getScale = (index: number) => {
+    if (maxDots === numberOfSlides) return null // No scaling when showing all dots
+
+    const distance = Math.abs(index - currentSlide)
+
+    if (distance === 0) return "scale-100"
+    if (distance === 1) return "scale-100"
+    if (distance === 2)
+      return currentSlide === 0 || currentSlide === numberOfSlides - 1
+        ? "scale-100"
+        : "scale-75"
+    if (distance === 3)
+      return currentSlide === 0 || currentSlide === numberOfSlides - 1
+        ? "scale-75"
+        : "scale-50"
+    if (distance >= 4) return "scale-50"
+  }
+
+  return (
+    <div ref={ref} className={cn("flex justify-center", props.className)}>
+      <div
+        className="relative overflow-hidden"
+        style={{ width: `${visibleDotsWidth}px` }}
+      >
+        <div
+          ref={dotsContainerRef}
+          className="pointer-events-none flex w-full touch-none select-none gap-0 overflow-x-scroll"
+          style={{
+            scrollbarWidth: "none",
+            overscrollBehavior: "none",
+          }}
+        >
+          {allDots.map((i) => (
+            <button
+              key={i}
+              className="group/dot flex h-4 w-4 flex-shrink-0 items-center justify-center p-0"
+              aria-label={`Go to slide ${i + 1}`}
+              onClick={() => api?.scrollTo(i)}
+            >
+              <div
+                className={cn(
+                  "h-2 w-2 flex-shrink-0 rounded-[8px] bg-f1-background-inverse opacity-[.08] transition-all duration-300 group-hover/dot:opacity-[.18]",
+                  i === currentSlide &&
+                    "rounded-[3px] opacity-100 group-hover/dot:opacity-100",
+                  getScale(i)
+                )}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
 })
 CarouselDots.displayName = "CarouselDots"
 
