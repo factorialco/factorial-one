@@ -178,7 +178,7 @@ export const BaseCommunityPost = ({
           </div>
         </div>
         {mediaUrl && !event && (
-          <div className="relative aspect-video overflow-hidden rounded-xl md:w-2/3">
+          <div className="relative aspect-video overflow-hidden rounded-xl md:max-w-[480px]">
             {isVideo(mediaUrl) ? (
               <video
                 controls
@@ -200,7 +200,7 @@ export const BaseCommunityPost = ({
           </div>
         )}
         {event && (
-          <div className="w-full md:w-2/3">
+          <div className="w-full md:max-w-[480px]">
             <PostEvent {...event} />
           </div>
         )}

@@ -38,7 +38,7 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function HomeLayout(
   return (
     <div ref={ref} className="@container">
       {/* Smaller screen content */}
-      <div className="flex flex-col gap-6 px-5 pb-5 pt-4 @md:px-3 @md:pb-3 @md:pt-2 @5xl:hidden">
+      <div className="flex flex-col gap-6 px-5 pt-4 @md:pt-2 @5xl:hidden">
         <Carousel columns={CAROUSEL_COLUMNS} showArrows={false}>
           {arrayWidgets}
         </Carousel>
