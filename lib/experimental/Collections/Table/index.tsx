@@ -11,7 +11,7 @@ import { useI18n } from "@/lib/i18n-provider"
 import { ActionsDropdown } from "../Actions/Dropdown"
 import type { FiltersDefinition } from "../Filters/types"
 import { ActionsDefinition } from "../actions"
-import { SortingKey, SortingsDefinition } from "../sortings"
+import { SortingKey, SortingsDefinition, SortingsState } from "../sortings"
 import { CollectionProps, RecordType } from "../types"
 import { useData } from "../useData"
 import { PropertyDefinition, renderValue } from "../utils"
@@ -61,6 +61,48 @@ export const TableCollection = <
 
   const { currentSortings, setCurrentSortings } = source
 
+  /**
+   * Determine the sort state of a column
+   */
+  const getColumnSortState = (
+    columnSorting: SortingKey<Sortings> | undefined,
+    sourceSortings: SortingsDefinition | undefined,
+    currentSortings: SortingsState<Sortings>
+  ): "asc" | "desc" | "none" | undefined => {
+    if (!columnSorting || !sourceSortings) {
+      return undefined
+    }
+
+    if (currentSortings === null) {
+      return "none"
+    }
+
+    return currentSortings.field === columnSorting
+      ? currentSortings.direction
+      : "none"
+  }
+
+  /**
+   * Handle column sort click
+   */
+  const handleSortClick = (columnSorting: SortingKey<Sortings>) => {
+    setCurrentSortings(() => {
+      if (!currentSortings || currentSortings.field !== columnSorting) {
+        return {
+          field: columnSorting,
+          direction: "asc",
+        }
+      } else if (currentSortings.direction === "asc") {
+        return {
+          field: columnSorting,
+          direction: "desc",
+        }
+      } else {
+        return null
+      }
+    })
+  }
+
   if (isInitialLoading) {
     return (
       <OneTable.Skeleton columns={columns.length + (source.actions ? 1 : 0)} />
@@ -88,40 +130,16 @@ export const TableCollection = <
                 key={String(column.label)}
                 info={column.info}
                 width={column.width}
-                sortState={
-                  column.sorting && source.sortings
-                    ? currentSortings === null
-                      ? "none"
-                      : currentSortings?.field === column.sorting
-                        ? currentSortings.direction
-                        : "none"
-                    : undefined
-                }
+                sortState={getColumnSortState(
+                  column.sorting,
+                  source.sortings,
+                  currentSortings
+                )}
                 onSortClick={
                   column.sorting
                     ? () => {
                         if (!column.sorting) return
-
-                        const sorting = column.sorting
-
-                        setCurrentSortings(() => {
-                          if (
-                            !currentSortings ||
-                            currentSortings.field !== sorting
-                          ) {
-                            return {
-                              field: sorting,
-                              direction: "asc",
-                            }
-                          } else if (currentSortings.direction === "asc") {
-                            return {
-                              field: sorting,
-                              direction: "desc",
-                            }
-                          } else {
-                            return null
-                          }
-                        })
+                        handleSortClick(column.sorting)
                       }
                     : undefined
                 }
