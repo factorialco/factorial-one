@@ -1,5 +1,5 @@
 import { Search } from "@/icons/app"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Select } from "./index"
@@ -57,6 +57,15 @@ describe("Select", () => {
     )
   })
 
+  const openSelect = async (user: ReturnType<typeof userEvent.setup>) => {
+    user.click(screen.getByRole("combobox"))
+
+    // Wait for animation to finish
+    await waitFor(() => expect(screen.getByRole("listbox")).toBeInTheDocument())
+    const teaser = screen.getByRole("listbox")
+    fireEvent.animationStart(teaser)
+  }
+
   it("renders with placeholder", () => {
     render(
       <Select
@@ -72,7 +81,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(<Select options={mockOptions} onChange={() => {}} />)
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
 
     expect(screen.getByText("Option 1")).toBeInTheDocument()
     expect(screen.getByText("Option 2")).toBeInTheDocument()
@@ -97,7 +106,7 @@ describe("Select", () => {
       />
     )
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
 
     expect(screen.getByPlaceholderText("Search options")).toBeInTheDocument()
   })
@@ -106,7 +115,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(<Select options={mockOptions} onChange={() => {}} showSearchBox />)
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
     await user.type(screen.getByRole("searchbox"), "1")
 
     expect(screen.getByText("Option 1")).toBeInTheDocument()
@@ -124,7 +133,7 @@ describe("Select", () => {
       />
     )
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
     await user.type(screen.getByRole("searchbox"), "xyz")
 
     expect(screen.getByText("No results found")).toBeInTheDocument()
@@ -144,7 +153,7 @@ describe("Select", () => {
       />
     )
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
 
     await user.type(screen.getByRole("searchbox"), "test")
 
@@ -176,7 +185,7 @@ describe("Select", () => {
 
     render(<Select options={mockOptions} onChange={handleChange} />)
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
     await user.click(screen.getByText("Option 1"))
 
     expect(handleChange).toHaveBeenCalledWith("option1", {
@@ -208,7 +217,7 @@ describe("Select", () => {
 
     render(<Select options={mockOptions} onChange={handleChange} />)
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
     await user.click(screen.getByText("Option 1"))
 
     expect(handleChange).toHaveBeenCalledWith("option1", undefined)

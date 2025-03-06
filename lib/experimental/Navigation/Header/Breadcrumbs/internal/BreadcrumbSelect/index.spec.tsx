@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { BreadcrumbSelect } from "."
@@ -26,6 +26,13 @@ describe("BreadcrumbSelect", () => {
       toJSON: () => {},
     }))
   })
+
+  const openSelect = async (user: ReturnType<typeof userEvent.setup>) => {
+    await user.click(screen.getByRole("combobox"))
+    await waitFor(() => expect(screen.getByRole("listbox")).toBeInTheDocument())
+    const teaser = screen.getByRole("listbox")
+    fireEvent.animationStart(teaser)
+  }
 
   it("renders with default value", () => {
     render(
@@ -66,8 +73,10 @@ describe("BreadcrumbSelect", () => {
 
     render(<BreadcrumbSelect options={mockOptions} onChange={onChange} />)
 
-    await user.click(screen.getByRole("combobox"))
-    await user.click(screen.getByText("Option 2"))
+    await openSelect(user)
+
+    user.click(screen.getByText("Option 2"))
+    await new Promise((resolve) => setTimeout(resolve, 100))
 
     expect(onChange).toHaveBeenCalledWith("option2")
   })

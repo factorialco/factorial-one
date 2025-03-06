@@ -31,11 +31,9 @@ const SelectWithHooks = ({
 
   return (
     <Select value={value} onValueChange={setValue} {...props}>
-      SELECT
       <SelectTrigger>
         {value}
         <SelectValue placeholder={placeholder} />
-        CSELECT
       </SelectTrigger>
       <SelectContent items={items}></SelectContent>
     </Select>

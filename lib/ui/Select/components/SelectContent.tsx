@@ -1,57 +1,10 @@
-"use client"
-
 import { cn } from "@/lib/utils.ts"
+import { SelectScrollButton, VirtualItem } from "@/ui/Select"
+import { SelectContext } from "@/ui/Select/SelectContext.tsx"
 import * as SelectPrimitive from "@radix-ui/react-select"
+import { useVirtualizer } from "@tanstack/react-virtual"
 import * as React from "react"
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useMemo,
-  useRef,
-} from "react"
-import { SelectItemsVirtual } from "./components/SelectItemsVirtual.tsx"
-import { SelectScrollButton } from "./components/SelectScrollButton.tsx"
-import { VirtualItem } from "./typings.ts"
-
-export const SelectValueContext = createContext<string | undefined>(undefined)
-
-/**
- * Select Root component
- */
-const Select = (props: React.ComponentProps<typeof SelectPrimitive.Root>) => {
-  return (
-    <SelectPrimitive.Root {...props}>
-      <SelectValueContext.Provider value={props.value}>
-        {props.children}
-      </SelectValueContext.Provider>
-    </SelectPrimitive.Root>
-  )
-}
-Select.displayName = SelectPrimitive.Root.displayName
-
-/**
- * Select Group component
- */
-const SelectGroup = SelectPrimitive.Group
-
-/**
- * Select Value component
- */
-const SelectValue = SelectPrimitive.Value
-
-/**
- * Select Trigger component
- */
-const SelectTrigger = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger ref={ref} className={cn(className)} {...props}>
-    {children}
-  </SelectPrimitive.Trigger>
-))
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
+import { ReactNode, useContext, useEffect, useMemo, useRef } from "react"
 
 /**
  * Select Content component
@@ -88,7 +41,14 @@ const SelectContent = React.forwardRef<
   SelectContentProps
 >(
   (
-    { items, className, children, position = "popper", emptyMessage, ...props },
+    {
+      items = [],
+      className,
+      children,
+      position = "popper",
+      emptyMessage,
+      ...props
+    },
     ref
   ) => {
     // ----------- Virtual list -----------
@@ -103,12 +63,41 @@ const SelectContent = React.forwardRef<
       return !children
     }, [isVirtual, items, children])
 
-    // Get the value from the select context
-    const value = useContext(SelectValueContext)
+    // State to check if the virtual list is ready and the scroll in the correct position
+    const [virtualReady, setVirtualReady] = React.useState(false)
+    // State to check if the radixui animation has started
+    const [animationStarted, setAnimationStarted] = React.useState(false)
+
+    // Get the value and the open status from the select context
+    const { value, open } = useContext(SelectContext)
 
     const positionIndex = useMemo(() => {
-      return items && items.findIndex((item) => item.value === value)
+      return (items && items.findIndex((item) => item.value === value)) || 0
     }, [items, value])
+
+    const virtualizer = useVirtualizer({
+      count: items.length,
+      getScrollElement: () => parentRef.current,
+      estimateSize: (i: number) => items[i].height,
+      overscan: 5,
+      enabled: animationStarted,
+    })
+
+    useEffect(() => {
+      // Reset the animation state when the select is closed
+      if (!open) {
+        setAnimationStarted(false)
+        setVirtualReady(true)
+      }
+    }, [open])
+
+    useEffect(() => {
+      // Measure the items when the animation is finished and scroll to item
+      virtualizer.measure()
+      virtualizer.scrollToIndex(positionIndex)
+    }, [virtualizer, positionIndex, animationStarted])
+
+    const virtualItems = virtualizer.getVirtualItems()
 
     return (
       <SelectPrimitive.Portal>
@@ -122,6 +111,14 @@ const SelectContent = React.forwardRef<
           )}
           position={position}
           {...props}
+          onAnimationStart={() => {
+            // Set the animation state to started as the elements are visible
+            setAnimationStarted(true)
+            setTimeout(() => {
+              virtualizer.scrollToIndex(positionIndex, { align: "center" })
+              setVirtualReady(true)
+            })
+          }}
         >
           {!!props.top && <div>{props.top}</div>}
           <SelectScrollButton variant="up" />
@@ -135,11 +132,37 @@ const SelectContent = React.forwardRef<
             {isEmpty ? (
               <p className="p-2 text-center">{emptyMessage || "-"}</p>
             ) : isVirtual ? (
-              <SelectItemsVirtual
-                items={items}
-                parentRef={parentRef}
-                positionIndex={positionIndex}
-              ></SelectItemsVirtual>
+              <div
+                className={cn(
+                  "transition-opacity delay-100",
+                  virtualReady ? "" : "opacity-0"
+                )}
+                style={{
+                  height: virtualizer.getTotalSize(),
+                  width: "100%",
+                  position: "relative",
+                }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
+                  }}
+                >
+                  {virtualItems.map((virtualItem) => (
+                    <div
+                      key={virtualItem.key}
+                      data-index={virtualItem.index}
+                      ref={virtualizer.measureElement}
+                    >
+                      {items[virtualItem.index].item}
+                    </div>
+                  ))}
+                </div>
+              </div>
             ) : (
               children
             )}
@@ -154,4 +177,4 @@ const SelectContent = React.forwardRef<
 
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
-export { Select, SelectContent, SelectGroup, SelectTrigger, SelectValue }
+export { SelectContent }

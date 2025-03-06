@@ -155,6 +155,7 @@
     "vite": "^6.1.1",
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-lib-inject-css": "^2.2.1",
+    "dotenv": "^16.4.7",
     "vitest": "^3.0.7"
   },
   "optionalDependencies": {
