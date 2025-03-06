@@ -31,8 +31,11 @@ const SelectWithHooks = ({
 
   return (
     <Select value={value} onValueChange={setValue} {...props}>
+      SELECT
       <SelectTrigger>
+        {value}
         <SelectValue placeholder={placeholder} />
+        CSELECT
       </SelectTrigger>
       <SelectContent items={items}></SelectContent>
     </Select>
@@ -65,6 +68,10 @@ const meta = {
       { value: "light", label: "Light" },
       { value: "dark", label: "Dark" },
       { value: "system", label: "System" },
+      ...Array.from({ length: 10 }, (_, i) => ({
+        value: `option-${i}`,
+        label: `Option ${i}`,
+      })),
     ],
   },
   tags: ["autodocs", "internal"],
@@ -157,11 +164,16 @@ export const WithBothTopAndBottom: Story = {
   },
 }
 
+const words =
+  "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua".split(
+    " "
+  )
+
 export const VirtualizedItems: Story = {
   args: {
     options: Array.from({ length: 10000 }, (_, i) => ({
       value: `option-${i}`,
-      label: `Option 123123 ${i}`,
+      label: `Option ${words[i % words.length]} ${i}`,
     })),
   },
 }

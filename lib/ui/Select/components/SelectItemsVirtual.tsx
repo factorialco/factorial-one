@@ -24,7 +24,7 @@ export const SelectItemsVirtual = ({
     getScrollElement: () => parentRef.current,
     estimateSize: (i: number) => items[i].height,
     initialOffset:
-      positionIndex !== undefined
+      (positionIndex || 0) > 0
         ? items
             .slice(0, positionIndex)
             .reduce((acc, item) => acc + item.height, 0)
@@ -49,8 +49,9 @@ export const SelectItemsVirtual = ({
   /* Recalculate measures when the items change */
   useEffect(() => {
     virtualizer.measure()
-    if (positionIndex !== undefined) {
-      setTimeout(() => scrollToIndex(positionIndex), 1)
+    setTimeout(() => virtualizer.measure(), 100)
+    if ((positionIndex || 0) > -1) {
+      setTimeout(() => scrollToIndex(positionIndex || 0), 200)
     }
   }, [virtualizer, parentRef.current, items, positionIndex, scrollToIndex])
 
@@ -62,6 +63,7 @@ export const SelectItemsVirtual = ({
         height: virtualizer.getTotalSize(),
         width: "100%",
         position: "relative",
+        backgroundColor: "#f00",
       }}
     >
       <div

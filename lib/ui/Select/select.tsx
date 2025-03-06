@@ -79,7 +79,10 @@ const SelectContent = React.forwardRef<
       return !children
     }, [isVirtual, items, children])
 
+    console.log("Value2", value)
+
     const positionIndex = useMemo(() => {
+      console.log("Value", value)
       return items && items.findIndex((item) => item.value === value)
     }, [items, value])
 
