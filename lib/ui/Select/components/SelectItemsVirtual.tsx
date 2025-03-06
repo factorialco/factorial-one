@@ -23,12 +23,6 @@ export const SelectItemsVirtual = ({
     count: items.length,
     getScrollElement: () => parentRef.current,
     estimateSize: (i: number) => items[i].height,
-    initialOffset:
-      (positionIndex || 0) > 0
-        ? items
-            .slice(0, positionIndex)
-            .reduce((acc, item) => acc + item.height, 0)
-        : 0,
     overscan: 5,
   })
 
@@ -63,7 +57,6 @@ export const SelectItemsVirtual = ({
         height: virtualizer.getTotalSize(),
         width: "100%",
         position: "relative",
-        backgroundColor: "#f00",
       }}
     >
       <div

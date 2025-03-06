@@ -215,7 +215,6 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
           <SelectContent
             items={items}
             emptyMessage={searchEmptyMessage}
-            value={value}
             top={
               showSearchBox && (
                 <div className="p-2">

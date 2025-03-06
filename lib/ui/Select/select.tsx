@@ -3,17 +3,46 @@
 import { cn } from "@/lib/utils.ts"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import * as React from "react"
-import { ReactNode, useMemo, useRef } from "react"
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useMemo,
+  useRef,
+} from "react"
 import { SelectItemsVirtual } from "./components/SelectItemsVirtual.tsx"
 import { SelectScrollButton } from "./components/SelectScrollButton.tsx"
 import { VirtualItem } from "./typings.ts"
 
-const Select = SelectPrimitive.Root
+export const SelectValueContext = createContext<string | undefined>(undefined)
 
+/**
+ * Select Root component
+ */
+const Select = (props: React.ComponentProps<typeof SelectPrimitive.Root>) => {
+  return (
+    <SelectPrimitive.Root {...props}>
+      <SelectValueContext.Provider value={props.value}>
+        {props.children}
+      </SelectValueContext.Provider>
+    </SelectPrimitive.Root>
+  )
+}
+Select.displayName = SelectPrimitive.Root.displayName
+
+/**
+ * Select Group component
+ */
 const SelectGroup = SelectPrimitive.Group
 
+/**
+ * Select Value component
+ */
 const SelectValue = SelectPrimitive.Value
 
+/**
+ * Select Trigger component
+ */
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
@@ -24,6 +53,9 @@ const SelectTrigger = React.forwardRef<
 ))
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
+/**
+ * Select Content component
+ */
 // Define two different prop types for the two mutually exclusive scenarios
 type SelectItemProps = React.ComponentPropsWithoutRef<
   typeof SelectPrimitive.Content
@@ -56,15 +88,7 @@ const SelectContent = React.forwardRef<
   SelectContentProps
 >(
   (
-    {
-      items,
-      className,
-      children,
-      position = "popper",
-      value,
-      emptyMessage,
-      ...props
-    },
+    { items, className, children, position = "popper", emptyMessage, ...props },
     ref
   ) => {
     // ----------- Virtual list -----------
@@ -79,10 +103,10 @@ const SelectContent = React.forwardRef<
       return !children
     }, [isVirtual, items, children])
 
-    console.log("Value2", value)
+    // Get the value from the select context
+    const value = useContext(SelectValueContext)
 
     const positionIndex = useMemo(() => {
-      console.log("Value", value)
       return items && items.findIndex((item) => item.value === value)
     }, [items, value])
 
