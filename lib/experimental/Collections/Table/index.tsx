@@ -156,10 +156,7 @@ export const TableCollection = <
         </TableHeader>
         <TableBody>
           {data.map((item, index) => {
-            const itemHref =
-              "href" in item && typeof item.href === "string"
-                ? item.href
-                : undefined
+            const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
 
             return (
               <TableRow key={`row-${index}`}>

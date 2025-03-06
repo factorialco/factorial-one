@@ -20,6 +20,8 @@ export type DataSourceDefinition<
   filters?: Filters
   /** Predefined filter configurations that can be applied */
   presets?: Presets<Filters>
+  /** URL for a single item in the collection */
+  itemUrl?: (item: Record) => string
   /** Available actions that can be performed on records */
   actions?: Actions
   /** Current state of applied filters */
