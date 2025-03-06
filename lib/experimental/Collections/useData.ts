@@ -6,6 +6,7 @@ import {
 } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { SortingsDefinition } from "./sortings"
 import {
   DataSource,
   PaginatedResponse,
@@ -157,11 +158,12 @@ function usePaginationState() {
 export function useData<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
 >(
-  source: DataSource<Record, Filters, ActionsDefinition<Record>>,
+  source: DataSource<Record, Filters, Sortings, ActionsDefinition<Record>>,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
-  const { dataAdapter, currentFilters } = source
+  const { dataAdapter, currentFilters, currentSortings } = source
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
@@ -231,9 +233,10 @@ export function useData<
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 filters,
+                sortings: currentSortings,
                 pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
               })
-            : dataAdapter.fetchData({ filters })
+            : dataAdapter.fetchData({ filters, sortings: currentSortings })
 
         const result = fetcher()
 
@@ -267,7 +270,13 @@ export function useData<
         handleFetchError(error)
       }
     },
-    [dataAdapter, handleFetchSuccess, handleFetchError, setIsLoading]
+    [
+      handleFetchError,
+      dataAdapter,
+      currentSortings,
+      handleFetchSuccess,
+      setIsLoading,
+    ]
   )
 
   const setPage = useCallback(

@@ -126,6 +126,15 @@ export function TableHead({
       tabIndex={sticky ? 0 : undefined}
       style={{ width: columnWidths[width] }}
       role={hidden ? "presentation" : undefined}
+      aria-sort={
+        onSortClick
+          ? sortState === "asc"
+            ? "ascending"
+            : sortState === "desc"
+              ? "descending"
+              : "none"
+          : undefined
+      }
     >
       <AnimatePresence>
         {isScrolled && sticky && (

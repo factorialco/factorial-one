@@ -2,6 +2,7 @@ import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ActionsDefinition } from "./actions"
+import { SortingsDefinition, SortingsState } from "./sortings"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
@@ -12,6 +13,7 @@ import { ActionsDefinition } from "./actions"
 export type DataSourceDefinition<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
   Actions extends ActionsDefinition<Record>,
 > = {
   /** Available filter configurations */
@@ -22,8 +24,10 @@ export type DataSourceDefinition<
   actions?: Actions
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
+  /** Available sorting fields. If not provided, sorting is not allowed. */
+  sortings?: Sortings
   /** Data adapter responsible for fetching and managing data */
-  dataAdapter: DataAdapter<Record, Filters>
+  dataAdapter: DataAdapter<Record, Filters, Sortings>
 }
 
 /**
@@ -70,20 +74,26 @@ export type PaginatedResponse<Record> = {
  * Base options for data fetching
  * @template Filters - The available filter configurations
  */
-export type BaseFetchOptions<Filters extends FiltersDefinition> = {
+export type BaseFetchOptions<
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+> = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
+  sortings: SortingsState<Sortings>
 }
 
 /**
  * Options for paginated data fetching
  * @template Filters - The available filter configurations
  */
-export type PaginatedFetchOptions<Filters extends FiltersDefinition> =
-  BaseFetchOptions<Filters> & {
-    /** Pagination configuration */
-    pagination: { currentPage: number; perPage: number }
-  }
+export type PaginatedFetchOptions<
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+> = BaseFetchOptions<Filters, Sortings> & {
+  /** Pagination configuration */
+  pagination: { currentPage: number; perPage: number }
+}
 
 /**
  * Base data adapter configuration for non-paginated collections
@@ -93,6 +103,7 @@ export type PaginatedFetchOptions<Filters extends FiltersDefinition> =
 export type BaseDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
 > = {
   /** Indicates this adapter doesn't use pagination */
   paginationType?: never
@@ -102,7 +113,7 @@ export type BaseDataAdapter<
    * @returns Array of records, promise of records, or observable of records
    */
   fetchData: (
-    options: BaseFetchOptions<Filters>
+    options: BaseFetchOptions<Filters, Sortings>
   ) =>
     | BaseResponse<Record>
     | Promise<BaseResponse<Record>>
@@ -117,6 +128,7 @@ export type BaseDataAdapter<
 export type PaginatedDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
 > = {
   /** Indicates this adapter uses page-based pagination */
   paginationType: "pages"
@@ -128,7 +140,7 @@ export type PaginatedDataAdapter<
    * @returns Paginated response with records and pagination info
    */
   fetchData: (
-    options: PaginatedFetchOptions<Filters>
+    options: PaginatedFetchOptions<Filters, Sortings>
   ) =>
     | PaginatedResponse<Record>
     | Promise<PaginatedResponse<Record>>
@@ -143,7 +155,10 @@ export type PaginatedDataAdapter<
 export type DataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-> = BaseDataAdapter<Record, Filters> | PaginatedDataAdapter<Record, Filters>
+  Sortings extends SortingsDefinition,
+> =
+  | BaseDataAdapter<Record, Filters, Sortings>
+  | PaginatedDataAdapter<Record, Filters, Sortings>
 
 /**
  * Represents a record type with string keys and unknown values.
@@ -167,11 +182,12 @@ export type ExtractPropertyKeys<RecordType> = keyof RecordType
 export type CollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
   Actions extends ActionsDefinition<Record>,
   VisualizationOptions extends object,
 > = {
   /** The data source configuration and state */
-  source: DataSource<Record, Filters, Actions>
+  source: DataSource<Record, Filters, Sortings, Actions>
 } & VisualizationOptions
 
 /**
@@ -184,12 +200,19 @@ export type CollectionProps<
 export type DataSource<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Actions extends ActionsDefinition<Record>,
-> = DataSourceDefinition<Record, Filters, Actions> & {
+  Sortings extends SortingsDefinition,
+  Actions extends ActionsDefinition<Record> = ActionsDefinition<Record>,
+> = DataSourceDefinition<Record, Filters, Sortings, Actions> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
   setCurrentFilters: React.Dispatch<React.SetStateAction<FiltersState<Filters>>>
+  /** Current state of applied sortings */
+  currentSortings: SortingsState<Sortings>
+  /** Function to update the current sortings state */
+  setCurrentSortings: React.Dispatch<
+    React.SetStateAction<SortingsState<Sortings>>
+  >
 }
 
 /**
