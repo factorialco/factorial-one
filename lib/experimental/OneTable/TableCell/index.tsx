@@ -1,4 +1,5 @@
 import { useI18n } from "@/lib/i18n-provider"
+import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import { TableCell as TableCellRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "framer-motion"
@@ -63,13 +64,13 @@ export function TableCell({
         {children}
       </div>
       {href && (
-        <a
+        <Link
           href={href}
           className="absolute inset-0 block"
           tabIndex={firstCell ? undefined : -1}
         >
           <span className="sr-only">{actions.view}</span>
-        </a>
+        </Link>
       )}
     </TableCellRoot>
   )

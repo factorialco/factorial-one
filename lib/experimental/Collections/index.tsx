@@ -45,12 +45,9 @@ export const useDataSource = <
   Actions extends ActionsDefinition<Record>,
 >(
   {
-    filters,
     currentFilters: initialCurrentFilters = {},
-    dataAdapter,
-    actions,
-    presets,
-    sortings,
+    filters,
+    ...rest
   }: DataSourceDefinition<Record, Filters, Sortings, Actions>,
   deps: ReadonlyArray<unknown> = []
 ): DataSource<Record, Filters, Sortings, Actions> => {
@@ -68,12 +65,9 @@ export const useDataSource = <
     filters: memoizedFilters,
     currentFilters,
     setCurrentFilters,
-    dataAdapter,
-    actions,
-    presets,
-    sortings,
     currentSortings,
     setCurrentSortings,
+    ...rest,
   }
 }
 

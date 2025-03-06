@@ -71,7 +71,6 @@ const mockUsers = [
     department: DEPARTMENTS[0],
     status: "active",
     isStarred: true,
-    href: "/users/john-doe",
   },
   {
     id: "user-2",
@@ -81,7 +80,6 @@ const mockUsers = [
     department: DEPARTMENTS[1],
     status: "active",
     isStarred: false,
-    href: "/users/jane-smith",
   },
   {
     id: "user-3",
@@ -91,7 +89,6 @@ const mockUsers = [
     department: DEPARTMENTS[2],
     status: "inactive",
     isStarred: false,
-    href: "/users/bob-johnson",
   },
   {
     id: "user-4",
@@ -101,7 +98,6 @@ const mockUsers = [
     department: DEPARTMENTS[3],
     status: "active",
     isStarred: true,
-    href: "/users/alice-williams",
   },
 ]
 
@@ -428,6 +424,122 @@ export const BasicTableView: Story = {
                     label: "Department",
                     render: (item) => item.department,
                     sorting: "department",
+                  },
+                ],
+              },
+            },
+          ]}
+        />
+      </div>
+    )
+  },
+}
+
+// Basic examples with single visualization
+export const WithLinkedItems: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      filters,
+      presets: filterPresets,
+      itemUrl: (item) => `/users/${item.id}`,
+      sortings: {
+        name: {
+          label: "Name",
+        },
+        email: {
+          label: "Email",
+        },
+        role: {
+          label: "Role",
+        },
+        department: {
+          label: "Department",
+        },
+      },
+      dataAdapter: {
+        fetchData: createPromiseDataFetch(),
+      },
+      actions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+          description: "Modify user information",
+        },
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+        },
+        "separator",
+        {
+          label: item.isStarred ? "Remove Star" : "Star User",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
+        },
+        {
+          label: "Delete",
+          icon: Delete,
+          onClick: () => console.log(`Deleting ${item.name}`),
+          critical: true,
+          description: "Permanently remove user",
+          enabled:
+            item.department === "Engineering" && item.status === "active",
+        },
+      ],
+    })
+
+    return (
+      <div className="space-y-4">
+        <DataCollection
+          source={dataSource}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  {
+                    label: "Name",
+                    render: (item) => item.name,
+                    sorting: "name",
+                  },
+                  {
+                    label: "Email",
+                    render: (item) => item.email,
+                    sorting: "email",
+                  },
+                  {
+                    label: "Role",
+                    render: (item) => item.role,
+                    sorting: "role",
+                  },
+                  {
+                    label: "Department",
+                    render: (item) => item.department,
+                    sorting: "department",
+                  },
+                ],
+              },
+            },
+            {
+              type: "card",
+              options: {
+                title: (item) => item.name,
+                cardProperties: [
+                  {
+                    label: "Email",
+                    render: (item) => item.email,
+                  },
+                  {
+                    label: "Role",
+                    render: (item) => item.role,
+                  },
+                  {
+                    label: "Department",
+                    render: (item) => item.department,
                   },
                 ],
               },
