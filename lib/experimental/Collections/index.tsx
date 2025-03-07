@@ -2,6 +2,7 @@ import { useMemo, useState } from "react"
 import { ActionsDefinition } from "./actions"
 import { Filters } from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type { DataSource, DataSourceDefinition, RecordType } from "./types"
 import type { Visualization } from "./visualizations"
@@ -119,13 +120,16 @@ export const DataCollection = <
             onChange={setCurrentFilters}
           />
         )}
-        {visualizations && visualizations.length > 1 && (
-          <VisualizationSelector
-            visualizations={visualizations}
-            currentVisualization={currentVisualization}
-            onVisualizationChange={setCurrentVisualization}
-          />
-        )}
+        <div className="flex items-center gap-2">
+          <Search placeholder="Search" onChange={() => {}} />
+          {visualizations && visualizations.length > 1 && (
+            <VisualizationSelector
+              visualizations={visualizations}
+              currentVisualization={currentVisualization}
+              onVisualizationChange={setCurrentVisualization}
+            />
+          )}
+        </div>
       </div>
       <VisualizationRenderer
         visualization={visualizations[currentVisualization]}

@@ -20,6 +20,7 @@ describe("I18nProvider", () => {
         showAll: "Mostrar todo",
         showLess: "Mostrar menos",
         view: "Ver",
+        search: "Buscar",
       },
     }
 
