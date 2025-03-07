@@ -1,24 +1,49 @@
+import { Icon } from "@/components/Utilities/Icon"
+import { ChevronDown } from "@/icons/app"
+import { useI18n } from "@/lib/i18n-provider"
+import { cn } from "@/lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
-import { ChevronDown, ChevronUp, MoreHorizontal } from "lucide-react"
+import { Skeleton } from "@/ui/skeleton"
+import { motion } from "framer-motion"
 import {
   type ReactNode,
+  useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react"
 
 interface OverflowListProps<T> {
   items: T[]
-  // Render functions for list and dropdown
+
+  // How things are rendered
+  /**
+   * What to render as a list item (items outside of the overflow list)
+   */
   renderListItem: (item: T, index: number) => ReactNode
+
+  /**
+   * What to render as a dropdown item (items inside of the overflow list)
+   */
   renderDropdownItem: (item: T, index: number) => ReactNode
+
+  /**
+   * What to render as the overflow indicator
+   * If not provided, the default overflow indicator will be displayed
+   */
   renderOverflowIndicator?: (count: number, isOpen: boolean) => ReactNode
 
   // Component styling
+  /**
+   * Additional styling for the container
+   */
   className?: string
-  popoverAlign?: "start" | "center" | "end"
-  popoverWidth?: "auto" | "trigger" | number
+
+  /**
+   * The gap between items
+   */
   gap?: number
 }
 
@@ -27,14 +52,14 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
   const containerRef = useRef<HTMLDivElement>(null)
   const overflowButtonRef = useRef<HTMLButtonElement>(null)
   const measurementContainerRef = useRef<HTMLDivElement>(null)
+  const isCalculatingRef = useRef(true)
 
   const [visibleItems, setVisibleItems] = useState<T[]>([])
   const [overflowItems, setOverflowItems] = useState<T[]>([])
-  const [_, setIsCalculating] = useState(true)
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Measure all items in a hidden container
-  const measureItemWidths = () => {
+  const measureItemWidths = useCallback(() => {
     if (!measurementContainerRef.current) return []
 
     const itemElements = measurementContainerRef.current.children
@@ -46,57 +71,60 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
     }
 
     return widths
-  }
+  }, [])
 
   // Calculate the total width of all items including gaps
-  const calculateTotalItemsWidth = (itemWidths: number[]) => {
-    let totalWidth = 0
+  const calculateTotalItemsWidth = useCallback(
+    (itemWidths: number[]) => {
+      let totalWidth = 0
 
-    for (let i = 0; i < itemWidths.length; i++) {
-      totalWidth += itemWidths[i]
-      if (i < itemWidths.length - 1) {
-        totalWidth += gap
+      for (let i = 0; i < itemWidths.length; i++) {
+        totalWidth += itemWidths[i]
+        if (i < itemWidths.length - 1) {
+          totalWidth += gap
+        }
       }
-    }
 
-    return totalWidth
-  }
+      return totalWidth
+    },
+    [gap]
+  )
 
   // Calculate how many items can fit in the available width
-  const calculateVisibleItemCount = (
-    itemWidths: number[],
-    availableWidth: number
-  ) => {
-    let visibleCount = 0
-    let accumulatedWidth = 0
+  const calculateVisibleItemCount = useCallback(
+    (itemWidths: number[], availableWidth: number) => {
+      let visibleCount = 0
+      let accumulatedWidth = 0
 
-    for (let i = 0; i < itemWidths.length; i++) {
-      const newWidth = accumulatedWidth + itemWidths[i]
+      for (let i = 0; i < itemWidths.length; i++) {
+        const newWidth = accumulatedWidth + itemWidths[i]
 
-      if (newWidth > availableWidth) break
+        if (newWidth > availableWidth) break
 
-      accumulatedWidth = newWidth
-      if (i < itemWidths.length - 1) {
-        accumulatedWidth += gap
+        accumulatedWidth = newWidth
+        if (i < itemWidths.length - 1) {
+          accumulatedWidth += gap
+        }
+        visibleCount++
       }
-      visibleCount++
-    }
 
-    return Math.max(visibleCount, 1)
-  }
+      return Math.max(visibleCount, 1)
+    },
+    [gap]
+  )
 
   // Calculate which items should be visible and which should overflow
-  const calculateVisibleItems = () => {
+  const calculateVisibleItems = useCallback(() => {
     if (!containerRef.current || items.length === 0) return
 
-    const currentContainerWidth = containerRef.current.clientWidth
-    setIsCalculating(true)
+    isCalculatingRef.current = true
 
+    const currentContainerWidth = containerRef.current.clientWidth
     const overflowButtonWidth = overflowButtonRef.current?.offsetWidth || 60
     const itemWidths = measureItemWidths()
 
     if (itemWidths.length === 0) {
-      setIsCalculating(false)
+      isCalculatingRef.current = false
       return
     }
 
@@ -107,7 +135,7 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
     if (allItemsFit) {
       setVisibleItems(items)
       setOverflowItems([])
-      setIsCalculating(false)
+      isCalculatingRef.current = false
       return
     }
 
@@ -117,8 +145,14 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
 
     setVisibleItems(items.slice(0, visibleCount))
     setOverflowItems(items.slice(visibleCount))
-    setIsCalculating(false)
-  }
+    isCalculatingRef.current = false
+  }, [
+    items,
+    gap,
+    measureItemWidths,
+    calculateTotalItemsWidth,
+    calculateVisibleItemCount,
+  ])
 
   // Set up resize observer and initial calculation
   useEffect(() => {
@@ -134,7 +168,7 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
 
     resizeObserver.observe(container)
     return () => resizeObserver.disconnect()
-  }, [items])
+  }, [calculateVisibleItems])
 
   // Initialize the component
   useLayoutEffect(() => {
@@ -161,11 +195,14 @@ export function OverflowList<T>({
   renderDropdownItem,
   renderOverflowIndicator,
   className = "",
-  popoverAlign = "end",
-  popoverWidth = "auto",
   gap = 8,
 }: OverflowListProps<T>) {
   const [isOpen, setIsOpen] = useState(false)
+  const i18n = useI18n()
+
+  const handleOpenChange = useCallback((open: boolean) => {
+    setIsOpen(open)
+  }, [])
 
   const {
     containerRef,
@@ -177,35 +214,43 @@ export function OverflowList<T>({
   } = useOverflowCalculation(items, gap)
 
   // Default overflow indicator
-  const defaultOverflowIndicator = (count: number, isOpen: boolean) => (
-    <>
-      <MoreHorizontal className="h-4 w-4" />
-      <span>{count}</span>
-      {isOpen ? (
-        <ChevronUp className="h-3 w-3" />
-      ) : (
-        <ChevronDown className="h-3 w-3" />
-      )}
-    </>
-  )
+  const defaultOverflowIndicator = useMemo(() => {
+    const IconMotion = motion(Icon)
+    return (count: number, isOpen: boolean) => (
+      <div
+        className={cn(
+          "flex items-center gap-1 rounded py-1.5 pl-3 pr-2 text-base font-medium text-f1-foreground transition-colors hover:bg-f1-background-secondary",
+          isOpen && "bg-f1-background-secondary"
+        )}
+      >
+        <span>+{count}</span>
+        <span>{i18n.actions.more}</span>
+        <div className="flex h-5 w-5 items-center justify-center after:absolute after:h-4 after:w-4 after:rounded-xs after:bg-f1-background-secondary after:content-['']">
+          <IconMotion
+            icon={ChevronDown}
+            initial={{ rotate: 0 }}
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            size="xs"
+          />
+        </div>
+      </div>
+    )
+  }, [])
 
-  // Calculate popover width style
-  const getPopoverStyle = () => {
-    if (popoverWidth === "auto") return {}
-    if (popoverWidth === "trigger" && overflowButtonRef.current) {
-      return { width: `${overflowButtonRef.current.offsetWidth}px` }
-    }
-    if (typeof popoverWidth === "number") {
-      return { width: `${popoverWidth}px` }
-    }
-    return {}
-  }
+  // Placeholder elements for initialization
+  const placeholderElements = useMemo(() => {
+    if (isInitialized) return null
+
+    return items.map((_, index) => (
+      <Skeleton key={`placeholder-${index}`} className="h-2 w-20 rounded-md" />
+    ))
+  }, [items, isInitialized])
 
   return (
     <div
       ref={containerRef}
       className={`relative flex items-center ${className}`}
-      style={{ gap: `${gap}px`, overflow: "hidden" }}
+      style={{ gap: `${gap}px` }}
     >
       {/* Hidden measurement container */}
       <div
@@ -219,39 +264,26 @@ export function OverflowList<T>({
         ))}
       </div>
 
-      {/* Visible items container */}
       <div
-        className="flex items-center"
-        style={{ gap: `${gap}px`, overflow: "hidden", whiteSpace: "nowrap" }}
+        className="flex items-center whitespace-nowrap"
+        style={{ gap: `${gap}px` }}
       >
         {isInitialized &&
           visibleItems.map((item, index) => (
-            <div
-              key={`item-${index}`}
-              className="overflow-hidden transition-all duration-150"
-            >
+            <div key={`item-${index}`} className="transition-all duration-150">
               {renderListItem(item, index)}
             </div>
           ))}
 
-        {/* Show placeholder divs during initialization to prevent layout shift */}
-        {!isInitialized &&
-          items.map((_, index) => (
-            <div
-              key={`placeholder-${index}`}
-              className="opacity-0"
-              style={{ height: "24px", width: "80px" }}
-            />
-          ))}
+        {placeholderElements}
       </div>
 
-      {/* Overflow dropdown */}
       {overflowItems.length > 0 && (
-        <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <Popover open={isOpen} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild>
             <button
               ref={overflowButtonRef}
-              className="bg-muted hover:bg-muted/80 inline-flex flex-shrink-0 items-center gap-1 rounded-md px-2 py-1 text-sm transition-all duration-150"
+              className="inline-flex flex-shrink-0 items-center"
               aria-label={`Show ${overflowItems.length} more items`}
             >
               {renderOverflowIndicator
@@ -260,11 +292,10 @@ export function OverflowList<T>({
             </button>
           </PopoverTrigger>
           <PopoverContent
-            className="p-2"
-            align={popoverAlign}
-            style={getPopoverStyle()}
+            className="rounded-md border border-solid border-f1-border-secondary p-1 shadow-md"
+            align="end"
           >
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col">
               {overflowItems.map((item, index) => (
                 <div key={`overflow-item-${index}`}>
                   {renderDropdownItem(item, index)}

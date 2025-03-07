@@ -1,3 +1,5 @@
+import { Counter } from "@/experimental/Information/Counter"
+import { Preset } from "@/experimental/OnePreset"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useState } from "react"
 import { OverflowList } from "./overflow-list"
@@ -13,7 +15,7 @@ const meta = {
         <>
           <div className="w-full gap-4">
             <div
-              className="rounded bg-f1-background-tertiary p-3"
+              className="rounded border border-solid border-f1-border-secondary p-3"
               style={{ width: `${containerWidth}px` }}
             >
               <Story />
@@ -108,6 +110,70 @@ export const Default: Story = {
             <span className="capitalize">{task.status.replace("-", " ")}</span>
             <span>Due: {task.dueDate}</span>
           </div>
+        </div>
+      )
+    },
+    gap: 8,
+  },
+  render: (args) => {
+    return (
+      <div className="w-full">
+        <OverflowList {...args} />
+      </div>
+    )
+  },
+}
+
+interface PresetItem {
+  id: number
+  name: string
+  number?: number
+}
+
+export const Presets: Story = {
+  args: {
+    items: [
+      {
+        id: 1,
+        name: "Draft",
+        number: 10,
+      },
+      {
+        id: 2,
+        name: "Pending",
+        number: 4,
+      },
+      {
+        id: 3,
+        name: "Ordered",
+        number: 8,
+      },
+      {
+        id: 4,
+        name: "Partial",
+        number: 12,
+      },
+      {
+        id: 5,
+        name: "Recieved",
+        number: 21,
+      },
+      {
+        id: 6,
+        name: "Closed",
+        number: 15,
+      },
+    ],
+    renderListItem: (item) => {
+      const preset = item as PresetItem
+      return <Preset label={preset.name} number={preset.number} />
+    },
+    renderDropdownItem: (item) => {
+      const preset = item as PresetItem
+      return (
+        <div className="flex justify-between rounded p-2 transition-colors hover:cursor-pointer hover:bg-f1-background-hover">
+          <span className="font-medium">{preset.name}</span>
+          {preset.number && <Counter value={preset.number} type="default" />}
         </div>
       )
     },
