@@ -59,7 +59,7 @@ export function WidgetHighlightButton({
           </p>
           <Icon icon={icon} size="md" className={iconClassName} />
         </div>
-        <p className="line-clamp-1 flex-1 text-2xl font-semibold text-f1-foreground">
+        <p className="line-clamp-1 flex-1 text-3xl font-semibold text-f1-foreground">
           {count}
         </p>
       </div>

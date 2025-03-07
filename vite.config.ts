@@ -15,6 +15,17 @@ dotenv.config({
 
 const extraPlugins: Plugin[] = []
 
+// Add tailwind build
+const buildTailwind = process.argv.find((arg) => arg.startsWith("--tailwind"))
+if (buildTailwind) {
+  extraPlugins.push({
+    name: "build-tailwind",
+    async closeBundle() {
+      spawnSync("pnpm", ["build:tailwind"], { stdio: "inherit" })
+    },
+  })
+}
+
 /* Build sync */
 const defaultCoderWorkspaceFolder =
   "/home/factorial/workspace/factorial/frontend/node_modules/@factorialco/factorial-one"
@@ -40,12 +51,6 @@ if (buildSync) {
     .join(":")
 
   extraPlugins.push(
-    {
-      name: "build-tailwind",
-      async closeBundle() {
-        spawnSync("pnpm", ["build:tailwind"], { stdio: "inherit" })
-      },
-    },
     buildSyncPlugin({
       target,
     })

@@ -143,7 +143,7 @@ export function BaseHeader({
             </div>
           )}
           <div className="flex flex-col gap-1">
-            <span className="text-xl font-semibold text-f1-foreground">
+            <span className="text-2xl font-semibold text-f1-foreground">
               {title}
             </span>
             {description && (

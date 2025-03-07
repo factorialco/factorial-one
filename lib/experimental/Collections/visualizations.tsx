@@ -9,6 +9,7 @@ import { ActionsDefinition } from "./actions"
 import type { CardVisualizationOptions } from "./Card"
 import { CardCollection } from "./Card"
 import type { FiltersDefinition } from "./Filters/types"
+import { SortingsDefinition } from "./sortings"
 import type { TableVisualizationOptions } from "./Table"
 import { TableCollection } from "./Table"
 import type { DataSource, RecordType } from "./types"
@@ -19,23 +20,24 @@ import type { DataSource, RecordType } from "./types"
  *
  * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
+ * @template Actions - The actions type extending ActionsDefinition
  */
 export type Visualization<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Actions extends ActionsDefinition<Record>,
+  Sortings extends SortingsDefinition,
 > =
   | {
       /** Card-based visualization type */
       type: "card"
       /** Configuration options for card visualization */
-      options: CardVisualizationOptions<Record>
+      options: CardVisualizationOptions<Record, Filters, Sortings>
     }
   | {
       /** Table-based visualization type */
       type: "table"
       /** Configuration options for table visualization */
-      options: TableVisualizationOptions<Record>
+      options: TableVisualizationOptions<Record, Filters, Sortings>
     }
   | {
       /** Custom visualization type */
@@ -46,7 +48,7 @@ export type Visualization<
       icon: IconType
       /** Custom component to render the visualization */
       component: (props: {
-        source: DataSource<Record, Filters, Actions>
+        source: DataSource<Record, Filters, Sortings>
       }) => JSX.Element
     }
 
@@ -56,22 +58,24 @@ export type Visualization<
  *
  * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
+ * @template Actions - The actions type extending ActionsDefinition
  */
 export type VisualizationProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Actions extends ActionsDefinition<Record>,
+  Sortings extends SortingsDefinition,
 > = {
   /** Array of available visualization configurations */
-  visualizations?: ReadonlyArray<Visualization<Record, Filters, Actions>>
+  visualizations?: ReadonlyArray<Visualization<Record, Filters, Sortings>>
 }
 
 /**
  * A component that renders a selector for switching between different visualization types.
  * Provides buttons for each available visualization with appropriate icons.
  *
- * @template Schema - The schema type extending CollectionSchema
+ * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
+ * @template Actions - The actions type extending ActionsDefinition
  *
  * @param visualizations - Array of available visualizations
  * @param currentVisualization - Index of the currently selected visualization
@@ -82,13 +86,13 @@ export type VisualizationProps<
 export const VisualizationSelector = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Actions extends ActionsDefinition<Record>,
+  Sortings extends SortingsDefinition,
 >({
   visualizations,
   currentVisualization,
   onVisualizationChange,
 }: {
-  visualizations: ReadonlyArray<Visualization<Record, Filters, Actions>>
+  visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
   currentVisualization: number
   onVisualizationChange: (index: number) => void
 }): JSX.Element => {
@@ -157,39 +161,41 @@ export const VisualizationSelector = <
 
 /**
  * A component that renders the selected visualization for a collection.
- * Handles switching between different visualization types (table or card view)
+ * Handles switching between different visualization types (table, card, or custom view)
  * and passes appropriate props to the specific visualization component.
  *
- * @template Schema - The schema type extending CollectionSchema
+ * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
+ * @template Actions - The actions type extending ActionsDefinition
  *
  * @param visualization - The configuration for the current visualization
  * @param source - The data source to visualize
  *
- * @returns The rendered visualization component (TableCollection or CardCollection)
+ * @returns The rendered visualization component (TableCollection, CardCollection, or custom component)
  */
 export const VisualizationRenderer = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
   Actions extends ActionsDefinition<Record>,
 >({
   visualization,
   source,
 }: {
-  visualization: Visualization<Record, Filters, Actions>
-  source: DataSource<Record, Filters, Actions>
+  visualization: Visualization<Record, Filters, Sortings>
+  source: DataSource<Record, Filters, Sortings, Actions>
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
       return (
-        <TableCollection<Record, Filters, Actions>
+        <TableCollection<Record, Filters, Sortings, Actions>
           source={source}
           {...visualization.options}
         />
       )
     case "card":
       return (
-        <CardCollection<Record, Filters, Actions>
+        <CardCollection<Record, Filters, Sortings, Actions>
           source={source}
           {...visualization.options}
         />

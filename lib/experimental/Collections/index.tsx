@@ -2,47 +2,62 @@ import { useMemo, useState } from "react"
 import { ActionsDefinition } from "./actions"
 import { Filters } from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { SortingsDefinition, SortingsState } from "./sortings"
 import type { DataSource, DataSourceDefinition, RecordType } from "./types"
 import type { Visualization } from "./visualizations"
 import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 
 /**
  * A hook that manages data source state and filtering capabilities for a collection.
- * It handles the initialization and management of filter states, and provides
- * a consistent interface for data fetching with the current filters.
+ * It creates and returns a reusable data source that can be shared across different
+ * visualizations and components.
  *
- * @template Schema - The schema defining the structure and types of the collection data
+ * This hook is intentionally separated from the rendering components to:
+ * 1. Enable sharing the same data source across multiple components
+ * 2. Allow for state management outside the rendering layer
+ * 3. Support more complex data filtering, querying, and pagination logic
+ * 4. Provide a clean separation between data management and visualization
+ *
+ * @template Record - The type of records in the collection
  * @template Filters - The definition of available filters for the collection
+ * @template Actions - The definition of available actions for the collection
  *
- * @param properties - The schema properties defining the data structure
- * @param filters - Optional filter configurations for the collection
- * @param currentFilters - Initial state of the filters
- * @param fetchData - Function to fetch data with the current filters
+ * @param options - Configuration object containing:
+ *   - filters: Optional filter configurations for the collection
+ *   - currentFilters: Initial state of the filters
+ *   - dataAdapter: Adapter for data fetching and manipulation
+ *   - actions: Optional actions available for records
+ *   - presets: Optional filter presets
+ * @param deps - Dependency array for memoization, similar to useEffect dependencies
  *
  * @returns A DataSource object containing:
- * - properties: The schema properties
  * - filters: The available filter configurations
  * - currentFilters: The current state of the filters
  * - setCurrentFilters: Function to update the filter state
- * - fetchData: Function to fetch data with the current filters
+ * - dataAdapter: The data adapter for fetching/manipulating data
+ * - actions: Available actions for records
+ * - presets: Available filter presets
  */
 export const useDataSource = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
   Actions extends ActionsDefinition<Record>,
 >(
   {
-    filters,
     currentFilters: initialCurrentFilters = {},
-    dataAdapter,
-    actions,
-    presets,
-  }: DataSourceDefinition<Record, Filters, Actions>,
+    filters,
+    ...rest
+  }: DataSourceDefinition<Record, Filters, Sortings, Actions>,
   deps: ReadonlyArray<unknown> = []
-): DataSource<Record, Filters, Actions> => {
+): DataSource<Record, Filters, Sortings, Actions> => {
   const [currentFilters, setCurrentFilters] = useState<FiltersState<Filters>>(
     initialCurrentFilters
   )
+
+  const [currentSortings, setCurrentSortings] =
+    useState<SortingsState<Sortings>>(null)
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
@@ -50,20 +65,27 @@ export const useDataSource = <
     filters: memoizedFilters,
     currentFilters,
     setCurrentFilters,
-    dataAdapter,
-    actions,
-    presets,
+    currentSortings,
+    setCurrentSortings,
+    ...rest,
   }
 }
 
 /**
  * A component that renders a collection of data with filtering and visualization capabilities.
- * It combines filters, data fetching, and multiple visualization options into a cohesive interface.
+ * It consumes a data source (created by useDataSource) and displays it through one or more visualizations.
  *
- * @template Schema - The schema defining the structure and types of the collection data
+ * DataCollection is separated from useDataSource to:
+ * 1. Support the composition pattern - data sources can be created and managed independently
+ * 2. Allow a single data source to be visualized in multiple ways simultaneously
+ * 3. Enable reuse of the same data source in different parts of the application
+ * 4. Provide a clean separation of concerns between data management and UI rendering
+ *
+ * @template Record - The type of records in the collection
  * @template Filters - The definition of available filters for the collection
+ * @template Actions - The definition of available actions for the collection
  *
- * @param source - The data source containing properties, filters, and data fetching capabilities
+ * @param source - The data source containing filters, data, and state management
  * @param visualizations - Array of available visualization options (e.g., table, card view)
  *
  * @returns A JSX element containing:
@@ -74,13 +96,14 @@ export const useDataSource = <
 export const DataCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
   Actions extends ActionsDefinition<Record>,
 >({
   source,
   visualizations,
 }: {
-  source: DataSource<Record, Filters, Actions>
-  visualizations: ReadonlyArray<Visualization<Record, Filters, Actions>>
+  source: DataSource<Record, Filters, Sortings, Actions>
+  visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
 }): JSX.Element => {
   const { filters, currentFilters, setCurrentFilters } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)

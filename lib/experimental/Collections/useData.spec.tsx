@@ -4,6 +4,7 @@ import { Observable } from "zen-observable-ts"
 import type { PromiseState } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import type { FiltersState } from "./Filters/types"
+import { SortingsDefinition } from "./sortings"
 import type {
   BaseDataAdapter,
   BaseFetchOptions,
@@ -33,20 +34,35 @@ const mockData: TestRecord[] = [
   { id: 2, name: "Test 2" },
 ]
 
+type TestSource = DataSource<
+  TestRecord,
+  TestFilters,
+  SortingsDefinition,
+  ActionsDefinition<TestRecord>
+>
+
 const createMockDataSource = (
   fetchData: (
-    options: BaseFetchOptions<TestFilters>
+    options: BaseFetchOptions<TestFilters, SortingsDefinition>
   ) =>
     | BaseResponse<TestRecord>
     | Promise<BaseResponse<TestRecord>>
     | Observable<PromiseState<BaseResponse<TestRecord>>>,
   paginationType?: "pages"
-): DataSource<TestRecord, TestFilters, ActionsDefinition<TestRecord>> => {
-  const baseAdapter: BaseDataAdapter<TestRecord, TestFilters> = {
+): TestSource => {
+  const baseAdapter: BaseDataAdapter<
+    TestRecord,
+    TestFilters,
+    SortingsDefinition
+  > = {
     fetchData,
   }
 
-  const paginatedAdapter: PaginatedDataAdapter<TestRecord, TestFilters> = {
+  const paginatedAdapter: PaginatedDataAdapter<
+    TestRecord,
+    TestFilters,
+    SortingsDefinition
+  > = {
     fetchData: async (options) => {
       const result = await Promise.resolve(fetchData(options))
       if (result instanceof Observable) {
@@ -68,6 +84,8 @@ const createMockDataSource = (
     dataAdapter: paginationType === "pages" ? paginatedAdapter : baseAdapter,
     currentFilters: {},
     setCurrentFilters: vi.fn(),
+    currentSortings: null,
+    setCurrentSortings: vi.fn(),
   }
 }
 
@@ -348,18 +366,12 @@ describe("useData", () => {
         },
         currentFilters: {},
         setCurrentFilters: vi.fn(),
+        currentSortings: null,
+        setCurrentSortings: vi.fn(),
       }
 
       // Render the hook
-      const { result } = renderHook(() =>
-        useData(
-          source as DataSource<
-            TestRecord,
-            TestFilters,
-            ActionsDefinition<TestRecord>
-          >
-        )
-      )
+      const { result } = renderHook(() => useData(source))
 
       // Wait for initial data to load
       await act(async () => {

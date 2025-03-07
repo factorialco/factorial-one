@@ -51,7 +51,7 @@ export function RadialProgressChart({
           <span className="text-sm text-f1-foreground-secondary">
             {overview.label}
           </span>
-          <span className="text-2xl font-semibold leading-none text-f1-foreground">
+          <span className="text-4xl font-semibold leading-none text-f1-foreground">
             {overview.number}
           </span>
         </div>

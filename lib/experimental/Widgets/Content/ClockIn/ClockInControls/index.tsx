@@ -100,7 +100,7 @@ export function ClockInControls({
           <div className="flex-1 space-y-4">
             <div className="flex flex-col items-center space-y-0.5 @xs:items-start">
               <div className="flex items-center gap-2">
-                <span className="line-clamp-1 text-xl font-semibold text-f1-foreground">
+                <span className="line-clamp-1 text-2xl font-semibold text-f1-foreground">
                   {statusText}
                 </span>
                 <div className="relative aspect-square h-4">

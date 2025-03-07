@@ -136,7 +136,7 @@ const CardComment = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn("flex text-2xl font-semibold", className)}
+      className={cn("flex text-3xl font-semibold", className)}
       {...props}
     />
   )

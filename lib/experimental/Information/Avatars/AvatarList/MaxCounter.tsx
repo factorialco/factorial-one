@@ -14,8 +14,8 @@ const sizeVariants = cva({
       xsmall: "h-5 w-5 rounded-xs text-sm",
       small: "h-6 min-w-6 rounded-sm px-1 text-sm",
       medium: "h-8 min-w-8 rounded px-1.5",
-      large: "h-14 min-w-14 rounded-xl px-3 text-xl",
-      xlarge: "h-18 min-w-18 rounded-[20px] px-4 text-2xl",
+      large: "h-14 min-w-14 rounded-xl px-3 text-2xl",
+      xlarge: "h-18 min-w-18 rounded-[20px] px-4 text-3xl",
     },
     type: {
       base: "",

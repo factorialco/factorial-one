@@ -67,7 +67,7 @@ export const Carousel = ({
 
   return (
     <ShadCarousel
-      className="flex w-full flex-col gap-3"
+      className="flex w-full flex-col gap-3 @container"
       opts={{
         align: !showPeek ? "start" : "center",
         slidesToScroll: "auto",
