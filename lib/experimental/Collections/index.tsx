@@ -120,8 +120,8 @@ export const DataCollection = <
             onChange={setCurrentFilters}
           />
         )}
-        <div className="flex items-center gap-2">
-          <Search placeholder="Search" onChange={() => {}} />
+        <div className="flex shrink-0 items-center gap-2">
+          <Search placeholder="Search" onChange={() => {}} loading />
           {visualizations && visualizations.length > 1 && (
             <VisualizationSelector
               visualizations={visualizations}

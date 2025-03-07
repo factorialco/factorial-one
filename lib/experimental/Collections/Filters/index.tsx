@@ -183,15 +183,20 @@ export function Filters<Definition extends FiltersDefinition>({
           </PopoverContent>
         </Popover>
 
-        {presets &&
-          presets.map((preset, index) => (
-            <Preset
-              key={index}
-              label={preset.label}
-              selected={JSON.stringify(preset.filter) === JSON.stringify(value)}
-              onClick={() => onChange(preset.filter)}
-            />
-          ))}
+        {presets && (
+          <div className="flex flex-wrap items-center gap-2">
+            {presets.map((preset, index) => (
+              <Preset
+                key={index}
+                label={preset.label}
+                selected={
+                  JSON.stringify(preset.filter) === JSON.stringify(value)
+                }
+                onClick={() => onChange(preset.filter)}
+              />
+            ))}
+          </div>
+        )}
       </div>
       {Object.keys(value).length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
