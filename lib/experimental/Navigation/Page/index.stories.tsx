@@ -1,17 +1,16 @@
 import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import type { Meta, StoryObj } from "@storybook/react"
-import { DaytimePage, DaytimePageProps, Page } from "."
+import { Page } from "."
 
 import { PageHeader } from "../Header/PageHeader"
 import * as HeaderStories from "../Header/PageHeader/index.stories"
 import { Tabs } from "../Tabs"
 import * as TabsStories from "../Tabs/index.stories"
 
-import { HomeLayout } from "@/experimental/PageLayouts/HomeLayout"
-import { Default as DefaultHomeLayoutStory } from "@/experimental/PageLayouts/HomeLayout/index.stories"
 import { StandardLayout } from "@/experimental/PageLayouts/StandardLayout"
 import { Briefcase } from "@/icons/app"
 import { ComponentProps } from "react"
+import { ApplicationFrame } from "../ApplicationFrame"
 
 type TabsProps = ComponentProps<typeof Tabs>
 
@@ -24,15 +23,15 @@ const meta: Meta<typeof Page> = {
   },
   decorators: [
     (Story) => (
-      <div className="bg-f1-background-tertiary p-2">
+      <ApplicationFrame sidebar={null}>
         <Story />
-      </div>
+      </ApplicationFrame>
     ),
   ],
 }
 
 export default meta
-type Story = StoryObj<DaytimePageProps>
+type Story = StoryObj<ComponentProps<typeof Page>>
 
 const defaultModule = {
   name: "Time Tracking",
@@ -244,28 +243,4 @@ export const Embedded: Story = {
       </StandardLayout>
     ),
   },
-}
-
-export const DaytimeHomeLayout: Story = {
-  args: {
-    period: "morning",
-  },
-  argTypes: {
-    period: {
-      control: "select",
-      options: ["morning", "afternoon", "evening"],
-    },
-  },
-  render: ({ period }) => (
-    <DaytimePage
-      period={period}
-      header={
-        <div className="px-3 py-4 lg:px-6">
-          <p className="text-xl font-semibold">Good morning, Saul!</p>
-        </div>
-      }
-    >
-      <HomeLayout {...DefaultHomeLayoutStory.args} />
-    </DaytimePage>
-  ),
 }

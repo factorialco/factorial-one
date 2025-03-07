@@ -6,6 +6,7 @@ import {
 } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { SortingsDefinition } from "./sortings"
 import {
   DataSource,
   PaginatedResponse,
@@ -89,37 +90,80 @@ function usePaginationState() {
 }
 
 /**
- * A React hook that manages data fetching and state for a collection data source.
- * Handles both Promise-based and Observable-based data streams, providing a consistent
- * interface for data loading states and results.
+ * A core React hook that manages data fetching, state management, and pagination within the Collections ecosystem.
+ *
+ * ## Why a Separate Hook?
+ *
+ * `useData` exists as a separate hook for three main reasons:
+ *
+ * - **Visualization-Specific Needs**: Different visualizations have unique data requirements:
+ *   - Card visualizations need grid-aligned pagination (multiples of grid columns)
+ *   - Table visualizations work best with row-optimized data fetching
+ *   - Custom visualizations may need specialized data transformations
+ *
+ * - **Separation of Concerns**: Maintains clear boundaries between:
+ *   - Data source configuration (managed by `useDataSource`)
+ *   - Data fetching & state management (handled by `useData`)
+ *   - UI presentation (implemented by visualization components)
+ *
+ * - **Extensibility**: New visualization types can be added without modifying core data logic,
+ *   as each visualization directly controls how it consumes data
+ *
+ * ## Core Features
+ *
+ * - Handles multiple data source types seamlessly (synchronous, Promise-based, Observable-based)
+ * - Manages pagination state with automatic page handling
+ * - Provides consistent loading states (`isInitialLoading`, `isLoading`)
+ * - Implements standardized error handling with detailed error information
+ * - Performs automatic cleanup of subscriptions to prevent memory leaks
+ * - Supports filter application with proper filter state management
+ *
+ * ## Usage in Visualizations
+ *
+ * Each visualization component calls `useData` directly to maintain control over its specific data needs:
+ *
+ * ```tsx
+ * // Example: CardCollection customizing pagination before calling useData
+ * function CardCollection({ source }) {
+ *   // Override source to ensure grid-friendly pagination (multiples of 2,3,4)
+ *   const adaptedSource = useMemo(() => ({
+ *     ...source,
+ *     dataAdapter: {
+ *       ...source.dataAdapter,
+ *       perPage: source.dataAdapter.perPage ?? 24,
+ *     }
+ *   }), [source]);
+ *
+ *   // Let useData handle the data fetching with our customized source
+ *   const { data, isInitialLoading, paginationInfo, setPage } = useData(adaptedSource);
+ *
+ *   // Rendering logic follows...
+ * }
+ * ```
  *
  * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
  *
- * @param source - The data source object containing fetchData and filter state
- * @param options - Optional configuration options
+ * @param source - The data source object containing dataAdapter and filter state
+ * @param options - Optional configuration including filter overrides
  *
- * @returns An object containing data state and pagination controls
- *
- * @example
- * ```tsx
- * const MyComponent = ({ source }) => {
- *   const { data, isInitialLoading, error } = useData({ source })
- *
- *   if (isInitialLoading) return <Loading />
- *   if (error) return <Error message={error.message} />
- *   return <DataList items={data} />
- * }
- * ```
+ * @returns {UseDataReturn<Record>} An object containing:
+ * - data: The current collection records
+ * - isInitialLoading: Whether this is the first data load
+ * - isLoading: Whether any data fetch is in progress
+ * - error: Any error that occurred during data fetching
+ * - paginationInfo: Pagination state and metadata if available
+ * - setPage: Function to navigate to a specific page
  */
 export function useData<
   Record extends RecordType,
   Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
 >(
-  source: DataSource<Record, Filters, ActionsDefinition<Record>>,
+  source: DataSource<Record, Filters, Sortings, ActionsDefinition<Record>>,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
-  const { dataAdapter, currentFilters } = source
+  const { dataAdapter, currentFilters, currentSortings } = source
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
@@ -189,9 +233,10 @@ export function useData<
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 filters,
+                sortings: currentSortings,
                 pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
               })
-            : dataAdapter.fetchData({ filters })
+            : dataAdapter.fetchData({ filters, sortings: currentSortings })
 
         const result = fetcher()
 
@@ -225,7 +270,13 @@ export function useData<
         handleFetchError(error)
       }
     },
-    [dataAdapter, handleFetchSuccess, handleFetchError, setIsLoading]
+    [
+      handleFetchError,
+      dataAdapter,
+      currentSortings,
+      handleFetchSuccess,
+      setIsLoading,
+    ]
   )
 
   const setPage = useCallback(

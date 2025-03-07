@@ -16,14 +16,10 @@ function Selector({
 }) {
   return (
     <div
-      className="flex cursor-default flex-row items-center gap-1 rounded-xs px-1 hover:bg-f1-background-hover"
+      className="flex cursor-default flex-row items-center gap-1 rounded-xs px-1 py-0.5 hover:bg-f1-background-hover"
       onClick={onClick}
     >
-      {icon && (
-        <div className="translate-y-0.5">
-          <Icon icon={icon} className="text-f1-icon" />
-        </div>
-      )}
+      {icon && <Icon icon={icon} className="text-f1-icon" />}
       <span
         className={cn(
           "font-medium",
@@ -32,9 +28,7 @@ function Selector({
       >
         {text ?? placeholder}
       </span>
-      <div className="translate-y-[3px]">
-        <Icon icon={DropdownDefault} />
-      </div>
+      <Icon icon={DropdownDefault} />
     </div>
   )
 }
