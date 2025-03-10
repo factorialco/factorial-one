@@ -206,7 +206,7 @@ interface OverflowListProps<T> {
   gap?: number
 }
 
-export function OverflowList<T>({
+const OverflowList = function OverflowList<T>({
   items,
   renderListItem,
   renderDropdownItem,
@@ -233,7 +233,7 @@ export function OverflowList<T>({
   // Default overflow indicator
   const defaultOverflowIndicator = useMemo(() => {
     const IconMotion = motion(Icon)
-    return (count: number, isOpen: boolean) => (
+    const OverflowIndicator = (count: number, isOpen: boolean) => (
       <div
         className={cn(
           "flex items-center gap-1 rounded py-1.5 pl-3 pr-2 text-base font-medium text-f1-foreground transition-colors hover:bg-f1-background-secondary",
@@ -255,6 +255,8 @@ export function OverflowList<T>({
         </div>
       </div>
     )
+    OverflowIndicator.displayName = "OverflowIndicator"
+    return OverflowIndicator
   }, [items.length, i18n.actions.more])
 
   // Placeholder elements for initialization
@@ -334,3 +336,5 @@ export function OverflowList<T>({
 }
 
 OverflowList.displayName = "OverflowList"
+
+export { OverflowList }
