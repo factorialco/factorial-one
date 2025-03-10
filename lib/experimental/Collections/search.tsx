@@ -1,5 +1,5 @@
 import { Icon } from "@/components/Utilities/Icon"
-import { Search as SearchIcon, Spinner } from "@/icons/app"
+import { CrossedCircle, Search as SearchIcon, Spinner } from "@/icons/app"
 import { useI18n } from "@/lib/i18n-provider"
 import { cn, focusRing } from "@/lib/utils"
 import {
@@ -15,35 +15,19 @@ interface SearchProps {
   value?: string
   placeholder?: string
   onChange: (value: string) => void
+  onClear: () => void
   loading?: boolean
 }
 
 const IconComponent = ({ loading }: { loading: boolean }) => {
   const IconMotion = motion(Icon)
 
-  const iconAnimationProps = {
-    initial: { opacity: 0, scale: 0.6 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.6 },
-    transition: { duration: 0.1 },
-  }
-
   return (
     <AnimatePresence mode="wait">
       {loading ? (
-        <IconMotion
-          key="spinner"
-          icon={Spinner}
-          className="animate-spin"
-          {...iconAnimationProps}
-        />
+        <IconMotion key="spinner" icon={Spinner} className="animate-spin" />
       ) : (
-        <IconMotion
-          key="magnifier"
-          icon={SearchIcon}
-          className="text"
-          {...iconAnimationProps}
-        />
+        <IconMotion key="magnifier" icon={SearchIcon} className="text" />
       )}
     </AnimatePresence>
   )
@@ -53,6 +37,7 @@ export const Search = ({
   value,
   placeholder,
   onChange,
+  onClear,
   loading = false,
 }: SearchProps) => {
   const [open, setOpen] = useState(false)
@@ -60,8 +45,6 @@ export const Search = ({
   const ref = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const i18n = useI18n()
-
-  const [loadingTest, setLoadingTest] = useState(loading)
 
   const placeholderText = placeholder || i18n.actions.search
 
@@ -88,39 +71,59 @@ export const Search = ({
             layout
             ref={ref}
             className={cn(
-              "relative flex h-8 w-8 items-center justify-center",
-              open && "w-64"
+              "relative flex h-8 w-fit min-w-8 max-w-[180px] items-center justify-center",
+              (open || value) && "w-[180px]"
             )}
           >
             {open ? (
               <motion.div
                 layout
                 layoutId="search-container"
-                className="absolute inset-0 h-8 w-full bg-f1-border p-px shadow-md transition-colors focus-within:bg-f1-border-hover"
+                className="absolute inset-0 h-8 w-full bg-f1-border p-px transition-colors focus-within:bg-f1-border-hover"
                 style={{ borderRadius: 12 }}
               >
                 <motion.div
                   layout
-                  className="relative h-full w-full bg-f1-background"
+                  className="relative flex h-full w-full items-center justify-between gap-1 overflow-hidden bg-f1-background pr-1.5"
                   style={{ borderRadius: 11 }}
                 >
                   <motion.div
                     className="absolute left-[5px] top-[5px] z-10 flex h-5 w-5 items-center justify-center text-f1-icon"
                     layoutId="search-icon"
                   >
-                    <IconComponent loading={loadingTest} />
+                    <IconComponent loading={loading} />
                   </motion.div>
                   <motion.input
+                    layout
                     ref={inputRef}
                     type="text"
                     value={value}
                     placeholder={placeholderText}
                     onChange={(e) => onChange(e.target.value)}
-                    className="h-full w-full appearance-none rounded border-none bg-f1-background px-7 py-2 text-base text-f1-foreground"
+                    className="h-full w-full appearance-none rounded border-none bg-f1-background py-2 pl-7 text-base text-f1-foreground"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   />
+                  <motion.div
+                    tabIndex={0}
+                    className={cn(
+                      "flex h-5 w-5 items-center justify-center rounded-full",
+                      focusRing()
+                    )}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      onClear()
+                    }}
+                    role="button"
+                    aria-label="Clear search"
+                  >
+                    <Icon
+                      icon={CrossedCircle}
+                      className="text-f1-icon-secondary transition-colors hover:text-f1-icon"
+                      size="md"
+                    />
+                  </motion.div>
                 </motion.div>
               </motion.div>
             ) : (
@@ -130,7 +133,7 @@ export const Search = ({
                 layout
                 layoutId="search-container"
                 className={cn(
-                  "relative h-8 w-8 bg-f1-border p-px transition-colors hover:bg-f1-border-hover",
+                  "relative h-8 w-full bg-f1-border p-px transition-colors hover:bg-f1-border-hover",
                   focusRing()
                 )}
                 onClick={handleOpen}
@@ -138,29 +141,47 @@ export const Search = ({
               >
                 <motion.div
                   layout
-                  className="relative h-full w-full bg-f1-background"
+                  className="relative flex h-full w-full items-center gap-1 overflow-hidden bg-f1-background"
                   style={{ borderRadius: 9 }}
                 >
                   <motion.div
                     className="absolute left-[5px] top-[5px] flex h-5 w-5 items-center justify-center text-f1-icon-bold"
                     layoutId="search-icon"
                   >
-                    <IconComponent loading={loadingTest} />
+                    <IconComponent loading={loading} />
                   </motion.div>
+                  {value && (
+                    <div className="flex h-7 w-full items-center justify-between gap-1.5 overflow-hidden pr-1.5">
+                      <motion.div
+                        layout
+                        className="line-clamp-1 overflow-hidden py-2 pl-7"
+                      >
+                        {value}
+                      </motion.div>
+                      <motion.div
+                        tabIndex={0}
+                        className={cn(
+                          "flex h-5 w-5 items-center justify-center rounded-full",
+                          focusRing()
+                        )}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          onClear()
+                        }}
+                        role="button"
+                        aria-label="Clear search"
+                      >
+                        <Icon
+                          icon={CrossedCircle}
+                          className="text-f1-icon-secondary transition-colors hover:text-f1-icon"
+                          size="md"
+                        />
+                      </motion.div>
+                    </div>
+                  )}
                 </motion.div>
               </motion.div>
             )}
-
-            <button
-              type="button"
-              className="text-medium absolute -bottom-5 right-0 rounded-xs bg-f1-background-accent-bold p-1 text-xs text-f1-foreground-inverse"
-              onClick={(e) => {
-                e.stopPropagation()
-                setLoadingTest(!loadingTest)
-              }}
-            >
-              Load
-            </button>
           </motion.div>
         </AnimatePresence>
       </MotionConfig>

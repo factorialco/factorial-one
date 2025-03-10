@@ -121,7 +121,7 @@ export const DataCollection = <
           />
         )}
         <div className="flex shrink-0 items-center gap-2">
-          <Search placeholder="Search" onChange={() => {}} loading />
+          <Search placeholder="Search" onChange={() => {}} onClear={() => {}} />
           {visualizations && visualizations.length > 1 && (
             <VisualizationSelector
               visualizations={visualizations}
