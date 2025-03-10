@@ -112,7 +112,7 @@ export const Search = ({
                       onClear()
                     }}
                     role="button"
-                    aria-label="Clear search"
+                    aria-label={i18n.actions.clear}
                   >
                     <Icon
                       icon={CrossedCircle}
@@ -125,6 +125,7 @@ export const Search = ({
             ) : (
               <motion.div
                 role="button"
+                aria-label={i18n.actions.search}
                 tabIndex={0}
                 layout
                 layoutId="search-container"
@@ -165,7 +166,7 @@ export const Search = ({
                           onClear()
                         }}
                         role="button"
-                        aria-label="Clear search"
+                        aria-label={i18n.actions.clear}
                       >
                         <Icon
                           icon={CrossedCircle}

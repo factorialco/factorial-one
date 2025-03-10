@@ -10,6 +10,7 @@ export const defaultTranslations = {
     skipToContent: "Skip to content",
     view: "View",
     search: "Search",
+    clear: "Clear",
   },
   filters: {
     label: "Filters",
