@@ -107,6 +107,32 @@ const chartData = [
   { date: "2023-02-01", performance: 72 },
   { date: "2023-03-01", performance: 68 },
   { date: "2023-04-01", performance: 75 },
+  { date: "2023-05-01", performance: 73 },
+  { date: "2023-06-01", performance: 70 },
+  { date: "2023-07-01", performance: 74 },
+  { date: "2023-08-01", performance: 69 },
+  { date: "2023-09-01", performance: 71 },
+  { date: "2023-10-01", performance: 72 },
+  { date: "2023-11-01", performance: 68 },
+  { date: "2023-12-01", performance: 76 },
+  { date: "2024-01-01", performance: 75 },
+  { date: "2024-02-01", performance: 73 },
+  { date: "2024-03-01", performance: 70 },
+  { date: "2024-04-01", performance: 74 },
+  { date: "2024-05-01", performance: 69 },
+  { date: "2024-06-01", performance: 72 },
+  { date: "2024-07-01", performance: 71 },
+  { date: "2024-08-01", performance: 70 },
+  { date: "2024-09-01", performance: 68 },
+  { date: "2024-10-01", performance: 75 },
+  { date: "2024-11-01", performance: 74 },
+  { date: "2024-12-01", performance: 76 },
+  { date: "2025-01-01", performance: 73 },
+  { date: "2025-02-01", performance: 72 },
+  { date: "2025-03-01", performance: 70 },
+  { date: "2025-04-01", performance: 69 },
+  { date: "2025-05-01", performance: 71 },
+  { date: "2025-06-01", performance: 73 },
 ]
 
 // Individual events. Multiple events can share the same date.
@@ -153,6 +179,7 @@ interface CustomEventMarkersProps {
   offset: { top: number; left: number }
   selectedGroup: GroupedEvent | null
   onSelectGroup: (group: GroupedEvent | null) => void
+  showLabels: boolean
 }
 
 const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
@@ -161,6 +188,7 @@ const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
   offset,
   selectedGroup,
   onSelectGroup,
+  showLabels,
 }) => {
   const [hoveredGroup, setHoveredGroup] = useState<GroupedEvent | null>(null)
 
@@ -213,28 +241,30 @@ const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
               onClick={() => onSelectGroup(group)}
             />
             {/* Aggregated event labels displayed directly above the line (outside the chart) */}
-            <foreignObject
-              x={x - 50}
-              y={offset.top - 45}
-              width={100}
-              height={45}
-            >
-              <div
-                style={{
-                  fontSize: "12px",
-                  lineHeight: "1.2",
-                  maxHeight: "45px",
-                  overflow: "hidden",
-                  textAlign: "center",
-                  whiteSpace: "normal",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 3,
-                  WebkitBoxOrient: "vertical",
-                }}
+            {showLabels && (
+              <foreignObject
+                x={x - 50}
+                y={offset.top - 45}
+                width={100}
+                height={45}
               >
-                {aggregatedLabel}
-              </div>
-            </foreignObject>
+                <div
+                  style={{
+                    fontSize: "12px",
+                    lineHeight: "1.2",
+                    maxHeight: "45px",
+                    overflow: "hidden",
+                    textAlign: "center",
+                    whiteSpace: "normal",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical",
+                  }}
+                >
+                  {aggregatedLabel}
+                </div>
+              </foreignObject>
+            )}
           </g>
         )
       })}
@@ -242,7 +272,7 @@ const CustomEventMarkers: React.FC<CustomEventMarkersProps> = ({
   )
 }
 
-const LineChartWithEventCard: React.FC = () => {
+const LineChartWithEventCard: React.FC = (showLabels: boolean) => {
   const [selectedGroup, setSelectedGroup] = useState<GroupedEvent | null>(null)
 
   return (
@@ -275,6 +305,7 @@ const LineChartWithEventCard: React.FC = () => {
                     offset={offset}
                     selectedGroup={selectedGroup}
                     onSelectGroup={setSelectedGroup}
+                    showLabels={showLabels}
                   />
                 )
               }}
@@ -328,4 +359,4 @@ const LineChartWithEventCard: React.FC = () => {
   )
 }
 
-export const EventCard = () => <LineChartWithEventCard />
+export const EventCard = () => <LineChartWithEventCard showLabels />
