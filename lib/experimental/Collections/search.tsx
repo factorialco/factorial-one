@@ -13,7 +13,6 @@ import { useOnClickOutside } from "usehooks-ts"
 
 interface SearchProps {
   value?: string
-  placeholder?: string
   onChange: (value: string) => void
   onClear: () => void
   loading?: boolean
@@ -35,7 +34,6 @@ const IconComponent = ({ loading }: { loading: boolean }) => {
 
 export const Search = ({
   value,
-  placeholder,
   onChange,
   onClear,
   loading = false,
@@ -45,8 +43,6 @@ export const Search = ({
   const ref = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const i18n = useI18n()
-
-  const placeholderText = placeholder || i18n.actions.search
 
   useOnClickOutside(ref, () => {
     if (open) setOpen(false)
@@ -98,7 +94,7 @@ export const Search = ({
                     ref={inputRef}
                     type="text"
                     value={value}
-                    placeholder={placeholderText}
+                    placeholder={i18n.actions.search}
                     onChange={(e) => onChange(e.target.value)}
                     className="h-full w-full appearance-none rounded border-none bg-f1-background py-2 pl-7 text-base text-f1-foreground"
                     initial={{ opacity: 0 }}
