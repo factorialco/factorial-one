@@ -30,8 +30,14 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
   const measurementContainerRef = useRef<HTMLDivElement>(null)
   const isCalculatingRef = useRef(true)
 
-  const [visibleItems, setVisibleItems] = useState<T[]>([])
-  const [overflowItems, setOverflowItems] = useState<T[]>([])
+  // Combined state for visible and overflow items
+  const [itemsState, setItemsState] = useState<{
+    visibleItems: T[]
+    overflowItems: T[]
+  }>({
+    visibleItems: [],
+    overflowItems: [],
+  })
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Use the useResizeObserver hook to watch for container size changes
@@ -42,7 +48,7 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
     },
   })
 
-  // Helper function to add gap between items for calculations
+  // Helper function to add gap between items
   const addGapBetweenItems = useCallback(
     (totalWidth: number, itemIndex: number, itemsCount: number) => {
       return itemIndex < itemsCount - 1 ? totalWidth + gap : totalWidth
@@ -126,8 +132,10 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
     const allItemsFit = totalItemsWidth <= currentContainerWidth
 
     if (allItemsFit) {
-      setVisibleItems(items)
-      setOverflowItems([])
+      setItemsState({
+        visibleItems: items,
+        overflowItems: [],
+      })
       isCalculatingRef.current = false
       return
     }
@@ -138,11 +146,15 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
 
     // If no items can fit, put all items in the overflow
     if (visibleCount === 0) {
-      setVisibleItems([])
-      setOverflowItems(items)
+      setItemsState({
+        visibleItems: [],
+        overflowItems: items,
+      })
     } else {
-      setVisibleItems(items.slice(0, visibleCount))
-      setOverflowItems(items.slice(visibleCount))
+      setItemsState({
+        visibleItems: items.slice(0, visibleCount),
+        overflowItems: items.slice(visibleCount),
+      })
     }
 
     isCalculatingRef.current = false
@@ -163,16 +175,14 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
   useEffect(() => {
     // Set initialized state after the first render
     setIsInitialized(true)
-
-    // No cleanup needed for this effect
   }, []) // Empty dependency array ensures this runs only once after mount
 
   return {
     containerRef,
     overflowButtonRef,
     measurementContainerRef,
-    visibleItems,
-    overflowItems,
+    visibleItems: itemsState.visibleItems,
+    overflowItems: itemsState.overflowItems,
     isInitialized,
   }
 }
