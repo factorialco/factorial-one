@@ -17,10 +17,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node-pnpm
-      #      - name: Install Playwright
-      #        run: |
-      #          pnpx playwright install --with-deps --no-shell
-
+      - name: Install Playwright
+        run: pnpx playwright install --with-deps
       - name: Build Storybook
         run: pnpm run build-storybook --quiet
       - name: Serve Storybook and run tests

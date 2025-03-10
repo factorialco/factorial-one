@@ -26,7 +26,7 @@ Those versions are not meant to be used in production, but to be tested and revi
 
 - We will delete all the alpha version of a PR once the PR is closed (merged or not)
 - We will only keep the last 3 versions of each PR
-- We will delete any alpha version older than 5 days
+- We will delete any alpha version older than 1 day
 
 ## Conventional Commits
 
@@ -56,37 +56,49 @@ The commit contains the following structural elements, to communicate intent to 
 
 [Read more about Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#examples)
 
-## Accessing to the package
+## Using the package
 
-The package is published in the github package registry and is a private package so you need to be authenticated to in
-the registry to install it.
+The package is published in the npmjs package registry so you can use it in your project as a regular package.
 
-To install the package you need to create a `.npmrc` file in your home directory with the following content:
-
-```
-@factorialco:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+```bash
+pnpm add @factorialco/factorial-one@latest
 ```
 
-You can get the token from your [github account settings](https://github.com/settings/tokens).
-It must be a classic token with the `read:packages` scope.
+Or to install an specific version go
+to https://www.npmjs.com/package/@factorialco/factorial-one?activeTab=versions and check the version you want to install
+and execute:
 
-> Remember to don't share the token with anyone and don't commit it to the repository
-
-### Accessing the package in a CI/CD pipeline
-
-You need to add `.npmrc` file in repository with the following content:
-
-```
-@factorialco/factorial-one:registry=https://npm.pkg.github.com
+```bash
+pnpm add @factorialco/factorial-one@[VERSION]
 ```
 
-To be able to install the `factorial-one` package in a CI/CD pipeline you need to ask us to add your repository to the
-list
-of "[Manage Actions Access](https://github.com/orgs/factorialco/packages/npm/factorial-one/settings)"
+### Alpha versions
 
-Remember to set the env variable `NODE_AUTH_TOKEN` with the value of `${{secrets.GITHUB_TOKEN}}` in your CI/CD pipeline
-use the authentication to access the package.
+To install an alpha version you can execute run
+
+```bash
+pnpm add @factorialco/factorial-one@alpha-pr-[PR_NUMBER]
+```
+
+> You can run this command multiple times to get the lastest version of the alpha-pr-[PR_NUMBER]
+
+Or you can visit https://www.npmjs.com/package/@factorialco/factorial-one?activeTab=versions or run
+`pnpm view @factorialco/factorial-one` to check the available versions for your pr (dist-tag)
+
+Example:
+
+```bash
+$ `pnpm add @factorialco/factorial-one@latest
+...
+dist-tags:
+alpha-pr-1239: 1.0.0-alpha.pr-1239-20250312133123-a3455492
+alpha: 0.0.2-3
+latest: 0.0.1
+```
+
+
+
+
 
 
 

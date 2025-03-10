@@ -22,13 +22,10 @@ or [in coder](#coder))
 
 ### Using an specific commit
 
-In the monorepo folder:
+Check [release and versioning](./release-and-versioning.md) for more information about the versioning and the commit and
+how to use it in local
 
-1. open the `package.json` file
-2. run `pnpm add `github:factorialco/factorial-one#[COMMIT_SHA1]` where `[COMMIT_SHA1]` is the commit identifier to use:
-    - example: `pnpm add github:factorialco/factorial-one#9c270d1db734771f7def654c20114ad947f156d2`
-
-> IMPORTANT: Remember to remove use an stable version before to merge into `main` or release
+> IMPORTANT: Remember to remove use a stable version before to merge into `main` or release
 
 ### How to use local version of `factorial-one` in your local repo (ex. `factorial`'s monorepo) {#local}
 
