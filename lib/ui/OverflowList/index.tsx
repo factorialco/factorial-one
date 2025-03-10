@@ -28,7 +28,6 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
   const containerRef = useRef<HTMLDivElement>(null)
   const overflowButtonRef = useRef<HTMLButtonElement>(null)
   const measurementContainerRef = useRef<HTMLDivElement>(null)
-  const isCalculatingRef = useRef(true)
 
   // Combined state for visible and overflow items
   const [itemsState, setItemsState] = useState<{
@@ -116,16 +115,9 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
   const calculateVisibleItems = useCallback(() => {
     if (!containerRef.current || items.length === 0) return
 
-    isCalculatingRef.current = true
-
     const currentContainerWidth = containerRef.current.clientWidth
     const overflowButtonWidth = overflowButtonRef.current?.offsetWidth || 60
     const itemWidths = measureItemWidths()
-
-    if (itemWidths.length === 0) {
-      isCalculatingRef.current = false
-      return
-    }
 
     // Check if all items can fit without an overflow button
     const totalItemsWidth = calculateTotalItemsWidth(itemWidths)
@@ -136,7 +128,6 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
         visibleItems: items,
         overflowItems: [],
       })
-      isCalculatingRef.current = false
       return
     }
 
@@ -156,8 +147,6 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
         overflowItems: items.slice(visibleCount),
       })
     }
-
-    isCalculatingRef.current = false
   }, [
     items,
     gap,
