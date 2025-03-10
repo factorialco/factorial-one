@@ -332,3 +332,5 @@ export function OverflowList<T>({
     </div>
   )
 }
+
+OverflowList.displayName = "OverflowList"
