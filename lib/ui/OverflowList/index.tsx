@@ -9,11 +9,11 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
-  useLayoutEffect,
   useMemo,
   useRef,
   useState,
 } from "react"
+import { useResizeObserver } from "usehooks-ts"
 
 /**
  * Custom hook for overflow calculations
@@ -33,6 +33,22 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
   const [visibleItems, setVisibleItems] = useState<T[]>([])
   const [overflowItems, setOverflowItems] = useState<T[]>([])
   const [isInitialized, setIsInitialized] = useState(false)
+
+  // Use the useResizeObserver hook to watch for container size changes
+  useResizeObserver({
+    ref: containerRef,
+    onResize: () => {
+      calculateVisibleItems()
+    },
+  })
+
+  // Helper function to add gap between items for calculations
+  const addGapBetweenItems = useCallback(
+    (totalWidth: number, itemIndex: number, itemsCount: number) => {
+      return itemIndex < itemsCount - 1 ? totalWidth + gap : totalWidth
+    },
+    [gap]
+  )
 
   // Measure all items in a hidden container
   const measureItemWidths = useCallback(() => {
@@ -56,14 +72,12 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
 
       for (let i = 0; i < itemWidths.length; i++) {
         totalWidth += itemWidths[i]
-        if (i < itemWidths.length - 1) {
-          totalWidth += gap
-        }
+        totalWidth = addGapBetweenItems(totalWidth, i, itemWidths.length)
       }
 
       return totalWidth
     },
-    [gap]
+    [addGapBetweenItems]
   )
 
   // Calculate how many items can fit in the available width
@@ -78,16 +92,18 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
         if (newWidth > availableWidth) break
 
         accumulatedWidth = newWidth
-        if (i < itemWidths.length - 1) {
-          accumulatedWidth += gap
-        }
+        accumulatedWidth = addGapBetweenItems(
+          accumulatedWidth,
+          i,
+          itemWidths.length
+        )
         visibleCount++
       }
 
       // Return the actual count without enforcing a minimum of 1
       return visibleCount
     },
-    [gap]
+    [addGapBetweenItems]
   )
 
   // Calculate which items should be visible and which should overflow
@@ -138,30 +154,18 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
     calculateVisibleItemCount,
   ])
 
-  // Set up resize observer and initial calculation
+  // Initial calculation
   useEffect(() => {
-    const container = containerRef.current
-    if (!container) return
-
-    // Initial calculation
     calculateVisibleItems()
-
-    const resizeObserver = new ResizeObserver(() => {
-      calculateVisibleItems()
-    })
-
-    resizeObserver.observe(container)
-    return () => resizeObserver.disconnect()
   }, [calculateVisibleItems])
 
   // Initialize the component
-  useLayoutEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setIsInitialized(true)
-    }, 0)
+  useEffect(() => {
+    // Set initialized state after the first render
+    setIsInitialized(true)
 
-    return () => clearTimeout(timeoutId)
-  }, [])
+    // No cleanup needed for this effect
+  }, []) // Empty dependency array ensures this runs only once after mount
 
   return {
     containerRef,
