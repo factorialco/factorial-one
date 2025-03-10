@@ -41,7 +41,6 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
   })
 
   // Track initialization
-  const isInitializedRef = useRef(false)
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Watch for container size changes
@@ -162,14 +161,12 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
 
   // Initial calculation and initialization
   useEffect(() => {
-    // Run the calculation
     calculateVisibleItems()
-
-    if (!isInitializedRef.current) {
-      isInitializedRef.current = true
-      setIsInitialized(true)
-    }
   }, [calculateVisibleItems])
+
+  useEffect(() => {
+    setIsInitialized(true)
+  }, [])
 
   return {
     containerRef,
