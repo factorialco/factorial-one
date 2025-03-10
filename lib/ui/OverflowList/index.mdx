@@ -38,12 +38,12 @@ will be displayed, but it can be customized by providing a custom component.
 <Canvas of={OverflowListStories.WithCustomOverflowIndicator} />
 
 ```tsx
-renderOverflowIndicator: (count, isOpen) => (
+renderOverflowIndicator={(count, isOpen) => (
     <div>
         <span>{count}</span>
         <motion.div animate={{ rotate: isOpen ? 360 : 90 }}>
             <Icon icon={ChevronDown} size="xs" />
         </motion.div>
     </div>
-),
+)}
 ```
