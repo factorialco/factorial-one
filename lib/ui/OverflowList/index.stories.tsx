@@ -1,13 +1,39 @@
+import { Icon } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
 import { Preset } from "@/experimental/OnePreset"
+import { ChevronDown } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import { motion } from "framer-motion"
 import { useState } from "react"
-import { OverflowList } from "./overflow-list"
+import { OverflowList } from "."
 
 const meta = {
   title: "Components/OverflowList",
   component: OverflowList,
   tags: ["autodocs", "internal"],
+  argTypes: {
+    items: {
+      description: "The items to display in the list.",
+    },
+    renderListItem: {
+      description:
+        "What to render as a list item (items outside of the overflow list).",
+    },
+    renderDropdownItem: {
+      description:
+        "What to render as a dropdown item (items inside of the overflow list).",
+    },
+    renderOverflowIndicator: {
+      description:
+        "What to render as the overflow indicator. If not provided, the default overflow indicator will be displayed.",
+    },
+    className: {
+      description: "Additional styling for the container.",
+    },
+    gap: {
+      description: "The gap between items in pixels.",
+    },
+  },
   decorators: [
     (Story) => {
       const [containerWidth, setContainerWidth] = useState(640)
@@ -21,10 +47,17 @@ const meta = {
               <Story />
             </div>
           </div>
-          <div className="w-full pt-4">
+          <div className="flex w-32 flex-col gap-1 pt-4">
+            <label
+              htmlFor="container-width"
+              className="text-sm font-medium text-f1-foreground-secondary"
+            >
+              Test width
+            </label>
             <input
+              id="container-width"
               type="range"
-              min="100"
+              min="180"
               max="1000"
               value={containerWidth}
               onChange={(e) => setContainerWidth(Number(e.target.value))}
@@ -53,44 +86,44 @@ export const Default: Story = {
       {
         id: 1,
         name: "Complete project proposal",
-        status: "completed",
-        dueDate: "2023-12-01",
+        status: "Completed",
+        dueDate: "2025-12-01",
       },
       {
         id: 2,
         name: "Review design mockups",
-        status: "in-progress",
-        dueDate: "2023-12-05",
+        status: "In progress",
+        dueDate: "2025-12-05",
       },
       {
         id: 3,
-        name: "Slow",
-        status: "pending",
-        dueDate: "2023-12-10",
+        name: "Design proposal",
+        status: "Pending",
+        dueDate: "2025-12-10",
       },
       {
         id: 4,
         name: "Fix reported bugs",
-        status: "failed",
-        dueDate: "2023-12-03",
+        status: "Failed",
+        dueDate: "2025-12-03",
       },
       {
         id: 5,
         name: "Prepare presentation",
-        status: "pending",
-        dueDate: "2023-12-15",
+        status: "Pending",
+        dueDate: "2025-12-15",
       },
       {
         id: 6,
         name: "Client meeting",
-        status: "in-progress",
-        dueDate: "2023-12-07",
+        status: "Pending",
+        dueDate: "2025-12-07",
       },
       {
         id: 7,
         name: "Team retrospective",
-        status: "pending",
-        dueDate: "2023-12-20",
+        status: "Pending",
+        dueDate: "2025-12-20",
       },
     ],
     renderListItem: (item) => {
@@ -104,10 +137,10 @@ export const Default: Story = {
     renderDropdownItem: (item) => {
       const task = item as Task
       return (
-        <div className="flex flex-col py-1">
+        <div className="flex flex-col p-2">
           <span className="font-medium">{task.name}</span>
-          <div className="flex justify-between text-xs text-f1-foreground-secondary">
-            <span className="capitalize">{task.status.replace("-", " ")}</span>
+          <div className="flex justify-between text-sm font-medium text-f1-foreground-secondary">
+            <span>{task.status}</span>
             <span>Due: {task.dueDate}</span>
           </div>
         </div>
@@ -163,6 +196,11 @@ export const Presets: Story = {
         name: "Closed",
         number: 15,
       },
+      {
+        id: 7,
+        name: "Deleted",
+        number: 3,
+      },
     ],
     renderListItem: (item) => {
       const preset = item as PresetItem
@@ -185,5 +223,22 @@ export const Presets: Story = {
         <OverflowList {...args} />
       </div>
     )
+  },
+}
+
+export const WithCustomOverflowIndicator: Story = {
+  args: {
+    ...Presets.args,
+    renderOverflowIndicator: (count, isOpen) => (
+      <div className="flex items-center gap-1 rounded-sm bg-f1-background-selected px-2 py-1.5 font-medium text-f1-foreground-selected">
+        <span>{count}</span>
+        <motion.div
+          className="flex h-4 w-4 items-center justify-center rounded-xs bg-f1-background-selected text-f1-icon-selected"
+          animate={{ rotate: isOpen ? 360 : 90 }}
+        >
+          <Icon icon={ChevronDown} size="xs" />
+        </motion.div>
+      </div>
+    ),
   },
 }
