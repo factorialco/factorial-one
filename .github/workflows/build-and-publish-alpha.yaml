@@ -43,19 +43,19 @@ jobs:
           # Update package.json version
           pnpm version $ALPHA_VERSION --no-git-tag-version
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
 
       - name: Publish to registry
         run: |
           # Publish alpha version
-          pnpm publish --tag alpha --no-git-checks
+          pnpm publish --tag alpha-pr-${{ github.event.pull_request.number }} --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
 
       - name: Keep only latest 3 alpha versions for this PR
         uses: ./.github/actions/cleanup-alpha-versions
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.NPMJS_TOKEN }}
           pr-number: ${{ github.event.pull_request.number }}
           keep-latest: 3
 

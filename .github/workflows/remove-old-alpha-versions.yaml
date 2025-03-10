@@ -16,5 +16,5 @@ jobs:
         uses: ./.github/actions/cleanup-alpha-versions
         with:
           token: ${{ github.token }}
-          days: 5
+          days: 1
 

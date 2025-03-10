@@ -8,7 +8,7 @@ inputs:
   registry:
     description: 'Registry URL'
     required: false
-    default: 'https://npm.pkg.github.com'
+    default: 'https://registry.npmjs.org/'
   scope:
     description: 'Scope'
     required: false
