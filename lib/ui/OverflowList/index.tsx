@@ -15,6 +15,8 @@ import {
 } from "react"
 import { useResizeObserver } from "usehooks-ts"
 
+const IconMotion = motion(Icon)
+
 /**
  * Custom hook for overflow calculations
  *
@@ -37,9 +39,12 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
     visibleItems: [],
     overflowItems: [],
   })
+
+  // Track initialization
+  const isInitializedRef = useRef(false)
   const [isInitialized, setIsInitialized] = useState(false)
 
-  // Use the useResizeObserver hook to watch for container size changes
+  // Watch for container size changes
   useResizeObserver({
     ref: containerRef,
     onResize: () => {
@@ -155,16 +160,16 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
     calculateVisibleItemCount,
   ])
 
-  // Initial calculation
+  // Initial calculation and initialization
   useEffect(() => {
+    // Run the calculation
     calculateVisibleItems()
-  }, [calculateVisibleItems])
 
-  // Initialize the component
-  useEffect(() => {
-    // Set initialized state after the first render
-    setIsInitialized(true)
-  }, []) // Empty dependency array ensures this runs only once after mount
+    if (!isInitializedRef.current) {
+      isInitializedRef.current = true
+      setIsInitialized(true)
+    }
+  }, [calculateVisibleItems])
 
   return {
     containerRef,
@@ -235,7 +240,6 @@ const OverflowList = function OverflowList<T>({
 
   // Default overflow indicator
   const defaultOverflowIndicator = useMemo(() => {
-    const IconMotion = motion(Icon)
     const OverflowIndicator = (count: number, isOpen: boolean) => (
       <div
         className={cn(
@@ -244,7 +248,7 @@ const OverflowList = function OverflowList<T>({
         )}
       >
         <span>
-          {count === items.length ? "" : "+"}
+          {count < items.length && "+"}
           {count}
         </span>
         <span>{i18n.actions.more}</span>
@@ -271,13 +275,12 @@ const OverflowList = function OverflowList<T>({
     ))
   }, [items, isInitialized])
 
-  // Determine if we need to show the overflow dropdown
   const showOverflowDropdown = overflowItems.length > 0
 
   return (
     <div
       ref={containerRef}
-      className={`relative flex items-center ${className}`}
+      className={cn("relative flex items-center", className)}
       style={{ gap: `${gap}px` }}
     >
       <div
@@ -312,7 +315,7 @@ const OverflowList = function OverflowList<T>({
               ref={overflowButtonRef}
               className={cn(
                 "inline-flex flex-shrink-0 items-center",
-                focusRing
+                focusRing()
               )}
             >
               {renderOverflowIndicator
