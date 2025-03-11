@@ -71,11 +71,11 @@ export const Default: Story = {
   },
   render: (args) => {
     const [items, setItems] = useState<Item[]>([
-      { id: "1", name: "Document 1", selected: false },
-      { id: "2", name: "Document 2", selected: false },
-      { id: "3", name: "Document 3", selected: false },
-      { id: "4", name: "Document 4", selected: false },
-      { id: "5", name: "Document 5", selected: false },
+      { id: "1", name: "Payslip 2025", selected: true },
+      { id: "2", name: "Medical leaves", selected: false },
+      { id: "3", name: "Contract", selected: false },
+      { id: "4", name: "Employee expenses", selected: false },
+      { id: "5", name: "ID card", selected: false },
     ])
 
     const selectedItems = items.filter((item) => item.selected)
@@ -95,7 +95,7 @@ export const Default: Story = {
 
     return (
       <div className="relative flex h-full w-full items-center justify-center">
-        <div className="h-fit w-[90%] max-w-[540px] overflow-hidden rounded-md bg-f1-background">
+        <div className="h-fit w-[90%] max-w-[400px] overflow-hidden rounded-md bg-f1-background">
           {items.map((item) => (
             <div
               className="flex h-[44px] items-center gap-3 border border-solid border-transparent border-b-f1-border-secondary px-2 last:border-b-transparent"

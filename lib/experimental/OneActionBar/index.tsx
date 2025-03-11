@@ -1,6 +1,7 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { useI18n } from "@/lib/i18n-provider"
+import NumberFlow from "@number-flow/react"
 import { AnimatePresence, motion } from "framer-motion"
 
 type Action = Pick<ButtonProps, "label" | "onClick" | "icon" | "disabled">
@@ -42,7 +43,14 @@ export const ActionBar = ({
           {selectedNumber && (
             <div className="dark flex items-center gap-2 pl-2">
               <span className="text-sm font-medium tabular-nums">
-                {selectedNumber} {selectedText}
+                <NumberFlow
+                  value={selectedNumber}
+                  spinTiming={{
+                    duration: 200,
+                    easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                  }}
+                />
+                <span> {selectedText}</span>
               </span>
               <Button
                 variant="outline"
