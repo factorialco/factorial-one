@@ -16,12 +16,15 @@ dotenv.config({
 const extraPlugins: Plugin[] = []
 
 // Add tailwind build
-extraPlugins.push({
-  name: "build-tailwind",
-  async closeBundle() {
-    spawnSync("pnpm", ["build:tailwind"], { stdio: "inherit" })
-  },
-})
+const buildTailwind = process.argv.find((arg) => arg.startsWith("--tailwind"))
+if (buildTailwind) {
+  extraPlugins.push({
+    name: "build-tailwind",
+    async closeBundle() {
+      spawnSync("pnpm", ["build:tailwind"], { stdio: "inherit" })
+    },
+  })
+}
 
 /* Build sync */
 const defaultCoderWorkspaceFolder =

@@ -22,7 +22,7 @@
     "dev:docs": "DOCS_MODE=true pnpm run dev",
     "dev:coder": "pnpm build --watch -- --buildSync",
     "start": "pnpm run dev",
-    "build": "tsc --project ./tsconfig-build.json && run-p build-icons && BUILD_TYPES=true vite build",
+    "build": "tsc --project ./tsconfig-build.json && run-p build-icons && BUILD_TYPES=true vite build -- --tailwind",
     "build:tsup": "tsup && pnpm run build:tailwind && run-p build-icons",
     "build-icons": "tsc --project ./tsconfig-build-icons.json",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
