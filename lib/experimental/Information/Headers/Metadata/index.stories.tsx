@@ -110,9 +110,9 @@ export const Default: Story = {
         value: {
           type: "date",
           formattedDate: new Date().toLocaleDateString(),
-          icon: "warning"
-        }
-      }
+          icon: "warning",
+        },
+      },
     ],
   },
 }
@@ -141,16 +141,16 @@ export const WithActions: Story = {
         value: {
           type: "date",
           formattedDate: new Date().toLocaleDateString(),
-          icon: "critical"
+          icon: "critical",
         },
         actions: [
           {
             label: "Copy",
             icon: Icon.LayersFront,
             onClick: fn(),
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
   },
 }
