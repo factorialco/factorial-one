@@ -22,7 +22,7 @@ const iconVariants = cva({
   base: "-ml-0.5 transition-colors",
   variants: {
     variant: {
-      default: "text-f1-icon-inverse/80",
+      default: "text-f1-icon-inverse/80 dark:text-f1-icon",
       outline: "text-f1-icon",
       neutral: "text-f1-icon",
       critical:

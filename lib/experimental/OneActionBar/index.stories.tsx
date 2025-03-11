@@ -1,5 +1,14 @@
+import { Button } from "@/components/Actions/Button"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
-import { Delete, LayersFront, Settings, Share, Upload } from "@/icons/app"
+import {
+  Delete,
+  EyeInvisible,
+  EyeVisible,
+  LayersFront,
+  Settings,
+  Share,
+  Upload,
+} from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { useState } from "react"
@@ -14,7 +23,7 @@ const meta: Meta<typeof ActionBar> = {
       story: { inline: false, height: "400px" },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   argTypes: {
     isOpen: {
       control: "boolean",
@@ -118,6 +127,28 @@ export const Default: Story = {
           selectedNumber={selectedItems.length}
           onUnselect={handleUnselect}
         />
+      </div>
+    )
+  },
+}
+
+export const NoSelectedItems: Story = {
+  args: {
+    ...Default.args,
+    selectedNumber: undefined,
+  },
+  render: (args) => {
+    const [open, setOpen] = useState(true)
+
+    return (
+      <div className="relative flex h-full w-full items-center justify-center">
+        <Button
+          variant="outline"
+          onClick={() => setOpen(!open)}
+          label={open ? "Hide ActionBar" : "Show ActionBar"}
+          icon={open ? EyeInvisible : EyeVisible}
+        />
+        <ActionBar {...args} isOpen={open} />
       </div>
     )
   },
