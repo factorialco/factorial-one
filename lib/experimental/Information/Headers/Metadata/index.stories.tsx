@@ -9,7 +9,7 @@ const meta: Meta<typeof Metadata> = {
   parameters: {
     layout: "padded",
   },
-  tags: ["no-sidebar"],
+  tags: ["no-sidebar", "internal"],
 }
 
 export default meta
@@ -105,6 +105,14 @@ export const Default: Story = {
           color: "malibu",
         },
       },
+      {
+        label: "Created",
+        value: {
+          type: "date",
+          formattedDate: new Date().toLocaleDateString(),
+          icon: "warning"
+        }
+      }
     ],
   },
 }
@@ -128,6 +136,21 @@ export const WithActions: Story = {
           },
         ],
       },
+      {
+        label: "Created",
+        value: {
+          type: "date",
+          formattedDate: new Date().toLocaleDateString(),
+          icon: "critical"
+        },
+        actions: [
+          {
+            label: "Copy",
+            icon: Icon.LayersFront,
+            onClick: fn(),
+          }
+        ]
+      }
     ],
   },
 }

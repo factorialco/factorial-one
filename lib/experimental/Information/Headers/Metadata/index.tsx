@@ -1,21 +1,15 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
-import {
-  Avatar,
-  AvatarVariant,
-} from "@/experimental/Information/Avatars/Avatar"
-import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
-import { DotTag, NewColor } from "@/experimental/Information/Tags/DotTag"
-import { RawTag } from "@/experimental/Information/Tags/exports"
-import {
-  StatusTag,
-  StatusVariant,
-} from "@/experimental/Information/Tags/StatusTag"
+
+import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
+import { NewColor } from "@/experimental/Information/Tags/DotTag"
+import { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { MobileDropdown } from "@/experimental/Navigation/Dropdown"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
 import { memo, useState } from "react"
+import { MetadataValue } from "./MetadataValue"
 
 type MetadataItemValue =
   | { type: "text"; content: string }
@@ -25,6 +19,7 @@ type MetadataItemValue =
   | { type: "data-list"; data: string[] }
   | { type: "tag-list"; tags: string[] }
   | { type: "dot-tag"; label: string; color: NewColor }
+  | { type: "date"; formattedDate: string; icon?: "warning" | "critical" }
 
 type MetadataAction = {
   icon: IconType
@@ -50,83 +45,6 @@ export interface MetadataProps {
    * If true and the metadata type is a list, it will be collapsed to the first item
    */
   collapse?: boolean
-}
-
-function MetadataValue({
-  item,
-  collapse = false,
-}: {
-  item: MetadataItem
-  collapse?: boolean
-}) {
-  switch (item.value.type) {
-    case "text":
-      return <span>{item.value.content}</span>
-
-    case "avatar":
-      return (
-        <div className="flex items-center gap-1">
-          <Avatar avatar={item.value.variant} size="xsmall" />
-          {item.value.text && <span>{item.value.text}</span>}
-        </div>
-      )
-
-    case "status":
-      return <StatusTag text={item.value.label} variant={item.value.variant} />
-    case "list":
-      return (
-        <AvatarList
-          avatars={item.value.avatars}
-          size="xsmall"
-          type={item.value.variant}
-          max={3}
-        />
-      )
-
-    case "data-list":
-      return collapse ? (
-        <div className="flex items-center justify-center gap-1 font-medium">
-          {item.value.data[0]}
-          {item.value.data.length > 1 && (
-            <span className="tabular-nums text-f1-foreground-secondary">
-              +{item.value.data.length - 1}
-            </span>
-          )}
-        </div>
-      ) : (
-        <div className="flex flex-col gap-1.5">
-          {item.value.data.map((data) => (
-            <span key={data}>{data}</span>
-          ))}
-        </div>
-      )
-
-    case "tag-list":
-      return collapse ? (
-        <div className="flex flex-wrap items-center justify-center gap-1 font-medium">
-          <RawTag text={item.value.tags[0]} />
-          {item.value.tags.length > 1 && (
-            <span className="tabular-nums text-f1-foreground-secondary">
-              +{item.value.tags.length - 1}
-            </span>
-          )}
-        </div>
-      ) : (
-        <div
-          className={cn(
-            "flex flex-col gap-1 [&>div]:w-fit",
-            item.value.tags.length > 1 && "-mt-[3px]"
-          )}
-        >
-          {item.value.tags.map((tag) => (
-            <RawTag key={tag} text={tag} />
-          ))}
-        </div>
-      )
-
-    case "dot-tag":
-      return <DotTag text={item.value.label} color={item.value.color} />
-  }
 }
 
 function MetadataItem({ item }: { item: MetadataItem }) {
