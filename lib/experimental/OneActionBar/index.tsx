@@ -41,7 +41,7 @@ export const ActionBar = ({
         >
           {selectedNumber && (
             <div className="dark flex items-center gap-2 pl-2">
-              <span className="font-medium">
+              <span className="text-sm font-medium tabular-nums">
                 {selectedNumber} {selectedText}
               </span>
               <Button
