@@ -1,7 +1,7 @@
 import { Search } from "@/icons/app"
-import { render, screen } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Select } from "./index"
 import type { SelectItemProps } from "./types"
 
@@ -11,20 +11,61 @@ const mockOptions: SelectItemProps<string>[] = [
     label: "Option 1",
     icon: Search,
     description: "Description 1",
+    item: {
+      id: "option1",
+      name: "Option 1",
+      description: "Description 1",
+    },
   },
   {
     value: "option2",
     label: "Option 2",
+    item: {
+      id: "option2",
+      name: "Option 2",
+      description: "Description 2",
+    },
   },
   "separator" as const,
   {
     value: "option3",
     label: "Option 3",
     description: "Description 3",
+    item: {
+      id: "option3",
+      name: "Option 3",
+      description: "Description 3",
+    },
   },
 ]
 
 describe("Select", () => {
+  beforeEach(() => {
+    vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
+      () => ({
+        width: 120,
+        height: 120,
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        x: 0,
+        y: 0,
+
+        toJSON: () => {},
+      })
+    )
+  })
+
+  const openSelect = async (user: ReturnType<typeof userEvent.setup>) => {
+    user.click(screen.getByRole("combobox"))
+
+    // Wait for animation to finish
+    await waitFor(() => expect(screen.getByRole("listbox")).toBeInTheDocument())
+    const teaser = screen.getByRole("listbox")
+    fireEvent.animationStart(teaser)
+  }
+
   it("renders with placeholder", () => {
     render(
       <Select
@@ -40,24 +81,12 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(<Select options={mockOptions} onChange={() => {}} />)
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
 
     expect(screen.getByText("Option 1")).toBeInTheDocument()
     expect(screen.getByText("Option 2")).toBeInTheDocument()
     expect(screen.getByText("Option 3")).toBeInTheDocument()
     expect(screen.getByText("Description 1")).toBeInTheDocument()
-  })
-
-  it("calls onChange when option is selected", async () => {
-    const handleChange = vi.fn()
-    const user = userEvent.setup()
-
-    render(<Select options={mockOptions} onChange={handleChange} />)
-
-    await user.click(screen.getByRole("combobox"))
-    await user.click(screen.getByText("Option 1"))
-
-    expect(handleChange).toHaveBeenCalledWith("option1")
   })
 
   it("displays selected value", () => {
@@ -77,7 +106,7 @@ describe("Select", () => {
       />
     )
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
 
     expect(screen.getByPlaceholderText("Search options")).toBeInTheDocument()
   })
@@ -86,7 +115,7 @@ describe("Select", () => {
     const user = userEvent.setup()
     render(<Select options={mockOptions} onChange={() => {}} showSearchBox />)
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
     await user.type(screen.getByRole("searchbox"), "1")
 
     expect(screen.getByText("Option 1")).toBeInTheDocument()
@@ -104,7 +133,7 @@ describe("Select", () => {
       />
     )
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
     await user.type(screen.getByRole("searchbox"), "xyz")
 
     expect(screen.getByText("No results found")).toBeInTheDocument()
@@ -124,7 +153,7 @@ describe("Select", () => {
       />
     )
 
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
 
     await user.type(screen.getByRole("searchbox"), "test")
 
@@ -148,5 +177,49 @@ describe("Select", () => {
     )
 
     expect(screen.getByText("Custom Trigger")).toBeInTheDocument()
+  })
+
+  it("calls onChange when option is selected with item", async () => {
+    const handleChange = vi.fn()
+    const user = userEvent.setup()
+
+    render(<Select options={mockOptions} onChange={handleChange} />)
+
+    await openSelect(user)
+    await user.click(screen.getByText("Option 1"))
+
+    expect(handleChange).toHaveBeenCalledWith("option1", {
+      id: "option1",
+      name: "Option 1",
+      description: "Description 1",
+    })
+  })
+
+  it("calls onChange when option is selected without item", async () => {
+    const handleChange = vi.fn()
+    const user = userEvent.setup()
+
+    const mockOptions: SelectItemProps<string>[] = [
+      {
+        value: "option1",
+        label: "Option 1",
+      },
+      {
+        value: "option2",
+        label: "Option 2",
+      },
+      "separator" as const,
+      {
+        value: "option3",
+        label: "Option 3",
+      },
+    ]
+
+    render(<Select options={mockOptions} onChange={handleChange} />)
+
+    await openSelect(user)
+    await user.click(screen.getByText("Option 1"))
+
+    expect(handleChange).toHaveBeenCalledWith("option1", undefined)
   })
 })

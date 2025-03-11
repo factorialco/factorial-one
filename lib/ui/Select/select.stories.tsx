@@ -1,13 +1,13 @@
 import { Circle, Desktop } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./select"
+} from "./"
 
 const SelectWithHooks = ({
   options,
@@ -19,18 +19,23 @@ const SelectWithHooks = ({
 }) => {
   const [value, setValue] = useState("")
 
+  const items = useMemo(
+    () =>
+      options.map((option) => ({
+        value: option.value,
+        height: 40,
+        item: <SelectItem value={option.value}>{option.label}</SelectItem>,
+      })),
+    [options]
+  )
+
   return (
     <Select value={value} onValueChange={setValue} {...props}>
       <SelectTrigger>
+        {value}
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent>
-        {options.map((option) => (
-          <SelectItem key={option.value} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
+      <SelectContent items={items}></SelectContent>
     </Select>
   )
 }
@@ -46,8 +51,12 @@ const meta = {
     docs: {
       description: {
         component:
-          "<p>The `Select` component the base component for the `Select` component. It provides the basic styling and functionality for the select component.</p>" +
-          "<p>The pop content contains the list of items, but it can also contain a `Top` and/or `Bottom` content fixed (not scrollable). Useful for searchboxes, buttons, etc</p>",
+          "<p>The `Select` component the base component for the `Select` component. It provides the basic styling and " +
+          "functionality for the select component.</p>" +
+          "<p>The pop content contains the list of items, but it can also contain a `Top` and/or `Bottom` content fixed" +
+          " (not scrollable). Useful for searchboxes, buttons, etc</p>" +
+          "<p>You can pass the options items as children or via the `items` props. When the items are passed in the " +
+          "items props of `SelectContent` the list is virtualized to manage  huge amount of items",
       },
     },
   },
@@ -80,10 +89,9 @@ export const WithTopContent: Story = {
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
-          <SelectContent.Top>
-            <div className="border-b border-f1-border p-3">Top Content</div>
-          </SelectContent.Top>
+        <SelectContent
+          top={<div className="border-b border-f1-border p-3">Top Content</div>}
+        >
           {options.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
@@ -104,15 +112,16 @@ export const WithBottomContent: Story = {
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent
+          bottom={
+            <div className="border-t border-f1-border p-3">Bottom Content</div>
+          }
+        >
           {options.map((option) => (
             <SelectItem key={option.value} value={option.value}>
               {option.label}
             </SelectItem>
           ))}
-          <SelectContent.Bottom>
-            <div className="border-t border-f1-border p-3">Bottom Content</div>
-          </SelectContent.Bottom>
         </SelectContent>
       </Select>
     )
@@ -128,27 +137,42 @@ export const WithBothTopAndBottom: Story = {
         <SelectTrigger>
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent>
-          <SelectContent.Top>
+        <SelectContent
+          top={
             <div className="border-b border-f1-border p-3">
               Search or Filter
             </div>
-          </SelectContent.Top>
-          {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
-          <SelectContent.Bottom>
+          }
+          bottom={
             <div className="border-t border-f1-border p-3">
               <button className="w-full text-center text-f1-foreground-secondary hover:text-f1-foreground">
                 Add New Option
               </button>
             </div>
-          </SelectContent.Bottom>
+          }
+        >
+          {options.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     )
+  },
+}
+
+const words =
+  "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua".split(
+    " "
+  )
+
+export const VirtualizedItems: Story = {
+  args: {
+    options: Array.from({ length: 10000 }, (_, i) => ({
+      value: `option-${i}`,
+      label: `Option ${words[i % words.length]} ${i}`,
+    })),
   },
 }
 
