@@ -24,12 +24,12 @@ const alertAvatarVariants = cva({
   },
 })
 
-export type Props = VariantProps<typeof alertAvatarVariants> & {
+export type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
   type: "critical" | "warning" | "info"
   size?: "sm" | "md" | "lg"
 }
 
-export const AlertAvatar = ({ type, size }: Props) => {
+export const AlertAvatar = ({ type, size }: AlertAvatarProps) => {
   const iconMap = {
     critical: AlertCircle,
     warning: Warning,
