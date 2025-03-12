@@ -16,12 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      packages: write
-
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: ./.github/actions/setup-node-pnpm
@@ -30,33 +29,13 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Create new version
+      - name: Publish to release branch npm/alpha-pr-${{ github.event.pull_request.number }}
         run: |
-          # Get lastest version from  package.json
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          COMMIT_SHA=$(git rev-parse --short ${{ github.sha }})
-          
-          # Create alpha version 
-          ALPHA_VERSION="${CURRENT_VERSION}-alpha.pr-${PR_NUMBER}-$(date +%Y%m%d%H%M%S)-${COMMIT_SHA}"
-          
-          # Update package.json version
-          pnpm version $ALPHA_VERSION --no-git-tag-version
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
-
-      - name: Publish to registry
-        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Publish alpha version
-          pnpm publish --tag alpha-pr-${{ github.event.pull_request.number }} --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
-
-      - name: Keep only latest 3 alpha versions for this PR
-        uses: ./.github/actions/cleanup-alpha-versions
-        with:
-          token: ${{ secrets.NPMJS_TOKEN }}
-          pr-number: ${{ github.event.pull_request.number }}
-          keep-latest: 3
-
+          pnpx git-publish -b 'npm/alpha-pr-${{ github.event.pull_request.number }}'
+          LAST=$(git rev-parse HEAD)
+          echo "::notice title='Package published'::Use pnpm i github:factorialco/factorial-one#npm/alpha-pr-${{ github.event.pull_request.number }} to install the package (or pnpm i github:factorialco/factorial-one#${LAST} to install this specific commit)"
+ 
 

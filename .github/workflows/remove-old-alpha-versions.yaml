@@ -1,4 +1,4 @@
-name: "Remove all alpha versions"
+name: "Remove old alpha release branches"
 
 on:
   schedule:
@@ -12,9 +12,7 @@ jobs:
       contents: write
       packages: write
     steps:
-      - name: Remove old alpha versions of any PR
+      - name: Remove old alpha release branches
         uses: ./.github/actions/cleanup-alpha-versions
         with:
-          token: ${{ github.token }}
-          days: 1
-
+          days: 5

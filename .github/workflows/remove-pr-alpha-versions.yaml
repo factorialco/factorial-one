@@ -17,6 +17,5 @@ jobs:
         uses: ./.github/actions/cleanup-alpha-versions
         if: ${{ github.event.pull_request.number }}
         with:
-          token: ${{ secrets.NPMJS_TOKEN }}
           pr-number: ${{ github.event.pull_request.number }} # PR that triggered the workflow
 
