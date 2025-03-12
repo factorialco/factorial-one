@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import {
   AlertAvatar,
-  type Props as AlertAvatarProps,
+  type AlertAvatarProps,
 } from "@/experimental/Information/Avatars/AlertAvatar"
 import {
   Dialog,
