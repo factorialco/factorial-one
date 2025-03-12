@@ -1,0 +1,37 @@
+{
+  "name": "@factorialco/factorial-one-react-native",
+  "version": "0.0.1",
+  "description": "React Native components for Factorial One Design System",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "factorial",
+    "design-system",
+    "react-native",
+    "components"
+  ],
+  "author": "Factorial",
+  "license": "MIT",
+  "peerDependencies": {
+    "@factorialco/factorial-one-core": "workspace:*",
+    "react": "^18.2.0",
+    "react-native": "^0.74.0",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@testing-library/react-native": "^12.4.3",
+    "@types/react": "^18.2.0",
+    "@types/react-native": "^0.73.0",
+    "react": "^18.2.0",
+    "react-native": "^0.74.0",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.7"
+  }
+}
