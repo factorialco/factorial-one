@@ -74,29 +74,23 @@ pnpm add @factorialco/factorial-one@[VERSION]
 
 ### Alpha versions
 
-To install an alpha version you can execute run
+Alpha version are published in a release branch in the factorial-one repo, those branches are named
+`npm/alpha-pr-<pr-number>` and are ephemeral branches that will be deleted after 5 days or after merge the PR to main.
+
+Use the following command to install an alpha version:
 
 ```bash
-pnpm add @factorialco/factorial-one@alpha-pr-[PR_NUMBER]
+pnpm i github:factorialco/factorial-one#npm/alpha-pr-[PR_NUMBER]
 ```
 
-> You can run this command multiple times to get the lastest version of the alpha-pr-[PR_NUMBER]
-
-Or you can visit https://www.npmjs.com/package/@factorialco/factorial-one?activeTab=versions or run
-`pnpm view @factorialco/factorial-one` to check the available versions for your pr (dist-tag)
-
-Example:
+or if you want to install an specific commit:
 
 ```bash
-$ `pnpm add @factorialco/factorial-one@latest
-...
-dist-tags:
-alpha-pr-1239: 1.0.0-alpha.pr-1239-20250312133123-a3455492
-alpha: 0.0.2-3
-latest: 0.0.1
+pnpm i github:factorialco/factorial-one#COMMIT_SHA
 ```
 
-
+Visit https://github.com/factorialco/factorial-one/branches/all?query=npm%2Falpha to get the list of the alpha branches
+and the commits
 
 
 
