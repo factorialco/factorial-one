@@ -11,8 +11,10 @@ export const variants = [
   "ghost",
   "promote",
 ] as const
+export type ButtonVariant = (typeof variants)[number]
 
 export const sizes = ["sm", "md", "lg"] as const
+export type ButtonSize = (typeof sizes)[number]
 
 const buttonVariants = cva({
   base: cn(
@@ -33,12 +35,12 @@ const buttonVariants = cva({
         "bg-transparent text-f1-foreground hover:bg-f1-background-secondary-hover",
       promote:
         "border border-solid border-f1-border-promote bg-f1-background-promote text-f1-foreground hover:bg-f1-background-promote-hover",
-    } satisfies Record<(typeof variants)[number], string>,
+    } satisfies Record<ButtonVariant, string>,
     size: {
       sm: "h-6 rounded-sm px-2",
       md: "h-8 rounded px-3",
       lg: "h-10 rounded px-4",
-    } satisfies Record<(typeof sizes)[number], string>,
+    } satisfies Record<ButtonSize, string>,
     round: {
       true: "aspect-square px-0",
     },
@@ -54,6 +56,8 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
+  size?: ButtonSize
+  variant?: ButtonVariant
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
