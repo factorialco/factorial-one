@@ -55,19 +55,16 @@ export const Default: Story = {
         onClick: fn(),
         icon: Share,
       },
-    ],
-    otherActions: [
-      {
-        label: "Edit permissions",
-        onClick: fn(),
-        icon: Settings,
-      },
       {
         label: "Duplicate",
         onClick: fn(),
         icon: LayersFront,
       },
-      "separator",
+      {
+        label: "Edit permissions",
+        onClick: fn(),
+        icon: Settings,
+      },
       {
         label: "Remove",
         onClick: fn(),
@@ -135,6 +132,19 @@ export const Default: Story = {
 export const NoSelectedItems: Story = {
   args: {
     ...Default.args,
+    secondaryActions: [
+      {
+        label: "Share",
+        onClick: fn(),
+        icon: Share,
+      },
+      {
+        label: "Remove",
+        onClick: fn(),
+        icon: Delete,
+        critical: true,
+      },
+    ],
     selectedNumber: undefined,
   },
   render: (args) => {
