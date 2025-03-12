@@ -24,7 +24,7 @@ const alertAvatarVariants = cva({
   },
 })
 
-type Props = VariantProps<typeof alertAvatarVariants> & {
+export type Props = VariantProps<typeof alertAvatarVariants> & {
   type: "critical" | "warning" | "info"
   size?: "sm" | "md" | "lg"
 }
