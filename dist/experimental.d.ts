@@ -58,12 +58,7 @@ export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLA
     className?: ClassValue;
 })) | undefined) => string> & React_2.RefAttributes<HTMLDivElement>, "ref"> & React_2.RefAttributes<HTMLElement | SVGElement>>;
 
-export declare const AlertAvatar: ({ type, size }: AlertAvatarProps) => JSX_2.Element;
-
-export declare type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
-    type: "critical" | "warning" | "info";
-    size?: "sm" | "md" | "lg";
-};
+export declare const AlertAvatar: ({ type, size }: Props_4) => JSX_2.Element;
 
 declare const alertAvatarVariants: (props?: ({
     type?: "info" | "critical" | "warning" | undefined;
@@ -78,7 +73,7 @@ declare const alertAvatarVariants: (props?: ({
 
 export declare const AlertDescription: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLParagraphElement> & React_2.RefAttributes<HTMLParagraphElement>>;
 
-export declare const AlertTag: ForwardRefExoticComponent<Props_8<string> & RefAttributes<HTMLDivElement>>;
+export declare const AlertTag: ForwardRefExoticComponent<Props_9<string> & RefAttributes<HTMLDivElement>>;
 
 export declare const AlertTitle: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLHeadingElement> & React_2.RefAttributes<HTMLParagraphElement>>;
 
@@ -128,7 +123,7 @@ declare const Avatar_2: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.A
 } & React_2.RefAttributes<HTMLSpanElement>>;
 
 export declare const AvatarList: {
-    ({ avatars, size, type, noTooltip, max, }: Props_4): JSX_2.Element;
+    ({ avatars, size, type, noTooltip, max, }: Props_5): JSX_2.Element;
     displayName: string;
 };
 
@@ -226,7 +221,7 @@ declare const badgeVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-export declare const BalanceTag: ForwardRefExoticComponent<Props_9 & RefAttributes<HTMLDivElement>>;
+export declare const BalanceTag: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
 
 declare type BarChartProps<K extends ChartConfig_2 = ChartConfig_2> = ChartPropsBase<K> & {
     type?: "simple" | "stacked" | "stacked-by-sign";
@@ -667,9 +662,9 @@ declare type ChartPropsBase<K extends ChartConfig_2 = ChartConfig_2> = {
     aspect?: ComponentProps<typeof ChartContainer>["aspect"];
 };
 
-export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
+export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
 
-export declare type ChatWidgetEmptyStateProps = Props_13;
+export declare type ChatWidgetEmptyStateProps = Props_14;
 
 export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, canShowBreakButton, onChangeLocationId, canShowProject, projectSelectorElement, }: ClockInControlsProps): JSX_2.Element;
 
@@ -837,7 +832,7 @@ export declare type CompanySelectorProps = {
     }[];
 };
 
-export declare const CompanyTag: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
+export declare const CompanyTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
 
 declare type ComposeChartContainerProps<T extends object> = ChartContainerPropsBase & {
     chart: T;
@@ -990,7 +985,7 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     dataAdapter: DataAdapter<Record, Filters, Sortings>;
 };
 
-export declare const DateAvatar: ({ date }: Props_5) => JSX_2.Element;
+export declare const DateAvatar: ({ date }: Props_6) => JSX_2.Element;
 
 export declare function DaytimePage({ children, header, period, embedded, }: DaytimePageProps): JSX_2.Element;
 
@@ -1035,27 +1030,25 @@ export declare interface DetailsItemType {
 }
 
 export declare const Dialog: ForwardRefExoticComponent<Omit<{
-header: {
-type: AlertAvatarProps["type"];
+header?: {
+icon?: IconType;
 title: string;
 description: string;
 };
-actions: {
+actions?: {
 primary: {
 label: string;
-icon?: IconType | undefined;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
 disabled?: boolean | undefined | undefined;
-} & {
-variant?: "default" | "critical" | "neutral";
 };
-secondary: {
+secondary?: {
 label: string;
-icon?: IconType | undefined;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
 disabled?: boolean | undefined | undefined;
 };
 };
+loading?: boolean;
+children: ReactNode;
 open?: boolean;
 onClose?: () => void;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
@@ -1713,7 +1706,7 @@ declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
 
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
-export declare const PersonTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
+export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
 
 declare type PieChartItem = {
     label: string;
@@ -1804,25 +1797,30 @@ declare type Props = {
     badge?: BadgeProps;
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
 
-declare type Props_10 = {
+declare interface Props_10 {
+    text: string;
+    status: Status;
+}
+
+declare type Props_11 = {
     companyName: string;
     companyImageUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_11 = {
+declare type Props_12 = {
     name: string;
     avatarUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_12 = {
+declare type Props_13 = {
     teamName: string;
     teamImageUrl: string;
     onClick?: () => void;
 };
 
-declare interface Props_13 {
+declare interface Props_14 {
     title: string;
     content: string;
     buttonLabel?: string;
@@ -1831,7 +1829,7 @@ declare interface Props_13 {
     type: Type;
 }
 
-declare type Props_14 = {
+declare type Props_15 = {
     label: string;
     icon: IconType;
     iconClassName?: string;
@@ -1839,12 +1837,12 @@ declare type Props_14 = {
     onClick?: () => void;
 };
 
-declare type Props_15<Id extends string | number = string | number> = {
+declare type Props_16<Id extends string | number = string | number> = {
     items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
     onClickItem?: (id: Id) => void;
 };
 
-declare type Props_16<Id extends string | number = string | number> = {
+declare type Props_17<Id extends string | number = string | number> = {
     id: Id;
     icon?: IconType;
     title: string;
@@ -1852,12 +1850,12 @@ declare type Props_16<Id extends string | number = string | number> = {
     onClick?: (id: Id) => void;
 };
 
-declare type Props_17<Id extends string | number = string | number> = {
-    items: Omit<Props_18<Id>, "onClick">[];
+declare type Props_18<Id extends string | number = string | number> = {
+    items: Omit<Props_19<Id>, "onClick">[];
     onClickItem?: (id: Id) => void;
 };
 
-declare type Props_18<Id extends string | number = string | number> = {
+declare type Props_19<Id extends string | number = string | number> = {
     id: Id;
     title: string;
     icon?: IconType;
@@ -1884,7 +1882,12 @@ declare type Props_3 = {
     badge?: BadgeProps;
 } & Pick<BaseAvatarProps_3, "aria-label" | "aria-labelledby">;
 
-declare type Props_4 = {
+declare type Props_4 = VariantProps<typeof alertAvatarVariants> & {
+    type: "critical" | "warning" | "info";
+    size?: "sm" | "md" | "lg";
+};
+
+declare type Props_5 = {
     avatars: AvatarVariant[];
     size?: (typeof sizes)[number];
     type?: AvatarType;
@@ -1900,13 +1903,13 @@ declare type Props_4 = {
     max?: number;
 };
 
-declare type Props_5 = {
+declare type Props_6 = {
     date: Date;
 };
 
-declare type Props_6 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
+declare type Props_7 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
 
-declare type Props_7 = {
+declare type Props_8 = {
     /** Main heading text */
     title: string;
     /** Description text below the title */
@@ -1925,15 +1928,10 @@ declare type Props_7 = {
     separator?: "top" | "bottom";
 };
 
-declare type Props_8<Text extends string = string> = {
+declare type Props_9<Text extends string = string> = {
     text: Text extends "" ? never : Text;
     level: Level;
 };
-
-declare interface Props_9 {
-    text: string;
-    status: Status;
-}
 
 export declare const RadarChart: <K extends ChartConfig>(props: RadarChartProps<K> & RefAttributes<HTMLDivElement>) => React.ReactNode;
 
@@ -1977,7 +1975,7 @@ declare interface ReactionsProps {
  */
 export declare type RecordType = Record<string, unknown>;
 
-export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_6) => JSX_2.Element;
+export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_7) => JSX_2.Element;
 
 declare type SchemaType = ZodType;
 
@@ -2006,7 +2004,7 @@ declare interface SecondaryAction extends PrimaryAction {
     variant?: "outline" | "critical";
 }
 
-export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_7) => JSX_2.Element;
+export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_8) => JSX_2.Element;
 
 export declare const Select: ForwardRefExoticComponent<SelectProps<string, any> & RefAttributes<HTMLButtonElement>>;
 
@@ -2277,7 +2275,7 @@ declare type TeamItemProps = {
     action?: ActionType;
 };
 
-export declare const TeamTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
+export declare const TeamTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
 
 export declare const Textarea: React.FC<TextareaProps>;
 
@@ -2468,13 +2466,13 @@ export declare type WidgetEmptyStateProps = {
     actions?: Action[];
 };
 
-export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_14): JSX_2.Element;
+export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_15): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, onClickItem }: Props_15): JSX_2.Element;
+export declare function WidgetInboxList({ items, onClickItem }: Props_16): JSX_2.Element;
 
-declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_16<Id>;
+declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_17<Id>;
 
-export declare type WidgetInboxListProps = Props_15;
+export declare type WidgetInboxListProps = Props_16;
 
 export declare interface WidgetProps {
     header?: {
@@ -2510,9 +2508,9 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, onClickItem }: Props_17): JSX_2.Element;
+export declare function WidgetSimpleList({ items, onClickItem }: Props_18): JSX_2.Element;
 
-export declare type WidgetSimpleListProps = Props_17;
+export declare type WidgetSimpleListProps = Props_18;
 
 export declare type WidgetSkeletonProps = {
     header?: {
