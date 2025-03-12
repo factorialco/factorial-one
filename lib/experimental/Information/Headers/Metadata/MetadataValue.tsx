@@ -31,26 +31,27 @@ export function MetadataValue({
   item: MetadataItem
   collapse?: boolean
 }) {
-  switch (item.value.type) {
+  const { value } = item
+  switch (value.type) {
     case "text":
-      return <span>{item.value.content}</span>
+      return <span>{value.content}</span>
 
     case "avatar":
       return (
         <div className="flex items-center gap-1">
-          <Avatar avatar={item.value.variant} size="xsmall" />
-          {item.value.text && <span>{item.value.text}</span>}
+          <Avatar avatar={value.variant} size="xsmall" />
+          {value.text && <span>{value.text}</span>}
         </div>
       )
 
     case "status":
-      return <StatusTag text={item.value.label} variant={item.value.variant} />
+      return <StatusTag text={value.label} variant={value.variant} />
     case "list":
       return (
         <AvatarList
-          avatars={item.value.avatars}
+          avatars={value.avatars}
           size="xsmall"
-          type={item.value.variant}
+          type={value.variant}
           max={3}
         />
       )
@@ -58,16 +59,16 @@ export function MetadataValue({
     case "data-list":
       return collapse ? (
         <div className="flex items-center justify-center gap-1 font-medium">
-          {item.value.data[0]}
-          {item.value.data.length > 1 && (
+          {value.data[0]}
+          {value.data.length > 1 && (
             <span className="tabular-nums text-f1-foreground-secondary">
-              +{item.value.data.length - 1}
+              +{value.data.length - 1}
             </span>
           )}
         </div>
       ) : (
         <div className="flex flex-col gap-1.5">
-          {item.value.data.map((data) => (
+          {value.data.map((data) => (
             <span key={data}>{data}</span>
           ))}
         </div>
@@ -76,10 +77,10 @@ export function MetadataValue({
     case "tag-list":
       return collapse ? (
         <div className="flex flex-wrap items-center justify-center gap-1 font-medium">
-          <RawTag text={item.value.tags[0]} />
-          {item.value.tags.length > 1 && (
+          <RawTag text={value.tags[0]} />
+          {value.tags.length > 1 && (
             <span className="tabular-nums text-f1-foreground-secondary">
-              +{item.value.tags.length - 1}
+              +{value.tags.length - 1}
             </span>
           )}
         </div>
@@ -87,27 +88,27 @@ export function MetadataValue({
         <div
           className={cn(
             "flex flex-col gap-1 [&>div]:w-fit",
-            item.value.tags.length > 1 && "-mt-[3px]"
+            value.tags.length > 1 && "-mt-[3px]"
           )}
         >
-          {item.value.tags.map((tag) => (
+          {value.tags.map((tag) => (
             <RawTag key={tag} text={tag} />
           ))}
         </div>
       )
 
     case "dot-tag":
-      return <DotTag text={item.value.label} color={item.value.color} />
+      return <DotTag text={value.label} color={value.color} />
     case "date": {
-      if (item.value.icon === undefined) {
-        return <span>{item.value.formattedDate}</span>
+      if (value.icon === undefined) {
+        return <span>{value.formattedDate}</span>
       }
 
-      const { icon, iconColor, textColor } = DATE_ICON_STYLES[item.value.icon]
+      const { icon, iconColor, textColor } = DATE_ICON_STYLES[value.icon]
       return (
         <div className="flex items-center justify-center gap-0.5 font-medium">
           <Icon icon={icon} className={iconColor} />
-          <span className={textColor}>{item.value.formattedDate}</span>
+          <span className={textColor}>{value.formattedDate}</span>
         </div>
       )
     }
