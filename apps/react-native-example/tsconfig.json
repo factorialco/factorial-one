@@ -3,9 +3,16 @@
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
+    "jsx": "react-native",
     "paths": {
       "~/*": [
         "*"
+      ],
+      "@factorialco/factorial-one-react-native": [
+        "../../packages/react-native/src"
+      ],
+      "@factorialco/factorial-one-core": [
+        "../../packages/core/src"
       ]
     }
   },
