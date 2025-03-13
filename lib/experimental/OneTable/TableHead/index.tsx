@@ -67,7 +67,7 @@ export function TableHead({
           <motion.button
             onClick={onSortClick}
             className={cn(
-              "relative h-5 w-5 rounded-xs p-1 text-f1-foreground-secondary opacity-0 transition-all hover:bg-f1-background-hover group-hover:opacity-100",
+              "relative h-5 w-5 rounded-xs p-1 text-f1-foreground-secondary opacity-0 transition-all focus-within:opacity-100 hover:bg-f1-background-hover group-hover:opacity-100",
               focusRing()
             )}
             aria-label="Sort"
