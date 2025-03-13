@@ -39,7 +39,14 @@
   "include": [
     "src",
     "lib",
-    ".storybook",
+    ".storybook"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".husky",
+    "coverage",
+    "storybook-static"
   ],
   "references": [
     {
