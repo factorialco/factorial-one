@@ -41,8 +41,12 @@
     "prettier:check:ci": "prettier --check \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "tsc": "tsc --noEmit",
     "vitest": "vitest run",
+    "vitest:rn": "cd packages/react-native && vitest run",
+    "vitest:r": "vitest run --exclude 'packages/react-native/**'",
     "vitest:watch": "vitest dev",
-    "vitest:ci": "vitest run --reporter=dot"
+    "vitest:ci": "pnpm run vitest:ci:r && pnpm run vitest:ci:rn",
+    "vitest:ci:r": "vitest run --exclude 'packages/react-native/**'",
+    "vitest:ci:rn": "cd packages/react-native && vitest run"
   },
   "peerDependencies": {
     "@hookform/resolvers": "^3.9.0",
