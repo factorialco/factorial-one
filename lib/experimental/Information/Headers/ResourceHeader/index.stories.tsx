@@ -148,7 +148,7 @@ export const Metadata: Story = {
     metadata: [
       {
         label: "Created",
-        value: { type: "text", content: "2024-01-01" },
+        value: { type: "date", formattedDate: "2024-01-01", icon: "critical" },
         actions: [
           {
             label: "Copy",
