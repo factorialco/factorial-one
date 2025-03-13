@@ -33,7 +33,7 @@ export const BaseTabs: React.FC<TabsProps> = ({
     <TabNavigation
       secondary={secondary}
       asChild
-      aria-label={secondary ? "primary-navigation" : "secondary-navigation"}
+      aria-label={secondary ? "secondary-navigation" : "primary-navigation"}
     >
       {visibleTabs.length === 1 ? (
         <li className="flex h-8 items-center justify-center whitespace-nowrap text-lg font-medium text-f1-foreground">

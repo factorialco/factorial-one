@@ -54,7 +54,7 @@ describe("Tabs", () => {
     render(<BaseTabs tabs={defaultTabs} secondary />)
 
     const nav = screen.getByRole("navigation")
-    expect(nav).toHaveAttribute("aria-label", "primary-navigation")
+    expect(nav).toHaveAttribute("aria-label", "secondary-navigation")
   })
 
   describe("TabsSkeleton", () => {
