@@ -42,7 +42,7 @@
     "vitest": "vitest run",
     "vitest:watch": "vitest dev",
     "vitest:ci": "vitest run --reporter=dot",
-    "prepare": "husky"
+    "prepare": "lefthook install"
   },
   "peerDependencies": {
     "@hookform/resolvers": "^3.9.0",
