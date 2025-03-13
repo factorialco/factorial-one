@@ -11,6 +11,7 @@ export const defaultTranslations = {
     view: "View",
     search: "Search",
     clear: "Clear",
+    more: "More",
   },
   filters: {
     label: "Filters",

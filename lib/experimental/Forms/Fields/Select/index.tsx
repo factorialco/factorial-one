@@ -10,17 +10,20 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue as SelectValuePrimitive,
-} from "@/ui/select"
+  VirtualItem,
+} from "@/ui/Select"
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
 import type { SelectItemObject, SelectItemProps } from "./types"
+
 export * from "./types"
 
-export type SelectProps<T> = {
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Allow to pass anything as item */
+export type SelectProps<T, R = any> = {
   placeholder?: string
-  onChange: (value: T) => void
+  onChange: (value: T, item?: R) => void
   value?: T
-  defaultItem?: SelectItemObject<T>
-  options: SelectItemProps<T>[]
+  defaultItem?: SelectItemObject<T, R>
+  options: SelectItemProps<T, R>[]
   children?: React.ReactNode
   disabled?: boolean
   open?: boolean
@@ -73,30 +76,6 @@ const SelectValue = forwardRef<
   )
 })
 
-const SelectOptions = ({
-  options,
-  emptyMessage,
-}: {
-  options: SelectProps<string>["options"]
-  emptyMessage?: string
-}) => {
-  return (
-    <>
-      {options.filter((option) => option !== "separator").length ? (
-        options.map((option, index) =>
-          option === "separator" ? (
-            <SelectSeparator key={`separator-${index}`} />
-          ) : (
-            <SelectItem key={option.value} item={option} />
-          )
-        )
-      ) : (
-        <p className="p-2 text-center">{emptyMessage}</p>
-      )}
-    </>
-  )
-}
-
 const defaultTrigger =
   "flex h-10 w-full items-center justify-between rounded-md border border-solid border-f1-border bg-f1-background pl-3 pr-2 py-2.5 transition-colors placeholder:text-f1-foreground-secondary hover:border-f1-border-hover disabled:cursor-not-allowed disabled:bg-f1-background-secondary disabled:opacity-50 [&>span]:line-clamp-1"
 
@@ -129,6 +108,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
     const searchInputRef = useRef<HTMLInputElement>(null)
 
     const [searchValue, setSearchValue] = useState(props.searchValue || "")
+    const [openLocal, setOpenLocal] = useState(open)
 
     const filteredOptions = useMemo(() => {
       if (externalSearch) {
@@ -163,15 +143,39 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
     const onValueChange = (value: string) => {
       // Resets the search value when the option is selected
       setSearchValue("")
-      onChange?.(value)
+      onChange?.(
+        value,
+        options.find(
+          (option): option is SelectItemObject<string> =>
+            typeof option === "object" && option.value === value
+        )?.item
+      )
     }
 
     const onOpenChangeLocal = (open: boolean) => {
       onOpenChange?.(open)
+      setOpenLocal(open)
       setTimeout(() => {
         searchInputRef.current?.focus()
       }, 0)
     }
+
+    const items: VirtualItem[] = useMemo(
+      () =>
+        filteredOptions.map((option, index) =>
+          option === "separator"
+            ? {
+                height: 1,
+                item: <SelectSeparator key={`separator-${index}`} />,
+              }
+            : {
+                height: option.description ? 64 : 32,
+                item: <SelectItem key={option.value} item={option} />,
+                value: option.value,
+              }
+        ),
+      [filteredOptions]
+    )
 
     return (
       <SelectPrimitive
@@ -207,26 +211,26 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
             </button>
           )}
         </SelectTrigger>
-        <SelectContent>
-          <SelectContent.Top>
-            {showSearchBox && (
-              <div className="p-3 pb-2">
-                <F1SearchBox
-                  placeholder={searchBoxPlaceholder}
-                  onChange={onSearchChangeLocal}
-                  clearable
-                  value={searchValue}
-                  key="search-input"
-                  ref={searchInputRef}
-                />
-              </div>
-            )}
-          </SelectContent.Top>
-          <SelectOptions
-            options={filteredOptions}
+        {openLocal && (
+          <SelectContent
+            items={items}
             emptyMessage={searchEmptyMessage}
-          />
-        </SelectContent>
+            top={
+              showSearchBox && (
+                <div className="p-2">
+                  <F1SearchBox
+                    placeholder={searchBoxPlaceholder}
+                    onChange={onSearchChangeLocal}
+                    clearable
+                    value={searchValue}
+                    key="search-input"
+                    ref={searchInputRef}
+                  />
+                </div>
+              )
+            }
+          ></SelectContent>
+        )}
       </SelectPrimitive>
     )
   }

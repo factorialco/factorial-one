@@ -1,5 +1,11 @@
 import { Home, Settings } from "@/icons/app"
-import { render, screen, within } from "@testing-library/react"
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import Breadcrumbs, { BreadcrumbItemType } from "."
@@ -16,7 +22,7 @@ describe("Breadcrumbs", () => {
     // Mock getBoundingClientRect for width calculations
     Element.prototype.getBoundingClientRect = vi.fn(() => ({
       width: 1000,
-      height: 0,
+      height: 200,
       top: 0,
       left: 0,
       bottom: 0,
@@ -26,6 +32,13 @@ describe("Breadcrumbs", () => {
       toJSON: () => {},
     }))
   })
+
+  const openSelect = async (user: ReturnType<typeof userEvent.setup>) => {
+    await user.click(screen.getByRole("combobox"))
+    await waitFor(() => expect(screen.getByRole("listbox")).toBeInTheDocument())
+    const teaser = screen.getByRole("listbox")
+    fireEvent.animationStart(teaser)
+  }
 
   it("renders all breadcrumbs when there's enough space", () => {
     const home = { id: "home", label: "Home", href: "/" }
@@ -292,7 +305,7 @@ describe("Breadcrumbs", () => {
     render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
 
     // Open select
-    await user.click(screen.getByRole("combobox"))
+    await openSelect(user)
 
     // Check if searchbox is rendered
     const searchbox = screen.getByRole("searchbox")

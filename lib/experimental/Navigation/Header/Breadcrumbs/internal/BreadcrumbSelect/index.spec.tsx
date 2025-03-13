@@ -1,6 +1,6 @@
-import { render, screen, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import { BreadcrumbSelect } from "."
 
 const mockOptions = [
@@ -11,7 +11,29 @@ const mockOptions = [
 
 const mockOnChange = vi.fn()
 
-describe("F1BreadcrumbSelect", () => {
+describe("BreadcrumbSelect", () => {
+  beforeEach(() => {
+    // Mock getBoundingClientRect for width calculations
+    Element.prototype.getBoundingClientRect = vi.fn(() => ({
+      width: 1000,
+      height: 200,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      x: 0,
+      y: 0,
+      toJSON: () => {},
+    }))
+  })
+
+  const openSelect = async (user: ReturnType<typeof userEvent.setup>) => {
+    await user.click(screen.getByRole("combobox"))
+    await waitFor(() => expect(screen.getByRole("listbox")).toBeInTheDocument())
+    const teaser = screen.getByRole("listbox")
+    fireEvent.animationStart(teaser)
+  }
+
   it("renders with default value", () => {
     render(
       <BreadcrumbSelect
@@ -51,8 +73,10 @@ describe("F1BreadcrumbSelect", () => {
 
     render(<BreadcrumbSelect options={mockOptions} onChange={onChange} />)
 
-    await user.click(screen.getByRole("combobox"))
-    await user.click(screen.getByText("Option 2"))
+    await openSelect(user)
+
+    user.click(screen.getByText("Option 2"))
+    await new Promise((resolve) => setTimeout(resolve, 100))
 
     expect(onChange).toHaveBeenCalledWith("option2")
   })
