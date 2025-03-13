@@ -166,7 +166,7 @@ export function Filters<Definition extends FiltersDefinition>({
       <button
         key={index}
         className={cn(
-          "flex w-full cursor-pointer items-center justify-between rounded-sm p-2 text-left font-medium hover:bg-f1-background-secondary",
+          "flex w-full cursor-pointer items-center justify-between rounded-sm p-2 text-left font-medium text-f1-foreground hover:bg-f1-background-secondary",
           isSelected &&
             "bg-f1-background-selected hover:bg-f1-background-selected",
           focusRing()
