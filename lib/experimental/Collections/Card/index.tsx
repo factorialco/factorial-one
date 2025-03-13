@@ -49,12 +49,11 @@ export const CardCollection = <
   // screen size (2 columns on sm, 3 on lg, 4 on xl)
   const overridenSource = useMemo(() => {
     if (source.dataAdapter.paginationType === "pages") {
-      const currentPerPage = source.dataAdapter.perPage ?? 24
       return {
         ...source,
         dataAdapter: {
           ...source.dataAdapter,
-          perPage: findNextMultiple(currentPerPage),
+          perPage: findNextMultiple(source.dataAdapter.perPage ?? 24),
         },
       }
     }
