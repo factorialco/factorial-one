@@ -12,9 +12,9 @@
     // Types should go into this directory.
     // Removing this would place the .d.ts files
     // next to the .js files
-    "outDir": "icons",
     "jsx": "react-jsx",
     "noEmit": false,
+    "outDir": "icons",
     "allowImportingTsExtensions": false,
     // go to js file when using IDE functions like
     // "Go to Definition" in VSCode
