@@ -21,6 +21,13 @@ export type CardVisualizationOptions<
   title: (record: T) => string
 }
 
+// Find the next number that is divisible by 2, 3, and 4
+const findNextMultiple = (n: number): number => {
+  // LCM of 2, 3, and 4 is 12
+  const lcm = 12
+  return Math.ceil(n / lcm) * lcm
+}
+
 export const CardCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
@@ -37,16 +44,17 @@ export const CardCollection = <
   Actions,
   CardVisualizationOptions<Record, Filters, Sortings>
 >) => {
-  // We override this to force a perPage of 24 (unless set at the dataAdapter
-  // level), which is a multiple of 2, 3 and 4 This is to ensure that the cards
-  // are always aligned in a grid
+  // We override the perPage to ensure it's always a multiple of 2, 3, and 4
+  // This ensures the cards are always aligned in a grid regardless of the
+  // screen size (2 columns on sm, 3 on lg, 4 on xl)
   const overridenSource = useMemo(() => {
     if (source.dataAdapter.paginationType === "pages") {
+      const currentPerPage = source.dataAdapter.perPage ?? 24
       return {
         ...source,
         dataAdapter: {
           ...source.dataAdapter,
-          perPage: source.dataAdapter.perPage ?? 24,
+          perPage: findNextMultiple(currentPerPage),
         },
       }
     }
