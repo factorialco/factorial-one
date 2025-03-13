@@ -10,13 +10,13 @@ import { ChevronDown } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils.ts"
 import { useMemo, useState } from "react"
 
-type OneDropdownButtonItem<T> = {
+export type OneDropdownButtonItem<T> = {
   value: T
   label: string
   icon?: IconType
 }
 
-type OneDropdownButtonProps<T = string> = Pick<
+export type OneDropdownButtonProps<T = string> = Pick<
   ButtonProps,
   "disabled" | "loading"
 > & {

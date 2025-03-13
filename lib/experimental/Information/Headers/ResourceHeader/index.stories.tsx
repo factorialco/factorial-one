@@ -1,4 +1,8 @@
 import {
+  PrimaryActionButton,
+  PrimaryActionDropdown,
+} from "@/experimental/Information/utils"
+import {
   Archive,
   Comment,
   Download,
@@ -73,7 +77,7 @@ export const Default: Story = {
       label: "Publish",
       icon: Icon.ArrowUp,
       onClick: fn(),
-    },
+    } as PrimaryActionButton,
     secondaryActions: [
       {
         label: "Edit",
@@ -342,7 +346,7 @@ export const TeamHeader: Story = {
       label: "Add members",
       icon: Icon.Add,
       onClick: fn(),
-    },
+    } as PrimaryActionButton,
     secondaryActions: [
       {
         label: "Edit",
@@ -422,7 +426,7 @@ export const NoDescription: Story = {
       label: "Add members",
       icon: Icon.Add,
       onClick: fn(),
-    },
+    } as PrimaryActionButton,
     secondaryActions: [
       {
         label: "Edit",
@@ -459,6 +463,78 @@ export const NoDescription: Story = {
       {
         label: "Members",
         value: { type: "text", content: "22" },
+      },
+    ],
+  },
+}
+
+export const WithPrimaryActionDropdown: Story = {
+  args: {
+    title: "Senior Product Designer",
+    description:
+      "Seeking an experienced product designer to lead design initiatives",
+    status: {
+      label: "Status",
+      text: "Draft",
+      variant: "neutral",
+      actions: [
+        {
+          label: "Edit",
+          icon: Icon.Pencil,
+          onClick: fn(),
+        },
+      ],
+    },
+    primaryAction: {
+      items: [
+        {
+          label: "Publish now",
+          value: "now",
+          icon: Icon.ArrowRight,
+        },
+        {
+          label: "Schedule publish",
+          value: "schedule",
+          icon: Icon.Calendar,
+        },
+        {
+          label: "Save as draft",
+          value: "draft",
+          icon: Icon.Save,
+        },
+      ],
+      onClick: (value: string) => {
+        console.log(`Selected: ${value}`)
+      },
+      tooltip: "Choose a publish option",
+    } as PrimaryActionDropdown<string>,
+    secondaryActions: [
+      {
+        label: "Preview",
+        icon: Icon.ExternalLink,
+        onClick: fn(),
+      },
+      {
+        label: "Edit",
+        icon: Icon.Pencil,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        label: "Location",
+        value: { type: "text", content: "Barcelona, Spain" },
+      },
+      {
+        label: "Department",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "team",
+            name: "Product design",
+          },
+          text: "Product design",
+        },
       },
     ],
   },
