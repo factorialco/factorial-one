@@ -15,9 +15,24 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
+// Common settings to apply to all configs using React
+const reactSettings = {
+  react: {
+    version: "detect",
+  },
+}
+
 export default [
+  // Ignore dist and other config files across the project
   {
     ignores: ["**/dist", "**/.eslintrc.cjs"],
+  },
+
+  // Main project configuration
+  {
+    files: ["**/*.{js,jsx,ts,tsx}"],
+    ignores: ["apps/react-native-example/**"],
+    settings: reactSettings,
   },
   ...fixupConfigRules(
     compat.extends(
@@ -27,8 +42,16 @@ export default [
       "plugin:react-hooks/recommended",
       "plugin:storybook/recommended"
     )
-  ),
+  ).map((config) => ({
+    ...config,
+    settings: {
+      ...(config.settings || {}),
+      ...reactSettings,
+    },
+  })),
   {
+    files: ["**/*.{js,jsx,ts,tsx}"],
+    ignores: ["apps/react-native-example/**"],
     plugins: {
       "react-refresh": reactRefresh,
     },
@@ -41,11 +64,7 @@ export default [
       parser: tsParser,
     },
 
-    settings: {
-      react: {
-        version: "detect",
-      },
-    },
+    settings: reactSettings,
 
     rules: {
       "no-unused-vars": "off",
@@ -62,6 +81,52 @@ export default [
           argsIgnorePattern: "^_",
         },
       ],
+    },
+  },
+
+  // React Native specific configuration
+  {
+    files: ["apps/react-native-example/**/*.{js,jsx,ts,tsx}"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+      parser: tsParser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    settings: reactSettings,
+    rules: {
+      "no-undef": "off", // Disable since it conflicts with globals in RN config files
+      "@typescript-eslint/no-require-imports": "off", // React Native uses require-style imports
+      "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off",
+    },
+  },
+
+  // React Native config files - special handling for CommonJS files
+  {
+    files: [
+      "apps/react-native-example/babel.config.js",
+      "apps/react-native-example/metro.config.js",
+      "apps/react-native-example/tailwind.config.js",
+      "apps/react-native-example/index.js",
+    ],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        module: "writable",
+        require: "readonly",
+        __dirname: "readonly",
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "no-undef": "off",
     },
   },
 ]
