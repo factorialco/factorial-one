@@ -1,7 +1,10 @@
 import { Button } from "@/components/Actions/Button"
+import { Counter } from "@/experimental/Information/Counter"
 import { Preset } from "@/experimental/OnePreset"
 import { Filter } from "@/icons/app"
 import { useI18n } from "@/lib/i18n-provider"
+import { cn, focusRing } from "@/lib/utils"
+import { OverflowList } from "@/ui/OverflowList"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { AnimatePresence } from "framer-motion"
 import { useState } from "react"
@@ -137,8 +140,50 @@ export function Filters<Definition extends FiltersDefinition>({
     setIsOpen(false)
   }
 
+  // Render preset item in the main list
+  const renderListPresetItem = (
+    preset: Presets<Definition>[number],
+    index: number
+  ) => {
+    const isSelected = JSON.stringify(preset.filter) === JSON.stringify(value)
+    return (
+      <Preset
+        key={index}
+        label={preset.label}
+        selected={isSelected}
+        onClick={() => onChange(preset.filter)}
+      />
+    )
+  }
+
+  // Render preset item in the dropdown
+  const renderDropdownPresetItem = (
+    preset: Presets<Definition>[number],
+    index: number
+  ) => {
+    const isSelected = JSON.stringify(preset.filter) === JSON.stringify(value)
+    return (
+      <button
+        key={index}
+        className={cn(
+          "flex w-full cursor-pointer items-center justify-between rounded-sm p-2 text-left font-medium hover:bg-f1-background-secondary",
+          isSelected &&
+            "bg-f1-background-selected hover:bg-f1-background-selected",
+          focusRing()
+        )}
+        onClick={() => onChange(preset.filter)}
+      >
+        {preset.label}
+        <Counter
+          value={Object.keys(preset.filter).length}
+          type={isSelected ? "selected" : "default"}
+        />
+      </button>
+    )
+  }
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex w-full flex-1 flex-col gap-4">
       <div className="flex items-center gap-2">
         <Popover open={isOpen} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild>
@@ -183,19 +228,13 @@ export function Filters<Definition extends FiltersDefinition>({
           </PopoverContent>
         </Popover>
 
-        {presets && (
-          <div className="flex flex-wrap items-center gap-2">
-            {presets.map((preset, index) => (
-              <Preset
-                key={index}
-                label={preset.label}
-                selected={
-                  JSON.stringify(preset.filter) === JSON.stringify(value)
-                }
-                onClick={() => onChange(preset.filter)}
-              />
-            ))}
-          </div>
+        {presets && presets.length > 0 && (
+          <OverflowList
+            items={presets}
+            renderListItem={renderListPresetItem}
+            renderDropdownItem={renderDropdownPresetItem}
+            className="flex-1"
+          />
         )}
       </div>
       {Object.keys(value).length > 0 && (
