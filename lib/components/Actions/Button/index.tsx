@@ -1,5 +1,5 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import { EmojiImage } from "@/factorial-one"
+import { EmojiImage } from "@/lib/emojis.tsx"
 import { Button as ShadcnButton } from "@/ui/button"
 import { cva } from "cva"
 import { ComponentProps, forwardRef, useState } from "react"
@@ -16,6 +16,8 @@ export type ButtonProps = Pick<
   icon?: IconType
   emoji?: string
   hideLabel?: boolean
+  size?: "sm" | "md" | "lg"
+  internalAppend?: React.ReactNode
 }
 
 const iconVariants = cva({
@@ -64,6 +66,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
     emoji,
     variant = "default",
     size = "md",
+    internalAppend,
     ...props
   },
   ref
@@ -110,6 +113,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
       )}
       {emoji && <EmojiImage emoji={emoji} size={size === "sm" ? "sm" : "md"} />}
       {!hideLabel && label}
+      {internalAppend}
     </ShadcnButton>
   )
 })

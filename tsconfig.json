@@ -39,7 +39,11 @@
   "include": [
     "src",
     "lib",
-    ".storybook",
+    ".storybook"
+  ],
+  "exclude": [
+    "**/*.test.ts",
+    "**/*.test.tsx"
   ],
   "references": [
     {

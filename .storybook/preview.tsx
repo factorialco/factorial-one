@@ -107,6 +107,9 @@ const preview: Preview = {
     },
     controls: {
       expanded: true,
+      exclude: import.meta.env["STORYBOOK_PUBLIC_BUILD"]
+        ? /^internal.*/
+        : undefined,
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,

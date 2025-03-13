@@ -36,6 +36,7 @@ type DropdownProps = {
   icon?: IconType
   size?: ButtonProps["size"]
   children?: React.ReactNode
+  internalAlign?: "start" | "end"
 }
 
 const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
@@ -47,7 +48,14 @@ const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
   )
 
   return (
-    <DropdownMenuItem asChild onClick={item.onClick} className={itemClass}>
+    <DropdownMenuItem
+      asChild
+      onClick={(e) => {
+        e.stopPropagation()
+        item.onClick?.()
+      }}
+      className={itemClass}
+    >
       {item.href ? (
         <Link
           href={item.href}
@@ -71,6 +79,7 @@ const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
 export function Dropdown({
   items,
   icon = EllipsisHorizontal,
+  internalAlign = "start",
   size,
   children,
 }: DropdownProps) {
@@ -88,7 +97,7 @@ export function Dropdown({
           />
         )}
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
+      <DropdownMenuContent align={internalAlign}>
         {items.map((item, index) =>
           item === "separator" ? (
             <DropdownMenuSeparator key={index} />
