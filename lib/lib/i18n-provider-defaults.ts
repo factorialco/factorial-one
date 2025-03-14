@@ -9,7 +9,14 @@ export const defaultTranslations = {
     showLess: "Show less",
     skipToContent: "Skip to content",
     view: "View",
+    unselect: "Unselect",
     more: "More",
+  },
+  status: {
+    selected: {
+      singular: "Selected",
+      plural: "Selected",
+    },
   },
   filters: {
     label: "Filters",
