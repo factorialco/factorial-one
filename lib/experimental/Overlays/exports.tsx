@@ -8,3 +8,5 @@ export const Dialog = Component(
   },
   DialogComponent
 )
+
+export * from "./Tooltip"
