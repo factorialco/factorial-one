@@ -121,6 +121,7 @@ export const Default: Story = {
         <div className="h-fit w-[90%] max-w-[400px] overflow-hidden rounded-md bg-f1-background">
           {items.map((item) => (
             <div
+              key={item.id}
               className="flex h-[44px] items-center gap-3 border border-solid border-transparent border-b-f1-border-secondary px-2 last:border-b-transparent"
               id={item.id}
             >
