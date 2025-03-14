@@ -27,9 +27,7 @@ export const Preset = ({ label, number, onClick, selected }: PresetProps) => {
         checked={selected}
         onChange={() => onClick?.()}
       />
-      <span className="line-clamp-1 min-w-0 max-w-full text-ellipsis whitespace-nowrap">
-        {label}
-      </span>
+      <span className="whitespace-nowrap">{label}</span>
       {number && (
         <Counter value={number} type={selected ? "selected" : "default"} />
       )}
