@@ -10,13 +10,13 @@ export const defaultTranslations = {
     skipToContent: "Skip to content",
     view: "View",
     unselect: "Unselect",
+    more: "More",
   },
   status: {
     selected: {
       singular: "Selected",
       plural: "Selected",
     },
-    more: "More",
   },
   filters: {
     label: "Filters",
