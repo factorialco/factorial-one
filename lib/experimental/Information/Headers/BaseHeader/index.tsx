@@ -1,4 +1,5 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
+import { OneDropdownButtonProps } from "@/components/Actions/OneDropdownButton"
 import {
   Avatar,
   AvatarVariant,
@@ -6,6 +7,8 @@ import {
 import { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import {
   PrimaryAction,
+  PrimaryActionButton,
+  PrimaryActionDropdown,
   SecondaryAction,
 } from "@/experimental/Information/utils"
 import {
@@ -64,6 +67,23 @@ const ButtonWithTooltip = memo(function ButtonWithTooltip({
   return <Button {...buttonProps} />
 })
 
+const DropdownButtonWithTooltip = memo(function OneDropdownButtonWithTooltip({
+  tooltip,
+  ...dropdownButtonProps
+}: OneDropdownButtonProps<unknown> & { tooltip?: string }) {
+  if (tooltip) {
+    const Wrapper = dropdownButtonProps.disabled ? "span" : Fragment
+    return (
+      <Tooltip description={tooltip}>
+        <Wrapper>
+          <DropdownButtonWithTooltip {...dropdownButtonProps} />
+        </Wrapper>
+      </Tooltip>
+    )
+  }
+  return <DropdownButtonWithTooltip {...dropdownButtonProps} />
+})
+
 export function BaseHeader({
   title,
   avatar,
@@ -110,6 +130,10 @@ export function BaseHeader({
     }
   }, [measureSize.height, descriptionSize.height])
 
+  const primaryActionDropdown = primaryAction as
+    | PrimaryActionDropdown<unknown>
+    | undefined
+  const primaryActionButton = primaryAction as PrimaryActionButton | undefined
   const visibleSecondaryActions = secondaryActions.filter(isVisible)
   const visibleOtherActions = otherActions.filter(isVisible)
   const isPrimaryActionVisible = primaryAction && isVisible(primaryAction)
@@ -202,16 +226,28 @@ export function BaseHeader({
         )}
 
         <div className="flex w-full shrink-0 flex-col gap-x-2 gap-y-3 md:hidden">
-          {isPrimaryActionVisible && (
+          {isPrimaryActionVisible && primaryActionDropdown && (
+            <div className="w-full md:hidden [&>*]:w-full">
+              <DropdownButtonWithTooltip
+                items={primaryActionDropdown.items}
+                onClick={primaryActionDropdown.onClick}
+                variant="default"
+                size="lg"
+                disabled={primaryActionDropdown.disabled}
+                tooltip={primaryActionDropdown.tooltip}
+              />
+            </div>
+          )}
+          {isPrimaryActionVisible && primaryActionButton && (
             <div className="w-full md:hidden [&>*]:w-full">
               <ButtonWithTooltip
-                label={primaryAction.label}
-                onClick={primaryAction.onClick}
+                label={primaryActionButton.label}
+                onClick={primaryActionButton.onClick}
                 variant="default"
-                icon={primaryAction.icon}
+                icon={primaryActionButton.icon}
                 size="lg"
-                disabled={primaryAction.disabled}
-                tooltip={primaryAction.tooltip}
+                disabled={primaryActionButton.disabled}
+                tooltip={primaryActionButton.tooltip}
               />
             </div>
           )}
@@ -263,15 +299,26 @@ export function BaseHeader({
             (hasSecondaryActions || hasOtherActions) && (
               <div className="mx-1 h-4 w-px bg-f1-background-secondary-hover" />
             )}
-          {isPrimaryActionVisible && (
+          {isPrimaryActionVisible && primaryActionDropdown && (
+            <div className="hidden md:block">
+              <DropdownButtonWithTooltip
+                items={primaryActionDropdown.items}
+                onClick={primaryActionDropdown.onClick}
+                variant="default"
+                disabled={primaryActionDropdown.disabled}
+                tooltip={primaryActionDropdown.tooltip}
+              />
+            </div>
+          )}
+          {isPrimaryActionVisible && primaryActionButton && (
             <div className="hidden md:block">
               <ButtonWithTooltip
-                label={primaryAction.label}
-                onClick={primaryAction.onClick}
+                label={primaryActionButton.label}
+                onClick={primaryActionButton.onClick}
                 variant="default"
-                icon={primaryAction.icon}
-                disabled={primaryAction.disabled}
-                tooltip={primaryAction.tooltip}
+                icon={primaryActionButton.icon}
+                disabled={primaryActionButton.disabled}
+                tooltip={primaryActionButton.tooltip}
               />
             </div>
           )}
