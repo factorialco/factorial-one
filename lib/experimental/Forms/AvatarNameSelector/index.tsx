@@ -205,47 +205,45 @@ export const AvatarNameSelector = ({
   useEffect(() => {
     if (!debouncedSearch) {
       setFilteredEntities(entities)
-    } else {
-      if (groupView) {
-        setFilteredEntities(
-          entities
-            .filter(
-              (entity) =>
-                entity.name
-                  .toLowerCase()
-                  .includes(debouncedSearch.toLowerCase()) ||
-                entity.subItems?.some((subItem) =>
-                  subItem.subName
-                    .toLowerCase()
-                    .includes(debouncedSearch.toLowerCase())
-                )
-            )
-            .map((entity) => {
-              const someSubItem = entity.subItems?.some((subItem) =>
-                subItem.subName
-                  .toLowerCase()
-                  .includes(debouncedSearch.toLowerCase())
-              )
-              return {
-                ...entity,
-                expanded: entity.expanded ?? someSubItem,
-                subItems: entity.subItems?.filter((subItem) =>
-                  subItem.subName
-                    .toLowerCase()
-                    .includes(debouncedSearch.toLowerCase())
-                ),
-              }
-            })
-        )
-      } else {
-        setFilteredEntities(
-          entities.filter((entity) =>
-            entity.name.toLowerCase().includes(debouncedSearch.toLowerCase())
-          )
-        )
-      }
+      return
     }
-  }, [debouncedSearch, entities, groupView])
+
+    if (groupView) {
+      const nextEntities = entities
+        .map((entity) => {
+          const entityScore = getBestScoreForEntity(entity, debouncedSearch)
+
+          const filteredSubItems = entity.subItems
+            ?.map((el) => ({
+              ...el,
+              score: getMatchScore(el.subName, debouncedSearch),
+            }))
+            .filter((subEntity) => subEntity.score < Infinity)
+            .sort((a, b) => a.score - b.score)
+
+          return {
+            ...entity,
+            score: entityScore,
+            expanded: entity.expanded ?? (filteredSubItems?.length ?? 0) > 0,
+            subItems: filteredSubItems,
+          }
+        })
+        .filter((entity) => entity.score < Infinity)
+        .sort((a, b) => a.score - b.score)
+
+      setFilteredEntities(nextEntities)
+    } else {
+      const nextEntities = entities
+        .map((entity) => {
+          const entityScore = getMatchScore(entity.name, debouncedSearch)
+          return { ...entity, score: entityScore }
+        })
+        .filter((entity) => entity.score < Infinity)
+        .sort((a, b) => a.score - b.score)
+
+      setFilteredEntities(nextEntities)
+    }
+  }, [debouncedSearch, entities, groupView, setFilteredEntities])
 
   const onOpenChange = (open: boolean) => {
     props.onOpenChange?.(open)
@@ -354,4 +352,38 @@ export const AvatarNameSelector = ({
       </PopoverContent>
     </Popover>
   )
+}
+
+function getMatchScore(text = "", search = "") {
+  const lowerText = text.toLowerCase()
+  const lowerSearch = search.toLowerCase()
+
+  if (lowerText.startsWith(lowerSearch)) {
+    return 1
+  }
+
+  const words = lowerText.split(/\s+/)
+  if (words.slice(1).some((w) => w.startsWith(lowerSearch))) {
+    return 2
+  }
+
+  if (lowerText.includes(lowerSearch)) {
+    return 3
+  }
+
+  return Infinity
+}
+
+function getBestScoreForEntity(entity: AvatarNamedEntity, search: string) {
+  const nameScore = getMatchScore(entity.name, search)
+
+  let bestSubItemScore = Infinity
+  if (entity.subItems?.length) {
+    bestSubItemScore = entity.subItems.reduce((minScore, subItem) => {
+      const current = getMatchScore(subItem.subName, search)
+      return Math.min(minScore, current)
+    }, Infinity)
+  }
+
+  return Math.min(nameScore, bestSubItemScore)
 }
