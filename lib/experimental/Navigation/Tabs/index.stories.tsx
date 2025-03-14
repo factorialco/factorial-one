@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { Tabs } from "."
+import { TabItem, Tabs } from "."
 
-const tabItems = [
+const tabItems: TabItem[] = [
   { label: "Overview", href: "/", index: true },
   { label: "Courses", href: "/courses" },
   { label: "Categories", href: "/categories" },
@@ -15,15 +15,19 @@ const secondaryTabItems = [
   { label: "Activity", href: "/courses/activity" },
 ]
 
-const meta = {
+const meta: Meta<typeof Tabs> = {
+  title: "Navigation/Tabs",
   component: Tabs,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   argTypes: {
     secondary: {
       control: "boolean",
     },
+    embedded: {
+      control: "boolean",
+    },
   },
-} satisfies Meta<typeof Tabs>
+}
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -74,4 +78,11 @@ export const SingleTab: Story = {
       <Tabs tabs={[{ label: "Overview", href: "/" }]} secondary={true} />
     </div>
   ),
+}
+
+export const Embedded: Story = {
+  args: {
+    tabs: tabItems,
+    embedded: true,
+  },
 }

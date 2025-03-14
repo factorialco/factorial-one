@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import React from "react"
 
 export interface StandardLayoutProps
@@ -7,16 +7,14 @@ export interface StandardLayoutProps
   children?: React.ReactNode
 }
 
-const layoutVariants = cva(
-  "relative flex min-h-full w-full flex-col gap-4 place-self-center overflow-y-auto px-6 py-5",
-  {
-    variants: {
-      variant: {
-        narrow: "max-w-screen-lg",
-      },
+const layoutVariants = cva({
+  base: "relative flex min-h-full w-full flex-col gap-4 place-self-center overflow-y-auto px-6 py-5",
+  variants: {
+    variant: {
+      narrow: "max-w-screen-lg",
     },
-  }
-)
+  },
+})
 
 export const StandardLayout = React.forwardRef<
   HTMLElement,

@@ -4,11 +4,12 @@ import { ComponentProps } from "react"
 import { Link } from "."
 
 const meta = {
+  title: "Link",
   component: Link,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "stable"],
   argTypes: {
     target: {
       control: "select",

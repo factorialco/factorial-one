@@ -1,5 +1,6 @@
 export * from "./Alert"
 export * from "./Avatars/exports"
+export * from "./Badge"
 export * from "./Communities/exports"
 export * from "./Counter"
 export * from "./Headers/exports"

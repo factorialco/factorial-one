@@ -1,4 +1,4 @@
-export * from "@/ui/input"
+export * from "@/ui/textarea"
 import { Component } from "@/lib/component"
 import { Textarea as ShadcnTextarea } from "@/ui/textarea"
 import { ComponentProps } from "react"

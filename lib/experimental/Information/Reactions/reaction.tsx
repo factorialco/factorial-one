@@ -1,11 +1,9 @@
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { useReducedMotion } from "@/lib/a11y"
-import { EmojiImage, getEmojiLabel } from "@/lib/emojis"
+import { EmojiImage, getEmojiLabel, useEmojiConfetti } from "@/lib/emojis"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import NumberFlow from "@number-flow/react"
-import confetti from "canvas-confetti"
-import { useCallback, useRef, useState } from "react"
+import { useRef, useState } from "react"
 
 interface User {
   name: string
@@ -16,7 +14,7 @@ export interface ReactionProps {
   initialCount: number
   hasReacted?: boolean
   users?: User[]
-  onInteraction?: () => void
+  onInteraction?: (emoji: string) => void
 }
 
 export function Reaction({
@@ -29,41 +27,19 @@ export function Reaction({
   const [isActive, setIsActive] = useState(hasReacted)
   const [count, setCount] = useState(initialCount)
   const buttonRef = useRef<HTMLButtonElement>(null)
-  const shouldReduceMotion = useReducedMotion()
+  const { fireEmojiConfetti } = useEmojiConfetti()
 
-  const fireConfetti = useCallback(() => {
-    const button = buttonRef.current
-    if (button) {
-      const rect = button.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
-      const centerY = rect.top
-
-      confetti({
-        particleCount: 5,
-        gravity: 0.8,
-        spread: 45,
-        startVelocity: 12,
-        ticks: 30,
-        // @ts-expect-error flat property exists in canvas-confetti
-        flat: true,
-        origin: {
-          x: centerX / window.innerWidth,
-          y: centerY / window.innerHeight,
-        },
-        shapes: [confetti.shapeFromText({ text: emoji })],
-        scalar: 1.5,
-        disableInteraction: shouldReduceMotion,
-      })
-    }
-  }, [emoji, shouldReduceMotion])
-
-  const handleClick = () => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    emoji: string
+  ) => {
+    event.stopPropagation()
     setCount(count + (isActive ? -1 : 1))
     setIsActive(!isActive)
-    onInteraction?.()
+    onInteraction?.(emoji)
 
-    if (!isActive && !shouldReduceMotion) {
-      fireConfetti()
+    if (!isActive) {
+      fireEmojiConfetti(emoji, buttonRef)
     }
   }
 
@@ -74,7 +50,9 @@ export function Reaction({
       ref={buttonRef}
       variant="outline"
       size="md"
-      onClick={handleClick}
+      onClick={(event) => {
+        handleClick(event, emoji)
+      }}
       className={cn(
         "flex items-center gap-1 px-2 py-1 font-medium leading-tight transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
         isActive &&

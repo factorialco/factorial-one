@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 
 export type ColumnNumber = 1 | 2 | 3 | 4 | 6
 export type PeekVariant = `peek${ColumnNumber}`
@@ -9,9 +9,10 @@ export interface CarouselBreakpoints {
   sm?: ColumnNumber
   md?: ColumnNumber
   lg?: ColumnNumber
+  xl?: ColumnNumber
 }
 
-export const carouselItemVariants = cva("", {
+export const carouselItemVariants = cva({
   variants: {
     peek: { true: "", false: "" },
     default: {
@@ -27,52 +28,64 @@ export const carouselItemVariants = cva("", {
       peek6: "basis-[16%]",
     },
     xs: {
-      1: "xs:basis-full",
-      2: "xs:basis-1/2",
-      3: "xs:basis-1/3",
-      4: "xs:basis-1/4",
-      6: "xs:basis-1/6",
-      peek1: "xs:basis-[85%]",
-      peek2: "xs:basis-[48%]",
-      peek3: "xs:basis-[32%]",
-      peek4: "xs:basis-[24%]",
-      peek6: "xs:basis-[16%]",
+      1: "@xl:basis-full",
+      2: "@xl:basis-1/2",
+      3: "@xl:basis-1/3",
+      4: "@xl:basis-1/4",
+      6: "@xl:basis-1/6",
+      peek1: "@xl:basis-[85%]",
+      peek2: "@xl:basis-[48%]",
+      peek3: "@xl:basis-[32%]",
+      peek4: "@xl:basis-[24%]",
+      peek6: "@xl:basis-[16%]",
     },
     sm: {
-      1: "sm:basis-full",
-      2: "sm:basis-1/2",
-      3: "sm:basis-1/3",
-      4: "sm:basis-1/4",
-      6: "sm:basis-1/6",
-      peek1: "sm:basis-[85%]",
-      peek2: "sm:basis-[48%]",
-      peek3: "sm:basis-[32%]",
-      peek4: "sm:basis-[24%]",
-      peek6: "sm:basis-[16%]",
+      1: "@2xl:basis-full",
+      2: "@2xl:basis-1/2",
+      3: "@2xl:basis-1/3",
+      4: "@2xl:basis-1/4",
+      6: "@2xl:basis-1/6",
+      peek1: "@2xl:basis-[85%]",
+      peek2: "@2xl:basis-[48%]",
+      peek3: "@2xl:basis-[32%]",
+      peek4: "@2xl:basis-[24%]",
+      peek6: "@2xl:basis-[16%]",
     },
     md: {
-      1: "md:basis-full",
-      2: "md:basis-1/2",
-      3: "md:basis-1/3",
-      4: "md:basis-1/4",
-      6: "md:basis-1/6",
-      peek1: "md:basis-[85%]",
-      peek2: "md:basis-[48%]",
-      peek3: "md:basis-[32%]",
-      peek4: "md:basis-[24%]",
-      peek6: "md:basis-[16%]",
+      1: "@3xl:basis-full",
+      2: "@3xl:basis-1/2",
+      3: "@3xl:basis-1/3",
+      4: "@3xl:basis-1/4",
+      6: "@3xl:basis-1/6",
+      peek1: "@3xl:basis-[85%]",
+      peek2: "@3xl:basis-[48%]",
+      peek3: "@3xl:basis-[32%]",
+      peek4: "@3xl:basis-[24%]",
+      peek6: "@3xl:basis-[16%]",
     },
     lg: {
-      1: "lg:basis-full",
-      2: "lg:basis-1/2",
-      3: "lg:basis-1/3",
-      4: "lg:basis-1/4",
-      6: "lg:basis-1/6",
-      peek1: "lg:basis-[85%]",
-      peek2: "lg:basis-[48%]",
-      peek3: "lg:basis-[32%]",
-      peek4: "lg:basis-[24%]",
-      peek6: "lg:basis-[16%]",
+      1: "@4xl:basis-full",
+      2: "@4xl:basis-1/2",
+      3: "@4xl:basis-1/3",
+      4: "@4xl:basis-1/4",
+      6: "@4xl:basis-1/6",
+      peek1: "@4xl:basis-[85%]",
+      peek2: "@4xl:basis-[48%]",
+      peek3: "@4xl:basis-[32%]",
+      peek4: "@4xl:basis-[24%]",
+      peek6: "@4xl:basis-[16%]",
+    },
+    xl: {
+      1: "@5xl:basis-full",
+      2: "@5xl:basis-1/2",
+      3: "@5xl:basis-1/3",
+      4: "@5xl:basis-1/4",
+      6: "@5xl:basis-1/6",
+      peek1: "@5xl:basis-[85%]",
+      peek2: "@5xl:basis-[48%]",
+      peek3: "@5xl:basis-[32%]",
+      peek4: "@5xl:basis-[24%]",
+      peek6: "@5xl:basis-[16%]",
     },
   },
   defaultVariants: {

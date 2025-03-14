@@ -1,19 +1,12 @@
-import { IconType } from "@/components/Utilities/Icon"
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
-import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { cn, focusRing } from "@/lib/utils"
 
 interface UserProps {
   firstName: string
   lastName: string
   avatarUrl?: string
-  options: {
-    label: string
-    href?: string
-    icon?: IconType
-    onClick?: () => void
-    critical?: boolean
-  }[]
+  options: DropdownItem[]
 }
 
 export function User({ firstName, lastName, avatarUrl, options }: UserProps) {

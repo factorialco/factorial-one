@@ -2,8 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { SidebarIcon } from "."
 
 const meta: Meta<typeof SidebarIcon> = {
+  title: "Sidebar/Icon",
   component: SidebarIcon,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental", "no-sidebar"],
 }
 
 export default meta

@@ -1,24 +1,20 @@
-import { Button } from "@/components/Actions/Button"
+import { Button, ButtonProps } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
 import { AlertAvatar } from "@/experimental/Information/Avatars/AlertAvatar"
 import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
+
+type Action = {
+  label: string
+  onClick: () => void
+  icon?: IconType
+  variant?: ButtonProps["variant"]
+}
 
 export type WidgetEmptyStateProps = {
   title: string
   description: string
   emoji?: string
-  actions?: {
-    primary: {
-      label: string
-      onClick: () => void
-      icon?: IconType
-    }
-    outline: {
-      label: string
-      onClick: () => void
-      icon?: IconType
-    }
-  }
+  actions?: Action[]
 }
 
 export function WidgetEmptyState({
@@ -27,8 +23,14 @@ export function WidgetEmptyState({
   emoji,
   actions,
 }: WidgetEmptyStateProps) {
+  if ((actions?.length ?? 0) > 2) {
+    throw Error(
+      "You can only provide up to two actions for the WidgetEmptyState"
+    )
+  }
+
   return (
-    <div className="flex min-h-56 flex-col items-center justify-center p-8">
+    <div className="flex min-h-56 flex-grow flex-col items-center justify-center p-8">
       {emoji ? (
         <EmojiAvatar emoji={emoji} size="lg" />
       ) : (
@@ -42,17 +44,15 @@ export function WidgetEmptyState({
       </div>
       {!!actions && (
         <div className="mt-5 flex flex-row gap-3">
-          <Button
-            label={actions.primary.label}
-            icon={actions.primary.icon}
-            onClick={actions.primary.onClick}
-          />
-          <Button
-            label={actions.outline.label}
-            icon={actions.outline.icon}
-            onClick={actions.outline.onClick}
-            variant="outline"
-          />
+          {actions.map((action) => (
+            <Button
+              key={action.label}
+              label={action.label}
+              icon={action.icon}
+              onClick={action.onClick}
+              variant={action.variant}
+            />
+          ))}
         </div>
       )}
     </div>

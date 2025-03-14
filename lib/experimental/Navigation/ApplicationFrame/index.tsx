@@ -1,9 +1,11 @@
 import { cn, focusRing } from "@/lib/utils"
-import { motion, MotionConfig } from "framer-motion"
-import { FrameProvider, useSidebar } from "./FrameProvider"
+import { AnimatePresence, motion, MotionConfig } from "framer-motion"
 
 import { useReducedMotion } from "@/lib/a11y"
-import { AnimatePresence } from "framer-motion"
+import { useI18n } from "@/lib/i18n-provider"
+
+import { FrameProvider, useSidebar } from "./FrameProvider"
+
 interface ApplicationFrameProps {
   banner?: React.ReactNode
   sidebar: React.ReactNode
@@ -25,14 +27,15 @@ export function ApplicationFrame({
 }
 
 const SkipToContentButton = ({ contentId }: { contentId?: string }) => {
+  const translations = useI18n()
   return (
     <a
       href={`#${contentId}`}
       className={focusRing(
-        "absolute z-50 -translate-y-full translate-x-4 rounded-md bg-f1-background px-4 py-2.5 text-base font-medium text-f1-foreground no-underline transition-transform duration-200 focus-visible:translate-y-4"
+        "absolute z-50 -translate-y-[1000px] translate-x-4 rounded-md bg-f1-background px-4 py-2.5 text-base font-medium text-f1-foreground no-underline transition-transform duration-200 focus-visible:translate-y-4"
       )}
     >
-      Skip to content
+      {translations.actions.skipToContent}
     </a>
   )
 }
@@ -47,7 +50,6 @@ function ApplicationFrameContent({
 
   return (
     <>
-      <SkipToContentButton contentId="content" />
       <MotionConfig
         reducedMotion={shouldReduceMotion ? "always" : "never"}
         transition={{
@@ -60,7 +62,7 @@ function ApplicationFrameContent({
           <div className="relative isolate flex h-full">
             <AnimatePresence>
               {sidebarState === "unlocked" && (
-                <motion.div
+                <motion.nav
                   className={cn("fixed inset-0 z-[5] bg-f1-background-bold", {
                     hidden: !isSmallScreen,
                   })}
@@ -77,7 +79,16 @@ function ApplicationFrameContent({
                 { "transition-all": !shouldReduceMotion },
                 sidebarState === "locked" ? "w-[240px] shrink-0 pl-3" : "w-0"
               )}
+              ref={(node) => {
+                // React types does not yet support ["inert" attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert) at the moment
+                if (sidebarState === "hidden") {
+                  node?.setAttribute("inert", "")
+                } else {
+                  node?.removeAttribute("inert")
+                }
+              }}
             >
+              <SkipToContentButton contentId="content" />
               {sidebar}
             </div>
             <motion.main

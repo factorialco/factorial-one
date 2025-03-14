@@ -8,6 +8,7 @@ const dataConfig = {
 }
 
 const meta: Meta<typeof BarChart<typeof dataConfig>> = {
+  title: "Charts/BarChart",
   component: BarChart,
   tags: ["autodocs"],
   decorators: [
@@ -30,6 +31,9 @@ const meta: Meta<typeof BarChart<typeof dataConfig>> = {
       { label: "April", values: { desktop: 1500 } },
       { label: "May", values: { desktop: 2000 } },
     ],
+    onClick: (data) => {
+      console.log("Bar clicked", data)
+    },
   },
 }
 

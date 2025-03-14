@@ -3,7 +3,8 @@ import { AlertAvatar } from "./index"
 
 const meta: Meta<typeof AlertAvatar> = {
   component: AlertAvatar,
-  tags: ["autodocs"],
+  title: "Avatars/AlertAvatar",
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta

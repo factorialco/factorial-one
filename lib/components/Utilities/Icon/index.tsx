@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import {
   forwardRef,
   ForwardRefExoticComponent,
@@ -7,12 +7,14 @@ import {
   SVGProps,
 } from "react"
 
-const iconVariants = cva("inline-block shrink-0", {
+const iconVariants = cva({
+  base: "inline-block shrink-0",
   variants: {
     size: {
       lg: "w-6 [&_circle]:stroke-lg [&_path]:stroke-lg [&_rect]:stroke-lg",
       md: "w-5 [&_circle]:stroke-md [&_path]:stroke-md [&_rect]:stroke-md",
       sm: "w-4 [&_circle]:stroke-sm [&_path]:stroke-sm [&_rect]:stroke-sm",
+      xs: "w-3 [&_circle]:stroke-xs [&_path]:stroke-xs [&_rect]:stroke-xs",
     },
   },
   defaultVariants: {

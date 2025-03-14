@@ -1,8 +1,6 @@
 import { Meta, Unstyled } from "@storybook/blocks"
 import { FeatureCard } from "./components/FeatureCard"
-import Rocket from "@/icons/app/Rocket"
-import Masonry from "@/icons/app/Masonry"
-import Folder from "@/icons/app/Folder"
+import * as AnimatedIcon from "@/icons/animated"
 
 # Welcome to Factorial One
 
@@ -10,21 +8,21 @@ Here you can find all the guides and resources to design and develop with
 Factorial One.
 
 <Unstyled>
-  <div className="grid grid-cols-1 gap-6 pb-8 md:grid-cols-3">
+  <div className="mt-6 grid grid-cols-1 gap-6 pb-8 md:grid-cols-3">
     <FeatureCard
-      icon={Rocket}
+      icon={AnimatedIcon.RocketAnimated}
       title="Getting Started"
       description="Explore how to start with tutorials and getting started guides."
       href="/?path=/docs/components-maturity--documentation"
     />
     <FeatureCard
-      icon={Masonry}
+      icon={AnimatedIcon.BookAnimated}
       title="Foundations"
       description="Explore the foundations like colors, typography, or spacing."
       href="/?path=/docs/foundations-colors--documentation"
     />
     <FeatureCard
-      icon={Folder}
+      icon={AnimatedIcon.FoldersAnimated}
       title="Components"
       description="Discover our comprehensive collection of UI components."
       href="/?path=/docs/components-actions-button--documentation"
@@ -124,3 +122,7 @@ You can then utilize any of its components:
 ```jsx
 import { Button } from "@factorialco/factorial-one"
 ```
+
+## Figma resources
+
+**[Figma Dashboard](https://www.figma.com/files/1209519141454845458/team/1359486354120896816)**

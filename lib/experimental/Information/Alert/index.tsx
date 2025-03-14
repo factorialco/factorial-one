@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import * as React from "react"
 
 import { Component } from "@/lib/component"
@@ -13,22 +13,20 @@ import {
 
 type Variants = "destructive" | "positive" | "warning" | "info"
 
-const alertVariants = cva(
-  "relative w-full rounded-xl bg-f1-background-secondary p-6 text-f1-foreground [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg]:text-f1-foreground [&>svg~*]:pl-8",
-  {
-    variants: {
-      variant: {
-        destructive: "bg-f1-background-critical [&>svg]:text-f1-icon-critical",
-        positive: "bg-f1-background-positive [&>svg]:text-f1-icon-positive",
-        warning: "bg-f1-background-warning [&>svg]:text-f1-icon-warning",
-        info: "bg-f1-background-info [&>svg]:text-f1-icon-info",
-      } satisfies Record<Variants, string>,
-    },
-    defaultVariants: {
-      variant: "info",
-    },
-  }
-)
+const alertVariants = cva({
+  base: "relative w-full rounded-xl bg-f1-background-secondary p-6 text-f1-foreground [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-6 [&>svg]:top-6 [&>svg]:text-f1-foreground [&>svg~*]:pl-8",
+  variants: {
+    variant: {
+      destructive: "bg-f1-background-critical [&>svg]:text-f1-icon-critical",
+      positive: "bg-f1-background-positive [&>svg]:text-f1-icon-positive",
+      warning: "bg-f1-background-warning [&>svg]:text-f1-icon-warning",
+      info: "bg-f1-background-info [&>svg]:text-f1-icon-info",
+    } satisfies Record<Variants, string>,
+  },
+  defaultVariants: {
+    variant: "info",
+  },
+})
 
 const variantIcons: Record<Variants, React.FC<LucideProps>> = {
   destructive: OctagonX,

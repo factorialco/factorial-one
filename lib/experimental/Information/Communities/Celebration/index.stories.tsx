@@ -3,14 +3,19 @@ import { Celebration } from "."
 
 const meta: Meta<typeof Celebration> = {
   component: Celebration,
+  title: "Home/Communities/Celebration",
   parameters: {
     layout: "centered",
   },
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
 
 type Story = StoryObj<typeof Celebration>
+
+// Fixed date for the example stories
+const exampleDate = new Date(2024, 11, 13, 20, 0)
 
 export const Default: Story = {
   decorators: [
@@ -30,10 +35,7 @@ export const Default: Story = {
           src="https://github.com/josepjaume.png"
           type="birthday"
           typeLabel="Birthday"
-          date={{
-            day: 29,
-            month: "November",
-          }}
+          date={exampleDate}
         />
       </div>
       <div className="w-48">
@@ -44,13 +46,27 @@ export const Default: Story = {
           src="https://github.com/nlopin.png"
           type="anniversary"
           typeLabel="Anniversary"
-          date={{
-            day: 4,
-            month: "December",
-          }}
+          date={exampleDate}
         />
       </div>
     </>
+  ),
+}
+
+export const WithReaction: Story = {
+  render: () => (
+    <div className="w-48">
+      <Celebration
+        link="/"
+        firstName="Saul"
+        lastName="Dominguez"
+        src="https://github.com/sauldom102.png"
+        type="birthday"
+        typeLabel="Birthday"
+        date={exampleDate}
+        lastEmojiReaction="😍"
+      />
+    </div>
   ),
 }
 
@@ -69,10 +85,7 @@ export const NoImage: Story = {
     canReact: false,
     type: "first-day",
     typeLabel: "First day very long name",
-    date: {
-      day: 15,
-      month: "December",
-    },
+    date: exampleDate,
   },
 }
 

@@ -11,17 +11,22 @@ export type TabItem = {
 interface TabsProps {
   tabs: TabItem[]
   secondary?: boolean
+  embedded?: boolean
 }
 
-export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
+export const BaseTabs: React.FC<TabsProps> = ({
+  tabs,
+  secondary = false,
+  embedded = false,
+}) => {
   const { isActive } = useNavigation()
 
-  // Index tabs are usually `/` while other tabs are `/some-other-path`.
-  // We need to find the right active tab by checking if the current path
-  // is active without the index first, and then with the index. Otherwise,
-  // we would incorrectly match the index tab as active, resulting in two tabs
-  // being active at the same time.
-  const sortedTabs = [...tabs].sort((a, b) => (a.index ? 1 : b.index ? -1 : 0))
+  // If embedded, only show first tab
+  const visibleTabs = embedded ? [tabs[0]] : tabs
+
+  const sortedTabs = [...visibleTabs].sort((a, b) =>
+    a.index ? 1 : b.index ? -1 : 0
+  )
   const activeTab = sortedTabs.find((tab) => isActive(tab.href))
 
   return (
@@ -30,12 +35,12 @@ export const BaseTabs: React.FC<TabsProps> = ({ tabs, secondary = false }) => {
       asChild
       aria-label={secondary ? "primary-navigation" : "secondary-navigation"}
     >
-      {tabs.length === 1 ? (
+      {visibleTabs.length === 1 ? (
         <li className="flex h-8 items-center justify-center whitespace-nowrap text-lg font-medium text-f1-foreground">
-          {tabs[0].label}
+          {visibleTabs[0].label}
         </li>
       ) : (
-        tabs.map(({ label, ...props }, index) => (
+        visibleTabs.map(({ label, ...props }, index) => (
           <TabNavigationLink
             key={index}
             active={activeTab?.href === props.href}

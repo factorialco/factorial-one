@@ -1,135 +1,206 @@
-import EllipsisHorizontal from "@/icons/app/EllipsisHorizontal"
-import Settings from "@/icons/app/Settings"
-
-import { Documents, Recruitment } from "@/icons/modules"
+import { Briefcase, EllipsisHorizontal, Settings } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { PageHeader } from "."
 
 const meta = {
+  title: "Navigation/PageHeader",
   component: PageHeader,
-  tags: ["autodocs"],
-} satisfies Meta<typeof PageHeader>
-
-export default meta
-type Story = StoryObj<typeof meta>
-
-export const Default: Story = {
-  args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
-    breadcrumbs: [
-      { label: "Candidates", href: "/recruitment/candidates" },
-      { label: "Dani Moreno" },
-    ],
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
-      },
-      {
-        label: "More options",
-        icon: EllipsisHorizontal,
-        actions: [
+  tags: ["autodocs", "experimental"],
+  parameters: {
+    layout: "fullscreen",
+    a11y: {
+      // Disable color contrast checks for this component since the status tags
+      // are designed to be used with specific backgrounds in the actual application
+      config: {
+        rules: [
           {
-            label: "Profile",
-            href: "/recruitment/profile",
-          },
-          {
-            label: "Whatever",
-            href: "/whatever",
+            id: "color-contrast",
+            enabled: false,
           },
         ],
       },
-    ],
-  },
-}
-
-export const FirstLevel: Story = {
-  args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
     },
   },
+  decorators: [
+    (Story) => (
+      <div className="bg-f1-background">
+        <Story />
+      </div>
+    ),
+  ],
+} satisfies Meta<typeof PageHeader>
+
+export default meta
+type Story = StoryObj<typeof PageHeader>
+
+const defaultModule = {
+  name: "Time Tracking",
+  href: "/time-tracking",
+  icon: Briefcase,
 }
 
-export const FirstLevelWithTag: Story = {
-  args: {
-    module: {
-      name: "Recruitment",
-      href: "/recruitment",
-      icon: Recruitment,
-    },
-    statusTag: {
-      text: "Published",
-      variant: "positive",
-      tooltip: "Tooltip description",
-    },
+const defaultActions = [
+  {
+    label: "Settings",
+    icon: Settings,
+    href: "/settings",
   },
-}
-
-export const FirstLevelWithTagAndActions: Story = {
-  args: {
-    module: {
-      name: "Documents",
-      href: "/documents",
-      icon: Recruitment,
-    },
-    statusTag: {
-      text: "Published",
-      variant: "positive",
-    },
+  {
+    label: "More options",
+    icon: EllipsisHorizontal,
     actions: [
       {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
+        label: "Download",
+        href: "/download",
+      },
+      {
+        label: "Export",
+        href: "/export",
       },
     ],
   },
+]
+
+const defaultNavigation = {
+  previous: {
+    url: "/previous",
+    title: "Previous Employee: John Smith",
+  },
+  next: {
+    url: "/next",
+    title: "Next Employee: Sarah Johnson",
+  },
+  counter: {
+    current: 1,
+    total: 30,
+  },
 }
 
-export const LongBreadcrumbs: Story = {
+export const Default: Story = {
   args: {
-    module: {
-      name: "Documents",
-      href: "/documents",
-      icon: Documents,
+    module: defaultModule,
+  },
+}
+
+export const WithActions: Story = {
+  args: {
+    module: defaultModule,
+    actions: defaultActions,
+  },
+}
+
+export const WithStatus: Story = {
+  args: {
+    module: defaultModule,
+    statusTag: {
+      text: "Published",
+      variant: "positive",
     },
+  },
+}
+
+export const WithStatusVariants: Story = {
+  args: {
+    module: defaultModule,
+    statusTag: {
+      text: "Draft",
+      variant: "warning",
+      tooltip: "This document is not yet published",
+    },
+  },
+}
+
+export const WithNavigation: Story = {
+  args: {
+    module: defaultModule,
+    navigation: defaultNavigation,
+  },
+}
+
+export const WithNavigationDisabled: Story = {
+  args: {
+    module: defaultModule,
+    navigation: {
+      next: {
+        url: "/next",
+        title: "Next Employee: Sarah Johnson",
+      },
+      counter: {
+        current: 1,
+        total: 30,
+      },
+    },
+  },
+}
+
+export const WithBreadcrumbs: Story = {
+  args: {
+    module: defaultModule,
     breadcrumbs: [
-      { label: "Employee Documents", href: "/documents" },
-      { label: "Human Resources", href: "/documents/hr" },
-      { label: "Recruitment", href: "/documents/hr/recruitment" },
-      { label: "Candidates", href: "/documents/hr/recruitment/candidates" },
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
+  },
+}
+
+export const WithSelectBreadcrumb: Story = {
+  args: {
+    module: defaultModule,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
       {
-        label: "Dani Moreno",
-        href: "/dani-moreno",
-      },
-      {
-        label: "Applications",
-        href: "/dani-moreno/applications",
-      },
-      {
-        label: "Interviews",
-        href: "/dani-moreno/applications/interviews",
+        type: "select",
+        id: "employee",
+        label: "Ainhoa Aznar Lago",
+        searchbox: true,
+        options: Array.from({ length: 10 }, (_, idx) => ({
+          value: idx.toString(),
+          label: `Offer ${idx}`,
+        })),
+        value: "1",
+        onChange: (value) => {
+          console.log("WithSelectBreadcrumb value", value)
+        },
       },
     ],
-    actions: [
-      {
-        label: "Settings",
-        icon: Settings,
-        href: "/recruitment/settings",
-      },
-      {
-        label: "More options",
-        icon: EllipsisHorizontal,
-        href: "/recruitment/settings",
-      },
+  },
+}
+
+export const WithEverything: Story = {
+  args: {
+    module: defaultModule,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
+    navigation: defaultNavigation,
+    statusTag: {
+      text: "Draft",
+      tooltip: "This employee profile is not yet published",
+      variant: "critical",
+    },
+    actions: defaultActions,
+  },
+}
+
+export const Embedded: Story = {
+  args: {
+    module: defaultModule,
+    embedded: true,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
+  },
+}
+
+export const EmbeddedWithLoading: Story = {
+  args: {
+    module: defaultModule,
+    embedded: true,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "loading", loading: true },
     ],
   },
 }

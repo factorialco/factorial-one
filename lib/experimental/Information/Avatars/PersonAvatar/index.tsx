@@ -1,3 +1,4 @@
+import { BadgeProps } from "@/experimental/Information/Badge"
 import { ComponentProps } from "react"
 import { BaseAvatar } from "../BaseAvatar"
 
@@ -8,6 +9,7 @@ type Props = {
   lastName: string
   src?: string
   size?: BaseAvatarProps["size"]
+  badge?: BadgeProps
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">
 
 export const PersonAvatar = ({
@@ -17,6 +19,7 @@ export const PersonAvatar = ({
   size,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledby,
+  badge,
 }: Props) => {
   return (
     <BaseAvatar
@@ -27,6 +30,7 @@ export const PersonAvatar = ({
       color="random"
       aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
+      badge={badge}
     />
   )
 }

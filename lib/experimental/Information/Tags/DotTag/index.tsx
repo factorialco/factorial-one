@@ -3,7 +3,7 @@ import { baseColors } from "@/tokens/colors"
 import { forwardRef } from "react"
 import { BaseTag } from "../BaseTag"
 
-type NewColor = Extract<
+export type NewColor = Extract<
   keyof typeof baseColors,
   | "viridian"
   | "malibu"
@@ -18,12 +18,12 @@ type NewColor = Extract<
   | "camel"
 >
 
-interface Props {
+export interface DotTagProps {
   text: string
   color: NewColor
 }
 
-export const DotTag = forwardRef<HTMLDivElement, Props>(
+export const DotTag = forwardRef<HTMLDivElement, DotTagProps>(
   ({ text, color }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 

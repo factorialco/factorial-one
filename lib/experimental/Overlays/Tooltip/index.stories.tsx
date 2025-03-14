@@ -3,8 +3,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Tooltip } from "."
 
 const meta: Meta<typeof Tooltip> = {
+  title: "Tooltip",
   component: Tooltip,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
       <div className="flex h-32 items-center justify-center p-6">{Story()}</div>

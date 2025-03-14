@@ -1,38 +1,40 @@
-import {
-  StatusTag,
-  StatusVariant,
-} from "@/experimental/Information/Tags/StatusTag"
 import { ComponentProps } from "react"
 import { BaseHeader } from "../BaseHeader"
 
 type BaseHeaderProps = ComponentProps<typeof BaseHeader>
 
-type Props = {
-  status?: {
-    label: string
-    variant: StatusVariant
-  }
-} & Pick<
+type Props = {} & Pick<
   BaseHeaderProps,
-  "title" | "description" | "primaryAction" | "secondaryActions"
+  | "avatar"
+  | "title"
+  | "description"
+  | "primaryAction"
+  | "secondaryActions"
+  | "otherActions"
+  | "metadata"
+  | "status"
 >
 
 export const ResourceHeader = ({
+  avatar,
   title,
   description,
   primaryAction,
   secondaryActions,
+  otherActions,
   status,
+  metadata,
 }: Props) => {
   return (
     <BaseHeader
+      avatar={avatar}
       title={title}
       description={description}
       primaryAction={primaryAction}
       secondaryActions={secondaryActions}
-      eyebrow={
-        status && <StatusTag text={status.label} variant={status.variant} />
-      }
+      otherActions={otherActions}
+      status={status}
+      metadata={metadata}
     />
   )
 }

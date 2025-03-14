@@ -7,6 +7,8 @@ export function SidebarHeader({
   companies,
   selected,
   onChange,
+  withNotification = false,
+  additionalOptions,
 }: SidebarHeaderProps) {
   return (
     <div className="flex h-[72px] items-center justify-between gap-3 px-3">
@@ -14,6 +16,8 @@ export function SidebarHeader({
         companies={companies}
         selected={selected}
         onChange={onChange}
+        withNotification={withNotification}
+        additionalOptions={additionalOptions}
       />
       <SidebarIcon />
     </div>

@@ -108,6 +108,9 @@ export const baseColors = {
     60: "258 56% 56%",
     70: "258 43% 46%",
   },
+  special: {
+    highlight: "348 80% 50%",
+  },
 }
 
 export const f1Colors = {
@@ -155,14 +158,30 @@ export const f1Colors = {
     },
     critical: {
       DEFAULT: "hsl(var(--critical-50) / 0.1)",
-      bold: "hsl(var(--critical-70))",
+      bold: "hsl(var(--critical-50))",
     },
-    info: "hsl(var(--info-50) / 0.1)",
-    warning: "hsl(var(--warning-50) / 0.1)",
-    positive: "hsl(var(--positive-50) / 0.1)",
+    info: {
+      DEFAULT: "hsl(var(--info-50) / 0.1)",
+      bold: "hsl(var(--info-50))",
+    },
+    warning: {
+      DEFAULT: "hsl(var(--warning-50) / 0.1)",
+      bold: "hsl(var(--warning-50))",
+    },
+    positive: {
+      DEFAULT: "hsl(var(--positive-50) / 0.1)",
+      bold: "hsl(var(--positive-50))",
+    },
     selected: {
       DEFAULT: "hsl(var(--selected-50) / 0.1)",
-      bold: "hsl(var(--selected-50))",
+      secondary: "hsl(var(--selected-50) / 0.05)",
+      bold: {
+        DEFAULT: "hsl(var(--selected-50))",
+        hover: "hsl(var(--selected-60))",
+      },
+    },
+    overlay: {
+      DEFAULT: "hsl(var(--neutral-40))",
     },
   },
   border: {
@@ -175,7 +194,7 @@ export const f1Colors = {
       alpha30: "hsl(var(--promote-50) / 0.3)",
     },
     selected: {
-      DEFAULT: "hsl(var(--selected-50) / 0.2)",
+      DEFAULT: "hsl(var(--selected-50) / 0.4)",
       bold: "hsl(var(--selected-50))",
     },
     accent: {
@@ -200,9 +219,13 @@ export const f1Colors = {
     info: "hsl(var(--info-50))",
     warning: "hsl(var(--warning-50))",
     positive: "hsl(var(--positive-50))",
-    selected: "hsl(var(--selected-50))",
+    selected: {
+      DEFAULT: "hsl(var(--selected-50))",
+      hover: "hsl(var(--selected-60))",
+    },
   },
   ring: "hsl(var(--ring))",
   link: "hsl(var(--link))",
   page: "hsl(var(--page))",
+  "special-highlight": "hsl(var(--special-highlight))",
 }

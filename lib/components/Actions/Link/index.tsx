@@ -6,10 +6,11 @@ import {
   useNavigation,
 } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import { forwardRef } from "react"
 
-const linkVariants = cva("inline-flex flex-row items-center gap-1 text-base", {
+const linkVariants = cva({
+  base: "inline-flex flex-row items-center gap-1 text-base",
   variants: {
     variant: {
       text: "text-inherit no-underline",
@@ -27,20 +28,30 @@ const linkVariants = cva("inline-flex flex-row items-center gap-1 text-base", {
 
 export interface LinkProps
   extends BaseLinkProps,
-    VariantProps<typeof linkVariants> {}
+    VariantProps<typeof linkVariants> {
+  stopPropagation?: boolean
+}
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { className, children, variant, ...props },
+  { className, children, variant, stopPropagation = false, ...props },
   ref
 ) {
   const { target } = props
   const external = target === "_blank"
   const { isActive } = useNavigation()
 
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (stopPropagation) {
+      event.stopPropagation()
+    }
+    props.onClick?.(event)
+  }
+
   return (
     <BaseLink
       ref={ref}
       {...props}
+      onClick={handleClick}
       className={cn(
         linkVariants({ variant, active: isActive(props.href) }),
         className

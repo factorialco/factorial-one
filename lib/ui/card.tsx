@@ -47,7 +47,11 @@ const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
 >(({ className, ...props }, ref) => (
-  <h3 ref={ref} className={cn("text-base font-medium", className)} {...props} />
+  <h3
+    ref={ref}
+    className={cn("text-base font-medium text-f1-foreground", className)}
+    {...props}
+  />
 ))
 CardTitle.displayName = "CardTitle"
 
@@ -94,9 +98,9 @@ CardInfo.displayName = "CardInfo"
 const CardLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithoutRef<"a">
->(({ className, title, ...props }) => {
+>(({ className, title, ...props }, ref) => {
   return (
-    <Link className={className} aria-label={title} {...props}>
+    <Link ref={ref} className={className} aria-label={title} {...props}>
       <Button
         icon={ChevronRight}
         label={title ?? ""}
@@ -132,7 +136,7 @@ const CardComment = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn("flex text-2xl font-semibold", className)}
+      className={cn("flex text-3xl font-semibold", className)}
       {...props}
     />
   )

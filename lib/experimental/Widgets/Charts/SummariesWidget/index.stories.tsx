@@ -4,11 +4,12 @@ import { SummariesWidget } from "."
 import { WidgetDecorator } from "../storybook-utils"
 
 const meta = {
+  title: "Widgets/Charts/SummariesWidget",
   component: SummariesWidget,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   args: {
     summaries: [
       {

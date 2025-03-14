@@ -22,7 +22,7 @@ import {
 } from "@/ui/card"
 import { Separator } from "@/ui/separator"
 import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 import React, { forwardRef, ReactNode, useEffect } from "react"
 
 export interface WidgetProps {
@@ -90,7 +90,7 @@ const Container = forwardRef<
     <Card
       className={cn(
         fullHeight ? "h-full" : "",
-        "relative flex gap-4 border-f1-border-secondary"
+        "relative flex gap-3 border-f1-border-secondary"
       )}
       ref={ref}
     >
@@ -161,7 +161,7 @@ const Container = forwardRef<
                 <div className="mb-0.5 text-sm text-f1-foreground-secondary">
                   {summary.label}
                 </div>
-                <div className="flex flex-row items-end gap-0.5 text-xl font-semibold">
+                <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
                   {!!summary.prefixUnit && (
                     <div className="text-lg font-medium">
                       {summary.prefixUnit}
@@ -182,10 +182,10 @@ const Container = forwardRef<
           .filter(isRealNode)
           .map((child, index) => {
             return (
-              <>
+              <React.Fragment key={index}>
                 {index > 0 && <Separator bare />}
                 {child}
-              </>
+              </React.Fragment>
             )
           })}
       </CardContent>
@@ -198,7 +198,7 @@ const Container = forwardRef<
   )
 })
 
-const skeletonVariants = cva("", {
+const skeletonVariants = cva({
   variants: {
     height: {
       sm: "h-36",

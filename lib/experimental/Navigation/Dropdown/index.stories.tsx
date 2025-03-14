@@ -4,8 +4,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Dropdown } from "."
 
 const meta: Meta<typeof Dropdown> = {
+  title: "Dropdown",
   component: Dropdown,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -33,6 +34,7 @@ export const Default: Story = {
         icon: Icons.Save,
         description: "Preserve changes",
       },
+      "separator",
       {
         label: "Delete",
         onClick: () => console.log("Delete clicked"),
@@ -60,7 +62,7 @@ export const WithCustomTrigger: Story = {
   },
   render: (args) => (
     <Dropdown {...args}>
-      <button>
+      <button aria-label="Open user menu">
         <PersonAvatar
           src="https://github.com/dani-moreno.png"
           firstName="Dani"
@@ -73,12 +75,7 @@ export const WithCustomTrigger: Story = {
   parameters: {
     a11y: {
       config: {
-        rules: [
-          {
-            id: "button-name",
-            enabled: false,
-          },
-        ],
+        rules: [],
       },
     },
   },

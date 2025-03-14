@@ -1,72 +1,127 @@
+import { Button } from "@/components/Actions/Button"
+import { Delete } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
-
-import { LogoAvatar } from "@/icons/app"
+import { useState } from "react"
 import { Dialog } from "."
 
 const meta = {
+  title: "Dialog",
   component: Dialog,
   parameters: {
     layout: "fullscreen",
-    a11y: {
-      skipCi: true,
-    },
     docs: {
-      story: { inline: false, height: "800px" },
+      story: { inline: false, height: "400px" },
     },
   },
   args: {
-    children: <span>Dialog Content</span>,
+    header: {
+      title: "Remove job opening",
+      description:
+        "If you cancel the job opening, you won’t see it on your company’s career page or receive new candidates.",
+      type: "critical",
+    },
+    actions: {
+      primary: {
+        label: "Remove",
+        icon: Delete,
+        onClick: () => alert("Remove"),
+        variant: "critical",
+      },
+      secondary: {
+        label: "Cancel",
+        onClick: () => alert("Cancel"),
+      },
+    },
     open: true,
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof Dialog>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Basic: Story = {}
+export const Critical: Story = {}
 
-export const Header: Story = {
+export const Warning: Story = {
   args: {
     header: {
-      title: "Dialog title",
-      description: "Dialog description",
-      icon: LogoAvatar,
+      title: "Top up account",
+      description:
+        "Your account balance is under 1.000,00 €. Top up to avoid failed payments.",
+      type: "warning",
     },
-  },
-}
-
-export const WithActions: Story = {
-  args: {
-    ...Header.args,
     actions: {
       primary: {
-        label: "Primary",
-        onClick: () => alert("Primary"),
+        label: "Add money",
+        onClick: () => alert("Add money"),
       },
       secondary: {
-        label: "Secondary",
-        onClick: () => alert("Secondary"),
+        label: "Cancel",
+        onClick: () => alert("Cancel"),
       },
     },
   },
 }
 
-export const Overflow: Story = {
+export const Info: Story = {
   args: {
-    children: (
-      <>
-        {Array.from({ length: 100 }).map((_, i) => (
-          <p key={i}>Content</p>
-        ))}
-      </>
-    ),
+    header: {
+      title: "Account number is missing",
+      description:
+        "Hellen the HR’s account number is missing. Review now to avoid failed payroll.",
+      type: "info",
+    },
+    actions: {
+      primary: {
+        label: "Review",
+        onClick: () => alert("Review"),
+        variant: "neutral",
+      },
+      secondary: {
+        label: "Cancel",
+        onClick: () => alert("Cancel"),
+      },
+    },
   },
 }
 
-export const Loading: Story = {
-  args: {
-    ...WithActions.args,
-    loading: true,
+export const WithTrigger = {
+  render: () => {
+    const [isOpen, setIsOpen] = useState(false)
+
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        <Button
+          variant="critical"
+          icon={Delete}
+          label="Delete file"
+          onClick={() => setIsOpen(true)}
+        />
+        <Dialog
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          header={{
+            title: "Delete file",
+            description: "Are you sure you want to delete this file?",
+            type: "critical",
+          }}
+          actions={{
+            primary: {
+              label: "Delete",
+              icon: Delete,
+              variant: "critical",
+              onClick: () => {
+                alert("Confirmed")
+                setIsOpen(false)
+              },
+            },
+            secondary: {
+              label: "Cancel",
+              onClick: () => setIsOpen(false),
+            },
+          }}
+        />
+      </div>
+    )
   },
 }

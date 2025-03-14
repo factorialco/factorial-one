@@ -1,4 +1,5 @@
 import { useReducedMotion } from "@/lib/a11y"
+import { useI18n } from "@/lib/i18n-provider"
 import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/ui/scrollarea"
 import { AnimatePresence, motion } from "framer-motion"
@@ -41,6 +42,7 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
 
   const [topRef, isAtTop] = useIntersectionObserver({ threshold: 1 })
   const [bottomRef, isAtBottom] = useIntersectionObserver({ threshold: 1 })
+  const i18n = useI18n()
 
   const transition = {
     x: {
@@ -62,8 +64,9 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
   }
 
   return (
-    <motion.div
+    <motion.aside
       initial={false}
+      aria-label={i18n.navigation.sidebar}
       className={cn(
         "absolute bottom-0 left-0 top-0 z-10 flex w-[240px] flex-col transition-[background-color]",
         sidebarState === "locked"
@@ -86,22 +89,36 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
       }}
       transition={transition}
     >
-      <div className="flex-shrink-0">{header}</div>
+      <header className="flex-shrink-0">{header}</header>
       {body && (
-        <div className="relative flex-grow overflow-y-hidden">
+        <nav className="relative flex-grow overflow-y-hidden">
           <ScrollArea className="h-full">
-            <div ref={topRef} className="h-px" aria-hidden="true" />
+            <div
+              ref={topRef}
+              className="h-px"
+              aria-hidden="true"
+              key="top-ref"
+            />
             {body}
-            <div ref={bottomRef} className="h-px" aria-hidden="true" />
+            <div
+              ref={bottomRef}
+              className="h-px"
+              aria-hidden="true"
+              key="bottom-ref"
+            />
           </ScrollArea>
 
           <AnimatePresence>
-            {!isAtTop && <ScrollShadow position="top" />}
-            {!isAtBottom && <ScrollShadow position="bottom" />}
+            {!isAtTop && (
+              <ScrollShadow position="top" key="shadow-scroll-top" />
+            )}
+            {!isAtBottom && (
+              <ScrollShadow position="bottom" key="shadow-scroll-bottom" />
+            )}
           </AnimatePresence>
-        </div>
+        </nav>
       )}
-      <div className="flex-shrink-0">{footer}</div>
-    </motion.div>
+      <footer className="flex-shrink-0">{footer}</footer>
+    </motion.aside>
   )
 }

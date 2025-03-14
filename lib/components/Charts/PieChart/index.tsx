@@ -6,7 +6,7 @@ import {
   ChartTooltipContent,
 } from "@/ui/chart"
 import { ComponentProps, ForwardedRef } from "react"
-import { Label, Pie, PieChart as PieChartPrimitive } from "recharts"
+import { Cell, Label, Pie, PieChart as PieChartPrimitive } from "recharts"
 import { autoColor } from "../utils/colors"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { ChartConfig } from "../utils/types"
@@ -73,6 +73,18 @@ export const _PieChart = (
           outerRadius={135}
           paddingAngle={2.5}
         >
+          {preparedData.map((entry, index) => {
+            const value = tickFormatter
+              ? tickFormatter(String(entry.value))
+              : entry.value
+            return (
+              <Cell
+                key={`cell-${index}`}
+                fill={entry.fill}
+                aria-label={`${entry.label}: ${value} (${((entry.value / sum) * 100).toFixed(0)}%)`}
+              />
+            )
+          })}
           <Label
             content={({ viewBox }) => {
               if (viewBox && "cx" in viewBox && "cy" in viewBox) {
@@ -86,7 +98,7 @@ export const _PieChart = (
                     <tspan
                       x={viewBox.cx}
                       y={(viewBox.cy || 0) + 8}
-                      className="fill-f1-foreground text-2xl font-semibold"
+                      className="fill-f1-foreground text-4xl font-semibold"
                     >
                       {overview?.number
                         ? tickFormatter

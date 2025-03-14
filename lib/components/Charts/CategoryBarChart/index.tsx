@@ -16,10 +16,11 @@ export interface CategoryBarProps {
     color?: string
   }[]
   legend: boolean
+  hideTooltip?: boolean
 }
 
 const _CategoryBarChart = (
-  { data, legend = true }: CategoryBarProps,
+  { data, legend = true, hideTooltip = false }: CategoryBarProps,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
   const total = data.reduce((sum, category) => sum + category.value, 0)
@@ -39,6 +40,10 @@ const _CategoryBarChart = (
                 : percentage.toFixed(1)
             }
 
+            if (percentage === 0) {
+              return null
+            }
+
             return (
               <Tooltip key={category.name}>
                 <TooltipTrigger
@@ -55,18 +60,20 @@ const _CategoryBarChart = (
                     tabIndex={0}
                   />
                 </TooltipTrigger>
-                <TooltipContent className="flex items-center gap-1 text-sm">
-                  <div
-                    className="h-2.5 w-2.5 shrink-0 translate-y-px rounded-full"
-                    style={{ backgroundColor: color }}
-                  />
-                  <span className="pl-0.5 pr-2 text-f1-foreground-secondary">
-                    {category.name}
-                  </span>
-                  <span className="font-mono font-medium tabular-nums text-f1-foreground">
-                    {category.value} ({formatPercentage(category.value)}%)
-                  </span>
-                </TooltipContent>
+                {!hideTooltip && (
+                  <TooltipContent className="flex items-center gap-1 text-sm">
+                    <div
+                      className="h-2.5 w-2.5 shrink-0 translate-y-px rounded-full"
+                      style={{ backgroundColor: color }}
+                    />
+                    <span className="pl-0.5 pr-2 text-f1-foreground-inverse-secondary dark:text-f1-foreground-secondary">
+                      {category.name}
+                    </span>
+                    <span className="font-mono font-medium tabular-nums text-f1-foreground-inverse dark:text-f1-foreground">
+                      {category.value} ({formatPercentage(category.value)}%)
+                    </span>
+                  </TooltipContent>
+                )}
               </Tooltip>
             )
           })}
@@ -90,9 +97,7 @@ const _CategoryBarChart = (
                   className="h-2 w-2 shrink-0 rounded-full"
                   style={{ backgroundColor: color }}
                 />
-                <span className="text text-sm font-medium tracking-wide text-f1-foreground">
-                  {category.name}
-                </span>
+                <span className="text-f1-foreground">{category.name}</span>
               </div>
             )
           })}

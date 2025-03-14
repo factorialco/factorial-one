@@ -3,9 +3,9 @@ import { useLayoutEffect, useMemo, useState } from "react"
 import * as RechartsPrimitive from "recharts"
 
 import { cn } from "@/lib/utils"
-import { cva, VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "cva"
 
-const variants = cva("", {
+const variants = cva({
   variants: {
     aspect: {
       square: "aspect-square",
@@ -383,16 +383,14 @@ const ChartLegendContent = React.forwardRef<
               ) : (
                 itemConfig && (
                   <div
-                    className="h-2.5 w-2.5 shrink-0 rounded-full"
+                    className="h-2 w-2 shrink-0 rounded-full"
                     style={{
                       backgroundColor: item.color,
                     }}
                   />
                 )
               )}
-              <span className="text font-medium tracking-wide text-f1-foreground">
-                {itemConfig?.label}
-              </span>
+              <span className="text-f1-foreground">{itemConfig?.label}</span>
             </div>
           )
         })}

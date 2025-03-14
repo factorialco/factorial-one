@@ -2,6 +2,7 @@ import { Meta, StoryObj } from "@storybook/react"
 import { OmniButton } from "."
 
 const meta: Meta<typeof OmniButton> = {
+  title: "Omnibutton",
   component: OmniButton,
   parameters: {
     layout: "fullscreen",
@@ -13,6 +14,7 @@ const meta: Meta<typeof OmniButton> = {
       </div>
     ),
   ],
+  tags: ["autodocs", "deprecated"],
 }
 
 export default meta
