@@ -20,3 +20,19 @@ vi.mock("@testing-library/react-native", () => ({
     },
   })),
 }))
+
+// Mock @factorialco/factorial-one-core
+vi.mock("@factorialco/factorial-one-core", () => ({
+  semanticColors: {
+    background: {
+      default: {
+        light: "#FFFFFF",
+      },
+    },
+    foreground: {
+      default: {
+        light: "#000000",
+      },
+    },
+  },
+}))
