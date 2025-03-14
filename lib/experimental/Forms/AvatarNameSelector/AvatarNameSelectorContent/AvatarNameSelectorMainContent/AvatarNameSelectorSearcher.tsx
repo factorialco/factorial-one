@@ -29,6 +29,9 @@ export const AvatarNameSelectorSearcher = ({
       ev.preventDefault()
       ev.stopPropagation()
       focusPreviousFocusable(ev.currentTarget, goToLast)
+    } else if (ev.key === "Enter") {
+      ev.preventDefault()
+      ev.stopPropagation()
     }
   }
 

@@ -16,6 +16,7 @@ export const defaultTranslations = {
       singular: "Selected",
       plural: "Selected",
     },
+    more: "More",
   },
   filters: {
     label: "Filters",
