@@ -33,6 +33,7 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install
+      - name: Build core package
+        run: pnpm --filter @factorialco/factorial-one-core build
       - name: Check linting with eslint
         run: pnpm run lint
-

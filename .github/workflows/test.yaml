@@ -23,6 +23,8 @@ jobs:
           cache: pnpm
       - name: Install dependencies
         run: pnpm install
+      - name: Build core package
+        run: pnpm --filter @factorialco/factorial-one-core build
       - name: Run type checking
         run: pnpm run tsc
       - name: Run tests
