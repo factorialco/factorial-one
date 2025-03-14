@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { fn } from "@storybook/test"
-import { ComponentProps } from "react"
+import { ComponentProps, useCallback, useState } from "react"
 import { AvatarNameListItem } from "."
 import { famousEmployees } from "../avatar-name.factory"
 import { teamsWithEmployees } from "../groups-avatar-name.factory"
@@ -69,5 +69,37 @@ export const GroupViewExpanded: Story = {
   args: {
     ...GroupViewSelected.args,
     expanded: true,
+  },
+}
+
+export const DefaultInForm = {
+  args: {
+    entity: teamsWithEmployees[0],
+    partialSelected: false,
+    groupView: false,
+    selected: false,
+    onSelect: fn(),
+    onRemove: fn(),
+    onExpand: fn(),
+    expanded: false,
+  },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  render: (props: any) => {
+    const [selected, setSelected] = useState(false)
+
+    const onSelect = useCallback(() => {
+      setSelected(!selected)
+    }, [selected])
+
+    return (
+      <form>
+        <AvatarNameListItem
+          {...props}
+          onSelect={onSelect}
+          onRemove={onSelect}
+          selected={selected}
+        />
+      </form>
+    )
   },
 }

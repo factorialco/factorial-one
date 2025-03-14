@@ -43,6 +43,7 @@ const defaultArgs: AvatarNameSelectorMultipleProps = {
   onGroupChange: fn(),
   onSelect: fn(),
   singleSelector: false,
+  width: 500,
 }
 
 const meta: Meta<typeof AvatarNameSelector> = {
@@ -89,6 +90,40 @@ export default meta
 
 export const Default = {
   args: defaultArgs,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  render: (props: any) => {
+    const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [selected, setSelected] = useState<AvatarNamedEntity[]>([
+      {
+        ...famousEmployees[0],
+      },
+      { ...famousEmployees[1] },
+    ])
+    const [selectedGroup, setSelectedGroup] = useState<string>(
+      props.selectedGroup ?? "all"
+    )
+
+    return (
+      <AvatarNameSelector
+        {...props}
+        loading={loading}
+        entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+        selectedGroup={selectedGroup}
+        onGroupChange={(value) => {
+          setSelected([])
+          setSelectedGroup(value ?? "all")
+        }}
+        onOpenChange={(open) =>
+          open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
+        }
+        selectedAvatarName={selected}
+        onSelect={(selection: AvatarNamedEntity[]) => {
+          setSelected(selection)
+          props.onSelect(selection)
+        }}
+      />
+    )
+  },
 }
 
 export const WithSelectedGroup = {
@@ -96,6 +131,40 @@ export const WithSelectedGroup = {
     ...defaultArgs,
     selectedGroup: "teams",
   } as AvatarNameSelectorProps,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  render: (props: any) => {
+    const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [selected, setSelected] = useState<AvatarNamedEntity[]>([
+      {
+        ...famousEmployees[0],
+      },
+      { ...famousEmployees[1] },
+    ])
+    const [selectedGroup, setSelectedGroup] = useState<string>(
+      props.selectedGroup ?? "all"
+    )
+
+    return (
+      <AvatarNameSelector
+        {...props}
+        loading={loading}
+        entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+        selectedGroup={selectedGroup}
+        onGroupChange={(value) => {
+          setSelected([])
+          setSelectedGroup(value ?? "all")
+        }}
+        onOpenChange={(open) =>
+          open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
+        }
+        selectedAvatarName={selected}
+        onSelect={(selection: AvatarNamedEntity[]) => {
+          setSelected(selection)
+          props.onSelect(selection)
+        }}
+      />
+    )
+  },
 }
 
 export const SingleSelector = {
@@ -104,6 +173,44 @@ export const SingleSelector = {
     onSelect: fn(),
     singleSelector: true,
   } as AvatarNameSelectorProps,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  render: (props: any) => {
+    const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [selected, setSelected] = useState<AvatarNamedEntity | undefined>()
+    const [selectedGroup, setSelectedGroup] = useState<string>(
+      props.selectedGroup ?? "all"
+    )
+
+    return (
+      <AvatarNameSelector
+        {...props}
+        loading={loading}
+        entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+        selectedGroup={selectedGroup}
+        onGroupChange={(value) => {
+          setSelected(undefined)
+          setSelectedGroup(value ?? "all")
+        }}
+        onOpenChange={(open) =>
+          open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
+        }
+        selectedAvatarName={!selected ? [] : [selected]}
+        onSelect={(selection: AvatarNamedEntity) => {
+          if (selectedGroup != "all") {
+            console.log({ selection })
+            const found = GROUP_DATA["all"].find(
+              (el) => el.id === selection.subItems?.[0]?.subId
+            )
+            setSelected(found)
+            props.onSelect(found)
+          } else {
+            setSelected(selection)
+            props.onSelect(selection)
+          }
+        }}
+      />
+    )
+  },
 }
 
 export const AlwaysOpen = {
@@ -128,13 +235,17 @@ export const AlwaysOpen = {
     )
 
     return (
-      <div className="w-[600px]">
+      <div className="w-[300px] border-2">
         <AvatarNameSelector
           {...props}
+          width={undefined}
           loading={loading}
           entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
           selectedGroup={selectedGroup}
-          onGroupChange={(value) => setSelectedGroup(value ?? "all")}
+          onGroupChange={(value) => {
+            setSelected([])
+            setSelectedGroup(value ?? "all")
+          }}
           onOpenChange={(open) =>
             open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
           }
@@ -145,6 +256,47 @@ export const AlwaysOpen = {
           }}
         />
       </div>
+    )
+  },
+}
+
+export const AlwaysOpenInForm = {
+  args: {
+    ...defaultArgs,
+    onSelect: fn(),
+    singleSelector: false,
+    loading: false,
+    alwaysOpen: true,
+  } as AvatarNameSelectorProps,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  render: (props: any) => {
+    const [selected, setSelected] = useState<AvatarNamedEntity[]>([
+      {
+        ...famousEmployees[0],
+      },
+      { ...famousEmployees[1] },
+    ])
+    const [selectedGroup, setSelectedGroup] = useState<string>(
+      props.selectedGroup ?? "all"
+    )
+
+    return (
+      <form onSubmit={fn}>
+        <AvatarNameSelector
+          {...props}
+          entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+          selectedGroup={selectedGroup}
+          onGroupChange={(value) => {
+            setSelected([])
+            setSelectedGroup(value ?? "all")
+          }}
+          selectedAvatarName={selected}
+          onSelect={(selection: AvatarNamedEntity[]) => {
+            setSelected(selection)
+            props.onSelect(selection)
+          }}
+        />
+      </form>
     )
   },
 }
@@ -160,7 +312,13 @@ export const WithCustomTrigger = {
     const [selectedGroup, setSelectedGroup] = useState<string>(
       props.selectedGroup ?? "all"
     )
-    const [numSelected, setNumSelected] = useState<number>(0)
+    const [selected, setSelected] = useState<AvatarNamedEntity[]>([
+      {
+        ...famousEmployees[0],
+      },
+      { ...famousEmployees[1] },
+    ])
+    const [numSelected, setNumSelected] = useState<number>(2)
     const [open, setOpen] = useState<boolean>(false)
 
     return (
@@ -170,15 +328,28 @@ export const WithCustomTrigger = {
           loading={loading}
           entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
           selectedGroup={selectedGroup}
-          onGroupChange={(value) => setSelectedGroup(value ?? "all")}
+          onGroupChange={(value) => {
+            setSelected([])
+            setNumSelected(0)
+            setSelectedGroup(value ?? "all")
+          }}
           onOpenChange={(open) => {
             if (open) setTimeout(() => setLoading(false), 500)
             else setLoading(true)
             setOpen(open)
           }}
-          onSelect={(selection: AvatarNamedEntity[]) =>
-            setNumSelected(selection.length)
-          }
+          selectedAvatarName={selected}
+          onSelect={(selection: AvatarNamedEntity[]) => {
+            setSelected(selection)
+            props.onSelect(selection)
+            if (selectedGroup != "all") {
+              let total = 0
+              selection.forEach((el) => (total += el.subItems?.length ?? 0))
+              setNumSelected(total)
+            } else {
+              setNumSelected(selection.length)
+            }
+          }}
         >
           <div className="flex justify-start gap-2">
             <RawTag icon={open ? ChevronDown : ChevronRight} />

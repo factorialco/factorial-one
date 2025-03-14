@@ -7,6 +7,7 @@ import LogoAvatar from "@/icons/app/LogoAvatar"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { ChevronDown, ChevronRight } from "lucide-react"
+import { useState } from "react"
 import { HighlightText } from "../AvatarNameHighLightText"
 import { AvatarNamedEntity } from "../types"
 
@@ -73,7 +74,7 @@ export const AvatarNameListItemSingleContent = ({
   const firstName = nameParts[0] || ""
   const lastName = nameParts.slice(1).join(" ")
 
-  const handleLabelClick = (ev: React.MouseEvent<HTMLLabelElement>) => {
+  const handleLabelClick = (ev: React.MouseEvent<HTMLButtonElement>) => {
     ev.preventDefault()
     ev.stopPropagation()
     if (disabled) return
@@ -84,10 +85,10 @@ export const AvatarNameListItemSingleContent = ({
     }
   }
 
-  const handleKeyDown = (ev: React.KeyboardEvent<HTMLLabelElement>) => {
+  const handleKeyDown = (ev: React.KeyboardEvent<HTMLButtonElement>) => {
+    ev.preventDefault()
+    ev.stopPropagation()
     if (ev.key === "Enter" || ev.key === " ") {
-      ev.preventDefault()
-      ev.stopPropagation()
       if (disabled) return
       if (!selected) {
         onSelect(entity)
@@ -95,12 +96,8 @@ export const AvatarNameListItemSingleContent = ({
         onRemove(entity)
       }
     } else if (ev.key === "ArrowDown") {
-      ev.preventDefault()
-      ev.stopPropagation()
       focusNextFocusable(ev.currentTarget, goToFirst)
     } else if (ev.key === "ArrowUp") {
-      ev.preventDefault()
-      ev.stopPropagation()
       focusPreviousFocusable(ev.currentTarget, goToLast)
     }
   }
@@ -108,10 +105,7 @@ export const AvatarNameListItemSingleContent = ({
   return (
     <div className="w-full pl-1 pr-1">
       <label
-        onClick={handleLabelClick}
-        onKeyDown={handleKeyDown}
         aria-label={entity.name}
-        data-avatarname-navigator-element="true"
         className={cn(
           marginLeft,
           "flex flex-row flex-wrap items-center gap-2 rounded-[10px] border p-2 hover:cursor-pointer",
@@ -135,11 +129,11 @@ export const AvatarNameListItemSingleContent = ({
         </div>
 
         <Checkbox
+          data-avatarname-navigator-element="true"
           checked={selected}
           disabled={disabled}
-          onClick={(ev) => {
-            ev.preventDefault()
-          }}
+          onClick={handleLabelClick}
+          onKeyDown={handleKeyDown}
           className={cn(
             "pointer-events-none ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
             singleSelector ? "opacity-0" : ""
@@ -197,6 +191,7 @@ const AvatarNameListItem = ({
   goToLast?: () => void
   disabled?: boolean
 }) => {
+  const [pressingLabel, setPressingLabel] = useState<boolean>(false)
   if (!groupView) {
     return (
       <AvatarNameListItemSingleContent
@@ -215,13 +210,12 @@ const AvatarNameListItem = ({
   }
 
   const handleKeyDown = (ev: React.KeyboardEvent<HTMLLabelElement>) => {
+    ev.preventDefault()
+    ev.stopPropagation()
     if (ev.key === " ") {
-      ev.preventDefault()
-      ev.stopPropagation()
       onExpand()
     } else if (ev.key === "Enter") {
-      ev.preventDefault()
-      ev.stopPropagation()
+      onExpand()
       if (disabled) return
       if (!selected || partialSelected) {
         onSelect(entity)
@@ -229,22 +223,23 @@ const AvatarNameListItem = ({
         onRemove(entity)
       }
     } else if (ev.key === "ArrowDown") {
-      ev.preventDefault()
-      ev.stopPropagation()
       focusNextFocusable(ev.currentTarget, goToFirst)
     } else if (ev.key === "ArrowUp") {
-      ev.preventDefault()
-      ev.stopPropagation()
       focusPreviousFocusable(ev.currentTarget, goToLast)
     }
   }
 
   const handleGroupClick = (ev: React.MouseEvent) => {
+    ev.stopPropagation()
     if (disabled) return
     if (singleSelector) return
-    if (selected) onRemove(entity)
-    else onSelect(entity)
-    ev.stopPropagation()
+    if (pressingLabel) {
+      onExpand()
+      setPressingLabel(false)
+    } else {
+      if (selected) onRemove(entity)
+      else onSelect(entity)
+    }
   }
 
   if (!entity.subItems?.length) return null
@@ -261,15 +256,17 @@ const AvatarNameListItem = ({
           label={expanded ? "Collapse" : "Expand"}
           size="sm"
           variant="ghost"
+          type="button"
         />
         <label
           aria-label={entity.name}
           onKeyDown={handleKeyDown}
-          data-avatarname-navigator-element="true"
-          onClick={(ev) => {
+          onPointerDown={(ev) => {
             ev.preventDefault()
-            onExpand()
+            ev.stopPropagation()
+            setPressingLabel(true)
           }}
+          data-avatarname-navigator-element="true"
           className="flex flex-1 flex-row items-center gap-2 rounded-[10px] border p-2 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-f1-border-selected-bold hover:cursor-pointer hover:bg-f1-background-hover"
         >
           {showGroupIcon && (
@@ -287,6 +284,11 @@ const AvatarNameListItem = ({
             disabled={disabled}
             onClick={handleGroupClick}
             indeterminate={partialSelected}
+            onPointerDown={(ev) => {
+              ev.preventDefault()
+              ev.stopPropagation()
+              setPressingLabel(false)
+            }}
             className={cn(
               "ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
               singleSelector ? "opacity-0" : ""
