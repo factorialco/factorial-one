@@ -57,6 +57,21 @@ export const Search = ({
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!open) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault()
+        handleOpen()
+      }
+    } else {
+      if (e.key === "Escape") {
+        e.preventDefault()
+        onClear()
+        setOpen(false)
+      }
+    }
+  }
+
   return (
     <LayoutGroup id={uniqueId}>
       <MotionConfig
@@ -100,6 +115,7 @@ export const Search = ({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
+                    onKeyDown={handleKeyDown}
                   />
                   <motion.div
                     tabIndex={0}
@@ -134,6 +150,7 @@ export const Search = ({
                   focusRing()
                 )}
                 onClick={handleOpen}
+                onKeyDown={handleKeyDown}
                 style={{ borderRadius: 10 }}
               >
                 <motion.div
