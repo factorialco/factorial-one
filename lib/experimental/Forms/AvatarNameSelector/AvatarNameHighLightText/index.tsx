@@ -3,10 +3,12 @@ import { cn } from "@/lib/utils"
 export const HighlightText = ({
   text,
   search,
+  searchKeys = [],
   semiBold = false,
 }: {
   text: string
   search: string
+  searchKeys?: string[]
   semiBold?: boolean
 }) => {
   if (!search) {
@@ -18,7 +20,19 @@ export const HighlightText = ({
   }
 
   if (text.toLowerCase().indexOf(search.toLowerCase()) === -1) {
-    search = text.split(" ")[0]
+    if (
+      searchKeys.find(
+        (el) => el.toLowerCase().indexOf(search.toLowerCase().trim()) >= 0
+      )
+    ) {
+      search = text.split(" ")[0]
+    } else {
+      return (
+        <span className={cn("line-clamp-1", semiBold ? "font-semibold" : "")}>
+          {text}
+        </span>
+      )
+    }
   }
 
   const regex = new RegExp(`(${search})`, "gi")

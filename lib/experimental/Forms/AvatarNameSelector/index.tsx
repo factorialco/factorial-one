@@ -348,7 +348,7 @@ export const AvatarNameSelector = (
 }
 
 function getMatchScore(text = "", searchKeys: string[]): number {
-  const lowerText = text.toLowerCase()
+  const lowerText = text.toLowerCase().trim()
 
   let bestMatchIndex = Infinity
 
