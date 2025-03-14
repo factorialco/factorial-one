@@ -3,7 +3,7 @@ import type { Meta } from "@storybook/react"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { fn } from "@storybook/test"
 import { ChevronDown, ChevronRight } from "lucide-react"
-import { useState } from "react"
+import { ComponentProps, useState } from "react"
 import { AvatarNameSelector } from "."
 import { famousEmployees } from "./avatar-name.factory"
 import {
@@ -90,8 +90,7 @@ export default meta
 
 export const Default = {
   args: defaultArgs,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render: (props: any) => {
+  render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
     const [selected, setSelected] = useState<AvatarNamedEntity[]>([
       {
@@ -106,6 +105,7 @@ export const Default = {
     return (
       <AvatarNameSelector
         {...props}
+        singleSelector={false}
         loading={loading}
         entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
         selectedGroup={selectedGroup}
@@ -117,9 +117,8 @@ export const Default = {
           open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
         }
         selectedAvatarName={selected}
-        onSelect={(selection: AvatarNamedEntity[]) => {
+        onSelect={(selection) => {
           setSelected(selection)
-          props.onSelect(selection)
         }}
       />
     )
@@ -131,8 +130,7 @@ export const WithSelectedGroup = {
     ...defaultArgs,
     selectedGroup: "teams",
   } as AvatarNameSelectorProps,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render: (props: any) => {
+  render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
     const [selected, setSelected] = useState<AvatarNamedEntity[]>([
       {
@@ -147,6 +145,7 @@ export const WithSelectedGroup = {
     return (
       <AvatarNameSelector
         {...props}
+        singleSelector={false}
         loading={loading}
         entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
         selectedGroup={selectedGroup}
@@ -158,9 +157,8 @@ export const WithSelectedGroup = {
           open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
         }
         selectedAvatarName={selected}
-        onSelect={(selection: AvatarNamedEntity[]) => {
+        onSelect={(selection) => {
           setSelected(selection)
-          props.onSelect(selection)
         }}
       />
     )
@@ -173,8 +171,7 @@ export const SingleSelector = {
     onSelect: fn(),
     singleSelector: true,
   } as AvatarNameSelectorProps,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render: (props: any) => {
+  render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
     const [selected, setSelected] = useState<AvatarNamedEntity | undefined>()
     const [selectedGroup, setSelectedGroup] = useState<string>(
@@ -184,6 +181,7 @@ export const SingleSelector = {
     return (
       <AvatarNameSelector
         {...props}
+        singleSelector
         loading={loading}
         entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
         selectedGroup={selectedGroup}
@@ -195,17 +193,14 @@ export const SingleSelector = {
           open ? setTimeout(() => setLoading(false), 500) : setLoading(true)
         }
         selectedAvatarName={!selected ? [] : [selected]}
-        onSelect={(selection: AvatarNamedEntity) => {
+        onSelect={(selection) => {
           if (selectedGroup != "all") {
-            console.log({ selection })
             const found = GROUP_DATA["all"].find(
-              (el) => el.id === selection.subItems?.[0]?.subId
+              (el) => el.id === selection?.subItems?.[0]?.subId
             )
             setSelected(found)
-            props.onSelect(found)
           } else {
-            setSelected(selection)
-            props.onSelect(selection)
+            setSelected(selection ?? undefined)
           }
         }}
       />
@@ -221,8 +216,7 @@ export const AlwaysOpen = {
     loading: false,
     alwaysOpen: true,
   } as AvatarNameSelectorProps,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render: (props: any) => {
+  render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
     const [selected, setSelected] = useState<AvatarNamedEntity[]>([
       {
@@ -238,6 +232,7 @@ export const AlwaysOpen = {
       <div className="w-[300px] border-2">
         <AvatarNameSelector
           {...props}
+          singleSelector={false}
           width={undefined}
           loading={loading}
           entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
@@ -252,7 +247,6 @@ export const AlwaysOpen = {
           selectedAvatarName={selected}
           onSelect={(selection: AvatarNamedEntity[]) => {
             setSelected(selection)
-            props.onSelect(selection)
           }}
         />
       </div>
@@ -268,8 +262,7 @@ export const AlwaysOpenInForm = {
     loading: false,
     alwaysOpen: true,
   } as AvatarNameSelectorProps,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render: (props: any) => {
+  render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [selected, setSelected] = useState<AvatarNamedEntity[]>([
       {
         ...famousEmployees[0],
@@ -284,6 +277,7 @@ export const AlwaysOpenInForm = {
       <form onSubmit={fn}>
         <AvatarNameSelector
           {...props}
+          singleSelector={false}
           entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
           selectedGroup={selectedGroup}
           onGroupChange={(value) => {
@@ -293,7 +287,6 @@ export const AlwaysOpenInForm = {
           selectedAvatarName={selected}
           onSelect={(selection: AvatarNamedEntity[]) => {
             setSelected(selection)
-            props.onSelect(selection)
           }}
         />
       </form>
@@ -306,8 +299,7 @@ export const WithCustomTrigger = {
     ...defaultArgs,
     onSelect: fn(),
   } as AvatarNameSelectorProps,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render: (props: any) => {
+  render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
     const [selectedGroup, setSelectedGroup] = useState<string>(
       props.selectedGroup ?? "all"
@@ -325,6 +317,7 @@ export const WithCustomTrigger = {
       <div className="w-[600px]">
         <AvatarNameSelector
           {...props}
+          singleSelector={false}
           loading={loading}
           entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
           selectedGroup={selectedGroup}
@@ -341,7 +334,6 @@ export const WithCustomTrigger = {
           selectedAvatarName={selected}
           onSelect={(selection: AvatarNamedEntity[]) => {
             setSelected(selection)
-            props.onSelect(selection)
             if (selectedGroup != "all") {
               let total = 0
               selection.forEach((el) => (total += el.subItems?.length ?? 0))

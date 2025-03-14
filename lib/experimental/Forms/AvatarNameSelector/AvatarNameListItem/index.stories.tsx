@@ -83,8 +83,7 @@ export const DefaultInForm = {
     onExpand: fn(),
     expanded: false,
   },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  render: (props: any) => {
+  render: (props: ComponentProps<typeof AvatarNameListItem>) => {
     const [selected, setSelected] = useState(false)
 
     const onSelect = useCallback(() => {

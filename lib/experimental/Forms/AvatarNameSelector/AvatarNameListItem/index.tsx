@@ -86,9 +86,8 @@ export const AvatarNameListItemSingleContent = ({
   }
 
   const handleKeyDown = (ev: React.KeyboardEvent<HTMLButtonElement>) => {
-    ev.preventDefault()
-    ev.stopPropagation()
     if (ev.key === "Enter" || ev.key === " ") {
+      ev.preventDefault()
       if (disabled) return
       if (!selected) {
         onSelect(entity)
@@ -209,13 +208,13 @@ const AvatarNameListItem = ({
     )
   }
 
-  const handleKeyDown = (ev: React.KeyboardEvent<HTMLLabelElement>) => {
-    ev.preventDefault()
-    ev.stopPropagation()
+  const handleKeyDown = (ev: React.KeyboardEvent<HTMLButtonElement>) => {
     if (ev.key === " ") {
+      ev.preventDefault()
+      onExpand()
+    } else if (ev.key === "Enter" && singleSelector) {
       onExpand()
     } else if (ev.key === "Enter") {
-      onExpand()
       if (disabled) return
       if (!selected || partialSelected) {
         onSelect(entity)
@@ -229,14 +228,13 @@ const AvatarNameListItem = ({
     }
   }
 
-  const handleGroupClick = (ev: React.MouseEvent) => {
-    ev.stopPropagation()
-    if (disabled) return
-    if (singleSelector) return
+  const handleGroupClick = () => {
     if (pressingLabel) {
       onExpand()
       setPressingLabel(false)
     } else {
+      if (disabled) return
+      if (singleSelector) return
       if (selected) onRemove(entity)
       else onSelect(entity)
     }
@@ -260,13 +258,9 @@ const AvatarNameListItem = ({
         />
         <label
           aria-label={entity.name}
-          onKeyDown={handleKeyDown}
-          onPointerDown={(ev) => {
-            ev.preventDefault()
-            ev.stopPropagation()
+          onPointerDown={() => {
             setPressingLabel(true)
           }}
-          data-avatarname-navigator-element="true"
           className="flex flex-1 flex-row items-center gap-2 rounded-[10px] border p-2 focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-f1-border-selected-bold hover:cursor-pointer hover:bg-f1-background-hover"
         >
           {showGroupIcon && (
@@ -283,12 +277,13 @@ const AvatarNameListItem = ({
             checked={checked}
             disabled={disabled}
             onClick={handleGroupClick}
+            onKeyDown={handleKeyDown}
             indeterminate={partialSelected}
             onPointerDown={(ev) => {
-              ev.preventDefault()
               ev.stopPropagation()
               setPressingLabel(false)
             }}
+            data-avatarname-navigator-element="true"
             className={cn(
               "ml-auto h-[20px] w-[20px] rounded-xs border-[1px] data-[state=checked]:text-f1-foreground-inverse",
               singleSelector ? "opacity-0" : ""
