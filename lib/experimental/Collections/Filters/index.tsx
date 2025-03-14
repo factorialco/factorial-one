@@ -143,7 +143,8 @@ export function Filters<Definition extends FiltersDefinition>({
   // Render preset item in the main list
   const renderListPresetItem = (
     preset: Presets<Definition>[number],
-    index: number
+    index: number,
+    isVisible = true
   ) => {
     const isSelected = JSON.stringify(preset.filter) === JSON.stringify(value)
     return (
@@ -152,6 +153,7 @@ export function Filters<Definition extends FiltersDefinition>({
         label={preset.label}
         selected={isSelected}
         onClick={() => onChange(preset.filter)}
+        data-visible={isVisible}
       />
     )
   }
@@ -172,6 +174,7 @@ export function Filters<Definition extends FiltersDefinition>({
           focusRing()
         )}
         onClick={() => onChange(preset.filter)}
+        data-visible={true}
       >
         {preset.label}
         <Counter
