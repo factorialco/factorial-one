@@ -9,12 +9,17 @@ export const HighlightText = ({
   search: string
   semiBold?: boolean
 }) => {
-  if (!search)
+  if (!search) {
     return (
       <span className={cn("line-clamp-1", semiBold ? "font-semibold" : "")}>
         {text}
       </span>
     )
+  }
+
+  if (text.toLowerCase().indexOf(search.toLowerCase()) === -1) {
+    search = text.split(" ")[0]
+  }
 
   const regex = new RegExp(`(${search})`, "gi")
   const parts = text.split(regex)

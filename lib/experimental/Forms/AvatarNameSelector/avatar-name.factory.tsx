@@ -159,4 +159,5 @@ export const famousEmployeesAsSubItems: AvatarNamedSubEntity[] =
     subId: employee.id,
     subName: employee.name,
     subAvatar: employee.avatar,
+    subSearchKeys: employee.searchKeys,
   }))
