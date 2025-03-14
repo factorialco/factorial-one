@@ -10,11 +10,13 @@ import { Dropdown } from "@/experimental/Navigation/Dropdown"
 import { OnePagination } from "@/experimental/OnePagination"
 import { Delete, Ellipsis, Pencil } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import { AnimatePresence } from "framer-motion"
 import React, { useState } from "react"
 import {
   OneTable,
   TableBody,
   TableCell,
+  TableGroup,
   TableHead,
   TableHeader,
   TableRow,
@@ -589,6 +591,113 @@ export const Actions: Story = {
       </TableBody>
     </OneTable>
   ),
+}
+
+export const Grouping: Story = {
+  render: () => {
+    const [engineeringOpen, setEngineeringOpen] = useState(true)
+    const [designOpen, setDesignOpen] = useState(false)
+
+    return (
+      <OneTable>
+        <TableHeader>
+          <TableRow>
+            <TableHead width="30">Name</TableHead>
+            <TableHead width="30">Email</TableHead>
+            <TableHead width="20">Role</TableHead>
+            <TableHead width="20">Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableGroup
+              label="Engineering"
+              number={2}
+              open={engineeringOpen}
+              onClick={() => setEngineeringOpen(!engineeringOpen)}
+            />
+          </TableRow>
+          <AnimatePresence>
+            {engineeringOpen && (
+              <>
+                {sampleData.slice(0, 2).map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <PersonAvatar
+                          firstName={row.name.split(" ")[0]}
+                          lastName={row.name.split(" ")[1]}
+                          size="small"
+                        />
+                        <span className="font-medium">{row.name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>{row.email}</TableCell>
+                    <TableCell>
+                      <div className="w-fit">
+                        <RawTag text={row.role} />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="w-fit">
+                        <StatusTag
+                          text={row.status.label}
+                          variant={row.status.variant}
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </>
+            )}
+          </AnimatePresence>
+
+          <TableRow>
+            <TableGroup
+              label="Design"
+              number={2}
+              open={designOpen}
+              onClick={() => setDesignOpen(!designOpen)}
+            />
+          </TableRow>
+          <AnimatePresence>
+            {designOpen && (
+              <>
+                {sampleData.slice(2, 4).map((row) => (
+                  <TableRow key={row.id}>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <PersonAvatar
+                          firstName={row.name.split(" ")[0]}
+                          lastName={row.name.split(" ")[1]}
+                          size="small"
+                        />
+                        <span className="font-medium">{row.name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell>{row.email}</TableCell>
+                    <TableCell>
+                      <div className="w-fit">
+                        <RawTag text={row.role} />
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <div className="w-fit">
+                        <StatusTag
+                          text={row.status.label}
+                          variant={row.status.variant}
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </>
+            )}
+          </AnimatePresence>
+        </TableBody>
+      </OneTable>
+    )
+  },
 }
 
 export const WithLinks: Story = {
