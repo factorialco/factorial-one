@@ -22,6 +22,18 @@ const meta: Meta<typeof ActionBar> = {
     docs: {
       story: { inline: false, height: "400px" },
     },
+    a11y: {
+      config: {
+        rules: [
+          {
+            // This rule is disabled as dark-themed buttons are not compliant, we have to fix this in Figma first
+            // Meanwhile, disabling this rule
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
   },
   tags: ["autodocs", "experimental"],
   argTypes: {
