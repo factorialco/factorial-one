@@ -9,6 +9,8 @@ export const defaultTranslations = {
     showLess: "Show less",
     skipToContent: "Skip to content",
     view: "View",
+    search: "Search",
+    clear: "Clear",
     more: "More",
   },
   filters: {

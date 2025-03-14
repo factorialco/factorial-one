@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
-import { render, screen } from "~/lib/test-utils"
+import { render, screen, within } from "~/lib/test-utils"
 import { Filters } from "."
 import type { FiltersDefinition } from "./types"
 
@@ -284,7 +284,8 @@ describe("Presets", () => {
     )
 
     // Click on a preset
-    await user.click(screen.getByText("Engineering Only"))
+    const presetElement = screen.getByText("Engineering Only")
+    await user.click(presetElement)
 
     // Verify the preset's filter was applied
     expect(onChange).toHaveBeenCalledWith({ department: ["engineering"] })
@@ -352,7 +353,8 @@ describe("Presets", () => {
     )
 
     // Click on the first preset
-    await user.click(screen.getByText("Engineering Only"))
+    const engineeringPreset = screen.getByText("Engineering Only")
+    await user.click(engineeringPreset)
     expect(onChange).toHaveBeenCalledWith({ department: ["engineering"] })
 
     // Simulate the update
@@ -369,7 +371,8 @@ describe("Presets", () => {
     onChange.mockReset()
 
     // Click on the second preset
-    await user.click(screen.getByText("Design Only"))
+    const designPreset = screen.getByText("Design Only")
+    await user.click(designPreset)
     expect(onChange).toHaveBeenCalledWith({ department: ["design"] })
   })
 
@@ -393,7 +396,10 @@ describe("Presets", () => {
     )
 
     // Apply a preset
-    await user.click(screen.getByText("Engineering Only"))
+    const visibleContainer = screen.getByTestId("overflow-visible-container")
+    const engineeringOnlyPreset =
+      within(visibleContainer).getByText("Engineering Only")
+    await user.click(engineeringOnlyPreset)
     expect(onChange).toHaveBeenCalledWith({ department: ["engineering"] })
 
     // Simulate the update
@@ -450,7 +456,10 @@ describe("Presets", () => {
     )
 
     // Click on the preset
-    await user.click(screen.getByText("Engineering Search"))
+    const visibleContainer = screen.getByTestId("overflow-visible-container")
+    const engineeringSearchPreset =
+      within(visibleContainer).getByText("Engineering Search")
+    await user.click(engineeringSearchPreset)
 
     // Verify both filters were applied
     expect(onChange).toHaveBeenCalledWith({
