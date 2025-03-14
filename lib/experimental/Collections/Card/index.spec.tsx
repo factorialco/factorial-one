@@ -253,4 +253,103 @@ describe("CardCollection", () => {
       })
     })
   })
+
+  describe("pagination behavior", () => {
+    it("adjusts perPage to be a multiple of 2, 3, and 4", async () => {
+      const largeDataSet = Array.from({ length: 50 }, (_, i) => ({
+        id: i + 1,
+        name: `Person ${i + 1}`,
+        email: `person${i + 1}@example.com`,
+        role: `Role ${i + 1}`,
+      }))
+
+      const source = {
+        currentFilters: {},
+        setCurrentFilters: vi.fn(),
+        currentSortings: null,
+        setCurrentSortings: vi.fn(),
+        dataAdapter: {
+          paginationType: "pages" as const,
+          perPage: 10,
+          fetchData: async () => ({
+            records: largeDataSet.slice(0, 12),
+            pagesCount: Math.ceil(largeDataSet.length / 12),
+            currentPage: 1,
+            perPage: 12,
+            total: largeDataSet.length,
+          }),
+        },
+      }
+
+      render(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          source={source}
+        />
+      )
+
+      // Wait for the data to load
+      await waitFor(() => {
+        expect(screen.getByText("Person 1")).toBeInTheDocument()
+      })
+
+      // Should show exactly 12 cards (next multiple of 2, 3, and 4 after 10)
+      const cards = screen.getAllByRole("article")
+      expect(cards.length).toBe(12)
+    })
+
+    it("defaults to 24 items per page when perPage is not specified", async () => {
+      const largeDataSet = Array.from({ length: 50 }, (_, i) => ({
+        id: i + 1,
+        name: `Person ${i + 1}`,
+        email: `person${i + 1}@example.com`,
+        role: `Role ${i + 1}`,
+      }))
+
+      const source = {
+        currentFilters: {},
+        setCurrentFilters: vi.fn(),
+        currentSortings: null,
+        setCurrentSortings: vi.fn(),
+        dataAdapter: {
+          paginationType: "pages" as const,
+          fetchData: async () => ({
+            records: largeDataSet.slice(0, 24),
+            pagesCount: Math.ceil(largeDataSet.length / 24),
+            currentPage: 1,
+            perPage: 24,
+            total: largeDataSet.length,
+          }),
+        },
+      }
+
+      render(
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          source={source}
+        />
+      )
+
+      // Wait for the data to load
+      await waitFor(() => {
+        expect(screen.getByText("Person 1")).toBeInTheDocument()
+      })
+
+      // Should show exactly 24 cards (default)
+      const cards = screen.getAllByRole("article")
+      expect(cards.length).toBe(24)
+    })
+  })
 })
