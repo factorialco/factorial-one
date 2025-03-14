@@ -18,10 +18,30 @@ type ActionType = {
 }
 
 interface ActionBarProps {
+  /**
+   * Whether the action bar is open
+   */
   isOpen: boolean
+
+  /**
+   * The primary action
+   */
   primaryAction: ActionType
+
+  /**
+   * The secondary actions
+   */
   secondaryActions?: ActionType[]
+
+  /**
+   * The number of selected items. If not defined, the action bar will not show the selected items count and the unselect button.
+   * @default undefined
+   */
   selectedNumber?: number
+
+  /**
+   * The function to unselect the items
+   */
   onUnselect?: () => void
 }
 
@@ -29,7 +49,7 @@ export const ActionBar = ({
   isOpen,
   primaryAction,
   secondaryActions = [],
-  selectedNumber,
+  selectedNumber = undefined,
   onUnselect,
 }: ActionBarProps) => {
   const i18n = useI18n()

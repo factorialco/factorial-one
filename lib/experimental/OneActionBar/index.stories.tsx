@@ -29,6 +29,23 @@ const meta: Meta<typeof ActionBar> = {
       control: "boolean",
       description: "Controls the visibility of the action bar",
     },
+    primaryAction: {
+      control: false,
+      description: "The primary action",
+    },
+    secondaryActions: {
+      control: false,
+      description: "The secondary actions",
+    },
+    selectedNumber: {
+      control: "number",
+      description:
+        "The number of selected items. If not defined, the action bar will not show the selected items count and the unselect button.",
+    },
+    onUnselect: {
+      control: false,
+      description: "The function to unselect the items",
+    },
   },
 }
 
