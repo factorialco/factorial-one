@@ -5,6 +5,7 @@ export const famousEmployees: AvatarNamedEntity[] = [
   {
     id: 1000,
     name: "Albert Einstein",
+    searchKeys: ["Albert", "Albi", "Einstein", "cerebrito"],
     avatar: avatar,
   },
   {
@@ -158,4 +159,5 @@ export const famousEmployeesAsSubItems: AvatarNamedSubEntity[] =
     subId: employee.id,
     subName: employee.name,
     subAvatar: employee.avatar,
+    subSearchKeys: employee.searchKeys,
   }))

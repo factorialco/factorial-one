@@ -203,7 +203,10 @@ export const AvatarNameSelector = (
           const filteredSubItems = entity.subItems
             ?.map((el) => ({
               ...el,
-              score: getMatchScore(el.subName, debouncedSearch),
+              score: getMatchScore(
+                debouncedSearch,
+                el.subSearchKeys ?? el.subName.split(" ")
+              ),
             }))
             .filter((subEntity) => subEntity.score < Infinity)
             .sort((a, b) => a.score - b.score)
@@ -222,7 +225,10 @@ export const AvatarNameSelector = (
     } else {
       const nextEntities = props.entities
         .map((entity) => {
-          const entityScore = getMatchScore(entity.name, debouncedSearch)
+          const entityScore = getMatchScore(
+            debouncedSearch,
+            entity.searchKeys ?? entity.name.split(" ")
+          )
           return { ...entity, score: entityScore }
         })
         .filter((entity) => entity.score < Infinity)
@@ -341,33 +347,39 @@ export const AvatarNameSelector = (
   )
 }
 
-function getMatchScore(text = "", search = "") {
-  const lowerText = text.toLowerCase()
-  const lowerSearch = search.toLowerCase()
+function getMatchScore(text = "", searchKeys: string[]): number {
+  const lowerText = text.toLowerCase().trim()
 
-  if (lowerText.startsWith(lowerSearch)) {
-    return 1
+  let bestMatchIndex = Infinity
+
+  for (let i = 0; i < searchKeys.length; i++) {
+    const lowerKey = searchKeys[i].toLowerCase()
+
+    if (lowerKey.startsWith(lowerText)) {
+      return -(searchKeys.length - i)
+    }
+
+    if (lowerKey.includes(lowerText) && bestMatchIndex === Infinity) {
+      bestMatchIndex = i + 1
+    }
   }
 
-  const words = lowerText.split(/\s+/)
-  if (words.slice(1).some((w) => w.startsWith(lowerSearch))) {
-    return 2
-  }
-
-  if (lowerText.includes(lowerSearch)) {
-    return 3
-  }
-
-  return Infinity
+  return bestMatchIndex
 }
 
 function getBestScoreForEntity(entity: AvatarNamedEntity, search: string) {
-  const nameScore = getMatchScore(entity.name, search)
+  const nameScore = getMatchScore(
+    search,
+    entity.searchKeys ?? entity.name.split(" ")
+  )
 
   let bestSubItemScore = Infinity
   if (entity.subItems?.length) {
     bestSubItemScore = entity.subItems.reduce((minScore, subItem) => {
-      const current = getMatchScore(subItem.subName, search)
+      const current = getMatchScore(
+        search,
+        subItem.subSearchKeys ?? subItem.subName.split(" ")
+      )
       return Math.min(minScore, current)
     }, Infinity)
   }

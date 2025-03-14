@@ -123,7 +123,11 @@ export const AvatarNameListItemSingleContent = ({
 
         <div className="flex flex-1 flex-col">
           <div className="flex flex-1 flex-row items-center gap-2">
-            <HighlightText text={entity.name} search={search} />
+            <HighlightText
+              text={entity.name}
+              search={search}
+              searchKeys={entity.searchKeys}
+            />
           </div>
         </div>
 
@@ -270,7 +274,12 @@ const AvatarNameListItem = ({
             />
           )}
           <div className="flex flex-grow flex-row items-center gap-2">
-            <HighlightText semiBold text={entity.name} search={search} />
+            <HighlightText
+              semiBold
+              text={entity.name}
+              search={search}
+              searchKeys={entity.searchKeys}
+            />
             <Counter value={entity.subItems?.length ?? 0} />
           </div>
           <Checkbox
