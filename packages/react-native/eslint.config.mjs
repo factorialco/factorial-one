@@ -2,7 +2,6 @@ import { fixupConfigRules } from "@eslint/compat"
 import { FlatCompat } from "@eslint/eslintrc"
 import js from "@eslint/js"
 import tsParser from "@typescript-eslint/parser"
-import reactRefresh from "eslint-plugin-react-refresh"
 import globals from "globals"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
@@ -23,20 +22,14 @@ const reactSettings = {
 }
 
 export default [
-  // Ignore dist and other config files across the project
+  // Ignore dist and other config files
   {
-    ignores: [
-      "**/dist",
-      "**/.eslintrc.cjs",
-      "apps/react-native-example/**",
-      "packages/react-native/**",
-    ],
+    ignores: ["**/dist", "**/.eslintrc.cjs"],
   },
 
-  // Main project configuration
+  // Main React Native configuration
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
-    ignores: ["apps/react-native-example/**"],
     settings: reactSettings,
   },
   ...fixupConfigRules(
@@ -44,8 +37,7 @@ export default [
       "eslint:recommended",
       "plugin:react/recommended",
       "plugin:@typescript-eslint/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:storybook/recommended"
+      "plugin:react-hooks/recommended"
     )
   ).map((config) => ({
     ...config,
@@ -56,27 +48,25 @@ export default [
   })),
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
-    ignores: ["apps/react-native-example/**"],
-    plugins: {
-      "react-refresh": reactRefresh,
-    },
-
     languageOptions: {
       globals: {
         ...globals.browser,
+        ...globals.node,
       },
-
       parser: tsParser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
     },
-
     settings: reactSettings,
-
     rules: {
-      "no-unused-vars": "off",
+      "no-undef": "off", // Disable since it conflicts with globals in RN config files
+      "@typescript-eslint/no-require-imports": "off", // React Native uses require-style imports
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
-      "react/display-name": ["error", {}],
-
+      "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

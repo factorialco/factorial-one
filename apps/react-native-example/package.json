@@ -10,7 +10,9 @@
     "ios": "expo start -c --ios",
     "web": "expo start -c --web",
     "clean": "rm -rf .expo node_modules",
-    "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css"
+    "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css",
+    "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
+    "lint-fix": "pnpm run lint -- --fix"
   },
   "dependencies": {
     "@factorialco/factorial-one-react-native": "workspace:*",
