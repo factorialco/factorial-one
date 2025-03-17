@@ -1,11 +1,17 @@
 import { Button, ButtonProps } from "@/components/Actions/Button"
 import {
+  OneDropdownButton,
+  OneDropdownButtonProps,
+} from "@/components/Actions/OneDropdownButton"
+import {
   Avatar,
   AvatarVariant,
 } from "@/experimental/Information/Avatars/Avatar"
 import { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import {
   PrimaryAction,
+  PrimaryActionButton,
+  PrimaryDropdownAction,
   SecondaryAction,
 } from "@/experimental/Information/utils"
 import {
@@ -32,7 +38,7 @@ interface BaseHeaderProps {
     | AvatarVariant
 
   description?: string
-  primaryAction?: PrimaryAction
+  primaryAction?: PrimaryActionButton | PrimaryDropdownAction<string>
   secondaryActions?: SecondaryAction[]
   otherActions?: (DropdownItem & { isVisible?: boolean })[]
   status?: {
@@ -62,6 +68,23 @@ const ButtonWithTooltip = memo(function ButtonWithTooltip({
     )
   }
   return <Button {...buttonProps} />
+})
+
+const DropdownButtonWithTooltip = memo(function DropdownButtonWithTooltip({
+  tooltip,
+  ...dropdownProps
+}: OneDropdownButtonProps<string> & { tooltip?: string }) {
+  if (tooltip) {
+    const Wrapper = dropdownProps.disabled ? "span" : Fragment
+    return (
+      <Tooltip description={tooltip}>
+        <Wrapper>
+          <OneDropdownButton {...dropdownProps} />
+        </Wrapper>
+      </Tooltip>
+    )
+  }
+  return <OneDropdownButton {...dropdownProps} />
 })
 
 export function BaseHeader({
@@ -115,6 +138,18 @@ export function BaseHeader({
   const isPrimaryActionVisible = primaryAction && isVisible(primaryAction)
   const hasSecondaryActions = visibleSecondaryActions.length > 0
   const hasOtherActions = visibleOtherActions.length > 0
+
+  const isPrimaryDropdownAction = (
+    action: PrimaryAction | undefined
+  ): action is PrimaryDropdownAction<string> => {
+    return !!action && "items" in action
+  }
+
+  const isPrimaryActionButton = (
+    action: PrimaryAction | undefined
+  ): action is PrimaryActionButton => {
+    return !!action && "label" in action && !("items" in action)
+  }
 
   return (
     <div className="flex flex-col gap-3 px-6 pb-5 pt-3">
@@ -202,7 +237,7 @@ export function BaseHeader({
         )}
 
         <div className="flex w-full shrink-0 flex-col gap-x-2 gap-y-3 md:hidden">
-          {isPrimaryActionVisible && (
+          {isPrimaryActionVisible && isPrimaryActionButton(primaryAction) && (
             <div className="w-full md:hidden [&>*]:w-full">
               <ButtonWithTooltip
                 label={primaryAction.label}
@@ -210,6 +245,19 @@ export function BaseHeader({
                 variant="default"
                 icon={primaryAction.icon}
                 size="lg"
+                disabled={primaryAction.disabled}
+                tooltip={primaryAction.tooltip}
+              />
+            </div>
+          )}
+          {isPrimaryActionVisible && isPrimaryDropdownAction(primaryAction) && (
+            <div className="w-full md:hidden [&>*]:w-full">
+              <DropdownButtonWithTooltip
+                items={primaryAction.items}
+                onClick={primaryAction.onClick}
+                variant="default"
+                value={primaryAction.value}
+                size="md"
                 disabled={primaryAction.disabled}
                 tooltip={primaryAction.tooltip}
               />
@@ -263,13 +311,26 @@ export function BaseHeader({
             (hasSecondaryActions || hasOtherActions) && (
               <div className="mx-1 h-4 w-px bg-f1-background-secondary-hover" />
             )}
-          {isPrimaryActionVisible && (
+          {isPrimaryActionVisible && isPrimaryActionButton(primaryAction) && (
             <div className="hidden md:block">
               <ButtonWithTooltip
                 label={primaryAction.label}
                 onClick={primaryAction.onClick}
                 variant="default"
                 icon={primaryAction.icon}
+                disabled={primaryAction.disabled}
+                tooltip={primaryAction.tooltip}
+              />
+            </div>
+          )}
+          {isPrimaryActionVisible && isPrimaryDropdownAction(primaryAction) && (
+            <div className="hidden md:block">
+              <DropdownButtonWithTooltip
+                items={primaryAction.items}
+                onClick={primaryAction.onClick}
+                variant="default"
+                value={primaryAction.value}
+                size="md"
                 disabled={primaryAction.disabled}
                 tooltip={primaryAction.tooltip}
               />
