@@ -1,23 +1,26 @@
-import { Button, ButtonProps } from "@/components/Actions/Button"
+import {
+  ButtonInternal,
+  ButtonInternalProps,
+} from "@/components/Actions/Button/internal.tsx"
 import { internalButtonVariants } from "@/components/Actions/OneDropdownButton/theme.ts"
 import {
   OneDropdownButtonSize,
   OneDropdownButtonVariant,
 } from "@/components/Actions/OneDropdownButton/types.ts"
 import { IconType } from "@/components/Utilities/Icon"
-import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { DropdownInternal } from "@/experimental/Navigation/Dropdown/internal.tsx"
 import { ChevronDown } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils.ts"
 import { useMemo, useState } from "react"
 
-type OneDropdownButtonItem<T> = {
+export type OneDropdownButtonItem<T> = {
   value: T
   label: string
   icon?: IconType
 }
 
-type OneDropdownButtonProps<T = string> = Pick<
-  ButtonProps,
+export type OneDropdownButtonProps<T = string> = Pick<
+  ButtonInternalProps,
   "disabled" | "loading"
 > & {
   size?: OneDropdownButtonSize
@@ -60,13 +63,13 @@ const OneDropdownButton = ({
   return (
     selectedItem && (
       <>
-        <Button
+        <ButtonInternal
           onClick={handleClick}
           icon={selectedItem.icon}
           label={selectedItem.label}
           {...props}
-          internalAppend={
-            <Dropdown items={dropdownItems} internalAlign="end">
+          append={
+            <DropdownInternal items={dropdownItems} align="end">
               <a
                 className={cn(
                   "h-full",
@@ -87,9 +90,9 @@ const OneDropdownButton = ({
               >
                 <ChevronDown></ChevronDown>
               </a>
-            </Dropdown>
+            </DropdownInternal>
           }
-        ></Button>
+        ></ButtonInternal>
       </>
     )
   )

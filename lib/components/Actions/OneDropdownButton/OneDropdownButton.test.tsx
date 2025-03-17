@@ -6,18 +6,18 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 import { OneDropdownButton } from "./OneDropdownButton"
 
 // Mock the imported components
-vi.mock("@/components/Actions/Button", () => ({
-  Button: ({ label, icon: Icon, onClick, internalAppend, ...props }) => (
+vi.mock("@/components/Actions/Button/internal.tsx", () => ({
+  ButtonInternal: ({ label, icon: Icon, onClick, append, ...props }) => (
     <button onClick={onClick} {...props} data-testid="button">
       {Icon && <Icon data-testid="button-icon" />}
       <span data-testid="button-label">{label}</span>
-      <div data-testid="button-append">{internalAppend}</div>
+      <div data-testid="button-append">{append}</div>
     </button>
   ),
 }))
 
-vi.mock("@/experimental/Navigation/Dropdown", () => ({
-  Dropdown: ({ children, items }) => (
+vi.mock("@/experimental/Navigation/Dropdown/internal.tsx", () => ({
+  DropdownInternal: ({ children, items }) => (
     <div data-testid="dropdown" data-items={JSON.stringify(items)}>
       {children}
     </div>
