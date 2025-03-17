@@ -1,8 +1,7 @@
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
 import { Table as TableRoot } from "@/ui/table"
-import { useState } from "react"
-import { useIntersectionObserver } from "usehooks-ts"
+import { useEffect, useRef, useState } from "react"
 import { TableContext } from "../utils/TableContext"
 
 import { TableBody } from "../TableBody"
@@ -16,19 +15,28 @@ export interface TableProps {
 }
 
 function TableBase({ children }: TableProps) {
-  const [_, setIsScrolled] = useState(false)
-  const [leftRef, isAtLeft] = useIntersectionObserver({
-    threshold: 1,
-  })
+  const [isScrolled, setIsScrolled] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const handleScroll = () => {
+      setIsScrolled(container.scrollLeft > 0)
+    }
+
+    handleScroll()
+    container.addEventListener("scroll", handleScroll)
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
 
   return (
-    <TableContext.Provider value={{ isScrolled: !isAtLeft, setIsScrolled }}>
-      <div className="relative w-full overflow-auto">
-        <div
-          ref={leftRef}
-          className="absolute left-0 top-0 h-full w-px bg-transparent"
-          aria-hidden="true"
-        />
+    <TableContext.Provider value={{ isScrolled, setIsScrolled }}>
+      <div ref={containerRef} className="relative w-full overflow-auto">
         <TableRoot>{children}</TableRoot>
       </div>
     </TableContext.Provider>
