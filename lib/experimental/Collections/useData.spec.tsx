@@ -146,7 +146,6 @@ describe("useData", () => {
       })
 
       expect(result.current.data).toEqual(mockData)
-      expect(result.current.isLoading).toBe(false)
       expect(result.current.isInitialLoading).toBe(false)
     })
 
@@ -171,13 +170,8 @@ describe("useData", () => {
 
   describe("with observable data", () => {
     it("should handle observable data with loading states", async () => {
-      type ObservableState = {
-        loading: boolean
-        data: TestRecord[] | null
-        error: Error | null
-      }
       const source = createMockDataSource(() => {
-        return new Observable<ObservableState>((subscriber) => {
+        return new Observable((subscriber) => {
           subscriber.next({ loading: true, data: null, error: null })
           setTimeout(() => {
             subscriber.next({ loading: false, data: mockData, error: null })
@@ -188,25 +182,20 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source))
 
-      expect(result.current.isLoading).toBe(true)
+      expect(result.current.isInitialLoading).toBe(true)
 
       await act(async () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
       expect(result.current.data).toEqual(mockData)
-      expect(result.current.isLoading).toBe(false)
+      expect(result.current.isInitialLoading).toBe(false)
     })
 
     it("should handle observable errors", async () => {
       const error = new Error("Test error")
-      type ObservableState = {
-        loading: boolean
-        data: TestRecord[] | null
-        error: Error | null
-      }
       const source = createMockDataSource(() => {
-        return new Observable<ObservableState>((subscriber) => {
+        return new Observable((subscriber) => {
           subscriber.next({ loading: true, data: null, error: null })
           setTimeout(() => {
             subscriber.next({ loading: false, data: null, error })
