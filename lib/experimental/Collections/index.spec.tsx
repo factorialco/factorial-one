@@ -417,7 +417,7 @@ describe("Collections", () => {
 
               if (sortings && sortings.field === "name") {
                 sorted.sort((a, b) => {
-                  const direction = sortings.direction === "asc" ? 1 : -1
+                  const direction = sortings.order === "asc" ? 1 : -1
                   return a.name.localeCompare(b.name) * direction
                 })
               }
@@ -698,6 +698,116 @@ describe("Collections", () => {
     // Verify our handler was called with the correct item
     expect(handleEdit).toHaveBeenCalledTimes(1)
     expect(handleEdit).toHaveBeenCalledWith(mockData[0])
+  })
+
+  test("integrates search functionality", async () => {
+    type Person = {
+      id: number
+      name: string
+      email: string
+      role: string
+    }
+
+    const mockData: Person[] = [
+      { id: 1, name: "John Doe", email: "john@example.com", role: "Developer" },
+      {
+        id: 2,
+        name: "Jane Smith",
+        email: "jane@example.com",
+        role: "Designer",
+      },
+      {
+        id: 3,
+        name: "Alice Johnson",
+        email: "alice@example.com",
+        role: "Manager",
+      },
+      { id: 4, name: "Bob Brown", email: "bob@example.com", role: "Tester" },
+    ]
+
+    // Mock the setCurrentSearch function
+    const setCurrentSearchMock = vi.fn()
+
+    // Create a data source with search enabled
+    const { result } = renderHook(
+      () => {
+        const source = useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >({
+          dataAdapter: {
+            fetchData: async ({ search }) => {
+              if (!search) return mockData
+
+              const searchLower = search.toLowerCase()
+              return mockData.filter(
+                (person) =>
+                  person.name.toLowerCase().includes(searchLower) ||
+                  person.email.toLowerCase().includes(searchLower) ||
+                  person.role.toLowerCase().includes(searchLower)
+              )
+            },
+          },
+          search: {
+            enabled: true,
+            sync: true,
+          },
+        })
+
+        // Override setCurrentSearch with our mock
+        source.setCurrentSearch = setCurrentSearchMock
+
+        return source
+      },
+      { wrapper: TestWrapper }
+    )
+
+    // Render the DataCollection with our configured source
+    render(
+      <DataCollection
+        source={result.current}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { label: "Name", render: (item: Person) => item.name },
+                { label: "Email", render: (item: Person) => item.email },
+                { label: "Role", render: (item: Person) => item.role },
+              ],
+            },
+          },
+        ]}
+      />,
+      { wrapper: TestWrapper }
+    )
+
+    // Verify that all four initial users are displayed
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument()
+      expect(screen.getByText("Jane Smith")).toBeInTheDocument()
+      expect(screen.getByText("Alice Johnson")).toBeInTheDocument()
+      expect(screen.getByText("Bob Brown")).toBeInTheDocument()
+    })
+
+    // Find the search button/input
+    const searchButton = screen.getByLabelText(/search/i)
+    expect(searchButton).toBeInTheDocument()
+
+    // Click on the search button to open the search input
+    await userEvent.click(searchButton)
+
+    // Find the search input after it's opened
+    const searchInput = screen.getByPlaceholderText(/search/i)
+    expect(searchInput).toBeInTheDocument()
+
+    // Enter a search term
+    await userEvent.type(searchInput, "john")
+
+    // Verify the setCurrentSearch was called with the correct term
+    expect(setCurrentSearchMock).toHaveBeenCalledWith("john")
   })
 
   test("integrates TableCollection with pagination", async () => {

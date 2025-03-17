@@ -59,6 +59,11 @@ const createTestSource = (
   setCurrentFilters: vi.fn(),
   currentSortings: null,
   setCurrentSortings: vi.fn(),
+  currentSearch: undefined,
+  debouncedCurrentSearch: undefined,
+  setCurrentSearch: vi.fn(),
+  isLoading: false,
+  setIsLoading: vi.fn(),
   dataAdapter: {
     fetchData: async ({ filters: _filters }) => {
       if (error) throw error
@@ -249,6 +254,11 @@ describe("TableCollection", () => {
       setCurrentFilters: vi.fn(),
       currentSortings: null,
       setCurrentSortings: vi.fn(),
+      currentSearch: undefined,
+      debouncedCurrentSearch: undefined,
+      setCurrentSearch: vi.fn(),
+      isLoading: false,
+      setIsLoading: vi.fn(),
       dataAdapter: {
         paginationType: "pages",
         perPage: itemsPerPage,
@@ -527,11 +537,11 @@ describe("TableCollection", () => {
       // Check the result of the function
       expect(result).toEqual({
         field: "name",
-        direction: "asc",
+        order: "asc" as const,
       })
     })
 
-    it("toggles sort direction when clicking the same column twice", async () => {
+    it("toggles sort order when clicking the same column twice", async () => {
       // Given a table with sortings already applied
       const setCurrentSortingsMock = vi.fn()
 
@@ -539,7 +549,7 @@ describe("TableCollection", () => {
         ...createTestSource(),
         currentSortings: {
           field: "name",
-          direction: "asc" as const,
+          order: "asc" as const,
         },
         setCurrentSortings: setCurrentSortingsMock,
         sortings: {
@@ -601,7 +611,7 @@ describe("TableCollection", () => {
       // Check the result of the function
       expect(result).toEqual({
         field: "name",
-        direction: "desc",
+        order: "desc" as const,
       })
     })
 
@@ -613,7 +623,7 @@ describe("TableCollection", () => {
         ...createTestSource(),
         currentSortings: {
           field: "name",
-          direction: "desc" as const,
+          order: "desc" as const,
         },
         setCurrentSortings: setCurrentSortingsMock,
         sortings: {

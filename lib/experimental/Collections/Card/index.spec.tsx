@@ -47,6 +47,11 @@ const createTestSource = (
   setCurrentFilters: vi.fn(),
   currentSortings: null,
   setCurrentSortings: vi.fn(),
+  currentSearch: undefined,
+  debouncedCurrentSearch: undefined,
+  setCurrentSearch: vi.fn(),
+  isLoading: false,
+  setIsLoading: vi.fn(),
   dataAdapter: {
     fetchData: async ({ filters: _filters }) => {
       if (error) throw error
@@ -268,6 +273,11 @@ describe("CardCollection", () => {
         setCurrentFilters: vi.fn(),
         currentSortings: null,
         setCurrentSortings: vi.fn(),
+        currentSearch: undefined,
+        debouncedCurrentSearch: undefined,
+        setCurrentSearch: vi.fn(),
+        isLoading: false,
+        setIsLoading: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           perPage: 10,
@@ -317,6 +327,11 @@ describe("CardCollection", () => {
         setCurrentFilters: vi.fn(),
         currentSortings: null,
         setCurrentSortings: vi.fn(),
+        currentSearch: undefined,
+        debouncedCurrentSearch: undefined,
+        setCurrentSearch: vi.fn(),
+        isLoading: false,
+        setIsLoading: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           fetchData: async () => ({
