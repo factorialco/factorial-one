@@ -24,14 +24,12 @@ function TableBase({ children }: TableProps) {
   return (
     <TableContext.Provider value={{ isScrolled: !isAtLeft, setIsScrolled }}>
       <div className="relative w-full overflow-auto">
-        <TableRoot>
-          <div
-            ref={leftRef}
-            className="h-full w-px bg-f1-foreground"
-            aria-hidden="true"
-          />
-          {children}
-        </TableRoot>
+        <div
+          ref={leftRef}
+          className="absolute left-0 top-0 h-full w-px bg-transparent"
+          aria-hidden="true"
+        />
+        <TableRoot>{children}</TableRoot>
       </div>
     </TableContext.Provider>
   )
