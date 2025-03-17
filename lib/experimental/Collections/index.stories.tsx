@@ -107,7 +107,8 @@ const filterUsers = <
 >(
   users: T[],
   filterValues: FiltersState<FiltersType>,
-  sortingState: SortingsState<typeof sortings>
+  sortingState: SortingsState<typeof sortings>,
+  search?: string
 ) => {
   let filteredUsers = [...users]
 
@@ -163,10 +164,22 @@ const filterUsers = <
     })
   }
 
-  const departmentValue = filterValues.department
-  if (Array.isArray(departmentValue) && departmentValue.length > 0) {
+  // Handle department filter
+  const departmentFilterValues = filterValues.department
+  if (
+    Array.isArray(departmentFilterValues) &&
+    departmentFilterValues.length > 0
+  ) {
     filteredUsers = filteredUsers.filter((user) =>
-      departmentValue.some((d) => d === user.department)
+      departmentFilterValues.some((d) => d === user.department)
+    )
+  }
+
+  if (search) {
+    filteredUsers = filteredUsers.filter(
+      (user) =>
+        user.name.toLowerCase().includes(search.toLowerCase()) ||
+        user.email.toLowerCase().includes(search.toLowerCase())
     )
   }
 
@@ -208,13 +221,15 @@ const createPromiseDataFetch = (delay = 500) => {
   return ({
     filters,
     sortings: sortingsState,
+    search,
   }: {
     filters: FiltersState<FiltersType>
     sortings: SortingsState<typeof sortings>
+    search?: string
   }) =>
     new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
-        resolve(filterUsers(mockUsers, filters, sortingsState))
+        resolve(filterUsers(mockUsers, filters, sortingsState, search))
       }, delay)
     })
 }
@@ -359,6 +374,9 @@ export const BasicTableView: Story = {
         department: {
           label: "Department",
         },
+      },
+      search: {
+        enabled: true,
       },
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -912,7 +930,7 @@ function createDataAdapter<
       )
     }
 
-    // Apply department filter if available
+    // Apply department filter if provided
     if (
       "department" in filters &&
       Array.isArray(filters.department) &&
@@ -1451,6 +1469,320 @@ export const WithAdvancedActions: Story = {
                   sorting: "department",
                 },
                 { label: "Status", render: (item) => item.status },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+// Search functionality demonstration
+export const WithSyncSearch: Story = {
+  render: () => {
+    const source = useDataSource({
+      filters,
+      sortings,
+      search: {
+        enabled: true,
+        // Set sync to true to see immediate search results without debounce
+        sync: true,
+      },
+      dataAdapter: {
+        fetchData: ({ filters, sortings, search }) => {
+          // Store mock data in a local variable for filtering
+          const mockUserData = [
+            {
+              id: "user-1",
+              name: "John Doe",
+              email: "john@example.com",
+              role: "Senior Engineer",
+              department: DEPARTMENTS[0],
+              status: "active",
+              isStarred: true,
+            },
+            {
+              id: "user-2",
+              name: "Jane Smith",
+              email: "jane@example.com",
+              role: "Product Manager",
+              department: DEPARTMENTS[1],
+              status: "active",
+              isStarred: false,
+            },
+            {
+              id: "user-3",
+              name: "Alice Johnson",
+              email: "alice@example.com",
+              role: "UX Designer",
+              department: DEPARTMENTS[2],
+              status: "active",
+              isStarred: false,
+            },
+            {
+              id: "user-4",
+              name: "Bob Brown",
+              email: "bob@example.com",
+              role: "Developer",
+              department: DEPARTMENTS[0],
+              status: "inactive",
+              isStarred: true,
+            },
+            {
+              id: "user-5",
+              name: "Emma Wilson",
+              email: "emma@example.com",
+              role: "Marketing Lead",
+              department: DEPARTMENTS[3],
+              status: "active",
+              isStarred: false,
+            },
+          ]
+
+          // Apply search filter if search term is provided
+          let filteredUsers = [...mockUserData]
+
+          if (search) {
+            const searchLower = search.toLowerCase()
+            filteredUsers = filteredUsers.filter(
+              (user) =>
+                user.name.toLowerCase().includes(searchLower) ||
+                user.email.toLowerCase().includes(searchLower) ||
+                user.role.toLowerCase().includes(searchLower) ||
+                user.department.toLowerCase().includes(searchLower)
+            )
+            console.log(
+              `Searching for: "${search}" - Found ${filteredUsers.length} results`
+            )
+          }
+
+          // Apply department filter if provided
+          const departmentFilter = filters.department as string[] | undefined
+          if (departmentFilter && departmentFilter.length > 0) {
+            filteredUsers = filteredUsers.filter((user) =>
+              departmentFilter.includes(user.department)
+            )
+          }
+
+          // Apply sorting if provided
+          if (sortings) {
+            const field = sortings.field as keyof (typeof mockUserData)[0]
+            const direction = sortings.direction
+
+            filteredUsers.sort((a, b) => {
+              const aValue = a[field]
+              const bValue = b[field]
+
+              if (typeof aValue === "string" && typeof bValue === "string") {
+                return direction === "asc"
+                  ? aValue.localeCompare(bValue)
+                  : bValue.localeCompare(aValue)
+              }
+
+              return 0
+            })
+          }
+
+          return filteredUsers
+        },
+      },
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              title: (item) => item.name,
+              cardProperties: [
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+// Example with async search functionality
+export const WithAsyncSearch: Story = {
+  render: () => {
+    type MockUser = (typeof mockUsers)[number]
+    type MockActions = ActionsDefinition<MockUser>
+
+    const source = useDataSource<
+      MockUser,
+      typeof filters,
+      typeof sortings,
+      MockActions
+    >({
+      filters,
+      sortings,
+      search: {
+        enabled: true,
+        // Set sync to false to simulate async search with debounce
+        sync: false,
+        // Set debounce time to 300ms
+        debounceTime: 300,
+      },
+      actions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+          description: "Modify user information",
+        },
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+        },
+        "separator",
+        {
+          label: item.isStarred ? "Remove Star" : "Star User",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
+        },
+      ],
+      dataAdapter: {
+        fetchData: ({ filters, sortings, search }) => {
+          // Simulate an API call with a delay
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const mockUserData = generateMockUsers(20)
+              let filteredUsers = [...mockUserData]
+
+              if (search) {
+                const searchLower = search.toLowerCase()
+                filteredUsers = filteredUsers.filter(
+                  (user) =>
+                    user.name.toLowerCase().includes(searchLower) ||
+                    user.email.toLowerCase().includes(searchLower) ||
+                    user.role.toLowerCase().includes(searchLower) ||
+                    user.department.toLowerCase().includes(searchLower)
+                )
+                console.log(
+                  `Async search for: "${search}" - Found ${filteredUsers.length} results`
+                )
+              }
+
+              // Apply department filter if provided
+              const departmentFilter = filters.department as
+                | string[]
+                | undefined
+              if (departmentFilter && departmentFilter.length > 0) {
+                filteredUsers = filteredUsers.filter((user) =>
+                  departmentFilter.includes(user.department)
+                )
+              }
+
+              // Apply sorting if provided
+              if (sortings) {
+                const field = sortings.field as keyof MockUser
+                const direction = sortings.direction
+
+                filteredUsers.sort((a, b) => {
+                  const aValue = a[field]
+                  const bValue = b[field]
+
+                  if (
+                    typeof aValue === "string" &&
+                    typeof bValue === "string"
+                  ) {
+                    return direction === "asc"
+                      ? aValue.localeCompare(bValue)
+                      : bValue.localeCompare(aValue)
+                  }
+
+                  return 0
+                })
+              }
+
+              resolve(filteredUsers)
+            }, 1000) // Simulate 1 second delay for API response
+          })
+        },
+      },
+    })
+
+    return (
+      <DataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item: MockUser) => item.name,
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item: MockUser) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item: MockUser) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item: MockUser) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              title: (item: MockUser) => item.name,
+              cardProperties: [
+                { label: "Email", render: (item: MockUser) => item.email },
+                { label: "Role", render: (item: MockUser) => item.role },
+                {
+                  label: "Department",
+                  render: (item: MockUser) => item.department,
+                },
               ],
             },
           },
