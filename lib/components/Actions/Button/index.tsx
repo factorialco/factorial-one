@@ -5,7 +5,7 @@
 import { forwardRef } from "react"
 import { ButtonInternal, ButtonInternalProps } from "./internal.tsx"
 
-const privateProps = ["append"] as const
+const privateProps = ["append", "appendButton"] as const
 
 export type ButtonProps = Omit<
   ButtonInternalProps,

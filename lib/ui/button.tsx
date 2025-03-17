@@ -2,6 +2,7 @@ import { cn, focusRing } from "@/lib/utils"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "cva"
 import * as React from "react"
+import { useRef } from "react"
 
 export const variants = [
   "default",
@@ -18,10 +19,13 @@ export type ButtonSize = (typeof sizes)[number]
 
 const buttonVariants = cva({
   base: cn(
-    "group inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md border-none text-base font-medium transition-colors disabled:pointer-events-none disabled:opacity-50",
-    focusRing()
+    "group inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md border-none text-base font-medium transition-colors"
   ),
   variants: {
+    disabled: {
+      true: "pointer-events-none opacity-50",
+      false: cn("cursor-pointer", focusRing()),
+    },
     variant: {
       default:
         "bg-f1-background-accent-bold text-f1-foreground-inverse hover:bg-f1-background-accent-bold-hover",
@@ -58,17 +62,68 @@ export interface ButtonProps
   asChild?: boolean
   size?: ButtonSize
   variant?: ButtonVariant
+  appendButton?: React.ReactNode
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, round, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button"
+  (
+    {
+      className,
+      round,
+      variant,
+      disabled,
+      size,
+      asChild = false,
+      appendButton,
+      children,
+      ...props
+    },
+    ref
+  ) => {
+    const innerRef = useRef<HTMLButtonElement>(null)
+    // Combine the refs - use forwarded ref if provided, otherwise fall back to inner ref
+    const buttonRef = (ref || innerRef) as React.RefObject<HTMLButtonElement>
+
+    const Comp = asChild ? Slot : "div"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, round }), className)}
-        ref={ref}
-        {...props}
-      />
+        className={cn(
+          buttonVariants({ variant, size, round, disabled: !!disabled }),
+          className
+        )}
+        aria-disabled={disabled}
+        tabIndex={disabled ? -1 : 0}
+        onClick={(e) => {
+          e.preventDefault()
+          buttonRef.current?.click()
+        }}
+        onKeyPress={(e) => {
+          e.preventDefault()
+          if (e.key === "Enter" || e.key === " ") {
+            buttonRef.current?.click()
+          }
+        }}
+      >
+        <button
+          ref={buttonRef}
+          tabIndex={-1}
+          role="button"
+          className={cn(
+            "group inline-flex items-center justify-center gap-1 whitespace-nowrap",
+            "text-inherit font-inherit text-current"
+          )}
+          disabled={disabled}
+          {...props}
+          onClick={(e) => {
+            // Avoid the click event from bubbling up to the parent to avoid double clicks
+            e.stopPropagation()
+            props.onClick?.(e)
+          }}
+        >
+          {children}
+        </button>
+        {appendButton}
+      </Comp>
     )
   }
 )

@@ -1,13 +1,9 @@
+import { OneDropdownButtonVariant } from "@/components/Actions/OneDropdownButton/types.ts"
 import { cva } from "cva"
 
 export const internalButtonVariants = cva({
-  base: "border-0 border-solid",
+  base: "border-0 border-l border-solid",
   variants: {
-    variant: {
-      default: "border-(hsl(var(--accent-60)) border-l",
-      outline: "border-l-(--neutral-30)",
-      neutral: "border-l-(--neutral-30)",
-    },
     size: {
       sm: "-mr-2 ml-1 w-6 px-1",
       md: "-mr-3 ml-2 w-9 px-1",
@@ -15,7 +11,17 @@ export const internalButtonVariants = cva({
     },
   },
   defaultVariants: {
-    variant: "default",
     size: "md",
   },
 })
+
+export const internalButtonVariantsStyles = (
+  variant?: OneDropdownButtonVariant
+) => {
+  const variants = {
+    default: { borderColor: "hsl(var(--accent-60))" },
+    outline: { borderColor: "hsl(var(--neutral-30))" },
+    neutral: { borderColor: "hsl(var(--neutral-30))" },
+  }
+  return variants[variant || "default"]
+}

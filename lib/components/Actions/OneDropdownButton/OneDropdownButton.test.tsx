@@ -7,11 +7,11 @@ import { OneDropdownButton } from "./OneDropdownButton"
 
 // Mock the imported components
 vi.mock("@/components/Actions/Button/internal.tsx", () => ({
-  ButtonInternal: ({ label, icon: Icon, onClick, append, ...props }) => (
+  ButtonInternal: ({ label, icon: Icon, onClick, appendButton, ...props }) => (
     <button onClick={onClick} {...props} data-testid="button">
       {Icon && <Icon data-testid="button-icon" />}
       <span data-testid="button-label">{label}</span>
-      <div data-testid="button-append">{append}</div>
+      <div data-testid="button-append">{appendButton}</div>
     </button>
   ),
 }))

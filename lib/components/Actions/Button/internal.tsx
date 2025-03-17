@@ -18,6 +18,7 @@ export type ButtonInternalProps = Pick<
   hideLabel?: boolean
   size?: "sm" | "md" | "lg"
   append?: React.ReactNode
+  appendButton?: React.ReactNode
 }
 
 const iconVariants = cva({
@@ -71,6 +72,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
       variant = "default",
       size = "md",
       append,
+      appendButton,
       ...props
     },
     ref
@@ -102,6 +104,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
         variant={variant}
         size={size}
         round={hideLabel}
+        appendButton={appendButton}
         {...props}
       >
         {icon && (

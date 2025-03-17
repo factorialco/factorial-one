@@ -2,18 +2,18 @@ import {
   ButtonInternal,
   ButtonInternalProps,
 } from "@/components/Actions/Button/internal.tsx"
-import { internalButtonVariants } from "@/components/Actions/OneDropdownButton/theme.ts"
-import {
-  OneDropdownButtonSize,
-  OneDropdownButtonVariant,
-} from "@/components/Actions/OneDropdownButton/types.ts"
 import { IconType } from "@/components/Utilities/Icon"
 import { DropdownInternal } from "@/experimental/Navigation/Dropdown/internal.tsx"
 import { ChevronDown } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils.ts"
 import { useMemo, useState } from "react"
+import {
+  internalButtonVariants,
+  internalButtonVariantsStyles,
+} from "./theme.ts"
+import { OneDropdownButtonSize, OneDropdownButtonVariant } from "./types.ts"
 
-export type OneDropdownButtonItem<T> = {
+export type OneDropdownButtonItem<T = string> = {
   value: T
   label: string
   icon?: IconType
@@ -68,13 +68,12 @@ const OneDropdownButton = ({
           icon={selectedItem.icon}
           label={selectedItem.label}
           {...props}
-          append={
+          appendButton={
             <DropdownInternal items={dropdownItems} align="end">
               <a
                 className={cn(
                   "h-full",
                   internalButtonVariants({
-                    variant: props.variant,
                     size: props.size,
                   }),
                   "flex",
@@ -84,8 +83,9 @@ const OneDropdownButton = ({
                   "justify-center",
                   focusRing()
                 )}
+                style={internalButtonVariantsStyles(props.variant)}
                 aria-label="Open dropdown"
-                tabIndex={0}
+                tabIndex={props.disabled ? -1 : 0}
                 role="combobox"
               >
                 <ChevronDown></ChevronDown>
