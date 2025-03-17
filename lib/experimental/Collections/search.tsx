@@ -18,16 +18,10 @@ interface SearchProps {
 }
 
 const IconComponent = ({ loading }: { loading: boolean }) => {
-  const IconMotion = motion(Icon)
-
-  return (
-    <AnimatePresence mode="wait">
-      {loading ? (
-        <IconMotion key="spinner" icon={Spinner} className="animate-spin" />
-      ) : (
-        <IconMotion key="magnifier" icon={SearchIcon} className="text" />
-      )}
-    </AnimatePresence>
+  return loading ? (
+    <Icon icon={Spinner} className="animate-spin" />
+  ) : (
+    <Icon icon={SearchIcon} className="text" />
   )
 }
 
@@ -104,7 +98,7 @@ export const Search = ({ value, onChange, loading = false }: SearchProps) => {
                     className="absolute left-[5px] top-[5px] z-10 flex h-5 w-5 items-center justify-center text-f1-icon"
                     layoutId="search-icon"
                   >
-                    <IconComponent loading={loading} />
+                    <IconComponent loading={loading} key="loading" />
                   </motion.div>
                   <motion.input
                     layout

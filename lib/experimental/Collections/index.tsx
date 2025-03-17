@@ -1,3 +1,6 @@
+import { Icon } from "@/components/Utilities/Icon"
+import { Spinner } from "@/icons/app"
+import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { ActionsDefinition } from "./actions"
@@ -55,6 +58,7 @@ export const useDataSource = <
     currentFilters: initialCurrentFilters = {},
     filters,
     search,
+    dataAdapter,
     ...rest
   }: DataSourceDefinition<Record, Filters, Sortings, Actions>,
   deps: ReadonlyArray<unknown> = []
@@ -86,6 +90,11 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
+  const [isLoading, setIsLoading] = useState(false)
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
+
   return {
     filters: memoizedFilters,
     currentFilters,
@@ -96,9 +105,14 @@ export const useDataSource = <
     currentSearch,
     setCurrentSearch,
     debouncedCurrentSearch,
+    isLoading,
+    setIsLoading,
+    dataAdapter: memoizedDataAdapter,
     ...rest,
   }
 }
+
+const MotionIcon = motion(Icon)
 
 /**
  * A component that renders a collection of data with filtering and visualization capabilities.
@@ -141,6 +155,7 @@ export const DataCollection = <
     search,
     currentSearch,
     setCurrentSearch,
+    isLoading,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
@@ -156,8 +171,26 @@ export const DataCollection = <
           />
         )}
         <div className="flex shrink-0 items-center gap-2">
+          <AnimatePresence initial={false}>
+            {isLoading && !search && (
+              <MotionIcon
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{
+                  opacity: 0,
+                }}
+                size="lg"
+                icon={Spinner}
+                className="animate-spin"
+              />
+            )}
+          </AnimatePresence>
           {search && (
-            <Search onChange={setCurrentSearch} value={currentSearch} />
+            <Search
+              loading={isLoading}
+              onChange={setCurrentSearch}
+              value={currentSearch}
+            />
           )}
           {visualizations && visualizations.length > 1 && (
             <VisualizationSelector

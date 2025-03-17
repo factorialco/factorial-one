@@ -71,15 +71,12 @@ type DataType<T> = PromiseState<T>
  */
 function useDataFetchState<Record>() {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState<Array<Record>>([])
   const [error, setError] = useState<DataError | null>(null)
 
   return {
     isInitialLoading,
     setIsInitialLoading,
-    isLoading,
-    setIsLoading,
     data,
     setData,
     error,
@@ -177,14 +174,14 @@ export function useData<
     currentSortings,
     search,
     currentSearch,
+    isLoading,
+    setIsLoading,
   } = source
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
     isInitialLoading,
     setIsInitialLoading,
-    isLoading,
-    setIsLoading,
     data,
     setData,
     error,

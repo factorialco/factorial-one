@@ -50,6 +50,8 @@ const createTestSource = (
   currentSearch: undefined,
   debouncedCurrentSearch: undefined,
   setCurrentSearch: vi.fn(),
+  isLoading: false,
+  setIsLoading: vi.fn(),
   dataAdapter: {
     fetchData: async ({ filters: _filters }) => {
       if (error) throw error
@@ -274,6 +276,8 @@ describe("CardCollection", () => {
         currentSearch: undefined,
         debouncedCurrentSearch: undefined,
         setCurrentSearch: vi.fn(),
+        isLoading: false,
+        setIsLoading: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           perPage: 10,
@@ -326,6 +330,8 @@ describe("CardCollection", () => {
         currentSearch: undefined,
         debouncedCurrentSearch: undefined,
         setCurrentSearch: vi.fn(),
+        isLoading: false,
+        setIsLoading: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           fetchData: async () => ({

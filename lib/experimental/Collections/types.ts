@@ -230,6 +230,8 @@ export type DataSource<
   currentSearch: undefined | string
   debouncedCurrentSearch: undefined | string
   setCurrentSearch: (search: string | undefined) => void
+  isLoading: boolean
+  setIsLoading: (loading: boolean) => void
 }
 
 /**

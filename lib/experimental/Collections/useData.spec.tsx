@@ -89,6 +89,8 @@ const createMockDataSource = (
     currentSearch: undefined,
     debouncedCurrentSearch: undefined,
     setCurrentSearch: vi.fn(),
+    isLoading: false,
+    setIsLoading: vi.fn(),
   }
 }
 
@@ -374,6 +376,8 @@ describe("useData", () => {
         currentSearch: undefined,
         debouncedCurrentSearch: undefined,
         setCurrentSearch: vi.fn(),
+        isLoading: false,
+        setIsLoading: vi.fn(),
       }
 
       // Render the hook
