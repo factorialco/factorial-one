@@ -537,7 +537,7 @@ describe("TableCollection", () => {
       // Check the result of the function
       expect(result).toEqual({
         field: "name",
-        direction: "asc",
+        direction: "asc" as const,
       })
     })
 
@@ -611,7 +611,7 @@ describe("TableCollection", () => {
       // Check the result of the function
       expect(result).toEqual({
         field: "name",
-        direction: "desc",
+        direction: "desc" as const,
       })
     })
 
