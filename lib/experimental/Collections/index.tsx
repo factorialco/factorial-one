@@ -157,11 +157,7 @@ export const DataCollection = <
         )}
         <div className="flex shrink-0 items-center gap-2">
           {search && (
-            <Search
-              onChange={setCurrentSearch}
-              value={currentSearch}
-              onClear={() => setCurrentSearch(undefined)}
-            />
+            <Search onChange={setCurrentSearch} value={currentSearch} />
           )}
           {visualizations && visualizations.length > 1 && (
             <VisualizationSelector
