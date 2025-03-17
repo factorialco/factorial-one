@@ -59,6 +59,9 @@ const createTestSource = (
   setCurrentFilters: vi.fn(),
   currentSortings: null,
   setCurrentSortings: vi.fn(),
+  currentSearch: undefined,
+  debouncedCurrentSearch: undefined,
+  setCurrentSearch: vi.fn(),
   dataAdapter: {
     fetchData: async ({ filters: _filters }) => {
       if (error) throw error
@@ -249,6 +252,9 @@ describe("TableCollection", () => {
       setCurrentFilters: vi.fn(),
       currentSortings: null,
       setCurrentSortings: vi.fn(),
+      currentSearch: undefined,
+      debouncedCurrentSearch: undefined,
+      setCurrentSearch: vi.fn(),
       dataAdapter: {
         paginationType: "pages",
         perPage: itemsPerPage,

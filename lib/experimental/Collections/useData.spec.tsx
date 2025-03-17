@@ -86,6 +86,9 @@ const createMockDataSource = (
     setCurrentFilters: vi.fn(),
     currentSortings: null,
     setCurrentSortings: vi.fn(),
+    currentSearch: undefined,
+    debouncedCurrentSearch: undefined,
+    setCurrentSearch: vi.fn(),
   }
 }
 
@@ -368,6 +371,9 @@ describe("useData", () => {
         setCurrentFilters: vi.fn(),
         currentSortings: null,
         setCurrentSortings: vi.fn(),
+        currentSearch: undefined,
+        debouncedCurrentSearch: undefined,
+        setCurrentSearch: vi.fn(),
       }
 
       // Render the hook
