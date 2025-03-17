@@ -15,6 +15,7 @@ import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { SortingsDefinition } from "./sortings"
 import {
+  BaseFetchOptions,
   DataSource,
   PaginatedResponse,
   PromiseOrObservable,
@@ -250,15 +251,21 @@ export function useData<
           cleanup.current = undefined
         }
 
+        const baseFetchOptions: BaseFetchOptions<Filters, Sortings> = {
+          filters,
+          search: searchValue,
+          sortings: currentSortings,
+        }
+
         const fetcher = (): PromiseOrObservable<ResultType> =>
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
-                filters,
-                search: searchValue,
-                sortings: currentSortings,
+                ...baseFetchOptions,
                 pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
               })
-            : dataAdapter.fetchData({ filters, sortings: currentSortings })
+            : dataAdapter.fetchData({
+                ...baseFetchOptions,
+              })
 
         const result = fetcher()
 

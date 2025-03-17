@@ -76,7 +76,7 @@ export const useDataSource = <
 
   const [debouncedCurrentSearch, setDebouncedCurrentSearch] = useDebounceValue<
     string | undefined
-  >(currentSearch, 300)
+  >(currentSearch, 200)
 
   useEffect(() => {
     if (searchOptions.sync) return
