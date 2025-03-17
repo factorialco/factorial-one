@@ -537,11 +537,11 @@ describe("TableCollection", () => {
       // Check the result of the function
       expect(result).toEqual({
         field: "name",
-        direction: "asc" as const,
+        order: "asc" as const,
       })
     })
 
-    it("toggles sort direction when clicking the same column twice", async () => {
+    it("toggles sort order when clicking the same column twice", async () => {
       // Given a table with sortings already applied
       const setCurrentSortingsMock = vi.fn()
 
@@ -549,7 +549,7 @@ describe("TableCollection", () => {
         ...createTestSource(),
         currentSortings: {
           field: "name",
-          direction: "asc" as const,
+          order: "asc" as const,
         },
         setCurrentSortings: setCurrentSortingsMock,
         sortings: {
@@ -611,7 +611,7 @@ describe("TableCollection", () => {
       // Check the result of the function
       expect(result).toEqual({
         field: "name",
-        direction: "desc" as const,
+        order: "desc" as const,
       })
     })
 
@@ -623,7 +623,7 @@ describe("TableCollection", () => {
         ...createTestSource(),
         currentSortings: {
           field: "name",
-          direction: "desc" as const,
+          order: "desc" as const,
         },
         setCurrentSortings: setCurrentSortingsMock,
         sortings: {

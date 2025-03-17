@@ -7,7 +7,7 @@ export type SortingsDefinition = Record<
 
 export type SortingsState<Definition extends SortingsDefinition> = {
   field: keyof Definition
-  direction: "asc" | "desc"
+  order: "asc" | "desc"
 } | null
 
 /**
