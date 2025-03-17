@@ -4,6 +4,7 @@ export type AvatarNamedSubEntity = {
   subId: number
   subName: string
   subAvatar?: string
+  subSearchKeys?: string[]
 }
 
 export type AvatarNamedEntity = {
@@ -11,6 +12,7 @@ export type AvatarNamedEntity = {
   name: string
   avatar?: string
   expanded?: boolean
+  searchKeys?: string[]
   subItems?: AvatarNamedSubEntity[]
 }
 
