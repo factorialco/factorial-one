@@ -1,10 +1,16 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { useDebounceValue } from "usehooks-ts"
 import { ActionsDefinition } from "./actions"
 import { Filters } from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
-import type { DataSource, DataSourceDefinition, RecordType } from "./types"
+import type {
+  CollectionSearchOptions,
+  DataSource,
+  DataSourceDefinition,
+  RecordType,
+} from "./types"
 import type { Visualization } from "./visualizations"
 import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 
@@ -48,6 +54,7 @@ export const useDataSource = <
   {
     currentFilters: initialCurrentFilters = {},
     filters,
+    search,
     ...rest
   }: DataSourceDefinition<Record, Filters, Sortings, Actions>,
   deps: ReadonlyArray<unknown> = []
@@ -59,6 +66,23 @@ export const useDataSource = <
   const [currentSortings, setCurrentSortings] =
     useState<SortingsState<Sortings>>(null)
 
+  const searchOptions = {
+    enabled: false,
+    sync: false,
+    ...search,
+  } satisfies CollectionSearchOptions
+
+  const [currentSearch, setCurrentSearch] = useState<string | undefined>()
+
+  const [debouncedCurrentSearch, setDebouncedCurrentSearch] = useDebounceValue<
+    string | undefined
+  >(currentSearch, 300)
+
+  useEffect(() => {
+    if (searchOptions.sync) return
+    setDebouncedCurrentSearch(currentSearch)
+  }, [currentSearch, searchOptions.sync, setDebouncedCurrentSearch])
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedFilters = useMemo(() => filters, deps)
 
@@ -68,6 +92,10 @@ export const useDataSource = <
     setCurrentFilters,
     currentSortings,
     setCurrentSortings,
+    search,
+    currentSearch,
+    setCurrentSearch,
+    debouncedCurrentSearch,
     ...rest,
   }
 }
@@ -106,7 +134,14 @@ export const DataCollection = <
   source: DataSource<Record, Filters, Sortings, Actions>
   visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
 }): JSX.Element => {
-  const { filters, currentFilters, setCurrentFilters } = source
+  const {
+    filters,
+    currentFilters,
+    setCurrentFilters,
+    search,
+    currentSearch,
+    setCurrentSearch,
+  } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
   return (
@@ -121,7 +156,13 @@ export const DataCollection = <
           />
         )}
         <div className="flex shrink-0 items-center gap-2">
-          <Search onChange={() => {}} onClear={() => {}} />
+          {search && (
+            <Search
+              onChange={setCurrentSearch}
+              value={currentSearch}
+              onClear={() => setCurrentSearch(undefined)}
+            />
+          )}
           {visualizations && visualizations.length > 1 && (
             <VisualizationSelector
               visualizations={visualizations}

@@ -107,7 +107,8 @@ const filterUsers = <
 >(
   users: T[],
   filterValues: FiltersState<FiltersType>,
-  sortingState: SortingsState<typeof sortings>
+  sortingState: SortingsState<typeof sortings>,
+  search?: string
 ) => {
   let filteredUsers = [...users]
 
@@ -170,6 +171,14 @@ const filterUsers = <
     )
   }
 
+  if (search) {
+    filteredUsers = filteredUsers.filter(
+      (user) =>
+        user.name.toLowerCase().includes(search.toLowerCase()) ||
+        user.email.toLowerCase().includes(search.toLowerCase())
+    )
+  }
+
   return filteredUsers
 }
 
@@ -208,13 +217,15 @@ const createPromiseDataFetch = (delay = 500) => {
   return ({
     filters,
     sortings: sortingsState,
+    search,
   }: {
     filters: FiltersState<FiltersType>
     sortings: SortingsState<typeof sortings>
+    search?: string
   }) =>
     new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
-        resolve(filterUsers(mockUsers, filters, sortingsState))
+        resolve(filterUsers(mockUsers, filters, sortingsState, search))
       }, delay)
     })
 }
@@ -359,6 +370,9 @@ export const BasicTableView: Story = {
         department: {
           label: "Department",
         },
+      },
+      search: {
+        enabled: true,
       },
       dataAdapter: {
         fetchData: createPromiseDataFetch(),

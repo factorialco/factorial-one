@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import { Observable } from "zen-observable-ts"
 import {
   PromiseState,
@@ -163,7 +170,13 @@ export function useData<
   source: DataSource<Record, Filters, Sortings, ActionsDefinition<Record>>,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
-  const { dataAdapter, currentFilters, currentSortings } = source
+  const {
+    dataAdapter,
+    currentFilters,
+    currentSortings,
+    search,
+    currentSearch,
+  } = source
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
@@ -183,6 +196,14 @@ export function useData<
     () => ({ ...currentFilters, ...filters }),
     [currentFilters, filters]
   )
+
+  const deferredSearch = useDeferredValue(currentSearch)
+
+  const searchValue = !search?.enabled
+    ? undefined
+    : search?.sync
+      ? currentSearch
+      : deferredSearch
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<Record> | SimpleResult<Record>) => {
@@ -233,6 +254,7 @@ export function useData<
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 filters,
+                search: searchValue,
                 sortings: currentSortings,
                 pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
               })
@@ -274,6 +296,7 @@ export function useData<
       handleFetchError,
       dataAdapter,
       currentSortings,
+      searchValue,
       handleFetchSuccess,
       setIsLoading,
     ]

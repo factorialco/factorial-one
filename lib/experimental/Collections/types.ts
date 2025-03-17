@@ -24,12 +24,23 @@ export type DataSourceDefinition<
   itemUrl?: (item: Record) => string
   /** Available actions that can be performed on records */
   actions?: Actions
+  /** Search configuration */
+  search?: CollectionSearchOptions
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
   /** Available sorting fields. If not provided, sorting is not allowed. */
   sortings?: Sortings
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters, Sortings>
+}
+
+export type CollectionSearchOptions = {
+  /** Whether search is enabled */
+  enabled: boolean
+  /** Whether search is synchronous */
+  sync?: boolean
+  /** Debounce time for search */
+  debounceTime?: number
 }
 
 /**
@@ -83,6 +94,7 @@ export type BaseFetchOptions<
   /** Currently applied filters */
   filters: FiltersState<Filters>
   sortings: SortingsState<Sortings>
+  search?: string
 }
 
 /**
@@ -215,6 +227,9 @@ export type DataSource<
   setCurrentSortings: React.Dispatch<
     React.SetStateAction<SortingsState<Sortings>>
   >
+  currentSearch: undefined | string
+  debouncedCurrentSearch: undefined | string
+  setCurrentSearch: (search: string | undefined) => void
 }
 
 /**
