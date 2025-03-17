@@ -76,6 +76,7 @@ export function TableHead({
           >
             <AnimatePresence>
               <motion.div
+                key="sort-arrow"
                 className="absolute left-1 top-1 flex h-3 w-3 items-center justify-center"
                 animate={{
                   rotate: sortState === "desc" ? 0 : 180,
@@ -92,6 +93,7 @@ export function TableHead({
               </motion.div>
               {sortState === "none" && (
                 <motion.div
+                  key="sort-arrow-secondary"
                   className="absolute left-1 top-1 flex h-3 w-3 items-center justify-center"
                   initial={{ opacity: 0, x: 0, y: 0, scale: 0.9 }}
                   animate={{ opacity: 1, x: 3, y: 1, scale: 0.9 }}
@@ -139,6 +141,7 @@ export function TableHead({
       <AnimatePresence>
         {isScrolled && sticky && (
           <motion.div
+            key="shadow-gradient"
             className="absolute inset-y-0 -right-4 h-full w-4 bg-gradient-to-r from-f1-foreground-secondary to-transparent"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.1 }}
