@@ -13,8 +13,7 @@ import { useOnClickOutside } from "usehooks-ts"
 
 interface SearchProps {
   value?: string
-  onChange: (value: string) => void
-  onClear: () => void
+  onChange: (value: string | undefined) => void
   loading?: boolean
 }
 
@@ -32,17 +31,20 @@ const IconComponent = ({ loading }: { loading: boolean }) => {
   )
 }
 
-export const Search = ({
-  value,
-  onChange,
-  onClear,
-  loading = false,
-}: SearchProps) => {
+export const Search = ({ value, onChange, loading = false }: SearchProps) => {
   const [open, setOpen] = useState(false)
   const uniqueId = useId()
   const ref = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const i18n = useI18n()
+
+  const handleClear = () => {
+    onChange(undefined)
+    setOpen(false)
+    if (inputRef?.current) {
+      inputRef.current.value = ""
+    }
+  }
 
   useOnClickOutside(ref, () => {
     if (open) setOpen(false)
@@ -66,7 +68,7 @@ export const Search = ({
     } else {
       if (e.key === "Escape") {
         e.preventDefault()
-        onClear()
+        handleClear()
         setOpen(false)
       }
     }
@@ -125,7 +127,7 @@ export const Search = ({
                     )}
                     onClick={(e) => {
                       e.stopPropagation()
-                      onClear()
+                      handleClear()
                     }}
                     role="button"
                     aria-label={i18n.actions.clear}
@@ -180,7 +182,7 @@ export const Search = ({
                         )}
                         onClick={(e) => {
                           e.stopPropagation()
-                          onClear()
+                          handleClear()
                         }}
                         role="button"
                         aria-label={i18n.actions.clear}
