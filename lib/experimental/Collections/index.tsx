@@ -58,6 +58,7 @@ export const useDataSource = <
     currentFilters: initialCurrentFilters = {},
     filters,
     search,
+    defaultSorting,
     dataAdapter,
     ...rest
   }: DataSourceDefinition<Record, Filters, Sortings, Actions>,
@@ -68,7 +69,7 @@ export const useDataSource = <
   )
 
   const [currentSortings, setCurrentSortings] =
-    useState<SortingsState<Sortings>>(null)
+    useState<SortingsState<Sortings> | null>(defaultSorting || null)
 
   const searchOptions = {
     enabled: false,
