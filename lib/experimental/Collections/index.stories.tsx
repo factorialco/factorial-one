@@ -129,22 +129,20 @@ const filterUsers = <
 
       // Handle string comparisons
       if (typeof aValue === "string" && typeof bValue === "string") {
-        return sortingState.direction === "asc"
+        return sortingState.order === "asc"
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue)
       }
 
       // Handle number comparisons
       if (typeof aValue === "number" && typeof bValue === "number") {
-        return sortingState.direction === "asc"
-          ? aValue - bValue
-          : bValue - aValue
+        return sortingState.order === "asc" ? aValue - bValue : bValue - aValue
       }
 
       // Handle boolean comparisons
       if (typeof aValue === "boolean" && typeof bValue === "boolean") {
         // false comes before true when ascending
-        return sortingState.direction === "asc"
+        return sortingState.order === "asc"
           ? aValue === bValue
             ? 0
             : aValue
@@ -158,7 +156,7 @@ const filterUsers = <
       }
 
       // Default case: use string representation
-      return sortingState.direction === "asc"
+      return sortingState.order === "asc"
         ? String(aValue).localeCompare(String(bValue))
         : String(bValue).localeCompare(String(aValue))
     })
@@ -944,7 +942,7 @@ function createDataAdapter<
     // Apply sorting if available
     if (sortingsState) {
       const sortField = sortingsState.field as keyof TRecord
-      const sortDirection = sortingsState.direction
+      const sortDirection = sortingsState.order
 
       filteredRecords.sort((a, b) => {
         const aValue = a[sortField]
@@ -1568,7 +1566,7 @@ export const WithSyncSearch: Story = {
           // Apply sorting if provided
           if (sortings) {
             const field = sortings.field as keyof (typeof mockUserData)[0]
-            const direction = sortings.direction
+            const direction = sortings.order
 
             filteredUsers.sort((a, b) => {
               const aValue = a[field]
@@ -1715,7 +1713,7 @@ export const WithAsyncSearch: Story = {
               // Apply sorting if provided
               if (sortings) {
                 const field = sortings.field as keyof MockUser
-                const direction = sortings.direction
+                const direction = sortings.order
 
                 filteredUsers.sort((a, b) => {
                   const aValue = a[field]

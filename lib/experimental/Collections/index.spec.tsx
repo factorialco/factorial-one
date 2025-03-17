@@ -417,7 +417,7 @@ describe("Collections", () => {
 
               if (sortings && sortings.field === "name") {
                 sorted.sort((a, b) => {
-                  const direction = sortings.direction === "asc" ? 1 : -1
+                  const direction = sortings.order === "asc" ? 1 : -1
                   return a.name.localeCompare(b.name) * direction
                 })
               }
