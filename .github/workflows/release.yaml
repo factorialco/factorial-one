@@ -33,7 +33,7 @@ jobs:
           echo "DEBUG: $PR_DEBUG"
           if [ -z "$PR_NUMBER" ]; then
             echo "No PR number found"
-            exit 1
+            exit 0
           fi
           gh pr merge $PR_NUMBER --squash --admin
         env:
