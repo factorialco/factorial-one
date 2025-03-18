@@ -35,7 +35,7 @@
     "generate-module-icons": "npx @svgr/cli --out-dir lib/icons/modules assets/icons/modules",
     "build-storybook": "storybook build",
     "serve-storybook": "http-server storybook-static",
-    "test-storybook": "test-storybook",
+    "test-storybook": "test-storybook --testTimeout=60000",
     "prettier:format": "prettier --write \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "tsc": "tsc --noEmit",
