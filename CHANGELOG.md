@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/factorialco/factorial-one/compare/v1.0.3...v1.1.0) (2025-03-18)
+
+
+### Features
+
+* Add DropdownButton as PrimaryAction in Resource Header ([#1349](https://github.com/factorialco/factorial-one/issues/1349)) ([b42c70f](https://github.com/factorialco/factorial-one/commit/b42c70fd967944b204765e189ff54dc3e1c47ebc))
+
 ## [1.0.3](https://github.com/factorialco/factorial-one/compare/v1.0.2...v1.0.3) (2025-03-18)
 
 
