@@ -73,6 +73,7 @@ runs:
           echo "The following branches will be deleted:"
           for branch in "${branches_to_delete[@]}"; do
             branch_name=${branch#origin/}
+        
             # Check AGAIN if the branch is the base branch
             if [[ "$branch_name" == *"${{inputs.branch-base-name}}"* ]]; then
               echo "- $branch_name"
