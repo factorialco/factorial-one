@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/factorialco/factorial-one/compare/v1.0.1...v1.0.2) (2025-03-18)
+
+
+### Bug Fixes
+
+* test release and publish 3 ([#1364](https://github.com/factorialco/factorial-one/issues/1364)) ([e04b6d0](https://github.com/factorialco/factorial-one/commit/e04b6d0d1cc036bb7b7d7405df58935defefa1aa))
+
 ## [1.0.1](https://github.com/factorialco/factorial-one/compare/v1.0.0...v1.0.1) (2025-03-18)
 
 
