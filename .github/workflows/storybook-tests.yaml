@@ -12,6 +12,8 @@ concurrency:
 
 jobs:
   test:
+    # Skip if the PR is tagged for autorelease
+    if: "! contains(github.event.pull_request.labels.*.name, 'autorelease')"
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:

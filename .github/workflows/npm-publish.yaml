@@ -2,7 +2,10 @@ name: Publish factorial-one package to npm
 
 on:
   release:
-    types: [ released ]  # Triggers when a new release is published
+    types:
+      - released
+      - created
+
   workflow_dispatch: # Allows manual triggering
     inputs:
       release_tag:
