@@ -33,7 +33,7 @@ jobs:
           gh auth status
           if [ -z "$PR_NUMBER" ]; then
             echo "No PR number found"
-            echo "::warning title='No release PR created by release-please'::Conventional commits didnt triggeer a version bump and release is not necessary"
+            echo "::warning title='No release PR created by release-please'::Conventional commits didnt trigger a version bump and a release is not necessary"
             exit 0
           fi
           gh pr merge $PR_NUMBER --squash --admin
