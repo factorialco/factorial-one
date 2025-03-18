@@ -28,15 +28,12 @@ jobs:
 
       - name: Merge PR
         run: |
-          git status
-          git --no-pager diff
-          git --no-pager branch
-          
           if [ -z "$PR_NUMBER" ]; then
             echo "No PR number found"
             echo "::warning title='No release PR created by release-please'::Conventional commits didnt trigger a version bump and a release is not necessary"
             exit 0
           fi
+          gh pr review $PR_NUMBER -a
           gh pr merge $PR_NUMBER --squash --admin
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
