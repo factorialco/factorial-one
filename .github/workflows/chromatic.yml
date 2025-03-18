@@ -15,8 +15,6 @@ concurrency:
 
 jobs:
   chromatic:
-    # Skip if the PR is tagged for autorelease
-    if: "! contains(github.event.pull_request.labels.*.name, 'autorelease')"
     permissions: write-all
     name: Run Chromatic
     runs-on: ubuntu-latest
