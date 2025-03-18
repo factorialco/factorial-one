@@ -30,11 +30,13 @@ jobs:
 
       - name: Merge PR
         run: |
+          echo "DEBUG: $PR_DEBUG"
           if [ -z "$PR_NUMBER" ]; then
             echo "No PR number found"
-            exit 1
+            exit 0
           fi
           gh pr merge $PR_NUMBER --squash --admin
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
+          PR_DEBUG: ${{ steps.release.outputs.pr }}
