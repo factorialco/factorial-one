@@ -46,7 +46,9 @@
     "dist",
     ".husky",
     "coverage",
-    "storybook-static"
+    "storybook-static",
+    "**/*.test.ts",
+    "**/*.test.tsx"
   ],
   "references": [
     {

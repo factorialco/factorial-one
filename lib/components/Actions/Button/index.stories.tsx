@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { fn } from "@storybook/test"
 
 import Add from "@/icons/app/Add"
 import Archive from "@/icons/app/Archive"
@@ -20,7 +19,10 @@ const meta = {
   tags: ["autodocs", "stable"],
   args: {
     variant: "default",
-    onClick: fn(),
+    onClick: () => {
+      console.log("Button clicked")
+      //fn()
+    },
     label: "Click me",
     size: "md",
   },
