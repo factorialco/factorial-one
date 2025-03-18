@@ -12,8 +12,7 @@ jobs:
       contents: write
       packages: write
     steps:
-      - name: Cleanup NPM PR alpha versions
-
+      - name: Cleanup PR alpha versions
         uses: ./.github/actions/cleanup-alpha-versions
         if: ${{ github.event.pull_request.number }}
         with:
