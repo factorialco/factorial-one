@@ -1,11 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "release-type": "node",
+  "pull-request-header": "Factorial-one release 🚀 ${version} ",
+  "pull-request-title-pattern": "chore${scope}: release${component} ${version} [skip ci]",
+  "group-pull-request-title-pattern": "chore${scope}: release ${version} [skip ci]",
   "packages": {
     ".": {
-      "pull-request-header": "Factorial-one release 🚀 ${version} ",
-      "pull-request-title-pattern": "chore${scope}: release${component} ${version} [skip ci]",
-      "group-pull-request-title-pattern": "chore${scope}: release ${version} [skip ci]"
+      "pull-request-header": "Factorial-one release 🚀 ${version} 2",
+      "pull-request-title-pattern": "chore${scope}: release${component} ${version} [skip ci] 2",
+      "group-pull-request-title-pattern": "chore${scope}: release ${version} [skip ci] 2"
     }
   }
 }
