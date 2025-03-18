@@ -57,7 +57,7 @@ const OneDropdownButton = ({
             onClick(item.value, item)
           },
         })),
-    [items, localValue]
+    [items, localValue, onClick]
   )
 
   return (
