@@ -20,6 +20,9 @@ jobs:
       contents: write
       packages: write
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Remove old alpha release branches
         uses: ./.github/actions/cleanup-alpha-versions
         with:
