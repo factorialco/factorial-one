@@ -13,11 +13,11 @@ export function TableRow({ children, selected, className }: TableRowProps) {
     <TableRowRoot
       className={cn(
         selected && "bg-f1-background-selected hover:bg-f1-background-selected",
-        className
+        className,
+        "relative [&:has(a:focus)]:after:rounded-sm [&:has(a:focus)]:after:ring-1 [&:has(a:focus)]:after:ring-inset [&:has(a:focus)]:after:ring-f1-ring"
       )}
     >
       {children}
-      <div className="pointer-events-none absolute inset-0 [.group:has(a:focus)_&]:rounded-sm [.group:has(a:focus)_&]:ring-1 [.group:has(a:focus)_&]:ring-inset [.group:has(a:focus)_&]:ring-f1-ring" />
     </TableRowRoot>
   )
 }

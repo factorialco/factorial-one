@@ -175,32 +175,42 @@ export const AvatarNameSelectorMainContent = ({
             subId: el.id,
             subName: el.name,
             subAvatar: el.avatar,
+            subSearchKeys: el.searchKeys,
           } as AvatarNamedSubEntity,
         }))
       : entities
-          .flatMap((entity) => [
-            {
-              parent: null,
-              subItem: {
-                subId: entity.id,
-                subName: entity.name,
-                subAvatar: entity.avatar,
-                expanded: entity.expanded,
-                subItems: entity.subItems,
+          .flatMap((entity) => {
+            const foundSelected = selectedEntities?.find(
+              (el) => el.id === entity.id
+            )
+            return [
+              {
+                parent: null,
+                subItem: {
+                  subId: entity.id,
+                  subName: entity.name,
+                  subAvatar: entity.avatar,
+                  expanded: entity.expanded ?? foundSelected?.expanded ?? false,
+                  subItems: entity.subItems,
+                  subSearchKeys: entity.searchKeys,
+                },
               },
-            },
-            ...(entity.subItems ?? []).map((subItem) => ({
-              parent: entity,
-              subItem,
-            })),
-          ])
+              ...(entity.subItems ?? []).map((subItem) => ({
+                parent: {
+                  ...entity,
+                  expanded: entity.expanded ?? foundSelected?.expanded ?? false,
+                },
+                subItem,
+              })),
+            ]
+          })
           .filter(
             (el) =>
               (!el.parent || el.parent.expanded) &&
               (!!el.parent ||
                 (!!el.subItem.subItems && el.subItem.subItems.length > 0))
           )
-  }, [groupView, entities])
+  }, [groupView, entities, selectedEntities])
 
   const itemFlattenedRenderer = useCallback(
     (vi: VirtualItem) => {
@@ -213,6 +223,7 @@ export const AvatarNameSelectorMainContent = ({
           avatar: subItem.subAvatar,
           subItems: subItem.subItems,
           expanded: subItem.expanded,
+          searchKeys: subItem.subSearchKeys,
         }
         const selectedEntity = (selectedEntities ?? []).find(
           (el) => el.id === recoveredEntity.id
@@ -233,7 +244,6 @@ export const AvatarNameSelectorMainContent = ({
             expanded={recoveredEntity.expanded ?? false}
             onExpand={() => onToggleExpand(recoveredEntity)}
             search={search}
-            key={"group-" + recoveredEntity.id}
             entity={recoveredEntity}
             onSelect={onSelect}
             onRemove={onRemove}
@@ -250,32 +260,39 @@ export const AvatarNameSelectorMainContent = ({
           />
         )
       }
-      const selectedParentEntity = (selectedEntities ?? []).find(
-        (el) => el.id === parent.id
+
+      let selected = !!(selectedEntities ?? []).find(
+        (el) => el.id === subItem.subId
       )
-      const selectedSubItems = (parent?.subItems ?? []).filter((subItem) =>
-        selectedParentEntity?.subItems?.some(
-          (selectedSubItem) => selectedSubItem.subId === subItem.subId
+      if (!selected) {
+        const selectedParentEntity = (selectedEntities ?? []).find(
+          (el) => el.id === parent.id
         )
-      )
-      const selected = !!selectedSubItems.find(
-        (el) => el.subId === subItem.subId
-      )
+        const selectedSubItems = (parent?.subItems ?? []).filter((subItem) =>
+          selectedParentEntity?.subItems?.some(
+            (selectedSubItem) => selectedSubItem.subId === subItem.subId
+          )
+        )
+        selected = !!selectedSubItems.find((el) => el.subId === subItem.subId)
+      }
+
       return (
         <AvatarNameListItem
           expanded={false}
           onExpand={() => null}
           search={search}
           groupView={false}
-          key={"subitem-" + subItem.subId}
           entity={{
             id: subItem.subId,
             name: subItem.subName,
             avatar: subItem.subAvatar,
+            searchKeys: subItem.subSearchKeys,
           }}
-          onSelect={() => onSubItemSelect(parent, subItem)}
+          onSelect={() => {
+            onSubItemSelect(parent, subItem)
+          }}
           onRemove={() => onSubItemRemove(parent, subItem)}
-          selected={selected}
+          selected={!!selected}
           partialSelected={false}
           singleSelector={singleSelector}
           goToFirst={goToFirst}
@@ -392,6 +409,7 @@ export const AvatarNameSelectorMainContent = ({
                 size="sm"
                 onClick={onSelectAll}
                 title={selectAllLabel + ` (${totalFilteredEntities})`}
+                type="button"
               >
                 {selectAllLabel}
               </Button>
@@ -405,6 +423,7 @@ export const AvatarNameSelectorMainContent = ({
                 }
                 onClick={onClear}
                 title={clearLabel + ` (${totalFilteredEntities})`}
+                type="button"
               >
                 {clearLabel}
               </Button>

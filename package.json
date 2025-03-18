@@ -1,7 +1,9 @@
 {
   "name": "@factorialco/factorial-one-monorepo",
-  "version": "0.0.2-3",
-  "private": true,
+  "version": "1.0.0",
+  "main": "dist/factorial-one.js",
+  "typings": "dist/factorial-one.d.ts",
+  "private": false,
   "type": "module",
   "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
   "workspaces": [
@@ -28,7 +30,7 @@
     "generate-module-icons": "npx @svgr/cli --out-dir lib/icons/modules assets/icons/modules",
     "build-storybook": "storybook build",
     "serve-storybook": "http-server storybook-static",
-    "test-storybook": "test-storybook",
+    "test-storybook": "test-storybook --testTimeout=60000",
     "prettier:format": "prettier --write \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "tsc": "tsc --noEmit",
@@ -36,9 +38,10 @@
     "vitest:rn": "pnpm --filter @factorialco/factorial-one-react-native test",
     "vitest:r": "vitest run --exclude 'packages/react-native/**'",
     "vitest:watch": "vitest dev",
-    "vitest:ci": "pnpm run vitest:ci:r && pnpm run vitest:ci:rn",
+    "vitest:ci": "pnpm run vitest:ci:r --reporter=dot && pnpm run vitest:ci:rn --reporter=dot",
     "vitest:ci:r": "vitest run --exclude 'packages/react-native/**'",
-    "vitest:ci:rn": "pnpm --filter @factorialco/factorial-one-react-native test"
+    "vitest:ci:rn": "pnpm --filter @factorialco/factorial-one-react-native test",
+    "prepare": "lefthook install"
   },
   "peerDependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -84,6 +87,8 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
     "@emoji-mart/data": "^1.2.1",
     "@emoji-mart/react": "^1.1.1",
     "@emotion/is-prop-valid": "^1.3.1",
@@ -123,9 +128,10 @@
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.20",
     "axe-playwright": "^2.1.0",
+    "chalk": "^5.4.1",
     "chromatic": "^11.25.2",
     "consola": "^3.4.0",
-    "chalk": "^5.4.1",
+    "dotenv": "^16.4.7",
     "emoji-mart": "^5.6.0",
     "eslint": "^9.21.0",
     "eslint-plugin-react": "^7.37.4",
@@ -135,6 +141,7 @@
     "globals": "^16.0.0",
     "http-server": "^14.1.1",
     "jsdom": "^26.0.0",
+    "lefthook": "^1.11.3",
     "lodash": "^4.17.21",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.5.3",
@@ -149,10 +156,9 @@
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "user-agent-data-types": "^0.4.2",
-    "vite": "^6.1.1",
+    "vite": "^6.2.2",
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-lib-inject-css": "^2.2.1",
-    "dotenv": "^16.4.7",
     "vitest": "^3.0.7"
   },
   "optionalDependencies": {

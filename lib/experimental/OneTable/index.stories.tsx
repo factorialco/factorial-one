@@ -228,18 +228,18 @@ export const Sortable: Story = {
   render: () => {
     const [sortConfig, setSortConfig] = React.useState<{
       column: SortColumn | null
-      direction: SortState
+      order: SortState
     }>({
       column: "name",
-      direction: "asc",
+      order: "asc",
     })
 
     const handleSort = (column: SortColumn) => {
       setSortConfig((current) => ({
         column,
-        direction:
+        order:
           current.column === column
-            ? current.direction === "asc"
+            ? current.order === "asc"
               ? "desc"
               : "asc"
             : "asc",
@@ -253,7 +253,7 @@ export const Sortable: Story = {
         const aValue = a[sortConfig.column!]
         const bValue = b[sortConfig.column!]
 
-        return sortConfig.direction === "asc"
+        return sortConfig.order === "asc"
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue)
       })
@@ -266,7 +266,7 @@ export const Sortable: Story = {
             <TableHead
               onSortClick={() => handleSort("name")}
               sortState={
-                sortConfig.column === "name" ? sortConfig.direction : undefined
+                sortConfig.column === "name" ? sortConfig.order : undefined
               }
             >
               Name
@@ -274,7 +274,7 @@ export const Sortable: Story = {
             <TableHead
               onSortClick={() => handleSort("email")}
               sortState={
-                sortConfig.column === "email" ? sortConfig.direction : undefined
+                sortConfig.column === "email" ? sortConfig.order : undefined
               }
             >
               Email
@@ -282,7 +282,7 @@ export const Sortable: Story = {
             <TableHead
               onSortClick={() => handleSort("role")}
               sortState={
-                sortConfig.column === "role" ? sortConfig.direction : undefined
+                sortConfig.column === "role" ? sortConfig.order : undefined
               }
             >
               Status

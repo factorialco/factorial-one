@@ -23,20 +23,21 @@ const reactSettings = {
 }
 
 export default [
-  // Ignore dist and other config files across the project
+  // Main project configuration
   {
+    files: ["**/*.{js,jsx,ts,tsx}"],
     ignores: [
       "**/dist",
       "**/.eslintrc.cjs",
       "apps/react-native-example/**",
       "packages/react-native/**",
+      ".husky",
+      ".vscode",
+      ".yarn",
+      "node_modules",
+      "coverage",
+      "storybook-static",
     ],
-  },
-
-  // Main project configuration
-  {
-    files: ["**/*.{js,jsx,ts,tsx}"],
-    ignores: ["apps/react-native-example/**"],
     settings: reactSettings,
   },
   ...fixupConfigRules(

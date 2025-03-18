@@ -77,7 +77,7 @@ export const AvatarNameSelectorContent = ({
           groupView={groupView}
           onRemove={onRemove}
           onSubItemRemove={onSubItemRemove}
-          selectedEntities={selectedEntities}
+          selectedEntities={selectedEntities ?? []}
           selectedLabel={selectedLabel}
           disabled={props.disabled}
         />

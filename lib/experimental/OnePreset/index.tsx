@@ -27,7 +27,7 @@ export const Preset = ({ label, number, onClick, selected }: PresetProps) => {
         checked={selected}
         onChange={() => onClick?.()}
       />
-      <span>{label}</span>
+      <span className="whitespace-nowrap">{label}</span>
       {number && (
         <Counter value={number} type={selected ? "selected" : "default"} />
       )}

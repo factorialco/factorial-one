@@ -1,5 +1,4 @@
 import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
-import LinkTo from "@storybook/addon-links/react"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 import * as ResourceHeaderStories from "./ResourceHeader/index.stories"
@@ -158,9 +157,17 @@ characteristics:
 2. **Avatar**: Represents entities that can be visualized with an avatar icon.
    (User, company and team)
 3. **Status**: Represent a state or situation associated with the resource, such
-   as "Active," "Inactive," "Pending.”, etc.
+   as "Active," "Inactive," "Pending.", etc.
 4. **List**: Display team members, task owners, or people associated with a
    specific resource.
+5. **Data List**: Display a vertical list of related data elements or values
+   associated with the resource. Useful for showing multiple pieces of
+   information in a stacked format.
+6. **Tag List**: Identify or classify a resource with a generic labels.
+7. **Dot Tag**: Same as TagList, allows to set the color of the tag.
+8. **Date**: Display temporal information in a standardized format. Can show
+   dates like creation dates, due dates, or any other relevant timestamps for
+   the resource.
 
 ### Guidelines
 

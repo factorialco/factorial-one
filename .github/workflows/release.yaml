@@ -1,31 +1,42 @@
-name: Update release branch and create package
+name: Create release
+
 on:
   push:
+    branches:
+      - main
+
 jobs:
-  build:
+  release-please:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      packages: write
+      pull-requests: write
+    env:
+      BRANCH: ${{ github.event.repository.default_branch }}
+    outputs:
+      release_created: ${{ steps.release-please.outputs.release_created }}
+      pr: ${{ steps.release-please.outputs.pr }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22.x"
-          cache: pnpm
-      - run: pnpm install
-      - run: pnpm run build
-      - run: echo node_modules > .gitignore
-      - uses: JS-DevTools/npm-publish@v3
-        if: github.ref == 'refs/heads/main'
+      - uses: googleapis/release-please-action@v4
+        id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          registry: "https://npm.pkg.github.com"
-      - uses: stefanzweifel/git-auto-commit-action@v5
-        if: github.ref == 'refs/heads/main'
+          release-type: node
+          target-branch: ${{ env.BRANCH }}
+
+      - uses: actions/checkout@v4
         with:
-          commit_message: Commit Build
-          branch: release
-          create_branch: true
-          push_options: "--force"
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Merge PR
+        run: |
+          echo "DEBUG: $PR_DEBUG"
+          if [ -z "$PR_NUMBER" ]; then
+            echo "No PR number found"
+            exit 0
+          fi
+          gh pr merge $PR_NUMBER --squash --admin
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
+          PR_DEBUG: ${{ steps.release.outputs.pr }}

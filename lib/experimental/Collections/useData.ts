@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import { Observable } from "zen-observable-ts"
 import {
   PromiseState,
@@ -8,6 +15,7 @@ import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { SortingsDefinition } from "./sortings"
 import {
+  BaseFetchOptions,
   DataSource,
   PaginatedResponse,
   PromiseOrObservable,
@@ -63,15 +71,12 @@ type DataType<T> = PromiseState<T>
  */
 function useDataFetchState<Record>() {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState<Array<Record>>([])
   const [error, setError] = useState<DataError | null>(null)
 
   return {
     isInitialLoading,
     setIsInitialLoading,
-    isLoading,
-    setIsLoading,
     data,
     setData,
     error,
@@ -163,14 +168,20 @@ export function useData<
   source: DataSource<Record, Filters, Sortings, ActionsDefinition<Record>>,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
-  const { dataAdapter, currentFilters, currentSortings } = source
+  const {
+    dataAdapter,
+    currentFilters,
+    currentSortings,
+    search,
+    currentSearch,
+    isLoading,
+    setIsLoading,
+  } = source
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
     isInitialLoading,
     setIsInitialLoading,
-    isLoading,
-    setIsLoading,
     data,
     setData,
     error,
@@ -183,6 +194,14 @@ export function useData<
     () => ({ ...currentFilters, ...filters }),
     [currentFilters, filters]
   )
+
+  const deferredSearch = useDeferredValue(currentSearch)
+
+  const searchValue = !search?.enabled
+    ? undefined
+    : search?.sync
+      ? currentSearch
+      : deferredSearch
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<Record> | SimpleResult<Record>) => {
@@ -229,14 +248,21 @@ export function useData<
           cleanup.current = undefined
         }
 
+        const baseFetchOptions: BaseFetchOptions<Filters, Sortings> = {
+          filters,
+          search: searchValue,
+          sortings: currentSortings,
+        }
+
         const fetcher = (): PromiseOrObservable<ResultType> =>
           dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
-                filters,
-                sortings: currentSortings,
+                ...baseFetchOptions,
                 pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
               })
-            : dataAdapter.fetchData({ filters, sortings: currentSortings })
+            : dataAdapter.fetchData({
+                ...baseFetchOptions,
+              })
 
         const result = fetcher()
 
@@ -274,6 +300,7 @@ export function useData<
       handleFetchError,
       dataAdapter,
       currentSortings,
+      searchValue,
       handleFetchSuccess,
       setIsLoading,
     ]
