@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.2](https://github.com/factorialco/factorial-one/compare/v1.1.1...v1.1.2) (2025-03-18)
+
+
+### Bug Fixes
+
+* skip workflows on autorelease pr ([#1371](https://github.com/factorialco/factorial-one/issues/1371)) ([8068890](https://github.com/factorialco/factorial-one/commit/80688908b17264eaa11278d1d504b7512102f060))
+* skip workflows on autorelease pr ([#1373](https://github.com/factorialco/factorial-one/issues/1373)) ([55452d5](https://github.com/factorialco/factorial-one/commit/55452d5f9276d1b28a92d424670f8dd3918ae703))
+* skip workflows on autorelease pr ([#1375](https://github.com/factorialco/factorial-one/issues/1375)) ([7422dd5](https://github.com/factorialco/factorial-one/commit/7422dd5ba4cc75c5d02380d23baceb48b0029612))
+* skip workflows on autorelease pr ([#1377](https://github.com/factorialco/factorial-one/issues/1377)) ([b984eae](https://github.com/factorialco/factorial-one/commit/b984eae9d5057f78fa5b660b18fb647b695c3dcf))
+* skip workflows on autorelease pr ([#1378](https://github.com/factorialco/factorial-one/issues/1378)) ([9e559b5](https://github.com/factorialco/factorial-one/commit/9e559b5a6b9e6bfdbbbd14b627846ea187d6043d))
+* skip workflows on autorelease pr ([#1380](https://github.com/factorialco/factorial-one/issues/1380)) ([f625f3b](https://github.com/factorialco/factorial-one/commit/f625f3b2cd46c5a3ea2211c0774709e1468e4fe7))
+* skip workflows on autorelease pr ([#1381](https://github.com/factorialco/factorial-one/issues/1381)) ([8514c87](https://github.com/factorialco/factorial-one/commit/8514c87ef671be386665f75f7325c28835a672c4))
+* skip workflows on autorelease pr ([#1383](https://github.com/factorialco/factorial-one/issues/1383)) ([99e16cc](https://github.com/factorialco/factorial-one/commit/99e16cc8602e72fb7808aa53311aa6f8a6578d18))
+
 ## [1.1.1](https://github.com/factorialco/factorial-one/compare/v1.1.0...v1.1.1) (2025-03-18)
 
 
