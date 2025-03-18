@@ -8,9 +8,7 @@ on:
 
 jobs:
   publish-alpha:
-    # Skip if the PR is tagged for autorelease
     if: |
-      !contains(github.event.pull_request.labels.*.name, 'autorelease') && 
       (github.event_name == 'issue_comment' &&
        github.event.issue.pull_request &&
        contains(github.event.comment.body, 'build')) ||

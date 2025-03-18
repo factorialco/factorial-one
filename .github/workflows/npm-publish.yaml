@@ -17,6 +17,7 @@ on:
 
 jobs:
   publish:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event_name == 'release' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,7 +26,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.release.tag_name }}  # Checkout the tagged release
+          ref: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.sha }}  # Checkout the tagged release
 
       - uses: ./.github/actions/setup-node-pnpm
         name: Setup Node and pnpm

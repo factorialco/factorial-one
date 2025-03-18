@@ -7,7 +7,6 @@ on:
 
 jobs:
   release-please:
-    # Skip if the PR is tagged for autorelease
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -18,18 +17,22 @@ jobs:
       release_created: ${{ steps.release.outputs.release_created }}
       pr: ${{ steps.release.outputs.pr }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
       - uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target-branch: ${{ env.BRANCH }}
-
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.repository.default_branch }}
+          skip-github-pull-request: 'true'
 
       - name: Merge PR
         run: |
+          git status
+          git --no-pager diff
+          git --no-pager branch
+          
           if [ -z "$PR_NUMBER" ]; then
             echo "No PR number found"
             echo "::warning title='No release PR created by release-please'::Conventional commits didnt trigger a version bump and a release is not necessary"
