@@ -1,1 +1,1 @@
-export * from "./OneDropdownButton.tsx"
+export * from "./OneDropdownButton"

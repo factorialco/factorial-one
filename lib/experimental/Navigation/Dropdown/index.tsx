@@ -1,22 +1,22 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon } from "@/components/Utilities/Icon"
 import { EllipsisHorizontal } from "@/icons/app"
-import { Link } from "@/lib/linkHandler.tsx"
+import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils.ts"
 import {
   Drawer,
   DrawerContent,
   DrawerOverlay,
   DrawerTrigger,
-} from "@/ui/drawer.tsx"
+} from "@/ui/drawer"
 import { useState } from "react"
-import { DropdownItemContent } from "./DropdownItem.tsx"
+import { DropdownItemContent } from "./DropdownItem"
 import {
   DropdownInternal,
   DropdownInternalProps,
   DropdownItem,
   DropdownItemObject,
-} from "./internal.tsx"
+} from "./internal"
 
 const privateProps = ["align"] as const
 
