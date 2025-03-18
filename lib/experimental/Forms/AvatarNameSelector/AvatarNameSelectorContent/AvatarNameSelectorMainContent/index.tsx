@@ -175,6 +175,7 @@ export const AvatarNameSelectorMainContent = ({
             subId: el.id,
             subName: el.name,
             subAvatar: el.avatar,
+            subSearchKeys: el.searchKeys,
           } as AvatarNamedSubEntity,
         }))
       : entities
@@ -191,6 +192,7 @@ export const AvatarNameSelectorMainContent = ({
                   subAvatar: entity.avatar,
                   expanded: entity.expanded ?? foundSelected?.expanded ?? false,
                   subItems: entity.subItems,
+                  subSearchKeys: entity.searchKeys,
                 },
               },
               ...(entity.subItems ?? []).map((subItem) => ({
@@ -221,6 +223,7 @@ export const AvatarNameSelectorMainContent = ({
           avatar: subItem.subAvatar,
           subItems: subItem.subItems,
           expanded: subItem.expanded,
+          searchKeys: subItem.subSearchKeys,
         }
         const selectedEntity = (selectedEntities ?? []).find(
           (el) => el.id === recoveredEntity.id
@@ -283,6 +286,7 @@ export const AvatarNameSelectorMainContent = ({
             id: subItem.subId,
             name: subItem.subName,
             avatar: subItem.subAvatar,
+            searchKeys: subItem.subSearchKeys,
           }}
           onSelect={() => {
             onSubItemSelect(parent, subItem)

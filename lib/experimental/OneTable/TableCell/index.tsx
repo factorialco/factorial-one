@@ -47,6 +47,7 @@ export function TableCell({
       <AnimatePresence>
         {isScrolled && sticky && (
           <motion.div
+            key="cell-shadow-gradient"
             className="absolute inset-y-0 -right-4 h-full w-4 bg-gradient-to-r from-f1-foreground-secondary to-transparent"
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.1 }}

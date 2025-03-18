@@ -184,8 +184,11 @@ interface OverflowListProps<T> {
   // How things are rendered
   /**
    * What to render as a list item (items outside of the overflow list)
+   * @param item - The item to render
+   * @param index - The index of the item
+   * @param isVisible - Whether this item is in the visible list (true) or measurement container (false)
    */
-  renderListItem: (item: T, index: number) => ReactNode
+  renderListItem: (item: T, index: number, isVisible?: boolean) => ReactNode
 
   /**
    * What to render as a dropdown item (items inside of the overflow list)
@@ -285,20 +288,28 @@ const OverflowList = function OverflowList<T>({
         aria-hidden="true"
         className="pointer-events-none invisible absolute left-0 top-0 flex opacity-0"
         style={{ gap: `${gap}px` }}
+        data-testid="overflow-measurement-container"
       >
         {items.map((item, index) => (
-          <div key={`measure-${index}`}>{renderListItem(item, index)}</div>
+          <div key={`measure-${index}`} data-testid="overflow-measurement-item">
+            {renderListItem(item, index, false)}
+          </div>
         ))}
       </div>
 
       <div
         className="flex items-center whitespace-nowrap"
         style={{ gap: `${gap}px` }}
+        data-testid="overflow-visible-container"
       >
         {isInitialized &&
           visibleItems.map((item, index) => (
-            <div key={`item-${index}`} className="transition-all duration-150">
-              {renderListItem(item, index)}
+            <div
+              key={`item-${index}`}
+              className="transition-all duration-150"
+              data-testid="overflow-visible-item"
+            >
+              {renderListItem(item, index, true)}
             </div>
           ))}
 

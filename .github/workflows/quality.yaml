@@ -1,7 +1,7 @@
 name: Code Quality checks
 on:
   pull_request:
-    branches: [main]
+    branches: [ main ]
 concurrency:
   group:
     ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -12,13 +12,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22.x"
-          cache: pnpm
-      - name: Install dependencies
-        run: pnpm install
+      - uses: ./.github/actions/setup-node-pnpm
       - name: Check formatting with Prettier
         run: pnpm run prettier:check:ci
   eslint:
@@ -26,13 +20,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22.x"
-          cache: pnpm
-      - name: Install dependencies
-        run: pnpm install
+      - uses: ./.github/actions/setup-node-pnpm
       - name: Check linting with eslint
         run: pnpm run lint
 

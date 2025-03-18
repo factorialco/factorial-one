@@ -417,7 +417,7 @@ describe("Collections", () => {
 
               if (sortings && sortings.field === "name") {
                 sorted.sort((a, b) => {
-                  const direction = sortings.direction === "asc" ? 1 : -1
+                  const direction = sortings.order === "asc" ? 1 : -1
                   return a.name.localeCompare(b.name) * direction
                 })
               }
@@ -487,6 +487,271 @@ describe("Collections", () => {
 
     // Verify that setCurrentSortings is called with the correct parameters
     expect(setCurrentSortingsMock).toHaveBeenCalled()
+  })
+
+  test("applies defaultSorting correctly on initial render", async () => {
+    type Person = {
+      id: number
+      name: string
+      email: string
+      role: string
+    }
+
+    const mockData: Person[] = [
+      { id: 1, name: "John Doe", email: "john@example.com", role: "Developer" },
+      {
+        id: 2,
+        name: "Alice Brown",
+        email: "alice@example.com",
+        role: "Designer",
+      },
+      { id: 3, name: "Bob Smith", email: "bob@example.com", role: "Manager" },
+    ]
+
+    // Create a mock for data fetching that sorts based on sortings
+    const fetchDataMock = vi.fn().mockImplementation(({ sortings }) => {
+      const sorted = [...mockData]
+
+      if (sortings && sortings.field === "name") {
+        sorted.sort((a, b) => {
+          const direction = sortings.order === "asc" ? 1 : -1
+          return a.name.localeCompare(b.name) * direction
+        })
+      }
+
+      return sorted
+    })
+
+    const { result } = renderHook(
+      () =>
+        useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >({
+          dataAdapter: {
+            fetchData: fetchDataMock,
+          },
+          sortings: {
+            name: {
+              label: "Name",
+            },
+          },
+          defaultSorting: {
+            field: "name",
+            order: "desc",
+          },
+        }),
+      { wrapper: TestWrapper }
+    )
+
+    render(
+      <TestWrapper>
+        <DataCollection
+          source={result.current}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  {
+                    label: "Name",
+                    render: (item: Person) => item.name,
+                    sorting: "name" as const,
+                  },
+                  {
+                    label: "Email",
+                    render: (item: Person) => item.email,
+                  },
+                ],
+              },
+            },
+          ]}
+        />
+      </TestWrapper>
+    )
+
+    // Verify the fetchData function was called with the correct default sorting
+    expect(fetchDataMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        sortings: {
+          field: "name",
+          order: "desc",
+        },
+      })
+    )
+
+    // Wait for the sorted data to be rendered
+    // With descending sort by name, "John Doe" should appear before "Alice Brown"
+    await waitFor(() => {
+      const rows = screen.getAllByRole("row")
+      // Skip header row
+      const dataRows = rows.slice(1)
+
+      // With desc sorting, the order should be: John, Bob, Alice
+      expect(within(dataRows[0]).getByText("John Doe")).toBeInTheDocument()
+      expect(within(dataRows[1]).getByText("Bob Smith")).toBeInTheDocument()
+      expect(within(dataRows[2]).getByText("Alice Brown")).toBeInTheDocument()
+    })
+  })
+
+  test("initializes currentSortings state with defaultSorting value", () => {
+    type Person = {
+      id: number
+      name: string
+    }
+
+    const defaultSorting = {
+      field: "name",
+      order: "asc" as const,
+    }
+
+    const { result } = renderHook(
+      () =>
+        useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >({
+          dataAdapter: {
+            fetchData: async () => [
+              { id: 1, name: "John Doe" },
+              { id: 2, name: "Alice Brown" },
+            ],
+          },
+          sortings: {
+            name: {
+              label: "Name",
+            },
+          },
+          defaultSorting,
+        }),
+      { wrapper: TestWrapper }
+    )
+
+    // Verify that currentSortings is initialized with defaultSorting
+    expect(result.current.currentSortings).toEqual(defaultSorting)
+  })
+
+  test("allows changing sort from defaultSorting", async () => {
+    type Person = {
+      id: number
+      name: string
+      email: string
+    }
+
+    const mockData: Person[] = [
+      { id: 1, name: "John Doe", email: "john@example.com" },
+      { id: 2, name: "Alice Brown", email: "alice@example.com" },
+      { id: 3, name: "Bob Smith", email: "bob@example.com" },
+    ]
+
+    // Create a data source with actual sorting logic
+    const { result } = renderHook(
+      () =>
+        useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >({
+          dataAdapter: {
+            fetchData: async ({ sortings }) => {
+              const sorted = [...mockData]
+
+              if (sortings) {
+                if (sortings.field === "name") {
+                  sorted.sort((a, b) => {
+                    const direction = sortings.order === "asc" ? 1 : -1
+                    return a.name.localeCompare(b.name) * direction
+                  })
+                } else if (sortings.field === "email") {
+                  sorted.sort((a, b) => {
+                    const direction = sortings.order === "asc" ? 1 : -1
+                    return a.email.localeCompare(b.email) * direction
+                  })
+                }
+              }
+
+              return sorted
+            },
+          },
+          sortings: {
+            name: { label: "Name" },
+            email: { label: "Email" },
+          },
+          defaultSorting: {
+            field: "name",
+            order: "desc",
+          },
+        }),
+      { wrapper: TestWrapper }
+    )
+
+    render(
+      <TestWrapper>
+        <DataCollection
+          source={result.current}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  {
+                    label: "Name",
+                    render: (item: Person) => item.name,
+                    sorting: "name" as const,
+                  },
+                  {
+                    label: "Email",
+                    render: (item: Person) => item.email,
+                    sorting: "email" as const,
+                  },
+                ],
+              },
+            },
+          ]}
+        />
+      </TestWrapper>
+    )
+
+    // Step 1: Verify initial sorting state - currentSortings should be set to the defaultSorting
+    expect(result.current.currentSortings).toEqual({
+      field: "name",
+      order: "desc",
+    })
+
+    // Name column header should reflect the sorting (descending)
+    const nameColumnHeader = await screen.findByRole("columnheader", {
+      name: /name/i,
+    })
+    expect(nameColumnHeader).toHaveAttribute("aria-sort", "descending")
+
+    // Step 2: Find and click the email column header sort button
+    const emailColumnHeader = screen.getByRole("columnheader", {
+      name: /email/i,
+    })
+    const emailSortButton = within(emailColumnHeader).getByRole("button", {
+      name: /sort/i,
+    })
+
+    // Perform the click
+    await act(async () => {
+      await userEvent.click(emailSortButton)
+    })
+
+    // Step 3: Verify that currentSortings state changed correctly
+    // This is the most important assertion - it proves the default sorting can be changed
+    await waitFor(() => {
+      expect(result.current.currentSortings).toEqual({
+        field: "email",
+        order: "asc",
+      })
+    })
+
+    // Now the test has successfully verified that defaultSorting can be changed to a different sorting
   })
 
   test("integrates TableCollection with filtering capabilities", async () => {
@@ -698,6 +963,116 @@ describe("Collections", () => {
     // Verify our handler was called with the correct item
     expect(handleEdit).toHaveBeenCalledTimes(1)
     expect(handleEdit).toHaveBeenCalledWith(mockData[0])
+  })
+
+  test("integrates search functionality", async () => {
+    type Person = {
+      id: number
+      name: string
+      email: string
+      role: string
+    }
+
+    const mockData: Person[] = [
+      { id: 1, name: "John Doe", email: "john@example.com", role: "Developer" },
+      {
+        id: 2,
+        name: "Jane Smith",
+        email: "jane@example.com",
+        role: "Designer",
+      },
+      {
+        id: 3,
+        name: "Alice Johnson",
+        email: "alice@example.com",
+        role: "Manager",
+      },
+      { id: 4, name: "Bob Brown", email: "bob@example.com", role: "Tester" },
+    ]
+
+    // Mock the setCurrentSearch function
+    const setCurrentSearchMock = vi.fn()
+
+    // Create a data source with search enabled
+    const { result } = renderHook(
+      () => {
+        const source = useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ActionsDefinition<Person>
+        >({
+          dataAdapter: {
+            fetchData: async ({ search }) => {
+              if (!search) return mockData
+
+              const searchLower = search.toLowerCase()
+              return mockData.filter(
+                (person) =>
+                  person.name.toLowerCase().includes(searchLower) ||
+                  person.email.toLowerCase().includes(searchLower) ||
+                  person.role.toLowerCase().includes(searchLower)
+              )
+            },
+          },
+          search: {
+            enabled: true,
+            sync: true,
+          },
+        })
+
+        // Override setCurrentSearch with our mock
+        source.setCurrentSearch = setCurrentSearchMock
+
+        return source
+      },
+      { wrapper: TestWrapper }
+    )
+
+    // Render the DataCollection with our configured source
+    render(
+      <DataCollection
+        source={result.current}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                { label: "Name", render: (item: Person) => item.name },
+                { label: "Email", render: (item: Person) => item.email },
+                { label: "Role", render: (item: Person) => item.role },
+              ],
+            },
+          },
+        ]}
+      />,
+      { wrapper: TestWrapper }
+    )
+
+    // Verify that all four initial users are displayed
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument()
+      expect(screen.getByText("Jane Smith")).toBeInTheDocument()
+      expect(screen.getByText("Alice Johnson")).toBeInTheDocument()
+      expect(screen.getByText("Bob Brown")).toBeInTheDocument()
+    })
+
+    // Find the search button/input
+    const searchButton = screen.getByLabelText(/search/i)
+    expect(searchButton).toBeInTheDocument()
+
+    // Click on the search button to open the search input
+    await userEvent.click(searchButton)
+
+    // Find the search input after it's opened
+    const searchInput = screen.getByPlaceholderText(/search/i)
+    expect(searchInput).toBeInTheDocument()
+
+    // Enter a search term
+    await userEvent.type(searchInput, "john")
+
+    // Verify the setCurrentSearch was called with the correct term
+    expect(setCurrentSearchMock).toHaveBeenCalledWith("john")
   })
 
   test("integrates TableCollection with pagination", async () => {

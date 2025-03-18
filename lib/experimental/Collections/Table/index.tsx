@@ -78,7 +78,7 @@ export const TableCollection = <
     }
 
     return currentSortings.field === columnSorting
-      ? currentSortings.direction
+      ? currentSortings.order
       : "none"
   }
 
@@ -90,12 +90,12 @@ export const TableCollection = <
       if (!currentSortings || currentSortings.field !== columnSorting) {
         return {
           field: columnSorting,
-          direction: "asc",
+          order: "asc",
         }
-      } else if (currentSortings.direction === "asc") {
+      } else if (currentSortings.order === "asc") {
         return {
           field: columnSorting,
-          direction: "desc",
+          order: "desc",
         }
       } else {
         return null
