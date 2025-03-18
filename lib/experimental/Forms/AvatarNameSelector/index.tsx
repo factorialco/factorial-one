@@ -261,7 +261,8 @@ export const AvatarNameSelector = (
     setDebouncedSearch(search)
   }
 
-  const onToggleExpand = (entity: AvatarNamedEntity) => {
+  const onToggleExpand = (entity: AvatarNamedEntity, expanded: boolean) => {
+    props.onItemExpandedChange(entity.id, expanded)
     setFilteredEntities(
       filteredEntities.map((e) =>
         e.id === entity.id ? { ...e, expanded: !entity.expanded } : e

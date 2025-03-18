@@ -60,7 +60,7 @@ export const AvatarNameSelectorMainContent = ({
   onSearch: (search: string) => void
   selectedEntities?: AvatarNamedEntity[]
   onGroupChange: (key: string | null) => void
-  onToggleExpand: (entity: AvatarNamedEntity) => void
+  onToggleExpand: (entity: AvatarNamedEntity, expanded: boolean) => void
   notFoundTitle: string
   notFoundSubtitle: string
   className?: string
@@ -131,7 +131,7 @@ export const AvatarNameSelectorMainContent = ({
       return (
         <AvatarNameListItem
           expanded={entity.expanded ?? false}
-          onExpand={() => onToggleExpand(entity)}
+          onExpand={() => onToggleExpand(entity, true)}
           search={search}
           groupView={groupView}
           key={entity.id}
@@ -242,7 +242,7 @@ export const AvatarNameSelectorMainContent = ({
           <AvatarNameListItem
             groupView
             expanded={recoveredEntity.expanded ?? false}
-            onExpand={() => onToggleExpand(recoveredEntity)}
+            onExpand={(expanded) => onToggleExpand(recoveredEntity, expanded)}
             search={search}
             entity={recoveredEntity}
             onSelect={onSelect}
