@@ -30,7 +30,7 @@ jobs:
 
       - name: Merge PR
         run: |
-          echo "DEBUG: $PR_DEBUG"
+          gh auth status
           if [ -z "$PR_NUMBER" ]; then
             echo "No PR number found"
             echo "::warning title='No release PR created by release-please'::Conventional commits didnt triggeer a version bump and release is not necessary"
@@ -40,4 +40,3 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
-          PR_DEBUG: ${{ steps.release.outputs.pr }}
