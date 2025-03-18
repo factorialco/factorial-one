@@ -25,7 +25,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target-branch: ${{ env.BRANCH }}
-          skip-github-pull-request: 'true'
 
       - name: Merge PR
         run: |
@@ -42,3 +41,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
+
+      # Set the output to true if a PR was create. This is used in other worksflows to determine if a new version was created
+      - name: Set new_version output
+        if: ${{ steps.release.outputs.pr }}
+        id: set-output
+        run: echo "::set-output name=new_version::true"
