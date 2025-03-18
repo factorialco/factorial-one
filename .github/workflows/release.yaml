@@ -34,7 +34,7 @@ jobs:
             exit 0
           fi
           echo "Merging PR $PR_NUMBER"
-          gh pr merge --auto --merge "$PR_NUMBER"
+          gh pr merge --squash "$PR_NUMBER"
           # gh pr merge $PR_NUMBER --squash --admin
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
