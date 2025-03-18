@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/factorialco/factorial-one/compare/v1.0.2...v1.0.3) (2025-03-18)
+
+
+### Bug Fixes
+
+* skip workflows on autorelease pr ([#1366](https://github.com/factorialco/factorial-one/issues/1366)) ([385e15f](https://github.com/factorialco/factorial-one/commit/385e15f8a53ac7d682d20347a8ae279825eda867))
+
 ## [1.0.2](https://github.com/factorialco/factorial-one/compare/v1.0.1...v1.0.2) (2025-03-18)
 
 
