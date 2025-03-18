@@ -14,8 +14,8 @@ jobs:
     env:
       BRANCH: ${{ github.event.repository.default_branch }}
     outputs:
-      release_created: ${{ steps.release-please.outputs.release_created }}
-      pr: ${{ steps.release-please.outputs.pr }}
+      release_created: ${{ steps.release.outputs.release_created }}
+      pr: ${{ steps.release.outputs.pr }}
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
