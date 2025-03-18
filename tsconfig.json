@@ -42,6 +42,11 @@
     ".storybook"
   ],
   "exclude": [
+    "node_modules",
+    "dist",
+    ".husky",
+    "coverage",
+    "storybook-static",
     "**/*.test.ts",
     "**/*.test.tsx"
   ],

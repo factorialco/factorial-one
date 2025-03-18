@@ -17,7 +17,16 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ["**/dist", "**/.eslintrc.cjs"],
+    ignores: [
+      "**/dist",
+      "**/.eslintrc.cjs",
+      ".husky",
+      ".vscode",
+      ".yarn",
+      "node_modules",
+      "coverage",
+      "storybook-static",
+    ],
   },
   ...fixupConfigRules(
     compat.extends(
