@@ -4,9 +4,9 @@
   "include-component-in-tag": false,
   "packages": {
     ".": {
-      "pull-request-header": "Factorial-one release 🚀 ${version} 2",
-      "pull-request-title-pattern": "chore${scope}: release${component} ${version} [skip ci] 2",
-      "group-pull-request-title-pattern": "chore${scope}: release ${version} [skip ci] 2"
+      "pull-request-header": "Factorial-one stable release 🚀",
+      "pull-request-title-pattern": "chore${scope}: release${component} ${version} [skip ci]",
+      "group-pull-request-title-pattern": "chore${scope}: release ${version} [skip ci]"
     }
   }
 }
