@@ -20,6 +20,14 @@ export const AvatarNameSelector = (
   const [search, setSearch] = useState("")
   const [debouncedSearch, setDebouncedSearch] = useDebounceValue("", 300)
 
+  const groupView = useMemo(
+    () =>
+      props.entities.some(
+        (entity) => entity.subItems && entity.subItems.length > 0
+      ),
+    [props.entities]
+  )
+
   function onPrivateSelect(entity: AvatarNamedEntity) {
     if (props.singleSelector) {
       props.onSelect(entity)
@@ -230,25 +238,30 @@ export const AvatarNameSelector = (
 
     const prevSelected = props.selectedAvatarName ?? []
 
-    const visibleSubIds = new Set<number>(
-      filteredEntities.flatMap((ent) =>
-        (ent.subItems ?? []).map((sub) => sub.subId)
-      )
-    )
+    let newSelected: AvatarNamedEntity[] = []
 
-    const newSelected: AvatarNamedEntity[] = []
-
-    for (const selectedEntity of prevSelected) {
-      const filteredSubItems = (selectedEntity.subItems ?? []).filter(
-        (sub) => !visibleSubIds.has(sub.subId)
+    if (groupView) {
+      const visibleSubIds = new Set<number>(
+        filteredEntities.flatMap((ent) =>
+          (ent.subItems ?? []).map((sub) => sub.subId)
+        )
       )
 
-      if (filteredSubItems.length > 0) {
-        newSelected.push({
-          ...selectedEntity,
-          subItems: filteredSubItems,
-        })
+      for (const selectedEntity of prevSelected) {
+        const filteredSubItems = (selectedEntity.subItems ?? []).filter(
+          (sub) => !visibleSubIds.has(sub.subId)
+        )
+
+        if (filteredSubItems.length > 0) {
+          newSelected.push({
+            ...selectedEntity,
+            subItems: filteredSubItems,
+          })
+        }
       }
+    } else {
+      const visibleIds = new Set<number>(filteredEntities.map((ent) => ent.id))
+      newSelected = (prevSelected ?? []).filter((el) => !visibleIds.has(el.id))
     }
 
     props.onSelect(newSelected)
@@ -292,14 +305,6 @@ export const AvatarNameSelector = (
       )
     )
   }
-
-  const groupView = useMemo(
-    () =>
-      props.entities.some(
-        (entity) => entity.subItems && entity.subItems.length > 0
-      ),
-    [props.entities]
-  )
 
   useEffect(() => {
     if (!debouncedSearch) {
