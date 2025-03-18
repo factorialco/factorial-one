@@ -74,6 +74,7 @@ runs:
           for branch in "${branches_to_delete[@]}"; do
             branch_name=${branch#origin/}
             echo "- $branch_name"
+            echo "TODO: Delete branch $branch_name, now just echoing the command"
             echo "git push origin --delete $branch_name"
           done
         else
