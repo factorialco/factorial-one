@@ -1,9 +1,9 @@
 import {
   ButtonInternal,
   ButtonInternalProps,
-} from "@/components/Actions/Button/internal.tsx"
+} from "@/components/Actions/Button/internal"
 import { IconType } from "@/components/Utilities/Icon"
-import { DropdownInternal } from "@/experimental/Navigation/Dropdown/internal.tsx"
+import { DropdownInternal } from "@/experimental/Navigation/Dropdown/internal"
 import { ChevronDown } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils.ts"
 import { useMemo, useState } from "react"
