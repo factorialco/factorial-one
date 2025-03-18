@@ -24,6 +24,8 @@ export default [
       ".vscode",
       ".yarn",
       "node_modules",
+      "coverage",
+      "storybook-static",
     ],
   },
   ...fixupConfigRules(
