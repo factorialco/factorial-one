@@ -1,0 +1,5 @@
+{
+  "pull-request-header": "Factorial-one release 🚀 ${version} ",
+  "pull-request-title-pattern": "chore${scope}: release${component} ${version} [skip ci]",
+  "group-pull-request-title-pattern": "chore${scope}: release ${version} [skip ci]"
+}
