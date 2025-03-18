@@ -74,7 +74,7 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
             </div>
           </DialogHeader>
           {actions && (
-            <DialogFooter className="px-4 pb-4 pt-2 [&_button]:w-full">
+            <DialogFooter className="px-4 pb-4 pt-2 [&_div]:w-full">
               <div className="hidden sm:flex sm:flex-row sm:justify-between sm:gap-3">
                 <Button variant="outline" {...actions.secondary} />
                 <Button

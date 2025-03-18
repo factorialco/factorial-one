@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from "@/components/Actions/Button"
+import { Button, type ButtonProps } from "@/components/Actions/Button"
 import { Counter } from "@/experimental/Information/Counter"
 import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
 import {
