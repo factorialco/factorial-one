@@ -1,1 +1,0 @@
-import{j as o}from"./jsx-runtime-Cf8x2fCZ.js";import{m as t}from"./index.stories-C3h3A7Ty.js";const{children:c,...i}=t.args,e=r=>o.jsx("div",{className:"w-96",children:o.jsx(r,{})});try{e.displayName="WidgetDecorator",e.__docgenInfo={description:"",displayName:"WidgetDecorator",props:{}}}catch{}export{e as W,i as c};
