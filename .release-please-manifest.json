@@ -1,5 +1,3 @@
 {
-  "pull-request-header": "Factorial-one release ${version} 🚀",
-  "pull-request-title-pattern": "🚀 🤖 Factorial-one: release ${version} ",
   ".": "1.1.0"
 }
