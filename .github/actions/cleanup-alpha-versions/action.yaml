@@ -10,7 +10,7 @@ inputs:
     required: false
   branch-base-name:
     description: 'Branch base name'
-    required: false
+    required: true
     default: 'npm/alpha-pr-'
 runs:
   using: "composite"
@@ -39,9 +39,9 @@ runs:
         
         # Log what we're doing
         echo "Filter settings:"
-        [ -n "$REMOVE_DAYS" ] && echo "- Remove versions older than $REMOVE_DAYS days"
-        [ -n "$PR_NUMBER" ] && echo "- Remove versions for PR #$PR_NUMBER"
-        [ -z "$REMOVE_DAYS" ] && [ -z "$PR_NUMBER" ] && echo "- No filters - will NOT remove any alpha branches"
+        echo "- Remove versions for PR #$PR_NUMBER"
+        [ -n "$REMOVE_DAYS" ] && echo "- Remove versions older than $REMOVE_DAYS days"        
+        [ -z "$REMOVE_DAYS" ] && [ -z "$PR_NUMBER" ] && echo "- No filters - will NOT remove any alpha branches" && exit 0
         
         
         # Create a list of branches to delete
@@ -69,13 +69,17 @@ runs:
         done
         
         # Delete the branches
-        if [ ${#branches_to_delete[@]} -gt 0 ]; then
+        if [ ${#branches_to_delete[@]} -gt 0  ]; then
           echo "The following branches will be deleted:"
           for branch in "${branches_to_delete[@]}"; do
             branch_name=${branch#origin/}
-            echo "- $branch_name"
-            echo "TODO: Delete branch $branch_name, now just echoing the command"
-            echo "git push origin --delete $branch_name"
+            # Check AGAIN if the branch is the base branch
+            if [[ "$branch_name" == *"${{inputs.branch-base-name}}"* ]]; then
+              echo "- $branch_name"
+              git push origin --delete $branch_name
+            else
+              echo "- $branch_name (skipped)"
+            fi
           done
         else
           echo "No branches to delete based on the specified criteria."
