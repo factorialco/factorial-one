@@ -319,6 +319,48 @@ export const AvatarNameSelectorMainContent = ({
     ]
   )
 
+  const [allVisibleSelected, anyVisibleSelected] = useMemo(() => {
+    if (!entities.length) {
+      return [false, false]
+    }
+    const selectedMap = new Map<number, AvatarNamedEntity>(
+      (selectedEntities ?? []).map((se) => [se.id, se])
+    )
+
+    let visibleCount = 0
+    let selectedVisibleCount = 0
+
+    if (!groupView) {
+      visibleCount = entities.length
+      entities.forEach((fe) => {
+        if (selectedMap.has(fe.id)) {
+          selectedVisibleCount += 1
+        }
+      })
+    } else {
+      entities.forEach((fe) => {
+        const subItems = fe.subItems ?? []
+        visibleCount += subItems.length
+        subItems.forEach((sub) => {
+          const isSelected = [...selectedMap.values()].some((selParent) =>
+            selParent.subItems?.some(
+              (selectedSub) => selectedSub.subId === sub.subId
+            )
+          )
+          if (isSelected) {
+            selectedVisibleCount += 1
+          }
+        })
+      })
+    }
+
+    const allSelected =
+      visibleCount > 0 && selectedVisibleCount === visibleCount
+    const anySelected = selectedVisibleCount > 0
+
+    return [allSelected, anySelected]
+  }, [entities, selectedEntities, groupView])
+
   const totalFlattenedItems = flattenedList.length
 
   return (
@@ -404,7 +446,7 @@ export const AvatarNameSelectorMainContent = ({
           <div className="flex flex-1 justify-between p-2">
             {selectAllLabel && (
               <Button
-                disabled={disabled}
+                disabled={disabled || allVisibleSelected}
                 variant="outline"
                 size="sm"
                 onClick={onSelectAll}
@@ -418,9 +460,7 @@ export const AvatarNameSelectorMainContent = ({
               <Button
                 variant="ghost"
                 size="sm"
-                disabled={
-                  disabled || !selectedEntities || selectedEntities.length === 0
-                }
+                disabled={disabled || !anyVisibleSelected}
                 onClick={onClear}
                 title={clearLabel + ` (${totalFilteredEntities})`}
                 type="button"
