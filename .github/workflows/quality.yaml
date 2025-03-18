@@ -8,6 +8,8 @@ concurrency:
   cancel-in-progress: true
 jobs:
   prettier:
+    # Skip if the PR is tagged for autorelease
+    if: "! contains(github.event.pull_request.labels.*.name, 'autorelease')"
     name: Prettier
     runs-on: ubuntu-22.04
     steps:
@@ -16,6 +18,8 @@ jobs:
       - name: Check formatting with Prettier
         run: pnpm run prettier:check:ci
   eslint:
+    # Skip if the PR is tagged for autorelease
+    if: "! contains(github.event.pull_request.labels.*.name, 'autorelease')"
     name: Eslint
     runs-on: ubuntu-22.04
     steps:

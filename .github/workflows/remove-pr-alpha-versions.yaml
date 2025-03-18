@@ -6,8 +6,9 @@ on:
 
 jobs:
   clear-alpha-versions:
+    # Skip if the PR is tagged for autorelease
+    if: "! contains(github.event.pull_request.labels.*.name, 'autorelease')"
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
       packages: write

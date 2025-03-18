@@ -8,7 +8,9 @@ on:
 
 jobs:
   publish-alpha:
+    # Skip if the PR is tagged for autorelease
     if: |
+      !contains(github.event.pull_request.labels.*.name, 'autorelease') && 
       (github.event_name == 'issue_comment' &&
        github.event.issue.pull_request &&
        contains(github.event.comment.body, 'build')) ||
@@ -37,5 +39,5 @@ jobs:
           pnpx git-publish -b 'npm/alpha-pr-${{ github.event.pull_request.number }}'
           LAST=$(git rev-parse HEAD)
           echo "::notice title='Package published'::Use pnpm i github:factorialco/factorial-one#npm/alpha-pr-${{ github.event.pull_request.number }} to install the package (or pnpm i github:factorialco/factorial-one#${LAST} to install this specific commit)"
- 
+   
 
