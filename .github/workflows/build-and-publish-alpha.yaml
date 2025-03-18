@@ -37,5 +37,5 @@ jobs:
           pnpx git-publish -b 'npm/alpha-pr-${{ github.event.pull_request.number }}'
           LAST=$(git rev-parse HEAD)
           echo "::notice title='Package published'::Use pnpm i github:factorialco/factorial-one#npm/alpha-pr-${{ github.event.pull_request.number }} to install the package (or pnpm i github:factorialco/factorial-one#${LAST} to install this specific commit)"
- 
+   
 

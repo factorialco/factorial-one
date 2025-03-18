@@ -14,29 +14,33 @@ jobs:
     env:
       BRANCH: ${{ github.event.repository.default_branch }}
     outputs:
-      release_created: ${{ steps.release-please.outputs.release_created }}
-      pr: ${{ steps.release-please.outputs.pr }}
+      release_created: ${{ steps.release.outputs.release_created }}
+      pr: ${{ steps.release.outputs.pr }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
       - uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: node
           target-branch: ${{ env.BRANCH }}
-
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.repository.default_branch }}
 
       - name: Merge PR
         run: |
-          echo "DEBUG: $PR_DEBUG"
           if [ -z "$PR_NUMBER" ]; then
             echo "No PR number found"
+            echo "::warning title='No release PR created by release-please'::Conventional commits didnt trigger a version bump and a release is not necessary"
             exit 0
           fi
+          gh pr review $PR_NUMBER -a
           gh pr merge $PR_NUMBER --squash --admin
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
-          PR_DEBUG: ${{ steps.release.outputs.pr }}
+
+      # Set the output to true if a PR was create. This is used in other worksflows to determine if a new version was created
+      - name: Set new_version output
+        if: ${{ steps.release.outputs.pr }}
+        id: set-output
+        run: echo "::set-output name=new_version::true"
