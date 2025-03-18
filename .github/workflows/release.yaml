@@ -22,9 +22,7 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: node
           target-branch: ${{ env.BRANCH }}
-          config-file: 'release-please-config.json'
 
       - uses: actions/checkout@v4
         with:
