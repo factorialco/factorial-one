@@ -835,6 +835,10 @@ export const WithTableVisualization: Story = {
     const source = useDataSource({
       filters,
       sortings,
+      defaultSorting: {
+        field: "name",
+        order: "asc",
+      },
       presets: filterPresets,
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],

@@ -30,6 +30,7 @@ export type DataSourceDefinition<
   currentFilters?: FiltersState<Filters>
   /** Available sorting fields. If not provided, sorting is not allowed. */
   sortings?: Sortings
+  defaultSorting?: SortingsState<Sortings>
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters, Sortings>
 }
