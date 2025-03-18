@@ -27,21 +27,31 @@ export const AvatarNameSelector = (
     }
 
     const prevSelected = props.selectedAvatarName ?? []
-    const newSubIdsSet = new Set(entity.subItems?.map((s) => s.subId) ?? [])
-    const parentIdsToUpdate = new Set<number>([entity.id])
 
-    props.entities.forEach((parent) => {
-      if (parent.id !== entity.id) {
-        const hasIntersection = (parent.subItems ?? []).some((s) =>
-          newSubIdsSet.has(s.subId)
+    const filteredEntity = filteredEntities.find((fe) => fe.id === entity.id)
+    if (!filteredEntity) {
+      return
+    }
+
+    const visibleSubIds = new Set(
+      (filteredEntity.subItems ?? []).map((s) => s.subId)
+    )
+
+    const parentIdsToUpdate = new Set<number>([filteredEntity.id])
+    filteredEntities.forEach((possibleParent) => {
+      if (possibleParent.id !== filteredEntity.id) {
+        const hasIntersection = (possibleParent.subItems ?? []).some((sub) =>
+          visibleSubIds.has(sub.subId)
         )
-        if (hasIntersection) parentIdsToUpdate.add(parent.id)
+        if (hasIntersection) {
+          parentIdsToUpdate.add(possibleParent.id)
+        }
       }
     })
 
     const newSelectedEntities = [...prevSelected]
 
-    const upsertSelectedEntity = (updated: AvatarNamedEntity) => {
+    function upsertSelectedEntity(updated: AvatarNamedEntity) {
       const idx = newSelectedEntities.findIndex((x) => x.id === updated.id)
       if (idx >= 0) {
         newSelectedEntities[idx] = updated
@@ -51,22 +61,34 @@ export const AvatarNameSelector = (
     }
 
     parentIdsToUpdate.forEach((parentId) => {
-      const realParent = props.entities.find((p) => p.id === parentId)
-      if (!realParent) return
+      const filteredParent = filteredEntities.find((p) => p.id === parentId)
+      if (!filteredParent) return
 
-      const updatedSubItems =
-        realParent.subItems
-          ?.filter((sub) => newSubIdsSet.has(sub.subId))
-          .map((sub) => ({
-            ...sub,
-          })) ?? []
+      const newVisibleSubItems =
+        filteredParent.subItems?.filter((sub) =>
+          visibleSubIds.has(sub.subId)
+        ) ?? []
 
-      const updatedParent: AvatarNamedEntity = {
-        ...realParent,
-        subItems: updatedSubItems,
+      const oldIndex = newSelectedEntities.findIndex((x) => x.id === parentId)
+      if (oldIndex >= 0) {
+        const oldSubItems = newSelectedEntities[oldIndex].subItems ?? []
+        const setOldSubIds = new Set(oldSubItems.map((s) => s.subId))
+
+        const mergedSubItems = [
+          ...oldSubItems,
+          ...newVisibleSubItems.filter((s) => !setOldSubIds.has(s.subId)),
+        ]
+
+        upsertSelectedEntity({
+          ...filteredParent,
+          subItems: mergedSubItems,
+        })
+      } else {
+        upsertSelectedEntity({
+          ...filteredParent,
+          subItems: newVisibleSubItems,
+        })
       }
-
-      upsertSelectedEntity(updatedParent)
     })
 
     props.onSelect(newSelectedEntities)
@@ -141,24 +163,28 @@ export const AvatarNameSelector = (
 
     const prevSelected = props.selectedAvatarName ?? []
 
-    const subIdsToRemove = new Set(
-      (entityToRemove.subItems ?? []).map((sub) => sub.subId)
+    const filteredVersion = filteredEntities.find(
+      (fe) => fe.id === entityToRemove.id
+    )
+
+    if (!filteredVersion) {
+      return
+    }
+
+    const visibleSubIds = new Set(
+      (filteredVersion.subItems ?? []).map((sub) => sub.subId)
     )
 
     const newSelectedEntities: AvatarNamedEntity[] = []
 
-    for (const parent of prevSelected) {
-      if (parent.id === entityToRemove.id) {
-        continue
-      }
-
-      const filteredSubItems = (parent.subItems ?? []).filter(
-        (sub) => !subIdsToRemove.has(sub.subId)
+    for (const selectedParent of prevSelected) {
+      const filteredSubItems = (selectedParent.subItems ?? []).filter(
+        (sub) => !visibleSubIds.has(sub.subId)
       )
 
       if (filteredSubItems.length > 0) {
         newSelectedEntities.push({
-          ...parent,
+          ...selectedParent,
           subItems: filteredSubItems,
         })
       }
@@ -196,42 +222,39 @@ export const AvatarNameSelector = (
     props.onSelect(newSelectedEntities)
   }
 
-  const onClear = () => {
-    const updatedSelected = [...(props.selectedAvatarName ?? [])]
+  function onClear() {
+    if (props.singleSelector) {
+      props.onSelect(null)
+      return
+    }
 
-    props.entities.forEach((filteredEntity) => {
-      const existingIndex = updatedSelected.findIndex(
-        (sel) => sel.id === filteredEntity.id
+    const prevSelected = props.selectedAvatarName ?? []
+
+    const visibleSubIds = new Set<number>(
+      filteredEntities.flatMap((ent) =>
+        (ent.subItems ?? []).map((sub) => sub.subId)
+      )
+    )
+
+    const newSelected: AvatarNamedEntity[] = []
+
+    for (const selectedEntity of prevSelected) {
+      const filteredSubItems = (selectedEntity.subItems ?? []).filter(
+        (sub) => !visibleSubIds.has(sub.subId)
       )
 
-      if (existingIndex === -1) return
-
-      const existingEntity = updatedSelected[existingIndex]
-
-      const filteredSubs = filteredEntity.subItems ?? []
-      if (filteredSubs.length > 0) {
-        const newSubItems =
-          existingEntity.subItems?.filter(
-            (sub) => !filteredSubs.some((f) => f.subId === sub.subId)
-          ) ?? []
-
-        if (newSubItems.length === 0) {
-          updatedSelected.splice(existingIndex, 1)
-        } else {
-          updatedSelected[existingIndex] = {
-            ...existingEntity,
-            subItems: newSubItems,
-          }
-        }
-      } else {
-        updatedSelected.splice(existingIndex, 1)
+      if (filteredSubItems.length > 0) {
+        newSelected.push({
+          ...selectedEntity,
+          subItems: filteredSubItems,
+        })
       }
-    })
+    }
 
-    if (!props.singleSelector) props.onSelect(updatedSelected)
+    props.onSelect(newSelected)
   }
 
-  const onSelectAll = () => {
+  function onSelectAll() {
     const newSelected = [...(props.selectedAvatarName ?? [])]
 
     filteredEntities.forEach((entity) => {
