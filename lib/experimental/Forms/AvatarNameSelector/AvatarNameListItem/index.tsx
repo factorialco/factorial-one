@@ -186,7 +186,7 @@ const AvatarNameListItem = ({
   showGroupIcon?: boolean
   onSelect: (entity: AvatarNamedEntity) => void
   onRemove: (entity: AvatarNamedEntity) => void
-  onExpand: () => void
+  onExpand: (expanded: boolean) => void
   singleSelector: boolean
   isChild?: boolean
   hideLine?: boolean
@@ -215,9 +215,9 @@ const AvatarNameListItem = ({
   const handleKeyDown = (ev: React.KeyboardEvent<HTMLButtonElement>) => {
     if (ev.key === " ") {
       ev.preventDefault()
-      onExpand()
+      onExpand(!expanded)
     } else if (ev.key === "Enter" && singleSelector) {
-      onExpand()
+      onExpand(!expanded)
     } else if (ev.key === "Enter") {
       if (disabled) return
       if (!selected || partialSelected) {
@@ -234,7 +234,7 @@ const AvatarNameListItem = ({
 
   const handleGroupClick = () => {
     if (pressingLabel) {
-      onExpand()
+      onExpand(!expanded)
       setPressingLabel(false)
     } else {
       if (disabled) return
@@ -254,7 +254,7 @@ const AvatarNameListItem = ({
           round
           hideLabel
           icon={expanded ? ChevronDown : ChevronRight}
-          onClick={onExpand}
+          onClick={() => onExpand(!expanded)}
           label={expanded ? "Collapse" : "Expand"}
           size="sm"
           variant="ghost"

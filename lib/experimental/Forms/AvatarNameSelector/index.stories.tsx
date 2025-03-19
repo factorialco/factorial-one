@@ -40,6 +40,7 @@ const defaultArgs: AvatarNameSelectorMultipleProps = {
     { label: "Workplace", value: "workplaces" },
   ] as AvatarNamedGroup[],
   selectedGroup: "all",
+  onItemExpandedChange: fn(),
   onGroupChange: fn(),
   onSelect: fn(),
   singleSelector: false,
@@ -92,6 +93,7 @@ export const Default = {
   args: defaultArgs,
   render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [expandedElements, setExpandedElements] = useState<number[]>([])
     const [selected, setSelected] = useState<AvatarNamedEntity[]>([
       {
         ...famousEmployees[0],
@@ -102,13 +104,28 @@ export const Default = {
       props.selectedGroup ?? "all"
     )
 
+    const onItemExpandedChange = (id: number, expanded: boolean) => {
+      if (expanded) {
+        setExpandedElements([id].concat(expandedElements))
+      } else {
+        setExpandedElements(expandedElements.filter((el) => el !== id))
+      }
+    }
+
     return (
       <AvatarNameSelector
         {...props}
         singleSelector={false}
         loading={loading}
-        entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+        entities={
+          GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA].map((el) => ({
+            ...el,
+            expanded: expandedElements.includes(el.id),
+            subItems: el.subItems?.map((el2) => ({ ...el2 })),
+          })) || []
+        }
         selectedGroup={selectedGroup}
+        onItemExpandedChange={onItemExpandedChange}
         onGroupChange={(value) => {
           setSelected([])
           setSelectedGroup(value ?? "all")
@@ -132,6 +149,7 @@ export const WithSelectedGroup = {
   } as AvatarNameSelectorProps,
   render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [expandedElements, setExpandedElements] = useState<number[]>([])
     const [selected, setSelected] = useState<AvatarNamedEntity[]>([
       {
         ...famousEmployees[0],
@@ -142,12 +160,27 @@ export const WithSelectedGroup = {
       props.selectedGroup ?? "all"
     )
 
+    const onItemExpandedChange = (id: number, expanded: boolean) => {
+      if (expanded) {
+        setExpandedElements([id].concat(expandedElements))
+      } else {
+        setExpandedElements(expandedElements.filter((el) => el !== id))
+      }
+    }
+
     return (
       <AvatarNameSelector
         {...props}
         singleSelector={false}
         loading={loading}
-        entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+        onItemExpandedChange={onItemExpandedChange}
+        entities={
+          GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA].map((el) => ({
+            ...el,
+            expanded: expandedElements.includes(el.id),
+            subItems: el.subItems?.map((el2) => ({ ...el2 })),
+          })) || []
+        }
         selectedGroup={selectedGroup}
         onGroupChange={(value) => {
           setSelected([])
@@ -174,17 +207,33 @@ export const SingleSelector = {
   render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
     const [selected, setSelected] = useState<AvatarNamedEntity | undefined>()
+    const [expandedElements, setExpandedElements] = useState<number[]>([])
     const [selectedGroup, setSelectedGroup] = useState<string>(
       props.selectedGroup ?? "all"
     )
+
+    const onItemExpandedChange = (id: number, expanded: boolean) => {
+      if (expanded) {
+        setExpandedElements([id].concat(expandedElements))
+      } else {
+        setExpandedElements(expandedElements.filter((el) => el !== id))
+      }
+    }
 
     return (
       <AvatarNameSelector
         {...props}
         singleSelector
         loading={loading}
-        entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+        entities={
+          GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA].map((el) => ({
+            ...el,
+            expanded: expandedElements.includes(el.id),
+            subItems: el.subItems?.map((el2) => ({ ...el2 })),
+          })) || []
+        }
         selectedGroup={selectedGroup}
+        onItemExpandedChange={onItemExpandedChange}
         onGroupChange={(value) => {
           setSelected(undefined)
           setSelectedGroup(value ?? "all")
@@ -218,6 +267,7 @@ export const AlwaysOpen = {
   } as AvatarNameSelectorProps,
   render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [expandedElements, setExpandedElements] = useState<number[]>([])
     const [selected, setSelected] = useState<AvatarNamedEntity[]>([
       {
         ...famousEmployees[0],
@@ -228,6 +278,14 @@ export const AlwaysOpen = {
       props.selectedGroup ?? "all"
     )
 
+    const onItemExpandedChange = (id: number, expanded: boolean) => {
+      if (expanded) {
+        setExpandedElements([id].concat(expandedElements))
+      } else {
+        setExpandedElements(expandedElements.filter((el) => el !== id))
+      }
+    }
+
     return (
       <div className="w-[300px] border-2">
         <AvatarNameSelector
@@ -235,7 +293,14 @@ export const AlwaysOpen = {
           singleSelector={false}
           width={undefined}
           loading={loading}
-          entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+          onItemExpandedChange={onItemExpandedChange}
+          entities={
+            GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA].map((el) => ({
+              ...el,
+              expanded: expandedElements.includes(el.id),
+              subItems: el.subItems?.map((el2) => ({ ...el2 })),
+            })) || []
+          }
           selectedGroup={selectedGroup}
           onGroupChange={(value) => {
             setSelected([])
@@ -263,6 +328,7 @@ export const AlwaysOpenInForm = {
     alwaysOpen: true,
   } as AvatarNameSelectorProps,
   render: (props: ComponentProps<typeof AvatarNameSelector>) => {
+    const [expandedElements, setExpandedElements] = useState<number[]>([])
     const [selected, setSelected] = useState<AvatarNamedEntity[]>([
       {
         ...famousEmployees[0],
@@ -273,12 +339,27 @@ export const AlwaysOpenInForm = {
       props.selectedGroup ?? "all"
     )
 
+    const onItemExpandedChange = (id: number, expanded: boolean) => {
+      if (expanded) {
+        setExpandedElements([id].concat(expandedElements))
+      } else {
+        setExpandedElements(expandedElements.filter((el) => el !== id))
+      }
+    }
+
     return (
       <form onSubmit={fn}>
         <AvatarNameSelector
           {...props}
           singleSelector={false}
-          entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+          onItemExpandedChange={onItemExpandedChange}
+          entities={
+            GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA].map((el) => ({
+              ...el,
+              expanded: expandedElements.includes(el.id),
+              subItems: el.subItems?.map((el2) => ({ ...el2 })),
+            })) || []
+          }
           selectedGroup={selectedGroup}
           onGroupChange={(value) => {
             setSelected([])
@@ -301,6 +382,7 @@ export const WithCustomTrigger = {
   } as AvatarNameSelectorProps,
   render: (props: ComponentProps<typeof AvatarNameSelector>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
+    const [expandedElements, setExpandedElements] = useState<number[]>([])
     const [selectedGroup, setSelectedGroup] = useState<string>(
       props.selectedGroup ?? "all"
     )
@@ -313,13 +395,28 @@ export const WithCustomTrigger = {
     const [numSelected, setNumSelected] = useState<number>(2)
     const [open, setOpen] = useState<boolean>(false)
 
+    const onItemExpandedChange = (id: number, expanded: boolean) => {
+      if (expanded) {
+        setExpandedElements([id].concat(expandedElements))
+      } else {
+        setExpandedElements(expandedElements.filter((el) => el !== id))
+      }
+    }
+
     return (
       <div className="w-[600px]">
         <AvatarNameSelector
           {...props}
           singleSelector={false}
           loading={loading}
-          entities={GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA] || []}
+          onItemExpandedChange={onItemExpandedChange}
+          entities={
+            GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA].map((el) => ({
+              ...el,
+              expanded: expandedElements.includes(el.id),
+              subItems: el.subItems?.map((el2) => ({ ...el2 })),
+            })) || []
+          }
           selectedGroup={selectedGroup}
           onGroupChange={(value) => {
             setSelected([])

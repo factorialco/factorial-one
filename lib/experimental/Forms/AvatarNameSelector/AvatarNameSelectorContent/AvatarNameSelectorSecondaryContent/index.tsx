@@ -26,7 +26,7 @@ export const AvatarNameSelectorSecondaryContent = ({
   disabled?: boolean
 }) => {
   const flattenedList = useMemo<FlattenedItem[]>(() => {
-    return !groupView
+    const rawFlattened = !groupView
       ? selectedEntities.map((el) => ({
           parent: null,
           subItem: {
@@ -41,6 +41,16 @@ export const AvatarNameSelectorSecondaryContent = ({
             subItem,
           }))
         )
+
+    const seenIds = new Set<number>()
+    return rawFlattened.filter((item) => {
+      const key = item.subItem.subId
+      if (seenIds.has(key)) {
+        return false
+      }
+      seenIds.add(key)
+      return true
+    })
   }, [groupView, selectedEntities])
 
   const totalSelectedSubItems = flattenedList.length

@@ -41,7 +41,7 @@ export const AvatarNameSelectorContent = ({
   onSearch: (search: string) => void
   selectedEntities: AvatarNamedEntity[]
   onGroupChange: (key: string | null) => void
-  onToggleExpand: (entity: AvatarNamedEntity) => void
+  onToggleExpand: (entity: AvatarNamedEntity, expanded: boolean) => void
   notFoundTitle: string
   notFoundSubtitle: string
   width?: number
