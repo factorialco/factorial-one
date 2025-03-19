@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.1](https://github.com/factorialco/factorial-one/compare/v1.2.0...v1.2.1) (2025-03-19)
+
+
+### Bug Fixes
+
+* auto approve pr action ([#1407](https://github.com/factorialco/factorial-one/issues/1407)) ([704e67c](https://github.com/factorialco/factorial-one/commit/704e67cc6d73aa775fe2d13745f56dcbb6ac35a4))
+* auto approve pr action ([#1408](https://github.com/factorialco/factorial-one/issues/1408)) ([7d793a6](https://github.com/factorialco/factorial-one/commit/7d793a69913a2848aae8a1080d38a11b92ee3f57))
+* auto approve pr action ([#1409](https://github.com/factorialco/factorial-one/issues/1409)) ([92bbeac](https://github.com/factorialco/factorial-one/commit/92bbeacde9080d783cd5f6afccc2e9fe019783a8))
+* auto approve pr action ([#1410](https://github.com/factorialco/factorial-one/issues/1410)) ([8df5522](https://github.com/factorialco/factorial-one/commit/8df5522f69f85e77d868ed21fc06de5daeeae0a8))
+* auto approve pr action ([#1411](https://github.com/factorialco/factorial-one/issues/1411)) ([c8dc833](https://github.com/factorialco/factorial-one/commit/c8dc83302cea248ff0d60262a165184fdbf80454))
+* auto approve pr action ([#1412](https://github.com/factorialco/factorial-one/issues/1412)) ([57a6227](https://github.com/factorialco/factorial-one/commit/57a62272efad18786211410c7ef86c17a0d4eaf1))
+
 ## [1.2.0](https://github.com/factorialco/factorial-one/compare/v1.1.4...v1.2.0) (2025-03-19)
 
 
