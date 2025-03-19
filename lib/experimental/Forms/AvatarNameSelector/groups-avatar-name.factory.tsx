@@ -13,7 +13,7 @@ export const teamsWithEmployees: AvatarNamedEntity[] = [
     id: 52,
     name: "Design",
     avatar: avatar,
-    subItems: getEmployeesFromRange(12, 22),
+    subItems: getEmployeesFromRange(10, 22),
   },
   {
     id: 53,
@@ -24,7 +24,7 @@ export const teamsWithEmployees: AvatarNamedEntity[] = [
     id: 54,
     name: "Sales",
     avatar: avatar,
-    subItems: getEmployeesFromRange(22, 30),
+    subItems: getEmployeesFromRange(20, 30),
   },
 ]
 
