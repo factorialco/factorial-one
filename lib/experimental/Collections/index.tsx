@@ -173,7 +173,7 @@ export const DataCollection = <
         )}
         <div className="flex shrink-0 items-center gap-2">
           <AnimatePresence initial={false}>
-            {isLoading && !search && (
+            {isLoading && (
               <MotionIcon
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -187,11 +187,7 @@ export const DataCollection = <
             )}
           </AnimatePresence>
           {search && (
-            <Search
-              loading={isLoading}
-              onChange={setCurrentSearch}
-              value={currentSearch}
-            />
+            <Search onChange={setCurrentSearch} value={currentSearch} />
           )}
           {visualizations && visualizations.length > 1 && (
             <VisualizationSelector
