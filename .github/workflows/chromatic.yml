@@ -15,7 +15,8 @@ concurrency:
 
 jobs:
   chromatic:
-    if: github.head_ref != 'release-please--branches--master'
+    # Prevents running on the release-please branch
+    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
     permissions: write-all
     name: Run Chromatic
     runs-on: ubuntu-latest
