@@ -313,7 +313,7 @@ const ProductUpdates = ({
   label,
   getUpdatesQuery,
   updatesPageUrl,
-  hasUnread = false,
+  // hasUnread = false,
 }: ProductUpdatesProp) => {
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
   const [featuredUpdate, ...restUpdates] = updates ?? []
