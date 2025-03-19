@@ -1,6 +1,6 @@
 import { Meta, Unstyled } from "@storybook/blocks"
 import { FeatureCard } from "./components/FeatureCard"
-import * as AnimatedIcons from "@/icons/animated"
+import * as AnimatedIcon from "@/icons/animated"
 
 # Welcome to Factorial One
 
@@ -10,19 +10,19 @@ Factorial One.
 <Unstyled>
   <div className="mt-6 grid grid-cols-1 gap-6 pb-8 md:grid-cols-3">
     <FeatureCard
-      icon={AnimatedIcons.RocketAnimated}
+      icon={AnimatedIcon.RocketAnimated}
       title="Getting Started"
       description="Explore how to start with tutorials and getting started guides."
       href="/?path=/docs/components-maturity--documentation"
     />
     <FeatureCard
-      icon={AnimatedIcons.BookAnimated}
+      icon={AnimatedIcon.BookAnimated}
       title="Foundations"
       description="Explore the foundations like colors, typography, or spacing."
       href="/?path=/docs/foundations-colors--documentation"
     />
     <FeatureCard
-      icon={AnimatedIcons.FoldersAnimated}
+      icon={AnimatedIcon.FoldersAnimated}
       title="Components"
       description="Discover our comprehensive collection of UI components."
       href="/?path=/docs/components-actions-button--documentation"
@@ -120,15 +120,7 @@ import "@factorialco/factorial-one/dist/styles.css"
 You can then utilize any of its components:
 
 ```jsx
-import { Button, AppIcons, ModuleIcons, AnimatedIcons } from "@factorialco/factorial-one"
-
-// Use a regular button component
-<Button>Click me</Button>
-
-// Use icons with namespaces
-<AppIcons.Home />
-<ModuleIcons.Calendar />
-<AnimatedIcons.RocketAnimated />
+import { Button } from "@factorialco/factorial-one"
 ```
 
 ## Figma resources
