@@ -1,3 +1,4 @@
+import { PrimaryDropdownAction } from "@/experimental/Information/utils"
 import {
   Archive,
   Comment,
@@ -222,6 +223,46 @@ export const WithOtherActions: Story = {
         icon: Archive,
         critical: true,
         onClick: fn(),
+      },
+    ],
+  },
+}
+
+export const WithDropdownAction: Story = {
+  args: {
+    ...Default.args,
+    primaryAction: {
+      items: [
+        { label: "Publish now", value: "publish", icon: Icon.ArrowUp },
+        { label: "Schedule publish", value: "schedule", icon: Icon.Calendar },
+        { label: "Save as draft", value: "draft", icon: Icon.Save },
+      ],
+      onClick: (value) => {
+        console.log("Selected action:", value)
+      },
+      tooltip: "Choose a publish action",
+    } as PrimaryDropdownAction<string>,
+    metadata: [
+      {
+        label: "Status",
+        value: { type: "status", label: "Pending review", variant: "warning" },
+      },
+      {
+        label: "Due date",
+        value: { type: "date", formattedDate: "2024-03-20", icon: "warning" },
+      },
+      {
+        label: "Reviewer",
+        value: {
+          type: "avatar",
+          variant: {
+            type: "person",
+            firstName: "Ana",
+            lastName: "Martínez",
+            src: "https://github.com/anamartinez.png",
+          },
+          text: "Ana Martínez",
+        },
       },
     ],
   },
