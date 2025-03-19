@@ -334,7 +334,7 @@ const ProductUpdates = ({
           <Icon icon={Messages} size="md" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="max-w-md max-h-[600px]">
+      <DropdownMenuContent align="start" className="max-h-[600px] max-w-md">
         {updates === null && "loading"}
         {updates !== null && updates.length > 0 && (
           <>
@@ -388,23 +388,23 @@ const FeaturedDropdownItem = ({
           "text-f1-foreground no-underline hover:cursor-pointer"
         )}
       >
-          <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
-            <Image
-              src={imageURL}
-              className="block aspect-video object-contain object-center w-full"
-            />
+        <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
+          <Image
+            src={imageURL}
+            className="block aspect-video w-full object-contain object-center"
+          />
+        </div>
+        <div className="flex items-start gap-4">
+          <div className="flex-1 *:text-base">
+            <h3 className="font-medium">{title}</h3>
+            <p className="font-normal text-f1-foreground-secondary">
+              {updated}
+            </p>
           </div>
-          <div className="flex items-start gap-4">
-            <div className="flex-1 *:text-base">
-              <h3 className="font-medium">{title}</h3>
-              <p className="font-normal text-f1-foreground-secondary">
-                {updated}
-              </p>
-            </div>
-            {unread && (
-              <div className="size-2 rounded bg-f1-background-selected-bold mt-1.5" />
-            )}
-          </div>
+          {unread && (
+            <div className="mt-1.5 size-2 rounded bg-f1-background-selected-bold" />
+          )}
+        </div>
       </Link>
     </DropdownMenuItem>
   )
@@ -441,7 +441,7 @@ const DropdownItem = ({
             </p>
           </div>
           {unread && (
-            <div className="size-2 rounded bg-f1-background-selected-bold mt-1.5" />
+            <div className="mt-1.5 size-2 rounded bg-f1-background-selected-bold" />
           )}
         </div>
       </Link>
