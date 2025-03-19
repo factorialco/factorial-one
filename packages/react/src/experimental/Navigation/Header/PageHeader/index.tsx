@@ -16,6 +16,17 @@ import { StatusTag } from "../../../Information/Tags/StatusTag"
 import { Tooltip } from "../../../Overlays/Tooltip"
 import { useSidebar } from "../../ApplicationFrame/FrameProvider"
 import { Dropdown } from "../../Dropdown"
+
+import ChevronRight from "@/icons/app/ChevronRight.tsx"
+import Messages from "@/icons/app/Messages.tsx"
+import { Image } from "@/lib/imageHandler"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/ui/dropdown-menu.tsx"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 
 export type PageAction = {
@@ -60,6 +71,13 @@ type HeaderProps = {
   navigation?: NavigationProps
   embedded?: boolean
   breadcrumbs?: BreadcrumbItemType[]
+  productUpdates?: {
+    isVisible?: boolean
+    label: string
+    updatesPageUrl: UrlString
+    getUpdatesQuery: () => Promise<Array<ProductUpdate>>
+    hasUnread?: boolean
+  }
 }
 
 function PageNavigationLink({
@@ -95,6 +113,7 @@ export function PageHeader({
   actions = [],
   embedded = false,
   navigation,
+  productUpdates,
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
@@ -110,6 +129,7 @@ export function PageHeader({
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
   const hasActions = !embedded && actions.length > 0
+  const hasProductUpdates = !embedded && !!productUpdates?.isVisible
   const lastBreadcrumb = breadcrumbsTree[breadcrumbsTree.length - 1]
   const parentBreadcrumb = hasNavigation
     ? breadcrumbsTree[breadcrumbsTree.length - 2]
@@ -202,9 +222,11 @@ export function PageHeader({
             )}
           </div>
         )}
-        {!embedded && hasStatus && (navigation || hasActions) && (
-          <div className="h-4 w-px bg-f1-border-secondary" />
-        )}
+        {!embedded &&
+          hasStatus &&
+          (navigation || hasActions || hasProductUpdates) && (
+            <div className="h-4 w-px bg-f1-border-secondary" />
+          )}
         {navigation && (
           <div className="flex items-center gap-3">
             {navigation.counter && (
@@ -230,6 +252,16 @@ export function PageHeader({
         )}
         {navigation && hasActions && (
           <div className="h-4 w-px bg-f1-border-secondary" />
+        )}
+        {hasProductUpdates && (
+          <div className="items-right flex gap-2">
+            <ProductUpdates
+              updatesPageUrl={productUpdates?.updatesPageUrl}
+              getUpdatesQuery={productUpdates?.getUpdatesQuery}
+              hasUnread={productUpdates?.hasUnread}
+              label="Product updates"
+            />
+          </div>
         )}
         {hasActions && (
           <div className="items-right flex gap-2">
@@ -265,5 +297,159 @@ function PageAction({ action }: { action: PageAction }): ReactElement {
     >
       <Icon icon={action.icon} size="md" />
     </Link>
+  )
+}
+
+type ProductUpdate = {
+  title: string
+  href: UrlString
+  imageURL: UrlString
+  updated: string
+  unread?: boolean
+}
+
+type ProductUpdatesProp = {
+  label: string
+  updatesPageUrl: UrlString
+  getUpdatesQuery: () => Promise<Array<ProductUpdate>>
+  hasUnread?: boolean
+}
+const ProductUpdates = ({
+  label,
+  getUpdatesQuery,
+  updatesPageUrl,
+  hasUnread = false,
+}: ProductUpdatesProp) => {
+  const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
+  const [featuredUpdate, ...restUpdates] = updates ?? []
+  return (
+    <DropdownMenu
+      onOpenChange={async (open) => {
+        if (open && updates === null) {
+          const response = await getUpdatesQuery()
+          setUpdates(response)
+        }
+      }}
+    >
+      <DropdownMenuTrigger asChild>
+        <button
+          title={label}
+          className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
+        >
+          <Icon icon={Messages} size="md" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start" className="max-h-[600px] max-w-md">
+        {updates === null && "loading"}
+        {updates !== null && updates.length > 0 && (
+          <>
+            <a
+              href={updatesPageUrl}
+              className="flex items-center justify-between gap-4 px-4 py-3 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
+            >
+              <h2 className="text-base font-medium">{label}</h2>
+              <Button
+                variant="outline"
+                round
+                size="sm"
+                icon={ChevronRight}
+                label={label}
+                hideLabel
+              />
+            </a>
+            <FeaturedDropdownItem {...featuredUpdate} />
+            {updates.length > 1 && (
+              <>
+                <DropdownMenuSeparator />
+                {restUpdates.map((update, index) => (
+                  <DropdownItem key={index} {...update} />
+                ))}
+              </>
+            )}
+          </>
+        )}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
+
+const FeaturedDropdownItem = ({
+  title,
+  href,
+  imageURL,
+  unread,
+  updated,
+}: ProductUpdate) => {
+  const itemClass = "flex flex-col items-stretch gap-3 w-full"
+  return (
+    <DropdownMenuItem asChild className={itemClass}>
+      <Link
+        href={href}
+        target="_blank"
+        referrerPolicy="no-referrer"
+        rel="noopener noreferrer"
+        className={cn(
+          itemClass,
+          "text-f1-foreground no-underline hover:cursor-pointer"
+        )}
+      >
+        <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
+          <Image
+            src={imageURL}
+            className="block aspect-video w-full object-contain object-center"
+          />
+        </div>
+        <div className="flex items-start gap-4">
+          <div className="flex-1 *:text-base">
+            <h3 className="font-medium">{title}</h3>
+            <p className="font-normal text-f1-foreground-secondary">
+              {updated}
+            </p>
+          </div>
+          {unread && (
+            <div className="mt-1.5 size-2 rounded bg-f1-background-selected-bold" />
+          )}
+        </div>
+      </Link>
+    </DropdownMenuItem>
+  )
+}
+
+const DropdownItem = ({
+  title,
+  href,
+  updated,
+  unread = false,
+}: ProductUpdate) => {
+  const itemClass = cn(
+    "flex flex-col items-stretch gap-3 w-full"
+    // item.critical && "text-f1-foreground-critical"
+  )
+
+  return (
+    <DropdownMenuItem asChild className={itemClass}>
+      <Link
+        href={href}
+        target="_blank"
+        referrerPolicy="no-referrer"
+        rel="noopener noreferrer"
+        className={cn(
+          itemClass,
+          "text-f1-foreground no-underline hover:cursor-pointer"
+        )}
+      >
+        <div className="flex items-start gap-4">
+          <div className="flex-1 *:text-base">
+            <h3 className="font-medium">{title}</h3>
+            <p className="font-normal text-f1-foreground-secondary">
+              {updated}
+            </p>
+          </div>
+          {unread && (
+            <div className="mt-1.5 size-2 rounded bg-f1-background-selected-bold" />
+          )}
+        </div>
+      </Link>
+    </DropdownMenuItem>
   )
 }
