@@ -7,3 +7,4 @@
     - [Local Development](development/development.md)
     - [Using factorial-one without build it](development/using-factorial-one-source.md)
     - [Release and Versioning](development/release-and-versioning)
+    - [Github Actions](development/github-actions.md)
