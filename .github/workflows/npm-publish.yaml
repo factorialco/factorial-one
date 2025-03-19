@@ -18,6 +18,7 @@ on:
 jobs:
   publish:
     if: |
+      github.head_ref != 'release-please--branches--master' && 
       github.event_name == 'workflow_dispatch' || github.event_name == 'release' || 
       (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.outputs.new_version)
     runs-on: ubuntu-latest

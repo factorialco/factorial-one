@@ -8,6 +8,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   prettier:
+    if: github.head_ref != 'release-please--branches--master'
     name: Prettier
     runs-on: ubuntu-22.04
     steps:
@@ -16,6 +17,7 @@ jobs:
       - name: Check formatting with Prettier
         run: pnpm run prettier:check:ci
   eslint:
+    if: github.head_ref != 'release-please--branches--master'
     name: Eslint
     runs-on: ubuntu-22.04
     steps:

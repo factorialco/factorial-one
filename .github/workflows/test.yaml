@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   test:
+    if: github.head_ref != 'release-please--branches--master'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:

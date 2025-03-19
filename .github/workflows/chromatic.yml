@@ -15,6 +15,7 @@ concurrency:
 
 jobs:
   chromatic:
+    if: github.head_ref != 'release-please--branches--master'
     permissions: write-all
     name: Run Chromatic
     runs-on: ubuntu-latest
