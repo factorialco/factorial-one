@@ -8,7 +8,8 @@ concurrency:
   cancel-in-progress: true
 jobs:
   prettier:
-    if: github.head_ref != 'release-please--branches--master'
+    # Prevents running on the release-please branch
+    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
     name: Prettier
     runs-on: ubuntu-22.04
     steps:
@@ -17,7 +18,8 @@ jobs:
       - name: Check formatting with Prettier
         run: pnpm run prettier:check:ci
   eslint:
-    if: github.head_ref != 'release-please--branches--master'
+    # Prevents running on the release-please branch
+    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
     name: Eslint
     runs-on: ubuntu-22.04
     steps:
