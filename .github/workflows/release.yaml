@@ -34,7 +34,7 @@ jobs:
         if: steps.release.outputs.prs_created
         uses: juliangruber/approve-pull-request-action@b71c44ff142895ba07fad34389f1938a4e8ee7b0
         with:
-          github-token: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
 
       - name: Merge release-please PR and create a release
@@ -47,7 +47,7 @@ jobs:
           echo "Merging PR $PR_NUMBER"
           gh pr merge --squash --admin "$PR_NUMBER"
         env:
-          GH_TOKEN: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
 
       # Set the output to true if a PR was created. This is used in other worksflows to determine if a new version was created
