@@ -40,8 +40,7 @@
     "vitest:watch": "vitest dev",
     "vitest:ci": "pnpm run vitest:ci:r --reporter=dot && pnpm run vitest:ci:rn --reporter=dot",
     "vitest:ci:r": "vitest run --exclude 'packages/react-native/**'",
-    "vitest:ci:rn": "pnpm --filter @factorialco/factorial-one-react-native test",
-    "prepare": "lefthook install"
+    "vitest:ci:rn": "pnpm --filter @factorialco/factorial-one-react-native test"
   },
   "peerDependencies": {
     "@hookform/resolvers": "^3.9.0",
