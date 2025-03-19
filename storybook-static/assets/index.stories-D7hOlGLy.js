@@ -1,5 +1,0 @@
-import{j as m}from"./jsx-runtime-Cf8x2fCZ.js";import{P as c}from"./placeholder-D2Lqcnmi.js";import{W as p}from"./index-Ch0Anrm1.js";import"./index-yBjzXJbu.js";import"./index-B6o7_jwP.js";import"./_commonjsHelpers-Cpj98o6Y.js";import"./utils-B2yEwIwY.js";import"./clsx-B-dksMZM.js";import"./text-CLXhi3RU.js";const S={title:"Widgets/WidgetSection",component:p,tags:["autodocs","experimental"],parameters:{layout:"centered"},args:{title:"Worked / Planned hours",children:m.jsx(c,{children:"Put your content in there"})}},e={},t={args:{title:void 0}};var r,o,a;e.parameters={...e.parameters,docs:{...(r=e.parameters)==null?void 0:r.docs,source:{originalSource:"{}",...(a=(o=e.parameters)==null?void 0:o.docs)==null?void 0:a.source}}};var s,i,n;t.parameters={...t.parameters,docs:{...(s=t.parameters)==null?void 0:s.docs,source:{originalSource:`{
-  args: {
-    title: undefined
-  }
-}`,...(n=(i=t.parameters)==null?void 0:i.docs)==null?void 0:n.source}}};const j=["Default","WithoutTitle"];export{e as Default,t as WithoutTitle,j as __namedExportsOrder,S as default};
