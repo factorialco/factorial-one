@@ -28,6 +28,7 @@ jobs:
         with:
           token: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
           target-branch: ${{ env.BRANCH }}
+          skip-github-release: 'true'
       #
       #      - name: Auto approve release-please PR
       #        if: steps.release.outputs.prs_created
