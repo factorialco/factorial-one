@@ -332,22 +332,22 @@ export const AvatarNameSelectorMainContent = ({
 
     if (!groupView) {
       visibleCount = entities.length
-      entities.forEach((fe) => {
-        if (selectedMap.has(fe.id)) {
-          selectedVisibleCount += 1
-        }
-      })
+      selectedVisibleCount = entities.reduce(
+        (acc, { id }) => acc + (selectedMap.has(id) ? 1 : 0),
+        0
+      )
     } else {
       entities.forEach((fe) => {
         const subItems = fe.subItems ?? []
         visibleCount += subItems.length
-        subItems.forEach((sub) => {
-          const isSelected = [...selectedMap.values()].some((selParent) =>
-            selParent.subItems?.some(
-              (selectedSub) => selectedSub.subId === sub.subId
-            )
+        const selectedSubIds = new Set(
+          [...selectedMap.values()].flatMap(
+            (selParent) =>
+              selParent.subItems?.map((selectedSub) => selectedSub.subId) ?? []
           )
-          if (isSelected) {
+        )
+        subItems.forEach((sub) => {
+          if (selectedSubIds.has(sub.subId)) {
             selectedVisibleCount += 1
           }
         })
