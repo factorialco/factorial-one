@@ -1793,3 +1793,231 @@ export const WithAsyncSearch: Story = {
     )
   },
 }
+
+// Example showcasing table column properties (width, info, sticky, hidden)
+export const TableColumnProperties: Story = {
+  render: () => {
+    // Generate more mock users for this example to better demonstrate scrolling with sticky columns
+    const extendedMockUsers = Array(50)
+      .fill(null)
+      .map((_, index) => ({
+        id: `user-ex-${index}`,
+        name: `User ${index + 1}`,
+        email: `user${index + 1}@example.com`,
+        role:
+          index % 3 === 0
+            ? "Engineer"
+            : index % 3 === 1
+              ? "Designer"
+              : "Manager",
+        department: DEPARTMENTS[index % DEPARTMENTS.length],
+        status: index % 4 === 0 ? "inactive" : "active",
+        isStarred: index % 5 === 0,
+        salary: 50000 + index * 1000,
+        location:
+          index % 3 === 0 ? "Remote" : index % 3 === 1 ? "Office" : "Hybrid",
+        startDate: new Date(2020, index % 12, 1 + (index % 28))
+          .toISOString()
+          .split("T")[0],
+        performance:
+          index % 5 === 0
+            ? "Exceptional"
+            : index % 5 === 1
+              ? "Above Average"
+              : index % 5 === 2
+                ? "Average"
+                : index % 5 === 3
+                  ? "Below Average"
+                  : "Needs Improvement",
+        yearsExperience: Math.floor(Math.random() * 15) + 1,
+        team: ["Alpha", "Beta", "Gamma", "Delta", "Epsilon"][index % 5],
+        certifications:
+          index % 3 === 0
+            ? "AWS, Google Cloud"
+            : index % 3 === 1
+              ? "Azure, MongoDB"
+              : "Kubernetes, Docker",
+        education:
+          index % 4 === 0
+            ? "Ph.D."
+            : index % 4 === 1
+              ? "Master's"
+              : index % 4 === 2
+                ? "Bachelor's"
+                : "Associate's",
+        languages:
+          index % 3 === 0
+            ? "English, Spanish"
+            : index % 3 === 1
+              ? "English, French, German"
+              : "English, Mandarin",
+        projects: Math.floor(Math.random() * 10) + 1,
+        performanceScore: Math.floor(Math.random() * 100) + 1,
+        lastReview: new Date(2023, index % 12, 1 + (index % 28))
+          .toISOString()
+          .split("T")[0],
+        nextReview: new Date(2024, index % 12, 1 + (index % 28))
+          .toISOString()
+          .split("T")[0],
+      }))
+
+    // Define extended sortings for the example
+    const extendedSortings = {
+      name: { label: "Name" },
+      email: { label: "Email" },
+      role: { label: "Role" },
+      department: { label: "Department" },
+      salary: { label: "Salary" },
+      location: { label: "Location" },
+      startDate: { label: "Start Date" },
+      performance: { label: "Performance" },
+      yearsExperience: { label: "Experience" },
+      team: { label: "Team" },
+      certifications: { label: "Certifications" },
+      education: { label: "Education" },
+      languages: { label: "Languages" },
+      projects: { label: "Projects" },
+      performanceScore: { label: "Score" },
+      lastReview: { label: "Last Review" },
+      nextReview: { label: "Next Review" },
+    } as const
+
+    // Create a custom data adapter for the extended data structure
+    const dataAdapter = createDataAdapter({
+      data: extendedMockUsers,
+      delay: 300,
+    })
+
+    const dataSource = useDataSource({
+      filters,
+      presets: filterPresets,
+      sortings: extendedSortings,
+      dataAdapter,
+    })
+
+    return (
+      <DataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "ID",
+                  render: (item) => item.id,
+                  hidden: true, // This column will be hidden
+                },
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                  width: "30", // Medium width
+                  sticky: true, // This column will stick when scrolling horizontally
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                  width: "50", // Medium-large width
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                  width: "30", // Medium width
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                  width: "30",
+                },
+                {
+                  label: "Years Experience",
+                  render: (item) => item.yearsExperience,
+                  sorting: "yearsExperience",
+                  width: "20", // Smaller width
+                },
+                {
+                  label: "Team",
+                  render: (item) => item.team,
+                  sorting: "team",
+                  width: "20",
+                },
+                {
+                  label: "Salary",
+                  render: (item) => `$${item.salary.toLocaleString()}`,
+                  sorting: "salary",
+                  width: "30",
+                  info: "Annual gross salary before taxes and deductions", // Info tooltip
+                },
+                {
+                  label: "Location",
+                  render: (item) => item.location,
+                  sorting: "location",
+                  width: "30",
+                },
+                {
+                  label: "Start Date",
+                  render: (item) => item.startDate,
+                  sorting: "startDate",
+                  width: "30",
+                },
+                {
+                  label: "Certifications",
+                  render: (item) => item.certifications,
+                  sorting: "certifications",
+                  width: "80", // Wider column for longer text
+                },
+                {
+                  label: "Education",
+                  render: (item) => item.education,
+                  sorting: "education",
+                  width: "40",
+                },
+                {
+                  label: "Languages",
+                  render: (item) => item.languages,
+                  sorting: "languages",
+                  width: "60", // Wider column for longer text
+                },
+                {
+                  label: "Projects",
+                  render: (item) => item.projects,
+                  sorting: "projects",
+                  width: "20", // Narrow column for numbers
+                },
+                {
+                  label: "Performance",
+                  render: (item) => item.performance,
+                  sorting: "performance",
+                  width: "60", // Wider column for performance text
+                  info: "Based on the last annual performance review", // Info tooltip
+                },
+                {
+                  label: "Score",
+                  render: (item) => item.performanceScore,
+                  sorting: "performanceScore",
+                  width: "20", // Narrow column for numbers
+                },
+                {
+                  label: "Last Review",
+                  render: (item) => item.lastReview,
+                  sorting: "lastReview",
+                  width: "30",
+                },
+                {
+                  label: "Next Review",
+                  render: (item) => item.nextReview,
+                  sorting: "nextReview",
+                  width: "30",
+                },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
