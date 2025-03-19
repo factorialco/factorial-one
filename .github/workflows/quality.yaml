@@ -1,7 +1,7 @@
 name: Code Quality checks
 on:
   pull_request:
-    branches: [main]
+    branches: [ main ]
 concurrency:
   group:
     ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node-pnpm
       - name: Check formatting with Prettier
-        run: pnpm run prettier:check:ci
+        run: pnpm --filter @factorialco/factorial-one-react run prettier:check:ci
   eslint:
     # Prevents running on the release-please branch
     if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
@@ -35,4 +35,4 @@ jobs:
       - name: Build core package
         run: pnpm --filter @factorialco/factorial-one-core build
       - name: Check linting with eslint
-        run: pnpm run lint
+        run: pnpm --filter @factorialco/factorial-one-react run lint

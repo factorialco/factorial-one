@@ -1,0 +1,4 @@
+# This is used by the action https://github.com/dorny/paths-filter to know witch part of the monorepo has changes
+
+package_react:
+  - 'packages/react/**'
