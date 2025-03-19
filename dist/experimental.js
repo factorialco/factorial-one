@@ -23651,7 +23651,7 @@ const sN = ({
             children: /* @__PURE__ */ o(ie, { icon: Ab, size: "md" })
           }
         ) }),
-        /* @__PURE__ */ x(Hf, { align: "start", className: "max-w-md max-h-[600px]", children: [
+        /* @__PURE__ */ x(Hf, { align: "start", className: "max-h-[600px] max-w-md", children: [
           t === null && "loading",
           t !== null && t.length > 0 && /* @__PURE__ */ x(pe, { children: [
             /* @__PURE__ */ x(
@@ -23709,7 +23709,7 @@ const sN = ({
           pu,
           {
             src: i,
-            className: "block aspect-video object-contain object-center w-full"
+            className: "block aspect-video w-full object-contain object-center"
           }
         ) }),
         /* @__PURE__ */ x("div", { className: "flex items-start gap-4", children: [
@@ -23717,7 +23717,7 @@ const sN = ({
             /* @__PURE__ */ o("h3", { className: "font-medium", children: e }),
             /* @__PURE__ */ o("p", { className: "font-normal text-f1-foreground-secondary", children: a })
           ] }),
-          t && /* @__PURE__ */ o("div", { className: "size-2 rounded bg-f1-background-selected-bold mt-1.5" })
+          t && /* @__PURE__ */ o("div", { className: "mt-1.5 size-2 rounded bg-f1-background-selected-bold" })
         ] })
       ]
     }
@@ -23748,7 +23748,7 @@ const sN = ({
           /* @__PURE__ */ o("h3", { className: "font-medium", children: e }),
           /* @__PURE__ */ o("p", { className: "font-normal text-f1-foreground-secondary", children: i })
         ] }),
-        t && /* @__PURE__ */ o("div", { className: "size-2 rounded bg-f1-background-selected-bold mt-1.5" })
+        t && /* @__PURE__ */ o("div", { className: "mt-1.5 size-2 rounded bg-f1-background-selected-bold" })
       ] })
     }
   ) });
