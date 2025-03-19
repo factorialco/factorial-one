@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/factorialco/factorial-one/compare/v1.1.3...v1.1.4) (2025-03-18)
+
+
+### Bug Fixes
+
+* dropdown button action on click ([#1397](https://github.com/factorialco/factorial-one/issues/1397)) ([c347562](https://github.com/factorialco/factorial-one/commit/c347562211998b0fa66f75856aff3a106f4fc4d7))
+
 ## [1.1.3](https://github.com/factorialco/factorial-one/compare/v1.1.2...v1.1.3) (2025-03-18)
 
 
