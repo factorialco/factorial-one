@@ -16,6 +16,7 @@ env:
 
 jobs:
   deploy:
+    if: github.head_ref != 'release-please--branches--master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
