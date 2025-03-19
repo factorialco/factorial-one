@@ -36,7 +36,7 @@ const OneDropdownButton = ({
   value,
   ...props
 }: OneDropdownButtonProps) => {
-  const [localValue, setLocalValue] = useState(value || items[0].value)
+  const [localValue] = useState(value || items[0].value)
 
   const selectedItem = useMemo(
     () => items.find((item) => item.value === localValue),
@@ -54,10 +54,10 @@ const OneDropdownButton = ({
         .map((item) => ({
           ...item,
           onClick: () => {
-            setLocalValue(item.value)
+            onClick(item.value, item)
           },
         })),
-    [items, localValue]
+    [items, localValue, onClick]
   )
 
   return (
