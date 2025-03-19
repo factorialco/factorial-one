@@ -27,14 +27,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           target-branch: ${{ env.BRANCH }}
 
-      - name: Auto approve
+      - name: Auto approve release-please PR
         if: steps.release.outputs.prs_created
         uses: juliangruber/approve-pull-request-action@b71c44ff142895ba07fad34389f1938a4e8ee7b0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
           number: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
 
-      - name: Merge PR
+      - name: Merge release-please PR
         run: |
           if [ -z "$PR_NUMBER" ]; then
             echo "No PR number found"
