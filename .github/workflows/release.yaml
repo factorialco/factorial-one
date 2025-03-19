@@ -24,31 +24,31 @@ jobs:
       - uses: googleapis/release-please-action@v4
         id: release
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
           target-branch: ${{ env.BRANCH }}
-
-      - name: Auto approve release-please PR
-        if: steps.release.outputs.prs_created
-        uses: juliangruber/approve-pull-request-action@b71c44ff142895ba07fad34389f1938a4e8ee7b0
-        with:
-          github-token: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
-          number: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
-
-      - name: Merge release-please PR
-        run: |
-          if [ -z "$PR_NUMBER" ]; then
-            echo "No PR number found"
-            echo "::warning title='No release PR created by release-please'::Conventional commits didnt trigger a version bump and a release is not necessary"
-            exit 0
-          fi
-          echo "Merging PR $PR_NUMBER"
-          gh pr merge --squash --admin "$PR_NUMBER"
-        env:
-          GH_TOKEN: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
-          PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
+      #
+      #      - name: Auto approve release-please PR
+      #        if: steps.release.outputs.prs_created
+      #        uses: juliangruber/approve-pull-request-action@b71c44ff142895ba07fad34389f1938a4e8ee7b0
+      #        with:
+      #          github-token: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
+      #          number: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
+      #
+      #      - name: Merge release-please PR and create a release
+      #        run: |
+      #          if [ -z "$PR_NUMBER" ]; then
+      #            echo "No PR number found"
+      #            echo "::warning title='No release PR created by release-please'::Conventional commits didnt trigger a version bump and a release is not necessary"
+      #            exit 0
+      #          fi
+      #          echo "Merging PR $PR_NUMBER"
+      #          gh pr merge --squash --admin "$PR_NUMBER"
+      #        env:
+      #          GH_TOKEN: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
+      #          PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
 
       # Set the output to true if a PR was created. This is used in other worksflows to determine if a new version was created
-      - name: Set new_version output
-        if: ${{ steps.release.outputs.pr }}
-        id: set-output
-        run: echo "::set-output name=new_version::true"
+#      - name: Set new_version output
+#        if: ${{ steps.release.outputs.pr }}
+#        id: set-output
+#        run: echo "::set-output name=new_version::true"
