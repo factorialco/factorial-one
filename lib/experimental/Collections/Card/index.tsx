@@ -47,24 +47,26 @@ export const CardCollection = <
   // We override the perPage to ensure it's always a multiple of 2, 3, and 4
   // This ensures the cards are always aligned in a grid regardless of the
   // screen size (2 columns on sm, 3 on lg, 4 on xl)
-  const overridenSource = useMemo(() => {
+  const overridenDataAdapter = useMemo(() => {
     if (source.dataAdapter.paginationType === "pages") {
+      const perPage = source.dataAdapter.perPage
+      const overridenPerPage = findNextMultiple(perPage ?? 24)
       return {
-        ...source,
-        dataAdapter: {
-          ...source.dataAdapter,
-          perPage: findNextMultiple(source.dataAdapter.perPage ?? 24),
-        },
+        ...source.dataAdapter,
+        perPage: overridenPerPage,
       }
     }
-    return source
-  }, [source])
+    return source.dataAdapter
+  }, [source.dataAdapter])
 
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
     Record,
     Filters,
     Sortings
-  >(overridenSource)
+  >({
+    ...source,
+    dataAdapter: overridenDataAdapter,
+  })
 
   return (
     <>
