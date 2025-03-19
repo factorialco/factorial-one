@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/factorialco/factorial-one/compare/v1.2.1...v1.2.2) (2025-03-19)
+
+
+### Bug Fixes
+
+* auto approve pr action ([#1420](https://github.com/factorialco/factorial-one/issues/1420)) ([e73f368](https://github.com/factorialco/factorial-one/commit/e73f3684134da7d2077cb6f72ca3c1661777a9e6))
+
 ## [1.2.1](https://github.com/factorialco/factorial-one/compare/v1.2.0...v1.2.1) (2025-03-19)
 
 
