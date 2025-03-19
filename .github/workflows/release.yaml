@@ -15,6 +15,7 @@ jobs:
       BRANCH: ${{ github.event.repository.default_branch }}
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
+      prs_created: ${{ steps.release.outputs.prs_created }}
       pr: ${{ steps.release.outputs.pr }}
     steps:
       - uses: actions/checkout@v4
@@ -25,6 +26,13 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           target-branch: ${{ env.BRANCH }}
+
+      - name: Auto approve
+        if: steps.release.outputs.prs_created
+        uses: juliangruber/approve-pull-request-action@b71c44ff142895ba07fad34389f1938a4e8ee7b0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
 
       - name: Merge PR
         run: |
@@ -39,7 +47,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PR_AUTOAPPROVER_TOKEN }}
           PR_NUMBER: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
 
-      # Set the output to true if a PR was create. This is used in other worksflows to determine if a new version was created
+      # Set the output to true if a PR was created. This is used in other worksflows to determine if a new version was created
       - name: Set new_version output
         if: ${{ steps.release.outputs.pr }}
         id: set-output
