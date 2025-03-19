@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { useState } from "react"
 
 import * as AnimatedIcons from "@/icons/animated"
-import * as AppIcons from "@/icons/app"
+import * as Icons from "@/icons/app"
 import * as ModuleIcons from "@/icons/modules"
 import { ComponentProps } from "react"
 import { Icon } from "."
@@ -13,8 +13,8 @@ const meta = {
   argTypes: {
     icon: {
       control: "select",
-      options: Object.keys(AppIcons),
-      mapping: AppIcons,
+      options: Object.keys(Icons),
+      mapping: Icons,
       description: "Select an icon to display",
     },
     size: {
@@ -35,7 +35,7 @@ type Story = StoryObj<typeof meta>
 export const App: Story = {
   args: {
     size: "lg",
-    icon: AppIcons.ChartLine,
+    icon: Icons.ChartLine,
   },
 }
 

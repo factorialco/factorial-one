@@ -1,0 +1,1 @@
+import{j as r}from"./jsx-runtime-Cf8x2fCZ.js";import{P as o,D as s}from"./index.stories-BK59UYeA.js";const a=e=>r.jsx("div",{className:"flex h-[600px] w-full flex-row",children:r.jsx(o,{...s.args,children:r.jsx(e,{})})});try{a.displayName="PageDecorator",a.__docgenInfo={description:"",displayName:"PageDecorator",props:{}}}catch{}export{a as P};

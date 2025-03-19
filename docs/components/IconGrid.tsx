@@ -1,5 +1,5 @@
 import { Icon as IconComponent, IconType } from "@/components/Utilities/Icon"
-import { AppIcons } from "@/factorial-one"
+import * as Icons from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils.ts"
 import { AnimatePresence, motion } from "framer-motion"
 import { useMemo, useState } from "react"
@@ -9,7 +9,7 @@ type IconEntry = {
   icon: IconType
 }
 
-const iconList: IconEntry[] = Object.entries(AppIcons).map(([name, icon]) => ({
+const iconList: IconEntry[] = Object.entries(Icons).map(([name, icon]) => ({
   name,
   icon,
 }))
@@ -58,7 +58,7 @@ function IconCard({ name, icon: Icon }: IconEntry) {
               transition={{ duration: 0.1 }}
               className="text-f1-icon-positive"
             >
-              <IconComponent icon={AppIcons.Check} />
+              <IconComponent icon={Icons.Check} />
             </motion.div>
           ) : (
             <motion.div
@@ -68,7 +68,7 @@ function IconCard({ name, icon: Icon }: IconEntry) {
               exit={{ opacity: 0, scale: 0.6 }}
               transition={{ duration: 0.1 }}
             >
-              <IconComponent icon={AppIcons.LayersFront} />
+              <IconComponent icon={Icons.LayersFront} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -100,7 +100,7 @@ export function IconGrid() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <IconComponent
-          icon={AppIcons.Search}
+          icon={Icons.Search}
           className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 select-none text-f1-foreground-secondary"
         />
       </div>
