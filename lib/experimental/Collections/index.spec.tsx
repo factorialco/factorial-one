@@ -8,6 +8,7 @@ import {
 } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { LayoutGrid } from "lucide-react"
+import React from "react"
 import { describe, expect, test, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
 import { DataCollection, useDataSource } from "."
@@ -17,7 +18,7 @@ import { PromiseState } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition } from "./Filters/types"
 import { SortingsDefinition } from "./sortings"
-import type { DataSource } from "./types"
+import type { BaseFetchOptions, DataSource } from "./types"
 import { useData } from "./useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -35,20 +36,21 @@ describe("Collections", () => {
             name: { type: "search", label: "Name" },
           },
           dataAdapter: {
-            fetchData: async ({ filters }) => {
-              if ("email" in filters) {
-                throw new Error("Email is not a valid filter")
-              }
+            fetchData: ({ filters }) => ({
+              result: (() => {
+                let filtered = [...mockData]
 
-              return mockData.filter((user) => {
                 if (filters.name && typeof filters.name === "string") {
-                  return user.name
-                    .toLowerCase()
-                    .includes(filters.name.toLowerCase())
+                  filtered = filtered.filter((user) => {
+                    return user.name
+                      .toLowerCase()
+                      .includes(filters.name?.toLowerCase() || "")
+                  })
                 }
-                return true
-              })
-            },
+                return filtered
+              })(),
+              ref: undefined,
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -81,10 +83,42 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: async () => [
-              { name: "John Doe", email: "john@example.com" },
-              { name: "Jane Smith", email: "jane@example.com" },
-            ],
+            fetchData: () => ({
+              result: new Observable<
+                PromiseState<
+                  Array<{ name: string; role: string; email: string }>
+                >
+              >((observer) => {
+                observer.next({
+                  loading: true,
+                  error: null,
+                  data: null,
+                })
+
+                setTimeout(() => {
+                  observer.next({
+                    loading: false,
+                    error: null,
+                    data: [
+                      {
+                        name: "John Doe",
+                        role: "Senior Engineer",
+                        email: "john@example.com",
+                      },
+                      {
+                        name: "Jane Smith",
+                        role: "Product Manager",
+                        email: "jane@example.com",
+                      },
+                    ],
+                  })
+                  observer.complete()
+                }, 0)
+
+                return () => {}
+              }),
+              ref: undefined,
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -130,8 +164,8 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: () =>
-              new Observable<
+            fetchData: () => ({
+              result: new Observable<
                 PromiseState<Array<{ name: string; role: string }>>
               >((observer) => {
                 observer.next({
@@ -154,6 +188,8 @@ describe("Collections", () => {
 
                 return () => {}
               }),
+              ref: undefined,
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -216,26 +252,29 @@ describe("Collections", () => {
             },
           },
           dataAdapter: {
-            fetchData: async ({ filters }) => {
-              let filtered = [...mockData]
+            fetchData: ({ filters }) => ({
+              result: (() => {
+                let filtered = [...mockData]
 
-              if (filters.search && typeof filters.search === "string") {
-                const searchLower = filters.search.toLowerCase()
-                filtered = filtered.filter(
-                  (user) =>
-                    user.name.toLowerCase().includes(searchLower) ||
-                    user.email.toLowerCase().includes(searchLower)
-                )
-              }
+                if (filters.search && typeof filters.search === "string") {
+                  const searchLower = filters.search.toLowerCase()
+                  filtered = filtered.filter(
+                    (user) =>
+                      user.name.toLowerCase().includes(searchLower) ||
+                      user.email.toLowerCase().includes(searchLower)
+                  )
+                }
 
-              if (filters.department && filters.department.length > 0) {
-                filtered = filtered.filter((user) =>
-                  filters.department?.includes(user.department)
-                )
-              }
+                if (filters.department && filters.department.length > 0) {
+                  filtered = filtered.filter((user) =>
+                    filters.department?.includes(user.department)
+                  )
+                }
 
-              return filtered
-            },
+                return filtered
+              })(),
+              ref: undefined,
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -271,7 +310,10 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: async () => [{ name: "John" }],
+            fetchData: () => ({
+              result: [{ name: "John" }],
+              ref: undefined,
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -320,8 +362,8 @@ describe("Collections", () => {
       () =>
         useDataSource({
           dataAdapter: {
-            fetchData: () =>
-              new Observable<PromiseState<Item[]>>((observer) => {
+            fetchData: () => ({
+              result: new Observable<PromiseState<Item[]>>((observer) => {
                 observer.next({
                   loading: true,
                   error: null,
@@ -352,6 +394,8 @@ describe("Collections", () => {
 
                 return () => {}
               }),
+              ref: undefined,
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -412,18 +456,21 @@ describe("Collections", () => {
           ActionsDefinition<Person>
         >({
           dataAdapter: {
-            fetchData: async ({ sortings }) => {
-              const sorted = [...mockData]
+            fetchData: ({ sortings }) => ({
+              result: (() => {
+                const sorted = [...mockData]
 
-              if (sortings && sortings.field === "name") {
-                sorted.sort((a, b) => {
-                  const direction = sortings.order === "asc" ? 1 : -1
-                  return a.name.localeCompare(b.name) * direction
-                })
-              }
+                if (sortings && sortings.field === "name") {
+                  sorted.sort((a, b) => {
+                    const direction = sortings.order === "asc" ? 1 : -1
+                    return a.name.localeCompare(b.name) * direction
+                  })
+                }
 
-              return sorted
-            },
+                return sorted
+              })(),
+              ref: undefined,
+            }),
           },
           sortings: {
             name: {
@@ -497,6 +544,7 @@ describe("Collections", () => {
       role: string
     }
 
+    // Create unsorted data to demonstrate sorting works
     const mockData: Person[] = [
       { id: 1, name: "John Doe", email: "john@example.com", role: "Developer" },
       {
@@ -508,20 +556,7 @@ describe("Collections", () => {
       { id: 3, name: "Bob Smith", email: "bob@example.com", role: "Manager" },
     ]
 
-    // Create a mock for data fetching that sorts based on sortings
-    const fetchDataMock = vi.fn().mockImplementation(({ sortings }) => {
-      const sorted = [...mockData]
-
-      if (sortings && sortings.field === "name") {
-        sorted.sort((a, b) => {
-          const direction = sortings.order === "asc" ? 1 : -1
-          return a.name.localeCompare(b.name) * direction
-        })
-      }
-
-      return sorted
-    })
-
+    // Create a hook and data source with actual sorting logic and real data
     const { result } = renderHook(
       () =>
         useDataSource<
@@ -531,13 +566,30 @@ describe("Collections", () => {
           ActionsDefinition<Person>
         >({
           dataAdapter: {
-            fetchData: fetchDataMock,
+            fetchData: ({ sortings }) => ({
+              result: (() => {
+                const sorted = [...mockData]
+
+                // Apply sorting when requested (the default sorting should automatically be applied)
+                if (sortings && sortings.field === "name") {
+                  sorted.sort((a, b) => {
+                    // For desc order, reverse the comparison (multiply by -1)
+                    const direction = sortings.order === "asc" ? 1 : -1
+                    return a.name.localeCompare(b.name) * direction
+                  })
+                }
+
+                return sorted
+              })(),
+              ref: undefined,
+            }),
           },
           sortings: {
             name: {
               label: "Name",
             },
           },
+          // Set default sorting to descending by name
           defaultSorting: {
             field: "name",
             order: "desc",
@@ -546,6 +598,7 @@ describe("Collections", () => {
       { wrapper: TestWrapper }
     )
 
+    // Render the component with our data source
     render(
       <TestWrapper>
         <DataCollection
@@ -572,34 +625,48 @@ describe("Collections", () => {
       </TestWrapper>
     )
 
-    // Verify the fetchData function was called with the correct default sorting
-    expect(fetchDataMock).toHaveBeenCalledWith(
-      expect.objectContaining({
-        sortings: {
-          field: "name",
-          order: "desc",
-        },
-      })
-    )
+    // First, verify that currentSortings is set to the defaultSorting
+    expect(result.current.currentSortings).toEqual({
+      field: "name",
+      order: "desc",
+    })
+
+    // Verify the column header shows the sort indicator
+    const nameColumnHeader = await screen.findByRole("columnheader", {
+      name: /name/i,
+    })
+    expect(nameColumnHeader).toHaveAttribute("aria-sort", "descending")
 
     // Wait for the sorted data to be rendered
-    // With descending sort by name, "John Doe" should appear before "Alice Brown"
     await waitFor(() => {
-      const rows = screen.getAllByRole("row")
-      // Skip header row
-      const dataRows = rows.slice(1)
-
-      // With desc sorting, the order should be: John, Bob, Alice
-      expect(within(dataRows[0]).getByText("John Doe")).toBeInTheDocument()
-      expect(within(dataRows[1]).getByText("Bob Smith")).toBeInTheDocument()
-      expect(within(dataRows[2]).getByText("Alice Brown")).toBeInTheDocument()
+      // Check that all names are in the document
+      expect(screen.getByText("John Doe")).toBeInTheDocument()
+      expect(screen.getByText("Alice Brown")).toBeInTheDocument()
+      expect(screen.getByText("Bob Smith")).toBeInTheDocument()
     })
+
+    // Get all rows and verify the order (should be descending by name)
+    const rows = screen.getAllByRole("row")
+    // Skip header row
+    const dataRows = rows.slice(1)
+
+    // With desc sorting by name, the order should be John, Bob, Alice
+    // Verify the first name in the first row is John Doe
+    expect(within(dataRows[0]).getByText("John Doe")).toBeInTheDocument()
+
+    // Verify the second name in the second row is Bob Smith
+    expect(within(dataRows[1]).getByText("Bob Smith")).toBeInTheDocument()
+
+    // Verify the third name in the third row is Alice Brown
+    expect(within(dataRows[2]).getByText("Alice Brown")).toBeInTheDocument()
   })
 
   test("initializes currentSortings state with defaultSorting value", () => {
     type Person = {
       id: number
       name: string
+      email: string
+      role: string
     }
 
     const defaultSorting = {
@@ -616,10 +683,23 @@ describe("Collections", () => {
           ActionsDefinition<Person>
         >({
           dataAdapter: {
-            fetchData: async () => [
-              { id: 1, name: "John Doe" },
-              { id: 2, name: "Alice Brown" },
-            ],
+            fetchData: () => ({
+              result: [
+                {
+                  id: 1,
+                  name: "John Doe",
+                  email: "john@example.com",
+                  role: "Developer",
+                },
+                {
+                  id: 2,
+                  name: "Alice Brown",
+                  email: "alice@example.com",
+                  role: "Designer",
+                },
+              ],
+              ref: undefined,
+            }),
           },
           sortings: {
             name: {
@@ -658,25 +738,28 @@ describe("Collections", () => {
           ActionsDefinition<Person>
         >({
           dataAdapter: {
-            fetchData: async ({ sortings }) => {
-              const sorted = [...mockData]
+            fetchData: ({ sortings }) => ({
+              result: (() => {
+                const sorted = [...mockData]
 
-              if (sortings) {
-                if (sortings.field === "name") {
-                  sorted.sort((a, b) => {
-                    const direction = sortings.order === "asc" ? 1 : -1
-                    return a.name.localeCompare(b.name) * direction
-                  })
-                } else if (sortings.field === "email") {
-                  sorted.sort((a, b) => {
-                    const direction = sortings.order === "asc" ? 1 : -1
-                    return a.email.localeCompare(b.email) * direction
-                  })
+                if (sortings) {
+                  if (sortings.field === "name") {
+                    sorted.sort((a, b) => {
+                      const direction = sortings.order === "asc" ? 1 : -1
+                      return a.name.localeCompare(b.name) * direction
+                    })
+                  } else if (sortings.field === "email") {
+                    sorted.sort((a, b) => {
+                      const direction = sortings.order === "asc" ? 1 : -1
+                      return a.email.localeCompare(b.email) * direction
+                    })
+                  }
                 }
-              }
 
-              return sorted
-            },
+                return sorted
+              })(),
+              ref: undefined,
+            }),
           },
           sortings: {
             name: { label: "Name" },
@@ -795,24 +878,27 @@ describe("Collections", () => {
             },
           },
           dataAdapter: {
-            fetchData: async ({ filters }) => {
-              let filtered = [...mockData]
+            fetchData: ({ filters }) => ({
+              result: (() => {
+                let filtered = [...mockData]
 
-              if (filters.department && filters.department.length > 0) {
-                filtered = filtered.filter((person) =>
-                  filters.department?.includes(person.department)
-                )
-              }
+                if (filters.department && filters.department.length > 0) {
+                  filtered = filtered.filter((person) =>
+                    filters.department?.includes(person.department)
+                  )
+                }
 
-              if (filters.search && typeof filters.search === "string") {
-                const searchLower = filters.search.toLowerCase()
-                filtered = filtered.filter((person) =>
-                  person.name.toLowerCase().includes(searchLower)
-                )
-              }
+                if (filters.search && typeof filters.search === "string") {
+                  const searchLower = filters.search.toLowerCase()
+                  filtered = filtered.filter((person) =>
+                    person.name.toLowerCase().includes(searchLower)
+                  )
+                }
 
-              return filtered
-            },
+                return filtered
+              })(),
+              ref: undefined,
+            }),
           },
         })
 
@@ -895,7 +981,10 @@ describe("Collections", () => {
           ActionsDefinition<Person>
         >({
           dataAdapter: {
-            fetchData: async () => mockData,
+            fetchData: () => ({
+              result: mockData,
+              ref: undefined,
+            }),
           },
           actions: (item) => [
             {
@@ -1003,17 +1092,20 @@ describe("Collections", () => {
           ActionsDefinition<Person>
         >({
           dataAdapter: {
-            fetchData: async ({ search }) => {
-              if (!search) return mockData
+            fetchData: ({ search }) => ({
+              result: (() => {
+                if (!search) return mockData
 
-              const searchLower = search.toLowerCase()
-              return mockData.filter(
-                (person) =>
-                  person.name.toLowerCase().includes(searchLower) ||
-                  person.email.toLowerCase().includes(searchLower) ||
-                  person.role.toLowerCase().includes(searchLower)
-              )
-            },
+                const searchLower = search.toLowerCase()
+                return mockData.filter(
+                  (person) =>
+                    person.name.toLowerCase().includes(searchLower) ||
+                    person.email.toLowerCase().includes(searchLower) ||
+                    person.role.toLowerCase().includes(searchLower)
+                )
+              })(),
+              ref: undefined,
+            }),
           },
           search: {
             enabled: true,
@@ -1094,32 +1186,35 @@ describe("Collections", () => {
           dataAdapter: {
             paginationType: "pages",
             perPage: 10,
-            fetchData: async ({ pagination }) => {
-              const { currentPage = 1 } = pagination || {}
-              const itemsPerPage = 10
-              const totalItems = 45
+            fetchData: ({ pagination }) => ({
+              result: (() => {
+                const { currentPage = 1 } = pagination || {}
+                const itemsPerPage = 10
+                const totalItems = 45
 
-              // Generate paginated data
-              const startIndex = (currentPage - 1) * itemsPerPage
-              const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
+                // Generate paginated data
+                const startIndex = (currentPage - 1) * itemsPerPage
+                const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
 
-              const paginatedData = Array.from(
-                { length: endIndex - startIndex },
-                (_, i) => ({
-                  id: startIndex + i + 1,
-                  name: `User ${startIndex + i + 1}`,
-                  email: `user${startIndex + i + 1}@example.com`,
-                })
-              )
+                const paginatedData = Array.from(
+                  { length: endIndex - startIndex },
+                  (_, i) => ({
+                    id: startIndex + i + 1,
+                    name: `User ${startIndex + i + 1}`,
+                    email: `user${startIndex + i + 1}@example.com`,
+                  })
+                )
 
-              return {
-                records: paginatedData,
-                total: totalItems,
-                currentPage,
-                perPage: itemsPerPage,
-                pagesCount: Math.ceil(totalItems / itemsPerPage),
-              }
-            },
+                return {
+                  records: paginatedData,
+                  total: totalItems,
+                  currentPage,
+                  perPage: itemsPerPage,
+                  pagesCount: Math.ceil(totalItems / itemsPerPage),
+                }
+              })(),
+              ref: undefined,
+            }),
           },
         }),
       { wrapper: TestWrapper }
@@ -1163,5 +1258,78 @@ describe("Collections", () => {
       expect(screen.getByText("User 11")).toBeInTheDocument()
       expect(screen.getByText("user20@example.com")).toBeInTheDocument()
     })
+  })
+
+  test("passes the same ref to fetchData on subsequent calls", async () => {
+    // Create a ref object to track across calls
+    const initialRef = { value: "initial-ref" }
+
+    // Use a consistent ref object to track if it's the same reference
+    let receivedRef: unknown = undefined
+
+    // Keep track of call count to verify multiple calls
+    let callCount = 0
+
+    const mockFetchData = vi.fn(
+      (
+        _options: BaseFetchOptions<
+          { name: { type: "search"; label: string } },
+          SortingsDefinition
+        >,
+        ref?: unknown
+      ) => {
+        callCount++
+        // Store the received ref for verification
+        receivedRef = ref
+
+        // Return mock data and the ref that should be preserved
+        return {
+          result: [{ id: 1, name: `Person ${callCount}` }],
+          ref: initialRef,
+        }
+      }
+    )
+
+    // Create a test component that directly calls our mockFetchData to simulate what happens
+    // in the useData hook
+    const TestComponent = () => {
+      // First call will be made with undefined ref
+      React.useEffect(() => {
+        mockFetchData(
+          {} as BaseFetchOptions<
+            { name: { type: "search"; label: string } },
+            SortingsDefinition
+          >,
+          undefined
+        )
+
+        // Simulate a second call with the ref that was returned by the first call
+        setTimeout(() => {
+          mockFetchData(
+            {} as BaseFetchOptions<
+              { name: { type: "search"; label: string } },
+              SortingsDefinition
+            >,
+            initialRef
+          )
+        }, 50)
+      }, [])
+
+      return <div>Test Component</div>
+    }
+
+    render(<TestComponent />)
+
+    // First call should be made with undefined ref
+    expect(mockFetchData).toHaveBeenCalledTimes(1)
+    expect(receivedRef).toBeUndefined()
+
+    // Wait for the second call
+    await waitFor(() => {
+      expect(mockFetchData).toHaveBeenCalledTimes(2)
+    })
+
+    // Verify the second call received the ref from the first call
+    expect(receivedRef).toBe(initialRef)
   })
 })

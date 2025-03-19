@@ -65,9 +65,9 @@ const createTestSource = (
   isLoading: false,
   setIsLoading: vi.fn(),
   dataAdapter: {
-    fetchData: async ({ filters: _filters }) => {
+    fetchData: ({ filters: _filters }) => {
       if (error) throw error
-      return data
+      return { result: data }
     },
   },
 })
@@ -262,7 +262,7 @@ describe("TableCollection", () => {
       dataAdapter: {
         paginationType: "pages",
         perPage: itemsPerPage,
-        fetchData: async ({ pagination }) => {
+        fetchData: ({ pagination }) => {
           const { currentPage = 1 } = pagination || {}
           const pagesCount = Math.ceil(totalItems / itemsPerPage)
           const startIndex = (currentPage - 1) * itemsPerPage
@@ -275,11 +275,13 @@ describe("TableCollection", () => {
           })).slice(startIndex, endIndex)
 
           return {
-            records: paginatedData,
-            total: totalItems,
-            currentPage,
-            perPage: itemsPerPage,
-            pagesCount,
+            result: {
+              records: paginatedData,
+              total: totalItems,
+              currentPage,
+              perPage: itemsPerPage,
+              pagesCount,
+            },
           }
         },
       },

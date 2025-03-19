@@ -194,25 +194,28 @@ const createObservableDataFetch = (delay = 0) => {
   }: {
     filters: FiltersState<FiltersType>
     sortings: SortingsState<typeof sortings>
-  }) =>
-    new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
-      observer.next({
-        loading: true,
-        error: null,
-        data: null,
-      })
-
-      const timeoutId = setTimeout(() => {
+  }) => ({
+    result: new Observable<PromiseState<(typeof mockUsers)[number][]>>(
+      (observer) => {
         observer.next({
-          loading: false,
+          loading: true,
           error: null,
-          data: filterUsers(mockUsers, filters, sortingsState),
+          data: null,
         })
-        observer.complete()
-      }, delay)
 
-      return () => clearTimeout(timeoutId)
-    })
+        const timeoutId = setTimeout(() => {
+          observer.next({
+            loading: false,
+            error: null,
+            data: filterUsers(mockUsers, filters, sortingsState),
+          })
+          observer.complete()
+        }, delay)
+
+        return () => clearTimeout(timeoutId)
+      }
+    ),
+  })
 }
 
 const createPromiseDataFetch = (delay = 500) => {
@@ -224,12 +227,13 @@ const createPromiseDataFetch = (delay = 500) => {
     filters: FiltersState<FiltersType>
     sortings: SortingsState<typeof sortings>
     search?: string
-  }) =>
-    new Promise<(typeof mockUsers)[number][]>((resolve) => {
+  }) => ({
+    result: new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
         resolve(filterUsers(mockUsers, filters, sortingsState, search))
       }, delay)
-    })
+    }),
+  })
 }
 
 // Example component using useDataSource
@@ -1014,60 +1018,68 @@ function createDataAdapter<
       perPage,
       fetchData: ({ filters, sortings, pagination }) => {
         if (useObservable) {
-          return new Observable<PromiseState<PaginatedResponse<TRecord>>>(
-            (observer) => {
-              observer.next({
-                loading: true,
-                error: null,
-                data: null,
-              })
+          return {
+            result: new Observable<PromiseState<PaginatedResponse<TRecord>>>(
+              (observer) => {
+                observer.next({
+                  loading: true,
+                  error: null,
+                  data: null,
+                })
 
-              setTimeout(() => {
-                const fetch = () =>
+                setTimeout(() => {
+                  const fetch = () =>
+                    filterData(
+                      data,
+                      filters,
+                      sortings,
+                      pagination
+                    ) as PaginatedResponse<TRecord>
+
+                  try {
+                    observer.next({
+                      loading: false,
+                      error: null,
+                      data: fetch(),
+                    })
+                    observer.complete()
+                  } catch (error) {
+                    observer.next({
+                      loading: false,
+                      error:
+                        error instanceof Error
+                          ? error
+                          : new Error(String(error)),
+                      data: null,
+                    })
+                    observer.complete()
+                  }
+                }, delay)
+              }
+            ),
+            ref: undefined,
+          }
+        }
+
+        return {
+          result: new Promise<PaginatedResponse<TRecord>>((resolve, reject) => {
+            setTimeout(() => {
+              try {
+                resolve(
                   filterData(
                     data,
                     filters,
                     sortings,
                     pagination
                   ) as PaginatedResponse<TRecord>
-
-                try {
-                  observer.next({
-                    loading: false,
-                    error: null,
-                    data: fetch(),
-                  })
-                  observer.complete()
-                } catch (error) {
-                  observer.next({
-                    loading: false,
-                    error:
-                      error instanceof Error ? error : new Error(String(error)),
-                    data: null,
-                  })
-                  observer.complete()
-                }
-              }, delay)
-            }
-          )
+                )
+              } catch (error) {
+                reject(error)
+              }
+            }, delay)
+          }),
+          ref: undefined,
         }
-
-        return new Promise<PaginatedResponse<TRecord>>((resolve, reject) => {
-          setTimeout(() => {
-            try {
-              resolve(
-                filterData(
-                  data,
-                  filters,
-                  sortings,
-                  pagination
-                ) as PaginatedResponse<TRecord>
-              )
-            } catch (error) {
-              reject(error)
-            }
-          }, delay)
-        })
       },
     }
 
@@ -1077,46 +1089,52 @@ function createDataAdapter<
   const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
     fetchData: ({ filters, sortings }) => {
       if (useObservable) {
-        return new Observable<PromiseState<TRecord[]>>((observer) => {
-          observer.next({
-            loading: true,
-            error: null,
-            data: null,
-          })
+        return {
+          result: new Observable<PromiseState<TRecord[]>>((observer) => {
+            observer.next({
+              loading: true,
+              error: null,
+              data: null,
+            })
 
-          setTimeout(() => {
-            try {
-              const fetch = () =>
-                filterData(data, filters, sortings) as TRecord[]
+            setTimeout(() => {
+              try {
+                const fetch = () =>
+                  filterData(data, filters, sortings) as TRecord[]
 
-              observer.next({
-                loading: false,
-                error: null,
-                data: fetch(),
-              })
-              observer.complete()
-            } catch (error) {
-              observer.next({
-                loading: false,
-                error:
-                  error instanceof Error ? error : new Error(String(error)),
-                data: null,
-              })
-              observer.complete()
-            }
-          }, delay)
-        })
+                observer.next({
+                  loading: false,
+                  error: null,
+                  data: fetch(),
+                })
+                observer.complete()
+              } catch (error) {
+                observer.next({
+                  loading: false,
+                  error:
+                    error instanceof Error ? error : new Error(String(error)),
+                  data: null,
+                })
+                observer.complete()
+              }
+            }, delay)
+          }),
+          ref: undefined,
+        }
       }
 
-      return new Promise<TRecord[]>((resolve, reject) => {
-        setTimeout(() => {
-          try {
-            resolve(filterData(data, filters, sortings) as TRecord[])
-          } catch (error) {
-            reject(error)
-          }
-        }, delay)
-      })
+      return {
+        result: new Promise<TRecord[]>((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              resolve(filterData(data, filters, sortings) as TRecord[])
+            } catch (error) {
+              reject(error)
+            }
+          }, delay)
+        }),
+        ref: undefined,
+      }
     },
   }
 
@@ -1320,7 +1338,7 @@ export const WithSynchronousData: Story = {
       dataAdapter: {
         fetchData: ({ filters, sortings }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, sortings)
+          return { result: filterUsers(mockUsers, filters, sortings) }
         },
       },
     })
@@ -1586,7 +1604,7 @@ export const WithSyncSearch: Story = {
             })
           }
 
-          return filteredUsers
+          return { result: filteredUsers }
         },
       },
     })
@@ -1685,60 +1703,62 @@ export const WithAsyncSearch: Story = {
       dataAdapter: {
         fetchData: ({ filters, sortings, search }) => {
           // Simulate an API call with a delay
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              const mockUserData = generateMockUsers(20)
-              let filteredUsers = [...mockUserData]
+          return {
+            result: new Promise((resolve) => {
+              setTimeout(() => {
+                const mockUserData = generateMockUsers(20)
+                let filteredUsers = [...mockUserData]
 
-              if (search) {
-                const searchLower = search.toLowerCase()
-                filteredUsers = filteredUsers.filter(
-                  (user) =>
-                    user.name.toLowerCase().includes(searchLower) ||
-                    user.email.toLowerCase().includes(searchLower) ||
-                    user.role.toLowerCase().includes(searchLower) ||
-                    user.department.toLowerCase().includes(searchLower)
-                )
-                console.log(
-                  `Async search for: "${search}" - Found ${filteredUsers.length} results`
-                )
-              }
+                if (search) {
+                  const searchLower = search.toLowerCase()
+                  filteredUsers = filteredUsers.filter(
+                    (user) =>
+                      user.name.toLowerCase().includes(searchLower) ||
+                      user.email.toLowerCase().includes(searchLower) ||
+                      user.role.toLowerCase().includes(searchLower) ||
+                      user.department.toLowerCase().includes(searchLower)
+                  )
+                  console.log(
+                    `Async search for: "${search}" - Found ${filteredUsers.length} results`
+                  )
+                }
 
-              // Apply department filter if provided
-              const departmentFilter = filters.department as
-                | string[]
-                | undefined
-              if (departmentFilter && departmentFilter.length > 0) {
-                filteredUsers = filteredUsers.filter((user) =>
-                  departmentFilter.includes(user.department)
-                )
-              }
+                // Apply department filter if provided
+                const departmentFilter = filters.department as
+                  | string[]
+                  | undefined
+                if (departmentFilter && departmentFilter.length > 0) {
+                  filteredUsers = filteredUsers.filter((user) =>
+                    departmentFilter.includes(user.department)
+                  )
+                }
 
-              // Apply sorting if provided
-              if (sortings) {
-                const field = sortings.field as keyof MockUser
-                const direction = sortings.order
+                // Apply sorting if provided
+                if (sortings) {
+                  const field = sortings.field as keyof MockUser
+                  const direction = sortings.order
 
-                filteredUsers.sort((a, b) => {
-                  const aValue = a[field]
-                  const bValue = b[field]
+                  filteredUsers.sort((a, b) => {
+                    const aValue = a[field]
+                    const bValue = b[field]
 
-                  if (
-                    typeof aValue === "string" &&
-                    typeof bValue === "string"
-                  ) {
-                    return direction === "asc"
-                      ? aValue.localeCompare(bValue)
-                      : bValue.localeCompare(aValue)
-                  }
+                    if (
+                      typeof aValue === "string" &&
+                      typeof bValue === "string"
+                    ) {
+                      return direction === "asc"
+                        ? aValue.localeCompare(bValue)
+                        : bValue.localeCompare(aValue)
+                    }
 
-                  return 0
-                })
-              }
+                    return 0
+                  })
+                }
 
-              resolve(filteredUsers)
-            }, 1000) // Simulate 1 second delay for API response
-          })
+                return resolve(filteredUsers)
+              }, 1000) // Simulate 1 second delay for API response
+            }),
+          }
         },
       },
     })

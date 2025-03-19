@@ -127,12 +127,16 @@ export type BaseDataAdapter<
    * @param options - The filter options to apply when fetching data
    * @returns Array of records, promise of records, or observable of records
    */
-  fetchData: (
-    options: BaseFetchOptions<Filters, Sortings>
-  ) =>
-    | BaseResponse<Record>
-    | Promise<BaseResponse<Record>>
-    | Observable<PromiseState<BaseResponse<Record>>>
+  fetchData: <T>(
+    options: BaseFetchOptions<Filters, Sortings>,
+    ref?: T
+  ) => {
+    result:
+      | BaseResponse<Record>
+      | Promise<BaseResponse<Record>>
+      | Observable<PromiseState<BaseResponse<Record>>>
+    ref?: T
+  }
 }
 
 /**
@@ -154,12 +158,17 @@ export type PaginatedDataAdapter<
    * @param options - The filter and pagination options to apply when fetching data
    * @returns Paginated response with records and pagination info
    */
-  fetchData: (
-    options: PaginatedFetchOptions<Filters, Sortings>
-  ) =>
-    | PaginatedResponse<Record>
-    | Promise<PaginatedResponse<Record>>
-    | Observable<PromiseState<PaginatedResponse<Record>>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchData: <T = any>(
+    options: PaginatedFetchOptions<Filters, Sortings>,
+    ref?: T
+  ) => {
+    result:
+      | PaginatedResponse<Record>
+      | Promise<PaginatedResponse<Record>>
+      | Observable<PromiseState<PaginatedResponse<Record>>>
+    ref?: T
+  }
 }
 
 /**

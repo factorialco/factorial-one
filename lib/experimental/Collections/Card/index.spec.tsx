@@ -53,9 +53,9 @@ const createTestSource = (
   isLoading: false,
   setIsLoading: vi.fn(),
   dataAdapter: {
-    fetchData: async ({ filters: _filters }) => {
+    fetchData: ({ filters: _filters }) => {
       if (error) throw error
-      return data
+      return { result: Promise.resolve(data) }
     },
   },
 })
@@ -281,12 +281,14 @@ describe("CardCollection", () => {
         dataAdapter: {
           paginationType: "pages" as const,
           perPage: 10,
-          fetchData: async () => ({
-            records: largeDataSet.slice(0, 12),
-            pagesCount: Math.ceil(largeDataSet.length / 12),
-            currentPage: 1,
-            perPage: 12,
-            total: largeDataSet.length,
+          fetchData: () => ({
+            result: Promise.resolve({
+              records: largeDataSet.slice(0, 12),
+              pagesCount: Math.ceil(largeDataSet.length / 12),
+              currentPage: 1,
+              perPage: 12,
+              total: largeDataSet.length,
+            }),
           }),
         },
       }
@@ -334,12 +336,14 @@ describe("CardCollection", () => {
         setIsLoading: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
-          fetchData: async () => ({
-            records: largeDataSet.slice(0, 24),
-            pagesCount: Math.ceil(largeDataSet.length / 24),
-            currentPage: 1,
-            perPage: 24,
-            total: largeDataSet.length,
+          fetchData: () => ({
+            result: Promise.resolve({
+              records: largeDataSet.slice(0, 24),
+              pagesCount: Math.ceil(largeDataSet.length / 24),
+              currentPage: 1,
+              perPage: 24,
+              total: largeDataSet.length,
+            }),
           }),
         },
       }

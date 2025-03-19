@@ -6,11 +6,7 @@ import {
   useRef,
   useState,
 } from "react"
-import { Observable } from "zen-observable-ts"
-import {
-  PromiseState,
-  promiseToObservable,
-} from "../../lib/promise-to-observable"
+import { promiseToObservable } from "../../lib/promise-to-observable"
 import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { SortingsDefinition } from "./sortings"
@@ -63,8 +59,6 @@ interface UseDataReturn<Record> {
   paginationInfo: PaginationInfo | null
   setPage: (page: number) => void
 }
-
-type DataType<T> = PromiseState<T>
 
 /**
  * Custom hook for handling data fetching state
@@ -178,6 +172,8 @@ export function useData<
     setIsLoading,
   } = source
   const cleanup = useRef<(() => void) | undefined>()
+  // Store reference for reuse between data fetches
+  const stableRef = useRef()
 
   const {
     isInitialLoading,
@@ -254,25 +250,61 @@ export function useData<
           sortings: currentSortings,
         }
 
-        const fetcher = (): PromiseOrObservable<ResultType> =>
-          dataAdapter.paginationType === "pages"
-            ? dataAdapter.fetchData({
+        const fetcher = <T>(
+          ref: T
+        ): {
+          ref?: T
+          result: PromiseOrObservable<ResultType>
+        } => {
+          if (dataAdapter.paginationType === "pages") {
+            const fetchResult = dataAdapter.fetchData(
+              {
                 ...baseFetchOptions,
-                pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
-              })
-            : dataAdapter.fetchData({
+                pagination: {
+                  currentPage,
+                  perPage: dataAdapter.perPage || 20,
+                },
+              },
+              ref
+            )
+            return {
+              ref: fetchResult.ref,
+              result: fetchResult.result,
+            }
+          } else {
+            const fetchResult = dataAdapter.fetchData(
+              {
                 ...baseFetchOptions,
-              })
+              },
+              ref
+            )
 
-        const result = fetcher()
+            return {
+              ref: fetchResult.ref,
+              result: fetchResult.result,
+            }
+          }
+        }
+
+        // Use the current stable reference but don't immediately update it
+        // This prevents the reference update from triggering additional renders
+        const { ref, result } = fetcher(stableRef.current)
+
+        // Only update the reference if it has changed and after the fetch completes
+        const updateRef = () => {
+          if (ref !== undefined && ref !== stableRef.current) {
+            stableRef.current = ref
+          }
+        }
 
         // Handle synchronous data
         if (!("then" in result || "subscribe" in result)) {
           handleFetchSuccess(result)
+          updateRef()
           return
         }
 
-        const observable: Observable<DataType<ResultType>> =
+        const observable =
           "subscribe" in result ? result : promiseToObservable(result)
 
         const subscription = observable.subscribe({
@@ -283,6 +315,7 @@ export function useData<
               handleFetchError(state.error)
             } else if (state.data) {
               handleFetchSuccess(state.data)
+              updateRef() // Only update ref after successful data fetch
             }
           },
           error: handleFetchError,
@@ -296,12 +329,13 @@ export function useData<
         handleFetchError(error)
       }
     },
+    // Only include truly required dependencies
     [
-      handleFetchError,
       dataAdapter,
       currentSortings,
       searchValue,
       handleFetchSuccess,
+      handleFetchError,
       setIsLoading,
     ]
   )

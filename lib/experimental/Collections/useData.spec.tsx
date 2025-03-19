@@ -55,7 +55,10 @@ const createMockDataSource = (
     TestFilters,
     SortingsDefinition
   > = {
-    fetchData,
+    fetchData: (options, ref) => ({
+      result: fetchData(options),
+      ref,
+    }),
   }
 
   const paginatedAdapter: PaginatedDataAdapter<
@@ -63,17 +66,21 @@ const createMockDataSource = (
     TestFilters,
     SortingsDefinition
   > = {
-    fetchData: async (options) => {
-      const result = await Promise.resolve(fetchData(options))
-      if (result instanceof Observable) {
+    fetchData: (options) => {
+      const fetchResult = fetchData(options)
+      if (fetchResult instanceof Observable) {
         throw new Error("Observable not supported in paginated mode")
       }
+
       return {
-        records: result,
-        total: result.length,
-        currentPage: options.pagination.currentPage,
-        perPage: options.pagination.perPage,
-        pagesCount: Math.ceil(result.length / options.pagination.perPage),
+        result: Promise.resolve(fetchResult).then((result) => ({
+          records: result,
+          total: result.length,
+          currentPage: options.pagination.currentPage,
+          perPage: options.pagination.perPage,
+          pagesCount: Math.ceil(result.length / options.pagination.perPage),
+        })),
+        ref: undefined,
       }
     },
     paginationType: "pages",
@@ -323,8 +330,10 @@ describe("useData", () => {
       const source = {
         dataAdapter: {
           fetchData: () => {
-            return new Observable<PromiseState<PaginatedResponse<TestRecord>>>(
-              (subscriber) => {
+            return {
+              result: new Observable<
+                PromiseState<PaginatedResponse<TestRecord>>
+              >((subscriber) => {
                 subscriptionCount++
                 subscriber.next({
                   loading: true,
@@ -352,8 +361,9 @@ describe("useData", () => {
                 return () => {
                   unsubscribeCalls++
                 }
-              }
-            )
+              }),
+              ref: undefined,
+            }
           },
           paginationType: "pages" as const,
           perPage: 10,
