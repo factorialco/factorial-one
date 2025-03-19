@@ -1,11 +1,51 @@
-# Factorial One
+# Factorial One Design System
 
-[![Build and Publish Storybook to GitHub Pages](https://github.com/factorialco/factorial-one/actions/workflows/deploy.yaml/badge.svg)](https://github.com/josepjaume/factorial-one/actions/workflows/deploy.yaml)
-[![Storybook Tests](https://github.com/factorialco/factorial-one/actions/workflows/storybook-tests.yaml/badge.svg)](https://github.com/josepjaume/factorial-one/actions/workflows/storybook-tests.yaml)
+Factorial One is a comprehensive design system for building consistent user interfaces across web and mobile platforms.
 
-[one.factorial.dev](https://one.factorial.dev/)
+## Packages
 
-Please check the factorial-one's docs for understand the use cases, the architectures, the aggrements, conventions, how
-to develop in local, etc..
+This monorepo contains the following packages:
 
-# [factorial-one docs](docs/index.md)
+- `@factorialco/factorial-one-core`: Core tokens and utilities shared across platforms (located in `packages/core`)
+- `@factorialco/factorial-one-react-native`: React Native implementation of the design system (located in `packages/react-native`)
+- `@factorialco/factorial-one`: React implementation of the design system (existing)
+
+## Development
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm 9+
+
+### Setup
+
+```bash
+# Install dependencies
+pnpm install
+```
+
+### Building
+
+```bash
+# Build all packages
+pnpm build
+
+# Build a specific package
+pnpm --filter @factorialco/factorial-one-core build
+pnpm --filter @factorialco/factorial-one-react-native build
+```
+
+### Testing
+
+```bash
+# Run tests for all packages
+pnpm test
+
+# Run tests for a specific package
+pnpm --filter @factorialco/factorial-one-core test
+pnpm --filter @factorialco/factorial-one-react-native test
+```
+
+## License
+
+MIT
