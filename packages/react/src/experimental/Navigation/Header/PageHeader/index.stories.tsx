@@ -211,29 +211,33 @@ export const WithProductUpdate: Story = {
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                   imageURL: "https://placecats.com/neo/300/200",
                   updated: "4 mar 2025",
-                  unread: true
+                  unread: true,
                 },
-                {title: "New Client section",
+                {
+                  title: "New Client section",
                   imageURL: "https://placecats.com/neo/300/200",
                   updated: "3 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
-                  unread: true
+                  unread: true,
                 },
-                {title: "Spending tab in projects",
+                {
+                  title: "Spending tab in projects",
                   imageURL: "https://placecats.com/neo/300/200",
                   updated: "2 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                 },
-                {title: "Improved management of planned income and costs",
+                {
+                  title: "Improved management of planned income and costs",
                   imageURL: "https://placecats.com/neo/300/200",
                   updated: "1 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                 },
-                {title: "Project hours by employee export",
+                {
+                  title: "Project hours by employee export",
                   imageURL: "https://placecats.com/neo/300/200",
                   updated: "1 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
-                }
+                },
               ]),
             0
           )
