@@ -7,8 +7,8 @@ on:
 
 jobs:
   release-please:
-    # Prevents the workflow from running on the release-please branch
-    if: github.head_ref != 'release-please--branches--master'
+    # Prevents running on the release-please branch
+    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
     runs-on: ubuntu-latest
     permissions:
       contents: write
