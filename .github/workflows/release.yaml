@@ -7,6 +7,8 @@ on:
 
 jobs:
   release-please:
+    # Prevents the workflow from running on the release-please branch
+    if: github.head_ref != 'release-please--branches--master'
     runs-on: ubuntu-latest
     permissions:
       contents: write
