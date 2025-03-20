@@ -40,6 +40,10 @@ const squirclePath =
 export function ModuleAvatar({ size = "md", icon }: ModuleAvatarProps) {
   const IconComponent = icon
 
+  const code = Math.random().toString(36).substring(2, 15)
+
+  const gradientId = `gradient-${code}`
+
   return (
     <div className={moduleAvatarVariants({ size })} aria-hidden="true">
       <svg
@@ -48,13 +52,13 @@ export function ModuleAvatar({ size = "md", icon }: ModuleAvatarProps) {
         preserveAspectRatio="none"
       >
         <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#FF355E" />
             <stop offset="44%" stopColor="#FF355E" />
             <stop offset="100%" stopColor="#D62D4F" />
           </linearGradient>
         </defs>
-        <path d={squirclePath} fill="url(#gradient)" />
+        <path d={squirclePath} fill={`url(#${gradientId})`} />
       </svg>
       <IconComponent className={iconSizeVariants({ size })} />
     </div>

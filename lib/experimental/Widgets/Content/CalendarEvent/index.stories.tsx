@@ -4,10 +4,11 @@ import { Building, Coffee, Comment, Pin, Replace } from "@/icons/app"
 import { CalendarEvent } from "."
 
 const meta: Meta = {
+  title: "Widgets/Content/CalendarEvent",
   component: CalendarEvent,
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
-    tags: ["autodocs"],
   },
   args: {
     label: "Overtime",

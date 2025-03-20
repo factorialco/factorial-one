@@ -64,20 +64,27 @@ export default {
         },
       ],
       xl: [
-        "1.375rem",
+        "1.125rem",
         {
           lineHeight: "1.75rem",
           letterSpacing: "-0.01em",
         },
       ],
       "2xl": [
+        "1.375rem",
+        {
+          lineHeight: "1.75rem",
+          letterSpacing: "-0.01em",
+        },
+      ],
+      "3xl": [
         "1.625rem",
         {
           lineHeight: "2rem",
           letterSpacing: "-0.01em",
         },
       ],
-      "3xl": [
+      "4xl": [
         "2.25rem",
         {
           lineHeight: "2.5rem",
@@ -116,6 +123,9 @@ export default {
       width: relativeSpacing,
       colors: {
         f1: f1Colors,
+      },
+      zIndex: {
+        "50": "1250",
       },
       keyframes: {
         "accordion-down": {

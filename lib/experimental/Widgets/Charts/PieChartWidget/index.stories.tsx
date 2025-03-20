@@ -4,6 +4,7 @@ import { PieChartWidget } from "."
 import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
 
 const meta = {
+  title: "Widgets/Charts/PieChartWidget",
   component: PieChartWidget,
   parameters: {
     layout: "centered",
@@ -13,7 +14,7 @@ const meta = {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   args: {
     ...containerStoryArgs,
     header: {

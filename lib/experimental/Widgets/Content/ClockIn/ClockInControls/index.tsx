@@ -1,55 +1,13 @@
 import { Button } from "@/components/Actions/Button"
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { IconType } from "@/components/Utilities/Icon"
 import { Select } from "@/experimental/Forms/Fields/Select"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
-import {
-  DropdownDefault,
-  SolidPause,
-  SolidPlay,
-  SolidStop,
-  Suitcase as SuitcaseIcon,
-} from "@/icons/app"
-import { cn } from "@/lib/utils"
+import { SolidPause, SolidPlay, SolidStop } from "@/icons/app"
 import { motion } from "framer-motion"
 import { Dispatch, useState } from "react"
 import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
 import { getInfo } from "./helpers"
-
-function Selector({
-  text,
-  placeholder,
-  icon,
-  onClick,
-}: {
-  text?: string
-  placeholder: string
-  icon?: IconType
-  onClick?: () => void
-}) {
-  return (
-    <div
-      className="flex cursor-default flex-row items-center gap-1 rounded-xs px-1 hover:bg-f1-background-hover"
-      onClick={onClick}
-    >
-      {icon && (
-        <div className="translate-y-0.5">
-          <Icon icon={icon} className="text-f1-icon" />
-        </div>
-      )}
-      <span
-        className={cn(
-          "font-medium",
-          text ? "text-f1-foreground" : "text-f1-foreground-secondary"
-        )}
-      >
-        {text ?? placeholder}
-      </span>
-      <div className="translate-y-[3px]">
-        <Icon icon={DropdownDefault} />
-      </div>
-    </div>
-  )
-}
+import Selector from "./Selector"
 
 interface BreakType {
   id: string
@@ -77,14 +35,18 @@ export interface ClockInControlsProps {
     selectLocation: string
     selectProject: string
   }
-  location?: {
+  locationId?: string
+  onChangeLocationId: Dispatch<string>
+  locations: {
+    id: string
     name: string
     icon: IconType
-  }
+  }[]
   breakTypes?: BreakType[]
   onChangeBreakTypeId?: Dispatch<string>
+  canShowLocation?: boolean
+  locationSelectorDisabled?: boolean
   canShowBreakButton?: boolean
-  projectName?: string
   /** Callback when Clock In button is clicked */
   onClockIn?: () => void
   /** Callback when Clock Out button is clicked */
@@ -95,22 +57,28 @@ export interface ClockInControlsProps {
   onClickProjectSelector?: () => void
   /** Callback when Location Selector is clicked */
   onClickLocationSelector?: () => void
+  canShowProject?: boolean
+  projectSelectorElement?: React.ReactNode
 }
 
 export function ClockInControls({
   remainingMinutes,
   data = [],
   labels,
-  location,
-  projectName,
+  locationId,
+  locations,
+  canShowLocation = true,
+  locationSelectorDisabled = false,
   onClockIn,
   onClockOut,
   onBreak,
   breakTypes,
   onChangeBreakTypeId,
   canShowBreakButton = true,
-  onClickProjectSelector,
-  onClickLocationSelector,
+  // onClickProjectSelector,
+  onChangeLocationId,
+  canShowProject = true,
+  projectSelectorElement,
 }: ClockInControlsProps) {
   const { status, statusText, subtitle, statusColor } = getInfo({
     data,
@@ -143,6 +111,26 @@ export function ClockInControls({
     onBreak?.(value)
   }
 
+  const canSelectLocation =
+    showLocationAndProjectSelectors &&
+    locations.length &&
+    !locationSelectorDisabled &&
+    canShowLocation
+  // const canSelectProject =
+  //   showLocationAndProjectSelectors &&
+  //   !projectSelectorDisabled &&
+  //   canShowProject
+
+  const location = locations.find((location) => location.id === locationId)
+
+  const locationOptions = locations.map((location) => ({
+    value: location.id,
+    label: location.name,
+    icon: location.icon,
+  }))
+
+  const [locationPickerOpen, setLocationPickerOpen] = useState(false)
+
   return (
     <div className="@container">
       <div className="flex-grow flex-col">
@@ -150,7 +138,7 @@ export function ClockInControls({
           <div className="flex-1 space-y-4">
             <div className="flex flex-col items-center space-y-0.5 @xs:items-start">
               <div className="flex items-center gap-2">
-                <span className="line-clamp-1 text-xl font-semibold text-f1-foreground">
+                <span className="line-clamp-1 text-2xl font-semibold text-f1-foreground">
                   {statusText}
                 </span>
                 <div className="relative aspect-square h-4">
@@ -255,25 +243,34 @@ export function ClockInControls({
           <ClockInGraph data={data} remainingMinutes={remainingMinutes} />
         </div>
         <div className="mt-6 flex flex-row flex-wrap items-center justify-center gap-2 @xs:justify-start">
-          {showLocationAndProjectSelectors ? (
+          {canSelectLocation ? (
             <>
-              <Selector
-                text={location?.name}
-                placeholder={labels.selectLocation}
-                icon={location?.icon}
-                onClick={onClickLocationSelector}
-              />
-              <Selector
-                text={projectName}
-                placeholder={labels.selectProject}
-                icon={SuitcaseIcon}
-                onClick={onClickProjectSelector}
-              />
+              <Select
+                value={locationId}
+                options={locationOptions}
+                onChange={onChangeLocationId}
+                open={locationPickerOpen}
+                onOpenChange={setLocationPickerOpen}
+                disabled={locationSelectorDisabled}
+              >
+                <div aria-label="Select location">
+                  <Selector
+                    text={location?.name}
+                    placeholder={labels.selectLocation}
+                    icon={location?.icon}
+                  />
+                </div>
+              </Select>
+              {canShowProject && projectSelectorElement}
             </>
           ) : (
             <>
-              {location && <RawTag text={location.name} icon={location.icon} />}
-              {projectName && <RawTag text={projectName} icon={SuitcaseIcon} />}
+              {canShowLocation && location && (
+                <>
+                  <RawTag text={location.name} icon={location.icon} />
+                </>
+              )}
+              {canShowProject && projectSelectorElement}
             </>
           )}
         </div>

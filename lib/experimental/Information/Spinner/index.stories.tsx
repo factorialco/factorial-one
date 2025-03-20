@@ -3,10 +3,11 @@ import { Spinner } from "."
 
 const meta = {
   component: Spinner,
+  title: "Spinner",
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof Spinner>
 
 export default meta

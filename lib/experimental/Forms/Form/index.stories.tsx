@@ -1,27 +1,24 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { AutoGrid } from "@/experimental/Utilities/Layout/AutoGrid"
+import { Button } from "@/factorial-one"
 import { Textarea } from "@/ui/textarea"
+import { UseFormReturn } from "react-hook-form"
+import { number, z } from "zod"
 import { Form, FormActions } from "."
-import Checkbox from "../Fields/Checkbox"
+import { Checkbox } from "../Fields/Checkbox"
 import { Input } from "../Fields/Input"
+import { NumberInput } from "../Fields/NumberInput"
 import { Select } from "../Fields/Select"
 import { FormField } from "../FormField"
-import {
-  booleanField,
-  buildFormSchema,
-  stringField,
-  useFormSchema,
-} from "../lib/useForm"
+import { useFormSchema } from "../lib/useForm"
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 const meta = {
-  tags: ["autodocs"],
-  parameters: {
-    a11y: {
-      skipCi: true,
-    },
-  },
+  title: "Form",
+  tags: ["autodocs", "experimental"],
+  parameters: { a11y: { skipCi: true } },
   args: {},
 } satisfies Meta<typeof Form>
 
@@ -30,24 +27,27 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   render() {
-    const schema = buildFormSchema({
-      username: stringField()
-        .min(2)
-        .max(10)
-        .refine((username) => username !== "admin", {
-          message: "Username cannot be admin",
-        }),
-      fullName: stringField().min(6).max(50),
-      email: stringField().email(),
-      password: stringField().min(8).max(50),
-      passwordConfirmation: stringField(),
-      bio: stringField().max(500),
-      tag: stringField(),
-      acceptedTerms: booleanField(),
-    }).refine((data) => data.password === data.passwordConfirmation, {
-      message: "Passwords do not match",
-      path: ["passwordConfirmation"],
-    })
+    const schema = z
+      .object({
+        username: z
+          .string()
+          .min(2)
+          .max(10)
+          .refine((username) => username !== "admin", {
+            message: "Username cannot be admin",
+          }),
+        fullName: z.string().min(6).max(50),
+        email: z.string().email(),
+        password: z.string().min(8).max(50),
+        passwordConfirmation: z.string(),
+        bio: z.string().max(500),
+        tag: z.string(),
+        acceptedTerms: z.boolean(),
+      })
+      .refine((data) => data.password === data.passwordConfirmation, {
+        message: "Passwords do not match",
+        path: ["passwordConfirmation"],
+      })
 
     const form = useFormSchema(
       schema,
@@ -63,9 +63,7 @@ export const Default: Story = {
         await sleep(2000)
         alert(`Form has been submitted: ${JSON.stringify(data)}`)
 
-        return {
-          success: true,
-        }
+        return { success: true }
       }
     )
 
@@ -201,8 +199,8 @@ export const Default: Story = {
 
 export const AsyncFieldValidation: Story = {
   render() {
-    const schema = buildFormSchema({
-      username: stringField().refine(
+    const schema = z.object({
+      username: z.string().refine(
         async (username) => {
           await sleep(200)
           return username !== "taken"
@@ -215,9 +213,7 @@ export const AsyncFieldValidation: Story = {
       await sleep(1000)
       alert("Form has been submitted")
 
-      return {
-        success: true,
-      }
+      return { success: true }
     })
 
     return (
@@ -241,9 +237,7 @@ export const AsyncFieldValidation: Story = {
 
 export const AsyncSubmit: Story = {
   render() {
-    const schema = buildFormSchema({
-      comment: stringField(),
-    })
+    const schema = z.object({ comment: z.string() })
 
     const form = useFormSchema(schema, {}, async () => {
       await sleep(2000)
@@ -251,9 +245,7 @@ export const AsyncSubmit: Story = {
       return {
         success: false,
         rootMessage: "Server error",
-        errors: {
-          comment: "Couln't create comment",
-        },
+        errors: { comment: "Couln't create comment" },
       }
     })
 
@@ -269,6 +261,344 @@ export const AsyncSubmit: Story = {
         </FormField>
 
         <FormActions form={form} submitLabel="Create" />
+      </Form>
+    )
+  },
+}
+
+export const MultipleTypeSchema: Story = {
+  render() {
+    const animalSchema = z.object({ name: z.string(), eating: z.boolean() })
+
+    const fishSchema = animalSchema.merge(
+      z.object({ type: z.literal("fish"), swimming: z.boolean() })
+    )
+
+    const dogSchema = animalSchema.merge(
+      z.object({ type: z.literal("dog"), running: z.boolean() })
+    )
+
+    const fishForm = useFormSchema(
+      fishSchema,
+      {
+        defaultValues: {
+          name: "Nemo",
+          eating: false,
+          type: "fish",
+          swimming: true,
+          // running: false this will trigger an error. TS will let you know this is not valid for this schema.
+        },
+      },
+      async (data) => {
+        alert(`Form has been submitted: ${JSON.stringify(data)}`)
+
+        return { success: true }
+      }
+    )
+
+    const dogForm = useFormSchema(
+      dogSchema,
+      {
+        defaultValues: {
+          name: "Fluffy",
+          type: "dog",
+          eating: false,
+          running: true,
+        },
+      },
+      async (data) => {
+        alert(`Form has been submitted: ${JSON.stringify(data)}`)
+
+        return { success: true }
+      }
+    )
+
+    return (
+      <div>
+        <div>
+          <h3>Fish form:</h3>
+          <Form {...fishForm}>
+            <FormField
+              label="Name"
+              description="Write a name"
+              control={fishForm.control}
+              name="name"
+            >
+              {(field) => (
+                <Input
+                  placeholder="Try 'taken' as a username"
+                  {...field}
+                  value={String(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label="Eating"
+              description="Is the animal eating?"
+              control={fishForm.control}
+              name="eating"
+            >
+              {(field) => (
+                <Checkbox
+                  {...field}
+                  onCheckedChange={field.onChange}
+                  value={String(field.value)}
+                  checked={Boolean(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label="Swimming"
+              description="Is the animal swimming?"
+              control={fishForm.control}
+              name="swimming"
+            >
+              {(field) => (
+                <Checkbox
+                  {...field}
+                  onCheckedChange={field.onChange}
+                  value={String(field.value)}
+                  checked={Boolean(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormActions form={fishForm} submitLabel="Create" />
+          </Form>
+        </div>
+
+        <br />
+        <div>
+          <h3>Dog form:</h3>
+          <Form {...dogForm}>
+            <FormField
+              label="Name"
+              description="Write a name"
+              control={dogForm.control}
+              name="name"
+            >
+              {(field) => (
+                <Input
+                  placeholder="Try 'taken' as a username"
+                  {...field}
+                  value={String(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label="Eating"
+              description="Is the animal eating?"
+              control={dogForm.control}
+              name="eating"
+            >
+              {(field) => (
+                <Checkbox
+                  {...field}
+                  onCheckedChange={field.onChange}
+                  value={String(field.value)}
+                  checked={Boolean(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label="Running"
+              description="Is the animal running?"
+              control={dogForm.control}
+              name="running"
+            >
+              {(field) => (
+                <Checkbox
+                  {...field}
+                  onCheckedChange={field.onChange}
+                  value={String(field.value)}
+                  checked={Boolean(field.value)}
+                />
+              )}
+            </FormField>
+
+            <FormActions form={dogForm} submitLabel="Create" />
+          </Form>
+        </div>
+      </div>
+    )
+  },
+}
+
+export const NestedSchemas: Story = {
+  render() {
+    // SCHEMAS
+    const itemSchema = z.object({
+      quantity: number().min(1),
+      price: number().min(0),
+      comment: z.string().optional(),
+    })
+
+    const schema = z.object({
+      total: number().min(0),
+      items: itemSchema.array().nonempty(),
+    })
+
+    // TYPES
+    type FormType = UseFormReturn<z.infer<typeof schema>>
+    type SubFormType = UseFormReturn<z.infer<typeof itemSchema>>
+
+    // FORM definitions
+    const form = useFormSchema(
+      schema,
+      { defaultValues: { items: [], total: 0 } },
+      async (data) => {
+        alert(`Form has been submitted: ${JSON.stringify(data)}`)
+
+        return { success: true }
+      }
+    )
+
+    interface SubFormProps {
+      form: FormType
+    }
+
+    const SubForm = ({ form }: SubFormProps) => {
+      const subForm = useFormSchema(
+        itemSchema,
+        { defaultValues: {} },
+        async (_data) => {
+          return { success: true }
+        }
+      )
+
+      subForm.watch("quantity")
+      subForm.watch("price")
+      subForm.watch("comment")
+
+      const addItem = (quantity: number, price: number, comment?: string) => {
+        form.setValue("items", [
+          ...form.getValues().items,
+          { quantity: quantity, price: price, comment: comment },
+        ])
+
+        form.trigger()
+      }
+
+      const handleAddItem = (subForm: SubFormType) => {
+        const { quantity, price, comment } = subForm.getValues()
+
+        subForm.trigger().then(() => {
+          const valid =
+            !subForm.getFieldState("quantity").error &&
+            !subForm.getFieldState("price").error &&
+            !subForm.getFieldState("comment").error
+
+          if (!valid) {
+            if (subForm.getFieldState("quantity").error) {
+              alert(
+                "Quantity " + subForm.getFieldState("quantity").error?.message
+              )
+            }
+
+            if (subForm.getFieldState("price").error) {
+              alert("Price " + subForm.getFieldState("price").error?.message)
+            }
+
+            if (subForm.getFieldState("comment").error) {
+              alert(
+                "Comment " + subForm.getFieldState("comment").error?.message
+              )
+            }
+          } else {
+            addItem(quantity, price, comment)
+          }
+        })
+      }
+
+      return (
+        <div>
+          <AutoGrid gap="4">
+            <FormField
+              label=""
+              description="Quantity"
+              control={subForm.control}
+              name="quantity"
+            >
+              {(field) => (
+                <NumberInput
+                  {...field}
+                  step={1}
+                  value={Number(field.value) || 0}
+                  locale="en-US"
+                  onChange={(value) => {
+                    subForm.setValue("quantity", Number(value))
+                  }}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label=""
+              description="Price"
+              control={subForm.control}
+              name="price"
+            >
+              {(field) => (
+                <NumberInput
+                  {...field}
+                  value={Number(field.value) || 0}
+                  locale="en-US"
+                  onChange={(value) => {
+                    subForm.setValue("price", Number(value))
+                  }}
+                />
+              )}
+            </FormField>
+
+            <FormField
+              label=""
+              description="Write something about this item"
+              control={subForm.control}
+              name="comment"
+            >
+              {(field) => <Input placeholder="Add your comment" {...field} />}
+            </FormField>
+
+            <div className="mt-3">
+              <Button
+                variant="neutral"
+                label="Add an item"
+                type="button"
+                onClick={(event) => {
+                  event.preventDefault()
+                  handleAddItem(subForm)
+                }}
+              />
+            </div>
+          </AutoGrid>
+        </div>
+      )
+    }
+
+    return (
+      <Form {...form}>
+        <SubForm form={form} />
+
+        {form
+          .getValues()
+          .items.map((item: z.infer<typeof itemSchema>, index: number) => {
+            return (
+              <div key={index}>
+                {item.quantity} x {item.price} Comment: {item.comment}
+              </div>
+            )
+          })}
+
+        {form.formState.errors.items && (
+          <div>{form.formState.errors.items.message}</div>
+        )}
+        <div className="mt-3">
+          <FormActions form={form} submitLabel="Submit" />
+        </div>
       </Form>
     )
   },

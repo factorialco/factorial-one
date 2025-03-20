@@ -8,6 +8,7 @@ import { ComponentProps } from "react"
 import { Icon } from "."
 
 const meta = {
+  title: "Icon",
   component: Icon,
   argTypes: {
     icon: {
@@ -18,14 +19,14 @@ const meta = {
     },
     size: {
       control: "radio",
-      options: ["sm", "md", "lg"],
+      options: ["xs", "sm", "md", "lg"],
       description: "Size of the icon",
     },
   },
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "stable"],
 } satisfies Meta<ComponentProps<typeof Icon>>
 
 export default meta
@@ -42,6 +43,13 @@ export const Module: Story = {
   args: {
     size: "lg",
     icon: ModuleIcons.Calendar,
+  },
+  argTypes: {
+    icon: {
+      control: "select",
+      options: Object.keys(ModuleIcons),
+      mapping: ModuleIcons,
+    },
   },
 }
 

@@ -1,3 +1,4 @@
+export * from "./AvatarNameSelector/exports"
 export * from "./Fields/exports"
 export * from "./Form"
 export * from "./FormField"

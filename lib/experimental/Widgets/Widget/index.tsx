@@ -1,4 +1,5 @@
-import { Button, ButtonProps } from "@/components/Actions/Button"
+import { Button, type ButtonProps } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
 import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
 import {
@@ -31,7 +32,7 @@ export interface WidgetProps {
     subtitle?: string
     comment?: string
     canBeBlurred?: boolean
-    link?: { title: string; url: string; onClick?: () => void }
+    link?: { title: string; url: string; onClick?: () => void; icon?: IconType }
     count?: number
   }
   action?: ButtonProps
@@ -90,7 +91,7 @@ const Container = forwardRef<
     <Card
       className={cn(
         fullHeight ? "h-full" : "",
-        "relative flex gap-4 border-f1-border-secondary"
+        "relative flex gap-3 border-f1-border-secondary"
       )}
       ref={ref}
     >
@@ -126,6 +127,7 @@ const Container = forwardRef<
                     onClick={handleLinkClick}
                     href={header.link.url}
                     title={header.link.title}
+                    icon={header.link.icon}
                   />
                 )}
               </div>
@@ -161,7 +163,7 @@ const Container = forwardRef<
                 <div className="mb-0.5 text-sm text-f1-foreground-secondary">
                   {summary.label}
                 </div>
-                <div className="flex flex-row items-end gap-0.5 text-xl font-semibold">
+                <div className="flex flex-row items-end gap-0.5 text-2xl font-semibold">
                   {!!summary.prefixUnit && (
                     <div className="text-lg font-medium">
                       {summary.prefixUnit}
@@ -182,10 +184,10 @@ const Container = forwardRef<
           .filter(isRealNode)
           .map((child, index) => {
             return (
-              <>
+              <React.Fragment key={index}>
                 {index > 0 && <Separator bare />}
                 {child}
-              </>
+              </React.Fragment>
             )
           })}
       </CardContent>

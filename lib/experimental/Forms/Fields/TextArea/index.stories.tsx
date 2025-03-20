@@ -2,8 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Textarea } from "."
 
 const meta = {
+  title: "Input/TextArea",
   component: Textarea,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   args: {
     disabled: false,
     placeholder: "Placeholder text here",

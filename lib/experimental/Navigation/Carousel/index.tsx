@@ -67,7 +67,7 @@ export const Carousel = ({
 
   return (
     <ShadCarousel
-      className="flex w-full flex-col gap-3"
+      className="flex w-full flex-col gap-3 @container"
       opts={{
         align: !showPeek ? "start" : "center",
         slidesToScroll: "auto",
@@ -78,7 +78,7 @@ export const Carousel = ({
       onMouseEnter={autoplay ? handleMouseEnter : undefined}
       onMouseLeave={autoplay ? handleMouseLeave : undefined}
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-5">
         <div className="relative">
           <CarouselContent>
             {React.Children.map(childrenArray, (child, index) => (

@@ -1,7 +1,11 @@
-import DenyIcon from "@/icons/app/Deny"
-import HomeIcon from "@/icons/app/Home"
-import SaladIcon from "@/icons/app/Salad"
-import TimerIcon from "@/icons/app/Timer"
+import {
+  Deny as DenyIcon,
+  Home as HomeIcon,
+  Office as OfficeIcon,
+  Salad as SaladIcon,
+  Suitcase as SuitcaseIcon,
+  Timer as TimerIcon,
+} from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ClockInControls } from "."
 
@@ -20,16 +24,29 @@ const defaultLabels = {
 }
 
 const meta: Meta<typeof ClockInControls> = {
-  title: "Components/ClockInControls",
+  title: "Home/ClockInControls",
   component: ClockInControls,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   args: {
     labels: defaultLabels,
-    location: {
-      name: "Home",
-      icon: HomeIcon,
-    },
-    projectName: "Bolt’s project",
+    locations: [
+      {
+        id: "1",
+        name: "Home",
+        icon: HomeIcon,
+      },
+      {
+        id: "2",
+        name: "Business Trip",
+        icon: SuitcaseIcon,
+      },
+      {
+        id: "3",
+        name: "Office",
+        icon: OfficeIcon,
+      },
+    ],
+    locationId: "1",
   },
   render: (args) => (
     <div className="max-w-[350px]">
@@ -112,14 +129,15 @@ export const Collapsed: Story = {
 
 export const WithNoLocationOrProject: Story = {
   args: {
-    location: undefined,
-    projectName: undefined,
-  },
-}
-
-export const WithLongProjectName: Story = {
-  args: {
-    projectName: "Bolt’s project with a very long name",
+    remainingMinutes: 4 * 60 + 39,
+    data: [
+      {
+        from: new Date("2024-03-20T09:02:00"),
+        to: new Date("2024-03-20T12:23:00"),
+        variant: "clocked-in",
+      },
+    ],
+    locationId: undefined,
   },
 }
 
@@ -164,5 +182,19 @@ export const WithBreakTypes: Story = {
       },
     ],
     onChangeBreakTypeId: () => {},
+  },
+}
+
+export const WithDisabledSelectors: Story = {
+  args: {
+    ...ClockedOut.args,
+    locationSelectorDisabled: true,
+  },
+}
+
+export const WithHiddenLocationAndProject: Story = {
+  args: {
+    ...ClockedOut.args,
+    canShowLocation: false,
   },
 }

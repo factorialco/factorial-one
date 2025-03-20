@@ -20,17 +20,40 @@ import { cn } from "@/lib/utils"
 import { NavigationItem } from "../../utils"
 
 import { IconType } from "@/components/Utilities/Icon"
+import { SelectItemObject } from "@/experimental/Forms/Fields/Select"
 import { motion } from "framer-motion"
 import React, { useLayoutEffect, useRef, useState } from "react"
+import {
+  BreadcrumbSelect,
+  BreadcrumbSelectProps,
+} from "./internal/BreadcrumbSelect"
 
-export type BreadcrumbItemType = { id: string } & (
-  | (NavigationItem & {
-      icon?: IconType
-    })
-  | {
-      loading: true
-    }
-)
+export type BreadcrumbBaseItemType = NavigationItem & {
+  id: string
+  loading?: boolean
+  label: string
+}
+export type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
+  loading: true
+}
+export type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
+  icon?: IconType
+}
+
+export type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
+  type: "select"
+  searchbox?: boolean
+  externalSearch?: boolean
+  options: BreadcrumbSelectProps["options"]
+  onChange: BreadcrumbSelectProps["onChange"]
+  value?: string
+  defaultItem?: SelectItemObject<string>
+}
+
+export type BreadcrumbItemType =
+  | BreadcrumbLoadingItemType
+  | BreadcrumbNavItemType
+  | BreadcrumbSelectItemType
 
 interface BreadcrumbState {
   visibleCount: number
@@ -141,12 +164,21 @@ interface BreadcrumbContentProps {
   isFirst?: boolean
 }
 
+type ContentType = "loading" | "select" | "page" | "link"
+
 const BreadcrumbContent = React.forwardRef<
   HTMLDivElement,
   BreadcrumbContentProps
 >(({ item, isLast, isOnly = false, isFirst = false }, ref) => {
-  const isLoading = "loading" in item
-  const shouldRenderAsPage = isLast || isOnly
+  const isLoading = "loading" in item && item.loading
+
+  const contentType: ContentType = isLoading
+    ? "loading"
+    : "type" in item && item.type
+      ? item.type
+      : isLast || isOnly
+        ? "page"
+        : "link"
 
   const content = (
     <motion.div
@@ -154,7 +186,7 @@ const BreadcrumbContent = React.forwardRef<
       className={cn(
         "flex items-center gap-2 px-1.5",
         isFirst && "pl-0",
-        isOnly && "text-xl font-semibold"
+        isOnly && "text-2xl font-semibold"
       )}
       transition={{ duration: 0.15 }}
     >
@@ -167,6 +199,35 @@ const BreadcrumbContent = React.forwardRef<
     </motion.div>
   )
 
+  // Different renders depending on the breadcrumbtype
+  const contents: Record<ContentType, React.ReactNode> = {
+    loading: <BreadcrumbSkeleton />,
+    select: "type" in item && item.type === "select" && (
+      <BreadcrumbSelect
+        options={item.options}
+        defaultItem={item.defaultItem}
+        onChange={item.onChange}
+        value={item.value}
+        showSearchBox={item.searchbox}
+      />
+    ),
+    page: (
+      <BreadcrumbPage aria-hidden="true" className="p-0">
+        {content}
+      </BreadcrumbPage>
+    ),
+    link: (
+      <ShadBreadcrumbLink asChild className="p-0">
+        <Link
+          {...("href" in item ? (item as BreadcrumbNavItemType) : {})}
+          className="block"
+        >
+          {content}
+        </Link>
+      </ShadBreadcrumbLink>
+    ),
+  }
+
   return (
     <motion.div
       ref={ref}
@@ -174,19 +235,7 @@ const BreadcrumbContent = React.forwardRef<
       className={cn(isLoading && "max-w-40")}
       transition={{ duration: 0.15 }}
     >
-      {isLoading ? (
-        <BreadcrumbSkeleton />
-      ) : shouldRenderAsPage ? (
-        <BreadcrumbPage aria-hidden="true" className="p-0">
-          {content}
-        </BreadcrumbPage>
-      ) : (
-        <ShadBreadcrumbLink asChild className="p-0">
-          <Link {...("href" in item ? item : {})} className="block">
-            {content}
-          </Link>
-        </ShadBreadcrumbLink>
-      )}
+      {contents[contentType]}
     </motion.div>
   )
 })

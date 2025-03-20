@@ -3,8 +3,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { PageHeader } from "."
 
 const meta = {
-  title: "Navigation/Header/PageHeader",
+  title: "Navigation/PageHeader",
   component: PageHeader,
+  tags: ["autodocs", "experimental"],
   parameters: {
     layout: "fullscreen",
     a11y: {
@@ -138,6 +139,29 @@ export const WithBreadcrumbs: Story = {
     breadcrumbs: [
       { id: "employees", label: "Employees", href: "/employees" },
       { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
+  },
+}
+
+export const WithSelectBreadcrumb: Story = {
+  args: {
+    module: defaultModule,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
+      {
+        type: "select",
+        id: "employee",
+        label: "Ainhoa Aznar Lago",
+        searchbox: true,
+        options: Array.from({ length: 10 }, (_, idx) => ({
+          value: idx.toString(),
+          label: `Offer ${idx}`,
+        })),
+        value: "1",
+        onChange: (value) => {
+          console.log("WithSelectBreadcrumb value", value)
+        },
+      },
     ],
   },
 }

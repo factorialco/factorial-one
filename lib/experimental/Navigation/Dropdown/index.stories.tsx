@@ -4,8 +4,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { Dropdown } from "."
 
 const meta: Meta<typeof Dropdown> = {
+  title: "Dropdown",
   component: Dropdown,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -33,7 +34,7 @@ export const Default: Story = {
         icon: Icons.Save,
         description: "Preserve changes",
       },
-      "separator",
+      { type: "separator" },
       {
         label: "Delete",
         onClick: () => console.log("Delete clicked"),

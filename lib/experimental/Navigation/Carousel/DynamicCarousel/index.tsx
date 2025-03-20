@@ -1,75 +1,75 @@
 import { Icon } from "@/factorial-one"
-import { ArrowLeft, ArrowRight } from "@/icons/app"
+import { ChevronLeft, ChevronRight } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
-import { PropsWithChildren, useEffect, useRef, useState } from "react"
+import { PropsWithChildren, useLayoutEffect, useRef, useState } from "react"
 
-const SPACE_FOR_WIDGET_SHADOW = 28
+export const SPACE_FOR_WIDGET_SHADOW = 28
+const GAP = 16
 
 export const DynamicCarousel = ({ children }: PropsWithChildren) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [canScrollNext, setCanScrollNext] = useState(true)
   const [canScrollPrev, setCanScrollPrev] = useState(false)
 
-  const scrollToNextItem = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current
-      const { scrollLeft } = container
+  useLayoutEffect(() => {
+    const container = scrollContainerRef.current
+    if (!container) return
 
-      if (direction === "right") {
-        const nextItem = Array.from(container.children).find((child) => {
-          const childLeft = (child as HTMLElement).offsetLeft
-          return childLeft - SPACE_FOR_WIDGET_SHADOW > scrollLeft
-        })
-        if (nextItem) {
-          container.scrollTo({
-            left:
-              (nextItem as HTMLElement).offsetLeft - SPACE_FOR_WIDGET_SHADOW,
-            behavior: "smooth",
-          })
-        }
-      } else {
-        const previousItem = Array.from(container.children)
-          .reverse()
-          .find((child) => {
-            const childRight =
-              (child as HTMLElement).offsetLeft +
-              (child as HTMLElement).offsetWidth
-            return childRight < scrollLeft
-          })
-        if (previousItem) {
-          container.scrollTo({
-            left:
-              (previousItem as HTMLElement).offsetLeft -
-              SPACE_FOR_WIDGET_SHADOW,
-            behavior: "smooth",
-          })
-        }
-      }
+    const ro = new ResizeObserver(() => updateScrollState())
+    ro.observe(container)
+
+    const handleScroll = () => {
+      updateScrollState()
     }
+
+    container.addEventListener("scroll", handleScroll)
+    updateScrollState()
+
+    return () => {
+      ro.disconnect()
+      container.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
+  function scrollNext() {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    container.scrollBy({
+      left: container.clientWidth,
+      behavior: "smooth",
+    })
+  }
+
+  function scrollPrev() {
+    const container = scrollContainerRef.current
+    if (!container) return
+
+    container.scrollBy({
+      left: -container.clientWidth,
+      behavior: "smooth",
+    })
   }
 
   const updateScrollState = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } =
-        scrollContainerRef.current
-      setCanScrollPrev(scrollLeft > 0)
-      setCanScrollNext(scrollLeft + clientWidth < scrollWidth)
-    }
+    if (!scrollContainerRef.current) return
+    const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
+
+    setCanScrollPrev(scrollLeft > 0)
+    setCanScrollNext(scrollLeft + clientWidth < scrollWidth)
   }
 
-  useEffect(() => {
-    const container = scrollContainerRef.current
-    if (container) {
-      container.addEventListener("scroll", updateScrollState)
-      updateScrollState()
-    }
-    return () => {
-      if (container) {
-        container.removeEventListener("scroll", updateScrollState)
-      }
-    }
-  }, [])
+  let maskImageStyle = ""
+  if (canScrollPrev && canScrollNext) {
+    maskImageStyle = `linear-gradient(to right, transparent 0px, transparent ${SPACE_FOR_WIDGET_SHADOW}px, black ${2 * SPACE_FOR_WIDGET_SHADOW}px, black calc(100% - ${3 * SPACE_FOR_WIDGET_SHADOW}px), transparent calc(100% - ${2 * SPACE_FOR_WIDGET_SHADOW}px), transparent 100%)`
+  } else if (canScrollPrev && !canScrollNext) {
+    maskImageStyle = `linear-gradient(to right, transparent 0px, transparent ${SPACE_FOR_WIDGET_SHADOW}px, black ${2 * SPACE_FOR_WIDGET_SHADOW}px, black 100%)`
+  } else if (!canScrollPrev && canScrollNext) {
+    maskImageStyle = `linear-gradient(to right, black 0px, black calc(100% - ${3 * SPACE_FOR_WIDGET_SHADOW}px), transparent calc(100% - ${2 * SPACE_FOR_WIDGET_SHADOW}px), transparent 100%)`
+  } else {
+    maskImageStyle = "none"
+  }
 
   return (
     <div className="relative">
@@ -77,28 +77,27 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
         ref={scrollContainerRef}
         className="relative flex gap-4 overflow-x-auto overflow-y-visible scroll-smooth"
         style={{
-          scrollbarWidth: "none", // Para Firefox
-          msOverflowStyle: "none", // Para IE y Edge
+          scrollbarWidth: "none", // Firefox
+          msOverflowStyle: "none", // IE & Edge
           margin: `-${SPACE_FOR_WIDGET_SHADOW}px`,
           padding: `${SPACE_FOR_WIDGET_SHADOW}px`,
           height: `calc(100% + ${SPACE_FOR_WIDGET_SHADOW * 2}px)`,
           width: `calc(100% + ${SPACE_FOR_WIDGET_SHADOW * 2}px)`,
+          maskImage: maskImageStyle,
+          WebkitMaskImage: maskImageStyle,
+          scrollSnapType: "x mandatory",
         }}
       >
-        <style>
-          {`
-              /* Para ocultar scrollbar en Chrome, Safari y Edge */
-              .no-scrollbar::-webkit-scrollbar {
-                display: none;
-              }
-            `}
-        </style>
         {Array.isArray(children)
           ? children.map((child, index) => (
               <div
                 key={index}
                 className="flex-shrink-0"
-                style={{ scrollSnapAlign: "start" }}
+                style={{
+                  scrollSnapAlign: "start",
+                  scrollSnapStop: "always",
+                  scrollMarginLeft: SPACE_FOR_WIDGET_SHADOW + GAP + "px",
+                }}
               >
                 {child}
               </div>
@@ -106,69 +105,45 @@ export const DynamicCarousel = ({ children }: PropsWithChildren) => {
           : children && (
               <div
                 className="flex-shrink-0"
-                style={{ scrollSnapAlign: "start" }}
+                style={{
+                  scrollSnapAlign: "start",
+                  scrollSnapStop: "always",
+                  scrollMarginLeft: SPACE_FOR_WIDGET_SHADOW + GAP + "px",
+                }}
               >
                 {children}
               </div>
             )}
       </div>
 
-      {/* Gradientes dinámicos para los bordes */}
-      {canScrollPrev && (
-        <div
-          className={cn(
-            "w-[60px]",
-            "absolute",
-            "h-full",
-            "top-0",
-            "bg-gradient-to-l from-transparent from-0% to-f1-background to-100%"
-          )}
-          style={{ left: `-${SPACE_FOR_WIDGET_SHADOW}px` }}
-        ></div>
-      )}
-      {canScrollNext && (
-        <div
-          className={cn(
-            "w-[60px]",
-            "absolute",
-            "h-full",
-            "top-0",
-            "bg-gradient-to-r from-transparent from-0% to-f1-background to-100%"
-          )}
-          style={{ right: `-${SPACE_FOR_WIDGET_SHADOW}px` }}
-        ></div>
-      )}
-
-      {/* Botón Izquierdo dinámico */}
       {canScrollPrev && (
         <Button
-          size="sm"
+          size="lg"
           variant={"outline"}
           round
           className={cn(
             "absolute opacity-100 transition-all",
-            "-left-3 top-1/2 -translate-y-1/2"
+            "-left-4 top-1/2 -translate-y-1/2 rounded-lg"
           )}
-          onClick={() => scrollToNextItem("left")}
+          onClick={scrollPrev}
         >
-          <Icon size="sm" icon={ArrowLeft} />
+          <Icon icon={ChevronLeft} />
           <span className="sr-only">Previous</span>
         </Button>
       )}
 
-      {/* Botón Derecho dinámico */}
       {canScrollNext && (
         <Button
-          size="sm"
+          size="lg"
           variant={"outline"}
           round
           className={cn(
             "absolute opacity-100 transition-all",
-            "-right-3 top-1/2 -translate-y-1/2"
+            "-right-4 top-1/2 -translate-y-1/2 rounded-lg"
           )}
-          onClick={() => scrollToNextItem("right")}
+          onClick={scrollNext}
         >
-          <Icon size="sm" icon={ArrowRight} />
+          <Icon icon={ChevronRight} />
           <span className="sr-only">Next</span>
         </Button>
       )}

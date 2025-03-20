@@ -44,6 +44,8 @@ export type CommunityPostProps = {
     onClick: () => void
   }
 
+  noVideoPreload?: boolean
+
   onClick: (id: string) => void
 
   dropdownItems?: DropdownItem[]
@@ -64,6 +66,7 @@ export const BaseCommunityPost = ({
   inLabel,
   comment,
   dropdownItems,
+  noVideoPreload = false,
 }: CommunityPostProps) => {
   const countersDisplay = [counters.views, counters.comments]
     .filter(Boolean)
@@ -73,6 +76,10 @@ export const BaseCommunityPost = ({
 
   const handleClick = () => {
     onClick(id)
+  }
+
+  const handleVideoClick = (event: React.MouseEvent<HTMLVideoElement>) => {
+    event.stopPropagation()
   }
 
   const authorFullName = `${author.firstName} ${author.lastName}`
@@ -171,9 +178,14 @@ export const BaseCommunityPost = ({
           </div>
         </div>
         {mediaUrl && !event && (
-          <div className="relative aspect-video overflow-hidden rounded-xl md:w-2/3">
+          <div className="relative aspect-video overflow-hidden rounded-xl md:max-w-[480px]">
             {isVideo(mediaUrl) ? (
-              <video controls className="h-full w-full object-cover">
+              <video
+                controls
+                className="h-full w-full object-cover"
+                onClick={handleVideoClick}
+                preload={noVideoPreload ? "none" : "auto"}
+              >
                 <source src={mediaUrl} />
               </video>
             ) : (
@@ -188,7 +200,7 @@ export const BaseCommunityPost = ({
           </div>
         )}
         {event && (
-          <div className="w-full md:w-2/3">
+          <div className="w-full md:max-w-[480px]">
             <PostEvent {...event} />
           </div>
         )}

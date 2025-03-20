@@ -1,69 +1,51 @@
-# Factorial One
+# Factorial One Design System
 
-[![Build and Publish Storybook to GitHub Pages](https://github.com/factorialco/factorial-one/actions/workflows/deploy.yaml/badge.svg)](https://github.com/josepjaume/factorial-one/actions/workflows/deploy.yaml)
-[![Storybook Tests](https://github.com/factorialco/factorial-one/actions/workflows/storybook-tests.yaml/badge.svg)](https://github.com/josepjaume/factorial-one/actions/workflows/storybook-tests.yaml)
+Factorial One is a comprehensive design system for building consistent user interfaces across web and mobile platforms.
 
-[one.factorial.dev](https://one.factorial.dev/)
+## Packages
 
-## Usage
+This monorepo contains the following packages:
 
-In your react project:
-
-```bash
-$ npm install git+https://github.com/factorialco/factorial-one#release
-```
-
-Then, in your react files:
-
-```tsx
-// In your `main.tsx` file or any top-level component
-import "@factorialco/factorial-one/dist/styles.css"
-
-// If you want to use the shipped fonts
-import "@factorialco/factorial-one/dist/fonts.js"
-
-// In any of your components
-import { Button } from "@factorialco/factorial-one"
-```
-
-And that's it!
+- `@factorialco/factorial-one-core`: Core tokens and utilities shared across platforms (located in `packages/core`)
+- `@factorialco/factorial-one-react-native`: React Native implementation of the design system (located in `packages/react-native`)
+- `@factorialco/factorial-one`: React implementation of the design system (existing)
 
 ## Development
 
-### Install nodejs
+### Prerequisites
 
-The recommended approach is to use the `asdf` dependency manager. On MacOS +
-Homebrew:
+- Node.js 18+
+- pnpm 9+
 
-```bash
-$ brew install asdf
-$ echo -e "\n. $(brew --prefix asdf)/libexec/asdf.sh" >> ${
-```
-
-Then open a new terminal:
+### Setup
 
 ```bash
-$ asdf plugin add nodejs
+# Install dependencies
+pnpm install
 ```
 
-Then, `cd` into the project's directory and:
+### Building
 
 ```bash
-$ asdf install
+# Build all packages
+pnpm build
+
+# Build a specific package
+pnpm --filter @factorialco/factorial-one-core build
+pnpm --filter @factorialco/factorial-one-react-native build
 ```
 
-This should leave you with a fully working nodejs version.
-
-### Start the project
-
-First, install the dependencies:
+### Testing
 
 ```bash
-$ npm install
+# Run tests for all packages
+pnpm test
+
+# Run tests for a specific package
+pnpm --filter @factorialco/factorial-one-core test
+pnpm --filter @factorialco/factorial-one-react-native test
 ```
 
-Then run the storybook server:
+## License
 
-```bash
-$ npm start
-```
+MIT

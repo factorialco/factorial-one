@@ -1,12 +1,18 @@
 import { render, screen } from "@testing-library/react"
-import { ComponentProps, PropsWithChildren } from "react"
+import { ComponentProps, forwardRef, PropsWithChildren } from "react"
 import { describe, expect, it, vi } from "vitest"
 import { BaseTabs, TabsSkeleton } from "."
 
 // Mock the linkHandler module
 vi.mock("@/lib/linkHandler", () => ({
-  Link: ({ children, ...props }: PropsWithChildren<ComponentProps<"a">>) => (
-    <a {...props}>{children}</a>
+  Link: forwardRef<HTMLAnchorElement, PropsWithChildren<ComponentProps<"a">>>(
+    function Link({ children, ...props }, ref) {
+      return (
+        <a ref={ref} {...props}>
+          {children}
+        </a>
+      )
+    }
   ),
   useNavigation: () => ({
     isActive: (href: string) => href === "/active",

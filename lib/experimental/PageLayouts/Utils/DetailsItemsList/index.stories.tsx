@@ -3,10 +3,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { DetailsItemsList } from "."
 
 const meta: Meta = {
+  title: "List/DetailsItemsList",
   component: DetailsItemsList,
-  parameters: {
-    tags: ["autodocs"],
-  },
+  tags: ["autodocs", "experimental"],
   args: {
     title: "Details",
     details: [
@@ -37,7 +36,7 @@ const meta: Meta = {
         title: "Workable days",
         content: {
           type: "weekdays",
-          activatedDays: ["Monday", "Tuesday", "Wednesday"],
+          activatedDays: [0, 1, 2],
         },
         spacingAtTheBottom: true,
       },

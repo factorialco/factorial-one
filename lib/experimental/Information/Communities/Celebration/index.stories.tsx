@@ -3,9 +3,11 @@ import { Celebration } from "."
 
 const meta: Meta<typeof Celebration> = {
   component: Celebration,
+  title: "Home/Communities/Celebration",
   parameters: {
     layout: "centered",
   },
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -48,6 +50,23 @@ export const Default: Story = {
         />
       </div>
     </>
+  ),
+}
+
+export const WithReaction: Story = {
+  render: () => (
+    <div className="w-48">
+      <Celebration
+        link="/"
+        firstName="Saul"
+        lastName="Dominguez"
+        src="https://github.com/sauldom102.png"
+        type="birthday"
+        typeLabel="Birthday"
+        date={exampleDate}
+        lastEmojiReaction="😍"
+      />
+    </div>
   ),
 }
 

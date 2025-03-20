@@ -15,9 +15,30 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
+// Common settings to apply to all configs using React
+const reactSettings = {
+  react: {
+    version: "detect",
+  },
+}
+
 export default [
+  // Main project configuration
   {
-    ignores: ["**/dist", "**/.eslintrc.cjs"],
+    files: ["**/*.{js,jsx,ts,tsx}"],
+    ignores: [
+      "**/dist",
+      "**/.eslintrc.cjs",
+      "apps/react-native-example/**",
+      "packages/react-native/**",
+      ".husky",
+      ".vscode",
+      ".yarn",
+      "node_modules",
+      "coverage",
+      "storybook-static",
+    ],
+    settings: reactSettings,
   },
   ...fixupConfigRules(
     compat.extends(
@@ -27,8 +48,16 @@ export default [
       "plugin:react-hooks/recommended",
       "plugin:storybook/recommended"
     )
-  ),
+  ).map((config) => ({
+    ...config,
+    settings: {
+      ...(config.settings || {}),
+      ...reactSettings,
+    },
+  })),
   {
+    files: ["**/*.{js,jsx,ts,tsx}"],
+    ignores: ["apps/react-native-example/**"],
     plugins: {
       "react-refresh": reactRefresh,
     },
@@ -41,11 +70,7 @@ export default [
       parser: tsParser,
     },
 
-    settings: {
-      react: {
-        version: "detect",
-      },
-    },
+    settings: reactSettings,
 
     rules: {
       "no-unused-vars": "off",

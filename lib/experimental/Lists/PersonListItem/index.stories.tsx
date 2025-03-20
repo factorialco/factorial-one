@@ -1,11 +1,13 @@
 import { Check, Placeholder } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
+import avatar from "../../../../storybook-assets/avatar.jpeg"
 import { PersonListItem } from "./index"
 
 const meta = {
-  title: "Experimental/Lists/PersonListItem",
+  title: "List/PersonListItem",
   component: PersonListItem,
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof PersonListItem>
 
 export default meta
@@ -16,7 +18,7 @@ export const Default: Story = {
     person: {
       firstName: "John",
       lastName: "Smith",
-      avatarUrl: "https://i.pravatar.cc/300",
+      avatarUrl: avatar,
       avatarBadge: {
         icon: Check,
         type: "positive",
@@ -35,18 +37,18 @@ export const WithActions: Story = {
     person: {
       firstName: "Sarah",
       lastName: "Johnson",
-      avatarUrl: "https://i.pravatar.cc/300",
+      avatarUrl: avatar,
     },
     description: "Product Designer",
     actions: {
       primary: {
         icon: Placeholder,
         label: "Message",
-        onClick: () => console.log("Primary action clicked"),
+        onClick: fn(),
       },
       secondary: {
         icon: Placeholder,
-        onClick: () => console.log("Secondary action clicked"),
+        onClick: fn(),
       },
     },
   },
@@ -57,7 +59,7 @@ export const WithTags: Story = {
     person: {
       firstName: "Emma",
       lastName: "Wilson",
-      avatarUrl: "https://i.pravatar.cc/300",
+      avatarUrl: avatar,
     },
     bottomTags: [
       { text: "Label", icon: Placeholder },
@@ -73,7 +75,7 @@ export const Minimal: Story = {
     person: {
       firstName: "Emma",
       lastName: "Wilson",
-      avatarUrl: "https://i.pravatar.cc/300",
+      avatarUrl: avatar,
     },
     description: "Software Engineer",
   },

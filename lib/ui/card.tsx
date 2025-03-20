@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import ChevronRight from "@/icons/app/ChevronRight"
 import InfoCircleLine from "@/icons/app/InfoCircleLine"
 
-import { Icon } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Link } from "@/lib/linkHandler"
 import {
   Tooltip,
@@ -21,6 +21,7 @@ const Card = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
+    role="article"
     className={cn(
       "flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-4 shadow",
       className
@@ -97,12 +98,12 @@ CardInfo.displayName = "CardInfo"
 
 const CardLink = React.forwardRef<
   HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, ...props }) => {
+  React.ComponentPropsWithoutRef<"a"> & { icon?: IconType }
+>(({ className, title, icon = ChevronRight, ...props }, ref) => {
   return (
-    <Link className={className} aria-label={title} {...props}>
+    <Link ref={ref} className={className} aria-label={title} {...props}>
       <Button
-        icon={ChevronRight}
+        icon={icon}
         label={title ?? ""}
         variant="outline"
         size="sm"
@@ -136,7 +137,7 @@ const CardComment = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn("flex text-2xl font-semibold", className)}
+      className={cn("flex text-3xl font-semibold", className)}
       {...props}
     />
   )

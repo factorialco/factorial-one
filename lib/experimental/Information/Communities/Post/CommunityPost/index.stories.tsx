@@ -4,6 +4,8 @@ import { CommunityPost } from "."
 
 const meta: Meta<typeof CommunityPost> = {
   component: CommunityPost,
+  title: "Home/Communities/Post/CommunityPost",
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -91,7 +93,7 @@ export const Default: Story = {
         label: "Turn comments and reactions on",
         onClick: () => {},
       },
-      "separator",
+      { type: "separator" },
       {
         label: "Delete post",
         onClick: () => {},
@@ -125,6 +127,7 @@ export const WithVideo: Story = {
     event: undefined,
     mediaUrl:
       "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    noVideoPreload: true,
   },
 }
 

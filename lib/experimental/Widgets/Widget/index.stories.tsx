@@ -1,16 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import Pencil from "@/icons/app/Pencil"
 import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { fn } from "@storybook/test"
 import { ComponentProps } from "react"
 import { Widget } from "."
 
 const meta: Meta = {
+  title: "Widgets/Widget",
   component: Widget,
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
       <div className="w-full min-w-72 max-w-96">
@@ -40,6 +42,17 @@ export const WithLink: Story = {
       title: "Wellness programs",
       subtitle: "Boosting workplace health",
       link: { url: "/", title: "Go to link", onClick: fn() },
+    },
+  },
+}
+
+export const WithLinkAndCustomIcon: Story = {
+  args: {
+    ...meta.args,
+    header: {
+      title: "Wellness programs",
+      subtitle: "Boosting workplace health",
+      link: { url: "/", title: "Go to link", onClick: fn(), icon: Pencil },
     },
   },
 }

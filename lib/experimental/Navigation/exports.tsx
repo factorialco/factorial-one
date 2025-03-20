@@ -1,5 +1,7 @@
 export * from "./ApplicationFrame"
+export { useSidebar } from "./ApplicationFrame/FrameProvider"
 export * from "./Carousel"
+export * from "./DaytimePage"
 export * from "./Dropdown"
 export * from "./Header"
 export * from "./Omnibutton"

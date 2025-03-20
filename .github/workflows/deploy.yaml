@@ -16,14 +16,12 @@ env:
 
 jobs:
   deploy:
+    # Prevents running on the release-please branch
+    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22.x"
-          cache: pnpm
+      - uses: ./.github/actions/setup-node-pnpm
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
           install_command: pnpm install

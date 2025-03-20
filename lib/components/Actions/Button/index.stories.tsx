@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { fn } from "@storybook/test"
 
 import Add from "@/icons/app/Add"
 import Archive from "@/icons/app/Archive"
@@ -8,6 +7,7 @@ import Save from "@/icons/app/Save"
 import { Button } from "."
 
 const meta = {
+  title: "Button",
   component: Button,
   parameters: {
     layout: "centered",
@@ -16,10 +16,13 @@ const meta = {
       url: "https://www.figma.com/design/pZzg1KTe9lpKTSGPUZa8OJ/Web-components?node-id=41-1256&t=99GWQFvFLZtKW49N-4",
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "stable"],
   args: {
     variant: "default",
-    onClick: fn(),
+    onClick: () => {
+      console.log("Button clicked")
+      //fn()
+    },
     label: "Click me",
     size: "md",
   },
@@ -193,4 +196,13 @@ export const IconButtonGroup: Story = {
       <Button variant="ghost" icon={Delete} hideLabel round label="Delete" />
     </div>
   ),
+}
+
+export const OnlyEmoji: Story = {
+  args: {
+    emoji: "🥰",
+    label: "🥰",
+    variant: "neutral",
+    hideLabel: true,
+  },
 }

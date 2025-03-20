@@ -1,105 +1,37 @@
-import { Button, ButtonProps } from "@/components/Actions/Button"
-import { Icon, IconType } from "@/components/Utilities/Icon"
-import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
+import { Button } from "@/components/Actions/Button"
+import { Icon } from "@/components/Utilities/Icon"
 import { EllipsisHorizontal } from "@/icons/app"
 import { Link } from "@/lib/linkHandler"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils.ts"
 import {
   Drawer,
   DrawerContent,
   DrawerOverlay,
   DrawerTrigger,
 } from "@/ui/drawer"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/ui/dropdown-menu"
 import { useState } from "react"
-import { NavigationItem } from "../utils"
 import { DropdownItemContent } from "./DropdownItem"
+import {
+  DropdownInternal,
+  DropdownInternalProps,
+  DropdownItem,
+  DropdownItemObject,
+} from "./internal"
 
-export type DropdownItem = DropdownItemObject | "separator"
+const privateProps = ["align"] as const
 
-export type DropdownItemObject = NavigationItem & {
-  onClick?: () => void
-  icon?: IconType
-  description?: string
-  critical?: boolean
-  avatar?: AvatarVariant
+type DropdownProps = Omit<DropdownInternalProps, (typeof privateProps)[number]>
+
+export const Dropdown = (props: DropdownProps) => {
+  const publicProps = privateProps.reduce((acc, key) => {
+    const { [key]: _, ...rest } = acc
+    return rest
+  }, props as DropdownInternalProps)
+
+  return <DropdownInternal {...publicProps} />
 }
 
-type DropdownProps = {
-  items: DropdownItem[]
-  icon?: IconType
-  size?: ButtonProps["size"]
-  children?: React.ReactNode
-}
-
-const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
-  const { label: _label, ...props } = item
-
-  const itemClass = cn(
-    "flex items-start gap-1.5 w-full",
-    item.critical && "text-f1-foreground-critical"
-  )
-
-  return (
-    <DropdownMenuItem asChild onClick={item.onClick} className={itemClass}>
-      {item.href ? (
-        <Link
-          href={item.href}
-          className={cn(
-            itemClass,
-            "text-f1-foreground no-underline hover:cursor-pointer"
-          )}
-          {...props}
-        >
-          <DropdownItemContent item={item} />
-        </Link>
-      ) : (
-        <div className={itemClass}>
-          <DropdownItemContent item={item} />
-        </div>
-      )}
-    </DropdownMenuItem>
-  )
-}
-
-export function Dropdown({
-  items,
-  icon = EllipsisHorizontal,
-  size,
-  children,
-}: DropdownProps) {
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        {children || (
-          <Button
-            hideLabel
-            icon={icon}
-            size={size}
-            label="..."
-            round
-            variant="outline"
-          />
-        )}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
-        {items.map((item, index) =>
-          item === "separator" ? (
-            <DropdownMenuSeparator key={index} />
-          ) : (
-            <DropdownItem key={index} item={item} />
-          )
-        )}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  )
-}
+export type { DropdownItem, DropdownItemObject }
 
 export const MobileDropdown = ({ items, children }: DropdownProps) => {
   const [open, setOpen] = useState(false)
@@ -122,7 +54,7 @@ export const MobileDropdown = ({ items, children }: DropdownProps) => {
       <DrawerContent className="bg-f1-background">
         <div className="flex flex-col px-2 pb-3 pt-2">
           {items.map((item, index) =>
-            item === "separator" ? (
+            item.type === "separator" ? (
               <div
                 key={`separator-${index}`}
                 className="mx-[-8px] my-2 h-px w-[calc(100%+16px)] bg-f1-border-secondary"

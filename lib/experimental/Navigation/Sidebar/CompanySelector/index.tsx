@@ -103,7 +103,7 @@ const Selector = ({
           "aria-label": `${company.name} logo`,
         } satisfies AvatarVariant,
       })),
-      ...(additionalOptions.length ? ["separator" as const] : []),
+      ...(additionalOptions.length ? [{ type: "separator" as const }] : []),
       ...additionalOptions,
     ],
     [companies, additionalOptions]
