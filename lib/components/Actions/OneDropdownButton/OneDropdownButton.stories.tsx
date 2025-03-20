@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { Add, Replace } from "@/icons/app"
+import { fn } from "@storybook/test"
 import { OneDropdownButton } from "."
 import { oneDropdownButtonSizes, oneDropdownButtonVariants } from "./types.ts"
 
@@ -71,5 +72,6 @@ export const Default: Story = {
         label: "Item 3",
       },
     ],
+    onClick: fn(),
   },
 }

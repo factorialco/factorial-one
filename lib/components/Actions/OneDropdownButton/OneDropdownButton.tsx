@@ -2,11 +2,11 @@ import {
   ButtonInternal,
   ButtonInternalProps,
 } from "@/components/Actions/Button/internal"
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { DropdownInternal } from "@/experimental/Navigation/Dropdown/internal"
 import { ChevronDown } from "@/icons/app"
-import { cn, focusRing } from "@/lib/utils.ts"
-import { useMemo, useState } from "react"
+import { cn, focusRing } from "@/lib/utils"
+import { useMemo } from "react"
 import {
   internalButtonVariants,
   internalButtonVariantsStyles,
@@ -36,65 +36,58 @@ const OneDropdownButton = ({
   value,
   ...props
 }: OneDropdownButtonProps) => {
-  const [localValue] = useState(value || items[0].value)
-
-  const selectedItem = useMemo(
-    () => items.find((item) => item.value === localValue),
-    [localValue, items]
-  )
+  const mainAction = items[0]
 
   const handleClick = () => {
-    onClick(localValue, items.find((value) => value.value === localValue)!)
+    onClick(mainAction.value, mainAction)
   }
 
   const dropdownItems = useMemo(
     () =>
       items
-        .filter((item) => item.value !== localValue)
+        .filter((item) => item.value !== mainAction.value)
         .map((item) => ({
           ...item,
           onClick: () => {
             onClick(item.value, item)
           },
         })),
-    [items, localValue, onClick]
+    [items, onClick]
   )
 
   return (
-    selectedItem && (
-      <>
-        <ButtonInternal
-          onClick={handleClick}
-          icon={selectedItem.icon}
-          label={selectedItem.label}
-          {...props}
-          appendButton={
-            <DropdownInternal items={dropdownItems} align="end">
-              <a
-                className={cn(
-                  "h-full",
-                  internalButtonVariants({
-                    size: props.size,
-                  }),
-                  "flex",
-                  "hover:bg-[#0002]",
-                  "rounded-e",
-                  "align-middle",
-                  "justify-center",
-                  focusRing()
-                )}
-                style={internalButtonVariantsStyles(props.variant)}
-                aria-label="Open dropdown"
-                tabIndex={props.disabled ? -1 : 0}
-                role="combobox"
-              >
-                <ChevronDown></ChevronDown>
-              </a>
-            </DropdownInternal>
-          }
-        ></ButtonInternal>
-      </>
-    )
+    <>
+      <ButtonInternal
+        onClick={handleClick}
+        icon={mainAction.icon}
+        label={mainAction.label}
+        {...props}
+        appendButton={
+          <DropdownInternal items={dropdownItems} align="end">
+            <a
+              className={cn(
+                "h-full",
+                internalButtonVariants({
+                  size: props.size,
+                }),
+                "flex",
+                "hover:bg-[#0002]",
+                "rounded-e",
+                "align-middle",
+                "justify-center",
+                focusRing()
+              )}
+              style={internalButtonVariantsStyles(props.variant)}
+              aria-label="Open dropdown"
+              tabIndex={props.disabled ? -1 : 0}
+              role="combobox"
+            >
+              <Icon icon={ChevronDown} />
+            </a>
+          </DropdownInternal>
+        }
+      ></ButtonInternal>
+    </>
   )
 }
 
