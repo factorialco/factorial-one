@@ -78,48 +78,47 @@ const enhancementOptions: EnhancementOption[] = [
     prompt: "Convert this text: '[TEXT]' into a concise bullet-point list.",
   },
 ]
-
+const users = [
+  {
+    id: 1,
+    label: "John Doe",
+    href: "https://www.google.com",
+  },
+  {
+    id: 2,
+    label: "Jane Doe",
+    href: "https://www.google.com",
+  },
+  {
+    id: 3,
+    label: "John Smith",
+    href: "https://www.google.com",
+  },
+  {
+    id: 4,
+    label: "Jane Smith",
+    href: "https://www.google.com",
+  },
+]
 export const Default: Story = {
   args: {
     onChange: () => {},
     placeholder: "Write something...",
-    width: "w-full",
+    width: "w-4/5",
     // Mentions configuration
     hasMentions: true,
     hasDebouncedMentions: false,
-    onMentionQueryStringChanged: undefined,
-    users: [
-      {
-        id: 1,
-        label: "John Doe",
-        href: "https://www.google.com",
-      },
-      {
-        id: 2,
-        label: "Jane Doe",
-        href: "https://www.google.com",
-      },
-      {
-        id: 3,
-        label: "John Smith",
-        href: "https://www.google.com",
-      },
-      {
-        id: 4,
-        label: "Jane Smith",
-        href: "https://www.google.com",
-      },
-    ],
-
+    onMentionQueryStringChanged: () => Promise.resolve(users),
+    users: users,
     // AI enhancement
     enhanceText: () =>
-      Promise.resolve("Just imagine this is a response from AI"),
+      Promise.resolve(
+        "Just imagine this is a response from AI from our friend Jacob"
+      ),
     enhancementOptions: enhancementOptions,
-
     // File handling
     onFiles: () => {},
     maxCharacters: 1000,
-
     // Actions
     onSubmit: () => {
       alert("Submit")
@@ -127,7 +126,6 @@ export const Default: Story = {
     onCancel: () => {
       alert("Cancel")
     },
-
     // Miscellaneous
     title: "RichTextEditor",
     fullScreenEnabled: true,
