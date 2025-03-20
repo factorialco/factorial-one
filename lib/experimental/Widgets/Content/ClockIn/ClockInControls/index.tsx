@@ -53,10 +53,6 @@ export interface ClockInControlsProps {
   onClockOut?: () => void
   /** Callback when Break button is clicked */
   onBreak?: (breakTypeId?: string) => void
-  /** Callback when Project Selector is clicked */
-  onClickProjectSelector?: () => void
-  /** Callback when Location Selector is clicked */
-  onClickLocationSelector?: () => void
   canShowProject?: boolean
   projectSelectorElement?: React.ReactNode
 }
