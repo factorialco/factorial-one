@@ -21,7 +21,7 @@ export type DataSourceDefinition<
   /** Predefined filter configurations that can be applied */
   presets?: Presets<Filters>
   /** URL for a single item in the collection */
-  itemUrl?: (item: Record) => string
+  itemUrl?: (item: Record) => string | undefined
   /** Available actions that can be performed on records */
   actions?: Actions
   /** Search configuration */

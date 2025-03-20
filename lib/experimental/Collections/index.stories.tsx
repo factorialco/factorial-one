@@ -457,7 +457,10 @@ export const WithLinkedItems: Story = {
     const dataSource = useDataSource({
       filters,
       presets: filterPresets,
-      itemUrl: (item) => `/users/${item.id}`,
+      itemUrl: (item) => {
+        if (item.id === "user-1") return undefined
+        return `/users/${item.id}`
+      },
       sortings: {
         name: {
           label: "Name",
