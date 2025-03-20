@@ -19,7 +19,7 @@ export type AvatarNamedEntity = {
 export type AvatarNamedGroup = {
   value: string
   label: string
-  type?: "avatar" | "team"
+  groupType?: "avatar" | "team"
 }
 
 interface AvatarNameSelectorCommonProps
@@ -31,6 +31,7 @@ interface AvatarNameSelectorCommonProps
   triggerSelected: string
   notFoundTitle: string
   notFoundSubtitle: string
+  onItemExpandedChange: (id: number, expanded: boolean) => void
   onGroupChange: (value: string | null) => void
   disabled?: boolean
   zIndex?: number

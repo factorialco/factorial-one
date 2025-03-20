@@ -207,6 +207,7 @@ export const Default: Story = {
     const [loading, setLoading] = useState<boolean>(true)
     const [fetchEmployees, setFetchEmployees] = useState<FetchEmployee[]>([])
     const [selectedGroup, setSelectedGroup] = useState<string>("all")
+    const [expandedElements, setExpandedElements] = useState<number[]>([])
     const [selectedEmployees, setSelectedEmployees] = useState<
       AvatarNamedEntity[]
     >([])
@@ -226,11 +227,19 @@ export const Default: Story = {
       setSelectedEmployees(Array.isArray(el) ? el : el ? [el] : [])
     }
 
+    const onItemExpandedChange = (id: number, expanded: boolean) => {
+      if (expanded) {
+        setExpandedElements([id].concat(expandedElements))
+      } else {
+        setExpandedElements(expandedElements.filter((el) => el !== id))
+      }
+    }
+
     return (
       <div className="w-60">
         <AvatarNameSelector
           // Groups (hard-coded as an example)
-          groups={[{ label: "None", value: "all", type: "avatar" }]}
+          groups={[{ label: "None", value: "all", groupType: "avatar" }]}
           selectedGroup={selectedGroup}
           onGroupChange={(value) => setSelectedGroup(value ?? "all")}
           // Convert our fetched employees to the shape needed by AvatarNameSelector
@@ -238,10 +247,12 @@ export const Default: Story = {
             id: emp.id,
             name: emp.fullName,
             avatar: emp.avatar?.url || undefined,
+            expanded: expandedElements.includes(emp.id),
           }))}
           // Loading animation
           loading={loading}
           onOpenChange={onOpenChange}
+          onItemExpandedChange={onItemExpandedChange}
           // Basic placeholders and labels
           triggerPlaceholder="Select employees..."
           triggerSelected="employees selected"

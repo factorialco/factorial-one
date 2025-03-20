@@ -1,18 +1,13 @@
 {
   "name": "@factorialco/factorial-one",
-  "version": "1.1.2",
+  "version": "1.4.1",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
   "type": "module",
   "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
-  "files": [
-    "assets",
-    "icons",
-    "dist",
-    "styles.css",
-    "tailwind.config.ts",
-    "postcss.config.js"
+  "workspaces": [
+    "packages/*"
   ],
   "sideEffects": [
     "**/*.css"
@@ -27,8 +22,8 @@
     "build-icons": "tsc --project ./tsconfig-build-icons.json",
     "build:tailwind": "NODE_ENV=production tailwindcss -i ./styles.css -o ./dist/styles.css --postcss --minify",
     "build:watch": "pnpm build --watch",
-    "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
-    "lint-fix": "pnpm run lint -- --fix",
+    "lint": "eslint -c eslint.config.mjs lib/**/*.{ts,tsx} --report-unused-disable-directives --max-warnings 0 && pnpm --filter @factorialco/factorial-one-react-native lint && pnpm --filter react-native-example lint",
+    "lint-fix": "eslint -c eslint.config.mjs lib/**/*.{ts,tsx} --fix --report-unused-disable-directives --max-warnings 0 && pnpm --filter @factorialco/factorial-one-react-native lint-fix && pnpm --filter react-native-example lint-fix",
     "preview": "vite preview",
     "generate-icons": "rm -fR lib/icons/app/* lib/icons/modules/* && run-p generate-app-icons generate-module-icons",
     "generate-app-icons": "npx @svgr/cli --out-dir lib/icons/app assets/icons/app",
@@ -40,8 +35,12 @@
     "prettier:check:ci": "prettier --check \"lib/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "tsc": "tsc --noEmit",
     "vitest": "vitest run",
+    "vitest:rn": "pnpm --filter @factorialco/factorial-one-react-native test",
+    "vitest:r": "vitest run --exclude 'packages/react-native/**'",
     "vitest:watch": "vitest dev",
-    "vitest:ci": "vitest run --reporter=dot",
+    "vitest:ci": "pnpm run vitest:ci:r --reporter=dot && pnpm run vitest:ci:rn --reporter=dot",
+    "vitest:ci:r": "vitest run --exclude 'packages/react-native/**'",
+    "vitest:ci:rn": "pnpm --filter @factorialco/factorial-one-react-native test",
     "prepare": "lefthook install"
   },
   "peerDependencies": {

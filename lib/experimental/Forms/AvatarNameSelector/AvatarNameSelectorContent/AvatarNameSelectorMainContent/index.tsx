@@ -60,7 +60,7 @@ export const AvatarNameSelectorMainContent = ({
   onSearch: (search: string) => void
   selectedEntities?: AvatarNamedEntity[]
   onGroupChange: (key: string | null) => void
-  onToggleExpand: (entity: AvatarNamedEntity) => void
+  onToggleExpand: (entity: AvatarNamedEntity, expanded: boolean) => void
   notFoundTitle: string
   notFoundSubtitle: string
   className?: string
@@ -131,7 +131,7 @@ export const AvatarNameSelectorMainContent = ({
       return (
         <AvatarNameListItem
           expanded={entity.expanded ?? false}
-          onExpand={() => onToggleExpand(entity)}
+          onExpand={() => onToggleExpand(entity, true)}
           search={search}
           groupView={groupView}
           key={entity.id}
@@ -141,7 +141,8 @@ export const AvatarNameSelectorMainContent = ({
           selected={selected}
           partialSelected={partialSelected}
           showGroupIcon={
-            groups.find((el) => el.value === selectedGroup)?.type === "team"
+            groups.find((el) => el.value === selectedGroup)?.groupType ===
+            "team"
           }
           singleSelector={singleSelector}
           goToFirst={goToFirst}
@@ -242,7 +243,7 @@ export const AvatarNameSelectorMainContent = ({
           <AvatarNameListItem
             groupView
             expanded={recoveredEntity.expanded ?? false}
-            onExpand={() => onToggleExpand(recoveredEntity)}
+            onExpand={(expanded) => onToggleExpand(recoveredEntity, expanded)}
             search={search}
             entity={recoveredEntity}
             onSelect={onSelect}
@@ -250,7 +251,8 @@ export const AvatarNameSelectorMainContent = ({
             selected={selected}
             partialSelected={partialSelected}
             showGroupIcon={
-              groups.find((el) => el.value === selectedGroup)?.type === "team"
+              groups.find((el) => el.value === selectedGroup)?.groupType ===
+              "team"
             }
             singleSelector={singleSelector}
             goToFirst={goToFirst}
@@ -318,6 +320,48 @@ export const AvatarNameSelectorMainContent = ({
       onSubItemRemove,
     ]
   )
+
+  const [allVisibleSelected, anyVisibleSelected] = useMemo(() => {
+    if (!entities.length) {
+      return [false, false]
+    }
+    const selectedMap = new Map<number, AvatarNamedEntity>(
+      (selectedEntities ?? []).map((se) => [se.id, se])
+    )
+
+    let visibleCount = 0
+    let selectedVisibleCount = 0
+
+    if (!groupView) {
+      visibleCount = entities.length
+      selectedVisibleCount = entities.reduce(
+        (acc, { id }) => acc + (selectedMap.has(id) ? 1 : 0),
+        0
+      )
+    } else {
+      entities.forEach((fe) => {
+        const subItems = fe.subItems ?? []
+        visibleCount += subItems.length
+        const selectedSubIds = new Set(
+          [...selectedMap.values()].flatMap(
+            (selParent) =>
+              selParent.subItems?.map((selectedSub) => selectedSub.subId) ?? []
+          )
+        )
+        subItems.forEach((sub) => {
+          if (selectedSubIds.has(sub.subId)) {
+            selectedVisibleCount += 1
+          }
+        })
+      })
+    }
+
+    const allSelected =
+      visibleCount > 0 && selectedVisibleCount === visibleCount
+    const anySelected = selectedVisibleCount > 0
+
+    return [allSelected, anySelected]
+  }, [entities, selectedEntities, groupView])
 
   const totalFlattenedItems = flattenedList.length
 
@@ -404,7 +448,7 @@ export const AvatarNameSelectorMainContent = ({
           <div className="flex flex-1 justify-between p-2">
             {selectAllLabel && (
               <Button
-                disabled={disabled}
+                disabled={disabled || allVisibleSelected}
                 variant="outline"
                 size="sm"
                 onClick={onSelectAll}
@@ -418,9 +462,7 @@ export const AvatarNameSelectorMainContent = ({
               <Button
                 variant="ghost"
                 size="sm"
-                disabled={
-                  disabled || !selectedEntities || selectedEntities.length === 0
-                }
+                disabled={disabled || !anyVisibleSelected}
                 onClick={onClear}
                 title={clearLabel + ` (${totalFilteredEntities})`}
                 type="button"
