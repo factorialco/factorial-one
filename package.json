@@ -12,6 +12,14 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "files": [
+    "assets",
+    "icons",
+    "dist",
+    "styles.css",
+    "tailwind.config.ts",
+    "postcss.config.js"
+  ],
   "scripts": {
     "dev": "storybook dev -p 6006",
     "dev:docs": "DOCS_MODE=true pnpm run dev",
