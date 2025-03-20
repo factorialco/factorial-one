@@ -1,8 +1,7 @@
 import React from "react"
 
 import { Dropdown } from "@/experimental/exports"
-import { ToolbarButton } from "@/experimental/RichTextEditor/Toolbar/ToolbarButton"
-import { IconType } from "@/factorial-one"
+import { Button, IconType } from "@/factorial-one"
 
 interface ToolbarDropdownItem {
   label: string
@@ -31,13 +30,14 @@ const ToolbarDropdown = ({
 }: ToolbarDropdownProps) => {
   return isFullscreen ? (
     items?.map((item) => (
-      <ToolbarButton
+      <Button
         key={item.label}
         icon={item.icon}
+        hideLabel={item.icon ? true : false}
         onClick={item.onClick}
-        isActive={item.isActive}
-        title={item.label}
-        label={item.icon ? undefined : item.label}
+        variant={item.isActive ? "neutral" : "ghost"}
+        label={item.label}
+        type="button"
       />
     ))
   ) : (

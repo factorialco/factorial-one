@@ -1,10 +1,10 @@
 import tippy, { Instance } from "tippy.js"
 
-import { MentionedUser } from "@/experimental/RichTextEditor"
+import { MentionedUser } from "@/experimental/RichText/RichTextEditor"
 import {
   MentionList,
   MentionListComponent,
-} from "@/experimental/RichTextEditor/MentionList"
+} from "@/experimental/RichText/RichTextEditor/MentionList"
 
 interface MentionNodeAttrs {
   id: string

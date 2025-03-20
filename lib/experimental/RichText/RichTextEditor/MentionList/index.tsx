@@ -17,7 +17,7 @@ const MentionListComponent = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-2 rounded-md border-[2px] border-solid p-1",
+        "flex items-center gap-2 rounded-lg border-[2px] border-solid p-1",
         selected ? "border-f1-border-selected-bold" : "border-f1-border-inverse"
       )}
     >
@@ -48,7 +48,7 @@ const MentionListUI = ({
   component: Component,
 }: MentionListUIProps) => {
   return (
-    <div className="flex max-h-72 w-72 flex-col gap-2 overflow-y-auto rounded-lg border-[1px] border-solid border-f1-border bg-f1-background p-1 shadow-md">
+    <div className="flex max-h-72 w-60 flex-col gap-2 overflow-y-auto rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 shadow-md">
       {items.length === 0 ? (
         <div className="p-2">
           <p className="text-neutral-40 text-sm font-medium">
@@ -61,6 +61,7 @@ const MentionListUI = ({
             key={index}
             onClick={() => onItemSelect(index)}
             onMouseEnter={() => onItemHover(index)}
+            className="cursor-pointer bg-f1-background hover:bg-f1-background-hover"
           >
             <Component
               item={item}

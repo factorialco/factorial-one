@@ -4,9 +4,9 @@ import ReactDOM from "react-dom/client"
 import { Editor } from "@tiptap/react"
 import tippy, { Instance } from "tippy.js"
 
-import { EnhancementOption } from "@/experimental/RichTextEditor"
-import { AIEnhanceMenu } from "@/experimental/RichTextEditor/Enhance/EnhanceMenu"
-import { isValidSelectionForEnhancement } from "@/experimental/RichTextEditor/utils/enhance"
+import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
+import { AIEnhanceMenu } from "@/experimental/RichText/RichTextEditor/Enhance/EnhanceMenu"
+import { isValidSelectionForEnhancement } from "@/experimental/RichText/RichTextEditor/utils/enhance"
 import { Button, IconType } from "@/factorial-one"
 import { Ai } from "@/icons/app"
 
@@ -18,7 +18,7 @@ interface EnhanceActivatorProps {
     customIntent?: string,
     context?: string
   ) => Promise<void>
-  isEnhancing: boolean
+  isLoadingAi: boolean
   button?: {
     variant?: "ghost" | "default" | "outline"
     size?: "md" | "sm"
@@ -27,12 +27,13 @@ interface EnhanceActivatorProps {
     hideLabel?: boolean
   }
   enhancementOptions: EnhancementOption[]
+  canUseCustomPrompt: boolean
 }
 
 const EnhanceActivator = ({
   editor,
   onEnhanceWithAI,
-  isEnhancing,
+  isLoadingAi,
   button = {
     variant: "outline",
     size: "md",
@@ -40,6 +41,7 @@ const EnhanceActivator = ({
     icon: Ai,
     hideLabel: false,
   },
+  canUseCustomPrompt,
   enhancementOptions,
 }: EnhanceActivatorProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
@@ -142,6 +144,7 @@ const EnhanceActivator = ({
 
     root.render(
       <AIEnhanceMenu
+        canUseCustomPrompt={canUseCustomPrompt}
         onSelect={handleAIEnhance}
         onClose={() => tippyInstanceRef.current?.hide()}
         enhancementOptions={enhancementOptions}
@@ -178,7 +181,9 @@ const EnhanceActivator = ({
       icon={button.icon || Ai}
       hideLabel={button.hideLabel || false}
       onClick={handleEnhanceClick}
-      loading={isEnhancing}
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      className={isLoadingAi ? "aiMagicLoading animate-pulse" : ""}
     />
   )
 }
