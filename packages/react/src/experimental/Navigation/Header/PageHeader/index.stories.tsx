@@ -207,6 +207,12 @@ export const WithProductUpdate: Story = {
           "Check out our product updates page to see past launches and what’s coming.",
         buttonText: "Go to Updates",
       },
+      errorScreen: {
+        title: "Something went wrong",
+        description:
+          "We couldn’t load the latest updates. Please check your connection and try again.",
+        buttonText: "Try again",
+      },
       getUpdatesQuery: async () => {
         return new Promise((resolve) => {
           setTimeout(
