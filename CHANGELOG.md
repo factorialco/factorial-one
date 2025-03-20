@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/factorialco/factorial-one/compare/v1.4.0...v1.4.1) (2025-03-20)
+
+
+### Bug Fixes
+
+* **dropdowns:** fix autocomplete on dropdowns ([#1434](https://github.com/factorialco/factorial-one/issues/1434)) ([e21fd6f](https://github.com/factorialco/factorial-one/commit/e21fd6f74e5d296393a8ec879da8b0f0d687fa75))
+
 ## [1.4.0](https://github.com/factorialco/factorial-one/compare/v1.3.0...v1.4.0) (2025-03-20)
 
 
