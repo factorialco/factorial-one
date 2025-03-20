@@ -32,8 +32,6 @@ const ToolbarDropdown = ({
     items?.map((item) => (
       <Button
         key={item.label}
-        icon={item.icon}
-        hideLabel={item.icon ? true : false}
         onClick={item.onClick}
         variant={item.isActive ? "neutral" : "ghost"}
         label={item.label}
