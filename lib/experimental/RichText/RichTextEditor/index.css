@@ -3,40 +3,17 @@
   color: #06838c;
   cursor: pointer;
   text-decoration: none !important;
+  font-weight: 600;
 }
-
-.mention:hover {
-  color: rgba(6, 131, 140, 1);
+.aiMagicLoading {
+  background: linear-gradient(
+    90deg,
+    #fff2e0 0%,
+    #ffe3ea 36.5%,
+    #e5deff 66%,
+    #d1f3f7 100%
+  ) !important;
 }
-
-.toolbar-button {
-  display: flex;
-  width: 32px;
-  height: 32px;
-  padding: 6px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  background: white;
-  border: none;
-}
-
-.toolbar-button:hover {
-  background-color: rgba(226, 226, 229, 0.5);
-}
-
-.toolbar-button.active {
-  background-color: #e2e2e5;
-}
-
-.hoverEffect {
-  transition: background-color 0.2s ease;
-}
-
-.hoverEffect:hover {
-  background-color: rgba(226, 226, 229, 0.5);
-}
-
 /*********
   tiptap styles
   **********/

@@ -4,7 +4,8 @@ import { Input } from "@/experimental/exports"
 import { Icon } from "@/factorial-one"
 import { ChevronLeft, ChevronRight } from "@/icons/app"
 
-import { EnhancementOption } from "@/experimental/RichTextEditor"
+import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
+import { cn } from "@/lib/utils"
 
 const Option = ({
   option,
@@ -30,12 +31,14 @@ interface AIEnhanceMenuProps {
   onSelect: (optionId: string, customIntent?: string) => void
   onClose: () => void
   enhancementOptions: EnhancementOption[]
+  canUseCustomPrompt: boolean
 }
 
 const AIEnhanceMenu = ({
   onSelect,
   onClose,
   enhancementOptions,
+  canUseCustomPrompt,
 }: AIEnhanceMenuProps) => {
   const [selectedParentOption, setSelectedParentOption] = useState<
     string | null
@@ -88,22 +91,27 @@ const AIEnhanceMenu = ({
 
   return (
     <div
-      className="flex w-96 flex-col overflow-hidden rounded-lg border-[1px] border-solid border-f1-border bg-f1-background shadow-md"
+      className="flex w-96 flex-col overflow-hidden rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background shadow-md"
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="flex w-full flex-row items-center p-2">
-        <Input
-          type="text"
-          placeholder="What do you want the AI to do?"
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore - The Input component from Factorial doesn't expose autoFocus but it works
-          autoFocus
-          onKeyDown={handleKeyDown}
-        />
-      </div>
+      {canUseCustomPrompt && (
+        <div className="flex w-full flex-row items-center p-2">
+          <Input
+            type="text"
+            placeholder="What do you want the AI to do?"
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            autoFocus
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+      )}
       {enhancementOptions.length > 0 && (
         <div
-          className="flex max-h-80 flex-col overflow-y-auto border-0 border-t-[1px] border-solid border-f1-border"
+          className={cn(
+            "flex max-h-80 flex-col overflow-y-auto border-0 border-t-[1px] border-solid border-f1-border",
+            canUseCustomPrompt ? "border-t" : "border-t-0"
+          )}
           onClick={(e) => e.stopPropagation()}
         >
           {selectedParentOption ? (

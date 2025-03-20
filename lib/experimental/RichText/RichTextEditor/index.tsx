@@ -8,6 +8,13 @@ import {
   useState,
 } from "react"
 
+import { EditorBubbleMenu } from "@/experimental/RichText/RichTextEditor/BubbleMenu"
+import { FileList } from "@/experimental/RichText/RichTextEditor/FileList"
+import { ToolbarPlugin } from "@/experimental/RichText/RichTextEditor/Toolbar"
+import { isValidSelectionForEnhancement } from "@/experimental/RichText/RichTextEditor/utils/enhance"
+import { configureMention } from "@/experimental/RichText/RichTextEditor/utils/mention"
+import { Button } from "@/factorial-one"
+import { Cross } from "@/icons/app"
 import CharacterCount from "@tiptap/extension-character-count"
 import Color from "@tiptap/extension-color"
 import Image from "@tiptap/extension-image"
@@ -20,18 +27,7 @@ import Underline from "@tiptap/extension-underline"
 import { EditorContent, useEditor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import screenfull from "screenfull"
-
-import { EditorBubbleMenu } from "@/experimental/RichTextEditor/BubbleMenu"
-import { FileList } from "@/experimental/RichTextEditor/FileList"
-import { ToolbarPlugin } from "@/experimental/RichTextEditor/Toolbar"
-import { ToolbarButton } from "@/experimental/RichTextEditor/Toolbar/ToolbarButton"
-import { isValidSelectionForEnhancement } from "@/experimental/RichTextEditor/utils/enhance"
-import { configureMention } from "@/experimental/RichTextEditor/utils/mention"
-import { Button } from "@/factorial-one"
-import { Cross } from "@/icons/app"
-
 import "./index.css"
-
 // types related to the editor styles
 
 type RichTextEditorHeight =
@@ -130,6 +126,7 @@ interface RichTextEditorProps {
     context,
   }: enhanceTextType) => Promise<string>
   enhancementOptions?: EnhancementOption[]
+  canUseCustomPrompt?: boolean
 
   // File handling
   onFiles?: onFiles
@@ -165,6 +162,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       users,
       enhanceText,
       enhancementOptions,
+      canUseCustomPrompt = false,
       onFiles,
       maxCharacters,
       onSubmit,
@@ -180,7 +178,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     >(users || [])
     const editorRef = useRef<HTMLDivElement>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const [isEnhancing, setIsEnhancing] = useState(false)
+    const [isLoadingAi, setIsLoadingAi] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
 
@@ -329,14 +327,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         )
           return
         try {
-          setIsEnhancing(true)
-          const textToEnhance = selectedText
+          setIsLoadingAi(true)
           const { from, to } = editor.state.selection
-          const editorEnhanceType: string = enhanceType || "improve-writing"
 
           const enhancedText = await enhanceText({
-            text: textToEnhance,
-            type: editorEnhanceType,
+            text: selectedText,
+            type: enhanceType || "improve-writing",
             intent: customIntent || "improve text in editor",
             context: context,
           })
@@ -354,7 +350,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         } catch (error) {
           // Error handling
         } finally {
-          setIsEnhancing(false)
+          setIsLoadingAi(false)
         }
       },
       [editor, enhanceText]
@@ -373,10 +369,13 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             <p className="text-2xl font-semibold text-f1-foreground">
               {title || "Fullscreen Rich Text Editor"}
             </p>
-            <ToolbarButton
+            <Button
               icon={Cross}
               onClick={handleToggleFullscreen}
-              title="Collapse"
+              label="Collapse"
+              hideLabel
+              variant="ghost"
+              type="button"
             />
           </div>
         )}
@@ -387,11 +386,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           isFullscreen={isFullscreen}
           onEnhanceWithAI={handleEnhanceWithAI}
           fileInputRef={fileInputRef}
-          isEnhancing={isEnhancing}
+          isLoadingAi={isLoadingAi}
           canUseFiles={onFiles ? true : false}
           canUseAi={enhanceText ? true : false}
           fullScreenEnabled={fullScreenEnabled}
           enhancementOptions={enhancementOptions || []}
+          canUseCustomPrompt={canUseCustomPrompt}
         />
         <div
           ref={editorRef}
@@ -422,9 +422,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           <EditorBubbleMenu
             editor={editor}
             onEnhanceWithAI={handleEnhanceWithAI}
-            isEnhancing={isEnhancing}
+            isLoadingAi={isLoadingAi}
             canUseAi={enhanceText ? true : false}
             enhancementOptions={enhancementOptions || []}
+            canUseCustomPrompt={canUseCustomPrompt}
           />
         )}
 
