@@ -16,8 +16,14 @@ export const ActionsDropdown = <
 }) => {
   if (!actions || actions.length === 0) return null
 
+  const items = filterActions(actions, item)
+
+  if (items.length === 0) {
+    return null
+  }
+
   return (
-    <Dropdown items={filterActions(actions, item)}>
+    <Dropdown items={items}>
       <Button variant="ghost" icon={Ellipsis} label="Actions" hideLabel />
     </Dropdown>
   )
