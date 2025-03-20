@@ -1,4 +1,5 @@
 import { Button, type ButtonProps } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
 import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
 import {
@@ -31,7 +32,7 @@ export interface WidgetProps {
     subtitle?: string
     comment?: string
     canBeBlurred?: boolean
-    link?: { title: string; url: string; onClick?: () => void }
+    link?: { title: string; url: string; onClick?: () => void; icon?: IconType }
     count?: number
   }
   action?: ButtonProps
@@ -126,6 +127,7 @@ const Container = forwardRef<
                     onClick={handleLinkClick}
                     href={header.link.url}
                     title={header.link.title}
+                    icon={header.link.icon}
                   />
                 )}
               </div>

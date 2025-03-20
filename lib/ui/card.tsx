@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils"
 import ChevronRight from "@/icons/app/ChevronRight"
 import InfoCircleLine from "@/icons/app/InfoCircleLine"
 
-import { Icon } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Link } from "@/lib/linkHandler"
 import {
   Tooltip,
@@ -98,12 +98,12 @@ CardInfo.displayName = "CardInfo"
 
 const CardLink = React.forwardRef<
   HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"a"> & { icon?: IconType }
+>(({ className, title, icon = ChevronRight, ...props }, ref) => {
   return (
     <Link ref={ref} className={className} aria-label={title} {...props}>
       <Button
-        icon={ChevronRight}
+        icon={icon}
         label={title ?? ""}
         variant="outline"
         size="sm"
