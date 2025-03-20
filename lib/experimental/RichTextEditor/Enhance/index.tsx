@@ -1,16 +1,14 @@
 import { useCallback, useRef, useState } from "react"
 import ReactDOM from "react-dom/client"
 
-import { Button, IconType } from "@factorialco/factorial-one"
-import { Ai } from "@factorialco/factorial-one/icons/app"
 import { Editor } from "@tiptap/react"
 import tippy, { Instance } from "tippy.js"
-
-import Box from "design-system/layouts/Box"
 
 import { EnhancementOption } from "@/experimental/RichTextEditor"
 import { AIEnhanceMenu } from "@/experimental/RichTextEditor/Enhance/EnhanceMenu"
 import { isValidSelectionForEnhancement } from "@/experimental/RichTextEditor/utils/enhance"
+import { Button, IconType } from "@/factorial-one"
+import { Ai } from "@/icons/app"
 
 interface EnhanceActivatorProps {
   editor: Editor
@@ -172,17 +170,16 @@ const EnhanceActivator = ({
   }, [editor, handleAIEnhance, enhancementOptions])
 
   return (
-    <Box ref={enhanceButtonRef}>
-      <Button
-        variant={button.variant || "ghost"}
-        size={button.size || "md"}
-        label={button.label || "Enhance"}
-        icon={button.icon || Ai}
-        hideLabel={button.hideLabel || false}
-        onClick={handleEnhanceClick}
-        loading={isEnhancing}
-      />
-    </Box>
+    <Button
+      ref={enhanceButtonRef}
+      variant={button.variant || "ghost"}
+      size={button.size || "md"}
+      label={button.label || "Enhance"}
+      icon={button.icon || Ai}
+      hideLabel={button.hideLabel || false}
+      onClick={handleEnhanceClick}
+      loading={isEnhancing}
+    />
   )
 }
 

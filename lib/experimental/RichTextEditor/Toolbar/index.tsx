@@ -3,21 +3,26 @@ import React from "react"
 
 import { Editor } from "@tiptap/react"
 
-import Icon from "design-system/Icon"
-import Box from "design-system/layouts/Box"
-
 import { EnhancementOption } from "@/experimental/RichTextEditor"
-import { EnhanceActivator } from "@/experimental/RichTextEditor/Toolbar/EnhanceActivator"
+import { EnhanceActivator } from "@/experimental/RichTextEditor/Enhance"
 import { ToolbarButton } from "@/experimental/RichTextEditor/Toolbar/ToolbarButton"
 import { ToolbarDropdown } from "@/experimental/RichTextEditor/Toolbar/ToolbarDropdown"
+import {
+  Code,
+  Ellipsis,
+  ExternalLink,
+  List,
+  Minus,
+  Paperclip,
+} from "@/icons/app"
+import { cn } from "@/lib/utils"
 
 const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
-  <Box
-    width="s1"
-    height="s16"
-    background="grey400"
-    borderRadius={{ all: "abs004" }}
-    style={{ display: show ? "block" : "none" }}
+  <div
+    className={cn(
+      "h-4 w-0.5 bg-f1-background-secondary-hover",
+      show ? "block" : "hidden"
+    )}
   />
 )
 
@@ -55,55 +60,41 @@ const ToolbarPlugin = ({
     return null
   }
 
-  const getHeadingIcon = () => {
+  const getHeadingLabel = () => {
     if (editor.isActive("heading")) {
       const headingLevel = editor.getAttributes("heading").level
-      if (headingLevel === 1) return "h1"
-      if (headingLevel === 2) return "h2"
-      if (headingLevel === 3) return "h3"
+      if (headingLevel === 1) return "H1"
+      if (headingLevel === 2) return "H2"
+      if (headingLevel === 3) return "H3"
     }
-    return "text-size"
+    return "Normal"
   }
 
-  const getTextAlignIcon = () => {
-    if (editor.isActive({ textAlign: "left" })) return "align-text-left"
-    if (editor.isActive({ textAlign: "center" })) return "align-text-center"
-    if (editor.isActive({ textAlign: "right" })) return "align-text-right"
-    if (editor.isActive({ textAlign: "justify" })) return "align-text-justify"
-    return "align-text-left"
+  const getTextAlignLabel = () => {
+    if (editor.isActive({ textAlign: "left" })) return "Left"
+    if (editor.isActive({ textAlign: "center" })) return "Center"
+    if (editor.isActive({ textAlign: "right" })) return "Right"
+    if (editor.isActive({ textAlign: "justify" })) return "Justify"
+    return "Left"
   }
 
   return (
-    <Box
-      alignItems="center"
-      paddingY="s12"
-      paddingX="s20"
-      border={{ bottom: { color: "grey300", style: "solid", width: "s1" } }}
-      flexDirection="row"
-      gap="s8"
-      id="rich-text-editor-toolbar-root"
-    >
-      <Box
-        alignItems="center"
-        flexDirection="row"
-        gap="s8"
-        flexGrow
-        overflowX="auto"
-      >
+    <div className="flex flex-row items-center justify-between gap-2 border-0 border-b-[1px] border-solid border-f1-border px-5 py-3">
+      <div className="flex flex-row items-center gap-1 overflow-x-auto">
         <ToolbarButton
-          icon="bold"
+          label="Bold"
           onClick={() => editor.chain().focus().toggleBold().run()}
           isActive={editor.isActive("bold")}
           title="Bold (Ctrl+B)"
         />
         <ToolbarButton
-          icon="italic"
+          label="Italic"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           isActive={editor.isActive("italic")}
           title="Italic (Ctrl+I)"
         />
         <ToolbarButton
-          icon="underline"
+          label="Underline"
           onClick={() => editor.chain().focus().toggleUnderline().run()}
           isActive={editor.isActive("underline")}
           title="Underline (Ctrl+U)"
@@ -113,7 +104,7 @@ const ToolbarPlugin = ({
           isFullscreen={isFullscreen}
           items={[
             {
-              label: "Normal text",
+              label: "Normal",
               onClick: function Js() {
                 editor
                   .chain()
@@ -123,41 +114,36 @@ const ToolbarPlugin = ({
                   })
                   .run()
               },
-              icon: "text-size",
               isActive: !editor.isActive("heading"),
             },
             {
-              label: "Heading 1",
+              label: "H1",
               onClick: function Js() {
                 editor.chain().focus().toggleHeading({ level: 1 }).run()
               },
-              icon: "h1",
               isActive: editor.isActive("heading", { level: 1 }),
             },
             {
-              label: "Heading 2",
+              label: "H2",
               onClick: function Js() {
                 editor.chain().focus().toggleHeading({ level: 2 }).run()
               },
-              icon: "h2",
               isActive: editor.isActive("heading", { level: 2 }),
             },
             {
-              label: "Heading 3",
+              label: "H3",
               onClick: function Js() {
                 editor.chain().focus().toggleHeading({ level: 3 }).run()
               },
-              icon: "h3",
               isActive: editor.isActive("heading", { level: 3 }),
             },
           ]}
         >
-          <button
-            className={`toolbar-button ${editor.isActive("heading") && "active"}`}
-            title="Heading"
-          >
-            <Icon.Medium icon={getHeadingIcon()} color="grey800" />
-          </button>
+          <ToolbarButton
+            label={getHeadingLabel()}
+            isActive={editor.isActive("heading")}
+            title={getHeadingLabel()}
+          />
         </ToolbarDropdown>
         <ToolbarDivider show={isFullscreen} />
         <ToolbarDropdown
@@ -168,7 +154,6 @@ const ToolbarPlugin = ({
               onClick: function Js() {
                 editor.chain().focus().setTextAlign("left").run()
               },
-              icon: "align-text-left",
               isActive:
                 editor.isActive({ textAlign: "left" }) ||
                 (!editor.isActive({ textAlign: "justify" }) &&
@@ -180,7 +165,6 @@ const ToolbarPlugin = ({
               onClick: function Js() {
                 editor.chain().focus().setTextAlign("center").run()
               },
-              icon: "align-text-center",
               isActive: editor.isActive({ textAlign: "center" }),
             },
             {
@@ -188,7 +172,6 @@ const ToolbarPlugin = ({
               onClick: function Js() {
                 editor.chain().focus().setTextAlign("right").run()
               },
-              icon: "align-text-right",
               isActive: editor.isActive({ textAlign: "right" }),
             },
             {
@@ -196,36 +179,36 @@ const ToolbarPlugin = ({
               onClick: function Js() {
                 editor.chain().focus().setTextAlign("justify").run()
               },
-              icon: "align-text-justify",
               isActive: editor.isActive({ textAlign: "justify" }),
             },
           ]}
         >
-          <button className="toolbar-button" title="Align text">
-            <Icon.Medium icon={getTextAlignIcon()} color="grey800" />
-          </button>
+          <ToolbarButton
+            label={getTextAlignLabel()}
+            title={getTextAlignLabel()}
+          />
         </ToolbarDropdown>
 
         <ToolbarDivider />
 
         <ToolbarButton
-          icon="list"
+          icon={List}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           isActive={editor.isActive("bulletList")}
           title="Bullet List"
         />
         <ToolbarButton
-          icon="ol-list"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           isActive={editor.isActive("orderedList")}
           title="Ordered List"
+          label="Ordered List"
         />
 
         <ToolbarDivider />
 
         {canUseFiles && (
           <ToolbarButton
-            icon="paperclip"
+            icon={Paperclip}
             onClick={() => {
               if (fileInputRef && fileInputRef.current) {
                 fileInputRef.current.click()
@@ -245,7 +228,7 @@ const ToolbarPlugin = ({
           items={[
             {
               label: "Code Block",
-              icon: "code",
+              icon: Code,
               onClick: function Js() {
                 editor.chain().focus().toggleCodeBlock().run()
               },
@@ -253,7 +236,7 @@ const ToolbarPlugin = ({
             },
             {
               label: "Horizontal Rule",
-              icon: "remove",
+              icon: Minus,
               onClick: function Js() {
                 editor.chain().focus().setHorizontalRule().run()
               },
@@ -261,7 +244,6 @@ const ToolbarPlugin = ({
             },
             {
               label: "Quote",
-              icon: "quote",
               onClick: function Js() {
                 editor.chain().focus().toggleBlockquote().run()
               },
@@ -269,29 +251,29 @@ const ToolbarPlugin = ({
             },
           ]}
         >
-          <button className="toolbar-button" title="More options">
-            <Icon.Medium icon="ellipsis" color="grey800" />
-          </button>
+          <ToolbarButton icon={Ellipsis} title="More options" />
         </ToolbarDropdown>
-      </Box>
+      </div>
 
-      {canUseAi && (
-        <EnhanceActivator
-          editor={editor}
-          onEnhanceWithAI={onEnhanceWithAI}
-          isEnhancing={isEnhancing}
-          enhancementOptions={enhancementOptions}
-        />
-      )}
+      <div className="flex flex-row items-center gap-2">
+        {canUseAi && (
+          <EnhanceActivator
+            editor={editor}
+            onEnhanceWithAI={onEnhanceWithAI}
+            isEnhancing={isEnhancing}
+            enhancementOptions={enhancementOptions}
+          />
+        )}
 
-      {fullScreenEnabled && !isFullscreen && (
-        <ToolbarButton
-          icon={"expand"}
-          onClick={handleToggleFullscreen}
-          title="Expand"
-        />
-      )}
-    </Box>
+        {fullScreenEnabled && !isFullscreen && (
+          <ToolbarButton
+            icon={ExternalLink}
+            onClick={handleToggleFullscreen}
+            title="Expand"
+          />
+        )}
+      </div>
+    </div>
   )
 }
 

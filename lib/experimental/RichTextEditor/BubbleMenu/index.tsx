@@ -1,16 +1,14 @@
 import { useRef, useState } from "react"
 import ReactDOM from "react-dom/client"
 
-import { Button } from "@factorialco/factorial-one"
-import { Input } from "@factorialco/factorial-one/dist/experimental"
 import { BubbleMenu, Editor } from "@tiptap/react"
 import tippy, { Instance } from "tippy.js"
-
-import Box from "design-system/layouts/Box"
 
 import { EnhancementOption } from "@/experimental/RichTextEditor"
 import { EnhanceActivator } from "@/experimental/RichTextEditor/Enhance/index"
 import { ToolbarButton } from "@/experimental/RichTextEditor/Toolbar/ToolbarButton"
+import { ExternalLink } from "@/icons/app"
+import { Input } from "@/ui/input"
 
 interface EditorBubbleMenuProps {
   editor: Editor
@@ -32,47 +30,30 @@ interface LinkPopupProps {
 const LinkPopup = ({ onSubmit }: LinkPopupProps) => {
   const [url, setUrl] = useState("")
 
-  const handleSubmit = () => {
-    const trimmedUrl = url.trim()
-    if (trimmedUrl === "") {
-      return
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      const trimmedUrl = url.trim()
+      if (trimmedUrl === "") {
+        return
+      }
+      const completeUrl = /^(https?:\/\/)/i.test(trimmedUrl)
+        ? trimmedUrl
+        : `https://${trimmedUrl}`
+      onSubmit(completeUrl)
     }
-    const completeUrl = /^(https?:\/\/)/i.test(trimmedUrl)
-      ? trimmedUrl
-      : `https://${trimmedUrl}`
-    onSubmit(completeUrl)
   }
 
   return (
-    <Box
-      gap="s8"
-      paddingX="s12"
-      paddingY="s12"
-      borderRadius={{ all: "abs012" }}
-      border={{ all: { color: "grey300", style: "solid", width: "s1" } }}
-      background="white"
-      boxShadow="s200"
-      width="s360"
-      justifyContent="center"
-    >
-      <Box flexDirection="row" gap="s4" alignItems="center">
-        <Input
-          type="text"
-          placeholder="Enter the URL"
-          value={url}
-          onChange={(e) => {
-            setUrl(e.target.value)
-          }}
-        />
-        <Button
-          disabled={url.trim() === ""}
-          label="Apply"
-          onClick={handleSubmit}
-          size="md"
-          variant="default"
-        />
-      </Box>
-    </Box>
+    <Input
+      className="w-80 shadow-md"
+      type="text"
+      placeholder="Enter the URL"
+      value={url}
+      onChange={(e) => {
+        setUrl(e.target.value)
+      }}
+      onKeyDown={handleKeyDown}
+    />
   )
 }
 
@@ -84,7 +65,7 @@ const EditorBubbleMenu = ({
   enhancementOptions,
 }: EditorBubbleMenuProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
-  const linkButtonRef = useRef<HTMLButtonElement>(null)
+  const linkButtonRef = useRef<HTMLDivElement>(null)
 
   const handleLinkClick = () => {
     if (editor.isActive("link")) {
@@ -132,19 +113,12 @@ const EditorBubbleMenu = ({
       tippyOptions={{ duration: 100, placement: "bottom" }}
       editor={editor}
     >
-      <Box
+      <div
         ref={linkButtonRef}
-        flexDirection="row"
-        alignItems="center"
-        gap="s8"
-        background="white"
-        paddingX="s8"
-        paddingY="s8"
-        borderRadius={{ all: "abs008" }}
-        boxShadow="s200"
+        className="flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border bg-f1-background p-1 shadow-md"
       >
         <ToolbarButton
-          icon="link"
+          icon={ExternalLink}
           onClick={handleLinkClick}
           isActive={editor.isActive("link")}
           title="Add/Remove Link"
@@ -162,7 +136,7 @@ const EditorBubbleMenu = ({
             enhancementOptions={enhancementOptions}
           />
         )}
-      </Box>
+      </div>
     </BubbleMenu>
   )
 }

@@ -1,16 +1,14 @@
 import React from "react"
 
-import { Dropdown } from "@factorialco/factorial-one/dist/experimental"
-
-import type { Medium as MediumType } from "design-system/Icon/types/medium"
-
+import { Dropdown } from "@/experimental/exports"
 import { ToolbarButton } from "@/experimental/RichTextEditor/Toolbar/ToolbarButton"
+import { IconType } from "@/factorial-one"
 
 interface ToolbarDropdownItem {
   label: string
   isActive?: boolean
   onClick: () => void
-  icon: MediumType
+  icon?: IconType
 }
 
 interface ToolbarDropdownProps {
@@ -38,6 +36,8 @@ const ToolbarDropdown = ({
         icon={item.icon}
         onClick={item.onClick}
         isActive={item.isActive}
+        title={item.label}
+        label={item.icon ? undefined : item.label}
       />
     ))
   ) : (

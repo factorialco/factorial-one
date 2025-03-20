@@ -1,10 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 
-import Avatar from "design-system/Avatar"
-import Text from "design-system/Text"
-import Box from "design-system/layouts/Box"
-
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { cn } from "@/lib/utils"
 import { MentionedUser } from "../index"
 
 interface MentionListComponentProps {
@@ -17,27 +15,22 @@ const MentionListComponent = ({
   selected,
 }: MentionListComponentProps) => {
   return (
-    <Box
-      gap="s8"
-      flexDirection="row"
-      alignItems="center"
-      padding="s4"
-      borderRadius={{ all: "abs010" }}
-      border={{
-        all: {
-          color: selected ? "viridian800" : "grey000White",
-          style: "solid",
-          width: "s1",
-        },
-      }}
+    <div
+      className={cn(
+        "flex items-center gap-2 border p-1",
+        selected ? "border-selected-50" : "border-f1-border"
+      )}
     >
       {item.image_url && (
-        <Avatar label={item.label} url={item.image_url} size="s24" />
+        <PersonAvatar
+          firstName={item.label}
+          lastName=""
+          src={item.image_url}
+          size="medium"
+        />
       )}
-      <Text weight="medium" size="200" ellipsis color="grey1000">
-        {item.label}
-      </Text>
-    </Box>
+      <p className="text-neutral-100 text-sm font-medium">{item.label}</p>
+    </div>
   )
 }
 interface MentionListUIProps {
@@ -56,29 +49,16 @@ const MentionListUI = ({
   component: Component,
 }: MentionListUIProps) => {
   return (
-    <Box
-      flexDirection="column"
-      gap="s8"
-      paddingX="s4"
-      paddingY="s4"
-      borderRadius={{ all: "abs012" }}
-      border={{
-        all: { color: "grey300", style: "solid", width: "s1" },
-      }}
-      background="white"
-      boxShadow="s200"
-      width="s240"
-      maxHeight="s240"
-    >
+    <div className="flex max-h-72 w-72 flex-col gap-2 overflow-y-auto rounded-md border border-f1-border p-1 shadow-md">
       {items.length === 0 ? (
-        <Box padding="s8">
-          <Text weight="medium" size="200" ellipsis color="grey600">
+        <div className="p-2">
+          <p className="text-neutral-40 text-sm font-medium">
             No results found
-          </Text>
-        </Box>
+          </p>
+        </div>
       ) : (
         items.map((item, index) => (
-          <Box
+          <div
             key={index}
             onClick={() => onItemSelect(index)}
             onMouseEnter={() => onItemHover(index)}
@@ -88,10 +68,10 @@ const MentionListUI = ({
               index={index}
               selected={index === selectedIndex}
             />
-          </Box>
+          </div>
         ))
       )}
-    </Box>
+    </div>
   )
 }
 
