@@ -94,7 +94,7 @@ export const Default: Story = {
         icon: Icon.LayersFront,
         onClick: fn(),
       },
-      "separator",
+      { type: "separator" },
       {
         label: "Unlist",
         icon: Icon.Delete,
@@ -217,7 +217,7 @@ export const WithOtherActions: Story = {
         icon: Download,
         onClick: fn(),
       },
-      "separator",
+      { type: "separator" },
       {
         label: "Archive",
         icon: Archive,
@@ -402,7 +402,7 @@ export const TeamHeader: Story = {
         icon: Icon.ExternalLink,
         onClick: fn(),
       },
-      "separator",
+      { type: "separator" },
       {
         label: "Delete",
         icon: Icon.Delete,

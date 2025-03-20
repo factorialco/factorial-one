@@ -14,9 +14,10 @@ import {
 import { NavigationItem } from "../utils"
 import { DropdownItemContent } from "./DropdownItem"
 
-export type DropdownItem = DropdownItemObject | "separator"
+export type DropdownItem = DropdownItemObject | { type: "separator" }
 
 export type DropdownItemObject = NavigationItem & {
+  type?: "item"
   onClick?: () => void
   icon?: IconType
   description?: string
@@ -92,7 +93,7 @@ export function DropdownInternal({
       </DropdownMenuTrigger>
       <DropdownMenuContent align={align}>
         {items.map((item, index) =>
-          item === "separator" ? (
+          item.type === "separator" ? (
             <DropdownMenuSeparator key={index} />
           ) : (
             <DropdownItem key={index} item={item} />

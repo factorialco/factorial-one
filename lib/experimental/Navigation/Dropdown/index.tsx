@@ -54,7 +54,7 @@ export const MobileDropdown = ({ items, children }: DropdownProps) => {
       <DrawerContent className="bg-f1-background">
         <div className="flex flex-col px-2 pb-3 pt-2">
           {items.map((item, index) =>
-            item === "separator" ? (
+            item.type === "separator" ? (
               <div
                 key={`separator-${index}`}
                 className="mx-[-8px] my-2 h-px w-[calc(100%+16px)] bg-f1-border-secondary"
