@@ -239,7 +239,7 @@ export const Default: Story = {
       <div className="w-60">
         <AvatarNameSelector
           // Groups (hard-coded as an example)
-          groups={[{ label: "None", value: "all", type: "avatar" }]}
+          groups={[{ label: "None", value: "all", groupType: "avatar" }]}
           selectedGroup={selectedGroup}
           onGroupChange={(value) => setSelectedGroup(value ?? "all")}
           // Convert our fetched employees to the shape needed by AvatarNameSelector

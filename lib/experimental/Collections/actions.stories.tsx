@@ -101,7 +101,7 @@ const createUserActions = (): ActionsDefinition<(typeof mockUsers)[number]> => {
     },
 
     // Separator between action groups
-    "separator",
+    { type: "separator" },
 
     // Conditional action based on item state
     {

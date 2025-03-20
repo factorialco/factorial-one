@@ -141,7 +141,8 @@ export const AvatarNameSelectorMainContent = ({
           selected={selected}
           partialSelected={partialSelected}
           showGroupIcon={
-            groups.find((el) => el.value === selectedGroup)?.type === "team"
+            groups.find((el) => el.value === selectedGroup)?.groupType ===
+            "team"
           }
           singleSelector={singleSelector}
           goToFirst={goToFirst}
@@ -250,7 +251,8 @@ export const AvatarNameSelectorMainContent = ({
             selected={selected}
             partialSelected={partialSelected}
             showGroupIcon={
-              groups.find((el) => el.value === selectedGroup)?.type === "team"
+              groups.find((el) => el.value === selectedGroup)?.groupType ===
+              "team"
             }
             singleSelector={singleSelector}
             goToFirst={goToFirst}
