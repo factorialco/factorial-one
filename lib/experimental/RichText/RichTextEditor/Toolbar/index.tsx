@@ -3,12 +3,11 @@ import React from "react"
 
 import { Editor } from "@tiptap/react"
 
-import { EnhancementOption } from "@/experimental/RichTextEditor"
-import { EnhanceActivator } from "@/experimental/RichTextEditor/Enhance"
-import { ToolbarButton } from "@/experimental/RichTextEditor/Toolbar/ToolbarButton"
-import { ToolbarDropdown } from "@/experimental/RichTextEditor/Toolbar/ToolbarDropdown"
+import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
+import { EnhanceActivator } from "@/experimental/RichText/RichTextEditor/Enhance"
+import { ToolbarDropdown } from "@/experimental/RichText/RichTextEditor/Toolbar/ToolbarDropdown"
 import { Button } from "@/factorial-one"
-import { Code, Ellipsis, ExternalLink, Minus, Paperclip } from "@/icons/app"
+import { Code, Ellipsis, Minus, Paperclip } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
 const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
@@ -31,11 +30,12 @@ interface ToolbarPluginProps {
     customIntent?: string,
     context?: string
   ) => Promise<void>
-  isEnhancing: boolean
+  isLoadingAi: boolean
   canUseFiles: boolean
   canUseAi: boolean
   fullScreenEnabled: boolean
   enhancementOptions: EnhancementOption[]
+  canUseCustomPrompt: boolean
 }
 
 const ToolbarPlugin = ({
@@ -44,11 +44,12 @@ const ToolbarPlugin = ({
   isFullscreen,
   onEnhanceWithAI,
   fileInputRef,
-  isEnhancing,
+  isLoadingAi,
   canUseFiles,
   canUseAi,
   fullScreenEnabled,
   enhancementOptions,
+  canUseCustomPrompt,
 }: ToolbarPluginProps) => {
   if (!editor) {
     return null
@@ -73,26 +74,33 @@ const ToolbarPlugin = ({
   }
 
   return (
-    <div className="flex flex-row items-center justify-between gap-2 border-0 border-b-[1px] border-solid border-f1-border px-5 py-3">
-      <div className="flex flex-row items-center overflow-x-auto">
-        <ToolbarButton
+    <div className="flex flex-row items-center justify-between gap-2 border-0 border-b-[1px] border-solid border-f1-border py-3">
+      <div className="flex flex-row items-center overflow-x-auto pl-4">
+        <Button
+          variant={editor.isActive("bold") ? "neutral" : "ghost"}
           label="Bold"
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          isActive={editor.isActive("bold")}
-          title="Bold (Ctrl+B)"
+          onClick={() => {
+            editor.chain().focus().toggleBold().run()
+          }}
+          type="button"
         />
-        <ToolbarButton
+        <Button
+          variant={editor.isActive("italic") ? "neutral" : "ghost"}
           label="Italic"
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          isActive={editor.isActive("italic")}
-          title="Italic (Ctrl+I)"
+          onClick={() => {
+            editor.chain().focus().toggleItalic().run()
+          }}
+          type="button"
         />
-        <ToolbarButton
+        <Button
+          variant={editor.isActive("underline") ? "neutral" : "ghost"}
           label="Underline"
-          onClick={() => editor.chain().focus().toggleUnderline().run()}
-          isActive={editor.isActive("underline")}
-          title="Underline (Ctrl+U)"
+          onClick={() => {
+            editor.chain().focus().toggleUnderline().run()
+          }}
+          type="button"
         />
+
         <ToolbarDivider />
         <ToolbarDropdown
           isFullscreen={isFullscreen}
@@ -178,23 +186,27 @@ const ToolbarPlugin = ({
 
         <ToolbarDivider />
 
-        <ToolbarButton
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          isActive={editor.isActive("bulletList")}
-          title="Bullet List"
+        <Button
+          onClick={() => {
+            editor.chain().focus().toggleBulletList().run()
+          }}
+          variant={editor.isActive("bulletList") ? "neutral" : "ghost"}
           label="Bullet List"
+          type="button"
         />
-        <ToolbarButton
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          isActive={editor.isActive("orderedList")}
-          title="Ordered List"
+        <Button
+          onClick={() => {
+            editor.chain().focus().toggleOrderedList().run()
+          }}
+          variant={editor.isActive("orderedList") ? "neutral" : "ghost"}
           label="Ordered List"
+          type="button"
         />
 
         <ToolbarDivider />
 
         {canUseFiles && (
-          <ToolbarButton
+          <Button
             icon={Paperclip}
             onClick={() => {
               if (fileInputRef && fileInputRef.current) {
@@ -206,7 +218,10 @@ const ToolbarPlugin = ({
                 }
               }
             }}
-            title="Add Attachment"
+            hideLabel
+            label="Add Attachment"
+            variant="ghost"
+            type="button"
           />
         )}
 
@@ -248,21 +263,23 @@ const ToolbarPlugin = ({
         </ToolbarDropdown>
       </div>
 
-      <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-row items-center gap-2 pr-4">
         {canUseAi && (
           <EnhanceActivator
             editor={editor}
             onEnhanceWithAI={onEnhanceWithAI}
-            isEnhancing={isEnhancing}
+            isLoadingAi={isLoadingAi}
             enhancementOptions={enhancementOptions}
+            canUseCustomPrompt={canUseCustomPrompt}
           />
         )}
 
         {fullScreenEnabled && !isFullscreen && (
-          <ToolbarButton
-            icon={ExternalLink}
+          <Button
             onClick={handleToggleFullscreen}
-            title="Expand"
+            label="Fullscreen"
+            variant="ghost"
+            type="button"
           />
         )}
       </div>

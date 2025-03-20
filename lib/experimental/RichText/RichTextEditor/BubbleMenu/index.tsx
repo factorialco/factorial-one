@@ -4,10 +4,9 @@ import ReactDOM from "react-dom/client"
 import { BubbleMenu, Editor } from "@tiptap/react"
 import tippy, { Instance } from "tippy.js"
 
-import { EnhancementOption } from "@/experimental/RichTextEditor"
-import { EnhanceActivator } from "@/experimental/RichTextEditor/Enhance/index"
-import { ToolbarButton } from "@/experimental/RichTextEditor/Toolbar/ToolbarButton"
-import { ExternalLink } from "@/icons/app"
+import { Button } from "@/components/Actions/exports"
+import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
+import { EnhanceActivator } from "@/experimental/RichText/RichTextEditor/Enhance"
 import { Input } from "@/ui/input"
 
 interface EditorBubbleMenuProps {
@@ -18,9 +17,10 @@ interface EditorBubbleMenuProps {
     customIntent?: string,
     context?: string
   ) => Promise<void>
-  isEnhancing: boolean
+  isLoadingAi: boolean
   canUseAi: boolean
   enhancementOptions: EnhancementOption[]
+  canUseCustomPrompt: boolean
 }
 
 interface LinkPopupProps {
@@ -61,8 +61,9 @@ const EditorBubbleMenu = ({
   editor,
   canUseAi,
   onEnhanceWithAI,
-  isEnhancing,
+  isLoadingAi,
   enhancementOptions,
+  canUseCustomPrompt,
 }: EditorBubbleMenuProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
   const linkButtonRef = useRef<HTMLDivElement>(null)
@@ -115,25 +116,26 @@ const EditorBubbleMenu = ({
     >
       <div
         ref={linkButtonRef}
-        className="flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border bg-f1-background p-1 shadow-md"
+        className="flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 shadow-md"
       >
-        <ToolbarButton
-          icon={ExternalLink}
+        <Button
           onClick={handleLinkClick}
-          isActive={editor.isActive("link")}
-          title="Add/Remove Link"
+          label="Link"
+          variant={editor.isActive("link") ? "neutral" : "ghost"}
+          type="button"
         />
 
         {canUseAi && (
           <EnhanceActivator
             editor={editor}
             onEnhanceWithAI={onEnhanceWithAI}
-            isEnhancing={isEnhancing}
+            isLoadingAi={isLoadingAi}
             button={{
               hideLabel: true,
               variant: "ghost",
             }}
             enhancementOptions={enhancementOptions}
+            canUseCustomPrompt={canUseCustomPrompt}
           />
         )}
       </div>

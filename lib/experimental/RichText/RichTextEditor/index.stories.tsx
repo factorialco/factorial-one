@@ -3,7 +3,7 @@ import { EnhancementOption, RichTextEditor } from "."
 
 const meta = {
   component: RichTextEditor,
-  title: "RichTextEditor",
+  title: "Rich text/RichTextEditor",
 } satisfies Meta<typeof RichTextEditor>
 
 export default meta
@@ -81,30 +81,28 @@ const enhancementOptions: EnhancementOption[] = [
 const users = [
   {
     id: 1,
-    label: "John Doe",
+    label: "Raúl Sigüenza Sánchez",
     href: "https://www.google.com",
   },
   {
     id: 2,
-    label: "Jane Doe",
+    label: "Jacob Bamio Cordero",
     href: "https://www.google.com",
   },
   {
     id: 3,
-    label: "John Smith",
-    href: "https://www.google.com",
-  },
-  {
-    id: 4,
-    label: "Jane Smith",
+    label: "Xavier Val Parejo",
     href: "https://www.google.com",
   },
 ]
 export const Default: Story = {
+  tags: ["experimental"],
   args: {
-    onChange: () => {},
-    placeholder: "Write something...",
-    width: "w-4/5",
+    onChange: (html) => {
+      console.log(html)
+    },
+    placeholder: "Write something and test our fabulous editor...",
+    width: "w-full",
     // Mentions configuration
     hasMentions: true,
     hasDebouncedMentions: false,
@@ -112,10 +110,15 @@ export const Default: Story = {
     users: users,
     // AI enhancement
     enhanceText: () =>
-      Promise.resolve(
-        "Just imagine this is a response from AI from our friend Jacob"
-      ),
+      new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(
+            "Just imagine this is a response from AI from our friend Jacob"
+          )
+        }, 1000)
+      }),
     enhancementOptions: enhancementOptions,
+    canUseCustomPrompt: true,
     // File handling
     onFiles: () => {},
     maxCharacters: 1000,
