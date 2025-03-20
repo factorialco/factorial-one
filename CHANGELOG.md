@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/factorialco/factorial-one/compare/v1.3.0...v1.4.0) (2025-03-20)
+
+
+### Features
+
+* **collections:** improve table headers with more options ([#1432](https://github.com/factorialco/factorial-one/issues/1432)) ([02b22f0](https://github.com/factorialco/factorial-one/commit/02b22f098ed60ee36ad3afcbd874e93e6dcb2644))
+
 ## [1.3.0](https://github.com/factorialco/factorial-one/compare/v1.2.5...v1.3.0) (2025-03-20)
 
 
