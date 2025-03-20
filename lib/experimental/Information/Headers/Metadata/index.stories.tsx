@@ -109,7 +109,7 @@ export const Default: Story = {
         label: "Created",
         value: {
           type: "date",
-          formattedDate: new Date().toLocaleDateString(),
+          formattedDate: "January 15, 2023",
           icon: "warning",
         },
       },
@@ -140,7 +140,7 @@ export const WithActions: Story = {
         label: "Created",
         value: {
           type: "date",
-          formattedDate: new Date().toLocaleDateString(),
+          formattedDate: "January 15, 2023",
           icon: "critical",
         },
         actions: [
