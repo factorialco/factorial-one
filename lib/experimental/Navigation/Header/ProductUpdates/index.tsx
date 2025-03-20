@@ -1,7 +1,8 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon } from "@/components/Utilities/Icon"
+import AlertCircle from "@/icons/app/AlertCircle"
 import ChevronRight from "@/icons/app/ChevronRight"
-import Megaphone from "@/icons/app/Megaphone.tsx"
+import Megaphone from "@/icons/app/Megaphone"
 import Messages from "@/icons/app/Messages"
 import { Image } from "@/lib/imageHandler"
 import { Link } from "@/lib/linkHandler"
@@ -13,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
-import { useState } from "react"
+import { ReactElement, useCallback, useState } from "react"
 
 type ProductUpdate = {
   title: string
@@ -33,34 +34,11 @@ type ProductUpdatesProp = {
     description: string
     buttonText: string
   }
-}
-
-function NoUpdates({
-  title,
-  description,
-  buttonText,
-  buttonUrl,
-}: {
-  buttonUrl: UrlString
-} & ProductUpdatesProp["emptyScreen"]) {
-  return (
-    <div className="w-[420px] rounded border border-solid border-f1-border-secondary bg-[hsl(var(--neutral-2))] p-12">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-min rounded border border-solid border-f1-border-secondary bg-f1-background-tertiary p-3">
-          <Icon icon={Megaphone} size="lg" className="block" />
-        </div>
-        <div className="flex-1 gap-1 text-center *:text-base">
-          <h3 className="font-medium">{title}</h3>
-          <p className="font-normal text-f1-foreground-secondary">
-            {description}
-          </p>
-        </div>
-        <Link href={buttonUrl}>
-          <Button label={buttonText} />
-        </Link>
-      </div>
-    </div>
-  )
+  errorScreen: {
+    title: string
+    description: string
+    buttonText: string
+  }
 }
 
 const ProductUpdates = ({
@@ -68,17 +46,28 @@ const ProductUpdates = ({
   getUpdatesQuery,
   updatesPageUrl,
   emptyScreen,
+  errorScreen,
   // hasUnread = false,
 }: ProductUpdatesProp) => {
+  const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
   const [featuredUpdate, ...restUpdates] = updates ?? []
+  const getUpdates = useCallback(async () => {
+    try {
+      setState("fetching")
+      const response = await getUpdatesQuery()
+      setState("idle")
+      setUpdates(response)
+    } catch {
+      setState("error")
+    }
+  }, [getUpdatesQuery])
 
   return (
     <DropdownMenu
       onOpenChange={async (open) => {
         if (open && updates === null) {
-          const response = await getUpdatesQuery()
-          setUpdates(response)
+          getUpdates()
         }
       }}
     >
@@ -94,8 +83,8 @@ const ProductUpdates = ({
         align="start"
         className="max-h-[600px] min-w-96 max-w-md"
       >
-        {updates === null && "loading"}
-        {updates !== null && updates.length === 0 && (
+        {state === "fetching" && "loading"}
+        {state === "idle" && updates !== null && updates.length === 0 && (
           <>
             <Header title={label} url={updatesPageUrl} />
             <div className="p-2 pt-0">
@@ -103,7 +92,7 @@ const ProductUpdates = ({
             </div>
           </>
         )}
-        {updates !== null && updates.length > 0 && (
+        {state === "idle" && updates !== null && updates.length > 0 && (
           <>
             <Header title={label} url={updatesPageUrl} />
             <div className="p-2 pt-0">
@@ -116,6 +105,19 @@ const ProductUpdates = ({
                   ))}
                 </>
               )}
+            </div>
+          </>
+        )}
+        {state === "error" && (
+          <>
+            <Header title={label} url={updatesPageUrl} />
+            <div className="p-2 pt-0">
+              <ErrorScreen
+                {...errorScreen}
+                onClick={() => {
+                  getUpdates()
+                }}
+              />
             </div>
           </>
         )}
@@ -217,6 +219,75 @@ const Header = ({ title, url }: { title: string; url: UrlString }) => (
       hideLabel
     />
   </a>
+)
+
+const BaseScreen = ({
+  icon,
+  button,
+  title,
+  description,
+  iconWrapperClassName,
+}: {
+  button: ReactElement
+  icon: ReactElement
+  title: string
+  description: string
+  iconWrapperClassName?: string
+}) => (
+  <div className="w-[420px] rounded border border-solid border-f1-border-secondary bg-[hsl(var(--neutral-2))] p-12">
+    <div className="flex flex-col items-center gap-4">
+      <div
+        className={cn(
+          "grid size-14 place-items-center overflow-clip rounded border border-solid border-f1-border-secondary bg-f1-background-tertiary *:block",
+          iconWrapperClassName
+        )}
+      >
+        {icon}
+      </div>
+      <div className="flex flex-1 flex-col gap-1 text-center *:text-base">
+        <h3 className="font-medium">{title}</h3>
+        <p className="font-normal text-f1-foreground-secondary">
+          {description}
+        </p>
+      </div>
+      {button}
+    </div>
+  </div>
+)
+
+const NoUpdates = ({
+  title,
+  buttonText,
+  buttonUrl,
+  description,
+}: {
+  buttonUrl: UrlString
+} & ProductUpdatesProp["emptyScreen"]) => (
+  <BaseScreen
+    title={title}
+    description={description}
+    icon={<Icon icon={Megaphone} size="lg" className="block" />}
+    button={
+      <Link href={buttonUrl}>
+        <Button label={buttonText} />
+      </Link>
+    }
+  />
+)
+
+const ErrorScreen = ({
+  title,
+  description,
+  buttonText,
+  onClick,
+}: { onClick: () => void } & ProductUpdatesProp["errorScreen"]) => (
+  <BaseScreen
+    button={<Button label={buttonText} onClick={onClick} />}
+    iconWrapperClassName="text-f1-icon-critical bg-f1-background-critical border-f1-critical"
+    icon={<Icon icon={AlertCircle} size="lg" />}
+    title={title}
+    description={description}
+  />
 )
 
 export { ProductUpdates, type ProductUpdate, type ProductUpdatesProp }
