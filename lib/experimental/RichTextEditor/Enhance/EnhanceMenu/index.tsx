@@ -1,13 +1,30 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { Icon } from "@factorialco/factorial-one"
-import { Input } from "@factorialco/factorial-one/dist/experimental"
-import { ChevronLeft, ChevronRight } from "@factorialco/factorial-one/icons/app"
-
-import Text from "design-system/Text"
-import Box from "design-system/layouts/Box"
+import { Input } from "@/experimental/exports"
+import { Icon } from "@/factorial-one"
+import { ChevronLeft, ChevronRight } from "@/icons/app"
 
 import { EnhancementOption } from "@/experimental/RichTextEditor"
+
+const Option = ({
+  option,
+  onClick,
+}: {
+  option: EnhancementOption
+  onClick: () => void
+}) => {
+  return (
+    <div
+      onClick={onClick}
+      className="flex cursor-pointer flex-row items-center gap-2 bg-f1-background px-3 py-2 hover:bg-f1-background-secondary-hover"
+    >
+      <p className="text-neutral-40 text-md grow text-ellipsis font-normal">
+        {option.label}
+      </p>
+      {option.subOptions && <Icon icon={ChevronRight} size="md" />}
+    </div>
+  )
+}
 
 interface AIEnhanceMenuProps {
   onSelect: (optionId: string, customIntent?: string) => void
@@ -70,23 +87,11 @@ const AIEnhanceMenu = ({
   }
 
   return (
-    <Box
-      background="white"
-      borderRadius={{ all: "abs012" }}
-      boxShadow="s200"
+    <div
+      className="flex w-96 flex-col overflow-hidden rounded-lg border-[1px] border-solid border-f1-border bg-f1-background shadow-md"
       onClick={(e) => e.stopPropagation()}
-      width="s360"
-      overflowY="hidden"
-      overflowX="hidden"
-      border={{ all: { style: "solid", width: "s1", color: "grey300" } }}
     >
-      <Box
-        flexDirection="row"
-        alignItems="center"
-        gap="s8"
-        paddingX="s12"
-        paddingY="s12"
-      >
+      <div className="flex w-full flex-row items-center p-2">
         <Input
           type="text"
           placeholder="What do you want the AI to do?"
@@ -95,77 +100,52 @@ const AIEnhanceMenu = ({
           autoFocus
           onKeyDown={handleKeyDown}
         />
-      </Box>
+      </div>
       {enhancementOptions.length > 0 && (
-        <Box
-          border={{ top: { style: "solid", width: "s1", color: "grey300" } }}
-          flexDirection="column"
-          overflowY="auto"
-          maxHeight="s300"
+        <div
+          className="flex max-h-80 flex-col overflow-y-auto border-0 border-t-[1px] border-solid border-f1-border"
           onClick={(e) => e.stopPropagation()}
         >
           {selectedParentOption ? (
             <>
-              <Box
-                flexDirection="row"
-                alignItems="center"
-                paddingX="s12"
-                paddingY="s8"
-                gap="s8"
-                background="grey100"
-                border={{
-                  bottom: { style: "solid", width: "s1", color: "grey300" },
-                }}
+              <div
+                className="flex cursor-pointer flex-row items-center gap-2 border-x-0 border-b-[1px] border-t-0 border-solid border-f1-border bg-f1-background-secondary px-3 py-2 hover:bg-f1-background-secondary-hover"
                 onClick={handleBackToMainMenu}
-                className="hoverEffect"
               >
                 <Icon icon={ChevronLeft} size="md" />
-                <Text size="300" weight="medium">
+                <p className="text-neutral-100 text-md grow text-ellipsis font-medium">
                   {
                     enhancementOptions?.find(
                       (option) => option.id === selectedParentOption
                     )?.label
                   }
-                </Text>
-              </Box>
+                </p>
+              </div>
 
               {enhancementOptions
                 ?.find((option) => option.id === selectedParentOption)
                 ?.subOptions?.map((subOption) => (
-                  <Box
+                  <Option
                     key={subOption.id}
                     onClick={() => handleOptionSelect(subOption)}
-                    paddingX="s12"
-                    paddingY="s8"
-                    flexDirection="row"
-                    justifyContent="spaceBetween"
-                    className="hoverEffect"
-                  >
-                    <Text size="300">{subOption.label}</Text>
-                  </Box>
+                    option={subOption}
+                  />
                 ))}
             </>
           ) : (
             enhancementOptions
               .filter((option) => option.id !== "custom-intent")
               .map((option) => (
-                <Box
+                <Option
                   key={option.id}
                   onClick={() => handleOptionSelect(option)}
-                  paddingX="s12"
-                  paddingY="s8"
-                  flexDirection="row"
-                  justifyContent="spaceBetween"
-                  className="hoverEffect"
-                >
-                  <Text size="300">{option.label}</Text>
-                  {option.subOptions && <Icon icon={ChevronRight} size="md" />}
-                </Box>
+                  option={option}
+                />
               ))
           )}
-        </Box>
+        </div>
       )}
-    </Box>
+    </div>
   )
 }
 

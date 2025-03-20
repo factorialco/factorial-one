@@ -1,27 +1,28 @@
-import Icon from "design-system/Icon"
-import type { Medium as MediumType } from "design-system/Icon/types/medium"
+import { Button, IconType } from "@/factorial-one"
 
 interface ToolbarButtonProps {
-  icon: MediumType
-  onClick: () => void
+  onClick?: () => void
+  title: string
+  icon?: IconType
   isActive?: boolean
-  title?: string
+  label?: string
 }
 
 const ToolbarButton = ({
   icon,
   onClick,
-  isActive,
+  isActive = false,
   title,
+  label,
 }: ToolbarButtonProps) => (
-  <button
-    className={`toolbar-button ${isActive && "active"}`}
-    onClick={onClick}
-    title={title}
+  <Button
+    variant={isActive ? "neutral" : "ghost"}
+    icon={icon ?? undefined}
+    hideLabel={label ? false : true}
+    label={label ?? title}
+    onClick={onClick ?? undefined}
     type="button"
-  >
-    <Icon.Medium icon={icon} color="grey800" />
-  </button>
+  />
 )
 
 export { ToolbarButton }
