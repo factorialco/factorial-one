@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.5](https://github.com/factorialco/factorial-one/compare/v1.2.4...v1.2.5) (2025-03-19)
+
+
+### Bug Fixes
+
+* **collections:** fix card infinite loading ([#1427](https://github.com/factorialco/factorial-one/issues/1427)) ([b4eb85d](https://github.com/factorialco/factorial-one/commit/b4eb85dce410bfc231640795cacce6aa35a04814))
+
+## [1.2.4](https://github.com/factorialco/factorial-one/compare/v1.2.3...v1.2.4) (2025-03-19)
+
+
+### Bug Fixes
+
+* multiple small employee selector bugs ([dd4e22a](https://github.com/factorialco/factorial-one/commit/dd4e22a68f4263ab313a3e1900e5683fd75aaa6b))
+
 ## [1.2.3](https://github.com/factorialco/factorial-one/compare/v1.2.2...v1.2.3) (2025-03-19)
 
 

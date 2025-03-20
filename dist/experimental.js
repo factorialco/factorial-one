@@ -7381,13 +7381,19 @@ const Pv = (e, n) => n.render(e), bx = (e) => Math.ceil(e / 12) * 12, wx = ({
   title: n,
   source: i
 }) => {
-  const t = Re(() => i.dataAdapter.paginationType === "pages" ? {
-    ...i,
-    dataAdapter: {
-      ...i.dataAdapter,
-      perPage: bx(i.dataAdapter.perPage ?? 24)
+  const t = Re(() => {
+    if (i.dataAdapter.paginationType === "pages") {
+      const d = i.dataAdapter.perPage, c = bx(d ?? 24);
+      return {
+        ...i.dataAdapter,
+        perPage: c
+      };
     }
-  } : i, [i]), { data: a, paginationInfo: r, setPage: s, isInitialLoading: f } = Ev(t);
+    return i.dataAdapter;
+  }, [i.dataAdapter]), { data: a, paginationInfo: r, setPage: s, isInitialLoading: f } = Ev({
+    ...i,
+    dataAdapter: t
+  });
   return /* @__PURE__ */ k(ke, { children: [
     /* @__PURE__ */ o("div", { className: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4", children: f ? Array.from({ length: 8 }).map((d, c) => /* @__PURE__ */ k(ot, { children: [
       /* @__PURE__ */ o(st, { children: /* @__PURE__ */ o(ft, { children: /* @__PURE__ */ o(Pe, { className: "h-4 w-3/4" }) }) }),
@@ -8003,7 +8009,7 @@ const Rl = fn(Ex, Px), Rx = ({
         }
       ),
       /* @__PURE__ */ k("div", { className: "flex shrink-0 items-center gap-2", children: [
-        /* @__PURE__ */ o(Sn, { initial: !1, children: d && !r && /* @__PURE__ */ o(
+        /* @__PURE__ */ o(Sn, { initial: !1, children: d && /* @__PURE__ */ o(
           Ix,
           {
             initial: { opacity: 0 },
@@ -8016,14 +8022,7 @@ const Rl = fn(Ex, Px), Rx = ({
             className: "animate-spin"
           }
         ) }),
-        r && /* @__PURE__ */ o(
-          Dw,
-          {
-            loading: d,
-            onChange: f,
-            value: s
-          }
-        ),
+        r && /* @__PURE__ */ o(Dw, { onChange: f, value: s }),
         n && n.length > 1 && /* @__PURE__ */ o(
           Tx,
           {
