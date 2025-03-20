@@ -26,6 +26,7 @@ type ProductUpdate = {
 
 type ProductUpdatesProp = {
   label: string
+  moreUpdatesLabel: string
   updatesPageUrl: UrlString
   getUpdatesQuery: () => Promise<Array<ProductUpdate>>
   hasUnread?: boolean
@@ -43,6 +44,7 @@ type ProductUpdatesProp = {
 
 const ProductUpdates = ({
   label,
+  moreUpdatesLabel,
   getUpdatesQuery,
   updatesPageUrl,
   emptyScreen,
@@ -81,7 +83,7 @@ const ProductUpdates = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
-        className="max-h-[600px] min-w-96 max-w-md"
+        className="max-h-[600px] min-w-96 max-w-md overflow-y-scroll"
       >
         {state === "fetching" && "loading"}
         {state === "idle" && updates !== null && updates.length === 0 && (
@@ -100,6 +102,9 @@ const ProductUpdates = ({
               {updates.length > 1 && (
                 <>
                   <DropdownMenuSeparator />
+                  <h3 className="pb-2 pl-3 pr-5 pt-3 text-sm font-medium text-f1-foreground-secondary">
+                    {moreUpdatesLabel}
+                  </h3>
                   {restUpdates.map((update, index) => (
                     <DropdownItem key={index} {...update} />
                   ))}
@@ -282,11 +287,11 @@ const ErrorScreen = ({
   onClick,
 }: { onClick: () => void } & ProductUpdatesProp["errorScreen"]) => (
   <BaseScreen
-    button={<Button label={buttonText} onClick={onClick} />}
-    iconWrapperClassName="text-f1-icon-critical bg-f1-background-critical border-f1-critical"
-    icon={<Icon icon={AlertCircle} size="lg" />}
     title={title}
     description={description}
+    iconWrapperClassName="text-f1-icon-critical bg-f1-background-critical border-f1-critical"
+    icon={<Icon icon={AlertCircle} size="lg" />}
+    button={<Button variant="outline" label={buttonText} onClick={onClick} />}
   />
 )
 

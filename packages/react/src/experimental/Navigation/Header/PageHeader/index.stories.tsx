@@ -200,6 +200,7 @@ export const WithProductUpdate: Story = {
     productUpdates: {
       isVisible: true,
       label: "Latest from Projects",
+      moreUpdatesLabel: "More updates",
       updatesPageUrl: "https://factorialmakers.atlassian.net/browse/FCT-24580",
       emptyScreen: {
         title: "There aren’t updates for Projects yet",
@@ -221,7 +222,14 @@ export const WithProductUpdate: Story = {
                 {
                   title: "Project timetable with absence information",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
-                  imageURL: "https://placecats.com/neo/300/200",
+                  imageURL: "https://placecats.com/neo/1416/797/",
+                  updated: "4 mar 2025",
+                  unread: true,
+                },
+                {
+                  title: "Project timetable with absence information",
+                  href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+                  imageURL: "https://placecats.com/neo/1416/797/",
                   updated: "4 mar 2025",
                   unread: true,
                 },
@@ -251,7 +259,7 @@ export const WithProductUpdate: Story = {
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                 },
               ]),
-            0
+            1000
           )
         })
       },
