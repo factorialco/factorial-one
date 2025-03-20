@@ -3,7 +3,6 @@ import { Icon } from "@/components/Utilities/Icon"
 import AlertCircle from "@/icons/app/AlertCircle"
 import ChevronRight from "@/icons/app/ChevronRight"
 import Megaphone from "@/icons/app/Megaphone"
-import Messages from "@/icons/app/Messages"
 import { Image } from "@/lib/imageHandler"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
@@ -14,6 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
+import { Skeleton } from "@/ui/skeleton"
 import { ReactElement, useCallback, useState } from "react"
 
 type ProductUpdate = {
@@ -78,17 +78,17 @@ const ProductUpdates = ({
           title={label}
           className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
         >
-          <Icon icon={Messages} size="md" />
+          <Icon icon={Megaphone} size="md" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
         className="max-h-[600px] min-w-96 max-w-md overflow-y-scroll"
       >
-        {state === "fetching" && "loading"}
+        <Header title={label} url={updatesPageUrl} />
+        {state === "fetching" && <ProductUpdatesSkeleton />}
         {state === "idle" && updates !== null && updates.length === 0 && (
           <>
-            <Header title={label} url={updatesPageUrl} />
             <div className="p-2 pt-0">
               <NoUpdates {...emptyScreen} buttonUrl={updatesPageUrl} />
             </div>
@@ -96,7 +96,6 @@ const ProductUpdates = ({
         )}
         {state === "idle" && updates !== null && updates.length > 0 && (
           <>
-            <Header title={label} url={updatesPageUrl} />
             <div className="p-2 pt-0">
               <FeaturedDropdownItem {...featuredUpdate} />
               {updates.length > 1 && (
@@ -115,7 +114,6 @@ const ProductUpdates = ({
         )}
         {state === "error" && (
           <>
-            <Header title={label} url={updatesPageUrl} />
             <div className="p-2 pt-0">
               <ErrorScreen
                 {...errorScreen}
@@ -212,7 +210,7 @@ const DropdownItem = ({
 const Header = ({ title, url }: { title: string; url: UrlString }) => (
   <a
     href={url}
-    className="flex items-center justify-between gap-4 px-4 py-3 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
+    className="flex items-center justify-between gap-4 px-5 pt-3 pb-2 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
   >
     <h2 className="text-base font-medium">{title}</h2>
     <Button
@@ -293,6 +291,31 @@ const ErrorScreen = ({
     icon={<Icon icon={AlertCircle} size="lg" />}
     button={<Button variant="outline" label={buttonText} onClick={onClick} />}
   />
+)
+
+const ProductUpdatesSkeleton = () => (
+  <div
+    className="flex flex-col"
+    role="status"
+    aria-busy="true"
+    aria-live="polite"
+  >
+    <div className="p-2">
+      <Skeleton className="h-56 w-full rounded" />
+      <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
+          <div className="flex-1 flex flex-col gap-2 py-1">
+            <Skeleton className="h-3 w-2/3" />
+            <Skeleton className="h-3 w-1/3" />
+          </div>
+      </div>
+      <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
+          <div className="flex-1 flex flex-col gap-2 py-1">
+            <Skeleton className="h-3 w-2/3" />
+            <Skeleton className="h-3 w-1/3" />
+          </div>
+      </div>
+    </div>
+  </div>
 )
 
 export { ProductUpdates, type ProductUpdate, type ProductUpdatesProp }
