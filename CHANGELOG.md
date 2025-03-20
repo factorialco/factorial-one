@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/factorialco/factorial-one/compare/v1.4.1...v1.4.2) (2025-03-20)
+
+
+### Bug Fixes
+
+* make release work meanwhile workspaces refactor happens ([#1439](https://github.com/factorialco/factorial-one/issues/1439)) ([7925980](https://github.com/factorialco/factorial-one/commit/79259807c1af5d0e0655248a4db40f6345e817e7))
+
 ## [1.4.1](https://github.com/factorialco/factorial-one/compare/v1.4.0...v1.4.1) (2025-03-20)
 
 
