@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one",
-  "version": "1.2.6",
+  "version": "1.4.2",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -11,6 +11,14 @@
   ],
   "sideEffects": [
     "**/*.css"
+  ],
+  "files": [
+    "assets",
+    "icons",
+    "dist",
+    "styles.css",
+    "tailwind.config.ts",
+    "postcss.config.js"
   ],
   "scripts": {
     "dev": "storybook dev -p 6006",

@@ -2323,6 +2323,7 @@ const Na = Ek, Ea = Mk, Ft = v.forwardRef(({ className: e, align: n = "center", 
     sideOffset: i,
     className: E(
       "z-50 w-72 rounded-xs border bg-f1-background p-4 text-f1-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      "origin-[var(--radix-popover-content-transform-origin)]",
       e
     ),
     ...t
@@ -7607,6 +7608,7 @@ const Mh = v.forwardRef(({ className: e, sideOffset: n = 4, ...i }, t) => /* @__
     sideOffset: n,
     className: E(
       "z-50 min-w-[--radix-popper-anchor-width] overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background text-f1-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      "origin-[var(--radix-dropdown-menu-content-transform-origin)]",
       e
     ),
     ...i
@@ -7732,7 +7734,7 @@ function Dh({
       }
     ) }),
     /* @__PURE__ */ o(Mh, { align: i, children: e.map(
-      (r, s) => r === "separator" ? /* @__PURE__ */ o(Rh, {}, s) : /* @__PURE__ */ o(G5, { item: r }, s)
+      (r, s) => r.type === "separator" ? /* @__PURE__ */ o(Rh, {}, s) : /* @__PURE__ */ o(G5, { item: r }, s)
     ) })
   ] });
 }
@@ -7756,7 +7758,7 @@ const K5 = ["align"], Ri = (e) => {
     ) }) }),
     /* @__PURE__ */ o(cd, { className: "bg-f1-background-overlay" }),
     /* @__PURE__ */ o(Nv, { className: "bg-f1-background", children: /* @__PURE__ */ o("div", { className: "flex flex-col px-2 pb-3 pt-2", children: e.map(
-      (a, r) => a === "separator" ? /* @__PURE__ */ o(
+      (a, r) => a.type === "separator" ? /* @__PURE__ */ o(
         "div",
         {
           className: "mx-[-8px] my-2 h-px w-[calc(100%+16px)] bg-f1-border-secondary"
@@ -7809,12 +7811,16 @@ const K5 = ["align"], Ri = (e) => {
       )
     ) }) })
   ] });
-}, Y5 = (e, n) => e(n).filter(
+}, Y5 = (e, n) => (e(n) || []).filter(
   (i) => i.enabled === void 0 || i.enabled
 ), Ih = ({
   item: e,
   actions: n
-}) => !n || n.length === 0 ? null : /* @__PURE__ */ o(Ri, { items: Y5(n, e), children: /* @__PURE__ */ o(Me, { variant: "ghost", icon: zw, label: "Actions", hideLabel: !0 }) });
+}) => {
+  if (!n || n.length === 0) return null;
+  const i = Y5(n, e);
+  return i.length === 0 ? null : /* @__PURE__ */ o(Ri, { items: i, children: /* @__PURE__ */ o(Me, { variant: "ghost", icon: zw, label: "Actions", hideLabel: !0 }) });
+};
 function X5(e, n) {
   var i = typeof Symbol < "u" && e[Symbol.iterator] || e["@@iterator"];
   if (i) return (i = i.call(e)).next.bind(i);
@@ -8659,7 +8665,7 @@ function rf({
   sticky: r = !1,
   hidden: s = !1
 }) {
-  const { isScrolled: f } = qh(), d = /* @__PURE__ */ o(pe, { children: /* @__PURE__ */ x("div", { className: "flex items-center gap-1", children: [
+  const { isScrolled: f } = qh(), d = /* @__PURE__ */ o(pe, { children: /* @__PURE__ */ x("div", { className: "flex items-center gap-1 whitespace-nowrap", children: [
     e,
     t && /* @__PURE__ */ o(
       be.button,
@@ -8812,22 +8818,21 @@ const Nc = dn(h6, y6), g6 = ({
   }), /* @__PURE__ */ x(pe, { children: [
     /* @__PURE__ */ x(Nc, { children: [
       /* @__PURE__ */ o(Kh, { children: /* @__PURE__ */ x(Ar, { children: [
-        e.map((u) => /* @__PURE__ */ o(
+        e.map(({ sorting: u, label: m, ...y }) => /* @__PURE__ */ o(
           rf,
           {
-            info: u.info,
-            width: u.width,
             sortState: l(
-              u.sorting,
+              u,
               n.sortings,
               f
             ),
-            onSortClick: u.sorting ? () => {
-              u.sorting && c(u.sorting);
+            ...y,
+            onSortClick: u ? () => {
+              u && c(u);
             } : void 0,
-            children: u.label
+            children: m
           },
-          String(u.label)
+          String(m)
         )),
         n.actions && /* @__PURE__ */ o(rf, { width: "fit", hidden: !0, children: i.collections.actions.actions }, "actions")
       ] }) }),
@@ -8839,6 +8844,7 @@ const Nc = dn(h6, y6), g6 = ({
             {
               firstCell: h === 0,
               href: y,
+              sticky: g.sticky,
               children: $h(u, g)
             },
             String(g.label)
@@ -10609,12 +10615,12 @@ const a9 = Q6, r9 = ({ item: e }) => /* @__PURE__ */ o(Ty, { value: e.value, chi
     ...h
   }, p) {
     const w = i.find(
-      (O) => O !== "separator" && O.value === a
+      (O) => O.type !== "separator" && O.value === a
     ), b = Ne(null), [_, k] = ie(h.searchValue || ""), [C, P] = ie(f), S = Re(() => {
       if (m)
         return i;
       const O = i.filter(
-        (R) => R == "separator" || !_ || R.label.toLowerCase().includes(_.toLowerCase())
+        (R) => R.type === "separator" || !_ || R.label.toLowerCase().includes(_.toLowerCase())
       );
       return setTimeout(() => {
         var R;
@@ -10632,7 +10638,7 @@ const a9 = Q6, r9 = ({ item: e }) => /* @__PURE__ */ o(Ty, { value: e.value, chi
       k(""), t == null || t(
         O,
         (R = i.find(
-          (F) => typeof F == "object" && F.value === O
+          (F) => typeof F == "object" && F.type !== "separator" && F.value === O
         )) == null ? void 0 : R.item
       );
     }, $ = (O) => {
@@ -10642,7 +10648,7 @@ const a9 = Q6, r9 = ({ item: e }) => /* @__PURE__ */ o(Ty, { value: e.value, chi
       }, 0);
     }, z = Re(
       () => S.map(
-        (O, R) => O === "separator" ? {
+        (O, R) => O.type === "separator" ? {
           height: 1,
           item: /* @__PURE__ */ o(Iy, {}, `separator-${R}`)
         } : {
@@ -11057,7 +11063,7 @@ const d9 = ({
           onRemove: s,
           selected: we,
           partialSelected: ge,
-          showGroupIcon: ((xe = i.find((K) => K.value === t)) == null ? void 0 : xe.type) === "team",
+          showGroupIcon: ((xe = i.find((K) => K.value === t)) == null ? void 0 : xe.groupType) === "team",
           singleSelector: C,
           goToFirst: z,
           goToLast: O,
@@ -11149,7 +11155,7 @@ const d9 = ({
             onRemove: s,
             selected: te,
             partialSelected: de,
-            showGroupIcon: ((ge = i.find((se) => se.value === t)) == null ? void 0 : ge.type) === "team",
+            showGroupIcon: ((ge = i.find((se) => se.value === t)) == null ? void 0 : ge.groupType) === "team",
             singleSelector: C,
             goToFirst: z,
             goToLast: O,
@@ -25026,7 +25032,7 @@ const rP = ({
           "aria-label": `${l.name} logo`
         }
       })),
-      ...a.length ? ["separator"] : [],
+      ...a.length ? [{ type: "separator" }] : [],
       ...a
     ],
     [e, a]
