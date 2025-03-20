@@ -199,8 +199,14 @@ export const WithProductUpdate: Story = {
     actions: defaultActions,
     productUpdates: {
       isVisible: true,
-      label: "Product Updates",
+      label: "Latest from Projects",
       updatesPageUrl: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+      emptyScreen: {
+        title: "There aren’t updates for Projects yet",
+        description:
+          "Check out our product updates page to see past launches and what’s coming.",
+        buttonText: "Go to Updates",
+      },
       getUpdatesQuery: async () => {
         return new Promise((resolve) => {
           setTimeout(
