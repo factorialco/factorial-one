@@ -26,7 +26,7 @@ const mockOptions: SelectItemProps<string>[] = [
       description: "Description 2",
     },
   },
-  "separator" as const,
+  { type: "separator" },
   {
     value: "option3",
     label: "Option 3",
@@ -208,7 +208,7 @@ describe("Select", () => {
         value: "option2",
         label: "Option 2",
       },
-      "separator" as const,
+      { type: "separator" },
       {
         value: "option3",
         label: "Option 3",

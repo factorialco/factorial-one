@@ -19,7 +19,7 @@ export type AvatarNamedEntity = {
 export type AvatarNamedGroup = {
   value: string
   label: string
-  type?: "avatar" | "team"
+  groupType?: "avatar" | "team"
 }
 
 interface AvatarNameSelectorCommonProps

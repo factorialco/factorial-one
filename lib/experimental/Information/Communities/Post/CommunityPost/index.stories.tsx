@@ -93,7 +93,7 @@ export const Default: Story = {
         label: "Turn comments and reactions on",
         onClick: () => {},
       },
-      "separator",
+      { type: "separator" },
       {
         label: "Delete post",
         onClick: () => {},

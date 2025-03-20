@@ -144,7 +144,7 @@ export const LargeList: Story = {
     ...WithSearchBox.args,
     options: [
       ...(meta.args?.options || []),
-      "separator",
+      { type: "separator" },
       ...Array.from({ length: 10000 }, (_, i) => ({
         value: `option-${i}`,
         label: `Option ${i}`,
@@ -163,7 +163,7 @@ export const WithCustomTrigger: Story = {
     options: [
       { value: "red", label: "Red" },
       { value: "green", label: "Green" },
-      "separator",
+      { type: "separator" },
       { value: "blue", label: "Blue" },
     ],
   },

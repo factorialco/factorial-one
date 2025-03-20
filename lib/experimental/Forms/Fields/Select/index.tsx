@@ -101,8 +101,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
     ref
   ) {
     const selectedOption = options.find(
-      (option): option is Exclude<typeof option, "separator"> =>
-        option !== "separator" && option.value === value
+      (option): option is Exclude<typeof option, { type: "separator" }> =>
+        option.type !== "separator" && option.value === value
     )
 
     const searchInputRef = useRef<HTMLInputElement>(null)
@@ -117,7 +117,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
 
       const res = options.filter(
         (option) =>
-          option == "separator" ||
+          option.type === "separator" ||
           !searchValue ||
           option.label.toLowerCase().includes(searchValue.toLowerCase())
       )
@@ -147,7 +147,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
         value,
         options.find(
           (option): option is SelectItemObject<string> =>
-            typeof option === "object" && option.value === value
+            typeof option === "object" &&
+            option.type !== "separator" &&
+            option.value === value
         )?.item
       )
     }
@@ -163,7 +165,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
     const items: VirtualItem[] = useMemo(
       () =>
         filteredOptions.map((option, index) =>
-          option === "separator"
+          option.type === "separator"
             ? {
                 height: 1,
                 item: <SelectSeparator key={`separator-${index}`} />,

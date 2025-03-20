@@ -258,7 +258,7 @@ const ExampleComponent = ({
         icon: Ai,
         onClick: () => console.log(`Viewing ${item.name}'s profile`),
       },
-      "separator",
+      { type: "separator" },
       {
         label: item.isStarred ? "Remove Star" : "Star User",
         icon: Star,
@@ -391,7 +391,7 @@ export const BasicTableView: Story = {
           icon: Ai,
           onClick: () => console.log(`Viewing ${item.name}'s profile`),
         },
-        "separator",
+        { type: "separator" },
         {
           label: item.isStarred ? "Remove Star" : "Star User",
           icon: Star,
@@ -490,7 +490,7 @@ export const WithLinkedItems: Story = {
           icon: Ai,
           onClick: () => console.log(`Viewing ${item.name}'s profile`),
         },
-        "separator",
+        { type: "separator" },
         {
           label: item.isStarred ? "Remove Star" : "Star User",
           icon: Star,
@@ -1387,7 +1387,7 @@ export const WithAdvancedActions: Story = {
           icon: Pencil,
           onClick: () => console.log(`Editing ${item.name}`),
         },
-        "separator",
+        { type: "separator" },
         // Conditional actions based on item state
         ...(item.status === "active"
           ? [
@@ -1675,7 +1675,7 @@ export const WithAsyncSearch: Story = {
           icon: Ai,
           onClick: () => console.log(`Viewing ${item.name}'s profile`),
         },
-        "separator",
+        { type: "separator" },
         {
           label: item.isStarred ? "Remove Star" : "Star User",
           icon: Star,

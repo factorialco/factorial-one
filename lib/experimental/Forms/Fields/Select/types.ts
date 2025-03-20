@@ -2,6 +2,7 @@ import type { IconType } from "@/components/Utilities/Icon"
 import type { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 
 export type SelectItemObject<T, R = unknown> = {
+  type?: "item"
   value: T
   label: string
   description?: string
@@ -12,4 +13,4 @@ export type SelectItemObject<T, R = unknown> = {
 
 export type SelectItemProps<T, R = unknown> =
   | SelectItemObject<T, R>
-  | "separator"
+  | { type: "separator" }

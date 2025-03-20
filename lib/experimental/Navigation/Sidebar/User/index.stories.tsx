@@ -19,7 +19,7 @@ export const Default: Story = {
     options: [
       { label: "Preferences", href: "/preferences", icon: Icons.Sliders },
       { label: "Notifications", href: "/notifications", icon: Icons.Bell },
-      "separator",
+      { type: "separator" },
       { label: "Logout", href: "/logout", icon: Icons.Exit, critical: true },
     ],
   },
