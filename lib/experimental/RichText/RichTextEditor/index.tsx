@@ -11,7 +11,10 @@ import {
 import { EditorBubbleMenu } from "@/experimental/RichText/RichTextEditor/BubbleMenu"
 import { FileList } from "@/experimental/RichText/RichTextEditor/FileList"
 import { ToolbarPlugin } from "@/experimental/RichText/RichTextEditor/Toolbar"
-import { isValidSelectionForEnhancement } from "@/experimental/RichText/RichTextEditor/utils/enhance"
+import {
+  handleEnhanceWithAIFunction,
+  isValidSelectionForEnhancement,
+} from "@/experimental/RichText/RichTextEditor/utils/enhance"
 import { configureMention } from "@/experimental/RichText/RichTextEditor/utils/mention"
 import { Button } from "@/factorial-one"
 import { Cross } from "@/icons/app"
@@ -28,43 +31,20 @@ import { EditorContent, useEditor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import screenfull from "screenfull"
 import "./index.css"
+
 // types related to the editor styles
+type RichTextEditorHeight = "xs" | "sm" | "md" | "lg" | "xl" | "h-full"
 
-type RichTextEditorHeight =
-  | "h-32"
-  | "h-36"
-  | "h-40"
-  | "h-44"
-  | "h-48"
-  | "h-52"
-  | "h-56"
-  | "h-60"
-  | "h-64"
-  | "h-72"
-  | "h-80"
-  | "h-full"
+const heightMapping: Record<RichTextEditorHeight, string> = {
+  xs: "h-60",
+  sm: "h-64",
+  md: "h-72",
+  lg: "h-80",
+  xl: "h-96",
+  "h-full": "h-full",
+}
 
-type RichTextEditorWidth =
-  | "w-full"
-  | "w-60"
-  | "w-64"
-  | "w-72"
-  | "w-80"
-  | "w-96"
-  | "w-1/2"
-  | "w-1/3"
-  | "w-1/4"
-  | "w-1/5"
-  | "w-1/6"
-  | "w-2/3"
-  | "w-2/5"
-  | "w-2/7"
-  | "w-3/4"
-  | "w-3/5"
-  | "w-3/7"
-  | "w-4/5"
-
-// Types related to mentions and enhancements
+// Types related to mentions
 
 type MentionedUser = {
   id: number
@@ -77,6 +57,8 @@ type MentionChangeResult = {
   value: string
   ids: number[]
 }
+
+// Types related to enhancements
 
 type EnhancementOption = {
   id: string
@@ -107,12 +89,10 @@ interface RichTextEditorProps {
     files?: File[]
   }
   height?: RichTextEditorHeight
-  width?: RichTextEditorWidth
   maxFileSize?: number
 
   // Mentions configuration
   hasMentions?: boolean
-  hasDebouncedMentions?: boolean
   onMentionQueryStringChanged?: (
     queryString: string
   ) => Promise<MentionedUser[]> | undefined
@@ -153,11 +133,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       onChange,
       placeholder,
       initialEditorState,
-      height = "h-80",
-      width = "w-full",
+      height = "lg",
       maxFileSize: _maxFileSize,
       hasMentions = false,
-      hasDebouncedMentions = false,
       onMentionQueryStringChanged,
       users,
       enhanceText,
@@ -227,7 +205,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           CharacterCount.configure({
             limit: maxCharacters || null,
           }),
-          ...(hasMentions || hasDebouncedMentions
+          ...(hasMentions
             ? configureMention(
                 mentionSuggestions,
                 setMentionSuggestions,
@@ -319,50 +297,24 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         customIntent?: string,
         context?: string
       ) => {
-        if (
-          !editor ||
-          !selectedText ||
-          !isValidSelectionForEnhancement(selectedText) ||
-          !enhanceText
-        )
-          return
-        try {
-          setIsLoadingAi(true)
-          const { from, to } = editor.state.selection
-
-          const enhancedText = await enhanceText({
-            text: selectedText,
-            type: enhanceType || "improve-writing",
-            intent: customIntent || "improve text in editor",
-            context: context,
-          })
-
-          if (from === 0 && to === editor.state.doc.content.size) {
-            editor.chain().focus().setContent(enhancedText).run()
-          } else {
-            editor
-              .chain()
-              .focus()
-              .deleteRange({ from, to })
-              .insertContent(enhancedText)
-              .run()
-          }
-        } catch (error) {
-          // Error handling
-        } finally {
-          setIsLoadingAi(false)
-        }
+        await handleEnhanceWithAIFunction({
+          selectedText,
+          editor: editor!,
+          enhanceText: enhanceText!,
+          setIsLoadingAi,
+          isValidSelectionForEnhancement,
+          enhanceType,
+          customIntent,
+          context,
+        })
       },
-      [editor, enhanceText]
+      [editor, enhanceText, setIsLoadingAi]
     )
 
     return (
       <div
         ref={containerRef}
-        className={cn(
-          "m-5 flex w-full flex-col rounded-xl border-[1px] border-solid border-f1-border bg-f1-background",
-          width
-        )}
+        className="m-5 flex w-full flex-col rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
       >
         {isFullscreen && (
           <div className="flex w-full items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3">
@@ -397,8 +349,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           ref={editorRef}
           className={cn(
             "w-full overflow-y-auto px-5 py-3",
-            isFullscreen ? "h-full" : height
+            isFullscreen ? "h-full" : heightMapping[height] || "h-80"
           )}
+          onClick={() => {
+            editor?.commands.focus()
+          }}
         >
           <EditorContent editor={editor} />
           {onFiles && (
@@ -465,6 +420,7 @@ export { RichTextEditor }
 
 export type {
   EnhancementOption,
+  enhanceTextType,
   MentionChangeResult,
   MentionedUser,
   onFiles,
