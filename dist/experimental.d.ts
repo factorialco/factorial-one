@@ -1339,11 +1339,7 @@ declare type HeaderProps = {
     breadcrumbs?: BreadcrumbItemType[];
     productUpdates?: {
         isVisible?: boolean;
-        label: string;
-        updatesPageUrl: UrlString;
-        getUpdatesQuery: () => Promise<Array<ProductUpdate>>;
-        hasUnread?: boolean;
-    };
+    } & ProductUpdatesProp;
 };
 
 export declare const HighlightBanner: ({ title, subtitle, buttonLabel, onClick, }: HighlightBannerProps) => JSX_2.Element;
@@ -1842,6 +1838,18 @@ declare type ProductUpdate = {
     imageURL: UrlString;
     updated: string;
     unread?: boolean;
+};
+
+declare type ProductUpdatesProp = {
+    label: string;
+    updatesPageUrl: UrlString;
+    getUpdatesQuery: () => Promise<Array<ProductUpdate>>;
+    hasUnread?: boolean;
+    emptyScreen: {
+        title: string;
+        description: string;
+        buttonText: string;
+    };
 };
 
 /**
