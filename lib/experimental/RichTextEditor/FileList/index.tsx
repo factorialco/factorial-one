@@ -1,8 +1,5 @@
-import { Button, Icon } from "@factorialco/factorial-one"
-import { Cross, File } from "@factorialco/factorial-one/icons/app"
-
-import Text from "design-system/Text"
-import Box from "design-system/layouts/Box"
+import { Button, Icon } from "@/factorial-one"
+import { Cross, File } from "@/icons/app"
 
 interface FileListProps {
   files: File[]
@@ -17,42 +14,19 @@ interface FileItemProps {
 
 const FileItem = ({ file, onRemoveFile, index }: FileItemProps) => {
   return (
-    <Box
-      flexDirection="row"
-      gap="s12"
-      background="grey200"
-      paddingY="s2"
-      paddingLeft="s2"
-      paddingRight="s4"
-      borderRadius={{
-        all: "abs012",
-      }}
-      alignItems="center"
-      width="s200"
-    >
-      <Box
-        width="s32"
-        height="s32"
-        background="white"
-        borderRadius={{ all: "abs008" }}
-        flexNoShrink
-        alignItems="center"
-        justifyContent="center"
-      >
+    <div className="flex w-40 flex-row items-center gap-1.5 rounded-md bg-f1-background-secondary p-2">
+      <div className="bg-neutral-0 flex h-8 w-8 shrink-0 items-center justify-center rounded-md">
         <Icon icon={File} />
-      </Box>
-      <Box flexGrow>
-        <Text
-          weight="medium"
-          size="100"
-          ellipsis
-          color="grey1000"
+      </div>
+      <div className="flex-grow">
+        <p
           title={file.name}
+          className="text-neutral-1000 overflow-hidden text-ellipsis text-sm font-medium"
         >
           {file.name}
-        </Text>
-      </Box>
-      <Box flexNoShrink>
+        </p>
+      </div>
+      <div className="shrink-0">
         <Button
           variant="ghost"
           icon={Cross}
@@ -63,8 +37,8 @@ const FileItem = ({ file, onRemoveFile, index }: FileItemProps) => {
           type="button"
           size="sm"
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   )
 }
 
@@ -72,7 +46,7 @@ const FileList = ({ files, onRemoveFile }: FileListProps) => {
   if (!files.length) return null
 
   return (
-    <Box flexDirection="column" gap="s8" paddingY="s8">
+    <div className="flex flex-col gap-2 p-3">
       {files.map((file, index) => (
         <FileItem
           key={`${file.name}-${index}`}
@@ -81,7 +55,7 @@ const FileList = ({ files, onRemoveFile }: FileListProps) => {
           index={index}
         />
       ))}
-    </Box>
+    </div>
   )
 }
 

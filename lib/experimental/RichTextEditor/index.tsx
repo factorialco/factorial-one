@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import {
   forwardRef,
   useCallback,
@@ -20,16 +21,52 @@ import { EditorContent, useEditor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import screenfull from "screenfull"
 
-import Box, { EnhancedDimension } from "design-system/layouts/Box"
-
 import { EditorBubbleMenu } from "@/experimental/RichTextEditor/BubbleMenu"
 import { FileList } from "@/experimental/RichTextEditor/FileList"
 import { ToolbarPlugin } from "@/experimental/RichTextEditor/Toolbar"
 import { ToolbarButton } from "@/experimental/RichTextEditor/Toolbar/ToolbarButton"
-import "@/experimental/RichTextEditor/styles.css"
 import { isValidSelectionForEnhancement } from "@/experimental/RichTextEditor/utils/enhance"
 import { configureMention } from "@/experimental/RichTextEditor/utils/mention"
 import { Button } from "@/factorial-one"
+import { Cross } from "@/icons/app"
+
+import "./index.css"
+
+// types related to the editor styles
+
+type RichTextEditorHeight =
+  | "h-32"
+  | "h-36"
+  | "h-40"
+  | "h-44"
+  | "h-48"
+  | "h-52"
+  | "h-56"
+  | "h-60"
+  | "h-64"
+  | "h-72"
+  | "h-80"
+  | "h-full"
+
+type RichTextEditorWidth =
+  | "w-full"
+  | "w-60"
+  | "w-64"
+  | "w-72"
+  | "w-80"
+  | "w-96"
+  | "w-1/2"
+  | "w-1/3"
+  | "w-1/4"
+  | "w-1/5"
+  | "w-1/6"
+  | "w-2/3"
+  | "w-2/5"
+  | "w-2/7"
+  | "w-3/4"
+  | "w-3/5"
+  | "w-3/7"
+  | "w-4/5"
 
 // Types related to mentions and enhancements
 
@@ -73,7 +110,8 @@ interface RichTextEditorProps {
     content?: string
     files?: File[]
   }
-  height?: EnhancedDimension
+  height?: RichTextEditorHeight
+  width?: RichTextEditorWidth
   maxFileSize?: number
 
   // Mentions configuration
@@ -118,7 +156,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       onChange,
       placeholder,
       initialEditorState,
-      height = "s200",
+      height = "h-80",
+      width = "w-full",
       maxFileSize: _maxFileSize,
       hasMentions = false,
       hasDebouncedMentions = false,
@@ -322,41 +361,24 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     )
 
     return (
-      <Box
+      <div
         ref={containerRef}
-        border={{
-          all: {
-            color: "grey300",
-            style: "solid",
-            width: "s1",
-          },
-        }}
-        borderRadius={{
-          all: "abs012",
-        }}
-        background="white"
-        width="full"
+        className={cn(
+          "m-5 flex w-full flex-col rounded-xl border-[1px] border-solid border-f1-border bg-f1-background",
+          width
+        )}
       >
         {isFullscreen && (
-          <Box
-            paddingX="s24"
-            paddingY="s16"
-            flexDirection="row"
-            alignItems="center"
-            justifyContent="spaceBetween"
-            border={{
-              bottom: { color: "grey300", style: "solid", width: "s1" },
-            }}
-          >
+          <div className="flex w-full items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3">
             <p className="text-2xl font-semibold text-f1-foreground">
               {title || "Fullscreen Rich Text Editor"}
             </p>
             <ToolbarButton
-              icon="collapse"
+              icon={Cross}
               onClick={handleToggleFullscreen}
               title="Collapse"
             />
-          </Box>
+          </div>
         )}
 
         <ToolbarPlugin
@@ -371,12 +393,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           fullScreenEnabled={fullScreenEnabled}
           enhancementOptions={enhancementOptions || []}
         />
-        <Box
-          paddingY="s12"
-          paddingX="s20"
-          height={isFullscreen ? "full" : height}
+        <div
           ref={editorRef}
-          overflowY="auto"
+          className={cn(
+            "w-full overflow-y-auto px-5 py-3",
+            isFullscreen ? "h-full" : height
+          )}
         >
           <EditorContent editor={editor} />
           {onFiles && (
@@ -386,15 +408,15 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 type="file"
                 multiple
                 onChange={handleFileChange}
-                style={{ display: "none" }}
                 ref={fileInputRef}
+                className="hidden"
               />
               {files.length > 0 && (
                 <FileList files={files} onRemoveFile={handleRemoveFile} />
               )}
             </>
           )}
-        </Box>
+        </div>
 
         {editor && (
           <EditorBubbleMenu
@@ -407,27 +429,13 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         )}
 
         {(onSubmit || onCancel || maxCharacters) && (
-          <Box
-            padding="s12"
-            flexDirection="row"
-            gap="s8"
-            alignItems="center"
-            border={{ top: { color: "grey300", style: "solid", width: "s1" } }}
-          >
+          <div className="flex w-full items-center justify-between border-0 border-t-[1px] border-solid border-f1-border px-4 py-3">
             {editor && maxCharacters && (
-              <p className="f1-foreground-disabled text-sm font-medium">
+              <p className="text-sm font-medium text-f1-foreground-secondary">
                 {editor.storage.characterCount.characters()} / {maxCharacters}
               </p>
             )}
-            <Box flexDirection="rowReverse" gap="s8" flexGrow>
-              {onSubmit && (
-                <Button
-                  onClick={onSubmit}
-                  variant="default"
-                  size="md"
-                  label="Save"
-                />
-              )}
+            <div className="flex gap-2">
               {onCancel && (
                 <Button
                   onClick={onCancel}
@@ -436,10 +444,18 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                   label="Cancel"
                 />
               )}
-            </Box>
-          </Box>
+              {onSubmit && (
+                <Button
+                  onClick={onSubmit}
+                  variant="default"
+                  size="md"
+                  label="Save"
+                />
+              )}
+            </div>
+          </div>
         )}
-      </Box>
+      </div>
     )
   }
 )
@@ -452,5 +468,6 @@ export type {
   MentionedUser,
   onFiles,
   RichTextEditorHandle,
+  RichTextEditorHeight,
   RichTextEditorProps,
 }
