@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/factorialco/factorial-one/compare/v1.2.5...v1.3.0) (2025-03-20)
+
+
+### Features
+
+* allow no actions in a row in data collections ([#1336](https://github.com/factorialco/factorial-one/issues/1336)) ([1f90b22](https://github.com/factorialco/factorial-one/commit/1f90b22fc59b459dbe89f397b8c225328d95730d))
+
 ## [1.2.5](https://github.com/factorialco/factorial-one/compare/v1.2.4...v1.2.5) (2025-03-19)
 
 
