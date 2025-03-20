@@ -83,88 +83,93 @@ const mockUsers = [
 
 // Example of a comprehensive actions definition with various types of actions
 const createUserActions = (): ActionsDefinition<(typeof mockUsers)[number]> => {
-  return (user) => [
-    // Basic action with icon
-    {
-      label: "View Profile",
-      icon: Ai,
-      onClick: () => console.log(`Viewing ${user.name}'s profile`),
-    },
-
-    // Action with description
-    {
-      label: "Edit User",
-      icon: Pencil,
-      onClick: () => console.log(`Editing ${user.name}`),
-      description: "Modify user information",
-      enabled: user.permissions.canEdit,
-    },
-
-    // Separator between action groups
-    { type: "separator" },
-
-    // Conditional action based on item state
-    {
-      label: user.isStarred ? "Remove Star" : "Add Star",
-      icon: Star,
-      onClick: () => console.log(`Toggling star for ${user.name}`),
-      description: user.isStarred
-        ? "Remove from favorites"
-        : "Add to favorites",
-    },
-
-    // Action with conditional visibility
-    {
-      label: "Share User",
-      icon: Share,
-      onClick: () => console.log(`Sharing ${user.name}`),
-      enabled: user.permissions.canShare,
-    },
-
-    // Conditional action based on status
-    ...(user.status === "active"
-      ? [
-          {
-            label: "Deactivate User",
-            icon: Delete,
-            onClick: () => console.log(`Deactivating ${user.name}`),
-            description: "Temporarily disable account",
-          } as const,
-        ]
-      : [
-          {
-            label: "Activate User",
-            icon: ArrowRight,
-            onClick: () => console.log(`Activating ${user.name}`),
-            description: "Re-enable account",
-          } as const,
-        ]),
-
-    // Critical action with conditional visibility
-    {
-      label: "Delete Permanently",
-      icon: Delete,
-      onClick: () => {
-        if (confirm(`Are you sure you want to delete ${user.name}?`)) {
-          console.log(`Deleting ${user.name}`)
-        }
+  return (user) => {
+    if (user.id === "user-1") {
+      return undefined
+    }
+    return [
+      // Basic action with icon
+      {
+        label: "View Profile",
+        icon: Ai,
+        onClick: () => console.log(`Viewing ${user.name}'s profile`),
       },
-      critical: true,
-      description: "This action cannot be undone",
-      enabled: user.permissions.canDelete,
-    },
 
-    // Action with download functionality
-    {
-      label: "Download Data",
-      icon: Download,
-      onClick: () => {
-        console.log(`Downloading data for ${user.name}`)
-        // In a real implementation, this would trigger a download
+      // Action with description
+      {
+        label: "Edit User",
+        icon: Pencil,
+        onClick: () => console.log(`Editing ${user.name}`),
+        description: "Modify user information",
+        enabled: user.permissions.canEdit,
       },
-      enabled: user.status === "active",
-    },
-  ]
+
+      // Separator between action groups
+      { type: "separator" },
+
+      // Conditional action based on item state
+      {
+        label: user.isStarred ? "Remove Star" : "Add Star",
+        icon: Star,
+        onClick: () => console.log(`Toggling star for ${user.name}`),
+        description: user.isStarred
+          ? "Remove from favorites"
+          : "Add to favorites",
+      },
+
+      // Action with conditional visibility
+      {
+        label: "Share User",
+        icon: Share,
+        onClick: () => console.log(`Sharing ${user.name}`),
+        enabled: user.permissions.canShare,
+      },
+
+      // Conditional action based on status
+      ...(user.status === "active"
+        ? [
+            {
+              label: "Deactivate User",
+              icon: Delete,
+              onClick: () => console.log(`Deactivating ${user.name}`),
+              description: "Temporarily disable account",
+            } as const,
+          ]
+        : [
+            {
+              label: "Activate User",
+              icon: ArrowRight,
+              onClick: () => console.log(`Activating ${user.name}`),
+              description: "Re-enable account",
+            } as const,
+          ]),
+
+      // Critical action with conditional visibility
+      {
+        label: "Delete Permanently",
+        icon: Delete,
+        onClick: () => {
+          if (confirm(`Are you sure you want to delete ${user.name}?`)) {
+            console.log(`Deleting ${user.name}`)
+          }
+        },
+        critical: true,
+        description: "This action cannot be undone",
+        enabled: user.permissions.canDelete,
+      },
+
+      // Action with download functionality
+      {
+        label: "Download Data",
+        icon: Download,
+        onClick: () => {
+          console.log(`Downloading data for ${user.name}`)
+          // In a real implementation, this would trigger a download
+        },
+        enabled: user.status === "active",
+      },
+    ]
+  }
 }
 
 // Basic story showing all action types
