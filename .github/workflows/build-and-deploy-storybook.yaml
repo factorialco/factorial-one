@@ -1,11 +1,9 @@
-name: "[REACT] Build and Publish Storybook to GitHub Pages"
+name: "Build and Publish Storybook to GitHub Pages"
 
 on:
   push:
     branches:
       - "main"
-    paths:
-      - packages/react/**/*
   workflow_dispatch:
 
 permissions:
@@ -17,10 +15,18 @@ env:
   PUBLIC_BUILD: true
 
 jobs:
+  # Detect which projects have changed
+  detect-changes:
+    uses: ./.github/workflows/_check-workspaces-changes.yaml
+
   deploy:
-    name: Deploy Storybook to GitHub Pages
+    needs: detect-changes
+    name: "[REACT] Deploy Storybook to GitHub Pages"
     # Prevents running on the release-please branch
-    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
+    if: |
+      needs.detect-changes.outputs.package_react == 'true' &&
+      github.head_ref != 'release-please--branches--master' &&
+      !contains(github.event.pull_request.labels.*.name, 'autorelease')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

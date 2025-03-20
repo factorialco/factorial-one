@@ -7,9 +7,16 @@ concurrency:
     ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
+  # Detect which projects have changed
+  detect-changes:
+    uses: ./.github/workflows/_check-workspaces-changes.yaml
   prettier:
+    needs: detect-changes
     # Prevents running on the release-please branch
-    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
+    if: |
+      needs.detect-changes.outputs.package_react == 'true' &&
+      github.head_ref != 'release-please--branches--master' &&
+      !contains(github.event.pull_request.labels.*.name, 'autorelease')
     name: Prettier
     runs-on: ubuntu-22.04
     steps:
@@ -18,8 +25,12 @@ jobs:
       - name: Check formatting with Prettier
         run: pnpm --filter @factorialco/factorial-one-react run prettier:check:ci
   eslint:
+    needs: detect-changes
     # Prevents running on the release-please branch
-    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
+    if: |
+      needs.detect-changes.outputs.package_react == 'true' &&
+      github.head_ref != 'release-please--branches--master' &&
+      !contains(github.event.pull_request.labels.*.name, 'autorelease')
     name: Eslint
     runs-on: ubuntu-22.04
     steps:

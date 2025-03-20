@@ -1,23 +1,25 @@
-name: "[REACT] Unit Tests"
+name: "Unit Tests"
 on:
   pull_request:
-    paths:
-      - packages/react/**/*
   push:
     branches:
       - "main"
-    paths:
-      - packages/react/**/*
 
 concurrency:
-  group:
-    ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
+  # Detect which projects have changed
+  detect-changes:
+    uses: ./.github/workflows/_check-workspaces-changes.yaml
   test:
-    name: Unit Tests
-    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
+    needs: detect-changes
+    name: "[REACT] Unit Tests"
+    if: |
+      needs.detect-changes.outputs.package_react == 'true' &&
+      github.head_ref != 'release-please--branches--master' &&
+      !contains(github.event.pull_request.labels.*.name, 'autorelease')
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:

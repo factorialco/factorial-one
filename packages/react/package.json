@@ -41,7 +41,7 @@
     "tsc": "tsc --noEmit",
     "vitest": "vitest run",
     "vitest:watch": "vitest dev",
-    "vitest:ci": "pnpm run vitest:ci:r --reporter=dot"
+    "vitest:ci": "pnpm run vitest --reporter=dot"
   },
   "peerDependencies": {
     "@hookform/resolvers": "^3.9.0",

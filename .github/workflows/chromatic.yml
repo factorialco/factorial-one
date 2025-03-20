@@ -1,26 +1,28 @@
-name: "[REACT] Chromatic"
+name: "Chromatic"
 on:
   pull_request:
-    paths:
-      - packages/react/**/*
   push:
     branches:
       - main
-    paths:
-      - packages/react/**/*
 
 env:
   PUBLIC_BUILD: true
 
 concurrency:
-  group:
-    ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
+  # Detect which projects have changed
+  detect-changes:
+    uses: ./.github/workflows/_check-workspaces-changes.yaml
   chromatic:
+    needs: detect-changes
     # Prevents running on the release-please branch
-    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
+    if: |
+      needs.detect-changes.outputs.package_react == 'true' &&
+      github.head_ref != 'release-please--branches--master' &&
+      !contains(github.event.pull_request.labels.*.name, 'autorelease')
     permissions: write-all
     name: Run Chromatic
     runs-on: ubuntu-latest
@@ -29,10 +31,12 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/actions/setup-node-pnpm
+
       - name: Run Chromatic
         id: chromatic
         uses: chromaui/action@latest
         with:
+          workingDir: /packages/react
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           autoAcceptChanges: "main"
           exitOnceUploaded: true

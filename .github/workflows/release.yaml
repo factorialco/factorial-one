@@ -1,17 +1,23 @@
-name: "[REACT] Create release"
+name: "Create release"
 
 on:
   push:
     branches:
       - main
-    paths:
-      - packages/react/**/*
 
 jobs:
+  # Detect which projects have changed
+  detect-changes:
+    uses: ./.github/workflows/_check-workspaces-changes.yaml
+
   release-please:
-    name: Release React library
+    needs: detect-changes
+    name: "[REACT} Release library"
     # Prevents running on the release-please branch
-    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
+    if: |
+      needs.detect-changes.outputs.package_react == 'true' &&
+      github.head_ref != 'release-please--branches--master' &&
+      !contains(github.event.pull_request.labels.*.name, 'autorelease')
     runs-on: ubuntu-latest
     permissions:
       contents: write
