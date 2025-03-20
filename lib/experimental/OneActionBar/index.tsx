@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/Button"
+import { OneDropdownButton } from "@/components/Actions/OneDropdownButton"
 import { IconType } from "@/components/Utilities/Icon"
 import {
   Dropdown,
@@ -26,7 +27,7 @@ interface ActionBarProps {
   /**
    * The primary action
    */
-  primaryAction: ActionType
+  primaryActions: ActionType[]
 
   /**
    * The secondary actions
@@ -47,7 +48,7 @@ interface ActionBarProps {
 
 export const ActionBar = ({
   isOpen,
-  primaryAction,
+  primaryActions,
   secondaryActions = [],
   selectedNumber = undefined,
   onUnselect,
@@ -96,15 +97,30 @@ export const ActionBar = ({
             </div>
           )}
           <div className="dark">
-            <div className="flex flex-col items-center gap-2 sm:hidden [&_button]:w-full">
+            <div className="flex flex-col items-center gap-2 sm:hidden [&_button]:w-full [&_div]:w-full">
               <MobileDropdown items={secondaryActions} />
-              <Button
-                label={primaryAction.label}
-                icon={primaryAction.icon}
-                onClick={primaryAction.onClick}
-                disabled={primaryAction.disabled}
-                size="lg"
-              />
+              {primaryActions.length > 1 ? (
+                <OneDropdownButton
+                  items={primaryActions.map((action) => ({
+                    value: action.label,
+                    label: action.label,
+                    icon: action.icon,
+                  }))}
+                  onClick={(value) => {
+                    const action = primaryActions.find((a) => a.label === value)
+                    action?.onClick?.()
+                  }}
+                  size="lg"
+                />
+              ) : primaryActions.length === 1 ? (
+                <Button
+                  label={primaryActions[0].label}
+                  icon={primaryActions[0].icon}
+                  onClick={primaryActions[0].onClick}
+                  disabled={primaryActions[0].disabled}
+                  size="lg"
+                />
+              ) : null}
             </div>
             <div className="hidden items-center gap-2 sm:flex">
               {dropdownActions.length > 0 && (
@@ -123,12 +139,26 @@ export const ActionBar = ({
                     disabled={action.disabled}
                   />
                 ))}
-              <Button
-                label={primaryAction.label}
-                icon={primaryAction.icon}
-                onClick={primaryAction.onClick}
-                disabled={primaryAction.disabled}
-              />
+              {primaryActions.length > 1 ? (
+                <OneDropdownButton
+                  items={primaryActions.map((action) => ({
+                    value: action.label,
+                    label: action.label,
+                    icon: action.icon,
+                  }))}
+                  onClick={(value) => {
+                    const action = primaryActions.find((a) => a.label === value)
+                    action?.onClick?.()
+                  }}
+                />
+              ) : primaryActions.length === 1 ? (
+                <Button
+                  label={primaryActions[0].label}
+                  icon={primaryActions[0].icon}
+                  onClick={primaryActions[0].onClick}
+                  disabled={primaryActions[0].disabled}
+                />
+              ) : null}
             </div>
           </div>
         </motion.div>
