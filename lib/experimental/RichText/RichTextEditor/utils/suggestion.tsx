@@ -1,10 +1,7 @@
-import tippy, { Instance } from "tippy.js"
-
 import { MentionedUser } from "@/experimental/RichText/RichTextEditor"
-import {
-  MentionList,
-  MentionListComponent,
-} from "@/experimental/RichText/RichTextEditor/MentionList"
+import { MentionList } from "@/experimental/RichText/RichTextEditor/MentionList"
+import { ReactRenderer } from "@tiptap/react"
+import tippy, { Instance } from "tippy.js"
 
 interface MentionNodeAttrs {
   id: string
@@ -26,56 +23,59 @@ function Suggestion(
     minLength: 0,
     items: async ({ query }: { query: string }) => {
       if (onMentionQueryStringChanged) {
-        const promise = onMentionQueryStringChanged(query)
-        if (promise) {
-          try {
-            const suggestions = await promise
-            setMentionSuggestions(suggestions)
-            return suggestions
-          } catch (error) {
-            return []
-          }
+        try {
+          const suggestions = await onMentionQueryStringChanged(query)
+          setMentionSuggestions(suggestions || [])
+          return suggestions || []
+        } catch (error) {
+          return []
         }
-        return mentionSuggestions
       } else if (users) {
         const normalizedQuery = query.toLowerCase().trim()
+        let filtered: MentionedUser[]
         if (!normalizedQuery) {
-          const results = users.slice(0, 5)
-          setMentionSuggestions(results)
-          return results
+          filtered = users.slice(0, 5)
+        } else {
+          filtered = users
+            .filter((user) =>
+              user.label.toLowerCase().includes(normalizedQuery)
+            )
+            .slice(0, 5)
         }
-        const exactMatches = users.filter(
-          (user) => user.label.toLowerCase() === normalizedQuery
-        )
-        const startsWithMatches = users.filter(
-          (user) =>
-            user.label.toLowerCase().startsWith(normalizedQuery) &&
-            !exactMatches.some((match) => match.id === user.id)
-        )
-        const containsMatches = users.filter(
-          (user) =>
-            user.label.toLowerCase().includes(normalizedQuery) &&
-            !exactMatches.some((match) => match.id === user.id) &&
-            !startsWithMatches.some((match) => match.id === user.id)
-        )
-        const combinedResults = [
-          ...exactMatches,
-          ...startsWithMatches,
-          ...containsMatches,
-        ].slice(0, 5)
-        setMentionSuggestions(combinedResults)
-        return combinedResults
+        setMentionSuggestions(filtered)
+        return filtered
       }
-      return []
+      return mentionSuggestions
     },
     render: () => {
-      let component: MentionList | null = null
+      let component: ReactRenderer | null = null
       let popup: Instance | undefined = undefined
+      const getAtSymbolRect = (): DOMRect => {
+        const selection = window.getSelection()
+        if (selection && selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0)
+          const { startContainer, startOffset } = range
+          if (startContainer.nodeType === Node.TEXT_NODE) {
+            const textContent = startContainer.textContent || ""
+            const index = textContent.lastIndexOf("@", startOffset)
+            if (index !== -1) {
+              const atRange = document.createRange()
+              atRange.setStart(startContainer, index)
+              atRange.setEnd(startContainer, index + 1)
+              return atRange.getBoundingClientRect()
+            }
+          }
+          return range.getBoundingClientRect()
+        }
+        return document.body.getBoundingClientRect()
+      }
       return {
         onStart: (props: {
           items: MentionedUser[]
           command: (attrs: MentionNodeAttrs) => void
           clientRect?: (() => DOMRect | null) | null
+          editor: any
+          range: { from: number; to: number }
         }) => {
           const commandFn = (item: MentionedUser) => {
             props.command({
@@ -85,21 +85,17 @@ function Suggestion(
               href: item.href,
             })
           }
-          component = new MentionList({
-            items: props.items,
-            command: commandFn,
-            component: MentionListComponent,
+          component = new ReactRenderer(MentionList, {
+            props: { items: props.items, command: commandFn },
+            editor: props.editor,
           })
-
-          // Create a safe reference rect function that never returns null
           const safeGetRect = () => {
             if (props.clientRect) {
               const rect = props.clientRect()
-              if (rect) return rect
+              if (rect && rect.width && rect.height) return rect
             }
-            return document.body.getBoundingClientRect()
+            return getAtSymbolRect()
           }
-
           popup = tippy(document.body, {
             getReferenceClientRect: safeGetRect,
             appendTo: () => document.fullscreenElement || document.body,
@@ -115,22 +111,15 @@ function Suggestion(
           clientRect?: (() => DOMRect | null) | null
         }) => {
           if (!component) return
-          component.updateProps({
-            items: props.items,
-          })
-
-          // Create a safe reference rect function that never returns null
+          component.updateProps({ items: props.items })
           const safeGetRect = () => {
             if (props.clientRect) {
               const rect = props.clientRect()
-              if (rect) return rect
+              if (rect && rect.width && rect.height) return rect
             }
-            return document.body.getBoundingClientRect()
+            return getAtSymbolRect()
           }
-
-          popup?.setProps({
-            getReferenceClientRect: safeGetRect,
-          })
+          popup?.setProps({ getReferenceClientRect: safeGetRect })
         },
         onKeyDown: (props: { event: KeyboardEvent }) => {
           if (!component) return false
@@ -138,7 +127,7 @@ function Suggestion(
             popup?.hide()
             return true
           }
-          return component.onKeyDown(props)
+          return (component.ref as any)?.onKeyDown(props) || false
         },
         onExit() {
           popup?.destroy()

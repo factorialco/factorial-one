@@ -7,7 +7,7 @@ import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
 import { EnhanceActivator } from "@/experimental/RichText/RichTextEditor/Enhance"
 import { ToolbarDropdown } from "@/experimental/RichText/RichTextEditor/Toolbar/ToolbarDropdown"
 import { Button } from "@/factorial-one"
-import { Code, Ellipsis, Minus, Paperclip } from "@/icons/app"
+import { Ellipsis, Paperclip } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
 const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
@@ -230,7 +230,6 @@ const ToolbarPlugin = ({
           items={[
             {
               label: "Code Block",
-              icon: Code,
               onClick: function Js() {
                 editor.chain().focus().toggleCodeBlock().run()
               },
@@ -238,7 +237,6 @@ const ToolbarPlugin = ({
             },
             {
               label: "Horizontal Rule",
-              icon: Minus,
               onClick: function Js() {
                 editor.chain().focus().setHorizontalRule().run()
               },

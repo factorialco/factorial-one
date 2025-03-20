@@ -102,18 +102,21 @@ export const Default: Story = {
       console.log(html)
     },
     placeholder: "Write something and test our fabulous editor...",
-    width: "w-full",
     // Mentions configuration
     hasMentions: true,
-    hasDebouncedMentions: false,
-    onMentionQueryStringChanged: () => Promise.resolve(users),
     users: users,
+    onMentionQueryStringChanged: (search) => {
+      const newUsers = users.filter((user) =>
+        user.label.toLowerCase().includes(search.toLowerCase())
+      )
+      return Promise.resolve(newUsers)
+    },
     // AI enhancement
     enhanceText: () =>
       new Promise((resolve) => {
         setTimeout(() => {
           resolve(
-            "Just imagine this is a response from AI from our friend Jacob"
+            `<b>Just imagine this is a response from AI from our friend Jacob</b>`
           )
         }, 1000)
       }),
