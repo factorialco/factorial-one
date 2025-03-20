@@ -41,7 +41,7 @@ const meta: Meta<typeof ActionBar> = {
       control: "boolean",
       description: "Controls the visibility of the action bar",
     },
-    primaryAction: {
+    primaryActions: {
       control: false,
       description: "The primary action",
     },
@@ -73,11 +73,13 @@ interface Item {
 export const Default: Story = {
   args: {
     isOpen: true,
-    primaryAction: {
-      label: "Export",
-      onClick: fn(),
-      icon: Upload,
-    },
+    primaryActions: [
+      {
+        label: "Export",
+        onClick: fn(),
+        icon: Upload,
+      },
+    ],
     secondaryActions: [
       {
         label: "Share",
@@ -191,5 +193,28 @@ export const NoSelectedItems: Story = {
         <ActionBar {...args} isOpen={open} />
       </div>
     )
+  },
+}
+
+export const MultiplePrimaryActions: Story = {
+  args: {
+    ...Default.args,
+    primaryActions: [
+      {
+        label: "Export",
+        onClick: fn(),
+        icon: Upload,
+      },
+      {
+        label: "Export to Excel",
+        onClick: fn(),
+        icon: Upload,
+      },
+      {
+        label: "Export to PDF",
+        onClick: fn(),
+        icon: Upload,
+      },
+    ],
   },
 }
