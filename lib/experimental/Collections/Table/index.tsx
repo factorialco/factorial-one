@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/i18n-provider"
+import { ComponentProps } from "react"
 import { ActionsDropdown } from "../Actions/Dropdown"
 import type { FiltersDefinition } from "../Filters/types"
 import { ActionsDefinition } from "../actions"
@@ -26,7 +27,8 @@ export type WithOptionalSorting<
 export type TableColumnDefinition<
   Record,
   Sortings extends SortingsDefinition,
-> = WithOptionalSorting<Record, Sortings>
+> = WithOptionalSorting<Record, Sortings> &
+  Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">
 
 export type TableVisualizationOptions<
   Record extends RecordType,
@@ -125,26 +127,25 @@ export const TableCollection = <
       <OneTable>
         <TableHeader>
           <TableRow>
-            {columns.map((column) => (
+            {columns.map(({ sorting, label, ...column }) => (
               <TableHead
-                key={String(column.label)}
-                info={column.info}
-                width={column.width}
+                key={String(label)}
                 sortState={getColumnSortState(
-                  column.sorting,
+                  sorting,
                   source.sortings,
                   currentSortings
                 )}
+                {...column}
                 onSortClick={
-                  column.sorting
+                  sorting
                     ? () => {
-                        if (!column.sorting) return
-                        handleSortClick(column.sorting)
+                        if (!sorting) return
+                        handleSortClick(sorting)
                       }
                     : undefined
                 }
               >
-                {column.label}
+                {label}
               </TableHead>
             ))}
             {source.actions && (
@@ -165,6 +166,7 @@ export const TableCollection = <
                     key={String(column.label)}
                     firstCell={cellIndex === 0}
                     href={itemHref}
+                    sticky={column.sticky}
                   >
                     {renderValue(item, column)}
                   </TableCell>
