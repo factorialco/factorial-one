@@ -1,0 +1,1 @@
+import{j as t}from"./jsx-runtime-Cf8x2fCZ.js";import{c as a}from"./utils-B2yEwIwY.js";function o({className:e,...r}){return t.jsx("div",{className:a("animate-pulse rounded-xs bg-f1-background-secondary",e),...r})}try{o.displayName="Skeleton",o.__docgenInfo={description:"",displayName:"Skeleton",props:{}}}catch{}export{o as S};
