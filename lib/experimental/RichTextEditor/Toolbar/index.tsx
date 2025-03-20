@@ -7,20 +7,14 @@ import { EnhancementOption } from "@/experimental/RichTextEditor"
 import { EnhanceActivator } from "@/experimental/RichTextEditor/Enhance"
 import { ToolbarButton } from "@/experimental/RichTextEditor/Toolbar/ToolbarButton"
 import { ToolbarDropdown } from "@/experimental/RichTextEditor/Toolbar/ToolbarDropdown"
-import {
-  Code,
-  Ellipsis,
-  ExternalLink,
-  List,
-  Minus,
-  Paperclip,
-} from "@/icons/app"
+import { Button } from "@/factorial-one"
+import { Code, Ellipsis, ExternalLink, Minus, Paperclip } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
 const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
   <div
     className={cn(
-      "h-4 w-0.5 bg-f1-background-secondary-hover",
+      "mx-1 h-4 w-0.5 bg-f1-background-secondary-hover",
       show ? "block" : "hidden"
     )}
   />
@@ -80,7 +74,7 @@ const ToolbarPlugin = ({
 
   return (
     <div className="flex flex-row items-center justify-between gap-2 border-0 border-b-[1px] border-solid border-f1-border px-5 py-3">
-      <div className="flex flex-row items-center gap-1 overflow-x-auto">
+      <div className="flex flex-row items-center overflow-x-auto">
         <ToolbarButton
           label="Bold"
           onClick={() => editor.chain().focus().toggleBold().run()}
@@ -139,11 +133,7 @@ const ToolbarPlugin = ({
             },
           ]}
         >
-          <ToolbarButton
-            label={getHeadingLabel()}
-            isActive={editor.isActive("heading")}
-            title={getHeadingLabel()}
-          />
+          <Button variant={"ghost"} size="md" label={getHeadingLabel()} />
         </ToolbarDropdown>
         <ToolbarDivider show={isFullscreen} />
         <ToolbarDropdown
@@ -183,19 +173,16 @@ const ToolbarPlugin = ({
             },
           ]}
         >
-          <ToolbarButton
-            label={getTextAlignLabel()}
-            title={getTextAlignLabel()}
-          />
+          <Button variant={"ghost"} size="md" label={getTextAlignLabel()} />
         </ToolbarDropdown>
 
         <ToolbarDivider />
 
         <ToolbarButton
-          icon={List}
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           isActive={editor.isActive("bulletList")}
           title="Bullet List"
+          label="Bullet List"
         />
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
@@ -251,7 +238,13 @@ const ToolbarPlugin = ({
             },
           ]}
         >
-          <ToolbarButton icon={Ellipsis} title="More options" />
+          <Button
+            variant="ghost"
+            size="md"
+            icon={Ellipsis}
+            hideLabel
+            label="More options"
+          />
         </ToolbarDropdown>
       </div>
 

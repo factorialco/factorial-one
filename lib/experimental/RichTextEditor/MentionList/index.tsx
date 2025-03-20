@@ -17,18 +17,17 @@ const MentionListComponent = ({
   return (
     <div
       className={cn(
-        "flex items-center gap-2 border p-1",
-        selected ? "border-selected-50" : "border-f1-border"
+        "flex items-center gap-2 rounded-md border-[2px] border-solid p-1",
+        selected ? "border-f1-border-selected-bold" : "border-f1-border-inverse"
       )}
     >
-      {item.image_url && (
-        <PersonAvatar
-          firstName={item.label}
-          lastName=""
-          src={item.image_url}
-          size="medium"
-        />
-      )}
+      <PersonAvatar
+        firstName={item.label}
+        lastName=""
+        src={item.image_url ?? undefined}
+        size="medium"
+      />
+
       <p className="text-neutral-100 text-sm font-medium">{item.label}</p>
     </div>
   )
@@ -49,7 +48,7 @@ const MentionListUI = ({
   component: Component,
 }: MentionListUIProps) => {
   return (
-    <div className="flex max-h-72 w-72 flex-col gap-2 overflow-y-auto rounded-md border border-f1-border p-1 shadow-md">
+    <div className="flex max-h-72 w-72 flex-col gap-2 overflow-y-auto rounded-lg border-[1px] border-solid border-f1-border bg-f1-background p-1 shadow-md">
       {items.length === 0 ? (
         <div className="p-2">
           <p className="text-neutral-40 text-sm font-medium">

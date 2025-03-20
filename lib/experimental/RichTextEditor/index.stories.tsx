@@ -83,15 +83,37 @@ export const Default: Story = {
   args: {
     onChange: () => {},
     placeholder: "Write something...",
-    width: "w-2/3",
+    width: "w-full",
     // Mentions configuration
-    hasMentions: false,
+    hasMentions: true,
     hasDebouncedMentions: false,
     onMentionQueryStringChanged: undefined,
-    users: [],
+    users: [
+      {
+        id: 1,
+        label: "John Doe",
+        href: "https://www.google.com",
+      },
+      {
+        id: 2,
+        label: "Jane Doe",
+        href: "https://www.google.com",
+      },
+      {
+        id: 3,
+        label: "John Smith",
+        href: "https://www.google.com",
+      },
+      {
+        id: 4,
+        label: "Jane Smith",
+        href: "https://www.google.com",
+      },
+    ],
 
     // AI enhancement
-    enhanceText: () => Promise.resolve(""),
+    enhanceText: () =>
+      Promise.resolve("Just imagine this is a response from AI"),
     enhancementOptions: enhancementOptions,
 
     // File handling
@@ -99,8 +121,12 @@ export const Default: Story = {
     maxCharacters: 1000,
 
     // Actions
-    onSubmit: () => {},
-    onCancel: () => {},
+    onSubmit: () => {
+      alert("Submit")
+    },
+    onCancel: () => {
+      alert("Cancel")
+    },
 
     // Miscellaneous
     title: "RichTextEditor",

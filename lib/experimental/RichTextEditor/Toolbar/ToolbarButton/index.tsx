@@ -22,6 +22,7 @@ const ToolbarButton = ({
     label={label ?? title}
     onClick={onClick ?? undefined}
     type="button"
+    size="md"
   />
 )
 
