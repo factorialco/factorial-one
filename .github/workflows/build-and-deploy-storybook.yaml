@@ -35,4 +35,4 @@ jobs:
         with:
           install_command: pnpm install
           build_command: pnpm --filter @factorialco/factorial-one run build-storybook
-          path: storybook-static
+          path: packages/react/storybook-static

@@ -30,8 +30,10 @@ jobs:
             package_react: 
               - 'packages/react/**/*'
               - 'packages/core/**/*'
+              - '!.release-please-manifest.json'
               - '!packages/react/CHANGELOG.md'
               - '!packages/react/package.json'
             package_react_native: 
+              - '!.release-please-manifest.json'
               - 'packages/react-native/**/*'
               - 'packages/core/**/*'

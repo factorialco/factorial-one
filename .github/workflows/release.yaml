@@ -12,7 +12,7 @@ jobs:
 
   release-please:
     needs: detect-changes
-    name: "[REACT} Release library"
+    name: "[REACT] Release library"
     # Prevents running on the release-please branch
     if: |
       needs.detect-changes.outputs.package_react == 'true' &&
@@ -44,6 +44,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
+          prs_debug: ${{ fromJSON(steps.release.outputs.pr || '{}').prs }}
+          prs_createddebug: ${{ steps.release.outputs.prs_created }}
 
       - name: Merge release-please PR and create a release
         run: |
