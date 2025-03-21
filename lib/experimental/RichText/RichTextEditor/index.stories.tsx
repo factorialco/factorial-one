@@ -102,6 +102,7 @@ export const Default: Story = {
       console.log(html)
     },
     placeholder: "Write something and test our fabulous editor...",
+    height: "md",
     // Mentions configuration
     hasMentions: true,
     users: users,
@@ -116,7 +117,7 @@ export const Default: Story = {
       new Promise((resolve) => {
         setTimeout(() => {
           resolve({
-            success: false,
+            success: true,
             error: "Error from AI, Jacob didn't finish his work",
             text: `<b>Just imagine this is an AI response from our friend</b> <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">@Jacob Bamio Cordero</a>`,
           })
@@ -124,19 +125,35 @@ export const Default: Story = {
       }),
     enhancementOptions: enhancementOptions,
     canUseCustomPrompt: true,
+    enhanceLabels: {
+      defaultError: "Error enhancing text, try again later",
+      enhanceLabel: "Magic",
+      acceptChangesLabel: "Well... I'll trust Jacob",
+      rejectChangesLabel: "No way, I'll do it myself",
+    },
     // File handling
-    onFiles: () => {},
+    onFiles: (files) => {
+      console.log(files)
+    },
     multipleFiles: true,
     maxCharacters: 100000,
     // Actions
-    onSubmit: () => {
-      alert("Submit")
+    onSubmit: {
+      label: "Goooo for it!",
+      onClick: () => {
+        alert("Submit")
+      },
+      disabled: false,
     },
-    onCancel: () => {
-      alert("Cancel")
+    onCancel: {
+      label: "Cancel",
+      onClick: () => {
+        alert("Cancel")
+      },
+      disabled: false,
     },
     // Miscellaneous
-    title: "RichTextEditor",
+    title: "Rich Text Editor test",
 
     toolbarConfig: {
       bold: true,

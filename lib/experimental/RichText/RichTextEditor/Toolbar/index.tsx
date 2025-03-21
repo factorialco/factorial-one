@@ -44,6 +44,7 @@ interface ToolbarPluginProps {
   canUseCustomPrompt: boolean
   config: toolbarConfig
   disableButtons: boolean
+  enhanceLabel: string
 }
 
 const ToolbarPlugin = ({
@@ -59,6 +60,7 @@ const ToolbarPlugin = ({
   canUseCustomPrompt,
   config,
   disableButtons,
+  enhanceLabel,
 }: ToolbarPluginProps) => {
   if (!editor) return null
 
@@ -322,6 +324,7 @@ const ToolbarPlugin = ({
             enhancementOptions={enhancementOptions}
             canUseCustomPrompt={canUseCustomPrompt}
             disableButtons={disableButtons}
+            enhanceLabel={enhanceLabel}
           />
         )}
         {fullScreen && !isFullscreen && (
