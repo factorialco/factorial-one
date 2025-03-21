@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.5](https://github.com/factorialco/factorial-one/compare/v1.4.4...v1.4.5) (2025-03-21)
+
+
+### Bug Fixes
+
+* when one element of employeeSelector is removed all get removed ([#1451](https://github.com/factorialco/factorial-one/issues/1451)) ([c080544](https://github.com/factorialco/factorial-one/commit/c080544dd0d5e428a3b13217708f3ecb83edf391))
+
 ## [1.4.4](https://github.com/factorialco/factorial-one/compare/v1.4.3...v1.4.4) (2025-03-21)
 
 
