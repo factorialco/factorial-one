@@ -124,7 +124,7 @@ export const Default: Story = {
     canUseCustomPrompt: true,
     // File handling
     onFiles: () => {},
-    maxCharacters: 1000,
+    maxCharacters: 100000,
     // Actions
     onSubmit: () => {
       alert("Submit")

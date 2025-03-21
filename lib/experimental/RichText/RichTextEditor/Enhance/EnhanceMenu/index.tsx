@@ -1,11 +1,9 @@
-import React, { useEffect, useRef, useState } from "react"
-
 import { Input } from "@/experimental/exports"
+import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
 import { Icon } from "@/factorial-one"
 import { ChevronLeft, ChevronRight } from "@/icons/app"
-
-import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
 import { cn } from "@/lib/utils"
+import React, { useEffect, useRef, useState } from "react"
 
 const Option = ({
   option,

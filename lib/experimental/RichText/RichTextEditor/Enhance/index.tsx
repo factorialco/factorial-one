@@ -1,15 +1,13 @@
-import { useCallback, useRef, useState } from "react"
-import ReactDOM from "react-dom/client"
-
-import { Editor } from "@tiptap/react"
-import tippy, { Instance } from "tippy.js"
-
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/exports"
 import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
 import { AIEnhanceMenu } from "@/experimental/RichText/RichTextEditor/Enhance/EnhanceMenu"
 import { isValidSelectionForEnhancement } from "@/experimental/RichText/RichTextEditor/utils/enhance"
 import { Ai } from "@/icons/app"
+import { Editor } from "@tiptap/react"
+import { useCallback, useRef, useState } from "react"
+import ReactDOM from "react-dom/client"
+import tippy, { Instance } from "tippy.js"
 
 interface EnhanceActivatorProps {
   editor: Editor
@@ -29,6 +27,7 @@ interface EnhanceActivatorProps {
   }
   enhancementOptions: EnhancementOption[]
   canUseCustomPrompt: boolean
+  disableButtons: boolean
 }
 
 const EnhanceActivator = ({
@@ -44,6 +43,7 @@ const EnhanceActivator = ({
   },
   canUseCustomPrompt,
   enhancementOptions,
+  disableButtons,
 }: EnhanceActivatorProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
@@ -182,6 +182,7 @@ const EnhanceActivator = ({
       icon={button.icon || Ai}
       hideLabel={button.hideLabel || false}
       onClick={handleEnhanceClick}
+      disabled={disableButtons}
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       className={isLoadingAi ? "aiMagicLoading animate-pulse" : ""}
