@@ -35,6 +35,6 @@ jobs:
       - name: Build core package
         run: pnpm --filter @factorialco/factorial-one-core build
       - name: Run type checking
-        run: pnpm --filter @factorialco/factorial-one-react run tsc
+        run: pnpm --filter @factorialco/factorial-one run tsc
       - name: Run tests
-        run: pnpm --filter @factorialco/factorial-one-react run vitest:ci
+        run: pnpm --filter @factorialco/factorial-one run vitest:ci
