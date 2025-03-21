@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.3](https://github.com/factorialco/factorial-one/compare/v1.4.2...v1.4.3) (2025-03-21)
+
+
+### Bug Fixes
+
+* release test ([#1442](https://github.com/factorialco/factorial-one/issues/1442)) ([411319c](https://github.com/factorialco/factorial-one/commit/411319c8a465c7ce138d9261c0a00dcdbe6b1421))
+* release test ([#1443](https://github.com/factorialco/factorial-one/issues/1443)) ([08dca66](https://github.com/factorialco/factorial-one/commit/08dca663d6826aa2f8497b69b6ad5e9525b9e968))
+
 ## [1.4.2](https://github.com/factorialco/factorial-one/compare/v1.4.1...v1.4.2) (2025-03-20)
 
 
