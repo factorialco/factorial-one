@@ -27,7 +27,7 @@ export const Default: Story = {
     author: {
       firstName: "Saúl",
       lastName: "Domínguez",
-      url: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
+      url: "https://google.com",
       avatarUrl: "https://github.com/sauldom102.png",
     },
     group: {
