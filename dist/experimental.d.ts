@@ -1,6 +1,7 @@
 import { AnchorHTMLAttributes } from 'react';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { AvatarProps } from '@radix-ui/react-avatar';
+import { baseColors } from '../../../../../tokens/colors';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
 import { ComponentProps } from 'react';
@@ -266,121 +267,6 @@ declare type BaseAvatarProps_3 = ComponentProps<typeof BaseAvatar>;
 
 export declare const BaseCelebration: ({ link, firstName, lastName, src, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element;
 
-declare const baseColors: {
-    white: {
-        3: string;
-        5: string;
-        10: string;
-        20: string;
-        30: string;
-        40: string;
-        50: string;
-        60: string;
-        70: string;
-        80: string;
-        90: string;
-        100: string;
-    };
-    current: string;
-    transparent: string;
-    grey: {
-        0: string;
-        5: string;
-        10: string;
-        20: string;
-        30: string;
-        40: string;
-        50: string;
-        60: string;
-        70: string;
-        80: string;
-        90: string;
-        100: string;
-        solid: {
-            40: string;
-            50: string;
-        };
-    };
-    lilac: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    barbie: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    smoke: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    army: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    flubber: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    indigo: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    camel: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    radical: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    viridian: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    orange: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    red: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    grass: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    malibu: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    yellow: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    purple: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    special: {
-        highlight: string;
-    };
-};
-
 export declare const BaseCommunityPost: ({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noVideoPreload, }: CommunityPostProps) => JSX_2.Element;
 
 /**
@@ -523,7 +409,7 @@ declare type ButtonVariant = (typeof variants_2)[number];
 
 declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
-    variant?: "outline" | "default" | "critical" | "neutral" | "ghost" | "promote" | undefined;
+    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
     round?: boolean | undefined;
 } & ({
@@ -2409,7 +2295,7 @@ declare const THEMES: {
 };
 
 export declare const ToggleGroup: React_2.ForwardRefExoticComponent<((Omit<ToggleGroupPrimitive.ToggleGroupSingleProps & React_2.RefAttributes<HTMLDivElement>, "ref"> | Omit<ToggleGroupPrimitive.ToggleGroupMultipleProps & React_2.RefAttributes<HTMLDivElement>, "ref">) & VariantProps<(props?: ({
-    variant?: "outline" | "default" | undefined;
+    variant?: "default" | "outline" | undefined;
     size?: "lg" | "sm" | "default" | undefined;
 } & ({
     class?: ClassValue;
@@ -2420,7 +2306,7 @@ export declare const ToggleGroup: React_2.ForwardRefExoticComponent<((Omit<Toggl
 })) | undefined) => string>) & React_2.RefAttributes<HTMLDivElement>>;
 
 export declare const ToggleGroupItem: React_2.ForwardRefExoticComponent<Omit<ToggleGroupPrimitive.ToggleGroupItemProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & VariantProps<(props?: ({
-    variant?: "outline" | "default" | undefined;
+    variant?: "default" | "outline" | undefined;
     size?: "lg" | "sm" | "default" | undefined;
 } & ({
     class?: ClassValue;
