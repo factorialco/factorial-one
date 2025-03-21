@@ -3926,10 +3926,10 @@ const ax = v.forwardRef(({ className: e, content: n }, i) => /* @__PURE__ */ o(
   }
 ));
 ax.displayName = "CardInfo";
-const Dm = v.forwardRef(({ className: e, title: n, ...i }, t) => /* @__PURE__ */ o(En, { ref: t, className: e, "aria-label": n, ...i, children: /* @__PURE__ */ o(
+const Dm = v.forwardRef(({ className: e, title: n, icon: i = Tt, ...t }, a) => /* @__PURE__ */ o(En, { ref: a, className: e, "aria-label": n, ...t, children: /* @__PURE__ */ o(
   Me,
   {
-    icon: Tt,
+    icon: i,
     label: n ?? "",
     variant: "outline",
     size: "sm",
@@ -27250,7 +27250,8 @@ const HT = rn(
                 {
                   onClick: m,
                   href: n.link.url,
-                  title: n.link.title
+                  title: n.link.title,
+                  icon: n.link.icon
                 }
               )
             ] })

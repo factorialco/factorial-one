@@ -2595,6 +2595,7 @@ export declare interface WidgetProps {
             title: string;
             url: string;
             onClick?: () => void;
+            icon?: IconType;
         };
         count?: number;
     };
