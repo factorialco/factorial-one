@@ -1,8 +1,8 @@
-name: Remove PR alpha versions on close
+name: "Remove PR alpha versions on close"
 
 on:
   pull_request:
-    types: [ closed ]
+    types: [closed]
 
 jobs:
   clear-alpha-versions:

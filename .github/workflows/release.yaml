@@ -1,4 +1,4 @@
-name: Create release
+name: "Create release"
 
 on:
   push:
@@ -6,9 +6,18 @@ on:
       - main
 
 jobs:
+  # Detect which projects have changed
+  detect-changes:
+    uses: ./.github/workflows/_check-workspaces-changes.yaml
+
   release-please:
+    needs: detect-changes
+    name: "[REACT] Release library"
     # Prevents running on the release-please branch
-    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
+    if: |
+      needs.detect-changes.outputs.package_react == 'true' &&
+      github.head_ref != 'release-please--branches--master' &&
+      !contains(github.event.pull_request.labels.*.name, 'autorelease')
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -35,6 +44,8 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
+          prs_debug: ${{ fromJSON(steps.release.outputs.pr || '{}').prs }}
+          prs_createddebug: ${{ steps.release.outputs.prs_created }}
 
       - name: Merge release-please PR and create a release
         run: |

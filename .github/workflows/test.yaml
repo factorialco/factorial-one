@@ -6,13 +6,20 @@ on:
       - "main"
 
 concurrency:
-  group:
-    ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
+  # Detect which projects have changed
+  detect-changes:
+    uses: ./.github/workflows/_check-workspaces-changes.yaml
   test:
-    if: "github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease')"
+    needs: detect-changes
+    name: "[REACT] Unit Tests"
+    if: |
+      needs.detect-changes.outputs.package_react == 'true' &&
+      github.head_ref != 'release-please--branches--master' &&
+      !contains(github.event.pull_request.labels.*.name, 'autorelease')
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -28,6 +35,6 @@ jobs:
       - name: Build core package
         run: pnpm --filter @factorialco/factorial-one-core build
       - name: Run type checking
-        run: pnpm run tsc
+        run: pnpm --filter @factorialco/factorial-one run tsc
       - name: Run tests
-        run: pnpm run vitest:ci
+        run: pnpm --filter @factorialco/factorial-one run vitest:ci
