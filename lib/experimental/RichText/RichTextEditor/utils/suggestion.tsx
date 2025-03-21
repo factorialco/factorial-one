@@ -1,7 +1,7 @@
-import { MentionedUser } from "@/experimental/RichText/RichTextEditor"
-import { MentionList } from "@/experimental/RichText/RichTextEditor/MentionList"
 import { ReactRenderer } from "@tiptap/react"
 import tippy, { Instance } from "tippy.js"
+import { MentionedUser } from ".."
+import { MentionList } from "../MentionList"
 
 interface MentionNodeAttrs {
   id: string

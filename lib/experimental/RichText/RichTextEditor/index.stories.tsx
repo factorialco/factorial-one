@@ -82,17 +82,17 @@ const users = [
   {
     id: 1,
     label: "Raúl Sigüenza Sánchez",
-    href: "https://www.google.com",
+    href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
   },
   {
     id: 2,
     label: "Jacob Bamio Cordero",
-    href: "https://www.google.com",
+    href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
   },
   {
     id: 3,
     label: "Xavier Val Parejo",
-    href: "https://www.google.com",
+    href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
   },
 ]
 export const Default: Story = {
@@ -115,9 +115,11 @@ export const Default: Story = {
     enhanceText: () =>
       new Promise((resolve) => {
         setTimeout(() => {
-          resolve(
-            `<b>Just imagine this is an AI response from our friend</b> <a href="https://www.google.com" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">@Jacob Bamio Cordero</a>`
-          )
+          resolve({
+            success: false,
+            error: "Error from AI",
+            text: `<b>Just imagine this is an AI response from our friend</b> <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">@Jacob Bamio Cordero</a>`,
+          })
         }, 1000)
       }),
     enhancementOptions: enhancementOptions,

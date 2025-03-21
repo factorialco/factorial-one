@@ -1,16 +1,13 @@
 import { Button } from "@/components/Actions/Button"
-import {
-  EnhancementOption,
-  toolbarConfig,
-} from "@/experimental/RichText/RichTextEditor"
-import { EnhanceActivator } from "@/experimental/RichText/RichTextEditor/Enhance"
-import { ToolbarDropdown } from "@/experimental/RichText/RichTextEditor/Toolbar/ToolbarDropdown"
-import { defaultToolbarConfig } from "@/experimental/RichText/RichTextEditor/utils/toolbar"
 import { Ellipsis, Paperclip } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Editor } from "@tiptap/react"
 import { compact, defaultsDeep } from "lodash"
 import React from "react"
+import { EnhancementOption, toolbarConfig } from ".."
+import { EnhanceActivator } from "../Enhance"
+import { defaultToolbarConfig } from "../utils/toolbar"
+import { ToolbarDropdown } from "./ToolbarDropdown"
 
 const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
   <div
@@ -22,7 +19,12 @@ const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
 )
 
 const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
-  arr.flatMap((item, index) => (index < arr.length - 1 ? [item, sep] : [item]))
+  arr.map((item, index) => (
+    <React.Fragment key={`intersperse-${index}`}>
+      {item}
+      {index < arr.length - 1 && sep}
+    </React.Fragment>
+  ))
 
 interface ToolbarPluginProps {
   editor: Editor | null

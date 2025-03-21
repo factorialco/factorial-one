@@ -1,6 +1,6 @@
-import { MentionedUser } from "@/experimental/RichText/RichTextEditor"
-import { Suggestion } from "@/experimental/RichText/RichTextEditor/utils/suggestion"
 import Mention from "@tiptap/extension-mention"
+import { MentionedUser } from ".."
+import { Suggestion } from "../utils/suggestion"
 
 const CustomMention = Mention.extend({
   addAttributes() {

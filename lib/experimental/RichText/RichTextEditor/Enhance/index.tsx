@@ -1,13 +1,13 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/exports"
-import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
-import { AIEnhanceMenu } from "@/experimental/RichText/RichTextEditor/Enhance/EnhanceMenu"
-import { isValidSelectionForEnhancement } from "@/experimental/RichText/RichTextEditor/utils/enhance"
 import { Ai } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { useCallback, useRef, useState } from "react"
 import ReactDOM from "react-dom/client"
 import tippy, { Instance } from "tippy.js"
+import { EnhancementOption } from ".."
+import { isValidSelectionForEnhancement } from "../utils/enhance"
+import { AIEnhanceMenu } from "./EnhanceMenu"
 
 interface EnhanceActivatorProps {
   editor: Editor

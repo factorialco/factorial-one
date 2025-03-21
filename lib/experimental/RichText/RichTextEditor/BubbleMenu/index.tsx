@@ -1,11 +1,11 @@
 import { Button } from "@/components/Actions/exports"
-import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
-import { EnhanceActivator } from "@/experimental/RichText/RichTextEditor/Enhance"
 import { Input } from "@/ui/input"
 import { BubbleMenu, Editor } from "@tiptap/react"
 import { useRef, useState } from "react"
 import ReactDOM from "react-dom/client"
 import tippy, { Instance } from "tippy.js"
+import { EnhancementOption } from ".."
+import { EnhanceActivator } from "../Enhance"
 
 interface EditorBubbleMenuProps {
   editor: Editor
