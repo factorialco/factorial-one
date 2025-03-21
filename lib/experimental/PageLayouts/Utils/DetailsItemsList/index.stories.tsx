@@ -47,7 +47,7 @@ const meta: Meta = {
             type: "team",
             name: "Management",
             action: {
-              href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
+              href: "https://google.com",
               type: "navigate",
             },
           },
@@ -55,7 +55,7 @@ const meta: Meta = {
             type: "team",
             name: "Engineering",
             action: {
-              href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
+              href: "https://google.com",
               type: "navigate",
             },
           },
