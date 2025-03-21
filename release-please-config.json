@@ -1,12 +1,16 @@
 {
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "release-type": "node",
-  "include-component-in-tag": false,
   "packages": {
     "packages/react": {
       "pull-request-header": "Factorial-one core stable release 🚀",
       "pull-request-title-pattern": "chore${scope}: Core release${component} ${version}",
       "group-pull-request-title-pattern": "chore${scope}: Core release ${version}"
+    },
+    "packages/react-native": {
+      "pull-request-header": "Factorial-one React Native 📱 stable release 🚀",
+      "pull-request-title-pattern": "chore${scope}: React Native 📱 release${component} ${version}",
+      "group-pull-request-title-pattern": "chore${scope}: React Native 📱 release ${version}"
     }
   }
 }
