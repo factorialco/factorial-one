@@ -23549,22 +23549,24 @@ const aN = ({
   updatesPageUrl: t,
   emptyScreen: a,
   errorScreen: r,
-  hasUnread: s = !1
+  onOpenChange: s = () => {
+  },
+  hasUnread: f = !1
 }) => {
-  const [f, d] = ne("idle"), [c, l] = ne(null), [u, ...m] = c ?? [], h = $e(async () => {
+  const [d, c] = ne("idle"), [l, u] = ne(null), [m, ...h] = l ?? [], y = $e(async () => {
     try {
-      d("fetching");
-      const y = await i();
-      d("idle"), l(y);
+      c("fetching");
+      const v = await i();
+      c("idle"), u(v);
     } catch {
-      d("error");
+      c("error");
     }
   }, [i]);
   return /* @__PURE__ */ k(
     Nv,
     {
-      onOpenChange: async (y) => {
-        y && c === null && h();
+      onOpenChange: async (v) => {
+        v && l === null && y(), s(v);
       },
       children: [
         /* @__PURE__ */ o(Mv, { asChild: !0, children: /* @__PURE__ */ k(
@@ -23574,7 +23576,7 @@ const aN = ({
             className: "relative inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover",
             children: [
               /* @__PURE__ */ o(re, { icon: Xu, size: "md" }),
-              s && /* @__PURE__ */ o(zd, { className: "absolute -right-0.5 -top-0.5" })
+              f && /* @__PURE__ */ o(zd, { className: "absolute -right-0.5 -top-0.5" })
             ]
           }
         ) }),
@@ -23588,22 +23590,22 @@ const aN = ({
             className: "max-h-[600px] min-w-96 max-w-md overflow-y-scroll",
             children: [
               /* @__PURE__ */ o(sN, { title: e, url: t }),
-              f === "fetching" && /* @__PURE__ */ o(lN, {}),
-              f === "idle" && c !== null && c.length === 0 && /* @__PURE__ */ o(pe, { children: /* @__PURE__ */ o("div", { className: "p-2 pt-0", children: /* @__PURE__ */ o(fN, { ...a, buttonUrl: t }) }) }),
-              f === "idle" && c !== null && c.length > 0 && /* @__PURE__ */ k(pe, { children: [
-                /* @__PURE__ */ o(rN, { ...u }),
-                c.length > 1 && /* @__PURE__ */ k(pe, { children: [
+              d === "fetching" && /* @__PURE__ */ o(lN, {}),
+              d === "idle" && l !== null && l.length === 0 && /* @__PURE__ */ o(pe, { children: /* @__PURE__ */ o("div", { className: "p-2 pt-0", children: /* @__PURE__ */ o(fN, { ...a, buttonUrl: t }) }) }),
+              d === "idle" && l !== null && l.length > 0 && /* @__PURE__ */ k(pe, { children: [
+                /* @__PURE__ */ o(rN, { ...m }),
+                l.length > 1 && /* @__PURE__ */ k(pe, { children: [
                   /* @__PURE__ */ o(qf, {}),
                   /* @__PURE__ */ o("p", { className: "text-balance pb-1 pl-3 pr-5 pt-3 text-sm font-medium text-f1-foreground-secondary", children: n }),
-                  m.map((y, v) => /* @__PURE__ */ o(oN, { ...y }, v))
+                  h.map((v, p) => /* @__PURE__ */ o(oN, { ...v }, p))
                 ] })
               ] }),
-              f === "error" && /* @__PURE__ */ o(pe, { children: /* @__PURE__ */ o("div", { className: "p-2 pt-0", children: /* @__PURE__ */ o(
+              d === "error" && /* @__PURE__ */ o(pe, { children: /* @__PURE__ */ o("div", { className: "p-2 pt-0", children: /* @__PURE__ */ o(
                 dN,
                 {
                   ...r,
                   onClick: () => {
-                    h();
+                    y();
                   }
                 }
               ) }) })

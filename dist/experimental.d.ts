@@ -10,6 +10,7 @@ import { ControllerRenderProps } from 'react-hook-form';
 import { DayPicker } from 'react-day-picker';
 import { default as default_2 } from 'react';
 import { Dispatch } from 'react';
+import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { FC } from 'react';
 import { FieldPath } from 'react-hook-form';
 import { FieldValues } from 'react-hook-form';
@@ -1010,6 +1011,8 @@ export declare type DropdownItemObject = NavigationItem & {
     avatar?: AvatarVariant;
 };
 
+declare const DropdownMenu: React_2.FC<DropdownMenuPrimitive.DropdownMenuProps>;
+
 declare type DropdownProps = Omit<DropdownInternalProps, (typeof privateProps_2)[number]>;
 
 declare type EmployeeItemProps = {
@@ -1736,6 +1739,7 @@ declare type ProductUpdatesProp = {
     updatesPageUrl: UrlString;
     getUpdates: () => Promise<Array<ProductUpdate>>;
     hasUnread?: boolean;
+    onOpenChange?: ComponentProps<typeof DropdownMenu>['onOpenChange'];
     emptyScreen: {
         title: string;
         description: string;
