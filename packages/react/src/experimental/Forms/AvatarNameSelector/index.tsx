@@ -169,33 +169,40 @@ export const AvatarNameSelector = (
       return
     }
 
+    let newSelectedEntities: AvatarNamedEntity[] = []
     const prevSelected = props.selectedAvatarName ?? []
 
-    const filteredVersion = filteredEntities.find(
-      (fe) => fe.id === entityToRemove.id
-    )
-
-    if (!filteredVersion) {
-      return
-    }
-
-    const visibleSubIds = new Set(
-      (filteredVersion.subItems ?? []).map((sub) => sub.subId)
-    )
-
-    const newSelectedEntities: AvatarNamedEntity[] = []
-
-    for (const selectedParent of prevSelected) {
-      const filteredSubItems = (selectedParent.subItems ?? []).filter(
-        (sub) => !visibleSubIds.has(sub.subId)
+    if (groupView) {
+      const parentElement = filteredEntities.find(
+        (fe) => fe.id === entityToRemove.id
       )
 
-      if (filteredSubItems.length > 0) {
-        newSelectedEntities.push({
-          ...selectedParent,
-          subItems: filteredSubItems,
-        })
+      if (!parentElement) {
+        // This should never happen as a element not visible cannot be selected
+        return
       }
+
+      const subIdsRemoved = new Set(
+        (parentElement.subItems ?? []).map((sub) => sub.subId)
+      )
+
+      for (const selectedParent of prevSelected) {
+        const selectedParentSubItems = (selectedParent.subItems ?? []).filter(
+          (sub) => !subIdsRemoved.has(sub.subId)
+        )
+
+        if (selectedParentSubItems.length > 0) {
+          newSelectedEntities.push({
+            ...selectedParent,
+            subItems: selectedParentSubItems,
+          })
+        }
+      }
+    } else {
+      const visibleIds = new Set(filteredEntities.map((ent) => ent.id))
+      newSelectedEntities = (prevSelected ?? []).filter((el) => {
+        return visibleIds.has(el.id) && el.id !== entityToRemove.id
+      })
     }
 
     props.onSelect(newSelectedEntities)
