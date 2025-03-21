@@ -133,7 +133,6 @@ const EditorBubbleMenu = ({
             onEnhanceWithAI={onEnhanceWithAI}
             isLoadingAi={isLoadingAi}
             button={{
-              hideLabel: true,
               variant: "ghost",
             }}
             enhancementOptions={enhancementOptions}

@@ -21,13 +21,12 @@ interface EnhanceActivatorProps {
   button?: {
     variant?: "ghost" | "default" | "outline"
     size?: "md" | "sm"
-    label?: string
     icon?: IconType
-    hideLabel?: boolean
   }
   enhancementOptions: EnhancementOption[]
   canUseCustomPrompt: boolean
   disableButtons: boolean
+  enhanceLabel?: string
 }
 
 const EnhanceActivator = ({
@@ -37,13 +36,12 @@ const EnhanceActivator = ({
   button = {
     variant: "outline",
     size: "md",
-    label: "Enhance",
     icon: Ai,
-    hideLabel: false,
   },
   canUseCustomPrompt,
   enhancementOptions,
   disableButtons,
+  enhanceLabel,
 }: EnhanceActivatorProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
@@ -178,9 +176,9 @@ const EnhanceActivator = ({
       ref={enhanceButtonRef}
       variant={button.variant || "ghost"}
       size={button.size || "md"}
-      label={button.label || "Enhance"}
+      label={enhanceLabel || "Enhance"}
       icon={button.icon || Ai}
-      hideLabel={button.hideLabel || false}
+      hideLabel={enhanceLabel ? false : true}
       onClick={handleEnhanceClick}
       disabled={disableButtons}
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

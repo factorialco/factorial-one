@@ -34,14 +34,24 @@ import {
 import { configureMention } from "./utils/mention"
 
 // types related to the editor styles
-type RichTextEditorHeight = "xs" | "sm" | "md" | "lg" | "xl" | "h-full"
+type RichTextEditorHeight =
+  | "xxs"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "h-full"
 
 const heightMapping: Record<RichTextEditorHeight, string> = {
-  xs: "h-60",
-  sm: "h-64",
-  md: "h-72",
-  lg: "h-80",
-  xl: "h-96",
+  xxs: "h-32",
+  xs: "h-40",
+  sm: "h-60",
+  md: "h-64",
+  lg: "h-72",
+  xl: "h-80",
+  "2xl": "h-96",
   "h-full": "h-full",
 }
 
@@ -75,6 +85,13 @@ type enhanceTextType = {
   type: string
   intent?: string
   context?: string
+}
+
+type enhanceLabelsType = {
+  defaultError: string
+  enhanceLabel: string
+  acceptChangesLabel: string
+  rejectChangesLabel: string
 }
 
 type enhancedTextResponse = {
@@ -111,13 +128,12 @@ type toolbarConfig = {
   }
   fullScreen?: boolean
 }
-// Component props and handle
 
+// Component props and handle
 interface RichTextEditorProps {
   // Required props
   onChange: (html: string | null | MentionChangeResult) => void
   placeholder: string
-
   // Initial state and editor configuration
   initialEditorState?: {
     content?: string
@@ -125,14 +141,12 @@ interface RichTextEditorProps {
   }
   height?: RichTextEditorHeight
   maxFileSize?: number
-
   // Mentions configuration
   hasMentions?: boolean
   onMentionQueryStringChanged?: (
     queryString: string
   ) => Promise<MentionedUser[]> | undefined
   users?: MentionedUser[]
-
   // AI enhancement
   enhanceText?: ({
     text,
@@ -142,19 +156,25 @@ interface RichTextEditorProps {
   }: enhanceTextType) => Promise<enhancedTextResponse>
   enhancementOptions?: EnhancementOption[]
   canUseCustomPrompt?: boolean
-
+  enhanceLabels: enhanceLabelsType
   // File handling
   onFiles?: onFiles
   multipleFiles?: boolean
   maxCharacters?: number
-
   // Actions
-  onSubmit?: () => void
-  onCancel?: () => void
-
+  onSubmit?: {
+    label: string
+    onClick: () => void
+    disabled?: boolean
+  }
+  onCancel?: {
+    label: string
+    onClick: () => void
+    disabled?: boolean
+  }
   // Miscellaneous
-  title?: string
-
+  title: string
+  // Toolbar configuration
   toolbarConfig?: toolbarConfig
 }
 
@@ -171,7 +191,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       placeholder,
       initialEditorState,
       height = "lg",
-      maxFileSize: _maxFileSize,
+      maxFileSize,
       hasMentions = false,
       onMentionQueryStringChanged,
       users,
@@ -185,6 +205,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       title,
       toolbarConfig,
       multipleFiles = false,
+      enhanceLabels = {
+        defaultError: "Error enhancing text, try again later",
+        enhanceLabel: "Enhance",
+        acceptChangesLabel: "Accept changes",
+        rejectChangesLabel: "Reject changes",
+      },
     },
     ref
   ) {
@@ -321,7 +347,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const selectedFiles = e.target.files
       if (selectedFiles && selectedFiles.length > 0) {
-        const fileArray = Array.from(selectedFiles)
+        let fileArray = Array.from(selectedFiles)
+        if (maxFileSize) {
+          fileArray = fileArray.filter((file) => file.size <= maxFileSize)
+        }
         handleFiles(fileArray)
       }
       if (fileInputRef.current) {
@@ -349,7 +378,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           onError: (error?: string) => {
             editor?.setEditable(true)
             setIsAcceptChangesOpen(false)
-            setAiError(error || "Error enhancing text, try again later")
+            setAiError(error || enhanceLabels.defaultError)
           },
           enhanceType,
           customIntent,
@@ -393,12 +422,13 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           canUseCustomPrompt={canUseCustomPrompt}
           config={toolbarConfig || {}}
           disableButtons={isAcceptChangesOpen}
+          enhanceLabel={enhanceLabels.enhanceLabel}
         />
         <div
           ref={editorRef}
           className={cn(
-            "relative w-full overflow-y-hidden",
-            isFullscreen ? "h-full" : heightMapping[height] || "h-80"
+            "relative w-full",
+            isFullscreen && "h-full overflow-y-hidden"
           )}
           onClick={() => {
             editor?.commands.focus()
@@ -407,7 +437,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           <div
             className={cn(
               "h-80 overflow-y-auto px-5 py-3",
-              isFullscreen ? "h-full" : "h-80"
+              isFullscreen ? "h-full" : heightMapping[height] || "h-80"
             )}
           >
             <EditorContent editor={editor} />
@@ -429,6 +459,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           )}
           {isAcceptChangesOpen && (
             <AcceptChanges
+              acceptLabel={enhanceLabels.acceptChangesLabel}
+              rejectLabel={enhanceLabels.rejectChangesLabel}
               onAccept={() => {
                 setIsAcceptChangesOpen(false)
                 editor?.setEditable(true)
@@ -467,20 +499,20 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             <div className="flex gap-2">
               {onCancel && (
                 <Button
-                  onClick={onCancel}
+                  onClick={onCancel.onClick}
                   variant="outline"
                   size="md"
-                  label="Cancel"
-                  disabled={isAcceptChangesOpen}
+                  label={onCancel.label}
+                  disabled={isAcceptChangesOpen || onCancel.disabled}
                 />
               )}
               {onSubmit && (
                 <Button
-                  onClick={onSubmit}
+                  onClick={onSubmit.onClick}
                   variant="default"
                   size="md"
-                  label="Save"
-                  disabled={isAcceptChangesOpen}
+                  label={onSubmit.label}
+                  disabled={isAcceptChangesOpen || onSubmit.disabled}
                 />
               )}
             </div>
