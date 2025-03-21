@@ -25,4 +25,4 @@ node_modules
 *storybook.log
 
 dist
-/icons
+/packages/react/icons

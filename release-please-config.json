@@ -3,10 +3,10 @@
   "release-type": "node",
   "include-component-in-tag": false,
   "packages": {
-    ".": {
-      "pull-request-header": "Factorial-one stable release 🚀",
-      "pull-request-title-pattern": "chore${scope}: release${component} ${version} [skip ci]",
-      "group-pull-request-title-pattern": "chore${scope}: release ${version} [skip ci]"
+    "packages/react": {
+      "pull-request-header": "Factorial-one core stable release 🚀",
+      "pull-request-title-pattern": "chore${scope}: Core release${component} ${version}",
+      "group-pull-request-title-pattern": "chore${scope}: Core release ${version}"
     }
   }
 }
