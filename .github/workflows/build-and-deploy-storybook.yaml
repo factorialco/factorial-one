@@ -34,5 +34,5 @@ jobs:
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
           install_command: pnpm install
-          build_command: pnpm --filter @factorialco/factorial-one-react run build-storybook
+          build_command: pnpm --filter @factorialco/factorial-one run build-storybook
           path: storybook-static

@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node-pnpm
       - name: Check formatting with Prettier
-        run: pnpm --filter @factorialco/factorial-one-react run prettier:check:ci
+        run: pnpm --filter @factorialco/factorial-one run prettier:check:ci
   eslint:
     needs: detect-changes
     # Prevents running on the release-please branch
@@ -46,4 +46,4 @@ jobs:
       - name: Build core package
         run: pnpm --filter @factorialco/factorial-one-core build
       - name: Check linting with eslint
-        run: pnpm --filter @factorialco/factorial-one-react run lint
+        run: pnpm --filter @factorialco/factorial-one run lint

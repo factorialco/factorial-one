@@ -38,9 +38,9 @@ jobs:
         name: Setup Node and pnpm
 
       - name: Build
-        run: pnpm --filter @factorialco/factorial-one-react build
+        run: pnpm --filter @factorialco/factorial-one build
 
       - name: Publish to registry
-        run: pnpm --filter @factorialco/factorial-one-react publish --no-git-checks
+        run: pnpm --filter @factorialco/factorial-one publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}

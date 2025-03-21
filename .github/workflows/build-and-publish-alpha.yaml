@@ -34,7 +34,7 @@ jobs:
         name: Setup Node and pnpm
 
       - name: Build
-        run: pnpm --filter @factorialco/factorial-one-react build
+        run: pnpm --filter @factorialco/factorial-one build
 
       - name: Publish to release branch npm/alpha-pr-${{ github.event.pull_request.number }}
         run: |

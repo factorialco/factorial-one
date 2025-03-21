@@ -1,5 +1,5 @@
 {
-  "name": "@factorialco/factorial-one-react",
+  "name": "@factorialco/factorial-one",
   "version": "1.4.3",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
