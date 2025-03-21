@@ -1,10 +1,9 @@
 name: Code Quality checks
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 concurrency:
-  group:
-    ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
   # Detect which projects have changed
@@ -23,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-node-pnpm
       - name: Check formatting with Prettier
-        run: pnpm --filter @factorialco/factorial-one run prettier:check:ci
+        run: pnpm --filter @factorialco/factorial-one-react run prettier:check:ci
   eslint:
     needs: detect-changes
     # Prevents running on the release-please branch
@@ -46,4 +45,25 @@ jobs:
       - name: Build core package
         run: pnpm --filter @factorialco/factorial-one-core build
       - name: Check linting with eslint
-        run: pnpm --filter @factorialco/factorial-one run lint
+        run: pnpm --filter @factorialco/factorial-one-react run lint
+  eslint-react-native:
+    needs: detect-changes
+    # Prevents running on the release-please branch
+    if: |
+      needs.detect-changes.outputs.package_react_native == 'true'
+    name: "[REACT NATIVE] Eslint"
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: "22.x"
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build core package
+        run: pnpm --filter @factorialco/factorial-one-core build
+      - name: Check linting with eslint
+        run: pnpm --filter @factorialco/factorial-one-react-native run lint

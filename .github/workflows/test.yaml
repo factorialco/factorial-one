@@ -35,6 +35,27 @@ jobs:
       - name: Build core package
         run: pnpm --filter @factorialco/factorial-one-core build
       - name: Run type checking
-        run: pnpm --filter @factorialco/factorial-one run tsc
+        run: pnpm --filter @factorialco/factorial-one-react run tsc
       - name: Run tests
-        run: pnpm --filter @factorialco/factorial-one run vitest:ci
+        run: pnpm --filter @factorialco/factorial-one-react run vitest:ci
+  test-react-native:
+    needs: detect-changes
+    name: "[REACT NATIVE] Unit Tests"
+    if: |
+      needs.detect-changes.outputs.package_react_native == 'true'
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+      - uses: ./.github/actions/setup-node-pnpm
+        with:
+          node-version: "22.x"
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install
+      - name: Build core package
+        run: pnpm --filter @factorialco/factorial-one-core build
+      - name: Run tests
+        run: pnpm --filter @factorialco/factorial-one-react-native run test
