@@ -4,9 +4,9 @@
   "include-component-in-tag": false,
   "packages": {
     "packages/react": {
-      "pull-request-header": "Factorial-one core stable release 🚀",
-      "pull-request-title-pattern": "chore${scope}: Core release${component} ${version}",
-      "group-pull-request-title-pattern": "chore${scope}: Core release ${version}"
+      "pull-request-header": "🤖 Factorial-one React package stable release 🚀",
+      "pull-request-title-pattern": "chore${scope}: 🤖 React package release${component} ${version} 🚀",
+      "group-pull-request-title-pattern": "chore${scope}: 🤖 React package release ${version} 🚀"
     }
   }
 }

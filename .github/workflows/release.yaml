@@ -39,13 +39,11 @@ jobs:
           target-branch: ${{ env.BRANCH }}
 
       - name: Auto approve release-please PR
-        if: steps.release.outputs.prs_created
+        if: steps.release.outputs.prs_created == 'true'
         uses: juliangruber/approve-pull-request-action@b71c44ff142895ba07fad34389f1938a4e8ee7b0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ fromJSON(steps.release.outputs.pr || '{}').number }}
-          prs_debug: ${{ fromJSON(steps.release.outputs.pr || '{}').prs }}
-          prs_createddebug: ${{ steps.release.outputs.prs_created }}
 
       - name: Merge release-please PR and create a release
         run: |
