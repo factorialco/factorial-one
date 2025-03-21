@@ -76,7 +76,7 @@ declare type ButtonVariant = (typeof variants)[number];
 
 declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
-    variant?: "outline" | "default" | "critical" | "neutral" | "ghost" | "promote" | undefined;
+    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
     round?: boolean | undefined;
 } & ({

@@ -4,6 +4,7 @@ import { AreaChartWidgetProps } from './AreaChartWidget';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { AvatarProps } from '@radix-ui/react-avatar';
 import { BarChartProps } from '../../../components/Charts/BarChart';
+import { baseColors } from '../../../../../tokens/colors';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
 import { color as color_2 } from '../../../../ui/avatar';
@@ -57,7 +58,7 @@ declare type Action = {
 
 export declare type ActionsDefinition<T extends RecordType> = (item: T) => Array<DropdownItem & {
     enabled?: boolean;
-}>;
+}> | undefined;
 
 declare type ActionType = CopyActionType | NavigateActionType;
 
@@ -144,7 +145,7 @@ export declare type AvatarNamedEntity = {
 export declare type AvatarNamedGroup = {
     value: string;
     label: string;
-    type?: "avatar" | "team";
+    groupType?: "avatar" | "team";
 };
 
 export declare type AvatarNamedSubEntity = {
@@ -246,121 +247,6 @@ declare type BaseAvatarProps_2 = ComponentProps<typeof BaseAvatar>;
 declare type BaseAvatarProps_3 = ComponentProps<typeof BaseAvatar>;
 
 export declare const BaseCelebration: ({ link, firstName, lastName, src, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element;
-
-declare const baseColors: {
-    white: {
-        3: string;
-        5: string;
-        10: string;
-        20: string;
-        30: string;
-        40: string;
-        50: string;
-        60: string;
-        70: string;
-        80: string;
-        90: string;
-        100: string;
-    };
-    current: string;
-    transparent: string;
-    grey: {
-        0: string;
-        5: string;
-        10: string;
-        20: string;
-        30: string;
-        40: string;
-        50: string;
-        60: string;
-        70: string;
-        80: string;
-        90: string;
-        100: string;
-        solid: {
-            40: string;
-            50: string;
-        };
-    };
-    lilac: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    barbie: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    smoke: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    army: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    flubber: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    indigo: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    camel: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    radical: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    viridian: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    orange: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    red: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    grass: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    malibu: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    yellow: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    purple: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    special: {
-        highlight: string;
-    };
-};
 
 export declare const BaseCommunityPost: ({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noVideoPreload, }: CommunityPostProps) => JSX_2.Element;
 
@@ -497,7 +383,7 @@ declare type ButtonVariant = (typeof variants_2)[number];
 
 declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
-    variant?: "outline" | "default" | "critical" | "neutral" | "ghost" | "promote" | undefined;
+    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
     round?: boolean | undefined;
 } & ({
@@ -958,7 +844,7 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     /** Predefined filter configurations that can be applied */
     presets?: Presets<Filters>;
     /** URL for a single item in the collection */
-    itemUrl?: (item: Record) => string;
+    itemUrl?: (item: Record) => string | undefined;
     /** Available actions that can be performed on records */
     actions?: Actions;
     /** Search configuration */
@@ -1059,9 +945,12 @@ declare type DropdownInternalProps = {
     align?: "start" | "end";
 };
 
-export declare type DropdownItem = DropdownItemObject | "separator";
+export declare type DropdownItem = DropdownItemObject | {
+    type: "separator";
+};
 
 export declare type DropdownItemObject = NavigationItem & {
+    type?: "item";
     onClick?: () => void;
     icon?: IconType;
     description?: string;
@@ -1978,6 +1867,7 @@ export declare const SectionHeader: ({ title, description, action, supportButton
 export declare const Select: ForwardRefExoticComponent<SelectProps<string, any> & RefAttributes<HTMLButtonElement>>;
 
 export declare type SelectItemObject<T, R = unknown> = {
+    type?: "item";
     value: T;
     label: string;
     description?: string;
@@ -1986,7 +1876,9 @@ export declare type SelectItemObject<T, R = unknown> = {
     item?: R;
 };
 
-export declare type SelectItemProps<T, R = unknown> = SelectItemObject<T, R> | "separator";
+export declare type SelectItemProps<T, R = unknown> = SelectItemObject<T, R> | {
+    type: "separator";
+};
 
 export declare type SelectProps<T, R = any> = {
     placeholder?: string;
@@ -2179,7 +2071,44 @@ export declare type TabItem = {
     index?: boolean;
 };
 
-declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings>;
+declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
+
+declare function TableHead({ children, width, sortState, onSortClick, info, sticky, hidden, }: TableHeadProps): JSX_2.Element;
+
+declare interface TableHeadProps {
+    children: React.ReactNode;
+    /**
+     * The width of the header cell. If not provided, the width will be "auto"
+     * @default "auto"
+     */
+    width?: ColumnWidth;
+    /**
+     * When true, the header cell will stick to the left side of the table when scrolling horizontally
+     * @default false
+     */
+    sticky?: boolean;
+    /**
+     * The current sort direction of this column. "none" indicates no sorting,
+     * "asc" sorts ascending (A-Z, 1-9), and "desc" sorts descending (Z-A, 9-1)
+     * @default "none"
+     */
+    sortState?: "none" | "asc" | "desc";
+    /**
+     * Callback fired when the sort button is clicked.
+     * Use this to handle toggling between sort states.
+     */
+    onSortClick?: () => void;
+    /**
+     * Optional tooltip text. When provided, displays an info icon next to the header content
+     * that shows this text in a tooltip when hovered.
+     */
+    info?: string;
+    /**
+     * When true, the header cell will not be visible.
+     * @default false
+     */
+    hidden?: boolean;
+}
 
 declare type TableVisualizationOptions<Record extends RecordType, _Filters extends FiltersDefinition, Sortings extends SortingsDefinition> = {
     columns: ReadonlyArray<TableColumnDefinition<Record, Sortings>>;
@@ -2260,7 +2189,7 @@ declare const THEMES: {
 };
 
 export declare const ToggleGroup: React_2.ForwardRefExoticComponent<((Omit<ToggleGroupPrimitive.ToggleGroupSingleProps & React_2.RefAttributes<HTMLDivElement>, "ref"> | Omit<ToggleGroupPrimitive.ToggleGroupMultipleProps & React_2.RefAttributes<HTMLDivElement>, "ref">) & VariantProps<(props?: ({
-    variant?: "outline" | "default" | undefined;
+    variant?: "default" | "outline" | undefined;
     size?: "lg" | "sm" | "default" | undefined;
 } & ({
     class?: ClassValue;
@@ -2271,7 +2200,7 @@ export declare const ToggleGroup: React_2.ForwardRefExoticComponent<((Omit<Toggl
 })) | undefined) => string>) & React_2.RefAttributes<HTMLDivElement>>;
 
 export declare const ToggleGroupItem: React_2.ForwardRefExoticComponent<Omit<ToggleGroupPrimitive.ToggleGroupItemProps & React_2.RefAttributes<HTMLButtonElement>, "ref"> & VariantProps<(props?: ({
-    variant?: "outline" | "default" | undefined;
+    variant?: "default" | "outline" | undefined;
     size?: "lg" | "sm" | "default" | undefined;
 } & ({
     class?: ClassValue;
@@ -2451,6 +2380,7 @@ export declare interface WidgetProps {
             title: string;
             url: string;
             onClick?: () => void;
+            icon?: IconType;
         };
         count?: number;
     };
