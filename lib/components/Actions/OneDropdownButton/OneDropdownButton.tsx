@@ -66,15 +66,10 @@ const OneDropdownButton = ({
           <DropdownInternal items={dropdownItems} align="end">
             <a
               className={cn(
-                "h-full",
                 internalButtonVariants({
                   size: props.size,
                 }),
-                "flex",
-                "hover:bg-[#0002]",
-                "rounded-e",
-                "align-middle",
-                "justify-center",
+                "flex h-full justify-center rounded-e align-middle",
                 focusRing()
               )}
               style={internalButtonVariantsStyles(props.variant)}
