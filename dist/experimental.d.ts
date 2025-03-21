@@ -1734,7 +1734,7 @@ declare type ProductUpdatesProp = {
     label: string;
     moreUpdatesLabel: string;
     updatesPageUrl: UrlString;
-    getUpdatesQuery: () => Promise<Array<ProductUpdate>>;
+    getUpdates: () => Promise<Array<ProductUpdate>>;
     hasUnread?: boolean;
     emptyScreen: {
         title: string;

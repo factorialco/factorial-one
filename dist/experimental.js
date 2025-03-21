@@ -23545,7 +23545,7 @@ function tN({ breadcrumbs: e }) {
 const aN = ({
   label: e,
   moreUpdatesLabel: n,
-  getUpdatesQuery: i,
+  getUpdates: i,
   updatesPageUrl: t,
   emptyScreen: a,
   errorScreen: r,
