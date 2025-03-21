@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
 import { Skeleton } from "@/ui/skeleton"
-import { ReactElement, useCallback, useState } from "react"
+import { ComponentProps, ReactElement, useCallback, useState } from "react"
 
 type ProductUpdate = {
   title: string
@@ -31,6 +31,7 @@ type ProductUpdatesProp = {
   updatesPageUrl: UrlString
   getUpdates: () => Promise<Array<ProductUpdate>>
   hasUnread?: boolean
+  onOpenChange?: ComponentProps<typeof DropdownMenu>['onOpenChange']
   emptyScreen: {
     title: string
     description: string
@@ -50,6 +51,7 @@ const ProductUpdates = ({
   updatesPageUrl,
   emptyScreen,
   errorScreen,
+  onOpenChange = () => {},
   hasUnread = false,
 }: ProductUpdatesProp) => {
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
@@ -72,6 +74,7 @@ const ProductUpdates = ({
         if (open && updates === null) {
           invokeGetUpdates()
         }
+        onOpenChange(open)
       }}
     >
       <DropdownMenuTrigger asChild>
