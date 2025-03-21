@@ -160,7 +160,7 @@ const FeaturedDropdownItem = ({
           <Image
             fetchPriority="high"
             src={imageURL}
-            className="block aspect-video w-full object-contain object-center"
+            className="block aspect-video w-full object-contain object-center bg-f1-background-secondary"
           />
         </div>
         <div className="flex items-start gap-4">
