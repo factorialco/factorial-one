@@ -30,7 +30,7 @@ jobs:
       needs.detect-changes.outputs.package_react == 'true' &&
       github.head_ref != 'release-please--branches--master' &&
       !contains(github.event.pull_request.labels.*.name, 'autorelease')
-    name: Eslint
+    name: "[REACT] Eslint"
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
