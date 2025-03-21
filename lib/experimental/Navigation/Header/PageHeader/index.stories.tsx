@@ -248,7 +248,7 @@ export const WithProductUpdate: Story = {
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                 },
                 {
-                  title: "Improved management of planned income and costs, Improved management of planned income and costsImproved management of planned income and costsImproved management of planned income and costsImproved management of planned income and costs",
+                  title: "Night of the Day of the Dawn of the Son of the Bride of the Return of the Revenge of the Terror of the Attack of the Evil, Mutant, Hellbound, Flesh-Eating Subhumanoid Zombified Living Dead",
                   imageURL: "https://placecats.com/neo/300/200",
                   updated: "1 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
