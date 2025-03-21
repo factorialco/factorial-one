@@ -1,6 +1,7 @@
 import { Button } from "@/components/Actions/Button"
-import { Icon } from "@/components/exports"
-import { Cross, File } from "@/icons/app"
+import { Cross } from "@/icons/app"
+import { cn } from "@/lib/utils"
+import { getFileTypeInfo } from "../utils/files"
 
 interface FileListProps {
   files: File[]
@@ -14,14 +15,15 @@ interface FileItemProps {
 }
 
 const FileItem = ({ file, onRemoveFile, index }: FileItemProps) => {
+  const { type, color } = getFileTypeInfo(file)
   return (
     <div className="flex w-48 flex-row items-center gap-1.5 rounded-md bg-f1-background-secondary p-1">
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-f1-background">
-        <Icon icon={File} />
+        <p className={cn("text-sm font-semibold", color)}>{type}</p>
       </div>
       <p
         title={file.name}
-        className="text-neutral-1000 overflow-hidden truncate text-ellipsis text-sm font-medium"
+        className="text-neutral-1000 grow overflow-hidden truncate text-ellipsis text-sm font-medium"
       >
         {file.name}
       </p>
@@ -43,7 +45,7 @@ const FileList = ({ files, onRemoveFile }: FileListProps) => {
   if (!files.length) return null
 
   return (
-    <div className="flex flex-col gap-2 py-3">
+    <div className="absolute bottom-0 grid grid-cols-2 items-end gap-2 px-4 py-3">
       {files.map((file, index) => (
         <FileItem
           key={`${file.name}-${index}`}

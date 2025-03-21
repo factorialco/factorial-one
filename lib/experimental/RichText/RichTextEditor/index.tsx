@@ -23,6 +23,7 @@ import {
 import screenfull from "screenfull"
 import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
+import { EnhanceError } from "./Enhance/EnhanceError"
 import { FileList } from "./FileList"
 import "./index.css"
 import { ToolbarPlugin } from "./Toolbar"
@@ -144,6 +145,7 @@ interface RichTextEditorProps {
 
   // File handling
   onFiles?: onFiles
+  multipleFiles?: boolean
   maxCharacters?: number
 
   // Actions
@@ -182,6 +184,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       onCancel,
       title,
       toolbarConfig,
+      multipleFiles = false,
     },
     ref
   ) {
@@ -195,6 +198,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const containerRef = useRef<HTMLDivElement>(null)
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
+    const [aiError, setAiError] = useState<string | null>(null)
 
     useEffect(() => {
       if (screenfull.isEnabled) {
@@ -284,7 +288,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
 
     const handleFiles = (newFiles: File[]) => {
       if (onFiles) {
-        const updatedFiles = [...files, ...newFiles]
+        const updatedFiles = multipleFiles ? [...files, ...newFiles] : newFiles
         setFiles(updatedFiles)
         onFiles(updatedFiles)
       }
@@ -343,10 +347,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             setIsAcceptChangesOpen(true)
           },
           onError: (error?: string) => {
-            // TODO: Add error handling
             editor?.setEditable(true)
             setIsAcceptChangesOpen(false)
-            console.error(error || "Error")
+            setAiError(error || "Error enhancing text, try again later")
           },
           enhanceType,
           customIntent,
@@ -359,7 +362,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     return (
       <div
         ref={containerRef}
-        className="relative m-5 flex w-full flex-col rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
+        className="m-5 flex w-full flex-col rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
       >
         {isFullscreen && (
           <div className="flex w-full items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3">
@@ -394,20 +397,27 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         <div
           ref={editorRef}
           className={cn(
-            "w-full overflow-y-auto px-5 py-3",
+            "relative w-full overflow-y-hidden",
             isFullscreen ? "h-full" : heightMapping[height] || "h-80"
           )}
           onClick={() => {
             editor?.commands.focus()
           }}
         >
-          <EditorContent editor={editor} />
+          <div
+            className={cn(
+              "h-80 overflow-y-auto px-5 py-3",
+              isFullscreen ? "h-full" : "h-80"
+            )}
+          >
+            <EditorContent editor={editor} />
+          </div>
           {onFiles && (
             <>
               <input
                 id="upload-button"
                 type="file"
-                multiple
+                multiple={multipleFiles}
                 onChange={handleFileChange}
                 ref={fileInputRef}
                 className="hidden"
@@ -416,6 +426,22 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 <FileList files={files} onRemoveFile={handleRemoveFile} />
               )}
             </>
+          )}
+          {isAcceptChangesOpen && (
+            <AcceptChanges
+              onAccept={() => {
+                setIsAcceptChangesOpen(false)
+                editor?.setEditable(true)
+              }}
+              onReject={() => {
+                editor?.chain().focus().undo().run()
+                setIsAcceptChangesOpen(false)
+                editor?.setEditable(true)
+              }}
+            />
+          )}
+          {aiError && (
+            <EnhanceError aiError={aiError} onClose={() => setAiError(null)} />
           )}
         </div>
 
@@ -459,19 +485,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               )}
             </div>
           </div>
-        )}
-        {isAcceptChangesOpen && (
-          <AcceptChanges
-            onAccept={() => {
-              setIsAcceptChangesOpen(false)
-              editor?.setEditable(true)
-            }}
-            onReject={() => {
-              editor?.chain().focus().undo().run()
-              setIsAcceptChangesOpen(false)
-              editor?.setEditable(true)
-            }}
-          />
         )}
       </div>
     )
