@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from "tailwindcss"
 
-import { baseColors, f1Colors } from "./lib/tokens/colors"
-import { absoluteSpacing, relativeSpacing } from "./tailwind/spacing"
+import { absoluteSpacing, relativeSpacing } from "./src/tailwind/spacing"
+import { baseColors, f1Colors } from "./tokens/colors"
 
 export default {
   darkMode: ["class"],
@@ -14,7 +14,6 @@ export default {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
-    "./lib/**/*.{ts,tsx}",
     "./docs/**/*.{mdx,ts,tsx}",
     "./storybook/**/*.{mdx,ts,tsx}",
   ],
