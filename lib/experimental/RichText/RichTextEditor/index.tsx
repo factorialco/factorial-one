@@ -8,6 +8,7 @@ import {
   useState,
 } from "react"
 
+import { Button } from "@/components/Actions/Button"
 import { EditorBubbleMenu } from "@/experimental/RichText/RichTextEditor/BubbleMenu"
 import { FileList } from "@/experimental/RichText/RichTextEditor/FileList"
 import { ToolbarPlugin } from "@/experimental/RichText/RichTextEditor/Toolbar"
@@ -16,7 +17,6 @@ import {
   isValidSelectionForEnhancement,
 } from "@/experimental/RichText/RichTextEditor/utils/enhance"
 import { configureMention } from "@/experimental/RichText/RichTextEditor/utils/mention"
-import { Button } from "@/factorial-one"
 import { Cross } from "@/icons/app"
 import CharacterCount from "@tiptap/extension-character-count"
 import Color from "@tiptap/extension-color"
@@ -76,6 +76,34 @@ type enhanceTextType = {
   context?: string
 }
 
+type toolbarConfig = {
+  bold?: boolean
+  italic?: boolean
+  underline?: boolean
+  link?: boolean
+  textSize?: {
+    normal?: boolean
+    heading1?: boolean
+    heading2?: boolean
+    heading3?: boolean
+  }
+  textAlign?: {
+    left?: boolean
+    center?: boolean
+    right?: boolean
+    justify?: boolean
+  }
+  list?: {
+    bullet?: boolean
+    ordered?: boolean
+  }
+  moreOptions?: {
+    code?: boolean
+    horizontalRule?: boolean
+    quote?: boolean
+  }
+  fullScreen?: boolean
+}
 // Component props and handle
 
 interface RichTextEditorProps {
@@ -118,7 +146,8 @@ interface RichTextEditorProps {
 
   // Miscellaneous
   title?: string
-  fullScreenEnabled?: boolean
+
+  toolbarConfig?: toolbarConfig
 }
 
 type RichTextEditorHandle = {
@@ -146,7 +175,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       onSubmit,
       onCancel,
       title,
-      fullScreenEnabled = true,
+      toolbarConfig,
     },
     ref
   ) {
@@ -341,9 +370,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           isLoadingAi={isLoadingAi}
           canUseFiles={onFiles ? true : false}
           canUseAi={enhanceText ? true : false}
-          fullScreenEnabled={fullScreenEnabled}
           enhancementOptions={enhancementOptions || []}
           canUseCustomPrompt={canUseCustomPrompt}
+          config={toolbarConfig || {}}
         />
         <div
           ref={editorRef}
@@ -427,4 +456,5 @@ export type {
   RichTextEditorHandle,
   RichTextEditorHeight,
   RichTextEditorProps,
+  toolbarConfig,
 }

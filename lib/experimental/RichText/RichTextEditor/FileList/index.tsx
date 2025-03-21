@@ -1,4 +1,5 @@
-import { Button, Icon } from "@/factorial-one"
+import { Button } from "@/components/Actions/Button"
+import { Icon } from "@/components/exports"
 import { Cross, File } from "@/icons/app"
 
 interface FileListProps {

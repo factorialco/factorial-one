@@ -116,7 +116,7 @@ export const Default: Story = {
       new Promise((resolve) => {
         setTimeout(() => {
           resolve(
-            `<b>Just imagine this is a response from AI from our friend Jacob</b>`
+            `<b>Just imagine this is an AI response from our friend</b> <a href="https://www.google.com" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">@Jacob Bamio Cordero</a>`
           )
         }, 1000)
       }),
@@ -134,6 +134,34 @@ export const Default: Story = {
     },
     // Miscellaneous
     title: "RichTextEditor",
-    fullScreenEnabled: true,
+
+    toolbarConfig: {
+      bold: true,
+      italic: true,
+      underline: true,
+      link: true,
+      textSize: {
+        normal: true,
+        heading1: true,
+        heading2: true,
+        heading3: true,
+      },
+      textAlign: {
+        left: true,
+        center: true,
+        right: true,
+        justify: true,
+      },
+      list: {
+        bullet: true,
+        ordered: true,
+      },
+      moreOptions: {
+        code: true,
+        horizontalRule: true,
+        quote: true,
+      },
+      fullScreen: true,
+    },
   },
 }

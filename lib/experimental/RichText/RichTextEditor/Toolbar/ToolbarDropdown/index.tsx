@@ -1,7 +1,8 @@
 import React from "react"
 
+import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/exports"
 import { Dropdown } from "@/experimental/exports"
-import { Button, IconType } from "@/factorial-one"
 
 interface ToolbarDropdownItem {
   label: string

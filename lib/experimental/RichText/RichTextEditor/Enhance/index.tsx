@@ -4,10 +4,11 @@ import ReactDOM from "react-dom/client"
 import { Editor } from "@tiptap/react"
 import tippy, { Instance } from "tippy.js"
 
+import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/exports"
 import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
 import { AIEnhanceMenu } from "@/experimental/RichText/RichTextEditor/Enhance/EnhanceMenu"
 import { isValidSelectionForEnhancement } from "@/experimental/RichText/RichTextEditor/utils/enhance"
-import { Button, IconType } from "@/factorial-one"
 import { Ai } from "@/icons/app"
 
 interface EnhanceActivatorProps {
