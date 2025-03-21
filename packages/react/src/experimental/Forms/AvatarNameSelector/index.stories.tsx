@@ -1,15 +1,15 @@
 import type { Meta } from "@storybook/react"
 
-import { RawTag } from "../../Information/Tags/RawTag"
 import { fn } from "@storybook/test"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { ComponentProps, useState } from "react"
-import { AvatarNameSelector } from "./index"
+import { RawTag } from "../../Information/Tags/RawTag"
 import { famousEmployees } from "./avatar-name.factory"
 import {
   teamsWithEmployees,
   workplaceWithEmployees,
 } from "./groups-avatar-name.factory"
+import { AvatarNameSelector } from "./index"
 import {
   AvatarNamedEntity,
   AvatarNamedGroup,
