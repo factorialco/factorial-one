@@ -248,7 +248,8 @@ export const WithProductUpdate: Story = {
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                 },
                 {
-                  title: "Night of the Day of the Dawn of the Son of the Bride of the Return of the Revenge of the Terror of the Attack of the Evil, Mutant, Hellbound, Flesh-Eating Subhumanoid Zombified Living Dead",
+                  title:
+                    "Night of the Day of the Dawn of the Son of the Bride of the Return of the Revenge of the Terror of the Attack of the Evil, Mutant, Hellbound, Flesh-Eating Subhumanoid Zombified Living Dead",
                   imageURL: "https://placecats.com/neo/300/200",
                   updated: "1 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
@@ -263,7 +264,7 @@ export const WithProductUpdate: Story = {
             1000
           )
         })
-      }
+      },
     },
   },
 }
