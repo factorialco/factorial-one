@@ -1,8 +1,11 @@
 import {
+  Deny as DenyIcon,
   Home as HomeIcon,
   Office as OfficeIcon,
+  Salad as SaladIcon,
   Suitcase as SuitcaseIcon,
-} from "../../../../../icons/app"
+  Timer as TimerIcon,
+} from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ClockInControls } from "./index"
 
@@ -153,6 +156,32 @@ export const ClockedOutWithSomeTime: Story = {
         variant: "clocked-out",
       },
     ],
+  },
+}
+
+export const WithBreakTypes: Story = {
+  args: {
+    ...ClockedIn.args,
+    breakTypes: [
+      {
+        id: "1",
+        name: "Manual",
+        description: "This is a description",
+        icon: TimerIcon,
+      },
+      {
+        id: "2",
+        name: "Lunch time · 30 min",
+        description: "30 min",
+        icon: SaladIcon,
+      },
+      {
+        id: "3",
+        name: "Unpaid",
+        icon: DenyIcon,
+      },
+    ],
+    onChangeBreakTypeId: () => {},
   },
 }
 
