@@ -1,8 +1,7 @@
-import React from "react"
-
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/exports"
 import { Dropdown } from "@/experimental/exports"
+import React from "react"
 
 interface ToolbarDropdownItem {
   label: string
@@ -15,6 +14,7 @@ interface ToolbarDropdownProps {
   items: ToolbarDropdownItem[]
   children: React.ReactNode
   isFullscreen: boolean
+  disabled: boolean
 }
 
 const convertItemsToDropdownItems = (items: ToolbarDropdownItem[]) => {
@@ -28,6 +28,7 @@ const ToolbarDropdown = ({
   items,
   children,
   isFullscreen,
+  disabled,
 }: ToolbarDropdownProps) => {
   return isFullscreen ? (
     items?.map((item) => (
@@ -37,6 +38,7 @@ const ToolbarDropdown = ({
         variant={item.isActive ? "neutral" : "ghost"}
         label={item.label}
         type="button"
+        disabled={disabled}
       />
     ))
   ) : (

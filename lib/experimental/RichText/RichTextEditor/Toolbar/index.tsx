@@ -1,8 +1,3 @@
-import { compact } from "lodash"
-import React from "react"
-
-import { Editor } from "@tiptap/react"
-
 import { Button } from "@/components/Actions/Button"
 import {
   EnhancementOption,
@@ -10,8 +5,12 @@ import {
 } from "@/experimental/RichText/RichTextEditor"
 import { EnhanceActivator } from "@/experimental/RichText/RichTextEditor/Enhance"
 import { ToolbarDropdown } from "@/experimental/RichText/RichTextEditor/Toolbar/ToolbarDropdown"
+import { defaultToolbarConfig } from "@/experimental/RichText/RichTextEditor/utils/toolbar"
 import { Ellipsis, Paperclip } from "@/icons/app"
 import { cn } from "@/lib/utils"
+import { Editor } from "@tiptap/react"
+import { compact, defaultsDeep } from "lodash"
+import React from "react"
 
 const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
   <div
@@ -21,6 +20,9 @@ const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
     )}
   />
 )
+
+const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
+  arr.flatMap((item, index) => (index < arr.length - 1 ? [item, sep] : [item]))
 
 interface ToolbarPluginProps {
   editor: Editor | null
@@ -39,6 +41,7 @@ interface ToolbarPluginProps {
   enhancementOptions: EnhancementOption[]
   canUseCustomPrompt: boolean
   config: toolbarConfig
+  disableButtons: boolean
 }
 
 const ToolbarPlugin = ({
@@ -53,50 +56,22 @@ const ToolbarPlugin = ({
   enhancementOptions,
   canUseCustomPrompt,
   config,
+  disableButtons,
 }: ToolbarPluginProps) => {
-  if (!editor) {
-    return null
-  }
+  if (!editor) return null
+
+  const mergedConfig = defaultsDeep({}, config, defaultToolbarConfig)
 
   const {
-    bold = true,
-    italic = true,
-    underline = true,
-    textSize: {
-      normal = true,
-      heading1 = true,
-      heading2 = true,
-      heading3 = true,
-    } = {
-      normal: true,
-      heading1: true,
-      heading2: true,
-      heading3: true,
-    },
-    textAlign: { left = true, center = true, right = true, justify = true } = {
-      left: true,
-      center: true,
-      right: true,
-      justify: true,
-    },
-    list: { bullet, ordered } = {
-      bullet: true,
-      ordered: true,
-    },
-    moreOptions: { code, horizontalRule, quote } = {
-      code: true,
-      horizontalRule: true,
-      quote: true,
-    },
-    fullScreen = true,
-  } = config
-
-  const showTextSize = normal || heading1 || heading2 || heading3
-  const showTextAlign = left || center || right || justify
-  const showMoreOptions = code || horizontalRule || quote
-  const showFormattingButtons = bold || italic || underline
-  const showList = bullet || ordered
-  const showFileButton = canUseFiles
+    bold,
+    italic,
+    underline,
+    textSize: { normal, heading1, heading2, heading3 },
+    textAlign: { left, center, right, justify },
+    list: { bullet, ordered },
+    moreOptions: { code, horizontalRule, quote },
+    fullScreen,
+  } = mergedConfig
 
   const getHeadingLabel = () => {
     if (editor.isActive("heading")) {
@@ -116,26 +91,9 @@ const ToolbarPlugin = ({
     return "Left"
   }
 
-  const showToolbar =
-    bold ||
-    italic ||
-    underline ||
-    showTextSize ||
-    showTextAlign ||
-    showMoreOptions ||
-    showFormattingButtons ||
-    showList ||
-    showFileButton ||
-    canUseAi ||
-    fullScreen
-
-  if (!showToolbar) {
-    return null
-  }
-
-  return (
-    <div className="flex flex-row items-center justify-between gap-2 border-0 border-b-[1px] border-solid border-f1-border py-3">
-      <div className="flex flex-row items-center overflow-x-auto pl-4">
+  const formattingGroup =
+    bold || italic || underline ? (
+      <div className="flex flex-row items-center gap-2">
         {bold && (
           <Button
             variant={editor.isActive("bold") ? "neutral" : "ghost"}
@@ -144,6 +102,7 @@ const ToolbarPlugin = ({
               editor.chain().focus().toggleBold().run()
             }}
             type="button"
+            disabled={disableButtons}
           />
         )}
         {italic && (
@@ -154,6 +113,7 @@ const ToolbarPlugin = ({
               editor.chain().focus().toggleItalic().run()
             }}
             type="button"
+            disabled={disableButtons}
           />
         )}
         {underline && (
@@ -164,90 +124,102 @@ const ToolbarPlugin = ({
               editor.chain().focus().toggleUnderline().run()
             }}
             type="button"
+            disabled={disableButtons}
           />
         )}
-        {showFormattingButtons && showTextSize && <ToolbarDivider />}
-        {showTextSize && (
-          <ToolbarDropdown
-            isFullscreen={isFullscreen}
-            items={compact([
-              normal && {
-                label: "Normal",
-                onClick: () =>
-                  editor
-                    .chain()
-                    .focus()
-                    .toggleHeading({
-                      level: editor.getAttributes("heading").level,
-                    })
-                    .run(),
-                isActive: !editor.isActive("heading"),
-              },
-              heading1 && {
-                label: "H1",
-                onClick: () =>
-                  editor.chain().focus().toggleHeading({ level: 1 }).run(),
-                isActive: editor.isActive("heading", { level: 1 }),
-              },
-              heading2 && {
-                label: "H2",
-                onClick: () =>
-                  editor.chain().focus().toggleHeading({ level: 2 }).run(),
-                isActive: editor.isActive("heading", { level: 2 }),
-              },
-              heading3 && {
-                label: "H3",
-                onClick: () =>
-                  editor.chain().focus().toggleHeading({ level: 3 }).run(),
-                isActive: editor.isActive("heading", { level: 3 }),
-              },
-            ])}
-          >
-            <Button variant="ghost" size="md" label={getHeadingLabel()} />
-          </ToolbarDropdown>
-        )}
-        {showTextSize && showTextAlign && (
-          <ToolbarDivider show={isFullscreen} />
-        )}
-        {showTextAlign && (
-          <ToolbarDropdown
-            isFullscreen={isFullscreen}
-            items={compact([
-              left && {
-                label: "Left",
-                onClick: () =>
-                  editor.chain().focus().setTextAlign("left").run(),
-                isActive:
-                  editor.isActive({ textAlign: "left" }) ||
-                  (!editor.isActive({ textAlign: "justify" }) &&
-                    !editor.isActive({ textAlign: "center" }) &&
-                    !editor.isActive({ textAlign: "right" })),
-              },
-              center && {
-                label: "Center",
-                onClick: () =>
-                  editor.chain().focus().setTextAlign("center").run(),
-                isActive: editor.isActive({ textAlign: "center" }),
-              },
-              right && {
-                label: "Right",
-                onClick: () =>
-                  editor.chain().focus().setTextAlign("right").run(),
-                isActive: editor.isActive({ textAlign: "right" }),
-              },
-              justify && {
-                label: "Justify",
-                onClick: () =>
-                  editor.chain().focus().setTextAlign("justify").run(),
-                isActive: editor.isActive({ textAlign: "justify" }),
-              },
-            ])}
-          >
-            <Button variant="ghost" size="md" label={getTextAlignLabel()} />
-          </ToolbarDropdown>
-        )}
-        {showTextAlign && showList && <ToolbarDivider />}
-        {showList && bullet && (
+      </div>
+    ) : null
+
+  const textSizeGroup =
+    normal || heading1 || heading2 || heading3 ? (
+      <ToolbarDropdown
+        isFullscreen={isFullscreen}
+        items={compact([
+          normal && {
+            label: "Normal",
+            onClick: () =>
+              editor
+                .chain()
+                .focus()
+                .toggleHeading({ level: editor.getAttributes("heading").level })
+                .run(),
+            isActive: !editor.isActive("heading"),
+          },
+          heading1 && {
+            label: "H1",
+            onClick: () =>
+              editor.chain().focus().toggleHeading({ level: 1 }).run(),
+            isActive: editor.isActive("heading", { level: 1 }),
+          },
+          heading2 && {
+            label: "H2",
+            onClick: () =>
+              editor.chain().focus().toggleHeading({ level: 2 }).run(),
+            isActive: editor.isActive("heading", { level: 2 }),
+          },
+          heading3 && {
+            label: "H3",
+            onClick: () =>
+              editor.chain().focus().toggleHeading({ level: 3 }).run(),
+            isActive: editor.isActive("heading", { level: 3 }),
+          },
+        ])}
+        disabled={disableButtons}
+      >
+        <Button
+          variant="ghost"
+          size="md"
+          label={getHeadingLabel()}
+          disabled={disableButtons}
+        />
+      </ToolbarDropdown>
+    ) : null
+
+  const textAlignGroup =
+    left || center || right || justify ? (
+      <ToolbarDropdown
+        isFullscreen={isFullscreen}
+        items={compact([
+          left && {
+            label: "Left",
+            onClick: () => editor.chain().focus().setTextAlign("left").run(),
+            isActive:
+              editor.isActive({ textAlign: "left" }) ||
+              (!editor.isActive({ textAlign: "justify" }) &&
+                !editor.isActive({ textAlign: "center" }) &&
+                !editor.isActive({ textAlign: "right" })),
+          },
+          center && {
+            label: "Center",
+            onClick: () => editor.chain().focus().setTextAlign("center").run(),
+            isActive: editor.isActive({ textAlign: "center" }),
+          },
+          right && {
+            label: "Right",
+            onClick: () => editor.chain().focus().setTextAlign("right").run(),
+            isActive: editor.isActive({ textAlign: "right" }),
+          },
+          justify && {
+            label: "Justify",
+            onClick: () => editor.chain().focus().setTextAlign("justify").run(),
+            isActive: editor.isActive({ textAlign: "justify" }),
+          },
+        ])}
+        disabled={disableButtons}
+      >
+        <Button
+          variant="ghost"
+          size="md"
+          label={getTextAlignLabel()}
+          disabled={disableButtons}
+        />
+      </ToolbarDropdown>
+    ) : null
+
+  const listGroup =
+    bullet || ordered ? (
+      <div className="flex flex-row items-center gap-2">
+        {bullet && (
           <Button
             onClick={() => {
               editor.chain().focus().toggleBulletList().run()
@@ -255,9 +227,10 @@ const ToolbarPlugin = ({
             variant={editor.isActive("bulletList") ? "neutral" : "ghost"}
             label="Bullet List"
             type="button"
+            disabled={disableButtons}
           />
         )}
-        {showList && ordered && (
+        {ordered && (
           <Button
             onClick={() => {
               editor.chain().focus().toggleOrderedList().run()
@@ -265,58 +238,79 @@ const ToolbarPlugin = ({
             variant={editor.isActive("orderedList") ? "neutral" : "ghost"}
             label="Ordered List"
             type="button"
+            disabled={disableButtons}
           />
-        )}
-        {showList && (showFileButton || showMoreOptions) && <ToolbarDivider />}
-        {showFileButton && (
-          <Button
-            icon={Paperclip}
-            onClick={() => {
-              if (fileInputRef?.current) {
-                fileInputRef.current.click()
-              } else {
-                const fileInput = document.getElementById("upload-button")
-                if (fileInput) fileInput.click()
-              }
-            }}
-            hideLabel
-            label="Add Attachment"
-            variant="ghost"
-            type="button"
-          />
-        )}
-        {showMoreOptions && (
-          <ToolbarDropdown
-            isFullscreen={isFullscreen}
-            items={compact([
-              code && {
-                label: "Code Block",
-                onClick: () => editor.chain().focus().toggleCodeBlock().run(),
-                isActive: editor.isActive("codeBlock"),
-              },
-              horizontalRule && {
-                label: "Horizontal Rule",
-                onClick: () => editor.chain().focus().setHorizontalRule().run(),
-                isActive: editor.isActive("horizontalRule"),
-              },
-              quote && {
-                label: "Quote",
-                onClick: () => editor.chain().focus().toggleBlockquote().run(),
-                isActive: editor.isActive("blockquote"),
-              },
-            ])}
-          >
-            <Button
-              variant="ghost"
-              size="md"
-              icon={Ellipsis}
-              hideLabel
-              label="More options"
-            />
-          </ToolbarDropdown>
         )}
       </div>
+    ) : null
 
+  const fileGroup = canUseFiles && (
+    <Button
+      icon={Paperclip}
+      onClick={() => {
+        if (fileInputRef?.current) {
+          fileInputRef.current.click()
+        } else {
+          const fileInput = document.getElementById("upload-button")
+          if (fileInput) fileInput.click()
+        }
+      }}
+      hideLabel
+      label="Add Attachment"
+      variant="ghost"
+      type="button"
+      disabled={disableButtons}
+    />
+  )
+
+  const moreOptionsGroup =
+    code || horizontalRule || quote ? (
+      <ToolbarDropdown
+        isFullscreen={isFullscreen}
+        items={compact([
+          code && {
+            label: "Code Block",
+            onClick: () => editor.chain().focus().toggleCodeBlock().run(),
+            isActive: editor.isActive("codeBlock"),
+          },
+          horizontalRule && {
+            label: "Horizontal Rule",
+            onClick: () => editor.chain().focus().setHorizontalRule().run(),
+            isActive: editor.isActive("horizontalRule"),
+          },
+          quote && {
+            label: "Quote",
+            onClick: () => editor.chain().focus().toggleBlockquote().run(),
+            isActive: editor.isActive("blockquote"),
+          },
+        ])}
+        disabled={disableButtons}
+      >
+        <Button
+          variant="ghost"
+          size="md"
+          icon={Ellipsis}
+          hideLabel
+          label="More options"
+          disabled={disableButtons}
+        />
+      </ToolbarDropdown>
+    ) : null
+
+  const groups = compact([
+    formattingGroup,
+    textSizeGroup,
+    textAlignGroup,
+    listGroup,
+    fileGroup,
+    moreOptionsGroup,
+  ])
+
+  return (
+    <div className="flex flex-row items-center justify-between gap-2 border-0 border-b-[1px] border-solid border-f1-border py-3">
+      <div className="flex flex-row items-center overflow-x-auto pl-4">
+        {intersperse(groups, <ToolbarDivider />)}
+      </div>
       <div className="flex flex-row items-center gap-2 pr-4">
         {canUseAi && (
           <EnhanceActivator
@@ -325,6 +319,7 @@ const ToolbarPlugin = ({
             isLoadingAi={isLoadingAi}
             enhancementOptions={enhancementOptions}
             canUseCustomPrompt={canUseCustomPrompt}
+            disableButtons={disableButtons}
           />
         )}
         {fullScreen && !isFullscreen && (
@@ -333,6 +328,7 @@ const ToolbarPlugin = ({
             label="Fullscreen"
             variant="ghost"
             type="button"
+            disabled={disableButtons}
           />
         )}
       </div>
