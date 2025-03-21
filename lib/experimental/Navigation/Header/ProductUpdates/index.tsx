@@ -10,6 +10,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
@@ -49,7 +50,7 @@ const ProductUpdates = ({
   updatesPageUrl,
   emptyScreen,
   errorScreen,
-  // hasUnread = false,
+  hasUnread = false,
 }: ProductUpdatesProp) => {
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
@@ -76,55 +77,61 @@ const ProductUpdates = ({
       <DropdownMenuTrigger asChild>
         <button
           title={label}
-          className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
+          className="relative inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
         >
           <Icon icon={Megaphone} size="md" />
+          {hasUnread && <UnreadDot className="absolute -right-0.5 -top-0.5" />}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="start"
-        className="max-h-[600px] min-w-96 max-w-md overflow-y-scroll"
-      >
-        <Header title={label} url={updatesPageUrl} />
-        {state === "fetching" && <ProductUpdatesSkeleton />}
-        {state === "idle" && updates !== null && updates.length === 0 && (
-          <>
-            <div className="p-2 pt-0">
-              <NoUpdates {...emptyScreen} buttonUrl={updatesPageUrl} />
-            </div>
-          </>
-        )}
-        {state === "idle" && updates !== null && updates.length > 0 && (
-          <>
-            <div className="p-2 pt-0">
-              <FeaturedDropdownItem {...featuredUpdate} />
-              {updates.length > 1 && (
-                <>
-                  <DropdownMenuSeparator />
-                  <h3 className="pb-2 pl-3 pr-5 pt-3 text-sm font-medium text-f1-foreground-secondary">
-                    {moreUpdatesLabel}
-                  </h3>
-                  {restUpdates.map((update, index) => (
-                    <DropdownItem key={index} {...update} />
-                  ))}
-                </>
-              )}
-            </div>
-          </>
-        )}
-        {state === "error" && (
-          <>
-            <div className="p-2 pt-0">
-              <ErrorScreen
-                {...errorScreen}
-                onClick={() => {
-                  getUpdates()
-                }}
-              />
-            </div>
-          </>
-        )}
-      </DropdownMenuContent>
+      <DropdownMenuPortal>
+        <DropdownMenuContent
+          sideOffset={8}
+          collisionPadding={20}
+          align="end"
+          hideWhenDetached
+          className="max-h-[600px] min-w-96 max-w-md overflow-y-scroll"
+        >
+          <Header title={label} url={updatesPageUrl} />
+          {state === "fetching" && <ProductUpdatesSkeleton />}
+          {state === "idle" && updates !== null && updates.length === 0 && (
+            <>
+              <div className="p-2 pt-0">
+                <NoUpdates {...emptyScreen} buttonUrl={updatesPageUrl} />
+              </div>
+            </>
+          )}
+          {state === "idle" && updates !== null && updates.length > 0 && (
+            <>
+              <div className="p-2 pt-0">
+                <FeaturedDropdownItem {...featuredUpdate} />
+                {updates.length > 1 && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <p className="pb-2 pl-3 pr-5 pt-3 text-sm font-medium text-f1-foreground-secondary text-balance">
+                      {moreUpdatesLabel}
+                    </p>
+                    {restUpdates.map((update, index) => (
+                      <DropdownItem key={index} {...update} />
+                    ))}
+                  </>
+                )}
+              </div>
+            </>
+          )}
+          {state === "error" && (
+            <>
+              <div className="p-2 pt-0">
+                <ErrorScreen
+                  {...errorScreen}
+                  onClick={() => {
+                    getUpdates()
+                  }}
+                />
+              </div>
+            </>
+          )}
+        </DropdownMenuContent>
+      </DropdownMenuPortal>
     </DropdownMenu>
   )
 }
@@ -138,7 +145,7 @@ const FeaturedDropdownItem = ({
 }: ProductUpdate) => {
   const itemClass = "flex flex-col items-stretch gap-3 w-full"
   return (
-    <DropdownMenuItem asChild className={itemClass}>
+    <DropdownMenuItem asChild>
       <Link
         href={href}
         target="_blank"
@@ -151,6 +158,7 @@ const FeaturedDropdownItem = ({
       >
         <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
           <Image
+            fetchPriority="high"
             src={imageURL}
             className="block aspect-video w-full object-contain object-center"
           />
@@ -162,9 +170,7 @@ const FeaturedDropdownItem = ({
               {updated}
             </p>
           </div>
-          {unread && (
-            <div className="mt-1.5 size-2 rounded bg-f1-background-selected-bold" />
-          )}
+          {unread && <UnreadDot className="mt-1.5" />}
         </div>
       </Link>
     </DropdownMenuItem>
@@ -193,14 +199,12 @@ const DropdownItem = ({
       >
         <div className="flex items-start gap-4">
           <div className="flex-1 *:text-base">
-            <h3 className="font-medium">{title}</h3>
+            <h3 className="font-medium text-pretty">{title}</h3>
             <p className="font-normal text-f1-foreground-secondary">
               {updated}
             </p>
           </div>
-          {unread && (
-            <div className="mt-1.5 size-2 rounded bg-f1-background-selected-bold" />
-          )}
+          {unread && <UnreadDot className="mt-1.5" />}
         </div>
       </Link>
     </DropdownMenuItem>
@@ -210,7 +214,7 @@ const DropdownItem = ({
 const Header = ({ title, url }: { title: string; url: UrlString }) => (
   <a
     href={url}
-    className="flex items-center justify-between gap-4 px-5 pt-3 pb-2 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
+    className="flex items-center justify-between gap-4 px-5 pb-2 pt-3 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
   >
     <h2 className="text-base font-medium">{title}</h2>
     <Button
@@ -248,7 +252,7 @@ const BaseScreen = ({
         {icon}
       </div>
       <div className="flex flex-1 flex-col gap-1 text-center *:text-base">
-        <h3 className="font-medium">{title}</h3>
+        <h3 className="font-medium text-pretty">{title}</h3>
         <p className="font-normal text-f1-foreground-secondary">
           {description}
         </p>
@@ -303,19 +307,25 @@ const ProductUpdatesSkeleton = () => (
     <div className="p-2">
       <Skeleton className="h-56 w-full rounded" />
       <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
-          <div className="flex-1 flex flex-col gap-2 py-1">
-            <Skeleton className="h-3 w-2/3" />
-            <Skeleton className="h-3 w-1/3" />
-          </div>
+        <div className="flex flex-1 flex-col gap-2 py-1">
+          <Skeleton className="h-3 w-2/3" />
+          <Skeleton className="h-3 w-1/3" />
+        </div>
       </div>
       <div className="flex basis-1/3 flex-row justify-between gap-2 p-3">
-          <div className="flex-1 flex flex-col gap-2 py-1">
-            <Skeleton className="h-3 w-2/3" />
-            <Skeleton className="h-3 w-1/3" />
-          </div>
+        <div className="flex flex-1 flex-col gap-2 py-1">
+          <Skeleton className="h-3 w-2/3" />
+          <Skeleton className="h-3 w-1/3" />
+        </div>
       </div>
     </div>
   </div>
+)
+
+const UnreadDot = ({ className = "" }: { className?: string }) => (
+  <div
+    className={cn("size-2 rounded bg-f1-background-selected-bold", className)}
+  />
 )
 
 export { ProductUpdates, type ProductUpdate, type ProductUpdatesProp }

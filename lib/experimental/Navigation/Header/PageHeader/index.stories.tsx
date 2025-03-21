@@ -199,6 +199,7 @@ export const WithProductUpdate: Story = {
     actions: defaultActions,
     productUpdates: {
       isVisible: true,
+      hasUnread: true,
       label: "Latest from Projects",
       moreUpdatesLabel: "More updates",
       updatesPageUrl: "https://factorialmakers.atlassian.net/browse/FCT-24580",
@@ -247,7 +248,7 @@ export const WithProductUpdate: Story = {
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                 },
                 {
-                  title: "Improved management of planned income and costs",
+                  title: "Improved management of planned income and costs, Improved management of planned income and costsImproved management of planned income and costsImproved management of planned income and costsImproved management of planned income and costs",
                   imageURL: "https://placecats.com/neo/300/200",
                   updated: "1 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
@@ -262,8 +263,7 @@ export const WithProductUpdate: Story = {
             1000
           )
         })
-      },
-      hasUnread: false,
+      }
     },
   },
 }
