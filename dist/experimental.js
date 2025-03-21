@@ -2323,6 +2323,7 @@ const va = iw, ha = tw, _t = h.forwardRef(({ className: e, align: n = "center", 
     sideOffset: i,
     className: N(
       "z-50 w-72 rounded-xs border bg-f1-background p-4 text-f1-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      "origin-[var(--radix-popover-content-transform-origin)]",
       e
     ),
     ...t
@@ -3925,10 +3926,10 @@ const Iw = h.forwardRef(({ className: e, content: n }, i) => /* @__PURE__ */ o(
   }
 ));
 Iw.displayName = "CardInfo";
-const A1 = h.forwardRef(({ className: e, title: n, ...i }, t) => /* @__PURE__ */ o(Nn, { ref: t, className: e, "aria-label": n, ...i, children: /* @__PURE__ */ o(
+const A1 = h.forwardRef(({ className: e, title: n, icon: i = kt, ...t }, a) => /* @__PURE__ */ o(Nn, { ref: a, className: e, "aria-label": n, ...t, children: /* @__PURE__ */ o(
   Ee,
   {
-    icon: kt,
+    icon: i,
     label: n ?? "",
     variant: "outline",
     size: "sm",
@@ -6624,6 +6625,7 @@ const bv = h.forwardRef(({ className: e, sideOffset: n = 4, ...i }, t) => /* @__
     sideOffset: n,
     className: N(
       "z-50 min-w-[--radix-popper-anchor-width] overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background text-f1-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      "origin-[var(--radix-dropdown-menu-content-transform-origin)]",
       e
     ),
     ...i
@@ -6749,7 +6751,7 @@ function xv({
       }
     ) }),
     /* @__PURE__ */ o(bv, { align: i, children: e.map(
-      (r, s) => r === "separator" ? /* @__PURE__ */ o(kv, {}, s) : /* @__PURE__ */ o(ox, { item: r }, s)
+      (r, s) => r.type === "separator" ? /* @__PURE__ */ o(kv, {}, s) : /* @__PURE__ */ o(ox, { item: r }, s)
     ) })
   ] });
 }
@@ -6773,7 +6775,7 @@ const sx = ["align"], Si = (e) => {
     ) }) }),
     /* @__PURE__ */ o(If, { className: "bg-f1-background-overlay" }),
     /* @__PURE__ */ o(gm, { className: "bg-f1-background", children: /* @__PURE__ */ o("div", { className: "flex flex-col px-2 pb-3 pt-2", children: e.map(
-      (a, r) => a === "separator" ? /* @__PURE__ */ o(
+      (a, r) => a.type === "separator" ? /* @__PURE__ */ o(
         "div",
         {
           className: "mx-[-8px] my-2 h-px w-[calc(100%+16px)] bg-f1-border-secondary"
@@ -6826,12 +6828,16 @@ const sx = ["align"], Si = (e) => {
       )
     ) }) })
   ] });
-}, fx = (e, n) => e(n).filter(
+}, fx = (e, n) => (e(n) || []).filter(
   (i) => i.enabled === void 0 || i.enabled
 ), Cv = ({
   item: e,
   actions: n
-}) => !n || n.length === 0 ? null : /* @__PURE__ */ o(Si, { items: fx(n, e), children: /* @__PURE__ */ o(Ee, { variant: "ghost", icon: vb, label: "Actions", hideLabel: !0 }) });
+}) => {
+  if (!n || n.length === 0) return null;
+  const i = fx(n, e);
+  return i.length === 0 ? null : /* @__PURE__ */ o(Si, { items: i, children: /* @__PURE__ */ o(Ee, { variant: "ghost", icon: vb, label: "Actions", hideLabel: !0 }) });
+};
 function dx(e, n) {
   var i = typeof Symbol < "u" && e[Symbol.iterator] || e["@@iterator"];
   if (i) return (i = i.call(e)).next.bind(i);
@@ -7676,7 +7682,7 @@ function Ns({
   sticky: r = !1,
   hidden: s = !1
 }) {
-  const { isScrolled: f } = Ov(), d = /* @__PURE__ */ o(ke, { children: /* @__PURE__ */ k("div", { className: "flex items-center gap-1", children: [
+  const { isScrolled: f } = Ov(), d = /* @__PURE__ */ o(ke, { children: /* @__PURE__ */ k("div", { className: "flex items-center gap-1 whitespace-nowrap", children: [
     e,
     t && /* @__PURE__ */ o(
       be.button,
@@ -7829,22 +7835,21 @@ const Rl = fn(Ex, Px), Rx = ({
   }), /* @__PURE__ */ k(ke, { children: [
     /* @__PURE__ */ k(Rl, { children: [
       /* @__PURE__ */ o(Bv, { children: /* @__PURE__ */ k(yr, { children: [
-        e.map((u) => /* @__PURE__ */ o(
+        e.map(({ sorting: u, label: m, ...y }) => /* @__PURE__ */ o(
           Ns,
           {
-            info: u.info,
-            width: u.width,
             sortState: c(
-              u.sorting,
+              u,
               n.sortings,
               f
             ),
-            onSortClick: u.sorting ? () => {
-              u.sorting && l(u.sorting);
+            ...y,
+            onSortClick: u ? () => {
+              u && l(u);
             } : void 0,
-            children: u.label
+            children: m
           },
-          String(u.label)
+          String(m)
         )),
         n.actions && /* @__PURE__ */ o(Ns, { width: "fit", hidden: !0, children: i.collections.actions.actions }, "actions")
       ] }) }),
@@ -7856,6 +7861,7 @@ const Rl = fn(Ex, Px), Rx = ({
             {
               firstCell: v === 0,
               href: y,
+              sticky: g.sticky,
               children: Pv(u, g)
             },
             String(g.label)
@@ -9626,12 +9632,12 @@ const g_ = u_, p_ = ({ item: e }) => /* @__PURE__ */ o(_h, { value: e.value, chi
     ...v
   }, p) {
     const w = i.find(
-      (O) => O !== "separator" && O.value === a
+      (O) => O.type !== "separator" && O.value === a
     ), b = Se(null), [_, x] = ie(v.searchValue || ""), [C, R] = ie(f), M = Re(() => {
       if (m)
         return i;
       const O = i.filter(
-        (P) => P == "separator" || !_ || P.label.toLowerCase().includes(_.toLowerCase())
+        (P) => P.type === "separator" || !_ || P.label.toLowerCase().includes(_.toLowerCase())
       );
       return setTimeout(() => {
         var P;
@@ -9649,7 +9655,7 @@ const g_ = u_, p_ = ({ item: e }) => /* @__PURE__ */ o(_h, { value: e.value, chi
       x(""), t == null || t(
         O,
         (P = i.find(
-          (F) => typeof F == "object" && F.value === O
+          (F) => typeof F == "object" && F.type !== "separator" && F.value === O
         )) == null ? void 0 : P.item
       );
     }, B = (O) => {
@@ -9659,7 +9665,7 @@ const g_ = u_, p_ = ({ item: e }) => /* @__PURE__ */ o(_h, { value: e.value, chi
       }, 0);
     }, j = Re(
       () => M.map(
-        (O, P) => O === "separator" ? {
+        (O, P) => O.type === "separator" ? {
           height: 1,
           item: /* @__PURE__ */ o(Ch, {}, `separator-${P}`)
         } : {
@@ -10074,7 +10080,7 @@ const x_ = ({
           onRemove: s,
           selected: we,
           partialSelected: ge,
-          showGroupIcon: ((_e = i.find((G) => G.value === t)) == null ? void 0 : _e.type) === "team",
+          showGroupIcon: ((_e = i.find((G) => G.value === t)) == null ? void 0 : _e.groupType) === "team",
           singleSelector: C,
           goToFirst: j,
           goToLast: O,
@@ -10166,7 +10172,7 @@ const x_ = ({
             onRemove: s,
             selected: te,
             partialSelected: de,
-            showGroupIcon: ((ge = i.find((se) => se.value === t)) == null ? void 0 : ge.type) === "team",
+            showGroupIcon: ((ge = i.find((se) => se.value === t)) == null ? void 0 : ge.groupType) === "team",
             singleSelector: C,
             goToFirst: j,
             goToLast: O,
@@ -23831,7 +23837,7 @@ const fN = ({
           "aria-label": `${c.name} logo`
         }
       })),
-      ...a.length ? ["separator"] : [],
+      ...a.length ? [{ type: "separator" }] : [],
       ...a
     ],
     [e, a]
@@ -25823,7 +25829,8 @@ const IP = rn(
                 {
                   onClick: m,
                   href: n.link.url,
-                  title: n.link.title
+                  title: n.link.title,
+                  icon: n.link.icon
                 }
               )
             ] })

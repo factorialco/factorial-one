@@ -44,7 +44,7 @@ declare type Action = {
 
 export declare type ActionsDefinition<T extends RecordType> = (item: T) => Array<DropdownItem & {
     enabled?: boolean;
-}>;
+}> | undefined;
 
 declare type ActionType = CopyActionType | NavigateActionType;
 
@@ -144,7 +144,7 @@ export declare type AvatarNamedEntity = {
 export declare type AvatarNamedGroup = {
     value: string;
     label: string;
-    type?: "avatar" | "team";
+    groupType?: "avatar" | "team";
 };
 
 export declare type AvatarNamedSubEntity = {
@@ -1010,7 +1010,7 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     /** Predefined filter configurations that can be applied */
     presets?: Presets<Filters>;
     /** URL for a single item in the collection */
-    itemUrl?: (item: Record) => string;
+    itemUrl?: (item: Record) => string | undefined;
     /** Available actions that can be performed on records */
     actions?: Actions;
     /** Search configuration */
@@ -1111,9 +1111,12 @@ declare type DropdownInternalProps = {
     align?: "start" | "end";
 };
 
-export declare type DropdownItem = DropdownItemObject | "separator";
+export declare type DropdownItem = DropdownItemObject | {
+    type: "separator";
+};
 
 export declare type DropdownItemObject = NavigationItem & {
+    type?: "item";
     onClick?: () => void;
     icon?: IconType;
     description?: string;
@@ -2071,6 +2074,7 @@ export declare const SectionHeader: ({ title, description, action, supportButton
 export declare const Select: ForwardRefExoticComponent<SelectProps<string, any> & RefAttributes<HTMLButtonElement>>;
 
 export declare type SelectItemObject<T, R = unknown> = {
+    type?: "item";
     value: T;
     label: string;
     description?: string;
@@ -2079,7 +2083,9 @@ export declare type SelectItemObject<T, R = unknown> = {
     item?: R;
 };
 
-export declare type SelectItemProps<T, R = unknown> = SelectItemObject<T, R> | "separator";
+export declare type SelectItemProps<T, R = unknown> = SelectItemObject<T, R> | {
+    type: "separator";
+};
 
 export declare type SelectProps<T, R = any> = {
     placeholder?: string;
@@ -2276,7 +2282,44 @@ export declare type TabItem = {
     index?: boolean;
 };
 
-declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings>;
+declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
+
+declare function TableHead({ children, width, sortState, onSortClick, info, sticky, hidden, }: TableHeadProps): JSX_2.Element;
+
+declare interface TableHeadProps {
+    children: React.ReactNode;
+    /**
+     * The width of the header cell. If not provided, the width will be "auto"
+     * @default "auto"
+     */
+    width?: ColumnWidth;
+    /**
+     * When true, the header cell will stick to the left side of the table when scrolling horizontally
+     * @default false
+     */
+    sticky?: boolean;
+    /**
+     * The current sort direction of this column. "none" indicates no sorting,
+     * "asc" sorts ascending (A-Z, 1-9), and "desc" sorts descending (Z-A, 9-1)
+     * @default "none"
+     */
+    sortState?: "none" | "asc" | "desc";
+    /**
+     * Callback fired when the sort button is clicked.
+     * Use this to handle toggling between sort states.
+     */
+    onSortClick?: () => void;
+    /**
+     * Optional tooltip text. When provided, displays an info icon next to the header content
+     * that shows this text in a tooltip when hovered.
+     */
+    info?: string;
+    /**
+     * When true, the header cell will not be visible.
+     * @default false
+     */
+    hidden?: boolean;
+}
 
 declare type TableVisualizationOptions<Record extends RecordType, _Filters extends FiltersDefinition, Sortings extends SortingsDefinition> = {
     columns: ReadonlyArray<TableColumnDefinition<Record, Sortings>>;
@@ -2552,6 +2595,7 @@ export declare interface WidgetProps {
             title: string;
             url: string;
             onClick?: () => void;
+            icon?: IconType;
         };
         count?: number;
     };
