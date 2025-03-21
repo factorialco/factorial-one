@@ -1,12 +1,4 @@
 import { Button } from "@/components/Actions/Button"
-import { EditorBubbleMenu } from "@/experimental/RichText/RichTextEditor/BubbleMenu"
-import { FileList } from "@/experimental/RichText/RichTextEditor/FileList"
-import { ToolbarPlugin } from "@/experimental/RichText/RichTextEditor/Toolbar"
-import {
-  handleEnhanceWithAIFunction,
-  isValidSelectionForEnhancement,
-} from "@/experimental/RichText/RichTextEditor/utils/enhance"
-import { configureMention } from "@/experimental/RichText/RichTextEditor/utils/mention"
 import { Cross } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import CharacterCount from "@tiptap/extension-character-count"
@@ -29,8 +21,16 @@ import {
   useState,
 } from "react"
 import screenfull from "screenfull"
+import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
+import { FileList } from "./FileList"
 import "./index.css"
+import { ToolbarPlugin } from "./Toolbar"
+import {
+  handleEnhanceWithAIFunction,
+  isValidSelectionForEnhancement,
+} from "./utils/enhance"
+import { configureMention } from "./utils/mention"
 
 // types related to the editor styles
 type RichTextEditorHeight = "xs" | "sm" | "md" | "lg" | "xl" | "h-full"
@@ -74,6 +74,12 @@ type enhanceTextType = {
   type: string
   intent?: string
   context?: string
+}
+
+type enhancedTextResponse = {
+  success: boolean
+  text: string
+  error?: string
 }
 
 type toolbarConfig = {
@@ -132,7 +138,7 @@ interface RichTextEditorProps {
     type,
     intent,
     context,
-  }: enhanceTextType) => Promise<string>
+  }: enhanceTextType) => Promise<enhancedTextResponse>
   enhancementOptions?: EnhancementOption[]
   canUseCustomPrompt?: boolean
 
@@ -332,12 +338,20 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           enhanceText: enhanceText!,
           setIsLoadingAi,
           isValidSelectionForEnhancement,
+          onSuccess: () => {
+            editor?.setEditable(false)
+            setIsAcceptChangesOpen(true)
+          },
+          onError: (error?: string) => {
+            // TODO: Add error handling
+            editor?.setEditable(true)
+            setIsAcceptChangesOpen(false)
+            console.error(error || "Error")
+          },
           enhanceType,
           customIntent,
           context,
         })
-        editor?.setEditable(false)
-        setIsAcceptChangesOpen(true)
       },
       [editor, enhanceText, setIsLoadingAi]
     )
@@ -467,6 +481,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
 export { RichTextEditor }
 
 export type {
+  enhancedTextResponse,
   EnhancementOption,
   enhanceTextType,
   MentionChangeResult,
