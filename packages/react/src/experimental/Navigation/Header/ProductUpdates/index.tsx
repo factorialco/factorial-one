@@ -29,7 +29,7 @@ type ProductUpdatesProp = {
   label: string
   moreUpdatesLabel: string
   updatesPageUrl: UrlString
-  getUpdatesQuery: () => Promise<Array<ProductUpdate>>
+  getUpdates: () => Promise<Array<ProductUpdate>>
   hasUnread?: boolean
   emptyScreen: {
     title: string
@@ -46,7 +46,7 @@ type ProductUpdatesProp = {
 const ProductUpdates = ({
   label,
   moreUpdatesLabel,
-  getUpdatesQuery,
+  getUpdates,
   updatesPageUrl,
   emptyScreen,
   errorScreen,
@@ -55,22 +55,22 @@ const ProductUpdates = ({
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
   const [featuredUpdate, ...restUpdates] = updates ?? []
-  const getUpdates = useCallback(async () => {
+  const invokeGetUpdates = useCallback(async () => {
     try {
       setState("fetching")
-      const response = await getUpdatesQuery()
+      const response = await getUpdates()
       setState("idle")
       setUpdates(response)
     } catch {
       setState("error")
     }
-  }, [getUpdatesQuery])
+  }, [getUpdates])
 
   return (
     <DropdownMenu
       onOpenChange={async (open) => {
         if (open && updates === null) {
-          getUpdates()
+          invokeGetUpdates()
         }
       }}
     >
@@ -122,7 +122,7 @@ const ProductUpdates = ({
                 <ErrorScreen
                   {...errorScreen}
                   onClick={() => {
-                    getUpdates()
+                    invokeGetUpdates()
                   }}
                 />
               </div>
