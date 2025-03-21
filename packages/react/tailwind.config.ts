@@ -2,7 +2,7 @@
 import type { Config } from "tailwindcss"
 
 import { absoluteSpacing, relativeSpacing } from "./src/tailwind/spacing"
-import { baseColors, f1Colors } from "./tokens/colors"
+import { baseColors, f1Colors } from "./src/tokens/colors"
 
 export default {
   darkMode: ["class"],

@@ -1,6 +1,6 @@
-import { useTextFormatEnforcer } from "../../../../lib/text"
-import { baseColors } from "../../../../../tokens/colors"
 import { forwardRef } from "react"
+import { useTextFormatEnforcer } from "../../../../lib/text"
+import { baseColors } from "../../../../tokens/colors"
 import { BaseTag } from "../BaseTag"
 
 export type NewColor = Extract<

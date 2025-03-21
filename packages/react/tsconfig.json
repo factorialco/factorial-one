@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
@@ -23,23 +19,13 @@
     "noFallthroughCasesInSwitch": true,
     /* Shadcn */
     /* */
-    "types": [
-      "vite/client",
-      "@testing-library/jest-dom"
-    ],
+    "types": ["vite/client", "@testing-library/jest-dom"],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "~/*": [
-        "./*"
-      ]
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
     }
   },
-  "include": [
-    "src",
-    ".storybook"
-  ],
+  "include": ["src", ".storybook", "src/tokens"],
   "exclude": [
     ".node_modules",
     "dist",
