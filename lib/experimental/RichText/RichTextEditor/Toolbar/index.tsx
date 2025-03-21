@@ -1,12 +1,15 @@
-// ToolbarPlugin.tsx
+import { compact } from "lodash"
 import React from "react"
 
 import { Editor } from "@tiptap/react"
 
-import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
+import { Button } from "@/components/Actions/Button"
+import {
+  EnhancementOption,
+  toolbarConfig,
+} from "@/experimental/RichText/RichTextEditor"
 import { EnhanceActivator } from "@/experimental/RichText/RichTextEditor/Enhance"
 import { ToolbarDropdown } from "@/experimental/RichText/RichTextEditor/Toolbar/ToolbarDropdown"
-import { Button } from "@/factorial-one"
 import { Ellipsis, Paperclip } from "@/icons/app"
 import { cn } from "@/lib/utils"
 
@@ -33,9 +36,9 @@ interface ToolbarPluginProps {
   isLoadingAi: boolean
   canUseFiles: boolean
   canUseAi: boolean
-  fullScreenEnabled: boolean
   enhancementOptions: EnhancementOption[]
   canUseCustomPrompt: boolean
+  config: toolbarConfig
 }
 
 const ToolbarPlugin = ({
@@ -47,13 +50,53 @@ const ToolbarPlugin = ({
   isLoadingAi,
   canUseFiles,
   canUseAi,
-  fullScreenEnabled,
   enhancementOptions,
   canUseCustomPrompt,
+  config,
 }: ToolbarPluginProps) => {
   if (!editor) {
     return null
   }
+
+  const {
+    bold = true,
+    italic = true,
+    underline = true,
+    textSize: {
+      normal = true,
+      heading1 = true,
+      heading2 = true,
+      heading3 = true,
+    } = {
+      normal: true,
+      heading1: true,
+      heading2: true,
+      heading3: true,
+    },
+    textAlign: { left = true, center = true, right = true, justify = true } = {
+      left: true,
+      center: true,
+      right: true,
+      justify: true,
+    },
+    list: { bullet, ordered } = {
+      bullet: true,
+      ordered: true,
+    },
+    moreOptions: { code, horizontalRule, quote } = {
+      code: true,
+      horizontalRule: true,
+      quote: true,
+    },
+    fullScreen = true,
+  } = config
+
+  const showTextSize = normal || heading1 || heading2 || heading3
+  const showTextAlign = left || center || right || justify
+  const showMoreOptions = code || horizontalRule || quote
+  const showFormattingButtons = bold || italic || underline
+  const showList = bullet || ordered
+  const showFileButton = canUseFiles
 
   const getHeadingLabel = () => {
     if (editor.isActive("heading")) {
@@ -73,149 +116,167 @@ const ToolbarPlugin = ({
     return "Left"
   }
 
+  const showToolbar =
+    bold ||
+    italic ||
+    underline ||
+    showTextSize ||
+    showTextAlign ||
+    showMoreOptions ||
+    showFormattingButtons ||
+    showList ||
+    showFileButton ||
+    canUseAi ||
+    fullScreen
+
+  if (!showToolbar) {
+    return null
+  }
+
   return (
     <div className="flex flex-row items-center justify-between gap-2 border-0 border-b-[1px] border-solid border-f1-border py-3">
       <div className="flex flex-row items-center overflow-x-auto pl-4">
-        <Button
-          variant={editor.isActive("bold") ? "neutral" : "ghost"}
-          label="Bold"
-          onClick={() => {
-            editor.chain().focus().toggleBold().run()
-          }}
-          type="button"
-        />
-        <Button
-          variant={editor.isActive("italic") ? "neutral" : "ghost"}
-          label="Italic"
-          onClick={() => {
-            editor.chain().focus().toggleItalic().run()
-          }}
-          type="button"
-        />
-        <Button
-          variant={editor.isActive("underline") ? "neutral" : "ghost"}
-          label="Underline"
-          onClick={() => {
-            editor.chain().focus().toggleUnderline().run()
-          }}
-          type="button"
-        />
-
-        <ToolbarDivider />
-        <ToolbarDropdown
-          isFullscreen={isFullscreen}
-          items={[
-            {
-              label: "Normal",
-              onClick: function Js() {
-                editor
-                  .chain()
-                  .focus()
-                  .toggleHeading({
-                    level: editor.getAttributes("heading").level,
-                  })
-                  .run()
+        {bold && (
+          <Button
+            variant={editor.isActive("bold") ? "neutral" : "ghost"}
+            label="Bold"
+            onClick={() => {
+              editor.chain().focus().toggleBold().run()
+            }}
+            type="button"
+          />
+        )}
+        {italic && (
+          <Button
+            variant={editor.isActive("italic") ? "neutral" : "ghost"}
+            label="Italic"
+            onClick={() => {
+              editor.chain().focus().toggleItalic().run()
+            }}
+            type="button"
+          />
+        )}
+        {underline && (
+          <Button
+            variant={editor.isActive("underline") ? "neutral" : "ghost"}
+            label="Underline"
+            onClick={() => {
+              editor.chain().focus().toggleUnderline().run()
+            }}
+            type="button"
+          />
+        )}
+        {showFormattingButtons && showTextSize && <ToolbarDivider />}
+        {showTextSize && (
+          <ToolbarDropdown
+            isFullscreen={isFullscreen}
+            items={compact([
+              normal && {
+                label: "Normal",
+                onClick: () =>
+                  editor
+                    .chain()
+                    .focus()
+                    .toggleHeading({
+                      level: editor.getAttributes("heading").level,
+                    })
+                    .run(),
+                isActive: !editor.isActive("heading"),
               },
-              isActive: !editor.isActive("heading"),
-            },
-            {
-              label: "H1",
-              onClick: function Js() {
-                editor.chain().focus().toggleHeading({ level: 1 }).run()
+              heading1 && {
+                label: "H1",
+                onClick: () =>
+                  editor.chain().focus().toggleHeading({ level: 1 }).run(),
+                isActive: editor.isActive("heading", { level: 1 }),
               },
-              isActive: editor.isActive("heading", { level: 1 }),
-            },
-            {
-              label: "H2",
-              onClick: function Js() {
-                editor.chain().focus().toggleHeading({ level: 2 }).run()
+              heading2 && {
+                label: "H2",
+                onClick: () =>
+                  editor.chain().focus().toggleHeading({ level: 2 }).run(),
+                isActive: editor.isActive("heading", { level: 2 }),
               },
-              isActive: editor.isActive("heading", { level: 2 }),
-            },
-            {
-              label: "H3",
-              onClick: function Js() {
-                editor.chain().focus().toggleHeading({ level: 3 }).run()
+              heading3 && {
+                label: "H3",
+                onClick: () =>
+                  editor.chain().focus().toggleHeading({ level: 3 }).run(),
+                isActive: editor.isActive("heading", { level: 3 }),
               },
-              isActive: editor.isActive("heading", { level: 3 }),
-            },
-          ]}
-        >
-          <Button variant={"ghost"} size="md" label={getHeadingLabel()} />
-        </ToolbarDropdown>
-        <ToolbarDivider show={isFullscreen} />
-        <ToolbarDropdown
-          isFullscreen={isFullscreen}
-          items={[
-            {
-              label: "Left",
-              onClick: function Js() {
-                editor.chain().focus().setTextAlign("left").run()
+            ])}
+          >
+            <Button variant="ghost" size="md" label={getHeadingLabel()} />
+          </ToolbarDropdown>
+        )}
+        {showTextSize && showTextAlign && (
+          <ToolbarDivider show={isFullscreen} />
+        )}
+        {showTextAlign && (
+          <ToolbarDropdown
+            isFullscreen={isFullscreen}
+            items={compact([
+              left && {
+                label: "Left",
+                onClick: () =>
+                  editor.chain().focus().setTextAlign("left").run(),
+                isActive:
+                  editor.isActive({ textAlign: "left" }) ||
+                  (!editor.isActive({ textAlign: "justify" }) &&
+                    !editor.isActive({ textAlign: "center" }) &&
+                    !editor.isActive({ textAlign: "right" })),
               },
-              isActive:
-                editor.isActive({ textAlign: "left" }) ||
-                (!editor.isActive({ textAlign: "justify" }) &&
-                  !editor.isActive({ textAlign: "center" }) &&
-                  !editor.isActive({ textAlign: "right" })),
-            },
-            {
-              label: "Center",
-              onClick: function Js() {
-                editor.chain().focus().setTextAlign("center").run()
+              center && {
+                label: "Center",
+                onClick: () =>
+                  editor.chain().focus().setTextAlign("center").run(),
+                isActive: editor.isActive({ textAlign: "center" }),
               },
-              isActive: editor.isActive({ textAlign: "center" }),
-            },
-            {
-              label: "Right",
-              onClick: function Js() {
-                editor.chain().focus().setTextAlign("right").run()
+              right && {
+                label: "Right",
+                onClick: () =>
+                  editor.chain().focus().setTextAlign("right").run(),
+                isActive: editor.isActive({ textAlign: "right" }),
               },
-              isActive: editor.isActive({ textAlign: "right" }),
-            },
-            {
-              label: "Justify",
-              onClick: function Js() {
-                editor.chain().focus().setTextAlign("justify").run()
+              justify && {
+                label: "Justify",
+                onClick: () =>
+                  editor.chain().focus().setTextAlign("justify").run(),
+                isActive: editor.isActive({ textAlign: "justify" }),
               },
-              isActive: editor.isActive({ textAlign: "justify" }),
-            },
-          ]}
-        >
-          <Button variant={"ghost"} size="md" label={getTextAlignLabel()} />
-        </ToolbarDropdown>
-
-        <ToolbarDivider />
-
-        <Button
-          onClick={() => {
-            editor.chain().focus().toggleBulletList().run()
-          }}
-          variant={editor.isActive("bulletList") ? "neutral" : "ghost"}
-          label="Bullet List"
-          type="button"
-        />
-        <Button
-          onClick={() => {
-            editor.chain().focus().toggleOrderedList().run()
-          }}
-          variant={editor.isActive("orderedList") ? "neutral" : "ghost"}
-          label="Ordered List"
-          type="button"
-        />
-
-        <ToolbarDivider />
-
-        {canUseFiles && (
+            ])}
+          >
+            <Button variant="ghost" size="md" label={getTextAlignLabel()} />
+          </ToolbarDropdown>
+        )}
+        {showTextAlign && showList && <ToolbarDivider />}
+        {showList && bullet && (
+          <Button
+            onClick={() => {
+              editor.chain().focus().toggleBulletList().run()
+            }}
+            variant={editor.isActive("bulletList") ? "neutral" : "ghost"}
+            label="Bullet List"
+            type="button"
+          />
+        )}
+        {showList && ordered && (
+          <Button
+            onClick={() => {
+              editor.chain().focus().toggleOrderedList().run()
+            }}
+            variant={editor.isActive("orderedList") ? "neutral" : "ghost"}
+            label="Ordered List"
+            type="button"
+          />
+        )}
+        {showList && (showFileButton || showMoreOptions) && <ToolbarDivider />}
+        {showFileButton && (
           <Button
             icon={Paperclip}
             onClick={() => {
-              if (fileInputRef && fileInputRef.current) {
+              if (fileInputRef?.current) {
                 fileInputRef.current.click()
               } else {
                 const fileInput = document.getElementById("upload-button")
-                if (fileInput) {
-                  fileInput.click()
-                }
+                if (fileInput) fileInput.click()
               }
             }}
             hideLabel
@@ -224,41 +285,36 @@ const ToolbarPlugin = ({
             type="button"
           />
         )}
-
-        <ToolbarDropdown
-          isFullscreen={isFullscreen}
-          items={[
-            {
-              label: "Code Block",
-              onClick: function Js() {
-                editor.chain().focus().toggleCodeBlock().run()
+        {showMoreOptions && (
+          <ToolbarDropdown
+            isFullscreen={isFullscreen}
+            items={compact([
+              code && {
+                label: "Code Block",
+                onClick: () => editor.chain().focus().toggleCodeBlock().run(),
+                isActive: editor.isActive("codeBlock"),
               },
-              isActive: editor.isActive("codeBlock"),
-            },
-            {
-              label: "Horizontal Rule",
-              onClick: function Js() {
-                editor.chain().focus().setHorizontalRule().run()
+              horizontalRule && {
+                label: "Horizontal Rule",
+                onClick: () => editor.chain().focus().setHorizontalRule().run(),
+                isActive: editor.isActive("horizontalRule"),
               },
-              isActive: editor.isActive("horizontalRule"),
-            },
-            {
-              label: "Quote",
-              onClick: function Js() {
-                editor.chain().focus().toggleBlockquote().run()
+              quote && {
+                label: "Quote",
+                onClick: () => editor.chain().focus().toggleBlockquote().run(),
+                isActive: editor.isActive("blockquote"),
               },
-              isActive: editor.isActive("blockquote"),
-            },
-          ]}
-        >
-          <Button
-            variant="ghost"
-            size="md"
-            icon={Ellipsis}
-            hideLabel
-            label="More options"
-          />
-        </ToolbarDropdown>
+            ])}
+          >
+            <Button
+              variant="ghost"
+              size="md"
+              icon={Ellipsis}
+              hideLabel
+              label="More options"
+            />
+          </ToolbarDropdown>
+        )}
       </div>
 
       <div className="flex flex-row items-center gap-2 pr-4">
@@ -271,8 +327,7 @@ const ToolbarPlugin = ({
             canUseCustomPrompt={canUseCustomPrompt}
           />
         )}
-
-        {fullScreenEnabled && !isFullscreen && (
+        {fullScreen && !isFullscreen && (
           <Button
             onClick={handleToggleFullscreen}
             label="Fullscreen"
