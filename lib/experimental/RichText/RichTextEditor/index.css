@@ -1,7 +1,5 @@
 /* Main styles */
 .mention {
-  color: #06838c;
-  cursor: pointer;
   text-decoration: none !important;
   font-weight: 600;
 }
@@ -15,6 +13,7 @@
     #d1f3f7 100%
   ) !important;
 }
+
 /*********
   tiptap styles
   **********/

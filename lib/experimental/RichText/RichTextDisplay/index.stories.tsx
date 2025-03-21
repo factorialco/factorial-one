@@ -25,7 +25,7 @@ const htmlContent = `<p>
 </p>
 <p>
   You have to fill
-  <a href="https://google.com/" target="_blank" rel="noopener noreferrer">
+  <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" target="_blank" rel="noopener noreferrer">
     <strong>THIS FORM</strong>
   </a>
   !
@@ -50,8 +50,7 @@ const htmlContent = `<p>
     <p>
       <a href="https://www.google.com" class="mention" data-id="1" rel="noopener noreferrer" target="_blank">
         @Raúl Sigüenza Sánchez
-      </a>
-      ?
+      </a>?
     </p>
   </li>
 </ul>

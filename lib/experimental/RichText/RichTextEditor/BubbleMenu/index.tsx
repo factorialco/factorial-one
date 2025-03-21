@@ -1,13 +1,11 @@
-import { useRef, useState } from "react"
-import ReactDOM from "react-dom/client"
-
-import { BubbleMenu, Editor } from "@tiptap/react"
-import tippy, { Instance } from "tippy.js"
-
 import { Button } from "@/components/Actions/exports"
 import { EnhancementOption } from "@/experimental/RichText/RichTextEditor"
 import { EnhanceActivator } from "@/experimental/RichText/RichTextEditor/Enhance"
 import { Input } from "@/ui/input"
+import { BubbleMenu, Editor } from "@tiptap/react"
+import { useRef, useState } from "react"
+import ReactDOM from "react-dom/client"
+import tippy, { Instance } from "tippy.js"
 
 interface EditorBubbleMenuProps {
   editor: Editor
@@ -21,6 +19,7 @@ interface EditorBubbleMenuProps {
   canUseAi: boolean
   enhancementOptions: EnhancementOption[]
   canUseCustomPrompt: boolean
+  disableButtons: boolean
 }
 
 interface LinkPopupProps {
@@ -64,11 +63,13 @@ const EditorBubbleMenu = ({
   isLoadingAi,
   enhancementOptions,
   canUseCustomPrompt,
+  disableButtons,
 }: EditorBubbleMenuProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
   const linkButtonRef = useRef<HTMLDivElement>(null)
 
   const handleLinkClick = () => {
+    if (disableButtons) return
     if (editor.isActive("link")) {
       editor.chain().focus().unsetLink().run()
       return
@@ -123,6 +124,7 @@ const EditorBubbleMenu = ({
           label="Link"
           variant={editor.isActive("link") ? "neutral" : "ghost"}
           type="button"
+          disabled={disableButtons}
         />
 
         {canUseAi && (
@@ -136,6 +138,7 @@ const EditorBubbleMenu = ({
             }}
             enhancementOptions={enhancementOptions}
             canUseCustomPrompt={canUseCustomPrompt}
+            disableButtons={disableButtons}
           />
         )}
       </div>

@@ -1,13 +1,3 @@
-import { cn } from "@/lib/utils"
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react"
-
 import { Button } from "@/components/Actions/Button"
 import { EditorBubbleMenu } from "@/experimental/RichText/RichTextEditor/BubbleMenu"
 import { FileList } from "@/experimental/RichText/RichTextEditor/FileList"
@@ -18,6 +8,7 @@ import {
 } from "@/experimental/RichText/RichTextEditor/utils/enhance"
 import { configureMention } from "@/experimental/RichText/RichTextEditor/utils/mention"
 import { Cross } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import CharacterCount from "@tiptap/extension-character-count"
 import Color from "@tiptap/extension-color"
 import Image from "@tiptap/extension-image"
@@ -29,7 +20,16 @@ import Typography from "@tiptap/extension-typography"
 import Underline from "@tiptap/extension-underline"
 import { EditorContent, useEditor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react"
 import screenfull from "screenfull"
+import { AcceptChanges } from "./Enhance/AcceptChanges"
 import "./index.css"
 
 // types related to the editor styles
@@ -188,6 +188,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const [isLoadingAi, setIsLoadingAi] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
+    const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
 
     useEffect(() => {
       if (screenfull.isEnabled) {
@@ -244,7 +245,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             : []),
         ],
         content: initialEditorState?.content || "",
-        editable: true,
         onUpdate: ({ editor: editorInstance }) => {
           if (onChange) {
             const html = editorInstance.getHTML()
@@ -336,6 +336,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           customIntent,
           context,
         })
+        editor?.setEditable(false)
+        setIsAcceptChangesOpen(true)
       },
       [editor, enhanceText, setIsLoadingAi]
     )
@@ -343,7 +345,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     return (
       <div
         ref={containerRef}
-        className="m-5 flex w-full flex-col rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
+        className="relative m-5 flex w-full flex-col rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
       >
         {isFullscreen && (
           <div className="flex w-full items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3">
@@ -373,6 +375,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           enhancementOptions={enhancementOptions || []}
           canUseCustomPrompt={canUseCustomPrompt}
           config={toolbarConfig || {}}
+          disableButtons={isAcceptChangesOpen}
         />
         <div
           ref={editorRef}
@@ -410,6 +413,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             canUseAi={enhanceText ? true : false}
             enhancementOptions={enhancementOptions || []}
             canUseCustomPrompt={canUseCustomPrompt}
+            disableButtons={isAcceptChangesOpen}
           />
         )}
 
@@ -427,6 +431,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                   variant="outline"
                   size="md"
                   label="Cancel"
+                  disabled={isAcceptChangesOpen}
                 />
               )}
               {onSubmit && (
@@ -435,10 +440,24 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                   variant="default"
                   size="md"
                   label="Save"
+                  disabled={isAcceptChangesOpen}
                 />
               )}
             </div>
           </div>
+        )}
+        {isAcceptChangesOpen && (
+          <AcceptChanges
+            onAccept={() => {
+              setIsAcceptChangesOpen(false)
+              editor?.setEditable(true)
+            }}
+            onReject={() => {
+              editor?.chain().focus().undo().run()
+              setIsAcceptChangesOpen(false)
+              editor?.setEditable(true)
+            }}
+          />
         )}
       </div>
     )
