@@ -102,20 +102,18 @@ const ProductUpdates = ({
           )}
           {state === "idle" && updates !== null && updates.length > 0 && (
             <>
-              <div className="p-2 pt-0">
-                <FeaturedDropdownItem {...featuredUpdate} />
-                {updates.length > 1 && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <p className="text-balance pb-2 pl-3 pr-5 pt-3 text-sm font-medium text-f1-foreground-secondary">
-                      {moreUpdatesLabel}
-                    </p>
-                    {restUpdates.map((update, index) => (
-                      <DropdownItem key={index} {...update} />
-                    ))}
-                  </>
-                )}
-              </div>
+              <FeaturedDropdownItem {...featuredUpdate} />
+              {updates.length > 1 && (
+                <>
+                  <DropdownMenuSeparator />
+                  <p className="text-balance pb-1 pl-3 pr-5 pt-3 text-sm font-medium text-f1-foreground-secondary">
+                    {moreUpdatesLabel}
+                  </p>
+                  {restUpdates.map((update, index) => (
+                    <DropdownItem key={index} {...update} />
+                  ))}
+                </>
+              )}
             </>
           )}
           {state === "error" && (
@@ -160,7 +158,7 @@ const FeaturedDropdownItem = ({
           <Image
             fetchPriority="high"
             src={imageURL}
-            className="block aspect-video w-full object-contain object-center bg-f1-background-secondary"
+            className="block aspect-video w-full bg-f1-background-secondary object-contain object-center"
           />
         </div>
         <div className="flex items-start gap-4">
@@ -214,7 +212,7 @@ const DropdownItem = ({
 const Header = ({ title, url }: { title: string; url: UrlString }) => (
   <a
     href={url}
-    className="flex items-center justify-between gap-4 px-5 pb-2 pt-3 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
+    className="flex items-center justify-between gap-4 px-4 pb-2 pt-3 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
   >
     <h2 className="text-base font-medium">{title}</h2>
     <Button
