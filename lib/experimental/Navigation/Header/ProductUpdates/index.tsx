@@ -107,7 +107,7 @@ const ProductUpdates = ({
                 {updates.length > 1 && (
                   <>
                     <DropdownMenuSeparator />
-                    <p className="pb-2 pl-3 pr-5 pt-3 text-sm font-medium text-f1-foreground-secondary text-balance">
+                    <p className="text-balance pb-2 pl-3 pr-5 pt-3 text-sm font-medium text-f1-foreground-secondary">
                       {moreUpdatesLabel}
                     </p>
                     {restUpdates.map((update, index) => (
@@ -199,7 +199,7 @@ const DropdownItem = ({
       >
         <div className="flex items-start gap-4">
           <div className="flex-1 *:text-base">
-            <h3 className="font-medium text-pretty">{title}</h3>
+            <h3 className="text-pretty font-medium">{title}</h3>
             <p className="font-normal text-f1-foreground-secondary">
               {updated}
             </p>
@@ -252,7 +252,7 @@ const BaseScreen = ({
         {icon}
       </div>
       <div className="flex flex-1 flex-col gap-1 text-center *:text-base">
-        <h3 className="font-medium text-pretty">{title}</h3>
+        <h3 className="text-pretty font-medium">{title}</h3>
         <p className="font-normal text-f1-foreground-secondary">
           {description}
         </p>
