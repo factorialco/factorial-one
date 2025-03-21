@@ -1,4 +1,4 @@
-import { ExampleComponent } from "../../../react-native/src";
+import { ExampleComponent } from "@factorialco/factorial-one-react-native";
 import * as React from "react";
 import { View } from "react-native";
 
