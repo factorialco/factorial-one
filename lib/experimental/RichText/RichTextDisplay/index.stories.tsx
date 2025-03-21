@@ -10,11 +10,11 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const htmlContent = `<p>
-  <a href="https://www.google.com" class="mention" data-id="3" rel="noopener noreferrer" target="_blank">
+  <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="3" rel="noopener noreferrer" target="_blank">
     @Xavier Val Parejo
   </a>
   and
-  <a href="https://www.google.com" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">
+  <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">
     @Jacob Bamio Cordero
   </a>
   are trying to get fit so...
@@ -48,7 +48,7 @@ const htmlContent = `<p>
   </li>
   <li>
     <p>
-      <a href="https://www.google.com" class="mention" data-id="1" rel="noopener noreferrer" target="_blank">
+      <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="1" rel="noopener noreferrer" target="_blank">
         @Raúl Sigüenza Sánchez
       </a>?
     </p>

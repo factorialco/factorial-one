@@ -1,5 +1,5 @@
 import { Editor } from "@tiptap/react"
-import { enhanceTextType } from ".."
+import { enhancedTextResponse, enhanceTextType } from ".."
 
 function isValidSelectionForEnhancement(text: string): boolean {
   return text.trim().length > 0
@@ -8,12 +8,14 @@ function isValidSelectionForEnhancement(text: string): boolean {
 export interface EnhanceWithAIParams {
   selectedText: string
   editor: Editor
-  enhanceText: (params: enhanceTextType) => Promise<string>
+  enhanceText: (params: enhanceTextType) => Promise<enhancedTextResponse>
   setIsLoadingAi: (loading: boolean) => void
   isValidSelectionForEnhancement: (text: string) => boolean
   enhanceType?: string
   customIntent?: string
   context?: string
+  onSuccess: () => void
+  onError: (error?: string) => void
 }
 
 async function handleEnhanceWithAIFunction({
@@ -25,6 +27,8 @@ async function handleEnhanceWithAIFunction({
   enhanceType,
   customIntent,
   context,
+  onSuccess,
+  onError,
 }: EnhanceWithAIParams): Promise<void> {
   if (
     !editor ||
@@ -36,23 +40,33 @@ async function handleEnhanceWithAIFunction({
   try {
     setIsLoadingAi(true)
     const { from, to } = editor.state.selection
-    const enhancedText = await enhanceText({
+    const {
+      text: enhancedText,
+      error,
+      success,
+    } = await enhanceText({
       text: selectedText,
       type: enhanceType || "improve-writing",
       intent: customIntent || "improve text in editor",
       context: context,
     })
-    if (from === 0 && to === editor.state.doc.content.size) {
-      editor.chain().focus().setContent(enhancedText).run()
+    if (success) {
+      if (from === 0 && to === editor.state.doc.content.size) {
+        editor.chain().focus().setContent(enhancedText).run()
+      } else {
+        editor
+          .chain()
+          .focus()
+          .deleteRange({ from, to })
+          .insertContent(enhancedText)
+          .run()
+      }
+      onSuccess()
     } else {
-      editor
-        .chain()
-        .focus()
-        .deleteRange({ from, to })
-        .insertContent(enhancedText)
-        .run()
+      onError(error)
     }
   } catch (error) {
+    onError()
   } finally {
     setIsLoadingAi(false)
   }
