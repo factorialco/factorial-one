@@ -8,10 +8,13 @@ import {
   CardTitle,
 } from "@/ui/card"
 import { type ReactNode } from "react"
+import { CardMetadata } from "./CardMetadata"
+import { type Metadata } from "./types"
 
 interface OneCardProps {
   title?: string
   description?: string
+  metadata?: Metadata[]
   children?: ReactNode
   primaryAction?: {
     label: string
@@ -32,6 +35,7 @@ interface OneCardProps {
 export function OneCard({
   title,
   description,
+  metadata,
   children,
   primaryAction,
   secondaryAction,
@@ -46,10 +50,19 @@ export function OneCard({
           <CardTitle className="text-lg font-semibold text-f1-foreground">
             {title}
           </CardTitle>
-          <CardSubtitle className="text-base text-f1-foreground-secondary">
-            {description}
-          </CardSubtitle>
+          {description && (
+            <CardSubtitle className="text-base text-f1-foreground-secondary">
+              {description}
+            </CardSubtitle>
+          )}
         </CardHeader>
+        {metadata && (
+          <div className="flex flex-col gap-0.5">
+            {metadata.map((item) => (
+              <CardMetadata key={item.type} metadata={item} />
+            ))}
+          </div>
+        )}
         {children}
       </div>
       {hasActions && (
