@@ -5,8 +5,8 @@ import { Editor } from "@tiptap/react"
 import { useCallback, useRef, useState } from "react"
 import ReactDOM from "react-dom/client"
 import tippy, { Instance } from "tippy.js"
-import { EnhancementOption } from ".."
 import { isValidSelectionForEnhancement } from "../utils/enhance"
+import { EnhancementOption } from "../utils/types"
 import { AIEnhanceMenu } from "./EnhanceMenu"
 
 interface EnhanceActivatorProps {
@@ -27,6 +27,7 @@ interface EnhanceActivatorProps {
   canUseCustomPrompt: boolean
   disableButtons: boolean
   enhanceLabel?: string
+  inputPlaceholder: string
 }
 
 const EnhanceActivator = ({
@@ -42,6 +43,7 @@ const EnhanceActivator = ({
   enhancementOptions,
   disableButtons,
   enhanceLabel,
+  inputPlaceholder,
 }: EnhanceActivatorProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
@@ -147,6 +149,7 @@ const EnhanceActivator = ({
         onSelect={handleAIEnhance}
         onClose={() => tippyInstanceRef.current?.hide()}
         enhancementOptions={enhancementOptions}
+        inputPlaceholder={inputPlaceholder}
       />
     )
 

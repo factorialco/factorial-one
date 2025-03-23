@@ -1,5 +1,5 @@
 import { Editor } from "@tiptap/react"
-import { enhancedTextResponse, enhanceTextType } from ".."
+import { enhancedTextResponse, enhanceTextParams } from ".."
 
 function isValidSelectionForEnhancement(text: string): boolean {
   return text.trim().length > 0
@@ -8,7 +8,7 @@ function isValidSelectionForEnhancement(text: string): boolean {
 export interface EnhanceWithAIParams {
   selectedText: string
   editor: Editor
-  enhanceText: (params: enhanceTextType) => Promise<enhancedTextResponse>
+  enhanceText: (params: enhanceTextParams) => Promise<enhancedTextResponse>
   setIsLoadingAi: (loading: boolean) => void
   isValidSelectionForEnhancement: (text: string) => boolean
   enhanceType?: string

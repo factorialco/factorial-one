@@ -3,15 +3,14 @@ import { Icon } from "@/factorial-one"
 import { ChevronLeft, ChevronRight } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import React, { useEffect, useRef, useState } from "react"
-import { EnhancementOption } from "../.."
+import { EnhancementOption } from "../../utils/types"
 
-const Option = ({
-  option,
-  onClick,
-}: {
+interface OptionProps {
   option: EnhancementOption
   onClick: () => void
-}) => {
+}
+
+const Option = ({ option, onClick }: OptionProps) => {
   return (
     <div
       onClick={onClick}
@@ -30,6 +29,7 @@ interface AIEnhanceMenuProps {
   onClose: () => void
   enhancementOptions: EnhancementOption[]
   canUseCustomPrompt: boolean
+  inputPlaceholder: string
 }
 
 const AIEnhanceMenu = ({
@@ -37,6 +37,7 @@ const AIEnhanceMenu = ({
   onClose,
   enhancementOptions,
   canUseCustomPrompt,
+  inputPlaceholder,
 }: AIEnhanceMenuProps) => {
   const [selectedParentOption, setSelectedParentOption] = useState<
     string | null
@@ -52,13 +53,10 @@ const AIEnhanceMenu = ({
 
   const handleOptionSelect = (option: EnhancementOption) => {
     if (option.subOptions) {
-      // If this option has suboptions, show them
       setSelectedParentOption(option.id)
     } else if (option.id === "custom-intent") {
-      // For custom intent, show the custom input field
       setShowCustomInput(true)
     } else {
-      // For regular options, just select them
       onSelect(option.id)
       onClose()
     }
@@ -96,7 +94,7 @@ const AIEnhanceMenu = ({
         <div className="flex w-full flex-row items-center p-2">
           <Input
             type="text"
-            placeholder="What do you want the AI to do?"
+            placeholder={inputPlaceholder}
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             autoFocus

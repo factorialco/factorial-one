@@ -102,44 +102,47 @@ export const Default: Story = {
       console.log(html)
     },
     placeholder: "Write something and test our fabulous editor...",
-    height: "md",
+
     // Mentions configuration
-    hasMentions: true,
-    users: users,
-    onMentionQueryStringChanged: (search) => {
-      const newUsers = users.filter((user) =>
-        user.label.toLowerCase().includes(search.toLowerCase())
-      )
-      return Promise.resolve(newUsers)
+    mentionsConfig: {
+      users: users,
+      onMentionQueryStringChanged: (search) => {
+        const newUsers = users.filter((user) =>
+          user.label.toLowerCase().includes(search.toLowerCase())
+        )
+        return Promise.resolve(newUsers)
+      },
     },
-    // AI enhancement
-    enhanceText: () =>
-      new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            success: true,
-            error: "Error from AI, Jacob didn't finish his work",
-            text: `<b>Just imagine this is an AI response from our friend</b> <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">@Jacob Bamio Cordero</a>`,
-          })
-        }, 1000)
-      }),
-    enhancementOptions: enhancementOptions,
-    canUseCustomPrompt: true,
-    enhanceLabels: {
-      defaultError: "Error enhancing text, try again later",
-      enhanceLabel: "Magic",
-      acceptChangesLabel: "Well... I'll trust Jacob",
-      rejectChangesLabel: "No way, I'll do it myself",
+    enhanceConfig: {
+      onEnhanceText: () =>
+        new Promise((resolve) => {
+          setTimeout(() => {
+            resolve({
+              success: true,
+              error: "Error from AI, Jacob didn't finish his work",
+              text: `<b>Just imagine this is an AI response from our friend</b> <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">@Jacob Bamio Cordero</a>`,
+            })
+          }, 1000)
+        }),
+      enhancementOptions: enhancementOptions,
+      canUseCustomPrompt: true,
+      enhanceLabels: {
+        defaultError: "Error enhancing text, try again later",
+        enhanceButtonLabel: "Magic",
+        acceptChangesButtonLabel: "Accept changes",
+        rejectChangesButtonLabel: "Reject changes",
+        customPromptPlaceholder: "What do you want to do?",
+      },
     },
-    // File handling
-    onFiles: (files) => {
-      console.log(files)
+    filesConfig: {
+      onFiles: (files) => {
+        console.log(files)
+      },
+      multipleFiles: false,
+      maxFileSize: 100000,
     },
-    multipleFiles: true,
-    maxCharacters: 100000,
-    // Actions
     onSubmit: {
-      label: "Goooo for it!",
+      label: "Send",
       onClick: () => {
         alert("Submit")
       },
@@ -152,14 +155,14 @@ export const Default: Story = {
       },
       disabled: false,
     },
-    // Miscellaneous
     title: "Rich Text Editor test",
-
     toolbarConfig: {
-      bold: true,
-      italic: true,
-      underline: true,
-      link: true,
+      format: {
+        bold: true,
+        italic: true,
+        underline: true,
+        highlight: true,
+      },
       textSize: {
         normal: true,
         heading1: true,
@@ -175,6 +178,7 @@ export const Default: Story = {
       list: {
         bullet: true,
         ordered: true,
+        task: true,
       },
       moreOptions: {
         code: true,

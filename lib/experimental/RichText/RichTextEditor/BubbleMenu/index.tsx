@@ -4,23 +4,8 @@ import { BubbleMenu, Editor } from "@tiptap/react"
 import { useRef, useState } from "react"
 import ReactDOM from "react-dom/client"
 import tippy, { Instance } from "tippy.js"
-import { EnhancementOption } from ".."
 import { EnhanceActivator } from "../Enhance"
-
-interface EditorBubbleMenuProps {
-  editor: Editor
-  onEnhanceWithAI?: (
-    selectedText: string,
-    enhanceType?: string,
-    customIntent?: string,
-    context?: string
-  ) => Promise<void>
-  isLoadingAi: boolean
-  canUseAi: boolean
-  enhancementOptions: EnhancementOption[]
-  canUseCustomPrompt: boolean
-  disableButtons: boolean
-}
+import { EnhancementOption } from "../utils/types"
 
 interface LinkPopupProps {
   onSubmit: (url: string) => void
@@ -56,6 +41,22 @@ const LinkPopup = ({ onSubmit }: LinkPopupProps) => {
   )
 }
 
+interface EditorBubbleMenuProps {
+  editor: Editor
+  onEnhanceWithAI?: (
+    selectedText: string,
+    enhanceType?: string,
+    customIntent?: string,
+    context?: string
+  ) => Promise<void>
+  isLoadingAi: boolean
+  canUseAi: boolean
+  enhancementOptions: EnhancementOption[]
+  canUseCustomPrompt: boolean
+  disableButtons: boolean
+  enhanceInputPlaceholder: string
+}
+
 const EditorBubbleMenu = ({
   editor,
   canUseAi,
@@ -64,6 +65,7 @@ const EditorBubbleMenu = ({
   enhancementOptions,
   canUseCustomPrompt,
   disableButtons,
+  enhanceInputPlaceholder,
 }: EditorBubbleMenuProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
   const linkButtonRef = useRef<HTMLDivElement>(null)
@@ -138,6 +140,7 @@ const EditorBubbleMenu = ({
             enhancementOptions={enhancementOptions}
             canUseCustomPrompt={canUseCustomPrompt}
             disableButtons={disableButtons}
+            inputPlaceholder={enhanceInputPlaceholder}
           />
         )}
       </div>

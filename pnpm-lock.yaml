@@ -237,6 +237,9 @@ importers:
       "@tiptap/extension-color":
         specifier: ^2.11.5
         version: 2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))(@tiptap/extension-text-style@2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5)))
+      "@tiptap/extension-highlight":
+        specifier: ^2.11.5
+        version: 2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))
       "@tiptap/extension-image":
         specifier: ^2.11.5
         version: 2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))
@@ -249,6 +252,12 @@ importers:
       "@tiptap/extension-placeholder":
         specifier: ^2.11.5
         version: 2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))(@tiptap/pm@2.11.5)
+      "@tiptap/extension-task-item":
+        specifier: ^2.11.5
+        version: 2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))(@tiptap/pm@2.11.5)
+      "@tiptap/extension-task-list":
+        specifier: ^2.11.5
+        version: 2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))
       "@tiptap/extension-text-align":
         specifier: ^2.11.5
         version: 2.11.5(@tiptap/core@2.11.5(@tiptap/pm@2.11.5))
@@ -5102,6 +5111,14 @@ packages:
     peerDependencies:
       "@tiptap/core": ^2.7.0
 
+  "@tiptap/extension-highlight@2.11.5":
+    resolution:
+      {
+        integrity: sha512-VBZfT869L9CiTLF8qr+3FBUtJcmlyUTECORNo0ceEiNDg4H6V9uNPwaROMXrWiQCc+DYVCOkx541QrXwNMzxlg==,
+      }
+    peerDependencies:
+      "@tiptap/core": ^2.7.0
+
   "@tiptap/extension-history@2.11.5":
     resolution:
       {
@@ -5192,6 +5209,23 @@ packages:
     resolution:
       {
         integrity: sha512-PVfUiCqrjvsLpbIoVlegSY8RlkR64F1Rr2RYmiybQfGbg+AkSZXDeO0eIrc03//4gua7D9DfIozHmAKv1KN3ow==,
+      }
+    peerDependencies:
+      "@tiptap/core": ^2.7.0
+
+  "@tiptap/extension-task-item@2.11.5":
+    resolution:
+      {
+        integrity: sha512-Xvvww8cleM6fcNejP916vzhL31yJnAmuBvABsOV0kHGtAqkqUVCSDcN/1qjI4ihVNeIWEJBHDczjDfZzvLy1xA==,
+      }
+    peerDependencies:
+      "@tiptap/core": ^2.7.0
+      "@tiptap/pm": ^2.7.0
+
+  "@tiptap/extension-task-list@2.11.5":
+    resolution:
+      {
+        integrity: sha512-DJpIrBu/bjXYmyYoWQDH2GkpvRmizT9Fvbx5MscFYyfmSsYryD3vRBtCDz08gviwoRII+pFBrG4Ynb0XuQ7DsA==,
       }
     peerDependencies:
       "@tiptap/core": ^2.7.0
