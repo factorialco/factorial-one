@@ -4,9 +4,9 @@ import { cn } from "@/lib/utils"
 import { Editor } from "@tiptap/react"
 import { compact, defaultsDeep } from "lodash"
 import React from "react"
-import { EnhancementOption, toolbarConfig } from ".."
 import { EnhanceActivator } from "../Enhance"
-import { defaultToolbarConfig } from "../utils/toolbar"
+import { defaultToolbarConfig } from "../utils/helpers"
+import { EnhancementOption, toolbarConfig } from "../utils/types"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 
 const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
@@ -45,6 +45,7 @@ interface ToolbarPluginProps {
   config: toolbarConfig
   disableButtons: boolean
   enhanceLabel: string
+  enhanceInputPlaceholder: string
 }
 
 const ToolbarPlugin = ({
@@ -61,18 +62,17 @@ const ToolbarPlugin = ({
   config,
   disableButtons,
   enhanceLabel,
+  enhanceInputPlaceholder,
 }: ToolbarPluginProps) => {
   if (!editor) return null
 
   const mergedConfig = defaultsDeep({}, config, defaultToolbarConfig)
 
   const {
-    bold,
-    italic,
-    underline,
+    format: { bold, italic, underline, highlight },
     textSize: { normal, heading1, heading2, heading3 },
     textAlign: { left, center, right, justify },
-    list: { bullet, ordered },
+    list: { bullet, ordered, task },
     moreOptions: { code, horizontalRule, quote },
     fullScreen,
   } = mergedConfig
@@ -126,6 +126,17 @@ const ToolbarPlugin = ({
             label="Underline"
             onClick={() => {
               editor.chain().focus().toggleUnderline().run()
+            }}
+            type="button"
+            disabled={disableButtons}
+          />
+        )}
+        {highlight && (
+          <Button
+            variant={editor.isActive("highlight") ? "neutral" : "ghost"}
+            label="Highlight"
+            onClick={() => {
+              editor.chain().focus().toggleHighlight().run()
             }}
             type="button"
             disabled={disableButtons}
@@ -221,7 +232,7 @@ const ToolbarPlugin = ({
     ) : null
 
   const listGroup =
-    bullet || ordered ? (
+    bullet || ordered || task ? (
       <div className="flex flex-row items-center gap-2">
         {bullet && (
           <Button
@@ -241,6 +252,17 @@ const ToolbarPlugin = ({
             }}
             variant={editor.isActive("orderedList") ? "neutral" : "ghost"}
             label="Ordered List"
+            type="button"
+            disabled={disableButtons}
+          />
+        )}
+        {task && (
+          <Button
+            onClick={() => {
+              editor.chain().focus().toggleTaskList().run()
+            }}
+            variant={editor.isActive("taskList") ? "neutral" : "ghost"}
+            label="Task List"
             type="button"
             disabled={disableButtons}
           />
@@ -325,6 +347,7 @@ const ToolbarPlugin = ({
             canUseCustomPrompt={canUseCustomPrompt}
             disableButtons={disableButtons}
             enhanceLabel={enhanceLabel}
+            inputPlaceholder={enhanceInputPlaceholder}
           />
         )}
         {fullScreen && !isFullscreen && (

@@ -67,6 +67,35 @@
   margin-bottom: 4px;
 }
 
+.ProseMirror ul[data-type="taskList"] {
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+}
+
+.ProseMirror ul[data-type="taskList"] li {
+  align-items: flex-start;
+  display: flex;
+}
+
+.ProseMirror ul[data-type="taskList"] li > label {
+  flex: 0 0 auto;
+  margin-right: 0.5rem;
+  user-select: none;
+}
+
+.ProseMirror ul[data-type="taskList"] li > div {
+  flex: 1 1 auto;
+}
+
+.ProseMirror ul[data-type="taskList"] input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.ProseMirror ul[data-type="taskList"] ul[data-type="taskList"] {
+  margin: 0;
+}
+
 .ProseMirror a {
   color: #06838c;
   text-decoration: underline;

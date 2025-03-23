@@ -3,9 +3,12 @@ import { Cross } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import CharacterCount from "@tiptap/extension-character-count"
 import Color from "@tiptap/extension-color"
+import Highlight from "@tiptap/extension-highlight"
 import Image from "@tiptap/extension-image"
 import Link from "@tiptap/extension-link"
 import Placeholder from "@tiptap/extension-placeholder"
+import TaskItem from "@tiptap/extension-task-item"
+import TaskList from "@tiptap/extension-task-list"
 import TextAlign from "@tiptap/extension-text-align"
 import TextStyle from "@tiptap/extension-text-style"
 import Typography from "@tiptap/extension-typography"
@@ -31,137 +34,28 @@ import {
   handleEnhanceWithAIFunction,
   isValidSelectionForEnhancement,
 } from "./utils/enhance"
+import { heightMapping } from "./utils/helpers"
 import { configureMention } from "./utils/mention"
-
-// types related to the editor styles
-type RichTextEditorHeight =
-  | "xxs"
-  | "xs"
-  | "sm"
-  | "md"
-  | "lg"
-  | "xl"
-  | "2xl"
-  | "h-full"
-
-const heightMapping: Record<RichTextEditorHeight, string> = {
-  xxs: "h-32",
-  xs: "h-40",
-  sm: "h-60",
-  md: "h-64",
-  lg: "h-72",
-  xl: "h-80",
-  "2xl": "h-96",
-  "h-full": "h-full",
-}
-
-// Types related to mentions
-
-type MentionedUser = {
-  id: number
-  label: string
-  image_url?: string
-  href?: string
-}
-
-type MentionChangeResult = {
-  value: string
-  ids: number[]
-}
-
-// Types related to enhancements
-
-type EnhancementOption = {
-  id: string
-  label: string
-  prompt: string
-  subOptions?: EnhancementOption[]
-}
-
-type onFiles = (files: File[]) => void
-
-type enhanceTextType = {
-  text: string
-  type: string
-  intent?: string
-  context?: string
-}
-
-type enhanceLabelsType = {
-  defaultError: string
-  enhanceLabel: string
-  acceptChangesLabel: string
-  rejectChangesLabel: string
-}
-
-type enhancedTextResponse = {
-  success: boolean
-  text: string
-  error?: string
-}
-
-type toolbarConfig = {
-  bold?: boolean
-  italic?: boolean
-  underline?: boolean
-  link?: boolean
-  textSize?: {
-    normal?: boolean
-    heading1?: boolean
-    heading2?: boolean
-    heading3?: boolean
-  }
-  textAlign?: {
-    left?: boolean
-    center?: boolean
-    right?: boolean
-    justify?: boolean
-  }
-  list?: {
-    bullet?: boolean
-    ordered?: boolean
-  }
-  moreOptions?: {
-    code?: boolean
-    horizontalRule?: boolean
-    quote?: boolean
-  }
-  fullScreen?: boolean
-}
+import {
+  enhanceConfig,
+  enhancedTextResponse,
+  enhanceLabelsType,
+  EnhancementOption,
+  enhanceTextParams,
+  filesConfig,
+  MentionChangeResult,
+  MentionedUser,
+  mentionsConfig,
+  RichTextEditorHeight,
+  toolbarConfig,
+} from "./utils/types"
 
 // Component props and handle
 interface RichTextEditorProps {
-  // Required props
-  onChange: (html: string | null | MentionChangeResult) => void
-  placeholder: string
-  // Initial state and editor configuration
-  initialEditorState?: {
-    content?: string
-    files?: File[]
-  }
-  height?: RichTextEditorHeight
-  maxFileSize?: number
-  // Mentions configuration
-  hasMentions?: boolean
-  onMentionQueryStringChanged?: (
-    queryString: string
-  ) => Promise<MentionedUser[]> | undefined
-  users?: MentionedUser[]
-  // AI enhancement
-  enhanceText?: ({
-    text,
-    type,
-    intent,
-    context,
-  }: enhanceTextType) => Promise<enhancedTextResponse>
-  enhancementOptions?: EnhancementOption[]
-  canUseCustomPrompt?: boolean
-  enhanceLabels: enhanceLabelsType
-  // File handling
-  onFiles?: onFiles
-  multipleFiles?: boolean
-  maxCharacters?: number
-  // Actions
+  mentionsConfig?: mentionsConfig
+  enhanceConfig?: enhanceConfig
+  filesConfig?: filesConfig
+  toolbarConfig?: toolbarConfig
   onSubmit?: {
     label: string
     onClick: () => void
@@ -172,10 +66,15 @@ interface RichTextEditorProps {
     onClick: () => void
     disabled?: boolean
   }
-  // Miscellaneous
   title: string
-  // Toolbar configuration
-  toolbarConfig?: toolbarConfig
+  height?: RichTextEditorHeight
+  maxCharacters?: number
+  initialEditorState?: {
+    content?: string
+    files?: File[]
+  }
+  onChange: (html: string | null | MentionChangeResult) => void
+  placeholder: string
 }
 
 type RichTextEditorHandle = {
@@ -187,37 +86,25 @@ type RichTextEditorHandle = {
 const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
   function RichTextEditor(
     {
-      onChange,
-      placeholder,
-      initialEditorState,
-      height = "lg",
-      maxFileSize,
-      hasMentions = false,
-      onMentionQueryStringChanged,
-      users,
-      enhanceText,
-      enhancementOptions,
-      canUseCustomPrompt = false,
-      onFiles,
-      maxCharacters,
+      mentionsConfig,
+      enhanceConfig,
+      filesConfig,
+      toolbarConfig,
       onSubmit,
       onCancel,
       title,
-      toolbarConfig,
-      multipleFiles = false,
-      enhanceLabels = {
-        defaultError: "Error enhancing text, try again later",
-        enhanceLabel: "Enhance",
-        acceptChangesLabel: "Accept changes",
-        rejectChangesLabel: "Reject changes",
-      },
+      height = "lg",
+      maxCharacters,
+      initialEditorState,
+      onChange,
+      placeholder,
     },
     ref
   ) {
     const [files, setFiles] = useState<File[]>(initialEditorState?.files || [])
     const [mentionSuggestions, setMentionSuggestions] = useState<
       MentionedUser[]
-    >(users || [])
+    >(mentionsConfig?.users || [])
     const editorRef = useRef<HTMLDivElement>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [isLoadingAi, setIsLoadingAi] = useState(false)
@@ -255,6 +142,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           Color,
           Image,
           Typography,
+          Highlight,
+          TaskList,
+          TaskItem.configure({
+            nested: true,
+          }),
           TextAlign.configure({
             types: ["heading", "paragraph"],
           }),
@@ -271,12 +163,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           CharacterCount.configure({
             limit: maxCharacters || null,
           }),
-          ...(hasMentions
+          ...(mentionsConfig
             ? configureMention(
                 mentionSuggestions,
                 setMentionSuggestions,
-                onMentionQueryStringChanged,
-                users || []
+                mentionsConfig.onMentionQueryStringChanged,
+                mentionsConfig.users
               )
             : []),
         ],
@@ -313,10 +205,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     )
 
     const handleFiles = (newFiles: File[]) => {
-      if (onFiles) {
-        const updatedFiles = multipleFiles ? [...files, ...newFiles] : newFiles
+      if (filesConfig) {
+        const updatedFiles = filesConfig.multipleFiles
+          ? [...files, ...newFiles]
+          : newFiles
         setFiles(updatedFiles)
-        onFiles(updatedFiles)
+        filesConfig.onFiles(updatedFiles)
       }
     }
 
@@ -324,8 +218,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       const updatedFiles = [...files]
       updatedFiles.splice(fileIndex, 1)
       setFiles(updatedFiles)
-      if (onFiles) {
-        onFiles(updatedFiles)
+      if (filesConfig) {
+        filesConfig.onFiles(updatedFiles)
       }
     }
 
@@ -335,8 +229,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       },
       clearFiles: () => {
         setFiles([])
-        if (onFiles) {
-          onFiles([])
+        if (filesConfig) {
+          filesConfig.onFiles([])
         }
       },
       focus: () => {
@@ -348,9 +242,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       const selectedFiles = e.target.files
       if (selectedFiles && selectedFiles.length > 0) {
         let fileArray = Array.from(selectedFiles)
-        if (maxFileSize) {
-          fileArray = fileArray.filter((file) => file.size <= maxFileSize)
-        }
+        // if (filesConfig?.maxFileSize) {
+        //   fileArray = fileArray.filter(
+        //     (file) => file.size <= filesConfig.maxFileSize
+        //   )
+        // }
         handleFiles(fileArray)
       }
       if (fileInputRef.current) {
@@ -365,27 +261,29 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         customIntent?: string,
         context?: string
       ) => {
-        await handleEnhanceWithAIFunction({
-          selectedText,
-          editor: editor!,
-          enhanceText: enhanceText!,
-          setIsLoadingAi,
-          isValidSelectionForEnhancement,
-          onSuccess: () => {
-            editor?.setEditable(false)
-            setIsAcceptChangesOpen(true)
-          },
-          onError: (error?: string) => {
-            editor?.setEditable(true)
-            setIsAcceptChangesOpen(false)
-            setAiError(error || enhanceLabels.defaultError)
-          },
-          enhanceType,
-          customIntent,
-          context,
-        })
+        if (enhanceConfig) {
+          await handleEnhanceWithAIFunction({
+            selectedText,
+            editor: editor!,
+            enhanceText: enhanceConfig?.onEnhanceText!,
+            setIsLoadingAi,
+            isValidSelectionForEnhancement,
+            onSuccess: () => {
+              editor?.setEditable(false)
+              setIsAcceptChangesOpen(true)
+            },
+            onError: (error?: string) => {
+              editor?.setEditable(true)
+              setIsAcceptChangesOpen(false)
+              setAiError(error || enhanceConfig?.enhanceLabels.defaultError)
+            },
+            enhanceType,
+            customIntent,
+            context,
+          })
+        }
       },
-      [editor, enhanceText, setIsLoadingAi]
+      [editor, setIsLoadingAi]
     )
 
     return (
@@ -416,13 +314,18 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           onEnhanceWithAI={handleEnhanceWithAI}
           fileInputRef={fileInputRef}
           isLoadingAi={isLoadingAi}
-          canUseFiles={onFiles ? true : false}
-          canUseAi={enhanceText ? true : false}
-          enhancementOptions={enhancementOptions || []}
-          canUseCustomPrompt={canUseCustomPrompt}
+          canUseFiles={filesConfig ? true : false}
+          canUseAi={enhanceConfig ? true : false}
+          enhancementOptions={enhanceConfig?.enhancementOptions || []}
+          canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
           config={toolbarConfig || {}}
           disableButtons={isAcceptChangesOpen}
-          enhanceLabel={enhanceLabels.enhanceLabel}
+          enhanceLabel={
+            enhanceConfig?.enhanceLabels.enhanceButtonLabel || "Enhance"
+          }
+          enhanceInputPlaceholder={
+            enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
+          }
         />
         <div
           ref={editorRef}
@@ -442,12 +345,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           >
             <EditorContent editor={editor} />
           </div>
-          {onFiles && (
+          {filesConfig && (
             <>
               <input
                 id="upload-button"
                 type="file"
-                multiple={multipleFiles}
+                multiple={filesConfig.multipleFiles}
                 onChange={handleFileChange}
                 ref={fileInputRef}
                 className="hidden"
@@ -459,8 +362,14 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           )}
           {isAcceptChangesOpen && (
             <AcceptChanges
-              acceptLabel={enhanceLabels.acceptChangesLabel}
-              rejectLabel={enhanceLabels.rejectChangesLabel}
+              acceptLabel={
+                enhanceConfig?.enhanceLabels.acceptChangesButtonLabel ||
+                "Accept"
+              }
+              rejectLabel={
+                enhanceConfig?.enhanceLabels.rejectChangesButtonLabel ||
+                "Reject"
+              }
               onAccept={() => {
                 setIsAcceptChangesOpen(false)
                 editor?.setEditable(true)
@@ -482,20 +391,25 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             editor={editor}
             onEnhanceWithAI={handleEnhanceWithAI}
             isLoadingAi={isLoadingAi}
-            canUseAi={enhanceText ? true : false}
-            enhancementOptions={enhancementOptions || []}
-            canUseCustomPrompt={canUseCustomPrompt}
+            canUseAi={enhanceConfig ? true : false}
+            enhancementOptions={enhanceConfig?.enhancementOptions || []}
+            canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
             disableButtons={isAcceptChangesOpen}
+            enhanceInputPlaceholder={
+              enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
+            }
           />
         )}
 
         {(onSubmit || onCancel || maxCharacters) && (
           <div className="flex w-full items-center justify-between border-0 border-t-[1px] border-solid border-f1-border px-4 py-3">
-            {editor && maxCharacters && (
-              <p className="text-sm font-medium text-f1-foreground-secondary">
-                {editor.storage.characterCount.characters()} / {maxCharacters}
-              </p>
-            )}
+            <div>
+              {editor && maxCharacters && (
+                <p className="text-sm font-medium text-f1-foreground-secondary">
+                  {editor.storage.characterCount.characters()} / {maxCharacters}
+                </p>
+              )}
+            </div>
             <div className="flex gap-2">
               {onCancel && (
                 <Button
@@ -526,14 +440,15 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
 export { RichTextEditor }
 
 export type {
+  enhanceConfig,
   enhancedTextResponse,
+  enhanceLabelsType,
   EnhancementOption,
-  enhanceTextType,
+  enhanceTextParams,
+  filesConfig,
   MentionChangeResult,
   MentionedUser,
-  onFiles,
-  RichTextEditorHandle,
+  mentionsConfig,
   RichTextEditorHeight,
-  RichTextEditorProps,
   toolbarConfig,
 }
