@@ -1,10 +1,7 @@
 import {
-  Deny as DenyIcon,
   Home as HomeIcon,
   Office as OfficeIcon,
-  Salad as SaladIcon,
   Suitcase as SuitcaseIcon,
-  Timer as TimerIcon,
 } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ClockInControls } from "./index"
@@ -21,6 +18,8 @@ const defaultLabels = {
   overtime: "Overtime",
   selectLocation: "Select location",
   selectProject: "Select project",
+  paid: "Paid",
+  unpaid: "Unpaid",
 }
 
 const meta: Meta<typeof ClockInControls> = {
@@ -165,20 +164,24 @@ export const WithBreakTypes: Story = {
     breakTypes: [
       {
         id: "1",
-        name: "Manual",
+        name: "Break name",
+        duration: "1h",
         description: "This is a description",
-        icon: TimerIcon,
+        isPaid: true,
       },
       {
         id: "2",
-        name: "Lunch time · 30 min",
-        description: "30 min",
-        icon: SaladIcon,
+        name: "Break name with very very very long name here",
+        duration: "30 min",
+        description: "Semi-fixed",
+        isPaid: false,
       },
       {
         id: "3",
-        name: "Unpaid",
-        icon: DenyIcon,
+        name: "Break name",
+        duration: "1h",
+        description: "Fixed",
+        isPaid: true,
       },
     ],
     onChangeBreakTypeId: () => {},

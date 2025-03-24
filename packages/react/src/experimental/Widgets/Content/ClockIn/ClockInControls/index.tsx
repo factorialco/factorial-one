@@ -12,8 +12,9 @@ import Selector from "./Selector"
 interface BreakType {
   id: string
   name: string
+  duration?: string
   description?: string
-  icon?: IconType
+  isPaid: boolean
 }
 
 export interface ClockInControlsProps {
@@ -34,6 +35,8 @@ export interface ClockInControlsProps {
     overtime: string
     selectLocation: string
     selectProject: string
+    paid: string
+    unpaid: string
   }
   locationId?: string
   onChangeLocationId: Dispatch<string>
@@ -86,9 +89,11 @@ export function ClockInControls({
 
   const breakTypeOptions = breakTypes?.map((breakType) => ({
     value: breakType.id,
-    label: breakType.name,
+    label: breakType.duration
+      ? `${breakType.name} · ${breakType.duration}`
+      : breakType.name,
     description: breakType.description,
-    icon: breakType.icon,
+    tag: breakType.isPaid ? labels.paid : labels.unpaid,
   }))
 
   const [breakTypePickerOpen, setBreakTypePickerOpen] = useState(false)
@@ -188,6 +193,7 @@ export function ClockInControls({
                           onChange={handleChangeBreakType}
                           open={breakTypePickerOpen}
                           onOpenChange={setBreakTypePickerOpen}
+                          selectContentClassName="min-w-80"
                         >
                           <div aria-label="Select break type">
                             <Button

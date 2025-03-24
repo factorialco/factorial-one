@@ -1,3 +1,4 @@
+import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import {
   SelectContent,
   SelectItem as SelectItemPrimitive,
@@ -35,26 +36,32 @@ export type SelectProps<T, R = any> = {
   onOpenChange?: (open: boolean) => void
   searchEmptyMessage?: string
   className?: string
+  selectContentClassName?: string
 }
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   return (
-    <SelectItemPrimitive value={item.value}>
-      <div className="flex items-start gap-1.5">
+    <SelectItemPrimitive value={item.value} withIndicator={false}>
+      <div className="flex w-full items-start gap-1.5">
         {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
         {item.icon && (
           <div className="text-f1-icon">
             <Icon icon={item.icon} />
           </div>
         )}
-        <div className="flex flex-col">
-          <span className="font-medium">{item.label}</span>
+        <div className="flex flex-1 flex-col">
+          <span className="line-clamp-2 font-medium">{item.label}</span>
           {item.description && (
-            <div className="text-f1-foreground-secondary">
+            <div className="line-clamp-2 text-f1-foreground-secondary">
               {item.description}
             </div>
           )}
         </div>
+        {item.tag && (
+          <div className="self-center">
+            <RawTag text={item.tag} />
+          </div>
+        )}
       </div>
     </SelectItemPrimitive>
   )
@@ -96,6 +103,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
       externalSearch,
       searchEmptyMessage,
       className,
+      selectContentClassName,
       ...props
     },
     ref
@@ -216,6 +224,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
         {openLocal && (
           <SelectContent
             items={items}
+            className={selectContentClassName}
             emptyMessage={searchEmptyMessage}
             top={
               showSearchBox && (
