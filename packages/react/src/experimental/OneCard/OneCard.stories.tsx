@@ -1,4 +1,11 @@
-import { Calendar, Delete, Placeholder } from "@/icons/app"
+import {
+  Add,
+  Archive,
+  Delete,
+  Download,
+  Envelope,
+  Placeholder,
+} from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { OneCard } from "./OneCard"
@@ -60,19 +67,34 @@ export const Default: Story = {
       },
     ],
     primaryAction: {
-      label: "View",
+      label: "Add",
+      icon: Add,
       onClick: fn(),
     },
     secondaryActions: [
       {
-        label: "Calendar",
-        icon: Calendar,
+        label: "Archive",
+        icon: Archive,
         onClick: fn(),
       },
+      {
+        label: "Download",
+        icon: Download,
+        onClick: fn(),
+      },
+    ],
+    otherActions: [
+      {
+        label: "Mail",
+        icon: Envelope,
+        onClick: fn(),
+      },
+      { type: "separator" },
       {
         label: "Delete",
         icon: Delete,
         onClick: fn(),
+        critical: true,
       },
     ],
   },

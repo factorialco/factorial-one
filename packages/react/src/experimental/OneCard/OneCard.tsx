@@ -1,7 +1,8 @@
 import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
 import { IconType } from "@/components/Utilities/Icon"
-import { DropdownItem } from "@/experimental/Navigation/Dropdown"
+import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
+import { EllipsisHorizontal } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
   Card,
@@ -13,7 +14,6 @@ import {
 import { type ReactNode } from "react"
 import { CardMetadata } from "./CardMetadata"
 import { type Metadata } from "./types"
-
 interface OneCardProps {
   title?: string
   description?: string
@@ -43,7 +43,8 @@ export function OneCard({
   secondaryActions,
   otherActions,
 }: OneCardProps) {
-  const hasActions = primaryAction || secondaryActions || otherActions
+  const hasActions = primaryAction || secondaryActions
+  const hasOtherActions = otherActions && otherActions.length > 0
 
   return (
     <Card
@@ -56,20 +57,37 @@ export function OneCard({
       {link && (
         <Link
           href={link}
+          title={title}
           className={cn("absolute inset-0 z-0 block rounded-xl", focusRing())}
         />
       )}
       <div className="flex flex-col gap-2.5 p-4">
-        <CardHeader className="flex-col gap-0.5">
-          <CardTitle className="flex flex-row gap-1 text-lg font-semibold text-f1-foreground">
-            {title}
-          </CardTitle>
-          {description && (
-            <CardSubtitle className="text-base text-f1-foreground-secondary">
-              {description}
-            </CardSubtitle>
-          )}
-        </CardHeader>
+        <div className="flex flex-row items-start justify-between gap-1">
+          <CardHeader className="flex-col gap-0.5">
+            <CardTitle className="flex flex-row justify-between gap-1 text-lg font-semibold text-f1-foreground">
+              {title}
+            </CardTitle>
+            {description && (
+              <CardSubtitle className="text-base text-f1-foreground-secondary">
+                {description}
+              </CardSubtitle>
+            )}
+          </CardHeader>
+          <div className="flex flex-row gap-1 [&_div]:z-10">
+            {hasOtherActions && (
+              <Dropdown items={otherActions}>
+                <Button
+                  label="Other actions"
+                  hideLabel
+                  icon={EllipsisHorizontal}
+                  variant="ghost"
+                  round
+                  size="sm"
+                />
+              </Dropdown>
+            )}
+          </div>
+        </div>
         {metadata && (
           <div className="flex flex-col gap-0.5">
             {metadata.map((item) => (
@@ -80,15 +98,15 @@ export function OneCard({
         {children}
       </div>
       {hasActions && (
-        <CardFooter className="flex justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary px-4 py-3 [&_button]:z-10">
+        <CardFooter className="flex justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary px-4 py-3 [&>div]:z-10">
           {secondaryActions && (
             <div className="flex gap-2">
-              {secondaryActions.map((action) => (
+              {secondaryActions.map((action, index) => (
                 <Button
                   label={action.label}
                   icon={action.icon}
-                  hideLabel
-                  round
+                  hideLabel={index > 0}
+                  round={index > 0}
                   variant="outline"
                   onClick={action.onClick}
                 />
