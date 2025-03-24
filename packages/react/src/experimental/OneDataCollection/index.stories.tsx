@@ -507,7 +507,7 @@ export const BasicTableView: Story = {
                     label: "Salary",
                     render: (item) => ({
                       type: "amount",
-                      value: item.salary,
+                      value: item.salary ?? 0,
                     }),
                     align: "right",
                     sorting: "salary",
