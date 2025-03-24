@@ -15,6 +15,8 @@ describe("ClockInControls helpers", () => {
     resume: "Resume",
     selectLocation: "Select location",
     selectProject: "Select project",
+    paid: "Paid",
+    unpaid: "Unpaid",
   }
 
   const createEntry = (variant: ClockInStatus) => ({
