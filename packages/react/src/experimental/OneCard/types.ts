@@ -23,4 +23,36 @@ export type StatusMetadata = BaseMetadata & {
   label: string
 }
 
-export type Metadata = SimpleMetadata | AvatarListMetadata | StatusMetadata
+export type UserMetadata = BaseMetadata & {
+  type: "user"
+  firstName: string
+  lastName: string
+  src?: string
+}
+
+export type CompanyMetadata = BaseMetadata & {
+  type: "company"
+  name: string
+  src?: string
+}
+
+export type TeamMetadata = BaseMetadata & {
+  type: "team"
+  name: string
+  src?: string
+}
+
+export type TagMetadata = BaseMetadata & {
+  type: "tag"
+  label: string
+  tagIcon?: IconType
+}
+
+export type Metadata =
+  | SimpleMetadata
+  | AvatarListMetadata
+  | StatusMetadata
+  | UserMetadata
+  | CompanyMetadata
+  | TeamMetadata
+  | TagMetadata

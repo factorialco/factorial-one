@@ -1,10 +1,13 @@
 import {
   Add,
-  Archive,
+  Briefcase,
+  Calendar,
+  CalendarArrowRight,
   Delete,
-  Download,
   Envelope,
-  Placeholder,
+  ExternalLink,
+  Office,
+  Star,
 } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
@@ -14,7 +17,12 @@ import { OneCard } from "./OneCard"
 const meta = {
   component: OneCard,
   title: "Card",
-  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      story: { inline: false, height: "320px" },
+    },
+  },
+  tags: ["autodocs", "Experimental"],
   decorators: [
     (Story) => (
       <div className="flex h-[calc(100vh-32px)] w-full items-center justify-center">
@@ -31,57 +39,28 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    title: "Card with Description",
-    description: "This is a description for the card.",
+    avatar: {
+      type: "person",
+      firstName: "Daniel",
+      lastName: "Moreno",
+    },
+    title: "Daniel Moreno",
     metadata: [
       {
         type: "text",
-        icon: Placeholder,
-        title: "Metadata Item 1",
+        icon: Briefcase,
+        title: "Design Engineer",
       },
       {
-        type: "avatarList",
-        icon: Placeholder,
-        avatars: [
-          {
-            type: "person",
-            firstName: "John",
-            lastName: "Doe",
-          },
-          {
-            type: "person",
-            firstName: "Jane",
-            lastName: "Smith",
-          },
-          {
-            type: "person",
-            firstName: "Jim",
-            lastName: "Beam",
-          },
-        ],
+        type: "text",
+        icon: CalendarArrowRight,
+        title: "3 years ago",
       },
       {
         type: "status",
-        icon: Placeholder,
+        icon: Star,
         status: "positive",
         label: "Active",
-      },
-    ],
-    primaryAction: {
-      label: "Add",
-      icon: Add,
-      onClick: fn(),
-    },
-    secondaryActions: [
-      {
-        label: "Archive",
-        icon: Archive,
-        onClick: fn(),
-      },
-      {
-        label: "Download",
-        icon: Download,
-        onClick: fn(),
       },
     ],
     otherActions: [
@@ -96,6 +75,43 @@ export const Default: Story = {
         icon: Delete,
         onClick: fn(),
         critical: true,
+      },
+    ],
+  },
+}
+
+export const WithActions: Story = {
+  args: {
+    title: "Product designer",
+    description:
+      "Seeking an experienced product designer to lead design initiatives.",
+    primaryAction: {
+      label: "Refer",
+      icon: Envelope,
+      onClick: fn(),
+    },
+    secondaryActions: [
+      {
+        label: "Apply",
+        icon: Add,
+        onClick: fn(),
+      },
+      {
+        label: "Share",
+        icon: ExternalLink,
+        onClick: fn(),
+      },
+    ],
+    metadata: [
+      {
+        type: "tag",
+        icon: Office,
+        label: "Barcelona, Spain",
+      },
+      {
+        type: "text",
+        icon: Calendar,
+        title: "10 months ago",
       },
     ],
   },
