@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/factorialco/factorial-one/compare/v1.5.0...v1.5.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* **PageHeader:** currentModule to check if the module changes and clean its state ([#1460](https://github.com/factorialco/factorial-one/issues/1460)) ([e07f95c](https://github.com/factorialco/factorial-one/commit/e07f95ce22799801a16e4ace1bc83a8781ddfc59))
+
 ## [1.5.0](https://github.com/factorialco/factorial-one/compare/v1.4.6...v1.5.0) (2025-03-24)
 
 
