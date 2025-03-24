@@ -53,6 +53,12 @@ export type Visualization<
     }
 
 /**
+ * Represents the type of visualization.
+ * TODO: This should be a union of all the types in the Visualization type.
+ */
+export type VisualizationType = "card" | "table" | "custom"
+
+/**
  * Props interface for components that support multiple visualizations.
  * Used to configure how data can be displayed in different formats.
  *
