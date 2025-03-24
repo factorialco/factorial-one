@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.6](https://github.com/factorialco/factorial-one/compare/v1.4.5...v1.4.6) (2025-03-24)
+
+
+### Bug Fixes
+
+* move basecolors to ahve it in the dist ([#1453](https://github.com/factorialco/factorial-one/issues/1453)) ([72f91bb](https://github.com/factorialco/factorial-one/commit/72f91bb1c260aba797a22852ee4f1eb3964e5335))
+
 ## [1.4.5](https://github.com/factorialco/factorial-one/compare/v1.4.4...v1.4.5) (2025-03-21)
 
 
