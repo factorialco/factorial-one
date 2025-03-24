@@ -122,6 +122,8 @@ const ToolbarPlugin = ({
             onClick={() => {
               editor.chain().focus().toggleStrike().run()
             }}
+            type="button"
+            disabled={disableButtons}
           />
         )}
         {highlight && (

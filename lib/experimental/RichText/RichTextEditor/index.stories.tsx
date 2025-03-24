@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { EnhancementOption, RichTextEditor } from "."
+import { EnhancementOption, FileType, RichTextEditor } from "."
 
 const meta = {
   component: RichTextEditor,
@@ -78,6 +78,7 @@ const enhancementOptions: EnhancementOption[] = [
     prompt: "Convert this text: '[TEXT]' into a concise bullet-point list.",
   },
 ]
+
 const users = [
   {
     id: 1,
@@ -95,28 +96,19 @@ const users = [
     href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
   },
 ]
+
 export const Default: Story = {
   tags: ["experimental"],
   args: {
-    onChange: (html) => {
-      console.log(html)
-    },
+    onChange: (html) => console.log(html),
     placeholder: "Write something and test our fabulous editor...",
-    mentionsConfig: {
-      users: users,
-      onMentionQueryStringChanged: (search) => {
-        const newUsers = users.filter((user) =>
-          user.label.toLowerCase().includes(search.toLowerCase())
-        )
-        return Promise.resolve(newUsers)
-      },
-    },
+    mentionsConfig: { users: users },
     enhanceConfig: {
       onEnhanceText: () =>
         new Promise((resolve) => {
           setTimeout(() => {
             resolve({
-              success: true,
+              success: false,
               error: "Error from AI, Jacob didn't finish his work",
               text: `<b>Just imagine this is an AI response from our friend</b> <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">@Jacob Bamio Cordero</a>`,
             })
@@ -133,62 +125,34 @@ export const Default: Story = {
       },
     },
     filesConfig: {
-      onFiles: (files) => {
-        console.log(files)
-      },
+      onFiles: (files) => console.log(files),
       multipleFiles: true,
-      maxFileSize: 10 * 1024 * 1024,
+      acceptedFileType: [
+        FileType.IMAGE,
+        FileType.VIDEO,
+        FileType.PDF,
+        FileType.DOC,
+        FileType.EXCEL,
+      ],
     },
     submitAction: {
       label: "Send",
-      onClick: () => {
-        alert("Submit")
-      },
-      disabled: false,
+      onClick: () => alert("Submit"),
     },
     cancelAction: {
       label: "Cancel",
-      onClick: () => {
-        alert("Cancel")
-      },
-      disabled: false,
+      onClick: () => alert("Cancel"),
     },
-    linkPopupConfig: {
-      linkPlaceholder: "Write or paste a link",
-    },
+    linkPopupConfig: { linkPlaceholder: "Write or paste a link" },
     title: "Rich Text Editor test",
-    toolbarConfig: "all",
-    // {
-    //   format: {
-    //     bold: true,
-    //     italic: true,
-    //     underline: true,
-    //     highlight: true,
-    //   },
-    //   textSize: {
-    //     normal: true,
-    //     heading1: true,
-    //     heading2: true,
-    //     heading3: true,
-    //   },
-    //   textAlign: {
-    //     left: true,
-    //     center: true,
-    //     right: true,
-    //     justify: true,
-    //   },
-    //   list: {
-    //     bullet: true,
-    //     ordered: true,
-    //     task: true,
-    //   },
-    //   moreOptions: {
-    //     code: true,
-    //     horizontalRule: true,
-    //     quote: true,
-    //   },
-    //   fullScreen: true,
-    // },
+    toolbarConfig: {
+      format: {
+        bold: true,
+        italic: true,
+        underline: true,
+        highlight: true,
+      },
+    },
     maxCharacters: 1000,
   },
 }
