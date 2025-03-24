@@ -259,6 +259,7 @@ export const WithProductUpdate: Story = {
       onHeaderClick: () => {
         alert("onHeaderClick")
       },
+      currentModule: defaultModule.name,
     },
   },
 }

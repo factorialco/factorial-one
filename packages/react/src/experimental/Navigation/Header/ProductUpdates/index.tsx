@@ -15,7 +15,13 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
 import { Skeleton } from "@/ui/skeleton"
-import { ComponentProps, ReactElement, useCallback, useState } from "react"
+import {
+  ComponentProps,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react"
 
 type ProductUpdate = {
   title: string
@@ -32,6 +38,7 @@ type ProductUpdatesProp = {
   updatesPageUrl: string
   getUpdates: () => Promise<Array<ProductUpdate>>
   hasUnread?: boolean
+  currentModule: string
   onOpenChange?: ComponentProps<typeof DropdownMenu>["onOpenChange"]
   onHeaderClick?: ComponentProps<typeof DropdownMenuTrigger>["onClick"]
   onItemClick?: ComponentProps<typeof DropdownMenuItem>["onClick"]
@@ -48,6 +55,7 @@ type ProductUpdatesProp = {
 }
 
 const ProductUpdates = ({
+  currentModule,
   label,
   moreUpdatesLabel,
   getUpdates,
@@ -62,6 +70,12 @@ const ProductUpdates = ({
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
   const [featuredUpdate, ...restUpdates] = updates ?? []
+
+  useEffect(() => {
+    setUpdates(null)
+    setState("idle")
+  }, [currentModule])
+
   const invokeGetUpdates = useCallback(async () => {
     try {
       setState("fetching")
