@@ -52,7 +52,7 @@ interface RichTextEditorProps {
   mentionsConfig?: mentionsConfig
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
-  toolbarConfig?: toolbarConfig
+  toolbarConfig: toolbarConfig
   submitAction?: actionConfig
   cancelAction?: actionConfig
   onChange: (html: string | MentionChangeResult | null) => void
@@ -121,11 +121,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const editor = useEditor(
       {
         extensions: [
-          StarterKit.configure({
-            heading: {
-              levels: [1, 2, 3],
-            },
-          }),
+          StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
           Underline,
           TextStyle,
           Color,
@@ -133,12 +129,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           Typography,
           Highlight,
           TaskList,
-          TaskItem.configure({
-            nested: true,
-          }),
-          TextAlign.configure({
-            types: ["heading", "paragraph"],
-          }),
+          TaskItem.configure({ nested: true }),
+          TextAlign.configure({ types: ["heading", "paragraph"] }),
           Link.configure({
             openOnClick: false,
             HTMLAttributes: {
@@ -146,12 +138,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               target: "_blank",
             },
           }),
-          Placeholder.configure({
-            placeholder,
-          }),
-          CharacterCount.configure({
-            limit: maxCharacters || null,
-          }),
+          Placeholder.configure({ placeholder }),
+          CharacterCount.configure({ limit: maxCharacters }),
           ...(mentionsConfig
             ? configureMention(
                 mentionSuggestions,
@@ -194,18 +182,14 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     )
 
     useImperativeHandle(ref, () => ({
-      clear: () => {
-        editor?.commands.clearContent()
-      },
+      clear: () => editor?.commands.clearContent(),
       clearFiles: () => {
         setFiles([])
         if (filesConfig) {
           filesConfig.onFiles([])
         }
       },
-      focus: () => {
-        editor?.commands.focus()
-      },
+      focus: () => editor?.commands.focus(),
     }))
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -263,9 +247,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       >
         {isFullscreen && (
           <div className="flex w-full items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3">
-            <p className="text-2xl font-semibold text-f1-foreground">
-              {title || "Fullscreen Rich Text Editor"}
-            </p>
+            <p className="text-2xl font-semibold text-f1-foreground">{title}</p>
             <Button
               icon={Cross}
               onClick={handleToggleFullscreen}
@@ -283,7 +265,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           isFullscreen={isFullscreen}
           onEnhanceWithAI={handleEnhanceWithAI}
           fileInputRef={fileInputRef}
-          config={toolbarConfig || "all"}
+          config={toolbarConfig}
           disableButtons={isAcceptChangesOpen}
           canUseFiles={filesConfig ? true : false}
           enhanceConfig={enhanceConfig}
