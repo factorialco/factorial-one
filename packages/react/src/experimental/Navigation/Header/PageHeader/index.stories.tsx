@@ -1,5 +1,5 @@
-import { Briefcase, EllipsisHorizontal, Settings } from "../../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import { Briefcase, EllipsisHorizontal, Settings } from "../../../../icons/app"
 import { PageHeader } from "./index"
 
 const meta = {
@@ -180,6 +180,86 @@ export const WithEverything: Story = {
       variant: "critical",
     },
     actions: defaultActions,
+  },
+}
+
+export const WithProductUpdate: Story = {
+  args: {
+    module: defaultModule,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
+    navigation: defaultNavigation,
+    statusTag: {
+      text: "Draft",
+      tooltip: "This employee profile is not yet published",
+      variant: "critical",
+    },
+    actions: defaultActions,
+    productUpdates: {
+      isVisible: true,
+      hasUnread: true,
+      label: "Latest from Projects",
+      moreUpdatesLabel: "More updates",
+      updatesPageUrl: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+      emptyScreen: {
+        title: "There aren’t updates for Projects yet",
+        description:
+          "Check out our product updates page to see past launches and what’s coming.",
+        buttonText: "Go to Updates",
+      },
+      errorScreen: {
+        title: "Something went wrong",
+        description:
+          "We couldn’t load the latest updates. Please check your connection and try again.",
+        buttonText: "Try again",
+      },
+      getUpdates: async () => {
+        return new Promise((resolve) => {
+          setTimeout(
+            () =>
+              resolve([
+                {
+                  title: "Project timetable with absence information",
+                  href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+                  imageURL: "https://placecats.com/neo/1416/797/",
+                  updated: "4 mar 2025",
+                  unread: true,
+                },
+                {
+                  title: "Project timetable with absence information",
+                  href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+                  imageURL: "https://placecats.com/neo/1416/797/",
+                  updated: "4 mar 2025",
+                  unread: true,
+                },
+                {
+                  title: "New Client section",
+                  imageURL: "https://placecats.com/neo/300/200",
+                  updated: "3 mar 2025",
+                  href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+                  unread: true,
+                },
+                {
+                  title: "Spending tab in projects",
+                  imageURL: "https://placecats.com/neo/300/200",
+                  updated: "2 mar 2025",
+                  href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+                },
+              ]),
+            1000
+          )
+        })
+      },
+
+      onItemClick: () => {
+        alert("onItemClick")
+      },
+      onHeaderClick: () => {
+        alert("onHeaderClick")
+      },
+    },
   },
 }
 
