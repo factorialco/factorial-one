@@ -26,9 +26,10 @@ const getLeftEntry = (remainingMinutes?: number) => {
 
 export const normalizeData = (
   data: ClockInGraphProps["data"] = [],
-  remainingMinutes?: number
+  remainingMinutes?: number,
+  overtimeOnly?: boolean
 ) => {
-  const leftEntry = getLeftEntry(remainingMinutes)
+  const leftEntry = getLeftEntry(overtimeOnly ? 0 : remainingMinutes)
 
   return [
     ...(remainingMinutes
@@ -36,6 +37,13 @@ export const normalizeData = (
           const value = Math.floor(
             (entry.to.getTime() - entry.from.getTime()) / 60000
           )
+
+          if (entry.variant === "clocked-in" && overtimeOnly) {
+            return {
+              value,
+              color: CLOCK_IN_COLORS.overtime,
+            }
+          }
 
           return {
             value,
