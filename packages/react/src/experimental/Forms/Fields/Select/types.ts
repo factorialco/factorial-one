@@ -7,6 +7,7 @@ export type SelectItemObject<T, R = unknown> = {
   label: string
   description?: string
   avatar?: AvatarVariant
+  tag?: string
   icon?: IconType
   item?: R
 }

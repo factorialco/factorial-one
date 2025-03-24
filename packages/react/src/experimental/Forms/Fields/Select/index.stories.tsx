@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { Select, SelectProps } from "./index"
 
+import { useState } from "react"
 import { IconType } from "../../../../components/Utilities/Icon"
 import { Appearance, Circle, Desktop } from "../../../../icons/app"
-import { useState } from "react"
 
 // Wraps the Select component with a hook to show the selected value
 const SelectWithHooks = (props: SelectProps<string>) => {
@@ -47,11 +47,13 @@ const items = [
     id: "dark",
     name: "Dark",
     description: "A sleek and modern theme for a sophisticated look",
+    tag: "Paid",
   },
   {
     id: "system",
     name: "System",
     description: "A theme that adapts to the system's default appearance",
+    tag: "Unpaid",
   },
 ]
 
@@ -117,6 +119,7 @@ const meta: Meta = {
         label: item.name,
         icon: icons[item.id],
         description: item.description,
+        tag: item.tag,
         item,
       }
     }),

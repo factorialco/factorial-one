@@ -14,6 +14,8 @@ const defaultLabels = {
   overtime: "Overtime",
   selectLocation: "Select location",
   selectProject: "Select project",
+  paid: "Paid",
+  unpaid: "Unpaid",
 }
 
 describe("ClockInControls", () => {
