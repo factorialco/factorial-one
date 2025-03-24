@@ -242,7 +242,7 @@ export function PageHeader({
         )}
         {hasProductUpdates && (
           <div className="items-right flex gap-2">
-            <ProductUpdates {...productUpdates} />
+            <ProductUpdates {...productUpdates} currentModule={module.name} />
           </div>
         )}
         {hasActions && (
