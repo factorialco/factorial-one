@@ -156,36 +156,38 @@ export const Default: Story = {
       disabled: false,
     },
     title: "Rich Text Editor test",
-    toolbarConfig: {
-      format: {
-        bold: true,
-        italic: true,
-        underline: true,
-        highlight: true,
-      },
-      textSize: {
-        normal: true,
-        heading1: true,
-        heading2: true,
-        heading3: true,
-      },
-      textAlign: {
-        left: true,
-        center: true,
-        right: true,
-        justify: true,
-      },
-      list: {
-        bullet: true,
-        ordered: true,
-        task: true,
-      },
-      moreOptions: {
-        code: true,
-        horizontalRule: true,
-        quote: true,
-      },
-      fullScreen: true,
-    },
+    toolbarConfig: "all",
+    // {
+    //   format: {
+    //     bold: true,
+    //     italic: true,
+    //     underline: true,
+    //     highlight: true,
+    //   },
+    //   textSize: {
+    //     normal: true,
+    //     heading1: true,
+    //     heading2: true,
+    //     heading3: true,
+    //   },
+    //   textAlign: {
+    //     left: true,
+    //     center: true,
+    //     right: true,
+    //     justify: true,
+    //   },
+    //   list: {
+    //     bullet: true,
+    //     ordered: true,
+    //     task: true,
+    //   },
+    //   moreOptions: {
+    //     code: true,
+    //     horizontalRule: true,
+    //     quote: true,
+    //   },
+    //   fullScreen: true,
+    // },
+    maxCharacters: 1000,
   },
 }

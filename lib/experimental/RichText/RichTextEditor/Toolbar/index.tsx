@@ -5,7 +5,12 @@ import { Editor } from "@tiptap/react"
 import { compact, defaultsDeep } from "lodash"
 import React from "react"
 import { EnhanceActivator } from "../Enhance"
-import { defaultToolbarConfig } from "../utils/helpers"
+import {
+  defaultAllToolbarConfig,
+  defaultNoneToolbarConfig,
+  getHeadingLabel,
+  getTextAlignLabel,
+} from "../utils/helpers"
 import { enhanceConfig, toolbarConfig } from "../utils/types"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 
@@ -58,34 +63,21 @@ const ToolbarPlugin = ({
 }: ToolbarPluginProps) => {
   if (!editor) return null
 
-  const mergedConfig = defaultsDeep({}, config, defaultToolbarConfig)
+  const mergedConfig =
+    config === "all"
+      ? defaultAllToolbarConfig
+      : config === "none"
+        ? defaultNoneToolbarConfig
+        : defaultsDeep({}, config, defaultAllToolbarConfig)
 
   const {
-    format: { bold, italic, underline, highlight },
+    format: { bold, italic, underline, highlight, strike },
     textSize: { normal, heading1, heading2, heading3 },
     textAlign: { left, center, right, justify },
     list: { bullet, ordered, task },
     moreOptions: { code, horizontalRule, quote },
     fullScreen,
   } = mergedConfig
-
-  const getHeadingLabel = () => {
-    if (editor.isActive("heading")) {
-      const headingLevel = editor.getAttributes("heading").level
-      if (headingLevel === 1) return "H1"
-      if (headingLevel === 2) return "H2"
-      if (headingLevel === 3) return "H3"
-    }
-    return "Normal"
-  }
-
-  const getTextAlignLabel = () => {
-    if (editor.isActive({ textAlign: "left" })) return "Left"
-    if (editor.isActive({ textAlign: "center" })) return "Center"
-    if (editor.isActive({ textAlign: "right" })) return "Right"
-    if (editor.isActive({ textAlign: "justify" })) return "Justify"
-    return "Left"
-  }
 
   const formattingGroup =
     bold || italic || underline ? (
@@ -121,6 +113,15 @@ const ToolbarPlugin = ({
             }}
             type="button"
             disabled={disableButtons}
+          />
+        )}
+        {strike && (
+          <Button
+            variant={editor.isActive("strike") ? "neutral" : "ghost"}
+            label="Strike"
+            onClick={() => {
+              editor.chain().focus().toggleStrike().run()
+            }}
           />
         )}
         {highlight && (
@@ -176,7 +177,7 @@ const ToolbarPlugin = ({
         <Button
           variant="ghost"
           size="md"
-          label={getHeadingLabel()}
+          label={getHeadingLabel(editor)}
           disabled={disableButtons}
         />
       </ToolbarDropdown>
@@ -217,7 +218,7 @@ const ToolbarPlugin = ({
         <Button
           variant="ghost"
           size="md"
-          label={getTextAlignLabel()}
+          label={getTextAlignLabel(editor)}
           disabled={disableButtons}
         />
       </ToolbarDropdown>
