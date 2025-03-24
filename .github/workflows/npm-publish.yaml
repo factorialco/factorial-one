@@ -30,21 +30,9 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: ./.github/actions/publish-to-npmjs
         with:
-          ref: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.sha }} # Checkout the tagged release
-
-      - uses: ./.github/actions/setup-node-pnpm
-        name: Setup Node and pnpm
-
-      - name: Build
-        run: pnpm --filter @factorialco/factorial-one-react build
-
-      - name: Publish to registry
-        run: pnpm --filter @factorialco/factorial-one-react publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+          workspace: @factorialco/factorial-one-react
 
   publish-react-native:
     name: "[REACT NATIVE] Publish to npm"
@@ -60,18 +48,6 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: ./.github/actions/publish-to-npmjs
         with:
-          ref: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.sha }} # Checkout the tagged release
-
-      - uses: ./.github/actions/setup-node-pnpm
-        name: Setup Node and pnpm
-
-      - name: Build
-        run: pnpm --filter @factorialco/factorial-one-react-native build
-
-      - name: Publish to registry
-        run: pnpm --filter @factorialco/factorial-one-react-native publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+          workspace: @factorialco/factorial-one-react-native

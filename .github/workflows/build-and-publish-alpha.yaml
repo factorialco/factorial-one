@@ -37,13 +37,10 @@ jobs:
         run: pnpm --filter @factorialco/factorial-one-react build
 
       - name: Publish to release branch npm/alpha-pr-${{ github.event.pull_request.number }}
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Publish alpha version
-          pnpx sergiocarracedo/git-publish#npm/feat/directory-support -b 'npm/alpha-pr-${{ github.event.pull_request.number }}' --directory packages/react
-          LAST=$(git rev-parse HEAD)
-          echo "::notice title='Package published'::Use pnpm i github:factorialco/factorial-one#npm/alpha-pr-${{ github.event.pull_request.number }} to install the package (or pnpm i github:factorialco/factorial-one#${LAST} to install this specific commit)"
+        uses: ./.github/actions/publish-release-branch.yaml
+        with:
+          branch-name: npm/alpha-pr-${{ github.event.pull_request.number }}
+          directory: packages/react
   publish-alpha-react-native:
     name: "[REACT NATIVE] Build and Publish ALPHA"
     needs: detect-changes
@@ -67,13 +64,12 @@ jobs:
         name: Setup Node and pnpm
 
       - name: Build
-        run: pnpm --filter @factorialco/factorial-one-react-native build
+        run: |
+          pnpm --filter @factorialco/factorial-one-react-core build
+          pnpm --filter @factorialco/factorial-one-react-native build
 
       - name: Publish to release branch npm/alpha-pr-${{ github.event.pull_request.number }}
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # Publish alpha version
-          pnpx sergiocarracedo/git-publish#npm/feat/directory-support -b 'npm/alpha-pr-${{ github.event.pull_request.number }}-react-native' --directory packages/react-native
-          LAST=$(git rev-parse HEAD)
-          echo "::notice title='Package published'::Use pnpm i github:factorialco/factorial-one#npm/alpha-pr-${{ github.event.pull_request.number }}-react-native to install the package (or pnpm i github:factorialco/factorial-one#${LAST} to install this specific commit)"
+        uses: ./.github/actions/publish-release-branch.yaml
+        with:
+          branch-name: npm/alpha-pr-${{ github.event.pull_request.number }}-react-native
+          directory: packages/react-native
