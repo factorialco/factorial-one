@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/factorialco/factorial-one/compare/v1.4.6...v1.5.0) (2025-03-24)
+
+
+### Features
+
+* **PageHeader:** add product update dropdown ([#1429](https://github.com/factorialco/factorial-one/issues/1429)) ([20be94d](https://github.com/factorialco/factorial-one/commit/20be94d5c35b481a1e2bf4af69b826f00aa61230))
+
 ## [1.4.6](https://github.com/factorialco/factorial-one/compare/v1.4.5...v1.4.6) (2025-03-24)
 
 
