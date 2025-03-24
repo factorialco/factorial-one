@@ -12,7 +12,9 @@ export function CardMetadata({ metadata }: CardMetadataProps) {
     <div className="flex h-8 items-center gap-1.5 font-medium">
       <Icon icon={metadata.icon} className="text-f1-icon" size="md" />
 
-      {metadata.type === "text" && <div>{metadata.title}</div>}
+      {metadata.type === "text" && (
+        <div className="text-f1-foreground">{metadata.title}</div>
+      )}
 
       {metadata.type === "avatarList" && (
         <AvatarList

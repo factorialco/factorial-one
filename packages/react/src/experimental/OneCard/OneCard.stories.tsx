@@ -1,4 +1,4 @@
-import { Calendar, Placeholder } from "@/icons/app"
+import { Calendar, Delete, Placeholder } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { OneCard } from "./OneCard"
@@ -22,19 +22,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  args: {
-    title: "Custom Card Title",
-  },
-}
-
-export const WithContent: Story = {
-  args: {
-    title: "Card with Content",
-    children: <p>This is some sample content for the card.</p>,
-  },
-}
-
-export const WithDescription: Story = {
   args: {
     title: "Card with Description",
     description: "This is a description for the card.",
@@ -76,14 +63,24 @@ export const WithDescription: Story = {
       label: "View",
       onClick: fn(),
     },
-    secondaryAction: {
-      label: "Calendar",
-      icon: Calendar,
-      onClick: fn(),
-    },
-    otherAction: {
-      label: "Delete",
-      onClick: fn(),
-    },
+    secondaryActions: [
+      {
+        label: "Calendar",
+        icon: Calendar,
+        onClick: fn(),
+      },
+      {
+        label: "Delete",
+        icon: Delete,
+        onClick: fn(),
+      },
+    ],
+  },
+}
+
+export const WithLink: Story = {
+  args: {
+    ...Default.args,
+    link: "/",
   },
 }
