@@ -68,6 +68,13 @@ export const CardCollection = <
     dataAdapter: overridenDataAdapter,
   })
 
+  const renderProperty = (
+    item: Record,
+    property: CardPropertyDefinition<Record>
+  ) => {
+    return renderValue(item, property, "card")
+  }
+
   return (
     <>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -101,7 +108,7 @@ export const CardCollection = <
                         {property.label}
                       </div>
                       <div className="text-sm">
-                        {renderValue(item, property)}
+                        {renderProperty(item, property)}
                       </div>
                     </div>
                   ))}

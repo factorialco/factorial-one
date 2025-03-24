@@ -141,7 +141,7 @@ const MotionIcon = motion(Icon)
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export const DataCollection = <
+export const OneDataCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
