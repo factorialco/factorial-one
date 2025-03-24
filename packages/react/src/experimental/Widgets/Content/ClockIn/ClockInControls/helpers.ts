@@ -1,11 +1,15 @@
-import { ClockInControlsProps } from "./index"
 import { CLOCK_IN_COLORS } from "../ClockInGraph"
+import { ClockInControlsProps } from "./index"
 
 export const getInfo = ({
   data = [],
   labels,
   remainingMinutes,
-}: Pick<ClockInControlsProps, "data" | "labels" | "remainingMinutes">) => {
+  canSeeRemainingTime = true,
+}: Pick<
+  ClockInControlsProps,
+  "data" | "labels" | "remainingMinutes" | "canSeeRemainingTime"
+>) => {
   const lastEntry = data[data.length - 1]
   const status = lastEntry?.variant || "clocked-out"
 
@@ -16,6 +20,8 @@ export const getInfo = ({
   }[status]
 
   const subtitle = (() => {
+    if (!canSeeRemainingTime) return
+
     if (remainingMinutes === undefined) return
 
     const absRemainingMinutes = Math.abs(remainingMinutes)
