@@ -19,8 +19,8 @@ import { ComponentProps, ReactElement, useCallback, useState } from "react"
 
 type ProductUpdate = {
   title: string
-  href: UrlString
-  imageURL: UrlString
+  href: string
+  imageURL: string
   updated: string
   unread?: boolean
 }
@@ -28,7 +28,7 @@ type ProductUpdate = {
 type ProductUpdatesProp = {
   label: string
   moreUpdatesLabel: string
-  updatesPageUrl: UrlString
+  updatesPageUrl: string
   getUpdates: () => Promise<Array<ProductUpdate>>
   hasUnread?: boolean
   onOpenChange?: ComponentProps<typeof DropdownMenu>['onOpenChange']
@@ -212,7 +212,7 @@ const DropdownItem = ({
   )
 }
 
-const Header = ({ title, url }: { title: string; url: UrlString }) => (
+const Header = ({ title, url }: { title: string; url: string }) => (
   <a
     href={url}
     className="flex items-center justify-between gap-4 px-4 pb-2 pt-3 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
@@ -269,7 +269,7 @@ const NoUpdates = ({
   buttonUrl,
   description,
 }: {
-  buttonUrl: UrlString
+  buttonUrl: string
 } & ProductUpdatesProp["emptyScreen"]) => (
   <BaseScreen
     title={title}
