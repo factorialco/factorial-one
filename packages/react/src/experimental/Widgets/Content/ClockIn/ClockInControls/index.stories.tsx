@@ -77,6 +77,14 @@ export const ClockedIn: Story = {
   },
 }
 
+export const NoGraphNorRemainingTime: Story = {
+  args: {
+    ...ClockedIn.args,
+    canSeeGraph: false,
+    canSeeRemainingTime: false,
+  },
+}
+
 export const OnBreak: Story = {
   args: {
     remainingMinutes: 4 * 60 + 39,
