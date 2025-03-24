@@ -38,13 +38,19 @@ const htmlContent = `<p>
     <p>Wait for the invitation email, which will come by the end of the month.</p>
   </li>
   <li>
-    <p>This is some magic created by our AI</p>
+    <p>
+      <em>This is some magic created by our AI</em>
+    </p>
   </li>
   <li>
-    <p>More magic</p>
+    <p>
+      <u>More magic</u>
+    </p>
   </li>
   <li>
-    <p>More magic 2.0</p>
+    <p>
+      <s>More magic 2.0</s>
+    </p>
   </li>
   <li>
     <p>

@@ -20,37 +20,41 @@ type MentionChangeResult = {
   ids: number[]
 }
 
-type toolbarConfig = {
-  format?: {
-    bold?: boolean
-    italic?: boolean
-    underline?: boolean
-    highlight?: boolean
-  }
-  textSize?: {
-    normal?: boolean
-    heading1?: boolean
-    heading2?: boolean
-    heading3?: boolean
-  }
-  textAlign?: {
-    left?: boolean
-    center?: boolean
-    right?: boolean
-    justify?: boolean
-  }
-  list?: {
-    bullet?: boolean
-    ordered?: boolean
-    task?: boolean
-  }
-  moreOptions?: {
-    code?: boolean
-    horizontalRule?: boolean
-    quote?: boolean
-  }
-  fullScreen?: boolean
-}
+type toolbarConfig =
+  | {
+      format?: {
+        bold?: boolean
+        italic?: boolean
+        underline?: boolean
+        strike?: boolean
+        highlight?: boolean
+      }
+      textSize?: {
+        normal?: boolean
+        heading1?: boolean
+        heading2?: boolean
+        heading3?: boolean
+      }
+      textAlign?: {
+        left?: boolean
+        center?: boolean
+        right?: boolean
+        justify?: boolean
+      }
+      list?: {
+        bullet?: boolean
+        ordered?: boolean
+        task?: boolean
+      }
+      moreOptions?: {
+        code?: boolean
+        horizontalRule?: boolean
+        quote?: boolean
+      }
+      fullScreen?: boolean
+    }
+  | "all"
+  | "none"
 
 // Types related to enhancements
 
