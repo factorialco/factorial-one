@@ -1,7 +1,7 @@
 import { Skeleton } from "@/ui/skeleton"
-import { f1Colors } from "../../../../../../tokens/colors"
 import { formatTime } from "../../../../../lib/date"
 import { withSkeleton } from "../../../../../lib/skeleton"
+import { f1Colors } from "../../../../../tokens/colors"
 import { CalendarEvent } from "../../../../Widgets/Content/CalendarEvent"
 
 export type PostEventProps = {
