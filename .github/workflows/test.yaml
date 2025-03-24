@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/_check-workspaces-changes.yaml
   test:
     needs: detect-changes
-    name: "[REACT] Unit Tests"
+    name: "[⚛️ REACT] Unit Tests"
     if: |
       needs.detect-changes.outputs.package_react == 'true' &&
       github.head_ref != 'release-please--branches--master' &&
@@ -40,7 +40,7 @@ jobs:
         run: pnpm --filter @factorialco/factorial-one-react run vitest:ci
   test-react-native:
     needs: detect-changes
-    name: "[REACT NATIVE] Unit Tests"
+    name: "[📱 REACT NATIVE] Unit Tests"
     if: |
       needs.detect-changes.outputs.package_react_native == 'true'
     timeout-minutes: 60

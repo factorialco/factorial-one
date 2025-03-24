@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/_check-workspaces-changes.yaml
   test:
     needs: detect-changes
-    name: "[REACT] Storybook Tests"
+    name: "[⚛️ REACT] Storybook Tests"
     if: |
       needs.detect-changes.outputs.package_react == 'true' &&
       github.head_ref != 'release-please--branches--master' &&

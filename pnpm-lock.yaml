@@ -533,10 +533,11 @@ importers:
         version: 3.0.7(@types/node@22.13.9)(jiti@2.4.2)(jsdom@26.0.0)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.0)
 
   packages/react-native:
-    devDependencies:
+    dependencies:
       '@factorialco/factorial-one-core':
         specifier: workspace:*
         version: link:../core
+    devDependencies:
       '@testing-library/react-native':
         specifier: ^12.4.3
         version: 12.9.0(jest@29.7.0(@types/node@22.13.9))(react-native@0.74.7(@babel/core@7.26.7)(@babel/preset-env@7.26.9(@babel/core@7.26.7))(@types/react@18.3.18)(react@18.3.1))(react-test-renderer@18.3.1(react@18.3.1))(react@18.3.1)

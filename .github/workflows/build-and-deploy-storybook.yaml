@@ -21,7 +21,7 @@ jobs:
 
   deploy:
     needs: detect-changes
-    name: "[REACT] Deploy Storybook to GitHub Pages"
+    name: "[⚛️ REACT] Deploy Storybook to GitHub Pages"
     # Prevents running on the release-please branch
     if: |
       needs.detect-changes.outputs.package_react == 'true' &&

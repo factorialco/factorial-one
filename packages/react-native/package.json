@@ -29,9 +29,6 @@
     "react-native",
     "components"
   ],
-  "files": [
-    "dist"
-  ],
   "author": "Factorial",
   "license": "MIT",
   "peerDependencies": {

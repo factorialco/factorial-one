@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/_check-workspaces-changes.yaml
 
   publish-alpha:
-    name: "[REACT] Build and Publish ALPHA"
+    name: "[⚛️ REACT] Build and Publish ALPHA"
     needs: detect-changes
     if: |
       (github.event_name == 'issue_comment' &&
@@ -37,12 +37,12 @@ jobs:
         run: pnpm --filter @factorialco/factorial-one-react build
 
       - name: Publish to release branch npm/alpha-pr-${{ github.event.pull_request.number }}
-        uses: ./.github/actions/publish-release-branch.yaml
+        uses: ./.github/actions/publish-release-branch
         with:
           branch-name: npm/alpha-pr-${{ github.event.pull_request.number }}
           directory: packages/react
   publish-alpha-react-native:
-    name: "[REACT NATIVE] Build and Publish ALPHA"
+    name: "[📱 REACT NATIVE] Build and Publish ALPHA"
     needs: detect-changes
     if: |
       (github.event_name == 'issue_comment' &&
@@ -69,7 +69,7 @@ jobs:
           pnpm --filter @factorialco/factorial-one-react-native build
 
       - name: Publish to release branch npm/alpha-pr-${{ github.event.pull_request.number }}
-        uses: ./.github/actions/publish-release-branch.yaml
+        uses: ./.github/actions/publish-release-branch
         with:
           branch-name: npm/alpha-pr-${{ github.event.pull_request.number }}-react-native
           directory: packages/react-native

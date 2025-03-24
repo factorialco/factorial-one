@@ -30,7 +30,7 @@ jobs:
       needs.detect-changes.outputs.package_react == 'true' &&
       github.head_ref != 'release-please--branches--master' &&
       !contains(github.event.pull_request.labels.*.name, 'autorelease')
-    name: "[REACT] Eslint"
+    name: "[⚛️ REACT] Eslint"
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
     # Prevents running on the release-please branch
     if: |
       needs.detect-changes.outputs.package_react_native == 'true'
-    name: "[REACT NATIVE] Eslint"
+    name: "[📱 REACT NATIVE] Eslint"
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4

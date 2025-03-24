@@ -7,7 +7,7 @@ on:
 
 jobs:
   release-please:
-    name: "[REACT] Release library"
+    name: "Release library(s)"
     # Prevents running on the release-please branch
     if: |
       github.head_ref != 'release-please--branches--master' &&

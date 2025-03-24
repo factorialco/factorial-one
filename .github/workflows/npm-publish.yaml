@@ -17,7 +17,7 @@ on:
 
 jobs:
   publish-react:
-    name: "[REACT] Publish to npm"
+    name: "[⚛️ REACT] Publish to npm"
     # Prevents running on the release-please branch
     # For workflow_run trigger we need to check if the workflow_run was successful and if the new_version output was set to not run on it if no new version was released
     if: |
@@ -35,7 +35,7 @@ jobs:
           workspace: @factorialco/factorial-one-react
 
   publish-react-native:
-    name: "[REACT NATIVE] Publish to npm"
+    name: "[📱 REACT NATIVE] Publish to npm"
     # Prevents running on the release-please branch
     # For workflow_run trigger we need to check if the workflow_run was successful and if the new_version output was set to not run on it if no new version was released
     if: |
