@@ -23,6 +23,7 @@ type ProductUpdate = {
   imageURL: string
   updated: string
   unread?: boolean
+  onClick?: ComponentProps<typeof DropdownMenuItem>["onClick"]
 }
 
 type ProductUpdatesProp = {
@@ -31,7 +32,9 @@ type ProductUpdatesProp = {
   updatesPageUrl: string
   getUpdates: () => Promise<Array<ProductUpdate>>
   hasUnread?: boolean
-  onOpenChange?: ComponentProps<typeof DropdownMenu>['onOpenChange']
+  onOpenChange?: ComponentProps<typeof DropdownMenu>["onOpenChange"]
+  onHeaderClick?: ComponentProps<typeof DropdownMenuTrigger>["onClick"]
+  onItemClick?: ComponentProps<typeof DropdownMenuItem>["onClick"]
   emptyScreen: {
     title: string
     description: string
@@ -52,6 +55,8 @@ const ProductUpdates = ({
   emptyScreen,
   errorScreen,
   onOpenChange = () => {},
+  onHeaderClick = () => {},
+  onItemClick = () => {},
   hasUnread = false,
 }: ProductUpdatesProp) => {
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
@@ -92,9 +97,9 @@ const ProductUpdates = ({
           collisionPadding={20}
           align="end"
           hideWhenDetached
-          className="max-h-[600px] min-w-96 max-w-md overflow-y-scroll"
+          className="max-h-[600px] min-w-96 max-w-md overflow-y-auto"
         >
-          <Header title={label} url={updatesPageUrl} />
+          <Header title={label} url={updatesPageUrl} onClick={onHeaderClick} />
           {state === "fetching" && <ProductUpdatesSkeleton />}
           {state === "idle" && updates !== null && updates.length === 0 && (
             <>
@@ -105,7 +110,7 @@ const ProductUpdates = ({
           )}
           {state === "idle" && updates !== null && updates.length > 0 && (
             <>
-              <FeaturedDropdownItem {...featuredUpdate} />
+              <FeaturedDropdownItem {...featuredUpdate} onClick={onItemClick} />
               {updates.length > 1 && (
                 <>
                   <DropdownMenuSeparator />
@@ -113,7 +118,11 @@ const ProductUpdates = ({
                     {moreUpdatesLabel}
                   </p>
                   {restUpdates.map((update, index) => (
-                    <DropdownItem key={index} {...update} />
+                    <DropdownItem
+                      key={index}
+                      {...update}
+                      onClick={onItemClick}
+                    />
                   ))}
                 </>
               )}
@@ -143,10 +152,11 @@ const FeaturedDropdownItem = ({
   imageURL,
   unread,
   updated,
+  onClick,
 }: ProductUpdate) => {
   const itemClass = "flex flex-col items-stretch gap-3 w-full"
   return (
-    <DropdownMenuItem asChild>
+    <DropdownMenuItem asChild onClick={onClick}>
       <Link
         href={href}
         target="_blank"
@@ -183,11 +193,12 @@ const DropdownItem = ({
   href,
   updated,
   unread = false,
+  onClick,
 }: ProductUpdate) => {
   const itemClass = cn("flex flex-col items-stretch gap-3 w-full")
 
   return (
-    <DropdownMenuItem asChild className={itemClass}>
+    <DropdownMenuItem asChild className={itemClass} onClick={onClick}>
       <Link
         href={href}
         target="_blank"
@@ -212,7 +223,15 @@ const DropdownItem = ({
   )
 }
 
-const Header = ({ title, url }: { title: string; url: string }) => (
+const Header = ({
+  title,
+  url,
+  onClick,
+}: {
+  title: string
+  url: string
+  onClick: ComponentProps<typeof Button>["onClick"]
+}) => (
   <a
     href={url}
     className="flex items-center justify-between gap-4 px-4 pb-2 pt-3 text-f1-foreground no-underline visited:text-f1-foreground hover:text-f1-foreground"
@@ -225,6 +244,7 @@ const Header = ({ title, url }: { title: string; url: string }) => (
       icon={ChevronRight}
       label={title}
       hideLabel
+      onClick={onClick}
     />
   </a>
 )
