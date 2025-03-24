@@ -138,8 +138,8 @@ export const Default: Story = {
       onFiles: (files) => {
         console.log(files)
       },
-      multipleFiles: false,
-      maxFileSize: 100000,
+      multipleFiles: true,
+      maxFileSize: 10 * 1024 * 1024,
     },
     onSubmit: {
       label: "Send",

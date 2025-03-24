@@ -5,7 +5,7 @@ import { useRef, useState } from "react"
 import ReactDOM from "react-dom/client"
 import tippy, { Instance } from "tippy.js"
 import { EnhanceActivator } from "../Enhance"
-import { EnhancementOption } from "../utils/types"
+import { enhanceConfig } from "../utils/types"
 
 interface LinkPopupProps {
   onSubmit: (url: string) => void
@@ -49,23 +49,17 @@ interface EditorBubbleMenuProps {
     customIntent?: string,
     context?: string
   ) => Promise<void>
-  isLoadingAi: boolean
-  canUseAi: boolean
-  enhancementOptions: EnhancementOption[]
-  canUseCustomPrompt: boolean
+  isLoadingEnhance: boolean
   disableButtons: boolean
-  enhanceInputPlaceholder: string
+  enhanceConfig: enhanceConfig | undefined
 }
 
 const EditorBubbleMenu = ({
   editor,
-  canUseAi,
   onEnhanceWithAI,
-  isLoadingAi,
-  enhancementOptions,
-  canUseCustomPrompt,
+  isLoadingEnhance,
   disableButtons,
-  enhanceInputPlaceholder,
+  enhanceConfig,
 }: EditorBubbleMenuProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
   const linkButtonRef = useRef<HTMLDivElement>(null)
@@ -129,18 +123,20 @@ const EditorBubbleMenu = ({
           disabled={disableButtons}
         />
 
-        {canUseAi && (
+        {enhanceConfig && (
           <EnhanceActivator
             editor={editor}
             onEnhanceWithAI={onEnhanceWithAI}
-            isLoadingAi={isLoadingAi}
+            isLoadingEnhance={isLoadingEnhance}
             button={{
               variant: "ghost",
             }}
-            enhancementOptions={enhancementOptions}
-            canUseCustomPrompt={canUseCustomPrompt}
+            enhancementOptions={enhanceConfig?.enhancementOptions || []}
+            canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
             disableButtons={disableButtons}
-            inputPlaceholder={enhanceInputPlaceholder}
+            inputPlaceholder={
+              enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
+            }
           />
         )}
       </div>
