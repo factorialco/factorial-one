@@ -1,4 +1,5 @@
 import { find, keys } from "lodash"
+import { filesConfig } from "./types"
 
 type FileTypeInfo = {
   type: string
@@ -146,4 +147,33 @@ const getFileTypeInfo = (file: File): FileTypeInfo => {
   return FILE_TYPE_MAP.default
 }
 
-export { getFileTypeInfo }
+const handleAddFiles = (
+  newFiles: File[],
+  files: File[],
+  filesConfig: filesConfig | undefined,
+  setFiles: (files: File[]) => void
+) => {
+  if (filesConfig) {
+    const updatedFiles = filesConfig.multipleFiles
+      ? [...files, ...newFiles]
+      : newFiles
+    setFiles(updatedFiles)
+    filesConfig.onFiles(updatedFiles)
+  }
+}
+
+const handleRemoveFile = (
+  fileIndex: number,
+  files: File[],
+  filesConfig: filesConfig | undefined,
+  setFiles: (files: File[]) => void
+) => {
+  if (filesConfig) {
+    const updatedFiles = [...files]
+    updatedFiles.splice(fileIndex, 1)
+    setFiles(updatedFiles)
+    filesConfig.onFiles(updatedFiles)
+  }
+}
+
+export { getFileTypeInfo, handleAddFiles, handleRemoveFile }

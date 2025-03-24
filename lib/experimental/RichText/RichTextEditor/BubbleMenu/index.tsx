@@ -131,12 +131,9 @@ const EditorBubbleMenu = ({
             button={{
               variant: "ghost",
             }}
-            enhancementOptions={enhanceConfig?.enhancementOptions || []}
-            canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
+            enhanceConfig={enhanceConfig}
             disableButtons={disableButtons}
-            inputPlaceholder={
-              enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
-            }
+            hideLabel={true}
           />
         )}
       </div>

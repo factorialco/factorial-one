@@ -141,14 +141,14 @@ export const Default: Story = {
       multipleFiles: true,
       maxFileSize: 10 * 1024 * 1024,
     },
-    onSubmit: {
+    submitAction: {
       label: "Send",
       onClick: () => {
         alert("Submit")
       },
       disabled: false,
     },
-    onCancel: {
+    cancelAction: {
       label: "Cancel",
       onClick: () => {
         alert("Cancel")

@@ -6,7 +6,7 @@ import { useCallback, useRef, useState } from "react"
 import ReactDOM from "react-dom/client"
 import tippy, { Instance } from "tippy.js"
 import { isValidSelectionForEnhancement } from "../utils/enhance"
-import { EnhancementOption } from "../utils/types"
+import { enhanceConfig } from "../utils/types"
 import { AIEnhanceMenu } from "./EnhanceMenu"
 
 interface EnhanceActivatorProps {
@@ -23,11 +23,9 @@ interface EnhanceActivatorProps {
     size?: "md" | "sm"
     icon?: IconType
   }
-  enhancementOptions: EnhancementOption[]
-  canUseCustomPrompt: boolean
+  enhanceConfig?: enhanceConfig
   disableButtons: boolean
-  enhanceLabel?: string
-  inputPlaceholder: string
+  hideLabel?: boolean
 }
 
 const EnhanceActivator = ({
@@ -39,11 +37,9 @@ const EnhanceActivator = ({
     size: "md",
     icon: Ai,
   },
-  canUseCustomPrompt,
-  enhancementOptions,
+  enhanceConfig,
   disableButtons,
-  enhanceLabel,
-  inputPlaceholder,
+  hideLabel,
 }: EnhanceActivatorProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
@@ -145,11 +141,13 @@ const EnhanceActivator = ({
 
     root.render(
       <AIEnhanceMenu
-        canUseCustomPrompt={canUseCustomPrompt}
+        canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
         onSelect={handleAIEnhance}
         onClose={() => tippyInstanceRef.current?.hide()}
-        enhancementOptions={enhancementOptions}
-        inputPlaceholder={inputPlaceholder}
+        enhancementOptions={enhanceConfig?.enhancementOptions || []}
+        inputPlaceholder={
+          enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
+        }
       />
     )
 
@@ -172,16 +170,16 @@ const EnhanceActivator = ({
     })
 
     tippyInstanceRef.current.show()
-  }, [editor, handleAIEnhance, enhancementOptions])
+  }, [editor, handleAIEnhance])
 
   return (
     <Button
       ref={enhanceButtonRef}
       variant={button.variant || "ghost"}
       size={button.size || "md"}
-      label={enhanceLabel || "Enhance"}
+      label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || "Enhance"}
       icon={button.icon || Ai}
-      hideLabel={enhanceLabel ? false : true}
+      hideLabel={hideLabel ?? false}
       onClick={handleEnhanceClick}
       disabled={disableButtons}
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

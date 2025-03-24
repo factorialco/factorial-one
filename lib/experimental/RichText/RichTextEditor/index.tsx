@@ -34,9 +34,11 @@ import {
   handleEnhanceWithAIFunction,
   isValidSelectionForEnhancement,
 } from "./utils/enhance"
+import { handleAddFiles, handleRemoveFile } from "./utils/files"
 import { heightMapping } from "./utils/helpers"
 import { configureMention } from "./utils/mention"
 import {
+  actionConfig,
   enhanceConfig,
   filesConfig,
   MentionChangeResult,
@@ -46,31 +48,22 @@ import {
   toolbarConfig,
 } from "./utils/types"
 
-// Component props and handle
 interface RichTextEditorProps {
   mentionsConfig?: mentionsConfig
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
   toolbarConfig?: toolbarConfig
-  onSubmit?: {
-    label: string
-    onClick: () => void
-    disabled?: boolean
-  }
-  onCancel?: {
-    label: string
-    onClick: () => void
-    disabled?: boolean
-  }
+  submitAction?: actionConfig
+  cancelAction?: actionConfig
+  onChange: (html: string | MentionChangeResult | null) => void
   title: string
   height?: RichTextEditorHeight
   maxCharacters?: number
+  placeholder: string
   initialEditorState?: {
     content?: string
     files?: File[]
   }
-  onChange: (html: string | null | MentionChangeResult) => void
-  placeholder: string
 }
 
 type RichTextEditorHandle = {
@@ -86,8 +79,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       enhanceConfig,
       filesConfig,
       toolbarConfig,
-      onSubmit,
-      onCancel,
+      submitAction,
+      cancelAction,
       title,
       height = "lg",
       maxCharacters,
@@ -215,25 +208,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       },
     }))
 
-    const handleFiles = (newFiles: File[]) => {
-      if (filesConfig) {
-        const updatedFiles = filesConfig.multipleFiles
-          ? [...files, ...newFiles]
-          : newFiles
-        setFiles(updatedFiles)
-        filesConfig.onFiles(updatedFiles)
-      }
-    }
-
-    const handleRemoveFile = (fileIndex: number) => {
-      const updatedFiles = [...files]
-      updatedFiles.splice(fileIndex, 1)
-      setFiles(updatedFiles)
-      if (filesConfig) {
-        filesConfig.onFiles(updatedFiles)
-      }
-    }
-
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const selectedFiles = e.target.files
       if (selectedFiles && selectedFiles.length > 0) {
@@ -243,7 +217,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             (file) => file.size <= filesConfig.maxFileSize!
           )
         }
-        handleFiles(fileArray)
+        handleAddFiles(fileArray, files, filesConfig, setFiles)
       }
       if (fileInputRef.current) {
         fileInputRef.current.value = ""
@@ -344,7 +318,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 className="hidden"
               />
               {files.length > 0 && (
-                <FileList files={files} onRemoveFile={handleRemoveFile} />
+                <FileList
+                  files={files}
+                  onRemoveFile={(fileIndex) =>
+                    handleRemoveFile(fileIndex, files, filesConfig, setFiles)
+                  }
+                />
               )}
             </>
           )}
@@ -377,7 +356,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           />
         )}
 
-        {(onSubmit || onCancel || maxCharacters) && (
+        {(submitAction || cancelAction || maxCharacters) && (
           <div className="flex w-full items-center justify-between border-0 border-t-[1px] border-solid border-f1-border px-4 py-3">
             <div>
               {editor && maxCharacters && (
@@ -387,22 +366,22 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               )}
             </div>
             <div className="flex gap-2">
-              {onCancel && (
+              {cancelAction && (
                 <Button
-                  onClick={onCancel.onClick}
+                  onClick={cancelAction.onClick}
                   variant="outline"
                   size="md"
-                  label={onCancel.label}
-                  disabled={isAcceptChangesOpen || onCancel.disabled}
+                  label={cancelAction.label}
+                  disabled={isAcceptChangesOpen || cancelAction.disabled}
                 />
               )}
-              {onSubmit && (
+              {submitAction && (
                 <Button
-                  onClick={onSubmit.onClick}
+                  onClick={submitAction.onClick}
                   variant="default"
                   size="md"
-                  label={onSubmit.label}
-                  disabled={isAcceptChangesOpen || onSubmit.disabled}
+                  label={submitAction.label}
+                  disabled={isAcceptChangesOpen || submitAction.disabled}
                 />
               )}
             </div>
