@@ -5,13 +5,14 @@ import { useRef, useState } from "react"
 import ReactDOM from "react-dom/client"
 import tippy, { Instance } from "tippy.js"
 import { EnhanceActivator } from "../Enhance"
-import { enhanceConfig } from "../utils/types"
+import { enhanceConfig, linkPopupConfig } from "../utils/types"
 
 interface LinkPopupProps {
   onSubmit: (url: string) => void
+  linkPlaceholder: string
 }
 
-const LinkPopup = ({ onSubmit }: LinkPopupProps) => {
+const LinkPopup = ({ onSubmit, linkPlaceholder }: LinkPopupProps) => {
   const [url, setUrl] = useState("")
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -31,7 +32,7 @@ const LinkPopup = ({ onSubmit }: LinkPopupProps) => {
     <Input
       className="w-80 shadow-md"
       type="text"
-      placeholder="Enter the URL"
+      placeholder={linkPlaceholder}
       value={url}
       onChange={(e) => {
         setUrl(e.target.value)
@@ -52,6 +53,7 @@ interface EditorBubbleMenuProps {
   isLoadingEnhance: boolean
   disableButtons: boolean
   enhanceConfig: enhanceConfig | undefined
+  linkPopupConfig?: linkPopupConfig | undefined
 }
 
 const EditorBubbleMenu = ({
@@ -60,11 +62,13 @@ const EditorBubbleMenu = ({
   isLoadingEnhance,
   disableButtons,
   enhanceConfig,
+  linkPopupConfig,
 }: EditorBubbleMenuProps) => {
   const tippyInstanceRef = useRef<Instance | null>(null)
   const linkButtonRef = useRef<HTMLDivElement>(null)
 
   const handleLinkClick = () => {
+    if (!linkPopupConfig) return
     if (disableButtons) return
     if (editor.isActive("link")) {
       editor.chain().focus().unsetLink().run()
@@ -89,6 +93,7 @@ const EditorBubbleMenu = ({
             .run()
           tippyInstanceRef.current?.hide()
         }}
+        linkPlaceholder={linkPopupConfig.linkPlaceholder}
       />
     )
 
@@ -106,6 +111,8 @@ const EditorBubbleMenu = ({
     tippyInstanceRef.current.show()
   }
 
+  if (!linkPopupConfig && !enhanceConfig) return null
+
   return (
     <BubbleMenu
       tippyOptions={{ duration: 100, placement: "bottom" }}
@@ -115,13 +122,15 @@ const EditorBubbleMenu = ({
         ref={linkButtonRef}
         className="flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 shadow-md"
       >
-        <Button
-          onClick={handleLinkClick}
-          label="Link"
-          variant={editor.isActive("link") ? "neutral" : "ghost"}
-          type="button"
-          disabled={disableButtons}
-        />
+        {linkPopupConfig && (
+          <Button
+            onClick={handleLinkClick}
+            label="Link"
+            variant={editor.isActive("link") ? "neutral" : "ghost"}
+            type="button"
+            disabled={disableButtons}
+          />
+        )}
 
         {enhanceConfig && (
           <EnhanceActivator

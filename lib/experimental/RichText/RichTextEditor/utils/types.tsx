@@ -20,43 +20,51 @@ type MentionChangeResult = {
   ids: number[]
 }
 
+type ToolbarFormatConfig = {
+  bold?: boolean
+  italic?: boolean
+  underline?: boolean
+  strike?: boolean
+  highlight?: boolean
+}
+
+type ToolbarTextSizeConfig = {
+  normal?: boolean
+  heading1?: boolean
+  heading2?: boolean
+  heading3?: boolean
+}
+
+type ToolbarTextAlignConfig = {
+  left?: boolean
+  center?: boolean
+  right?: boolean
+  justify?: boolean
+}
+
+type ToolbarListConfig = {
+  bullet?: boolean
+  ordered?: boolean
+  task?: boolean
+}
+
+type ToolbarMoreOptionsConfig = {
+  code?: boolean
+  horizontalRule?: boolean
+  quote?: boolean
+}
+
 type toolbarConfig =
-  | {
-      format?: {
-        bold?: boolean
-        italic?: boolean
-        underline?: boolean
-        strike?: boolean
-        highlight?: boolean
-      }
-      textSize?: {
-        normal?: boolean
-        heading1?: boolean
-        heading2?: boolean
-        heading3?: boolean
-      }
-      textAlign?: {
-        left?: boolean
-        center?: boolean
-        right?: boolean
-        justify?: boolean
-      }
-      list?: {
-        bullet?: boolean
-        ordered?: boolean
-        task?: boolean
-      }
-      moreOptions?: {
-        code?: boolean
-        horizontalRule?: boolean
-        quote?: boolean
-      }
-      fullScreen?: boolean
-    }
   | "all"
   | "none"
-
-// Types related to enhancements
+  | {
+      format?: ToolbarFormatConfig
+      textSize?: ToolbarTextSizeConfig
+      textAlign?: ToolbarTextAlignConfig
+      list?: ToolbarListConfig
+      moreOptions?: ToolbarMoreOptionsConfig
+      fullScreen?: boolean
+    }
 
 type enhanceTextParams = {
   text: string
@@ -64,6 +72,7 @@ type enhanceTextParams = {
   intent?: string
   context?: string
 }
+
 type enhancedTextResponse = {
   success: boolean
   text: string
@@ -86,12 +95,7 @@ type EnhancementOption = {
 }
 
 type enhanceConfig = {
-  onEnhanceText?: ({
-    text,
-    type,
-    intent,
-    context,
-  }: enhanceTextParams) => Promise<enhancedTextResponse>
+  onEnhanceText?: (params: enhanceTextParams) => Promise<enhancedTextResponse>
   enhancementOptions?: EnhancementOption[]
   canUseCustomPrompt?: boolean
   enhanceLabels: enhanceLabelsType
@@ -116,6 +120,10 @@ type actionConfig = {
   disabled?: boolean
 }
 
+type linkPopupConfig = {
+  linkPlaceholder: string
+}
+
 export type {
   EnhancementOption,
   MentionChangeResult,
@@ -127,6 +135,7 @@ export type {
   enhanceTextParams,
   enhancedTextResponse,
   filesConfig,
+  linkPopupConfig,
   mentionsConfig,
   toolbarConfig,
 }
