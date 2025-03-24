@@ -128,6 +128,13 @@ export const TableCollection = <
     })
   }
 
+  const renderCell = (
+    item: Record,
+    column: TableColumnDefinition<Record, Sortings>
+  ) => {
+    return renderValue(item, column, "table")
+  }
+
   return (
     <>
       <OneTable loading={isLoading}>
@@ -174,7 +181,7 @@ export const TableCollection = <
                     href={itemHref}
                     sticky={column.sticky}
                   >
-                    {renderValue(item, column)}
+                    {renderCell(item, column)}
                   </TableCell>
                 ))}
                 {source.itemActions && (
