@@ -1,5 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { enhanceLabelsType } from "@/experimental/exports"
+import { Reset } from "@/icons/app"
 
 interface AcceptChangesProps {
   onAccept: () => void
@@ -15,6 +16,7 @@ const AcceptChanges = ({ onAccept, onReject, labels }: AcceptChangesProps) => {
         onClick={onReject}
         size="sm"
         variant="critical"
+        icon={Reset}
       />
       <Button
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment

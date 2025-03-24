@@ -106,11 +106,18 @@ type filesConfig = {
   maxFileSize?: number
 }
 
+type actionConfig = {
+  label: string
+  onClick: () => void
+  disabled?: boolean
+}
+
 export type {
   EnhancementOption,
   MentionChangeResult,
   MentionedUser,
   RichTextEditorHeight,
+  actionConfig,
   enhanceConfig,
   enhanceLabelsType,
   enhanceTextParams,

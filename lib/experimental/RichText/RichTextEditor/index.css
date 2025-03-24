@@ -183,3 +183,9 @@
 .ProseMirror-selectednode {
   outline: 2px solid #0078d4;
 }
+
+.ProseMirror mark {
+  background-color: #ffa8a8;
+  padding: 2px 4px;
+  border-radius: 4px;
+}

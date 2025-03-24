@@ -48,9 +48,11 @@ const htmlContent = `<p>
   </li>
   <li>
     <p>
-      <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="1" rel="noopener noreferrer" target="_blank">
-        @Raúl Sigüenza Sánchez
-      </a>?
+      <mark>
+        <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="1" rel="noopener noreferrer" target="_blank">
+          @Raúl Sigüenza Sánchez
+        </a>
+      </mark>
     </p>
   </li>
 </ul>

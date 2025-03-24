@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { Ellipsis, Paperclip } from "@/icons/app"
+import { ChevronUp, Code, Ellipsis, Minus, Paperclip } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Editor } from "@tiptap/react"
 import { compact, defaultsDeep } from "lodash"
@@ -287,11 +287,13 @@ const ToolbarPlugin = ({
         isFullscreen={isFullscreen}
         items={compact([
           code && {
+            icon: Code,
             label: "Code Block",
             onClick: () => editor.chain().focus().toggleCodeBlock().run(),
             isActive: editor.isActive("codeBlock"),
           },
           horizontalRule && {
+            icon: Minus,
             label: "Horizontal Rule",
             onClick: () => editor.chain().focus().setHorizontalRule().run(),
             isActive: editor.isActive("horizontalRule"),
@@ -326,7 +328,7 @@ const ToolbarPlugin = ({
 
   return (
     <div className="flex flex-row items-center justify-between gap-2 border-0 border-b-[1px] border-solid border-f1-border py-3">
-      <div className="flex flex-row items-center overflow-x-auto pl-4">
+      <div className="flex flex-row items-center overflow-x-auto whitespace-nowrap pl-4">
         {intersperse(groups, <ToolbarDivider />)}
       </div>
       <div className="flex flex-row items-center gap-2 pr-4">
@@ -335,13 +337,8 @@ const ToolbarPlugin = ({
             editor={editor}
             onEnhanceWithAI={onEnhanceWithAI}
             isLoadingEnhance={isLoadingEnhance}
-            enhancementOptions={enhanceConfig?.enhancementOptions || []}
-            canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
+            enhanceConfig={enhanceConfig}
             disableButtons={disableButtons}
-            enhanceLabel={enhanceConfig?.enhanceLabels.enhanceButtonLabel || ""}
-            inputPlaceholder={
-              enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
-            }
           />
         )}
         {fullScreen && !isFullscreen && (
@@ -350,6 +347,9 @@ const ToolbarPlugin = ({
             label="Fullscreen"
             variant="ghost"
             type="button"
+            hideLabel
+            round
+            icon={ChevronUp}
             disabled={disableButtons}
           />
         )}

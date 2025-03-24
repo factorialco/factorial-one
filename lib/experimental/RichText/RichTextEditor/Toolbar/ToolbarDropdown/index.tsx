@@ -21,6 +21,7 @@ const convertItemsToDropdownItems = (items: ToolbarDropdownItem[]) => {
   return items.map((item) => ({
     label: item.label,
     onClick: item.onClick,
+    icon: item.icon || undefined,
   }))
 }
 
