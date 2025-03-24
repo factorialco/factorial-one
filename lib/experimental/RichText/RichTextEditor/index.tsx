@@ -41,6 +41,7 @@ import {
   actionConfig,
   enhanceConfig,
   filesConfig,
+  linkPopupConfig,
   MentionChangeResult,
   MentionedUser,
   mentionsConfig,
@@ -64,6 +65,7 @@ interface RichTextEditorProps {
     content?: string
     files?: File[]
   }
+  linkPopupConfig?: linkPopupConfig
 }
 
 type RichTextEditorHandle = {
@@ -87,6 +89,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       initialEditorState,
       onChange,
       placeholder,
+      linkPopupConfig,
     },
     ref
   ) {
@@ -335,6 +338,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             isLoadingEnhance={isLoadingEnhance}
             enhanceConfig={enhanceConfig}
             disableButtons={isAcceptChangesOpen}
+            linkPopupConfig={linkPopupConfig}
           />
         )}
 

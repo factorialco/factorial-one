@@ -102,8 +102,6 @@ export const Default: Story = {
       console.log(html)
     },
     placeholder: "Write something and test our fabulous editor...",
-
-    // Mentions configuration
     mentionsConfig: {
       users: users,
       onMentionQueryStringChanged: (search) => {
@@ -154,6 +152,9 @@ export const Default: Story = {
         alert("Cancel")
       },
       disabled: false,
+    },
+    linkPopupConfig: {
+      linkPlaceholder: "Write or paste a link",
     },
     title: "Rich Text Editor test",
     toolbarConfig: "all",
