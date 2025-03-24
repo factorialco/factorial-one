@@ -10,12 +10,12 @@ import { userEvent } from "@testing-library/user-event"
 import { LayoutGrid } from "lucide-react"
 import { describe, expect, test, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
-import { DataCollection, useDataSource } from "./index"
 import { I18nProvider } from "../../lib/i18n-provider"
 import { defaultTranslations } from "../../lib/i18n-provider-defaults"
 import { PromiseState } from "../../lib/promise-to-observable"
-import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition } from "./Filters/types"
+import { OneDataCollection, useDataSource } from "./index"
+import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
 import type { DataSource } from "./types"
 import { useData } from "./useData"
@@ -56,7 +56,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -92,7 +92,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -161,7 +161,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -243,7 +243,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -295,7 +295,7 @@ describe("Collections", () => {
         Item,
         FiltersDefinition,
         SortingsDefinition,
-        ActionsDefinition<Item>
+        ItemActionsDefinition<Item>
       >
     }) => {
       const { data } = useData<Item, FiltersDefinition, SortingsDefinition>(
@@ -359,7 +359,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -409,7 +409,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
@@ -442,7 +442,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -528,7 +528,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >({
           dataAdapter: {
             fetchData: fetchDataMock,
@@ -548,7 +548,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -613,7 +613,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async () => [
@@ -655,7 +655,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
@@ -692,7 +692,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -777,7 +777,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >({
           filters: {
             department: {
@@ -826,7 +826,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -892,12 +892,12 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async () => mockData,
           },
-          actions: (item) => [
+          itemActions: (item) => [
             {
               label: "Edit",
               onClick: () => handleEdit(item),
@@ -913,7 +913,7 @@ describe("Collections", () => {
     )
 
     render(
-      <DataCollection
+      <OneDataCollection
         source={result.current}
         visualizations={[
           {
@@ -1000,7 +1000,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ search }) => {
@@ -1031,7 +1031,7 @@ describe("Collections", () => {
 
     // Render the DataCollection with our configured source
     render(
-      <DataCollection
+      <OneDataCollection
         source={result.current}
         visualizations={[
           {
@@ -1089,7 +1089,7 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >({
           dataAdapter: {
             paginationType: "pages",
@@ -1127,7 +1127,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {

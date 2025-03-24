@@ -1,22 +1,22 @@
 import { Button } from "../../../components/Actions/Button"
-import { Dropdown } from "../../Navigation/Dropdown"
 import { Ellipsis } from "../../../icons/app"
-import { ActionsDefinition, filterActions } from "../actions"
+import { Dropdown } from "../../Navigation/Dropdown"
+import { ItemActionsDefinition, filterItemActions } from "../item-actions"
 import { RecordType } from "../types"
 
 export const ActionsDropdown = <
   Record extends RecordType,
-  Actions extends ActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<Record>,
 >({
   item,
   actions,
 }: {
   item: Record
-  actions: Actions
+  actions: ItemActions
 }) => {
   if (!actions || actions.length === 0) return null
 
-  const items = filterActions(actions, item)
+  const items = filterItemActions(actions, item)
 
   if (items.length === 0) {
     return null

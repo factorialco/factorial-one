@@ -1,5 +1,3 @@
-import { I18nProvider } from "../../../lib/i18n-provider"
-import { defaultTranslations } from "../../../lib/i18n-provider-defaults"
 import {
   act,
   render,
@@ -10,12 +8,14 @@ import {
 } from "@testing-library/react"
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
+import { I18nProvider } from "../../../../../lib/i18n-provider"
+import { defaultTranslations } from "../../../../../lib/i18n-provider-defaults"
+import type { FiltersDefinition } from "../../../Filters/types"
+import { ItemActionsDefinition } from "../../../item-actions"
+import { SortingsDefinition } from "../../../sortings"
+import type { DataSource } from "../../../types"
+import { useData } from "../../../useData"
 import { TableCollection } from "./index"
-import { ActionsDefinition } from "../actions"
-import type { FiltersDefinition } from "../Filters/types"
-import { SortingsDefinition } from "../sortings"
-import type { DataSource } from "../types"
-import { useData } from "../useData"
 
 type TestFilters = FiltersDefinition
 
@@ -53,7 +53,7 @@ const createTestSource = (
   Person,
   TestFilters,
   SortingsDefinition,
-  ActionsDefinition<Person>
+  ItemActionsDefinition<Person>
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -86,7 +86,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource()}
@@ -113,7 +113,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource()}
@@ -155,7 +155,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={columnsWithCustomRender}
             source={createTestSource()}
@@ -179,7 +179,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource([])}
@@ -207,7 +207,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource([], error)}
@@ -248,7 +248,7 @@ describe("TableCollection", () => {
       Person,
       TestFilters,
       SortingsDefinition,
-      ActionsDefinition<Person>
+      ItemActionsDefinition<Person>
     > => ({
       currentFilters: {},
       setCurrentFilters: vi.fn(),
@@ -292,7 +292,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
@@ -315,7 +315,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
@@ -345,7 +345,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
@@ -377,7 +377,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource(5, 10)}
@@ -403,7 +403,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource(0, 10)}
@@ -451,7 +451,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={columnsWithSorting}
             source={sortableSource}
@@ -492,7 +492,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={[
               {
@@ -563,7 +563,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={[
               {
@@ -637,7 +637,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={[
               {
@@ -705,7 +705,7 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ActionsDefinition<Person>
+            ItemActionsDefinition<Person>
           >
             columns={columnsWithSorting}
             source={createTestSource()} // No sortings defined

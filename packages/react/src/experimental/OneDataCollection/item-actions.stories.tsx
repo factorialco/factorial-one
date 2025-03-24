@@ -1,3 +1,4 @@
+import { Meta, StoryObj } from "@storybook/react"
 import {
   Ai,
   ArrowRight,
@@ -7,14 +8,19 @@ import {
   Share,
   Star,
 } from "../../icons/app"
-import { Meta, StoryObj } from "@storybook/react"
-import { DataCollection, useDataSource } from "./index"
-import { ActionsDefinition } from "./actions"
+import { OneDataCollection, useDataSource } from "./index"
+import { ItemActionsDefinition } from "./item-actions"
 
 const meta = {
-  title: "Data Collection/Actions",
+  title: "Data Collection/Item Actions",
   parameters: {
     layout: "padded",
+    docs: {
+      description: {
+        component:
+          "Data collection item actions are a way to add actions to a data collection item. The actions are  item specific. (check Data Collection Actions for data collection specific actions)",
+      },
+    },
   },
 } satisfies Meta
 
@@ -82,8 +88,10 @@ const mockUsers = [
 ]
 
 // Example of a comprehensive actions definition with various types of actions
-const createUserActions = (): ActionsDefinition<(typeof mockUsers)[number]> => {
-  return (user) => {
+const createUserActions = (): ItemActionsDefinition<
+  (typeof mockUsers)[number]
+> => {
+  return (user: (typeof mockUsers)[number]) => {
     if (user.id === "user-1") {
       return undefined
     }
@@ -179,13 +187,13 @@ export const BasicActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
-      actions: createUserActions(),
+      itemActions: createUserActions(),
     })
 
     return (
       <div className="space-y-8">
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Actions Example</h2>
+          <h2 className="mb-2 text-xl font-semibold">Items Actions Example</h2>
           <p className="mb-4 text-f1-foreground-secondary">
             This example demonstrates various types of actions that can be used
             in Collections. Click on the actions menu (three dots) to see the
@@ -193,7 +201,7 @@ export const BasicActionsExample: Story = {
           </p>
         </div>
 
-        <DataCollection
+        <OneDataCollection
           source={dataSource}
           visualizations={[
             {
@@ -206,17 +214,14 @@ export const BasicActionsExample: Story = {
                   { label: "Department", render: (item) => item.department },
                   {
                     label: "Status",
-                    render: (item) => (
-                      <span
-                        className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                          item.status === "active"
-                            ? "bg-f1-background-success text-f1-foreground-success"
-                            : "bg-f1-background-warning text-f1-foreground-warning"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    ),
+                    render: (item) => ({
+                      type: "status",
+                      value: {
+                        status:
+                          item.status === "active" ? "positive" : "warning",
+                        label: item.status,
+                      },
+                    }),
                   },
                 ],
               },
@@ -235,19 +240,21 @@ export const CardActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
-      actions: createUserActions(),
+      itemActions: createUserActions(),
     })
 
     return (
       <div className="space-y-8">
         <div>
-          <h2 className="mb-2 text-xl font-semibold">Card Actions Example</h2>
+          <h2 className="mb-2 text-xl font-semibold">
+            Card Item Actions Example
+          </h2>
           <p className="mb-4 text-f1-foreground-secondary">
             This example shows how actions work with card visualization.
           </p>
         </div>
 
-        <DataCollection
+        <OneDataCollection
           source={dataSource}
           visualizations={[
             {
@@ -260,17 +267,14 @@ export const CardActionsExample: Story = {
                   { label: "Department", render: (item) => item.department },
                   {
                     label: "Status",
-                    render: (item) => (
-                      <span
-                        className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                          item.status === "active"
-                            ? "bg-f1-background-success text-f1-foreground-success"
-                            : "bg-f1-background-warning text-f1-foreground-warning"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    ),
+                    render: (item) => ({
+                      type: "status",
+                      value: {
+                        status:
+                          item.status === "active" ? "positive" : "warning",
+                        label: item.status,
+                      },
+                    }),
                   },
                 ],
               },

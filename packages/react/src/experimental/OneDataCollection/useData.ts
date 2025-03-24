@@ -11,8 +11,8 @@ import {
   PromiseState,
   promiseToObservable,
 } from "../../lib/promise-to-observable"
-import { ActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
 import {
   BaseFetchOptions,
@@ -165,7 +165,7 @@ export function useData<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
 >(
-  source: DataSource<Record, Filters, Sortings, ActionsDefinition<Record>>,
+  source: DataSource<Record, Filters, Sortings, ItemActionsDefinition<Record>>,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
   const {
