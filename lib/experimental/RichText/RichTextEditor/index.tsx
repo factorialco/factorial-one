@@ -38,10 +38,6 @@ import { heightMapping } from "./utils/helpers"
 import { configureMention } from "./utils/mention"
 import {
   enhanceConfig,
-  enhancedTextResponse,
-  enhanceLabelsType,
-  EnhancementOption,
-  enhanceTextParams,
   filesConfig,
   MentionChangeResult,
   MentionedUser,
@@ -107,7 +103,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     >(mentionsConfig?.users || [])
     const editorRef = useRef<HTMLDivElement>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const [isLoadingAi, setIsLoadingAi] = useState(false)
+    const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
@@ -204,6 +200,21 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       []
     )
 
+    useImperativeHandle(ref, () => ({
+      clear: () => {
+        editor?.commands.clearContent()
+      },
+      clearFiles: () => {
+        setFiles([])
+        if (filesConfig) {
+          filesConfig.onFiles([])
+        }
+      },
+      focus: () => {
+        editor?.commands.focus()
+      },
+    }))
+
     const handleFiles = (newFiles: File[]) => {
       if (filesConfig) {
         const updatedFiles = filesConfig.multipleFiles
@@ -223,30 +234,15 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       }
     }
 
-    useImperativeHandle(ref, () => ({
-      clear: () => {
-        editor?.commands.clearContent()
-      },
-      clearFiles: () => {
-        setFiles([])
-        if (filesConfig) {
-          filesConfig.onFiles([])
-        }
-      },
-      focus: () => {
-        editor?.commands.focus()
-      },
-    }))
-
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const selectedFiles = e.target.files
       if (selectedFiles && selectedFiles.length > 0) {
         let fileArray = Array.from(selectedFiles)
-        // if (filesConfig?.maxFileSize) {
-        //   fileArray = fileArray.filter(
-        //     (file) => file.size <= filesConfig.maxFileSize
-        //   )
-        // }
+        if (filesConfig?.maxFileSize) {
+          fileArray = fileArray.filter(
+            (file) => file.size <= filesConfig.maxFileSize!
+          )
+        }
         handleFiles(fileArray)
       }
       if (fileInputRef.current) {
@@ -266,7 +262,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             selectedText,
             editor: editor!,
             enhanceText: enhanceConfig?.onEnhanceText!,
-            setIsLoadingAi,
+            setIsLoadingEnhance,
             isValidSelectionForEnhancement,
             onSuccess: () => {
               editor?.setEditable(false)
@@ -283,7 +279,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           })
         }
       },
-      [editor, setIsLoadingAi]
+      [editor, setIsLoadingEnhance]
     )
 
     return (
@@ -313,19 +309,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           isFullscreen={isFullscreen}
           onEnhanceWithAI={handleEnhanceWithAI}
           fileInputRef={fileInputRef}
-          isLoadingAi={isLoadingAi}
-          canUseFiles={filesConfig ? true : false}
-          canUseAi={enhanceConfig ? true : false}
-          enhancementOptions={enhanceConfig?.enhancementOptions || []}
-          canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
           config={toolbarConfig || {}}
           disableButtons={isAcceptChangesOpen}
-          enhanceLabel={
-            enhanceConfig?.enhanceLabels.enhanceButtonLabel || "Enhance"
-          }
-          enhanceInputPlaceholder={
-            enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
-          }
+          canUseFiles={filesConfig ? true : false}
+          enhanceConfig={enhanceConfig}
+          isLoadingEnhance={isLoadingEnhance}
         />
         <div
           ref={editorRef}
@@ -362,14 +350,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           )}
           {isAcceptChangesOpen && (
             <AcceptChanges
-              acceptLabel={
-                enhanceConfig?.enhanceLabels.acceptChangesButtonLabel ||
-                "Accept"
-              }
-              rejectLabel={
-                enhanceConfig?.enhanceLabels.rejectChangesButtonLabel ||
-                "Reject"
-              }
+              labels={enhanceConfig?.enhanceLabels}
               onAccept={() => {
                 setIsAcceptChangesOpen(false)
                 editor?.setEditable(true)
@@ -390,14 +371,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           <EditorBubbleMenu
             editor={editor}
             onEnhanceWithAI={handleEnhanceWithAI}
-            isLoadingAi={isLoadingAi}
-            canUseAi={enhanceConfig ? true : false}
-            enhancementOptions={enhanceConfig?.enhancementOptions || []}
-            canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
+            isLoadingEnhance={isLoadingEnhance}
+            enhanceConfig={enhanceConfig}
             disableButtons={isAcceptChangesOpen}
-            enhanceInputPlaceholder={
-              enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
-            }
           />
         )}
 
@@ -437,18 +413,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
   }
 )
 
+export * from "./utils/types"
 export { RichTextEditor }
-
-export type {
-  enhanceConfig,
-  enhancedTextResponse,
-  enhanceLabelsType,
-  EnhancementOption,
-  enhanceTextParams,
-  filesConfig,
-  MentionChangeResult,
-  MentionedUser,
-  mentionsConfig,
-  RichTextEditorHeight,
-  toolbarConfig,
-}
+export type { RichTextEditorHandle, RichTextEditorProps }

@@ -6,7 +6,7 @@ import { compact, defaultsDeep } from "lodash"
 import React from "react"
 import { EnhanceActivator } from "../Enhance"
 import { defaultToolbarConfig } from "../utils/helpers"
-import { EnhancementOption, toolbarConfig } from "../utils/types"
+import { enhanceConfig, toolbarConfig } from "../utils/types"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 
 const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
@@ -37,15 +37,11 @@ interface ToolbarPluginProps {
     customIntent?: string,
     context?: string
   ) => Promise<void>
-  isLoadingAi: boolean
+  isLoadingEnhance: boolean
   canUseFiles: boolean
-  canUseAi: boolean
-  enhancementOptions: EnhancementOption[]
-  canUseCustomPrompt: boolean
   config: toolbarConfig
   disableButtons: boolean
-  enhanceLabel: string
-  enhanceInputPlaceholder: string
+  enhanceConfig: enhanceConfig | undefined
 }
 
 const ToolbarPlugin = ({
@@ -54,15 +50,11 @@ const ToolbarPlugin = ({
   isFullscreen,
   onEnhanceWithAI,
   fileInputRef,
-  isLoadingAi,
+  isLoadingEnhance,
   canUseFiles,
-  canUseAi,
-  enhancementOptions,
-  canUseCustomPrompt,
+  enhanceConfig,
   config,
   disableButtons,
-  enhanceLabel,
-  enhanceInputPlaceholder,
 }: ToolbarPluginProps) => {
   if (!editor) return null
 
@@ -338,16 +330,18 @@ const ToolbarPlugin = ({
         {intersperse(groups, <ToolbarDivider />)}
       </div>
       <div className="flex flex-row items-center gap-2 pr-4">
-        {canUseAi && (
+        {enhanceConfig && (
           <EnhanceActivator
             editor={editor}
             onEnhanceWithAI={onEnhanceWithAI}
-            isLoadingAi={isLoadingAi}
-            enhancementOptions={enhancementOptions}
-            canUseCustomPrompt={canUseCustomPrompt}
+            isLoadingEnhance={isLoadingEnhance}
+            enhancementOptions={enhanceConfig?.enhancementOptions || []}
+            canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
             disableButtons={disableButtons}
-            enhanceLabel={enhanceLabel}
-            inputPlaceholder={enhanceInputPlaceholder}
+            enhanceLabel={enhanceConfig?.enhanceLabels.enhanceButtonLabel || ""}
+            inputPlaceholder={
+              enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
+            }
           />
         )}
         {fullScreen && !isFullscreen && (

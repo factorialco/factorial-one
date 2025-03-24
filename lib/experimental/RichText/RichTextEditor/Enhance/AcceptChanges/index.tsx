@@ -1,22 +1,17 @@
 import { Button } from "@/components/Actions/Button"
+import { enhanceLabelsType } from "@/experimental/exports"
 
 interface AcceptChangesProps {
   onAccept: () => void
   onReject: () => void
-  acceptLabel: string
-  rejectLabel: string
+  labels?: enhanceLabelsType
 }
 
-const AcceptChanges = ({
-  onAccept,
-  onReject,
-  acceptLabel,
-  rejectLabel,
-}: AcceptChangesProps) => {
+const AcceptChanges = ({ onAccept, onReject, labels }: AcceptChangesProps) => {
   return (
     <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2 rounded-md border-[1px] border-solid border-f1-border-secondary bg-f1-background p-2 shadow-md">
       <Button
-        label={rejectLabel}
+        label={labels?.rejectChangesButtonLabel || "Reject"}
         onClick={onReject}
         size="sm"
         variant="critical"
@@ -25,7 +20,7 @@ const AcceptChanges = ({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         className="aiMagicLoading"
-        label={acceptLabel}
+        label={labels?.acceptChangesButtonLabel || "Accept"}
         onClick={onAccept}
         size="sm"
         variant="outline"

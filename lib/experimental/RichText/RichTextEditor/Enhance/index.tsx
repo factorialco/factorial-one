@@ -17,7 +17,7 @@ interface EnhanceActivatorProps {
     customIntent?: string,
     context?: string
   ) => Promise<void>
-  isLoadingAi: boolean
+  isLoadingEnhance: boolean
   button?: {
     variant?: "ghost" | "default" | "outline"
     size?: "md" | "sm"
@@ -33,7 +33,7 @@ interface EnhanceActivatorProps {
 const EnhanceActivator = ({
   editor,
   onEnhanceWithAI,
-  isLoadingAi,
+  isLoadingEnhance,
   button = {
     variant: "outline",
     size: "md",
@@ -186,7 +186,7 @@ const EnhanceActivator = ({
       disabled={disableButtons}
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      className={isLoadingAi ? "aiMagicLoading animate-pulse" : ""}
+      className={isLoadingEnhance ? "aiMagicLoading animate-pulse" : ""}
     />
   )
 }

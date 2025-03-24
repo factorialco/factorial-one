@@ -1,23 +1,11 @@
 import { find, keys } from "lodash"
 
-/**
- * Describes the information to be displayed for a file type,
- * such as a label and a color (e.g., a CSS class).
- */
-export type FileTypeInfo = {
-  /** A string that labels the file type (e.g., "PDF", "IMG", "VID") */
+type FileTypeInfo = {
   type: string
-  /** A string for color or a CSS class name (e.g., "text-f1-foreground") */
   color: string
 }
 
-/**
- * The main map that defines the label and color
- * for each supported file type.
- *
- * Feel free to adjust `color` values to match your design system.
- */
-export const FILE_TYPE_MAP: Record<string, FileTypeInfo> = {
+const FILE_TYPE_MAP: Record<string, FileTypeInfo> = {
   pdf: {
     type: "PDF",
     color: "text-f1-foreground-accent",
@@ -72,28 +60,27 @@ export const FILE_TYPE_MAP: Record<string, FileTypeInfo> = {
   },
 }
 
-/**
- * A mapping of keywords found within the MIME type string
- * to the corresponding file type key in `FILE_TYPE_MAP`.
- */
-export const MIME_MATCH_MAP: Record<string, keyof typeof FILE_TYPE_MAP> = {
+const MIME_MATCH_MAP: Record<string, keyof typeof FILE_TYPE_MAP> = {
   pdf: "pdf",
   image: "image",
   word: "doc",
   excel: "excel",
   powerpoint: "ppt",
-  text: "txt", // covers "text/plain", "text/html", etc.
+  text: "txt",
   video: "video",
   audio: "audio",
-  // If you want to detect archives by MIME, you might add "zip" => "archive"
-  // but sometimes MIME can be "application/zip", "application/x-rar-compressed" etc.
+  archive: "archive",
+  csv: "csv",
+  html: "html",
+  markdown: "markdown",
+  zip: "archive",
+  rar: "archive",
+  tar: "archive",
+  gz: "archive",
+  "7z": "archive",
 }
 
-/**
- * A mapping of file extensions to the corresponding
- * file type key in `FILE_TYPE_MAP`.
- */
-export const EXTENSION_MAP: Record<string, keyof typeof FILE_TYPE_MAP> = {
+const EXTENSION_MAP: Record<string, keyof typeof FILE_TYPE_MAP> = {
   // PDF
   pdf: "pdf",
   // Images
@@ -139,32 +126,24 @@ export const EXTENSION_MAP: Record<string, keyof typeof FILE_TYPE_MAP> = {
   markdown: "markdown",
 }
 
-/**
- * Determines the file type (label and color) by inspecting
- * the MIME type and extension of the provided `File`. If no
- * match is found, a default file type is returned.
- *
- * @param file - The file to be analyzed.
- * @returns An object containing `type` and `color` corresponding
- *          to the file's recognized type, or a default if unmatched.
- */
-export function getFileTypeInfo(file: File): FileTypeInfo {
+const getFileTypeInfo = (file: File): FileTypeInfo => {
   const mimeType = file.type.toLowerCase()
 
-  // 1) Check if the MIME type matches any key in MIME_MATCH_MAP
   const matchedMimeKey = find(keys(MIME_MATCH_MAP), (key) =>
     mimeType.includes(key)
   )
+
   if (matchedMimeKey) {
     return FILE_TYPE_MAP[MIME_MATCH_MAP[matchedMimeKey]]
   }
 
-  // 2) If no match by MIME, look for a matching file extension
   const extension = file.name.toLowerCase().split(".").pop()
+
   if (extension && EXTENSION_MAP[extension]) {
     return FILE_TYPE_MAP[EXTENSION_MAP[extension]]
   }
 
-  // 3) Return the default file type if none of the above matched
   return FILE_TYPE_MAP.default
 }
+
+export { getFileTypeInfo }

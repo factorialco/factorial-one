@@ -9,7 +9,7 @@ export interface EnhanceWithAIParams {
   selectedText: string
   editor: Editor
   enhanceText: (params: enhanceTextParams) => Promise<enhancedTextResponse>
-  setIsLoadingAi: (loading: boolean) => void
+  setIsLoadingEnhance: (loading: boolean) => void
   isValidSelectionForEnhancement: (text: string) => boolean
   enhanceType?: string
   customIntent?: string
@@ -22,7 +22,7 @@ async function handleEnhanceWithAIFunction({
   selectedText,
   editor,
   enhanceText,
-  setIsLoadingAi,
+  setIsLoadingEnhance,
   isValidSelectionForEnhancement,
   enhanceType,
   customIntent,
@@ -38,7 +38,7 @@ async function handleEnhanceWithAIFunction({
   )
     return
   try {
-    setIsLoadingAi(true)
+    setIsLoadingEnhance(true)
     const { from, to } = editor.state.selection
     const {
       text: enhancedText,
@@ -68,7 +68,7 @@ async function handleEnhanceWithAIFunction({
   } catch (error) {
     onError()
   } finally {
-    setIsLoadingAi(false)
+    setIsLoadingEnhance(false)
   }
 }
 
