@@ -8,6 +8,7 @@ import {
 } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
+import { useState } from "react"
 import { OneCard } from "./OneCard"
 
 const meta = {
@@ -104,5 +105,16 @@ export const WithLink: Story = {
   args: {
     ...Default.args,
     link: "/",
+  },
+}
+
+export const Selectable: Story = {
+  args: {
+    ...Default.args,
+    selectable: true,
+  },
+  render: (args) => {
+    const [selected, setSelected] = useState(false)
+    return <OneCard {...args} selected={selected} onSelect={setSelected} />
   },
 }

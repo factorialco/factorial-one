@@ -1,6 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
 import { IconType } from "@/components/Utilities/Icon"
+import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { EllipsisHorizontal } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
@@ -14,6 +15,7 @@ import {
 import { type ReactNode } from "react"
 import { CardMetadata } from "./CardMetadata"
 import { type Metadata } from "./types"
+
 interface OneCardProps {
   title?: string
   description?: string
@@ -31,6 +33,9 @@ interface OneCardProps {
     onClick: () => void
   }[]
   otherActions?: DropdownItem[]
+  selectable?: boolean
+  selected?: boolean
+  onSelect?: (selected: boolean) => void
 }
 
 export function OneCard({
@@ -42,6 +47,9 @@ export function OneCard({
   primaryAction,
   secondaryActions,
   otherActions,
+  selectable = false,
+  selected = false,
+  onSelect,
 }: OneCardProps) {
   const hasActions = primaryAction || secondaryActions
   const hasOtherActions = otherActions && otherActions.length > 0
@@ -51,14 +59,16 @@ export function OneCard({
       className={cn(
         "relative bg-f1-background p-0 shadow-none transition-all",
         link &&
-          "focus-within:border-f1-border-hover focus-within:shadow-md hover:border-f1-border-hover hover:shadow-md"
+          "focus-within:border-f1-border-hover focus-within:shadow-md hover:border-f1-border-hover hover:shadow-md",
+        selected &&
+          "border-f1-border-selected bg-f1-background-selected-secondary"
       )}
     >
       {link && (
         <Link
           href={link}
-          title={title}
           className={cn("absolute inset-0 z-0 block rounded-xl", focusRing())}
+          aria-label={title}
         />
       )}
       <div className="flex flex-col gap-2.5 p-4">
@@ -73,7 +83,7 @@ export function OneCard({
               </CardSubtitle>
             )}
           </CardHeader>
-          <div className="flex flex-row gap-1 [&_div]:z-10">
+          <div className="flex flex-row gap-2 [&_div]:z-10">
             {hasOtherActions && (
               <Dropdown items={otherActions}>
                 <Button
@@ -85,6 +95,14 @@ export function OneCard({
                   size="sm"
                 />
               </Dropdown>
+            )}
+            {selectable && (
+              <Checkbox
+                title={title}
+                checked={selected}
+                onCheckedChange={onSelect}
+                hideLabel
+              />
             )}
           </div>
         </div>
