@@ -108,10 +108,26 @@ type mentionsConfig = {
   users: MentionedUser[]
 }
 
+enum FileType {
+  PDF = "pdf",
+  IMAGE = "image",
+  DOC = "doc",
+  EXCEL = "excel",
+  PPT = "ppt",
+  TXT = "txt",
+  VIDEO = "video",
+  AUDIO = "audio",
+  ARCHIVE = "archive",
+  CSV = "csv",
+  HTML = "html",
+  MARKDOWN = "markdown",
+}
+
 type filesConfig = {
   onFiles: (files: File[]) => void
   multipleFiles: boolean
   maxFileSize?: number
+  acceptedFileType?: FileType[]
 }
 
 type actionConfig = {
@@ -123,6 +139,8 @@ type actionConfig = {
 type linkPopupConfig = {
   linkPlaceholder: string
 }
+
+export { FileType }
 
 export type {
   EnhancementOption,

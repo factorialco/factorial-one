@@ -34,7 +34,11 @@ import {
   handleEnhanceWithAIFunction,
   isValidSelectionForEnhancement,
 } from "./utils/enhance"
-import { handleAddFiles, handleRemoveFile } from "./utils/files"
+import {
+  getAcceptFileTypeString,
+  handleAddFiles,
+  handleRemoveFile,
+} from "./utils/files"
 import { heightMapping } from "./utils/helpers"
 import { configureMention } from "./utils/mention"
 import {
@@ -301,6 +305,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 onChange={handleFileChange}
                 ref={fileInputRef}
                 className="hidden"
+                accept={getAcceptFileTypeString(filesConfig)}
               />
               {files.length > 0 && (
                 <FileList
