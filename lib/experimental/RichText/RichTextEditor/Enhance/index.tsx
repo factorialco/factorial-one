@@ -1,10 +1,10 @@
 import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/exports"
 import { Ai } from "@/icons/app"
+import * as Popover from "@radix-ui/react-popover"
 import { Editor } from "@tiptap/react"
 import { useCallback, useRef, useState } from "react"
-import ReactDOM from "react-dom/client"
-import tippy, { Instance } from "tippy.js"
+import screenfull from "screenfull"
 import { isValidSelectionForEnhancement } from "../utils/enhance"
 import { enhanceConfig } from "../utils/types"
 import { AIEnhanceMenu } from "./EnhanceMenu"
@@ -41,12 +41,12 @@ const EnhanceActivator = ({
   disableButtons,
   hideLabel,
 }: EnhanceActivatorProps) => {
-  const tippyInstanceRef = useRef<Instance | null>(null)
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
   const [selectedRange, setSelectedRange] = useState<{
     from: number
     to: number
   } | null>(null)
+  const [open, setOpen] = useState(false)
 
   const handleAIEnhance = useCallback(
     (optionId: string, customIntent?: string) => {
@@ -57,15 +57,11 @@ const EnhanceActivator = ({
       let from = 0
       let to = 0
 
-      // Get the full HTML content of the editor
       const fullContent = editor.getHTML()
 
       if (selectedRange) {
         from = selectedRange.from
         to = selectedRange.to
-
-        // For selected text, we'll use the plain text for now
-        // The user will still see the enhancement applied with proper HTML formatting
         textToEnhance = editor.state.doc.textBetween(from, to, " ")
       } else {
         const selection = editor.state.selection
@@ -73,49 +69,36 @@ const EnhanceActivator = ({
         to = selection.to
 
         if (from !== to) {
-          // For selected text, use the plain text
           textToEnhance = editor.state.doc.textBetween(from, to, " ")
         } else {
-          // If no selection, use the entire HTML content
           textToEnhance = fullContent
           from = 0
           to = editor.state.doc.content.size
         }
       }
 
-      // Limit selected text to 5000 characters
       if (textToEnhance.length > 5000) {
         textToEnhance = textToEnhance.substring(0, 5000)
       }
-
-      // For context, we'll send the full HTML if it's within size limits
       if (fullContent.length < 10000) {
-        // For small documents, use the full content as context
         context = fullContent
       } else {
-        // For larger documents, fallback to plain text for context around the selection
         const beforeChars = 2500
         const afterChars = 2500
-
         const contextStart = Math.max(0, from - beforeChars)
         const beforeText = editor.state.doc.textBetween(contextStart, from, " ")
-
         const contextEnd = Math.min(
           editor.state.doc.content.size,
           to + afterChars
         )
         const afterText = editor.state.doc.textBetween(to, contextEnd, " ")
-
         context = beforeText + " " + afterText
       }
 
       if (isValidSelectionForEnhancement(textToEnhance) && onEnhanceWithAI) {
         onEnhanceWithAI(textToEnhance, optionId, customIntent, context)
       }
-
-      if (tippyInstanceRef.current) {
-        tippyInstanceRef.current.hide()
-      }
+      setOpen(false)
     },
     [editor, onEnhanceWithAI, selectedRange]
   )
@@ -130,62 +113,63 @@ const EnhanceActivator = ({
     } else {
       setSelectedRange(null)
     }
-
-    if (tippyInstanceRef.current) {
-      tippyInstanceRef.current.destroy()
-      tippyInstanceRef.current = null
-    }
-
-    const container = document.createElement("div")
-    const root = ReactDOM.createRoot(container)
-
-    root.render(
-      <AIEnhanceMenu
-        canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
-        onSelect={handleAIEnhance}
-        onClose={() => tippyInstanceRef.current?.hide()}
-        enhancementOptions={enhanceConfig?.enhancementOptions || []}
-        inputPlaceholder={
-          enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
-        }
-      />
-    )
-
-    tippyInstanceRef.current = tippy(enhanceButtonRef.current, {
-      content: container,
-      trigger: "manual",
-      interactive: true,
-      placement: "bottom-start",
-      arrow: true,
-      theme: "light",
-      onHidden(instance) {
-        instance.destroy()
-        tippyInstanceRef.current = null
-        setSelectedRange(null)
-        root.unmount()
-        if (editor) {
-          editor.view.dom.classList.remove("maintain-selection")
-        }
-      },
-    })
-
-    tippyInstanceRef.current.show()
-  }, [editor, handleAIEnhance])
+    setOpen(true)
+  }, [editor])
 
   return (
-    <Button
-      ref={enhanceButtonRef}
-      variant={button.variant || "ghost"}
-      size={button.size || "md"}
-      label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || "Enhance"}
-      icon={button.icon || Ai}
-      hideLabel={hideLabel ?? false}
-      onClick={handleEnhanceClick}
-      disabled={disableButtons}
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      className={isLoadingEnhance ? "aiMagicLoading animate-pulse" : ""}
-    />
+    <Popover.Root
+      open={open}
+      onOpenChange={(o) => {
+        setOpen(o)
+        if (!o) {
+          setSelectedRange(null)
+          editor.view.dom.classList.remove("maintain-selection")
+        }
+      }}
+      modal={false}
+    >
+      <Popover.Trigger asChild>
+        <Button
+          ref={enhanceButtonRef}
+          variant={button.variant || "ghost"}
+          size={button.size || "md"}
+          label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || "Enhance"}
+          icon={button.icon || Ai}
+          hideLabel={hideLabel ?? false}
+          onClick={handleEnhanceClick}
+          disabled={disableButtons}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          className={isLoadingEnhance ? "aiMagicLoading animate-pulse" : ""}
+        />
+      </Popover.Trigger>
+
+      <Popover.Portal
+        container={
+          screenfull.isFullscreen && screenfull.element
+            ? screenfull.element
+            : undefined
+        }
+      >
+        <Popover.Content
+          side="bottom"
+          align="center"
+          sideOffset={5}
+          collisionPadding={10}
+          style={{ zIndex: 1000 }}
+        >
+          <AIEnhanceMenu
+            canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
+            onSelect={handleAIEnhance}
+            onClose={() => setOpen(false)}
+            enhancementOptions={enhanceConfig?.enhancementOptions || []}
+            inputPlaceholder={
+              enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
+            }
+          />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   )
 }
 

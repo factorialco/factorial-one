@@ -3,18 +3,14 @@ import { Cross } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { getFileTypeInfo } from "../utils/files"
 
-interface FileListProps {
-  files: File[]
-  onRemoveFile: (index: number) => void
-}
-
 interface FileItemProps {
   file: File
   onRemoveFile: (index: number) => void
   index: number
+  disabled: boolean
 }
 
-const FileItem = ({ file, onRemoveFile, index }: FileItemProps) => {
+const FileItem = ({ file, onRemoveFile, index, disabled }: FileItemProps) => {
   const { type, color } = getFileTypeInfo(file)
   return (
     <div className="flex w-48 flex-row items-center gap-1.5 rounded-md bg-f1-background-secondary p-1 pr-2">
@@ -36,12 +32,19 @@ const FileItem = ({ file, onRemoveFile, index }: FileItemProps) => {
         onClick={() => onRemoveFile(index)}
         type="button"
         size="sm"
+        disabled={disabled}
       />
     </div>
   )
 }
 
-const FileList = ({ files, onRemoveFile }: FileListProps) => {
+interface FileListProps {
+  files: File[]
+  onRemoveFile: (index: number) => void
+  disabled: boolean
+}
+
+const FileList = ({ files, onRemoveFile, disabled }: FileListProps) => {
   if (!files.length) return null
 
   return (
@@ -52,6 +55,7 @@ const FileList = ({ files, onRemoveFile }: FileListProps) => {
           file={file}
           onRemoveFile={onRemoveFile}
           index={index}
+          disabled={disabled}
         />
       ))}
     </div>

@@ -1,3 +1,4 @@
+import { Add } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { EnhancementOption, FileType, RichTextEditor } from "."
 
@@ -108,7 +109,7 @@ export const Default: Story = {
         new Promise((resolve) => {
           setTimeout(() => {
             resolve({
-              success: false,
+              success: true,
               error: "Error from AI, Jacob didn't finish his work",
               text: `<b>Just imagine this is an AI response from our friend</b> <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">@Jacob Bamio Cordero</a>`,
             })
@@ -135,24 +136,27 @@ export const Default: Story = {
         FileType.EXCEL,
       ],
     },
-    submitAction: {
-      label: "Send",
+    primaryAction: {
+      label: "Add",
       onClick: () => alert("Submit"),
+      variant: "default",
+      icon: Add,
     },
-    cancelAction: {
-      label: "Cancel",
-      onClick: () => alert("Cancel"),
-    },
+    secondaryActions: [
+      {
+        label: "Cancel",
+        onClick: () => alert("Cancel"),
+        variant: "critical",
+      },
+      {
+        label: "Send tomorrow",
+        onClick: () => alert("Send to AI"),
+        variant: "neutral",
+      },
+    ],
     linkPopupConfig: { linkPlaceholder: "Write or paste a link" },
     title: "Rich Text Editor test",
-    toolbarConfig: {
-      format: {
-        bold: true,
-        italic: true,
-        underline: true,
-        highlight: true,
-      },
-    },
+    toolbarConfig: "all",
     maxCharacters: 1000,
   },
 }

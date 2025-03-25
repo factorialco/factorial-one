@@ -339,9 +339,6 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.17)
-      tippy.js:
-        specifier: ^6.3.7
-        version: 6.3.7
       twemoji-parser:
         specifier: ^14.0.0
         version: 14.0.0
