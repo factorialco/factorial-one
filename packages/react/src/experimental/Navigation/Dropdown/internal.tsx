@@ -31,6 +31,8 @@ export type DropdownInternalProps = {
   size?: ButtonProps["size"]
   children?: React.ReactNode
   align?: "start" | "end"
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
@@ -76,9 +78,11 @@ export function DropdownInternal({
   align = "start",
   size,
   children,
+  open,
+  onOpenChange,
 }: DropdownInternalProps) {
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
         {children || (
           <Button
