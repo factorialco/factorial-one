@@ -189,6 +189,7 @@ export function Filters<Definition extends FiltersDefinition>({
                 isOpen && "border-f1-border-hover",
                 focusRing()
               )}
+              title={i18n.filters.label}
             >
               <Icon icon={Filter} />
               <span className="sr-only">{i18n.filters.label}</span>
