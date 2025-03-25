@@ -155,6 +155,9 @@ const FeaturedDropdownItem = ({
   onClick,
 }: ProductUpdate) => {
   const itemClass = "flex flex-col items-stretch gap-3 w-full"
+
+  const isVideo = mediaUrl?.includes(".mp4")
+
   return (
     <DropdownMenuItem asChild onClick={onClick}>
       <Link
@@ -167,7 +170,7 @@ const FeaturedDropdownItem = ({
           "text-f1-foreground no-underline hover:cursor-pointer"
         )}
       >
-        {mediaUrl?.includes(".mp4") ? (
+        {isVideo ? (
           <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
             <video
               src={mediaUrl}
