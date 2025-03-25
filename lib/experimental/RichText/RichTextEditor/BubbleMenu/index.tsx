@@ -1,9 +1,8 @@
 import { Button } from "@/components/Actions/exports"
 import { Input } from "@/ui/input"
+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
 import { BubbleMenu, Editor } from "@tiptap/react"
-import { useRef, useState } from "react"
-import ReactDOM from "react-dom/client"
-import tippy, { Instance } from "tippy.js"
+import { useState } from "react"
 import { EnhanceActivator } from "../Enhance"
 import { enhanceConfig, linkPopupConfig } from "../utils/types"
 
@@ -18,9 +17,7 @@ const LinkPopup = ({ onSubmit, linkPlaceholder }: LinkPopupProps) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const trimmedUrl = url.trim()
-      if (trimmedUrl === "") {
-        return
-      }
+      if (trimmedUrl === "") return
       const completeUrl = /^(https?:\/\/)/i.test(trimmedUrl)
         ? trimmedUrl
         : `https://${trimmedUrl}`
@@ -34,16 +31,14 @@ const LinkPopup = ({ onSubmit, linkPlaceholder }: LinkPopupProps) => {
       type="text"
       placeholder={linkPlaceholder}
       value={url}
-      onChange={(e) => {
-        setUrl(e.target.value)
-      }}
+      onChange={(e) => setUrl(e.target.value)}
       onKeyDown={handleKeyDown}
     />
   )
 }
 
 interface EditorBubbleMenuProps {
-  editor: Editor
+  editor: Editor | null
   onEnhanceWithAI?: (
     selectedText: string,
     enhanceType?: string,
@@ -64,72 +59,60 @@ const EditorBubbleMenu = ({
   enhanceConfig,
   linkPopupConfig,
 }: EditorBubbleMenuProps) => {
-  const tippyInstanceRef = useRef<Instance | null>(null)
-  const linkButtonRef = useRef<HTMLDivElement>(null)
+  const [openDropdown, setOpenDropdown] = useState(false)
 
-  const handleLinkClick = () => {
+  if (!editor) return null
+  if (!linkPopupConfig && !enhanceConfig) return null
+
+  const handleTriggerClick = () => {
     if (!linkPopupConfig) return
     if (disableButtons) return
     if (editor.isActive("link")) {
       editor.chain().focus().unsetLink().run()
-      return
+      setOpenDropdown(false)
     }
-    if (!linkButtonRef.current) return
-    if (tippyInstanceRef.current) {
-      tippyInstanceRef.current.destroy()
-      tippyInstanceRef.current = null
-    }
-    const container = document.createElement("div")
-    const root = ReactDOM.createRoot(container)
-
-    root.render(
-      <LinkPopup
-        onSubmit={(url) => {
-          editor
-            .chain()
-            .focus()
-            .extendMarkRange("link")
-            .setLink({ href: url })
-            .run()
-          tippyInstanceRef.current?.hide()
-        }}
-        linkPlaceholder={linkPopupConfig.linkPlaceholder}
-      />
-    )
-
-    tippyInstanceRef.current = tippy(linkButtonRef.current, {
-      content: container,
-      trigger: "manual",
-      interactive: true,
-      placement: "bottom",
-      onHidden(instance) {
-        instance.destroy()
-        tippyInstanceRef.current = null
-        root.unmount()
-      },
-    })
-    tippyInstanceRef.current.show()
   }
-
-  if (!linkPopupConfig && !enhanceConfig) return null
 
   return (
     <BubbleMenu
       tippyOptions={{ duration: 100, placement: "bottom" }}
       editor={editor}
     >
-      <div
-        ref={linkButtonRef}
-        className="flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 shadow-md"
-      >
+      <div className="flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 shadow-md">
         {linkPopupConfig && (
-          <Button
-            onClick={handleLinkClick}
-            label="Link"
-            variant={editor.isActive("link") ? "neutral" : "ghost"}
-            type="button"
-            disabled={disableButtons}
-          />
+          <DropdownMenuPrimitive.Root
+            open={openDropdown}
+            onOpenChange={setOpenDropdown}
+          >
+            <DropdownMenuPrimitive.Trigger asChild onClick={handleTriggerClick}>
+              <Button
+                label="Link"
+                variant={editor.isActive("link") ? "neutral" : "ghost"}
+                type="button"
+                disabled={disableButtons}
+              />
+            </DropdownMenuPrimitive.Trigger>
+            <DropdownMenuPrimitive.Content
+              side="bottom"
+              align="start"
+              sideOffset={10}
+              avoidCollisions={true}
+              collisionPadding={10}
+            >
+              <LinkPopup
+                onSubmit={(url) => {
+                  editor
+                    .chain()
+                    .focus()
+                    .extendMarkRange("link")
+                    .setLink({ href: url })
+                    .run()
+                  setOpenDropdown(false)
+                }}
+                linkPlaceholder={linkPopupConfig.linkPlaceholder}
+              />
+            </DropdownMenuPrimitive.Content>
+          </DropdownMenuPrimitive.Root>
         )}
 
         {enhanceConfig && (
@@ -137,9 +120,7 @@ const EditorBubbleMenu = ({
             editor={editor}
             onEnhanceWithAI={onEnhanceWithAI}
             isLoadingEnhance={isLoadingEnhance}
-            button={{
-              variant: "ghost",
-            }}
+            button={{ variant: "ghost" }}
             enhanceConfig={enhanceConfig}
             disableButtons={disableButtons}
             hideLabel={true}

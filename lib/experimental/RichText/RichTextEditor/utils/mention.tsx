@@ -1,6 +1,8 @@
+import * as Popover from "@radix-ui/react-popover"
 import Mention from "@tiptap/extension-mention"
 import { ReactRenderer } from "@tiptap/react"
-import tippy, { Instance } from "tippy.js"
+import { createRoot, Root } from "react-dom/client"
+import screenfull from "screenfull"
 import { MentionList } from "../MentionList"
 import { MentionedUser } from "./types"
 
@@ -8,15 +10,9 @@ const CustomMention = Mention.extend({
   addAttributes() {
     return {
       ...this.parent?.(),
-      id: {
-        default: null,
-      },
-      label: {
-        default: null,
-      },
-      href: {
-        default: "#",
-      },
+      id: { default: null },
+      label: { default: null },
+      href: { default: "#" },
     }
   },
 })
@@ -29,7 +25,7 @@ function configureMention(
   ) => Promise<MentionedUser[]> | undefined,
   users?: MentionedUser[]
 ) {
-  if (!onMentionQueryStringChanged && !users?.length) {
+  if (!users?.length) {
     return []
   }
 
@@ -109,7 +105,9 @@ function Suggestion(
     },
     render: () => {
       let component: ReactRenderer | null = null
-      let popup: Instance | undefined = undefined
+      let popoverRoot: Root | null = null
+      let container: HTMLDivElement | null = null
+
       const getAtSymbolRect = (): DOMRect => {
         const selection = window.getSelection()
         if (selection && selection.rangeCount > 0) {
@@ -129,6 +127,65 @@ function Suggestion(
         }
         return document.body.getBoundingClientRect()
       }
+
+      const PopoverComponent = ({
+        content,
+        anchorRect,
+        editor,
+      }: {
+        content: HTMLElement
+        anchorRect: DOMRect
+        editor: any
+      }) => {
+        const anchorStyle: React.CSSProperties = {
+          position: "absolute",
+          top: anchorRect.bottom + window.scrollY,
+          left: anchorRect.left + window.scrollX,
+          width: anchorRect.width,
+          height: anchorRect.height,
+        }
+        return (
+          <Popover.Root
+            open
+            modal={false}
+            onOpenChange={(open) => {
+              if (open) {
+                editor?.commands.focus()
+              }
+            }}
+          >
+            <div style={anchorStyle} />
+            <Popover.Anchor asChild>
+              <div style={anchorStyle} />
+            </Popover.Anchor>
+            <Popover.Content
+              side="bottom"
+              align="start"
+              sideOffset={5}
+              collisionPadding={10}
+              style={{ zIndex: 1000 }}
+              onMouseDownCapture={() => {
+                editor?.commands.focus()
+              }}
+              onOpenAutoFocus={(event) => {
+                event.preventDefault()
+              }}
+              onCloseAutoFocus={(event) => {
+                event.preventDefault()
+              }}
+            >
+              <div
+                ref={(el) => {
+                  if (el && content.parentNode !== el) {
+                    el.appendChild(content)
+                  }
+                }}
+              />
+            </Popover.Content>
+          </Popover.Root>
+        )
+      }
+
       return {
         onStart: (props: {
           items: MentionedUser[]
@@ -156,21 +213,31 @@ function Suggestion(
             }
             return getAtSymbolRect()
           }
-          popup = tippy(document.body, {
-            getReferenceClientRect: safeGetRect,
-            appendTo: () => document.fullscreenElement || document.body,
-            content: component.element,
-            showOnCreate: true,
-            interactive: true,
-            trigger: "manual",
-            placement: "bottom-start",
-          })
+          const anchorRect = safeGetRect()
+
+          container = document.createElement("div")
+          const parentElement =
+            screenfull.isFullscreen && screenfull.element
+              ? screenfull.element
+              : document.body
+          parentElement.appendChild(container)
+
+          popoverRoot = createRoot(container)
+          popoverRoot.render(
+            <PopoverComponent
+              content={component.element as HTMLElement}
+              anchorRect={anchorRect}
+              editor={props.editor}
+            />
+          )
+          props.editor?.commands.focus()
         },
         onUpdate: (props: {
           items: MentionedUser[]
           clientRect?: (() => DOMRect | null) | null
+          editor: any
         }) => {
-          if (!component) return
+          if (!component || !container || !popoverRoot) return
           component.updateProps({ items: props.items })
           const safeGetRect = () => {
             if (props.clientRect) {
@@ -179,18 +246,37 @@ function Suggestion(
             }
             return getAtSymbolRect()
           }
-          popup?.setProps({ getReferenceClientRect: safeGetRect })
+          const anchorRect = safeGetRect()
+          popoverRoot.render(
+            <PopoverComponent
+              content={component.element as HTMLElement}
+              anchorRect={anchorRect}
+              editor={props.editor}
+            />
+          )
         },
         onKeyDown: (props: { event: KeyboardEvent }) => {
           if (!component) return false
+          if (
+            props.event.key === "ArrowUp" ||
+            props.event.key === "ArrowDown"
+          ) {
+            return (component.ref as any)?.onKeyDown(props) || false
+          }
           if (props.event.key === "Escape") {
-            popup?.hide()
+            if (popoverRoot && container) {
+              popoverRoot.unmount()
+              container.remove()
+            }
             return true
           }
           return (component.ref as any)?.onKeyDown(props) || false
         },
         onExit() {
-          popup?.destroy()
+          if (popoverRoot && container) {
+            popoverRoot.unmount()
+            container.remove()
+          }
           component?.destroy()
         },
       }

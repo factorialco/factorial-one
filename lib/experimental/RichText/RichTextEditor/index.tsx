@@ -28,6 +28,7 @@ import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
 import { EnhanceError } from "./Enhance/EnhanceError"
 import { FileList } from "./FileList"
+import { Footer } from "./Footer"
 import "./index.css"
 import { ToolbarPlugin } from "./Toolbar"
 import {
@@ -58,8 +59,8 @@ interface RichTextEditorProps {
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
   toolbarConfig: toolbarConfig
-  submitAction?: actionConfig
-  cancelAction?: actionConfig
+  secondaryActions?: actionConfig[]
+  primaryAction?: actionConfig
   onChange: (html: string | MentionChangeResult | null) => void
   title: string
   height?: RichTextEditorHeight
@@ -85,8 +86,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       enhanceConfig,
       filesConfig,
       toolbarConfig,
-      submitAction,
-      cancelAction,
+      secondaryActions,
+      primaryAction,
       title,
       height = "lg",
       maxCharacters,
@@ -271,10 +272,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           handleToggleFullscreen={handleToggleFullscreen}
           isFullscreen={isFullscreen}
           onEnhanceWithAI={handleEnhanceWithAI}
-          fileInputRef={fileInputRef}
           config={toolbarConfig}
           disableButtons={isAcceptChangesOpen}
-          canUseFiles={filesConfig ? true : false}
           enhanceConfig={enhanceConfig}
           isLoadingEnhance={isLoadingEnhance}
         />
@@ -313,6 +312,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                   onRemoveFile={(fileIndex) =>
                     handleRemoveFile(fileIndex, files, filesConfig, setFiles)
                   }
+                  disabled={isAcceptChangesOpen}
                 />
               )}
             </>
@@ -336,48 +336,24 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           )}
         </div>
 
-        {editor && (
-          <EditorBubbleMenu
-            editor={editor}
-            onEnhanceWithAI={handleEnhanceWithAI}
-            isLoadingEnhance={isLoadingEnhance}
-            enhanceConfig={enhanceConfig}
-            disableButtons={isAcceptChangesOpen}
-            linkPopupConfig={linkPopupConfig}
-          />
-        )}
+        <EditorBubbleMenu
+          editor={editor}
+          onEnhanceWithAI={handleEnhanceWithAI}
+          isLoadingEnhance={isLoadingEnhance}
+          enhanceConfig={enhanceConfig}
+          disableButtons={isAcceptChangesOpen}
+          linkPopupConfig={linkPopupConfig}
+        />
 
-        {(submitAction || cancelAction || maxCharacters) && (
-          <div className="flex w-full items-center justify-between border-0 border-t-[1px] border-solid border-f1-border px-4 py-3">
-            <div>
-              {editor && maxCharacters && (
-                <p className="text-sm font-medium text-f1-foreground-secondary">
-                  {editor.storage.characterCount.characters()} / {maxCharacters}
-                </p>
-              )}
-            </div>
-            <div className="flex gap-2">
-              {cancelAction && (
-                <Button
-                  onClick={cancelAction.onClick}
-                  variant="outline"
-                  size="md"
-                  label={cancelAction.label}
-                  disabled={isAcceptChangesOpen || cancelAction.disabled}
-                />
-              )}
-              {submitAction && (
-                <Button
-                  onClick={submitAction.onClick}
-                  variant="default"
-                  size="md"
-                  label={submitAction.label}
-                  disabled={isAcceptChangesOpen || submitAction.disabled}
-                />
-              )}
-            </div>
-          </div>
-        )}
+        <Footer
+          editor={editor}
+          maxCharacters={maxCharacters}
+          secondaryActions={secondaryActions}
+          primaryAction={primaryAction}
+          isAcceptChangesOpen={isAcceptChangesOpen}
+          fileInputRef={fileInputRef}
+          canUseFiles={filesConfig ? true : false}
+        />
       </div>
     )
   }

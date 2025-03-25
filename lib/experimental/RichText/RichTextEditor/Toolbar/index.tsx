@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { ChevronUp, Code, Ellipsis, Minus, Paperclip } from "@/icons/app"
+import { ChevronUp, Code, Ellipsis, Minus } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Editor } from "@tiptap/react"
 import { compact, defaultsDeep } from "lodash"
@@ -33,7 +33,6 @@ const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
 
 interface ToolbarPluginProps {
   editor: Editor | null
-  fileInputRef?: React.RefObject<HTMLInputElement>
   handleToggleFullscreen: () => void
   isFullscreen: boolean
   onEnhanceWithAI?: (
@@ -43,7 +42,6 @@ interface ToolbarPluginProps {
     context?: string
   ) => Promise<void>
   isLoadingEnhance: boolean
-  canUseFiles: boolean
   config: toolbarConfig
   disableButtons: boolean
   enhanceConfig: enhanceConfig | undefined
@@ -54,9 +52,7 @@ const ToolbarPlugin = ({
   handleToggleFullscreen,
   isFullscreen,
   onEnhanceWithAI,
-  fileInputRef,
   isLoadingEnhance,
-  canUseFiles,
   enhanceConfig,
   config,
   disableButtons,
@@ -265,25 +261,6 @@ const ToolbarPlugin = ({
       </div>
     ) : null
 
-  const fileGroup = canUseFiles && (
-    <Button
-      icon={Paperclip}
-      onClick={() => {
-        if (fileInputRef?.current) {
-          fileInputRef.current.click()
-        } else {
-          const fileInput = document.getElementById("upload-button")
-          if (fileInput) fileInput.click()
-        }
-      }}
-      hideLabel
-      label="Add Attachment"
-      variant="ghost"
-      type="button"
-      disabled={disableButtons}
-    />
-  )
-
   const moreOptionsGroup =
     code || horizontalRule || quote ? (
       <ToolbarDropdown
@@ -325,7 +302,6 @@ const ToolbarPlugin = ({
     textSizeGroup,
     textAlignGroup,
     listGroup,
-    fileGroup,
     moreOptionsGroup,
   ])
 

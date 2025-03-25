@@ -27,8 +27,7 @@ const htmlContent = `<p>
   You have to fill
   <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" target="_blank" rel="noopener noreferrer">
     <strong>THIS FORM</strong>
-  </a>
-  !
+  </a>!
 </p>
 <p>
   Once you filled the form, <strong>what now?</strong>

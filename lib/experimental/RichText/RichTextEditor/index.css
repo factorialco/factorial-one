@@ -189,3 +189,7 @@
   padding: 2px 4px;
   border-radius: 4px;
 }
+
+.ProseMirror p:empty::before {
+  content: "\00a0";
+}

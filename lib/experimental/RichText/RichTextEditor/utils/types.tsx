@@ -1,3 +1,6 @@
+import { IconType } from "@/factorial-one"
+import { variants } from "@/ui/button"
+
 type RichTextEditorHeight =
   | "xxs"
   | "xs"
@@ -134,6 +137,8 @@ type actionConfig = {
   label: string
   onClick: () => void
   disabled?: boolean
+  variant: (typeof variants)[number]
+  icon?: IconType
 }
 
 type linkPopupConfig = {
@@ -143,17 +148,17 @@ type linkPopupConfig = {
 export { FileType }
 
 export type {
-  EnhancementOption,
-  MentionChangeResult,
-  MentionedUser,
-  RichTextEditorHeight,
   actionConfig,
   enhanceConfig,
-  enhanceLabelsType,
-  enhanceTextParams,
   enhancedTextResponse,
+  enhanceLabelsType,
+  EnhancementOption,
+  enhanceTextParams,
   filesConfig,
   linkPopupConfig,
+  MentionChangeResult,
+  MentionedUser,
   mentionsConfig,
+  RichTextEditorHeight,
   toolbarConfig,
 }
