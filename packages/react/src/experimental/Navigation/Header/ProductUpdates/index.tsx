@@ -26,7 +26,7 @@ import {
 type ProductUpdate = {
   title: string
   href: string
-  imageURL: string
+  mediaUrl: string
   updated: string
   unread?: boolean
   onClick?: ComponentProps<typeof DropdownMenuItem>["onClick"]
@@ -163,12 +163,15 @@ const ProductUpdates = ({
 const FeaturedDropdownItem = ({
   title,
   href,
-  imageURL,
+  mediaUrl,
   unread,
   updated,
   onClick,
 }: ProductUpdate) => {
   const itemClass = "flex flex-col items-stretch gap-3 w-full"
+
+  const isVideo = mediaUrl?.includes(".mp4")
+
   return (
     <DropdownMenuItem asChild onClick={onClick}>
       <Link
@@ -181,13 +184,26 @@ const FeaturedDropdownItem = ({
           "text-f1-foreground no-underline hover:cursor-pointer"
         )}
       >
-        <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
-          <Image
-            fetchPriority="high"
-            src={imageURL}
-            className="block aspect-video w-full bg-f1-background-secondary object-contain object-center"
-          />
-        </div>
+        {isVideo ? (
+          <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
+            <video
+              src={mediaUrl}
+              className="block aspect-video w-full bg-f1-background-secondary object-contain object-center"
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          </div>
+        ) : (
+          <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
+            <Image
+              fetchPriority="high"
+              src={mediaUrl}
+              className="block aspect-video w-full bg-f1-background-secondary object-contain object-center"
+            />
+          </div>
+        )}
         <div className="flex items-start gap-4">
           <div className="flex-1 *:text-base">
             <h3 className="font-medium">{title}</h3>
