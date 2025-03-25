@@ -20,7 +20,7 @@ import { ComponentProps, ReactElement, useCallback, useState } from "react"
 type ProductUpdate = {
   title: string
   href: string
-  mediaURL: string
+  mediaUrl: string
   updated: string
   unread?: boolean
   onClick?: ComponentProps<typeof DropdownMenuItem>["onClick"]
@@ -149,7 +149,7 @@ const ProductUpdates = ({
 const FeaturedDropdownItem = ({
   title,
   href,
-  mediaURL,
+  mediaUrl,
   unread,
   updated,
   onClick,
@@ -167,10 +167,10 @@ const FeaturedDropdownItem = ({
           "text-f1-foreground no-underline hover:cursor-pointer"
         )}
       >
-        {mediaURL?.includes(".mp4") ? (
+        {mediaUrl?.includes(".mp4") ? (
           <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
             <video
-              src={mediaURL}
+              src={mediaUrl}
               className="block aspect-video w-full bg-f1-background-secondary object-contain object-center"
               autoPlay
               muted
@@ -182,7 +182,7 @@ const FeaturedDropdownItem = ({
           <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
             <Image
               fetchPriority="high"
-              src={mediaURL}
+              src={mediaUrl}
               className="block aspect-video w-full bg-f1-background-secondary object-contain object-center"
             />
           </div>
