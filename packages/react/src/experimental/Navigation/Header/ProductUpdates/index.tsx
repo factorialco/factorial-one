@@ -42,6 +42,7 @@ type ProductUpdatesProp = {
   onOpenChange?: ComponentProps<typeof DropdownMenu>["onOpenChange"]
   onHeaderClick?: ComponentProps<typeof DropdownMenuTrigger>["onClick"]
   onItemClick?: ComponentProps<typeof DropdownMenuItem>["onClick"]
+  trackView?: () => void
   emptyScreen: {
     title: string
     description: string
@@ -66,12 +67,14 @@ const ProductUpdates = ({
   onHeaderClick = () => {},
   onItemClick = () => {},
   hasUnread = false,
+  trackView = () => {},
 }: ProductUpdatesProp) => {
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
   const [featuredUpdate, ...restUpdates] = updates ?? []
 
   useEffect(() => {
+    trackView()
     setUpdates(null)
     setState("idle")
   }, [currentModule])

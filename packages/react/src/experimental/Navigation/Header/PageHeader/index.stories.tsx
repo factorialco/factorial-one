@@ -215,6 +215,9 @@ export const WithProductUpdate: Story = {
           "We couldn’t load the latest updates. Please check your connection and try again.",
         buttonText: "Try again",
       },
+      trackView: () => {
+        console.log("trackView")
+      },
       getUpdates: async () => {
         return new Promise((resolve) => {
           setTimeout(
