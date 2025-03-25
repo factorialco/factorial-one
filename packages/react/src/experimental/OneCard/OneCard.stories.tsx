@@ -12,6 +12,7 @@ import {
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { useState } from "react"
+import cat from "../../../storybook-assets/cat.jpeg"
 import { OneCard } from "./OneCard"
 
 const meta = {
@@ -22,7 +23,7 @@ const meta = {
       story: { inline: false, height: "320px" },
     },
   },
-  tags: ["autodocs", "Experimental"],
+  tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
       <div className="flex h-[calc(100vh-32px)] w-full items-center justify-center">
@@ -132,5 +133,17 @@ export const Selectable: Story = {
   render: (args) => {
     const [selected, setSelected] = useState(false)
     return <OneCard {...args} selected={selected} onSelect={setSelected} />
+  },
+}
+
+export const WithChildren: Story = {
+  args: {
+    title: "A cool cat",
+    description: "This is a cool cat",
+    children: (
+      <div className="h-[220px] w-fit overflow-hidden rounded-sm">
+        <img src={cat} alt="cat" className="w-full object-cover" />
+      </div>
+    ),
   },
 }

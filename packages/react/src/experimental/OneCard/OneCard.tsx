@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import {
   Avatar,
@@ -16,7 +16,7 @@ import {
   CardSubtitle,
   CardTitle,
 } from "@/ui/card"
-import { type ReactNode } from "react"
+import { useState, type ReactNode } from "react"
 import { CardMetadata } from "./CardMetadata"
 import { type Metadata } from "./types"
 
@@ -108,6 +108,7 @@ export function OneCard({
 }: OneCardProps) {
   const hasActions = primaryAction || secondaryActions
   const hasOtherActions = otherActions && otherActions.length > 0
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <Card
@@ -150,22 +151,31 @@ export function OneCard({
           {(hasOtherActions || selectable) && (
             <div
               className={cn(
-                "flex flex-row gap-2 opacity-0 transition-opacity group-hover:opacity-100 [&_div]:z-10",
+                "flex flex-row gap-2 opacity-0 transition-opacity group-hover:opacity-100 [&>div]:z-[1]",
                 "focus-within:opacity-100",
-                selected && "opacity-100"
+                selected && "opacity-100",
+                isOpen && "!opacity-100"
               )}
             >
               {hasOtherActions && (
-                <Dropdown items={otherActions}>
-                  <Button
-                    label="Other actions"
-                    hideLabel
-                    icon={EllipsisHorizontal}
-                    variant="ghost"
-                    round
-                    size="sm"
-                  />
-                </Dropdown>
+                <div>
+                  <Dropdown
+                    items={otherActions}
+                    open={isOpen}
+                    onOpenChange={setIsOpen}
+                  >
+                    <button
+                      className={cn(
+                        "flex h-6 w-6 items-center justify-center rounded-sm transition-colors hover:bg-f1-background-secondary",
+                        isOpen && "bg-f1-background-secondary",
+                        focusRing()
+                      )}
+                      aria-label="Other actions"
+                    >
+                      <Icon icon={EllipsisHorizontal} size="sm" />
+                    </button>
+                  </Dropdown>
+                </div>
               )}
               {selectable && (
                 <Checkbox
@@ -188,7 +198,7 @@ export function OneCard({
         {children}
       </div>
       {hasActions && (
-        <CardFooter className="flex justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary px-4 py-3 [&>div]:z-10">
+        <CardFooter className="flex justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary px-4 py-3 [&>div]:z-[1]">
           {secondaryActions && (
             <div className="flex gap-2">
               {secondaryActions.map((action, index) => (
