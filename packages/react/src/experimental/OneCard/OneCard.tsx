@@ -149,16 +149,15 @@ export function OneCard({
             )}
           </CardHeader>
           {(hasOtherActions || selectable) && (
-            <div
-              className={cn(
-                "flex flex-row gap-2 opacity-0 transition-opacity group-hover:opacity-100 [&>div]:z-[1]",
-                "focus-within:opacity-100",
-                selected && "opacity-100",
-                isOpen && "!opacity-100"
-              )}
-            >
+            <div className={cn("flex flex-row gap-2 [&>div]:z-[1]")}>
               {hasOtherActions && (
-                <div>
+                <div
+                  className={cn(
+                    "flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100",
+                    "focus-within:opacity-100",
+                    isOpen && "opacity-100"
+                  )}
+                >
                   <Dropdown
                     items={otherActions}
                     open={isOpen}
@@ -178,12 +177,21 @@ export function OneCard({
                 </div>
               )}
               {selectable && (
-                <Checkbox
-                  title={title}
-                  checked={selected}
-                  onCheckedChange={onSelect}
-                  hideLabel
-                />
+                <div
+                  className={cn(
+                    "flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100",
+                    "focus-within:opacity-100",
+                    selected && "opacity-100",
+                    isOpen && "opacity-100"
+                  )}
+                >
+                  <Checkbox
+                    title={title}
+                    checked={selected}
+                    onCheckedChange={onSelect}
+                    hideLabel
+                  />
+                </div>
               )}
             </div>
           )}
