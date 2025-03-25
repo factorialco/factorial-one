@@ -223,27 +223,28 @@ export const WithProductUpdate: Story = {
                 {
                   title: "Project timetable with absence information",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
-                  imageURL: "https://placecats.com/neo/1416/797/",
+                  mediaUrl:
+                    "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
                   updated: "4 mar 2025",
                   unread: true,
                 },
                 {
                   title: "Project timetable with absence information",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
-                  imageURL: "https://placecats.com/neo/1416/797/",
+                  mediaUrl: "https://placecats.com/neo/1416/797/",
                   updated: "4 mar 2025",
                   unread: true,
                 },
                 {
                   title: "New Client section",
-                  imageURL: "https://placecats.com/neo/300/200",
+                  mediaUrl: "https://placecats.com/neo/300/200",
                   updated: "3 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                   unread: true,
                 },
                 {
                   title: "Spending tab in projects",
-                  imageURL: "https://placecats.com/neo/300/200",
+                  mediaUrl: "https://placecats.com/neo/300/200",
                   updated: "2 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                 },
