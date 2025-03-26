@@ -167,6 +167,7 @@ const Toolbar = ({
           size="md"
           label={getHeadingLabel(editor)}
           disabled={disableButtons}
+          type="button"
         />
       </ToolbarDropdown>
     ) : null
@@ -208,6 +209,7 @@ const Toolbar = ({
           size="md"
           label={getTextAlignLabel(editor)}
           disabled={disableButtons}
+          type="button"
         />
       </ToolbarDropdown>
     ) : null
@@ -283,6 +285,7 @@ const Toolbar = ({
           hideLabel
           label="More options"
           disabled={disableButtons}
+          type="button"
         />
       </ToolbarDropdown>
     ) : null

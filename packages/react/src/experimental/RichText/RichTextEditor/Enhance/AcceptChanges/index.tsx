@@ -17,6 +17,7 @@ const AcceptChanges = ({ onAccept, onReject, labels }: AcceptChangesProps) => {
         size="sm"
         variant="critical"
         icon={Reset}
+        type="button"
       />
       <Button
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -26,6 +27,7 @@ const AcceptChanges = ({ onAccept, onReject, labels }: AcceptChangesProps) => {
         onClick={onAccept}
         size="sm"
         variant="outline"
+        type="button"
       />
     </div>
   )
