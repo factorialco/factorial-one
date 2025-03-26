@@ -44908,7 +44908,7 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
   isToolbarOpen: s,
   setIsToolbarOpen: l,
   canToggleToolbar: d
-}) => t ? /* @__PURE__ */ C("div", { className: "flex w-full items-center gap-2", children: [
+}) => !t || !e && !n && !i && !a && !d ? null : /* @__PURE__ */ C("div", { className: "flex w-full items-center gap-2", children: [
   /* @__PURE__ */ C("div", { className: "flex flex-shrink-0 items-center gap-2", children: [
     d && /* @__PURE__ */ f(
       ve,
@@ -44974,7 +44974,7 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
       }
     )
   ] })
-] }) : null;
+] });
 var xn = /* @__PURE__ */ ((t) => (t.PDF = "pdf", t.IMAGE = "image", t.DOC = "doc", t.EXCEL = "excel", t.PPT = "ppt", t.TXT = "txt", t.VIDEO = "video", t.AUDIO = "audio", t.ARCHIVE = "archive", t.CSV = "csv", t.HTML = "html", t.MARKDOWN = "markdown", t))(xn || {});
 const JG = (t, e, n, i) => {
   if (n) {
@@ -45667,7 +45667,7 @@ const LX = q(
         ref: O,
         className: "flex w-full flex-col divide-x-0 divide-y-[1px] divide-solid divide-f1-border rounded-xl border-[1px] border-solid border-f1-border bg-f1-background",
         children: [
-          N && /* @__PURE__ */ C("div", { className: "flex w-full items-center justify-between px-5 py-3", children: [
+          N && /* @__PURE__ */ C("div", { className: "flex w-full flex-shrink-0 items-center justify-between px-5 py-3", children: [
             /* @__PURE__ */ f("p", { className: "text-2xl font-semibold text-f1-foreground", children: s }),
             /* @__PURE__ */ f(
               ve,
@@ -45681,7 +45681,7 @@ const LX = q(
               }
             )
           ] }),
-          (r !== "none" || r === "none" && n) && H && /* @__PURE__ */ f("div", { className: "order-1 h-auto overflow-hidden py-2 transition-all duration-300 md:py-3", children: /* @__PURE__ */ f(
+          (r !== "none" || r === "none" && n) && H && /* @__PURE__ */ f("div", { className: "order-1 h-auto flex-shrink-0 overflow-hidden py-2 transition-all duration-300 md:py-3", children: /* @__PURE__ */ f(
             GG,
             {
               editor: L,
@@ -45710,7 +45710,7 @@ const LX = q(
                   "div",
                   {
                     className: E(
-                      "overflow-y-auto p-5 transition-all duration-300",
+                      "overflow-y-auto p-5",
                       N ? "h-full" : HG[l] || "h-80"
                     ),
                     children: /* @__PURE__ */ f(gK, { editor: L })
@@ -45754,7 +45754,7 @@ const LX = q(
               ]
             }
           ),
-          /* @__PURE__ */ f("div", { className: "order-3 px-4 py-2 md:py-3", children: /* @__PURE__ */ f(
+          /* @__PURE__ */ f("div", { className: "order-3 flex-shrink-0 px-4 py-2 md:py-3", children: /* @__PURE__ */ f(
             YG,
             {
               editor: L,
@@ -45766,7 +45766,7 @@ const LX = q(
               canUseFiles: !!i,
               isToolbarOpen: H,
               setIsToolbarOpen: j,
-              canToggleToolbar: r !== "none" && !N
+              canToggleToolbar: r !== "none"
             }
           ) }),
           /* @__PURE__ */ f(
