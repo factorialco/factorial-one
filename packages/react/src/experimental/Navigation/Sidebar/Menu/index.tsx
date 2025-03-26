@@ -16,6 +16,7 @@ export interface MenuItem extends NavigationItem {
 }
 
 export interface MenuCategory {
+  id: number
   title: string
   items: MenuItem[]
   isRoot?: boolean
@@ -26,6 +27,7 @@ export interface MenuCategory {
 interface MenuProps {
   tree: MenuCategory[]
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
+  onSort?: (categories: MenuCategory[]) => void
 }
 
 const MenuItemContent = ({
@@ -195,7 +197,7 @@ const CategoryItem = ({
 
   return (
     <Reorder.Item
-      id={category.title}
+      id={category.id}
       value={category}
       dragConstraints={dragConstraints}
       dragElastic={0.1}
@@ -227,7 +229,7 @@ const CategoryItem = ({
   )
 }
 
-export function Menu({ tree, onCollapse }: MenuProps) {
+export function Menu({ tree, onCollapse, onSort }: MenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const nonSortableItems = tree.filter(
     (category) => category.isSortable === false
@@ -236,12 +238,20 @@ export function Menu({ tree, onCollapse }: MenuProps) {
     tree.filter((category) => category.isSortable !== false)
   )
 
+  const handleSort = React.useCallback(
+    (newOrder: MenuCategory[]) => {
+      setSortableItems(newOrder)
+      onSort?.(newOrder)
+    },
+    [onSort]
+  )
+
   return (
     <DragProvider>
       <MenuContent
         nonSortableItems={nonSortableItems}
         sortableItems={sortableItems}
-        setSortableItems={setSortableItems}
+        setSortableItems={handleSort}
         containerRef={containerRef}
         onCollapse={onCollapse}
       />
@@ -319,7 +329,7 @@ function MenuContent({
             <AnimatePresence>
               {sortableItems.map((category) => (
                 <CategoryItem
-                  key={category.title}
+                  key={category.id}
                   category={category}
                   isSortable={true}
                   dragConstraints={containerRef}

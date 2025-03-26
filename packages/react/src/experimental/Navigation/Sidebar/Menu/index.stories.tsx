@@ -25,6 +25,7 @@ export const Default: Story = {
   args: {
     tree: [
       {
+        id: 1,
         title: "Root",
         items: [
           { label: "Home", icon: Icons.Home, href: "/", exactMatch: true },
@@ -44,6 +45,7 @@ export const Default: Story = {
         isSortable: false,
       },
       {
+        id: 2,
         title: "You",
         items: [
           { label: "Me", icon: Icons.Person, href: "/me" },
@@ -54,6 +56,7 @@ export const Default: Story = {
         isSortable: true,
       },
       {
+        id: 3,
         title: "Your company",
         items: [
           { label: "Organization", icon: Icons.People, href: "/organization" },
@@ -67,6 +70,9 @@ export const Default: Story = {
       console.log(
         `Category "${category.title}" is now ${isOpen ? "open" : "closed"}`
       )
+    },
+    onSort: (categories) => {
+      console.log("Categories sorted:", categories)
     },
   },
 }
