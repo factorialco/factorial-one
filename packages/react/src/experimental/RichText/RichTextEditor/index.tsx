@@ -253,7 +253,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     return (
       <div
         ref={containerRef}
-        className="m-5 flex w-full flex-col divide-x-0 divide-y-[1px] divide-solid divide-f1-border rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
+        className="flex w-full flex-col divide-x-0 divide-y-[1px] divide-solid divide-f1-border rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
       >
         {isFullscreen && (
           <div className="flex w-full items-center justify-between px-5 py-3">
@@ -275,7 +275,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         {(toolbarConfig !== "none" ||
           (toolbarConfig === "none" && enhanceConfig)) &&
           isToolbarOpen && (
-            <div className="order-2 h-auto overflow-hidden py-2 transition-all duration-300 md:order-1 md:py-3">
+            <div className="order-1 h-auto overflow-hidden py-2 transition-all duration-300 md:py-3">
               <Toolbar
                 editor={editor}
                 handleToggleFullscreen={handleToggleFullscreen}
@@ -295,7 +295,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         <div
           ref={editorRef}
           className={cn(
-            "relative order-1 w-full flex-grow md:order-2",
+            "relative order-2 w-full flex-grow",
             isFullscreen && "h-full overflow-y-hidden"
           )}
           onClick={() => {
@@ -305,8 +305,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           <div
             className={cn(
               "overflow-y-auto p-5 transition-all duration-300",
-              isFullscreen ? "h-full" : heightMapping[height] || "md:h-80",
-              editor?.isFocused ? "h-96" : "h-18"
+              isFullscreen ? "h-full" : heightMapping[height] || "h-80"
             )}
           >
             <EditorContent editor={editor} />
