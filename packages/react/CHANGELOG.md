@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.6.0](https://github.com/factorialco/factorial-one/compare/v1.5.1...v1.6.0) (2025-03-25)
+
+
+### Features
+
+* **PageHeader:** allow videos in product updates dropdown ([#1463](https://github.com/factorialco/factorial-one/issues/1463)) ([3d99c43](https://github.com/factorialco/factorial-one/commit/3d99c439569410803ceed4352e46e885a0b031c1))
+
+## [1.5.1](https://github.com/factorialco/factorial-one/compare/v1.5.0...v1.5.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* **PageHeader:** currentModule to check if the module changes and clean its state ([#1460](https://github.com/factorialco/factorial-one/issues/1460)) ([e07f95c](https://github.com/factorialco/factorial-one/commit/e07f95ce22799801a16e4ace1bc83a8781ddfc59))
+
+## [1.5.0](https://github.com/factorialco/factorial-one/compare/v1.4.6...v1.5.0) (2025-03-24)
+
+
+### Features
+
+* **PageHeader:** add product update dropdown ([#1429](https://github.com/factorialco/factorial-one/issues/1429)) ([20be94d](https://github.com/factorialco/factorial-one/commit/20be94d5c35b481a1e2bf4af69b826f00aa61230))
+
+## [1.4.6](https://github.com/factorialco/factorial-one/compare/v1.4.5...v1.4.6) (2025-03-24)
+
+
+### Bug Fixes
+
+* move basecolors to ahve it in the dist ([#1453](https://github.com/factorialco/factorial-one/issues/1453)) ([72f91bb](https://github.com/factorialco/factorial-one/commit/72f91bb1c260aba797a22852ee4f1eb3964e5335))
+
+## [1.4.5](https://github.com/factorialco/factorial-one/compare/v1.4.4...v1.4.5) (2025-03-21)
+
+
+### Bug Fixes
+
+* when one element of employeeSelector is removed all get removed ([#1451](https://github.com/factorialco/factorial-one/issues/1451)) ([c080544](https://github.com/factorialco/factorial-one/commit/c080544dd0d5e428a3b13217708f3ecb83edf391))
+
 ## [1.4.4](https://github.com/factorialco/factorial-one/compare/v1.4.3...v1.4.4) (2025-03-21)
 
 
