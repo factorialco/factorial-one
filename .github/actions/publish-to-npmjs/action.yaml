@@ -4,11 +4,13 @@ inputs:
   workspace:
     description: "Workspace"
     required: true
+  registry_token:
+    description: "Registry token"
+    required: true
 runs:
   using: "composite"
   steps:
     - uses: ./.github/actions/setup-node-pnpm
-      shell: bash
       name: Setup Node and pnpm
 
     - name: Build
@@ -21,4 +23,4 @@ runs:
       shell: bash
       run: pnpm --filter ${{ inputs.workspace }} publish --no-git-checks
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ inputs.registry_token }}

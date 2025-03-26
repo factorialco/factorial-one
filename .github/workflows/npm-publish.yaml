@@ -37,6 +37,7 @@ jobs:
       - uses: ./.github/actions/publish-to-npmjs
         with:
           workspace: "@factorialco/factorial-one-react"
+          registry_token: ${{ secrets.NPMJS_TOKEN }}
 
   publish-react-native:
     name: "[📱 REACT NATIVE] Publish to npm"
@@ -59,3 +60,4 @@ jobs:
       - uses: ./.github/actions/publish-to-npmjs
         with:
           workspace: "@factorialco/factorial-one-react-native"
+          registry_token: ${{ secrets.NPMJS_TOKEN }}
