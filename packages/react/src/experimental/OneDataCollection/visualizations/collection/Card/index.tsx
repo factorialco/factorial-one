@@ -5,10 +5,10 @@ import { OnePagination } from "../../../../OnePagination"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ActionsDropdown } from "../../../ItemActions/Dropdown"
 import { ItemActionsDefinition } from "../../../item-actions"
+import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
 import { CollectionProps, RecordType } from "../../../types"
 import { useData } from "../../../useData"
-import { PropertyDefinition, renderValue } from "../../../utils"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
 
@@ -68,11 +68,11 @@ export const CardCollection = <
     dataAdapter: overridenDataAdapter,
   })
 
-  const renderProperty = (
+  const renderValue = (
     item: Record,
     property: CardPropertyDefinition<Record>
   ) => {
-    return renderValue(item, property, "card")
+    return renderProperty(item, property, "card")
   }
 
   return (
@@ -108,7 +108,7 @@ export const CardCollection = <
                         {property.label}
                       </div>
                       <div className="text-sm">
-                        {renderProperty(item, property)}
+                        {renderValue(item, property)}
                       </div>
                     </div>
                   ))}
