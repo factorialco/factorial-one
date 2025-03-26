@@ -30,6 +30,14 @@ const Footer = ({
   canToggleToolbar,
 }: FooterProps) => {
   if (!editor) return null
+  if (
+    !maxCharacters &&
+    !secondaryActions &&
+    !primaryAction &&
+    !canUseFiles &&
+    !canToggleToolbar
+  )
+    return null
 
   return (
     <div className="flex w-full items-center gap-2">

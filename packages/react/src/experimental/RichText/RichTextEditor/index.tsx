@@ -256,7 +256,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         className="flex w-full flex-col divide-x-0 divide-y-[1px] divide-solid divide-f1-border rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
       >
         {isFullscreen && (
-          <div className="flex w-full items-center justify-between px-5 py-3">
+          <div className="flex w-full flex-shrink-0 items-center justify-between px-5 py-3">
             <p className="text-2xl font-semibold text-f1-foreground">{title}</p>
             <Button
               icon={Cross}
@@ -275,7 +275,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         {(toolbarConfig !== "none" ||
           (toolbarConfig === "none" && enhanceConfig)) &&
           isToolbarOpen && (
-            <div className="order-1 h-auto overflow-hidden py-2 transition-all duration-300 md:py-3">
+            <div className="order-1 h-auto flex-shrink-0 overflow-hidden py-2 transition-all duration-300 md:py-3">
               <Toolbar
                 editor={editor}
                 handleToggleFullscreen={handleToggleFullscreen}
@@ -304,7 +304,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         >
           <div
             className={cn(
-              "overflow-y-auto p-5 transition-all duration-300",
+              "overflow-y-auto p-5",
               isFullscreen ? "h-full" : heightMapping[height] || "h-80"
             )}
           >
@@ -354,7 +354,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         {/**********
         Footer
         *********/}
-        <div className="order-3 px-4 py-2 md:py-3">
+        <div className="order-3 flex-shrink-0 px-4 py-2 md:py-3">
           <Footer
             editor={editor}
             maxCharacters={maxCharacters}
@@ -365,7 +365,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             canUseFiles={filesConfig ? true : false}
             isToolbarOpen={isToolbarOpen}
             setIsToolbarOpen={setIsToolbarOpen}
-            canToggleToolbar={toolbarConfig !== "none" && !isFullscreen}
+            canToggleToolbar={toolbarConfig !== "none"}
           />
         </div>
 
