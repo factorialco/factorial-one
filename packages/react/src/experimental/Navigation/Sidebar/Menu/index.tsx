@@ -83,6 +83,8 @@ interface CategoryItemProps {
   isSortable?: boolean
   dragConstraints?: React.RefObject<HTMLDivElement>
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
+  onDragEnd?: (categories: MenuCategory[]) => void
+  currentOrder?: MenuCategory[]
 }
 
 const CategoryItem = ({
@@ -90,6 +92,8 @@ const CategoryItem = ({
   isSortable = false,
   dragConstraints,
   onCollapse,
+  onDragEnd,
+  currentOrder,
 }: CategoryItemProps) => {
   const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
   const shouldReduceMotion = useReducedMotion()
@@ -113,6 +117,9 @@ const CategoryItem = ({
     setIsDragging(false)
     setTimeout(() => {
       wasDragging.current = false
+      if (currentOrder) {
+        onDragEnd?.(currentOrder)
+      }
     }, 0)
   }
 
@@ -238,9 +245,12 @@ export function Menu({ tree, onCollapse, onSort }: MenuProps) {
     tree.filter((category) => category.isSortable !== false)
   )
 
-  const handleSort = React.useCallback(
+  const handleSort = React.useCallback((newOrder: MenuCategory[]) => {
+    setSortableItems(newOrder)
+  }, [])
+
+  const handleDragEnd = React.useCallback(
     (newOrder: MenuCategory[]) => {
-      setSortableItems(newOrder)
       onSort?.(newOrder)
     },
     [onSort]
@@ -254,6 +264,7 @@ export function Menu({ tree, onCollapse, onSort }: MenuProps) {
         setSortableItems={handleSort}
         containerRef={containerRef}
         onCollapse={onCollapse}
+        onDragEnd={handleDragEnd}
       />
     </DragProvider>
   )
@@ -265,12 +276,14 @@ function MenuContent({
   setSortableItems,
   containerRef,
   onCollapse,
+  onDragEnd,
 }: {
   nonSortableItems: MenuCategory[]
   sortableItems: MenuCategory[]
   setSortableItems: (items: MenuCategory[]) => void
   containerRef: React.RefObject<HTMLDivElement>
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
+  onDragEnd?: (categories: MenuCategory[]) => void
 }) {
   const { isDragging } = useDragContext()
   const hasRoot = nonSortableItems.some((category) => category.isRoot)
@@ -334,6 +347,8 @@ function MenuContent({
                   isSortable={true}
                   dragConstraints={containerRef}
                   onCollapse={onCollapse}
+                  onDragEnd={onDragEnd}
+                  currentOrder={sortableItems}
                 />
               ))}
             </AnimatePresence>
