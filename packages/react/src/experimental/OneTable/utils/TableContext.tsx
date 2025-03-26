@@ -3,6 +3,8 @@ import { createContext, useContext } from "react"
 interface TableContextValue {
   isScrolled: boolean
   setIsScrolled: (value: boolean) => void
+  isScrolledRight: boolean
+  setIsScrolledRight: (value: boolean) => void
 }
 
 export const TableContext = createContext<TableContextValue | undefined>(
