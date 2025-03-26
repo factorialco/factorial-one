@@ -78,6 +78,33 @@ const enhancementOptions: EnhancementOption[] = [
     label: "Turn Into List",
     prompt: "Convert this text: '[TEXT]' into a concise bullet-point list.",
   },
+  {
+    id: "translate",
+    label: "Translate",
+    prompt: "",
+    subOptions: [
+      {
+        id: "translate-to-spanish",
+        label: "Spanish",
+        prompt: "Translate this text: '[TEXT]' to Spanish.",
+      },
+      {
+        id: "translate-to-english",
+        label: "English",
+        prompt: "Translate this text: '[TEXT]' to English.",
+      },
+      {
+        id: "translate-to-french",
+        label: "French",
+        prompt: "Translate this text: '[TEXT]' to French.",
+      },
+      {
+        id: "translate-to-german",
+        label: "German",
+        prompt: "Translate this text: '[TEXT]' to German.",
+      },
+    ],
+  },
 ]
 
 const users = [
@@ -137,21 +164,18 @@ export const Default: Story = {
       ],
     },
     primaryAction: {
-      label: "Add",
-      onClick: () => alert("Submit"),
-      variant: "default",
-      icon: Add,
+      action: {
+        label: "Add",
+        onClick: () => alert("Submit"),
+        variant: "default",
+        icon: Add,
+      },
     },
     secondaryActions: [
       {
         label: "Cancel",
         onClick: () => alert("Cancel"),
         variant: "critical",
-      },
-      {
-        label: "Send tomorrow",
-        onClick: () => alert("Send to AI"),
-        variant: "neutral",
       },
     ],
     linkPopupConfig: { linkPlaceholder: "Write or paste a link" },

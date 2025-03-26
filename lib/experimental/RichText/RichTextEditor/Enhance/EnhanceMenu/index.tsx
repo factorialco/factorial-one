@@ -1,7 +1,7 @@
-import { Input } from "@/experimental/exports"
 import { Icon } from "@/factorial-one"
-import { ChevronLeft, ChevronRight } from "@/icons/app"
+import { Ai, ChevronLeft, ChevronRight } from "@/icons/app"
 import { cn } from "@/lib/utils"
+import { Input } from "@/ui/input"
 import React, { useEffect, useRef, useState } from "react"
 import { EnhancementOption } from "../../utils/types"
 
@@ -14,7 +14,7 @@ const Option = ({ option, onClick }: OptionProps) => {
   return (
     <div
       onClick={onClick}
-      className="flex cursor-pointer flex-row items-center gap-2 bg-f1-background px-3 py-2 hover:bg-f1-background-secondary-hover"
+      className="flex cursor-pointer flex-row items-center gap-2 bg-f1-background px-3 py-2 hover:bg-f1-background-secondary"
     >
       <p className="text-neutral-40 text-md grow text-ellipsis font-normal">
         {option.label}
@@ -93,10 +93,9 @@ const AIEnhanceMenu = ({
       {canUseCustomPrompt && (
         <div className="flex w-full flex-row items-center p-2">
           <Input
+            icon={Ai}
             type="text"
             placeholder={inputPlaceholder}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             autoFocus
             onKeyDown={handleKeyDown}
           />

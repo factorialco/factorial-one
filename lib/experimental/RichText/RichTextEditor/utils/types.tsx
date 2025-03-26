@@ -32,7 +32,6 @@ type ToolbarFormatConfig = {
 }
 
 type ToolbarTextSizeConfig = {
-  normal?: boolean
   heading1?: boolean
   heading2?: boolean
   heading3?: boolean
@@ -71,7 +70,6 @@ type toolbarConfig =
 
 type enhanceTextParams = {
   text: string
-  type: string
   intent?: string
   context?: string
 }
@@ -133,12 +131,24 @@ type filesConfig = {
   acceptedFileType?: FileType[]
 }
 
-type actionConfig = {
+type actionType = {
   label: string
   onClick: () => void
   disabled?: boolean
   variant: (typeof variants)[number]
   icon?: IconType
+}
+
+type subActionType = {
+  label: string
+  onClick: () => void
+  disabled?: boolean
+  icon?: IconType
+}
+
+type primaryActionType = {
+  action: actionType
+  subActions?: subActionType[]
 }
 
 type linkPopupConfig = {
@@ -148,7 +158,7 @@ type linkPopupConfig = {
 export { FileType }
 
 export type {
-  actionConfig,
+  actionType,
   enhanceConfig,
   enhancedTextResponse,
   enhanceLabelsType,
@@ -159,6 +169,8 @@ export type {
   MentionChangeResult,
   MentionedUser,
   mentionsConfig,
+  primaryActionType,
   RichTextEditorHeight,
+  subActionType,
   toolbarConfig,
 }

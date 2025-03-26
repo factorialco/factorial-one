@@ -30,7 +30,7 @@ import { EnhanceError } from "./Enhance/EnhanceError"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
 import "./index.css"
-import { ToolbarPlugin } from "./Toolbar"
+import { Toolbar } from "./Toolbar"
 import {
   handleEnhanceWithAIFunction,
   isValidSelectionForEnhancement,
@@ -43,13 +43,14 @@ import {
 import { heightMapping } from "./utils/helpers"
 import { configureMention } from "./utils/mention"
 import {
-  actionConfig,
+  actionType,
   enhanceConfig,
   filesConfig,
   linkPopupConfig,
   MentionChangeResult,
   MentionedUser,
   mentionsConfig,
+  primaryActionType,
   RichTextEditorHeight,
   toolbarConfig,
 } from "./utils/types"
@@ -59,8 +60,8 @@ interface RichTextEditorProps {
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
   toolbarConfig: toolbarConfig
-  secondaryActions?: actionConfig[]
-  primaryAction?: actionConfig
+  secondaryActions?: actionType[]
+  primaryAction?: primaryActionType
   onChange: (html: string | MentionChangeResult | null) => void
   title: string
   height?: RichTextEditorHeight
@@ -70,6 +71,7 @@ interface RichTextEditorProps {
     content?: string
     files?: File[]
   }
+  toolbarIsOpen?: boolean
   linkPopupConfig?: linkPopupConfig
 }
 
@@ -95,6 +97,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       onChange,
       placeholder,
       linkPopupConfig,
+      toolbarIsOpen = true,
     },
     ref
   ) {
@@ -109,14 +112,13 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
     const [aiError, setAiError] = useState<string | null>(null)
+    const [isToolbarOpen, setIsToolbarOpen] = useState(toolbarIsOpen)
 
     useEffect(() => {
       if (screenfull.isEnabled) {
         const handleChange = () => setIsFullscreen(screenfull.isFullscreen)
         screenfull.on("change", handleChange)
-        return () => {
-          screenfull.off("change", handleChange)
-        }
+        return () => screenfull.off("change", handleChange)
       }
     }, [])
 
@@ -219,7 +221,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const handleEnhanceWithAI = useCallback(
       async (
         selectedText: string,
-        enhanceType?: string,
+        selectedIntent?: string,
         customIntent?: string,
         context?: string
       ) => {
@@ -239,7 +241,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               setIsAcceptChangesOpen(false)
               setAiError(error || enhanceConfig?.enhanceLabels.defaultError)
             },
-            enhanceType,
+            selectedIntent,
             customIntent,
             context,
           })
@@ -251,10 +253,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     return (
       <div
         ref={containerRef}
-        className="m-5 flex w-full flex-col rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
+        className="m-5 flex w-full flex-col divide-x-0 divide-y-[1px] divide-solid divide-f1-border rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
       >
         {isFullscreen && (
-          <div className="flex w-full items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3">
+          <div className="flex w-full items-center justify-between px-5 py-3">
             <p className="text-2xl font-semibold text-f1-foreground">{title}</p>
             <Button
               icon={Cross}
@@ -267,20 +269,33 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           </div>
         )}
 
-        <ToolbarPlugin
-          editor={editor}
-          handleToggleFullscreen={handleToggleFullscreen}
-          isFullscreen={isFullscreen}
-          onEnhanceWithAI={handleEnhanceWithAI}
-          config={toolbarConfig}
-          disableButtons={isAcceptChangesOpen}
-          enhanceConfig={enhanceConfig}
-          isLoadingEnhance={isLoadingEnhance}
-        />
+        {/**********
+        Toolbar
+        *********/}
+        {(toolbarConfig !== "none" ||
+          (toolbarConfig === "none" && enhanceConfig)) &&
+          isToolbarOpen && (
+            <div className="order-2 h-auto overflow-hidden py-2 transition-all duration-300 md:order-1 md:py-3">
+              <Toolbar
+                editor={editor}
+                handleToggleFullscreen={handleToggleFullscreen}
+                isFullscreen={isFullscreen}
+                onEnhanceWithAI={handleEnhanceWithAI}
+                config={toolbarConfig}
+                disableButtons={isAcceptChangesOpen}
+                enhanceConfig={enhanceConfig}
+                isLoadingEnhance={isLoadingEnhance}
+              />
+            </div>
+          )}
+
+        {/**********
+        Editor
+        *********/}
         <div
           ref={editorRef}
           className={cn(
-            "relative w-full",
+            "relative order-1 w-full flex-grow md:order-2",
             isFullscreen && "h-full overflow-y-hidden"
           )}
           onClick={() => {
@@ -289,8 +304,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         >
           <div
             className={cn(
-              "h-80 overflow-y-auto px-5 py-3",
-              isFullscreen ? "h-full" : heightMapping[height] || "h-80"
+              "overflow-y-auto p-5 transition-all duration-300",
+              isFullscreen ? "h-full" : heightMapping[height] || "md:h-80",
+              editor?.isFocused ? "h-96" : "h-18"
             )}
           >
             <EditorContent editor={editor} />
@@ -298,7 +314,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           {filesConfig && (
             <>
               <input
-                id="upload-button"
+                id="rich-text-editor-upload-button"
                 type="file"
                 multiple={filesConfig.multipleFiles}
                 onChange={handleFileChange}
@@ -336,6 +352,27 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           )}
         </div>
 
+        {/**********
+        Footer
+        *********/}
+        <div className="order-3 px-4 py-2 md:py-3">
+          <Footer
+            editor={editor}
+            maxCharacters={maxCharacters}
+            secondaryActions={secondaryActions}
+            primaryAction={primaryAction}
+            isAcceptChangesOpen={isAcceptChangesOpen}
+            fileInputRef={fileInputRef}
+            canUseFiles={filesConfig ? true : false}
+            isToolbarOpen={isToolbarOpen}
+            setIsToolbarOpen={setIsToolbarOpen}
+            canToggleToolbar={toolbarConfig !== "none" && !isFullscreen}
+          />
+        </div>
+
+        {/**********
+        Bubble menu
+        *********/}
         <EditorBubbleMenu
           editor={editor}
           onEnhanceWithAI={handleEnhanceWithAI}
@@ -343,16 +380,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           enhanceConfig={enhanceConfig}
           disableButtons={isAcceptChangesOpen}
           linkPopupConfig={linkPopupConfig}
-        />
-
-        <Footer
-          editor={editor}
-          maxCharacters={maxCharacters}
-          secondaryActions={secondaryActions}
-          primaryAction={primaryAction}
-          isAcceptChangesOpen={isAcceptChangesOpen}
-          fileInputRef={fileInputRef}
-          canUseFiles={filesConfig ? true : false}
         />
       </div>
     )

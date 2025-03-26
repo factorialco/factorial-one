@@ -2,16 +2,19 @@ import { Button } from "@/components/exports"
 import { Paperclip } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { ToolbarDivider } from "../Toolbar"
-import { actionConfig } from "../utils/types"
+import { actionType, primaryActionType } from "../utils/types"
 
 interface FooterProps {
   editor: Editor | null
   maxCharacters: number | undefined
-  secondaryActions: actionConfig[] | undefined
-  primaryAction: actionConfig | undefined
+  secondaryActions: actionType[] | undefined
+  primaryAction: primaryActionType | undefined
   isAcceptChangesOpen: boolean
   fileInputRef: React.RefObject<HTMLInputElement>
   canUseFiles: boolean
+  isToolbarOpen: boolean
+  setIsToolbarOpen: (isToolbarOpen: boolean) => void
+  canToggleToolbar: boolean
 }
 
 const Footer = ({
@@ -22,13 +25,27 @@ const Footer = ({
   isAcceptChangesOpen,
   fileInputRef,
   canUseFiles,
+  isToolbarOpen,
+  setIsToolbarOpen,
+  canToggleToolbar,
 }: FooterProps) => {
   if (!editor) return null
   if (!maxCharacters && !secondaryActions && !primaryAction) return null
 
   return (
-    <div className="flex w-full items-center justify-between border-0 border-t-[1px] border-solid border-f1-border px-4 py-3">
-      <div className="flex items-center gap-2">
+    <div className="flex w-full items-center gap-2">
+      <div className="flex flex-shrink-0 items-center gap-2">
+        {canToggleToolbar && (
+          <Button
+            onClick={() => {
+              setIsToolbarOpen(!isToolbarOpen)
+            }}
+            variant="outline"
+            size="md"
+            label="Toolbar"
+            disabled={isAcceptChangesOpen}
+          />
+        )}
         {canUseFiles && (
           <Button
             icon={Paperclip}
@@ -36,11 +53,14 @@ const Footer = ({
               if (fileInputRef?.current) {
                 fileInputRef.current.click()
               } else {
-                const fileInput = document.getElementById("upload-button")
-                if (fileInput) fileInput.click()
+                const fileInput = document.getElementById(
+                  "rich-text-editor-upload-button"
+                )
+                fileInput?.click()
               }
             }}
             hideLabel
+            round
             label="Add Attachment"
             variant="outline"
             type="button"
@@ -53,25 +73,29 @@ const Footer = ({
           </p>
         )}
       </div>
-      <div className="flex items-center gap-2">
-        {secondaryActions?.map((action) => (
-          <Button
-            onClick={action.onClick}
-            variant={action.variant ?? "outline"}
-            size="md"
-            label={action.label}
-            disabled={isAcceptChangesOpen || action.disabled}
-          />
-        ))}
+      <div className="flex grow items-center justify-end gap-2 overflow-x-hidden">
+        {secondaryActions && secondaryActions.length > 0 && (
+          <div className="flex items-center gap-2 overflow-x-auto">
+            {secondaryActions?.map((action) => (
+              <Button
+                onClick={action.onClick}
+                variant={action.variant ?? "outline"}
+                size="md"
+                label={action.label}
+                disabled={isAcceptChangesOpen || action.disabled}
+              />
+            ))}
+          </div>
+        )}
         {secondaryActions && secondaryActions.length > 0 && <ToolbarDivider />}
         {primaryAction && (
           <Button
-            onClick={primaryAction.onClick}
-            variant={primaryAction.variant ?? "default"}
+            onClick={primaryAction.action.onClick}
+            variant={primaryAction.action.variant ?? "default"}
             size="md"
-            label={primaryAction.label}
-            disabled={isAcceptChangesOpen || primaryAction.disabled}
-            icon={primaryAction.icon ?? undefined}
+            label={primaryAction.action.label}
+            disabled={isAcceptChangesOpen || primaryAction.action.disabled}
+            icon={primaryAction.action.icon ?? undefined}
           />
         )}
       </div>

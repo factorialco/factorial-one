@@ -41,7 +41,7 @@ interface EditorBubbleMenuProps {
   editor: Editor | null
   onEnhanceWithAI?: (
     selectedText: string,
-    enhanceType?: string,
+    selectedIntent?: string,
     customIntent?: string,
     context?: string
   ) => Promise<void>

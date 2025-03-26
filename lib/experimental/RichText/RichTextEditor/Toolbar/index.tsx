@@ -31,13 +31,13 @@ const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
     </React.Fragment>
   ))
 
-interface ToolbarPluginProps {
+interface ToolbarProps {
   editor: Editor | null
   handleToggleFullscreen: () => void
   isFullscreen: boolean
   onEnhanceWithAI?: (
     selectedText: string,
-    enhanceType?: string,
+    selectedIntent?: string,
     customIntent?: string,
     context?: string
   ) => Promise<void>
@@ -47,7 +47,7 @@ interface ToolbarPluginProps {
   enhanceConfig: enhanceConfig | undefined
 }
 
-const ToolbarPlugin = ({
+const Toolbar = ({
   editor,
   handleToggleFullscreen,
   isFullscreen,
@@ -56,7 +56,7 @@ const ToolbarPlugin = ({
   enhanceConfig,
   config,
   disableButtons,
-}: ToolbarPluginProps) => {
+}: ToolbarProps) => {
   if (!editor) return null
 
   const mergedConfig =
@@ -68,7 +68,7 @@ const ToolbarPlugin = ({
 
   const {
     format: { bold, italic, underline, highlight, strike },
-    textSize: { normal, heading1, heading2, heading3 },
+    textSize: { heading1, heading2, heading3 },
     textAlign: { left, center, right, justify },
     list: { bullet, ordered, task },
     moreOptions: { code, horizontalRule, quote },
@@ -81,7 +81,7 @@ const ToolbarPlugin = ({
         {bold && (
           <Button
             variant={editor.isActive("bold") ? "neutral" : "ghost"}
-            label="Bold"
+            label="B"
             onClick={() => {
               editor.chain().focus().toggleBold().run()
             }}
@@ -92,7 +92,7 @@ const ToolbarPlugin = ({
         {italic && (
           <Button
             variant={editor.isActive("italic") ? "neutral" : "ghost"}
-            label="Italic"
+            label="I"
             onClick={() => {
               editor.chain().focus().toggleItalic().run()
             }}
@@ -103,7 +103,7 @@ const ToolbarPlugin = ({
         {underline && (
           <Button
             variant={editor.isActive("underline") ? "neutral" : "ghost"}
-            label="Underline"
+            label="U"
             onClick={() => {
               editor.chain().focus().toggleUnderline().run()
             }}
@@ -114,7 +114,7 @@ const ToolbarPlugin = ({
         {strike && (
           <Button
             variant={editor.isActive("strike") ? "neutral" : "ghost"}
-            label="Strike"
+            label="S"
             onClick={() => {
               editor.chain().focus().toggleStrike().run()
             }}
@@ -125,7 +125,7 @@ const ToolbarPlugin = ({
         {highlight && (
           <Button
             variant={editor.isActive("highlight") ? "neutral" : "ghost"}
-            label="Highlight"
+            label="H"
             onClick={() => {
               editor.chain().focus().toggleHighlight().run()
             }}
@@ -137,20 +137,10 @@ const ToolbarPlugin = ({
     ) : null
 
   const textSizeGroup =
-    normal || heading1 || heading2 || heading3 ? (
+    heading1 || heading2 || heading3 ? (
       <ToolbarDropdown
         isFullscreen={isFullscreen}
         items={compact([
-          normal && {
-            label: "Normal",
-            onClick: () =>
-              editor
-                .chain()
-                .focus()
-                .toggleHeading({ level: editor.getAttributes("heading").level })
-                .run(),
-            isActive: !editor.isActive("heading"),
-          },
           heading1 && {
             label: "H1",
             onClick: () =>
@@ -231,7 +221,7 @@ const ToolbarPlugin = ({
               editor.chain().focus().toggleBulletList().run()
             }}
             variant={editor.isActive("bulletList") ? "neutral" : "ghost"}
-            label="Bullet List"
+            label="Bullet"
             type="button"
             disabled={disableButtons}
           />
@@ -242,7 +232,7 @@ const ToolbarPlugin = ({
               editor.chain().focus().toggleOrderedList().run()
             }}
             variant={editor.isActive("orderedList") ? "neutral" : "ghost"}
-            label="Ordered List"
+            label="Ordered"
             type="button"
             disabled={disableButtons}
           />
@@ -253,7 +243,7 @@ const ToolbarPlugin = ({
               editor.chain().focus().toggleTaskList().run()
             }}
             variant={editor.isActive("taskList") ? "neutral" : "ghost"}
-            label="Task List"
+            label="Task"
             type="button"
             disabled={disableButtons}
           />
@@ -306,7 +296,7 @@ const ToolbarPlugin = ({
   ])
 
   return (
-    <div className="flex flex-row items-center justify-between gap-2 border-0 border-b-[1px] border-solid border-f1-border py-3">
+    <div className="flex flex-row items-center justify-between gap-2">
       <div className="flex flex-row items-center overflow-x-auto whitespace-nowrap pl-4">
         {intersperse(groups, <ToolbarDivider />)}
       </div>
@@ -322,6 +312,9 @@ const ToolbarPlugin = ({
         )}
         {fullScreen && !isFullscreen && (
           <Button
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            className="hidden md:block"
             onClick={handleToggleFullscreen}
             label="Fullscreen"
             variant="ghost"
@@ -337,4 +330,4 @@ const ToolbarPlugin = ({
   )
 }
 
-export { ToolbarDivider, ToolbarPlugin }
+export { Toolbar, ToolbarDivider }
