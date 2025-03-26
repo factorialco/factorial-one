@@ -22,7 +22,6 @@ const reactSettings = {
     version: "detect",
   },
 }
-
 export default [
   // Main project configuration
   {
