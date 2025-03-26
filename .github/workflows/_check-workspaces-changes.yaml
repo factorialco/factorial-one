@@ -23,17 +23,10 @@ jobs:
         id: changes
         with:
           token: ${{ github.token }}
-          # Add the paths to the packages you want to check for changes
-          # If a package has dependencies in another package, you should include both like in the `package_react`
-          # as we want to trigger the react package workflow's also when the core package changes
           filters: |
             package_react: 
-              - 'packages/react/**/*'
-              - 'packages/core/**/*'
-              - '!.release-please-manifest.json'
-              - '!packages/react/CHANGELOG.md'
-              - '!packages/react/package.json'
+              - 'packages/react/**'
+              - 'packages/core/**'
             package_react_native: 
-              - '!.release-please-manifest.json'
-              - 'packages/react-native/**/*'
-              - 'packages/core/**/*'
+              - 'packages/react-native/**'
+              - 'packages/core/**'

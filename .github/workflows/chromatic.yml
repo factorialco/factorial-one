@@ -24,7 +24,7 @@ jobs:
       github.head_ref != 'release-please--branches--master' &&
       !contains(github.event.pull_request.labels.*.name, 'autorelease')
     permissions: write-all
-    name: Run Chromatic
+    name: "[⚛️ REACT] Run Chromatic"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
