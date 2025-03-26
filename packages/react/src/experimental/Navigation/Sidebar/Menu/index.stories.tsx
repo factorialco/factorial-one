@@ -1,5 +1,5 @@
-import * as Icons from "../../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import * as Icons from "../../../../icons/app"
 import { Menu } from "./index"
 
 const meta = {
@@ -50,6 +50,7 @@ export const Default: Story = {
           { label: "Time off", icon: Icons.PalmTree, href: "/time-off" },
         ],
         isOpen: true,
+        isSortable: true,
       },
       {
         title: "Your company",
@@ -58,6 +59,7 @@ export const Default: Story = {
           { label: "Calendar", icon: Icons.Calendar, href: "/calendar" },
         ],
         isOpen: true,
+        isSortable: true,
       },
     ],
   },
