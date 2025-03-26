@@ -10,6 +10,7 @@ import {
 } from "@/experimental/Information/Tags/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { ReactNode } from "react"
+import { PropertyDefinition } from "../../property-render"
 import { VisualizationType } from "../../visualizations"
 
 /**
@@ -17,8 +18,13 @@ import { VisualizationType } from "../../visualizations"
  */
 export type PropertyRenderer<T extends string | number | object> = (
   args: T,
-  visualization: VisualizationType
+  meta: PropertyRendererMetadata<T>
 ) => ReactNode
+
+export type PropertyRendererMetadata<T> = {
+  visualization: VisualizationType
+  property: PropertyDefinition<T>
+}
 
 /**
  * Renders a property value based on the renderer type.
@@ -27,19 +33,31 @@ export type PropertyRenderer<T extends string | number | object> = (
  * @returns The rendered property value
  */
 export const propertyRenderers = {
-  text: (text: string | number) => text,
-  number: (number: number) => <div className="justify-end">{number}</div>,
-  date: (date: Date) => (
-    <div className="justify-end">{date.toLocaleDateString()}</div>
+  text: (text: string | number | undefined) => text,
+  number: (
+    number: number | undefined,
+    meta: PropertyRendererMetadata<never>
+  ) => (
+    <div className={meta.visualization === "table" ? "text-right" : ""}>
+      {number}
+    </div>
   ),
-  amount: (amount: number) => <div className="justify-end">{amount}</div>,
+  date: (date: Date | undefined) => date?.toLocaleDateString(),
+  amount: (
+    amount: number | undefined,
+    meta: PropertyRendererMetadata<never>
+  ) => (
+    <div className={meta.visualization === "table" ? "text-right" : ""}>
+      {amount}
+    </div>
+  ),
   avatarList: (args: { avatarList: AvatarVariant[]; max?: number }) => (
     <AvatarList avatars={args.avatarList} size="xsmall" max={args.max} />
   ),
   status: (args: { status: StatusVariant; label: string }) => (
     <StatusTag variant={args.status} text={args.label} />
   ),
-  user: (args: { firstName: string; lastName: string; src?: string }) => (
+  person: (args: { firstName: string; lastName: string; src?: string }) => (
     <div className="flex items-center gap-2">
       <Avatar
         avatar={{
