@@ -25,6 +25,7 @@ export interface MenuCategory {
 
 interface MenuProps {
   tree: MenuCategory[]
+  onCollapse?: (category: MenuCategory, isOpen: boolean) => void
 }
 
 const MenuItemContent = ({
@@ -79,12 +80,14 @@ interface CategoryItemProps {
   category: MenuCategory
   isSortable?: boolean
   dragConstraints?: React.RefObject<HTMLDivElement>
+  onCollapse?: (category: MenuCategory, isOpen: boolean) => void
 }
 
 const CategoryItem = ({
   category,
   isSortable = false,
   dragConstraints,
+  onCollapse,
 }: CategoryItemProps) => {
   const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
   const shouldReduceMotion = useReducedMotion()
@@ -93,7 +96,9 @@ const CategoryItem = ({
 
   const handleClick = () => {
     if (!isDragging && !wasDragging.current) {
-      setIsOpen(!isOpen)
+      const newIsOpen = !isOpen
+      setIsOpen(newIsOpen)
+      onCollapse?.(category, newIsOpen)
     }
   }
 
@@ -222,7 +227,7 @@ const CategoryItem = ({
   )
 }
 
-export function Menu({ tree }: MenuProps) {
+export function Menu({ tree, onCollapse }: MenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const nonSortableItems = tree.filter(
     (category) => category.isSortable === false
@@ -238,6 +243,7 @@ export function Menu({ tree }: MenuProps) {
         sortableItems={sortableItems}
         setSortableItems={setSortableItems}
         containerRef={containerRef}
+        onCollapse={onCollapse}
       />
     </DragProvider>
   )
@@ -248,11 +254,13 @@ function MenuContent({
   sortableItems,
   setSortableItems,
   containerRef,
+  onCollapse,
 }: {
   nonSortableItems: MenuCategory[]
   sortableItems: MenuCategory[]
   setSortableItems: (items: MenuCategory[]) => void
   containerRef: React.RefObject<HTMLDivElement>
+  onCollapse?: (category: MenuCategory, isOpen: boolean) => void
 }) {
   const { isDragging } = useDragContext()
   const hasRoot = nonSortableItems.some((category) => category.isRoot)
@@ -272,7 +280,11 @@ function MenuContent({
           {nonSortableItems
             .filter((category) => category.isRoot)
             .map((category, index) => (
-              <CategoryItem key={`fixed-${index}`} category={category} />
+              <CategoryItem
+                key={`fixed-${index}`}
+                category={category}
+                onCollapse={onCollapse}
+              />
             ))}
         </div>
       )}
@@ -282,7 +294,11 @@ function MenuContent({
           {nonSortableItems
             .filter((category) => !category.isRoot)
             .map((category, index) => (
-              <CategoryItem key={`fixed-${index}`} category={category} />
+              <CategoryItem
+                key={`fixed-${index}`}
+                category={category}
+                onCollapse={onCollapse}
+              />
             ))}
         </div>
       )}
@@ -307,6 +323,7 @@ function MenuContent({
                   category={category}
                   isSortable={true}
                   dragConstraints={containerRef}
+                  onCollapse={onCollapse}
                 />
               ))}
             </AnimatePresence>

@@ -63,5 +63,10 @@ export const Default: Story = {
         isSortable: true,
       },
     ],
+    onCollapse: (category, isOpen) => {
+      console.log(
+        `Category "${category.title}" is now ${isOpen ? "open" : "closed"}`
+      )
+    },
   },
 }
