@@ -8,7 +8,7 @@ import { cn, focusRing } from "../../lib/utils"
 import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
-import type { DataSource, RecordType } from "./types"
+import type { BulkAction, DataSource, RecordType, SelectedItems } from "./types"
 import type { CardVisualizationOptions } from "./visualizations/collection/Card"
 import { CardCollection } from "./visualizations/collection/Card"
 import type { TableVisualizationOptions } from "./visualizations/collection/Table"
@@ -187,9 +187,20 @@ export const VisualizationRenderer = <
 >({
   visualization,
   source,
+  onSelectItems,
+  onBulkAction,
 }: {
   visualization: Visualization<Record, Filters, Sortings>
   source: DataSource<Record, Filters, Sortings, ItemActions>
+  onSelectItems?: (
+    allSelected: boolean,
+    selectedItems: SelectedItems<Record>
+  ) => void
+  onBulkAction?: (
+    action: BulkAction,
+    allSelected: boolean,
+    selectedItems: SelectedItems<Record>
+  ) => void
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
@@ -197,6 +208,8 @@ export const VisualizationRenderer = <
         <TableCollection<Record, Filters, Sortings, ItemActions>
           source={source}
           {...visualization.options}
+          onSelectItems={onSelectItems}
+          onBulkAction={onBulkAction}
         />
       )
     case "card":
@@ -204,6 +217,8 @@ export const VisualizationRenderer = <
         <CardCollection<Record, Filters, Sortings, ItemActions>
           source={source}
           {...visualization.options}
+          onSelectItems={onSelectItems}
+          onBulkAction={onBulkAction}
         />
       )
     case "custom":

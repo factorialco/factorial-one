@@ -1,0 +1,133 @@
+import { useEffect, useMemo, useState } from "react"
+import type { FiltersDefinition } from "./Filters/types"
+import type { SortingsDefinition } from "./sortings"
+import { DataSource, PaginationInfo, RecordType } from "./types"
+
+export function useSelectable<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+>(
+  data: ReadonlyArray<Record>,
+  paginationInfo: PaginationInfo | null,
+  source: DataSource<Record, Filters, Sortings>,
+  onSelectItems?: (allSelected: boolean, items: ReadonlyArray<Record>) => void
+): {
+  isAllSelected: boolean
+  selectedItems: Map<number | string, Record>
+  isPartiallySelected: boolean
+  handleSelectItemChange: (item: Record, checked: boolean) => void
+  handleSelectAll: (checked: boolean) => void
+} {
+  // itemsState is the state of the selected items
+  const [itemsState, setItemsState] = useState<
+    Map<number | string, { item: Record; checked: boolean }>
+  >(new Map())
+
+  const [selectedItems, unselectedItems] = useMemo(() => {
+    const selected = new Map()
+    const unselected = new Map()
+    itemsState.forEach((value, id) => {
+      if (value.checked) {
+        selected.set(id, value.item)
+      } else {
+        unselected.set(id, value.item)
+      }
+    })
+    return [selected, unselected]
+  }, [itemsState])
+
+  const selectedCount: number = selectedItems.size
+  const unselectedCount: number = unselectedItems.size
+
+  const [allSelectedCheck, setAllSelectedCheck] = useState(false)
+
+  const handleItemStateChange = (item: Record, checked: boolean) => {
+    const id = source.selectable && source.selectable(item)
+    if (id === undefined) {
+      return
+    }
+
+    itemsState.set(id, { item, checked })
+
+    setItemsState(new Map(itemsState))
+  }
+
+  const handleSelectAll = (checked: boolean) => {
+    setAllSelectedCheck(checked)
+    if (checked) {
+      data.forEach((item) => {
+        handleItemStateChange(item, true)
+      })
+    } else {
+      // We need to reset the items state to the initial state
+      setItemsState(
+        new Map(
+          Array.from(itemsState.entries()).map(([id, value]) => {
+            return [id, { item: value.item, checked: false }]
+          })
+        )
+      )
+    }
+  }
+
+  // Try to determine if all items are selected when we select one by one
+  // If there is pagination, we need to check if the selected items are less than the total number of items
+  // If there is no pagination, we need to check if the selected items are less than the total number of items
+  const areAllKnownItemsSelected =
+    (paginationInfo && selectedCount === paginationInfo.total) ||
+    (!paginationInfo && selectedCount === data.length)
+
+  const isPartiallySelected = selectedCount > 0 && unselectedCount > 0
+
+  const isAllSelected = allSelectedCheck || areAllKnownItemsSelected
+
+  // If the filters change, we need to reset the selected items
+  useEffect(() => {
+    handleSelectAll(false)
+    setItemsState(new Map())
+  }, [source.currentFilters])
+
+  // If the data changes, we need to update new items that are added to the data
+  // If the data changes, we need to update new items that are added to the data
+  useEffect(() => {
+    if (isAllSelected) {
+      data.forEach((item) => {
+        const id = source.selectable && source.selectable(item)
+        // If the item was loaded before, we can't change the state
+        if (id !== undefined && !itemsState.has(id)) {
+          handleItemStateChange(item, true)
+        }
+      })
+    }
+  }, [data, isAllSelected])
+
+  // Control the allSelectedCheck state
+  // If all items are selected, we need to set the allSelectedCheck state to true
+  // If there are no selected items, we need to set the allSelectedCheck state to false
+  // If some items are selected, we need to keep the state as is to know if we will need to check the next page items
+  useEffect(() => {
+    if (areAllKnownItemsSelected) {
+      setAllSelectedCheck(true)
+    }
+    if (selectedCount === 0) {
+      setAllSelectedCheck(false)
+    }
+  }, [areAllKnownItemsSelected, selectedCount])
+
+  useEffect(() => {
+    // Notify the parent component about the selected items
+    onSelectItems?.(
+      allSelectedCheck && unselectedCount == 0,
+      Array.from(selectedItems.values())
+    )
+  }, [onSelectItems, allSelectedCheck, selectedItems, unselectedCount])
+
+  return {
+    selectedItems,
+    isAllSelected,
+    isPartiallySelected,
+    handleSelectItemChange: handleItemStateChange,
+    handleSelectAll,
+  }
+}
