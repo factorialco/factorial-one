@@ -7,11 +7,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/experimental/OneTable"
+import { ColumnWidth } from "@/experimental/OneTable/utils/sizes"
 import { useI18n } from "@/lib/i18n-provider"
+import { cn } from "@/lib/utils"
 import { ComponentProps } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { ActionsDropdown } from "../../../ItemActions/Dropdown"
+import { PropertyDefinition, renderProperty } from "../../../property-render"
 import {
   SortingKey,
   SortingsDefinition,
@@ -19,13 +22,22 @@ import {
 } from "../../../sortings"
 import { CollectionProps, RecordType } from "../../../types"
 import { useData } from "../../../useData"
-import { PropertyDefinition, renderValue } from "../../../utils"
 
 export type WithOptionalSorting<
   Record,
   Sortings extends SortingsDefinition,
 > = PropertyDefinition<Record> & {
   sorting?: SortingKey<Sortings>
+
+  /**
+   * The alignment of the column. If not provided, the alignment will be "left"
+   */
+  align?: "left" | "right"
+
+  /**
+   * The width of the column. If not provided, the width will be "auto"
+   */
+  width?: ColumnWidth
 }
 
 export type TableColumnDefinition<
@@ -132,7 +144,7 @@ export const TableCollection = <
     item: Record,
     column: TableColumnDefinition<Record, Sortings>
   ) => {
-    return renderValue(item, column, "table")
+    return renderProperty(item, column, "table")
   }
 
   return (
@@ -181,7 +193,14 @@ export const TableCollection = <
                     href={itemHref}
                     sticky={column.sticky}
                   >
-                    {renderCell(item, column)}
+                    <div
+                      className={cn(
+                        column.align === "right" ? "justify-end" : "",
+                        "flex"
+                      )}
+                    >
+                      {renderCell(item, column)}
+                    </div>
                   </TableCell>
                 ))}
                 {source.itemActions && (
