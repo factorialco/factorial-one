@@ -33,12 +33,24 @@ export type PropertyRendererMetadata<T> = {
  * @returns The rendered property value
  */
 export const propertyRenderers = {
-  text: (text: string | number) => text,
-  number: (number: number) => <div className="justify-end">{number}</div>,
-  date: (date: Date) => (
-    <div className="justify-end">{date.toLocaleDateString()}</div>
+  text: (text: string | number | undefined) => text,
+  number: (
+    number: number | undefined,
+    meta: PropertyRendererMetadata<never>
+  ) => (
+    <div className={meta.visualization === "table" ? "text-right" : ""}>
+      {number}
+    </div>
   ),
-  amount: (amount: number) => <div className="justify-end">{amount}</div>,
+  date: (date: Date | undefined) => date?.toLocaleDateString(),
+  amount: (
+    amount: number | undefined,
+    meta: PropertyRendererMetadata<never>
+  ) => (
+    <div className={meta.visualization === "table" ? "text-right" : ""}>
+      {amount}
+    </div>
+  ),
   avatarList: (args: { avatarList: AvatarVariant[]; max?: number }) => (
     <AvatarList avatars={args.avatarList} size="xsmall" max={args.max} />
   ),
