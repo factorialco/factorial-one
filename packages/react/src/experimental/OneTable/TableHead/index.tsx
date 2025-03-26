@@ -17,10 +17,10 @@ interface TableHeadProps {
   width?: ColumnWidth
 
   /**
-   * When true, the header cell will stick to the left side of the table when scrolling horizontally
-   * @default false
+   * When true, the header cell will stick in the specified position when scrolling horizontally
+   * @default undefined
    */
-  sticky?: boolean
+  sticky?: { left?: number; right?: never } | { left?: never; right?: number }
 
   /**
    * The current sort direction of this column. "none" indicates no sorting,
@@ -54,10 +54,16 @@ export function TableHead({
   sortState = "none",
   onSortClick,
   info,
-  sticky = false,
+  sticky,
   hidden = false,
 }: TableHeadProps) {
-  const { isScrolled } = useTable()
+  const { isScrolled, isScrolledRight } = useTable()
+
+  const isStickyLeft = sticky?.left !== undefined
+  const isStickyRight = sticky?.right !== undefined
+  const isSticky = isStickyLeft || isStickyRight
+  const stickyLeft = sticky?.left ?? 0
+  const stickyRight = sticky?.right ?? 0
 
   const content = (
     <>
@@ -118,15 +124,28 @@ export function TableHead({
     </>
   )
 
+  const isNumber = (width: ColumnWidth): width is number =>
+    typeof width === "number"
+
+  const colWidth = isNumber(width) ? width : columnWidths[width]
+
   return (
     <TableHeadRoot
       className={cn(
         "group",
-        sticky && isScrolled && "sticky left-0 z-10 bg-f1-background",
+        isSticky && (isScrolled || isScrolledRight) && "bg-f1-background",
+        isSticky && "sticky z-10",
         hidden && "after:hidden"
       )}
       tabIndex={sticky ? 0 : undefined}
-      style={{ width: columnWidths[width] }}
+      // Min and max width is needed to prevent the cell from shrinking or expanding when the table is scrolled
+      style={{
+        width: colWidth,
+        maxWidth: colWidth,
+        minWidth: colWidth,
+        left: stickyLeft,
+        right: stickyRight,
+      }}
       role={hidden ? "presentation" : undefined}
       aria-sort={
         onSortClick
@@ -139,10 +158,15 @@ export function TableHead({
       }
     >
       <AnimatePresence>
-        {isScrolled && sticky && (
+        {((isStickyLeft && isScrolled) ||
+          (isStickyRight && isScrolledRight)) && (
           <motion.div
             key="shadow-gradient"
-            className="absolute inset-y-0 -right-4 h-full w-4 bg-gradient-to-r from-f1-foreground-secondary to-transparent"
+            className={cn(
+              "absolute inset-y-0 h-full w-4 from-f1-foreground-secondary to-transparent",
+              isStickyLeft && "-right-4 bg-gradient-to-r",
+              isStickyRight && "-left-4 bg-gradient-to-l"
+            )}
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.1 }}
             exit={{ opacity: 0 }}
@@ -152,10 +176,14 @@ export function TableHead({
       {!hidden &&
         (info ? (
           <Tooltip label={info}>
-            <div>{content}</div>
+            <div className={cn(width !== "auto" && "overflow-hidden")}>
+              {content}
+            </div>
           </Tooltip>
         ) : (
-          content
+          <div className={cn(width !== "auto" && "overflow-hidden")}>
+            {content}
+          </div>
         ))}
     </TableHeadRoot>
   )
