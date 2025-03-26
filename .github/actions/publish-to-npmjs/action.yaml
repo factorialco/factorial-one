@@ -21,6 +21,6 @@ runs:
 
     - name: Publish to registry
       shell: bash
-      run: pnpm --filter ${{ inputs.workspace }} publish --no-git-checks
+      run: pnpm --filter ${{ inputs.workspace }} publish --no-git-checks --access=public
       env:
         NODE_AUTH_TOKEN: ${{ inputs.registry_token }}
