@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/factorialco/factorial-one/compare/factorial-one-v1.9.0...factorial-one-v1.10.0) (2025-03-26)
+
+
+### Features
+
+* publish packages test b ([#1480](https://github.com/factorialco/factorial-one/issues/1480)) ([fdb504d](https://github.com/factorialco/factorial-one/commit/fdb504ddc0bd03c061beba30c3a75b0b8806c9ca))
+
 ## [1.9.0](https://github.com/factorialco/factorial-one/compare/factorial-one-v1.8.0...factorial-one-v1.9.0) (2025-03-26)
 
 
