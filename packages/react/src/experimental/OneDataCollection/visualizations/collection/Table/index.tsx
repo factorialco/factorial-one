@@ -1,3 +1,4 @@
+import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { OnePagination } from "@/experimental/OnePagination"
 import {
   OneTable,
@@ -21,6 +22,7 @@ import {
 } from "../../../sortings"
 import { CollectionProps, RecordType } from "../../../types"
 import { useData } from "../../../useData"
+import { useSelectable } from "../../../useSelectable"
 
 export type WithOptionalSorting<
   Record,
@@ -63,6 +65,7 @@ export const TableCollection = <
   columns,
   source,
   fixedColumns = 0,
+  onSelectItems,
 }: CollectionProps<
   Record,
   Filters,
@@ -81,6 +84,18 @@ export const TableCollection = <
   const { currentSortings, setCurrentSortings, isLoading } = source
 
   const fixedColumnsLeft = useMemo(() => fixedColumns, [fixedColumns])
+
+  /**
+   * Item selection
+   */
+
+  const {
+    selectedItems,
+    isAllSelected,
+    isPartiallySelected,
+    handleSelectItemChange,
+    handleSelectAll,
+  } = useSelectable(data, paginationInfo, source, onSelectItems)
 
   /**
    * Determine the sort state of a column
@@ -150,11 +165,24 @@ export const TableCollection = <
     return renderProperty(item, column, "table")
   }
 
+  const checkColumnWidth = source.selectable ? 50 : 0
+
   return (
     <>
       <OneTable loading={isLoading}>
         <TableHeader>
           <TableRow>
+            {source.selectable && (
+              <TableHead width={checkColumnWidth} sticky={{ left: 0 }}>
+                <Checkbox
+                  checked={isAllSelected}
+                  indeterminate={isPartiallySelected}
+                  onCheckedChange={handleSelectAll}
+                  title="Select all"
+                  hideLabel
+                />
+              </TableHead>
+            )}
             {columns.map(({ sorting, label, ...column }, index) => (
               <TableHead
                 key={String(label)}
@@ -171,7 +199,7 @@ export const TableCollection = <
                           .slice(0, Math.max(0, index))
                           .reduce(
                             (acc, column) => acc + (column.width ?? 0),
-                            0
+                            checkColumnWidth
                           ),
                       }
                     : undefined
@@ -206,9 +234,23 @@ export const TableCollection = <
         <TableBody>
           {data.map((item, index) => {
             const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
-
+            const id = source.selectable ? source.selectable(item) : undefined
             return (
               <TableRow key={`row-${index}`}>
+                {source.selectable && (
+                  <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
+                    {id !== undefined && (
+                      <Checkbox
+                        checked={selectedItems.has(id)}
+                        onCheckedChange={(checked) =>
+                          handleSelectItemChange(item, checked)
+                        }
+                        title={`Select ${source.selectable(item)}`}
+                        hideLabel
+                      />
+                    )}
+                  </TableCell>
+                )}
                 {columns.map((column, cellIndex) => (
                   <TableCell
                     key={String(column.label)}
@@ -222,7 +264,7 @@ export const TableCollection = <
                               .slice(0, Math.max(0, cellIndex))
                               .reduce(
                                 (acc, column) => acc + (column.width ?? 0),
-                                0
+                                checkColumnWidth
                               ),
                           }
                         : undefined
