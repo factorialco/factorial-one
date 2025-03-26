@@ -44361,6 +44361,7 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
         /* @__PURE__ */ f(I2, { asChild: !0, children: /* @__PURE__ */ f(
           ve,
           {
+            type: "button",
             ref: s,
             variant: i.variant || "ghost",
             size: i.size || "md",
@@ -44498,7 +44499,8 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
       onClick: e,
       size: "sm",
       variant: "critical",
-      icon: Z8
+      icon: Z8,
+      type: "button"
     }
   ),
   /* @__PURE__ */ f(
@@ -44508,7 +44510,8 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
       label: (n == null ? void 0 : n.acceptChangesButtonLabel) || "Accept",
       onClick: t,
       size: "sm",
-      variant: "outline"
+      variant: "outline",
+      type: "button"
     }
   )
 ] }), zG = ({ aiError: t, onClose: e }) => (Te(() => {
@@ -44523,7 +44526,8 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
     {
       variant: "default",
       onClick: e,
-      label: "Continue editing"
+      label: "Continue editing",
+      type: "button"
     }
   ) })
 ] }) })), jG = ({ files: t, onRemoveFile: e, disabled: n }) => t.length ? /* @__PURE__ */ f("div", { className: "absolute bottom-0 flex w-full items-end gap-2 overflow-x-auto px-4 py-2", children: t.map((i, r) => /* @__PURE__ */ f(
@@ -44748,7 +44752,8 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
           variant: "ghost",
           size: "md",
           label: WG(t),
-          disabled: s
+          disabled: s,
+          type: "button"
         }
       )
     }
@@ -44785,7 +44790,8 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
           variant: "ghost",
           size: "md",
           label: qG(t),
-          disabled: s
+          disabled: s,
+          type: "button"
         }
       )
     }
@@ -44858,7 +44864,8 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
           icon: l2,
           hideLabel: !0,
           label: "More options",
-          disabled: s
+          disabled: s,
+          type: "button"
         }
       )
     }
@@ -44919,7 +44926,8 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
         variant: "outline",
         size: "md",
         label: "Toolbar",
-        disabled: r
+        disabled: r,
+        type: "button"
       }
     ),
     a && /* @__PURE__ */ f(
@@ -44958,7 +44966,8 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
         variant: c.variant ?? "outline",
         size: "md",
         label: c.label,
-        disabled: r || c.disabled
+        disabled: r || c.disabled,
+        type: "button"
       }
     )) }),
     n && n.length > 0 && /* @__PURE__ */ f(T9, {}),
@@ -44970,7 +44979,8 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
         size: "md",
         label: i.action.label,
         disabled: r || i.action.disabled,
-        icon: i.action.icon ?? void 0
+        icon: i.action.icon ?? void 0,
+        type: "button"
       }
     )
   ] })
