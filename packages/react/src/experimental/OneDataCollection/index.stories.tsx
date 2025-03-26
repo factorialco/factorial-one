@@ -16,7 +16,14 @@ import { FilterDefinition, FiltersState } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition, SortingsState } from "./sortings"
-import { DataAdapter, PaginatedResponse, Presets, RecordType } from "./types"
+import {
+  BulkActionDefinition,
+  DataAdapter,
+  PaginatedResponse,
+  Presets,
+  RecordType,
+  SelectedItems,
+} from "./types"
 import { useData } from "./useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
@@ -257,10 +264,17 @@ const ExampleComponent = ({
   useObservable = false,
   usePresets = false,
   frozenColumns = 0,
+  selectable,
+  bulkActions,
 }: {
   useObservable?: boolean
   usePresets?: boolean
   frozenColumns?: 0 | 1 | 2
+  selectable?: (item: (typeof mockUsers)[number]) => string | number | undefined
+  bulkActions?: (
+    allSelected: boolean,
+    selectedItems: SelectedItems<(typeof mockUsers)[number]>
+  ) => BulkActionDefinition[]
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
@@ -298,6 +312,8 @@ const ExampleComponent = ({
         enabled: item.department === "Engineering" && item.status === "active",
       },
     ],
+    selectable,
+    bulkActions,
     dataAdapter: {
       fetchData: useObservable
         ? createObservableDataFetch()
@@ -309,6 +325,15 @@ const ExampleComponent = ({
     <div className="space-y-4">
       <OneDataCollection
         source={dataSource}
+        onSelectItems={(allSelected, items) =>
+          console.log("Selected items: All selected", allSelected, items)
+        }
+        onBulkAction={(action, allSelected, items) =>
+          console.log(
+            `Bulk action: ${action}, allSelected: ${allSelected}, items:`,
+            items
+          )
+        }
         visualizations={[
           {
             type: "table",
@@ -343,47 +368,47 @@ const ExampleComponent = ({
                   sorting: "department",
                 },
                 {
-                  label: "Email",
+                  label: "Email 2",
                   render: (item) => item.email,
                   sorting: "email",
                 },
                 {
-                  label: "Role",
+                  label: "Role 2",
                   render: (item) => item.role,
                   sorting: "role",
                 },
                 {
-                  label: "Department",
+                  label: "Department 2",
                   render: (item) => item.department,
                   sorting: "department",
                 },
                 {
-                  label: "Email",
+                  label: "Email 3",
                   render: (item) => item.email,
                   sorting: "email",
                 },
                 {
-                  label: "Role",
+                  label: "Role 3",
                   render: (item) => item.role,
                   sorting: "role",
                 },
                 {
-                  label: "Department",
+                  label: "Department 3",
                   render: (item) => item.department,
                   sorting: "department",
                 },
                 {
-                  label: "Email",
+                  label: "Email 4",
                   render: (item) => item.email,
                   sorting: "email",
                 },
                 {
-                  label: "Role",
+                  label: "Role 4",
                   render: (item) => item.role,
                   sorting: "role",
                 },
                 {
-                  label: "Department",
+                  label: "Department 4",
                   render: (item) => item.department,
                   sorting: "department",
                 },
@@ -881,6 +906,44 @@ export const CustomCardProperties: Story = {
 // Examples with multiple visualizations
 export const SwitchableVisualizations: Story = {
   render: () => <ExampleComponent />,
+}
+
+export const WithSelectableAndBulkActions: Story = {
+  render: () => (
+    <ExampleComponent
+      selectable={(item) => item.id}
+      bulkActions={(
+        allSelected: boolean,
+        selectedItems: SelectedItems<(typeof mockUsers)[number]>
+      ) => [
+        ...(selectedItems.length > 0
+          ? [
+              {
+                label: "Delete All",
+                icon: Delete,
+                id: "delete-all",
+              },
+            ]
+          : []),
+
+        ...(allSelected
+          ? [
+              {
+                label: "Star All",
+                icon: Star,
+                id: "star-all",
+              },
+            ]
+          : [
+              {
+                label: "Star",
+                icon: Star,
+                id: "star",
+              },
+            ]),
+      ]}
+    />
+  ),
 }
 
 // Examples with filters and loading states
@@ -1464,6 +1527,7 @@ export const WithPagination: Story = {
       filters,
       presets: filterPresets,
       sortings,
+      selectable: (item) => (item.id !== "user-1a" ? item.id : undefined),
       dataAdapter: createDataAdapter<
         {
           id: string
@@ -1489,6 +1553,9 @@ export const WithPagination: Story = {
     return (
       <OneDataCollection
         source={source}
+        onSelectItems={(allSelected, items) => {
+          console.log("allSelected", allSelected, "items", items)
+        }}
         visualizations={[
           {
             type: "table",

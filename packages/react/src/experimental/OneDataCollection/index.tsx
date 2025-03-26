@@ -11,6 +11,7 @@ import { ItemActionsDefinition } from "./item-actions"
 import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
+  BulkAction,
   CollectionSearchOptions,
   DataSource,
   DataSourceDefinition,
@@ -150,9 +151,17 @@ export const OneDataCollection = <
 >({
   source,
   visualizations,
+  onSelectItems,
+  onBulkAction,
 }: {
   source: DataSource<Record, Filters, Sortings, ItemActions>
   visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
+  onSelectItems?: (allSelected: boolean, items: ReadonlyArray<Record>) => void
+  onBulkAction?: (
+    action: BulkAction,
+    allSelected: boolean,
+    items: ReadonlyArray<Record>
+  ) => void
 }): JSX.Element => {
   const {
     filters,
@@ -255,6 +264,8 @@ export const OneDataCollection = <
       <VisualizationRenderer
         visualization={visualizations[currentVisualization]}
         source={source}
+        onSelectItems={onSelectItems}
+        onBulkAction={onBulkAction}
       />
     </div>
   )
