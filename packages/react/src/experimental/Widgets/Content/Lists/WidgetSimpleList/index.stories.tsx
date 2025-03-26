@@ -26,7 +26,7 @@ type Story = StoryObj<WidgetSimpleListProps>
 
 export const Default: Story = {
   args: {
-    items: new Array(5).fill(null).map((_, i) => ({
+    items: new Array(10).fill(null).map((_, i) => ({
       id: i,
       ...DefaultWidgetSimpleListItemStory.args,
       title: DefaultWidgetSimpleListItemStory.args?.title ?? "Example title",
@@ -38,7 +38,7 @@ export const Default: Story = {
 export const WithLongTitles: Story = {
   args: {
     ...Default.args,
-    items: new Array(5).fill(null).map((_, i) => ({
+    items: new Array(10).fill(null).map((_, i) => ({
       id: i,
       ...WithLongTitleWidgetSimpleListItemStory.args,
       title:
