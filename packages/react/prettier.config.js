@@ -10,4 +10,5 @@ let config = {
   organizeImportsSkipDestructiveCodeActions: false,
   proseWrap: "always",
 }
+
 export default config
