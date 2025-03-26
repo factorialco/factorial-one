@@ -24,6 +24,7 @@ const EnhanceError = ({ aiError, onClose }: EnhanceErrorProps) => {
             variant="default"
             onClick={onClose}
             label="Continue editing"
+            type="button"
           />
         </AlertDescription>
       </Alert>

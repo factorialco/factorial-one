@@ -51,6 +51,7 @@ const Footer = ({
             size="md"
             label="Toolbar"
             disabled={isAcceptChangesOpen}
+            type="button"
           />
         )}
         {canUseFiles && (
@@ -90,6 +91,7 @@ const Footer = ({
                 size="md"
                 label={action.label}
                 disabled={isAcceptChangesOpen || action.disabled}
+                type="button"
               />
             ))}
           </div>
@@ -103,6 +105,7 @@ const Footer = ({
             label={primaryAction.action.label}
             disabled={isAcceptChangesOpen || primaryAction.action.disabled}
             icon={primaryAction.action.icon ?? undefined}
+            type="button"
           />
         )}
       </div>

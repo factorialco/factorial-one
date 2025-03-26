@@ -130,6 +130,7 @@ const EnhanceActivator = ({
     >
       <Popover.Trigger asChild>
         <Button
+          type="button"
           ref={enhanceButtonRef}
           variant={button.variant || "ghost"}
           size={button.size || "md"}
