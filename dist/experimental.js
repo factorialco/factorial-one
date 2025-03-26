@@ -44535,14 +44535,14 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
   },
   `${i.name}-${r}`
 )) }) : null, HG = {
-  xxs: "md:h-32",
-  xs: "md:h-40",
-  sm: "md:h-60",
-  md: "md:h-64",
-  lg: "md:h-72",
-  xl: "md:h-80",
-  "2xl": "md:h-96",
-  full: "md:h-full"
+  xxs: "h-32",
+  xs: "h-40",
+  sm: "h-60",
+  md: "h-64",
+  lg: "h-72",
+  xl: "h-80",
+  "2xl": "h-96",
+  full: "h-full"
 }, bb = {
   format: {
     bold: !0,
@@ -44885,7 +44885,6 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
       I && !n && /* @__PURE__ */ f(
         ve,
         {
-          className: "hidden md:block",
           onClick: e,
           label: "Fullscreen",
           variant: "ghost",
@@ -44909,7 +44908,7 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
   isToolbarOpen: s,
   setIsToolbarOpen: l,
   canToggleToolbar: d
-}) => !t || !e && !n && !i ? null : /* @__PURE__ */ C("div", { className: "flex w-full items-center gap-2", children: [
+}) => t ? /* @__PURE__ */ C("div", { className: "flex w-full items-center gap-2", children: [
   /* @__PURE__ */ C("div", { className: "flex flex-shrink-0 items-center gap-2", children: [
     d && /* @__PURE__ */ f(
       ve,
@@ -44975,7 +44974,7 @@ const yb = ({ option: t, onClick: e }) => /* @__PURE__ */ C(
       }
     )
   ] })
-] });
+] }) : null;
 var xn = /* @__PURE__ */ ((t) => (t.PDF = "pdf", t.IMAGE = "image", t.DOC = "doc", t.EXCEL = "excel", t.PPT = "ppt", t.TXT = "txt", t.VIDEO = "video", t.AUDIO = "audio", t.ARCHIVE = "archive", t.CSV = "csv", t.HTML = "html", t.MARKDOWN = "markdown", t))(xn || {});
 const JG = (t, e, n, i) => {
   if (n) {
@@ -45666,7 +45665,7 @@ const LX = q(
       "div",
       {
         ref: O,
-        className: "m-5 flex w-full flex-col divide-x-0 divide-y-[1px] divide-solid divide-f1-border rounded-xl border-[1px] border-solid border-f1-border bg-f1-background",
+        className: "flex w-full flex-col divide-x-0 divide-y-[1px] divide-solid divide-f1-border rounded-xl border-[1px] border-solid border-f1-border bg-f1-background",
         children: [
           N && /* @__PURE__ */ C("div", { className: "flex w-full items-center justify-between px-5 py-3", children: [
             /* @__PURE__ */ f("p", { className: "text-2xl font-semibold text-f1-foreground", children: s }),
@@ -45682,7 +45681,7 @@ const LX = q(
               }
             )
           ] }),
-          (r !== "none" || r === "none" && n) && H && /* @__PURE__ */ f("div", { className: "order-2 h-auto overflow-hidden py-2 transition-all duration-300 md:order-1 md:py-3", children: /* @__PURE__ */ f(
+          (r !== "none" || r === "none" && n) && H && /* @__PURE__ */ f("div", { className: "order-1 h-auto overflow-hidden py-2 transition-all duration-300 md:py-3", children: /* @__PURE__ */ f(
             GG,
             {
               editor: L,
@@ -45700,7 +45699,7 @@ const LX = q(
             {
               ref: b,
               className: E(
-                "relative order-1 w-full flex-grow md:order-2",
+                "relative order-2 w-full flex-grow",
                 N && "h-full overflow-y-hidden"
               ),
               onClick: () => {
@@ -45712,8 +45711,7 @@ const LX = q(
                   {
                     className: E(
                       "overflow-y-auto p-5 transition-all duration-300",
-                      N ? "h-full" : HG[l] || "md:h-80",
-                      L != null && L.isFocused ? "h-96" : "h-18"
+                      N ? "h-full" : HG[l] || "h-80"
                     ),
                     children: /* @__PURE__ */ f(gK, { editor: L })
                   }
