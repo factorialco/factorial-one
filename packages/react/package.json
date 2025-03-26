@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -126,7 +126,7 @@
     "@typescript-eslint/eslint-plugin": "^8.24.1",
     "@typescript-eslint/parser": "^8.24.1",
     "@vitejs/plugin-react": "^4.3.4",
-    "autoprefixer": "^10.4.20",
+    "autoprefixer": "^10.4.21",
     "axe-playwright": "^2.1.0",
     "chalk": "^5.4.1",
     "chromatic": "^11.25.2",
