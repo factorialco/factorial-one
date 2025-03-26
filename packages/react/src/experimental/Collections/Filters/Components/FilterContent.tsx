@@ -148,6 +148,12 @@ export function FilterContent<Definition extends FiltersDefinition>({
     }
   }
 
+  const handleClear = () => {
+    if (selectedFilterKey) {
+      onFilterChange(selectedFilterKey, filter.type === "in" ? [] : "")
+    }
+  }
+
   // Create a modified filter with filtered options for the InFilter component
   const getModifiedFilter = (originalFilter: InFilterDefinition<unknown>) => {
     if (deferredSearchTerm && loadedOptions.length > 0) {
@@ -161,7 +167,7 @@ export function FilterContent<Definition extends FiltersDefinition>({
   return (
     <div className="relative flex w-full flex-col gap-1">
       <div className="relative flex h-full flex-col justify-between overflow-y-auto">
-        <div className="flex flex-col gap-2 p-2">
+        <div className="relative flex flex-col gap-2 p-2">
           {showSearch && (
             <div className="flex gap-3">
               <Input
@@ -174,12 +180,6 @@ export function FilterContent<Definition extends FiltersDefinition>({
                 className="h-8 rounded"
                 icon={Search}
                 clearable
-              />
-              <Button
-                variant="outline"
-                label="Select all"
-                onClick={handleSelectAll}
-                disabled={filteredOptions.length === 0}
               />
             </div>
           )}
@@ -198,6 +198,30 @@ export function FilterContent<Definition extends FiltersDefinition>({
             />
           )}
         </div>
+        {filter.type === "in" && filteredOptions.length > 0 && (
+          <div className="sticky bottom-0 left-0 right-0 flex items-center justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary bg-f1-background/80 p-2 backdrop-blur-[8px]">
+            <Button
+              variant="outline"
+              label="Select all"
+              onClick={handleSelectAll}
+              disabled={
+                filteredOptions.length === 0 ||
+                (Array.isArray(currentValue) &&
+                  currentValue.length === filteredOptions.length)
+              }
+              size="sm"
+            />
+            <Button
+              variant="ghost"
+              label="Clear"
+              onClick={handleClear}
+              disabled={
+                !Array.isArray(currentValue) || currentValue.length === 0
+              }
+              size="sm"
+            />
+          </div>
+        )}
       </div>
     </div>
   )
