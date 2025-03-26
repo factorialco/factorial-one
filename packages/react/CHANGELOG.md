@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.11.0...factorial-one-react-v1.12.0) (2025-03-26)
+
+
+### Features
+
+* publish packages b ([#1484](https://github.com/factorialco/factorial-one/issues/1484)) ([afde2a7](https://github.com/factorialco/factorial-one/commit/afde2a710ffa9b9fc9fae114b52240fa3d613947))
+
 ## [1.11.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.10.0...factorial-one-react-v1.11.0) (2025-03-26)
 
 
