@@ -1,18 +1,18 @@
-import { Button } from "@/components/Actions/Button"
-import { ChevronUp, Code, Ellipsis, Minus } from "@/icons/app"
-import { cn } from "@/lib/utils"
-import { Editor } from "@tiptap/react"
-import { compact, defaultsDeep } from "lodash"
-import React from "react"
-import { EnhanceActivator } from "../Enhance"
+import { Button } from "@/components/Actions/Button";
+import { ChevronUp, Code, Ellipsis, Minus } from "@/icons/app";
+import { cn } from "@/lib/utils";
+import { Editor } from "@tiptap/react";
+import { compact, defaultsDeep } from "lodash";
+import React from "react";
+import { EnhanceActivator } from "../Enhance";
 import {
   defaultAllToolbarConfig,
   defaultNoneToolbarConfig,
   getHeadingLabel,
   getTextAlignLabel,
-} from "../utils/helpers"
-import { enhanceConfig, toolbarConfig } from "../utils/types"
-import { ToolbarDropdown } from "./ToolbarDropdown"
+} from "../utils/helpers";
+import { enhanceConfig, toolbarConfig } from "../utils/types";
+import { ToolbarDropdown } from "./ToolbarDropdown";
 
 const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
   <div
@@ -21,7 +21,7 @@ const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
       show ? "block" : "hidden"
     )}
   />
-)
+);
 
 const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
   arr.map((item, index) => (
@@ -29,22 +29,22 @@ const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
       {item}
       {index < arr.length - 1 && sep}
     </React.Fragment>
-  ))
+  ));
 
 interface ToolbarProps {
-  editor: Editor | null
-  handleToggleFullscreen: () => void
-  isFullscreen: boolean
+  editor: Editor | null;
+  handleToggleFullscreen: () => void;
+  isFullscreen: boolean;
   onEnhanceWithAI?: (
     selectedText: string,
     selectedIntent?: string,
     customIntent?: string,
     context?: string
-  ) => Promise<void>
-  isLoadingEnhance: boolean
-  config: toolbarConfig
-  disableButtons: boolean
-  enhanceConfig: enhanceConfig | undefined
+  ) => Promise<void>;
+  isLoadingEnhance: boolean;
+  config: toolbarConfig;
+  disableButtons: boolean;
+  enhanceConfig: enhanceConfig | undefined;
 }
 
 const Toolbar = ({
@@ -57,14 +57,14 @@ const Toolbar = ({
   config,
   disableButtons,
 }: ToolbarProps) => {
-  if (!editor) return null
+  if (!editor) return null;
 
   const mergedConfig =
     config === "all"
       ? defaultAllToolbarConfig
       : config === "none"
         ? defaultNoneToolbarConfig
-        : defaultsDeep({}, config, defaultAllToolbarConfig)
+        : defaultsDeep({}, config, defaultAllToolbarConfig);
 
   const {
     format: { bold, italic, underline, highlight, strike },
@@ -73,7 +73,7 @@ const Toolbar = ({
     list: { bullet, ordered, task },
     moreOptions: { code, horizontalRule, quote },
     fullScreen,
-  } = mergedConfig
+  } = mergedConfig;
 
   const formattingGroup =
     bold || italic || underline ? (
@@ -83,7 +83,7 @@ const Toolbar = ({
             variant={editor.isActive("bold") ? "neutral" : "ghost"}
             label="B"
             onClick={() => {
-              editor.chain().focus().toggleBold().run()
+              editor.chain().focus().toggleBold().run();
             }}
             type="button"
             disabled={disableButtons}
@@ -94,7 +94,7 @@ const Toolbar = ({
             variant={editor.isActive("italic") ? "neutral" : "ghost"}
             label="I"
             onClick={() => {
-              editor.chain().focus().toggleItalic().run()
+              editor.chain().focus().toggleItalic().run();
             }}
             type="button"
             disabled={disableButtons}
@@ -105,7 +105,7 @@ const Toolbar = ({
             variant={editor.isActive("underline") ? "neutral" : "ghost"}
             label="U"
             onClick={() => {
-              editor.chain().focus().toggleUnderline().run()
+              editor.chain().focus().toggleUnderline().run();
             }}
             type="button"
             disabled={disableButtons}
@@ -116,7 +116,7 @@ const Toolbar = ({
             variant={editor.isActive("strike") ? "neutral" : "ghost"}
             label="S"
             onClick={() => {
-              editor.chain().focus().toggleStrike().run()
+              editor.chain().focus().toggleStrike().run();
             }}
             type="button"
             disabled={disableButtons}
@@ -127,14 +127,14 @@ const Toolbar = ({
             variant={editor.isActive("highlight") ? "neutral" : "ghost"}
             label="H"
             onClick={() => {
-              editor.chain().focus().toggleHighlight().run()
+              editor.chain().focus().toggleHighlight().run();
             }}
             type="button"
             disabled={disableButtons}
           />
         )}
       </div>
-    ) : null
+    ) : null;
 
   const textSizeGroup =
     heading1 || heading2 || heading3 ? (
@@ -169,7 +169,7 @@ const Toolbar = ({
           disabled={disableButtons}
         />
       </ToolbarDropdown>
-    ) : null
+    ) : null;
 
   const textAlignGroup =
     left || center || right || justify ? (
@@ -210,7 +210,7 @@ const Toolbar = ({
           disabled={disableButtons}
         />
       </ToolbarDropdown>
-    ) : null
+    ) : null;
 
   const listGroup =
     bullet || ordered || task ? (
@@ -218,7 +218,7 @@ const Toolbar = ({
         {bullet && (
           <Button
             onClick={() => {
-              editor.chain().focus().toggleBulletList().run()
+              editor.chain().focus().toggleBulletList().run();
             }}
             variant={editor.isActive("bulletList") ? "neutral" : "ghost"}
             label="Bullet"
@@ -229,7 +229,7 @@ const Toolbar = ({
         {ordered && (
           <Button
             onClick={() => {
-              editor.chain().focus().toggleOrderedList().run()
+              editor.chain().focus().toggleOrderedList().run();
             }}
             variant={editor.isActive("orderedList") ? "neutral" : "ghost"}
             label="Ordered"
@@ -240,7 +240,7 @@ const Toolbar = ({
         {task && (
           <Button
             onClick={() => {
-              editor.chain().focus().toggleTaskList().run()
+              editor.chain().focus().toggleTaskList().run();
             }}
             variant={editor.isActive("taskList") ? "neutral" : "ghost"}
             label="Task"
@@ -249,7 +249,7 @@ const Toolbar = ({
           />
         )}
       </div>
-    ) : null
+    ) : null;
 
   const moreOptionsGroup =
     code || horizontalRule || quote ? (
@@ -285,7 +285,7 @@ const Toolbar = ({
           disabled={disableButtons}
         />
       </ToolbarDropdown>
-    ) : null
+    ) : null;
 
   const groups = compact([
     formattingGroup,
@@ -293,7 +293,7 @@ const Toolbar = ({
     textAlignGroup,
     listGroup,
     moreOptionsGroup,
-  ])
+  ]);
 
   return (
     <div className="flex flex-row items-center justify-between gap-2">
@@ -327,7 +327,7 @@ const Toolbar = ({
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export { Toolbar, ToolbarDivider }
+export { Toolbar, ToolbarDivider };
