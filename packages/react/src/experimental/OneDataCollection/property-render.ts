@@ -1,7 +1,9 @@
 import { ReactNode } from "react"
-import { ColumnWidth } from "../OneTable/utils/sizes"
 import { VisualizationType } from "./visualizations"
-import { propertyRenderers } from "./visualizations/property"
+import {
+  PropertyRendererMetadata,
+  propertyRenderers,
+} from "./visualizations/property"
 
 /**
  * The definition of a renderer.
@@ -22,11 +24,6 @@ export type PropertyDefinition<T> = {
    * that shows this text in a tooltip when hovered.
    */
   info?: string
-
-  /**
-   * The width of the column. If not provided, the width will be "auto"
-   */
-  width?: ColumnWidth
 
   /**
    * Function that extracts and formats the value from an item.
@@ -51,7 +48,7 @@ export type PropertyDefinition<T> = {
  * Renders a value for a given item and property definition.
  * Used by both table and card visualizations to ensure consistent rendering.
  */
-export const renderValue = <RecordType>(
+export const renderProperty = <RecordType>(
   item: RecordType,
   property: PropertyDefinition<RecordType>,
   visualization: VisualizationType
@@ -74,7 +71,7 @@ export const renderValue = <RecordType>(
   // Type assertion to ensure the renderer function is typed correctly as typescript can't infer the type correctly
   const renderer = propertyRenderers[type] as (
     arg: Parameters<(typeof propertyRenderers)[typeof type]>[0],
-    visualization: VisualizationType
+    meta: PropertyRendererMetadata<RecordType>
   ) => ReactNode
 
   if (!renderer) {
@@ -85,5 +82,8 @@ export const renderValue = <RecordType>(
     return "-"
   }
 
-  return renderer(value, visualization)
+  return renderer(value, {
+    visualization,
+    property,
+  })
 }

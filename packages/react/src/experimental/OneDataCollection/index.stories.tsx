@@ -63,7 +63,17 @@ const filterPresets: Presets<typeof filters> = [
 ]
 
 // Mock data
-const mockUsers = [
+const mockUsers: {
+  id: string
+  name: string
+  email: string
+  role: string
+  department: (typeof DEPARTMENTS)[number]
+  status: string
+  isStarred: boolean
+  href?: string
+  salary: number | undefined
+}[] = [
   {
     id: "user-1",
     name: "John Doe",
@@ -72,6 +82,7 @@ const mockUsers = [
     department: DEPARTMENTS[0],
     status: "active",
     isStarred: true,
+    salary: 100000,
   },
   {
     id: "user-2",
@@ -81,6 +92,7 @@ const mockUsers = [
     department: DEPARTMENTS[1],
     status: "active",
     isStarred: false,
+    salary: 80000,
   },
   {
     id: "user-3",
@@ -90,6 +102,7 @@ const mockUsers = [
     department: DEPARTMENTS[2],
     status: "inactive",
     isStarred: false,
+    salary: 90000,
   },
   {
     id: "user-4",
@@ -99,12 +112,18 @@ const mockUsers = [
     department: DEPARTMENTS[3],
     status: "active",
     isStarred: true,
+    salary: undefined,
   },
 ]
 
 // Helper function to filter users based on filters
 const filterUsers = <
-  T extends RecordType & { name: string; email: string; department: string },
+  T extends RecordType & {
+    name: string
+    email: string
+    department: string
+    salary: number | undefined
+  },
 >(
   users: T[],
   filterValues: FiltersState<FiltersType>,
@@ -296,7 +315,7 @@ const ExampleComponent = ({
                 {
                   label: "Name",
                   render: (item) => ({
-                    type: "user",
+                    type: "person",
                     value: {
                       firstName: item.name,
                       lastName: item.name,
@@ -389,6 +408,9 @@ export const BasicTableView: Story = {
         department: {
           label: "Department",
         },
+        salary: {
+          label: "Salary",
+        },
       },
       search: {
         enabled: true,
@@ -458,7 +480,7 @@ export const BasicTableView: Story = {
                   {
                     label: "Name",
                     render: (item) => ({
-                      type: "user",
+                      type: "person",
                       value: {
                         firstName: item.name,
                         lastName: item.name,
@@ -480,6 +502,15 @@ export const BasicTableView: Story = {
                     label: "Department",
                     render: (item) => item.department,
                     sorting: "department",
+                  },
+                  {
+                    label: "Salary",
+                    render: (item) => ({
+                      type: "amount",
+                      value: item.salary,
+                    }),
+                    align: "right",
+                    sorting: "salary",
                   },
                 ],
               },
@@ -513,6 +544,9 @@ export const WithLinkedItems: Story = {
         },
         department: {
           label: "Department",
+        },
+        salary: {
+          label: "Salary",
         },
       },
       dataAdapter: {
@@ -689,7 +723,7 @@ export const RendererTypes: Story = {
                 {
                   label: "Name",
                   render: (item) => ({
-                    type: "user",
+                    type: "person",
                     value: {
                       firstName: item.name.split(" ")[0],
                       lastName: item.name.split(" ")[1],
@@ -845,6 +879,9 @@ const sortings = {
   role: {
     label: "Role",
   },
+  salary: {
+    label: "Salary",
+  },
 } as const
 
 const JsonVisualization = ({
@@ -904,7 +941,7 @@ export const WithCustomJsonView: Story = {
                 {
                   label: "Name",
                   render: (item) => ({
-                    type: "user",
+                    type: "person",
                     value: {
                       firstName: item.name.split(" ")[0],
                       lastName: item.name.split(" ")[1],
@@ -925,7 +962,7 @@ export const WithCustomJsonView: Story = {
                 {
                   label: "Name",
                   render: (item) => ({
-                    type: "user",
+                    type: "person",
                     value: {
                       firstName: item.name.split(" ")[0],
                       lastName: item.name.split(" ")[1],
@@ -1024,7 +1061,8 @@ function createDataAdapter<
   TRecord extends RecordType & {
     name: string
     email: string
-    department: string
+    department: (typeof DEPARTMENTS)[number]
+    salary?: number
   },
   TFilters extends Record<string, FilterDefinition<unknown>>,
   TSortings extends SortingsDefinition,
@@ -1255,11 +1293,7 @@ export const WithCardVisualization: Story = {
       filters,
       presets: filterPresets,
       sortings,
-      dataAdapter: createDataAdapter<
-        (typeof mockUsers)[number],
-        typeof filters,
-        typeof sortings
-      >({
+      dataAdapter: createDataAdapter({
         data: mockUsers,
         delay: 1000,
         useObservable: true,
@@ -1294,11 +1328,7 @@ export const WithMultipleVisualizations: Story = {
       filters,
       presets: filterPresets,
       sortings,
-      dataAdapter: createDataAdapter<
-        (typeof mockUsers)[number],
-        typeof filters,
-        typeof sortings
-      >({
+      dataAdapter: createDataAdapter({
         data: mockUsers,
         delay: 500,
       }),
@@ -1354,17 +1384,21 @@ export const WithMultipleVisualizations: Story = {
 
 // Fix the generateMockUsers function to use the correct department types
 const generateMockUsers = (count: number) => {
-  return Array.from({ length: count }).map((_, index) => ({
-    id: `user-${index + 1}`,
-    name: `User ${index + 1}`,
-    email: `user${index + 1}@example.com`,
-    role:
-      index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
-    department: DEPARTMENTS[index % DEPARTMENTS.length],
-    status: index % 5 === 0 ? "inactive" : "active",
-    isStarred: index % 3 === 0,
-    href: `/users/user-${index + 1}`,
-  }))
+  return Array.from({ length: count }).map((_, index) => {
+    const department = DEPARTMENTS[index % DEPARTMENTS.length]
+    return {
+      id: `user-${index + 1}`,
+      name: `User ${index + 1}`,
+      email: `user${index + 1}@example.com`,
+      role:
+        index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
+      department,
+      status: index % 5 === 0 ? "inactive" : "active",
+      isStarred: index % 3 === 0,
+      href: `/users/user-${index + 1}`,
+      salary: department === "Marketing" ? 50000 + index * 1000 : undefined,
+    }
+  })
 }
 
 export const WithPagination: Story = {
@@ -1377,7 +1411,17 @@ export const WithPagination: Story = {
       presets: filterPresets,
       sortings,
       dataAdapter: createDataAdapter<
-        (typeof mockUsers)[number],
+        {
+          id: string
+          name: string
+          email: string
+          role: string
+          department: (typeof DEPARTMENTS)[number]
+          status: string
+          isStarred: boolean
+          href: string
+          salary: number | undefined
+        },
         typeof filters,
         typeof sortings
       >({
