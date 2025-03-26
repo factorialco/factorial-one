@@ -256,9 +256,11 @@ const createPromiseDataFetch = (delay = 500) => {
 const ExampleComponent = ({
   useObservable = false,
   usePresets = false,
+  fixedCols = 0,
 }: {
   useObservable?: boolean
   usePresets?: boolean
+  fixedCols?: 0 | 1 | 2
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
@@ -311,17 +313,64 @@ const ExampleComponent = ({
           {
             type: "table",
             options: {
+              fixedColumns: fixedCols,
               columns: [
                 {
                   label: "Name",
+                  width: 140,
                   render: (item) => ({
                     type: "person",
                     value: {
-                      firstName: item.name,
-                      lastName: item.name,
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
                     },
                   }),
                   sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
                 },
                 {
                   label: "Email",
@@ -482,8 +531,8 @@ export const BasicTableView: Story = {
                     render: (item) => ({
                       type: "person",
                       value: {
-                        firstName: item.name,
-                        lastName: item.name,
+                        firstName: item.name.split(" ")[0],
+                        lastName: item.name.split(" ")[1],
                       },
                     }),
                     sorting: "name",
@@ -520,6 +569,11 @@ export const BasicTableView: Story = {
       </div>
     )
   },
+}
+
+// Examples with multiple visualizations
+export const TableFixedCols: Story = {
+  render: () => <ExampleComponent fixedCols={2} />,
 }
 
 // Basic examples with single visualization
@@ -2081,106 +2135,92 @@ export const TableColumnProperties: Story = {
                   label: "Name",
                   render: (item) => item.name,
                   sorting: "name",
-                  width: "30", // Medium width
-                  sticky: true, // This column will stick when scrolling horizontally
+                  width: 100,
                 },
                 {
                   label: "Email",
                   render: (item) => item.email,
                   sorting: "email",
-                  width: "50", // Medium-large width
+                  width: 150,
                 },
                 {
                   label: "Role",
                   render: (item) => item.role,
                   sorting: "role",
-                  width: "30", // Medium width
+                  width: 100,
                 },
                 {
                   label: "Department",
                   render: (item) => item.department,
                   sorting: "department",
-                  width: "30",
                 },
                 {
                   label: "Years Experience",
                   render: (item) => item.yearsExperience,
                   sorting: "yearsExperience",
-                  width: "20", // Smaller width
                 },
                 {
                   label: "Team",
                   render: (item) => item.team,
                   sorting: "team",
-                  width: "20",
                 },
                 {
                   label: "Salary",
                   render: (item) => `$${item.salary.toLocaleString()}`,
                   sorting: "salary",
-                  width: "30",
                   info: "Annual gross salary before taxes and deductions", // Info tooltip
                 },
                 {
                   label: "Location",
                   render: (item) => item.location,
                   sorting: "location",
-                  width: "30",
                 },
                 {
                   label: "Start Date",
                   render: (item) => item.startDate,
                   sorting: "startDate",
-                  width: "30",
                 },
                 {
                   label: "Certifications",
                   render: (item) => item.certifications,
                   sorting: "certifications",
-                  width: "80", // Wider column for longer text
                 },
                 {
                   label: "Education",
                   render: (item) => item.education,
                   sorting: "education",
-                  width: "40",
                 },
                 {
                   label: "Languages",
                   render: (item) => item.languages,
                   sorting: "languages",
-                  width: "60", // Wider column for longer text
+                  width: 360, // Wider column for longer text
                 },
                 {
                   label: "Projects",
                   render: (item) => item.projects,
                   sorting: "projects",
-                  width: "20", // Narrow column for numbers
                 },
                 {
                   label: "Performance",
                   render: (item) => item.performance,
                   sorting: "performance",
-                  width: "60", // Wider column for performance text
                   info: "Based on the last annual performance review", // Info tooltip
                 },
                 {
                   label: "Score",
                   render: (item) => item.performanceScore,
                   sorting: "performanceScore",
-                  width: "20", // Narrow column for numbers
                 },
                 {
                   label: "Last Review",
                   render: (item) => item.lastReview,
                   sorting: "lastReview",
-                  width: "30",
                 },
                 {
                   label: "Next Review",
                   render: (item) => item.nextReview,
                   sorting: "nextReview",
-                  width: "30",
                 },
               ],
             },
