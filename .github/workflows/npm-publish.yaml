@@ -30,6 +30,11 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Checkout code
+        shell: bash
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.sha }} # Checkout the tagged release
       - uses: ./.github/actions/publish-to-npmjs
         with:
           workspace: "@factorialco/factorial-one-react"
@@ -48,6 +53,11 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Checkout code
+        shell: bash
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.sha }} # Checkout the tagged release
       - uses: ./.github/actions/publish-to-npmjs
         with:
           workspace: "@factorialco/factorial-one-react-native"
