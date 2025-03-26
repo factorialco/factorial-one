@@ -25645,7 +25645,9 @@ const gu = ln(NM, MM), EM = ({
   source: n,
   fixedColumns: i = 0
 }) => {
-  const t = qn(), { data: a, paginationInfo: r, setPage: s, isInitialLoading: f } = Pg(n), { currentSortings: d, setCurrentSortings: c } = n, l = Re(() => i, [i]), u = (v, h, p) => {
+  const t = qn(), { data: a, paginationInfo: r, setPage: s, isInitialLoading: f } = Pg(n);
+  console.log(a);
+  const { currentSortings: d, setCurrentSortings: c } = n, l = Re(() => i, [i]), u = (v, h, p) => {
     if (!(!v || !h))
       return p === null ? "none" : p.field === v ? p.order : "none";
   }, m = (v) => {
@@ -28085,7 +28087,6 @@ export {
   EC as CompanyTag,
   Dt as Counter,
   BR as Dashboard,
-  vR as DataCollection,
   As as DateAvatar,
   WS as DaytimePage,
   WM as DetailsItem,
@@ -28110,6 +28111,7 @@ export {
   MP as NumberInput,
   tR as OmniButton,
   uR as OneCard,
+  vR as OneDataCollection,
   _g as OnePagination,
   pR as OverviewLayout,
   nN as Page,

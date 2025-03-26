@@ -953,33 +953,6 @@ declare type DashboardProps_2 = {
  */
 export declare type DataAdapter<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition> = BaseDataAdapter<Record, Filters, Sortings> | PaginatedDataAdapter<Record, Filters, Sortings>;
 
-/**
- * A component that renders a collection of data with filtering and visualization capabilities.
- * It consumes a data source (created by useDataSource) and displays it through one or more visualizations.
- *
- * DataCollection is separated from useDataSource to:
- * 1. Support the composition pattern - data sources can be created and managed independently
- * 2. Allow a single data source to be visualized in multiple ways simultaneously
- * 3. Enable reuse of the same data source in different parts of the application
- * 4. Provide a clean separation of concerns between data management and UI rendering
- *
- * @template Record - The type of records in the collection
- * @template Filters - The definition of available filters for the collection
- * @template ItemActions - The definition of available item actions
- *
- * @param source - The data source containing filters, data, and state management
- * @param visualizations - Array of available visualization options (e.g., table, card view)
- *
- * @returns A JSX element containing:
- * - Filter controls (if filters are defined)
- * - Visualization selector (if multiple visualizations are available)
- * - The selected visualization of the data
- */
-export declare const DataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>>({ source, visualizations, }: {
-    source: DataSource<Record, Filters, Sortings, ItemActions>;
-    visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>;
-}) => JSX.Element;
-
 declare const DataList: ForwardRefExoticComponent<DataListProps & RefAttributes<HTMLUListElement>> & {
     Item: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
     CompanyItem: ForwardRefExoticComponent<CompanyItemProps & RefAttributes<HTMLLIElement>>;
@@ -1725,6 +1698,33 @@ declare interface OneCardProps {
      */
     onSelect?: (selected: boolean) => void;
 }
+
+/**
+ * A component that renders a collection of data with filtering and visualization capabilities.
+ * It consumes a data source (created by useDataSource) and displays it through one or more visualizations.
+ *
+ * DataCollection is separated from useDataSource to:
+ * 1. Support the composition pattern - data sources can be created and managed independently
+ * 2. Allow a single data source to be visualized in multiple ways simultaneously
+ * 3. Enable reuse of the same data source in different parts of the application
+ * 4. Provide a clean separation of concerns between data management and UI rendering
+ *
+ * @template Record - The type of records in the collection
+ * @template Filters - The definition of available filters for the collection
+ * @template ItemActions - The definition of available item actions
+ *
+ * @param source - The data source containing filters, data, and state management
+ * @param visualizations - Array of available visualization options (e.g., table, card view)
+ *
+ * @returns A JSX element containing:
+ * - Filter controls (if filters are defined)
+ * - Visualization selector (if multiple visualizations are available)
+ * - The selected visualization of the data
+ */
+export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>>({ source, visualizations, }: {
+    source: DataSource<Record, Filters, Sortings, ItemActions>;
+    visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>;
+}) => JSX.Element;
 
 declare type OneDropdownButtonItem<T = string> = {
     value: T;
