@@ -11,7 +11,7 @@ export interface EnhanceWithAIParams {
   enhanceText: (params: enhanceTextParams) => Promise<enhancedTextResponse>
   setIsLoadingEnhance: (loading: boolean) => void
   isValidSelectionForEnhancement: (text: string) => boolean
-  enhanceType?: string
+  selectedIntent?: string
   customIntent?: string
   context?: string
   onSuccess: () => void
@@ -24,7 +24,7 @@ async function handleEnhanceWithAIFunction({
   enhanceText,
   setIsLoadingEnhance,
   isValidSelectionForEnhancement,
-  enhanceType,
+  selectedIntent,
   customIntent,
   context,
   onSuccess,
@@ -46,8 +46,7 @@ async function handleEnhanceWithAIFunction({
       success,
     } = await enhanceText({
       text: selectedText,
-      type: enhanceType || "improve-writing",
-      intent: customIntent || "improve text in editor",
+      intent: selectedIntent ? customIntent : "improve-writing",
       context: context,
     })
     if (success) {

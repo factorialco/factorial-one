@@ -2,14 +2,14 @@ import { Editor } from "@tiptap/react"
 import { RichTextEditorHeight } from "./types"
 
 const heightMapping: Record<RichTextEditorHeight, string> = {
-  xxs: "h-32",
-  xs: "h-40",
-  sm: "h-60",
-  md: "h-64",
-  lg: "h-72",
-  xl: "h-80",
-  "2xl": "h-96",
-  full: "h-full",
+  xxs: "md:h-32",
+  xs: "md:h-40",
+  sm: "md:h-60",
+  md: "md:h-64",
+  lg: "md:h-72",
+  xl: "md:h-80",
+  "2xl": "md:h-96",
+  full: "md:h-full",
 }
 
 const defaultAllToolbarConfig = {
@@ -21,7 +21,6 @@ const defaultAllToolbarConfig = {
     highlight: true,
   },
   textSize: {
-    normal: true,
     heading1: true,
     heading2: true,
     heading3: true,
