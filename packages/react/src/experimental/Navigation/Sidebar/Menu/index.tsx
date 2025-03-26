@@ -83,7 +83,7 @@ interface CategoryItemProps {
 
 const CategoryItem = ({
   category,
-  isSortable,
+  isSortable = false,
   dragConstraints,
 }: CategoryItemProps) => {
   const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
@@ -129,6 +129,12 @@ const CategoryItem = ({
               category.isRoot && "hidden"
             )}
             onClick={!isDragging ? handleClick : undefined}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleClick()
+              }
+            }}
           >
             {category.title}
             <motion.div
@@ -249,6 +255,10 @@ function MenuContent({
   containerRef: React.RefObject<HTMLDivElement>
 }) {
   const { isDragging } = useDragContext()
+  const hasRoot = nonSortableItems.some((category) => category.isRoot)
+  const hasNonSortableItems =
+    nonSortableItems.filter((category) => !category.isRoot).length > 0
+  const hasSortableItems = sortableItems.length > 0
 
   return (
     <div
@@ -257,15 +267,17 @@ function MenuContent({
         isDragging && "cursor-grabbing [&_*]:cursor-grabbing"
       )}
     >
-      <div className="flex w-full flex-col gap-3 bg-transparent px-3">
-        {nonSortableItems
-          .filter((category) => category.isRoot)
-          .map((category, index) => (
-            <CategoryItem key={`fixed-${index}`} category={category} />
-          ))}
-      </div>
+      {hasRoot && (
+        <div className="flex w-full flex-col gap-3 bg-transparent px-3">
+          {nonSortableItems
+            .filter((category) => category.isRoot)
+            .map((category, index) => (
+              <CategoryItem key={`fixed-${index}`} category={category} />
+            ))}
+        </div>
+      )}
 
-      {nonSortableItems.length > 0 && (
+      {hasNonSortableItems && (
         <div className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3">
           {nonSortableItems
             .filter((category) => !category.isRoot)
@@ -275,30 +287,32 @@ function MenuContent({
         </div>
       )}
 
-      <div
-        className={cn(
-          "mt-3 flex w-full flex-col gap-3 bg-transparent px-3 [&_li]:list-none"
-        )}
-        ref={containerRef}
-      >
-        <Reorder.Group
-          axis="y"
-          values={sortableItems}
-          onReorder={setSortableItems}
-          className="flex flex-col gap-3"
+      {hasSortableItems && (
+        <div
+          className={cn(
+            "mt-3 flex w-full flex-col gap-3 bg-transparent px-3 [&_li]:list-none"
+          )}
+          ref={containerRef}
         >
-          <AnimatePresence>
-            {sortableItems.map((category) => (
-              <CategoryItem
-                key={category.title}
-                category={category}
-                isSortable={true}
-                dragConstraints={containerRef}
-              />
-            ))}
-          </AnimatePresence>
-        </Reorder.Group>
-      </div>
+          <Reorder.Group
+            axis="y"
+            values={sortableItems}
+            onReorder={setSortableItems}
+            className="flex flex-col gap-3"
+          >
+            <AnimatePresence>
+              {sortableItems.map((category) => (
+                <CategoryItem
+                  key={category.title}
+                  category={category}
+                  isSortable={true}
+                  dragConstraints={containerRef}
+                />
+              ))}
+            </AnimatePresence>
+          </Reorder.Group>
+        </div>
+      )}
     </div>
   )
 }

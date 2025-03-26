@@ -41,6 +41,7 @@ export const Default: Story = {
           },
         ],
         isRoot: true,
+        isSortable: false,
       },
       {
         title: "You",
