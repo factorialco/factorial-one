@@ -1209,13 +1209,13 @@ export declare type enhanceLabelsType = {
 export declare type EnhancementOption = {
     id: string;
     label: string;
-    prompt: string;
     subOptions?: EnhancementOption[];
 };
 
 export declare type enhanceTextParams = {
     text: string;
-    intent?: string;
+    selectedIntent?: string;
+    customIntent?: string;
     context?: string;
 };
 
