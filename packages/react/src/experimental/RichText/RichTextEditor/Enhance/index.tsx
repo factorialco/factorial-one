@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
-import { IconType } from "@/components/exports"
 import { Ai } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import * as Popover from "@radix-ui/react-popover"
 import { Editor } from "@tiptap/react"
 import { useCallback, useRef, useState } from "react"
@@ -18,11 +18,6 @@ interface EnhanceActivatorProps {
     context?: string
   ) => Promise<void>
   isLoadingEnhance: boolean
-  button?: {
-    variant?: "ghost" | "default" | "outline"
-    size?: "md" | "sm"
-    icon?: IconType
-  }
   enhanceConfig?: enhanceConfig
   disableButtons: boolean
   hideLabel?: boolean
@@ -32,11 +27,6 @@ const EnhanceActivator = ({
   editor,
   onEnhanceWithAI,
   isLoadingEnhance,
-  button = {
-    variant: "outline",
-    size: "md",
-    icon: Ai,
-  },
   enhanceConfig,
   disableButtons,
   hideLabel,
@@ -137,10 +127,10 @@ const EnhanceActivator = ({
         <Button
           type="button"
           ref={enhanceButtonRef}
-          variant={button.variant || "ghost"}
-          size={button.size || "md"}
+          variant="ghost"
+          size="md"
           label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || "Enhance"}
-          icon={button.icon || Ai}
+          icon={Ai}
           hideLabel={hideLabel ?? false}
           onClick={(e) => {
             e.preventDefault()
@@ -149,7 +139,7 @@ const EnhanceActivator = ({
           disabled={disableButtons}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          className={isLoadingEnhance ? "aiMagicLoading animate-pulse" : ""}
+          className={cn("aiMagic", isLoadingEnhance && "animate-pulse")}
         />
       </Popover.Trigger>
 

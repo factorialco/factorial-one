@@ -25,7 +25,7 @@ const AcceptChanges = ({ onAccept, onReject, labels }: AcceptChangesProps) => {
       <Button
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        className="aiMagicLoading"
+        className="aiMagic"
         label={labels?.acceptChangesButtonLabel || "Accept"}
         onClick={(e) => {
           e.preventDefault()

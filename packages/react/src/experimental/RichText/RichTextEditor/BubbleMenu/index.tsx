@@ -129,7 +129,6 @@ const EditorBubbleMenu = ({
             editor={editor}
             onEnhanceWithAI={onEnhanceWithAI}
             isLoadingEnhance={isLoadingEnhance}
-            button={{ variant: "ghost" }}
             enhanceConfig={enhanceConfig}
             disableButtons={disableButtons}
             hideLabel={true}
