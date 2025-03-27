@@ -1,4 +1,7 @@
+import type { Meta, StoryObj } from "@storybook/react"
+import React, { useState } from "react"
 import { Button } from "../../components/Actions/Button"
+import { Delete, Ellipsis, Pencil } from "../../icons/app"
 import { Checkbox } from "../Forms/Fields/Checkbox"
 import { PersonAvatar } from "../Information/Avatars/exports"
 import {
@@ -8,9 +11,6 @@ import {
 } from "../Information/Tags/exports"
 import { Dropdown } from "../Navigation/Dropdown"
 import { OnePagination } from "../OnePagination"
-import { Delete, Ellipsis, Pencil } from "../../icons/app"
-import type { Meta, StoryObj } from "@storybook/react"
-import React, { useState } from "react"
 import {
   OneTable,
   TableBody,
@@ -663,6 +663,51 @@ export const WithLinks: Story = {
                   label="Actions"
                 />
               </Dropdown>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </OneTable>
+  ),
+}
+
+export const Loading: Story = {
+  render: () => (
+    <OneTable loading>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role</TableHead>
+          <TableHead>Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {sampleData.map((row) => (
+          <TableRow key={row.id}>
+            <TableCell>
+              <div className="flex items-center gap-2">
+                <PersonAvatar
+                  firstName={row.name.split(" ")[0]}
+                  lastName={row.name.split(" ")[1]}
+                  size="small"
+                />
+                <span className="font-medium">{row.name}</span>
+              </div>
+            </TableCell>
+            <TableCell>{row.email}</TableCell>
+            <TableCell>
+              <div className="w-fit">
+                <RawTag text={row.role} />
+              </div>
+            </TableCell>
+            <TableCell>
+              <div className="w-fit">
+                <StatusTag
+                  text={row.status.label}
+                  variant={row.status.variant}
+                />
+              </div>
             </TableCell>
           </TableRow>
         ))}

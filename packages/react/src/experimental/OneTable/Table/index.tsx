@@ -2,8 +2,10 @@ import { Skeleton } from "@/ui/skeleton"
 import { Table as TableRoot } from "@/ui/table"
 import { useEffect, useRef, useState } from "react"
 import { withSkeleton } from "../../../lib/skeleton"
+import { Spinner } from "../../Information/Spinner"
 import { TableContext } from "../utils/TableContext"
 
+import { cn } from "@/lib/utils"
 import { TableBody } from "../TableBody"
 import { TableCell } from "../TableCell"
 import { TableHead } from "../TableHead"
@@ -12,9 +14,10 @@ import { TableRow } from "../TableRow"
 
 export interface TableProps {
   children: React.ReactNode
+  loading?: boolean
 }
 
-function TableBase({ children }: TableProps) {
+function TableBase({ children, loading = false }: TableProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -37,7 +40,18 @@ function TableBase({ children }: TableProps) {
   return (
     <TableContext.Provider value={{ isScrolled, setIsScrolled }}>
       <div ref={containerRef} className="relative w-full overflow-auto">
-        <TableRoot>{children}</TableRoot>
+        <TableRoot
+          className={cn(loading && "select-none opacity-50")}
+          aria-live={loading ? "polite" : undefined}
+          aria-busy={loading ? "true" : undefined}
+        >
+          {children}
+        </TableRoot>
+        {loading && (
+          <div className="absolute inset-0 flex cursor-progress items-center justify-center">
+            <Spinner />
+          </div>
+        )}
       </div>
     </TableContext.Provider>
   )
