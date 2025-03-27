@@ -16,11 +16,12 @@ on:
         required: true
 
 jobs:
-  publish:
-    name: "[REACT] Publish to npm"
+  publish-react:
+    name: "[⚛️ REACT] Publish to npm"
     # Prevents running on the release-please branch
     # For workflow_run trigger we need to check if the workflow_run was successful and if the new_version output was set to not run on it if no new version was released
     if: |
+      contains(github.event.release.tag_name, 'react-v') &&
       github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease') && 
       github.event_name == 'workflow_dispatch' || github.event_name == 'release' || 
       (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.outputs.new_version)
@@ -33,14 +34,30 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.sha }} # Checkout the tagged release
+      - uses: ./.github/actions/publish-to-npmjs
+        with:
+          workspace: "@factorialco/factorial-one-react"
+          registry_token: ${{ secrets.NPMJS_TOKEN }}
 
-      - uses: ./.github/actions/setup-node-pnpm
-        name: Setup Node and pnpm
-
-      - name: Build
-        run: pnpm --filter @factorialco/factorial-one-react build
-
-      - name: Publish to registry
-        run: pnpm --filter @factorialco/factorial-one-react publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+  publish-react-native:
+    name: "[📱 REACT NATIVE] Publish to npm"
+    # Prevents running on the release-please branch
+    # For workflow_run trigger we need to check if the workflow_run was successful and if the new_version output was set to not run on it if no new version was released
+    if: |
+      contains(github.event.release.tag_name, 'react-native-v') &&
+      github.head_ref != 'release-please--branches--master' && !contains(github.event.pull_request.labels.*.name, 'autorelease') && 
+      github.event_name == 'workflow_dispatch' || github.event_name == 'release' || 
+      (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.outputs.new_version)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.sha }} # Checkout the tagged release
+      - uses: ./.github/actions/publish-to-npmjs
+        with:
+          workspace: "@factorialco/factorial-one-react-native"
+          registry_token: ${{ secrets.NPMJS_TOKEN }}

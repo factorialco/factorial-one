@@ -20,15 +20,28 @@ import {
 
 const privateProps = ["align"] as const
 
-type DropdownProps = Omit<DropdownInternalProps, (typeof privateProps)[number]>
+type DropdownProps = Omit<
+  DropdownInternalProps,
+  (typeof privateProps)[number]
+> & {
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+}
 
 export const Dropdown = (props: DropdownProps) => {
+  const { open, onOpenChange, ...rest } = props
   const publicProps = privateProps.reduce((acc, key) => {
     const { [key]: _, ...rest } = acc
     return rest
-  }, props as DropdownInternalProps)
+  }, rest as DropdownInternalProps)
 
-  return <DropdownInternal {...publicProps} />
+  return (
+    <DropdownInternal
+      {...publicProps}
+      open={open}
+      onOpenChange={onOpenChange}
+    />
+  )
 }
 
 export type { DropdownItem, DropdownItemObject }

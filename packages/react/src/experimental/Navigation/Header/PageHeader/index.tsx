@@ -16,7 +16,9 @@ import { StatusTag } from "../../../Information/Tags/StatusTag"
 import { Tooltip } from "../../../Overlays/Tooltip"
 import { useSidebar } from "../../ApplicationFrame/FrameProvider"
 import { Dropdown } from "../../Dropdown"
+
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
+import { ProductUpdates, ProductUpdatesProp } from "../ProductUpdates"
 
 export type PageAction = {
   label: string
@@ -60,6 +62,9 @@ type HeaderProps = {
   navigation?: NavigationProps
   embedded?: boolean
   breadcrumbs?: BreadcrumbItemType[]
+  productUpdates?: {
+    isVisible?: boolean
+  } & ProductUpdatesProp
 }
 
 function PageNavigationLink({
@@ -95,6 +100,7 @@ export function PageHeader({
   actions = [],
   embedded = false,
   navigation,
+  productUpdates,
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
@@ -110,6 +116,7 @@ export function PageHeader({
   const hasStatus = statusTag && Object.keys(statusTag).length !== 0
   const hasNavigation = breadcrumbs.length > 0
   const hasActions = !embedded && actions.length > 0
+  const hasProductUpdates = !embedded && !!productUpdates?.isVisible
   const lastBreadcrumb = breadcrumbsTree[breadcrumbsTree.length - 1]
   const parentBreadcrumb = hasNavigation
     ? breadcrumbsTree[breadcrumbsTree.length - 2]
@@ -202,9 +209,11 @@ export function PageHeader({
             )}
           </div>
         )}
-        {!embedded && hasStatus && (navigation || hasActions) && (
-          <div className="h-4 w-px bg-f1-border-secondary" />
-        )}
+        {!embedded &&
+          hasStatus &&
+          (navigation || hasActions || hasProductUpdates) && (
+            <div className="h-4 w-px bg-f1-border-secondary" />
+          )}
         {navigation && (
           <div className="flex items-center gap-3">
             {navigation.counter && (
@@ -230,6 +239,11 @@ export function PageHeader({
         )}
         {navigation && hasActions && (
           <div className="h-4 w-px bg-f1-border-secondary" />
+        )}
+        {hasProductUpdates && (
+          <div className="items-right flex gap-2">
+            <ProductUpdates {...productUpdates} currentModule={module.name} />
+          </div>
         )}
         {hasActions && (
           <div className="items-right flex gap-2">

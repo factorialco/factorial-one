@@ -1,24 +1,27 @@
-name: 'Cleanup Alpha Versions'
-description: 'Remove alpha versions from GitHub Packages based on age or PR number'
+name: "Cleanup Alpha Versions"
+description: "Remove alpha versions from GitHub Packages based on age or PR number"
 
 inputs:
   days:
-    description: 'Remove alpha versions older than this many days'
+    description: "Remove alpha versions older than this many days"
     required: false
   pr-number:
-    description: 'PR number to remove alpha versions for'
+    description: "PR number to remove alpha versions for"
     required: false
   branch-base-name:
-    description: 'Branch base name'
+    description: "Branch base name"
     required: true
-    default: 'npm/alpha-pr-'
+    default: "npm/alpha-pr-"
+  token:
+    description: "GitHub token"
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20'
+        node-version: "20"
 
     - name: Cleanup Alpha Versions
       shell: bash
@@ -31,22 +34,22 @@ runs:
 
         # Get the list of branches that start with '${{inputs.branch-base-name}}'
         branches=$(git branch -r | grep 'origin/${{inputs.branch-base-name}}')
-        
+
         # Init variables from inputs
         REMOVE_DAYS="${{ inputs.days }}"
         PR_NUMBER="${{ inputs.pr-number }}"
         CURRENT_DATE=$(date +%s)
-        
+
         # Log what we're doing
         echo "Filter settings:"
         echo "- Remove versions for PR #$PR_NUMBER"
         [ -n "$REMOVE_DAYS" ] && echo "- Remove versions older than $REMOVE_DAYS days"        
         [ -z "$REMOVE_DAYS" ] && [ -z "$PR_NUMBER" ] && echo "- No filters - will NOT remove any alpha branches" && exit 0
-        
-        
+
+
         # Create a list of branches to delete
         branches_to_delete=()
-        
+
         # Iterate over each branch
         for branch in $branches; do
           # Get the last commit date of the branch in seconds since epoch
@@ -67,13 +70,13 @@ runs:
             fi
           fi
         done
-        
+
         # Delete the branches
         if [ ${#branches_to_delete[@]} -gt 0  ]; then
           echo "The following branches will be deleted:"
           for branch in "${branches_to_delete[@]}"; do
             branch_name=${branch#origin/}
-        
+
             # Check AGAIN if the branch is the base branch
             if [[ "$branch_name" == *"${{inputs.branch-base-name}}"* ]]; then
               echo "- $branch_name"

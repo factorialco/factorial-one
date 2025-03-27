@@ -1,3 +1,4 @@
+import { Icon } from "@/components/Utilities/Icon"
 import { OverflowList } from "@/ui/OverflowList"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { AnimatePresence } from "framer-motion"
@@ -120,14 +121,6 @@ export function Filters<Definition extends FiltersDefinition>({
     onChange(newValue)
   }
 
-  const handleClearFilter = (key: keyof Definition) => {
-    setTempFilters((current) => {
-      const newFilters = { ...current }
-      delete newFilters[key]
-      return newFilters
-    })
-  }
-
   const handleFilterChange = (key: keyof Definition, newValue: unknown) => {
     setTempFilters((current) => ({
       ...current,
@@ -190,12 +183,17 @@ export function Filters<Definition extends FiltersDefinition>({
       <div className="flex items-center gap-2">
         <Popover open={isOpen} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild>
-            <Button
-              icon={Filter}
-              variant="outline"
-              hideLabel
-              label={i18n.filters.label}
-            />
+            <button
+              className={cn(
+                "flex h-8 w-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary text-f1-foreground hover:border-f1-border-hover",
+                isOpen && "border-f1-border-hover",
+                focusRing()
+              )}
+              title={i18n.filters.label}
+            >
+              <Icon icon={Filter} />
+              <span className="sr-only">{i18n.filters.label}</span>
+            </button>
           </PopoverTrigger>
           <PopoverContent
             className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
@@ -209,7 +207,6 @@ export function Filters<Definition extends FiltersDefinition>({
                   tempFilters={tempFilters}
                   selectedFilterKey={selectedFilterKey}
                   onFilterSelect={setSelectedFilterKey}
-                  onFilterClear={handleClearFilter}
                 />
                 {selectedFilterKey && (
                   <FilterContent

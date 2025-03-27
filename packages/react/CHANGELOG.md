@@ -1,5 +1,130 @@
 # Changelog
 
+## [1.13.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.12.0...factorial-one-react-v1.13.0) (2025-03-27)
+
+
+### Features
+
+* collection actions ([#1464](https://github.com/factorialco/factorial-one/issues/1464)) ([51fa291](https://github.com/factorialco/factorial-one/commit/51fa29173952edb1ce2e1f6332223149219f446e))
+
+## [1.12.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.11.0...factorial-one-react-v1.12.0) (2025-03-26)
+
+
+### Features
+
+* publish packages b ([#1484](https://github.com/factorialco/factorial-one/issues/1484)) ([afde2a7](https://github.com/factorialco/factorial-one/commit/afde2a710ffa9b9fc9fae114b52240fa3d613947))
+
+## [1.11.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.10.0...factorial-one-react-v1.11.0) (2025-03-26)
+
+
+### Features
+
+* **PageHeader:** add product update dropdown ([#1429](https://github.com/factorialco/factorial-one/issues/1429)) ([20be94d](https://github.com/factorialco/factorial-one/commit/20be94d5c35b481a1e2bf4af69b826f00aa61230))
+* **PageHeader:** allow videos in product updates dropdown ([#1463](https://github.com/factorialco/factorial-one/issues/1463)) ([3d99c43](https://github.com/factorialco/factorial-one/commit/3d99c439569410803ceed4352e46e885a0b031c1))
+* publish packages ([#1473](https://github.com/factorialco/factorial-one/issues/1473)) ([aa7c997](https://github.com/factorialco/factorial-one/commit/aa7c997c37d3ac43e2f9fcf34b3197d1c44b8b9e))
+* publish packages a ([#1482](https://github.com/factorialco/factorial-one/issues/1482)) ([8635bde](https://github.com/factorialco/factorial-one/commit/8635bde39adcf52f2ecb67a8c307c331dfc15bbc))
+* publish packages test a ([#1477](https://github.com/factorialco/factorial-one/issues/1477)) ([7769055](https://github.com/factorialco/factorial-one/commit/776905592a12b2084a1e0dd1e820296dd271a361))
+* publish packages test b ([#1480](https://github.com/factorialco/factorial-one/issues/1480)) ([fdb504d](https://github.com/factorialco/factorial-one/commit/fdb504ddc0bd03c061beba30c3a75b0b8806c9ca))
+
+
+### Bug Fixes
+
+* move basecolors to ahve it in the dist ([#1453](https://github.com/factorialco/factorial-one/issues/1453)) ([72f91bb](https://github.com/factorialco/factorial-one/commit/72f91bb1c260aba797a22852ee4f1eb3964e5335))
+* **PageHeader:** currentModule to check if the module changes and clean its state ([#1460](https://github.com/factorialco/factorial-one/issues/1460)) ([e07f95c](https://github.com/factorialco/factorial-one/commit/e07f95ce22799801a16e4ace1bc83a8781ddfc59))
+* release test ([#1442](https://github.com/factorialco/factorial-one/issues/1442)) ([411319c](https://github.com/factorialco/factorial-one/commit/411319c8a465c7ce138d9261c0a00dcdbe6b1421))
+* release test ([#1443](https://github.com/factorialco/factorial-one/issues/1443)) ([08dca66](https://github.com/factorialco/factorial-one/commit/08dca663d6826aa2f8497b69b6ad5e9525b9e968))
+* release test ([#1445](https://github.com/factorialco/factorial-one/issues/1445)) ([b5bb2b2](https://github.com/factorialco/factorial-one/commit/b5bb2b2498259374ceb5cd323e32e171b07e0e9f))
+* when one element of employeeSelector is removed all get removed ([#1451](https://github.com/factorialco/factorial-one/issues/1451)) ([c080544](https://github.com/factorialco/factorial-one/commit/c080544dd0d5e428a3b13217708f3ecb83edf391))
+
+## [1.10.0](https://github.com/factorialco/factorial-one/compare/factorial-one-v1.9.0...factorial-one-v1.10.0) (2025-03-26)
+
+
+### Features
+
+* publish packages test b ([#1480](https://github.com/factorialco/factorial-one/issues/1480)) ([fdb504d](https://github.com/factorialco/factorial-one/commit/fdb504ddc0bd03c061beba30c3a75b0b8806c9ca))
+
+## [1.9.0](https://github.com/factorialco/factorial-one/compare/factorial-one-v1.8.0...factorial-one-v1.9.0) (2025-03-26)
+
+
+### Features
+
+* publish packages test a ([#1477](https://github.com/factorialco/factorial-one/issues/1477)) ([7769055](https://github.com/factorialco/factorial-one/commit/776905592a12b2084a1e0dd1e820296dd271a361))
+
+## [1.8.0](https://github.com/factorialco/factorial-one/compare/factorial-one-v1.7.0...factorial-one-v1.8.0) (2025-03-26)
+
+
+### Features
+
+* publish packages ([#1473](https://github.com/factorialco/factorial-one/issues/1473)) ([aa7c997](https://github.com/factorialco/factorial-one/commit/aa7c997c37d3ac43e2f9fcf34b3197d1c44b8b9e))
+
+## [1.7.0](https://github.com/factorialco/factorial-one/compare/factorial-one-v1.6.0...factorial-one-v1.7.0) (2025-03-26)
+
+
+### Features
+
+* **PageHeader:** add product update dropdown ([#1429](https://github.com/factorialco/factorial-one/issues/1429)) ([20be94d](https://github.com/factorialco/factorial-one/commit/20be94d5c35b481a1e2bf4af69b826f00aa61230))
+* **PageHeader:** allow videos in product updates dropdown ([#1463](https://github.com/factorialco/factorial-one/issues/1463)) ([3d99c43](https://github.com/factorialco/factorial-one/commit/3d99c439569410803ceed4352e46e885a0b031c1))
+
+
+### Bug Fixes
+
+* move basecolors to ahve it in the dist ([#1453](https://github.com/factorialco/factorial-one/issues/1453)) ([72f91bb](https://github.com/factorialco/factorial-one/commit/72f91bb1c260aba797a22852ee4f1eb3964e5335))
+* **PageHeader:** currentModule to check if the module changes and clean its state ([#1460](https://github.com/factorialco/factorial-one/issues/1460)) ([e07f95c](https://github.com/factorialco/factorial-one/commit/e07f95ce22799801a16e4ace1bc83a8781ddfc59))
+* release test ([#1442](https://github.com/factorialco/factorial-one/issues/1442)) ([411319c](https://github.com/factorialco/factorial-one/commit/411319c8a465c7ce138d9261c0a00dcdbe6b1421))
+* release test ([#1443](https://github.com/factorialco/factorial-one/issues/1443)) ([08dca66](https://github.com/factorialco/factorial-one/commit/08dca663d6826aa2f8497b69b6ad5e9525b9e968))
+* release test ([#1445](https://github.com/factorialco/factorial-one/issues/1445)) ([b5bb2b2](https://github.com/factorialco/factorial-one/commit/b5bb2b2498259374ceb5cd323e32e171b07e0e9f))
+* when one element of employeeSelector is removed all get removed ([#1451](https://github.com/factorialco/factorial-one/issues/1451)) ([c080544](https://github.com/factorialco/factorial-one/commit/c080544dd0d5e428a3b13217708f3ecb83edf391))
+
+## [1.6.0](https://github.com/factorialco/factorial-one/compare/v1.5.1...v1.6.0) (2025-03-25)
+
+
+### Features
+
+* **PageHeader:** allow videos in product updates dropdown ([#1463](https://github.com/factorialco/factorial-one/issues/1463)) ([3d99c43](https://github.com/factorialco/factorial-one/commit/3d99c439569410803ceed4352e46e885a0b031c1))
+
+## [1.5.1](https://github.com/factorialco/factorial-one/compare/v1.5.0...v1.5.1) (2025-03-24)
+
+
+### Bug Fixes
+
+* **PageHeader:** currentModule to check if the module changes and clean its state ([#1460](https://github.com/factorialco/factorial-one/issues/1460)) ([e07f95c](https://github.com/factorialco/factorial-one/commit/e07f95ce22799801a16e4ace1bc83a8781ddfc59))
+
+## [1.5.0](https://github.com/factorialco/factorial-one/compare/v1.4.6...v1.5.0) (2025-03-24)
+
+
+### Features
+
+* **PageHeader:** add product update dropdown ([#1429](https://github.com/factorialco/factorial-one/issues/1429)) ([20be94d](https://github.com/factorialco/factorial-one/commit/20be94d5c35b481a1e2bf4af69b826f00aa61230))
+
+## [1.4.6](https://github.com/factorialco/factorial-one/compare/v1.4.5...v1.4.6) (2025-03-24)
+
+
+### Bug Fixes
+
+* move basecolors to ahve it in the dist ([#1453](https://github.com/factorialco/factorial-one/issues/1453)) ([72f91bb](https://github.com/factorialco/factorial-one/commit/72f91bb1c260aba797a22852ee4f1eb3964e5335))
+
+## [1.4.5](https://github.com/factorialco/factorial-one/compare/v1.4.4...v1.4.5) (2025-03-21)
+
+
+### Bug Fixes
+
+* when one element of employeeSelector is removed all get removed ([#1451](https://github.com/factorialco/factorial-one/issues/1451)) ([c080544](https://github.com/factorialco/factorial-one/commit/c080544dd0d5e428a3b13217708f3ecb83edf391))
+
+## [1.4.4](https://github.com/factorialco/factorial-one/compare/v1.4.3...v1.4.4) (2025-03-21)
+
+
+### Bug Fixes
+
+* release test ([#1445](https://github.com/factorialco/factorial-one/issues/1445)) ([b5bb2b2](https://github.com/factorialco/factorial-one/commit/b5bb2b2498259374ceb5cd323e32e171b07e0e9f))
+
+## [1.4.3](https://github.com/factorialco/factorial-one/compare/v1.4.2...v1.4.3) (2025-03-21)
+
+
+### Bug Fixes
+
+* release test ([#1442](https://github.com/factorialco/factorial-one/issues/1442)) ([411319c](https://github.com/factorialco/factorial-one/commit/411319c8a465c7ce138d9261c0a00dcdbe6b1421))
+* release test ([#1443](https://github.com/factorialco/factorial-one/issues/1443)) ([08dca66](https://github.com/factorialco/factorial-one/commit/08dca663d6826aa2f8497b69b6ad5e9525b9e968))
+
 ## [1.4.2](https://github.com/factorialco/factorial-one/compare/v1.4.1...v1.4.2) (2025-03-20)
 
 

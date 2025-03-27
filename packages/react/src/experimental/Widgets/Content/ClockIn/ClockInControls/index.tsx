@@ -1,13 +1,21 @@
-import { Button } from "../../../../../components/Actions/Button"
-import { IconType } from "../../../../../components/Utilities/Icon"
-import { Select } from "../../../../exports"
-import { RawTag } from "../../../../Information/Tags/RawTag"
-import { SolidPause, SolidPlay, SolidStop } from "../../../../../icons/app"
+import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
+import { Select } from "@/experimental/Forms/Fields/Select"
+import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { SolidPause, SolidPlay, SolidStop } from "@/icons/app"
 import { motion } from "framer-motion"
 import { Dispatch, useState } from "react"
 import { ClockInGraph, ClockInGraphProps } from "../ClockInGraph"
 import { getInfo } from "./helpers"
 import Selector from "./Selector"
+
+interface BreakType {
+  id: string
+  name: string
+  duration?: string
+  description?: string
+  isPaid: boolean
+}
 
 export interface ClockInControlsProps {
   /** Optional remaining time in minutes */
@@ -27,6 +35,8 @@ export interface ClockInControlsProps {
     overtime: string
     selectLocation: string
     selectProject: string
+    paid: string
+    unpaid: string
   }
   locationId?: string
   onChangeLocationId: Dispatch<string>
@@ -35,15 +45,19 @@ export interface ClockInControlsProps {
     name: string
     icon: IconType
   }[]
+  breakTypes?: BreakType[]
+  onChangeBreakTypeId?: Dispatch<string>
   canShowLocation?: boolean
   locationSelectorDisabled?: boolean
   canShowBreakButton?: boolean
+  canSeeGraph?: boolean
+  canSeeRemainingTime?: boolean
   /** Callback when Clock In button is clicked */
   onClockIn?: () => void
   /** Callback when Clock Out button is clicked */
   onClockOut?: () => void
   /** Callback when Break button is clicked */
-  onBreak?: () => void
+  onBreak?: (breakTypeId?: string) => void
   canShowProject?: boolean
   projectSelectorElement?: React.ReactNode
 }
@@ -59,7 +73,11 @@ export function ClockInControls({
   onClockIn,
   onClockOut,
   onBreak,
+  breakTypes,
+  onChangeBreakTypeId,
   canShowBreakButton = true,
+  canSeeGraph = true,
+  canSeeRemainingTime = true,
   // onClickProjectSelector,
   onChangeLocationId,
   canShowProject = true,
@@ -69,9 +87,35 @@ export function ClockInControls({
     data,
     labels,
     remainingMinutes,
+    canSeeRemainingTime,
   })
 
   const showLocationAndProjectSelectors = status === "clocked-out"
+
+  const breakTypeOptions = breakTypes?.map((breakType) => ({
+    value: breakType.id,
+    label: breakType.duration
+      ? `${breakType.name} · ${breakType.duration}`
+      : breakType.name,
+    description: breakType.description,
+    tag: breakType.isPaid ? labels.paid : labels.unpaid,
+  }))
+
+  const [breakTypePickerOpen, setBreakTypePickerOpen] = useState(false)
+
+  const handleClickBreakButton = () => {
+    if (breakTypeOptions?.length && !breakTypePickerOpen) {
+      setBreakTypePickerOpen(true)
+    } else if (!breakTypeOptions?.length) {
+      onBreak?.()
+    }
+  }
+
+  const handleChangeBreakType = (value: string) => {
+    onChangeBreakTypeId?.(value)
+    setBreakTypePickerOpen(false)
+    onBreak?.(value)
+  }
 
   const canSelectLocation =
     showLocationAndProjectSelectors &&
@@ -146,13 +190,36 @@ export function ClockInControls({
               {status === "clocked-in" && (
                 <>
                   {canShowBreakButton && (
-                    <Button
-                      onClick={onBreak}
-                      label={labels.break}
-                      variant="neutral"
-                      icon={SolidPause}
-                      hideLabel
-                    />
+                    <>
+                      {breakTypeOptions?.length && onChangeBreakTypeId ? (
+                        <Select
+                          value=""
+                          options={breakTypeOptions}
+                          onChange={handleChangeBreakType}
+                          open={breakTypePickerOpen}
+                          onOpenChange={setBreakTypePickerOpen}
+                          selectContentClassName="min-w-80"
+                        >
+                          <div aria-label="Select break type">
+                            <Button
+                              // onClick={handleClickBreakButton}
+                              label={labels.break}
+                              variant="neutral"
+                              icon={SolidPause}
+                              hideLabel
+                            />
+                          </div>
+                        </Select>
+                      ) : (
+                        <Button
+                          onClick={handleClickBreakButton}
+                          label={labels.break}
+                          variant="neutral"
+                          icon={SolidPause}
+                          hideLabel
+                        />
+                      )}
+                    </>
                   )}
                   <Button
                     onClick={onClockOut}
@@ -180,7 +247,12 @@ export function ClockInControls({
               )}
             </div>
           </div>
-          <ClockInGraph data={data} remainingMinutes={remainingMinutes} />
+          {canSeeGraph && (
+            <ClockInGraph
+              data={data}
+              remainingMinutes={canSeeRemainingTime ? remainingMinutes : 0}
+            />
+          )}
         </div>
         <div className="mt-6 flex flex-row flex-wrap items-center justify-center gap-2 @xs:justify-start">
           {canSelectLocation ? (

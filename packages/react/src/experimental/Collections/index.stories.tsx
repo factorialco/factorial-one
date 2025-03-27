@@ -1,19 +1,21 @@
+import { Meta, StoryObj } from "@storybook/react"
+import { DownloadIcon, UploadIcon } from "lucide-react"
+import { Observable } from "zen-observable-ts"
 import { Link } from "../../components/Actions/Link"
 import {
   Ai,
   ArrowRight,
   Delete,
   Download,
+  EyeInvisible,
   Pencil,
   Share,
   Star,
 } from "../../icons/app"
-import { Meta, StoryObj } from "@storybook/react"
-import { Observable } from "zen-observable-ts"
-import { DataCollection, useDataSource } from "./index"
 import { PromiseState } from "../../lib/promise-to-observable"
-import { ActionsDefinition } from "./actions"
 import { FilterDefinition, FiltersState } from "./Filters/types"
+import { DataCollection, useDataSource } from "./index"
+import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import { DataAdapter, PaginatedResponse, Presets, RecordType } from "./types"
 import { useData } from "./useData"
@@ -246,7 +248,7 @@ const ExampleComponent = ({
     filters,
     presets: usePresets ? filterPresets : undefined,
     sortings,
-    actions: (item: MockUser) => [
+    itemActions: (item: MockUser) => [
       {
         label: "Edit",
         icon: Pencil,
@@ -333,7 +335,7 @@ const ExampleComponent = ({
 }
 
 const meta = {
-  title: "Data Collection/DataSource",
+  title: "Data Collection",
   component: ExampleComponent,
   parameters: {
     layout: "padded",
@@ -379,7 +381,7 @@ export const BasicTableView: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
-      actions: (item) => [
+      itemActions: (item) => [
         {
           label: "Edit",
           icon: Pencil,
@@ -408,6 +410,23 @@ export const BasicTableView: Story = {
           description: "Permanently remove user",
           enabled:
             item.department === "Engineering" && item.status === "active",
+        },
+      ],
+      primaryActions: () => ({
+        label: "Primary action",
+        icon: EyeInvisible,
+        onClick: () => console.log(`Primary action`),
+      }),
+      secondaryActions: () => [
+        {
+          label: "Import",
+          icon: UploadIcon,
+          onClick: () => console.log(`Import`),
+        },
+        {
+          label: "Export",
+          icon: DownloadIcon,
+          onClick: () => console.log(`Export`),
         },
       ],
     })
@@ -478,7 +497,7 @@ export const WithLinkedItems: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
-      actions: (item) => [
+      itemActions: (item) => [
         {
           label: "Edit",
           icon: Pencil,
@@ -579,7 +598,7 @@ export const BasicCardView: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
-      actions: (item) => [
+      itemActions: (item) => [
         {
           label: "Edit",
           icon: Pencil,
@@ -589,6 +608,18 @@ export const BasicCardView: Story = {
           label: "Share",
           icon: Share,
           onClick: () => console.log(`Sharing ${item.name}`),
+        },
+      ],
+      secondaryActions: () => [
+        {
+          label: "Import",
+          icon: DownloadIcon,
+          onClick: () => console.log(`Import`),
+        },
+        {
+          label: "Export",
+          icon: DownloadIcon,
+          onClick: () => console.log(`Export`),
         },
       ],
     })
@@ -758,7 +789,7 @@ const JsonVisualization = ({
       (typeof mockUsers)[number],
       typeof filters,
       typeof sortings,
-      ActionsDefinition<(typeof mockUsers)[number]>
+      ItemActionsDefinition<(typeof mockUsers)[number]>
     >
   >
 }) => {
@@ -1374,7 +1405,7 @@ export const WithAdvancedActions: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
-      actions: (item) => [
+      itemActions: (item) => [
         // Basic actions
         {
           label: "View Details",
@@ -1646,7 +1677,7 @@ export const WithSyncSearch: Story = {
 export const WithAsyncSearch: Story = {
   render: () => {
     type MockUser = (typeof mockUsers)[number]
-    type MockActions = ActionsDefinition<MockUser>
+    type MockActions = ItemActionsDefinition<MockUser>
 
     const source = useDataSource<
       MockUser,
@@ -1663,7 +1694,7 @@ export const WithAsyncSearch: Story = {
         // Set debounce time to 300ms
         debounceTime: 300,
       },
-      actions: (item) => [
+      itemActions: (item) => [
         {
           label: "Edit",
           icon: Pencil,
