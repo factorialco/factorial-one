@@ -65,8 +65,6 @@ export const TableCollection = <
     Sortings
   >(source)
 
-  console.log(data)
-
   const { currentSortings, setCurrentSortings } = source
 
   /**
