@@ -25427,9 +25427,8 @@ function rf({
     {
       className: S(
         t && "peer",
-        c && s && "bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-[calc(100%-1px)] before:w-full before:bg-f1-background before:transition-all before:content-[''] group-hover:before:bg-f1-background-hover",
-        d && r && "bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-[calc(100%-1px)] before:w-full before:bg-f1-background before:transition-all before:content-[''] group-hover:before:bg-f1-background-hover",
-        l && "sticky z-10"
+        l && r && "bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-[calc(100%-1px)] before:w-full before:bg-f1-background before:transition-all before:content-[''] group-hover:before:bg-f1-background-hover",
+        l && "sticky z-10 bg-f1-background"
       ),
       style: {
         width: v,
@@ -25646,9 +25645,7 @@ const gu = ln(NM, MM), EM = ({
   source: n,
   fixedColumns: i = 0
 }) => {
-  const t = qn(), { data: a, paginationInfo: r, setPage: s, isInitialLoading: f } = Pg(n);
-  console.log(a);
-  const { currentSortings: d, setCurrentSortings: c } = n, l = Re(() => i, [i]), u = (v, h, p) => {
+  const t = qn(), { data: a, paginationInfo: r, setPage: s, isInitialLoading: f } = Pg(n), { currentSortings: d, setCurrentSortings: c } = n, l = Re(() => i, [i]), u = (v, h, p) => {
     if (!(!v || !h))
       return p === null ? "none" : p.field === v ? p.order : "none";
   }, m = (v) => {
@@ -25702,7 +25699,7 @@ const gu = ln(NM, MM), EM = ({
         n.itemActions && /* @__PURE__ */ o(
           of,
           {
-            width: 56,
+            width: 50,
             hidden: !0,
             sticky: {
               right: 0
