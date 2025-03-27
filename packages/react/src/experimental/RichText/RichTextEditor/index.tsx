@@ -260,7 +260,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             <p className="text-2xl font-semibold text-f1-foreground">{title}</p>
             <Button
               icon={Cross}
-              onClick={handleToggleFullscreen}
+              onClick={(e) => {
+                e.preventDefault()
+                handleToggleFullscreen()
+              }}
               label="Collapse"
               hideLabel
               variant="ghost"

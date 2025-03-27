@@ -28,7 +28,10 @@ const FileItem = ({ file, onRemoveFile, disabled }: FileItemProps) => {
         hideLabel
         round
         label="Delete"
-        onClick={onRemoveFile}
+        onClick={(e) => {
+          e.preventDefault()
+          onRemoveFile()
+        }}
         type="button"
         size="sm"
         disabled={disabled}

@@ -46,11 +46,12 @@ async function handleEnhanceWithAIFunction({
       success,
     } = await enhanceText({
       text: selectedText,
-      intent: selectedIntent ? customIntent : "improve-writing",
+      selectedIntent: selectedIntent,
+      customIntent: customIntent,
       context: context,
     })
     if (success) {
-      if (from === 0 && to === editor.state.doc.content.size) {
+      if (selectedText.toString() === editor.getHTML().toString()) {
         editor.chain().focus().setContent(enhancedText).run()
       } else {
         editor

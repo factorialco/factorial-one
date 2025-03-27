@@ -1,6 +1,5 @@
-import { Add } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
-import { EnhancementOption, FileType, RichTextEditor } from "."
+import { EnhancementOption, RichTextEditor } from "."
 
 const meta = {
   component: RichTextEditor,
@@ -14,94 +13,60 @@ const enhancementOptions: EnhancementOption[] = [
   {
     id: "improve-writing",
     label: "Improve Writing",
-    prompt:
-      "Take this text: '[TEXT]' and enhance the clarity, flow, and overall quality of the writing while keeping the original meaning intact.",
-  },
-  {
-    id: "fix-spelling-grammar",
-    label: "Fix Spelling & Grammar",
-    prompt:
-      "Correct the spelling and grammar in this text: '[TEXT]' and return the polished version.",
   },
   {
     id: "make-shorter",
     label: "Make Shorter",
-    prompt:
-      "Condense this text: '[TEXT]' into a shorter version without losing its core message.",
   },
   {
     id: "make-longer",
     label: "Make Longer",
-    prompt:
-      "Expand this text: '[TEXT]' by adding more detail and elaboration while maintaining its original intent.",
   },
   {
     id: "change-tone",
     label: "Change Tone",
-    prompt: "", // Parent option with suboptions
     subOptions: [
       {
         id: "tone-casual",
         label: "Casual",
-        prompt: "Rewrite this text: '[TEXT]' in a relaxed, casual tone.",
       },
       {
         id: "tone-professional",
         label: "Professional",
-        prompt: "Revise this text: '[TEXT]' to sound formal and professional.",
       },
       {
         id: "tone-confident",
         label: "Confident",
-        prompt: "Adjust this text: '[TEXT]' to convey a bold, confident tone.",
       },
       {
         id: "tone-straightforward",
         label: "Straightforward",
-        prompt: "Simplify this text: '[TEXT]' into a direct, no-nonsense tone.",
       },
       {
         id: "tone-friendly",
         label: "Friendly",
-        prompt: "Rework this text: '[TEXT]' to sound warm and friendly.",
       },
     ],
   },
   {
-    id: "custom-intent",
-    label: "Ask AI",
-    prompt:
-      "Remake this text: '[TEXT]' in order to fulfill this intent: '[INTENT]'",
-  },
-  {
-    id: "turn-into-list",
-    label: "Turn Into List",
-    prompt: "Convert this text: '[TEXT]' into a concise bullet-point list.",
-  },
-  {
     id: "translate",
     label: "Translate",
-    prompt: "",
     subOptions: [
       {
         id: "translate-to-spanish",
         label: "Spanish",
-        prompt: "Translate this text: '[TEXT]' to Spanish.",
       },
       {
         id: "translate-to-english",
         label: "English",
-        prompt: "Translate this text: '[TEXT]' to English.",
       },
       {
         id: "translate-to-french",
         label: "French",
-        prompt: "Translate this text: '[TEXT]' to French.",
       },
       {
         id: "translate-to-german",
         label: "German",
-        prompt: "Translate this text: '[TEXT]' to German.",
       },
     ],
   },
@@ -128,12 +93,19 @@ const users = [
 export const Default: Story = {
   tags: ["experimental"],
   args: {
-    onChange: (html) => console.log(html),
+    onChange: () => {},
     placeholder: "Write something and test our fabulous editor...",
     mentionsConfig: { users: users },
     enhanceConfig: {
-      onEnhanceText: () =>
+      onEnhanceText: (params: {
+        text: string
+        selectedIntent?: string
+        customIntent?: string
+        context?: string
+      }) =>
         new Promise((resolve) => {
+          console.log(params)
+
           setTimeout(() => {
             resolve({
               success: true,
@@ -152,35 +124,35 @@ export const Default: Story = {
         customPromptPlaceholder: "What do you want to do?",
       },
     },
-    filesConfig: {
-      onFiles: (files) => console.log(files),
-      multipleFiles: true,
-      acceptedFileType: [
-        FileType.IMAGE,
-        FileType.VIDEO,
-        FileType.PDF,
-        FileType.DOC,
-        FileType.EXCEL,
-      ],
-    },
-    primaryAction: {
-      action: {
-        label: "Add",
-        onClick: () => alert("Submit"),
-        variant: "default",
-        icon: Add,
-      },
-    },
-    secondaryActions: [
-      {
-        label: "Cancel",
-        onClick: () => alert("Cancel"),
-        variant: "critical",
-      },
-    ],
+    // filesConfig: {
+    //   onFiles: (files) => console.log(files),
+    //   multipleFiles: true,
+    //   acceptedFileType: [
+    //     FileType.IMAGE,
+    //     FileType.VIDEO,
+    //     FileType.PDF,
+    //     FileType.DOC,
+    //     FileType.EXCEL,
+    //   ],
+    // },
+    // primaryAction: {
+    //   action: {
+    //     label: "Add",
+    //     onClick: () => alert("Submit"),
+    //     variant: "default",
+    //     icon: Add,
+    //   },
+    // },
+    // secondaryActions: [
+    //   {
+    //     label: "Cancel",
+    //     onClick: () => alert("Cancel"),
+    //     variant: "critical",
+    //   },
+    // ],
     linkPopupConfig: { linkPlaceholder: "Write or paste a link" },
     title: "Rich Text Editor test",
     toolbarConfig: "all",
-    maxCharacters: 1000,
+    // maxCharacters: 1000000,
   },
 }

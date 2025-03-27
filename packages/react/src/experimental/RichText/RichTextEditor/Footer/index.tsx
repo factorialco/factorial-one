@@ -44,7 +44,8 @@ const Footer = ({
       <div className="flex flex-shrink-0 items-center gap-2">
         {canToggleToolbar && (
           <Button
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault()
               setIsToolbarOpen(!isToolbarOpen)
             }}
             variant="outline"
@@ -57,7 +58,8 @@ const Footer = ({
         {canUseFiles && (
           <Button
             icon={Paperclip}
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault()
               if (fileInputRef?.current) {
                 fileInputRef.current.click()
               } else {
@@ -86,7 +88,10 @@ const Footer = ({
           <div className="flex items-center gap-2 overflow-x-auto">
             {secondaryActions?.map((action) => (
               <Button
-                onClick={action.onClick}
+                onClick={(e) => {
+                  e.preventDefault()
+                  action.onClick()
+                }}
                 variant={action.variant ?? "outline"}
                 size="md"
                 label={action.label}
@@ -99,7 +104,10 @@ const Footer = ({
         {secondaryActions && secondaryActions.length > 0 && <ToolbarDivider />}
         {primaryAction && (
           <Button
-            onClick={primaryAction.action.onClick}
+            onClick={(e) => {
+              e.preventDefault()
+              primaryAction.action.onClick()
+            }}
             variant={primaryAction.action.variant ?? "default"}
             size="md"
             label={primaryAction.action.label}

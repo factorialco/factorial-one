@@ -70,7 +70,8 @@ type toolbarConfig =
 
 type enhanceTextParams = {
   text: string
-  intent?: string
+  selectedIntent?: string
+  customIntent?: string
   context?: string
 }
 
@@ -91,7 +92,6 @@ type enhanceLabelsType = {
 type EnhancementOption = {
   id: string
   label: string
-  prompt: string
   subOptions?: EnhancementOption[]
 }
 

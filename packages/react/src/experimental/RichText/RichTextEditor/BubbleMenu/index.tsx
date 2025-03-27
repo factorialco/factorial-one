@@ -84,8 +84,17 @@ const EditorBubbleMenu = ({
             open={openDropdown}
             onOpenChange={setOpenDropdown}
           >
-            <DropdownMenuPrimitive.Trigger asChild onClick={handleTriggerClick}>
+            <DropdownMenuPrimitive.Trigger
+              asChild
+              onClick={(e) => {
+                e.preventDefault()
+                handleTriggerClick()
+              }}
+            >
               <Button
+                onClick={(e) => {
+                  e.preventDefault()
+                }}
                 label="Link"
                 variant={editor.isActive("link") ? "neutral" : "ghost"}
                 type="button"
