@@ -6,6 +6,7 @@ import { Spinner } from "../../Information/Spinner"
 import { TableContext } from "../utils/TableContext"
 
 import { cn } from "@/lib/utils"
+import { AnimatePresence, motion } from "framer-motion"
 import { TableBody } from "../TableBody"
 import { TableCell } from "../TableCell"
 import { TableHead } from "../TableHead"
@@ -41,17 +42,24 @@ function TableBase({ children, loading = false }: TableProps) {
     <TableContext.Provider value={{ isScrolled, setIsScrolled }}>
       <div ref={containerRef} className="relative w-full overflow-auto">
         <TableRoot
-          className={cn(loading && "select-none opacity-50")}
+          className={cn(loading && "select-none opacity-50 transition-opacity")}
           aria-live={loading ? "polite" : undefined}
           aria-busy={loading ? "true" : undefined}
         >
           {children}
         </TableRoot>
-        {loading && (
-          <div className="absolute inset-0 flex cursor-progress items-center justify-center">
-            <Spinner />
-          </div>
-        )}
+        <AnimatePresence>
+          {loading && (
+            <motion.div
+              className="absolute inset-0 flex cursor-progress items-center justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Spinner />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </TableContext.Provider>
   )
