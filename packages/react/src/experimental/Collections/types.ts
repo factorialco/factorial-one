@@ -1,20 +1,22 @@
 import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
+import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
-import { ActionsDefinition } from "./actions"
+import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition, SortingsState } from "./sortings"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
  * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
- * @template Actions - The available actions that can be performed on records
+ * @template ItemActions - The available actions that can be performed on records
+ * @template SecondaryActions - The available actions that can be performed on the collection
  */
 export type DataSourceDefinition<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Actions extends ActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<Record>,
 > = {
   /** Available filter configurations */
   filters?: Filters
@@ -23,7 +25,11 @@ export type DataSourceDefinition<
   /** URL for a single item in the collection */
   itemUrl?: (item: Record) => string | undefined
   /** Available actions that can be performed on records */
-  actions?: Actions
+  itemActions?: ItemActions
+  /** Available primary actions that can be performed on the collection */
+  primaryActions?: PrimaryActionsDefinition
+  /** Available secondary actions that can be performed on the collection */
+  secondaryActions?: SecondaryActionsDefinition
   /** Search configuration */
   search?: CollectionSearchOptions
   /** Current state of applied filters */
@@ -191,18 +197,18 @@ export type ExtractPropertyKeys<RecordType> = keyof RecordType
  * Props for the Collection component.
  * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
- * @template Actions - The available actions that can be performed on records
+ * @template ItemActions - The available actions that can be performed on records
  * @template VisualizationOptions - Additional options for visualizing the collection
  */
 export type CollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Actions extends ActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<Record>,
   VisualizationOptions extends object,
 > = {
   /** The data source configuration and state */
-  source: DataSource<Record, Filters, Sortings, Actions>
+  source: DataSource<Record, Filters, Sortings, ItemActions>
 } & VisualizationOptions
 
 /**
@@ -210,14 +216,15 @@ export type CollectionProps<
  * Extends DataSourceDefinition with runtime properties for state management.
  * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
- * @template Actions - The available actions that can be performed on records
+ * @template ItemActions - The available actions that can be performed on records
  */
 export type DataSource<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Actions extends ActionsDefinition<Record> = ActionsDefinition<Record>,
-> = DataSourceDefinition<Record, Filters, Sortings, Actions> & {
+  ItemActions extends
+    ItemActionsDefinition<Record> = ItemActionsDefinition<Record>,
+> = DataSourceDefinition<Record, Filters, Sortings, ItemActions> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
