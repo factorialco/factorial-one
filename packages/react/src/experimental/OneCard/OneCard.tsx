@@ -8,6 +8,7 @@ import {
 } from "@/experimental/Information/Avatars/Avatar"
 import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
 import { EllipsisHorizontal } from "@/icons/app"
+import { withSkeleton } from "@/lib/skeleton"
 import { cn, focusRing } from "@/lib/utils"
 import {
   Card,
@@ -16,6 +17,7 @@ import {
   CardSubtitle,
   CardTitle,
 } from "@/ui/card"
+import { Skeleton } from "@/ui/skeleton"
 import { useState, type ReactNode } from "react"
 import { CardMetadata } from "./CardMetadata"
 import { type Metadata } from "./types"
@@ -92,7 +94,7 @@ interface OneCardProps {
   onSelect?: (selected: boolean) => void
 }
 
-export function OneCard({
+function OneCardBase({
   avatar,
   title,
   description,
@@ -234,3 +236,32 @@ export function OneCard({
     </Card>
   )
 }
+
+function OneCardSkeleton() {
+  return (
+    <Card className="group relative bg-f1-background p-0 shadow-none">
+      <div className="flex flex-col gap-2.5 p-4">
+        <div className="flex flex-row items-start justify-between gap-1">
+          <CardHeader className="flex-col gap-0.5">
+            <CardTitle className="flex flex-row justify-between gap-1 text-lg font-semibold">
+              <Skeleton className="h-5 w-48" />
+            </CardTitle>
+            <CardSubtitle>
+              <Skeleton className="h-3 w-32" />
+            </CardSubtitle>
+          </CardHeader>
+        </div>
+        <div className="flex flex-col gap-2">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex items-center gap-1">
+              <Skeleton className="h-3 w-3" />
+              <Skeleton className="h-4 w-32" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </Card>
+  )
+}
+
+export const OneCard = withSkeleton(OneCardBase, OneCardSkeleton)

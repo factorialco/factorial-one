@@ -1,9 +1,8 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
-import { Skeleton } from "@/ui/skeleton"
+import { Placeholder } from "@/icons/app"
 import { useMemo } from "react"
+import { OneCard } from "../../OneCard"
 import { OnePagination } from "../../OnePagination"
-import { ActionsDefinition } from "../actions"
-import { ActionsDropdown } from "../Actions/Dropdown"
+import { ActionsDefinition, filterActions } from "../actions"
 import type { FiltersDefinition } from "../Filters/types"
 import { SortingsDefinition } from "../sortings"
 import { CollectionProps, RecordType } from "../types"
@@ -73,45 +72,24 @@ export const CardCollection = <
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {isInitialLoading
           ? Array.from({ length: 8 }).map((_, i) => (
-              <Card key={i}>
-                <CardHeader>
-                  <CardTitle>
-                    <Skeleton className="h-4 w-3/4" />
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {cardProperties.map((property) => (
-                    <div key={String(property.label)} className="space-y-1">
-                      <Skeleton className="h-3 w-1/4" />
-                      <Skeleton className="h-3 w-1/2" />
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
+              <OneCard.Skeleton key={i} />
             ))
           : data.map((item, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle>{title(item)}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {cardProperties.map((property) => (
-                    <div key={String(property.label)} className="space-y-1">
-                      <div className="text-muted-foreground text-sm font-medium">
-                        {property.label}
-                      </div>
-                      <div className="text-sm">
-                        {renderValue(item, property)}
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-                {source.actions && (
-                  <CardFooter className="justify-end">
-                    <ActionsDropdown item={item} actions={source.actions} />
-                  </CardFooter>
-                )}
-              </Card>
+              <OneCard
+                key={index}
+                title={title(item)}
+                metadata={cardProperties.map((property) => ({
+                  type: "text",
+                  icon: Placeholder,
+                  title: String(renderValue(item, property)),
+                  subtitle: property.label,
+                }))}
+                otherActions={
+                  source.actions
+                    ? filterActions(source.actions, item)
+                    : undefined
+                }
+              />
             ))}
       </div>
       {paginationInfo && (

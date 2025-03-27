@@ -147,3 +147,7 @@ export const WithChildren: Story = {
     ),
   },
 }
+
+export const Skeleton: Story = {
+  render: () => <OneCard.Skeleton />,
+}
