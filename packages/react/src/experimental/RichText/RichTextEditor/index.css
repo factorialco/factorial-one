@@ -4,13 +4,13 @@
   font-weight: 600;
 }
 
-.aiMagicLoading {
+.aiMagic {
+  color: #6143a7 !important;
   background: linear-gradient(
-    90deg,
-    #fff2e0 0%,
-    #ffe3ea 36.5%,
-    #e5deff 66%,
-    #d1f3f7 100%
+    95.27deg,
+    rgba(249, 240, 221, 0.5) 3.62%,
+    rgba(242, 223, 227, 0.5) 48.88%,
+    rgba(212, 204, 253, 0.5) 106.49%
   ) !important;
 }
 
