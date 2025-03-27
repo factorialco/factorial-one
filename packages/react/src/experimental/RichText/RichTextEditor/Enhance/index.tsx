@@ -13,7 +13,7 @@ interface EnhanceActivatorProps {
   editor: Editor
   onEnhanceWithAI?: (
     selectedText: string,
-    selectedIntent?: string,
+    selectedOption?: string,
     customIntent?: string,
     context?: string
   ) => Promise<void>
@@ -49,7 +49,13 @@ const EnhanceActivator = ({
   const [open, setOpen] = useState(false)
 
   const handleAIEnhance = useCallback(
-    (optionId: string, customIntent?: string) => {
+    ({
+      selectedIntent,
+      customIntent,
+    }: {
+      selectedIntent?: string
+      customIntent?: string
+    }) => {
       if (!editor) return
 
       let textToEnhance = ""
@@ -96,7 +102,7 @@ const EnhanceActivator = ({
       }
 
       if (isValidSelectionForEnhancement(textToEnhance) && onEnhanceWithAI) {
-        onEnhanceWithAI(textToEnhance, optionId, customIntent, context)
+        onEnhanceWithAI(textToEnhance, selectedIntent, customIntent, context)
       }
       setOpen(false)
     },
@@ -109,7 +115,6 @@ const EnhanceActivator = ({
     const { from, to } = editor.state.selection
     if (from !== to) {
       setSelectedRange({ from, to })
-      editor.view.dom.classList.add("maintain-selection")
     } else {
       setSelectedRange(null)
     }
@@ -137,7 +142,10 @@ const EnhanceActivator = ({
           label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || "Enhance"}
           icon={button.icon || Ai}
           hideLabel={hideLabel ?? false}
-          onClick={handleEnhanceClick}
+          onClick={(e) => {
+            e.preventDefault()
+            handleEnhanceClick()
+          }}
           disabled={disableButtons}
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore

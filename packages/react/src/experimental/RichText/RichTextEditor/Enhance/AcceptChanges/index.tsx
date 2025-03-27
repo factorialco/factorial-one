@@ -13,7 +13,10 @@ const AcceptChanges = ({ onAccept, onReject, labels }: AcceptChangesProps) => {
     <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2 rounded-md border-[1px] border-solid border-f1-border-secondary bg-f1-background p-2 shadow-md">
       <Button
         label={labels?.rejectChangesButtonLabel || "Reject"}
-        onClick={onReject}
+        onClick={(e) => {
+          e.preventDefault()
+          onReject()
+        }}
         size="sm"
         variant="critical"
         icon={Reset}
@@ -24,7 +27,10 @@ const AcceptChanges = ({ onAccept, onReject, labels }: AcceptChangesProps) => {
         // @ts-ignore
         className="aiMagicLoading"
         label={labels?.acceptChangesButtonLabel || "Accept"}
-        onClick={onAccept}
+        onClick={(e) => {
+          e.preventDefault()
+          onAccept()
+        }}
         size="sm"
         variant="outline"
         type="button"

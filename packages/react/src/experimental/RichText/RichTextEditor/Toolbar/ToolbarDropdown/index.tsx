@@ -35,7 +35,10 @@ const ToolbarDropdown = ({
     items?.map((item) => (
       <Button
         key={item.label}
-        onClick={item.onClick}
+        onClick={(e) => {
+          e.preventDefault()
+          item.onClick()
+        }}
         variant={item.isActive ? "neutral" : "ghost"}
         label={item.label}
         type="button"

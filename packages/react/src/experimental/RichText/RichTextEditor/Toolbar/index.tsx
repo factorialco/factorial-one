@@ -23,6 +23,32 @@ const ToolbarDivider = ({ show = true }: { show?: boolean }) => (
   />
 )
 
+interface ToolbarButtonProps {
+  onClick: () => void
+  active: boolean
+  label: string
+  disabled: boolean
+}
+
+const ToolbarButton = ({
+  onClick,
+  active,
+  label,
+  disabled,
+}: ToolbarButtonProps) => {
+  return (
+    <Button
+      variant={active ? "neutral" : "ghost"}
+      label={label}
+      onClick={(e) => {
+        e.preventDefault()
+        onClick()
+      }}
+      type="button"
+      disabled={disabled}
+    />
+  )
+}
 const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
   arr.map((item, index) => (
     <React.Fragment key={`intersperse-${index}`}>
@@ -79,57 +105,42 @@ const Toolbar = ({
     bold || italic || underline ? (
       <div className="flex flex-row items-center gap-2">
         {bold && (
-          <Button
-            variant={editor.isActive("bold") ? "neutral" : "ghost"}
+          <ToolbarButton
+            active={editor.isActive("bold")}
             label="B"
-            onClick={() => {
-              editor.chain().focus().toggleBold().run()
-            }}
-            type="button"
             disabled={disableButtons}
+            onClick={() => editor.chain().focus().toggleBold().run()}
           />
         )}
         {italic && (
-          <Button
-            variant={editor.isActive("italic") ? "neutral" : "ghost"}
+          <ToolbarButton
+            active={editor.isActive("italic")}
             label="I"
-            onClick={() => {
-              editor.chain().focus().toggleItalic().run()
-            }}
-            type="button"
             disabled={disableButtons}
+            onClick={() => editor.chain().focus().toggleItalic().run()}
           />
         )}
         {underline && (
-          <Button
-            variant={editor.isActive("underline") ? "neutral" : "ghost"}
+          <ToolbarButton
+            active={editor.isActive("underline")}
             label="U"
-            onClick={() => {
-              editor.chain().focus().toggleUnderline().run()
-            }}
-            type="button"
             disabled={disableButtons}
+            onClick={() => editor.chain().focus().toggleUnderline().run()}
           />
         )}
         {strike && (
-          <Button
-            variant={editor.isActive("strike") ? "neutral" : "ghost"}
+          <ToolbarButton
+            active={editor.isActive("strike")}
             label="S"
-            onClick={() => {
-              editor.chain().focus().toggleStrike().run()
-            }}
-            type="button"
+            onClick={() => editor.chain().focus().toggleStrike().run()}
             disabled={disableButtons}
           />
         )}
         {highlight && (
-          <Button
-            variant={editor.isActive("highlight") ? "neutral" : "ghost"}
+          <ToolbarButton
+            active={editor.isActive("highlight")}
             label="H"
-            onClick={() => {
-              editor.chain().focus().toggleHighlight().run()
-            }}
-            type="button"
+            onClick={() => editor.chain().focus().toggleHighlight().run()}
             disabled={disableButtons}
           />
         )}
@@ -163,6 +174,7 @@ const Toolbar = ({
         disabled={disableButtons}
       >
         <Button
+          onClick={(e) => e.preventDefault()}
           variant="ghost"
           size="md"
           label={getHeadingLabel(editor)}
@@ -205,6 +217,7 @@ const Toolbar = ({
         disabled={disableButtons}
       >
         <Button
+          onClick={(e) => e.preventDefault()}
           variant="ghost"
           size="md"
           label={getTextAlignLabel(editor)}
@@ -218,35 +231,26 @@ const Toolbar = ({
     bullet || ordered || task ? (
       <div className="flex flex-row items-center gap-2">
         {bullet && (
-          <Button
-            onClick={() => {
-              editor.chain().focus().toggleBulletList().run()
-            }}
-            variant={editor.isActive("bulletList") ? "neutral" : "ghost"}
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleBulletList().run()}
+            active={editor.isActive("bulletList")}
             label="Bullet"
-            type="button"
             disabled={disableButtons}
           />
         )}
         {ordered && (
-          <Button
-            onClick={() => {
-              editor.chain().focus().toggleOrderedList().run()
-            }}
-            variant={editor.isActive("orderedList") ? "neutral" : "ghost"}
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleOrderedList().run()}
+            active={editor.isActive("orderedList")}
             label="Ordered"
-            type="button"
             disabled={disableButtons}
           />
         )}
         {task && (
-          <Button
-            onClick={() => {
-              editor.chain().focus().toggleTaskList().run()
-            }}
-            variant={editor.isActive("taskList") ? "neutral" : "ghost"}
+          <ToolbarButton
+            onClick={() => editor.chain().focus().toggleTaskList().run()}
+            active={editor.isActive("taskList")}
             label="Task"
-            type="button"
             disabled={disableButtons}
           />
         )}
@@ -279,6 +283,7 @@ const Toolbar = ({
         disabled={disableButtons}
       >
         <Button
+          onClick={(e) => e.preventDefault()}
           variant="ghost"
           size="md"
           icon={Ellipsis}
@@ -315,7 +320,10 @@ const Toolbar = ({
         )}
         {fullScreen && !isFullscreen && (
           <Button
-            onClick={handleToggleFullscreen}
+            onClick={(e) => {
+              e.preventDefault()
+              handleToggleFullscreen()
+            }}
             label="Fullscreen"
             variant="ghost"
             type="button"

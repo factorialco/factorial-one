@@ -25,7 +25,13 @@ const Option = ({ option, onClick }: OptionProps) => {
 }
 
 interface AIEnhanceMenuProps {
-  onSelect: (optionId: string, customIntent?: string) => void
+  onSelect: ({
+    selectedIntent,
+    customIntent,
+  }: {
+    selectedIntent?: string
+    customIntent?: string
+  }) => void
   onClose: () => void
   enhancementOptions: EnhancementOption[]
   canUseCustomPrompt: boolean
@@ -54,10 +60,8 @@ const AIEnhanceMenu = ({
   const handleOptionSelect = (option: EnhancementOption) => {
     if (option.subOptions) {
       setSelectedParentOption(option.id)
-    } else if (option.id === "custom-intent") {
-      setShowCustomInput(true)
     } else {
-      onSelect(option.id)
+      onSelect({ selectedIntent: option.id, customIntent: undefined })
       onClose()
     }
   }
@@ -79,7 +83,10 @@ const AIEnhanceMenu = ({
       const input =
         e.currentTarget.parentElement?.querySelector<HTMLInputElement>("input")
       if (input && input.value.trim()) {
-        onSelect("custom-intent", input.value.trim())
+        onSelect({
+          selectedIntent: undefined,
+          customIntent: input.value.trim(),
+        })
         input.value = ""
       }
     }
