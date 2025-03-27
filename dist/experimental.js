@@ -25702,7 +25702,7 @@ const gu = ln(NM, MM), EM = ({
         n.itemActions && /* @__PURE__ */ o(
           of,
           {
-            width: 50,
+            width: 56,
             hidden: !0,
             sticky: {
               right: 0
