@@ -1,14 +1,14 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
 import { useMemo } from "react"
-import { OnePagination } from "../../OnePagination"
-import { ActionsDefinition } from "../actions"
-import { ActionsDropdown } from "../Actions/Dropdown"
-import type { FiltersDefinition } from "../Filters/types"
-import { SortingsDefinition } from "../sortings"
-import { CollectionProps, RecordType } from "../types"
-import { useData } from "../useData"
-import { PropertyDefinition, renderValue } from "../utils"
+import { OnePagination } from "../../../../OnePagination"
+import type { FiltersDefinition } from "../../../Filters/types"
+import { ActionsDropdown } from "../../../ItemActions/Dropdown"
+import { ItemActionsDefinition } from "../../../item-actions"
+import { SortingsDefinition } from "../../../sortings"
+import { CollectionProps, RecordType } from "../../../types"
+import { useData } from "../../../useData"
+import { PropertyDefinition, renderValue } from "../../../utils"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
 
@@ -32,7 +32,7 @@ export const CardCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Actions extends ActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<Record>,
 >({
   cardProperties,
   title,
@@ -41,7 +41,7 @@ export const CardCollection = <
   Record,
   Filters,
   Sortings,
-  Actions,
+  ItemActions,
   CardVisualizationOptions<Record, Filters, Sortings>
 >) => {
   // We override the perPage to ensure it's always a multiple of 2, 3, and 4
@@ -106,9 +106,9 @@ export const CardCollection = <
                     </div>
                   ))}
                 </CardContent>
-                {source.actions && (
+                {source.itemActions && (
                   <CardFooter className="justify-end">
-                    <ActionsDropdown item={item} actions={source.actions} />
+                    <ActionsDropdown item={item} actions={source.itemActions} />
                   </CardFooter>
                 )}
               </Card>

@@ -2,8 +2,8 @@ import { act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
 import type { PromiseState } from "../../lib/promise-to-observable"
-import { ActionsDefinition } from "./actions"
 import type { FiltersState } from "./Filters/types"
+import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
 import type {
   BaseDataAdapter,
@@ -38,7 +38,7 @@ type TestSource = DataSource<
   TestRecord,
   TestFilters,
   SortingsDefinition,
-  ActionsDefinition<TestRecord>
+  ItemActionsDefinition<TestRecord>
 >
 
 const createMockDataSource = (

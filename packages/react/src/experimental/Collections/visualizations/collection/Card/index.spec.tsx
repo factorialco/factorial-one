@@ -1,11 +1,11 @@
 import { render, renderHook, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
+import type { FiltersDefinition } from "../../../Filters/types"
+import { ItemActionsDefinition } from "../../../item-actions"
+import { SortingsDefinition } from "../../../sortings"
+import type { DataSource } from "../../../types"
+import { useData } from "../../../useData"
 import { CardCollection } from "./index"
-import { ActionsDefinition } from "../actions"
-import type { FiltersDefinition } from "../Filters/types"
-import { SortingsDefinition } from "../sortings"
-import type { DataSource } from "../types"
-import { useData } from "../useData"
 
 type Person = {
   id: number
@@ -41,7 +41,7 @@ const createTestSource = (
   Person,
   FiltersDefinition,
   SortingsDefinition,
-  ActionsDefinition<Person>
+  ItemActionsDefinition<Person>
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -68,7 +68,7 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >
           title={(item) => item.name}
           cardProperties={[
@@ -90,7 +90,7 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -119,7 +119,7 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -144,7 +144,7 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -194,7 +194,7 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >
           title={(item) => item.name}
           cardProperties={propertiesWithCustomRender}
@@ -217,7 +217,7 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -240,7 +240,7 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -296,7 +296,7 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -349,7 +349,7 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ActionsDefinition<Person>
+          ItemActionsDefinition<Person>
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}

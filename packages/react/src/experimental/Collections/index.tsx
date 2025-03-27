@@ -1,11 +1,12 @@
-import { Icon } from "../../components/Utilities/Icon"
-import { Spinner } from "../../icons/app"
 import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
-import { ActionsDefinition } from "./actions"
+import { Icon } from "../../components/Utilities/Icon"
+import { Spinner } from "../../icons/app"
+import { CollectionActions } from "./CollectionActions/ColletionActions"
 import { Filters } from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { ItemActionsDefinition } from "./item-actions"
 import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
@@ -30,13 +31,15 @@ import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
  *
  * @template Record - The type of records in the collection
  * @template Filters - The definition of available filters for the collection
+ * @template ItemActions - The definition of available item actions
  * @template Actions - The definition of available actions for the collection
  *
  * @param options - Configuration object containing:
  *   - filters: Optional filter configurations for the collection
  *   - currentFilters: Initial state of the filters
  *   - dataAdapter: Adapter for data fetching and manipulation
- *   - actions: Optional actions available for records
+ *   - itemActions: Optional item actions available
+ *   - actions: Optional DataCollection actions
  *   - presets: Optional filter presets
  * @param deps - Dependency array for memoization, similar to useEffect dependencies
  *
@@ -45,14 +48,15 @@ import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
  * - currentFilters: The current state of the filters
  * - setCurrentFilters: Function to update the filter state
  * - dataAdapter: The data adapter for fetching/manipulating data
- * - actions: Available actions for records
+ * - itemActions: Available actions for records (items)
+ * - actions: Available actions for the collection
  * - presets: Available filter presets
  */
 export const useDataSource = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Actions extends ActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<Record>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
@@ -61,9 +65,9 @@ export const useDataSource = <
     defaultSorting,
     dataAdapter,
     ...rest
-  }: DataSourceDefinition<Record, Filters, Sortings, Actions>,
+  }: DataSourceDefinition<Record, Filters, Sortings, ItemActions>,
   deps: ReadonlyArray<unknown> = []
-): DataSource<Record, Filters, Sortings, Actions> => {
+): DataSource<Record, Filters, Sortings, ItemActions> => {
   const [currentFilters, setCurrentFilters] = useState<FiltersState<Filters>>(
     initialCurrentFilters
   )
@@ -127,7 +131,7 @@ const MotionIcon = motion(Icon)
  *
  * @template Record - The type of records in the collection
  * @template Filters - The definition of available filters for the collection
- * @template Actions - The definition of available actions for the collection
+ * @template ItemActions - The definition of available item actions
  *
  * @param source - The data source containing filters, data, and state management
  * @param visualizations - Array of available visualization options (e.g., table, card view)
@@ -141,12 +145,12 @@ export const DataCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Actions extends ActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<Record>,
 >({
   source,
   visualizations,
 }: {
-  source: DataSource<Record, Filters, Sortings, Actions>
+  source: DataSource<Record, Filters, Sortings, ItemActions>
   visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
 }): JSX.Element => {
   const {
@@ -157,8 +161,20 @@ export const DataCollection = <
     currentSearch,
     setCurrentSearch,
     isLoading,
+    primaryActions,
+    secondaryActions,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
+
+  const primaryActionItem = useMemo(
+    () => primaryActions && primaryActions(),
+    [primaryActions]
+  )
+
+  const secondaryActionsItems = useMemo(
+    () => (secondaryActions && secondaryActions()) || [],
+    [secondaryActions]
+  )
 
   return (
     <div className="flex flex-col gap-4">
@@ -171,6 +187,7 @@ export const DataCollection = <
             onChange={setCurrentFilters}
           />
         )}
+        <div className="shrink-1 grow-1 flex"></div>
         <div className="flex shrink-0 items-center gap-2">
           <AnimatePresence initial={false}>
             {isLoading && (
@@ -194,6 +211,12 @@ export const DataCollection = <
               visualizations={visualizations}
               currentVisualization={currentVisualization}
               onVisualizationChange={setCurrentVisualization}
+            />
+          )}
+          {(primaryActionItem || secondaryActionsItems) && (
+            <CollectionActions
+              primaryActions={primaryActionItem}
+              secondaryActions={secondaryActionsItems}
             />
           )}
         </div>

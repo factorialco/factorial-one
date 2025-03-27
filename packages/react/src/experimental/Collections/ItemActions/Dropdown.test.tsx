@@ -1,7 +1,7 @@
 import { Ai, Pencil } from "@/icons/app"
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import { ActionsDefinition } from "../actions"
+import { ItemActionsDefinition } from "../item-actions"
 import { ActionsDropdown } from "./Dropdown"
 
 // Mock the imported components
@@ -41,7 +41,7 @@ describe("ActionsDropdown", () => {
     canEdit: true,
   }
 
-  const mockActions: ActionsDefinition<TestRecord> = (item) => [
+  const mockActions: ItemActionsDefinition<TestRecord> = (item) => [
     {
       label: "View Details",
       icon: Ai,
@@ -73,7 +73,7 @@ describe("ActionsDropdown", () => {
   })
 
   it("doesn't render when actions array is empty", () => {
-    const emptyActions: ActionsDefinition<TestRecord> = () => []
+    const emptyActions: ItemActionsDefinition<TestRecord> = () => []
     const { container } = render(
       <ActionsDropdown item={mockItem} actions={emptyActions} />
     )
@@ -82,7 +82,7 @@ describe("ActionsDropdown", () => {
   })
 
   it("doesn't render when actions is undefined", () => {
-    const undefinedActions: ActionsDefinition<TestRecord> = () => undefined
+    const undefinedActions: ItemActionsDefinition<TestRecord> = () => undefined
     const { container } = render(
       <ActionsDropdown item={mockItem} actions={undefinedActions} />
     )
@@ -92,7 +92,7 @@ describe("ActionsDropdown", () => {
 
   it("filters actions based on enabled property", () => {
     const mockItemWithoutEdit = { ...mockItem, canEdit: false }
-    const actionsWithDisabled: ActionsDefinition<TestRecord> = (item) => [
+    const actionsWithDisabled: ItemActionsDefinition<TestRecord> = (item) => [
       {
         label: "View Details",
         icon: Ai,
