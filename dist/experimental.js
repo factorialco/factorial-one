@@ -25352,6 +25352,7 @@ const _M = (e) => Math.ceil(e / 12) * 12, CM = ({
             {
               checked: c.has(y),
               onCheckedChange: (v) => l(u, v),
+              title: `Select ${i.selectable(u)}`,
               hideLabel: !0
             }
           ),
@@ -25802,6 +25803,7 @@ const pu = ln(MM, EM), PM = ({
             {
               checked: u.has(D),
               onCheckedChange: (M) => v(C, M),
+              title: `Select ${n.selectable(C)}`,
               hideLabel: !0
             }
           ) }),
