@@ -1,0 +1,127 @@
+import { Meta, Canvas, Controls } from "@storybook/blocks"
+import * as ExampleTestStories from "./index.stories"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
+import * as ComponentStories from "./index.stories"
+
+<Meta of={ComponentStories} />
+
+# ExampleTest
+
+The ExampleTest component is a simple calculator that demonstrates how to create
+and test interactive components in Storybook. This is an experimental component
+used primarily for demonstration purposes.
+
+## Anatomy
+
+<Canvas of={ExampleTestStories.Default} />
+<Controls of={ExampleTestStories.Default} />
+
+## Usage
+
+### Import
+
+Import the ExampleTest component from the experimental package:
+
+```tsx
+import { ExampleTest } from "@factorialco/factorial-one/experimental/Example"
+```
+
+### Basic Usage
+
+The component provides a simple interface for adding two numbers:
+
+```tsx
+<ExampleTest />
+```
+
+<DoDonts
+  do={{
+    description:
+      "Use the component to demonstrate interactive testing in Storybook.",
+    code: `
+      <ExampleTest />
+    `,
+  }}
+  dont={{
+    description: "Use this component in production - it's just an example.",
+    code: `
+      // Don't use in production code
+      import { ExampleTest } from "@factorialco/factorial-one/experimental/Example"
+    `,
+  }}
+/>
+
+## Edge Cases
+
+The component handles various edge cases:
+
+### Negative Numbers
+
+<Canvas of={ExampleTestStories.NegativeNumbers} />
+
+The component correctly handles negative numbers, allowing users to input and
+calculate with negative values.
+
+### Decimal Numbers
+
+<Canvas of={ExampleTestStories.DecimalNumbers} />
+
+When working with decimal numbers, the component performs the calculation and
+displays the result.
+
+### Empty Inputs
+
+<Canvas of={ExampleTestStories.EmptyInputs} />
+
+If no numbers are entered, the component defaults to 0 for empty inputs.
+
+### Large Numbers
+
+<Canvas of={ExampleTestStories.LargeNumbers} />
+
+The component can handle large numbers within JavaScript's safe integer limits.
+
+## Testing
+
+This component includes interactive tests that demonstrate:
+
+- Input field interactions
+- Button clicks
+- Result verification
+- Accessibility testing
+- Edge cases handling:
+  - Negative numbers
+  - Decimal numbers
+  - Empty inputs
+  - Large numbers
+
+### Running Tests
+
+You can run the tests using:
+
+```bash
+# Run all Storybook tests
+pnpm test-storybook
+
+# Run tests for this component only
+pnpm test-storybook --grep "ExampleTest"
+```
+
+## Platform Support
+
+This component is currently only available for web applications. For React
+Native implementation, please refer to the mobile components library.
+
+## Related Components
+
+- `Input` - Used for number inputs
+- `Button` - Used for triggering calculations
+
+## Contributing
+
+When working with this component:
+
+1. Follow the TypeScript guidelines
+2. Ensure all tests pass
+3. Update documentation for any changes
+4. Consider mobile compatibility if implementing new features

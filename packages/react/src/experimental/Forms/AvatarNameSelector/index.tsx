@@ -200,8 +200,9 @@ export const AvatarNameSelector = (
       }
     } else {
       const visibleIds = new Set(filteredEntities.map((ent) => ent.id))
+      console.log("prevSelected", prevSelected)
       newSelectedEntities = (prevSelected ?? []).filter((el) => {
-        return visibleIds.has(el.id) && el.id !== entityToRemove.id
+        return !visibleIds.has(el.id) && el.id !== entityToRemove.id
       })
     }
 

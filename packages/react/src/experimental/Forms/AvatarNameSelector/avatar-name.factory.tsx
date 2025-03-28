@@ -5,7 +5,7 @@ export const famousEmployees: AvatarNamedEntity[] = [
   {
     id: 1000,
     name: "Albert Einstein",
-    searchKeys: ["Albert", "Albi", "Einstein", "cerebrito"],
+    searchKeys: ["Albert", "Albert Einstein", "Al", "Einstein", "genius"],
     avatar: avatar,
   },
   {
