@@ -9,13 +9,17 @@ import {
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/i18n-provider"
 import { ComponentProps } from "react"
-import { ActionsDropdown } from "../Actions/Dropdown"
-import type { FiltersDefinition } from "../Filters/types"
-import { ActionsDefinition } from "../actions"
-import { SortingKey, SortingsDefinition, SortingsState } from "../sortings"
-import { CollectionProps, RecordType } from "../types"
-import { useData } from "../useData"
-import { PropertyDefinition, renderValue } from "../utils"
+import type { FiltersDefinition } from "../../../Filters/types"
+import { ItemActionsDefinition } from "../../../item-actions"
+import { ActionsDropdown } from "../../../ItemActions/Dropdown"
+import {
+  SortingKey,
+  SortingsDefinition,
+  SortingsState,
+} from "../../../sortings"
+import { CollectionProps, RecordType } from "../../../types"
+import { useData } from "../../../useData"
+import { PropertyDefinition, renderValue } from "../../../utils"
 
 export type WithOptionalSorting<
   Record,
@@ -42,7 +46,7 @@ export const TableCollection = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Actions extends ActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<Record>,
 >({
   columns,
   source,
@@ -50,7 +54,7 @@ export const TableCollection = <
   Record,
   Filters,
   Sortings,
-  Actions,
+  ItemActions,
   TableVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
@@ -107,7 +111,9 @@ export const TableCollection = <
 
   if (isInitialLoading) {
     return (
-      <OneTable.Skeleton columns={columns.length + (source.actions ? 1 : 0)} />
+      <OneTable.Skeleton
+        columns={columns.length + (source.itemActions ? 1 : 0)}
+      />
     )
   }
 
@@ -148,7 +154,7 @@ export const TableCollection = <
                 {label}
               </TableHead>
             ))}
-            {source.actions && (
+            {source.itemActions && (
               <TableHead key="actions" width="fit" hidden>
                 {t.collections.actions.actions}
               </TableHead>
@@ -171,9 +177,9 @@ export const TableCollection = <
                     {renderValue(item, column)}
                   </TableCell>
                 ))}
-                {source.actions && (
+                {source.itemActions && (
                   <TableCell key="actions" href={itemHref}>
-                    <ActionsDropdown item={item} actions={source.actions} />
+                    <ActionsDropdown item={item} actions={source.itemActions} />
                   </TableCell>
                 )}
               </TableRow>
