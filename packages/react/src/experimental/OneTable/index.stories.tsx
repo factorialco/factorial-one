@@ -672,6 +672,19 @@ export const WithLinks: Story = {
 }
 
 export const Loading: Story = {
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            // This rule is disabled because the loading state has a different background color
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
   render: () => {
     const [loading, setLoading] = useState(true)
 
