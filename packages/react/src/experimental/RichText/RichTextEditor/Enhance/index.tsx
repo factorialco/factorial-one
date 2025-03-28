@@ -76,7 +76,7 @@ const EnhanceActivator = ({
           disabled={disableButtons}
           // @ts-ignore
           className={cn(
-            "magicBackground magicBorder magicColor",
+            "magicBackground magicColor",
             isLoadingEnhance && "animate-pulse"
           )}
         />

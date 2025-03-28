@@ -54,9 +54,11 @@ const AcceptChanges = ({
           onAccept()
         }}
         size="sm"
-        variant="default"
+        variant="ghost"
         icon={Check}
         type="button"
+        // @ts-ignore
+        className="magicBackground magicColor rounded-xs"
       />
     </div>
   )

@@ -3,11 +3,11 @@ import { Alert, AlertDescription, AlertTitle } from "@/experimental/exports"
 import { useEffect } from "react"
 
 interface EnhanceErrorProps {
-  aiError: string
+  error: string
   onClose: () => void
 }
 
-const EnhanceError = ({ aiError, onClose }: EnhanceErrorProps) => {
+const EnhanceError = ({ error, onClose }: EnhanceErrorProps) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       onClose()
@@ -19,7 +19,7 @@ const EnhanceError = ({ aiError, onClose }: EnhanceErrorProps) => {
     <div className="absolute bottom-0 flex w-full items-center justify-center p-3">
       <div className="w-fit rounded-md bg-f1-background drop-shadow-sm">
         <Alert variant="destructive" className="w-fit max-w-full">
-          <AlertTitle>{aiError || "Error"}</AlertTitle>
+          <AlertTitle>{error || "Error"}</AlertTitle>
           <AlertDescription>
             <Button
               variant="default"

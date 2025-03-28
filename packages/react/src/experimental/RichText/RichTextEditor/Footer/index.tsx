@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react"
 import { EnhanceActivator } from "../Enhance"
 import { Toolbar, ToolbarDivider } from "../Toolbar"
 import { actionType, enhanceConfig, primaryActionType } from "../utils/types"
+import { ActionsMenu } from "./ActionsMenu"
 
 interface FooterProps {
   editor: Editor
@@ -148,38 +149,12 @@ const Footer = ({
         )}
       </div>
 
-      <div className="flex flex-shrink-0 items-center gap-2">
-        {secondaryAction && !useLittleMode && (
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              secondaryAction.onClick()
-            }}
-            variant={secondaryAction.variant ?? "outline"}
-            size="md"
-            label={secondaryAction.label}
-            disabled={isAcceptChangesOpen || secondaryAction.disabled}
-            type="button"
-          />
-        )}
-        {secondaryAction && primaryAction && !useLittleMode && (
-          <ToolbarDivider />
-        )}
-        {primaryAction && (
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              primaryAction.action.onClick()
-            }}
-            variant={primaryAction.action.variant ?? "default"}
-            size="md"
-            label={primaryAction.action.label}
-            disabled={isAcceptChangesOpen || primaryAction.action.disabled}
-            icon={primaryAction.action.icon ?? undefined}
-            type="button"
-          />
-        )}
-      </div>
+      <ActionsMenu
+        primaryAction={primaryAction}
+        secondaryAction={secondaryAction}
+        useLittleMode={useLittleMode}
+        isAcceptChangesOpen={isAcceptChangesOpen}
+      />
     </div>
   )
 }
