@@ -1,3 +1,4 @@
+import { ScrollArea } from "@/ui/scrollarea"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { useVirtualizer } from "@tanstack/react-virtual"
 import * as React from "react"
@@ -123,54 +124,57 @@ const SelectContent = React.forwardRef<
           }}
         >
           {!!props.top && <div>{props.top}</div>}
-          {/* <SelectScrollButton variant="up" /> */}
-          <SelectPrimitive.Viewport
-            ref={parentRef}
-            className={cn(
-              position === "popper" &&
-                "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
-            )}
+          <ScrollArea
+            viewportRef={parentRef}
+            className="flex max-h-[300px] flex-col overflow-y-auto"
           >
-            {isEmpty ? (
-              <p className="p-2 text-center">{emptyMessage || "-"}</p>
-            ) : isVirtual ? (
-              <div
-                className={cn(
-                  "transition-opacity delay-100",
-                  virtualReady ? "" : "opacity-0"
-                )}
-                style={{
-                  height: virtualizer.getTotalSize(),
-                  width: "100%",
-                  position: "relative",
-                }}
-              >
+            <SelectPrimitive.Viewport
+              asChild
+              className={cn(
+                position === "popper" &&
+                  "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
+              )}
+            >
+              {isEmpty ? (
+                <p className="p-2 text-center">{emptyMessage || "-"}</p>
+              ) : isVirtual ? (
                 <div
+                  className={cn(
+                    "transition-opacity delay-100",
+                    virtualReady ? "" : "opacity-0"
+                  )}
                   style={{
-                    // position: "absolute",
-                    top: 0,
-                    left: 0,
+                    height: virtualizer.getTotalSize(),
                     width: "100%",
-                    transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
+                    position: "relative",
                   }}
                 >
-                  {virtualItems.map((virtualItem) => (
-                    <div
-                      key={virtualItem.key}
-                      data-index={virtualItem.index}
-                      ref={virtualizer.measureElement}
-                      tabIndex={virtualItem.index === positionIndex ? 0 : -1}
-                    >
-                      {items[virtualItem.index].item}
-                    </div>
-                  ))}
+                  <div
+                    style={{
+                      // position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
+                    }}
+                  >
+                    {virtualItems.map((virtualItem) => (
+                      <div
+                        key={virtualItem.key}
+                        data-index={virtualItem.index}
+                        ref={virtualizer.measureElement}
+                        tabIndex={virtualItem.index === positionIndex ? 0 : -1}
+                      >
+                        {items[virtualItem.index].item}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ) : (
-              children
-            )}
-          </SelectPrimitive.Viewport>
-          {/* <SelectScrollButton variant="down" /> */}
+              ) : (
+                <>{children}</>
+              )}
+            </SelectPrimitive.Viewport>
+          </ScrollArea>
           {!!props.bottom && <div>{props.bottom}</div>}
         </SelectPrimitive.Content>
       </SelectPrimitive.Portal>
