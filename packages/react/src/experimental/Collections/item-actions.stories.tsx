@@ -1,16 +1,24 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { Ai, Download, Pencil } from "../../icons/app"
-import { SecondaryActionsDefinition } from "./actions"
+import {
+  Ai,
+  ArrowRight,
+  Delete,
+  Download,
+  Pencil,
+  Share,
+  Star,
+} from "../../icons/app"
 import { DataCollection, useDataSource } from "./index"
+import { ItemActionsDefinition } from "./item-actions"
 
 const meta = {
-  title: "Data Collection/Actions",
+  title: "Data Collection/Item Actions",
   parameters: {
     layout: "padded",
     docs: {
       description: {
         component:
-          "Data collection actions are a way to add actions to a data collection. There actions are displayed in the top right button or top right actions menu (three dots). The actions are data collection specific and are not related to the items in the collection. (check Item Actions for item specific actions)",
+          "Data collection item actions are a way to add actions to a data collection item. The actions are  item specific. (check Data Collection Actions for data collection specific actions)",
       },
     },
   },
@@ -80,30 +88,93 @@ const mockUsers = [
 ]
 
 // Example of a comprehensive actions definition with various types of actions
-const buildActions = (): SecondaryActionsDefinition => {
-  return () => {
+const createUserActions = (): ItemActionsDefinition<
+  (typeof mockUsers)[number]
+> => {
+  return (user: (typeof mockUsers)[number]) => {
+    if (user.id === "user-1") {
+      return undefined
+    }
     return [
+      // Basic action with icon
+      {
+        label: "View Profile",
+        icon: Ai,
+        onClick: () => console.log(`Viewing ${user.name}'s profile`),
+      },
+
       // Action with description
       {
-        label: "Another user actions User",
+        label: "Edit User",
         icon: Pencil,
-        onClick: () => console.log(`Another user action`),
-        description: "User actions",
+        onClick: () => console.log(`Editing ${user.name}`),
+        description: "Modify user information",
+        enabled: user.permissions.canEdit,
       },
 
       // Separator between action groups
       { type: "separator" },
+
+      // Conditional action based on item state
       {
-        label: "Export",
-        icon: Download,
-        onClick: () => console.log(`Downloading users`),
-        description: "Download users",
+        label: user.isStarred ? "Remove Star" : "Add Star",
+        icon: Star,
+        onClick: () => console.log(`Toggling star for ${user.name}`),
+        description: user.isStarred
+          ? "Remove from favorites"
+          : "Add to favorites",
       },
+
+      // Action with conditional visibility
       {
-        label: "Import",
+        label: "Share User",
+        icon: Share,
+        onClick: () => console.log(`Sharing ${user.name}`),
+        enabled: user.permissions.canShare,
+      },
+
+      // Conditional action based on status
+      ...(user.status === "active"
+        ? [
+            {
+              label: "Deactivate User",
+              icon: Delete,
+              onClick: () => console.log(`Deactivating ${user.name}`),
+              description: "Temporarily disable account",
+            } as const,
+          ]
+        : [
+            {
+              label: "Activate User",
+              icon: ArrowRight,
+              onClick: () => console.log(`Activating ${user.name}`),
+              description: "Re-enable account",
+            } as const,
+          ]),
+
+      // Critical action with conditional visibility
+      {
+        label: "Delete Permanently",
+        icon: Delete,
+        onClick: () => {
+          if (confirm(`Are you sure you want to delete ${user.name}?`)) {
+            console.log(`Deleting ${user.name}`)
+          }
+        },
+        critical: true,
+        description: "This action cannot be undone",
+        enabled: user.permissions.canDelete,
+      },
+
+      // Action with download functionality
+      {
+        label: "Download Data",
         icon: Download,
-        onClick: () => console.log(`Importing users`),
-        description: "Import users",
+        onClick: () => {
+          console.log(`Downloading data for ${user.name}`)
+          // In a real implementation, this would trigger a download
+        },
+        enabled: user.status === "active",
       },
     ]
   }
@@ -116,25 +187,17 @@ export const BasicActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
-      primaryActions: () => ({
-        label: "Create user",
-        icon: Ai,
-        onClick: () => console.log(`Creating a user`),
-      }),
-      secondaryActions: buildActions(),
+      itemActions: createUserActions(),
     })
 
     return (
       <div className="space-y-8">
         <div>
-          <h2 className="mb-2 text-xl font-semibold">
-            Data Collection Actions Example
-          </h2>
+          <h2 className="mb-2 text-xl font-semibold">Items Actions Example</h2>
           <p className="mb-4 text-f1-foreground-secondary">
             This example demonstrates various types of actions that can be used
-            in Collections. Click in the top right button or top right actions
-            menu (three dots) to see the available actions for the data
-            collection.
+            in Collections. Click on the actions menu (three dots) to see the
+            available actions for each user.
           </p>
         </div>
 
@@ -180,18 +243,17 @@ export const CardActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
-      secondaryActions: buildActions(),
+      itemActions: createUserActions(),
     })
 
     return (
       <div className="space-y-8">
         <div>
           <h2 className="mb-2 text-xl font-semibold">
-            Card Collection Actions Example
+            Card Item Actions Example
           </h2>
           <p className="mb-4 text-f1-foreground-secondary">
-            This example shows how data collection actions work with card
-            visualization.
+            This example shows how actions work with card visualization.
           </p>
         </div>
 

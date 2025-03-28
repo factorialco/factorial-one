@@ -16,7 +16,7 @@ export interface MenuItem extends NavigationItem {
 }
 
 export interface MenuCategory {
-  id: number
+  id: string
   title: string
   items: MenuItem[]
   isRoot?: boolean

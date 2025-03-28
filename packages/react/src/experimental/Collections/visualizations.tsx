@@ -5,14 +5,14 @@ import { Icon, IconType } from "../../components/Utilities/Icon"
 import { Kanban, Sliders, Table } from "../../icons/app"
 import { useI18n } from "../../lib/i18n-provider"
 import { cn, focusRing } from "../../lib/utils"
-import { ActionsDefinition } from "./actions"
-import type { CardVisualizationOptions } from "./Card"
-import { CardCollection } from "./Card"
 import type { FiltersDefinition } from "./Filters/types"
+import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
-import type { TableVisualizationOptions } from "./Table"
-import { TableCollection } from "./Table"
 import type { DataSource, RecordType } from "./types"
+import type { CardVisualizationOptions } from "./visualizations/collection/Card"
+import { CardCollection } from "./visualizations/collection/Card"
+import type { TableVisualizationOptions } from "./visualizations/collection/Table"
+import { TableCollection } from "./visualizations/collection/Table"
 
 /**
  * Represents a visualization configuration for displaying collection data.
@@ -20,7 +20,7 @@ import type { DataSource, RecordType } from "./types"
  *
  * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
- * @template Actions - The actions type extending ActionsDefinition
+ * @template ItemActions - The actions type extending Item ActionsDefinition
  */
 export type Visualization<
   Record extends RecordType,
@@ -166,7 +166,7 @@ export const VisualizationSelector = <
  *
  * @template Record - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
- * @template Actions - The actions type extending ActionsDefinition
+ * @template ItemActions - The item actions type extending Item ActionsDefinition
  *
  * @param visualization - The configuration for the current visualization
  * @param source - The data source to visualize
@@ -177,25 +177,25 @@ export const VisualizationRenderer = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Actions extends ActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<Record>,
 >({
   visualization,
   source,
 }: {
   visualization: Visualization<Record, Filters, Sortings>
-  source: DataSource<Record, Filters, Sortings, Actions>
+  source: DataSource<Record, Filters, Sortings, ItemActions>
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
       return (
-        <TableCollection<Record, Filters, Sortings, Actions>
+        <TableCollection<Record, Filters, Sortings, ItemActions>
           source={source}
           {...visualization.options}
         />
       )
     case "card":
       return (
-        <CardCollection<Record, Filters, Sortings, Actions>
+        <CardCollection<Record, Filters, Sortings, ItemActions>
           source={source}
           {...visualization.options}
         />

@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.14.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.14.0...factorial-one-react-v1.14.1) (2025-03-28)
+
+
+### Bug Fixes
+
+* Fixes in Product Updates dropdown ([#1491](https://github.com/factorialco/factorial-one/issues/1491)) ([81f374f](https://github.com/factorialco/factorial-one/commit/81f374fe00d3e1b720f8ea11f1fd43dfa4ad37af))
+
+## [1.14.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.13.0...factorial-one-react-v1.14.0) (2025-03-28)
+
+
+### Features
+
+* **Collections:** propagate loading state to Table visualization ([#1488](https://github.com/factorialco/factorial-one/issues/1488)) ([a2a488c](https://github.com/factorialco/factorial-one/commit/a2a488c27146618c1549e3457a42d8e032562a7b))
+
+## [1.13.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.12.0...factorial-one-react-v1.13.0) (2025-03-27)
+
+
+### Features
+
+* collection actions ([#1464](https://github.com/factorialco/factorial-one/issues/1464)) ([51fa291](https://github.com/factorialco/factorial-one/commit/51fa29173952edb1ce2e1f6332223149219f446e))
+
 ## [1.12.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.11.0...factorial-one-react-v1.12.0) (2025-03-26)
 
 
