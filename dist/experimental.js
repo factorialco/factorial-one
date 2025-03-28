@@ -24667,7 +24667,7 @@ const lM = (e, n) => (e(n) || []).filter(
   amount: (e, n) => /* @__PURE__ */ o("div", { className: n.visualization === "table" ? "text-right" : "", children: e }),
   avatarList: (e) => /* @__PURE__ */ o(uo, { avatars: e.avatarList, size: "xsmall", max: e.max }),
   status: (e) => /* @__PURE__ */ o(Wi, { variant: e.status, text: e.label }),
-  user: (e) => /* @__PURE__ */ k("div", { className: "flex items-center gap-2", children: [
+  person: (e) => /* @__PURE__ */ k("div", { className: "flex items-center gap-2", children: [
     /* @__PURE__ */ o(
       jn,
       {

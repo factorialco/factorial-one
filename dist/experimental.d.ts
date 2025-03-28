@@ -2047,7 +2047,7 @@ declare const propertyRenderers: {
         status: StatusVariant;
         label: string;
     }) => JSX_2.Element;
-    readonly user: (args: {
+    readonly person: (args: {
         firstName: string;
         lastName: string;
         src?: string;
