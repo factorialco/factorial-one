@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react"
 
-import { fn } from "@storybook/test"
+import { expect, fn, userEvent, within } from "@storybook/test"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { ComponentProps, useState } from "react"
 import { RawTag } from "../../Information/Tags/RawTag"
@@ -139,6 +139,51 @@ export const Default = {
         }}
       />
     )
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLCanvasElement }) => {
+    const canvas = within(canvasElement)
+
+    // Test initial render
+    const button = canvas.getByRole("button")
+    expect(button).toBeInTheDocument()
+
+    // Test opening popover
+    await userEvent.click(button)
+    await new Promise((resolve) => setTimeout(resolve, 600))
+
+    const popover = document.querySelector(
+      "[data-radix-popper-content-wrapper]"
+    )
+    expect(popover).toBeInTheDocument()
+
+    // Test search functionality
+    const input = popover?.querySelector("input")
+    expect(input).toBeInTheDocument()
+    await userEvent.type(input!, "Albert Einstein")
+    await new Promise((resolve) => setTimeout(resolve, 600))
+
+    // Get the popover content and use within to scope our queries
+    const popoverContent = within(popover as HTMLElement)
+
+    // Find the main content section (left side) where the list is
+    const mainContent = popoverContent
+      .getByRole("dialog")
+      .querySelector(".absolute.left-0")
+    expect(mainContent).toBeInTheDocument()
+
+    // Use within to scope our search to just the main content
+    const mainContentQueries = within(mainContent as HTMLElement)
+
+    // Find and click the item in the main list
+    const listItem = mainContentQueries.getByRole("checkbox", {
+      name: /Albert Einstein/i,
+    })
+    expect(listItem).toBeInTheDocument()
+    await userEvent.click(listItem.closest("label")!)
+
+    // Test that selection is reflected in trigger
+    const triggerText = canvas.getByText(/Marie Curie/)
+    expect(triggerText).toBeInTheDocument()
   },
 }
 
@@ -447,5 +492,92 @@ export const WithCustomTrigger = {
         </AvatarNameSelector>
       </div>
     )
+  },
+}
+
+export const WithSearch = {
+  args: {
+    ...defaultArgs,
+    loading: false,
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLCanvasElement }) => {
+    const canvas = within(canvasElement)
+    await userEvent.click(canvas.getByRole("button"))
+    await new Promise((resolve) => setTimeout(resolve, 600))
+
+    const popover = document.querySelector(
+      "[data-radix-popper-content-wrapper]"
+    )
+    const popoverContent = within(popover as HTMLElement)
+    const input = popoverContent.getByRole("textbox")
+    expect(input).toBeInTheDocument()
+
+    // Test empty search
+    await userEvent.type(input, "NonExistentPerson")
+    await new Promise((resolve) => setTimeout(resolve, 600))
+
+    // Verify no results message (both title and subtitle)
+    const noResultsTitle = popoverContent.getByText("No results found")
+    expect(noResultsTitle).toBeInTheDocument()
+    const noResultsSubtitle = popoverContent.getByText(
+      "Try searching with a different term."
+    )
+    expect(noResultsSubtitle).toBeInTheDocument()
+
+    // Test partial match
+    await userEvent.clear(input)
+    await userEvent.type(input, "Ein")
+    await new Promise((resolve) => setTimeout(resolve, 600))
+
+    // Verify results appear and no results message is gone
+    const matchedItems = popoverContent.getAllByRole("checkbox")
+    expect(matchedItems.length).toBeGreaterThan(0)
+    expect(noResultsTitle).not.toBeInTheDocument()
+    expect(noResultsSubtitle).not.toBeInTheDocument()
+  },
+}
+
+export const LoadingState = {
+  args: {
+    ...defaultArgs,
+    loading: true,
+  },
+  play: async ({ canvasElement }: { canvasElement: HTMLCanvasElement }) => {
+    const canvas = within(canvasElement)
+
+    // Click the trigger button
+    const triggerButton = canvas.getByRole("button")
+    await userEvent.click(triggerButton)
+
+    // Wait a bit for the popover to appear
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    // Find the popover and verify it exists
+    const popover = document.querySelector(
+      "[data-radix-popper-content-wrapper]"
+    )
+    expect(popover).toBeInTheDocument()
+
+    // Use within to scope our queries to the popover
+    const popoverContent = within(popover as HTMLElement)
+
+    // Check for loading state by finding the spinner container
+    const loadingSpinner = popoverContent
+      .getByRole("dialog")
+      .querySelector('div[aria-busy="true"][aria-live="polite"]')
+    expect(loadingSpinner).toBeInTheDocument()
+
+    // Wait for loading to complete
+    await new Promise((resolve) => setTimeout(resolve, 600))
+
+    // Verify content is loaded
+    const mainContent = popoverContent.getByRole("dialog")
+    expect(mainContent).toBeInTheDocument()
+
+    // Verify loading spinner is gone
+    const spinnerAfterLoad = popoverContent
+      .getByRole("dialog")
+      .querySelector('div[aria-busy="true"][aria-live="polite"]')
+    expect(spinnerAfterLoad).not.toBeInTheDocument()
   },
 }

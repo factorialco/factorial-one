@@ -1,0 +1,21 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: "Factorial One DS - Component Guidelines"
+globs: "packages/react/src/components/**/*.tsx"
+alwaysApply: false
+---
+
+# Component Guidelines
+
+- Use named exports for all components.
+- Implement `'use client'` directive only when necessary.
+- Structure component files:
+  1. **Type definitions and interfaces**
+  2. **Component implementation**
+  3. **Helper functions**
+  4. **Exports**
+
