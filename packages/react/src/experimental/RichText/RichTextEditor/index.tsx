@@ -31,10 +31,7 @@ import { EnhanceError } from "./Enhance/EnhanceError"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
 import "./index.css"
-import {
-  handleEnhanceWithAIFunction,
-  isValidSelectionForEnhancement,
-} from "./utils/enhance"
+import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import {
   getAcceptFileTypeString,
   handleAddFiles,
@@ -105,6 +102,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
     const [aiError, setAiError] = useState<string | null>(null)
+    const [lastIntent, setLastIntent] = useState<{
+      selectedIntent?: string
+      customIntent?: string
+    } | null>(null)
 
     useEffect(() => {
       if (screenfull.isEnabled) {
@@ -211,19 +212,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     }
 
     const handleEnhanceWithAI = useCallback(
-      async (
-        selectedText: string,
-        selectedIntent?: string,
-        customIntent?: string,
-        context?: string
-      ) => {
+      async (selectedIntent?: string, customIntent?: string) => {
         if (enhanceConfig) {
           await handleEnhanceWithAIFunction({
-            selectedText,
             editor: editor!,
             enhanceText: enhanceConfig?.onEnhanceText!,
             setIsLoadingEnhance,
-            isValidSelectionForEnhancement,
             onSuccess: () => {
               editor?.setEditable(false)
               setIsAcceptChangesOpen(true)
@@ -235,11 +229,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             },
             selectedIntent,
             customIntent,
-            context,
           })
         }
       },
-      [editor, setIsLoadingEnhance]
+      [editor, setIsLoadingEnhance, setLastIntent]
     )
 
     if (!editor) return null
@@ -291,7 +284,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         Editor
         *********/}
         <div
-          id="editor-container"
           ref={editorRef}
           className={cn(
             "relative w-full flex-grow",
@@ -343,14 +335,20 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               onAccept={() => {
                 setIsAcceptChangesOpen(false)
                 editor?.setEditable(true)
+                setLastIntent(null)
               }}
               onReject={() => {
                 editor?.chain().focus().undo().run()
                 setIsAcceptChangesOpen(false)
                 editor?.setEditable(true)
+                setLastIntent(null)
               }}
               onRepeat={() => {
                 editor?.chain().focus().undo().run()
+                handleEnhanceWithAI(
+                  lastIntent?.selectedIntent,
+                  lastIntent?.customIntent
+                )
               }}
             />
           )}
@@ -372,6 +370,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           enhanceConfig={enhanceConfig}
           isFullscreen={isFullscreen}
           onEnhanceWithAI={handleEnhanceWithAI}
+          setLastIntent={setLastIntent}
         />
 
         <EditorBubbleMenu
@@ -381,6 +380,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           enhanceConfig={enhanceConfig}
           disableButtons={isAcceptChangesOpen}
           linkPopupConfig={linkPopupConfig}
+          setLastIntent={setLastIntent}
         />
       </div>
     )

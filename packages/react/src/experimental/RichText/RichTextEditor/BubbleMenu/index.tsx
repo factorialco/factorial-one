@@ -114,16 +114,20 @@ const LinkPopup = ({
 
 interface EditorBubbleMenuProps {
   editor: Editor
-  onEnhanceWithAI?: (
-    selectedText: string,
+  onEnhanceWithAI: (
     selectedIntent?: string,
-    customIntent?: string,
-    context?: string
+    customIntent?: string
   ) => Promise<void>
   isLoadingEnhance: boolean
   disableButtons: boolean
   enhanceConfig: enhanceConfig | undefined
   linkPopupConfig?: linkPopupConfig | undefined
+  setLastIntent: (
+    lastIntent: {
+      selectedIntent?: string
+      customIntent?: string
+    } | null
+  ) => void
 }
 
 const EditorBubbleMenu = ({
@@ -133,6 +137,7 @@ const EditorBubbleMenu = ({
   disableButtons,
   enhanceConfig,
   linkPopupConfig,
+  setLastIntent,
 }: EditorBubbleMenuProps) => {
   const [openLinkPopover, setOpenLinkPopover] = useState(false)
 
@@ -151,14 +156,6 @@ const EditorBubbleMenu = ({
         hideOnClick: false,
         popperOptions: {
           modifiers: [
-            {
-              name: "preventOverflow",
-              options: {
-                boundary:
-                  document.getElementById("editor-container") ||
-                  "clippingParents",
-              },
-            },
             {
               name: "flip",
               options: {
@@ -251,6 +248,7 @@ const EditorBubbleMenu = ({
             isLoadingEnhance={isLoadingEnhance}
             enhanceConfig={enhanceConfig}
             disableButtons={disableButtons}
+            setLastIntent={setLastIntent}
           />
         )}
       </div>

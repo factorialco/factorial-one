@@ -15,16 +15,20 @@ interface FooterProps {
   isAcceptChangesOpen: boolean
   fileInputRef: React.RefObject<HTMLInputElement>
   canUseFiles: boolean
-  onEnhanceWithAI?: (
-    selectedText: string,
+  onEnhanceWithAI: (
     selectedIntent?: string,
-    customIntent?: string,
-    context?: string
+    customIntent?: string
   ) => Promise<void>
   isLoadingEnhance: boolean
   disableButtons: boolean
   enhanceConfig: enhanceConfig | undefined
   isFullscreen: boolean
+  setLastIntent: (
+    lastIntent: {
+      selectedIntent?: string
+      customIntent?: string
+    } | null
+  ) => void
 }
 
 const Footer = ({
@@ -39,6 +43,7 @@ const Footer = ({
   isLoadingEnhance,
   enhanceConfig,
   isFullscreen,
+  setLastIntent,
 }: FooterProps) => {
   const [isToolbarOpen, setIsToolbarOpen] = useState(false)
   const [toolbarAnimationComplete, setToolbarAnimationComplete] =
@@ -132,6 +137,7 @@ const Footer = ({
               enhanceConfig={enhanceConfig}
               disableButtons={isAcceptChangesOpen}
               hideLabel={useLittleMode}
+              setLastIntent={setLastIntent}
             />
           </>
         )}

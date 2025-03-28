@@ -85,7 +85,7 @@ const AIEnhanceMenu = ({
 
   return (
     <div
-      className="flex w-[500px] flex-col overflow-hidden rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
+      className="flex w-80 flex-col overflow-hidden rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
       onClick={(e) => e.stopPropagation()}
     >
       {canUseCustomPrompt && (
