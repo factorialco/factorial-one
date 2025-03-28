@@ -1,5 +1,5 @@
-import { ColumnWidth } from "../OneTable/utils/sizes"
 import { ReactNode } from "react"
+import { ColumnWidth } from "../OneTable/utils/sizes"
 
 export type PropertyDefinition<T> = {
   label: string

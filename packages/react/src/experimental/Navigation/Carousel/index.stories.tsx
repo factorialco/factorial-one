@@ -1,8 +1,8 @@
+import { Meta, StoryObj } from "@storybook/react"
 import { BarChartProps } from "../../../components/Charts/BarChart"
 import BarChartStory from "../../../components/Charts/BarChart/index.stories"
-import { BarChartWidget } from "../../Widgets/Charts/BarChartWidget"
 import { Placeholder } from "../../../lib/storybook-utils/placeholder"
-import { Meta, StoryObj } from "@storybook/react"
+import { BarChartWidget } from "../../Widgets/Charts/BarChartWidget"
 import { Carousel } from "./index"
 
 const meta: Meta<typeof Carousel> = {

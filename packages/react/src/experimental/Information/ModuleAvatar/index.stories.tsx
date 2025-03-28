@@ -1,5 +1,5 @@
-import * as iconComponents from "../../../icons/modules"
 import type { Meta, StoryObj } from "@storybook/react"
+import * as iconComponents from "../../../icons/modules"
 import { ModuleAvatar } from "./index"
 
 const meta: Meta<typeof ModuleAvatar> = {

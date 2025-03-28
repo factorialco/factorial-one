@@ -1,9 +1,9 @@
+import { memo, ReactNode } from "react"
 import { Icon } from "../../../../components/Utilities/Icon"
-import { InternalNavigateActionType } from "../ItemContainer"
 import ChevronRight from "../../../../icons/app/ChevronRight"
 import { Link } from "../../../../lib/linkHandler"
 import { cn } from "../../../../lib/utils"
-import { memo, ReactNode } from "react"
+import { InternalNavigateActionType } from "../ItemContainer"
 
 export type NavigateActionProps = {
   children: ReactNode

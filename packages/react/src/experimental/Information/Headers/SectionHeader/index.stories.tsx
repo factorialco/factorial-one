@@ -1,6 +1,6 @@
-import * as Icon from "../../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
+import * as Icon from "../../../../icons/app"
 import { SectionHeader } from "./index"
 const meta: Meta<typeof SectionHeader> = {
   component: SectionHeader,

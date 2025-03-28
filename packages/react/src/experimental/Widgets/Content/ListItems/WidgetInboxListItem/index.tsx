@@ -1,7 +1,7 @@
 import { IconType } from "../../../../../components/Utilities/Icon"
-import { ModuleAvatar } from "../../../../Information/ModuleAvatar"
 import { Bell as BellIcon } from "../../../../../icons/app"
 import { cn } from "../../../../../lib/utils"
+import { ModuleAvatar } from "../../../../Information/ModuleAvatar"
 
 type Props<Id extends string | number = string | number> = {
   id: Id

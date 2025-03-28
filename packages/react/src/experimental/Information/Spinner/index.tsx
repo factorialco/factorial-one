@@ -1,6 +1,6 @@
-import { cn } from "../../../lib/utils"
 import { cva, type VariantProps } from "cva"
 import { motion } from "framer-motion"
+import { cn } from "../../../lib/utils"
 
 const spinnerVariants = cva({
   base: "flex select-none items-center justify-center text-f1-foreground-secondary",

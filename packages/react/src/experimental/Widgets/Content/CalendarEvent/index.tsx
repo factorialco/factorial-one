@@ -1,10 +1,10 @@
+import { forwardRef } from "react"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
+import { ChevronRight } from "../../../../icons/app"
+import { cn } from "../../../../lib/utils"
 import { DateAvatar } from "../../../Information/Avatars/DateAvatar"
 import { RawTag } from "../../../Information/Tags/RawTag"
 import { Tooltip } from "../../../Overlays/Tooltip"
-import { ChevronRight } from "../../../../icons/app"
-import { cn } from "../../../../lib/utils"
-import { forwardRef } from "react"
 
 type Tag = {
   icon: IconType

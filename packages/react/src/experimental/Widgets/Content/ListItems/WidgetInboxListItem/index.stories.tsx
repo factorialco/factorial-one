@@ -1,5 +1,5 @@
-import { ClockIn as ClockInIcon } from "../../../../../icons/modules"
 import type { Meta, StoryObj } from "@storybook/react"
+import { ClockIn as ClockInIcon } from "../../../../../icons/modules"
 import { WidgetInboxListItem, WidgetInboxListItemProps } from "./index"
 
 const meta: Meta<WidgetInboxListItemProps> = {

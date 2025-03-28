@@ -1,7 +1,7 @@
 // Replace your-framework with the name of your framework
+import type { Meta, StoryObj } from "@storybook/react"
 import { Button } from "../../../components/Actions/Button"
 import { usePrivacyMode } from "../../../lib/privacyMode"
-import type { Meta, StoryObj } from "@storybook/react"
 import { PrivateBox } from "./index"
 
 const meta: Meta = {

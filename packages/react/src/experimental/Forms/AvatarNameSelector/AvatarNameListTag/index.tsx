@@ -1,8 +1,8 @@
 import { Icon } from "../../../../components/Utilities/Icon"
-import { BaseAvatar } from "../../../Information/Avatars/BaseAvatar"
-import { BaseTag } from "../../../Information/Tags/BaseTag"
 import { Cross } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
+import { BaseAvatar } from "../../../Information/Avatars/BaseAvatar"
+import { BaseTag } from "../../../Information/Tags/BaseTag"
 import { AvatarNamedSubEntity } from "../types"
 
 export const AvatarNameListTag = ({

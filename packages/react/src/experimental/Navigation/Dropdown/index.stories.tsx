@@ -1,6 +1,6 @@
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import * as Icons from "../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import * as Icons from "../../../icons/app"
+import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 import { Dropdown } from "./index"
 
 const meta: Meta<typeof Dropdown> = {

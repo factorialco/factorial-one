@@ -1,7 +1,7 @@
-import { SelectContext } from "../SelectContext.tsx"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import * as React from "react"
 import { useState } from "react"
+import { SelectContext } from "../SelectContext.tsx"
 
 /**
  * Select Root component

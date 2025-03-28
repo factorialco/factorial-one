@@ -1,6 +1,6 @@
+import { forwardRef } from "react"
 import { BarChart, BarChartProps } from "../../../../components/Charts/BarChart"
 import { withSkeleton } from "../../../../lib/skeleton"
-import { forwardRef } from "react"
 import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
 const BarChartContainer = forwardRef<

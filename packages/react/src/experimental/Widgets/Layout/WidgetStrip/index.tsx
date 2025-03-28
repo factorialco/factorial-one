@@ -1,6 +1,6 @@
-import { ScrollArea } from "../../../Utilities/ScrollArea"
-import { Blend, withSkeleton } from "../../../../lib/skeleton"
 import { forwardRef, ReactNode } from "react"
+import { Blend, withSkeleton } from "../../../../lib/skeleton"
+import { ScrollArea } from "../../../Utilities/ScrollArea"
 import { Widget } from "../../Widget"
 
 type DashboardProps = {

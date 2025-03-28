@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { fn } from "@storybook/test"
 import { ComponentProps } from "react"
-import { AvatarNameListTag } from "./index"
 import { famousEmployees } from "../avatar-name.factory"
 import { mapAvatarNamedEntityToSubentity } from "../utils"
+import { AvatarNameListTag } from "./index"
 
 const meta: Meta = {
   component: AvatarNameListTag,

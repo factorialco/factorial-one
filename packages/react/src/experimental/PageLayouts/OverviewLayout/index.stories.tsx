@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Dashboard } from "../../Widgets/Layout/Dashboard"
-import * as DashboardStories from "../../Widgets/Layout/Dashboard/index.stories"
+import { ComponentProps } from "react"
 import { PageDecorator } from "../../../lib/storybook-utils/pageDecorator"
 import { Placeholder } from "../../../lib/storybook-utils/placeholder"
-import { ComponentProps } from "react"
-import { OverviewLayout } from "./index"
+import { Dashboard } from "../../Widgets/Layout/Dashboard"
+import * as DashboardStories from "../../Widgets/Layout/Dashboard/index.stories"
 import { DetailsItemsList } from "../Utils/DetailsItemsList"
 import * as DetailsItemsListStories from "../Utils/DetailsItemsList/index.stories"
+import { OverviewLayout } from "./index"
 
 const DETAILS_ITEMS_ARGS = DetailsItemsListStories.default
   .args as ComponentProps<typeof DetailsItemsList>

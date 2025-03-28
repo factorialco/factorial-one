@@ -1,8 +1,8 @@
+import { ReactNode, useEffect, useState } from "react"
 import { Icon } from "../../../../components/Utilities/Icon"
-import { InternalCopyActionType } from "../ItemContainer"
 import { CheckCircle, LayersFront } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
-import { ReactNode, useEffect, useState } from "react"
+import { InternalCopyActionType } from "../ItemContainer"
 
 const COPIED_SHOWN_MS = 750
 

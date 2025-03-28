@@ -1,5 +1,5 @@
-import { Placeholder } from "../../../lib/storybook-utils/placeholder"
 import type { Meta, StoryObj } from "@storybook/react"
+import { Placeholder } from "../../../lib/storybook-utils/placeholder"
 import { Page } from "./index"
 
 import { PageHeader } from "../Header/PageHeader"
@@ -7,9 +7,9 @@ import * as HeaderStories from "../Header/PageHeader/index.stories"
 import { Tabs } from "../Tabs"
 import * as TabsStories from "../Tabs/index.stories"
 
-import { StandardLayout } from "../../PageLayouts/StandardLayout"
-import { Briefcase } from "../../../icons/app"
 import { ComponentProps } from "react"
+import { Briefcase } from "../../../icons/app"
+import { StandardLayout } from "../../PageLayouts/StandardLayout"
 import { ApplicationFrame } from "../ApplicationFrame"
 
 type TabsProps = ComponentProps<typeof Tabs>

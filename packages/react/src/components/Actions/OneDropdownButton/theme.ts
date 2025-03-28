@@ -1,5 +1,5 @@
-import { OneDropdownButtonVariant } from "./types.ts"
 import { cva } from "cva"
+import { OneDropdownButtonVariant } from "./types.ts"
 
 export const internalButtonVariants = cva({
   base: "border-0 border-l border-solid",

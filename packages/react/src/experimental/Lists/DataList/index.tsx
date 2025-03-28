@@ -4,10 +4,7 @@ import { IconType } from "../../../components/Utilities/Icon"
 import { CompanyAvatar } from "../../Information/Avatars/CompanyAvatar"
 import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 import { TeamAvatar } from "../../Information/Avatars/TeamAvatar"
-import {
-  InternalActionType,
-  ItemContainer,
-} from "./ItemContainer"
+import { InternalActionType, ItemContainer } from "./ItemContainer"
 
 export type DataListProps = {
   children: ReactElement<Items>[] | ReactElement<Items>

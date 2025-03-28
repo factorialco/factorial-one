@@ -1,8 +1,8 @@
-import { Documents, Recruitment } from "../../../../icons/modules"
-import { Button } from "../../../../ui/button"
 import type { Meta, StoryObj } from "@storybook/react"
 import { expect, userEvent, waitFor, within } from "@storybook/test"
 import { useState } from "react"
+import { Documents, Recruitment } from "../../../../icons/modules"
+import { Button } from "../../../../ui/button"
 import Breadcrumbs, { BreadcrumbItemType } from "./index"
 
 const meta: Meta<typeof Breadcrumbs> = {

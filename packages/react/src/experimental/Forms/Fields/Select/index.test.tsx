@@ -1,7 +1,7 @@
-import { Search } from "../../../../icons/app"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import { Search } from "../../../../icons/app"
 import { Select } from "./index"
 import type { SelectItemProps } from "./types"
 

@@ -1,9 +1,9 @@
 import { Button } from "../../../components/Actions/Button"
 import { ScrollArea } from "./index"
 
-import { Alert, AlertTitle } from "../../Information/Alert"
-import { Placeholder } from "../../../lib/storybook-utils/placeholder"
 import type { Meta, StoryObj } from "@storybook/react"
+import { Placeholder } from "../../../lib/storybook-utils/placeholder"
+import { Alert, AlertTitle } from "../../Information/Alert"
 
 const meta = {
   title: "ScrollArea",
