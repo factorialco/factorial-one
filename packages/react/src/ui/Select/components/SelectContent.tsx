@@ -42,7 +42,7 @@ const SelectContent = React.forwardRef<
 >(
   (
     {
-      items = [],
+      items = undefined,
       className,
       children,
       position = "popper",
@@ -76,9 +76,9 @@ const SelectContent = React.forwardRef<
     }, [items, value])
 
     const virtualizer = useVirtualizer({
-      count: items.length,
+      count: items?.length || 0,
       getScrollElement: () => parentRef.current,
-      estimateSize: (i: number) => items[i].height,
+      estimateSize: (i: number) => items?.[i]?.height || 0,
       overscan: 5,
       enabled: animationStarted,
     })
