@@ -65,7 +65,7 @@ export const TableCollection = <
     Sortings
   >(source)
 
-  const { currentSortings, setCurrentSortings } = source
+  const { currentSortings, setCurrentSortings, isLoading } = source
 
   /**
    * Determine the sort state of a column
@@ -130,7 +130,7 @@ export const TableCollection = <
 
   return (
     <>
-      <OneTable>
+      <OneTable loading={isLoading}>
         <TableHeader>
           <TableRow>
             {columns.map(({ sorting, label, ...column }) => (
