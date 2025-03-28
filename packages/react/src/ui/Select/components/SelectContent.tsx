@@ -1,3 +1,4 @@
+import { ScrollArea } from "@/ui/scrollarea"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { useVirtualizer } from "@tanstack/react-virtual"
 import * as React from "react"
@@ -109,7 +110,8 @@ const SelectContent = React.forwardRef<
               "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
             className,
             // Hides the content when the virtual list is not ready
-            isVirtual && !virtualReady && "opacity-0"
+            isVirtual && !virtualReady && "opacity-0",
+            "border border-solid border-[red]"
           )}
           position={position}
           {...props}
@@ -124,52 +126,54 @@ const SelectContent = React.forwardRef<
         >
           {!!props.top && <div>{props.top}</div>}
           {/* <SelectScrollButton variant="up" /> */}
-          <SelectPrimitive.Viewport
-            ref={parentRef}
-            className={cn(
-              position === "popper" &&
-                "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
-            )}
-          >
-            {isEmpty ? (
-              <p className="p-2 text-center">{emptyMessage || "-"}</p>
-            ) : isVirtual ? (
-              <div
-                className={cn(
-                  "transition-opacity delay-100",
-                  virtualReady ? "" : "opacity-0"
-                )}
-                style={{
-                  height: virtualizer.getTotalSize(),
-                  width: "100%",
-                  position: "relative",
-                }}
-              >
+          <ScrollArea viewportRef={parentRef} className="h-[300px]">
+            <SelectPrimitive.Viewport
+              asChild
+              className={cn(
+                position === "popper" &&
+                  "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
+              )}
+            >
+              {isEmpty ? (
+                <p className="p-2 text-center">{emptyMessage || "-"}</p>
+              ) : isVirtual ? (
                 <div
+                  className={cn(
+                    "transition-opacity delay-100",
+                    virtualReady ? "" : "opacity-0"
+                  )}
                   style={{
-                    // position: "absolute",
-                    top: 0,
-                    left: 0,
+                    height: virtualizer.getTotalSize(),
                     width: "100%",
-                    transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
+                    position: "relative",
                   }}
                 >
-                  {virtualItems.map((virtualItem) => (
-                    <div
-                      key={virtualItem.key}
-                      data-index={virtualItem.index}
-                      ref={virtualizer.measureElement}
-                      tabIndex={virtualItem.index === positionIndex ? 0 : -1}
-                    >
-                      {items[virtualItem.index].item}
-                    </div>
-                  ))}
+                  <div
+                    style={{
+                      // position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
+                    }}
+                  >
+                    {virtualItems.map((virtualItem) => (
+                      <div
+                        key={virtualItem.key}
+                        data-index={virtualItem.index}
+                        ref={virtualizer.measureElement}
+                        tabIndex={virtualItem.index === positionIndex ? 0 : -1}
+                      >
+                        {items[virtualItem.index].item}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ) : (
-              children
-            )}
-          </SelectPrimitive.Viewport>
+              ) : (
+                children
+              )}
+            </SelectPrimitive.Viewport>
+          </ScrollArea>
           {/* <SelectScrollButton variant="down" /> */}
           {!!props.bottom && <div>{props.bottom}</div>}
         </SelectPrimitive.Content>

@@ -150,7 +150,7 @@ export const LargeList: Story = {
     options: [
       ...(meta.args?.options || []),
       { type: "separator" },
-      ...Array.from({ length: 10000 }, (_, i) => ({
+      ...Array.from({ length: 100 }, (_, i) => ({
         value: `option-${i}`,
         label: `Option ${i}`,
         icon: Circle,
