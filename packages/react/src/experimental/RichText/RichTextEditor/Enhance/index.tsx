@@ -103,12 +103,15 @@ const EnhanceActivator = ({
   )
 
   const handleEnhanceClick = useCallback(() => {
-    if (!enhanceButtonRef.current || !editor) return
-
-    const { from, to } = editor.state.selection
-    setSelectedRange(from !== to ? { from, to } : null)
-    setOpen(true)
-  }, [editor])
+    if (open || !enhanceButtonRef.current) {
+      setOpen(false)
+      return
+    } else {
+      const { from, to } = editor.state.selection
+      setSelectedRange(from !== to ? { from, to } : null)
+      setOpen(true)
+    }
+  }, [editor, open])
 
   return (
     <Popover.Root
@@ -128,9 +131,12 @@ const EnhanceActivator = ({
           ref={enhanceButtonRef}
           variant="ghost"
           size="md"
-          label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || "Enhance"}
+          label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || ""}
           icon={Ai}
-          hideLabel={hideLabel ?? false}
+          hideLabel={
+            (hideLabel || !enhanceConfig?.enhanceLabels.enhanceButtonLabel) ??
+            false
+          }
           onClick={(e) => {
             e.preventDefault()
             handleEnhanceClick()

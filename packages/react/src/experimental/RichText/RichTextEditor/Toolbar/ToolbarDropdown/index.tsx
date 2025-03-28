@@ -1,7 +1,7 @@
-import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/exports"
 import { Dropdown } from "@/experimental/exports"
 import React from "react"
+import { ToolbarButton } from ".."
 
 interface ToolbarDropdownItem {
   label: string
@@ -33,16 +33,13 @@ const ToolbarDropdown = ({
 }: ToolbarDropdownProps) => {
   return isFullscreen ? (
     items?.map((item) => (
-      <Button
+      <ToolbarButton
         key={item.label}
-        onClick={(e) => {
-          e.preventDefault()
-          item.onClick()
-        }}
-        variant={item.isActive ? "neutral" : "ghost"}
+        onClick={item.onClick}
+        active={item.isActive || false}
         label={item.label}
-        type="button"
         disabled={disabled}
+        icon={item.icon}
       />
     ))
   ) : (

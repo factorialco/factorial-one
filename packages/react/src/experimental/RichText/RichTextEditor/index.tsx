@@ -15,6 +15,7 @@ import Typography from "@tiptap/extension-typography"
 import Underline from "@tiptap/extension-underline"
 import { EditorContent, useEditor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
+import { motion } from "framer-motion"
 import {
   forwardRef,
   useCallback,
@@ -290,6 +291,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         Editor
         *********/}
         <div
+          id="editor-container"
           ref={editorRef}
           className={cn(
             "relative w-full flex-grow",
@@ -297,14 +299,21 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           )}
           onClick={() => editor?.commands.focus()}
         >
-          <div
+          <motion.div
             className={cn(
-              "relative overflow-y-auto p-5 [scrollbar-width:none]",
+              "relative overflow-y-auto p-5 [scrollbar-width:thin]",
               isFullscreen ? "h-full" : "h-auto max-h-60 pr-16"
             )}
+            variants={{
+              unfocused: { minHeight: 0 },
+              focused: { minHeight: "146px" },
+            }}
+            animate={isAcceptChangesOpen ? "focused" : "unfocused"}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <EditorContent editor={editor} />
-          </div>
+          </motion.div>
+
           {filesConfig && (
             <>
               <input
@@ -327,6 +336,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               )}
             </>
           )}
+
           {isAcceptChangesOpen && (
             <AcceptChanges
               labels={enhanceConfig?.enhanceLabels}
@@ -339,6 +349,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 setIsAcceptChangesOpen(false)
                 editor?.setEditable(true)
               }}
+              onRepeat={() => {
+                editor?.chain().focus().undo().run()
+              }}
             />
           )}
           {aiError && (
@@ -346,9 +359,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           )}
         </div>
 
-        {/**********
-        Footer
-        *********/}
         <Footer
           editor={editor}
           maxCharacters={maxCharacters}
@@ -364,9 +374,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           onEnhanceWithAI={handleEnhanceWithAI}
         />
 
-        {/**********
-        Bubble menu
-        *********/}
         <EditorBubbleMenu
           editor={editor}
           onEnhanceWithAI={handleEnhanceWithAI}

@@ -119,8 +119,9 @@ export const Default: Story = {
       enhanceLabels: {
         defaultError: "Error enhancing text, try again later",
         enhanceButtonLabel: "Magic",
-        acceptChangesButtonLabel: "Accept changes",
-        rejectChangesButtonLabel: "Reject changes",
+        acceptChangesButtonLabel: "Accept",
+        rejectChangesButtonLabel: "Reject",
+        repeatButtonLabel: "Repeat",
         customPromptPlaceholder: "What do you want to do?",
       },
     },
@@ -148,9 +149,12 @@ export const Default: Story = {
       variant: "outline",
     },
 
-    linkPopupConfig: { linkPlaceholder: "Enter link http://here..." },
+    linkPopupConfig: {
+      linkPlaceholder: "Enter link http://here...",
+      linkLabel: "Link",
+    },
     title: "Rich Text Editor test",
-    maxCharacters: 100000,
+    maxCharacters: 1000,
     initialEditorState: {
       content:
         "This is a test of the Rich Text Editor. It is a test of the Rich Text Editor. It is a test of the Rich Text Editor. It is a test of the Rich Text Editor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",

@@ -1,7 +1,8 @@
 import { Button } from "@/components/Actions/exports"
 import { Icon } from "@/factorial-one"
-import { Check, CrossedCircle } from "@/icons/app"
+import { Add, Check, CrossedCircle } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
+import { Button as ButtonUI } from "@/ui/button"
 import * as Popover from "@radix-ui/react-popover"
 import { BubbleMenu, Editor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
@@ -45,7 +46,7 @@ const LinkPopup = ({
   }
 
   return (
-    <div className="z-50 flex w-80 flex-col divide-y-[1px] divide-solid divide-f1-border-secondary rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background shadow-md">
+    <div className="z-50 flex w-80 flex-col divide-y-[1px] divide-solid divide-f1-border-secondary rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm">
       <div className="flex flex-col gap-3 p-2">
         <div
           className={cn(
@@ -59,6 +60,7 @@ const LinkPopup = ({
             placeholder={linkPlaceholder}
             value={url}
             onChange={(e) => setUrl(e.target.value)}
+            disabled={editor.isActive("link")}
           />
           {editor.isActive("link") ? (
             <Icon
@@ -68,8 +70,6 @@ const LinkPopup = ({
                 e.preventDefault()
                 editor.chain().focus().unsetLink().run()
                 setUrl("")
-                setOpenLinkPopover(false)
-                editor.chain().focus().run()
               }}
             />
           ) : (
@@ -82,28 +82,23 @@ const LinkPopup = ({
         </div>
         {!editor.isActive("link") && (
           <div className="flex flex-row gap-3">
-            <Button
+            <Button // @ts-ignore
+              className="w-full"
               label="Cancel"
               variant="outline"
               type="button"
-              // @ts-ignore
-              className="w-full"
               onClick={(e) => {
                 e.preventDefault()
-                if (editor.isActive("link")) {
-                  editor.chain().focus().unsetLink().run()
-                }
                 setUrl("")
                 setOpenLinkPopover(false)
                 editor.chain().focus().run()
               }}
             />
-            <Button
+            <Button // @ts-ignore
+              className="w-full"
               label="Save"
               variant="default"
               type="button"
-              // @ts-ignore
-              className="w-full"
               onClick={(e) => {
                 e.preventDefault()
                 handleSave()
@@ -145,7 +140,7 @@ const EditorBubbleMenu = ({
 
   const handleTriggerClick = () => {
     if (!linkPopupConfig || disableButtons) return
-    setOpenLinkPopover(true)
+    setOpenLinkPopover((prev) => !prev)
   }
 
   return (
@@ -175,23 +170,45 @@ const EditorBubbleMenu = ({
       }}
       editor={editor}
     >
-      <div className="z-50 flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 shadow-md">
+      <div className="z-50 flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
         {linkPopupConfig && (
           <Popover.Root
             open={openLinkPopover}
             onOpenChange={setOpenLinkPopover}
           >
             <Popover.Trigger asChild>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleTriggerClick()
-                }}
-                label="Link"
-                variant={editor.isActive("link") ? "neutral" : "ghost"}
-                type="button"
+              <ButtonUI
+                variant="outline"
+                size="md"
+                onClick={handleTriggerClick}
+                className={cn(
+                  "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
+                  editor.isActive("link")
+                    ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
+                    : "hover:bg-f1-background-secondary-hover"
+                )}
                 disabled={disableButtons}
-              />
+                aria-label="Link"
+              >
+                <Icon
+                  icon={Add}
+                  className={
+                    editor.isActive("link")
+                      ? "text-f1-icon-selected"
+                      : "text-f1-foreground"
+                  }
+                />
+
+                <p
+                  className={
+                    editor.isActive("link")
+                      ? "text-f1-icon-selected"
+                      : "text-f1-foreground"
+                  }
+                >
+                  {linkPopupConfig.linkLabel}
+                </p>
+              </ButtonUI>
             </Popover.Trigger>
             <Popover.Portal
               container={
@@ -234,7 +251,6 @@ const EditorBubbleMenu = ({
             isLoadingEnhance={isLoadingEnhance}
             enhanceConfig={enhanceConfig}
             disableButtons={disableButtons}
-            hideLabel={true}
           />
         )}
       </div>

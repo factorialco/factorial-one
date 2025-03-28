@@ -1,6 +1,8 @@
 import { Button } from "@/components/Actions/Button"
-import { IconType } from "@/factorial-one"
+import { Icon, IconType } from "@/factorial-one"
 import { Check, Code, Cross, Ellipsis, List, Minus, Pencil } from "@/icons/app"
+import { cn } from "@/lib/utils"
+import { Button as ButtonUI } from "@/ui/button"
 import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
 import React from "react"
@@ -12,37 +14,50 @@ const ToolbarDivider = () => (
 )
 
 interface ToolbarButtonProps {
-  onClick: () => void
-  active: boolean
+  onClick?: () => void
+  active?: boolean
   label: string
   disabled: boolean
   icon?: IconType
 }
 
 const ToolbarButton = ({
-  onClick,
-  active,
+  onClick = () => {},
+  active = false,
   label,
   disabled,
   icon,
+  ...props
 }: ToolbarButtonProps) => {
   return (
-    <Button
-      variant={active ? "neutral" : "ghost"}
-      label={label}
+    <ButtonUI
+      {...props}
+      variant="outline"
       size="md"
-      round
-      onClick={(e) => {
-        e.preventDefault()
-        onClick()
-      }}
-      type="button"
+      onClick={onClick}
+      className={cn(
+        "flex aspect-square items-center p-0 transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
+        active
+          ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
+          : "border-none hover:bg-f1-background-secondary-hover"
+      )}
       disabled={disabled}
-      hideLabel={icon ? true : false}
-      icon={icon ?? undefined}
-    />
+      aria-label={label}
+    >
+      {icon ? (
+        <Icon
+          icon={icon}
+          className={active ? "text-f1-icon-selected" : "text-f1-foreground"}
+        />
+      ) : (
+        <p className={active ? "text-f1-icon-selected" : "text-f1-foreground"}>
+          {label}
+        </p>
+      )}
+    </ButtonUI>
   )
 }
+
 const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
   arr.map((item, index) => (
     <React.Fragment key={`intersperse-${index}`}>
@@ -56,6 +71,7 @@ interface ToolbarProps {
   isFullscreen: boolean
   disableButtons: boolean
   onClose: () => void
+  animationComplete: boolean
 }
 
 const Toolbar = ({
@@ -63,6 +79,7 @@ const Toolbar = ({
   isFullscreen,
   disableButtons,
   onClose,
+  animationComplete,
 }: ToolbarProps) => {
   const formattingGroup = (
     <div className="flex flex-row items-center gap-0.5">
@@ -211,14 +228,14 @@ const Toolbar = ({
         disabled={disableButtons}
       >
         <Button
-          onClick={(e) => e.preventDefault()}
           variant="ghost"
           size="md"
           icon={Ellipsis}
-          hideLabel
-          label="More options"
           disabled={disableButtons}
           type="button"
+          hideLabel
+          round
+          label="More options"
         />
       </ToolbarDropdown>
     </div>
@@ -227,7 +244,7 @@ const Toolbar = ({
   const groups = compact([formattingGroup, textSizeGroup, moreOptionsGroup])
 
   return (
-    <div className="flex flex-row items-center gap-2">
+    <div className="flex flex-row items-start gap-2 overflow-hidden">
       <Button
         // @ts-ignore
         className="flex-shrink-0"
@@ -244,11 +261,18 @@ const Toolbar = ({
         round
         icon={Cross}
       />
-      <div className="flex grow flex-row items-center overflow-x-auto [scrollbar-width:none]">
+      <div
+        className={cn(
+          "flex grow flex-row items-center",
+          animationComplete
+            ? "overflow-x-auto [scrollbar-width:thin]"
+            : "overflow-hidden"
+        )}
+      >
         {intersperse(groups, <ToolbarDivider />)}
       </div>
     </div>
   )
 }
 
-export { Toolbar, ToolbarDivider }
+export { Toolbar, ToolbarButton, ToolbarDivider }

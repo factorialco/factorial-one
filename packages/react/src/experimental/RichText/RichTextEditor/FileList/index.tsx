@@ -10,7 +10,7 @@ const FileList = ({ files, onRemoveFile, disabled }: FileListProps) => {
   if (!files.length) return null
 
   return (
-    <div className="absolute bottom-0 flex w-full items-end gap-2 overflow-x-auto px-4 py-2">
+    <div className="flex w-full items-end gap-2 overflow-x-auto px-4 py-2 [scrollbar-width:thin]">
       {files.map((file, index) => (
         <FileItem
           key={`${file.name}-${index}`}
