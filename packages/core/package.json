@@ -1,15 +1,17 @@
 {
   "name": "@factorialco/factorial-one-core",
-  "version": "0.0.1",
+  "version": "1.2.3",
   "description": "Core tokens and utilities for Factorial One Design System",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "lint": "eslint . --ext .ts,.tsx",
-    "test": "vitest run"
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "keywords": [
     "factorial",
@@ -20,5 +22,8 @@
   "license": "MIT",
   "peerDependencies": {
     "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5"
   }
 }
