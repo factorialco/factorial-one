@@ -1,3 +1,4 @@
+import { Calendar } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { EnhancementOption, FileType, RichTextEditor } from "."
 
@@ -139,9 +140,20 @@ export const Default: Story = {
     primaryAction: {
       action: {
         label: "Add",
-        onClick: () => alert("Submit"),
+        onClick: () => alert("Add"),
         variant: "default",
       },
+      subActions: [
+        {
+          label: "Add tomorrow",
+          onClick: () => alert("Add tomorrow"),
+          icon: Calendar,
+        },
+        {
+          label: "Add next week",
+          onClick: () => alert("Add next week"),
+        },
+      ],
     },
     secondaryAction: {
       label: "Cancel",

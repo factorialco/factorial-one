@@ -1,5 +1,4 @@
 import { IconType } from "@/factorial-one"
-import { variants } from "@/ui/button"
 
 type MentionedUser = {
   id: number
@@ -126,7 +125,7 @@ type actionType = {
   label: string
   onClick: () => void
   disabled?: boolean
-  variant: (typeof variants)[number]
+  variant: "default" | "outline" | "neutral" | undefined
   icon?: IconType
 }
 

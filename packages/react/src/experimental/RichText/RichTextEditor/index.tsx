@@ -101,7 +101,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const containerRef = useRef<HTMLDivElement>(null)
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
-    const [aiError, setAiError] = useState<string | null>(null)
+    const [enhanceError, setEnhanceError] = useState<string | null>(null)
     const [lastIntent, setLastIntent] = useState<{
       selectedIntent?: string
       customIntent?: string
@@ -225,7 +225,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             onError: (error?: string) => {
               editor?.setEditable(true)
               setIsAcceptChangesOpen(false)
-              setAiError(error || enhanceConfig?.enhanceLabels.defaultError)
+              setEnhanceError(
+                error || enhanceConfig?.enhanceLabels.defaultError
+              )
             },
             selectedIntent,
             customIntent,
@@ -304,6 +306,30 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <EditorContent editor={editor} />
+
+            {isAcceptChangesOpen && (
+              <AcceptChanges
+                labels={enhanceConfig?.enhanceLabels}
+                onAccept={() => {
+                  setIsAcceptChangesOpen(false)
+                  editor?.setEditable(true)
+                  setLastIntent(null)
+                }}
+                onReject={() => {
+                  editor?.chain().focus().undo().run()
+                  setIsAcceptChangesOpen(false)
+                  editor?.setEditable(true)
+                  setLastIntent(null)
+                }}
+                onRepeat={() => {
+                  editor?.chain().focus().undo().run()
+                  handleEnhanceWithAI(
+                    lastIntent?.selectedIntent,
+                    lastIntent?.customIntent
+                  )
+                }}
+              />
+            )}
           </motion.div>
 
           {filesConfig && (
@@ -329,31 +355,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             </>
           )}
 
-          {isAcceptChangesOpen && (
-            <AcceptChanges
-              labels={enhanceConfig?.enhanceLabels}
-              onAccept={() => {
-                setIsAcceptChangesOpen(false)
-                editor?.setEditable(true)
-                setLastIntent(null)
-              }}
-              onReject={() => {
-                editor?.chain().focus().undo().run()
-                setIsAcceptChangesOpen(false)
-                editor?.setEditable(true)
-                setLastIntent(null)
-              }}
-              onRepeat={() => {
-                editor?.chain().focus().undo().run()
-                handleEnhanceWithAI(
-                  lastIntent?.selectedIntent,
-                  lastIntent?.customIntent
-                )
-              }}
+          {enhanceError && (
+            <EnhanceError
+              error={enhanceError}
+              onClose={() => setEnhanceError(null)}
             />
-          )}
-          {aiError && (
-            <EnhanceError aiError={aiError} onClose={() => setAiError(null)} />
           )}
         </div>
 
