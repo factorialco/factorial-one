@@ -4,14 +4,23 @@
   font-weight: 600;
 }
 
-.aiMagic {
-  color: #6143a7 !important;
+.magicBackground {
   background: linear-gradient(
     95.27deg,
     rgba(249, 240, 221, 0.5) 3.62%,
     rgba(242, 223, 227, 0.5) 48.88%,
     rgba(212, 204, 253, 0.5) 106.49%
   ) !important;
+}
+
+.magicBorder {
+  border: 1px solid #b696ff;
+}
+.magicColor {
+  color: #6143a7 !important;
+}
+.magicColor svg {
+  color: #6143a7 !important;
 }
 
 /*********

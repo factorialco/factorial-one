@@ -48,14 +48,14 @@ const AIEnhanceMenu = ({
   const [selectedParentOption, setSelectedParentOption] = useState<
     string | null
   >(null)
-  const [showCustomInput, setShowCustomInput] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("") // New state for search query
   const customInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (showCustomInput && customInputRef.current) {
+    if (customInputRef.current) {
       customInputRef.current.focus()
     }
-  }, [showCustomInput])
+  }, [])
 
   const handleOptionSelect = (option: EnhancementOption) => {
     if (option.subOptions) {
@@ -68,26 +68,18 @@ const AIEnhanceMenu = ({
 
   const handleBackToMainMenu = () => {
     setSelectedParentOption(null)
-    setShowCustomInput(false)
   }
 
-  if (selectedParentOption) {
-    const parentOption = enhancementOptions.find(
-      (option) => option.id === selectedParentOption
-    )
-    if (!parentOption || !parentOption.subOptions) return null
-  }
-
+  // If user presses Enter, use the input as custom intent
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      const input =
-        e.currentTarget.parentElement?.querySelector<HTMLInputElement>("input")
-      if (input && input.value.trim()) {
+      if (searchQuery.trim()) {
         onSelect({
           selectedIntent: undefined,
-          customIntent: input.value.trim(),
+          customIntent: searchQuery.trim(),
         })
-        input.value = ""
+        setSearchQuery("")
+        onClose()
       }
     }
   }
@@ -104,7 +96,10 @@ const AIEnhanceMenu = ({
             type="text"
             placeholder={inputPlaceholder}
             autoFocus
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={handleKeyDown}
+            ref={customInputRef}
           />
         </div>
       )}
@@ -112,28 +107,27 @@ const AIEnhanceMenu = ({
         <div
           className={cn(
             "flex max-h-80 flex-col overflow-y-auto border-0 border-t-[1px] border-solid border-f1-border",
-            canUseCustomPrompt ? "border-t" : "border-t-0"
+            canUseCustomPrompt ? "" : "border-t-0"
           )}
           onClick={(e) => e.stopPropagation()}
         >
           {selectedParentOption ? (
             <>
               <div
-                className="flex cursor-pointer flex-row items-center gap-2 border-x-0 border-b-[1px] border-t-0 border-solid border-f1-border bg-f1-background-secondary px-3 py-2 hover:bg-f1-background-secondary-hover"
+                className="flex cursor-pointer flex-row items-center gap-2 border-0 border-b-[1px] border-solid border-f1-border bg-f1-background-secondary px-3 py-2 hover:bg-f1-background-secondary-hover"
                 onClick={handleBackToMainMenu}
               >
                 <Icon icon={ChevronLeft} size="md" />
                 <p className="text-neutral-100 text-md grow text-ellipsis font-medium">
                   {
-                    enhancementOptions?.find(
+                    enhancementOptions.find(
                       (option) => option.id === selectedParentOption
                     )?.label
                   }
                 </p>
               </div>
-
               {enhancementOptions
-                ?.find((option) => option.id === selectedParentOption)
+                .find((option) => option.id === selectedParentOption)
                 ?.subOptions?.map((subOption) => (
                   <Option
                     key={subOption.id}
@@ -144,7 +138,9 @@ const AIEnhanceMenu = ({
             </>
           ) : (
             enhancementOptions
-              .filter((option) => option.id !== "custom-intent")
+              .filter((option) =>
+                option.label.toLowerCase().includes(searchQuery.toLowerCase())
+              )
               .map((option) => (
                 <Option
                   key={option.id}

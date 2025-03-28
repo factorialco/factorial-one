@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { Cross } from "@/icons/app"
+import { ChevronUp, Cross } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import CharacterCount from "@tiptap/extension-character-count"
 import Color from "@tiptap/extension-color"
@@ -30,7 +30,6 @@ import { EnhanceError } from "./Enhance/EnhanceError"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
 import "./index.css"
-import { Toolbar } from "./Toolbar"
 import {
   handleEnhanceWithAIFunction,
   isValidSelectionForEnhancement,
@@ -40,7 +39,6 @@ import {
   handleAddFiles,
   handleRemoveFile,
 } from "./utils/files"
-import { heightMapping } from "./utils/helpers"
 import { configureMention } from "./utils/mention"
 import {
   actionType,
@@ -51,28 +49,24 @@ import {
   MentionedUser,
   mentionsConfig,
   primaryActionType,
-  RichTextEditorHeight,
-  toolbarConfig,
 } from "./utils/types"
 
 interface RichTextEditorProps {
   mentionsConfig?: mentionsConfig
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
-  toolbarConfig: toolbarConfig
-  secondaryActions?: actionType[]
+  secondaryAction: actionType
   primaryAction?: primaryActionType
   onChange: (html: string | MentionChangeResult | null) => void
   title: string
-  height?: RichTextEditorHeight
   maxCharacters?: number
   placeholder: string
   initialEditorState?: {
     content?: string
     files?: File[]
   }
-  toolbarIsOpen?: boolean
   linkPopupConfig?: linkPopupConfig
+  showTitle?: boolean
 }
 
 type RichTextEditorHandle = {
@@ -87,17 +81,15 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       mentionsConfig,
       enhanceConfig,
       filesConfig,
-      toolbarConfig,
-      secondaryActions,
+      secondaryAction,
       primaryAction,
       title,
-      height = "lg",
       maxCharacters,
       initialEditorState,
       onChange,
       placeholder,
       linkPopupConfig,
-      toolbarIsOpen = true,
+      showTitle = false,
     },
     ref
   ) {
@@ -112,7 +104,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
     const [aiError, setAiError] = useState<string | null>(null)
-    const [isToolbarOpen, setIsToolbarOpen] = useState(toolbarIsOpen)
 
     useEffect(() => {
       if (screenfull.isEnabled) {
@@ -250,47 +241,50 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       [editor, setIsLoadingEnhance]
     )
 
+    if (!editor) return null
+
     return (
       <div
         ref={containerRef}
-        className="flex w-full flex-col divide-x-0 divide-y-[1px] divide-solid divide-f1-border rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
+        className="relative flex w-full flex-col overflow-hidden rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
       >
-        {isFullscreen && (
-          <div className="flex w-full flex-shrink-0 items-center justify-between px-5 py-3">
+        {isFullscreen || showTitle ? (
+          <div className="flex w-full flex-shrink-0 items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3.5">
             <p className="text-2xl font-semibold text-f1-foreground">{title}</p>
+
             <Button
-              icon={Cross}
               onClick={(e) => {
                 e.preventDefault()
                 handleToggleFullscreen()
               }}
-              label="Collapse"
-              hideLabel
-              variant="ghost"
+              label="Fullscreen"
+              variant="outline"
               type="button"
+              hideLabel
+              round
+              size="sm"
+              icon={isFullscreen ? Cross : ChevronUp}
+              disabled={isAcceptChangesOpen}
             />
           </div>
+        ) : (
+          <Button
+            // @ts-ignore
+            className="fixed right-7 top-7 z-50"
+            onClick={(e) => {
+              e.preventDefault()
+              handleToggleFullscreen()
+            }}
+            label="Fullscreen"
+            variant="outline"
+            type="button"
+            hideLabel
+            round
+            size="sm"
+            icon={ChevronUp}
+            disabled={isAcceptChangesOpen}
+          />
         )}
-
-        {/**********
-        Toolbar
-        *********/}
-        {(toolbarConfig !== "none" ||
-          (toolbarConfig === "none" && enhanceConfig)) &&
-          isToolbarOpen && (
-            <div className="order-1 h-auto flex-shrink-0 overflow-hidden py-2 transition-all duration-300 md:py-3">
-              <Toolbar
-                editor={editor}
-                handleToggleFullscreen={handleToggleFullscreen}
-                isFullscreen={isFullscreen}
-                onEnhanceWithAI={handleEnhanceWithAI}
-                config={toolbarConfig}
-                disableButtons={isAcceptChangesOpen}
-                enhanceConfig={enhanceConfig}
-                isLoadingEnhance={isLoadingEnhance}
-              />
-            </div>
-          )}
 
         {/**********
         Editor
@@ -298,17 +292,15 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         <div
           ref={editorRef}
           className={cn(
-            "relative order-2 w-full flex-grow",
+            "relative w-full flex-grow",
             isFullscreen && "h-full overflow-y-hidden"
           )}
-          onClick={() => {
-            editor?.commands.focus()
-          }}
+          onClick={() => editor?.commands.focus()}
         >
           <div
             className={cn(
-              "overflow-y-auto p-5",
-              isFullscreen ? "h-full" : heightMapping[height] || "h-80"
+              "relative overflow-y-auto p-5 [scrollbar-width:none]",
+              isFullscreen ? "h-full" : "h-auto max-h-60 pr-16"
             )}
           >
             <EditorContent editor={editor} />
@@ -357,20 +349,20 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         {/**********
         Footer
         *********/}
-        <div className="order-3 flex-shrink-0 px-4 py-2 md:py-3">
-          <Footer
-            editor={editor}
-            maxCharacters={maxCharacters}
-            secondaryActions={secondaryActions}
-            primaryAction={primaryAction}
-            isAcceptChangesOpen={isAcceptChangesOpen}
-            fileInputRef={fileInputRef}
-            canUseFiles={filesConfig ? true : false}
-            isToolbarOpen={isToolbarOpen}
-            setIsToolbarOpen={setIsToolbarOpen}
-            canToggleToolbar={toolbarConfig !== "none"}
-          />
-        </div>
+        <Footer
+          editor={editor}
+          maxCharacters={maxCharacters}
+          secondaryAction={secondaryAction}
+          primaryAction={primaryAction}
+          isAcceptChangesOpen={isAcceptChangesOpen}
+          fileInputRef={fileInputRef}
+          canUseFiles={filesConfig ? true : false}
+          isLoadingEnhance={isLoadingEnhance}
+          disableButtons={isAcceptChangesOpen}
+          enhanceConfig={enhanceConfig}
+          isFullscreen={isFullscreen}
+          onEnhanceWithAI={handleEnhanceWithAI}
+        />
 
         {/**********
         Bubble menu

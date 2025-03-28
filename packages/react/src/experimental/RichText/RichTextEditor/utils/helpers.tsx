@@ -1,81 +1,4 @@
 import { Editor } from "@tiptap/react"
-import { RichTextEditorHeight } from "./types"
-
-const heightMapping: Record<RichTextEditorHeight, string> = {
-  xxs: "h-32",
-  xs: "h-40",
-  sm: "h-60",
-  md: "h-64",
-  lg: "h-72",
-  xl: "h-80",
-  "2xl": "h-96",
-  full: "h-full",
-}
-
-const defaultAllToolbarConfig = {
-  format: {
-    bold: true,
-    italic: true,
-    underline: true,
-    strike: true,
-    highlight: true,
-  },
-  textSize: {
-    heading1: true,
-    heading2: true,
-    heading3: true,
-  },
-  textAlign: {
-    left: true,
-    center: true,
-    right: true,
-    justify: true,
-  },
-  list: {
-    bullet: true,
-    ordered: true,
-    task: true,
-  },
-  moreOptions: {
-    code: true,
-    horizontalRule: true,
-    quote: true,
-  },
-  fullScreen: true,
-}
-
-const defaultNoneToolbarConfig = {
-  format: {
-    bold: false,
-    italic: false,
-    underline: false,
-    strike: false,
-    highlight: false,
-  },
-  textSize: {
-    normal: false,
-    heading1: false,
-    heading2: false,
-    heading3: false,
-  },
-  textAlign: {
-    left: false,
-    center: false,
-    right: false,
-    justify: false,
-  },
-  list: {
-    bullet: false,
-    ordered: false,
-    task: false,
-  },
-  moreOptions: {
-    code: false,
-    horizontalRule: false,
-    quote: false,
-  },
-  fullScreen: false,
-}
 
 const getHeadingLabel = (editor: Editor) => {
   if (editor.isActive("heading")) {
@@ -95,10 +18,4 @@ const getTextAlignLabel = (editor: Editor) => {
   return "Left"
 }
 
-export {
-  defaultAllToolbarConfig,
-  defaultNoneToolbarConfig,
-  getHeadingLabel,
-  getTextAlignLabel,
-  heightMapping,
-}
+export { getHeadingLabel, getTextAlignLabel }

@@ -1,16 +1,6 @@
 import { IconType } from "@/factorial-one"
 import { variants } from "@/ui/button"
 
-type RichTextEditorHeight =
-  | "xxs"
-  | "xs"
-  | "sm"
-  | "md"
-  | "lg"
-  | "xl"
-  | "2xl"
-  | "full"
-
 type MentionedUser = {
   id: number
   label: string
@@ -170,7 +160,6 @@ export type {
   MentionedUser,
   mentionsConfig,
   primaryActionType,
-  RichTextEditorHeight,
   subActionType,
   toolbarConfig,
 }

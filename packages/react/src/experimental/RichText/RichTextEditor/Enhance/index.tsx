@@ -3,6 +3,7 @@ import { Ai } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import * as Popover from "@radix-ui/react-popover"
 import { Editor } from "@tiptap/react"
+import { AnimatePresence, motion } from "framer-motion"
 import { useCallback, useRef, useState } from "react"
 import screenfull from "screenfull"
 import { isValidSelectionForEnhancement } from "../utils/enhance"
@@ -21,6 +22,7 @@ interface EnhanceActivatorProps {
   enhanceConfig?: enhanceConfig
   disableButtons: boolean
   hideLabel?: boolean
+  position?: "top" | "bottom"
 }
 
 const EnhanceActivator = ({
@@ -30,6 +32,7 @@ const EnhanceActivator = ({
   enhanceConfig,
   disableButtons,
   hideLabel,
+  position = "bottom",
 }: EnhanceActivatorProps) => {
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
   const [selectedRange, setSelectedRange] = useState<{
@@ -63,11 +66,11 @@ const EnhanceActivator = ({
         const selection = editor.state.selection
         from = selection.from
         to = selection.to
-
-        if (from !== to) {
-          textToEnhance = editor.state.doc.textBetween(from, to, " ")
-        } else {
-          textToEnhance = fullContent
+        textToEnhance =
+          from !== to
+            ? editor.state.doc.textBetween(from, to, " ")
+            : fullContent
+        if (from === to) {
           from = 0
           to = editor.state.doc.content.size
         }
@@ -103,11 +106,7 @@ const EnhanceActivator = ({
     if (!enhanceButtonRef.current || !editor) return
 
     const { from, to } = editor.state.selection
-    if (from !== to) {
-      setSelectedRange({ from, to })
-    } else {
-      setSelectedRange(null)
-    }
+    setSelectedRange(from !== to ? { from, to } : null)
     setOpen(true)
   }, [editor])
 
@@ -137,12 +136,13 @@ const EnhanceActivator = ({
             handleEnhanceClick()
           }}
           disabled={disableButtons}
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          className={cn("aiMagic", isLoadingEnhance && "animate-pulse")}
+          className={cn(
+            "magicBackground magicBorder magicColor",
+            isLoadingEnhance && "animate-pulse"
+          )}
         />
       </Popover.Trigger>
-
       <Popover.Portal
         container={
           screenfull.isFullscreen && screenfull.element
@@ -151,21 +151,34 @@ const EnhanceActivator = ({
         }
       >
         <Popover.Content
-          side="bottom"
-          align="center"
-          sideOffset={5}
+          side={position}
+          align="start"
+          sideOffset={15}
           collisionPadding={10}
           style={{ zIndex: 1000 }}
         >
-          <AIEnhanceMenu
-            canUseCustomPrompt={enhanceConfig?.canUseCustomPrompt || false}
-            onSelect={handleAIEnhance}
-            onClose={() => setOpen(false)}
-            enhancementOptions={enhanceConfig?.enhancementOptions || []}
-            inputPlaceholder={
-              enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
-            }
-          />
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <AIEnhanceMenu
+                  canUseCustomPrompt={
+                    enhanceConfig?.canUseCustomPrompt || false
+                  }
+                  onSelect={handleAIEnhance}
+                  onClose={() => setOpen(false)}
+                  enhancementOptions={enhanceConfig?.enhancementOptions || []}
+                  inputPlaceholder={
+                    enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
+                  }
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
