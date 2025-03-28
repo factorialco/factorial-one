@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.14.0...factorial-one-react-v1.14.1) (2025-03-28)
+
+
+### Bug Fixes
+
+* Fixes in Product Updates dropdown ([#1491](https://github.com/factorialco/factorial-one/issues/1491)) ([81f374f](https://github.com/factorialco/factorial-one/commit/81f374fe00d3e1b720f8ea11f1fd43dfa4ad37af))
+
 ## [1.14.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.13.0...factorial-one-react-v1.14.0) (2025-03-28)
 
 
