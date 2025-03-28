@@ -1,64 +1,78 @@
 import { Editor } from "@tiptap/react"
 import { enhancedTextResponse, enhanceTextParams } from ".."
 
-function isValidSelectionForEnhancement(text: string): boolean {
-  return text.trim().length > 0
-}
-
 export interface EnhanceWithAIParams {
-  selectedText: string
   editor: Editor
   enhanceText: (params: enhanceTextParams) => Promise<enhancedTextResponse>
   setIsLoadingEnhance: (loading: boolean) => void
-  isValidSelectionForEnhancement: (text: string) => boolean
   selectedIntent?: string
   customIntent?: string
-  context?: string
   onSuccess: () => void
   onError: (error?: string) => void
 }
 
 async function handleEnhanceWithAIFunction({
-  selectedText,
   editor,
   enhanceText,
   setIsLoadingEnhance,
-  isValidSelectionForEnhancement,
   selectedIntent,
   customIntent,
-  context,
   onSuccess,
   onError,
 }: EnhanceWithAIParams): Promise<void> {
-  if (
-    !editor ||
-    !selectedText ||
-    !isValidSelectionForEnhancement(selectedText) ||
-    !enhanceText
-  )
-    return
+  const selectedRange =
+    editor.state.selection.to !== editor.state.selection.from
+      ? editor.state.selection
+      : null
+
+  const fullContent = editor.getHTML()
+
+  const from = selectedRange?.from ?? 0
+  const to = selectedRange?.to ?? editor.state.doc.content.size
+  let textToEnhance = selectedRange
+    ? editor.state.doc.textBetween(from, to, " ")
+    : fullContent
+
+  let context = ""
+
+  if (fullContent.length < 10000) {
+    context = fullContent
+  } else {
+    const beforeChars = 2500
+    const afterChars = 2500
+    const contextStart = Math.max(0, from - beforeChars)
+    const beforeText = editor.state.doc.textBetween(contextStart, from, " ")
+    const contextEnd = Math.min(editor.state.doc.content.size, to + afterChars)
+    const afterText = editor.state.doc.textBetween(to, contextEnd, " ")
+    context = beforeText + " " + afterText
+  }
+
+  if (textToEnhance.length > 5000) {
+    textToEnhance = textToEnhance.substring(0, 5000)
+  }
+
+  if (!(textToEnhance.trim().length > 0)) return
+
   try {
     setIsLoadingEnhance(true)
     const { from, to } = editor.state.selection
-    const {
-      text: enhancedText,
-      error,
-      success,
-    } = await enhanceText({
-      text: selectedText,
+
+    const { success, text, error } = await enhanceText({
+      text: textToEnhance,
       selectedIntent: selectedIntent,
       customIntent: customIntent,
       context: context,
     })
+
     if (success) {
-      if (selectedText.toString() === editor.getHTML().toString()) {
-        editor.chain().focus().setContent(enhancedText).run()
+      if (textToEnhance.toString() === editor.getHTML().toString()) {
+        editor.chain().focus().setContent(text).run()
       } else {
         editor
           .chain()
           .focus()
           .deleteRange({ from, to })
-          .insertContent(enhancedText)
+          .insertContent(text)
           .run()
       }
       onSuccess()
@@ -72,4 +86,4 @@ async function handleEnhanceWithAIFunction({
   }
 }
 
-export { handleEnhanceWithAIFunction, isValidSelectionForEnhancement }
+export { handleEnhanceWithAIFunction }

@@ -110,7 +110,7 @@ export const Default: Story = {
             resolve({
               success: true,
               error: "Error from AI, Jacob didn't finish his work",
-              text: `<b>Just imagine this is an AI response from our friend</b> <a href="https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg" class="mention" data-id="2" rel="noopener noreferrer" target="_blank">@Jacob Bamio Cordero</a>`,
+              text: `<b>Just imagine this is an AI response from our friend Jacob</b>`,
             })
           }, 1000)
         }),

@@ -6,23 +6,26 @@ import { Editor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useCallback, useRef, useState } from "react"
 import screenfull from "screenfull"
-import { isValidSelectionForEnhancement } from "../utils/enhance"
 import { enhanceConfig } from "../utils/types"
 import { AIEnhanceMenu } from "./EnhanceMenu"
 
 interface EnhanceActivatorProps {
   editor: Editor
-  onEnhanceWithAI?: (
-    selectedText: string,
+  onEnhanceWithAI: (
     selectedOption?: string,
-    customIntent?: string,
-    context?: string
+    customIntent?: string
   ) => Promise<void>
   isLoadingEnhance: boolean
   enhanceConfig?: enhanceConfig
   disableButtons: boolean
   hideLabel?: boolean
   position?: "top" | "bottom"
+  setLastIntent: (
+    lastIntent: {
+      selectedIntent?: string
+      customIntent?: string
+    } | null
+  ) => void
 }
 
 const EnhanceActivator = ({
@@ -33,97 +36,26 @@ const EnhanceActivator = ({
   disableButtons,
   hideLabel,
   position = "bottom",
+  setLastIntent,
 }: EnhanceActivatorProps) => {
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
-  const [selectedRange, setSelectedRange] = useState<{
-    from: number
-    to: number
-  } | null>(null)
   const [open, setOpen] = useState(false)
 
-  const handleAIEnhance = useCallback(
-    ({
-      selectedIntent,
-      customIntent,
-    }: {
-      selectedIntent?: string
-      customIntent?: string
-    }) => {
-      if (!editor) return
-
-      let textToEnhance = ""
-      let context = ""
-      let from = 0
-      let to = 0
-
-      const fullContent = editor.getHTML()
-
-      if (selectedRange) {
-        from = selectedRange.from
-        to = selectedRange.to
-        textToEnhance = editor.state.doc.textBetween(from, to, " ")
-      } else {
-        const selection = editor.state.selection
-        from = selection.from
-        to = selection.to
-        textToEnhance =
-          from !== to
-            ? editor.state.doc.textBetween(from, to, " ")
-            : fullContent
-        if (from === to) {
-          from = 0
-          to = editor.state.doc.content.size
-        }
-      }
-
-      if (textToEnhance.length > 5000) {
-        textToEnhance = textToEnhance.substring(0, 5000)
-      }
-      if (fullContent.length < 10000) {
-        context = fullContent
-      } else {
-        const beforeChars = 2500
-        const afterChars = 2500
-        const contextStart = Math.max(0, from - beforeChars)
-        const beforeText = editor.state.doc.textBetween(contextStart, from, " ")
-        const contextEnd = Math.min(
-          editor.state.doc.content.size,
-          to + afterChars
-        )
-        const afterText = editor.state.doc.textBetween(to, contextEnd, " ")
-        context = beforeText + " " + afterText
-      }
-
-      if (isValidSelectionForEnhancement(textToEnhance) && onEnhanceWithAI) {
-        onEnhanceWithAI(textToEnhance, selectedIntent, customIntent, context)
-      }
-      setOpen(false)
-    },
-    [editor, onEnhanceWithAI, selectedRange]
-  )
-
   const handleEnhanceClick = useCallback(() => {
-    if (open || !enhanceButtonRef.current) {
-      setOpen(false)
-      return
-    } else {
-      const { from, to } = editor.state.selection
-      setSelectedRange(from !== to ? { from, to } : null)
-      setOpen(true)
-    }
+    if (!enhanceButtonRef.current) setOpen(false)
+    else setOpen((prev) => !prev)
   }, [editor, open])
 
   return (
     <Popover.Root
       open={open}
+      modal={false}
       onOpenChange={(o) => {
         setOpen(o)
         if (!o) {
-          setSelectedRange(null)
           editor.view.dom.classList.remove("maintain-selection")
         }
       }}
-      modal={false}
     >
       <Popover.Trigger asChild>
         <Button
@@ -175,8 +107,17 @@ const EnhanceActivator = ({
                   canUseCustomPrompt={
                     enhanceConfig?.canUseCustomPrompt || false
                   }
-                  onSelect={handleAIEnhance}
-                  onClose={() => setOpen(false)}
+                  onSelect={({ selectedIntent, customIntent }) => {
+                    onEnhanceWithAI(selectedIntent, customIntent)
+                    setLastIntent({
+                      selectedIntent: selectedIntent || undefined,
+                      customIntent: customIntent || undefined,
+                    })
+                    setOpen(false)
+                  }}
+                  onClose={() => {
+                    setOpen(false)
+                  }}
                   enhancementOptions={enhanceConfig?.enhancementOptions || []}
                   inputPlaceholder={
                     enhanceConfig?.enhanceLabels.customPromptPlaceholder || ""
