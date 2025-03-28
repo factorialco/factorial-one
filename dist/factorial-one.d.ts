@@ -1,13 +1,21 @@
 import { AnchorHTMLAttributes } from 'react';
+import { CategoryBarProps } from './CategoryBarChart';
+import { ChartConfig } from '../../ui/chart';
+import { ChartConfig as ChartConfig_2 } from './utils/types';
+import { ChartPropsBase } from './utils/types';
 import { ClassValue } from 'cva';
 import { ComponentProps } from 'react';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
+import { IconProps } from './Icon';
 import { ImgHTMLAttributes } from 'react';
 import { JSX as JSX_2 } from 'react';
+import { LineChartConfig } from '../../ui/chart';
+import { LineChartPropsBase } from './utils/types';
+import { LinkProps as LinkProps_3 } from './Link';
+import { PieChartProps } from './PieChart';
 import * as React_2 from 'react';
 import { ReactNode } from 'react';
-import * as RechartsPrimitive from 'recharts';
 import { RefAttributes } from 'react';
 import { RefObject } from 'react';
 import { SVGProps } from 'react';
@@ -20,16 +28,7 @@ canBeBlurred?: boolean;
 blurArea?: "l" | "r" | "lr";
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
-declare type AxisConfig = {
-    hide?: boolean;
-    tickFormatter?: (value: string) => string;
-    tickCount?: number;
-    ticks?: number[];
-    domain?: number[];
-    width?: number;
-};
-
-export declare const BarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
+export declare const BarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig> & {
 type?: "simple" | "stacked" | "stacked-by-sign";
 label?: boolean;
 legend?: boolean;
@@ -77,7 +76,7 @@ declare type ButtonVariant = (typeof variants)[number];
 
 declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
-    variant?: "outline" | "default" | "critical" | "neutral" | "ghost" | "promote" | undefined;
+    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
     round?: boolean | undefined;
 } & ({
@@ -89,65 +88,6 @@ declare const buttonVariants: (props?: ({
 })) | undefined) => string;
 
 export declare const CategoryBarChart: ForwardRefExoticComponent<Omit<CategoryBarProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
-
-declare interface CategoryBarProps {
-    data: {
-        name: string;
-        value: number;
-        color?: string;
-    }[];
-    legend: boolean;
-    hideTooltip?: boolean;
-}
-
-declare type ChartConfig = Record<string, ChartConfig_2[keyof ChartConfig_2]>;
-
-declare type ChartConfig_2 = {
-    [k in string]: {
-        label?: React_2.ReactNode;
-        icon?: React_2.ComponentType;
-    } & ({
-        color?: string;
-        theme?: never;
-    } | {
-        color?: never;
-        theme: Record<keyof typeof THEMES, string>;
-    });
-};
-
-declare type ChartConfigValue = {
-    label?: React_2.ReactNode;
-    icon?: React_2.ComponentType;
-    dashed?: boolean;
-} & ({
-    color?: string;
-    theme?: never;
-} | {
-    color?: never;
-    theme: Record<keyof typeof THEMES, string>;
-});
-
-declare const ChartContainer: React_2.ForwardRefExoticComponent<Omit<ChartContainerComponentProps, "ref"> & React_2.RefAttributes<HTMLDivElement>>;
-
-declare interface ChartContainerComponentProps extends React_2.ComponentProps<"div">, VariantProps<typeof variants_2> {
-    config: ChartConfig_2;
-    children: React_2.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer>["children"];
-}
-
-declare type ChartItem<K extends ChartConfig> = {
-    label: string;
-    values: {
-        [key in keyof K]: number;
-    };
-};
-
-declare type ChartPropsBase<K extends ChartConfig_2 = ChartConfig_2> = {
-    dataConfig: K;
-    data: ChartItem<K>[];
-    xAxis?: AxisConfig;
-    yAxis?: AxisConfig;
-    aspect?: ComponentProps<typeof ChartContainer>["aspect"];
-};
 
 declare type ComponentTypes = (typeof componentTypes)[number];
 
@@ -233,24 +173,9 @@ declare interface I18nProviderProps {
 
 export declare const Icon: ForwardRefExoticComponent<Omit<Omit<IconProps, "ref"> & RefAttributes<SVGSVGElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
-declare interface IconProps extends SVGProps<SVGSVGElement>, VariantProps<typeof iconVariants> {
-    icon: IconType;
-    state?: "normal" | "animate";
-}
-
 export declare type IconType = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement> & {
     animate?: "normal" | "animate";
 }>;
-
-declare const iconVariants: (props?: ({
-    size?: "lg" | "md" | "sm" | "xs" | undefined;
-} & ({
-    class?: ClassValue;
-    className?: never;
-} | {
-    class?: never;
-    className?: ClassValue;
-})) | undefined) => string;
 
 declare type ImageContextValue = {
     src?: (props: ImageProps) => SrcProps;
@@ -271,19 +196,7 @@ export declare const LineChart: ForwardRefExoticComponent<Omit<LineChartPropsBas
 lineType?: "natural" | "linear";
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
-declare type LineChartConfig = {
-    [key: string]: ChartConfigValue;
-};
-
-declare type LineChartPropsBase<K extends LineChartConfig = LineChartConfig> = {
-    dataConfig: K;
-    data: ChartItem<K>[];
-    xAxis?: AxisConfig;
-    yAxis?: AxisConfig;
-    aspect?: ComponentProps<typeof ChartContainer>["aspect"];
-};
-
-export declare const Link: ForwardRefExoticComponent<Omit<LinkProps & RefAttributes<HTMLAnchorElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+export declare const Link: ForwardRefExoticComponent<Omit<LinkProps_3 & RefAttributes<HTMLAnchorElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 declare type LinkContextValue = {
     currentPath?: string;
@@ -311,23 +224,6 @@ declare const linkVariants: (props?: ({
 
 export declare const PieChart: ForwardRefExoticComponent<Omit<PieChartProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
-declare type PieChartItem = {
-    label: string;
-    value: number;
-    color?: string;
-};
-
-declare type PieChartProps = {
-    dataConfig: ChartConfig;
-    data: PieChartItem[];
-    tickFormatter?: (value: string) => string;
-    overview?: {
-        number: number;
-        label: string;
-    };
-    aspect?: ComponentProps<typeof ChartContainer>["aspect"];
-};
-
 export declare const PrivacyModeProvider: React_2.FC<{
     initiallyEnabled?: boolean;
     children: ReactNode;
@@ -335,7 +231,7 @@ export declare const PrivacyModeProvider: React_2.FC<{
 
 declare const privateProps: readonly ["append", "appendButton"];
 
-export declare const ProgressBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig> & {
+export declare const ProgressBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
 value: number;
 max?: number;
 label?: string;
@@ -345,11 +241,6 @@ color?: string;
 declare const sizes: readonly ["sm", "md", "lg"];
 
 declare type SrcProps = Pick<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet" | "sizes">;
-
-declare const THEMES: {
-    readonly light: "";
-    readonly dark: ".dark";
-};
 
 declare type TranslationShape<T> = {
     [K in keyof T]: T[K] extends string ? string : T[K] extends Record<string, string | Record<string, unknown>> ? TranslationShape<T[K]> : never;
@@ -379,17 +270,7 @@ export declare const useXRay: () => {
 
 declare const variants: readonly ["default", "outline", "critical", "neutral", "ghost", "promote"];
 
-declare const variants_2: (props?: ({
-    aspect?: "small" | "square" | "wide" | undefined;
-} & ({
-    class?: ClassValue;
-    className?: never;
-} | {
-    class?: never;
-    className?: ClassValue;
-})) | undefined) => string;
-
-export declare const VerticalBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig> & {
+export declare const VerticalBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
 label?: boolean;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
