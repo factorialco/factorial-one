@@ -1,3 +1,4 @@
+import { IconType } from "@/factorial-one"
 import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
@@ -39,6 +40,13 @@ export type DataSourceDefinition<
   defaultSorting?: SortingsState<Sortings>
   /** Data adapter responsible for fetching and managing data */
   dataAdapter: DataAdapter<Record, Filters, Sortings>
+  /** Selectable items value under the checkbox column (undefined if not selectable) */
+  selectable?: (item: Record) => string | number | undefined
+  /** Bulk actions that can be performed on the collection */
+  bulkActions?: (
+    allSelected: boolean,
+    selectedItems: SelectedItems<Record>
+  ) => BulkActionDefinition[]
 }
 
 export type CollectionSearchOptions = {
@@ -182,10 +190,30 @@ export type DataAdapter<
   | PaginatedDataAdapter<Record, Filters, Sortings>
 
 /**
+ * Represents a collection of selected items.
+ * @template T - The type of items in the collection
+ */
+export type SelectedItems<T> = ReadonlyArray<T>
+
+/**
  * Represents a record type with string keys and unknown values.
  * This type is used to represent the data structure of a collection.
  */
 export type RecordType = Record<string, unknown>
+
+/**
+ * Represents a bulk action that can be performed on a collection.
+ */
+export type BulkAction = string
+
+/**
+ * Represents a bulk action definition.
+ */
+export type BulkActionDefinition = {
+  label: string
+  icon?: IconType
+  id: string
+}
 
 /**
  * Extracts the property keys from a record type.
@@ -209,6 +237,14 @@ export type CollectionProps<
 > = {
   /** The data source configuration and state */
   source: DataSource<Record, Filters, Sortings, ItemActions>
+  /** Function to handle item selection */
+  onSelectItems?: (allSelected: boolean, items: SelectedItems<Record>) => void
+  /** Function to handle bulk action */
+  onBulkAction?: (
+    action: BulkAction,
+    allSelected: boolean,
+    items: SelectedItems<Record>
+  ) => void
 } & VisualizationOptions
 
 /**
