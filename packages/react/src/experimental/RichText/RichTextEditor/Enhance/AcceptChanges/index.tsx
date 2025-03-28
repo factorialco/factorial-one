@@ -1,6 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { enhanceLabelsType } from "@/experimental/exports"
-import { Reset } from "@/icons/app"
+import { Check, Cross } from "@/icons/app"
 
 interface AcceptChangesProps {
   onAccept: () => void
@@ -12,27 +12,25 @@ const AcceptChanges = ({ onAccept, onReject, labels }: AcceptChangesProps) => {
   return (
     <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-2 rounded-md border-[1px] border-solid border-f1-border-secondary bg-f1-background p-2 shadow-md">
       <Button
-        label={labels?.rejectChangesButtonLabel || "Reject"}
+        label={labels?.rejectChangesButtonLabel || "Reject chnages"}
         onClick={(e) => {
           e.preventDefault()
           onReject()
         }}
         size="sm"
-        variant="critical"
-        icon={Reset}
+        variant="outline"
+        icon={Cross}
         type="button"
       />
       <Button
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        className="aiMagic"
-        label={labels?.acceptChangesButtonLabel || "Accept"}
+        label={labels?.acceptChangesButtonLabel || "Accept changes"}
         onClick={(e) => {
           e.preventDefault()
           onAccept()
         }}
         size="sm"
-        variant="outline"
+        variant="default"
+        icon={Check}
         type="button"
       />
     </div>

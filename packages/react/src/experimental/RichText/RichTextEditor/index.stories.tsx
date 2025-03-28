@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { EnhancementOption, RichTextEditor } from "."
+import { EnhancementOption, FileType, RichTextEditor } from "."
 
 const meta = {
   component: RichTextEditor,
@@ -94,7 +94,7 @@ export const Default: Story = {
   tags: ["experimental"],
   args: {
     onChange: () => {},
-    placeholder: "Write something and test our fabulous editor...",
+    placeholder: "Write something here...",
     mentionsConfig: { users: users },
     enhanceConfig: {
       onEnhanceText: (params: {
@@ -124,35 +124,37 @@ export const Default: Story = {
         customPromptPlaceholder: "What do you want to do?",
       },
     },
-    // filesConfig: {
-    //   onFiles: (files) => console.log(files),
-    //   multipleFiles: true,
-    //   acceptedFileType: [
-    //     FileType.IMAGE,
-    //     FileType.VIDEO,
-    //     FileType.PDF,
-    //     FileType.DOC,
-    //     FileType.EXCEL,
-    //   ],
-    // },
-    // primaryAction: {
-    //   action: {
-    //     label: "Add",
-    //     onClick: () => alert("Submit"),
-    //     variant: "default",
-    //     icon: Add,
-    //   },
-    // },
-    // secondaryActions: [
-    //   {
-    //     label: "Cancel",
-    //     onClick: () => alert("Cancel"),
-    //     variant: "critical",
-    //   },
-    // ],
-    linkPopupConfig: { linkPlaceholder: "Write or paste a link" },
+    filesConfig: {
+      onFiles: (files) => console.log(files),
+      multipleFiles: true,
+      acceptedFileType: [
+        FileType.IMAGE,
+        FileType.VIDEO,
+        FileType.PDF,
+        FileType.DOC,
+        FileType.EXCEL,
+      ],
+    },
+    primaryAction: {
+      action: {
+        label: "Add",
+        onClick: () => alert("Submit"),
+        variant: "default",
+      },
+    },
+    secondaryAction: {
+      label: "Cancel",
+      onClick: () => alert("Cancel"),
+      variant: "outline",
+    },
+
+    linkPopupConfig: { linkPlaceholder: "Enter link http://here..." },
     title: "Rich Text Editor test",
-    toolbarConfig: "all",
-    // maxCharacters: 1000000,
+    maxCharacters: 100000,
+    initialEditorState: {
+      content:
+        "This is a test of the Rich Text Editor. It is a test of the Rich Text Editor. It is a test of the Rich Text Editor. It is a test of the Rich Text Editor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+    },
+    showTitle: false,
   },
 }

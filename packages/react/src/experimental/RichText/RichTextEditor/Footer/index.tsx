@@ -1,60 +1,78 @@
-import { Button } from "@/components/exports"
-import { Paperclip } from "@/icons/app"
+import { Button } from "@/components/Actions/exports"
+import { Masonry, Paperclip } from "@/icons/app"
 import { Editor } from "@tiptap/react"
-import { ToolbarDivider } from "../Toolbar"
-import { actionType, primaryActionType } from "../utils/types"
+import { motion } from "framer-motion"
+import { useState } from "react"
+import { EnhanceActivator } from "../Enhance"
+import { Toolbar, ToolbarDivider } from "../Toolbar"
+import { actionType, enhanceConfig, primaryActionType } from "../utils/types"
 
 interface FooterProps {
-  editor: Editor | null
+  editor: Editor
   maxCharacters: number | undefined
-  secondaryActions: actionType[] | undefined
+  secondaryAction: actionType | undefined
   primaryAction: primaryActionType | undefined
   isAcceptChangesOpen: boolean
   fileInputRef: React.RefObject<HTMLInputElement>
   canUseFiles: boolean
-  isToolbarOpen: boolean
-  setIsToolbarOpen: (isToolbarOpen: boolean) => void
-  canToggleToolbar: boolean
+  onEnhanceWithAI?: (
+    selectedText: string,
+    selectedIntent?: string,
+    customIntent?: string,
+    context?: string
+  ) => Promise<void>
+  isLoadingEnhance: boolean
+  disableButtons: boolean
+  enhanceConfig: enhanceConfig | undefined
+  isFullscreen: boolean
 }
 
 const Footer = ({
   editor,
   maxCharacters,
-  secondaryActions,
+  secondaryAction,
   primaryAction,
   isAcceptChangesOpen,
   fileInputRef,
   canUseFiles,
-  isToolbarOpen,
-  setIsToolbarOpen,
-  canToggleToolbar,
+  onEnhanceWithAI,
+  isLoadingEnhance,
+  enhanceConfig,
+  isFullscreen,
 }: FooterProps) => {
-  if (!editor) return null
-  if (
-    !maxCharacters &&
-    !secondaryActions &&
-    !primaryAction &&
-    !canUseFiles &&
-    !canToggleToolbar
-  )
-    return null
+  const [isToolbarOpen, setIsToolbarOpen] = useState(false)
 
   return (
-    <div className="flex w-full items-center gap-2">
-      <div className="flex flex-shrink-0 items-center gap-2">
-        {canToggleToolbar && (
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              setIsToolbarOpen(!isToolbarOpen)
-            }}
-            variant="outline"
-            size="md"
-            label="Toolbar"
-            disabled={isAcceptChangesOpen}
-            type="button"
+    <div className="flex max-w-full items-center gap-2 px-4 py-2 md:py-3">
+      <div className="relative flex flex-grow items-center gap-2 overflow-x-auto">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: isToolbarOpen ? "100%" : 0 }}
+          transition={{ duration: 0.3 }}
+          className="absolute left-0 top-0 z-10 h-full overflow-hidden bg-f1-background"
+        >
+          <Toolbar
+            editor={editor}
+            isFullscreen={isFullscreen}
+            disableButtons={isAcceptChangesOpen}
+            onClose={() => setIsToolbarOpen(false)}
           />
-        )}
+        </motion.div>
+
+        <Button
+          onClick={(e) => {
+            e.preventDefault()
+            setIsToolbarOpen(true)
+          }}
+          variant="outline"
+          size="md"
+          label="Toolbar"
+          disabled={isAcceptChangesOpen}
+          type="button"
+          hideLabel
+          round
+          icon={Masonry}
+        />
         {canUseFiles && (
           <Button
             icon={Paperclip}
@@ -77,31 +95,42 @@ const Footer = ({
             disabled={isAcceptChangesOpen}
           />
         )}
+        {enhanceConfig && (
+          <>
+            <ToolbarDivider />
+            <EnhanceActivator
+              editor={editor}
+              onEnhanceWithAI={onEnhanceWithAI}
+              isLoadingEnhance={isLoadingEnhance}
+              enhanceConfig={enhanceConfig}
+              disableButtons={isAcceptChangesOpen}
+            />
+          </>
+        )}
         {maxCharacters && (
-          <p className="text-sm font-medium text-f1-foreground-secondary">
-            {editor.storage.characterCount.characters()} / {maxCharacters}
+          <p className="text-sm font-normal text-f1-border-hover">
+            {editor.storage.characterCount.characters()}/{maxCharacters}
           </p>
         )}
       </div>
-      <div className="flex grow items-center justify-end gap-2 overflow-x-hidden">
-        {secondaryActions && secondaryActions.length > 0 && (
+
+      <div className="flex flex-shrink-0 items-center gap-1">
+        {secondaryAction && (
           <div className="flex items-center gap-2 overflow-x-auto">
-            {secondaryActions?.map((action) => (
-              <Button
-                onClick={(e) => {
-                  e.preventDefault()
-                  action.onClick()
-                }}
-                variant={action.variant ?? "outline"}
-                size="md"
-                label={action.label}
-                disabled={isAcceptChangesOpen || action.disabled}
-                type="button"
-              />
-            ))}
+            <Button
+              onClick={(e) => {
+                e.preventDefault()
+                secondaryAction.onClick()
+              }}
+              variant={secondaryAction.variant ?? "outline"}
+              size="md"
+              label={secondaryAction.label}
+              disabled={isAcceptChangesOpen || secondaryAction.disabled}
+              type="button"
+            />
           </div>
         )}
-        {secondaryActions && secondaryActions.length > 0 && <ToolbarDivider />}
+        {secondaryAction && primaryAction && <ToolbarDivider />}
         {primaryAction && (
           <Button
             onClick={(e) => {
