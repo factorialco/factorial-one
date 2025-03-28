@@ -125,24 +125,26 @@ const ProductUpdates = ({
           )}
           {state === "idle" && updates !== null && updates.length > 0 && (
             <>
-              <div className="px-1 pb-1">
+              <div className="px-1">
                 <FeaturedDropdownItem
                   {...featuredUpdate}
                   onClick={onItemClick}
                 />
                 {updates.length > 1 && (
                   <>
-                    <DropdownMenuSeparator />
-                    <p className="text-balance px-3 pb-2 pt-3 text-sm font-medium text-f1-foreground-secondary">
-                      {moreUpdatesLabel}
-                    </p>
-                    {restUpdates.map((update, index) => (
-                      <DropdownItem
-                        key={index}
-                        {...update}
-                        onClick={onItemClick}
-                      />
-                    ))}
+                    <div className="pb-1">
+                      <DropdownMenuSeparator />
+                      <p className="text-balance px-3 pb-2 pt-3 text-sm font-medium text-f1-foreground-secondary">
+                        {moreUpdatesLabel}
+                      </p>
+                      {restUpdates.map((update, index) => (
+                        <DropdownItem
+                          key={index}
+                          {...update}
+                          onClick={onItemClick}
+                        />
+                      ))}
+                    </div>
                   </>
                 )}
               </div>
