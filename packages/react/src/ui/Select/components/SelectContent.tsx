@@ -3,7 +3,7 @@ import { useVirtualizer } from "@tanstack/react-virtual"
 import * as React from "react"
 import { ReactNode, useContext, useEffect, useMemo, useRef } from "react"
 import { cn } from "../../../lib/utils.ts"
-import { SelectScrollButton, VirtualItem } from "../index"
+import { VirtualItem } from "../index"
 import { SelectContext } from "../SelectContext.tsx"
 
 /**
@@ -107,7 +107,9 @@ const SelectContent = React.forwardRef<
             "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background text-f1-foreground shadow-md data-[state=closed]:fade-out-0 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=open]:fade-in-0 motion-safe:data-[state=closed]:zoom-out-95 motion-safe:data-[state=open]:zoom-in-95 motion-safe:data-[side=bottom]:slide-in-from-top-2",
             position === "popper" &&
               "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-            className
+            className,
+            // Hides the content when the virtual list is not ready
+            isVirtual && !virtualReady && "opacity-0"
           )}
           position={position}
           {...props}
@@ -121,12 +123,12 @@ const SelectContent = React.forwardRef<
           }}
         >
           {!!props.top && <div>{props.top}</div>}
-          <SelectScrollButton variant="up" />
+          {/* <SelectScrollButton variant="up" /> */}
           <SelectPrimitive.Viewport
             ref={parentRef}
             className={cn(
               position === "popper" &&
-                "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+                "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
             )}
           >
             {isEmpty ? (
@@ -145,7 +147,7 @@ const SelectContent = React.forwardRef<
               >
                 <div
                   style={{
-                    position: "absolute",
+                    // position: "absolute",
                     top: 0,
                     left: 0,
                     width: "100%",
@@ -157,6 +159,7 @@ const SelectContent = React.forwardRef<
                       key={virtualItem.key}
                       data-index={virtualItem.index}
                       ref={virtualizer.measureElement}
+                      tabIndex={virtualItem.index === positionIndex ? 0 : -1}
                     >
                       {items[virtualItem.index].item}
                     </div>
@@ -167,7 +170,7 @@ const SelectContent = React.forwardRef<
               children
             )}
           </SelectPrimitive.Viewport>
-          <SelectScrollButton variant="down" />
+          {/* <SelectScrollButton variant="down" /> */}
           {!!props.bottom && <div>{props.bottom}</div>}
         </SelectPrimitive.Content>
       </SelectPrimitive.Portal>
