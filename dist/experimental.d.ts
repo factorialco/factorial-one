@@ -1183,6 +1183,15 @@ declare type F1SearchBoxProps = {
 };
 
 /**
+ * Filters the actions based on the enabled property
+ * @param actions - The actions to filter
+ * @returns An array of filtered actions
+ */
+export declare const filterActions: (actions: SecondaryActionsDefinition) => (DropdownItem & {
+    enabled?: boolean;
+})[];
+
+/**
  * Union of all available filter types.
  * Used to define possible filter configurations in a collection.
  * @template T - Type of values for the InFilterDefinition
@@ -1964,7 +1973,7 @@ declare interface PrimaryActionButton extends PrimaryAction {
  * Defines the structure and configuration of the primary action that can be performed on a collection.
  * @returns An action
  */
-declare type PrimaryActionsDefinition = () => Pick<DropdownItemObject, "onClick" | "label" | "icon"> | undefined;
+export declare type PrimaryActionsDefinition = () => Pick<DropdownItemObject, "onClick" | "label" | "icon"> | undefined;
 
 declare interface PrimaryDropdownAction<T> extends PrimaryAction {
     items: OneDropdownButtonItem<T>[];
@@ -2315,7 +2324,7 @@ declare interface SecondaryAction extends PrimaryActionButton {
  * Defines the structure and configuration of secondary actions that can be performed on a collection.
  * @returns An array of actions
  */
-declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
+export declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
     enabled?: boolean;
 }> | undefined;
 
