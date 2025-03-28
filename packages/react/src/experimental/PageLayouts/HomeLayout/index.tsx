@@ -1,4 +1,3 @@
-import { Carousel } from "../../Navigation/Carousel"
 import {
   Children,
   forwardRef,
@@ -6,6 +5,7 @@ import {
   useImperativeHandle,
   useRef,
 } from "react"
+import { Carousel } from "../../Navigation/Carousel"
 
 type Props = {
   widgets?: ReactNode[]

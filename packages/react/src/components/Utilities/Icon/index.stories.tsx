@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { useState } from "react"
 
+import { ComponentProps } from "react"
 import * as AnimatedIcons from "../../../icons/animated"
 import * as Icons from "../../../icons/app"
 import * as ModuleIcons from "../../../icons/modules"
-import { ComponentProps } from "react"
 import { Icon } from "./index"
 
 const meta = {

@@ -1,5 +1,5 @@
-import { IconType } from "../../../components/Utilities/Icon"
 import { cva, type VariantProps } from "cva"
+import { IconType } from "../../../components/Utilities/Icon"
 
 const moduleAvatarVariants = cva({
   base: "relative flex shrink-0 items-center justify-center",

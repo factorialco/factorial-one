@@ -59,7 +59,7 @@ interface MoneyBagProps extends React.SVGProps<SVGSVGElement> {
 
 const MoneyBagAnimated = React.forwardRef<SVGSVGElement, MoneyBagProps>(
   ({ animate = "normal", ...props }, ref) => {
-  return (
+    return (
       <svg
         ref={ref}
         viewBox="0 0 24 24"

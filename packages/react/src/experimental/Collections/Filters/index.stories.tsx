@@ -1,9 +1,9 @@
-import { Input } from "../../../ui/input"
-import { Label } from "../../../ui/label"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useEffect, useState } from "react"
-import { Filters } from "./index"
+import { Input } from "../../../ui/input"
+import { Label } from "../../../ui/label"
 import { Presets } from "../types"
+import { Filters } from "./index"
 import type { FiltersDefinition, FiltersState } from "./types"
 import {
   deserializeFilters,

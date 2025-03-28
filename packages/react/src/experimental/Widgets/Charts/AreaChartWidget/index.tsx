@@ -1,6 +1,9 @@
-import { AreaChart, AreaChartProps } from "../../../../components/Charts/AreaChart"
-import { withSkeleton } from "../../../../lib/skeleton"
 import { forwardRef } from "react"
+import {
+  AreaChart,
+  AreaChartProps,
+} from "../../../../components/Charts/AreaChart"
+import { withSkeleton } from "../../../../lib/skeleton"
 import { ChartContainer, ComposeChartContainerProps } from "../ChartContainer"
 
 export interface AreaChartWidgetProps

@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react"
 
-import { PieChartWidget } from "./index"
 import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
+import { PieChartWidget } from "./index"
 
 const meta = {
   title: "Widgets/Charts/PieChartWidget",

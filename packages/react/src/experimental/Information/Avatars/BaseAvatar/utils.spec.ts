@@ -1,5 +1,5 @@
-import { getInitials } from "./utils.ts"
 import { describe, expect, test } from "vitest"
+import { getInitials } from "./utils.ts"
 
 describe("getInitials", () => {
   test("returns first two letters in uppercase from the name, if a string passed", () => {

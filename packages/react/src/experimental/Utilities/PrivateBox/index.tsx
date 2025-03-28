@@ -1,7 +1,7 @@
-import { usePrivacyMode } from "../../../lib/privacyMode"
-import { cn } from "../../../lib/utils"
 import { motion } from "framer-motion"
 import { FC, PropsWithChildren } from "react"
+import { usePrivacyMode } from "../../../lib/privacyMode"
+import { cn } from "../../../lib/utils"
 
 export const PrivateBox: FC<PropsWithChildren> = ({ children }) => {
   const { enabled } = usePrivacyMode()

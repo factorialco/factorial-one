@@ -1,6 +1,6 @@
-import { useNavigation } from "../../../lib/linkHandler"
 import { render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
+import { useNavigation } from "../../../lib/linkHandler"
 import { Link } from "./index"
 
 vi.mock("@/lib/linkHandler", async () => {
