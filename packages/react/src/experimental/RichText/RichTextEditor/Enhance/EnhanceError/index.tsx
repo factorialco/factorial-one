@@ -17,9 +17,9 @@ const EnhanceError = ({ aiError, onClose }: EnhanceErrorProps) => {
 
   return (
     <div className="absolute bottom-0 flex w-full items-center justify-center p-3">
-      <div className="w-fit rounded-md bg-f1-background shadow-md">
+      <div className="w-fit rounded-md bg-f1-background drop-shadow-sm">
         <Alert variant="destructive" className="w-fit max-w-full">
-          <AlertTitle>{aiError}</AlertTitle>
+          <AlertTitle>{aiError || "Error"}</AlertTitle>
           <AlertDescription>
             <Button
               variant="default"

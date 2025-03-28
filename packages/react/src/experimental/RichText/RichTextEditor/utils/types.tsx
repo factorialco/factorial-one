@@ -73,10 +73,11 @@ type enhancedTextResponse = {
 
 type enhanceLabelsType = {
   defaultError: string
-  enhanceButtonLabel: string
-  acceptChangesButtonLabel: string
-  rejectChangesButtonLabel: string
-  customPromptPlaceholder: string
+  enhanceButtonLabel?: string
+  acceptChangesButtonLabel?: string
+  rejectChangesButtonLabel?: string
+  repeatButtonLabel?: string
+  customPromptPlaceholder?: string
 }
 
 type EnhancementOption = {
@@ -143,6 +144,7 @@ type primaryActionType = {
 
 type linkPopupConfig = {
   linkPlaceholder: string
+  linkLabel: string
 }
 
 export { FileType }

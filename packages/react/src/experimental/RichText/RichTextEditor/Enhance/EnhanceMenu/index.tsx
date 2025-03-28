@@ -48,7 +48,7 @@ const AIEnhanceMenu = ({
   const [selectedParentOption, setSelectedParentOption] = useState<
     string | null
   >(null)
-  const [searchQuery, setSearchQuery] = useState("") // New state for search query
+  const [searchQuery, setSearchQuery] = useState("")
   const customInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -70,7 +70,6 @@ const AIEnhanceMenu = ({
     setSelectedParentOption(null)
   }
 
-  // If user presses Enter, use the input as custom intent
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       if (searchQuery.trim()) {
@@ -86,7 +85,7 @@ const AIEnhanceMenu = ({
 
   return (
     <div
-      className="flex w-96 flex-col overflow-hidden rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background shadow-md"
+      className="flex w-[500px] flex-col overflow-hidden rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
       onClick={(e) => e.stopPropagation()}
     >
       {canUseCustomPrompt && (
