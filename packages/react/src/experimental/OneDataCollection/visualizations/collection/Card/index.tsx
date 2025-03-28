@@ -5,10 +5,10 @@ import { OnePagination } from "../../../../OnePagination"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ActionsDropdown } from "../../../ItemActions/Dropdown"
 import { ItemActionsDefinition } from "../../../item-actions"
+import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
 import { CollectionProps, RecordType } from "../../../types"
 import { useData } from "../../../useData"
-import { PropertyDefinition, renderValue } from "../../../utils"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
 
@@ -67,6 +67,13 @@ export const CardCollection = <
     ...source,
     dataAdapter: overridenDataAdapter,
   })
+
+  const renderValue = (
+    item: Record,
+    property: CardPropertyDefinition<Record>
+  ) => {
+    return renderProperty(item, property, "card")
+  }
 
   return (
     <>
