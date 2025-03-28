@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.13.0...factorial-one-react-v1.14.0) (2025-03-28)
+
+
+### Features
+
+* **Collections:** propagate loading state to Table visualization ([#1488](https://github.com/factorialco/factorial-one/issues/1488)) ([a2a488c](https://github.com/factorialco/factorial-one/commit/a2a488c27146618c1549e3457a42d8e032562a7b))
+
 ## [1.13.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.12.0...factorial-one-react-v1.13.0) (2025-03-27)
 
 
