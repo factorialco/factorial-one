@@ -1,7 +1,7 @@
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import * as Icons from "../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
-import { Dropdown } from "./index"
+import * as Icons from "../../../icons/app"
+import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
+import { Dropdown, MobileDropdown as MobileDropdownComponent } from "./index"
 
 const meta: Meta<typeof Dropdown> = {
   title: "Dropdown",
@@ -141,4 +141,38 @@ export const WithAvatars: Story = {
       },
     ],
   },
+}
+
+export const MobileDropdown: Story = {
+  args: {
+    items: [
+      {
+        label: "Create",
+        onClick: () => console.log("Create clicked"),
+        icon: Icons.Add,
+        description: "New creation process",
+      },
+      {
+        label: "Edit",
+        onClick: () => console.log("Edit clicked"),
+        icon: Icons.Pencil,
+        description: "Edit item's information",
+      },
+      {
+        label: "Save",
+        onClick: () => console.log("Save clicked"),
+        icon: Icons.Save,
+        description: "Preserve changes",
+      },
+      { type: "separator" },
+      {
+        label: "Delete",
+        onClick: () => console.log("Delete clicked"),
+        description: "Remove item",
+        critical: true,
+        icon: Icons.Delete,
+      },
+    ],
+  },
+  render: (args) => <MobileDropdownComponent {...args} />,
 }
