@@ -1,12 +1,32 @@
 import { Button } from "@/components/Actions/Button"
 import { Icon, IconType } from "@/factorial-one"
-import { Check, Code, Cross, Ellipsis, List, Minus, Pencil } from "@/icons/app"
+import {
+  AlignTextCenter,
+  AlignTextJustify,
+  AlignTextLeft,
+  AlignTextRight,
+  Bold,
+  CheckDouble,
+  Code,
+  Cross,
+  Ellipsis,
+  Heading1,
+  Heading2,
+  Heading3,
+  Italic,
+  List,
+  Minus,
+  OlList,
+  Pencil,
+  Strikethrough,
+  Underline,
+} from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Button as ButtonUI } from "@/ui/button"
 import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
 import React from "react"
-import { getTextAlignLabel } from "../../utils/helpers"
+import { getTextAlignIcon, getTextAlignLabel } from "../../utils/helpers"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 
 const ToolbarDivider = () => (
@@ -85,26 +105,30 @@ const Toolbar = ({
     <div className="flex flex-row items-center gap-0.5">
       <ToolbarButton
         active={editor.isActive("bold")}
-        label="B"
+        label="Bold"
+        icon={Bold}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleBold().run()}
       />
 
       <ToolbarButton
         active={editor.isActive("italic")}
-        label="I"
+        label="Italic"
+        icon={Italic}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleItalic().run()}
       />
       <ToolbarButton
         active={editor.isActive("underline")}
-        label="U"
+        label="Underline"
+        icon={Underline}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleUnderline().run()}
       />
       <ToolbarButton
         active={editor.isActive("strike")}
-        label="S"
+        label="Strikethrough"
+        icon={Strikethrough}
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={disableButtons}
       />
@@ -115,20 +139,23 @@ const Toolbar = ({
     <div className="flex flex-row items-center gap-0.5">
       <ToolbarButton
         active={editor.isActive("heading", { level: 1 })}
-        label="H1"
+        label="Heading 1"
+        icon={Heading1}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
       />
 
       <ToolbarButton
         active={editor.isActive("heading", { level: 2 })}
-        label="H2"
+        label="Heading 2"
+        icon={Heading2}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
       />
       <ToolbarButton
         active={editor.isActive("heading", { level: 3 })}
-        label="H3"
+        label="Heading 3"
+        icon={Heading3}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
       />
@@ -142,6 +169,7 @@ const Toolbar = ({
         items={[
           {
             label: "Left",
+            icon: AlignTextLeft,
             onClick: () => editor.chain().focus().setTextAlign("left").run(),
             isActive:
               editor.isActive({ textAlign: "left" }) ||
@@ -151,16 +179,19 @@ const Toolbar = ({
           },
           {
             label: "Center",
+            icon: AlignTextCenter,
             onClick: () => editor.chain().focus().setTextAlign("center").run(),
             isActive: editor.isActive({ textAlign: "center" }),
           },
           {
             label: "Right",
+            icon: AlignTextRight,
             onClick: () => editor.chain().focus().setTextAlign("right").run(),
             isActive: editor.isActive({ textAlign: "right" }),
           },
           {
             label: "Justify",
+            icon: AlignTextJustify,
             onClick: () => editor.chain().focus().setTextAlign("justify").run(),
             isActive: editor.isActive({ textAlign: "justify" }),
           },
@@ -172,30 +203,33 @@ const Toolbar = ({
           variant="ghost"
           size="md"
           label={getTextAlignLabel(editor)}
+          icon={getTextAlignIcon(editor)}
           disabled={disableButtons}
+          hideLabel
+          round
           type="button"
         />
       </ToolbarDropdown>
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         active={editor.isActive("bulletList")}
-        label="Bullet"
+        label="Bullet List"
         disabled={disableButtons}
         icon={List}
       />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         active={editor.isActive("orderedList")}
-        label="Ordered"
+        label="Ordered List"
         disabled={disableButtons}
-        icon={List}
+        icon={OlList}
       />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleTaskList().run()}
         active={editor.isActive("taskList")}
         label="Task List"
         disabled={disableButtons}
-        icon={Check}
+        icon={CheckDouble}
       />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleHighlight().run()}
@@ -215,7 +249,7 @@ const Toolbar = ({
           },
           {
             icon: Minus,
-            label: "Horizontal Rule",
+            label: "Divider",
             onClick: () => editor.chain().focus().setHorizontalRule().run(),
             isActive: editor.isActive("horizontalRule"),
           },

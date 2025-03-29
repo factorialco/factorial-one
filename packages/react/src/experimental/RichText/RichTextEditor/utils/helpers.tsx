@@ -1,3 +1,6 @@
+import { AlignTextJustify, AlignTextRight } from "@/icons/app"
+import { AlignTextLeft } from "@/icons/app"
+import { AlignTextCenter } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 
 const getHeadingLabel = (editor: Editor) => {
@@ -18,4 +21,12 @@ const getTextAlignLabel = (editor: Editor) => {
   return "Left"
 }
 
-export { getHeadingLabel, getTextAlignLabel }
+const getTextAlignIcon = (editor: Editor) => {
+  if (editor.isActive({ textAlign: "left" })) return AlignTextLeft
+  if (editor.isActive({ textAlign: "center" })) return AlignTextCenter
+  if (editor.isActive({ textAlign: "right" })) return AlignTextRight
+  if (editor.isActive({ textAlign: "justify" })) return AlignTextJustify
+  return AlignTextLeft
+}
+
+export { getHeadingLabel, getTextAlignLabel, getTextAlignIcon }
