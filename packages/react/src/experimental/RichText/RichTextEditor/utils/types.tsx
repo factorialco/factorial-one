@@ -88,7 +88,6 @@ type EnhancementOption = {
 type enhanceConfig = {
   onEnhanceText?: (params: enhanceTextParams) => Promise<enhancedTextResponse>
   enhancementOptions?: EnhancementOption[]
-  canUseCustomPrompt?: boolean
   enhanceLabels: enhanceLabelsType
 }
 

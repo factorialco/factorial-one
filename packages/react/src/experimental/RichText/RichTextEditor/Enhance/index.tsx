@@ -104,9 +104,6 @@ const EnhanceActivator = ({
                 transition={{ duration: 0.2 }}
               >
                 <AIEnhanceMenu
-                  canUseCustomPrompt={
-                    enhanceConfig?.canUseCustomPrompt || false
-                  }
                   onSelect={({ selectedIntent, customIntent }) => {
                     onEnhanceWithAI(selectedIntent, customIntent)
                     setLastIntent({

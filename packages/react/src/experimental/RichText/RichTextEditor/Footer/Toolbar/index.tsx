@@ -6,7 +6,7 @@ import { Button as ButtonUI } from "@/ui/button"
 import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
 import React from "react"
-import { getTextAlignLabel } from "../utils/helpers"
+import { getTextAlignLabel } from "../../utils/helpers"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 
 const ToolbarDivider = () => (

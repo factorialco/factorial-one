@@ -2,7 +2,7 @@ import { Button } from "@/components/Actions/Button"
 import { enhanceLabelsType } from "@/experimental/exports"
 import { Check, Cross, Reset } from "@/icons/app"
 import { useI18n } from "@/lib/i18n-provider"
-import { ToolbarDivider } from "../../Toolbar"
+import { ToolbarDivider } from "../../Footer/Toolbar"
 
 interface AcceptChangesProps {
   onAccept: () => void

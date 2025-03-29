@@ -3,8 +3,8 @@ import {
   OneDropdownButton,
   OneDropdownButtonItem,
 } from "@/components/Actions/OneDropdownButton"
-import { ToolbarDivider } from "../../Toolbar"
 import { actionType, primaryActionType } from "../../utils/types"
+import { ToolbarDivider } from "../Toolbar"
 
 interface actionsMenuProps {
   secondaryAction: actionType | undefined

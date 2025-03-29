@@ -1,6 +1,5 @@
 import { Icon } from "@/factorial-one"
 import { Ai, ChevronLeft, ChevronRight } from "@/icons/app"
-import { cn } from "@/lib/utils"
 import { Input } from "@/ui/input"
 import React, { useEffect, useRef, useState } from "react"
 import { EnhancementOption } from "../../utils/types"
@@ -34,7 +33,6 @@ interface AIEnhanceMenuProps {
   }) => void
   onClose: () => void
   enhancementOptions: EnhancementOption[]
-  canUseCustomPrompt: boolean
   inputPlaceholder: string
 }
 
@@ -42,7 +40,6 @@ const AIEnhanceMenu = ({
   onSelect,
   onClose,
   enhancementOptions,
-  canUseCustomPrompt,
   inputPlaceholder,
 }: AIEnhanceMenuProps) => {
   const [selectedParentOption, setSelectedParentOption] = useState<
@@ -85,29 +82,24 @@ const AIEnhanceMenu = ({
 
   return (
     <div
-      className="flex w-80 flex-col overflow-hidden rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
+      className="flex w-96 flex-col overflow-hidden rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
       onClick={(e) => e.stopPropagation()}
     >
-      {canUseCustomPrompt && (
-        <div className="flex w-full flex-row items-center p-2">
-          <Input
-            icon={Ai}
-            type="text"
-            placeholder={inputPlaceholder}
-            autoFocus
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-            ref={customInputRef}
-          />
-        </div>
-      )}
+      <div className="flex w-full flex-row items-center p-2">
+        <Input
+          icon={Ai}
+          type="text"
+          placeholder={inputPlaceholder}
+          autoFocus
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
+          ref={customInputRef}
+        />
+      </div>
       {enhancementOptions.length > 0 && (
         <div
-          className={cn(
-            "flex max-h-80 flex-col overflow-y-auto border-0 border-t-[1px] border-solid border-f1-border",
-            canUseCustomPrompt ? "" : "border-t-0"
-          )}
+          className="flex max-h-32 flex-col overflow-y-auto [scrollbar-width:thin]"
           onClick={(e) => e.stopPropagation()}
         >
           {selectedParentOption ? (

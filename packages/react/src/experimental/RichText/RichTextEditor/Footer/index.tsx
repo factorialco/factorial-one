@@ -4,9 +4,9 @@ import { Editor } from "@tiptap/react"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { EnhanceActivator } from "../Enhance"
-import { Toolbar, ToolbarDivider } from "../Toolbar"
 import { actionType, enhanceConfig, primaryActionType } from "../utils/types"
 import { ActionsMenu } from "./ActionsMenu"
+import { Toolbar, ToolbarDivider } from "./Toolbar"
 
 interface FooterProps {
   editor: Editor
@@ -139,6 +139,7 @@ const Footer = ({
               disableButtons={isAcceptChangesOpen}
               hideLabel={useLittleMode}
               setLastIntent={setLastIntent}
+              position="top"
             />
           </>
         )}

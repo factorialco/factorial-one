@@ -116,7 +116,6 @@ export const Default: Story = {
           }, 1000)
         }),
       enhancementOptions: enhancementOptions,
-      canUseCustomPrompt: true,
       enhanceLabels: {
         defaultError: "Error enhancing text, try again later",
         enhanceButtonLabel: "Magic",
