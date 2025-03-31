@@ -50,6 +50,8 @@ export interface ClockInControlsProps {
   canShowLocation?: boolean
   locationSelectorDisabled?: boolean
   canShowBreakButton?: boolean
+  canSeeGraph?: boolean
+  canSeeRemainingTime?: boolean
   /** Callback when Clock In button is clicked */
   onClockIn?: () => void
   /** Callback when Clock Out button is clicked */
@@ -75,6 +77,8 @@ export function ClockInControls({
   breakTypes,
   onChangeBreakTypeId,
   canShowBreakButton = true,
+  canSeeGraph = true,
+  canSeeRemainingTime = true,
   // onClickProjectSelector,
   onChangeLocationId,
   canShowProject = true,
@@ -85,6 +89,7 @@ export function ClockInControls({
     data,
     labels,
     remainingMinutes,
+    canSeeRemainingTime,
   })
 
   const showLocationAndProjectSelectors = status === "clocked-out"
@@ -245,11 +250,13 @@ export function ClockInControls({
               )}
             </div>
           </div>
-          <ClockInGraph
-            data={data}
-            remainingMinutes={remainingMinutes}
-            overtimeOnly={overtimeOnly}
-          />
+          {canSeeGraph && (
+            <ClockInGraph
+              data={data}
+              remainingMinutes={canSeeRemainingTime ? remainingMinutes : 0}
+              overtimeOnly={overtimeOnly}
+            />
+          )}
         </div>
         <div className="mt-6 flex flex-row flex-wrap items-center justify-center gap-2 @xs:justify-start">
           {canSelectLocation ? (

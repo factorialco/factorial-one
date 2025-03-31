@@ -1,12 +1,20 @@
+import { motion } from "framer-motion"
+import { Fragment, memo, useEffect, useRef, useState } from "react"
+import { useResizeObserver } from "usehooks-ts"
 import { Button, ButtonProps } from "../../../../components/Actions/Button"
 import {
   OneDropdownButton,
   OneDropdownButtonProps,
 } from "../../../../components/Actions/OneDropdownButton"
+import { useI18n } from "../../../../lib/i18n-provider"
+import { cn } from "../../../../lib/utils"
 import {
-  Avatar,
-  AvatarVariant,
-} from "../../Avatars/Avatar"
+  Dropdown,
+  DropdownItem,
+  MobileDropdown,
+} from "../../../Navigation/Dropdown"
+import { Tooltip } from "../../../Overlays/Tooltip"
+import { Avatar, AvatarVariant } from "../../Avatars/Avatar"
 import { StatusVariant } from "../../Tags/StatusTag"
 import {
   PrimaryAction,
@@ -14,17 +22,6 @@ import {
   PrimaryDropdownAction,
   SecondaryAction,
 } from "../../utils"
-import {
-  Dropdown,
-  DropdownItem,
-  MobileDropdown,
-} from "../../../Navigation/Dropdown"
-import { Tooltip } from "../../../Overlays/Tooltip"
-import { useI18n } from "../../../../lib/i18n-provider"
-import { cn } from "../../../../lib/utils"
-import { motion } from "framer-motion"
-import { Fragment, memo, useEffect, useRef, useState } from "react"
-import { useResizeObserver } from "usehooks-ts"
 import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
 
 interface BaseHeaderProps {
@@ -281,7 +278,7 @@ export function BaseHeader({
           ))}
 
           {visibleOtherActions.length > 0 && (
-            <div className="w-full">
+            <div className="w-full [&>*]:w-full">
               <MobileDropdown items={visibleOtherActions} />
             </div>
           )}
