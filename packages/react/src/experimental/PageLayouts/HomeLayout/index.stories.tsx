@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { AreaChartWidget } from "../../Widgets/Charts/AreaChartWidget"
 import { Placeholder } from "../../../lib/storybook-utils/placeholder"
+import { AreaChartWidget } from "../../Widgets/Charts/AreaChartWidget"
 import { HomeLayout } from "./index"
 
 import { AreaChartProps } from "../../../components/Charts/AreaChart"

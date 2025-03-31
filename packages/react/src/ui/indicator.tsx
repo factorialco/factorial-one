@@ -1,6 +1,6 @@
+import { forwardRef } from "react"
 import { Icon, IconType } from "../components/Utilities/Icon"
 import { cn } from "../lib/utils"
-import { forwardRef } from "react"
 
 interface IndicatorProps {
   content: string

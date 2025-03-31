@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { Dashboard } from "./index"
 import { AreaChartWidget } from "../../Charts/AreaChartWidget"
+import { Dashboard } from "./index"
 
 import { AreaChartProps } from "../../../../components/Charts/AreaChart"
 import AreaChartWidgetStoriesMeta from "../../Charts/AreaChartWidget/index.stories"

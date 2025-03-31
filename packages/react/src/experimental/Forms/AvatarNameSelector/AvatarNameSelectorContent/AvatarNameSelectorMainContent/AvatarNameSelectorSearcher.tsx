@@ -1,5 +1,5 @@
-import { Icon } from "../../../../../components/Utilities/Icon"
 import { Search } from "lucide-react"
+import { Icon } from "../../../../../components/Utilities/Icon"
 import {
   focusNextFocusable,
   focusPreviousFocusable,

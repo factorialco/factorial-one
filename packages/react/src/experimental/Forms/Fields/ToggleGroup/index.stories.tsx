@@ -1,5 +1,5 @@
-import { ToggleGroup, ToggleGroupItem } from "../../../../ui/toggleGroup"
 import type { Meta, StoryObj } from "@storybook/react"
+import { ToggleGroup, ToggleGroupItem } from "../../../../ui/toggleGroup"
 
 const children: React.ReactNode = (
   <>

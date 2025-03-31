@@ -1,8 +1,8 @@
+import { useMemo } from "react"
 import { Icon } from "../../../../components/Utilities/Icon"
-import { PersonAvatar } from "../../../exports"
 import { ChevronDown } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
-import { useMemo } from "react"
+import { PersonAvatar } from "../../../exports"
 import {
   AvatarNamedEntity,
   AvatarNamedSubEntity,

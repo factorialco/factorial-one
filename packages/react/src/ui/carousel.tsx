@@ -1,11 +1,11 @@
 "use client"
 
-import { Icon } from "../components/Utilities/Icon"
-import { ArrowLeft, ArrowRight } from "../icons/app"
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react"
 import * as React from "react"
+import { Icon } from "../components/Utilities/Icon"
+import { ArrowLeft, ArrowRight } from "../icons/app"
 
 import { SPACE_FOR_WIDGET_SHADOW } from "../experimental/Navigation/Carousel/DynamicCarousel"
 import { cn } from "../lib/utils"

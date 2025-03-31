@@ -1,4 +1,3 @@
-import { useNavigation } from "../../../lib/linkHandler"
 import React, {
   createContext,
   PointerEvent,
@@ -9,6 +8,7 @@ import React, {
   useState,
 } from "react"
 import { useMediaQuery } from "usehooks-ts"
+import { useNavigation } from "../../../lib/linkHandler"
 
 type SidebarState = "locked" | "unlocked" | "hidden"
 

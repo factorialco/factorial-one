@@ -1,6 +1,6 @@
+import type { Meta, StoryObj } from "@storybook/react"
 import { Check } from "../../../../icons/app"
 import { sizes } from "../../../../ui/avatar"
-import type { Meta, StoryObj } from "@storybook/react"
 import { PersonAvatar } from "./index"
 
 const meta: Meta<typeof PersonAvatar> = {

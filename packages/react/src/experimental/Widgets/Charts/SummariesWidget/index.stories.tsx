@@ -1,7 +1,7 @@
 import type { Meta } from "@storybook/react"
 
-import { SummariesWidget } from "./index"
 import { WidgetDecorator } from "../storybook-utils"
+import { SummariesWidget } from "./index"
 
 const meta = {
   title: "Widgets/Charts/SummariesWidget",

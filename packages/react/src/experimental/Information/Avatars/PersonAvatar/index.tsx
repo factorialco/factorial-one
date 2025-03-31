@@ -1,5 +1,5 @@
-import { BadgeProps } from "../../Badge"
 import { ComponentProps } from "react"
+import { BadgeProps } from "../../Badge"
 import { BaseAvatar } from "../BaseAvatar"
 
 type BaseAvatarProps = ComponentProps<typeof BaseAvatar>

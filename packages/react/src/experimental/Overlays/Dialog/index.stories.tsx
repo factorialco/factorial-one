@@ -1,7 +1,7 @@
-import { Button } from "../../../components/Actions/Button"
-import { Delete } from "../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useState } from "react"
+import { Button } from "../../../components/Actions/Button"
+import { Delete } from "../../../icons/app"
 import { Dialog } from "./index"
 
 const meta = {

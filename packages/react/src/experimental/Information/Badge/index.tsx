@@ -1,5 +1,5 @@
-import { Icon, IconType } from "../../../components/Utilities/Icon"
 import { cva, type VariantProps } from "cva"
+import { Icon, IconType } from "../../../components/Utilities/Icon"
 
 const badgeVariants = cva({
   base: "flex shrink-0 items-center justify-center rounded-full",

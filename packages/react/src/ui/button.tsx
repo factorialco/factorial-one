@@ -1,8 +1,8 @@
-import { cn, focusRing } from "../lib/utils"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "cva"
 import * as React from "react"
 import { useRef } from "react"
+import { cn, focusRing } from "../lib/utils"
 
 export const variants = [
   "default",

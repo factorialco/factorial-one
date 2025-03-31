@@ -57,7 +57,7 @@ interface GraphProps extends React.SVGProps<SVGSVGElement> {
 
 const GraphAnimated = React.forwardRef<SVGSVGElement, GraphProps>(
   ({ animate = "normal", ...props }, ref) => {
-  return (
+    return (
       <svg
         ref={ref}
         viewBox="0 0 24 24"

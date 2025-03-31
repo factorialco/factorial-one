@@ -1,4 +1,5 @@
-import { Icon } from "../../Utilities/Icon"
+import { cva, type VariantProps } from "cva"
+import { forwardRef } from "react"
 import ExternalLink from "../../../icons/app/ExternalLink"
 import {
   Link as BaseLink,
@@ -6,8 +7,7 @@ import {
   useNavigation,
 } from "../../../lib/linkHandler"
 import { cn } from "../../../lib/utils"
-import { cva, type VariantProps } from "cva"
-import { forwardRef } from "react"
+import { Icon } from "../../Utilities/Icon"
 
 const linkVariants = cva({
   base: "inline-flex flex-row items-center gap-1 text-base",

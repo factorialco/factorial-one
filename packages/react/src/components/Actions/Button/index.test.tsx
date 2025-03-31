@@ -1,7 +1,7 @@
-import Add from "../../../icons/app/Add"
 import { render, screen } from "@testing-library/react"
 import { userEvent } from "@testing-library/user-event"
 import { expect, test, vi } from "vitest"
+import Add from "../../../icons/app/Add"
 import { Button } from "./index"
 
 test("Button calls the `onClick` handler when clicked", async () => {

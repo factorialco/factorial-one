@@ -1,6 +1,6 @@
 import type { Meta } from "@storybook/react"
-import { RadialProgressWidget } from "./index"
 import { WidgetDecorator } from "../storybook-utils"
+import { RadialProgressWidget } from "./index"
 
 const meta = {
   title: "Widgets/Charts/RadialProgressWidget",

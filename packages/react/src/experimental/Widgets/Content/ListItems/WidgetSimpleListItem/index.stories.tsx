@@ -1,5 +1,5 @@
-import { Placeholder } from "../../../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import { Placeholder } from "../../../../../icons/app"
 import { Props, WidgetSimpleListItem } from "./index"
 
 const meta: Meta<Props> = {

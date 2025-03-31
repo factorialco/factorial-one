@@ -39,7 +39,7 @@ interface ClockProps extends React.SVGProps<SVGSVGElement> {
 
 const ClockAnimated = React.forwardRef<SVGSVGElement, ClockProps>(
   ({ animate = "normal", ...props }, ref) => {
-  return (
+    return (
       <svg
         ref={ref}
         viewBox="0 0 24 24"

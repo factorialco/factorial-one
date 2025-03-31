@@ -1,4 +1,6 @@
-import { PrimaryDropdownAction } from "../../utils"
+import type { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
+import * as Icon from "../../../../icons/app"
 import {
   Archive,
   Comment,
@@ -7,9 +9,7 @@ import {
   LayersFront,
   Pencil,
 } from "../../../../icons/app"
-import * as Icon from "../../../../icons/app"
-import type { Meta, StoryObj } from "@storybook/react"
-import { fn } from "@storybook/test"
+import { PrimaryDropdownAction } from "../../utils"
 import { ResourceHeader } from "./index"
 
 const meta: Meta<typeof ResourceHeader> = {

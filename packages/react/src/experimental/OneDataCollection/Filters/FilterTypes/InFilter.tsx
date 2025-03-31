@@ -1,10 +1,10 @@
 "use client"
 
-import { Checkbox } from "../../../Forms/Fields/Checkbox"
-import { Spinner } from "../../../Information/Spinner"
+import { useEffect, useMemo, useState } from "react"
 import { useI18n } from "../../../../lib/i18n-provider"
 import { cn, focusRing } from "../../../../lib/utils"
-import { useEffect, useMemo, useState } from "react"
+import { Checkbox } from "../../../Forms/Fields/Checkbox"
+import { Spinner } from "../../../Information/Spinner"
 import type { FilterOption, InFilterDefinition } from "../types"
 
 /**

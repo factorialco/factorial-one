@@ -1,6 +1,6 @@
-import { cn } from "../../../lib/utils"
 import { cva, type VariantProps } from "cva"
 import React from "react"
+import { cn } from "../../../lib/utils"
 
 export interface StandardLayoutProps
   extends VariantProps<typeof layoutVariants> {
