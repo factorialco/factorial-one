@@ -126,9 +126,9 @@ const EditorBubbleMenu = ({
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
+                      aria-label="Link popup"
                     >
                       <LinkPopup
-                        aria-label="Link popup"
                         editor={editor}
                         linkPlaceholder={linkPopupConfig.linkPlaceholder}
                         setOpenLinkPopover={setOpenLinkPopover}

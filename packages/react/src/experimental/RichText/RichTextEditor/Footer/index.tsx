@@ -79,9 +79,9 @@ const Footer = ({
           transition={{ duration: 0.3 }}
           onAnimationComplete={() => setToolbarAnimationComplete(isToolbarOpen)}
           className="absolute left-0 top-0 z-10 h-full bg-f1-background"
+          aria-label="Rich text editor toolbar"
         >
           <Toolbar
-            aria-label="Rich text editor toolbar"
             editor={editor}
             isFullscreen={isFullscreen}
             disableButtons={isAcceptChangesOpen}
@@ -152,7 +152,6 @@ const Footer = ({
       </div>
 
       <ActionsMenu
-        aria-label="Rich text editor actions menu"
         primaryAction={primaryAction}
         secondaryAction={secondaryAction}
         useLittleMode={useLittleMode}

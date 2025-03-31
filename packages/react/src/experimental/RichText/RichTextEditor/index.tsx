@@ -309,9 +309,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 isFullscreen ? "h-full" : "h-auto max-h-60 pr-16"
               )}
             >
+              <label id="rich-text-editor-label" className="sr-only">
+                Rich text editor content
+              </label>
               <EditorContent
                 editor={editor}
-                aria-label="Rich text editor content"
+                aria-labelledby="rich-text-editor-label"
               />
             </div>
           </div>
@@ -427,7 +430,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             disableButtons={isAcceptChangesOpen}
             linkPopupConfig={linkPopupConfig}
             setLastIntent={setLastIntent}
-            aria-label="Editor actions menu"
           />
         </div>
         {isLoadingEnhance && (
