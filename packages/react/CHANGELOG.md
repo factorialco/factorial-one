@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.17.0...factorial-one-react-v1.18.0) (2025-03-31)
+
+
+### Features
+
+* datacolletion selectable rows ([#1489](https://github.com/factorialco/factorial-one/issues/1489)) ([e5b0ada](https://github.com/factorialco/factorial-one/commit/e5b0ada4fccda81a1c95104e3b9fb64edffe72ed))
+
 ## [1.17.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.16.1...factorial-one-react-v1.17.0) (2025-03-31)
 
 
