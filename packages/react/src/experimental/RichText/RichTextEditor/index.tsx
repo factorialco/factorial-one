@@ -259,13 +259,13 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               <p className="text-2xl font-semibold text-f1-foreground">
                 {title}
               </p>
-
               <Button
                 onClick={(e) => {
                   e.preventDefault()
                   handleToggleFullscreen()
                 }}
                 label="Fullscreen"
+                aria-label="Toggle fullscreen mode"
                 variant="outline"
                 type="button"
                 hideLabel
@@ -276,13 +276,15 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               />
             </div>
           ) : (
-            <Button // @ts-ignore
+            <Button
+              // @ts-ignore
               className="fixed right-7 top-7 z-50"
               onClick={(e) => {
                 e.preventDefault()
                 handleToggleFullscreen()
               }}
               label="Fullscreen"
+              aria-label="Toggle fullscreen mode"
               variant="outline"
               type="button"
               hideLabel
@@ -307,7 +309,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 isFullscreen ? "h-full" : "h-auto max-h-60 pr-16"
               )}
             >
-              <EditorContent editor={editor} />
+              <EditorContent
+                editor={editor}
+                aria-label="Rich text editor content"
+              />
             </div>
           </div>
 
@@ -320,6 +325,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 exit={{ height: 0, opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
                 className="flex w-full items-center justify-center"
+                aria-label="Accept changes dialog"
               >
                 {isAcceptChangesOpen && (
                   <AcceptChanges
@@ -368,6 +374,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 ref={fileInputRef}
                 className="hidden"
                 accept={getAcceptFileTypeString(filesConfig)}
+                aria-label="Upload file"
               />
               <AnimatePresence>
                 {files.length > 0 && (
@@ -420,6 +427,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             disableButtons={isAcceptChangesOpen}
             linkPopupConfig={linkPopupConfig}
             setLastIntent={setLastIntent}
+            aria-label="Editor actions menu"
           />
         </div>
         {isLoadingEnhance && (

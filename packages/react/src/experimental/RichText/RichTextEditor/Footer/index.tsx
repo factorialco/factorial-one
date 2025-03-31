@@ -81,6 +81,7 @@ const Footer = ({
           className="absolute left-0 top-0 z-10 h-full bg-f1-background"
         >
           <Toolbar
+            aria-label="Rich text editor toolbar"
             editor={editor}
             isFullscreen={isFullscreen}
             disableButtons={isAcceptChangesOpen}
@@ -144,13 +145,14 @@ const Footer = ({
           </>
         )}
         {maxCharacters && !useLittleMode && (
-          <p className="text-sm font-normal text-f1-border-hover">
+          <p className="text-sm font-normal text-f1-foreground-secondary">
             {editor.storage.characterCount.characters()}/{maxCharacters}
           </p>
         )}
       </div>
 
       <ActionsMenu
+        aria-label="Rich text editor actions menu"
         primaryAction={primaryAction}
         secondaryAction={secondaryAction}
         useLittleMode={useLittleMode}

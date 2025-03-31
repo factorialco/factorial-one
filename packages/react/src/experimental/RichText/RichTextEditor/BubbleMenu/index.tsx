@@ -128,6 +128,7 @@ const EditorBubbleMenu = ({
                       transition={{ duration: 0.2 }}
                     >
                       <LinkPopup
+                        aria-label="Link popup"
                         editor={editor}
                         linkPlaceholder={linkPopupConfig.linkPlaceholder}
                         setOpenLinkPopover={setOpenLinkPopover}
