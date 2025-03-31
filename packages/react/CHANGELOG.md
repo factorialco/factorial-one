@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.14.1...factorial-one-react-v1.15.0) (2025-03-31)
+
+
+### Features
+
+* **Collections:** "Clear" button in filters ([#1506](https://github.com/factorialco/factorial-one/issues/1506)) ([90ca9dd](https://github.com/factorialco/factorial-one/commit/90ca9dd7fb1d948aef8421e4d9c393ffbd058b0f))
+
 ## [1.14.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.14.0...factorial-one-react-v1.14.1) (2025-03-28)
 
 
