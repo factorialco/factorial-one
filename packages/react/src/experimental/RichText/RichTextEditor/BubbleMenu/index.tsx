@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import screenfull from "screenfull"
 import { EnhanceActivator } from "../Enhance"
-import { enhanceConfig, linkPopupConfig } from "../utils/types"
+import { enhanceConfig, toolbarLabels } from "../utils/types"
 import { LinkPopup } from "./LinkPopup"
 
 interface EditorBubbleMenuProps {
@@ -20,13 +20,13 @@ interface EditorBubbleMenuProps {
   isLoadingEnhance: boolean
   disableButtons: boolean
   enhanceConfig: enhanceConfig | undefined
-  linkPopupConfig?: linkPopupConfig | undefined
   setLastIntent: (
     lastIntent: {
       selectedIntent?: string
       customIntent?: string
     } | null
   ) => void
+  toolbarLabels: toolbarLabels
 }
 
 const EditorBubbleMenu = ({
@@ -35,15 +35,13 @@ const EditorBubbleMenu = ({
   isLoadingEnhance,
   disableButtons,
   enhanceConfig,
-  linkPopupConfig,
   setLastIntent,
+  toolbarLabels,
 }: EditorBubbleMenuProps) => {
   const [openLinkPopover, setOpenLinkPopover] = useState(false)
 
-  if (!linkPopupConfig && !enhanceConfig) return null
-
   const handleTriggerClick = () => {
-    if (!linkPopupConfig || disableButtons) return
+    if (disableButtons) return
     setOpenLinkPopover((prev) => !prev)
   }
 
@@ -67,79 +65,74 @@ const EditorBubbleMenu = ({
       editor={editor}
     >
       <div className="z-50 flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
-        {linkPopupConfig && (
-          <Popover.Root
-            open={openLinkPopover}
-            onOpenChange={setOpenLinkPopover}
-          >
-            <Popover.Trigger asChild>
-              <ButtonUI
-                variant="outline"
-                size="md"
-                onClick={handleTriggerClick}
-                className={cn(
-                  "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
-                  editor.isActive("link")
-                    ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
-                    : "hover:bg-f1-background-secondary-hover"
-                )}
-                disabled={disableButtons}
-                aria-label="Link"
-              >
-                <Icon
-                  icon={Add}
-                  className={
-                    editor.isActive("link")
-                      ? "text-f1-icon-selected"
-                      : "text-f1-foreground"
-                  }
-                />
-
-                <p
-                  className={
-                    editor.isActive("link")
-                      ? "text-f1-icon-selected"
-                      : "text-f1-foreground"
-                  }
-                >
-                  {linkPopupConfig.linkLabel}
-                </p>
-              </ButtonUI>
-            </Popover.Trigger>
-            <Popover.Portal
-              container={
-                screenfull.isFullscreen && screenfull.element
-                  ? screenfull.element
-                  : document.body
-              }
+        <Popover.Root open={openLinkPopover} onOpenChange={setOpenLinkPopover}>
+          <Popover.Trigger asChild>
+            <ButtonUI
+              variant="outline"
+              size="md"
+              onClick={handleTriggerClick}
+              className={cn(
+                "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
+                editor.isActive("link")
+                  ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
+                  : "hover:bg-f1-background-secondary-hover"
+              )}
+              disabled={disableButtons}
+              aria-label="Link"
             >
-              <Popover.Content
-                side="bottom"
-                align="start"
-                sideOffset={15}
-                collisionPadding={10}
+              <Icon
+                icon={Add}
+                className={
+                  editor.isActive("link")
+                    ? "text-f1-icon-selected"
+                    : "text-f1-foreground"
+                }
+              />
+
+              <p
+                className={
+                  editor.isActive("link")
+                    ? "text-f1-icon-selected"
+                    : "text-f1-foreground"
+                }
               >
-                <AnimatePresence>
-                  {openLinkPopover && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      aria-label="Link popup"
-                    >
-                      <LinkPopup
-                        editor={editor}
-                        linkPlaceholder={linkPopupConfig.linkPlaceholder}
-                        setOpenLinkPopover={setOpenLinkPopover}
-                      />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </Popover.Content>
-            </Popover.Portal>
-          </Popover.Root>
-        )}
+                {toolbarLabels.linkLabel}
+              </p>
+            </ButtonUI>
+          </Popover.Trigger>
+          <Popover.Portal
+            container={
+              screenfull.isFullscreen && screenfull.element
+                ? screenfull.element
+                : document.body
+            }
+          >
+            <Popover.Content
+              side="bottom"
+              align="start"
+              sideOffset={15}
+              collisionPadding={10}
+            >
+              <AnimatePresence>
+                {openLinkPopover && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    aria-label="Link popup"
+                  >
+                    <LinkPopup
+                      editor={editor}
+                      linkPlaceholder={toolbarLabels.linkPlaceholder}
+                      setOpenLinkPopover={setOpenLinkPopover}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover.Root>
 
         {enhanceConfig && (
           <EnhanceActivator

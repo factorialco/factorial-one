@@ -8,6 +8,10 @@ interface ToolbarDropdownItem {
   isActive?: boolean
   onClick: () => void
   icon?: IconType
+  tooltip?: {
+    label: string
+    shortcut?: string[]
+  }
 }
 
 interface ToolbarDropdownProps {
@@ -15,6 +19,10 @@ interface ToolbarDropdownProps {
   children: React.ReactNode
   isFullscreen: boolean
   disabled: boolean
+  tooltip?: {
+    label: string
+    shortcut?: string[]
+  }
 }
 
 const convertItemsToDropdownItems = (items: ToolbarDropdownItem[]) => {
@@ -22,6 +30,7 @@ const convertItemsToDropdownItems = (items: ToolbarDropdownItem[]) => {
     label: item.label,
     onClick: item.onClick,
     icon: item.icon || undefined,
+    tooltip: item.tooltip,
   }))
 }
 
@@ -40,6 +49,7 @@ const ToolbarDropdown = ({
         label={item.label}
         disabled={disabled}
         icon={item.icon}
+        tooltip={item.tooltip}
       />
     ))
   ) : (

@@ -1,20 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { Maximize, Minimize } from "@/icons/app"
 import { cn } from "@/lib/utils"
-import CharacterCount from "@tiptap/extension-character-count"
-import Color from "@tiptap/extension-color"
-import Highlight from "@tiptap/extension-highlight"
-import Image from "@tiptap/extension-image"
-import Link from "@tiptap/extension-link"
-import Placeholder from "@tiptap/extension-placeholder"
-import TaskItem from "@tiptap/extension-task-item"
-import TaskList from "@tiptap/extension-task-list"
-import TextAlign from "@tiptap/extension-text-align"
-import TextStyle from "@tiptap/extension-text-style"
-import Typography from "@tiptap/extension-typography"
-import Underline from "@tiptap/extension-underline"
 import { EditorContent, useEditor } from "@tiptap/react"
-import StarterKit from "@tiptap/starter-kit"
 import { AnimatePresence, motion } from "framer-motion"
 import {
   forwardRef,
@@ -34,22 +21,21 @@ import { Footer } from "./Footer"
 import "./index.css"
 import { Loading } from "./Loading"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
+import { ExtensionsConfiguration } from "./utils/extensions"
 import {
   getAcceptFileTypeString,
   handleAddFiles,
   handleRemoveFile,
 } from "./utils/files"
-import { configureMention } from "./utils/mention"
-import { PersistSelection } from "./utils/persistSelection"
 import {
   actionType,
   enhanceConfig,
   filesConfig,
-  linkPopupConfig,
   MentionChangeResult,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
+  toolbarLabels,
 } from "./utils/types"
 
 interface RichTextEditorProps {
@@ -66,9 +52,9 @@ interface RichTextEditorProps {
     content?: string
     files?: File[]
   }
-  linkPopupConfig?: linkPopupConfig
   showTitle?: boolean
   isLoading?: boolean
+  toolbarLabels: toolbarLabels
 }
 
 type RichTextEditorHandle = {
@@ -90,9 +76,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       initialEditorState,
       onChange,
       placeholder,
-      linkPopupConfig,
       showTitle = false,
       isLoading = false,
+      toolbarLabels,
     },
     ref
   ) {
@@ -128,36 +114,13 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
 
     const editor = useEditor(
       {
-        extensions: [
-          StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
-          Underline,
-          TextStyle,
-          Color,
-          Image,
-          Typography,
-          Highlight,
-          TaskList,
-          TaskItem.configure({ nested: true }),
-          TextAlign.configure({ types: ["heading", "paragraph"] }),
-          Link.configure({
-            openOnClick: false,
-            HTMLAttributes: {
-              rel: "noopener noreferrer",
-              target: "_blank",
-            },
-          }),
-          Placeholder.configure({ placeholder }),
-          CharacterCount.configure({ limit: maxCharacters }),
-          ...(mentionsConfig
-            ? configureMention(
-                mentionSuggestions,
-                setMentionSuggestions,
-                mentionsConfig.onMentionQueryStringChanged,
-                mentionsConfig.users
-              )
-            : []),
-          PersistSelection,
-        ],
+        extensions: ExtensionsConfiguration({
+          mentionsConfig,
+          mentionSuggestions,
+          setMentionSuggestions,
+          placeholder,
+          maxCharacters,
+        }),
 
         content: initialEditorState?.content || "",
         onUpdate: ({ editor: editorInstance }) => {
@@ -302,7 +265,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             ref={editorRef}
             className={cn(
               "relative w-full flex-grow",
-              isFullscreen && "h-full overflow-y-hidden"
+              isFullscreen &&
+                "h-full overflow-y-hidden p-3 md:px-36 md:py-7 lg:px-56 lg:py-10"
             )}
             onClick={() => editor?.commands.focus()}
           >
@@ -423,6 +387,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             isFullscreen={isFullscreen}
             onEnhanceWithAI={handleEnhanceWithAI}
             setLastIntent={setLastIntent}
+            toolbarLabels={toolbarLabels}
           />
 
           <EditorBubbleMenu
@@ -431,7 +396,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             isLoadingEnhance={isLoadingEnhance}
             enhanceConfig={enhanceConfig}
             disableButtons={isAcceptChangesOpen}
-            linkPopupConfig={linkPopupConfig}
+            toolbarLabels={toolbarLabels}
             setLastIntent={setLastIntent}
           />
         </div>

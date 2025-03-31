@@ -4,7 +4,12 @@ import { Editor } from "@tiptap/react"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { EnhanceActivator } from "../Enhance"
-import { actionType, enhanceConfig, primaryActionType } from "../utils/types"
+import {
+  actionType,
+  enhanceConfig,
+  primaryActionType,
+  toolbarLabels,
+} from "../utils/types"
 import { ActionsMenu } from "./ActionsMenu"
 import { Toolbar, ToolbarDivider } from "./Toolbar"
 
@@ -30,6 +35,7 @@ interface FooterProps {
       customIntent?: string
     } | null
   ) => void
+  toolbarLabels: toolbarLabels
 }
 
 const Footer = ({
@@ -45,6 +51,7 @@ const Footer = ({
   enhanceConfig,
   isFullscreen,
   setLastIntent,
+  toolbarLabels,
 }: FooterProps) => {
   const [isToolbarOpen, setIsToolbarOpen] = useState(false)
   const [toolbarAnimationComplete, setToolbarAnimationComplete] =
@@ -82,6 +89,7 @@ const Footer = ({
           aria-label="Rich text editor toolbar"
         >
           <Toolbar
+            labels={toolbarLabels}
             editor={editor}
             isFullscreen={isFullscreen}
             disableButtons={isAcceptChangesOpen}

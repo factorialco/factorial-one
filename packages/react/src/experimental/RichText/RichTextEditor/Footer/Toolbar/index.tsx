@@ -1,4 +1,7 @@
 import { Button } from "@/components/Actions/Button"
+import { toolbarLabels } from "@/experimental/exports"
+import { Shortcut } from "@/experimental/Information/Shortcut"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { Icon, IconType } from "@/factorial-one"
 import {
   AlignTextCenter,
@@ -26,7 +29,7 @@ import { cn } from "@/lib/utils"
 import { Button as ButtonUI } from "@/ui/button"
 import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
-import React from "react"
+import React, { ComponentProps } from "react"
 import { getTextAlignIcon, getTextAlignLabel } from "../../utils/helpers"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 
@@ -45,6 +48,11 @@ interface ToolbarButtonProps {
   label: string
   disabled: boolean
   icon?: IconType
+  tooltip?: {
+    description?: string
+    label?: string
+    shortcut?: ComponentProps<typeof Shortcut>["keys"]
+  }
 }
 
 const ToolbarButton = ({
@@ -53,9 +61,10 @@ const ToolbarButton = ({
   label,
   disabled,
   icon,
+  tooltip,
   ...props
 }: ToolbarButtonProps) => {
-  return (
+  const button = (
     <ButtonUI
       {...props}
       variant="outline"
@@ -82,6 +91,18 @@ const ToolbarButton = ({
       )}
     </ButtonUI>
   )
+
+  return tooltip ? (
+    <Tooltip
+      description={tooltip?.description || ""}
+      label={tooltip?.label}
+      shortcut={tooltip?.shortcut}
+    >
+      {button}
+    </Tooltip>
+  ) : (
+    button
+  )
 }
 
 const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
@@ -98,6 +119,7 @@ interface ToolbarProps {
   disableButtons: boolean
   onClose: () => void
   animationComplete: boolean
+  labels: toolbarLabels
 }
 
 const Toolbar = ({
@@ -106,37 +128,54 @@ const Toolbar = ({
   disableButtons,
   onClose,
   animationComplete,
+  labels,
 }: ToolbarProps) => {
   const formattingGroup = (
     <div className="flex flex-row items-center gap-0.5">
       <ToolbarButton
         active={editor.isActive("bold")}
-        label="Bold"
+        label={labels.bold}
         icon={Bold}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleBold().run()}
+        tooltip={{
+          label: `**${labels.bold}**`,
+          shortcut: ["cmd", "b"],
+        }}
       />
 
       <ToolbarButton
         active={editor.isActive("italic")}
-        label="Italic"
+        label={labels.italic}
         icon={Italic}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleItalic().run()}
+        tooltip={{
+          label: `*${labels.italic}*`,
+          shortcut: ["cmd", "i"],
+        }}
       />
       <ToolbarButton
         active={editor.isActive("underline")}
-        label="Underline"
+        label={labels.underline}
         icon={Underline}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleUnderline().run()}
+        tooltip={{
+          label: `_${labels.underline}_`,
+          shortcut: ["cmd", "u"],
+        }}
       />
       <ToolbarButton
         active={editor.isActive("strike")}
-        label="Strikethrough"
+        label={labels.strike}
         icon={Strikethrough}
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={disableButtons}
+        tooltip={{
+          label: `~${labels.strike}~`,
+          shortcut: ["cmd", "shift", "s"],
+        }}
       />
     </div>
   )
@@ -145,25 +184,37 @@ const Toolbar = ({
     <div className="flex flex-row items-center gap-0.5">
       <ToolbarButton
         active={editor.isActive("heading", { level: 1 })}
-        label="Heading 1"
+        label={labels.heading1}
         icon={Heading1}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+        tooltip={{
+          label: `# ${labels.heading1}`,
+          shortcut: ["cmd", "1"],
+        }}
       />
 
       <ToolbarButton
         active={editor.isActive("heading", { level: 2 })}
-        label="Heading 2"
+        label={labels.heading2}
         icon={Heading2}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+        tooltip={{
+          label: `## ${labels.heading2}`,
+          shortcut: ["cmd", "2"],
+        }}
       />
       <ToolbarButton
         active={editor.isActive("heading", { level: 3 })}
-        label="Heading 3"
+        label={labels.heading3}
         icon={Heading3}
         disabled={disableButtons}
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+        tooltip={{
+          label: `### ${labels.heading3}`,
+          shortcut: ["cmd", "3"],
+        }}
       />
     </div>
   )
@@ -174,7 +225,7 @@ const Toolbar = ({
         isFullscreen={isFullscreen}
         items={[
           {
-            label: "Left",
+            label: labels.left,
             icon: AlignTextLeft,
             onClick: () => editor.chain().focus().setTextAlign("left").run(),
             isActive:
@@ -184,19 +235,19 @@ const Toolbar = ({
                 !editor.isActive({ textAlign: "right" })),
           },
           {
-            label: "Center",
+            label: labels.center,
             icon: AlignTextCenter,
             onClick: () => editor.chain().focus().setTextAlign("center").run(),
             isActive: editor.isActive({ textAlign: "center" }),
           },
           {
-            label: "Right",
+            label: labels.right,
             icon: AlignTextRight,
             onClick: () => editor.chain().focus().setTextAlign("right").run(),
             isActive: editor.isActive({ textAlign: "right" }),
           },
           {
-            label: "Justify",
+            label: labels.justify,
             icon: AlignTextJustify,
             onClick: () => editor.chain().focus().setTextAlign("justify").run(),
             isActive: editor.isActive({ textAlign: "justify" }),
@@ -220,51 +271,79 @@ const Toolbar = ({
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         active={editor.isActive("bulletList")}
-        label="Bullet List"
+        label={labels.bulletList}
         disabled={disableButtons}
         icon={List}
+        tooltip={{
+          label: `- ${labels.bulletList}`,
+          shortcut: ["cmd", "alt", "8"],
+        }}
       />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
         active={editor.isActive("orderedList")}
-        label="Ordered List"
+        label={labels.orderedList}
         disabled={disableButtons}
         icon={OlList}
+        tooltip={{
+          label: `1. ${labels.orderedList}`,
+          shortcut: ["cmd", "alt", "7"],
+        }}
       />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleTaskList().run()}
         active={editor.isActive("taskList")}
-        label="Task List"
+        label={labels.taskList}
         disabled={disableButtons}
         icon={CheckDouble}
+        tooltip={{
+          label: `[ ] ${labels.taskList}`,
+          shortcut: ["cmd", "alt", "t"],
+        }}
       />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleHighlight().run()}
         active={editor.isActive("highlight")}
-        label="Highlight"
+        label={labels.highlight}
         disabled={disableButtons}
         icon={Pencil}
+        tooltip={{
+          label: `==${labels.highlight}==`,
+          shortcut: ["cmd", "alt", "h"],
+        }}
       />
       <ToolbarDropdown
         isFullscreen={isFullscreen}
         items={[
           {
             icon: Code,
-            label: "Code Block",
+            label: labels.codeBlock,
             onClick: () => editor.chain().focus().toggleCodeBlock().run(),
             isActive: editor.isActive("codeBlock"),
+            tooltip: {
+              label: `\`\`\`${labels.codeBlock}\`\`\``,
+              shortcut: ["cmd", "alt", "k"],
+            },
           },
           {
             icon: Minus,
-            label: "Divider",
+            label: labels.divider,
             onClick: () => editor.chain().focus().setHorizontalRule().run(),
             isActive: editor.isActive("horizontalRule"),
+            tooltip: {
+              label: `--- ${labels.divider} ---`,
+              shortcut: ["cmd", "alt", "d"],
+            },
           },
           {
             icon: Quote,
-            label: "Quote",
+            label: labels.quote,
             onClick: () => editor.chain().focus().toggleBlockquote().run(),
             isActive: editor.isActive("blockquote"),
+            tooltip: {
+              label: `> ${labels.quote}`,
+              shortcut: ["cmd", "alt", "q"],
+            },
           },
         ]}
         disabled={disableButtons}
@@ -277,7 +356,7 @@ const Toolbar = ({
           type="button"
           hideLabel
           round
-          label="More options"
+          label={labels.moreOptions}
         />
       </ToolbarDropdown>
     </div>
@@ -296,11 +375,11 @@ const Toolbar = ({
         }}
         variant="neutral"
         size="md"
-        label="Close"
         disabled={disableButtons}
         type="button"
         hideLabel
         round
+        label={labels.close}
         icon={Cross}
       />
       <div

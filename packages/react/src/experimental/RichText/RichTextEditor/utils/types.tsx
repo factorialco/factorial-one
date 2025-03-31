@@ -97,9 +97,34 @@ type primaryActionType = {
   subActions?: subActionType[]
 }
 
-type linkPopupConfig = {
+type toolbarLabels = {
+  bold: string
+  italic: string
+  underline: string
+  strike: string
+  highlight: string
+  heading1: string
+  heading2: string
+  heading3: string
+  left: string
+  center: string
+  right: string
+  justify: string
+  bulletList: string
+  orderedList: string
+  taskList: string
+  codeBlock: string
+  horizontalRule: string
+  quote: string
+  moreOptions: string
+  code: string
+  divider: string
+  bullet: string
+  ordered: string
+  task: string
   linkPlaceholder: string
   linkLabel: string
+  close: string
 }
 
 export { FileType }
@@ -112,10 +137,10 @@ export type {
   EnhancementOption,
   enhanceTextParams,
   filesConfig,
-  linkPopupConfig,
   MentionChangeResult,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
   subActionType,
+  toolbarLabels,
 }
