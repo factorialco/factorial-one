@@ -184,6 +184,30 @@ export const Default = {
     // Test that selection is reflected in trigger
     const triggerText = canvas.getByText(/Marie Curie/)
     expect(triggerText).toBeInTheDocument()
+
+    await userEvent.clear(input!)
+    await userEvent.type(input!, "Al")
+    await new Promise((resolve) => setTimeout(resolve, 600))
+
+    const selectAllButton = popoverContent.getByRole("button", {
+      name: /Select all/i,
+    })
+    expect(selectAllButton).toBeInTheDocument()
+    await userEvent.click(selectAllButton)
+
+    await userEvent.clear(input!)
+    await userEvent.type(input!, "Ab")
+    await new Promise((resolve) => setTimeout(resolve, 600))
+    await userEvent.click(selectAllButton)
+
+    const listItem2 = popoverContent.getByRole("checkbox", {
+      name: /Abraham Lincoln/i,
+    })
+    expect(listItem2).toBeInTheDocument()
+    await userEvent.click(listItem2.closest("label")!)
+
+    const selectedText = popoverContent.getByText(/5 selected/i)
+    expect(selectedText).toBeInTheDocument()
   },
 }
 
