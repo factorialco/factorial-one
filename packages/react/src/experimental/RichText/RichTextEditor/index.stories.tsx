@@ -109,7 +109,7 @@ export const Default: Story = {
 
           setTimeout(() => {
             resolve({
-              success: false,
+              success: Math.random() < 0.5,
               error: "Error from AI, Jacob didn't finish his work",
               text: `<b>Just imagine this is an AI response from our friend Jacob</b>`,
             })
@@ -173,5 +173,81 @@ export const Default: Story = {
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
     },
     showTitle: false,
+  },
+}
+
+export const WithoutEnhance: Story = {
+  args: {
+    ...Default.args,
+    enhanceConfig: undefined,
+  },
+}
+
+export const WithoutFiles: Story = {
+  args: {
+    ...Default.args,
+    filesConfig: undefined,
+  },
+}
+
+export const JustOnePrimaryAction: Story = {
+  args: {
+    ...Default.args,
+    primaryAction: {
+      action: {
+        label: "Add",
+        onClick: () => alert("Add"),
+        variant: "default",
+      },
+    },
+    secondaryAction: undefined,
+  },
+}
+
+export const JustSecondaryAction: Story = {
+  args: {
+    ...Default.args,
+    primaryAction: undefined,
+    secondaryAction: {
+      label: "Cancel",
+      onClick: () => alert("Cancel"),
+      variant: "outline",
+    },
+  },
+}
+
+export const WithoutActions: Story = {
+  args: {
+    ...Default.args,
+    primaryAction: undefined,
+    secondaryAction: undefined,
+  },
+}
+
+export const Blank: Story = {
+  args: {
+    ...Default.args,
+    enhanceConfig: undefined,
+    filesConfig: undefined,
+    primaryAction: undefined,
+    secondaryAction: undefined,
+    linkPopupConfig: undefined,
+    initialEditorState: undefined,
+    mentionsConfig: undefined,
+    maxCharacters: undefined,
+  },
+}
+
+export const Loading: Story = {
+  args: {
+    ...Default.args,
+    enhanceConfig: undefined,
+    filesConfig: undefined,
+    primaryAction: undefined,
+    secondaryAction: undefined,
+    linkPopupConfig: undefined,
+    initialEditorState: undefined,
+    mentionsConfig: undefined,
+    isLoading: true,
   },
 }

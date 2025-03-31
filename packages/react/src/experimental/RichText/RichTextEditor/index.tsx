@@ -32,6 +32,7 @@ import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
 import "./index.css"
+import { Loading } from "./Loading"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import {
   getAcceptFileTypeString,
@@ -54,7 +55,7 @@ interface RichTextEditorProps {
   mentionsConfig?: mentionsConfig
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
-  secondaryAction: actionType
+  secondaryAction?: actionType
   primaryAction?: primaryActionType
   onChange: (html: string | MentionChangeResult | null) => void
   title: string
@@ -66,6 +67,7 @@ interface RichTextEditorProps {
   }
   linkPopupConfig?: linkPopupConfig
   showTitle?: boolean
+  isLoading?: boolean
 }
 
 type RichTextEditorHandle = {
@@ -89,6 +91,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       placeholder,
       linkPopupConfig,
       showTitle = false,
+      isLoading = false,
     },
     ref
   ) {
@@ -243,13 +246,38 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     return (
       <div
         ref={containerRef}
-        className="relative flex w-full flex-col overflow-hidden rounded-xl border-[1px] border-solid border-f1-border bg-f1-background"
+        className="relative flex h-auto flex-row bg-f1-background"
       >
-        {isFullscreen || showTitle ? (
-          <div className="flex w-full flex-shrink-0 items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3.5">
-            <p className="text-2xl font-semibold text-f1-foreground">{title}</p>
+        <div
+          className={cn(
+            "relative flex w-full flex-col overflow-hidden rounded-xl border-[1px] border-solid border-f1-border bg-f1-background",
+            (isLoadingEnhance || isLoading) && "opacity-50 transition-opacity"
+          )}
+        >
+          {isFullscreen || showTitle ? (
+            <div className="flex w-full flex-shrink-0 items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3.5">
+              <p className="text-2xl font-semibold text-f1-foreground">
+                {title}
+              </p>
 
-            <Button
+              <Button
+                onClick={(e) => {
+                  e.preventDefault()
+                  handleToggleFullscreen()
+                }}
+                label="Fullscreen"
+                variant="outline"
+                type="button"
+                hideLabel
+                round
+                size="sm"
+                icon={isFullscreen ? Minimize : Maximize}
+                disabled={isAcceptChangesOpen}
+              />
+            </div>
+          ) : (
+            <Button // @ts-ignore
+              className="fixed right-7 top-7 z-50"
               onClick={(e) => {
                 e.preventDefault()
                 handleToggleFullscreen()
@@ -260,44 +288,27 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               hideLabel
               round
               size="sm"
-              icon={isFullscreen ? Minimize : Maximize}
+              icon={Maximize}
               disabled={isAcceptChangesOpen}
             />
-          </div>
-        ) : (
-          <Button
-            // @ts-ignore
-            className="fixed right-7 top-7 z-50"
-            onClick={(e) => {
-              e.preventDefault()
-              handleToggleFullscreen()
-            }}
-            label="Fullscreen"
-            variant="outline"
-            type="button"
-            hideLabel
-            round
-            size="sm"
-            icon={Maximize}
-            disabled={isAcceptChangesOpen}
-          />
-        )}
-
-        <div
-          ref={editorRef}
-          className={cn(
-            "relative w-full flex-grow",
-            isFullscreen && "h-full overflow-y-hidden"
           )}
-          onClick={() => editor?.commands.focus()}
-        >
+
           <div
+            ref={editorRef}
             className={cn(
-              "relative overflow-y-auto p-5 [scrollbar-width:thin]",
-              isFullscreen ? "h-full" : "h-auto max-h-60 pr-16"
+              "relative w-full flex-grow",
+              isFullscreen && "h-full overflow-y-hidden"
             )}
+            onClick={() => editor?.commands.focus()}
           >
-            <EditorContent editor={editor} />
+            <div
+              className={cn(
+                "relative overflow-y-auto p-5 [scrollbar-width:thin]",
+                isFullscreen ? "h-full" : "h-auto max-h-60 pr-16"
+              )}
+            >
+              <EditorContent editor={editor} />
+            </div>
           </div>
 
           <AnimatePresence>
@@ -366,6 +377,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                     animate={{ height: "auto", opacity: 1, y: 0 }}
                     exit={{ height: 0, opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
+                    className=""
                   >
                     <FileList
                       files={files}
@@ -384,38 +396,38 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               </AnimatePresence>
             </>
           )}
+          <Footer
+            editor={editor}
+            maxCharacters={maxCharacters}
+            secondaryAction={secondaryAction}
+            primaryAction={primaryAction}
+            isAcceptChangesOpen={isAcceptChangesOpen}
+            fileInputRef={fileInputRef}
+            canUseFiles={filesConfig ? true : false}
+            isLoadingEnhance={isLoadingEnhance}
+            disableButtons={isAcceptChangesOpen}
+            enhanceConfig={enhanceConfig}
+            isFullscreen={isFullscreen}
+            onEnhanceWithAI={handleEnhanceWithAI}
+            setLastIntent={setLastIntent}
+          />
+
+          <EditorBubbleMenu
+            editor={editor}
+            onEnhanceWithAI={handleEnhanceWithAI}
+            isLoadingEnhance={isLoadingEnhance}
+            enhanceConfig={enhanceConfig}
+            disableButtons={isAcceptChangesOpen}
+            linkPopupConfig={linkPopupConfig}
+            setLastIntent={setLastIntent}
+          />
         </div>
-
-        <Footer
-          editor={editor}
-          maxCharacters={maxCharacters}
-          secondaryAction={secondaryAction}
-          primaryAction={primaryAction}
-          isAcceptChangesOpen={isAcceptChangesOpen}
-          fileInputRef={fileInputRef}
-          canUseFiles={filesConfig ? true : false}
-          isLoadingEnhance={isLoadingEnhance}
-          disableButtons={isAcceptChangesOpen}
-          enhanceConfig={enhanceConfig}
-          isFullscreen={isFullscreen}
-          onEnhanceWithAI={handleEnhanceWithAI}
-          setLastIntent={setLastIntent}
-        />
-
-        <EditorBubbleMenu
-          editor={editor}
-          onEnhanceWithAI={handleEnhanceWithAI}
-          isLoadingEnhance={isLoadingEnhance}
-          enhanceConfig={enhanceConfig}
-          disableButtons={isAcceptChangesOpen}
-          linkPopupConfig={linkPopupConfig}
-          setLastIntent={setLastIntent}
-        />
         {isLoadingEnhance && (
           <LoadingEnhance
             label={enhanceConfig?.enhanceLabels.loadingEnhanceLabel}
           />
         )}
+        {isLoading && <Loading />}
       </div>
     )
   }

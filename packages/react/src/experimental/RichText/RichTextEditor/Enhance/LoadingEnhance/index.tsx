@@ -6,7 +6,7 @@ interface LoadingEnhanceProps {
 
 const LoadingEnhance = ({ label }: LoadingEnhanceProps) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-[1px]">
+    <div className="absolute inset-0 z-50 flex items-center justify-center">
       <div className="rounded-md bg-f1-background">
         <div className="magicBackground magicColor flex items-center gap-2 rounded-md px-3 py-2">
           <Spinner size="small" />

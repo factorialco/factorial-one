@@ -67,7 +67,7 @@ const ActionsMenu = ({
 
   return (
     <div className="flex flex-shrink-0 items-center gap-2">
-      {secondaryAction && !useLittleMode && (
+      {secondaryAction && (!useLittleMode || !primaryAction) && (
         <Button
           onClick={(e) => {
             e.preventDefault()
@@ -81,27 +81,28 @@ const ActionsMenu = ({
         />
       )}
       {secondaryAction && primaryAction && !useLittleMode && <ToolbarDivider />}
-      {primaryAction && primaryAction.subActions ? (
-        <OneDropdownButton
-          items={listOfActions as OneDropdownButtonItem<string>[]}
-          onClick={(value) => handleOnClick(value)}
-          variant={primaryAction?.action.variant ?? "default"}
-          size="md"
-        />
-      ) : (
-        <Button
-          onClick={(e) => {
-            e.preventDefault()
-            primaryAction?.action.onClick()
-          }}
-          variant={primaryAction?.action.variant ?? "default"}
-          size="md"
-          label={primaryAction?.action.label || ""}
-          disabled={isAcceptChangesOpen || primaryAction?.action.disabled}
-          icon={primaryAction?.action.icon ?? undefined}
-          type="button"
-        />
-      )}
+      {primaryAction &&
+        (primaryAction.subActions ? (
+          <OneDropdownButton
+            items={listOfActions as OneDropdownButtonItem<string>[]}
+            onClick={(value) => handleOnClick(value)}
+            variant={primaryAction?.action.variant ?? "default"}
+            size="md"
+          />
+        ) : (
+          <Button
+            onClick={(e) => {
+              e.preventDefault()
+              primaryAction?.action.onClick()
+            }}
+            variant={primaryAction?.action.variant ?? "default"}
+            size="md"
+            label={primaryAction?.action.label || ""}
+            disabled={isAcceptChangesOpen || primaryAction?.action.disabled}
+            icon={primaryAction?.action.icon ?? undefined}
+            type="button"
+          />
+        ))}
     </div>
   )
 }
