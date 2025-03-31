@@ -45,14 +45,12 @@ interface RichTextEditorProps {
   secondaryAction?: actionType
   primaryAction?: primaryActionType
   onChange: (html: string | MentionChangeResult | null) => void
-  title: string
   maxCharacters?: number
   placeholder: string
   initialEditorState?: {
     content?: string
     files?: File[]
   }
-  showTitle?: boolean
   isLoading?: boolean
   toolbarLabels: toolbarLabels
 }
@@ -71,12 +69,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       filesConfig,
       secondaryAction,
       primaryAction,
-      title,
       maxCharacters,
       initialEditorState,
       onChange,
       placeholder,
-      showTitle = false,
       isLoading = false,
       toolbarLabels,
     },
@@ -220,53 +216,30 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             (isLoadingEnhance || isLoading) && "opacity-50 transition-opacity"
           )}
         >
-          {isFullscreen || showTitle ? (
-            <div className="flex w-full flex-shrink-0 items-center justify-between border-0 border-b-[1px] border-solid border-f1-border px-5 py-3.5">
-              <p className="text-2xl font-semibold text-f1-foreground">
-                {title}
-              </p>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleToggleFullscreen()
-                }}
-                label="Fullscreen"
-                aria-label="Toggle fullscreen mode"
-                variant="outline"
-                type="button"
-                hideLabel
-                round
-                size="sm"
-                icon={isFullscreen ? Minimize : Maximize}
-                disabled={isAcceptChangesOpen}
-              />
-            </div>
-          ) : (
-            <Button
-              // @ts-ignore
-              className="fixed right-7 top-7 z-50"
-              onClick={(e) => {
-                e.preventDefault()
-                handleToggleFullscreen()
-              }}
-              label="Fullscreen"
-              aria-label="Toggle fullscreen mode"
-              variant="outline"
-              type="button"
-              hideLabel
-              round
-              size="sm"
-              icon={Maximize}
-              disabled={isAcceptChangesOpen}
-            />
-          )}
+          <Button
+            // @ts-ignore
+            className="fixed right-7 top-7 z-50"
+            onClick={(e) => {
+              e.preventDefault()
+              handleToggleFullscreen()
+            }}
+            label="Fullscreen"
+            aria-label="Toggle fullscreen mode"
+            variant="outline"
+            type="button"
+            hideLabel
+            round
+            size="sm"
+            icon={isFullscreen ? Minimize : Maximize}
+            disabled={isAcceptChangesOpen}
+          />
 
           <div
             ref={editorRef}
             className={cn(
               "relative w-full flex-grow",
               isFullscreen &&
-                "h-full overflow-y-hidden p-3 md:px-36 md:py-7 lg:px-56 lg:py-10"
+                "h-full overflow-y-hidden px-3 pt-3 md:px-36 md:pt-7 lg:px-56 lg:pt-20"
             )}
             onClick={() => editor?.commands.focus()}
           >

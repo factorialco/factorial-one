@@ -193,13 +193,11 @@ export const Default: Story = {
       close: "Close",
     },
 
-    title: "Rich Text Editor test",
     maxCharacters: 10000,
     initialEditorState: {
       content:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
     },
-    showTitle: false,
   },
 }
 
