@@ -21,6 +21,8 @@ interface FiltersControlsProps<Filters extends FiltersDefinition> {
     filter: FiltersState<Filters>
   }>
   onPresetsChange?: (filter: FiltersState<Filters>) => void
+  isOpen?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export function FiltersControls<Filters extends FiltersDefinition>({
@@ -29,15 +31,20 @@ export function FiltersControls<Filters extends FiltersDefinition>({
   onFilterChange,
   presets,
   onPresetsChange,
+  isOpen: controlledIsOpen,
+  onOpenChange: controlledOnOpenChange,
 }: FiltersControlsProps<Filters>) {
   const [selectedFilterKey, setSelectedFilterKey] = useState<
     keyof Filters | null
   >(null)
-  const [isOpen, setIsOpen] = useState(false)
+  const [internalIsOpen, setInternalIsOpen] = useState(false)
   const i18n = useI18n()
 
+  const isOpen = controlledIsOpen ?? internalIsOpen
+  const onOpenChange = controlledOnOpenChange ?? setInternalIsOpen
+
   const handleApplyFilters = () => {
-    setIsOpen(false)
+    onOpenChange(false)
   }
 
   const renderListPresetItem = (
@@ -87,7 +94,7 @@ export function FiltersControls<Filters extends FiltersDefinition>({
 
   return (
     <div className="flex items-center gap-2">
-      <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <Popover open={isOpen} onOpenChange={onOpenChange}>
         <PopoverTrigger asChild>
           <button
             className={cn(

@@ -167,6 +167,7 @@ export const DataCollection = <
     presets,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false)
 
   const primaryActionItem = useMemo(
     () => primaryActions && primaryActions(),
@@ -186,8 +187,8 @@ export const DataCollection = <
     setCurrentFilters((prev) => ({ ...prev, [key]: undefined }))
   }
 
-  const handleFilterSelect = (key: keyof Filters) => {
-    // This will be handled by the FiltersControls component
+  const handleFilterSelect = () => {
+    setIsFiltersOpen(true)
   }
 
   const handleClearAll = () => {
@@ -205,9 +206,12 @@ export const DataCollection = <
               onFilterChange={handleFilterChange}
               presets={presets}
               onPresetsChange={setCurrentFilters}
+              isOpen={isFiltersOpen}
+              onOpenChange={setIsFiltersOpen}
             />
           </div>
         )}
+        <div className="shrink-1 grow-1 flex"></div>
         <div className="flex shrink-0 items-center gap-2">
           {isLoading && (
             <MotionIcon
