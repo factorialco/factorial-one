@@ -12,7 +12,7 @@ alwaysApply: true
 - Follow functional and declarative programming patterns.
 - Implement comprehensive tests and ensure accessibility (a11y) compliance in all components.
 - Support both web and mobile platforms with consistent design patterns.
-- All code generated and comments shoud be in English
+- All code generated and comments should be in English
 
 ## Project Structure
 - `/packages/core`: Core component library and utilities
