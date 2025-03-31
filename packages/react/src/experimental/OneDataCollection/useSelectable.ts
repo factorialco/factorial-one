@@ -42,23 +42,27 @@ export function useSelectable<
 
   const [allSelectedCheck, setAllSelectedCheck] = useState(false)
 
-  const handleItemStateChange = (item: Record, checked: boolean) => {
-    const id = source.selectable && source.selectable(item)
-    if (id === undefined) {
-      return
-    }
+  const handleItemStateChange = (
+    item: Record | readonly Record[],
+    checked: boolean
+  ) => {
+    const items = Array.isArray(item) ? item : [item]
 
-    itemsState.set(id, { item, checked })
+    items.forEach((item) => {
+      const id = source.selectable && source.selectable(item)
+      if (id === undefined) {
+        return
+      }
+      itemsState.set(id, { item, checked })
+    })
 
-    setItemsState(new Map(itemsState))
+    setItemsState((current) => new Map(current))
   }
 
   const handleSelectAll = (checked: boolean) => {
     setAllSelectedCheck(checked)
     if (checked) {
-      data.forEach((item) => {
-        handleItemStateChange(item, true)
-      })
+      handleItemStateChange(data, true)
     } else {
       // We need to reset the items state to the initial state
       setItemsState(
@@ -108,8 +112,7 @@ export function useSelectable<
   useEffect(() => {
     if (areAllKnownItemsSelected) {
       setAllSelectedCheck(true)
-    }
-    if (selectedCount === 0) {
+    } else if (selectedCount === 0) {
       setAllSelectedCheck(false)
     }
   }, [areAllKnownItemsSelected, selectedCount])
