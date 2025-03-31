@@ -10,6 +10,7 @@ export interface ClockInGraphProps {
     variant: ClockInStatus
   }[]
   remainingMinutes?: number
+  overtimeOnly?: boolean
 }
 
 export const CLOCK_IN_COLORS = {
@@ -23,8 +24,9 @@ export const CLOCK_IN_COLORS = {
 export function ClockInGraph({
   data = [],
   remainingMinutes,
+  overtimeOnly = false,
 }: ClockInGraphProps) {
-  const normalizedData = normalizeData(data, remainingMinutes)
+  const normalizedData = normalizeData(data, remainingMinutes, overtimeOnly)
 
   const { primaryLabel, secondaryLabel, time } = getLabels({
     data,

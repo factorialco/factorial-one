@@ -60,6 +60,7 @@ export interface ClockInControlsProps {
   onBreak?: (breakTypeId?: string) => void
   canShowProject?: boolean
   projectSelectorElement?: React.ReactNode
+  overtimeOnly?: boolean
 }
 
 export function ClockInControls({
@@ -82,6 +83,7 @@ export function ClockInControls({
   onChangeLocationId,
   canShowProject = true,
   projectSelectorElement,
+  overtimeOnly = false,
 }: ClockInControlsProps) {
   const { status, statusText, subtitle, statusColor } = getInfo({
     data,
@@ -122,6 +124,7 @@ export function ClockInControls({
     locations.length &&
     !locationSelectorDisabled &&
     canShowLocation
+
   // const canSelectProject =
   //   showLocationAndProjectSelectors &&
   //   !projectSelectorDisabled &&
@@ -251,6 +254,7 @@ export function ClockInControls({
             <ClockInGraph
               data={data}
               remainingMinutes={canSeeRemainingTime ? remainingMinutes : 0}
+              overtimeOnly={overtimeOnly}
             />
           )}
         </div>
