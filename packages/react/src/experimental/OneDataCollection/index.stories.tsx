@@ -24,7 +24,6 @@ import {
   PaginatedResponse,
   Presets,
   RecordType,
-  SelectedItems,
 } from "./types"
 import { useData } from "./useData"
 
@@ -274,9 +273,13 @@ const ExampleComponent = ({
   frozenColumns?: 0 | 1 | 2
   selectable?: (item: (typeof mockUsers)[number]) => string | number | undefined
   bulkActions?: (
-    allSelected: boolean,
-    selectedItems: SelectedItems<(typeof mockUsers)[number]>
-  ) => BulkActionDefinition[]
+    selectedItems: Parameters<
+      OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
+    >[1]
+  ) => {
+    primary: BulkActionDefinition[]
+    secondary?: BulkActionDefinition[]
+  }
   onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
 }) => {

@@ -52,6 +52,7 @@ export function useSelectable<
   const clearSelectedItems = useCallback(() => {
     handleSelectAll(false)
     setItemsState(new Map())
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- handleSelectAll is a stable function
   }, [])
 
   const handleItemStateChange = (
@@ -94,6 +95,7 @@ export function useSelectable<
   // If the filters change, we need to reset the selected items
   useEffect(() => {
     clearSelectedItems()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- clearSelectedItems is a stable function
   }, [source.currentFilters])
 
   // If the data changes, we need to update new items that are added to the data
@@ -107,6 +109,7 @@ export function useSelectable<
         }
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- handleItemStateChange is a stable function
   }, [data, isAllSelected])
 
   // Control the allSelectedCheck state
@@ -146,6 +149,7 @@ export function useSelectable<
       },
       clearSelectedItems
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps  --  We intentionally omit clearSelectedItems, onSelectItems, selectedCount, source.currentFilters, and unselectedCount
   }, [allSelectedCheck, itemsState, paginationInfo?.total, data.length])
 
   return {

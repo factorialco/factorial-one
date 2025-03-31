@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
@@ -221,54 +221,53 @@ export const OneDataCollection = <
 
   const [selectedItemsCount, setSelectedItemsCount] = useState(0)
 
-  const onSelectItemsLocal: OnSelectItemsCallback<Record, Filters> =
-    useCallback(
-      (selectedItems, clearSelectedItems): void => {
-        onSelectItems?.(selectedItems, clearSelectedItems)
+  const onSelectItemsLocal: OnSelectItemsCallback<Record, Filters> = (
+    selectedItems,
+    clearSelectedItems
+  ): void => {
+    onSelectItems?.(selectedItems, clearSelectedItems)
 
-        /**
-         * Show action bar
-         */
-        setShowActionBar(
-          !!selectedItems.allSelected ||
-            selectedItems.itemsStatus.some((item) => item.checked)
-        )
-
-        /**
-         * Selected items count
-         */
-        setSelectedItemsCount(selectedItems.selectedCount)
-
-        /**
-         * Clear selected items function
-         */
-        setClearSelectedItemsFunc(() => clearSelectedItems)
-
-        /**
-         * Bulk actions for the action bar
-         */
-        const bulkActions = source.bulkActions
-          ? source.bulkActions(selectedItems)
-          : undefined
-
-        const mapBulkActions = (action: BulkActionDefinition) => ({
-          ...action,
-          onClick: () => {
-            onBulkAction?.(action.id, selectedItems, clearSelectedItems)
-            if (!action.keepSelection) {
-              clearSelectedItems()
-            }
-          },
-        })
-
-        setBulkActions({
-          primary: (bulkActions?.primary || []).map(mapBulkActions),
-          secondary: (bulkActions?.secondary || []).map(mapBulkActions),
-        })
-        /** */
-      },
-      [source.bulkActions]
+    /**
+     * Show action bar
+     */
+    setShowActionBar(
+      !!selectedItems.allSelected ||
+        selectedItems.itemsStatus.some((item) => item.checked)
     )
+
+    /**
+     * Selected items count
+     */
+    setSelectedItemsCount(selectedItems.selectedCount)
+
+    /**
+     * Clear selected items function
+     */
+    setClearSelectedItemsFunc(() => clearSelectedItems)
+
+    /**
+     * Bulk actions for the action bar
+     */
+    const bulkActions = source.bulkActions
+      ? source.bulkActions(selectedItems)
+      : undefined
+
+    const mapBulkActions = (action: BulkActionDefinition) => ({
+      ...action,
+      onClick: () => {
+        onBulkAction?.(action.id, selectedItems, clearSelectedItems)
+        if (!action.keepSelection) {
+          clearSelectedItems()
+        }
+      },
+    })
+
+    setBulkActions({
+      primary: (bulkActions?.primary || []).map(mapBulkActions),
+      secondary: (bulkActions?.secondary || []).map(mapBulkActions),
+    })
+    /** */
+  }
 
   return (
     <div className="flex flex-col gap-4">
