@@ -26,15 +26,6 @@ export const Description = ({ description }: { description: string }) => {
     }
   }, [measureSize.height, descriptionSize.height])
 
-  console.log(
-    "expanded size set",
-    measureSize.height ?? descriptionSize.height,
-    "measure:",
-    measureSize.height,
-    "desc:",
-    descriptionSize.height
-  )
-
   return (
     <div className="flex max-w-[640px] flex-col gap-1">
       <motion.div
