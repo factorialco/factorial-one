@@ -2,7 +2,7 @@
 .mention {
   text-decoration: none !important;
   font-weight: 600 !important;
-  color: #07a2ad !important;
+  color: #068993 !important;
   font-size: 14px !important;
 }
 
@@ -92,7 +92,7 @@
 }
 
 .ProseMirror a {
-  color: #07a2ad;
+  color: #068993;
   text-decoration: underline;
 }
 

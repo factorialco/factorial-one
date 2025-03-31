@@ -6,24 +6,24 @@ import {
 import { actionType, primaryActionType } from "../../utils/types"
 import { ToolbarDivider } from "../Toolbar"
 
-interface actionsMenuProps {
-  secondaryAction: actionType | undefined
-  primaryAction: primaryActionType | undefined
+interface ActionsMenuProps {
+  secondaryAction?: actionType
+  primaryAction?: primaryActionType
   useLittleMode: boolean
   isAcceptChangesOpen: boolean
+  isFullscreen: boolean
 }
 
-const getLabelID = (label: string | undefined) => {
-  if (!label) return ""
-  return label.toLowerCase().replace(" ", "-")
-}
+const getLabelID = (label?: string) =>
+  label ? label.toLowerCase().replace(" ", "-") : ""
 
 const ActionsMenu = ({
   secondaryAction,
   primaryAction,
   useLittleMode,
   isAcceptChangesOpen,
-}: actionsMenuProps) => {
+  isFullscreen,
+}: ActionsMenuProps) => {
   if (!secondaryAction && !primaryAction) return null
 
   const handleOnClick = (labelID: string) => {
@@ -32,27 +32,26 @@ const ActionsMenu = ({
     } else if (labelID === getLabelID(secondaryAction?.label)) {
       secondaryAction?.onClick()
     } else {
-      const subAction = primaryAction?.subActions?.find(
-        (sub) => getLabelID(sub.label) === labelID
-      )
-      subAction?.onClick()
+      primaryAction?.subActions
+        ?.find((sub) => getLabelID(sub.label) === labelID)
+        ?.onClick()
     }
   }
 
-  const listOfActions: OneDropdownButtonItem<string | undefined>[] = [
+  const listOfActions: OneDropdownButtonItem<string>[] = [
     ...(primaryAction
       ? [
           {
-            label: primaryAction?.action.label,
-            value: getLabelID(primaryAction?.action.label),
-            icon: primaryAction?.action.icon,
+            label: primaryAction.action.label,
+            value: getLabelID(primaryAction.action.label),
+            icon: primaryAction.action.icon,
           },
         ]
       : []),
-    ...(primaryAction?.subActions?.map((subAction) => ({
-      label: subAction.label,
-      value: getLabelID(subAction.label),
-      icon: subAction.icon,
+    ...(primaryAction?.subActions?.map((sub) => ({
+      label: sub.label,
+      value: getLabelID(sub.label),
+      icon: sub.icon,
     })) || []),
     ...(secondaryAction && useLittleMode
       ? [
@@ -65,9 +64,9 @@ const ActionsMenu = ({
       : []),
   ]
 
-  return (
-    <div className="flex flex-shrink-0 items-center gap-2">
-      {secondaryAction && (!useLittleMode || !primaryAction) && (
+  const renderSecondaryButton = () => {
+    if (secondaryAction && (!useLittleMode || !primaryAction || isFullscreen)) {
+      return (
         <Button
           onClick={(e) => {
             e.preventDefault()
@@ -79,30 +78,79 @@ const ActionsMenu = ({
           disabled={isAcceptChangesOpen || secondaryAction.disabled}
           type="button"
         />
-      )}
-      {secondaryAction && primaryAction && !useLittleMode && <ToolbarDivider />}
-      {primaryAction &&
-        (primaryAction.subActions ? (
-          <OneDropdownButton
-            items={listOfActions as OneDropdownButtonItem<string>[]}
-            onClick={(value) => handleOnClick(value)}
-            variant={primaryAction?.action.variant ?? "default"}
-            size="md"
-          />
-        ) : (
+      )
+    }
+    return null
+  }
+
+  const renderPrimaryAction = () => {
+    if (!primaryAction) return null
+
+    if (!isFullscreen) {
+      return primaryAction.subActions ? (
+        <OneDropdownButton
+          items={listOfActions}
+          onClick={handleOnClick}
+          variant={primaryAction.action.variant ?? "default"}
+          size="md"
+        />
+      ) : (
+        <Button
+          onClick={(e) => {
+            e.preventDefault()
+            primaryAction.action.onClick()
+          }}
+          variant={primaryAction.action.variant ?? "default"}
+          size="md"
+          label={primaryAction.action.label || ""}
+          disabled={isAcceptChangesOpen || primaryAction.action.disabled}
+          icon={primaryAction.action.icon}
+          type="button"
+        />
+      )
+    }
+
+    return (
+      <>
+        {primaryAction.subActions?.map((sub) => (
           <Button
+            key={getLabelID(sub.label)}
             onClick={(e) => {
               e.preventDefault()
-              primaryAction?.action.onClick()
+              sub.onClick()
             }}
-            variant={primaryAction?.action.variant ?? "default"}
+            variant={primaryAction.action.variant ?? "default"}
             size="md"
-            label={primaryAction?.action.label || ""}
-            disabled={isAcceptChangesOpen || primaryAction?.action.disabled}
-            icon={primaryAction?.action.icon ?? undefined}
+            label={sub.label}
+            disabled={isAcceptChangesOpen || sub.disabled}
+            icon={sub.icon}
             type="button"
           />
         ))}
+        <ToolbarDivider />
+        <Button
+          onClick={(e) => {
+            e.preventDefault()
+            primaryAction.action.onClick()
+          }}
+          variant={primaryAction.action.variant ?? "default"}
+          size="md"
+          label={primaryAction.action.label || ""}
+          disabled={isAcceptChangesOpen || primaryAction.action.disabled}
+          icon={primaryAction.action.icon}
+          type="button"
+        />
+      </>
+    )
+  }
+
+  return (
+    <div className="flex flex-shrink-0 items-center gap-2">
+      {renderSecondaryButton()}
+      {secondaryAction && primaryAction && (!useLittleMode || isFullscreen) && (
+        <ToolbarDivider />
+      )}
+      {renderPrimaryAction()}
     </div>
   )
 }

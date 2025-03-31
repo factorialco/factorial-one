@@ -155,6 +155,7 @@ const Footer = ({
         secondaryAction={secondaryAction}
         useLittleMode={useLittleMode}
         isAcceptChangesOpen={isAcceptChangesOpen}
+        isFullscreen={isFullscreen}
       />
     </div>
   )
