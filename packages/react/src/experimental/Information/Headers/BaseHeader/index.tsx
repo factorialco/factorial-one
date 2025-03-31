@@ -211,7 +211,7 @@ export function BaseHeader({
           ))}
 
           {visibleOtherActions.length > 0 && (
-            <div className="w-full">
+            <div className="w-full [&>*]:w-full">
               <MobileDropdown items={visibleOtherActions} />
             </div>
           )}
