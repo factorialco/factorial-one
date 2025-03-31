@@ -34,6 +34,8 @@ export type ChartPropsBase<
   xAxis?: AxisConfig
   yAxis?: AxisConfig
   aspect?: ComponentProps<typeof ChartContainer>["aspect"]
+  hideGrid?: boolean
+  hideTooltip?: boolean
 }
 
 export type LineChartPropsBase<K extends LineChartConfig = LineChartConfig> = {
@@ -42,4 +44,6 @@ export type LineChartPropsBase<K extends LineChartConfig = LineChartConfig> = {
   xAxis?: AxisConfig
   yAxis?: AxisConfig
   aspect?: ComponentProps<typeof ChartContainer>["aspect"]
+  hideGrid?: boolean
+  hideTooltip?: boolean
 }
