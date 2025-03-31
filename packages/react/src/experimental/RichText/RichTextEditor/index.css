@@ -17,6 +17,10 @@
   );
 }
 
+.preserved-selection {
+  background-color: #b2d7ff !important;
+}
+
 .magicBackground::before {
   content: "";
   position: absolute;
@@ -209,4 +213,9 @@
 
 .ProseMirror p:empty::before {
   content: "\00a0";
+}
+
+::selection {
+  background-color: #b2d7ff !important;
+  color: inherit;
 }

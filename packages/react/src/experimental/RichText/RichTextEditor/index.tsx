@@ -40,6 +40,7 @@ import {
   handleRemoveFile,
 } from "./utils/files"
 import { configureMention } from "./utils/mention"
+import { PersistSelection } from "./utils/persistSelection"
 import {
   actionType,
   enhanceConfig,
@@ -155,7 +156,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 mentionsConfig.users
               )
             : []),
+          PersistSelection,
         ],
+
         content: initialEditorState?.content || "",
         onUpdate: ({ editor: editorInstance }) => {
           if (onChange) {

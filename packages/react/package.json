@@ -187,6 +187,8 @@
     "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.5.1",
     "embla-carousel-wheel-gestures": "^8.0.1",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.38.1",
     "screenfull": "^6.0.2",
     "vaul": "^1.1.2",
     "zen-observable-ts": "^1.1.0"
