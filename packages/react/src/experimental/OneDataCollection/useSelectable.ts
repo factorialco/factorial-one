@@ -37,8 +37,8 @@ export function useSelectable<
     return [selected, unselected]
   }, [itemsState])
 
-  const selectedCount: number = selectedItems.size
-  const unselectedCount: number = unselectedItems.size
+  const selectedCount = selectedItems.size
+  const unselectedCount = unselectedItems.size
 
   const [allSelectedCheck, setAllSelectedCheck] = useState(false)
 
