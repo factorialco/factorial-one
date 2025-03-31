@@ -1,13 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import {
-  Ai,
-  ArrowRight,
-  Delete,
-  Download,
-  Pencil,
-  Share,
-  Star,
-} from "../../icons/app"
+import { Ai, Download, Pencil } from "../../icons/app"
 import { SecondaryActionsDefinition } from "./actions"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
@@ -129,77 +121,20 @@ const createUserActions = (): ItemActionsDefinition<
         description: "Modify user information",
         enabled: user.permissions.canEdit,
       },
-      // Action with description
-      {
-        label: "Another user actions User",
-        icon: Pencil,
-        onClick: () => console.log(`Another user action`),
-        description: "User actions",
-      },
 
       // Separator between action groups
       { type: "separator" },
-
-      // Conditional action based on item state
       {
-        label: user.isStarred ? "Remove Star" : "Add Star",
-        icon: Star,
-        onClick: () => console.log(`Toggling star for ${user.name}`),
-        description: user.isStarred
-          ? "Remove from favorites"
-          : "Add to favorites",
-      },
-
-      // Action with conditional visibility
-      {
-        label: "Share User",
-        icon: Share,
-        onClick: () => console.log(`Sharing ${user.name}`),
-        enabled: user.permissions.canShare,
-      },
-
-      // Conditional action based on status
-      ...(user.status === "active"
-        ? [
-            {
-              label: "Deactivate User",
-              icon: Delete,
-              onClick: () => console.log(`Deactivating ${user.name}`),
-              description: "Temporarily disable account",
-            } as const,
-          ]
-        : [
-            {
-              label: "Activate User",
-              icon: ArrowRight,
-              onClick: () => console.log(`Activating ${user.name}`),
-              description: "Re-enable account",
-            } as const,
-          ]),
-
-      // Critical action with conditional visibility
-      {
-        label: "Delete Permanently",
-        icon: Delete,
-        onClick: () => {
-          if (confirm(`Are you sure you want to delete ${user.name}?`)) {
-            console.log(`Deleting ${user.name}`)
-          }
-        },
-        critical: true,
-        description: "This action cannot be undone",
-        enabled: user.permissions.canDelete,
-      },
-
-      // Action with download functionality
-      {
-        label: "Download Data",
+        label: "Export",
         icon: Download,
-        onClick: () => {
-          console.log(`Downloading data for ${user.name}`)
-          // In a real implementation, this would trigger a download
-        },
-        enabled: user.status === "active",
+        onClick: () => console.log(`Downloading users`),
+        description: "Download users",
+      },
+      {
+        label: "Import",
+        icon: Download,
+        onClick: () => console.log(`Importing users`),
+        description: "Import users",
       },
     ]
   }
@@ -227,8 +162,9 @@ export const BasicActionsExample: Story = {
           <h2 className="mb-2 text-xl font-semibold">Items Actions Example</h2>
           <p className="mb-4 text-f1-foreground-secondary">
             This example demonstrates various types of actions that can be used
-            in Collections. Click on the actions menu (three dots) to see the
-            available actions for each user.
+            in Collections. Click in the top right button or top right actions
+            menu (three dots) to see the available actions for the data
+            collection.
           </p>
         </div>
 
@@ -282,8 +218,7 @@ export const CardActionsExample: Story = {
             Card Item Actions Example
           </h2>
           <p className="mb-4 text-f1-foreground-secondary">
-            This example shows how data collection actions work with card
-            visualization.
+            This example shows how actions work with card visualization.
           </p>
         </div>
 
