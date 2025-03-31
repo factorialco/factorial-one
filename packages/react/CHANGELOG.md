@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.15.0...factorial-one-react-v1.16.0) (2025-03-31)
+
+
+### Features
+
+* Data collection property renderers ([#1468](https://github.com/factorialco/factorial-one/issues/1468)) ([224caca](https://github.com/factorialco/factorial-one/commit/224cacacd686e59226ab9f8b800209c12c7223e3))
+
 ## [1.15.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.14.1...factorial-one-react-v1.15.0) (2025-03-31)
 
 
