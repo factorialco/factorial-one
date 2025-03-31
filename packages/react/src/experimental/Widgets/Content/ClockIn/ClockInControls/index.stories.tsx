@@ -126,6 +126,14 @@ export const WithOvertime: Story = {
   },
 }
 
+export const OvertimeOnly: Story = {
+  args: {
+    ...WithOvertime.args,
+    remainingMinutes: -8.5 * 60,
+    overtimeOnly: true,
+  },
+}
+
 export const Collapsed: Story = {
   render: (args) => (
     <div className="max-w-[300px]">
