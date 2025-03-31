@@ -14,7 +14,7 @@ import { I18nProvider } from "../../lib/i18n-provider"
 import { defaultTranslations } from "../../lib/i18n-provider-defaults"
 import { PromiseState } from "../../lib/promise-to-observable"
 import type { FiltersDefinition } from "./Filters/types"
-import { DataCollection, useDataSource } from "./index"
+import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
 import type { DataSource } from "./types"
@@ -56,7 +56,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -92,7 +92,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -161,7 +161,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -243,7 +243,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -359,7 +359,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -442,7 +442,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -548,7 +548,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -692,7 +692,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -826,7 +826,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
@@ -913,7 +913,7 @@ describe("Collections", () => {
     )
 
     render(
-      <DataCollection
+      <OneDataCollection
         source={result.current}
         visualizations={[
           {
@@ -1031,7 +1031,7 @@ describe("Collections", () => {
 
     // Render the DataCollection with our configured source
     render(
-      <DataCollection
+      <OneDataCollection
         source={result.current}
         visualizations={[
           {
@@ -1127,7 +1127,7 @@ describe("Collections", () => {
 
     render(
       <TestWrapper>
-        <DataCollection
+        <OneDataCollection
           source={result.current}
           visualizations={[
             {
