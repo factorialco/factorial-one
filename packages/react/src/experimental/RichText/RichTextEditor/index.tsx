@@ -28,6 +28,7 @@ import screenfull from "screenfull"
 import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
 import { EnhanceError } from "./Enhance/EnhanceError"
+import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
 import "./index.css"
@@ -357,15 +358,30 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 className="hidden"
                 accept={getAcceptFileTypeString(filesConfig)}
               />
-              {files.length > 0 && (
-                <FileList
-                  files={files}
-                  onRemoveFile={(fileIndex) =>
-                    handleRemoveFile(fileIndex, files, filesConfig, setFiles)
-                  }
-                  disabled={isAcceptChangesOpen}
-                />
-              )}
+              <AnimatePresence>
+                {files.length > 0 && (
+                  <motion.div
+                    key="filelist-accordion"
+                    initial={{ height: 0, opacity: 0, y: -20 }}
+                    animate={{ height: "auto", opacity: 1, y: 0 }}
+                    exit={{ height: 0, opacity: 0, y: -20 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <FileList
+                      files={files}
+                      onRemoveFile={(fileIndex) =>
+                        handleRemoveFile(
+                          fileIndex,
+                          files,
+                          filesConfig,
+                          setFiles
+                        )
+                      }
+                      disabled={isAcceptChangesOpen}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </>
           )}
         </div>
@@ -395,6 +411,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           linkPopupConfig={linkPopupConfig}
           setLastIntent={setLastIntent}
         />
+        {isLoadingEnhance && (
+          <LoadingEnhance
+            label={enhanceConfig?.enhanceLabels.loadingEnhanceLabel}
+          />
+        )}
       </div>
     )
   }

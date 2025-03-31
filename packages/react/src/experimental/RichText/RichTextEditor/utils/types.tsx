@@ -78,6 +78,7 @@ type enhanceLabelsType = {
   rejectChangesButtonLabel?: string
   repeatButtonLabel?: string
   customPromptPlaceholder?: string
+  loadingEnhanceLabel?: string
 }
 
 type EnhancementOption = {

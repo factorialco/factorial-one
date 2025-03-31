@@ -109,7 +109,7 @@ export const Default: Story = {
 
           setTimeout(() => {
             resolve({
-              success: true,
+              success: false,
               error: "Error from AI, Jacob didn't finish his work",
               text: `<b>Just imagine this is an AI response from our friend Jacob</b>`,
             })
@@ -124,6 +124,7 @@ export const Default: Story = {
         repeatButtonLabel: "Repeat",
         customPromptPlaceholder: "What do you want to do?",
         closeErrorButtonLabel: "Continue editing",
+        loadingEnhanceLabel: "Loading the magic...",
       },
     },
     filesConfig: {
@@ -169,7 +170,7 @@ export const Default: Story = {
     maxCharacters: 1000,
     initialEditorState: {
       content:
-        "This is a test of the Rich Text Editor. It is a test of the Rich Text Editor. It is a test of the Rich Text Editor. It is a test of the Rich Text Editor. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
     },
     showTitle: false,
   },
