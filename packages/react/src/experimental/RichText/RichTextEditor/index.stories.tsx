@@ -12,6 +12,10 @@ type Story = StoryObj<typeof meta>
 
 const enhancementOptions: EnhancementOption[] = [
   {
+    id: "error",
+    label: "This is gonna fail",
+  },
+  {
     id: "improve-writing",
     label: "Improve Writing",
   },
@@ -105,11 +109,9 @@ export const Default: Story = {
         context?: string
       }) =>
         new Promise((resolve) => {
-          console.log(params)
-
           setTimeout(() => {
             resolve({
-              success: Math.random() < 0.5,
+              success: !(params.selectedIntent === "error"),
               error: "Error from AI, Jacob didn't finish his work",
               text: `<b>Just imagine this is an AI response from our friend Jacob</b>`,
             })
