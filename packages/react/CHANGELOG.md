@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.17.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.16.1...factorial-one-react-v1.17.0) (2025-03-31)
+
+
+### Features
+
+* datacollection / onetable frozen cols ([444ad94](https://github.com/factorialco/factorial-one/commit/444ad9446f83c201c341bbb7d26a542290e55090))
+
 ## [1.16.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.16.0...factorial-one-react-v1.16.1) (2025-03-31)
 
 
