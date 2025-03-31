@@ -89,7 +89,6 @@ export function useSelectable<
   }, [source.currentFilters])
 
   // If the data changes, we need to update new items that are added to the data
-  // If the data changes, we need to update new items that are added to the data
   useEffect(() => {
     if (isAllSelected) {
       data.forEach((item) => {
