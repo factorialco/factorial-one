@@ -51,7 +51,7 @@ export type TableVisualizationOptions<
   Sortings extends SortingsDefinition,
 > = {
   columns: ReadonlyArray<TableColumnDefinition<Record, Sortings>>
-  fixedColumns?: 0 | 1 | 2
+  frozenColumns?: 0 | 1 | 2
 }
 
 export const TableCollection = <
@@ -62,7 +62,7 @@ export const TableCollection = <
 >({
   columns,
   source,
-  fixedColumns = 0,
+  frozenColumns = 0,
 }: CollectionProps<
   Record,
   Filters,
@@ -80,7 +80,7 @@ export const TableCollection = <
 
   const { currentSortings, setCurrentSortings, isLoading } = source
 
-  const fixedColumnsLeft = useMemo(() => fixedColumns, [fixedColumns])
+  const frozenColumnsLeft = useMemo(() => frozenColumns, [frozenColumns])
 
   /**
    * Determine the sort state of a column
@@ -165,7 +165,7 @@ export const TableCollection = <
                 )}
                 width={column.width}
                 sticky={
-                  index < fixedColumnsLeft
+                  index < frozenColumnsLeft
                     ? {
                         left: columns
                           .slice(0, Math.max(0, index))
@@ -216,7 +216,7 @@ export const TableCollection = <
                     href={itemHref}
                     width={column.width}
                     sticky={
-                      cellIndex < fixedColumnsLeft
+                      cellIndex < frozenColumnsLeft
                         ? {
                             left: columns
                               .slice(0, Math.max(0, cellIndex))

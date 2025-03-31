@@ -256,11 +256,11 @@ const createPromiseDataFetch = (delay = 500) => {
 const ExampleComponent = ({
   useObservable = false,
   usePresets = false,
-  fixedCols = 0,
+  frozenCols = 0,
 }: {
   useObservable?: boolean
   usePresets?: boolean
-  fixedCols?: 0 | 1 | 2
+  frozenCols?: 0 | 1 | 2
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
@@ -313,7 +313,7 @@ const ExampleComponent = ({
           {
             type: "table",
             options: {
-              fixedColumns: fixedCols,
+              frozenColumns: frozenCols,
               columns: [
                 {
                   label: "Name",
@@ -572,8 +572,8 @@ export const BasicTableView: Story = {
 }
 
 // Examples with multiple visualizations
-export const TableFixedCols: Story = {
-  render: () => <ExampleComponent fixedCols={2} />,
+export const TableFrozenCols: Story = {
+  render: () => <ExampleComponent frozenCols={2} />,
 }
 
 // Basic examples with single visualization
