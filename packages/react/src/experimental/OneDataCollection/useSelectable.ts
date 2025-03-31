@@ -1,7 +1,12 @@
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "./Filters/types"
 import type { SortingsDefinition } from "./sortings"
-import { DataSource, PaginationInfo, RecordType } from "./types"
+import {
+  DataSource,
+  OnSelectItemsCallback,
+  PaginationInfo,
+  RecordType,
+} from "./types"
 
 export function useSelectable<
   Record extends RecordType,
@@ -11,7 +16,7 @@ export function useSelectable<
   data: ReadonlyArray<Record>,
   paginationInfo: PaginationInfo | null,
   source: DataSource<Record, Filters, Sortings>,
-  onSelectItems?: (allSelected: boolean, items: ReadonlyArray<Record>) => void
+  onSelectItems?: OnSelectItemsCallback<Record, Filters>
 ): {
   isAllSelected: boolean
   selectedItems: Map<number | string, Record>
@@ -42,34 +47,41 @@ export function useSelectable<
 
   const [allSelectedCheck, setAllSelectedCheck] = useState(false)
 
-  const handleItemStateChange = (item: Record, checked: boolean) => {
-    const id = source.selectable && source.selectable(item)
-    if (id === undefined) {
-      return
-    }
+  const handleItemStateChange = useCallback(
+    (item: Record | readonly Record[], checked: boolean) => {
+      const items = Array.isArray(item) ? item : [item]
 
-    itemsState.set(id, { item, checked })
-
-    setItemsState(new Map(itemsState))
-  }
-
-  const handleSelectAll = (checked: boolean) => {
-    setAllSelectedCheck(checked)
-    if (checked) {
-      data.forEach((item) => {
-        handleItemStateChange(item, true)
+      items.forEach((item) => {
+        const id = source.selectable && source.selectable(item)
+        if (id === undefined) {
+          return
+        }
+        itemsState.set(id, { item, checked })
       })
-    } else {
-      // We need to reset the items state to the initial state
-      setItemsState(
-        new Map(
-          Array.from(itemsState.entries()).map(([id, value]) => {
-            return [id, { item: value.item, checked: false }]
-          })
+
+      setItemsState((current) => new Map(current))
+    },
+    [itemsState, source]
+  )
+
+  const handleSelectAll = useCallback(
+    (checked: boolean) => {
+      setAllSelectedCheck(checked)
+      if (checked) {
+        handleItemStateChange(data, true)
+      } else {
+        // We need to reset the items state to the initial state
+        setItemsState(
+          new Map(
+            Array.from(itemsState.entries()).map(([id, value]) => {
+              return [id, { item: value.item, checked: false }]
+            })
+          )
         )
-      )
-    }
-  }
+      }
+    },
+    [handleItemStateChange, data, itemsState]
+  )
 
   // Try to determine if all items are selected when we select one by one
   // If there is pagination, we need to check if the selected items are less than the total number of items
@@ -86,7 +98,7 @@ export function useSelectable<
   useEffect(() => {
     handleSelectAll(false)
     setItemsState(new Map())
-  }, [source.currentFilters])
+  }, [source.currentFilters, handleSelectAll])
 
   // If the data changes, we need to update new items that are added to the data
   useEffect(() => {
@@ -99,7 +111,14 @@ export function useSelectable<
         }
       })
     }
-  }, [data, isAllSelected])
+  }, [
+    data,
+    isAllSelected,
+    handleItemStateChange,
+    itemsState,
+    source.selectable,
+    source,
+  ])
 
   // Control the allSelectedCheck state
   // If all items are selected, we need to set the allSelectedCheck state to true
@@ -109,6 +128,7 @@ export function useSelectable<
     if (areAllKnownItemsSelected) {
       setAllSelectedCheck(true)
     }
+
     if (selectedCount === 0) {
       setAllSelectedCheck(false)
     }
@@ -117,10 +137,21 @@ export function useSelectable<
   useEffect(() => {
     // Notify the parent component about the selected items
     onSelectItems?.(
-      allSelectedCheck && unselectedCount == 0,
-      Array.from(selectedItems.values())
+      unselectedCount === 0
+        ? allSelectedCheck
+        : allSelectedCheck
+          ? "indeterminate"
+          : false,
+      Array.from(itemsState.values()),
+      source.currentFilters
     )
-  }, [onSelectItems, allSelectedCheck, selectedItems, unselectedCount])
+  }, [
+    onSelectItems,
+    allSelectedCheck,
+    itemsState,
+    source.currentFilters,
+    unselectedCount,
+  ])
 
   return {
     selectedItems,

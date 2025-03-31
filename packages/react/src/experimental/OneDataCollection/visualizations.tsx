@@ -8,7 +8,12 @@ import { cn, focusRing } from "../../lib/utils"
 import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
-import type { BulkAction, DataSource, RecordType, SelectedItems } from "./types"
+import type {
+  DataSource,
+  OnBulkActionCallback,
+  OnSelectItemsCallback,
+  RecordType,
+} from "./types"
 import type { CardVisualizationOptions } from "./visualizations/collection/Card"
 import { CardCollection } from "./visualizations/collection/Card"
 import type { TableVisualizationOptions } from "./visualizations/collection/Table"
@@ -192,15 +197,8 @@ export const VisualizationRenderer = <
 }: {
   visualization: Visualization<Record, Filters, Sortings>
   source: DataSource<Record, Filters, Sortings, ItemActions>
-  onSelectItems?: (
-    allSelected: boolean,
-    selectedItems: SelectedItems<Record>
-  ) => void
-  onBulkAction?: (
-    action: BulkAction,
-    allSelected: boolean,
-    selectedItems: SelectedItems<Record>
-  ) => void
+  onSelectItems?: OnSelectItemsCallback<Record, Filters>
+  onBulkAction?: OnBulkActionCallback<Record, Filters>
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
