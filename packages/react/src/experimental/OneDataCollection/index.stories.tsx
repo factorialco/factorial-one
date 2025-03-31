@@ -19,6 +19,8 @@ import { SortingsDefinition, SortingsState } from "./sortings"
 import {
   BulkActionDefinition,
   DataAdapter,
+  OnBulkActionCallback,
+  OnSelectItemsCallback,
   PaginatedResponse,
   Presets,
   RecordType,
@@ -275,17 +277,8 @@ const ExampleComponent = ({
     allSelected: boolean,
     selectedItems: SelectedItems<(typeof mockUsers)[number]>
   ) => BulkActionDefinition[]
-  onSelectItems?: (
-    allSelected: boolean,
-    itemsStatus: SelectedItems<(typeof mockUsers)[number]>[],
-    filters: FiltersState<FiltersType>
-  ) => void
-  onBulkAction?: (
-    action: string,
-    allSelected: boolean,
-    itemsStatus: SelectedItems<(typeof mockUsers)[number]>[],
-    filters: FiltersState<FiltersType>
-  ) => void
+  onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
+  onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
 }) => {
   type MockUser = (typeof mockUsers)[number]
 

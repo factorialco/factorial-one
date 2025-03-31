@@ -221,6 +221,25 @@ export type BulkActionDefinition = {
  */
 export type ExtractPropertyKeys<RecordType> = keyof RecordType
 
+export type OnSelectItemsCallback<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+> = (
+  allSelected: boolean | "indeterminate",
+  itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
+  filters: FiltersState<Filters>
+) => void
+
+export type OnBulkActionCallback<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+> = (
+  action: BulkAction,
+  allSelected: boolean | "indeterminate",
+  itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
+  filters: FiltersState<Filters>
+) => void
+
 /**
  * Props for the Collection component.
  * @template Record - The type of records in the collection
@@ -238,18 +257,9 @@ export type CollectionProps<
   /** The data source configuration and state */
   source: DataSource<Record, Filters, Sortings, ItemActions>
   /** Function to handle item selection */
-  onSelectItems?: (
-    allSelected: boolean | "indeterminate",
-    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
-    filters: FiltersState<Filters>
-  ) => void
+  onSelectItems?: OnSelectItemsCallback<Record, Filters>
   /** Function to handle bulk action */
-  onBulkAction?: (
-    action: BulkAction,
-    allSelected: boolean | "indeterminate",
-    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
-    filters: FiltersState<Filters>
-  ) => void
+  onBulkAction?: OnBulkActionCallback<Record, Filters>
 } & VisualizationOptions
 
 /**

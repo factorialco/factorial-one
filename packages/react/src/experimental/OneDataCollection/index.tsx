@@ -10,10 +10,11 @@ import { ItemActionsDefinition } from "./item-actions"
 import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
-  BulkAction,
   CollectionSearchOptions,
   DataSource,
   DataSourceDefinition,
+  OnBulkActionCallback,
+  OnSelectItemsCallback,
   RecordType,
 } from "./types"
 import type { Visualization } from "./visualizations"
@@ -155,17 +156,8 @@ export const OneDataCollection = <
 }: {
   source: DataSource<Record, Filters, Sortings, ItemActions>
   visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
-  onSelectItems?: (
-    allSelected: boolean | "indeterminate",
-    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
-    filters: FiltersState<Filters>
-  ) => void
-  onBulkAction?: (
-    action: BulkAction,
-    allSelected: boolean | "indeterminate",
-    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
-    filters: FiltersState<Filters>
-  ) => void
+  onSelectItems?: OnSelectItemsCallback<Record, Filters>
+  onBulkAction?: OnBulkActionCallback<Record, Filters>
 }): JSX.Element => {
   const {
     filters,

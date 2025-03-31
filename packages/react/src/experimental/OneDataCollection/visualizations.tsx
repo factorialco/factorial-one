@@ -5,10 +5,15 @@ import { Icon, IconType } from "../../components/Utilities/Icon"
 import { Kanban, Sliders, Table } from "../../icons/app"
 import { useI18n } from "../../lib/i18n-provider"
 import { cn, focusRing } from "../../lib/utils"
-import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
-import type { BulkAction, DataSource, RecordType } from "./types"
+import type {
+  DataSource,
+  OnBulkActionCallback,
+  OnSelectItemsCallback,
+  RecordType,
+} from "./types"
 import type { CardVisualizationOptions } from "./visualizations/collection/Card"
 import { CardCollection } from "./visualizations/collection/Card"
 import type { TableVisualizationOptions } from "./visualizations/collection/Table"
@@ -192,17 +197,8 @@ export const VisualizationRenderer = <
 }: {
   visualization: Visualization<Record, Filters, Sortings>
   source: DataSource<Record, Filters, Sortings, ItemActions>
-  onSelectItems?: (
-    allSelected: boolean | "indeterminate",
-    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
-    filters: FiltersState<Filters>
-  ) => void
-  onBulkAction?: (
-    action: BulkAction,
-    allSelected: boolean | "indeterminate",
-    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
-    filters: FiltersState<Filters>
-  ) => void
+  onSelectItems?: OnSelectItemsCallback<Record, Filters>
+  onBulkAction?: OnBulkActionCallback<Record, Filters>
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":

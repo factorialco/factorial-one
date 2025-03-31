@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useState } from "react"
-import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import type { FiltersDefinition } from "./Filters/types"
 import type { SortingsDefinition } from "./sortings"
-import { DataSource, PaginationInfo, RecordType } from "./types"
+import {
+  DataSource,
+  OnSelectItemsCallback,
+  PaginationInfo,
+  RecordType,
+} from "./types"
 
 export function useSelectable<
   Record extends RecordType,
@@ -11,11 +16,7 @@ export function useSelectable<
   data: ReadonlyArray<Record>,
   paginationInfo: PaginationInfo | null,
   source: DataSource<Record, Filters, Sortings>,
-  onSelectItems?: (
-    allSelected: boolean | "indeterminate",
-    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
-    filters: FiltersState<Filters>
-  ) => void
+  onSelectItems?: OnSelectItemsCallback<Record, Filters>
 ): {
   isAllSelected: boolean
   selectedItems: Map<number | string, Record>
