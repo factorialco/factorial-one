@@ -1,10 +1,12 @@
-import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
+import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
 import { useMemo } from "react"
 import { OnePagination } from "../../../../OnePagination"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ActionsDropdown } from "../../../ItemActions/Dropdown"
+import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
 import { CollectionProps, RecordType } from "../../../types"
@@ -37,6 +39,7 @@ export const CardCollection = <
   cardProperties,
   title,
   source,
+  onSelectItems,
 }: CollectionProps<
   Record,
   Filters,
@@ -68,6 +71,19 @@ export const CardCollection = <
     dataAdapter: overridenDataAdapter,
   })
 
+  /**
+   * Item selection
+   */
+
+  const {
+    selectedItems,
+    handleSelectItemChange,
+    // TODO Add all selection logic
+    // isAllSelected,
+    // isPartiallySelected,
+    // handleSelectAll,
+  } = useSelectable(data, paginationInfo, source, onSelectItems)
+
   const renderValue = (
     item: Record,
     property: CardPropertyDefinition<Record>
@@ -96,30 +112,46 @@ export const CardCollection = <
                 </CardContent>
               </Card>
             ))
-          : data.map((item, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle>{title(item)}</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {cardProperties.map((property) => (
-                    <div key={String(property.label)} className="space-y-1">
-                      <div className="text-muted-foreground text-sm font-medium">
-                        {property.label}
+          : data.map((item, index) => {
+              const id = source.selectable ? source.selectable(item) : undefined
+              return (
+                <Card key={index}>
+                  <CardHeader>
+                    {source.selectable && id !== undefined && (
+                      <Checkbox
+                        checked={selectedItems.has(id)}
+                        onCheckedChange={(checked) =>
+                          handleSelectItemChange(item, checked)
+                        }
+                        title={`Select ${source.selectable(item)}`}
+                        hideLabel
+                      />
+                    )}
+                    <CardTitle>{title(item)}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    {cardProperties.map((property) => (
+                      <div key={String(property.label)} className="space-y-1">
+                        <div className="text-muted-foreground text-sm font-medium">
+                          {property.label}
+                        </div>
+                        <div className="text-sm">
+                          {renderValue(item, property)}
+                        </div>
                       </div>
-                      <div className="text-sm">
-                        {renderValue(item, property)}
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-                {source.itemActions && (
-                  <CardFooter className="justify-end">
-                    <ActionsDropdown item={item} actions={source.itemActions} />
-                  </CardFooter>
-                )}
-              </Card>
-            ))}
+                    ))}
+                  </CardContent>
+                  {source.itemActions && (
+                    <CardFooter className="justify-end">
+                      <ActionsDropdown
+                        item={item}
+                        actions={source.itemActions}
+                      />
+                    </CardFooter>
+                  )}
+                </Card>
+              )
+            })}
       </div>
       {paginationInfo && (
         <OnePagination
