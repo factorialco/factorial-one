@@ -5,7 +5,8 @@ import { ArrowDown, InfoCircleLine } from "../../../icons/app"
 import { cn, focusRing } from "../../../lib/utils"
 import { Tooltip } from "../../Overlays/Tooltip"
 import { useTable } from "../utils/TableContext"
-import { ColumnWidth, columnWidths } from "../utils/sizes"
+import { getColWidth } from "../utils/colWidth"
+import { ColumnWidth } from "../utils/sizes"
 
 interface TableHeadProps {
   children: React.ReactNode
@@ -124,10 +125,7 @@ export function TableHead({
     </>
   )
 
-  const isNumber = (width: ColumnWidth): width is number =>
-    typeof width === "number"
-
-  const colWidth = isNumber(width) ? width : columnWidths[width]
+  const colWidth = getColWidth(width)
 
   return (
     <TableHeadRoot

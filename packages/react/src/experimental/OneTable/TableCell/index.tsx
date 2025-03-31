@@ -4,7 +4,7 @@ import { useI18n } from "../../../lib/i18n-provider"
 import { Link } from "../../../lib/linkHandler"
 import { cn } from "../../../lib/utils"
 import { useTable } from "../utils/TableContext"
-import { ColumnWidth, columnWidths } from "../utils/sizes"
+import { getColWidth } from "../utils/colWidth"
 
 interface TableCellProps {
   children: React.ReactNode
@@ -48,10 +48,7 @@ export function TableCell({
   const stickyLeft = sticky?.left
   const stickyRight = sticky?.right
 
-  const isNumber = (width: ColumnWidth): width is number =>
-    typeof width === "number"
-
-  const colWidth = isNumber(width) ? width : columnWidths[width]
+  const colWidth = getColWidth(width)
 
   return (
     <TableCellRoot

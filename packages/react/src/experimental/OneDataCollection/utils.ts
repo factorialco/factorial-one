@@ -51,25 +51,26 @@ export type PropertyDefinition<T> = {
  * Renders a value for a given item and property definition.
  * Used by both table and card visualizations to ensure consistent rendering.
  */
+
+const renderIsRendererDefinition = (
+  renderDef: RendererDefinition | string | number | undefined
+): renderDef is RendererDefinition => {
+  return renderDef !== undefined && typeof renderDef === "object"
+}
+
 export const renderValue = <RecordType>(
   item: RecordType,
   property: PropertyDefinition<RecordType>,
   visualization: VisualizationType
 ): ReactNode => {
-  const renderIsRendererDefinition = (
-    renderDef: RendererDefinition | string | number | undefined
-  ): renderDef is RendererDefinition => {
-    return renderDef !== undefined && typeof renderDef === "object"
-  }
-
   const renderDefinition = property.render(item)
 
   const { type, value } = renderIsRendererDefinition(renderDefinition)
     ? renderDefinition
     : ({
-        type: "text" as const,
+        type: "text",
         value: renderDefinition ?? "-",
-      } as const)
+      } satisfies RendererDefinition)
 
   // Type assertion to ensure the renderer function is typed correctly as typescript can't infer the type correctly
   const renderer = propertyRenderers[type] as (
