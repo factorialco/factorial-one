@@ -1,10 +1,11 @@
-import { AnimatePresence, motion } from "framer-motion"
+import { motion } from "framer-motion"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
 import { CollectionActions } from "./CollectionActions/ColletionActions"
-import { Filters } from "./Filters"
+import { FiltersChipsList } from "./Filters/Components/FiltersChipsList"
+import { FiltersControls } from "./Filters/Components/FiltersControls"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { Search } from "./search"
@@ -163,6 +164,7 @@ export const DataCollection = <
     isLoading,
     primaryActions,
     secondaryActions,
+    presets,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
@@ -176,33 +178,49 @@ export const DataCollection = <
     [secondaryActions]
   )
 
+  const handleFilterChange = (key: keyof Filters, value: unknown) => {
+    setCurrentFilters((prev) => ({ ...prev, [key]: value }))
+  }
+
+  const handleFilterRemove = (key: keyof Filters) => {
+    setCurrentFilters((prev) => ({ ...prev, [key]: undefined }))
+  }
+
+  const handleFilterSelect = (key: keyof Filters) => {
+    // This will be handled by the FiltersControls component
+  }
+
+  const handleClearAll = () => {
+    setCurrentFilters({})
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-start justify-between">
+      <div className="flex items-center justify-between">
         {filters && (
-          <Filters
-            schema={filters}
-            filters={currentFilters}
-            presets={source.presets}
-            onChange={setCurrentFilters}
-          />
+          <div className="flex-1">
+            <FiltersControls
+              filters={filters}
+              currentFilters={currentFilters}
+              onFilterChange={handleFilterChange}
+              presets={presets}
+              onPresetsChange={setCurrentFilters}
+            />
+          </div>
         )}
-        <div className="shrink-1 grow-1 flex"></div>
         <div className="flex shrink-0 items-center gap-2">
-          <AnimatePresence initial={false}>
-            {isLoading && (
-              <MotionIcon
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{
-                  opacity: 0,
-                }}
-                size="lg"
-                icon={Spinner}
-                className="animate-spin"
-              />
-            )}
-          </AnimatePresence>
+          {isLoading && (
+            <MotionIcon
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{
+                opacity: 0,
+              }}
+              size="lg"
+              icon={Spinner}
+              className="animate-spin"
+            />
+          )}
           {search && (
             <Search onChange={setCurrentSearch} value={currentSearch} />
           )}
@@ -221,6 +239,15 @@ export const DataCollection = <
           )}
         </div>
       </div>
+      {filters && (
+        <FiltersChipsList
+          filters={filters}
+          currentFilters={currentFilters}
+          onFilterSelect={handleFilterSelect}
+          onFilterRemove={handleFilterRemove}
+          onClearAll={handleClearAll}
+        />
+      )}
       <VisualizationRenderer
         visualization={visualizations[currentVisualization]}
         source={source}
