@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from "framer-motion"
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
+import { OneActionBar } from "../OneActionBar"
 import { CollectionActions } from "./CollectionActions/ColletionActions"
 import { Filters } from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
@@ -10,6 +11,7 @@ import { ItemActionsDefinition } from "./item-actions"
 import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
+  BulkActionDefinition,
   CollectionSearchOptions,
   DataSource,
   DataSourceDefinition,
@@ -182,6 +184,74 @@ export const OneDataCollection = <
     [secondaryActions]
   )
 
+  const [clearSelectedItemsFunc, setClearSelectedItemsFunc] = useState<
+    (() => void) | undefined
+  >(undefined)
+
+  /**
+   * Bulk actions
+   */
+  const [bulkActions, setBulkActions] = useState<
+    | {
+        primary: BulkActionDefinition[]
+        secondary?: BulkActionDefinition[]
+      }
+    | undefined
+  >(undefined)
+
+  const [showActionBar, setShowActionBar] = useState(false)
+
+  const [selectedItemsCount, setSelectedItemsCount] = useState(0)
+
+  const onSelectItemsLocal: OnSelectItemsCallback<Record, Filters> =
+    useCallback(
+      (selectedItems, clearSelectedItems): void => {
+        onSelectItems?.(selectedItems, clearSelectedItems)
+
+        /**
+         * Show action bar
+         */
+        setShowActionBar(
+          !!selectedItems.allSelected ||
+            selectedItems.itemsStatus.some((item) => item.checked)
+        )
+
+        /**
+         * Selected items count
+         */
+        setSelectedItemsCount(selectedItems.selectedCount)
+
+        /**
+         * Clear selected items function
+         */
+        setClearSelectedItemsFunc(() => clearSelectedItems)
+
+        /**
+         * Bulk actions for the action bar
+         */
+        const bulkActions = source.bulkActions
+          ? source.bulkActions(selectedItems)
+          : undefined
+
+        const mapBulkActions = (action: BulkActionDefinition) => ({
+          ...action,
+          onClick: () => {
+            onBulkAction?.(action.id, selectedItems, clearSelectedItems)
+            if (!action.keepSelection) {
+              clearSelectedItems()
+            }
+          },
+        })
+
+        setBulkActions({
+          primary: (bulkActions?.primary || []).map(mapBulkActions),
+          secondary: (bulkActions?.secondary || []).map(mapBulkActions),
+        })
+        /** */
+      },
+      [source.bulkActions]
+    )
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-start justify-between">
@@ -230,9 +300,17 @@ export const OneDataCollection = <
       <VisualizationRenderer
         visualization={visualizations[currentVisualization]}
         source={source}
-        onSelectItems={onSelectItems}
-        onBulkAction={onBulkAction}
+        onSelectItems={onSelectItemsLocal}
       />
+      {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
+        <OneActionBar
+          isOpen={showActionBar}
+          selectedNumber={selectedItemsCount}
+          primaryActions={bulkActions.primary}
+          secondaryActions={bulkActions?.secondary}
+          onUnselect={() => clearSelectedItemsFunc?.()}
+        />
+      )}
     </div>
   )
 }

@@ -12,11 +12,11 @@ import {
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { useState } from "react"
-import { ActionBar } from "."
+import { OneActionBar } from "."
 
-const meta: Meta<typeof ActionBar> = {
+const meta: Meta<typeof OneActionBar> = {
   title: "ActionBar",
-  component: ActionBar,
+  component: OneActionBar,
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -55,7 +55,7 @@ const meta: Meta<typeof ActionBar> = {
 }
 
 export default meta
-type Story = StoryObj<typeof ActionBar>
+type Story = StoryObj<typeof OneActionBar>
 
 interface Item {
   id: string
@@ -143,7 +143,7 @@ export const Default: Story = {
             </div>
           ))}
         </div>
-        <ActionBar
+        <OneActionBar
           {...args}
           isOpen={hasSelectedItems}
           selectedNumber={selectedItems.length}
@@ -183,7 +183,7 @@ export const NoSelectedItems: Story = {
           label={open ? "Hide ActionBar" : "Show ActionBar"}
           icon={open ? EyeInvisible : EyeVisible}
         />
-        <ActionBar {...args} isOpen={open} />
+        <OneActionBar {...args} isOpen={open} />
       </div>
     )
   },

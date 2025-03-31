@@ -44,9 +44,11 @@ export type DataSourceDefinition<
   selectable?: (item: Record) => string | number | undefined
   /** Bulk actions that can be performed on the collection */
   bulkActions?: (
-    allSelected: boolean,
-    selectedItems: SelectedItems<Record>
-  ) => BulkActionDefinition[]
+    selectedItems: Parameters<OnBulkActionCallback<Record, Filters>>[1]
+  ) => {
+    primary: BulkActionDefinition[]
+    secondary?: BulkActionDefinition[]
+  }
 }
 
 export type CollectionSearchOptions = {
@@ -213,6 +215,7 @@ export type BulkActionDefinition = {
   label: string
   icon?: IconType
   id: string
+  keepSelection?: boolean // If true, the selection will not be cleared after the action is performed (false by default)
 }
 
 /**
@@ -225,19 +228,23 @@ export type OnSelectItemsCallback<
   Record extends RecordType,
   Filters extends FiltersDefinition,
 > = (
-  allSelected: boolean | "indeterminate",
-  itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
-  filters: FiltersState<Filters>
+  selectedItems: {
+    allSelected: boolean | "indeterminate"
+    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>
+    filters: FiltersState<Filters>
+    selectedCount: number
+  },
+  clearSelectedItems: () => void
 ) => void
 
 export type OnBulkActionCallback<
   Record extends RecordType,
   Filters extends FiltersDefinition,
 > = (
-  action: BulkAction,
-  allSelected: boolean | "indeterminate",
-  itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
-  filters: FiltersState<Filters>
+  ...args: [
+    action: BulkAction,
+    ...Parameters<OnSelectItemsCallback<Record, Filters>>,
+  ]
 ) => void
 
 /**
@@ -258,8 +265,6 @@ export type CollectionProps<
   source: DataSource<Record, Filters, Sortings, ItemActions>
   /** Function to handle item selection */
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
-  /** Function to handle bulk action */
-  onBulkAction?: OnBulkActionCallback<Record, Filters>
 } & VisualizationOptions
 
 /**
