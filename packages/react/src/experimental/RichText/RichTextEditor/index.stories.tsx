@@ -113,7 +113,7 @@ export const Default: Story = {
               error: "Error from AI, Jacob didn't finish his work",
               text: `<b>Just imagine this is an AI response from our friend Jacob</b>`,
             })
-          }, 1000)
+          }, 2000)
         }),
       enhancementOptions: enhancementOptions,
       enhanceLabels: {
