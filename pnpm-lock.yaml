@@ -439,8 +439,8 @@ importers:
         specifier: ^5.4.1
         version: 5.4.1
       chromatic:
-        specifier: ^11.25.2
-        version: 11.25.2
+        specifier: ^11.27.0
+        version: 11.27.0
       consola:
         specifier: ^3.4.0
         version: 3.4.0
@@ -1939,7 +1939,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {'0': node >=0.10.0}
+    engines: {node: '>=0.10.0'}
 
   '@expo/cli@0.22.19':
     resolution: {integrity: sha512-vgAM3gUsAUQWgDm10RIYSrWQ5q235Ir/lMUdx5Yd/gObYaDlaBIdsq5H72eJ44QB+4ndvhm2wbqntTI19kBIRw==}
@@ -4633,8 +4633,8 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
 
-  chromatic@11.25.2:
-    resolution: {integrity: sha512-/9eQWn6BU1iFsop86t8Au21IksTRxwXAl7if8YHD05L2AbuMjClLWZo5cZojqrJHGKDhTqfrC2X2xE4uSm0iKw==}
+  chromatic@11.27.0:
+    resolution: {integrity: sha512-jQ2ufjS+ePpg+NtcPI9B2eOi+pAzlRd2nhd1LgNMsVCC9Bzf5t8mJtyd8v2AUuJS0LdX0QVBgkOnlNv9xviHzA==}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -11553,7 +11553,7 @@ snapshots:
 
   '@chromatic-com/storybook@3.2.6(react@18.3.1)(storybook@8.6.10(prettier@3.5.2))':
     dependencies:
-      chromatic: 11.25.2
+      chromatic: 11.27.0
       filesize: 10.1.6
       jsonfile: 6.1.0
       react-confetti: 6.4.0(react@18.3.1)
@@ -15611,7 +15611,7 @@ snapshots:
 
   chownr@2.0.0: {}
 
-  chromatic@11.25.2: {}
+  chromatic@11.27.0: {}
 
   chrome-launcher@0.15.2:
     dependencies:
