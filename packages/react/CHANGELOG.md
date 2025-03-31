@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.16.0...factorial-one-react-v1.16.1) (2025-03-31)
+
+
+### Bug Fixes
+
+* **PageHeader:** restrict height of description block ([#1499](https://github.com/factorialco/factorial-one/issues/1499)) ([da9323f](https://github.com/factorialco/factorial-one/commit/da9323fb42c8dac340b50915e7f4791f3499db5a))
+
 ## [1.16.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.15.0...factorial-one-react-v1.16.0) (2025-03-31)
 
 
