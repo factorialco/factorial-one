@@ -199,11 +199,11 @@ declare type AvatarType = AvatarVariant["type"];
 
 export declare type AvatarVariant = ({
     type: "person";
-} & PersonAvatarProps) | ({
+} & Omit<PersonAvatarProps, "size">) | ({
     type: "team";
-} & TeamAvatarProps) | ({
+} & Omit<TeamAvatarProps, "size">) | ({
     type: "company";
-} & CompanyAvatarProps);
+} & Omit<CompanyAvatarProps, "size">);
 
 export declare const Badge: ({ type, size, icon }: BadgeProps) => JSX_2.Element;
 
@@ -655,7 +655,7 @@ export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_13 &
 
 export declare type ChatWidgetEmptyStateProps = Props_13;
 
-export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, }: ClockInControlsProps): JSX_2.Element;
+export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, overtimeOnly, }: ClockInControlsProps): JSX_2.Element;
 
 export declare interface ClockInControlsProps {
     /** Optional remaining time in minutes */
@@ -700,6 +700,7 @@ export declare interface ClockInControlsProps {
     onBreak?: (breakTypeId?: string) => void;
     canShowProject?: boolean;
     projectSelectorElement?: React.ReactNode;
+    overtimeOnly?: boolean;
 }
 
 declare interface ClockInGraphProps {
@@ -709,6 +710,7 @@ declare interface ClockInGraphProps {
         variant: ClockInStatus;
     }[];
     remainingMinutes?: number;
+    overtimeOnly?: boolean;
 }
 
 declare type ClockInStatus = "clocked-in" | "break" | "clocked-out";
@@ -911,33 +913,6 @@ declare type DashboardProps_2 = {
  */
 export declare type DataAdapter<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition> = BaseDataAdapter<Record, Filters, Sortings> | PaginatedDataAdapter<Record, Filters, Sortings>;
 
-/**
- * A component that renders a collection of data with filtering and visualization capabilities.
- * It consumes a data source (created by useDataSource) and displays it through one or more visualizations.
- *
- * DataCollection is separated from useDataSource to:
- * 1. Support the composition pattern - data sources can be created and managed independently
- * 2. Allow a single data source to be visualized in multiple ways simultaneously
- * 3. Enable reuse of the same data source in different parts of the application
- * 4. Provide a clean separation of concerns between data management and UI rendering
- *
- * @template Record - The type of records in the collection
- * @template Filters - The definition of available filters for the collection
- * @template ItemActions - The definition of available item actions
- *
- * @param source - The data source containing filters, data, and state management
- * @param visualizations - Array of available visualization options (e.g., table, card view)
- *
- * @returns A JSX element containing:
- * - Filter controls (if filters are defined)
- * - Visualization selector (if multiple visualizations are available)
- * - The selected visualization of the data
- */
-export declare const DataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>>({ source, visualizations, }: {
-    source: DataSource<Record, Filters, Sortings, ItemActions>;
-    visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>;
-}) => JSX.Element;
-
 declare const DataList: ForwardRefExoticComponent<DataListProps & RefAttributes<HTMLUListElement>> & {
     Item: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
     CompanyItem: ForwardRefExoticComponent<CompanyItemProps & RefAttributes<HTMLLIElement>>;
@@ -990,9 +965,9 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     /** Available actions that can be performed on records */
     itemActions?: ItemActions;
     /** Available primary actions that can be performed on the collection */
-    primaryActions?: PrimaryActionsDefinition;
+    primaryActions?: PrimaryActionsDefinition_2;
     /** Available secondary actions that can be performed on the collection */
-    secondaryActions?: SecondaryActionsDefinition;
+    secondaryActions?: SecondaryActionsDefinition_2;
     /** Search configuration */
     search?: CollectionSearchOptions;
     /** Current state of applied filters */
@@ -1057,16 +1032,16 @@ description: string;
 actions: {
 primary: {
 label: string;
-icon?: IconType_2 | undefined;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
+icon?: IconType_2 | undefined;
 disabled?: boolean | undefined | undefined;
 } & {
 variant?: "default" | "critical" | "neutral";
 };
 secondary: {
 label: string;
-icon?: IconType_2 | undefined;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
+icon?: IconType_2 | undefined;
 disabled?: boolean | undefined | undefined;
 };
 };
@@ -1419,6 +1394,11 @@ export declare type InputProps = Pick<ComponentProps<typeof Input_2>, "ref" | "d
 
 declare const Item: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
 
+/**
+ * Filters the actions based on the enabled property
+ * @param actions - The actions to filter
+ * @returns An array of filtered actions
+ */
 export declare type ItemActionsDefinition<T extends RecordType> = (item: T) => Array<DropdownItem & {
     enabled?: boolean;
 }> | undefined;
@@ -1664,6 +1644,33 @@ declare interface OneCardProps {
     onSelect?: (selected: boolean) => void;
 }
 
+/**
+ * A component that renders a collection of data with filtering and visualization capabilities.
+ * It consumes a data source (created by useDataSource) and displays it through one or more visualizations.
+ *
+ * DataCollection is separated from useDataSource to:
+ * 1. Support the composition pattern - data sources can be created and managed independently
+ * 2. Allow a single data source to be visualized in multiple ways simultaneously
+ * 3. Enable reuse of the same data source in different parts of the application
+ * 4. Provide a clean separation of concerns between data management and UI rendering
+ *
+ * @template Record - The type of records in the collection
+ * @template Filters - The definition of available filters for the collection
+ * @template ItemActions - The definition of available item actions
+ *
+ * @param source - The data source containing filters, data, and state management
+ * @param visualizations - Array of available visualization options (e.g., table, card view)
+ *
+ * @returns A JSX element containing:
+ * - Filter controls (if filters are defined)
+ * - Visualization selector (if multiple visualizations are available)
+ * - The selected visualization of the data
+ */
+export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>>({ source, visualizations, }: {
+    source: DataSource<Record, Filters, Sortings, ItemActions>;
+    visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>;
+}) => JSX.Element;
+
 declare type OneDropdownButtonItem<T = string> = {
     value: T;
     label: string;
@@ -1853,7 +1860,13 @@ declare interface PrimaryActionButton extends PrimaryAction {
  * Defines the structure and configuration of the primary action that can be performed on a collection.
  * @returns An action
  */
-declare type PrimaryActionsDefinition = () => Pick<DropdownItemObject, "onClick" | "label" | "icon"> | undefined;
+export declare type PrimaryActionsDefinition = () => Pick<DropdownItemObject, "onClick" | "label" | "icon"> | undefined;
+
+/**
+ * Defines the structure and configuration of the primary action that can be performed on a collection.
+ * @returns An action
+ */
+declare type PrimaryActionsDefinition_2 = () => Pick<DropdownItemObject, "onClick" | "label" | "icon"> | undefined;
 
 declare interface PrimaryDropdownAction<T> extends PrimaryAction {
     items: OneDropdownButtonItem<T>[];
@@ -1918,10 +1931,65 @@ declare type PropertyDefinition_2<T> = {
      */
     info?: string;
     /**
-     * The width of the column. If not provided, the width will be "auto"
+     * Function that extracts and formats the value from an item.
+     * Should return an object matching the expected args for the specified renderer type.
+     *
+     * Example usage:
+     * {
+     *   render: (item) => ({
+     *     type: "avatar",
+     *     value: {
+     *       type: "person",
+     *       firstName: item.firstName,
+     *       lastName: item.lastName,
+     *     }
+     *   })
+     * }
      */
-    width?: ColumnWidth;
-    render: (item: T) => ReactNode;
+    render: (item: T) => RendererDefinition | string | number | undefined;
+};
+
+declare type PropertyRendererMetadata<T> = {
+    visualization: VisualizationType;
+    property: PropertyDefinition_2<T>;
+};
+
+/**
+ * Renders a property value based on the renderer type.
+ * @param renderer - The renderer type to use
+ * @param args - The arguments to pass to the renderer
+ * @returns The rendered property value
+ */
+declare const propertyRenderers: {
+    readonly text: (text: string | number | undefined) => string | number | undefined;
+    readonly number: (number: number | undefined, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
+    readonly date: (date: Date | undefined) => string | undefined;
+    readonly amount: (amount: number | undefined, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
+    readonly avatarList: (args: {
+        avatarList: AvatarVariant[];
+        max?: number;
+    }) => JSX_2.Element;
+    readonly status: (args: {
+        status: StatusVariant;
+        label: string;
+    }) => JSX_2.Element;
+    readonly person: (args: {
+        firstName: string;
+        lastName: string;
+        src?: string;
+    }) => JSX_2.Element;
+    readonly company: (args: {
+        name: string;
+        src?: string;
+    }) => JSX_2.Element;
+    readonly team: (args: {
+        name: string;
+        src?: string;
+    }) => JSX_2.Element;
+    readonly tag: (args: {
+        label: string;
+        icon?: IconType;
+    }) => JSX_2.Element;
 };
 
 declare type Props = {
@@ -2105,6 +2173,17 @@ declare interface ReactionsProps {
  */
 export declare type RecordType = Record<string, unknown>;
 
+/**
+ * The definition of a renderer.
+ * Union type of all possible renderer definitions to ensure the value is the type related the `type`{ [RenderedType]: RendererFuncArgument }.
+ */
+declare type RendererDefinition = {
+    [K in keyof typeof propertyRenderers]: {
+        type: K;
+        value: Parameters<(typeof propertyRenderers)[K]>[0];
+    };
+}[keyof typeof propertyRenderers];
+
 export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_6) => JSX_2.Element;
 
 declare type SchemaType = ZodType;
@@ -2138,7 +2217,15 @@ declare interface SecondaryAction extends PrimaryActionButton {
  * Defines the structure and configuration of secondary actions that can be performed on a collection.
  * @returns An array of actions
  */
-declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
+export declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
+    enabled?: boolean;
+}> | undefined;
+
+/**
+ * Defines the structure and configuration of secondary actions that can be performed on a collection.
+ * @returns An array of actions
+ */
+declare type SecondaryActionsDefinition_2 = () => Array<DropdownItem & {
     enabled?: boolean;
 }> | undefined;
 
@@ -2642,6 +2729,12 @@ declare type Visualization<Record extends RecordType, Filters extends FiltersDef
     }) => JSX.Element;
 };
 
+/**
+ * Represents the type of visualization.
+ * TODO: This should be a union of all the types in the Visualization type.
+ */
+declare type VisualizationType = "card" | "table" | "custom";
+
 export declare const Weekdays: ForwardRefExoticComponent<WeekdaysProps & RefAttributes<HTMLDivElement>>;
 
 declare interface WeekdaysProps {
@@ -2739,6 +2832,14 @@ declare type WidgetWidth = "sm" | "md" | "lg";
 
 declare type WithOptionalSorting<Record, Sortings extends SortingsDefinition> = PropertyDefinition_2<Record> & {
     sorting?: SortingKey<Sortings>;
+    /**
+     * The alignment of the column. If not provided, the alignment will be "left"
+     */
+    align?: "left" | "right";
+    /**
+     * The width of the column. If not provided, the width will be "auto"
+     */
+    width?: ColumnWidth;
 };
 
 export { }

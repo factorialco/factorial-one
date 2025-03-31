@@ -104,9 +104,16 @@ declare const defaultTranslations: {
         readonly showLess: "Show less";
         readonly skipToContent: "Skip to content";
         readonly view: "View";
+        readonly unselect: "Unselect";
         readonly search: "Search";
         readonly clear: "Clear";
         readonly more: "More";
+    };
+    readonly status: {
+        readonly selected: {
+            readonly singular: "Selected";
+            readonly plural: "Selected";
+        };
     };
     readonly filters: {
         readonly label: "Filters";
