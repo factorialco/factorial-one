@@ -329,29 +329,11 @@ const ExampleComponent = ({
     <div className="space-y-4">
       <OneDataCollection
         source={dataSource}
-        onSelectItems={(allSelected, itemsStatus, filters) =>
-          console.log(
-            "Selected items",
-            "->",
-            "All selected:",
-            allSelected,
-            "Items status:",
-            itemsStatus,
-            "Filters:",
-            filters
-          )
+        onSelectItems={(selectedItems) =>
+          console.log("Selected items", "->", selectedItems)
         }
-        onBulkAction={(action, allSelected, itemsStatus, filters) =>
-          console.log(
-            `Bulk action: ${action}`,
-            "->",
-            "allSelected:",
-            allSelected,
-            "itemsStatus:",
-            itemsStatus,
-            "Filters:",
-            filters
-          )
+        onBulkAction={(action, selectedItems) =>
+          console.log(`Bulk action: ${action}`, "->", selectedItems)
         }
         visualizations={[
           {
@@ -948,36 +930,43 @@ export const WithSelectableAndBulkActions: Story = {
   render: () => (
     <ExampleComponent
       selectable={(item) => item.id}
-      bulkActions={(
-        allSelected: boolean,
-        selectedItems: SelectedItems<(typeof mockUsers)[number]>
-      ) => [
-        ...(selectedItems.length > 0
-          ? [
-              {
-                label: "Delete All",
-                icon: Delete,
-                id: "delete-all",
-              },
-            ]
-          : []),
-
-        ...(allSelected
-          ? [
-              {
-                label: "Star All",
-                icon: Star,
-                id: "star-all",
-              },
-            ]
-          : [
-              {
-                label: "Star",
-                icon: Star,
-                id: "star",
-              },
-            ]),
-      ]}
+      bulkActions={({ allSelected }) => {
+        return {
+          primary: [
+            {
+              label: allSelected ? "Delete All" : "Delete",
+              icon: Delete,
+              id: "delete-all",
+            },
+          ],
+          secondary: [
+            ...(allSelected
+              ? [
+                  {
+                    label: "Star All",
+                    icon: Star,
+                    id: "star-all",
+                  },
+                ]
+              : [
+                  {
+                    label: "Star",
+                    icon: Star,
+                    id: "star",
+                  },
+                ]),
+            ...(allSelected === "indeterminate"
+              ? [
+                  {
+                    label: "Apply to all except unselected",
+                    icon: Star,
+                    id: "star-all",
+                  },
+                ]
+              : []),
+          ],
+        }
+      }}
     />
   ),
 }
@@ -1564,6 +1553,17 @@ export const WithPagination: Story = {
       presets: filterPresets,
       sortings,
       selectable: (item) => (item.id !== "user-1a" ? item.id : undefined),
+      bulkActions: (allSelected) => {
+        return {
+          primary: [
+            {
+              label: allSelected ? "Delete All" : "Delete",
+              icon: Delete,
+              id: "delete-all",
+            },
+          ],
+        }
+      },
       dataAdapter: createDataAdapter<
         {
           id: string
@@ -1589,29 +1589,11 @@ export const WithPagination: Story = {
     return (
       <OneDataCollection
         source={source}
-        onSelectItems={(allSelected, itemsStatus, filters) => {
-          console.log(
-            "Selected items",
-            "->",
-            "All selected:",
-            allSelected,
-            "Items status:",
-            itemsStatus,
-            "Filters:",
-            filters
-          )
+        onSelectItems={(selectedItems) => {
+          console.log("Selected items", "->", selectedItems)
         }}
-        onBulkAction={(action, allSelected, itemsStatus, filters) => {
-          console.log(
-            `Bulk action: ${action}`,
-            "->",
-            "allSelected:",
-            allSelected,
-            "itemsStatus:",
-            itemsStatus,
-            "filters:",
-            filters
-          )
+        onBulkAction={(action, selectedItems) => {
+          console.log(`Bulk action: ${action}`, "->", selectedItems)
         }}
         visualizations={[
           {

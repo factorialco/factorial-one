@@ -8,12 +8,7 @@ import { cn, focusRing } from "../../lib/utils"
 import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
-import type {
-  DataSource,
-  OnBulkActionCallback,
-  OnSelectItemsCallback,
-  RecordType,
-} from "./types"
+import type { DataSource, OnSelectItemsCallback, RecordType } from "./types"
 import type { CardVisualizationOptions } from "./visualizations/collection/Card"
 import { CardCollection } from "./visualizations/collection/Card"
 import type { TableVisualizationOptions } from "./visualizations/collection/Table"
@@ -184,6 +179,7 @@ export const VisualizationSelector = <
  *
  * @returns The rendered visualization component (TableCollection, CardCollection, or custom component)
  */
+
 export const VisualizationRenderer = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
@@ -193,12 +189,11 @@ export const VisualizationRenderer = <
   visualization,
   source,
   onSelectItems,
-  onBulkAction,
 }: {
   visualization: Visualization<Record, Filters, Sortings>
   source: DataSource<Record, Filters, Sortings, ItemActions>
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
-  onBulkAction?: OnBulkActionCallback<Record, Filters>
+  clearSelectedItems?: () => void
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
@@ -207,7 +202,6 @@ export const VisualizationRenderer = <
           source={source}
           {...visualization.options}
           onSelectItems={onSelectItems}
-          onBulkAction={onBulkAction}
         />
       )
     case "card":
@@ -216,7 +210,6 @@ export const VisualizationRenderer = <
           source={source}
           {...visualization.options}
           onSelectItems={onSelectItems}
-          onBulkAction={onBulkAction}
         />
       )
     case "custom":

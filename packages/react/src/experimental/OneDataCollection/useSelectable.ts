@@ -8,6 +8,14 @@ import {
   RecordType,
 } from "./types"
 
+type UseSelectable<Record extends RecordType> = {
+  isAllSelected: boolean
+  selectedItems: Map<number | string, Record>
+  isPartiallySelected: boolean
+  handleSelectItemChange: (item: Record, checked: boolean) => void
+  handleSelectAll: (checked: boolean) => void
+}
+
 export function useSelectable<
   Record extends RecordType,
   Filters extends FiltersDefinition,
@@ -17,13 +25,7 @@ export function useSelectable<
   paginationInfo: PaginationInfo | null,
   source: DataSource<Record, Filters, Sortings>,
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
-): {
-  isAllSelected: boolean
-  selectedItems: Map<number | string, Record>
-  isPartiallySelected: boolean
-  handleSelectItemChange: (item: Record, checked: boolean) => void
-  handleSelectAll: (checked: boolean) => void
-} {
+): UseSelectable<Record> {
   // itemsState is the state of the selected items
   const [itemsState, setItemsState] = useState<
     Map<number | string, { item: Record; checked: boolean }>
@@ -47,41 +49,36 @@ export function useSelectable<
 
   const [allSelectedCheck, setAllSelectedCheck] = useState(false)
 
-  const handleItemStateChange = useCallback(
-    (item: Record | readonly Record[], checked: boolean) => {
-      const items = Array.isArray(item) ? item : [item]
+  const clearSelectedItems = useCallback(() => {
+    handleSelectAll(false)
+    setItemsState(new Map())
+  }, [])
 
-      items.forEach((item) => {
-        const id = source.selectable && source.selectable(item)
-        if (id === undefined) {
-          return
-        }
-        itemsState.set(id, { item, checked })
-      })
+  const handleItemStateChange = (
+    item: Record | readonly Record[],
+    checked: boolean
+  ) => {
+    const items = Array.isArray(item) ? item : [item]
 
-      setItemsState((current) => new Map(current))
-    },
-    [itemsState, source]
-  )
-
-  const handleSelectAll = useCallback(
-    (checked: boolean) => {
-      setAllSelectedCheck(checked)
-      if (checked) {
-        handleItemStateChange(data, true)
-      } else {
-        // We need to reset the items state to the initial state
-        setItemsState(
-          new Map(
-            Array.from(itemsState.entries()).map(([id, value]) => {
-              return [id, { item: value.item, checked: false }]
-            })
-          )
-        )
+    items.forEach((item) => {
+      const id = source.selectable && source.selectable(item)
+      if (id === undefined) {
+        return
       }
-    },
-    [handleItemStateChange, data, itemsState]
-  )
+      itemsState.set(id, { item, checked })
+    })
+
+    setItemsState((current) => new Map(current))
+  }
+
+  const handleSelectAll = (checked: boolean) => {
+    setAllSelectedCheck(checked)
+    if (checked) {
+      handleItemStateChange(data, true)
+    } else {
+      setItemsState(new Map())
+    }
+  }
 
   // Try to determine if all items are selected when we select one by one
   // If there is pagination, we need to check if the selected items are less than the total number of items
@@ -96,9 +93,8 @@ export function useSelectable<
 
   // If the filters change, we need to reset the selected items
   useEffect(() => {
-    handleSelectAll(false)
-    setItemsState(new Map())
-  }, [source.currentFilters, handleSelectAll])
+    clearSelectedItems()
+  }, [source.currentFilters])
 
   // If the data changes, we need to update new items that are added to the data
   useEffect(() => {
@@ -111,14 +107,7 @@ export function useSelectable<
         }
       })
     }
-  }, [
-    data,
-    isAllSelected,
-    handleItemStateChange,
-    itemsState,
-    source.selectable,
-    source,
-  ])
+  }, [data, isAllSelected])
 
   // Control the allSelectedCheck state
   // If all items are selected, we need to set the allSelectedCheck state to true
@@ -136,22 +125,28 @@ export function useSelectable<
 
   useEffect(() => {
     // Notify the parent component about the selected items
+
+    const totalItems = paginationInfo?.total ?? data.length
+
+    const selectedItemsCount = allSelectedCheck
+      ? totalItems - unselectedCount
+      : selectedCount
+
     onSelectItems?.(
-      unselectedCount === 0
-        ? allSelectedCheck
-        : allSelectedCheck
-          ? "indeterminate"
-          : false,
-      Array.from(itemsState.values()),
-      source.currentFilters
+      {
+        allSelected:
+          unselectedCount === 0
+            ? allSelectedCheck
+            : allSelectedCheck
+              ? "indeterminate"
+              : false,
+        itemsStatus: Array.from(itemsState.values()),
+        filters: source.currentFilters,
+        selectedCount: selectedItemsCount,
+      },
+      clearSelectedItems
     )
-  }, [
-    onSelectItems,
-    allSelectedCheck,
-    itemsState,
-    source.currentFilters,
-    unselectedCount,
-  ])
+  }, [allSelectedCheck, itemsState, paginationInfo?.total, data.length])
 
   return {
     selectedItems,
