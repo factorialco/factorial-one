@@ -7,10 +7,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/experimental/OneTable"
-import { ColumnWidth } from "@/experimental/OneTable/utils/sizes"
 import { useI18n } from "@/lib/i18n-provider"
 import { cn } from "@/lib/utils"
-import { ComponentProps } from "react"
+import { ComponentProps, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { ActionsDropdown } from "../../../ItemActions/Dropdown"
@@ -37,7 +36,7 @@ export type WithOptionalSorting<
   /**
    * The width of the column. If not provided, the width will be "auto"
    */
-  width?: ColumnWidth
+  width?: number
 }
 
 export type TableColumnDefinition<
@@ -52,6 +51,7 @@ export type TableVisualizationOptions<
   Sortings extends SortingsDefinition,
 > = {
   columns: ReadonlyArray<TableColumnDefinition<Record, Sortings>>
+  frozenColumns?: 0 | 1 | 2
 }
 
 export const TableCollection = <
@@ -62,6 +62,7 @@ export const TableCollection = <
 >({
   columns,
   source,
+  frozenColumns = 0,
 }: CollectionProps<
   Record,
   Filters,
@@ -78,6 +79,8 @@ export const TableCollection = <
   >(source)
 
   const { currentSortings, setCurrentSortings, isLoading } = source
+
+  const frozenColumnsLeft = useMemo(() => frozenColumns, [frozenColumns])
 
   /**
    * Determine the sort state of a column
@@ -152,7 +155,7 @@ export const TableCollection = <
       <OneTable loading={isLoading}>
         <TableHeader>
           <TableRow>
-            {columns.map(({ sorting, label, ...column }) => (
+            {columns.map(({ sorting, label, ...column }, index) => (
               <TableHead
                 key={String(label)}
                 sortState={getColumnSortState(
@@ -160,6 +163,19 @@ export const TableCollection = <
                   source.sortings,
                   currentSortings
                 )}
+                width={column.width}
+                sticky={
+                  index < frozenColumnsLeft
+                    ? {
+                        left: columns
+                          .slice(0, Math.max(0, index))
+                          .reduce(
+                            (acc, column) => acc + (column.width ?? 0),
+                            0
+                          ),
+                      }
+                    : undefined
+                }
                 {...column}
                 onSortClick={
                   sorting
@@ -174,7 +190,14 @@ export const TableCollection = <
               </TableHead>
             ))}
             {source.itemActions && (
-              <TableHead key="actions" width="fit" hidden>
+              <TableHead
+                key="actions"
+                width={50}
+                hidden
+                sticky={{
+                  right: 0,
+                }}
+              >
                 {t.collections.actions.actions}
               </TableHead>
             )}
@@ -191,7 +214,19 @@ export const TableCollection = <
                     key={String(column.label)}
                     firstCell={cellIndex === 0}
                     href={itemHref}
-                    sticky={column.sticky}
+                    width={column.width}
+                    sticky={
+                      cellIndex < frozenColumnsLeft
+                        ? {
+                            left: columns
+                              .slice(0, Math.max(0, cellIndex))
+                              .reduce(
+                                (acc, column) => acc + (column.width ?? 0),
+                                0
+                              ),
+                          }
+                        : undefined
+                    }
                   >
                     <div
                       className={cn(
@@ -204,7 +239,14 @@ export const TableCollection = <
                   </TableCell>
                 ))}
                 {source.itemActions && (
-                  <TableCell key="actions" href={itemHref}>
+                  <TableCell
+                    key="actions"
+                    width={50}
+                    sticky={{
+                      right: 0,
+                    }}
+                    href={itemHref}
+                  >
                     <ActionsDropdown item={item} actions={source.itemActions} />
                   </TableCell>
                 )}
