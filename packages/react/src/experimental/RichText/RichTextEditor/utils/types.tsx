@@ -12,51 +12,6 @@ type MentionChangeResult = {
   ids: number[]
 }
 
-type ToolbarFormatConfig = {
-  bold?: boolean
-  italic?: boolean
-  underline?: boolean
-  strike?: boolean
-  highlight?: boolean
-}
-
-type ToolbarTextSizeConfig = {
-  heading1?: boolean
-  heading2?: boolean
-  heading3?: boolean
-}
-
-type ToolbarTextAlignConfig = {
-  left?: boolean
-  center?: boolean
-  right?: boolean
-  justify?: boolean
-}
-
-type ToolbarListConfig = {
-  bullet?: boolean
-  ordered?: boolean
-  task?: boolean
-}
-
-type ToolbarMoreOptionsConfig = {
-  code?: boolean
-  horizontalRule?: boolean
-  quote?: boolean
-}
-
-type toolbarConfig =
-  | "all"
-  | "none"
-  | {
-      format?: ToolbarFormatConfig
-      textSize?: ToolbarTextSizeConfig
-      textAlign?: ToolbarTextAlignConfig
-      list?: ToolbarListConfig
-      moreOptions?: ToolbarMoreOptionsConfig
-      fullScreen?: boolean
-    }
-
 type enhanceTextParams = {
   text: string
   selectedIntent?: string
@@ -73,12 +28,12 @@ type enhancedTextResponse = {
 type enhanceLabelsType = {
   defaultError: string
   closeErrorButtonLabel: string
-  enhanceButtonLabel?: string
-  acceptChangesButtonLabel?: string
-  rejectChangesButtonLabel?: string
-  repeatButtonLabel?: string
-  customPromptPlaceholder?: string
-  loadingEnhanceLabel?: string
+  enhanceButtonLabel: string
+  acceptChangesButtonLabel: string
+  rejectChangesButtonLabel: string
+  repeatButtonLabel: string
+  customPromptPlaceholder: string
+  loadingEnhanceLabel: string
 }
 
 type EnhancementOption = {
@@ -88,7 +43,7 @@ type EnhancementOption = {
 }
 
 type enhanceConfig = {
-  onEnhanceText?: (params: enhanceTextParams) => Promise<enhancedTextResponse>
+  onEnhanceText: (params: enhanceTextParams) => Promise<enhancedTextResponse>
   enhancementOptions?: EnhancementOption[]
   enhanceLabels: enhanceLabelsType
 }
@@ -163,5 +118,4 @@ export type {
   mentionsConfig,
   primaryActionType,
   subActionType,
-  toolbarConfig,
 }
