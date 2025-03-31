@@ -1,6 +1,6 @@
+import { cn, focusRing } from "../../../../lib/utils"
 import { PersonAvatar } from "../../../Information/Avatars/PersonAvatar"
 import { Dropdown, DropdownItem } from "../../Dropdown"
-import { cn, focusRing } from "../../../../lib/utils"
 
 interface UserProps {
   firstName: string

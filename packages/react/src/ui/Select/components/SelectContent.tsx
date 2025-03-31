@@ -1,10 +1,10 @@
-import { cn } from "../../../lib/utils.ts"
-import { SelectScrollButton, VirtualItem } from "../index"
-import { SelectContext } from "../SelectContext.tsx"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { useVirtualizer } from "@tanstack/react-virtual"
 import * as React from "react"
 import { ReactNode, useContext, useEffect, useMemo, useRef } from "react"
+import { cn } from "../../../lib/utils.ts"
+import { SelectScrollButton, VirtualItem } from "../index"
+import { SelectContext } from "../SelectContext.tsx"
 
 /**
  * Select Content component

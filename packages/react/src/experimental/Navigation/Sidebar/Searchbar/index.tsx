@@ -1,8 +1,8 @@
+import { ButtonHTMLAttributes } from "react"
 import { Icon } from "../../../../components/Utilities/Icon"
-import { Shortcut } from "../../../Information/Shortcut"
 import { Search } from "../../../../icons/app"
 import { cn, focusRing } from "../../../../lib/utils"
-import { ButtonHTMLAttributes } from "react"
+import { Shortcut } from "../../../Information/Shortcut"
 
 interface SearchBarProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   placeholder: string

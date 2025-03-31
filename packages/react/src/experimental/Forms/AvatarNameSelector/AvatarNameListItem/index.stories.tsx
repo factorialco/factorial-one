@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { fn } from "@storybook/test"
 import { ComponentProps, useCallback, useState } from "react"
-import { AvatarNameListItem } from "./index"
 import { famousEmployees } from "../avatar-name.factory"
 import { teamsWithEmployees } from "../groups-avatar-name.factory"
+import { AvatarNameListItem } from "./index"
 
 const meta: Meta = {
   component: AvatarNameListItem,

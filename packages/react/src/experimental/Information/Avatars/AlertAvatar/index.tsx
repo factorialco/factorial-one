@@ -1,6 +1,6 @@
+import { cva, type VariantProps } from "cva"
 import { Icon } from "../../../../components/Utilities/Icon"
 import { AlertCircle, InfoCircle, Warning } from "../../../../icons/app"
-import { cva, type VariantProps } from "cva"
 
 const alertAvatarVariants = cva({
   base: "flex items-center justify-center border border-solid",
