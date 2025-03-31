@@ -155,11 +155,16 @@ export const OneDataCollection = <
 }: {
   source: DataSource<Record, Filters, Sortings, ItemActions>
   visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
-  onSelectItems?: (allSelected: boolean, items: ReadonlyArray<Record>) => void
+  onSelectItems?: (
+    allSelected: boolean | "indeterminate",
+    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
+    filters: FiltersState<Filters>
+  ) => void
   onBulkAction?: (
     action: BulkAction,
-    allSelected: boolean,
-    items: ReadonlyArray<Record>
+    allSelected: boolean | "indeterminate",
+    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
+    filters: FiltersState<Filters>
   ) => void
 }): JSX.Element => {
   const {

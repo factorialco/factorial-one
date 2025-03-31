@@ -275,6 +275,17 @@ const ExampleComponent = ({
     allSelected: boolean,
     selectedItems: SelectedItems<(typeof mockUsers)[number]>
   ) => BulkActionDefinition[]
+  onSelectItems?: (
+    allSelected: boolean,
+    itemsStatus: SelectedItems<(typeof mockUsers)[number]>[],
+    filters: FiltersState<FiltersType>
+  ) => void
+  onBulkAction?: (
+    action: string,
+    allSelected: boolean,
+    itemsStatus: SelectedItems<(typeof mockUsers)[number]>[],
+    filters: FiltersState<FiltersType>
+  ) => void
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
@@ -325,13 +336,28 @@ const ExampleComponent = ({
     <div className="space-y-4">
       <OneDataCollection
         source={dataSource}
-        onSelectItems={(allSelected, items) =>
-          console.log("Selected items: All selected", allSelected, items)
-        }
-        onBulkAction={(action, allSelected, items) =>
+        onSelectItems={(allSelected, itemsStatus, filters) =>
           console.log(
-            `Bulk action: ${action}, allSelected: ${allSelected}, items:`,
-            items
+            "Selected items",
+            "->",
+            "All selected:",
+            allSelected,
+            "Items status:",
+            itemsStatus,
+            "Filters:",
+            filters
+          )
+        }
+        onBulkAction={(action, allSelected, itemsStatus, filters) =>
+          console.log(
+            `Bulk action: ${action}`,
+            "->",
+            "allSelected:",
+            allSelected,
+            "itemsStatus:",
+            itemsStatus,
+            "Filters:",
+            filters
           )
         }
         visualizations={[
@@ -446,6 +472,12 @@ const meta = {
   component: ExampleComponent,
   parameters: {
     layout: "padded",
+    docs: {
+      description: {
+        component:
+          "This component is used to display a collection of data with filtering and visualization capabilities.",
+      },
+    },
   },
   argTypes: {
     useObservable: {
@@ -455,6 +487,17 @@ const meta = {
     usePresets: {
       control: "boolean",
       description: "Include filter presets",
+    },
+    onSelectItems: {
+      action: "onSelectItems",
+      description:
+        "<p>Callback triggered when items are selected. It gets if `allItemsCheck` is checked(boolean | 'indeterminate', indeterminate means at least one item was delected), `itemsStatus` return the list of know items (if the datacollection is async we don't all the items) and the check status for each item, and `filters` the current filters state.</p>" +
+        "‼️ If the datacollection is async, the `itemsStatus` will return the items that are known at the moment of the callback execution, that means when the `allChecked` is not false you need to apply the selection logic in the backend for all the items (using the filters state) and removing the items which status is `checked: false`, but in this case never use the `itemsStatus` ",
+    },
+    onBulkAction: {
+      action: "onBulkAction",
+      description:
+        "<p>Callback triggered when a bulk action is performed. It gets the action name, and the same args as `inSelectItems`. ‼️ Please check the `onSelectItems` docs for more information.</p>",
     },
   },
   tags: ["autodocs", "experimental"],
@@ -1553,8 +1596,29 @@ export const WithPagination: Story = {
     return (
       <OneDataCollection
         source={source}
-        onSelectItems={(allSelected, items) => {
-          console.log("allSelected", allSelected, "items", items)
+        onSelectItems={(allSelected, itemsStatus, filters) => {
+          console.log(
+            "Selected items",
+            "->",
+            "All selected:",
+            allSelected,
+            "Items status:",
+            itemsStatus,
+            "Filters:",
+            filters
+          )
+        }}
+        onBulkAction={(action, allSelected, itemsStatus, filters) => {
+          console.log(
+            `Bulk action: ${action}`,
+            "->",
+            "allSelected:",
+            allSelected,
+            "itemsStatus:",
+            itemsStatus,
+            "filters:",
+            filters
+          )
         }}
         visualizations={[
           {

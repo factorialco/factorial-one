@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import type { FiltersDefinition } from "./Filters/types"
+import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import type { SortingsDefinition } from "./sortings"
 import { DataSource, PaginationInfo, RecordType } from "./types"
 
@@ -11,7 +11,11 @@ export function useSelectable<
   data: ReadonlyArray<Record>,
   paginationInfo: PaginationInfo | null,
   source: DataSource<Record, Filters, Sortings>,
-  onSelectItems?: (allSelected: boolean, items: ReadonlyArray<Record>) => void
+  onSelectItems?: (
+    allSelected: boolean | "indeterminate",
+    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
+    filters: FiltersState<Filters>
+  ) => void
 ): {
   isAllSelected: boolean
   selectedItems: Map<number | string, Record>
@@ -112,7 +116,9 @@ export function useSelectable<
   useEffect(() => {
     if (areAllKnownItemsSelected) {
       setAllSelectedCheck(true)
-    } else if (selectedCount === 0) {
+    }
+
+    if (selectedCount === 0) {
       setAllSelectedCheck(false)
     }
   }, [areAllKnownItemsSelected, selectedCount])
@@ -120,10 +126,21 @@ export function useSelectable<
   useEffect(() => {
     // Notify the parent component about the selected items
     onSelectItems?.(
-      allSelectedCheck && unselectedCount == 0,
-      Array.from(selectedItems.values())
+      unselectedCount === 0
+        ? allSelectedCheck
+        : allSelectedCheck
+          ? "indeterminate"
+          : false,
+      Array.from(itemsState.values()),
+      source.currentFilters
     )
-  }, [onSelectItems, allSelectedCheck, selectedItems, unselectedCount])
+  }, [
+    onSelectItems,
+    allSelectedCheck,
+    itemsState,
+    source.currentFilters,
+    unselectedCount,
+  ])
 
   return {
     selectedItems,

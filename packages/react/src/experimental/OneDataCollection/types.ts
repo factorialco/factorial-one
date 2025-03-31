@@ -238,12 +238,17 @@ export type CollectionProps<
   /** The data source configuration and state */
   source: DataSource<Record, Filters, Sortings, ItemActions>
   /** Function to handle item selection */
-  onSelectItems?: (allSelected: boolean, items: SelectedItems<Record>) => void
+  onSelectItems?: (
+    allSelected: boolean | "indeterminate",
+    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
+    filters: FiltersState<Filters>
+  ) => void
   /** Function to handle bulk action */
   onBulkAction?: (
     action: BulkAction,
-    allSelected: boolean,
-    items: SelectedItems<Record>
+    allSelected: boolean | "indeterminate",
+    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>,
+    filters: FiltersState<Filters>
   ) => void
 } & VisualizationOptions
 
