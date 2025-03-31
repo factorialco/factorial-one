@@ -20,6 +20,8 @@ export interface TableProps {
 
 function TableBase({ children, loading = false }: TableProps) {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolledRight, setIsScrolledRight] = useState(false)
+
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -28,6 +30,9 @@ function TableBase({ children, loading = false }: TableProps) {
 
     const handleScroll = () => {
       setIsScrolled(container.scrollLeft > 0)
+      setIsScrolledRight(
+        container.scrollWidth - container.scrollLeft - container.clientWidth > 0
+      )
     }
 
     handleScroll()
@@ -39,7 +44,9 @@ function TableBase({ children, loading = false }: TableProps) {
   }, [])
 
   return (
-    <TableContext.Provider value={{ isScrolled, setIsScrolled }}>
+    <TableContext.Provider
+      value={{ isScrolled, setIsScrolled, isScrolledRight, setIsScrolledRight }}
+    >
       <div ref={containerRef} className="relative w-full overflow-auto">
         <TableRoot
           className={cn(loading && "select-none opacity-50 transition-opacity")}
@@ -80,6 +87,8 @@ function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
       value={{
         isScrolled: false,
         setIsScrolled: () => {},
+        isScrolledRight: false,
+        setIsScrolledRight: () => {},
       }}
     >
       <TableRoot

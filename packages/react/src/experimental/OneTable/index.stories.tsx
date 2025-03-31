@@ -308,8 +308,12 @@ export const StickyColumn: Story = {
     <OneTable>
       <TableHeader>
         <TableRow>
-          <TableHead sticky>Name</TableHead>
-          <TableHead>Email</TableHead>
+          <TableHead sticky={{ left: 0 }} width={140}>
+            Name
+          </TableHead>
+          <TableHead sticky={{ left: 140 }} width={100}>
+            Email
+          </TableHead>
           <TableHead>Role</TableHead>
           <TableHead>Joined</TableHead>
           <TableHead>Manager</TableHead>
@@ -322,14 +326,18 @@ export const StickyColumn: Story = {
           <TableHead>Role</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
-          <TableHead>Role</TableHead>
+          <TableHead sticky={{ right: 0 }}>Role</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {sampleData.map((row) => (
           <TableRow key={row.id}>
-            <TableCell sticky>{row.name}</TableCell>
-            <TableCell>{row.email}</TableCell>
+            <TableCell sticky={{ left: 0 }} width={140}>
+              {row.name}
+            </TableCell>
+            <TableCell sticky={{ left: 140 }} width={100}>
+              {row.email}
+            </TableCell>
             <TableCell>{row.role}</TableCell>
             <TableCell>{row.joined}</TableCell>
             <TableCell>{row.manager}</TableCell>
@@ -349,7 +357,7 @@ export const StickyColumn: Story = {
             <TableCell>{row.role}</TableCell>
             <TableCell>{row.name}</TableCell>
             <TableCell>{row.email}</TableCell>
-            <TableCell>{row.role}</TableCell>
+            <TableCell sticky={{ right: 0 }}>{row.role}</TableCell>
           </TableRow>
         ))}
       </TableBody>

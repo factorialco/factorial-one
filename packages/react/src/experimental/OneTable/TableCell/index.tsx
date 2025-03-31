@@ -4,6 +4,7 @@ import { useI18n } from "../../../lib/i18n-provider"
 import { Link } from "../../../lib/linkHandler"
 import { cn } from "../../../lib/utils"
 import { useTable } from "../utils/TableContext"
+import { getColWidth } from "../utils/colWidth"
 
 interface TableCellProps {
   children: React.ReactNode
@@ -20,35 +21,63 @@ interface TableCellProps {
   firstCell?: boolean
 
   /**
-   * When true, the cell will stick to the left side of the table when scrolling horizontally
-   * @default false
+   * The width of the cell
    */
-  sticky?: boolean
+  width?: number | "auto"
+
+  /**
+   * When true, the header cell will stick in the specified position when scrolling horizontally
+   * @default undefined
+   */
+  sticky?: { left?: number; right?: never } | { left?: never; right?: number }
 }
 
 export function TableCell({
   children,
   href,
+  width = "auto",
   firstCell = false,
-  sticky = false,
+  sticky,
 }: TableCellProps) {
-  const { isScrolled } = useTable()
+  const { isScrolled, isScrolledRight } = useTable()
   const { actions } = useI18n()
+
+  const isStickyLeft = sticky?.left !== undefined
+  const isStickyRight = sticky?.right !== undefined
+  const isSticky = isStickyLeft || isStickyRight
+  const stickyLeft = sticky?.left
+  const stickyRight = sticky?.right
+
+  const colWidth = getColWidth(width)
 
   return (
     <TableCellRoot
       className={cn(
         firstCell && "peer",
-        sticky &&
+        isSticky &&
           isScrolled &&
-          "sticky left-0 z-10 bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-[calc(100%-1px)] before:w-full before:bg-f1-background before:transition-all before:content-[''] group-hover:before:bg-f1-background-hover"
+          "bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-[calc(100%-1px)] before:w-full before:bg-f1-background before:transition-all before:content-[''] group-hover:before:bg-f1-background-hover",
+        isSticky && "sticky z-10 bg-f1-background"
       )}
+      // Min and max width is needed to prevent the cell from shrinking or expanding when the table is scrolled
+      style={{
+        width: colWidth,
+        maxWidth: colWidth,
+        minWidth: colWidth,
+        left: stickyLeft,
+        right: stickyRight,
+      }}
     >
       <AnimatePresence>
-        {isScrolled && sticky && (
+        {((isStickyLeft && isScrolled) ||
+          (isStickyRight && isScrolledRight)) && (
           <motion.div
             key="cell-shadow-gradient"
-            className="absolute inset-y-0 -right-4 h-full w-4 bg-gradient-to-r from-f1-foreground-secondary to-transparent"
+            className={cn(
+              "absolute inset-y-0 h-full w-4 from-f1-foreground-secondary to-transparent",
+              isStickyLeft && "-right-4 bg-gradient-to-r",
+              isStickyRight && "-left-4 bg-gradient-to-l"
+            )}
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.1 }}
             exit={{ opacity: 0 }}
@@ -62,7 +91,9 @@ export function TableCell({
           "[&:has(a)]:relative [&:has(a)]:z-[1]"
         )}
       >
-        {children}
+        <div className={cn(width !== "auto" && "overflow-hidden")}>
+          {children}
+        </div>
       </div>
       {href && (
         <Link
