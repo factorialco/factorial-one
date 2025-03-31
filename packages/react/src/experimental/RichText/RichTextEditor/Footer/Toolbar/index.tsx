@@ -18,6 +18,7 @@ import {
   Minus,
   OlList,
   Pencil,
+  Quote,
   Strikethrough,
   Underline,
 } from "@/icons/app"
@@ -29,8 +30,13 @@ import React from "react"
 import { getTextAlignIcon, getTextAlignLabel } from "../../utils/helpers"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 
-const ToolbarDivider = () => (
-  <div className={"mx-1 h-4 w-[1px] bg-f1-foreground-disabled"} />
+const ToolbarDivider = ({ hidden = false }: { hidden?: boolean }) => (
+  <div
+    className={cn(
+      "mx-1 h-4 w-[1px] bg-f1-foreground-disabled",
+      hidden && "hidden"
+    )}
+  />
 )
 
 interface ToolbarButtonProps {
@@ -210,6 +216,7 @@ const Toolbar = ({
           type="button"
         />
       </ToolbarDropdown>
+      <ToolbarDivider hidden={!isFullscreen} />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         active={editor.isActive("bulletList")}
@@ -254,6 +261,7 @@ const Toolbar = ({
             isActive: editor.isActive("horizontalRule"),
           },
           {
+            icon: Quote,
             label: "Quote",
             onClick: () => editor.chain().focus().toggleBlockquote().run(),
             isActive: editor.isActive("blockquote"),

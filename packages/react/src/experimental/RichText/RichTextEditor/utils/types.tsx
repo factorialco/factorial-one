@@ -72,6 +72,7 @@ type enhancedTextResponse = {
 
 type enhanceLabelsType = {
   defaultError: string
+  closeErrorButtonLabel: string
   enhanceButtonLabel?: string
   acceptChangesButtonLabel?: string
   rejectChangesButtonLabel?: string

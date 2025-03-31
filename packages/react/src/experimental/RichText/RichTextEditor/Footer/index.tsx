@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/exports"
-import { Masonry, Paperclip } from "@/icons/app"
+import { Paperclip, TextSize } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
@@ -104,7 +104,7 @@ const Footer = ({
           type="button"
           hideLabel
           round
-          icon={Masonry}
+          icon={TextSize}
         />
         {canUseFiles && (
           <Button

@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { ChevronUp, Cross } from "@/icons/app"
+import { Maximize, Minimize } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import CharacterCount from "@tiptap/extension-character-count"
 import Color from "@tiptap/extension-color"
@@ -15,7 +15,7 @@ import Typography from "@tiptap/extension-typography"
 import Underline from "@tiptap/extension-underline"
 import { EditorContent, useEditor } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
-import { motion } from "framer-motion"
+import { AnimatePresence, motion } from "framer-motion"
 import {
   forwardRef,
   useCallback,
@@ -259,7 +259,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               hideLabel
               round
               size="sm"
-              icon={isFullscreen ? Cross : ChevronUp}
+              icon={isFullscreen ? Minimize : Maximize}
               disabled={isAcceptChangesOpen}
             />
           </div>
@@ -277,14 +277,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             hideLabel
             round
             size="sm"
-            icon={ChevronUp}
+            icon={Maximize}
             disabled={isAcceptChangesOpen}
           />
         )}
 
-        {/**********
-        Editor
-        *********/}
         <div
           ref={editorRef}
           className={cn(
@@ -293,44 +290,61 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           )}
           onClick={() => editor?.commands.focus()}
         >
-          <motion.div
+          <div
             className={cn(
               "relative overflow-y-auto p-5 [scrollbar-width:thin]",
               isFullscreen ? "h-full" : "h-auto max-h-60 pr-16"
             )}
-            variants={{
-              unfocused: { minHeight: 0 },
-              focused: { minHeight: "146px" },
-            }}
-            animate={isAcceptChangesOpen ? "focused" : "unfocused"}
-            transition={{ duration: 0.3, ease: "easeOut" }}
           >
             <EditorContent editor={editor} />
+          </div>
 
-            {isAcceptChangesOpen && (
-              <AcceptChanges
-                labels={enhanceConfig?.enhanceLabels}
-                onAccept={() => {
-                  setIsAcceptChangesOpen(false)
-                  editor?.setEditable(true)
-                  setLastIntent(null)
-                }}
-                onReject={() => {
-                  editor?.chain().focus().undo().run()
-                  setIsAcceptChangesOpen(false)
-                  editor?.setEditable(true)
-                  setLastIntent(null)
-                }}
-                onRepeat={() => {
-                  editor?.chain().focus().undo().run()
-                  handleEnhanceWithAI(
-                    lastIntent?.selectedIntent,
-                    lastIntent?.customIntent
-                  )
-                }}
-              />
+          <AnimatePresence>
+            {(isAcceptChangesOpen || enhanceError) && (
+              <motion.div
+                key="accordion"
+                initial={{ height: 0, opacity: 0, y: -20 }}
+                animate={{ height: "auto", opacity: 1, y: 0 }}
+                exit={{ height: 0, opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="flex w-full items-center justify-center"
+              >
+                {isAcceptChangesOpen && (
+                  <AcceptChanges
+                    labels={enhanceConfig?.enhanceLabels}
+                    onAccept={() => {
+                      setIsAcceptChangesOpen(false)
+                      editor?.setEditable(true)
+                      setLastIntent(null)
+                    }}
+                    onReject={() => {
+                      editor?.chain().focus().undo().run()
+                      setIsAcceptChangesOpen(false)
+                      editor?.setEditable(true)
+                      setLastIntent(null)
+                    }}
+                    onRepeat={() => {
+                      editor?.chain().focus().undo().run()
+                      handleEnhanceWithAI(
+                        lastIntent?.selectedIntent,
+                        lastIntent?.customIntent
+                      )
+                    }}
+                  />
+                )}
+
+                {enhanceError && (
+                  <EnhanceError
+                    error={enhanceError}
+                    onClose={() => setEnhanceError(null)}
+                    closeErrorButtonLabel={
+                      enhanceConfig?.enhanceLabels.closeErrorButtonLabel
+                    }
+                  />
+                )}
+              </motion.div>
             )}
-          </motion.div>
+          </AnimatePresence>
 
           {filesConfig && (
             <>
@@ -353,13 +367,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 />
               )}
             </>
-          )}
-
-          {enhanceError && (
-            <EnhanceError
-              error={enhanceError}
-              onClose={() => setEnhanceError(null)}
-            />
           )}
         </div>
 

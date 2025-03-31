@@ -123,6 +123,7 @@ export const Default: Story = {
         rejectChangesButtonLabel: "Reject",
         repeatButtonLabel: "Repeat",
         customPromptPlaceholder: "What do you want to do?",
+        closeErrorButtonLabel: "Continue editing",
       },
     },
     filesConfig: {
