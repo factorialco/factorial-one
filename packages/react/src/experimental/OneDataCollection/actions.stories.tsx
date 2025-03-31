@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { Ai, Download, Pencil } from "../../icons/app"
 import { SecondaryActionsDefinition } from "./actions"
-import { DataCollection, useDataSource } from "./index"
+import { OneDataCollection, useDataSource } from "./index"
 
 const meta = {
   title: "Data Collection/Actions",
@@ -138,7 +138,7 @@ export const BasicActionsExample: Story = {
           </p>
         </div>
 
-        <DataCollection
+        <OneDataCollection
           source={dataSource}
           visualizations={[
             {
@@ -151,17 +151,14 @@ export const BasicActionsExample: Story = {
                   { label: "Department", render: (item) => item.department },
                   {
                     label: "Status",
-                    render: (item) => (
-                      <span
-                        className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                          item.status === "active"
-                            ? "bg-f1-background-success text-f1-foreground-success"
-                            : "bg-f1-background-warning text-f1-foreground-warning"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    ),
+                    render: (item) => ({
+                      type: "status",
+                      value: {
+                        status:
+                          item.status === "active" ? "positive" : "warning",
+                        label: item.status,
+                      },
+                    }),
                   },
                 ],
               },
@@ -195,7 +192,7 @@ export const CardActionsExample: Story = {
           </p>
         </div>
 
-        <DataCollection
+        <OneDataCollection
           source={dataSource}
           visualizations={[
             {
@@ -208,17 +205,14 @@ export const CardActionsExample: Story = {
                   { label: "Department", render: (item) => item.department },
                   {
                     label: "Status",
-                    render: (item) => (
-                      <span
-                        className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                          item.status === "active"
-                            ? "bg-f1-background-success text-f1-foreground-success"
-                            : "bg-f1-background-warning text-f1-foreground-warning"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    ),
+                    render: (item) => ({
+                      type: "status",
+                      value: {
+                        status:
+                          item.status === "active" ? "positive" : "warning",
+                        label: item.status,
+                      },
+                    }),
                   },
                 ],
               },

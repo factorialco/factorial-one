@@ -1,7 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { DownloadIcon, UploadIcon } from "lucide-react"
+import { DownloadIcon, Mail, Tag, UploadIcon } from "lucide-react"
 import { Observable } from "zen-observable-ts"
-import { Link } from "../../components/Actions/Link"
 import {
   Ai,
   ArrowRight,
@@ -14,7 +13,7 @@ import {
 } from "../../icons/app"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { FilterDefinition, FiltersState } from "./Filters/types"
-import { DataCollection, useDataSource } from "./index"
+import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import { DataAdapter, PaginatedResponse, Presets, RecordType } from "./types"
@@ -64,7 +63,17 @@ const filterPresets: Presets<typeof filters> = [
 ]
 
 // Mock data
-const mockUsers = [
+const mockUsers: {
+  id: string
+  name: string
+  email: string
+  role: string
+  department: (typeof DEPARTMENTS)[number]
+  status: string
+  isStarred: boolean
+  href?: string
+  salary: number | undefined
+}[] = [
   {
     id: "user-1",
     name: "John Doe",
@@ -73,6 +82,7 @@ const mockUsers = [
     department: DEPARTMENTS[0],
     status: "active",
     isStarred: true,
+    salary: 100000,
   },
   {
     id: "user-2",
@@ -82,6 +92,7 @@ const mockUsers = [
     department: DEPARTMENTS[1],
     status: "active",
     isStarred: false,
+    salary: 80000,
   },
   {
     id: "user-3",
@@ -91,6 +102,7 @@ const mockUsers = [
     department: DEPARTMENTS[2],
     status: "inactive",
     isStarred: false,
+    salary: 90000,
   },
   {
     id: "user-4",
@@ -100,12 +112,18 @@ const mockUsers = [
     department: DEPARTMENTS[3],
     status: "active",
     isStarred: true,
+    salary: undefined,
   },
 ]
 
 // Helper function to filter users based on filters
 const filterUsers = <
-  T extends RecordType & { name: string; email: string; department: string },
+  T extends RecordType & {
+    name: string
+    email: string
+    department: string
+    salary: number | undefined
+  },
 >(
   users: T[],
   filterValues: FiltersState<FiltersType>,
@@ -287,7 +305,7 @@ const ExampleComponent = ({
 
   return (
     <div className="space-y-4">
-      <DataCollection
+      <OneDataCollection
         source={dataSource}
         visualizations={[
           {
@@ -296,7 +314,13 @@ const ExampleComponent = ({
               columns: [
                 {
                   label: "Name",
-                  render: (item) => item.name,
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name,
+                      lastName: item.name,
+                    },
+                  }),
                   sorting: "name",
                 },
                 {
@@ -322,9 +346,18 @@ const ExampleComponent = ({
             options: {
               title: (item) => item.name,
               cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                },
               ],
             },
           },
@@ -350,6 +383,7 @@ const meta = {
       description: "Include filter presets",
     },
   },
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof ExampleComponent>
 
 export default meta
@@ -373,6 +407,9 @@ export const BasicTableView: Story = {
         },
         department: {
           label: "Department",
+        },
+        salary: {
+          label: "Salary",
         },
       },
       search: {
@@ -433,7 +470,7 @@ export const BasicTableView: Story = {
 
     return (
       <div className="space-y-4">
-        <DataCollection
+        <OneDataCollection
           source={dataSource}
           visualizations={[
             {
@@ -442,7 +479,13 @@ export const BasicTableView: Story = {
                 columns: [
                   {
                     label: "Name",
-                    render: (item) => item.name,
+                    render: (item) => ({
+                      type: "person",
+                      value: {
+                        firstName: item.name,
+                        lastName: item.name,
+                      },
+                    }),
                     sorting: "name",
                   },
                   {
@@ -459,6 +502,15 @@ export const BasicTableView: Story = {
                     label: "Department",
                     render: (item) => item.department,
                     sorting: "department",
+                  },
+                  {
+                    label: "Salary",
+                    render: (item) => ({
+                      type: "amount",
+                      value: item.salary,
+                    }),
+                    align: "right",
+                    sorting: "salary",
                   },
                 ],
               },
@@ -492,6 +544,9 @@ export const WithLinkedItems: Story = {
         },
         department: {
           label: "Department",
+        },
+        salary: {
+          label: "Salary",
         },
       },
       dataAdapter: {
@@ -532,7 +587,7 @@ export const WithLinkedItems: Story = {
 
     return (
       <div className="space-y-4">
-        <DataCollection
+        <OneDataCollection
           source={dataSource}
           visualizations={[
             {
@@ -625,7 +680,7 @@ export const BasicCardView: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={dataSource}
         visualizations={[
           {
@@ -645,8 +700,8 @@ export const BasicCardView: Story = {
   },
 }
 
-// Examples with customized visualizations
-export const ComponentsAsCells: Story = {
+// Examples with different property renderers
+export const RendererTypes: Story = {
   render: () => {
     const dataSource = useDataSource({
       filters,
@@ -658,7 +713,7 @@ export const ComponentsAsCells: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={dataSource}
         visualizations={[
           {
@@ -667,24 +722,69 @@ export const ComponentsAsCells: Story = {
               columns: [
                 {
                   label: "Name",
-                  render: (item) => `👤  ${item.name}`,
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
+                    },
+                  }),
                   sorting: "name",
                 },
                 {
                   label: "Email",
-                  render: (item) => (
-                    <Link href={`mailto:${item.email}`}>{item.email}</Link>
-                  ),
+                  render: (item) => item.email,
                   sorting: "email",
                 },
                 {
                   label: "Role",
-                  render: (item) => `💼  ${item.role}`,
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status: "info",
+                      label: item.role,
+                    },
+                  }),
                   sorting: "role",
                 },
                 {
                   label: "Department",
-                  render: (item) => `🏢 ${item.department}`,
+                  render: (item) => ({
+                    type: "tag",
+                    value: {
+                      label: item.department,
+                      icon: Tag,
+                    },
+                  }),
+                  sorting: "department",
+                },
+                {
+                  label: "Teamates",
+                  render: (item) => ({
+                    type: "avatarList",
+                    value: {
+                      avatarList: [
+                        {
+                          type: "person",
+                          firstName: item.name,
+                          lastName: "Doe",
+                          src: "https://github.com/shadcn.png",
+                        },
+                        {
+                          type: "person",
+                          firstName: "Dani",
+                          lastName: "Moreno",
+                          src: "https://github.com/dani-moreno.png",
+                        },
+                        {
+                          type: "person",
+                          firstName: "Sergio",
+                          lastName: "Carracedo",
+                          src: "https://github.com/sergiocarracedo.png",
+                        },
+                      ],
+                    },
+                  }),
                   sorting: "department",
                 },
               ],
@@ -708,7 +808,7 @@ export const CustomCardProperties: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={dataSource}
         visualizations={[
           {
@@ -745,7 +845,7 @@ export const WithPreselectedFilters: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={dataSource}
         visualizations={[
           {
@@ -778,6 +878,9 @@ const sortings = {
   },
   role: {
     label: "Role",
+  },
+  salary: {
+    label: "Salary",
   },
 } as const
 
@@ -822,7 +925,7 @@ export const WithCustomJsonView: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={dataSource}
         visualizations={[
           {
@@ -837,7 +940,13 @@ export const WithCustomJsonView: Story = {
               columns: [
                 {
                   label: "Name",
-                  render: (item) => item.name,
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
+                    },
+                  }),
                   sorting: "name",
                 },
                 { label: "Email", render: (item) => item.email },
@@ -850,7 +959,26 @@ export const WithCustomJsonView: Story = {
             type: "card",
             options: {
               cardProperties: [
-                { label: "Email", render: (item) => item.email },
+                {
+                  label: "Name",
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
+                    },
+                  }),
+                },
+                {
+                  label: "Email",
+                  render: (item) => ({
+                    type: "tag",
+                    value: {
+                      label: item.email,
+                      icon: Mail,
+                    },
+                  }),
+                },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
               ],
@@ -885,7 +1013,7 @@ export const WithTableVisualization: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={source}
         visualizations={[
           {
@@ -933,7 +1061,8 @@ function createDataAdapter<
   TRecord extends RecordType & {
     name: string
     email: string
-    department: string
+    department: (typeof DEPARTMENTS)[number]
+    salary?: number
   },
   TFilters extends Record<string, FilterDefinition<unknown>>,
   TSortings extends SortingsDefinition,
@@ -1164,11 +1293,7 @@ export const WithCardVisualization: Story = {
       filters,
       presets: filterPresets,
       sortings,
-      dataAdapter: createDataAdapter<
-        (typeof mockUsers)[number],
-        typeof filters,
-        typeof sortings
-      >({
+      dataAdapter: createDataAdapter({
         data: mockUsers,
         delay: 1000,
         useObservable: true,
@@ -1176,7 +1301,7 @@ export const WithCardVisualization: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={source}
         visualizations={[
           {
@@ -1203,18 +1328,14 @@ export const WithMultipleVisualizations: Story = {
       filters,
       presets: filterPresets,
       sortings,
-      dataAdapter: createDataAdapter<
-        (typeof mockUsers)[number],
-        typeof filters,
-        typeof sortings
-      >({
+      dataAdapter: createDataAdapter({
         data: mockUsers,
         delay: 500,
       }),
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={source}
         visualizations={[
           {
@@ -1263,17 +1384,21 @@ export const WithMultipleVisualizations: Story = {
 
 // Fix the generateMockUsers function to use the correct department types
 const generateMockUsers = (count: number) => {
-  return Array.from({ length: count }).map((_, index) => ({
-    id: `user-${index + 1}`,
-    name: `User ${index + 1}`,
-    email: `user${index + 1}@example.com`,
-    role:
-      index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
-    department: DEPARTMENTS[index % DEPARTMENTS.length],
-    status: index % 5 === 0 ? "inactive" : "active",
-    isStarred: index % 3 === 0,
-    href: `/users/user-${index + 1}`,
-  }))
+  return Array.from({ length: count }).map((_, index) => {
+    const department = DEPARTMENTS[index % DEPARTMENTS.length]
+    return {
+      id: `user-${index + 1}`,
+      name: `User ${index + 1}`,
+      email: `user${index + 1}@example.com`,
+      role:
+        index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
+      department,
+      status: index % 5 === 0 ? "inactive" : "active",
+      isStarred: index % 3 === 0,
+      href: `/users/user-${index + 1}`,
+      salary: department === "Marketing" ? 50000 + index * 1000 : undefined,
+    }
+  })
 }
 
 export const WithPagination: Story = {
@@ -1286,7 +1411,17 @@ export const WithPagination: Story = {
       presets: filterPresets,
       sortings,
       dataAdapter: createDataAdapter<
-        (typeof mockUsers)[number],
+        {
+          id: string
+          name: string
+          email: string
+          role: string
+          department: (typeof DEPARTMENTS)[number]
+          status: string
+          isStarred: boolean
+          href: string
+          salary: number | undefined
+        },
         typeof filters,
         typeof sortings
       >({
@@ -1298,7 +1433,7 @@ export const WithPagination: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={source}
         visualizations={[
           {
@@ -1360,7 +1495,7 @@ export const WithSynchronousData: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={source}
         visualizations={[
           {
@@ -1477,7 +1612,7 @@ export const WithAdvancedActions: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={source}
         visualizations={[
           {
@@ -1626,7 +1761,7 @@ export const WithSyncSearch: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={source}
         visualizations={[
           {
@@ -1778,7 +1913,7 @@ export const WithAsyncSearch: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={source}
         visualizations={[
           {
@@ -1930,7 +2065,7 @@ export const TableColumnProperties: Story = {
     })
 
     return (
-      <DataCollection
+      <OneDataCollection
         source={dataSource}
         visualizations={[
           {

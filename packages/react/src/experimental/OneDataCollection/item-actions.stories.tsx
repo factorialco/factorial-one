@@ -8,7 +8,8 @@ import {
   Share,
   Star,
 } from "../../icons/app"
-import { DataCollection, useDataSource } from "./index"
+import { SecondaryActionsDefinition } from "./actions"
+import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
 
 const meta = {
@@ -18,7 +19,7 @@ const meta = {
     docs: {
       description: {
         component:
-          "Data collection item actions are a way to add actions to a data collection item. The actions are  item specific. (check Data Collection Actions for data collection specific actions)",
+          "Data collection actions are a way to add actions to a data collection. There actions are displayed in the top right button or top right actions menu (three dots). The actions are data collection specific and are not related to the items in the collection. (check Item Actions for item specific actions)",
       },
     },
   },
@@ -88,6 +89,23 @@ const mockUsers = [
 ]
 
 // Example of a comprehensive actions definition with various types of actions
+const buildActions = (): SecondaryActionsDefinition => {
+  return () => [
+    {
+      label: "Export",
+      icon: Download,
+      onClick: () => console.log(`Downloading users`),
+      description: "Download users",
+    },
+    {
+      label: "Import",
+      icon: Download,
+      onClick: () => console.log(`Importing users`),
+      description: "Import users",
+    },
+  ]
+}
+
 const createUserActions = (): ItemActionsDefinition<
   (typeof mockUsers)[number]
 > => {
@@ -110,6 +128,13 @@ const createUserActions = (): ItemActionsDefinition<
         onClick: () => console.log(`Editing ${user.name}`),
         description: "Modify user information",
         enabled: user.permissions.canEdit,
+      },
+      // Action with description
+      {
+        label: "Another user actions User",
+        icon: Pencil,
+        onClick: () => console.log(`Another user action`),
+        description: "User actions",
       },
 
       // Separator between action groups
@@ -187,6 +212,12 @@ export const BasicActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
+      primaryActions: () => ({
+        label: "Create user",
+        icon: Ai,
+        onClick: () => console.log(`Creating a user`),
+      }),
+      secondaryActions: buildActions(),
       itemActions: createUserActions(),
     })
 
@@ -201,7 +232,7 @@ export const BasicActionsExample: Story = {
           </p>
         </div>
 
-        <DataCollection
+        <OneDataCollection
           source={dataSource}
           visualizations={[
             {
@@ -214,17 +245,14 @@ export const BasicActionsExample: Story = {
                   { label: "Department", render: (item) => item.department },
                   {
                     label: "Status",
-                    render: (item) => (
-                      <span
-                        className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                          item.status === "active"
-                            ? "bg-f1-background-success text-f1-foreground-success"
-                            : "bg-f1-background-warning text-f1-foreground-warning"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    ),
+                    render: (item) => ({
+                      type: "status",
+                      value: {
+                        status:
+                          item.status === "active" ? "positive" : "warning",
+                        label: item.status,
+                      },
+                    }),
                   },
                 ],
               },
@@ -243,6 +271,7 @@ export const CardActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
+      secondaryActions: buildActions(),
       itemActions: createUserActions(),
     })
 
@@ -253,11 +282,12 @@ export const CardActionsExample: Story = {
             Card Item Actions Example
           </h2>
           <p className="mb-4 text-f1-foreground-secondary">
-            This example shows how actions work with card visualization.
+            This example shows how data collection actions work with card
+            visualization.
           </p>
         </div>
 
-        <DataCollection
+        <OneDataCollection
           source={dataSource}
           visualizations={[
             {
@@ -270,17 +300,14 @@ export const CardActionsExample: Story = {
                   { label: "Department", render: (item) => item.department },
                   {
                     label: "Status",
-                    render: (item) => (
-                      <span
-                        className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ${
-                          item.status === "active"
-                            ? "bg-f1-background-success text-f1-foreground-success"
-                            : "bg-f1-background-warning text-f1-foreground-warning"
-                        }`}
-                      >
-                        {item.status}
-                      </span>
-                    ),
+                    render: (item) => ({
+                      type: "status",
+                      value: {
+                        status:
+                          item.status === "active" ? "positive" : "warning",
+                        label: item.status,
+                      },
+                    }),
                   },
                 ],
               },
