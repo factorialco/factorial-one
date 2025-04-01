@@ -6,6 +6,7 @@ import { useState } from "react"
 export const ExampleTest = () => {
   const [number1, setNumber1] = useState(0)
   const [number2, setNumber2] = useState(0)
+
   const [result, setResult] = useState(0)
 
   return (
