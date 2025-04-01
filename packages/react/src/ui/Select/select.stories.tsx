@@ -68,7 +68,7 @@ const meta = {
       { value: "system", label: "System" },
       ...Array.from({ length: 10 }, (_, i) => ({
         value: `option-${i}`,
-        label: `Option ${i}`,
+        label: `Option ${i} very long content`,
       })),
     ],
   },
