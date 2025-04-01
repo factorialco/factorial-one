@@ -1,5 +1,6 @@
 import { Button } from "@/components/Actions/Button"
 import { toolbarLabels } from "@/experimental/exports"
+import { IconType } from "@/factorial-one"
 import {
   AlignTextCenter,
   AlignTextJustify,
@@ -68,6 +69,17 @@ interface ToolbarProps {
   mode?: "light" | "dark"
 }
 
+interface ButtonConfig {
+  key: string
+  icon: IconType
+  active: (editor: Editor) => boolean
+  onClick: (editor: Editor) => void
+  tooltip: {
+    label: string
+    shortcut: string[]
+  }
+}
+
 const Toolbar = ({
   editor,
   isFullscreen,
@@ -77,101 +89,151 @@ const Toolbar = ({
   labels,
   mode = "light",
 }: ToolbarProps) => {
-  const formattingGroup = (
-    <div className="flex flex-row items-center gap-0.5">
-      <ToolbarButton
-        active={editor.isActive("bold")}
-        label={labels.bold}
-        icon={Bold}
-        disabled={disableButtons}
-        onClick={() => editor.chain().focus().toggleBold().run()}
-        tooltip={{
-          label: `**${labels.bold}**`,
-          shortcut: ["cmd", "b"],
-        }}
-        mode={mode}
-      />
+  // Format buttons configuration
+  const formatButtons: ButtonConfig[] = [
+    {
+      key: "bold",
+      icon: Bold,
+      active: (editor) => editor.isActive("bold"),
+      onClick: (editor) => editor.chain().focus().toggleBold().run(),
+      tooltip: {
+        label: `**${labels.bold}**`,
+        shortcut: ["cmd", "b"],
+      },
+    },
+    {
+      key: "italic",
+      icon: Italic,
+      active: (editor) => editor.isActive("italic"),
+      onClick: (editor) => editor.chain().focus().toggleItalic().run(),
+      tooltip: {
+        label: `*${labels.italic}*`,
+        shortcut: ["cmd", "i"],
+      },
+    },
+    {
+      key: "underline",
+      icon: Underline,
+      active: (editor) => editor.isActive("underline"),
+      onClick: (editor) => editor.chain().focus().toggleUnderline().run(),
+      tooltip: {
+        label: `_${labels.underline}_`,
+        shortcut: ["cmd", "u"],
+      },
+    },
+    {
+      key: "strike",
+      icon: Strikethrough,
+      active: (editor) => editor.isActive("strike"),
+      onClick: (editor) => editor.chain().focus().toggleStrike().run(),
+      tooltip: {
+        label: `~${labels.strike}~`,
+        shortcut: ["cmd", "shift", "s"],
+      },
+    },
+  ]
 
-      <ToolbarButton
-        active={editor.isActive("italic")}
-        label={labels.italic}
-        icon={Italic}
-        disabled={disableButtons}
-        onClick={() => editor.chain().focus().toggleItalic().run()}
-        tooltip={{
-          label: `*${labels.italic}*`,
-          shortcut: ["cmd", "i"],
-        }}
-        mode={mode}
-      />
-      <ToolbarButton
-        active={editor.isActive("underline")}
-        label={labels.underline}
-        icon={Underline}
-        disabled={disableButtons}
-        onClick={() => editor.chain().focus().toggleUnderline().run()}
-        tooltip={{
-          label: `_${labels.underline}_`,
-          shortcut: ["cmd", "u"],
-        }}
-        mode={mode}
-      />
-      <ToolbarButton
-        active={editor.isActive("strike")}
-        label={labels.strike}
-        icon={Strikethrough}
-        onClick={() => editor.chain().focus().toggleStrike().run()}
-        disabled={disableButtons}
-        tooltip={{
-          label: `~${labels.strike}~`,
-          shortcut: ["cmd", "shift", "s"],
-        }}
-        mode={mode}
-      />
+  // Heading buttons configuration
+  const headingButtons: ButtonConfig[] = [
+    {
+      key: "heading1",
+      icon: Heading1,
+      active: (editor) => editor.isActive("heading", { level: 1 }),
+      onClick: (editor) =>
+        editor.chain().focus().toggleHeading({ level: 1 }).run(),
+      tooltip: {
+        label: `# ${labels.heading1}`,
+        shortcut: ["cmd", "1"],
+      },
+    },
+    {
+      key: "heading2",
+      icon: Heading2,
+      active: (editor) => editor.isActive("heading", { level: 2 }),
+      onClick: (editor) =>
+        editor.chain().focus().toggleHeading({ level: 2 }).run(),
+      tooltip: {
+        label: `## ${labels.heading2}`,
+        shortcut: ["cmd", "2"],
+      },
+    },
+    {
+      key: "heading3",
+      icon: Heading3,
+      active: (editor) => editor.isActive("heading", { level: 3 }),
+      onClick: (editor) =>
+        editor.chain().focus().toggleHeading({ level: 3 }).run(),
+      tooltip: {
+        label: `### ${labels.heading3}`,
+        shortcut: ["cmd", "3"],
+      },
+    },
+  ]
+
+  // List buttons configuration
+  const listButtons: ButtonConfig[] = [
+    {
+      key: "bulletList",
+      icon: List,
+      active: (editor) => editor.isActive("bulletList"),
+      onClick: (editor) => editor.chain().focus().toggleBulletList().run(),
+      tooltip: {
+        label: `- ${labels.bulletList}`,
+        shortcut: ["cmd", "alt", "8"],
+      },
+    },
+    {
+      key: "orderedList",
+      icon: OlList,
+      active: (editor) => editor.isActive("orderedList"),
+      onClick: (editor) => editor.chain().focus().toggleOrderedList().run(),
+      tooltip: {
+        label: `1. ${labels.orderedList}`,
+        shortcut: ["cmd", "alt", "7"],
+      },
+    },
+    {
+      key: "taskList",
+      icon: CheckDouble,
+      active: (editor) => editor.isActive("taskList"),
+      onClick: (editor) => editor.chain().focus().toggleTaskList().run(),
+      tooltip: {
+        label: `[ ] ${labels.taskList}`,
+        shortcut: ["cmd", "alt", "t"],
+      },
+    },
+    {
+      key: "highlight",
+      icon: Pencil,
+      active: (editor) => editor.isActive("highlight"),
+      onClick: (editor) => editor.chain().focus().toggleHighlight().run(),
+      tooltip: {
+        label: `==${labels.highlight}==`,
+        shortcut: ["cmd", "alt", "h"],
+      },
+    },
+  ]
+
+  // Render buttons from configuration
+  const renderButtons = (configs: ButtonConfig[]) => (
+    <div className="flex flex-row items-center gap-0.5">
+      {configs.map((config) => (
+        <ToolbarButton
+          key={config.key}
+          active={config.active(editor)}
+          label={labels[config.key as keyof typeof labels]}
+          icon={config.icon}
+          disabled={disableButtons}
+          onClick={() => config.onClick(editor)}
+          tooltip={config.tooltip}
+          mode={mode}
+        />
+      ))}
     </div>
   )
 
-  const textSizeGroup = (
-    <div className="flex flex-row items-center gap-0.5">
-      <ToolbarButton
-        active={editor.isActive("heading", { level: 1 })}
-        label={labels.heading1}
-        icon={Heading1}
-        disabled={disableButtons}
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        tooltip={{
-          label: `# ${labels.heading1}`,
-          shortcut: ["cmd", "1"],
-        }}
-        mode={mode}
-      />
-
-      <ToolbarButton
-        active={editor.isActive("heading", { level: 2 })}
-        label={labels.heading2}
-        icon={Heading2}
-        disabled={disableButtons}
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        tooltip={{
-          label: `## ${labels.heading2}`,
-          shortcut: ["cmd", "2"],
-        }}
-        mode={mode}
-      />
-      <ToolbarButton
-        active={editor.isActive("heading", { level: 3 })}
-        label={labels.heading3}
-        icon={Heading3}
-        disabled={disableButtons}
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        tooltip={{
-          label: `### ${labels.heading3}`,
-          shortcut: ["cmd", "3"],
-        }}
-        mode={mode}
-      />
-    </div>
-  )
+  const formattingGroup = renderButtons(formatButtons)
+  const textSizeGroup = renderButtons(headingButtons)
 
   const moreOptionsGroup = (
     <div className="flex flex-row items-center gap-0.5">
@@ -223,54 +285,9 @@ const Toolbar = ({
         />
       </ToolbarDropdown>
       <ToolbarDivider hidden={!isFullscreen} mode={mode} />
-      <ToolbarButton
-        onClick={() => editor.chain().focus().toggleBulletList().run()}
-        active={editor.isActive("bulletList")}
-        label={labels.bulletList}
-        disabled={disableButtons}
-        icon={List}
-        tooltip={{
-          label: `- ${labels.bulletList}`,
-          shortcut: ["cmd", "alt", "8"],
-        }}
-        mode={mode}
-      />
-      <ToolbarButton
-        onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        active={editor.isActive("orderedList")}
-        label={labels.orderedList}
-        disabled={disableButtons}
-        icon={OlList}
-        tooltip={{
-          label: `1. ${labels.orderedList}`,
-          shortcut: ["cmd", "alt", "7"],
-        }}
-        mode={mode}
-      />
-      <ToolbarButton
-        onClick={() => editor.chain().focus().toggleTaskList().run()}
-        active={editor.isActive("taskList")}
-        label={labels.taskList}
-        disabled={disableButtons}
-        icon={CheckDouble}
-        tooltip={{
-          label: `[ ] ${labels.taskList}`,
-          shortcut: ["cmd", "alt", "t"],
-        }}
-        mode={mode}
-      />
-      <ToolbarButton
-        onClick={() => editor.chain().focus().toggleHighlight().run()}
-        active={editor.isActive("highlight")}
-        label={labels.highlight}
-        disabled={disableButtons}
-        icon={Pencil}
-        tooltip={{
-          label: `==${labels.highlight}==`,
-          shortcut: ["cmd", "alt", "h"],
-        }}
-        mode={mode}
-      />
+
+      {renderButtons(listButtons)}
+
       <ToolbarDropdown
         mode={mode}
         isFullscreen={isFullscreen}
