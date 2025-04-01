@@ -92,6 +92,7 @@ const ActionsMenu = ({
           items={listOfActions}
           onClick={handleOnClick}
           variant={primaryAction.action.variant ?? "default"}
+          disabled={disableButtons}
           size="md"
         />
       ) : (
