@@ -40,7 +40,7 @@ export function CelebrationAvatar({
       {src && (
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
-          style={{ backgroundImage: `url(${src})` }}
+          style={{ backgroundImage: `url("${src}")` }}
         />
       )}
       <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-md backdrop-blur">
