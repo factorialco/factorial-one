@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import * as Popover from "@radix-ui/react-popover"
 import { Editor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
-import { useCallback, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import screenfull from "screenfull"
 import { enhanceConfig } from "../utils/types"
 import { AIEnhanceMenu } from "./EnhanceMenu"
@@ -41,10 +41,10 @@ const EnhanceActivator = ({
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
 
-  const handleEnhanceClick = useCallback(() => {
+  const handleEnhanceClick = () => {
     if (!enhanceButtonRef.current) setOpen(false)
     else setOpen((prev) => !prev)
-  }, [editor, open])
+  }
 
   return (
     <Popover.Root
@@ -74,7 +74,7 @@ const EnhanceActivator = ({
             handleEnhanceClick()
           }}
           disabled={disableButtons}
-          // @ts-ignore
+          // @ts-expect-error
           className={cn(
             "magicBackground magicColor",
             isLoadingEnhance && "animate-pulse"

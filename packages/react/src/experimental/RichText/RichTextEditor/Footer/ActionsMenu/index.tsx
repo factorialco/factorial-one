@@ -10,7 +10,7 @@ interface ActionsMenuProps {
   secondaryAction?: actionType
   primaryAction?: primaryActionType
   useLittleMode: boolean
-  isAcceptChangesOpen: boolean
+  disableButtons: boolean
   isFullscreen: boolean
 }
 
@@ -21,7 +21,7 @@ const ActionsMenu = ({
   secondaryAction,
   primaryAction,
   useLittleMode,
-  isAcceptChangesOpen,
+  disableButtons,
   isFullscreen,
 }: ActionsMenuProps) => {
   if (!secondaryAction && !primaryAction) return null
@@ -75,7 +75,7 @@ const ActionsMenu = ({
           variant={secondaryAction.variant ?? "outline"}
           size="md"
           label={secondaryAction.label}
-          disabled={isAcceptChangesOpen || secondaryAction.disabled}
+          disabled={disableButtons || secondaryAction.disabled}
           type="button"
         />
       )
@@ -103,7 +103,7 @@ const ActionsMenu = ({
           variant={primaryAction.action.variant ?? "default"}
           size="md"
           label={primaryAction.action.label || ""}
-          disabled={isAcceptChangesOpen || primaryAction.action.disabled}
+          disabled={disableButtons || primaryAction.action.disabled}
           icon={primaryAction.action.icon}
           type="button"
         />
@@ -122,7 +122,7 @@ const ActionsMenu = ({
             variant={primaryAction.action.variant ?? "default"}
             size="md"
             label={sub.label}
-            disabled={isAcceptChangesOpen || sub.disabled}
+            disabled={disableButtons || sub.disabled}
             icon={sub.icon}
             type="button"
           />
@@ -136,7 +136,7 @@ const ActionsMenu = ({
           variant={primaryAction.action.variant ?? "default"}
           size="md"
           label={primaryAction.action.label || ""}
-          disabled={isAcceptChangesOpen || primaryAction.action.disabled}
+          disabled={disableButtons || primaryAction.action.disabled}
           icon={primaryAction.action.icon}
           type="button"
         />

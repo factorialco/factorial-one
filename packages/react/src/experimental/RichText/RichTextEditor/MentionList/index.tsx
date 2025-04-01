@@ -8,21 +8,12 @@ import React, {
 } from "react"
 import { MentionedUser } from "../utils/types"
 
-export interface MentionListProps {
-  items: MentionedUser[]
-  command: (item: MentionedUser) => void
-  component?: React.FC<{
-    item: MentionedUser
-    index: number
-    selected: boolean
-  }>
+interface DefaultMentionItemProps {
+  item: MentionedUser
+  selected: boolean
 }
 
-const DefaultMentionItem: React.FC<{
-  item: MentionedUser
-  index: number
-  selected: boolean
-}> = ({ item, selected }) => {
+const DefaultMentionItem = ({ item, selected }: DefaultMentionItemProps) => {
   return (
     <div
       className={cn(
@@ -41,7 +32,21 @@ const DefaultMentionItem: React.FC<{
   )
 }
 
-const MentionList = forwardRef<any, MentionListProps>(
+type MentionListHandle = {
+  onKeyDown: ({ event }: { event: KeyboardEvent }) => boolean
+}
+
+export interface MentionListProps {
+  items: MentionedUser[]
+  command: (item: MentionedUser) => void
+  component?: React.FC<{
+    item: MentionedUser
+    index: number
+    selected: boolean
+  }>
+}
+
+const MentionList = forwardRef<MentionListHandle, MentionListProps>(
   ({ items, command, component: Component = DefaultMentionItem }, ref) => {
     const [selectedIndex, setSelectedIndex] = useState(0)
 
@@ -87,7 +92,7 @@ const MentionList = forwardRef<any, MentionListProps>(
           return false
         },
       }),
-      [selectedIndex, items]
+      [upHandler, downHandler, enterHandler]
     )
 
     return (

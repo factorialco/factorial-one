@@ -1,8 +1,9 @@
-import { Button } from "@/components/Actions/exports"
 import { Badge } from "@/experimental/exports"
 import { Icon } from "@/factorial-one"
 import { Alert, Check, CrossedCircle } from "@/icons/app"
+import { useI18n } from "@/lib/i18n-provider"
 import { cn, focusRing } from "@/lib/utils"
+import { Button } from "@/ui/button"
 import { Editor } from "@tiptap/react"
 import { useState } from "react"
 
@@ -17,6 +18,8 @@ const LinkPopup = ({
   editor,
   setOpenLinkPopover,
 }: LinkPopupProps) => {
+  const i18n = useI18n()
+
   const [url, setUrl] = useState(editor.getAttributes("link").href || "")
 
   const checkIfUrlIsValid = (url: string) => {
@@ -87,9 +90,8 @@ const LinkPopup = ({
         </div>
         {!editor.isActive("link") && (
           <div className="flex flex-row gap-3">
-            <Button // @ts-ignore
+            <Button
               className="w-full"
-              label="Cancel"
               variant="outline"
               type="button"
               onClick={(e) => {
@@ -98,10 +100,11 @@ const LinkPopup = ({
                 setOpenLinkPopover(false)
                 editor.chain().focus().run()
               }}
-            />
-            <Button // @ts-ignore
+            >
+              {i18n.actions.cancel}
+            </Button>
+            <Button
               className="w-full"
-              label="Save"
               variant="default"
               type="button"
               onClick={(e) => {
@@ -109,7 +112,9 @@ const LinkPopup = ({
                 handleSave()
               }}
               disabled={!checkIfUrlIsValid(url)}
-            />
+            >
+              {i18n.actions.save}
+            </Button>
           </div>
         )}
       </div>

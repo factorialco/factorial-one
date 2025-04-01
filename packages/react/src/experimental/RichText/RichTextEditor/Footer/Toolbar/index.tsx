@@ -36,7 +36,7 @@ import { ToolbarDropdown } from "./ToolbarDropdown"
 const ToolbarDivider = ({ hidden = false }: { hidden?: boolean }) => (
   <div
     className={cn(
-      "mx-1 h-4 w-[1px] bg-f1-foreground-disabled",
+      "mx-1 h-4 w-[1px] flex-shrink-0 bg-f1-foreground-disabled",
       hidden && "hidden"
     )}
   />
@@ -367,8 +367,6 @@ const Toolbar = ({
   return (
     <div className="flex flex-row items-start gap-2 overflow-hidden">
       <Button
-        // @ts-ignore
-        className="flex-shrink-0"
         onClick={(e) => {
           e.preventDefault()
           onClose()

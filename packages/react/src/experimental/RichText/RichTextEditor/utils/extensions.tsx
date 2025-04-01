@@ -13,12 +13,12 @@ import Underline from "@tiptap/extension-underline"
 import StarterKit from "@tiptap/starter-kit"
 import { configureMention } from "./mention"
 import { PersistSelection } from "./persistSelection"
-import { mentionsConfig } from "./types"
+import { MentionedUser, mentionsConfig } from "./types"
 
 interface ExtensionsConfigurationProps {
   mentionsConfig?: mentionsConfig
-  mentionSuggestions: any[]
-  setMentionSuggestions: (suggestions: any[]) => void
+  mentionSuggestions: MentionedUser[]
+  setMentionSuggestions: (suggestions: MentionedUser[]) => void
   placeholder: string
   maxCharacters?: number
 }

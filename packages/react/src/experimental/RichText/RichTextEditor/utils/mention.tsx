@@ -83,7 +83,7 @@ function Suggestion(
           const suggestions = await onMentionQueryStringChanged(query)
           setMentionSuggestions(suggestions || [])
           return suggestions || []
-        } catch (error) {
+        } catch {
           return []
         }
       } else if (users) {

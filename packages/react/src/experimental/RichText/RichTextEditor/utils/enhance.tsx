@@ -79,7 +79,7 @@ async function handleEnhanceWithAIFunction({
     } else {
       onError(error)
     }
-  } catch (error) {
+  } catch {
     onError()
   } finally {
     setIsLoadingEnhance(false)

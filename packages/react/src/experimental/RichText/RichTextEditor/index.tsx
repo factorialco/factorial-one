@@ -5,7 +5,6 @@ import { EditorContent, useEditor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import {
   forwardRef,
-  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -108,6 +107,13 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       }
     }
 
+    const disableAllButtons = !!(
+      isAcceptChangesOpen ||
+      isLoadingEnhance ||
+      isLoading ||
+      enhanceError
+    )
+
     const editor = useEditor(
       {
         extensions: ExtensionsConfiguration({
@@ -177,31 +183,29 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       }
     }
 
-    const handleEnhanceWithAI = useCallback(
-      async (selectedIntent?: string, customIntent?: string) => {
-        if (enhanceConfig) {
-          await handleEnhanceWithAIFunction({
-            editor: editor!,
-            enhanceText: enhanceConfig?.onEnhanceText!,
-            setIsLoadingEnhance,
-            onSuccess: () => {
-              editor?.setEditable(false)
-              setIsAcceptChangesOpen(true)
-            },
-            onError: (error?: string) => {
-              editor?.setEditable(true)
-              setIsAcceptChangesOpen(false)
-              setEnhanceError(
-                error || enhanceConfig?.enhanceLabels.defaultError
-              )
-            },
-            selectedIntent,
-            customIntent,
-          })
-        }
-      },
-      [editor, setIsLoadingEnhance, setLastIntent]
-    )
+    const handleEnhanceWithAI = async (
+      selectedIntent?: string,
+      customIntent?: string
+    ) => {
+      if (enhanceConfig && editor) {
+        await handleEnhanceWithAIFunction({
+          editor: editor,
+          enhanceText: enhanceConfig.onEnhanceText,
+          setIsLoadingEnhance,
+          onSuccess: () => {
+            editor.setEditable(false)
+            setIsAcceptChangesOpen(true)
+          },
+          onError: (error?: string) => {
+            editor.setEditable(false)
+            setIsAcceptChangesOpen(false)
+            setEnhanceError(error || enhanceConfig.enhanceLabels.defaultError)
+          },
+          selectedIntent,
+          customIntent,
+        })
+      }
+    }
 
     if (!editor) return null
 
@@ -216,23 +220,23 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             (isLoadingEnhance || isLoading) && "opacity-50 transition-opacity"
           )}
         >
-          <Button
-            // @ts-ignore
-            className="fixed right-7 top-7 z-50"
-            onClick={(e) => {
-              e.preventDefault()
-              handleToggleFullscreen()
-            }}
-            label="Fullscreen"
-            aria-label="Toggle fullscreen mode"
-            variant="outline"
-            type="button"
-            hideLabel
-            round
-            size="sm"
-            icon={isFullscreen ? Minimize : Maximize}
-            disabled={isAcceptChangesOpen}
-          />
+          <div className="fixed right-7 top-7 z-50">
+            <Button
+              onClick={(e) => {
+                e.preventDefault()
+                handleToggleFullscreen()
+              }}
+              label="Fullscreen"
+              aria-label="Toggle fullscreen mode"
+              variant="outline"
+              type="button"
+              hideLabel
+              round
+              size="sm"
+              icon={isFullscreen ? Minimize : Maximize}
+              disabled={disableAllButtons}
+            />
+          </div>
 
           <div
             ref={editorRef}
@@ -275,17 +279,17 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                     labels={enhanceConfig?.enhanceLabels}
                     onAccept={() => {
                       setIsAcceptChangesOpen(false)
-                      editor?.setEditable(true)
+                      editor.setEditable(true)
                       setLastIntent(null)
                     }}
                     onReject={() => {
-                      editor?.chain().focus().undo().run()
+                      editor.chain().focus().undo().run()
                       setIsAcceptChangesOpen(false)
-                      editor?.setEditable(true)
+                      editor.setEditable(true)
                       setLastIntent(null)
                     }}
                     onRepeat={() => {
-                      editor?.chain().focus().undo().run()
+                      editor.chain().focus().undo().run()
                       handleEnhanceWithAI(
                         lastIntent?.selectedIntent,
                         lastIntent?.customIntent
@@ -297,7 +301,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 {enhanceError && (
                   <EnhanceError
                     error={enhanceError}
-                    onClose={() => setEnhanceError(null)}
+                    onClose={() => {
+                      setEnhanceError(null)
+                      editor.setEditable(true)
+                    }}
                     closeErrorButtonLabel={
                       enhanceConfig?.enhanceLabels.closeErrorButtonLabel
                     }
@@ -339,7 +346,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                           setFiles
                         )
                       }
-                      disabled={isAcceptChangesOpen}
+                      disabled={disableAllButtons}
                     />
                   </motion.div>
                 )}
@@ -351,11 +358,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             maxCharacters={maxCharacters}
             secondaryAction={secondaryAction}
             primaryAction={primaryAction}
-            isAcceptChangesOpen={isAcceptChangesOpen}
             fileInputRef={fileInputRef}
             canUseFiles={filesConfig ? true : false}
             isLoadingEnhance={isLoadingEnhance}
-            disableButtons={isAcceptChangesOpen}
+            disableButtons={disableAllButtons}
             enhanceConfig={enhanceConfig}
             isFullscreen={isFullscreen}
             onEnhanceWithAI={handleEnhanceWithAI}
@@ -368,7 +374,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             onEnhanceWithAI={handleEnhanceWithAI}
             isLoadingEnhance={isLoadingEnhance}
             enhanceConfig={enhanceConfig}
-            disableButtons={isAcceptChangesOpen}
+            disableButtons={disableAllButtons}
             toolbarLabels={toolbarLabels}
             setLastIntent={setLastIntent}
           />

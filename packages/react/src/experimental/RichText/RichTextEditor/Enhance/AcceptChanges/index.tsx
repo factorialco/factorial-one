@@ -57,7 +57,7 @@ const AcceptChanges = ({
         variant="ghost"
         icon={Check}
         type="button"
-        // @ts-ignore
+        // @ts-expect-error
         className="magicBackground magicColor rounded-xs"
       />
     </div>

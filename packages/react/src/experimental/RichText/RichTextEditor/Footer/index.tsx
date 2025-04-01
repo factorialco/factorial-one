@@ -18,7 +18,6 @@ interface FooterProps {
   maxCharacters: number | undefined
   secondaryAction: actionType | undefined
   primaryAction: primaryActionType | undefined
-  isAcceptChangesOpen: boolean
   fileInputRef: React.RefObject<HTMLInputElement>
   canUseFiles: boolean
   onEnhanceWithAI: (
@@ -43,7 +42,6 @@ const Footer = ({
   maxCharacters,
   secondaryAction,
   primaryAction,
-  isAcceptChangesOpen,
   fileInputRef,
   canUseFiles,
   onEnhanceWithAI,
@@ -52,6 +50,7 @@ const Footer = ({
   isFullscreen,
   setLastIntent,
   toolbarLabels,
+  disableButtons,
 }: FooterProps) => {
   const [isToolbarOpen, setIsToolbarOpen] = useState(false)
   const [toolbarAnimationComplete, setToolbarAnimationComplete] =
@@ -92,7 +91,7 @@ const Footer = ({
             labels={toolbarLabels}
             editor={editor}
             isFullscreen={isFullscreen}
-            disableButtons={isAcceptChangesOpen}
+            disableButtons={disableButtons}
             onClose={() => {
               setIsToolbarOpen(false)
               setToolbarAnimationComplete(false)
@@ -109,7 +108,7 @@ const Footer = ({
           variant="outline"
           size="md"
           label="Toolbar"
-          disabled={isAcceptChangesOpen}
+          disabled={disableButtons}
           type="button"
           hideLabel
           round
@@ -134,7 +133,7 @@ const Footer = ({
             label="Add Attachment"
             variant="outline"
             type="button"
-            disabled={isAcceptChangesOpen}
+            disabled={disableButtons}
           />
         )}
         {enhanceConfig && (
@@ -145,7 +144,7 @@ const Footer = ({
               onEnhanceWithAI={onEnhanceWithAI}
               isLoadingEnhance={isLoadingEnhance}
               enhanceConfig={enhanceConfig}
-              disableButtons={isAcceptChangesOpen}
+              disableButtons={disableButtons}
               hideLabel={useLittleMode}
               setLastIntent={setLastIntent}
               position="top"
@@ -163,7 +162,7 @@ const Footer = ({
         primaryAction={primaryAction}
         secondaryAction={secondaryAction}
         useLittleMode={useLittleMode}
-        isAcceptChangesOpen={isAcceptChangesOpen}
+        disableButtons={disableButtons}
         isFullscreen={isFullscreen}
       />
     </div>
