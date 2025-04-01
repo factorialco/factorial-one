@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.18.2...factorial-one-react-v1.19.0) (2025-04-01)
+
+
+### Features
+
+* make a release ([#1526](https://github.com/factorialco/factorial-one/issues/1526)) ([e4c54cf](https://github.com/factorialco/factorial-one/commit/e4c54cf6fa037d24c44c67fe58255917e49407c0))
+
 ## [1.18.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.18.1...factorial-one-react-v1.18.2) (2025-04-01)
 
 
