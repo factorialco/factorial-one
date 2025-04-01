@@ -22,12 +22,14 @@ const SelectWithHooks = (props: SelectProps<string>) => {
   }
 
   return (
-    <Select
-      {...props}
-      value={localValue}
-      onChange={handleOnChange}
-      onSearchChange={handleOnSearchChange}
-    />
+    <div className="w-48">
+      <Select
+        {...props}
+        value={localValue}
+        onChange={handleOnChange}
+        onSearchChange={handleOnSearchChange}
+      />
+    </div>
   )
 }
 

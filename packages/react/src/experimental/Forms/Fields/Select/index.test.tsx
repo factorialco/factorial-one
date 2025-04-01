@@ -40,6 +40,13 @@ const mockOptions: SelectItemProps<string>[] = [
 ]
 
 describe("Select", () => {
+  // Mock ResizeObserver
+  global.ResizeObserver = vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  }))
+
   beforeEach(() => {
     vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
       () => ({

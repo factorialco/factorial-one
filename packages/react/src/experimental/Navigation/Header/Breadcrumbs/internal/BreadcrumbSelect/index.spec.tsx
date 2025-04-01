@@ -12,6 +12,13 @@ const mockOptions = [
 const mockOnChange = vi.fn()
 
 describe("BreadcrumbSelect", () => {
+  // Mock ResizeObserver
+  global.ResizeObserver = vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  }))
+
   beforeEach(() => {
     // Mock getBoundingClientRect for width calculations
     Element.prototype.getBoundingClientRect = vi.fn(() => ({
