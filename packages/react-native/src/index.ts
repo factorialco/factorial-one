@@ -1,2 +1,3 @@
 // Export components
-export * from "./components/ExampleComponent"
+import "./global.css";
+export * from "./components/ExampleComponent";

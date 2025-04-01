@@ -1,6 +1,5 @@
-import { semanticColors } from "@factorialco/factorial-one-core";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 export interface ExampleComponentProps {
   /**
@@ -17,21 +16,10 @@ export const ExampleComponent: React.FC<ExampleComponentProps> = ({
   text = "Hello World",
 }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{text}</Text>
+    <View className="bg-background-default-light flex-1 rounded-lg p-4">
+      <Text className="text-foreground-default-light text-lg font-medium">
+        {text}
+      </Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: semanticColors.background.default.light,
-    borderRadius: 8,
-  },
-  text: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: semanticColors.foreground.default.light,
-  },
-});
