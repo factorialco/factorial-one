@@ -1,6 +1,6 @@
 import * as Popover from "@radix-ui/react-popover"
 import Mention from "@tiptap/extension-mention"
-import { ReactRenderer } from "@tiptap/react"
+import { Editor, ReactRenderer } from "@tiptap/react"
 import { createRoot, Root } from "react-dom/client"
 import screenfull from "screenfull"
 import { MentionList } from "../MentionList"
@@ -64,6 +64,10 @@ interface MentionNodeAttrs {
   label: string
   image_url?: string
   href?: string
+}
+
+interface MentionListRef {
+  onKeyDown: (props: { event: KeyboardEvent }) => boolean
 }
 
 function Suggestion(
@@ -135,7 +139,7 @@ function Suggestion(
       }: {
         content: HTMLElement
         anchorRect: DOMRect
-        editor: any
+        editor: Editor
       }) => {
         const anchorStyle: React.CSSProperties = {
           position: "absolute",
@@ -191,7 +195,7 @@ function Suggestion(
           items: MentionedUser[]
           command: (attrs: MentionNodeAttrs) => void
           clientRect?: (() => DOMRect | null) | null
-          editor: any
+          editor: Editor
           range: { from: number; to: number }
         }) => {
           const commandFn = (item: MentionedUser) => {
@@ -235,7 +239,7 @@ function Suggestion(
         onUpdate: (props: {
           items: MentionedUser[]
           clientRect?: (() => DOMRect | null) | null
-          editor: any
+          editor: Editor
         }) => {
           if (!component || !container || !popoverRoot) return
           component.updateProps({ items: props.items })
@@ -261,7 +265,7 @@ function Suggestion(
             props.event.key === "ArrowUp" ||
             props.event.key === "ArrowDown"
           ) {
-            return (component.ref as any)?.onKeyDown(props) || false
+            return (component.ref as MentionListRef)?.onKeyDown(props) || false
           }
           if (props.event.key === "Escape") {
             if (popoverRoot && container) {
@@ -270,7 +274,7 @@ function Suggestion(
             }
             return true
           }
-          return (component.ref as any)?.onKeyDown(props) || false
+          return (component.ref as MentionListRef)?.onKeyDown(props) || false
         },
         onExit() {
           if (popoverRoot && container) {

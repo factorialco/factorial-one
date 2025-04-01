@@ -2,6 +2,7 @@ import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { cn } from "@/lib/utils"
 import React, {
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useState,
@@ -50,24 +51,27 @@ const MentionList = forwardRef<MentionListHandle, MentionListProps>(
   ({ items, command, component: Component = DefaultMentionItem }, ref) => {
     const [selectedIndex, setSelectedIndex] = useState(0)
 
-    const selectItem = (index: number) => {
-      const item = items[index]
-      if (item) {
-        command(item)
-      }
-    }
+    const selectItem = useCallback(
+      (index: number) => {
+        const item = items[index]
+        if (item) {
+          command(item)
+        }
+      },
+      [items, command]
+    )
 
-    const upHandler = () => {
+    const upHandler = useCallback(() => {
       setSelectedIndex((prev) => (prev + items.length - 1) % items.length)
-    }
+    }, [items.length])
 
-    const downHandler = () => {
+    const downHandler = useCallback(() => {
       setSelectedIndex((prev) => (prev + 1) % items.length)
-    }
+    }, [items.length])
 
-    const enterHandler = () => {
+    const enterHandler = useCallback(() => {
       selectItem(selectedIndex)
-    }
+    }, [selectedIndex, selectItem])
 
     useEffect(() => {
       setSelectedIndex(0)
@@ -123,5 +127,7 @@ const MentionList = forwardRef<MentionListHandle, MentionListProps>(
     )
   }
 )
+
+MentionList.displayName = "MentionList"
 
 export { MentionList }

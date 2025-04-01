@@ -74,7 +74,7 @@ const EnhanceActivator = ({
             handleEnhanceClick()
           }}
           disabled={disableButtons}
-          // @ts-expect-error
+          // @ts-expect-error - Magic background is not supported yet
           className={cn(
             "magicBackground magicColor",
             isLoadingEnhance && "animate-pulse"

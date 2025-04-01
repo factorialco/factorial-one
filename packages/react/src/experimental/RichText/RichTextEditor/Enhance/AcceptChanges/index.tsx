@@ -57,7 +57,7 @@ const AcceptChanges = ({
         variant="ghost"
         icon={Check}
         type="button"
-        // @ts-expect-error
+        // @ts-expect-error - Magic background is not supported yet
         className="magicBackground magicColor rounded-xs"
       />
     </div>
