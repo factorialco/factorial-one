@@ -42,7 +42,6 @@ const ToolbarDropdown = ({
     setOpen(false)
   }
 
-  // Función para manejar el clic en el botón
   const handleButtonClick = () => {
     if (disabled) return
     setOpen(!open)
