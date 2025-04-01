@@ -88,7 +88,18 @@ describe("ClockInControls helpers", () => {
 
     it("should format overtime correctly when negative", () => {
       const result = getInfo({
-        data: [],
+        data: [
+          {
+            from: new Date("2024-03-20T12:00:00"),
+            to: new Date("2024-03-20T12:45:00"),
+            variant: "clocked-in",
+          },
+          {
+            from: new Date("2024-03-20T12:45:00"),
+            to: new Date("2024-03-20T12:45:00"),
+            variant: "clocked-out",
+          },
+        ],
         labels: mockLabels,
         remainingMinutes: -45, // 45 minutes overtime
       })

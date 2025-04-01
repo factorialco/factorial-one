@@ -8,7 +8,6 @@ const getLeftEntry = (remainingMinutes: number, totalSeconds: number) => {
   if (remainingMinutes && remainingMinutes > 0) {
     return {
       value: (remainingMinutes * 60) / totalSeconds,
-      totalSeconds,
       color: CLOCK_IN_COLORS.empty,
     }
   }
@@ -53,7 +52,7 @@ export const normalizeData = (
 
   const dataCopy = [...data]
 
-  const res = [
+  let res = [
     ...dataCopy
       .reverse()
       .reduce(
@@ -102,6 +101,8 @@ export const normalizeData = (
       .reverse(),
     ...(leftEntry ? [leftEntry] : []),
   ]
+
+  res = res.filter((entry) => entry.value > 0)
 
   return res
 }
