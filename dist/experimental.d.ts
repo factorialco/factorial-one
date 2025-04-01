@@ -21,7 +21,7 @@ import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
-import { IconType as IconType_2 } from '../../factorial-one';
+import { IconType as IconType_3 } from '../../factorial-one';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
 import { Observable } from 'zen-observable-ts';
@@ -483,6 +483,21 @@ declare interface BreakType {
     isPaid: boolean;
 }
 
+/**
+ * Represents a bulk action that can be performed on a collection.
+ */
+export declare type BulkAction = string;
+
+/**
+ * Represents a bulk action definition.
+ */
+export declare type BulkActionDefinition = {
+    label: string;
+    icon?: IconType_2;
+    id: string;
+    keepSelection?: boolean;
+};
+
 declare const Button: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
 declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round"> & {
@@ -725,6 +740,8 @@ declare type ClockInStatus = "clocked-in" | "break" | "clocked-out";
 export declare type CollectionProps<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, VisualizationOptions extends object> = {
     /** The data source configuration and state */
     source: DataSource<Record, Filters, Sortings, ItemActions>;
+    /** Function to handle item selection */
+    onSelectItems?: OnSelectItemsCallback<Record, Filters>;
 } & VisualizationOptions;
 
 export declare type CollectionSearchOptions = {
@@ -740,21 +757,11 @@ declare const color: readonly ["viridian", "malibu", "yellow", "purple", "lilac"
 
 declare type ColumnNumber = 1 | 2 | 3 | 4 | 6;
 
-declare type ColumnWidth = keyof typeof columnWidths;
+declare type ColumnWidth = keyof typeof columnWidths | number;
 
 declare const columnWidths: {
     readonly auto: undefined;
-    readonly "10": "10%";
-    readonly "20": "20%";
-    readonly "30": "30%";
-    readonly "40": "40%";
-    readonly "50": "50%";
-    readonly "60": "60%";
-    readonly "70": "70%";
-    readonly "80": "80%";
-    readonly "90": "90%";
-    readonly "100": "100%";
-    readonly fit: "1px";
+    readonly fit: 1;
 };
 
 export declare const CommunityPost: (({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noVideoPreload, }: CommunityPostProps) => JSX_2.Element) & {
@@ -965,9 +972,9 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     /** Available actions that can be performed on records */
     itemActions?: ItemActions;
     /** Available primary actions that can be performed on the collection */
-    primaryActions?: PrimaryActionsDefinition_2;
+    primaryActions?: PrimaryActionsDefinition;
     /** Available secondary actions that can be performed on the collection */
-    secondaryActions?: SecondaryActionsDefinition_2;
+    secondaryActions?: SecondaryActionsDefinition;
     /** Search configuration */
     search?: CollectionSearchOptions;
     /** Current state of applied filters */
@@ -977,6 +984,13 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     defaultSorting?: SortingsState<Sortings>;
     /** Data adapter responsible for fetching and managing data */
     dataAdapter: DataAdapter<Record, Filters, Sortings>;
+    /** Selectable items value under the checkbox column (undefined if not selectable) */
+    selectable?: (item: Record) => string | number | undefined;
+    /** Bulk actions that can be performed on the collection */
+    bulkActions?: (selectedItems: Parameters<OnBulkActionCallback<Record, Filters>>[1]) => {
+        primary: BulkActionDefinition[];
+        secondary?: BulkActionDefinition[];
+    };
 };
 
 export declare const DateAvatar: ({ date }: Props_5) => JSX_2.Element;
@@ -1033,7 +1047,7 @@ actions: {
 primary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
-icon?: IconType_2 | undefined;
+icon?: IconType_3 | undefined;
 disabled?: boolean | undefined | undefined;
 } & {
 variant?: "default" | "critical" | "neutral";
@@ -1041,7 +1055,7 @@ variant?: "default" | "critical" | "neutral";
 secondary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
-icon?: IconType_2 | undefined;
+icon?: IconType_3 | undefined;
 disabled?: boolean | undefined | undefined;
 };
 };
@@ -1121,12 +1135,27 @@ declare type F1SearchBoxProps = {
 };
 
 /**
+ * Filters the actions based on the enabled property
+ * @param actions - The actions to filter
+ * @returns An array of filtered actions
+ */
+export declare const filterActions: (actions: SecondaryActionsDefinition) => (DropdownItem & {
+    enabled?: boolean;
+})[];
+
+/**
  * Union of all available filter types.
  * Used to define possible filter configurations in a collection.
  * @template T - Type of values for the InFilterDefinition
  */
 export declare type FilterDefinition<T = unknown> = InFilterDefinition<T> | SearchFilterDefinition;
 
+/**
+ * Filters the actions based on the enabled property
+ * @param actions - The actions to filter
+ * @param item - The item to filter the actions for
+ * @returns An array of filtered actions
+ */
 export declare const filterItemActions: <T extends RecordType>(actions: ItemActionsDefinition<T>, item: T) => (DropdownItem & {
     enabled?: boolean;
 })[];
@@ -1340,6 +1369,10 @@ declare type IconType = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefA
     animate?: "normal" | "animate";
 }>;
 
+declare type IconType_2 = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement> & {
+    animate?: "normal" | "animate";
+}>;
+
 declare const Indicator: ForwardRefExoticComponent<IndicatorProps & RefAttributes<HTMLDivElement>>;
 
 declare interface IndicatorProps {
@@ -1394,11 +1427,6 @@ export declare type InputProps = Pick<ComponentProps<typeof Input_2>, "ref" | "d
 
 declare const Item: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
 
-/**
- * Filters the actions based on the enabled property
- * @param actions - The actions to filter
- * @returns An array of filtered actions
- */
 export declare type ItemActionsDefinition<T extends RecordType> = (item: T) => Array<DropdownItem & {
     enabled?: boolean;
 }> | undefined;
@@ -1581,6 +1609,11 @@ declare interface OmniButtonProps {
     hasNewUpdate?: boolean;
 }
 
+export declare type OnBulkActionCallback<Record extends RecordType, Filters extends FiltersDefinition> = (...args: [
+action: BulkAction,
+...Parameters<OnSelectItemsCallback<Record, Filters>>
+]) => void;
+
 export declare function OneCard({ avatar, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, }: OneCardProps): JSX_2.Element;
 
 declare interface OneCardProps {
@@ -1666,9 +1699,11 @@ declare interface OneCardProps {
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>>({ source, visualizations, }: {
+export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>>({ source, visualizations, onSelectItems, onBulkAction, }: {
     source: DataSource<Record, Filters, Sortings, ItemActions>;
     visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>;
+    onSelectItems?: OnSelectItemsCallback<Record, Filters>;
+    onBulkAction?: OnBulkActionCallback<Record, Filters>;
 }) => JSX.Element;
 
 declare type OneDropdownButtonItem<T = string> = {
@@ -1714,6 +1749,16 @@ declare interface OnePaginationProps {
      */
     hasNextPage?: boolean;
 }
+
+export declare type OnSelectItemsCallback<Record extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {
+    allSelected: boolean | "indeterminate";
+    itemsStatus: ReadonlyArray<{
+        item: Record;
+        checked: boolean;
+    }>;
+    filters: FiltersState<Filters>;
+    selectedCount: number;
+}, clearSelectedItems: () => void) => void;
 
 declare interface Option_2 {
     title?: string;
@@ -1861,12 +1906,6 @@ declare interface PrimaryActionButton extends PrimaryAction {
  * @returns An action
  */
 export declare type PrimaryActionsDefinition = () => Pick<DropdownItemObject, "onClick" | "label" | "icon"> | undefined;
-
-/**
- * Defines the structure and configuration of the primary action that can be performed on a collection.
- * @returns An action
- */
-declare type PrimaryActionsDefinition_2 = () => Pick<DropdownItemObject, "onClick" | "label" | "icon"> | undefined;
 
 declare interface PrimaryDropdownAction<T> extends PrimaryAction {
     items: OneDropdownButtonItem<T>[];
@@ -2221,17 +2260,15 @@ export declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
     enabled?: boolean;
 }> | undefined;
 
-/**
- * Defines the structure and configuration of secondary actions that can be performed on a collection.
- * @returns An array of actions
- */
-declare type SecondaryActionsDefinition_2 = () => Array<DropdownItem & {
-    enabled?: boolean;
-}> | undefined;
-
 export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_7) => JSX_2.Element;
 
 export declare const Select: ForwardRefExoticComponent<SelectProps<string, any> & RefAttributes<HTMLButtonElement>>;
+
+/**
+ * Represents a collection of selected items.
+ * @template T - The type of items in the collection
+ */
+export declare type SelectedItems<T> = ReadonlyArray<T>;
 
 export declare type SelectItemObject<T, R = unknown> = {
     type?: "item";
@@ -2463,10 +2500,16 @@ declare interface TableHeadProps {
      */
     width?: ColumnWidth;
     /**
-     * When true, the header cell will stick to the left side of the table when scrolling horizontally
-     * @default false
+     * When true, the header cell will stick in the specified position when scrolling horizontally
+     * @default undefined
      */
-    sticky?: boolean;
+    sticky?: {
+        left?: number;
+        right?: never;
+    } | {
+        left?: never;
+        right?: number;
+    };
     /**
      * The current sort direction of this column. "none" indicates no sorting,
      * "asc" sorts ascending (A-Z, 1-9), and "desc" sorts descending (Z-A, 9-1)
@@ -2492,6 +2535,7 @@ declare interface TableHeadProps {
 
 declare type TableVisualizationOptions<Record extends RecordType, _Filters extends FiltersDefinition, Sortings extends SortingsDefinition> = {
     columns: ReadonlyArray<TableColumnDefinition<Record, Sortings>>;
+    frozenColumns?: 0 | 1 | 2;
 };
 
 export declare const Tabs: FC<TabsProps> & {
@@ -2839,7 +2883,7 @@ declare type WithOptionalSorting<Record, Sortings extends SortingsDefinition> = 
     /**
      * The width of the column. If not provided, the width will be "auto"
      */
-    width?: ColumnWidth;
+    width?: number;
 };
 
 export { }
