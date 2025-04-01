@@ -7,7 +7,7 @@ export default defineConfig({
   clean: true,
   minify: false,
   sourcemap: true,
-  external: ["react", "react-native", "@factorialco/factorial-one-core"],
+  external: ["react", "react-native"],
   esbuildOptions(options) {
     options.jsx = "automatic";
     return options;

@@ -97,8 +97,8 @@ describe("ClockInControls", () => {
         remainingMinutes={-17}
         data={[
           {
-            from: new Date(),
-            to: new Date(),
+            from: new Date("2024-03-20T12:00:00"),
+            to: new Date("2024-03-20T12:17:00"),
             variant: "clocked-in",
           },
         ]}

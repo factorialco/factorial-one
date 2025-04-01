@@ -2,8 +2,11 @@ import { Skeleton } from "@/ui/skeleton"
 import { Table as TableRoot } from "@/ui/table"
 import { useEffect, useRef, useState } from "react"
 import { withSkeleton } from "../../../lib/skeleton"
+import { Spinner } from "../../Information/Spinner"
 import { TableContext } from "../utils/TableContext"
 
+import { cn } from "@/lib/utils"
+import { AnimatePresence, motion } from "framer-motion"
 import { TableBody } from "../TableBody"
 import { TableCell } from "../TableCell"
 import { TableHead } from "../TableHead"
@@ -12,10 +15,13 @@ import { TableRow } from "../TableRow"
 
 export interface TableProps {
   children: React.ReactNode
+  loading?: boolean
 }
 
-function TableBase({ children }: TableProps) {
+function TableBase({ children, loading = false }: TableProps) {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isScrolledRight, setIsScrolledRight] = useState(false)
+
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -24,6 +30,9 @@ function TableBase({ children }: TableProps) {
 
     const handleScroll = () => {
       setIsScrolled(container.scrollLeft > 0)
+      setIsScrolledRight(
+        container.scrollWidth - container.scrollLeft - container.clientWidth > 0
+      )
     }
 
     handleScroll()
@@ -35,9 +44,29 @@ function TableBase({ children }: TableProps) {
   }, [])
 
   return (
-    <TableContext.Provider value={{ isScrolled, setIsScrolled }}>
+    <TableContext.Provider
+      value={{ isScrolled, setIsScrolled, isScrolledRight, setIsScrolledRight }}
+    >
       <div ref={containerRef} className="relative w-full overflow-auto">
-        <TableRoot>{children}</TableRoot>
+        <TableRoot
+          className={cn(loading && "select-none opacity-50 transition-opacity")}
+          aria-live={loading ? "polite" : undefined}
+          aria-busy={loading ? "true" : undefined}
+        >
+          {children}
+        </TableRoot>
+        <AnimatePresence>
+          {loading && (
+            <motion.div
+              className="absolute inset-0 flex cursor-progress items-center justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Spinner />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </TableContext.Provider>
   )
@@ -58,6 +87,8 @@ function TableSkeleton({ columns = 5 }: TableSkeletonProps) {
       value={{
         isScrolled: false,
         setIsScrolled: () => {},
+        isScrolledRight: false,
+        setIsScrolledRight: () => {},
       }}
     >
       <TableRoot

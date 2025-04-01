@@ -1,4 +1,7 @@
+import type { Meta, StoryObj } from "@storybook/react"
+import React, { useState } from "react"
 import { Button } from "../../components/Actions/Button"
+import { Delete, Ellipsis, Pencil } from "../../icons/app"
 import { Checkbox } from "../Forms/Fields/Checkbox"
 import { PersonAvatar } from "../Information/Avatars/exports"
 import {
@@ -8,9 +11,6 @@ import {
 } from "../Information/Tags/exports"
 import { Dropdown } from "../Navigation/Dropdown"
 import { OnePagination } from "../OnePagination"
-import { Delete, Ellipsis, Pencil } from "../../icons/app"
-import type { Meta, StoryObj } from "@storybook/react"
-import React, { useState } from "react"
 import {
   OneTable,
   TableBody,
@@ -308,8 +308,12 @@ export const StickyColumn: Story = {
     <OneTable>
       <TableHeader>
         <TableRow>
-          <TableHead sticky>Name</TableHead>
-          <TableHead>Email</TableHead>
+          <TableHead sticky={{ left: 0 }} width={140}>
+            Name
+          </TableHead>
+          <TableHead sticky={{ left: 140 }} width={100}>
+            Email
+          </TableHead>
           <TableHead>Role</TableHead>
           <TableHead>Joined</TableHead>
           <TableHead>Manager</TableHead>
@@ -322,14 +326,18 @@ export const StickyColumn: Story = {
           <TableHead>Role</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
-          <TableHead>Role</TableHead>
+          <TableHead sticky={{ right: 0 }}>Role</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {sampleData.map((row) => (
           <TableRow key={row.id}>
-            <TableCell sticky>{row.name}</TableCell>
-            <TableCell>{row.email}</TableCell>
+            <TableCell sticky={{ left: 0 }} width={140}>
+              {row.name}
+            </TableCell>
+            <TableCell sticky={{ left: 140 }} width={100}>
+              {row.email}
+            </TableCell>
             <TableCell>{row.role}</TableCell>
             <TableCell>{row.joined}</TableCell>
             <TableCell>{row.manager}</TableCell>
@@ -349,7 +357,7 @@ export const StickyColumn: Story = {
             <TableCell>{row.role}</TableCell>
             <TableCell>{row.name}</TableCell>
             <TableCell>{row.email}</TableCell>
-            <TableCell>{row.role}</TableCell>
+            <TableCell sticky={{ right: 0 }}>{row.role}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -669,4 +677,67 @@ export const WithLinks: Story = {
       </TableBody>
     </OneTable>
   ),
+}
+
+export const Loading: Story = {
+  parameters: {
+    a11y: {
+      // Skip a11y checks because the loading state has a opacity that breaks the color contrast
+      skipCi: true,
+    },
+  },
+  render: () => {
+    const [loading, setLoading] = useState(true)
+
+    return (
+      <div className="flex flex-col gap-4">
+        <button
+          onClick={() => setLoading(!loading)}
+          className="w-fit rounded-md bg-f1-background-inverse px-3 py-1.5 font-medium text-f1-foreground-inverse"
+        >
+          {loading ? "Stop loading" : "Start loading"}
+        </button>
+        <OneTable loading={loading}>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {sampleData.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>
+                  <div className="flex items-center gap-2">
+                    <PersonAvatar
+                      firstName={row.name.split(" ")[0]}
+                      lastName={row.name.split(" ")[1]}
+                      size="small"
+                    />
+                    <span className="font-medium">{row.name}</span>
+                  </div>
+                </TableCell>
+                <TableCell>{row.email}</TableCell>
+                <TableCell>
+                  <div className="w-fit">
+                    <RawTag text={row.role} />
+                  </div>
+                </TableCell>
+                <TableCell>
+                  <div className="w-fit">
+                    <StatusTag
+                      text={row.status.label}
+                      variant={row.status.variant}
+                    />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </OneTable>
+      </div>
+    )
+  },
 }

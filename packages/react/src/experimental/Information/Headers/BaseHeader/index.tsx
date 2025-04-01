@@ -1,12 +1,17 @@
+import { Fragment, memo } from "react"
 import { Button, ButtonProps } from "../../../../components/Actions/Button"
 import {
   OneDropdownButton,
   OneDropdownButtonProps,
 } from "../../../../components/Actions/OneDropdownButton"
+import { cn } from "../../../../lib/utils"
 import {
-  Avatar,
-  AvatarVariant,
-} from "../../Avatars/Avatar"
+  Dropdown,
+  DropdownItem,
+  MobileDropdown,
+} from "../../../Navigation/Dropdown"
+import { Tooltip } from "../../../Overlays/Tooltip"
+import { Avatar, AvatarVariant } from "../../Avatars/Avatar"
 import { StatusVariant } from "../../Tags/StatusTag"
 import {
   PrimaryAction,
@@ -14,18 +19,8 @@ import {
   PrimaryDropdownAction,
   SecondaryAction,
 } from "../../utils"
-import {
-  Dropdown,
-  DropdownItem,
-  MobileDropdown,
-} from "../../../Navigation/Dropdown"
-import { Tooltip } from "../../../Overlays/Tooltip"
-import { useI18n } from "../../../../lib/i18n-provider"
-import { cn } from "../../../../lib/utils"
-import { motion } from "framer-motion"
-import { Fragment, memo, useEffect, useRef, useState } from "react"
-import { useResizeObserver } from "usehooks-ts"
 import { Metadata, MetadataAction, MetadataProps } from "../Metadata"
+import { Description } from "./Description"
 
 interface BaseHeaderProps {
   title: string
@@ -73,7 +68,9 @@ const ButtonWithTooltip = memo(function ButtonWithTooltip({
 const DropdownButtonWithTooltip = memo(function DropdownButtonWithTooltip({
   tooltip,
   ...dropdownProps
-}: OneDropdownButtonProps<string> & { tooltip?: string }) {
+}: OneDropdownButtonProps<string> & {
+  tooltip?: string
+}) {
   if (tooltip) {
     const Wrapper = dropdownProps.disabled ? "span" : Fragment
     return (
@@ -110,28 +107,6 @@ export function BaseHeader({
     },
     ...metadata,
   ]
-
-  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
-  const [needsTruncation, setNeedsTruncation] = useState(false)
-  const translations = useI18n()
-
-  /*
-    Checks if the description is long enough to be truncated
-  */
-  const [descriptionRef, measureRef] = [
-    useRef<HTMLDivElement>(null),
-    useRef<HTMLDivElement>(null),
-  ]
-  const [descriptionSize, measureSize] = [
-    useResizeObserver({ ref: descriptionRef }),
-    useResizeObserver({ ref: measureRef }),
-  ]
-
-  useEffect(() => {
-    if (measureSize.height && descriptionSize.height) {
-      setNeedsTruncation(measureSize.height > descriptionSize.height)
-    }
-  }, [measureSize.height, descriptionSize.height])
 
   const visibleSecondaryActions = secondaryActions.filter(isVisible)
   const visibleOtherActions = otherActions.filter(isVisible)
@@ -181,52 +156,7 @@ export function BaseHeader({
             <span className="text-2xl font-semibold text-f1-foreground">
               {title}
             </span>
-            {description && (
-              <div className="flex max-w-[640px] flex-col gap-1">
-                <motion.div
-                  initial={false}
-                  animate={{
-                    height: isDescriptionExpanded
-                      ? (measureSize.height ?? descriptionSize.height)
-                      : (descriptionSize.height ?? "3rem"),
-                  }}
-                  transition={{
-                    duration: needsTruncation ? 0.15 : 0,
-                    ease: [0.165, 0.84, 0.44, 1],
-                  }}
-                  className="overflow-hidden"
-                >
-                  <div
-                    ref={descriptionRef}
-                    className={cn(
-                      "text-lg text-f1-foreground-secondary",
-                      !isDescriptionExpanded && "line-clamp-2"
-                    )}
-                  >
-                    {description}
-                  </div>
-                  <div
-                    ref={measureRef}
-                    className="invisible text-lg text-f1-foreground-secondary"
-                    aria-hidden="true"
-                  >
-                    {description}
-                  </div>
-                </motion.div>
-                {(needsTruncation || isDescriptionExpanded) && (
-                  <button
-                    onClick={() =>
-                      setIsDescriptionExpanded(!isDescriptionExpanded)
-                    }
-                    className="relative w-fit font-medium text-f1-foreground after:absolute after:-bottom-0.5 after:left-0 after:right-0 after:h-[1.5px] after:bg-f1-border after:transition-all after:content-[''] hover:after:bg-f1-border-hover"
-                  >
-                    {isDescriptionExpanded
-                      ? translations.actions.showLess
-                      : translations.actions.showAll}
-                  </button>
-                )}
-              </div>
-            )}
+            {description && <Description description={description} />}
           </div>
         </div>
 
@@ -281,7 +211,7 @@ export function BaseHeader({
           ))}
 
           {visibleOtherActions.length > 0 && (
-            <div className="w-full">
+            <div className="w-full [&>*]:w-full">
               <MobileDropdown items={visibleOtherActions} />
             </div>
           )}

@@ -1,9 +1,3 @@
-import { Icon } from "../../components/Utilities/Icon"
-import { ChevronDown } from "../../icons/app"
-import { useI18n } from "../../lib/i18n-provider"
-import { cn, focusRing } from "../../lib/utils"
-import { Popover, PopoverContent, PopoverTrigger } from "../popover"
-import { Skeleton } from "../skeleton"
 import { motion } from "framer-motion"
 import {
   type ReactNode,
@@ -14,6 +8,12 @@ import {
   useState,
 } from "react"
 import { useResizeObserver } from "usehooks-ts"
+import { Icon } from "../../components/Utilities/Icon"
+import { ChevronDown } from "../../icons/app"
+import { useI18n } from "../../lib/i18n-provider"
+import { cn, focusRing } from "../../lib/utils"
+import { Popover, PopoverContent, PopoverTrigger } from "../popover"
+import { Skeleton } from "../skeleton"
 
 const IconMotion = motion(Icon)
 

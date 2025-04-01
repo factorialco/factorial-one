@@ -15,12 +15,19 @@ import {
   DropdownMenuTrigger,
 } from "@/ui/dropdown-menu"
 import { Skeleton } from "@/ui/skeleton"
-import { ComponentProps, ReactElement, useCallback, useState } from "react"
+import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
+import {
+  ComponentProps,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from "react"
 
 type ProductUpdate = {
   title: string
   href: string
-  imageURL: string
+  mediaUrl: string
   updated: string
   unread?: boolean
   onClick?: ComponentProps<typeof DropdownMenuItem>["onClick"]
@@ -32,6 +39,7 @@ type ProductUpdatesProp = {
   updatesPageUrl: string
   getUpdates: () => Promise<Array<ProductUpdate>>
   hasUnread?: boolean
+  currentModule: string
   onOpenChange?: ComponentProps<typeof DropdownMenu>["onOpenChange"]
   onHeaderClick?: ComponentProps<typeof DropdownMenuTrigger>["onClick"]
   onItemClick?: ComponentProps<typeof DropdownMenuItem>["onClick"]
@@ -48,6 +56,7 @@ type ProductUpdatesProp = {
 }
 
 const ProductUpdates = ({
+  currentModule,
   label,
   moreUpdatesLabel,
   getUpdates,
@@ -62,6 +71,12 @@ const ProductUpdates = ({
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
   const [featuredUpdate, ...restUpdates] = updates ?? []
+
+  useEffect(() => {
+    setUpdates(null)
+    setState("idle")
+  }, [currentModule])
+
   const invokeGetUpdates = useCallback(async () => {
     try {
       setState("fetching")
@@ -110,22 +125,29 @@ const ProductUpdates = ({
           )}
           {state === "idle" && updates !== null && updates.length > 0 && (
             <>
-              <FeaturedDropdownItem {...featuredUpdate} onClick={onItemClick} />
-              {updates.length > 1 && (
-                <>
-                  <DropdownMenuSeparator />
-                  <p className="text-balance pb-1 pl-3 pr-5 pt-3 text-sm font-medium text-f1-foreground-secondary">
-                    {moreUpdatesLabel}
-                  </p>
-                  {restUpdates.map((update, index) => (
-                    <DropdownItem
-                      key={index}
-                      {...update}
-                      onClick={onItemClick}
-                    />
-                  ))}
-                </>
-              )}
+              <div className="px-1">
+                <FeaturedDropdownItem
+                  {...featuredUpdate}
+                  onClick={onItemClick}
+                />
+                {updates.length > 1 && (
+                  <>
+                    <div className="pb-1">
+                      <DropdownMenuSeparator />
+                      <p className="text-balance px-3 pb-2 pt-3 text-sm font-medium text-f1-foreground-secondary">
+                        {moreUpdatesLabel}
+                      </p>
+                      {restUpdates.map((update, index) => (
+                        <DropdownItem
+                          key={index}
+                          {...update}
+                          onClick={onItemClick}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
             </>
           )}
           {state === "error" && (
@@ -149,42 +171,63 @@ const ProductUpdates = ({
 const FeaturedDropdownItem = ({
   title,
   href,
-  imageURL,
+  mediaUrl,
   unread,
   updated,
   onClick,
 }: ProductUpdate) => {
-  const itemClass = "flex flex-col items-stretch gap-3 w-full"
+  const itemClass = "flex flex-col items-stretch w-full"
+
+  const isVideo = mediaUrl?.includes(".mp4")
+
   return (
-    <DropdownMenuItem asChild onClick={onClick}>
+    <DropdownMenuPrimitive.Item
+      onClick={onClick}
+      asChild
+      className="relative mb-2 flex cursor-default select-none items-center rounded-md px-1 text-base font-medium outline-none transition-colors after:absolute after:inset-x-1 after:inset-y-0 after:h-full after:rounded after:bg-f1-background-hover after:opacity-0 after:transition-opacity after:duration-75 after:content-[''] hover:cursor-pointer hover:after:opacity-100 focus:after:opacity-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+    >
       <Link
         href={href}
         target="_blank"
         referrerPolicy="no-referrer"
         rel="noopener noreferrer"
-        className={cn(
-          itemClass,
-          "text-f1-foreground no-underline hover:cursor-pointer"
-        )}
+        className={cn(itemClass, "text-f1-foreground no-underline")}
       >
-        <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
-          <Image
-            fetchPriority="high"
-            src={imageURL}
-            className="block aspect-video w-full bg-f1-background-secondary object-contain object-center"
-          />
+        <div className="px-1 pt-1">
+          {isVideo ? (
+            <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
+              <video
+                src={mediaUrl}
+                className="block aspect-video w-full bg-f1-background-secondary object-contain object-center"
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            </div>
+          ) : (
+            <div className="overflow-clip rounded border border-solid border-f1-border-secondary">
+              <Image
+                fetchPriority="high"
+                src={mediaUrl}
+                className="block aspect-video w-full bg-f1-background-secondary object-contain object-center"
+              />
+            </div>
+          )}
         </div>
-        <div className="flex items-start gap-4">
-          <div className="flex-1 *:text-base">
-            <h3 className="font-medium">{title}</h3>
-            <p className="font-normal text-f1-foreground-secondary">
-              {updated}
-            </p>
+        <div className="py-2 pl-2 pr-4">
+          <div className="flex items-start gap-4">
+            <div className="flex-1 *:text-base">
+              <h3 className="font-medium">{title}</h3>
+              <p className="font-normal text-f1-foreground-secondary">
+                {updated}
+              </p>
+            </div>
+            {unread && <UnreadDot className="mt-1.5" />}
           </div>
-          {unread && <UnreadDot className="mt-1.5" />}
         </div>
       </Link>
-    </DropdownMenuItem>
+    </DropdownMenuPrimitive.Item>
   )
 }
 

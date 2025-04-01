@@ -122,6 +122,7 @@ export function ClockInControls({
     locations.length &&
     !locationSelectorDisabled &&
     canShowLocation
+
   // const canSelectProject =
   //   showLocationAndProjectSelectors &&
   //   !projectSelectorDisabled &&
