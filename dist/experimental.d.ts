@@ -2090,6 +2090,7 @@ declare type Props_16<Id extends string | number = string | number> = {
 declare type Props_17<Id extends string | number = string | number> = {
     items: Omit<Props_18<Id>, "onClick">[];
     minSize?: number;
+    gap?: number;
     onClickItem?: (id: Id) => void;
 };
 
@@ -2858,7 +2859,7 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, minSize, onClickItem }: Props_17): JSX_2.Element;
+export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, }: Props_17): JSX_2.Element;
 
 export declare type WidgetSimpleListProps = Props_17;
 

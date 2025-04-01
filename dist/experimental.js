@@ -29417,14 +29417,19 @@ function ip({
     ] })
   ] });
 }
-function UR({ items: e, minSize: n = 184, onClickItem: i }) {
+function UR({
+  items: e,
+  gap: n,
+  minSize: i = 184,
+  onClickItem: t
+}) {
   return /* @__PURE__ */ o(
     ll,
     {
       items: e,
-      gap: 4,
-      renderListItem: (t) => /* @__PURE__ */ o(ip, { ...t, onClick: i }),
-      minSize: n
+      gap: n,
+      renderListItem: (a) => /* @__PURE__ */ o(ip, { ...a, onClick: t }),
+      minSize: i
     }
   );
 }
