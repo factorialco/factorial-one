@@ -16,6 +16,8 @@ export const ActionsDropdown = <
   item: Record
   actions: ItemActions
 }) => {
+  const [open, setOpen] = useState(false)
+
   if (!actions || actions.length === 0) return null
 
   const items = filterItemActions(actions, item)
@@ -24,11 +26,10 @@ export const ActionsDropdown = <
     return null
   }
 
-  const [open, setOpen] = useState(false)
-
   return (
     <Dropdown items={items} open={open} onOpenChange={setOpen}>
       <button
+        title="Actions"
         className={cn(
           "flex h-8 w-8 items-center justify-center rounded text-f1-icon-bold hover:bg-f1-background-secondary",
           open && "bg-f1-background-secondary",
@@ -36,6 +37,7 @@ export const ActionsDropdown = <
         )}
       >
         <Icon icon={Ellipsis} />
+        <label className="sr-only">Actions</label>
       </button>
     </Dropdown>
   )
