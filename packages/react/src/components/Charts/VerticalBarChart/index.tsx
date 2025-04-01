@@ -49,6 +49,7 @@ const getMaxValueByKey = (
 export type VerticalBarChartProps<K extends ChartConfig = ChartConfig> =
   ChartPropsBase<K> & {
     label?: boolean
+    hideGrid?: boolean
   }
 
 const _VBarChart = <K extends ChartConfig>(
@@ -59,6 +60,7 @@ const _VBarChart = <K extends ChartConfig>(
     yAxis,
     label = false,
     aspect,
+    hideGrid = false,
   }: VerticalBarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -94,11 +96,13 @@ const _VBarChart = <K extends ChartConfig>(
             <ChartTooltipContent yAxisFormatter={yAxis?.tickFormatter} />
           }
         />
-        <CartesianGrid
+        {!hideGrid && (
+          <CartesianGrid
           {...cartesianGridProps()}
           vertical={true}
           horizontal={false}
         />
+        )}
         <XAxis {...xAxisProps} hide={xAxis?.hide} />
         <YAxis
           {...yAxisProps}
