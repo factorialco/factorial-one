@@ -7,16 +7,22 @@ import {
 type Props<Id extends string | number = string | number> = {
   items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[]
   minSize?: number
+  gap?: number
   onClickItem?: (id: Id) => void
 }
 
 export type WidgetSimpleListProps = Props
 
-export function WidgetSimpleList({ items, minSize = 184, onClickItem }: Props) {
+export function WidgetSimpleList({
+  items,
+  gap,
+  minSize = 184,
+  onClickItem,
+}: Props) {
   return (
     <VerticalOverflowList
       items={items}
-      gap={4}
+      gap={gap}
       renderListItem={(item: (typeof items)[number]) => (
         <WidgetSimpleListItem {...item} onClick={onClickItem} />
       )}
