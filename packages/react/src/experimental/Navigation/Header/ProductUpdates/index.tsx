@@ -183,6 +183,7 @@ const FeaturedDropdownItem = ({
   return (
     <DropdownMenuPrimitive.Item
       onClick={onClick}
+      asChild
       className="relative mb-2 flex cursor-default select-none items-center rounded-md px-1 text-base font-medium outline-none transition-colors after:absolute after:inset-x-1 after:inset-y-0 after:h-full after:rounded after:bg-f1-background-hover after:opacity-0 after:transition-opacity after:duration-75 after:content-[''] hover:cursor-pointer hover:after:opacity-100 focus:after:opacity-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
     >
       <Link
