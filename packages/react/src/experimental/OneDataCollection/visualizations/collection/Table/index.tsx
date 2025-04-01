@@ -23,6 +23,16 @@ import {
 import { CollectionProps, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
+import { PropertyRendererType } from "../../../visualizations/property"
+
+// Define padding values for different property types
+const PROPERTY_TYPE_PADDINGS: Partial<Record<PropertyRendererType, number>> = {
+  avatarList: 8,
+  tag: 8,
+}
+
+// Default padding if not specified for a type
+const DEFAULT_CELL_PADDING = 12
 
 export type WithOptionalSorting<
   Record,
@@ -251,35 +261,47 @@ export const TableCollection = <
                     )}
                   </TableCell>
                 )}
-                {columns.map((column, cellIndex) => (
-                  <TableCell
-                    key={String(column.label)}
-                    firstCell={cellIndex === 0}
-                    href={itemHref}
-                    width={column.width}
-                    sticky={
-                      cellIndex < frozenColumnsLeft
-                        ? {
-                            left: columns
-                              .slice(0, Math.max(0, cellIndex))
-                              .reduce(
-                                (acc, column) => acc + (column.width ?? 0),
-                                checkColumnWidth
-                              ),
-                          }
-                        : undefined
-                    }
-                  >
-                    <div
-                      className={cn(
-                        column.align === "right" ? "justify-end" : "",
-                        "flex"
-                      )}
+                {columns.map((column, cellIndex) => {
+                  const renderedProperty = column.render(item)
+                  const propertyType =
+                    typeof renderedProperty === "object" &&
+                    renderedProperty !== null
+                      ? renderedProperty.type
+                      : "text"
+                  const padding =
+                    PROPERTY_TYPE_PADDINGS[propertyType] ?? DEFAULT_CELL_PADDING
+
+                  return (
+                    <TableCell
+                      key={String(column.label)}
+                      firstCell={cellIndex === 0}
+                      href={itemHref}
+                      width={column.width}
+                      padding={padding}
+                      sticky={
+                        cellIndex < frozenColumnsLeft
+                          ? {
+                              left: columns
+                                .slice(0, Math.max(0, cellIndex))
+                                .reduce(
+                                  (acc, column) => acc + (column.width ?? 0),
+                                  checkColumnWidth
+                                ),
+                            }
+                          : undefined
+                      }
                     >
-                      {renderCell(item, column)}
-                    </div>
-                  </TableCell>
-                ))}
+                      <div
+                        className={cn(
+                          column.align === "right" ? "justify-end" : "",
+                          "flex"
+                        )}
+                      >
+                        {renderCell(item, column)}
+                      </div>
+                    </TableCell>
+                  )
+                })}
                 {source.itemActions && (
                   <TableCell
                     key="actions"

@@ -30,6 +30,12 @@ interface TableCellProps {
    * @default undefined
    */
   sticky?: { left?: number; right?: never } | { left?: never; right?: number }
+
+  /**
+   * The padding of the cell
+   * @default 12
+   */
+  padding?: number
 }
 
 export function TableCell({
@@ -38,6 +44,7 @@ export function TableCell({
   width = "auto",
   firstCell = false,
   sticky,
+  padding = 12,
 }: TableCellProps) {
   const { isScrolled, isScrolledRight } = useTable()
   const { actions } = useI18n()
@@ -66,6 +73,8 @@ export function TableCell({
         minWidth: colWidth,
         left: stickyLeft,
         right: stickyRight,
+        paddingTop: padding,
+        paddingBottom: padding,
       }}
     >
       <AnimatePresence>

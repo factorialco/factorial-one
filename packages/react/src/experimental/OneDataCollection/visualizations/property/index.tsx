@@ -68,7 +68,7 @@ export const propertyRenderers = {
         }}
         size="xsmall"
       />
-      <span className="text-sm font-medium">
+      <span>
         {args.firstName} {args.lastName}
       </span>
     </div>
@@ -83,7 +83,7 @@ export const propertyRenderers = {
         }}
         size="xsmall"
       />
-      <span className="text-sm font-medium">{args.name}</span>
+      <span>{args.name}</span>
     </div>
   ),
   team: (args: { name: string; src?: string }) => (
@@ -96,7 +96,7 @@ export const propertyRenderers = {
         }}
         size="xsmall"
       />
-      <span className="text-sm font-medium">{args.name}</span>
+      <span>{args.name}</span>
     </div>
   ),
   tag: (args: { label: string; icon?: IconType }) => (
