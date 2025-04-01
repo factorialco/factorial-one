@@ -1,13 +1,16 @@
-import { IconType } from "@/components/exports"
-import { Dropdown } from "@/experimental/exports"
-import React from "react"
+import { Button, IconType } from "@/factorial-one"
+import * as Popover from "@radix-ui/react-popover"
+import { AnimatePresence, motion } from "framer-motion"
+import { useState } from "react"
+import screenfull from "screenfull"
 import { ToolbarButton } from "../ToolbarButton"
 
 interface ToolbarDropdownItem {
-  label: string
-  isActive?: boolean
-  onClick: () => void
   icon: IconType
+  label: string
+  onClick: () => void
+  isActive?: boolean
+  disabled?: boolean
   tooltip?: {
     label: string
     shortcut?: string[]
@@ -16,48 +19,88 @@ interface ToolbarDropdownItem {
 
 interface ToolbarDropdownProps {
   items: ToolbarDropdownItem[]
-  children: React.ReactNode
-  isFullscreen: boolean
-  disabled: boolean
-  tooltip?: {
+  disabled?: boolean
+  mode?: "light" | "dark"
+  position?: "top" | "bottom"
+  activator: {
     label: string
-    shortcut?: string[]
+    icon: IconType
   }
-  mode: "light" | "dark"
-}
-
-const convertItemsToDropdownItems = (items: ToolbarDropdownItem[]) => {
-  return items.map((item) => ({
-    label: item.label,
-    onClick: item.onClick,
-    icon: item.icon || undefined,
-    tooltip: item.tooltip,
-  }))
 }
 
 const ToolbarDropdown = ({
   items,
-  children,
-  isFullscreen,
-  disabled,
-  mode,
+  disabled = false,
+  activator,
+  mode = "light",
+  position = "top",
 }: ToolbarDropdownProps) => {
-  return isFullscreen ? (
-    items?.map((item) => (
-      <ToolbarButton
-        key={item.label}
-        onClick={item.onClick}
-        active={item.isActive || false}
-        label={item.label}
-        disabled={disabled}
-        icon={item.icon}
-        tooltip={item.tooltip}
-        mode={mode}
-      />
-    ))
-  ) : (
-    <Dropdown items={convertItemsToDropdownItems(items)}>{children}</Dropdown>
+  const [open, setOpen] = useState(false)
+
+  const handleItemClick = (onClick: () => void) => {
+    onClick()
+    setOpen(false)
+  }
+
+  return (
+    <Popover.Root open={open} modal={false} onOpenChange={setOpen}>
+      <Popover.Trigger asChild>
+        <Button
+          variant={open ? "neutral" : "ghost"}
+          size="md"
+          label={activator.label}
+          icon={activator.icon}
+          disabled={disabled}
+          hideLabel
+          round
+          type="button"
+        />
+      </Popover.Trigger>
+      <Popover.Portal
+        container={
+          screenfull.isFullscreen && screenfull.element
+            ? screenfull.element
+            : undefined
+        }
+      >
+        <Popover.Content
+          side={position}
+          align="end"
+          sideOffset={10}
+          collisionPadding={10}
+          style={{ zIndex: 1000 }}
+          alignOffset={-10}
+        >
+          <AnimatePresence>
+            {open && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 5 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 5 }}
+                transition={{ duration: 0.15 }}
+                className="flex w-40 flex-col overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm"
+              >
+                {items.map((item, index) => (
+                  <ToolbarButton
+                    key={`${item.label}-${index}`}
+                    onClick={() => handleItemClick(item.onClick)}
+                    active={item.isActive}
+                    label={item.label}
+                    disabled={disabled || !!item.disabled}
+                    icon={item.icon}
+                    tooltip={item.tooltip}
+                    mode={mode}
+                    showLabel
+                  />
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
   )
 }
 
 export { ToolbarDropdown }
+export type { ToolbarDropdownItem, ToolbarDropdownProps }

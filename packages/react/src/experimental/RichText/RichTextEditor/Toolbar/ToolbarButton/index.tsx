@@ -17,6 +17,7 @@ interface ToolbarButtonProps {
     shortcut?: ComponentProps<typeof Shortcut>["keys"]
   }
   mode: "light" | "dark"
+  showLabel?: boolean
 }
 
 const ToolbarButton = ({
@@ -27,6 +28,7 @@ const ToolbarButton = ({
   icon,
   tooltip,
   mode,
+  showLabel = false,
   ...props
 }: ToolbarButtonProps) => {
   const getIconColor = () => {
@@ -43,16 +45,18 @@ const ToolbarButton = ({
       size="md"
       onClick={onClick}
       className={cn(
-        "flex aspect-square items-center p-0 transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
+        "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
         active
           ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
           : "border-none hover:bg-f1-background-secondary-hover",
-        mode === "dark" && "bg-transparent text-f1-foreground-inverse"
+        mode === "dark" && "bg-transparent text-f1-foreground-inverse",
+        showLabel ? "w-full items-center justify-start px-2" : "p-0"
       )}
       disabled={disabled}
       aria-label={label}
     >
       <Icon icon={icon} className={getIconColor()} />
+      {showLabel && <span className="text-sm">{label}</span>}
     </Button>
   )
 

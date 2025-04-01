@@ -239,7 +239,6 @@ const Toolbar = ({
     <div className="flex flex-row items-center gap-0.5">
       <ToolbarDropdown
         mode={mode}
-        isFullscreen={isFullscreen}
         items={[
           {
             label: labels.left,
@@ -271,26 +270,17 @@ const Toolbar = ({
           },
         ]}
         disabled={disableButtons}
-      >
-        <Button
-          onClick={(e) => e.preventDefault()}
-          variant="ghost"
-          size="md"
-          label={getTextAlignLabel(editor)}
-          icon={getTextAlignIcon(editor)}
-          disabled={disableButtons}
-          hideLabel
-          round
-          type="button"
-        />
-      </ToolbarDropdown>
+        activator={{
+          label: getTextAlignLabel(editor),
+          icon: getTextAlignIcon(editor),
+        }}
+      />
       <ToolbarDivider hidden={!isFullscreen} mode={mode} />
 
       {renderButtons(listButtons)}
 
       <ToolbarDropdown
         mode={mode}
-        isFullscreen={isFullscreen}
         items={[
           {
             icon: Code,
@@ -324,18 +314,11 @@ const Toolbar = ({
           },
         ]}
         disabled={disableButtons}
-      >
-        <Button
-          variant="ghost"
-          size="md"
-          icon={Ellipsis}
-          disabled={disableButtons}
-          type="button"
-          hideLabel
-          round
-          label={labels.moreOptions}
-        />
-      </ToolbarDropdown>
+        activator={{
+          label: labels.moreOptions,
+          icon: Ellipsis,
+        }}
+      />
     </div>
   )
 
