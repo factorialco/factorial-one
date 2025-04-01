@@ -24,7 +24,6 @@ export function CelebrationAvatar({
   onReactionSelect,
   pickerRef,
 }: CelebrationAvatarProps) {
-  console.log({ src })
   return (
     <div
       className={cn(
