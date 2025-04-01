@@ -34,7 +34,7 @@ interface PalmTreeProps extends React.SVGProps<SVGSVGElement> {
 
 const PalmTreeAnimated = React.forwardRef<SVGSVGElement, PalmTreeProps>(
   ({ animate = "normal", ...props }, ref) => {
-  return (
+    return (
       <svg
         ref={ref}
         viewBox="0 0 24 24"

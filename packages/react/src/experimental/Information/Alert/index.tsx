@@ -1,8 +1,6 @@
 import { cva, type VariantProps } from "cva"
 import * as React from "react"
 
-import { Component } from "../../../lib/component"
-import { cn } from "../../../lib/utils"
 import {
   BookOpen,
   CircleCheck,
@@ -10,6 +8,8 @@ import {
   OctagonX,
   TriangleAlert,
 } from "lucide-react"
+import { Component } from "../../../lib/component"
+import { cn } from "../../../lib/utils"
 
 type Variants = "destructive" | "positive" | "warning" | "info"
 

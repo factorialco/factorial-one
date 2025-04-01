@@ -1,11 +1,11 @@
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
+import { AlertCircle, Warning } from "../../../../icons/app"
+import { cn } from "../../../../lib/utils"
 import { Avatar } from "../../Avatars/Avatar"
 import { AvatarList } from "../../Avatars/AvatarList"
 import { DotTag } from "../../Tags/DotTag"
 import { RawTag } from "../../Tags/RawTag"
 import { StatusTag } from "../../Tags/StatusTag"
-import { AlertCircle, Warning } from "../../../../icons/app"
-import { cn } from "../../../../lib/utils"
 import { MetadataItem, MetadataItemValue } from "./index"
 
 const DATE_ICON_STYLES: Record<

@@ -1,6 +1,6 @@
-import { Circle, Desktop } from "../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useMemo, useState } from "react"
+import { Circle, Desktop } from "../../icons/app"
 import {
   Select,
   SelectContent,
@@ -68,7 +68,7 @@ const meta = {
       { value: "system", label: "System" },
       ...Array.from({ length: 10 }, (_, i) => ({
         value: `option-${i}`,
-        label: `Option ${i}`,
+        label: `Option ${i} very long content`,
       })),
     ],
   },

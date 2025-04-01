@@ -1,6 +1,6 @@
 import { Icon } from "../../../components/Utilities/Icon"
-import { Avatar, DropdownItemObject } from "../../exports"
 import { cn } from "../../../lib/utils"
+import { Avatar, DropdownItemObject } from "../../exports"
 
 export const DropdownItemContent = ({ item }: { item: DropdownItemObject }) => (
   <>

@@ -18,7 +18,7 @@ type ActionType = {
   critical?: boolean
 }
 
-interface ActionBarProps {
+interface OneActionBarProps {
   /**
    * Whether the action bar is open
    */
@@ -46,13 +46,13 @@ interface ActionBarProps {
   onUnselect?: () => void
 }
 
-export const ActionBar = ({
+export const OneActionBar = ({
   isOpen,
   primaryActions,
   secondaryActions = [],
   selectedNumber = undefined,
   onUnselect,
-}: ActionBarProps) => {
+}: OneActionBarProps) => {
   const i18n = useI18n()
 
   const selectedText =

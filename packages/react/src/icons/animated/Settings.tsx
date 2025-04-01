@@ -23,7 +23,7 @@ interface SettingsProps extends React.SVGProps<SVGSVGElement> {
 
 const SettingsAnimated = React.forwardRef<SVGSVGElement, SettingsProps>(
   ({ animate = "normal", ...props }, ref) => {
-  return (
+    return (
       <svg
         ref={ref}
         viewBox="0 0 24 24"
@@ -50,7 +50,7 @@ const SettingsAnimated = React.forwardRef<SVGSVGElement, SettingsProps>(
           vectorEffect="non-scaling-stroke"
         />
       </svg>
-  )
+    )
   }
 )
 

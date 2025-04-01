@@ -1,11 +1,8 @@
+import { cva, type VariantProps } from "cva"
 import { Icon, type IconType } from "../../components/Utilities/Icon"
-import {
-  Avatar,
-  type AvatarVariant,
-} from "../Information/Avatars/Avatar"
 import { CrossedCircle } from "../../icons/app"
 import { cn, focusRing } from "../../lib/utils"
-import { cva, type VariantProps } from "cva"
+import { Avatar, type AvatarVariant } from "../Information/Avatars/Avatar"
 
 export const chipVariants = cva({
   base: "flex items-center gap-1 rounded-full border border-solid border-f1-border px-2 py-0.5 font-medium",

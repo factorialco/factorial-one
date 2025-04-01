@@ -1,5 +1,5 @@
-import { autoColor } from "../../../../components/Charts/utils/colors"
 import { forwardRef } from "react"
+import { autoColor } from "../../../../components/Charts/utils/colors"
 
 interface DualProgressBarProps {
   value: number

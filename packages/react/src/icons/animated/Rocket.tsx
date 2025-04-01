@@ -43,7 +43,7 @@ interface RocketProps extends React.SVGProps<SVGSVGElement> {
 
 const RocketAnimated = React.forwardRef<SVGSVGElement, RocketProps>(
   ({ animate = "normal", ...props }, ref) => {
-  return (
+    return (
       <svg
         ref={ref}
         viewBox="0 0 24 24"

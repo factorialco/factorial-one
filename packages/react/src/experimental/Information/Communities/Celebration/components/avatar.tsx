@@ -1,8 +1,8 @@
+import { RefObject } from "react"
+import { cn } from "../../../../../lib/utils"
 import { getAvatarColor } from "../../../Avatars/BaseAvatar/utils"
 import { PersonAvatar } from "../../../Avatars/exports"
 import { Picker } from "../../../Reactions/Picker"
-import { cn } from "../../../../../lib/utils"
-import { RefObject } from "react"
 import { BACKGROUND_COLORS } from "../types"
 
 type CelebrationAvatarProps = {

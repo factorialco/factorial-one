@@ -1,5 +1,5 @@
-import { Ai } from "../../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import { Ai } from "../../../../icons/app"
 
 import { RawTag } from "./index"
 

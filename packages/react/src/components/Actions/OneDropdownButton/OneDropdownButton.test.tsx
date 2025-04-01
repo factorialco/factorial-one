@@ -1,6 +1,6 @@
-import { IconType } from "../../Utilities/Icon"
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { IconType } from "../../Utilities/Icon"
 
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { OneDropdownButton } from "./OneDropdownButton"
