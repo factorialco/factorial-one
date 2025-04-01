@@ -15,7 +15,7 @@ const meta: Meta<WidgetInboxListProps> = {
   },
   decorators: [
     (Story) => (
-      <div className="w-[348px]">
+      <div className="h-[320px] w-[348px]">
         <Story />
       </div>
     ),
@@ -27,7 +27,7 @@ type Story = StoryObj<WidgetInboxListProps>
 
 export const Default: Story = {
   args: {
-    items: new Array(5).fill(null).map(() => ({
+    items: new Array(12).fill(null).map(() => ({
       ...(DefaulWidgetInboxListItemStory.args as WidgetInboxListItemProps),
     })),
     onClickItem: () => {},
@@ -37,7 +37,7 @@ export const Default: Story = {
 export const WithLongTitles: Story = {
   args: {
     ...Default.args,
-    items: new Array(5).fill(null).map(() => ({
+    items: new Array(12).fill(null).map(() => ({
       ...(WithLongTitleWidgetInboxListItemStory.args as WidgetInboxListItemProps),
     })),
   },

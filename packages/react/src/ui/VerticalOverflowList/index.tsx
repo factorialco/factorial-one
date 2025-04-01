@@ -11,9 +11,8 @@ import { cn } from "../../lib/utils"
  * @param gap - The gap between items
  * @returns The overflow calculation state
  */
-function useOverflowCalculation<T>(items: T[], gap: number, maxSize?: number) {
+function useOverflowCalculation<T>(items: T[], gap: number) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const overflowButtonRef = useRef<HTMLDivElement>(null)
   const measurementContainerRef = useRef<HTMLDivElement>(null)
 
   // Combined state for visible and overflow items
@@ -55,21 +54,6 @@ function useOverflowCalculation<T>(items: T[], gap: number, maxSize?: number) {
     return sizes
   }, [])
 
-  // Calculate the total size of all items including gaps
-  const calculateTotalItemsSize = useCallback(
-    (itemSizes: number[]) => {
-      let totalSize = 0
-
-      for (let i = 0; i < itemSizes.length; i++) {
-        totalSize += itemSizes[i]
-        totalSize = addGapBetweenItems(totalSize, i, itemSizes.length)
-      }
-
-      return totalSize
-    },
-    [addGapBetweenItems]
-  )
-
   // Calculate how many items can fit in the available size
   const calculateVisibleItemCount = useCallback(
     (itemSizes: number[], availableSize: number) => {
@@ -88,11 +72,7 @@ function useOverflowCalculation<T>(items: T[], gap: number, maxSize?: number) {
           itemSizes.length
         )
         visibleCount++
-
-        console.log({ visibleCount, accumulatedSize })
       }
-
-      console.log({ visibleCount, availableSize, accumulatedSize })
 
       // Return the actual count without enforcing a minimum of 1
       return visibleCount
@@ -105,30 +85,11 @@ function useOverflowCalculation<T>(items: T[], gap: number, maxSize?: number) {
     if (!containerRef.current || items.length === 0) return
 
     const currentContainerSize = containerRef.current.clientHeight
-    const overflowButtonSize = overflowButtonRef.current?.offsetHeight ?? 0
     const itemSizes = measureItemSizes()
 
-    // Check if all items can fit without an overflow button
-    const totalItemsSize = calculateTotalItemsSize(itemSizes)
-    const allItemsFit = totalItemsSize <= currentContainerSize
-
-    if (allItemsFit) {
-      setItemsState({
-        visibleItems: items,
-        overflowItems: [],
-      })
-      return
-    }
-
     // Calculate how many items fit with an overflow button
-    const availableSize =
-      maxSize ?? currentContainerSize - overflowButtonSize - gap
-    console.log({
-      currentContainerSize,
-      overflowButtonSize,
-      gap,
-      availableSize,
-    })
+    const availableSize = currentContainerSize - gap
+
     const visibleCount = calculateVisibleItemCount(itemSizes, availableSize)
 
     // If no items can fit, put all items in the overflow
@@ -143,13 +104,7 @@ function useOverflowCalculation<T>(items: T[], gap: number, maxSize?: number) {
         overflowItems: items.slice(visibleCount),
       })
     }
-  }, [
-    items,
-    gap,
-    measureItemSizes,
-    calculateTotalItemsSize,
-    calculateVisibleItemCount,
-  ])
+  }, [items, gap, measureItemSizes, calculateVisibleItemCount])
 
   // Initial calculation and initialization
   useEffect(() => {
@@ -158,7 +113,6 @@ function useOverflowCalculation<T>(items: T[], gap: number, maxSize?: number) {
 
   return {
     containerRef,
-    overflowButtonRef,
     measurementContainerRef,
     visibleItems: itemsState.visibleItems,
     overflowItems: itemsState.overflowItems,
@@ -177,12 +131,6 @@ interface OverflowListProps<T> {
    */
   renderListItem: (item: T, index: number, isVisible?: boolean) => ReactNode
 
-  /**
-   * What to render as the overflow indicator
-   * If not provided, the default overflow indicator will be displayed
-   */
-  renderOverflowIndicator?: (count: number) => ReactNode
-
   // Component styling
   /**
    * Additional styling for the container
@@ -200,30 +148,17 @@ interface OverflowListProps<T> {
    * @default 0
    */
   minSize: number
-
-  /**
-   * The maximum size of the container
-   * @default Infinity
-   */
-  maxSize?: number
 }
 
 const VerticalOverflowList = function VerticalOverflowList<T>({
   items,
   renderListItem,
-  renderOverflowIndicator,
   className,
   gap = 0,
   minSize,
-  maxSize,
 }: OverflowListProps<T>) {
-  const {
-    containerRef,
-    measurementContainerRef,
-    overflowButtonRef,
-    visibleItems,
-    overflowItems,
-  } = useOverflowCalculation(items, gap, maxSize)
+  const { containerRef, measurementContainerRef, visibleItems } =
+    useOverflowCalculation(items, gap)
 
   return (
     <div
@@ -231,7 +166,6 @@ const VerticalOverflowList = function VerticalOverflowList<T>({
       className={cn("relative flex h-full flex-col", className)}
       style={{
         minHeight: `${minSize}px`,
-        maxHeight: maxSize ? `${maxSize}px` : undefined,
       }}
     >
       <div
@@ -262,10 +196,6 @@ const VerticalOverflowList = function VerticalOverflowList<T>({
             {renderListItem(item, index, true)}
           </div>
         ))}
-      </div>
-
-      <div ref={overflowButtonRef}>
-        {renderOverflowIndicator?.(overflowItems.length)}
       </div>
     </div>
   )

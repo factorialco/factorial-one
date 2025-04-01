@@ -1,7 +1,5 @@
-import { ButtonInternal } from "@/components/Actions/Button/internal"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useState } from "react"
-import { Preset } from "../../experimental/OnePreset"
 import { VerticalOverflowList } from "./index"
 
 const meta = {
@@ -16,10 +14,6 @@ const meta = {
       description:
         "What to render as a list item (items outside of the overflow list).",
     },
-    renderOverflowIndicator: {
-      description:
-        "What to render as the overflow indicator. If not provided, the default overflow indicator will be displayed.",
-    },
     className: {
       description: "Additional styling for the container.",
     },
@@ -29,31 +23,31 @@ const meta = {
   },
   decorators: [
     (Story) => {
-      const [containerWidth, setContainerWidth] = useState(640)
+      const [containerSize, setContainerSize] = useState(220)
       return (
         <>
-          <div className="w-full gap-4">
+          <div className="w-[320px] gap-4">
             <div
               className="rounded border border-solid border-f1-border-secondary p-3"
-              style={{ width: `${containerWidth}px` }}
+              style={{ height: `${containerSize}px` }}
             >
               <Story />
             </div>
           </div>
           <div className="flex w-32 flex-col gap-1 pt-4">
             <label
-              htmlFor="container-width"
+              htmlFor="container-size"
               className="text-sm font-medium text-f1-foreground-secondary"
             >
-              Test width
+              Test size
             </label>
             <input
-              id="container-width"
+              id="container-size"
               type="range"
               min="180"
               max="1000"
-              value={containerWidth}
-              onChange={(e) => setContainerWidth(Number(e.target.value))}
+              value={containerSize}
+              onChange={(e) => setContainerSize(Number(e.target.value))}
             />
           </div>
         </>
@@ -119,6 +113,7 @@ export const Default: Story = {
         dueDate: "2025-12-20",
       },
     ],
+    minSize: 20,
     renderListItem: (item) => {
       const task = item as Task
       return (
@@ -129,78 +124,6 @@ export const Default: Story = {
     },
   },
   render: (args) => {
-    return (
-      <div className="w-full">
-        <VerticalOverflowList {...args} />
-      </div>
-    )
-  },
-}
-
-interface PresetItem {
-  id: number
-  name: string
-  number?: number
-}
-
-export const Presets: Story = {
-  args: {
-    items: [
-      {
-        id: 1,
-        name: "Draft",
-        number: 10,
-      },
-      {
-        id: 2,
-        name: "Pending",
-        number: 4,
-      },
-      {
-        id: 3,
-        name: "Ordered",
-        number: 8,
-      },
-      {
-        id: 4,
-        name: "Partial",
-        number: 12,
-      },
-      {
-        id: 5,
-        name: "Recieved",
-        number: 21,
-      },
-      {
-        id: 6,
-        name: "Closed",
-        number: 15,
-      },
-      {
-        id: 7,
-        name: "Deleted",
-        number: 3,
-      },
-    ],
-    renderListItem: (item) => {
-      const preset = item as PresetItem
-      return <Preset label={preset.name} number={preset.number} />
-    },
-  },
-  render: (args) => {
-    return (
-      <div className="w-full">
-        <VerticalOverflowList {...args} />
-      </div>
-    )
-  },
-}
-
-export const WithCustomOverflowIndicator: Story = {
-  args: {
-    ...Presets.args,
-    renderOverflowIndicator: () => (
-      <ButtonInternal label="Action" variant="ghost" size="sm" />
-    ),
+    return <VerticalOverflowList {...args} />
   },
 }
