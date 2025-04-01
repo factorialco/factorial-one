@@ -1,6 +1,6 @@
 import { Ellipsis } from "@/icons/app"
 import { Button } from "../../../components/Actions/Button"
-import { Dropdown } from "../../../experimental/Navigation/Dropdown"
+import { Dropdown } from "../../Navigation/Dropdown"
 import {
   PrimaryActionsDefinition,
   SecondaryActionsDefinition,
