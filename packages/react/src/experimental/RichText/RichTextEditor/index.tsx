@@ -366,12 +366,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
 
           <EditorBubbleMenu
             editor={editor}
-            onEnhanceWithAI={handleEnhanceWithAI}
-            isLoadingEnhance={isLoadingEnhance}
-            enhanceConfig={enhanceConfig}
             disableButtons={disableAllButtons}
             toolbarLabels={toolbarLabels}
-            setLastIntent={setLastIntent}
           />
         </div>
         {isLoadingEnhance && (

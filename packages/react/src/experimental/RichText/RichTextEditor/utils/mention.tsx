@@ -46,7 +46,7 @@ function configureMention(
             rel: "noopener noreferrer",
             target: "_blank",
           },
-          `@${node.attrs.label}`,
+          `${node.attrs.label}`,
         ]
       },
       suggestion: Suggestion(

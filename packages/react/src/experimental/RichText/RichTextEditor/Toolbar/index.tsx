@@ -61,10 +61,10 @@ const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
 
 interface ToolbarProps {
   editor: Editor
-  isFullscreen: boolean
+  isFullscreen?: boolean
   disableButtons: boolean
   onClose?: () => void
-  animationComplete: boolean
+  animationComplete?: boolean
   labels: toolbarLabels
   mode?: "light" | "dark"
 }
@@ -82,10 +82,10 @@ interface ButtonConfig {
 
 const Toolbar = ({
   editor,
-  isFullscreen,
+  isFullscreen = false,
   disableButtons,
   onClose,
-  animationComplete,
+  animationComplete = true,
   labels,
   mode = "light",
 }: ToolbarProps) => {

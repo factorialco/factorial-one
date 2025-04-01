@@ -1,49 +1,25 @@
-import { Icon } from "@/factorial-one"
 import { Link } from "@/icons/app"
-import { cn } from "@/lib/utils"
-import { Button as ButtonUI } from "@/ui/button"
 import * as Popover from "@radix-ui/react-popover"
 import { BubbleMenu, Editor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import screenfull from "screenfull"
-import { EnhanceActivator } from "../Enhance"
-import { enhanceConfig, toolbarLabels } from "../utils/types"
+import { Toolbar, ToolbarButton, ToolbarDivider } from "../Toolbar"
+import { toolbarLabels } from "../utils/types"
 import { LinkPopup } from "./LinkPopup"
 
 interface EditorBubbleMenuProps {
   editor: Editor
-  onEnhanceWithAI: (
-    selectedIntent?: string,
-    customIntent?: string
-  ) => Promise<void>
-  isLoadingEnhance: boolean
   disableButtons: boolean
-  enhanceConfig: enhanceConfig | undefined
-  setLastIntent: (
-    lastIntent: {
-      selectedIntent?: string
-      customIntent?: string
-    } | null
-  ) => void
   toolbarLabels: toolbarLabels
 }
 
 const EditorBubbleMenu = ({
   editor,
-  onEnhanceWithAI,
-  isLoadingEnhance,
   disableButtons,
-  enhanceConfig,
-  setLastIntent,
   toolbarLabels,
 }: EditorBubbleMenuProps) => {
   const [openLinkPopover, setOpenLinkPopover] = useState(false)
-
-  const handleTriggerClick = () => {
-    if (disableButtons) return
-    setOpenLinkPopover((prev) => !prev)
-  }
 
   return (
     <BubbleMenu
@@ -57,42 +33,27 @@ const EditorBubbleMenu = ({
       }}
       editor={editor}
     >
-      <div className="z-50 flex flex-row items-center gap-1 rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
+      <div className="z-50 flex w-max flex-row items-center rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
         <Popover.Root open={openLinkPopover} onOpenChange={setOpenLinkPopover}>
           <Popover.Trigger asChild>
-            <ButtonUI
-              variant="outline"
-              size="md"
-              onClick={handleTriggerClick}
-              className={cn(
-                "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
-                editor.isActive("link")
-                  ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
-                  : "hover:bg-f1-background-secondary-hover"
-              )}
-              disabled={disableButtons}
-              aria-label="Link"
-            >
-              <Icon
+            <div>
+              <ToolbarButton
+                active={editor.isActive("link") || openLinkPopover}
+                label={toolbarLabels.linkLabel}
                 icon={Link}
-                className={
-                  editor.isActive("link")
-                    ? "text-f1-icon-selected"
-                    : "text-f1-foreground"
-                }
+                disabled={disableButtons}
+                onClick={() => setOpenLinkPopover((prev) => !prev)}
+                tooltip={undefined}
+                mode="light"
               />
-
-              <p
-                className={
-                  editor.isActive("link")
-                    ? "text-f1-icon-selected"
-                    : "text-f1-foreground"
-                }
-              >
-                {toolbarLabels.linkLabel}
-              </p>
-            </ButtonUI>
+            </div>
           </Popover.Trigger>
+          <ToolbarDivider />
+          <Toolbar
+            labels={toolbarLabels}
+            editor={editor}
+            disableButtons={disableButtons}
+          />
           <Popover.Portal
             container={
               screenfull.isFullscreen && screenfull.element
@@ -101,9 +62,10 @@ const EditorBubbleMenu = ({
             }
           >
             <Popover.Content
-              side="bottom"
+              side="top"
               align="start"
               sideOffset={15}
+              alignOffset={-5}
               collisionPadding={10}
             >
               <AnimatePresence>
@@ -118,7 +80,6 @@ const EditorBubbleMenu = ({
                     <LinkPopup
                       editor={editor}
                       linkPlaceholder={toolbarLabels.linkPlaceholder}
-                      setOpenLinkPopover={setOpenLinkPopover}
                     />
                   </motion.div>
                 )}
@@ -126,17 +87,6 @@ const EditorBubbleMenu = ({
             </Popover.Content>
           </Popover.Portal>
         </Popover.Root>
-
-        {enhanceConfig && (
-          <EnhanceActivator
-            editor={editor}
-            onEnhanceWithAI={onEnhanceWithAI}
-            isLoadingEnhance={isLoadingEnhance}
-            enhanceConfig={enhanceConfig}
-            disableButtons={disableButtons}
-            setLastIntent={setLastIntent}
-          />
-        )}
       </div>
     </BubbleMenu>
   )

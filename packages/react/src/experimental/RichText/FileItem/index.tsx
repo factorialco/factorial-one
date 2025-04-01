@@ -1,6 +1,6 @@
-import { Button } from "@/components/Actions/Button"
+import { Icon } from "@/components/Utilities/Icon"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { Cross } from "@/icons/app"
+import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { getFileTypeInfo } from "./utils"
 
@@ -24,16 +24,15 @@ const FileItem = ({ file, onRemoveFile, disabled }: FileItemProps) => {
         >
           {file.name}
         </p>
-        <Button
-          variant="ghost"
-          icon={Cross}
-          hideLabel
-          round
-          label="Delete"
-          onClick={onRemoveFile}
-          type="button"
-          size="sm"
-          disabled={disabled}
+
+        <Icon
+          size="md"
+          icon={CrossedCircle}
+          className={cn(
+            "cursor-pointer text-f1-foreground-secondary",
+            disabled ? "cursor-not-allowed" : "hover:text-f1-foreground"
+          )}
+          onClick={disabled ? undefined : onRemoveFile}
         />
       </div>
     </Tooltip>
