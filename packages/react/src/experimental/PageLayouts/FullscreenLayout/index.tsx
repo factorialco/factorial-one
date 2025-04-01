@@ -1,17 +1,21 @@
-import React, { forwardRef } from "react"
+import { forwardRef, ReactNode } from "react"
+import { LayoutProvider } from "../LayoutProvider"
 
-export type StandardLayoutProps = {
-  children: React.ReactNode
+export type FullscreenLayoutProps = {
+  children: ReactNode
 }
 
-export const FullscreenLayout = forwardRef<HTMLDivElement, StandardLayoutProps>(
-  ({ children, ...props }, ref) => {
-    return (
+export const FullscreenLayout = forwardRef<
+  HTMLDivElement,
+  FullscreenLayoutProps
+>(({ children, ...props }, ref) => {
+  return (
+    <LayoutProvider layout="fullscreen">
       <div ref={ref} {...props} className="relative flex flex-1 [&>div]:flex-1">
         {children}
       </div>
-    )
-  }
-)
+    </LayoutProvider>
+  )
+})
 
 FullscreenLayout.displayName = "FullscreenLayout"
