@@ -10,6 +10,7 @@ import TextAlign from "@tiptap/extension-text-align"
 import TextStyle from "@tiptap/extension-text-style"
 import Typography from "@tiptap/extension-typography"
 import Underline from "@tiptap/extension-underline"
+import { Extension } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import { configureMention } from "./mention"
 import { PersistSelection } from "./persistSelection"
@@ -22,6 +23,22 @@ interface ExtensionsConfigurationProps {
   placeholder: string
   maxCharacters?: number
 }
+
+const Accessibility = Extension.create({
+  name: "accessibility",
+  addOptions() {
+    return {
+      label: "Rich text editor",
+    }
+  },
+  onTransaction() {
+    this.editor.view.dom.setAttribute("aria-label", this.options.label)
+  },
+
+  onCreate() {
+    this.editor.view.dom.setAttribute("aria-label", this.options.label)
+  },
+})
 
 const ExtensionsConfiguration = ({
   mentionsConfig,
@@ -59,6 +76,7 @@ const ExtensionsConfiguration = ({
         )
       : []),
     PersistSelection,
+    Accessibility.configure({ label: placeholder || "Rich text editor" }),
   ]
 }
 
