@@ -1,6 +1,7 @@
 import { Calendar } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
-import { EnhancementOption, FileType, RichTextEditor } from "."
+import { EnhancementOption, RichTextEditor } from "."
+import { FILE_TYPES } from "./utils/constants"
 
 const meta = {
   component: RichTextEditor,
@@ -132,13 +133,7 @@ export const Default: Story = {
     filesConfig: {
       onFiles: (files) => console.log(files),
       multipleFiles: true,
-      acceptedFileType: [
-        FileType.IMAGE,
-        FileType.VIDEO,
-        FileType.PDF,
-        FileType.DOC,
-        FileType.EXCEL,
-      ],
+      acceptedFileType: [FILE_TYPES.IMAGE, FILE_TYPES.VIDEO, FILE_TYPES.PDF],
     },
     primaryAction: {
       action: {

@@ -52,7 +52,7 @@ const Footer = ({
   toolbarLabels,
   disableButtons,
 }: FooterProps) => {
-  const [isToolbarOpen, setIsToolbarOpen] = useState(true)
+  const [isToolbarOpen, setIsToolbarOpen] = useState(false)
   const [toolbarAnimationComplete, setToolbarAnimationComplete] =
     useState(false)
   const containerRef = useRef<HTMLDivElement>(null)

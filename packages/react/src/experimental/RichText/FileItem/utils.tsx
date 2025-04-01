@@ -1,6 +1,4 @@
-import { keys } from "lodash"
-
-import { find } from "lodash"
+import { find, keys } from "lodash"
 
 type FileTypeInfo = {
   type: string

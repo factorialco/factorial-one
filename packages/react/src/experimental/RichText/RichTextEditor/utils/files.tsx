@@ -1,4 +1,5 @@
-import { FileType, filesConfig } from "./types"
+import { FILE_TYPES } from "./constants"
+import { filesConfig } from "./types"
 
 const handleAddFiles = (
   newFiles: File[],
@@ -39,29 +40,29 @@ const getAcceptFileTypeString = (
     return filesConfig.acceptedFileType
       .map((type) => {
         switch (type) {
-          case FileType.IMAGE:
+          case FILE_TYPES.IMAGE:
             return "image/*"
-          case FileType.VIDEO:
+          case FILE_TYPES.VIDEO:
             return "video/*"
-          case FileType.PDF:
+          case FILE_TYPES.PDF:
             return "application/pdf"
-          case FileType.DOC:
+          case FILE_TYPES.DOC:
             return "application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          case FileType.EXCEL:
+          case FILE_TYPES.EXCEL:
             return "application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          case FileType.PPT:
+          case FILE_TYPES.PPT:
             return "application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation"
-          case FileType.TXT:
+          case FILE_TYPES.TXT:
             return "text/plain"
-          case FileType.AUDIO:
+          case FILE_TYPES.AUDIO:
             return "audio/*"
-          case FileType.ARCHIVE:
+          case FILE_TYPES.ARCHIVE:
             return ".zip,.rar,.tar,.gz,.7z"
-          case FileType.CSV:
+          case FILE_TYPES.CSV:
             return "text/csv"
-          case FileType.HTML:
+          case FILE_TYPES.HTML:
             return "text/html"
-          case FileType.MARKDOWN:
+          case FILE_TYPES.MARKDOWN:
             return "text/markdown"
           default:
             return ""

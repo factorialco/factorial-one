@@ -1,4 +1,5 @@
 import { IconType } from "@/factorial-one"
+import { FileType } from "./constants"
 
 type MentionedUser = {
   id: number
@@ -53,21 +54,6 @@ type mentionsConfig = {
     queryString: string
   ) => Promise<MentionedUser[]> | undefined
   users: MentionedUser[]
-}
-
-enum FileType {
-  PDF = "pdf",
-  IMAGE = "image",
-  DOC = "doc",
-  EXCEL = "excel",
-  PPT = "ppt",
-  TXT = "txt",
-  VIDEO = "video",
-  AUDIO = "audio",
-  ARCHIVE = "archive",
-  CSV = "csv",
-  HTML = "html",
-  MARKDOWN = "markdown",
 }
 
 type filesConfig = {
@@ -126,8 +112,6 @@ type toolbarLabels = {
   linkLabel: string
   close: string
 }
-
-export { FileType }
 
 export type {
   actionType,
