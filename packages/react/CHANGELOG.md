@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.18.1...factorial-one-react-v1.18.2) (2025-04-01)
+
+
+### Bug Fixes
+
+* **SectionHeader:** adjust separator based on the layout ([#1519](https://github.com/factorialco/factorial-one/issues/1519)) ([4fbfe85](https://github.com/factorialco/factorial-one/commit/4fbfe85e36c7bb4f4d7b3964c2a94941f8d98f26))
+
 ## [1.18.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.18.0...factorial-one-react-v1.18.1) (2025-04-01)
 
 
