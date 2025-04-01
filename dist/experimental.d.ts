@@ -2077,6 +2077,7 @@ declare type Props_15<Id extends string | number = string | number> = {
     items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
     minSize?: number;
     onClickItem?: (id: Id) => void;
+    showAllItems?: boolean;
 };
 
 declare type Props_16<Id extends string | number = string | number> = {
@@ -2092,6 +2093,7 @@ declare type Props_17<Id extends string | number = string | number> = {
     minSize?: number;
     gap?: number;
     onClickItem?: (id: Id) => void;
+    showAllItems?: boolean;
 };
 
 declare type Props_18<Id extends string | number = string | number> = {
@@ -2818,7 +2820,7 @@ export declare type WidgetEmptyStateProps = {
 
 export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_14): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, minSize, onClickItem }: Props_15): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_15): JSX_2.Element;
 
 declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_16<Id>;
 
@@ -2859,7 +2861,7 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, }: Props_17): JSX_2.Element;
+export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_17): JSX_2.Element;
 
 export declare type WidgetSimpleListProps = Props_17;
 
