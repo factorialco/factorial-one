@@ -18,7 +18,12 @@
 }
 
 .preserved-selection {
-  background-color: #b2d7ff !important;
+  background-color: #07a2ad33 !important;
+}
+
+::selection {
+  background-color: #07a2ad33 !important;
+  color: inherit;
 }
 
 .magicBackground::before {
@@ -213,11 +218,4 @@
 
 .ProseMirror p:empty::before {
   content: "\00a0";
-}
-
-
-
-::selection {
-  background-color: #b2d7ff !important;
-  color: inherit;
 }

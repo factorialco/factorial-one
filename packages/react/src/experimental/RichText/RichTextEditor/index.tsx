@@ -213,6 +213,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       <div
         ref={containerRef}
         className="relative flex h-auto flex-row bg-f1-background"
+        id="rich-text-editor-container"
       >
         <div
           className={cn(
@@ -253,13 +254,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 isFullscreen ? "h-full" : "h-auto max-h-60 pr-16"
               )}
             >
-              <label id="rich-text-editor-label" className="sr-only">
-                Rich text editor content
-              </label>
-              <EditorContent
-                editor={editor}
-                aria-labelledby="rich-text-editor-label"
-              />
+              <EditorContent editor={editor} />
             </div>
           </div>
 

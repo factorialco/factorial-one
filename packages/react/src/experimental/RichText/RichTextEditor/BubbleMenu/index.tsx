@@ -51,16 +51,9 @@ const EditorBubbleMenu = ({
         duration: 100,
         placement: "top",
         hideOnClick: false,
-        popperOptions: {
-          modifiers: [
-            {
-              name: "flip",
-              options: {
-                fallbackPlacements: ["bottom", "right", "left"],
-              },
-            },
-          ],
-        },
+        appendTo: () =>
+          document.getElementById("rich-text-editor-container") ||
+          document.body,
       }}
       editor={editor}
     >
