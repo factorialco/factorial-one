@@ -126,6 +126,8 @@ export const VisualizationSelector = <
         <PopoverContent
           className="w-[280px] rounded-md border border-solid border-f1-border-secondary p-2"
           align="end"
+          sideOffset={8}
+          alignOffset={-6}
         >
           <div className="grid grid-cols-2">
             {visualizations.map((visualization, index) => {
