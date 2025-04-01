@@ -129,8 +129,7 @@ export const WithOvertime: Story = {
 export const OvertimeOnly: Story = {
   args: {
     ...WithOvertime.args,
-    remainingMinutes: -8.5 * 60,
-    overtimeOnly: true,
+    remainingMinutes: -9 * 60,
   },
 }
 

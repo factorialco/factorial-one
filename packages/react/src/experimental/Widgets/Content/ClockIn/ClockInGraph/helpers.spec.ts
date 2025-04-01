@@ -18,7 +18,7 @@ describe("ClockInGraph helpers", () => {
       const result = normalizeData([], 30)
       expect(result).toEqual([
         {
-          value: 30,
+          value: 1,
           color: CLOCK_IN_COLORS.empty,
         },
       ])
@@ -28,8 +28,8 @@ describe("ClockInGraph helpers", () => {
       const result = normalizeData([], -30)
       expect(result).toEqual([
         {
-          value: 30,
-          color: CLOCK_IN_COLORS.overtime,
+          value: 1,
+          color: CLOCK_IN_COLORS.empty,
         },
       ])
     })
@@ -47,11 +47,11 @@ describe("ClockInGraph helpers", () => {
       )
       expect(result).toEqual([
         {
-          value: 90, // 90 minutes difference
+          value: 0.75, // 90 minutes difference
           color: CLOCK_IN_COLORS["clocked-in"],
         },
         {
-          value: 30,
+          value: 0.25,
           color: CLOCK_IN_COLORS.empty,
         },
       ])
