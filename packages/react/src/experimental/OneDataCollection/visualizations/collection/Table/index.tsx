@@ -283,7 +283,7 @@ export const TableCollection = <
                 {source.itemActions && (
                   <TableCell
                     key="actions"
-                    width={50}
+                    width={56}
                     sticky={{
                       right: 0,
                     }}

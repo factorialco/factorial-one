@@ -32,7 +32,7 @@ export const ActionsDropdown = <
         className={cn(
           "flex h-8 w-8 items-center justify-center rounded text-f1-icon-bold hover:bg-f1-background-secondary",
           open && "bg-f1-background-secondary",
-          focusRing()
+          focusRing("focus-visible:ring-inset")
         )}
       >
         <Icon icon={Ellipsis} />
