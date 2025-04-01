@@ -1,13 +1,13 @@
 import { IconType } from "@/components/exports"
 import { Dropdown } from "@/experimental/exports"
 import React from "react"
-import { ToolbarButton } from ".."
+import { ToolbarButton } from "../ToolbarButton"
 
 interface ToolbarDropdownItem {
   label: string
   isActive?: boolean
   onClick: () => void
-  icon?: IconType
+  icon: IconType
   tooltip?: {
     label: string
     shortcut?: string[]
@@ -23,6 +23,7 @@ interface ToolbarDropdownProps {
     label: string
     shortcut?: string[]
   }
+  mode: "light" | "dark"
 }
 
 const convertItemsToDropdownItems = (items: ToolbarDropdownItem[]) => {
@@ -39,6 +40,7 @@ const ToolbarDropdown = ({
   children,
   isFullscreen,
   disabled,
+  mode,
 }: ToolbarDropdownProps) => {
   return isFullscreen ? (
     items?.map((item) => (
@@ -50,6 +52,7 @@ const ToolbarDropdown = ({
         disabled={disabled}
         icon={item.icon}
         tooltip={item.tooltip}
+        mode={mode}
       />
     ))
   ) : (

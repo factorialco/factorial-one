@@ -1,4 +1,4 @@
-import "@/experimental/RichText/RichTextEditor/index.css"
+import "../index.css"
 
 const RichTextDisplay = ({ content }: { content: string }) => {
   return (

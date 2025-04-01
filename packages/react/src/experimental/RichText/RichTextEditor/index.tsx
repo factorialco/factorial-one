@@ -11,13 +11,13 @@ import {
   useState,
 } from "react"
 import screenfull from "screenfull"
+import "../index.css"
 import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
 import { EnhanceError } from "./Enhance/EnhanceError"
 import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
-import "./index.css"
 import { Loading } from "./Loading"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import { ExtensionsConfiguration } from "./utils/extensions"
@@ -221,7 +221,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             (isLoadingEnhance || isLoading) && "opacity-50 transition-opacity"
           )}
         >
-          <div className="fixed right-7 top-7 z-50">
+          <div className="absolute right-3 top-3 z-50">
             <Button
               onClick={(e) => {
                 e.preventDefault()
@@ -251,7 +251,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             <div
               className={cn(
                 "relative overflow-y-auto p-5 [scrollbar-width:thin]",
-                isFullscreen ? "h-full" : "h-auto max-h-60 pr-16"
+                isFullscreen ? "h-full" : "h-auto max-h-60 pr-12"
               )}
             >
               <EditorContent editor={editor} />

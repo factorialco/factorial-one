@@ -1,8 +1,5 @@
 import { Button } from "@/components/Actions/Button"
 import { toolbarLabels } from "@/experimental/exports"
-import { Shortcut } from "@/experimental/Information/Shortcut"
-import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { Icon, IconType } from "@/factorial-one"
 import {
   AlignTextCenter,
   AlignTextJustify,
@@ -26,84 +23,32 @@ import {
   Underline,
 } from "@/icons/app"
 import { cn } from "@/lib/utils"
-import { Button as ButtonUI } from "@/ui/button"
 import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
-import React, { ComponentProps } from "react"
-import { getTextAlignIcon, getTextAlignLabel } from "../../utils/helpers"
+import React from "react"
+import { getTextAlignIcon, getTextAlignLabel } from "../utils/helpers"
+import { ToolbarButton } from "./ToolbarButton"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 
-const ToolbarDivider = ({ hidden = false }: { hidden?: boolean }) => (
+interface ToolbarDividerProps {
+  hidden?: boolean
+  mode?: "light" | "dark"
+}
+
+const ToolbarDivider = ({
+  hidden = false,
+  mode = "light",
+}: ToolbarDividerProps) => (
   <div
     className={cn(
-      "mx-1 h-4 w-[1px] flex-shrink-0 bg-f1-foreground-disabled",
-      hidden && "hidden"
+      "mx-1 h-4 w-[1px] flex-shrink-0",
+      hidden && "hidden",
+      mode === "dark"
+        ? "bg-f1-foreground-inverse opacity-50"
+        : "bg-f1-foreground-disabled"
     )}
   />
 )
-
-interface ToolbarButtonProps {
-  onClick?: () => void
-  active?: boolean
-  label: string
-  disabled: boolean
-  icon?: IconType
-  tooltip?: {
-    description?: string
-    label?: string
-    shortcut?: ComponentProps<typeof Shortcut>["keys"]
-  }
-}
-
-const ToolbarButton = ({
-  onClick = () => {},
-  active = false,
-  label,
-  disabled,
-  icon,
-  tooltip,
-  ...props
-}: ToolbarButtonProps) => {
-  const button = (
-    <ButtonUI
-      {...props}
-      variant="outline"
-      size="md"
-      onClick={onClick}
-      className={cn(
-        "flex aspect-square items-center p-0 transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
-        active
-          ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
-          : "border-none hover:bg-f1-background-secondary-hover"
-      )}
-      disabled={disabled}
-      aria-label={label}
-    >
-      {icon ? (
-        <Icon
-          icon={icon}
-          className={active ? "text-f1-icon-selected" : "text-f1-foreground"}
-        />
-      ) : (
-        <p className={active ? "text-f1-icon-selected" : "text-f1-foreground"}>
-          {label}
-        </p>
-      )}
-    </ButtonUI>
-  )
-
-  return tooltip ? (
-    <Tooltip
-      description={tooltip?.description || ""}
-      label={tooltip?.label}
-      shortcut={tooltip?.shortcut}
-    >
-      {button}
-    </Tooltip>
-  ) : (
-    button
-  )
-}
 
 const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
   arr.map((item, index) => (
@@ -117,9 +62,10 @@ interface ToolbarProps {
   editor: Editor
   isFullscreen: boolean
   disableButtons: boolean
-  onClose: () => void
+  onClose?: () => void
   animationComplete: boolean
   labels: toolbarLabels
+  mode?: "light" | "dark"
 }
 
 const Toolbar = ({
@@ -129,6 +75,7 @@ const Toolbar = ({
   onClose,
   animationComplete,
   labels,
+  mode = "light",
 }: ToolbarProps) => {
   const formattingGroup = (
     <div className="flex flex-row items-center gap-0.5">
@@ -142,6 +89,7 @@ const Toolbar = ({
           label: `**${labels.bold}**`,
           shortcut: ["cmd", "b"],
         }}
+        mode={mode}
       />
 
       <ToolbarButton
@@ -154,6 +102,7 @@ const Toolbar = ({
           label: `*${labels.italic}*`,
           shortcut: ["cmd", "i"],
         }}
+        mode={mode}
       />
       <ToolbarButton
         active={editor.isActive("underline")}
@@ -165,6 +114,7 @@ const Toolbar = ({
           label: `_${labels.underline}_`,
           shortcut: ["cmd", "u"],
         }}
+        mode={mode}
       />
       <ToolbarButton
         active={editor.isActive("strike")}
@@ -176,6 +126,7 @@ const Toolbar = ({
           label: `~${labels.strike}~`,
           shortcut: ["cmd", "shift", "s"],
         }}
+        mode={mode}
       />
     </div>
   )
@@ -192,6 +143,7 @@ const Toolbar = ({
           label: `# ${labels.heading1}`,
           shortcut: ["cmd", "1"],
         }}
+        mode={mode}
       />
 
       <ToolbarButton
@@ -204,6 +156,7 @@ const Toolbar = ({
           label: `## ${labels.heading2}`,
           shortcut: ["cmd", "2"],
         }}
+        mode={mode}
       />
       <ToolbarButton
         active={editor.isActive("heading", { level: 3 })}
@@ -215,6 +168,7 @@ const Toolbar = ({
           label: `### ${labels.heading3}`,
           shortcut: ["cmd", "3"],
         }}
+        mode={mode}
       />
     </div>
   )
@@ -222,6 +176,7 @@ const Toolbar = ({
   const moreOptionsGroup = (
     <div className="flex flex-row items-center gap-0.5">
       <ToolbarDropdown
+        mode={mode}
         isFullscreen={isFullscreen}
         items={[
           {
@@ -267,7 +222,7 @@ const Toolbar = ({
           type="button"
         />
       </ToolbarDropdown>
-      <ToolbarDivider hidden={!isFullscreen} />
+      <ToolbarDivider hidden={!isFullscreen} mode={mode} />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleBulletList().run()}
         active={editor.isActive("bulletList")}
@@ -278,6 +233,7 @@ const Toolbar = ({
           label: `- ${labels.bulletList}`,
           shortcut: ["cmd", "alt", "8"],
         }}
+        mode={mode}
       />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
@@ -289,6 +245,7 @@ const Toolbar = ({
           label: `1. ${labels.orderedList}`,
           shortcut: ["cmd", "alt", "7"],
         }}
+        mode={mode}
       />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleTaskList().run()}
@@ -300,6 +257,7 @@ const Toolbar = ({
           label: `[ ] ${labels.taskList}`,
           shortcut: ["cmd", "alt", "t"],
         }}
+        mode={mode}
       />
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleHighlight().run()}
@@ -311,8 +269,10 @@ const Toolbar = ({
           label: `==${labels.highlight}==`,
           shortcut: ["cmd", "alt", "h"],
         }}
+        mode={mode}
       />
       <ToolbarDropdown
+        mode={mode}
         isFullscreen={isFullscreen}
         items={[
           {
@@ -365,21 +325,23 @@ const Toolbar = ({
   const groups = compact([formattingGroup, textSizeGroup, moreOptionsGroup])
 
   return (
-    <div className="flex flex-row items-start gap-2 overflow-hidden">
-      <Button
-        onClick={(e) => {
-          e.preventDefault()
-          onClose()
-        }}
-        variant="neutral"
-        size="md"
-        disabled={disableButtons}
-        type="button"
-        hideLabel
-        round
-        label={labels.close}
-        icon={Cross}
-      />
+    <div className={cn("flex flex-row items-start gap-2 overflow-hidden")}>
+      {onClose && (
+        <Button
+          onClick={(e) => {
+            e.preventDefault()
+            onClose()
+          }}
+          variant="neutral"
+          size="md"
+          disabled={disableButtons}
+          type="button"
+          hideLabel
+          round
+          label={labels.close}
+          icon={Cross}
+        />
+      )}
       <div
         className={cn(
           "flex grow flex-row items-center",
@@ -388,7 +350,7 @@ const Toolbar = ({
             : "overflow-hidden"
         )}
       >
-        {intersperse(groups, <ToolbarDivider />)}
+        {intersperse(groups, <ToolbarDivider mode={mode} />)}
       </div>
     </div>
   )

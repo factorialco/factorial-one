@@ -1,5 +1,5 @@
 import { Icon } from "@/factorial-one"
-import { Add } from "@/icons/app"
+import { Link } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { Button as ButtonUI } from "@/ui/button"
 import * as Popover from "@radix-ui/react-popover"
@@ -74,7 +74,7 @@ const EditorBubbleMenu = ({
               aria-label="Link"
             >
               <Icon
-                icon={Add}
+                icon={Link}
                 className={
                   editor.isActive("link")
                     ? "text-f1-icon-selected"
