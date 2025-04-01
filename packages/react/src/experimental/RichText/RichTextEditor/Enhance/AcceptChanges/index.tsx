@@ -20,7 +20,7 @@ const AcceptChanges = ({
   const i18n = useI18n()
 
   return (
-    <div className="flex items-center gap-2 rounded-md border-[1px] border-solid border-f1-border-secondary bg-f1-background p-2 drop-shadow-sm">
+    <div className="flex items-center gap-2 rounded-md border border-solid border-f1-border-secondary bg-f1-background p-2 drop-shadow-sm">
       <Button
         label={labels?.rejectChangesButtonLabel || i18n.actions.cancel}
         onClick={(e) => {

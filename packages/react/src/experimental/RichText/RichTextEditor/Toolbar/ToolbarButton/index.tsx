@@ -27,7 +27,7 @@ const ToolbarButton = ({
   disabled,
   icon,
   tooltip,
-  mode,
+  mode = "light",
   showLabel = false,
   ...props
 }: ToolbarButtonProps) => {

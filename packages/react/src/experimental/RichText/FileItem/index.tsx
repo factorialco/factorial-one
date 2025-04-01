@@ -15,7 +15,7 @@ const FileItem = ({ file, onRemoveFile, disabled }: FileItemProps) => {
   return (
     <Tooltip label={file.name}>
       <div className="flex w-48 flex-row items-center gap-1.5 rounded-md bg-f1-background-secondary p-1 pr-2">
-        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border-[1px] border-solid border-f1-border bg-f1-background">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-solid border-f1-border bg-f1-background">
           <p className={cn("text-xs font-semibold", color)}>{type}</p>
         </div>
         <p

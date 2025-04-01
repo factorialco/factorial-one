@@ -217,7 +217,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       >
         <div
           className={cn(
-            "relative flex w-full flex-col overflow-hidden rounded-xl border-[1px] border-solid border-f1-border bg-f1-background",
+            "relative flex w-full flex-col overflow-hidden rounded-xl border border-solid border-f1-border bg-f1-background",
             (isLoadingEnhance || isLoading) && "opacity-50 transition-opacity"
           )}
         >

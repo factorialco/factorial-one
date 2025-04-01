@@ -1,4 +1,4 @@
-import { Button, IconType } from "@/factorial-one"
+import { IconType } from "@/factorial-one"
 import * as Popover from "@radix-ui/react-popover"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
@@ -44,16 +44,13 @@ const ToolbarDropdown = ({
 
   return (
     <Popover.Root open={open} modal={false} onOpenChange={setOpen}>
-      <Popover.Trigger asChild>
-        <Button
-          variant={open ? "neutral" : "ghost"}
-          size="md"
+      <Popover.Trigger>
+        <ToolbarButton
           label={activator.label}
           icon={activator.icon}
           disabled={disabled}
-          hideLabel
-          round
-          type="button"
+          mode={mode}
+          onClick={() => setOpen(true)}
         />
       </Popover.Trigger>
       <Popover.Portal
@@ -78,7 +75,7 @@ const ToolbarDropdown = ({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 5 }}
                 transition={{ duration: 0.15 }}
-                className="flex w-40 flex-col overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm"
+                className="flex w-40 flex-col gap-0.5 overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm"
               >
                 {items.map((item, index) => (
                   <ToolbarButton

@@ -33,20 +33,18 @@ const EditorBubbleMenu = ({
       }}
       editor={editor}
     >
-      <div className="z-50 flex w-max flex-row items-center rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
+      <div className="z-50 flex w-max flex-row items-center rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
         <Popover.Root open={openLinkPopover} onOpenChange={setOpenLinkPopover}>
-          <Popover.Trigger asChild>
-            <div>
-              <ToolbarButton
-                active={editor.isActive("link") || openLinkPopover}
-                label={toolbarLabels.linkLabel}
-                icon={Link}
-                disabled={disableButtons}
-                onClick={() => setOpenLinkPopover((prev) => !prev)}
-                tooltip={undefined}
-                mode="light"
-              />
-            </div>
+          <Popover.Trigger>
+            <ToolbarButton
+              active={editor.isActive("link") || openLinkPopover}
+              label={toolbarLabels.linkLabel}
+              icon={Link}
+              disabled={disableButtons}
+              onClick={() => setOpenLinkPopover((prev) => !prev)}
+              tooltip={undefined}
+              mode="light"
+            />
           </Popover.Trigger>
           <ToolbarDivider />
           <Toolbar

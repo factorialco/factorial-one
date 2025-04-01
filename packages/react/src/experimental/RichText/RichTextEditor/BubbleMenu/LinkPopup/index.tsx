@@ -39,7 +39,7 @@ const LinkPopup = ({ linkPlaceholder, editor }: LinkPopupProps) => {
   }
 
   return (
-    <div className="z-50 flex w-max flex-row gap-2 divide-y-[1px] divide-solid divide-f1-border-secondary rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
+    <div className="z-50 flex w-max flex-row gap-2 rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
       <div
         className={cn(
           "flex w-96 appearance-none items-center gap-2 rounded-md border-0 bg-f1-background px-2 py-1 ring-1 ring-inset ring-f1-border transition-all placeholder:text-f1-foreground-tertiary",

@@ -100,7 +100,7 @@ const MentionList = forwardRef<MentionListHandle, MentionListProps>(
     )
 
     return (
-      <div className="drop-drop-shadow-sm flex max-h-72 w-60 flex-col gap-2 overflow-y-auto rounded-lg border-[1px] border-solid border-f1-border-secondary bg-f1-background p-1">
+      <div className="drop-drop-shadow-sm flex max-h-72 w-60 flex-col gap-2 overflow-y-auto rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1">
         {items.length === 0 ? (
           <div className="p-2">
             <p className="text-neutral-40 text-sm font-medium">

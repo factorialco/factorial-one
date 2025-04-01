@@ -21,8 +21,8 @@
   background-color: #07a2ad33 !important;
 }
 
-::selection {
-  background-color: #ffffff00 !important;
+.ProseMirror::selection {
+  background-color: transparent !important;
   color: inherit;
 }
 
