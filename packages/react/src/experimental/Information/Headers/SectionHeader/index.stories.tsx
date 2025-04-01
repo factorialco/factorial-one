@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import * as Icon from "../../../../icons/app"
+import { StandardLayout } from "../../../PageLayouts/StandardLayout"
 import { SectionHeader } from "./index"
+
 const meta: Meta<typeof SectionHeader> = {
   component: SectionHeader,
   title: "Section header",
@@ -61,4 +63,17 @@ export const PrimaryAction: Story = {
       variant: "default",
     },
   },
+}
+
+export const InLayout: Story = {
+  args: {
+    ...Default.args,
+  },
+  decorators: [
+    (Story) => (
+      <StandardLayout>
+        <Story />
+      </StandardLayout>
+    ),
+  ],
 }
