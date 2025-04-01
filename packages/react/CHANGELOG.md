@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.18.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.18.0...factorial-one-react-v1.18.1) (2025-04-01)
+
+
+### Bug Fixes
+
+* **PageHeader:** adding asChild Property ([#1516](https://github.com/factorialco/factorial-one/issues/1516)) ([e4ddcfa](https://github.com/factorialco/factorial-one/commit/e4ddcfa5cf95b841f19b56e5980f4772074141af))
+
 ## [1.18.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.17.0...factorial-one-react-v1.18.0) (2025-03-31)
 
 
