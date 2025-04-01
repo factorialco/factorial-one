@@ -129,8 +129,7 @@ export const WithOvertime: Story = {
 export const OvertimeOnly: Story = {
   args: {
     ...WithOvertime.args,
-    remainingMinutes: -8.5 * 60,
-    overtimeOnly: true,
+    remainingMinutes: -9 * 60,
   },
 }
 
@@ -215,5 +214,69 @@ export const WithHiddenLocationAndProject: Story = {
   args: {
     ...ClockedOut.args,
     canShowLocation: false,
+  },
+}
+
+export const Something: Story = {
+  args: {
+    ...ClockedOut.args,
+    data: [
+      {
+        from: new Date("2025-03-31T13:43:00.000Z"),
+        to: new Date("2025-03-31T13:43:00.000Z"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2025-03-31T13:43:00.000Z"),
+        to: new Date("2025-03-31T13:44:00.000Z"),
+        variant: "break",
+      },
+      {
+        from: new Date("2025-03-31T13:44:00.000Z"),
+        to: new Date("2025-03-31T13:44:00.000Z"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2025-03-31T13:44:00.000Z"),
+        to: new Date("2025-03-31T13:44:00.000Z"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2025-03-31T13:44:00.000Z"),
+        to: new Date("2025-03-31T13:44:00.000Z"),
+        variant: "break",
+      },
+      {
+        from: new Date("2025-03-31T13:44:00.000Z"),
+        to: new Date("2025-03-31T13:53:00.000Z"),
+        variant: "break",
+      },
+      {
+        from: new Date("2025-03-31T13:53:00.000Z"),
+        to: new Date("2025-03-31T13:53:00.000Z"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2025-03-31T13:53:00.000Z"),
+        to: new Date("2025-03-31T13:58:00.000Z"),
+        variant: "break",
+      },
+      {
+        from: new Date("2025-03-31T13:58:00.000Z"),
+        to: new Date("2025-03-31T13:58:00.000Z"),
+        variant: "clocked-in",
+      },
+      {
+        from: new Date("2025-03-31T13:58:00.000Z"),
+        to: new Date("2025-03-31T14:24:29.000Z"),
+        variant: "break",
+      },
+      {
+        from: new Date("2025-03-31T14:24:29.000Z"),
+        to: new Date("2025-03-31T14:26:29.000Z"),
+        variant: "clocked-in",
+      },
+    ],
+    remainingMinutes: 0,
   },
 }
