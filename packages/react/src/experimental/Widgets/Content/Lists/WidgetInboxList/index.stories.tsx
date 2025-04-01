@@ -42,3 +42,10 @@ export const WithLongTitles: Story = {
     })),
   },
 }
+
+export const WithAllItems: Story = {
+  args: {
+    ...Default.args,
+    showAllItems: true,
+  },
+}
