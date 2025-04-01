@@ -1,9 +1,10 @@
+import { ScrollArea } from "@/ui/scrollarea"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { useVirtualizer } from "@tanstack/react-virtual"
 import * as React from "react"
 import { ReactNode, useContext, useEffect, useMemo, useRef } from "react"
 import { cn } from "../../../lib/utils.ts"
-import { SelectScrollButton, VirtualItem } from "../index"
+import { VirtualItem } from "../index"
 import { SelectContext } from "../SelectContext.tsx"
 
 /**
@@ -42,7 +43,7 @@ const SelectContent = React.forwardRef<
 >(
   (
     {
-      items = [],
+      items = undefined,
       className,
       children,
       position = "popper",
@@ -76,9 +77,9 @@ const SelectContent = React.forwardRef<
     }, [items, value])
 
     const virtualizer = useVirtualizer({
-      count: items.length,
+      count: items?.length || 0,
       getScrollElement: () => parentRef.current,
-      estimateSize: (i: number) => items[i].height,
+      estimateSize: (i: number) => items?.[i]?.height || 0,
       overscan: 5,
       enabled: animationStarted,
     })
@@ -107,7 +108,9 @@ const SelectContent = React.forwardRef<
             "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background text-f1-foreground shadow-md data-[state=closed]:fade-out-0 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=open]:fade-in-0 motion-safe:data-[state=closed]:zoom-out-95 motion-safe:data-[state=open]:zoom-in-95 motion-safe:data-[side=bottom]:slide-in-from-top-2",
             position === "popper" &&
               "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-            className
+            className,
+            // Hides the content when the virtual list is not ready
+            isVirtual && !virtualReady && "opacity-0"
           )}
           position={position}
           {...props}
@@ -121,53 +124,57 @@ const SelectContent = React.forwardRef<
           }}
         >
           {!!props.top && <div>{props.top}</div>}
-          <SelectScrollButton variant="up" />
-          <SelectPrimitive.Viewport
-            ref={parentRef}
-            className={cn(
-              position === "popper" &&
-                "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
-            )}
+          <ScrollArea
+            viewportRef={parentRef}
+            className="flex max-h-[300px] flex-col overflow-y-auto"
           >
-            {isEmpty ? (
-              <p className="p-2 text-center">{emptyMessage || "-"}</p>
-            ) : isVirtual ? (
-              <div
-                className={cn(
-                  "transition-opacity delay-100",
-                  virtualReady ? "" : "opacity-0"
-                )}
-                style={{
-                  height: virtualizer.getTotalSize(),
-                  width: "100%",
-                  position: "relative",
-                }}
-              >
+            <SelectPrimitive.Viewport
+              asChild
+              className={cn(
+                position === "popper" &&
+                  "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
+              )}
+            >
+              {isEmpty ? (
+                <p className="p-2 text-center">{emptyMessage || "-"}</p>
+              ) : isVirtual ? (
                 <div
+                  className={cn(
+                    "transition-opacity delay-100",
+                    virtualReady ? "" : "opacity-0"
+                  )}
                   style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
+                    height: virtualizer.getTotalSize(),
                     width: "100%",
-                    transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
+                    position: "relative",
                   }}
                 >
-                  {virtualItems.map((virtualItem) => (
-                    <div
-                      key={virtualItem.key}
-                      data-index={virtualItem.index}
-                      ref={virtualizer.measureElement}
-                    >
-                      {items[virtualItem.index].item}
-                    </div>
-                  ))}
+                  <div
+                    style={{
+                      // position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
+                    }}
+                  >
+                    {virtualItems.map((virtualItem) => (
+                      <div
+                        key={virtualItem.key}
+                        data-index={virtualItem.index}
+                        ref={virtualizer.measureElement}
+                        tabIndex={virtualItem.index === positionIndex ? 0 : -1}
+                      >
+                        {items[virtualItem.index].item}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ) : (
-              children
-            )}
-          </SelectPrimitive.Viewport>
-          <SelectScrollButton variant="down" />
+              ) : (
+                <>{children}</>
+              )}
+            </SelectPrimitive.Viewport>
+          </ScrollArea>
           {!!props.bottom && <div>{props.bottom}</div>}
         </SelectPrimitive.Content>
       </SelectPrimitive.Portal>
