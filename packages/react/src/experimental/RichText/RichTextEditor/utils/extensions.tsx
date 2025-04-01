@@ -12,17 +12,49 @@ import Typography from "@tiptap/extension-typography"
 import Underline from "@tiptap/extension-underline"
 import { Extension } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
+import { Plugin, PluginKey } from "prosemirror-state"
+import { Decoration, DecorationSet } from "prosemirror-view"
 import { configureMention } from "./mention"
-import { PersistSelection } from "./persistSelection"
 import { MentionedUser, mentionsConfig } from "./types"
 
-interface ExtensionsConfigurationProps {
-  mentionsConfig?: mentionsConfig
-  mentionSuggestions: MentionedUser[]
-  setMentionSuggestions: (suggestions: MentionedUser[]) => void
-  placeholder: string
-  maxCharacters?: number
-}
+const persistSelectionKey = new PluginKey("persistSelection")
+
+const persistSelectionPlugin = new Plugin({
+  key: persistSelectionKey,
+  state: {
+    init(_, { doc, selection }) {
+      return selection.from !== selection.to
+        ? DecorationSet.create(doc, [
+            Decoration.inline(selection.from, selection.to, {
+              class: "preserved-selection",
+            }),
+          ])
+        : DecorationSet.empty
+    },
+    apply(newState) {
+      const { doc, selection } = newState
+      return selection.from !== selection.to
+        ? DecorationSet.create(doc, [
+            Decoration.inline(selection.from, selection.to, {
+              class: "preserved-selection",
+            }),
+          ])
+        : DecorationSet.empty
+    },
+  },
+  props: {
+    decorations(state) {
+      return this.getState(state)
+    },
+  },
+})
+
+const PersistSelection = Extension.create({
+  name: "persistSelection",
+  addProseMirrorPlugins() {
+    return [persistSelectionPlugin]
+  },
+})
 
 const Accessibility = Extension.create({
   name: "accessibility",
@@ -39,6 +71,14 @@ const Accessibility = Extension.create({
     this.editor.view.dom.setAttribute("aria-label", this.options.label)
   },
 })
+
+interface ExtensionsConfigurationProps {
+  mentionsConfig?: mentionsConfig
+  mentionSuggestions: MentionedUser[]
+  setMentionSuggestions: (suggestions: MentionedUser[]) => void
+  placeholder: string
+  maxCharacters?: number
+}
 
 const ExtensionsConfiguration = ({
   mentionsConfig,

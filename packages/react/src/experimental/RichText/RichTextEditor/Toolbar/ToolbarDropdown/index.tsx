@@ -42,6 +42,12 @@ const ToolbarDropdown = ({
     setOpen(false)
   }
 
+  // Función para manejar el clic en el botón
+  const handleButtonClick = () => {
+    if (disabled) return
+    setOpen(!open)
+  }
+
   return (
     <Popover.Root open={open} modal={false} onOpenChange={setOpen}>
       <Popover.Trigger>
@@ -50,7 +56,7 @@ const ToolbarDropdown = ({
           icon={activator.icon}
           disabled={disabled}
           mode={mode}
-          onClick={() => setOpen(true)}
+          onClick={handleButtonClick}
         />
       </Popover.Trigger>
       <Popover.Portal

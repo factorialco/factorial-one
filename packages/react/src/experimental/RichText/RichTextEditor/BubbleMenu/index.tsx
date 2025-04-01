@@ -21,6 +21,11 @@ const EditorBubbleMenu = ({
 }: EditorBubbleMenuProps) => {
   const [openLinkPopover, setOpenLinkPopover] = useState(false)
 
+  const handleLinkButtonClick = () => {
+    if (disableButtons) return
+    setOpenLinkPopover(!openLinkPopover)
+  }
+
   return (
     <BubbleMenu
       tippyOptions={{
@@ -34,14 +39,19 @@ const EditorBubbleMenu = ({
       editor={editor}
     >
       <div className="z-50 flex w-max flex-row items-center rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
-        <Popover.Root open={openLinkPopover} onOpenChange={setOpenLinkPopover}>
+        <Popover.Root
+          open={openLinkPopover}
+          onOpenChange={(open) => {
+            setOpenLinkPopover(open)
+          }}
+        >
           <Popover.Trigger>
             <ToolbarButton
               active={editor.isActive("link") || openLinkPopover}
               label={toolbarLabels.linkLabel}
               icon={Link}
               disabled={disableButtons}
-              onClick={() => setOpenLinkPopover((prev) => !prev)}
+              onClick={handleLinkButtonClick}
               tooltip={undefined}
               mode="light"
             />

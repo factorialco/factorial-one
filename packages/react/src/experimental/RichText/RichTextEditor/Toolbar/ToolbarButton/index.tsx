@@ -16,7 +16,7 @@ interface ToolbarButtonProps {
     label?: string
     shortcut?: ComponentProps<typeof Shortcut>["keys"]
   }
-  mode: "light" | "dark"
+  mode?: "light" | "dark"
   showLabel?: boolean
 }
 
