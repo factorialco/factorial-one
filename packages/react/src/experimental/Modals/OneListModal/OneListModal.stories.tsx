@@ -1,9 +1,9 @@
 import { ApplicationFrame } from "@/experimental/exports"
 import {
-  PersonListItem,
-  PersonListItemProps,
-} from "@/experimental/Lists/PersonListItem"
-import { Default as PersonListItemDefault } from "@/experimental/Lists/PersonListItem/index.stories"
+  OnePersonListItem,
+  OnePersonListItemProps,
+} from "@/experimental/Lists/OnePersonListItem"
+import { Default as OnePersonListItemDefault } from "@/experimental/Lists/OnePersonListItem/index.stories"
 import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
 import type { Meta, StoryObj } from "@storybook/react"
@@ -88,9 +88,9 @@ const ExamplePersonList: FC<{ numberOfItems?: number }> = ({
 }) => (
   <div className="flex flex-col gap-0.5 p-2">
     {Array.from({ length: numberOfItems }, (_, i) => (
-      <PersonListItem
+      <OnePersonListItem
         key={i}
-        {...(PersonListItemDefault.args as PersonListItemProps)}
+        {...(OnePersonListItemDefault.args as OnePersonListItemProps)}
       />
     ))}
   </div>

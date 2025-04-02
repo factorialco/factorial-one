@@ -7,7 +7,7 @@ import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 import { DotTag, DotTagProps } from "../../Information/Tags/DotTag"
 import { RawTag, RawTagProps } from "../../Information/Tags/RawTag"
 
-export type PersonListItemProps = {
+export type OnePersonListItemProps = {
   person: {
     firstName: string
     lastName: string
@@ -31,9 +31,9 @@ export type PersonListItemProps = {
   onClick: () => void
 }
 
-export const PersonListItem = React.forwardRef<
+export const OnePersonListItem = React.forwardRef<
   HTMLDivElement,
-  PersonListItemProps
+  OnePersonListItemProps
 >(({ person, onClick, ...props }, ref) => {
   const handleClick = () => {
     onClick()
@@ -114,4 +114,4 @@ export const PersonListItem = React.forwardRef<
   )
 })
 
-PersonListItem.displayName = "PersonListItem"
+OnePersonListItem.displayName = "OnePersonListItem"
