@@ -17,8 +17,6 @@ export interface ListModalProps {
   tabs?: TabsProps["tabs"]
   /** Whether the modal is open */
   isOpen: boolean
-  /** Set the modal open state */
-  setIsOpen: (isOpen: boolean) => void
   /** Callback when modal is closed */
   onClose: () => void
   /** Custom content to render in the list section */

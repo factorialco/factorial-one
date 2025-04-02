@@ -1,4 +1,9 @@
 import { ApplicationFrame } from "@/experimental/exports"
+import {
+  PersonListItem,
+  PersonListItemProps,
+} from "@/experimental/Lists/PersonListItem"
+import { Default as PersonListItemDefault } from "@/experimental/Lists/PersonListItem/index.stories"
 import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
 import type { Meta, StoryObj } from "@storybook/react"
@@ -43,7 +48,6 @@ export const Default: Story = {
   args: {
     title: "Team Status",
     isOpen: true,
-    setIsOpen: () => {},
     dropdownItems: [
       {
         label: "Edit",
@@ -75,5 +79,23 @@ export const Default: Story = {
       },
     ],
     children: <ExampleList />,
+  },
+}
+
+const ExamplePersonList = () => (
+  <div className="flex flex-col gap-0.5 p-2">
+    {Array.from({ length: 20 }, (_, i) => (
+      <PersonListItem
+        key={i}
+        {...(PersonListItemDefault.args as PersonListItemProps)}
+      />
+    ))}
+  </div>
+)
+
+export const WithPersonListItems: Story = {
+  args: {
+    ...Default.args,
+    children: <ExamplePersonList />,
   },
 }
