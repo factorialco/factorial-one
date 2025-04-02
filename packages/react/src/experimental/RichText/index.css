@@ -77,7 +77,7 @@
 
 .ProseMirror ul,
 .ProseMirror ol {
-  @apply ml-7;
+  @apply ml-5;
 }
 
 .ProseMirror li {
@@ -114,38 +114,10 @@
 }
 
 .ProseMirror p.is-editor-empty:first-child::before {
+  @apply pointer-events-none float-left h-0 text-f1-foreground-secondary;
   content: attr(data-placeholder);
-  float: left;
-  color: #aaa;
-  pointer-events: none;
-  height: 0;
 }
 
 .ProseMirror ul[data-type="taskList"] {
-  list-style: none;
-  margin-left: 0;
-  padding: 0;
-}
-
-.ProseMirror ul[data-type="taskList"] li {
-  align-items: flex-start;
-  display: flex;
-}
-
-.ProseMirror ul[data-type="taskList"] li > label {
-  flex: 0 0 auto;
-  margin-right: 0.5rem;
-  user-select: none;
-}
-
-.ProseMirror ul[data-type="taskList"] li > div {
-  flex: 1 1 auto;
-}
-
-.ProseMirror ul[data-type="taskList"] input[type="checkbox"] {
-  cursor: pointer;
-}
-
-.ProseMirror ul[data-type="taskList"] ul[data-type="taskList"] {
-  margin: 0;
+  @apply ml-0;
 }

@@ -10,7 +10,7 @@ import TextAlign from "@tiptap/extension-text-align"
 import TextStyle from "@tiptap/extension-text-style"
 import Typography from "@tiptap/extension-typography"
 import Underline from "@tiptap/extension-underline"
-import { Extension } from "@tiptap/react"
+import { Extension, ReactNodeViewRenderer } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import { Plugin, PluginKey } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
@@ -72,6 +72,54 @@ const Accessibility = Extension.create({
   },
 })
 
+import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { cn } from "@/lib/utils"
+import { NodeViewContent, NodeViewProps, NodeViewWrapper } from "@tiptap/react"
+import React from "react"
+
+export const CustomTaskItemView: React.FC<NodeViewProps> = ({
+  node,
+  getPos,
+  editor,
+}) => {
+  const isChecked = node.attrs.checked
+
+  const handleCheckedChange = (checked: boolean) => {
+    editor
+      .chain()
+      .focus()
+      .command(({ tr }) => {
+        tr.setNodeMarkup(getPos(), undefined, {
+          ...node.attrs,
+          checked,
+        })
+        return true
+      })
+      .run()
+  }
+
+  return (
+    <NodeViewWrapper className="mb-2 flex items-start gap-2">
+      <Checkbox
+        checked={isChecked}
+        onCheckedChange={handleCheckedChange}
+        hideLabel
+      />
+      <div
+        className={cn(isChecked && "text-f1-foreground-secondary line-through")}
+      >
+        <NodeViewContent className="content" />
+      </div>
+    </NodeViewWrapper>
+  )
+}
+
+const CustomTaskItem = TaskItem.extend({
+  addNodeView() {
+    return ReactNodeViewRenderer(CustomTaskItemView)
+  },
+})
+
 interface ExtensionsConfigurationProps {
   mentionsConfig?: mentionsConfig
   mentionSuggestions: MentionedUser[]
@@ -95,8 +143,17 @@ const ExtensionsConfiguration = ({
     Image,
     Typography,
     Highlight,
-    TaskList,
-    TaskItem.configure({ nested: true }),
+    TaskList.configure({
+      HTMLAttributes: {
+        class: "f1-task-list",
+      },
+    }),
+    CustomTaskItem.configure({
+      nested: true,
+      HTMLAttributes: {
+        class: "f1-task-item",
+      },
+    }),
     TextAlign.configure({ types: ["heading", "paragraph"] }),
     Link.configure({
       openOnClick: false,

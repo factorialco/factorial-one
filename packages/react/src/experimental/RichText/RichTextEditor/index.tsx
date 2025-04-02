@@ -212,7 +212,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         ref={containerRef}
         id="rich-text-editor-container"
         className={cn(
-          "relative flex w-full flex-col overflow-hidden bg-f1-background",
+          "relative flex w-full flex-col bg-f1-background",
           !isFullscreen && "rounded-xl border border-solid border-f1-border"
         )}
       >
