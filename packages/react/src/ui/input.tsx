@@ -14,13 +14,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         className={cn(
           "flex w-full appearance-none rounded-md border-0 bg-f1-background p-2 ring-1 ring-inset ring-f1-border transition-all placeholder:text-f1-foreground-tertiary hover:ring-f1-border-hover",
           focusRing("focus:ring-f1-border-hover"),
-          icon ? "flex gap-1 ps-2" : "ps-3",
+          icon ? "flex gap-1 py-1.5 ps-2" : "ps-3",
           props.disabled &&
             "cursor-not-allowed bg-f1-background-secondary opacity-50",
           className
         )}
       >
-        {icon && <Icon icon={icon} className="text-f1-foreground-secondary" />}
+        {icon && (
+          <Icon
+            icon={icon}
+            className="h-5 w-5 shrink-0 text-f1-foreground-secondary"
+          />
+        )}
         <input
           type={type}
           ref={ref}

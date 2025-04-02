@@ -144,12 +144,15 @@ export function FiltersControls<Filters extends FiltersDefinition>({
       </Popover>
 
       {presets && presets.length > 0 && (
-        <OverflowList
-          items={presets}
-          renderListItem={renderListPresetItem}
-          renderDropdownItem={renderDropdownPresetItem}
-          className="flex-1"
-        />
+        <>
+          <div className="mx-1 h-4 w-px bg-f1-border-secondary" />
+          <OverflowList
+            items={presets}
+            renderListItem={renderListPresetItem}
+            renderDropdownItem={renderDropdownPresetItem}
+            className="flex-1"
+          />
+        </>
       )}
     </div>
   )
