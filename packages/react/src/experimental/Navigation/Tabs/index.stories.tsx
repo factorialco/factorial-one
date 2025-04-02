@@ -41,8 +41,8 @@ export const Primary: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    const button = canvas.getByRole("link", { name: /Requests/i })
-    await expect(button.dataset.test).toBe("foo")
+    const link = canvas.getByRole("link", { name: /Requests/i })
+    await expect(link.dataset.test).toBe("foo")
   },
 }
 
