@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.20.0...factorial-one-react-v1.20.1) (2025-04-02)
+
+
+### Bug Fixes
+
+* **DataCollection:** failing test ([a81a5d1](https://github.com/factorialco/factorial-one/commit/a81a5d132a0b45a3397eb6018f2c0944f7d643ea))
+
 ## [1.20.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.19.2...factorial-one-react-v1.20.0) (2025-04-02)
 
 
