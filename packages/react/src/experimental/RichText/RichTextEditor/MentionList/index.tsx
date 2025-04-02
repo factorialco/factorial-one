@@ -18,7 +18,7 @@ const DefaultMentionItem = ({ item, selected }: DefaultMentionItemProps) => {
   return (
     <div
       className={cn(
-        "flex items-center gap-2 rounded-lg border-[2px] border-solid p-1",
+        "flex items-center gap-2 rounded-md border border-solid p-1.5 hover:bg-f1-background-hover",
         selected ? "border-f1-border-selected-bold" : "border-f1-border-inverse"
       )}
     >
@@ -26,9 +26,11 @@ const DefaultMentionItem = ({ item, selected }: DefaultMentionItemProps) => {
         firstName={item.label}
         lastName=""
         src={item.image_url ?? undefined}
-        size="medium"
+        size="small"
       />
-      <p className="text-neutral-100 text-sm font-medium">{item.label}</p>
+      <p className="text-neutral-100 text-md truncate text-ellipsis font-medium">
+        {item.label}
+      </p>
     </div>
   )
 }
@@ -100,7 +102,7 @@ const MentionList = forwardRef<MentionListHandle, MentionListProps>(
     )
 
     return (
-      <div className="drop-drop-shadow-sm flex max-h-72 w-60 flex-col gap-2 overflow-y-auto rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1">
+      <div className="flex max-h-72 w-60 flex-col gap-2 overflow-y-auto rounded-md border border-solid border-f1-border-secondary bg-f1-background p-0.5 drop-shadow-sm">
         {items.length === 0 ? (
           <div className="p-2">
             <p className="text-neutral-40 text-sm font-medium">
@@ -113,7 +115,7 @@ const MentionList = forwardRef<MentionListHandle, MentionListProps>(
               key={index}
               onClick={() => selectItem(index)}
               onMouseEnter={() => setSelectedIndex(index)}
-              className="cursor-pointer bg-f1-background hover:bg-f1-background-hover"
+              className="cursor-pointer bg-f1-background"
             >
               <Component
                 item={item}

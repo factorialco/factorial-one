@@ -1,5 +1,3 @@
-import { find, keys } from "lodash"
-
 type FileTypeInfo = {
   type: string
   color: string
@@ -129,7 +127,7 @@ const EXTENSION_MAP: Record<string, keyof typeof FILE_TYPE_MAP> = {
 const getFileTypeInfo = (file: File): FileTypeInfo => {
   const mimeType = file.type.toLowerCase()
 
-  const matchedMimeKey = find(keys(MIME_MATCH_MAP), (key) =>
+  const matchedMimeKey = Object.keys(MIME_MATCH_MAP).find((key) =>
     mimeType.includes(key)
   )
 

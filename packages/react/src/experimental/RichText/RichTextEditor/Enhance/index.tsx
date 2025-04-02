@@ -61,7 +61,7 @@ const EnhanceActivator = ({
         <Button
           type="button"
           ref={enhanceButtonRef}
-          variant="ghost"
+          variant="outline"
           size="md"
           label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || ""}
           icon={Ai}

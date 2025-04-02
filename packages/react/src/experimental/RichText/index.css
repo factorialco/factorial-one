@@ -106,7 +106,7 @@
 }
 
 .ProseMirror mark {
-  @apply rounded-xs bg-f1-background-promote p-0.5;
+  @apply rounded-xs bg-f1-background-promote p-0.5 text-f1-foreground;
 }
 
 .ProseMirror p:empty::before {
