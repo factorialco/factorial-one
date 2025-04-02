@@ -1460,6 +1460,23 @@ declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
 };
 
+export declare const ListModal: default_2.FC<ListModalProps>;
+
+export declare interface ListModalProps {
+    /** Modal title */
+    title: string;
+    /** Dropdown items */
+    dropdownItems?: DropdownInternalProps["items"];
+    /** Tabs */
+    tabs?: TabsProps["tabs"];
+    /** Whether the modal is open */
+    isOpen: boolean;
+    /** Callback when modal is closed */
+    onClose: () => void;
+    /** Custom content to render in the list section */
+    children: ReactNode;
+}
+
 export declare function Menu({ tree, onCollapse, onSort }: MenuProps): default_2.JSX.Element;
 
 export declare interface MenuCategory {
