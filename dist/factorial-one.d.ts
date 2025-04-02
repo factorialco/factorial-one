@@ -40,7 +40,6 @@ values: {
 [x: string]: number;
 };
 }) => void) | undefined;
-hideTooltip?: boolean;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
