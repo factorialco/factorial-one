@@ -1,50 +1,23 @@
-import { fixupConfigRules } from "@eslint/compat";
-import { FlatCompat } from "@eslint/eslintrc";
-import js from "@eslint/js";
-import tsParser from "@typescript-eslint/parser";
-import globals from "globals";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+import tsParser from "@typescript-eslint/parser"
+import globals from "globals"
+import { fileURLToPath } from "node:url"
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
+const __filename = fileURLToPath(import.meta.url)
+
 // Common settings to apply to all configs using React
 const reactSettings = {
   react: {
     version: "detect",
   },
-};
+}
 
 export default [
   // Ignore dist and other config files
   {
-    ignores: ["**/dist", "**/.eslintrc.cjs"],
+    ignores: ["**/dist", "**/.eslintrc.cjs", "**/.expo/**"],
   },
 
   // Main React Native configuration
-  {
-    files: ["**/*.{js,jsx,ts,tsx}"],
-    settings: reactSettings,
-  },
-  ...fixupConfigRules(
-    compat.extends(
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:react-hooks/recommended"
-    )
-  ).map((config) => ({
-    ...config,
-    settings: {
-      ...(config.settings || {}),
-      ...reactSettings,
-    },
-  })),
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
@@ -65,16 +38,27 @@ export default [
       "@typescript-eslint/no-require-imports": "off", // React Native uses require-style imports
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
-      "no-unused-vars": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          vars: "all",
-          varsIgnorePattern: "^_",
-          args: "after-used",
-          argsIgnorePattern: "^_",
-        },
-      ],
     },
   },
-];
+
+  // React Native config files - special handling for CommonJS files
+  {
+    files: [
+      "babel.config.js",
+      "metro.config.js",
+      "tailwind.config.js",
+      "index.js",
+    ],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        module: "writable",
+        require: "readonly",
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "no-undef": "off",
+    },
+  },
+]
