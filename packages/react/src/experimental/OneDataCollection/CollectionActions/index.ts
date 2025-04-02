@@ -1,1 +1,1 @@
-export * from "./ColletionActions"
+export * from "./CollectionActions"
