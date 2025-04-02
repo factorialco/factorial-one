@@ -20,6 +20,7 @@ export type ButtonInternalProps = Pick<
   size?: "sm" | "md" | "lg"
   append?: React.ReactNode
   appendButton?: React.ReactNode
+  [key: `data-${string}`]: string | undefined
 }
 
 const iconVariants = cva({

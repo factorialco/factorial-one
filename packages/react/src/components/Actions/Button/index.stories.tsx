@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { expect, within } from "@storybook/test"
 
 import Add from "../../../icons/app/Add"
 import Archive from "../../../icons/app/Archive"
@@ -72,6 +73,13 @@ export const Default: Story = {
   args: {
     variant: "default",
     label: "Default Button",
+    "data-test": "data"
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    const button = canvas.getByRole('button');
+    await expect(button.dataset.test).toBe("data")
   },
 }
 
