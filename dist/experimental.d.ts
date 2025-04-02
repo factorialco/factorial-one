@@ -19,6 +19,7 @@ import { FieldPath } from 'react-hook-form';
 import { FieldValues } from 'react-hook-form';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
+import { FullscreenLayoutProps } from './FullscreenLayout';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
 import { IconType as IconType_3 } from '../../factorial-one';
@@ -36,7 +37,6 @@ import * as RechartsPrimitive from 'recharts';
 import { RefAttributes } from 'react';
 import { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { sizes as sizes_2 } from '../../../../ui/avatar';
-import { StandardLayoutProps as StandardLayoutProps_2 } from './FullscreenLayout';
 import { SVGProps } from 'react';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { type as type_2 } from '../../../../ui/avatar';
@@ -670,7 +670,7 @@ export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_13 &
 
 export declare type ChatWidgetEmptyStateProps = Props_13;
 
-export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, overtimeOnly, }: ClockInControlsProps): JSX_2.Element;
+export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, }: ClockInControlsProps): JSX_2.Element;
 
 export declare interface ClockInControlsProps {
     /** Optional remaining time in minutes */
@@ -715,7 +715,6 @@ export declare interface ClockInControlsProps {
     onBreak?: (breakTypeId?: string) => void;
     canShowProject?: boolean;
     projectSelectorElement?: React.ReactNode;
-    overtimeOnly?: boolean;
 }
 
 declare interface ClockInGraphProps {
@@ -1321,7 +1320,7 @@ declare interface FrameContextType {
     toggleSidebar: () => void;
 }
 
-export declare const FullscreenLayout: ForwardRefExoticComponent<Omit<StandardLayoutProps_2 & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+export declare const FullscreenLayout: ForwardRefExoticComponent<Omit<FullscreenLayoutProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 declare type HeaderProps = {
     module: {
