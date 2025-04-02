@@ -17769,31 +17769,39 @@ const Td = g.forwardRef(({ className: e, ...n }, i) => /* @__PURE__ */ o(
 ));
 Td.displayName = v0.displayName;
 const $7 = ({ item: e }) => {
-  const { label: n, ...i } = e, t = S(
+  const {
+    label: n,
+    icon: i,
+    avatar: t,
+    description: a,
+    href: r,
+    critical: s,
+    ...f
+  } = e, d = S(
     "flex items-start gap-1.5 w-full",
-    e.critical && "text-f1-foreground-critical"
+    s && "text-f1-foreground-critical"
   );
   return /* @__PURE__ */ o(
     Dd,
     {
       asChild: !0,
-      onClick: (a) => {
-        var r;
-        a.stopPropagation(), (r = e.onClick) == null || r.call(e);
+      onClick: (c) => {
+        var l;
+        c.stopPropagation(), (l = e.onClick) == null || l.call(e);
       },
-      className: t,
-      children: e.href ? /* @__PURE__ */ o(
+      className: d,
+      children: r ? /* @__PURE__ */ o(
         dn,
         {
-          href: e.href,
+          href: r,
           className: S(
-            t,
+            d,
             "text-f1-foreground no-underline hover:cursor-pointer"
           ),
-          ...i,
+          ...f,
           children: /* @__PURE__ */ o(Ys, { item: e })
         }
-      ) : /* @__PURE__ */ o("div", { className: t, children: /* @__PURE__ */ o(Ys, { item: e }) })
+      ) : /* @__PURE__ */ o("div", { ...f, className: d, children: /* @__PURE__ */ o(Ys, { item: e }) })
     }
   );
 };
@@ -17804,12 +17812,14 @@ function Id({
   size: t,
   children: a,
   open: r,
-  onOpenChange: s
+  onOpenChange: s,
+  ...f
 }) {
   return /* @__PURE__ */ k(g0, { open: r, onOpenChange: s, children: [
     /* @__PURE__ */ o(p0, { asChild: !0, children: a || /* @__PURE__ */ o(
       be,
       {
+        ...f,
         hideLabel: !0,
         icon: n,
         size: t,
@@ -17819,7 +17829,7 @@ function Id({
       }
     ) }),
     /* @__PURE__ */ o(Rd, { align: i, children: e.map(
-      (f, d) => f.type === "separator" ? /* @__PURE__ */ o(Td, {}, d) : /* @__PURE__ */ o($7, { item: f }, d)
+      (d, c) => d.type === "separator" ? /* @__PURE__ */ o(Td, {}, c) : /* @__PURE__ */ o($7, { item: d }, c)
     ) })
   ] });
 }
@@ -24247,17 +24257,17 @@ const ZN = ({
   ] }),
   e.badge && /* @__PURE__ */ o(It, { value: e.badge, size: "sm", type: "bold" })
 ] }), JN = ({ item: e }) => {
-  const { isActive: n } = gf(), { label: i, ...t } = e, a = n(t.href, { exact: t.exactMatch });
+  const { isActive: n } = gf(), { label: i, icon: t, ...a } = e, r = n(a.href, { exact: a.exactMatch });
   return /* @__PURE__ */ o(
     dn,
     {
-      ...t,
+      ...a,
       className: S(
         "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
         Te("focus-visible:ring-inset"),
-        a ? "bg-f1-background-secondary text-f1-foreground" : "hover:bg-f1-background-secondary"
+        r ? "bg-f1-background-secondary text-f1-foreground" : "hover:bg-f1-background-secondary"
       ),
-      children: /* @__PURE__ */ o(ZN, { item: e, active: a })
+      children: /* @__PURE__ */ o(ZN, { item: e, active: r })
     }
   );
 }, ps = ({

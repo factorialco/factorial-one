@@ -500,7 +500,7 @@ export declare type BulkActionDefinition = {
 
 declare const Button: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round"> & {
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -1079,7 +1079,7 @@ declare type DropdownInternalProps = {
     align?: "start" | "end";
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
-};
+} & DataAttributes;
 
 export declare type DropdownItem = DropdownItemObject | {
     type: "separator";
@@ -1586,7 +1586,7 @@ declare type NavigateActionType = {
 
 declare type NavigationItem = Pick<LinkProps, "href" | "exactMatch" | "onClick"> & {
     label: string;
-};
+} & DataAttributes;
 
 declare type NavigationProps = {
     previous?: {
@@ -2502,7 +2502,7 @@ export declare type TabItem = {
     label: string;
     href: string;
     index?: boolean;
-};
+} & DataAttributes;
 
 declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
 
