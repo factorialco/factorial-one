@@ -16,7 +16,7 @@ export const ExampleComponent: React.FC<ExampleComponentProps> = ({
   text = "Hello World",
 }) => {
   return (
-    <View className="bg-background-default-light flex-1 rounded-lg p-4">
+    <View className="flex-1 rounded-lg bg-red-400 p-4">
       <Text className="text-foreground-default-light text-lg font-medium">
         {text}
       </Text>
