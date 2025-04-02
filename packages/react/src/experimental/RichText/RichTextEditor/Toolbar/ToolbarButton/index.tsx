@@ -35,16 +35,8 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
     },
     ref
   ) => {
-    const getIconColor = () => {
-      if (mode === "dark") {
-        return active ? "text-f1-icon-selected" : "text-f1-foreground-inverse"
-      }
-      return active ? "text-f1-icon-selected" : "text-f1-foreground"
-    }
-
     const button = (
       <Button
-        {...props}
         ref={ref}
         variant="outline"
         size="md"
@@ -58,8 +50,18 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         )}
         disabled={disabled}
         aria-label={label}
+        {...props}
       >
-        <Icon icon={icon} className={getIconColor()} />
+        <Icon
+          icon={icon}
+          className={
+            active
+              ? "text-f1-icon-selected"
+              : mode === "dark"
+                ? "text-f1-foreground-inverse"
+                : "text-f1-foreground"
+          }
+        />
         {showLabel && (
           <span
             className={cn(
@@ -86,5 +88,7 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
     )
   }
 )
+
+ToolbarButton.displayName = "ToolbarButton"
 
 export { ToolbarButton }
