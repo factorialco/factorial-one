@@ -1766,6 +1766,32 @@ declare interface OnePaginationProps {
     hasNextPage?: boolean;
 }
 
+export declare const OnePersonListItem: default_2.ForwardRefExoticComponent<OnePersonListItemProps & default_2.RefAttributes<HTMLDivElement>>;
+
+export declare type OnePersonListItemProps = {
+    person: {
+        firstName: string;
+        lastName: string;
+        avatarUrl?: string;
+        avatarBadge?: Omit<BadgeProps, "size">;
+    };
+    description?: string;
+    bottomTags: Omit<RawTagProps, "noBorder">[];
+    rightTag?: DotTagProps;
+    actions?: {
+        primary?: {
+            icon?: IconType;
+            label: string;
+            onClick: () => void;
+        };
+        secondary?: {
+            icon: IconType;
+            onClick: () => void;
+        };
+    };
+    onClick: () => void;
+};
+
 export declare type OnSelectItemsCallback<Record extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {
     allSelected: boolean | "indeterminate";
     itemsStatus: ReadonlyArray<{
