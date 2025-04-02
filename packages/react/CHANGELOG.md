@@ -1,5 +1,96 @@
 # Changelog
 
+## [1.19.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.19.1...factorial-one-react-v1.19.2) (2025-04-02)
+
+
+### Bug Fixes
+
+* card link navigation on widget ([#1531](https://github.com/factorialco/factorial-one/issues/1531)) ([92a866e](https://github.com/factorialco/factorial-one/commit/92a866e8436166a5ace846191c16c0b2f26d146a))
+
+## [1.19.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.19.0...factorial-one-react-v1.19.1) (2025-04-02)
+
+
+### Bug Fixes
+
+* **DataCollection:** Various UI improvements ([#1525](https://github.com/factorialco/factorial-one/issues/1525)) ([8c60516](https://github.com/factorialco/factorial-one/commit/8c60516c0b1a89c29faca12e2bf3ccffde51e577))
+
+## [1.19.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.18.2...factorial-one-react-v1.19.0) (2025-04-01)
+
+
+### Features
+
+* make a release ([#1526](https://github.com/factorialco/factorial-one/issues/1526)) ([e4c54cf](https://github.com/factorialco/factorial-one/commit/e4c54cf6fa037d24c44c67fe58255917e49407c0))
+
+## [1.18.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.18.1...factorial-one-react-v1.18.2) (2025-04-01)
+
+
+### Bug Fixes
+
+* **SectionHeader:** adjust separator based on the layout ([#1519](https://github.com/factorialco/factorial-one/issues/1519)) ([4fbfe85](https://github.com/factorialco/factorial-one/commit/4fbfe85e36c7bb4f4d7b3964c2a94941f8d98f26))
+
+## [1.18.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.18.0...factorial-one-react-v1.18.1) (2025-04-01)
+
+
+### Bug Fixes
+
+* **PageHeader:** adding asChild Property ([#1516](https://github.com/factorialco/factorial-one/issues/1516)) ([e4ddcfa](https://github.com/factorialco/factorial-one/commit/e4ddcfa5cf95b841f19b56e5980f4772074141af))
+
+## [1.18.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.17.0...factorial-one-react-v1.18.0) (2025-03-31)
+
+
+### Features
+
+* datacolletion selectable rows ([#1489](https://github.com/factorialco/factorial-one/issues/1489)) ([e5b0ada](https://github.com/factorialco/factorial-one/commit/e5b0ada4fccda81a1c95104e3b9fb64edffe72ed))
+
+## [1.17.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.16.1...factorial-one-react-v1.17.0) (2025-03-31)
+
+
+### Features
+
+* datacollection / onetable frozen cols ([444ad94](https://github.com/factorialco/factorial-one/commit/444ad9446f83c201c341bbb7d26a542290e55090))
+
+## [1.16.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.16.0...factorial-one-react-v1.16.1) (2025-03-31)
+
+
+### Bug Fixes
+
+* **PageHeader:** restrict height of description block ([#1499](https://github.com/factorialco/factorial-one/issues/1499)) ([da9323f](https://github.com/factorialco/factorial-one/commit/da9323fb42c8dac340b50915e7f4791f3499db5a))
+
+## [1.16.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.15.0...factorial-one-react-v1.16.0) (2025-03-31)
+
+
+### Features
+
+* Data collection property renderers ([#1468](https://github.com/factorialco/factorial-one/issues/1468)) ([224caca](https://github.com/factorialco/factorial-one/commit/224cacacd686e59226ab9f8b800209c12c7223e3))
+
+## [1.15.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.14.1...factorial-one-react-v1.15.0) (2025-03-31)
+
+
+### Features
+
+* **Collections:** "Clear" button in filters ([#1506](https://github.com/factorialco/factorial-one/issues/1506)) ([90ca9dd](https://github.com/factorialco/factorial-one/commit/90ca9dd7fb1d948aef8421e4d9c393ffbd058b0f))
+
+## [1.14.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.14.0...factorial-one-react-v1.14.1) (2025-03-28)
+
+
+### Bug Fixes
+
+* Fixes in Product Updates dropdown ([#1491](https://github.com/factorialco/factorial-one/issues/1491)) ([81f374f](https://github.com/factorialco/factorial-one/commit/81f374fe00d3e1b720f8ea11f1fd43dfa4ad37af))
+
+## [1.14.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.13.0...factorial-one-react-v1.14.0) (2025-03-28)
+
+
+### Features
+
+* **Collections:** propagate loading state to Table visualization ([#1488](https://github.com/factorialco/factorial-one/issues/1488)) ([a2a488c](https://github.com/factorialco/factorial-one/commit/a2a488c27146618c1549e3457a42d8e032562a7b))
+
+## [1.13.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.12.0...factorial-one-react-v1.13.0) (2025-03-27)
+
+
+### Features
+
+* collection actions ([#1464](https://github.com/factorialco/factorial-one/issues/1464)) ([51fa291](https://github.com/factorialco/factorial-one/commit/51fa29173952edb1ce2e1f6332223149219f446e))
+
 ## [1.12.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.11.0...factorial-one-react-v1.12.0) (2025-03-26)
 
 

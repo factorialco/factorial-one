@@ -1,10 +1,10 @@
-import { Icon } from "../components/Utilities/Icon"
-import { Check, Minus } from "../icons/app"
-import { cn, focusRing } from "../lib/utils"
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
 import { AnimatePresence, motion } from "framer-motion"
 import * as React from "react"
 import { useId } from "react"
+import { Icon } from "../components/Utilities/Icon"
+import { Check, Minus } from "../icons/app"
+import { cn, focusRing } from "../lib/utils"
 
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,

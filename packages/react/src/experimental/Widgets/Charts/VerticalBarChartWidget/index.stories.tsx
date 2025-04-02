@@ -2,8 +2,8 @@ import type { Meta } from "@storybook/react"
 
 import { VerticalBarChartProps } from "../../../../components/Charts/VerticalBarChart"
 import BarChartStory from "../../../../components/Charts/VerticalBarChart/index.stories"
-import { VerticalBarChartWidget } from "./index"
 import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
+import { VerticalBarChartWidget } from "./index"
 
 const meta = {
   title: "Widgets/Charts/VerticalBarChartWidget",

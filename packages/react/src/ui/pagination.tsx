@@ -1,7 +1,7 @@
+import * as React from "react"
 import { Icon } from "../components/Utilities/Icon"
 import { ChevronLeft, ChevronRight, EllipsisHorizontal } from "../icons/app"
 import { cn, focusRing } from "../lib/utils"
-import * as React from "react"
 
 const Pagination = ({ className, ...props }: React.ComponentProps<"nav">) => (
   <nav

@@ -1,6 +1,29 @@
 import { CLOCK_IN_COLORS } from "../ClockInGraph"
 import { ClockInControlsProps } from "./index"
 
+// to prevent having an overtime greater that the total time that we're showing
+export const getNormalizedRemainingMinutes = (
+  data: ClockInControlsProps["data"],
+  remainingMinutes: ClockInControlsProps["remainingMinutes"]
+) => {
+  const totalMinutesWithoutRemainingTime =
+    (data?.reduce(
+      (acc, entry) =>
+        acc +
+        (entry.variant === "clocked-in"
+          ? (entry.to.getTime() - entry.from.getTime()) / 1000
+          : 0),
+      0
+    ) ?? 0) / 60
+
+  const res =
+    (remainingMinutes ?? 0) < -1 * (totalMinutesWithoutRemainingTime ?? 0)
+      ? -1 * totalMinutesWithoutRemainingTime
+      : remainingMinutes
+
+  return res ?? 0
+}
+
 export const getInfo = ({
   data = [],
   labels,
@@ -24,7 +47,12 @@ export const getInfo = ({
 
     if (remainingMinutes === undefined) return
 
-    const absRemainingMinutes = Math.abs(remainingMinutes)
+    const normalizedRemainingMinutes = getNormalizedRemainingMinutes(
+      data,
+      remainingMinutes
+    )
+
+    const absRemainingMinutes = Math.abs(normalizedRemainingMinutes)
 
     const hours = Math.floor(absRemainingMinutes / 60)
     const minutes = Math.floor(absRemainingMinutes % 60)

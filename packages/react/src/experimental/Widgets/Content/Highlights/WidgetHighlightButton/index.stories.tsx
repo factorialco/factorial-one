@@ -1,5 +1,5 @@
-import { InfoCircle as InfoCircleIcon } from "../../../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import { InfoCircle as InfoCircleIcon } from "../../../../../icons/app"
 import { WidgetHighlightButton, WidgetHighlightButtonProps } from "./index"
 
 const meta: Meta<WidgetHighlightButtonProps> = {

@@ -1,14 +1,14 @@
 import { Button } from "../../../../components/Actions/Button"
 import { IconType } from "../../../../components/Utilities/Icon"
 
+import { AnimatePresence, motion } from "framer-motion"
+import { memo, useState } from "react"
+import { cn } from "../../../../lib/utils"
+import { MobileDropdown } from "../../../Navigation/Dropdown"
+import { Tooltip } from "../../../Overlays/Tooltip"
 import { AvatarVariant } from "../../Avatars/Avatar"
 import { NewColor } from "../../Tags/DotTag"
 import { StatusVariant } from "../../Tags/StatusTag"
-import { MobileDropdown } from "../../../Navigation/Dropdown"
-import { Tooltip } from "../../../Overlays/Tooltip"
-import { cn } from "../../../../lib/utils"
-import { AnimatePresence, motion } from "framer-motion"
-import { memo, useState } from "react"
 import { MetadataValue } from "./MetadataValue"
 
 type MetadataItemValue =

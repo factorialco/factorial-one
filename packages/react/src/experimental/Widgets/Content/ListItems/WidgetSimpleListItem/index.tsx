@@ -1,9 +1,9 @@
+import { ComponentProps } from "react"
 import { Icon, IconType } from "../../../../../components/Utilities/Icon"
+import { cn } from "../../../../../lib/utils"
 import { Counter } from "../../../../Information/Counter"
 import { AlertTag } from "../../../../Information/Tags/AlertTag"
 import { RawTag } from "../../../../Information/Tags/RawTag"
-import { cn } from "../../../../../lib/utils"
-import { ComponentProps } from "react"
 
 export type Props<Id extends string | number = string | number> = {
   id: Id

@@ -1,4 +1,3 @@
-import { Carousel } from "../../Navigation/Carousel"
 import {
   Children,
   forwardRef,
@@ -6,6 +5,8 @@ import {
   useImperativeHandle,
   useRef,
 } from "react"
+import { Carousel } from "../../Navigation/Carousel"
+import { LayoutProvider } from "../LayoutProvider"
 
 type Props = {
   widgets?: ReactNode[]
@@ -36,27 +37,29 @@ export const HomeLayout = forwardRef<HTMLDivElement, Props>(function HomeLayout(
     ))
 
   return (
-    <div ref={ref} className="@container">
-      {/* Smaller screen content */}
-      <div className="flex flex-col gap-6 px-5 pt-4 @md:pt-2 @5xl:hidden">
-        <Carousel columns={CAROUSEL_COLUMNS} showArrows={false}>
-          {arrayWidgets}
-        </Carousel>
-        <main>{children}</main>
-      </div>
-
-      {/* Larger screen content */}
-      <div className="hidden grid-cols-3 gap-5 px-6 pb-6 pt-2 @5xl:grid">
-        <div className="col-span-3 flex flex-row gap-5 *:flex-1">
-          {arrayWidgets.slice(0, 3)}
+    <LayoutProvider layout="home">
+      <div ref={ref} className="@container">
+        {/* Smaller screen content */}
+        <div className="flex flex-col gap-6 px-5 pt-4 @md:pt-2 @5xl:hidden">
+          <Carousel columns={CAROUSEL_COLUMNS} showArrows={false}>
+            {arrayWidgets}
+          </Carousel>
+          <main>{children}</main>
         </div>
 
-        <main className="col-span-2">{children}</main>
+        {/* Larger screen content */}
+        <div className="hidden grid-cols-3 gap-5 px-6 pb-6 pt-2 @5xl:grid">
+          <div className="col-span-3 flex flex-row gap-5 *:flex-1">
+            {arrayWidgets.slice(0, 3)}
+          </div>
 
-        <div className="flex flex-1 flex-col gap-5">
-          {arrayWidgets.slice(3)}
+          <main className="col-span-2">{children}</main>
+
+          <div className="flex flex-1 flex-col gap-5">
+            {arrayWidgets.slice(3)}
+          </div>
         </div>
       </div>
-    </div>
+    </LayoutProvider>
   )
 })

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { DetailsItemsList } from "../DetailsItemsList"
-import * as DetailsItemsListStories from "../DetailsItemsList/index.stories"
+import { ComponentProps } from "react"
+import { PageDecorator } from "../../../../lib/storybook-utils/pageDecorator"
 import { Dashboard } from "../../../Widgets/Layout/Dashboard"
 import * as DashboardStories from "../../../Widgets/Layout/Dashboard/index.stories"
-import { PageDecorator } from "../../../../lib/storybook-utils/pageDecorator"
-import { ComponentProps } from "react"
+import { DetailsItemsList } from "../DetailsItemsList"
+import * as DetailsItemsListStories from "../DetailsItemsList/index.stories"
 import { InfoPaneLayout } from "./index"
 
 const meta = {

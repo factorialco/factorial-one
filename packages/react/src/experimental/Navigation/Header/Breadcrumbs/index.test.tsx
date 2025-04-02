@@ -1,4 +1,3 @@
-import { Home, Settings } from "../../../../icons/app"
 import {
   fireEvent,
   render,
@@ -8,6 +7,7 @@ import {
 } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import { Home, Settings } from "../../../../icons/app"
 import Breadcrumbs, { BreadcrumbItemType } from "./index"
 
 // Mock ResizeObserver

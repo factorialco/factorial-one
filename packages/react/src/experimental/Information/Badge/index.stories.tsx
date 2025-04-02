@@ -1,5 +1,5 @@
-import * as Icons from "../../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import * as Icons from "../../../icons/app"
 import { Badge } from "./index"
 
 const meta: Meta<typeof Badge> = {

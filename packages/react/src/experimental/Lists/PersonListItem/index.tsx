@@ -1,11 +1,11 @@
+import React from "react"
 import { Button } from "../../../components/Actions/Button"
 import { Icon, IconType } from "../../../components/Utilities/Icon"
+import { InfoCircle } from "../../../icons/app"
 import { BadgeProps } from "../../exports"
 import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 import { DotTag, DotTagProps } from "../../Information/Tags/DotTag"
 import { RawTag, RawTagProps } from "../../Information/Tags/RawTag"
-import { InfoCircle } from "../../../icons/app"
-import React from "react"
 
 export type PersonListItemProps = {
   person: {

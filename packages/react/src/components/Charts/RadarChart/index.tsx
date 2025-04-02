@@ -1,10 +1,3 @@
-import {
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "../../../ui/chart"
 import { ComponentProps, ForwardedRef } from "react"
 import {
   PolarAngleAxis,
@@ -13,6 +6,13 @@ import {
   Radar,
   RadarChart as RadarChartPrimitive,
 } from "recharts"
+import {
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "../../../ui/chart"
 import { autoColor } from "../utils/colors"
 import { fixedForwardRef } from "../utils/forwardRef"
 import { ChartConfig, ChartItem } from "../utils/types"

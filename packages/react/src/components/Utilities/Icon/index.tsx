@@ -1,4 +1,3 @@
-import { cn } from "../../../lib/utils"
 import { cva, type VariantProps } from "cva"
 import {
   forwardRef,
@@ -6,6 +5,7 @@ import {
   RefAttributes,
   SVGProps,
 } from "react"
+import { cn } from "../../../lib/utils"
 
 const iconVariants = cva({
   base: "inline-block shrink-0",

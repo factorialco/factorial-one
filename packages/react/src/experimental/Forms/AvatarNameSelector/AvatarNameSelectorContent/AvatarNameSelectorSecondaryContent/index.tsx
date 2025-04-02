@@ -1,5 +1,5 @@
-import { VirtualList } from "../../../../Navigation/VirtualList"
 import { useMemo } from "react"
+import { VirtualList } from "../../../../Navigation/VirtualList"
 import { AvatarNameListTag } from "../../AvatarNameListTag"
 import {
   AvatarNamedEntity,

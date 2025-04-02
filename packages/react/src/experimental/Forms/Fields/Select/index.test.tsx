@@ -1,7 +1,7 @@
-import { Search } from "../../../../icons/app"
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import { Search } from "../../../../icons/app"
 import { Select } from "./index"
 import type { SelectItemProps } from "./types"
 
@@ -40,6 +40,13 @@ const mockOptions: SelectItemProps<string>[] = [
 ]
 
 describe("Select", () => {
+  // Mock ResizeObserver
+  global.ResizeObserver = vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
+  }))
+
   beforeEach(() => {
     vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(
       () => ({

@@ -52,16 +52,14 @@ export const MobileDropdown = ({ items, children }: DropdownProps) => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <div className="w-full [&>*]:w-full">
-          {children || (
-            <Button
-              label="Other actions"
-              icon={EllipsisHorizontal}
-              variant="outline"
-              size="lg"
-            />
-          )}
-        </div>
+        {children || (
+          <Button
+            label="Other actions"
+            icon={EllipsisHorizontal}
+            variant="outline"
+            size="lg"
+          />
+        )}
       </DrawerTrigger>
       <DrawerOverlay className="bg-f1-background-overlay" />
       <DrawerContent className="bg-f1-background">

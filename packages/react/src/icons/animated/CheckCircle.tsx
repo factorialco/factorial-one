@@ -39,7 +39,6 @@ interface CheckCircleProps extends React.SVGProps<SVGSVGElement> {
 
 const CheckCircleAnimated = React.forwardRef<SVGSVGElement, CheckCircleProps>(
   ({ animate = "normal", ...props }, ref) => {
-
     return (
       <svg
         ref={ref}

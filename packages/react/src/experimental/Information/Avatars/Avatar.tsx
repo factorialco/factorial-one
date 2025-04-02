@@ -9,9 +9,9 @@ type TeamAvatarProps = ComponentProps<typeof TeamAvatar>
 type CompanyAvatarProps = ComponentProps<typeof CompanyAvatar>
 
 export type AvatarVariant =
-  | ({ type: "person" } & PersonAvatarProps)
-  | ({ type: "team" } & TeamAvatarProps)
-  | ({ type: "company" } & CompanyAvatarProps)
+  | ({ type: "person" } & Omit<PersonAvatarProps, "size">)
+  | ({ type: "team" } & Omit<TeamAvatarProps, "size">)
+  | ({ type: "company" } & Omit<CompanyAvatarProps, "size">)
 
 export const Avatar = ({
   avatar,

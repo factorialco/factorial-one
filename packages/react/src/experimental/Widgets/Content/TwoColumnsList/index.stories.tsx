@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { TwoColumnsList } from "./index"
 import { ProgressBarDuo } from "../ProgressBarDuo"
+import { TwoColumnsList } from "./index"
 
 const meta: Meta = {
   title: "Widgets/Content/TwoColumnsList",

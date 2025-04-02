@@ -1,8 +1,8 @@
+import * as SelectPrimitive from "@radix-ui/react-select"
+import { forwardRef } from "react"
 import { Icon } from "../../../components/Utilities/Icon"
 import { ChevronDown, ChevronUp } from "../../../icons/app"
 import { cn } from "../../../lib/utils.ts"
-import * as SelectPrimitive from "@radix-ui/react-select"
-import { forwardRef } from "react"
 
 type Props = {
   variant: "up" | "down"

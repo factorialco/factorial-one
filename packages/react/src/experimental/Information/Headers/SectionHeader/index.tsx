@@ -2,6 +2,7 @@ import { Button, type ButtonProps } from "../../../../components/Actions/Button"
 import { Icon, type IconType } from "../../../../components/Utilities/Icon"
 import ExternalLink from "../../../../icons/app/ExternalLink"
 import { cn, focusRing } from "../../../../lib/utils"
+import { useLayout } from "../../../PageLayouts/LayoutProvider"
 
 type Props = {
   /** Main heading text */
@@ -33,10 +34,12 @@ export const SectionHeader = ({
   supportButton,
   separator,
 }: Props) => {
+  const layout = useLayout()
   return (
     <div
       className={cn(
         "border-1 flex flex-col justify-between gap-4 border-dashed border-transparent px-6 py-5 md:flex-row md:gap-2",
+        layout === "standard" && "-mx-6",
         separator === "top" && "border-t-f1-border",
         separator === "bottom" && "border-b-f1-border"
       )}

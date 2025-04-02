@@ -1,6 +1,6 @@
-import * as Icons from "../../icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useState } from "react"
+import * as Icons from "../../icons/app"
 import { Chip } from "./index"
 
 const meta = {

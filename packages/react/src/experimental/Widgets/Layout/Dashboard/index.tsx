@@ -1,4 +1,3 @@
-import { Blend, withSkeleton } from "../../../../lib/skeleton"
 import {
   Children,
   ComponentProps,
@@ -9,6 +8,7 @@ import {
   useState,
 } from "react"
 import { Masonry } from "react-masonry"
+import { Blend, withSkeleton } from "../../../../lib/skeleton"
 import { Widget } from "../../Widget"
 
 type WidgetWidth = "sm" | "md" | "lg"

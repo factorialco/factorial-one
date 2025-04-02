@@ -1,10 +1,10 @@
 "use client"
 
-import { Image } from "../lib/imageHandler"
-import { cn } from "../lib/utils"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 import { cva } from "cva"
 import * as React from "react"
+import { Image } from "../lib/imageHandler"
+import { cn } from "../lib/utils"
 
 export const sizes = ["xsmall", "small", "medium", "large", "xlarge"] as const
 

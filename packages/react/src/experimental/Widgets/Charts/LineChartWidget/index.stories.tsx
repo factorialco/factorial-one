@@ -2,8 +2,8 @@ import type { Meta } from "@storybook/react"
 
 import AreaChartStory from "../../../../components/Charts/AreaChart/index.stories"
 import { LineChartProps } from "../../../../components/Charts/LineChart"
-import { LineChartWidget } from "./index"
 import { containerStoryArgs, WidgetDecorator } from "../storybook-utils"
+import { LineChartWidget } from "./index"
 
 const meta = {
   title: "Widgets/Charts/LineChartWidget",

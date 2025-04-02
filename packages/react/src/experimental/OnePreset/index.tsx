@@ -1,5 +1,5 @@
-import { Counter } from "../Information/Counter"
 import { cn } from "../../lib/utils"
+import { Counter } from "../Information/Counter"
 
 interface PresetProps {
   label: string
@@ -18,7 +18,7 @@ export const Preset = ({ label, number, onClick, selected }: PresetProps) => {
         number && "pr-1.5",
         onClick && "cursor-pointer hover:outline-f1-border-hover",
         selected &&
-          "bg-f1-background-selected-secondary text-f1-foreground-selected"
+          "border-f1-border-selected bg-f1-background-selected-secondary text-f1-foreground-selected"
       )}
     >
       <input

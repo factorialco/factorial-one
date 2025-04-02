@@ -213,6 +213,7 @@ function OneCardBase({
             <div className="flex gap-2">
               {secondaryActions.map((action, index) => (
                 <Button
+                  key={index}
                   label={action.label}
                   icon={action.icon}
                   hideLabel={index > 0}

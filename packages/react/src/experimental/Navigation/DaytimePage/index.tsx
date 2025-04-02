@@ -1,9 +1,9 @@
+import { cva, type VariantProps } from "cva"
 import { Button } from "../../../components/Actions/Button"
-import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
-import { useSidebar } from "../ApplicationFrame/FrameProvider"
 import Menu from "../../../icons/app/Menu"
 import { cn } from "../../../lib/utils"
-import { cva, type VariantProps } from "cva"
+import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
+import { useSidebar } from "../ApplicationFrame/FrameProvider"
 
 const daytimePageVariants = cva({
   base: "pointer-events-none absolute inset-0 h-screen max-h-[1000px] opacity-[0.08]",

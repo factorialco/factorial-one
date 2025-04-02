@@ -1,6 +1,6 @@
-import { cn } from "../../../lib/utils"
 import { cva, type VariantProps } from "cva"
 import { forwardRef } from "react"
+import { cn } from "../../../lib/utils"
 
 const boxVariants = cva({
   base: "flex",

@@ -1,9 +1,9 @@
+import { forwardRef } from "react"
 import {
   RadialProgressChart,
   RadialProgressProps,
 } from "../../../../components/Charts/RadialProgressChart"
 import { withSkeleton } from "../../../../lib/skeleton"
-import { forwardRef } from "react"
 import { Widget } from "../../Widget"
 
 export type RadialProgressWidgetProps = {
