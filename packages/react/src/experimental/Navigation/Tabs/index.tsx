@@ -8,7 +8,7 @@ export type TabItem = {
   index?: boolean
 }
 
-interface TabsProps {
+export interface TabsProps {
   tabs: TabItem[]
   secondary?: boolean
   embedded?: boolean
