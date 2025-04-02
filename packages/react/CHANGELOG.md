@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.19.1...factorial-one-react-v1.19.2) (2025-04-02)
+
+
+### Bug Fixes
+
+* card link navigation on widget ([#1531](https://github.com/factorialco/factorial-one/issues/1531)) ([92a866e](https://github.com/factorialco/factorial-one/commit/92a866e8436166a5ace846191c16c0b2f26d146a))
+
 ## [1.19.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.19.0...factorial-one-react-v1.19.1) (2025-04-02)
 
 

@@ -7,7 +7,6 @@ import InfoCircleLine from "../icons/app/InfoCircleLine"
 
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Link } from "@/lib/linkHandler"
-import { Button } from "../components/Actions/Button"
 import {
   Tooltip,
   TooltipContent,
@@ -101,14 +100,19 @@ const CardLink = React.forwardRef<
   React.ComponentPropsWithoutRef<"a"> & { icon?: IconType }
 >(({ className, title, icon = ChevronRight, ...props }, ref) => {
   return (
-    <Link ref={ref} className={className} aria-label={title} {...props}>
-      <Button
-        icon={icon}
-        label={title ?? ""}
-        variant="outline"
-        size="sm"
-        hideLabel
-      />
+    <Link
+      ref={ref}
+      className={cn(
+        "group inline-flex aspect-square h-6 items-center justify-center gap-1", //layout
+        "rounded-sm border border-solid border-f1-border bg-f1-background-inverse-secondary", //appearance
+        "whitespace-nowrap px-0 text-base font-medium text-f1-foreground", //typography
+        "cursor-pointer transition-colors hover:border-f1-border-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1", //interaction
+        className
+      )}
+      aria-label={title}
+      {...props}
+    >
+      <Icon size="sm" icon={icon} className="text-f1-icon-bold" />
     </Link>
   )
 })
