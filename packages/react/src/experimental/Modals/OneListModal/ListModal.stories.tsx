@@ -1,3 +1,4 @@
+import { ApplicationFrame } from "@/experimental/exports"
 import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
 import type { Meta, StoryObj } from "@storybook/react"
@@ -13,6 +14,13 @@ const meta: Meta<typeof ListModal> = {
     },
   },
   tags: ["autodocs"],
+  decorators: [
+    (Story) => (
+      <ApplicationFrame sidebar={null}>
+        <Story />
+      </ApplicationFrame>
+    ),
+  ],
 }
 
 export default meta
@@ -40,6 +48,7 @@ export const Default: Story = {
   args: {
     title: "Team Status",
     isOpen: true,
+    setIsOpen: () => {},
     dropdownItems: [
       {
         label: "Edit",
