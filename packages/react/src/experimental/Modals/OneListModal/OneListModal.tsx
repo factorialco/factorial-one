@@ -85,7 +85,7 @@ export const ListModal: React.FC<ListModalProps> = ({
     return (
       <Drawer open={open} onOpenChange={handleOpenChange}>
         <DrawerOverlay className="bg-f1-background-overlay" />
-        <DrawerContent className="max-h-[90vh] bg-f1-background">
+        <DrawerContent className="max-h-[95vh] bg-f1-background">
           <Content />
         </DrawerContent>
       </Drawer>
