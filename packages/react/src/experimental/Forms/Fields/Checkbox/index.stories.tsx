@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { expect, within } from "@storybook/test"
 import { useState } from "react"
 import { Checkbox } from "./index"
 
@@ -50,10 +51,17 @@ type Story = StoryObj<typeof Checkbox>
 export const Default: Story = {
   args: {
     title: "Checkbox",
+    "data-test": "foo",
   },
   render: (args) => {
     const [checked, setChecked] = useState(false)
     return <Checkbox {...args} checked={checked} onCheckedChange={setChecked} />
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const checkbox = canvas.getByRole("checkbox")
+    await expect(checkbox.dataset.test).toBe("foo")
   },
 }
 
