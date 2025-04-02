@@ -28,7 +28,7 @@ if (buildTailwind) {
 
 /* Build sync */
 const defaultCoderWorkspaceFolder =
-  "/home/factorial/workspace/factorial/frontend/node_modules/@factorialco/factorial-one"
+  "/home/factorial/workspace/factorial/frontend/node_modules/@factorialco/factorial-one-react"
 
 const buildSyncArg = process.argv.find((arg) => arg.startsWith("--buildSync"))
 const buildSync = !!buildSyncArg
