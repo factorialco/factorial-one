@@ -16851,7 +16851,7 @@ const by = g.forwardRef(({ className: e, children: n, ...i }, t) => /* @__PURE__
     {
       ref: t,
       className: S(
-        "bg-background fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-xl",
+        "bg-background fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto flex-col rounded-t-xl focus:outline-none",
         e
       ),
       ...i,
