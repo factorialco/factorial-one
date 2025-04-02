@@ -1,51 +1,43 @@
-# Factorial One Design System
+# Factorial One React Native
 
-Factorial One is a comprehensive design system for building consistent user interfaces across web and mobile platforms.
+React Native implementation of the Factorial One Design System.
 
-## Packages
-
-This monorepo contains the following packages:
-
-- `@factorialco/factorial-one-core`: Core tokens and utilities shared across platforms (located in `packages/core`)
-- `@factorialco/factorial-one-react-native`: React Native implementation of the design system (located in `packages/react-native`)
-- `@factorialco/factorial-one`: React implementation of the design system (existing)
-
-## Development
-
-### Prerequisites
-
-- Node.js 18+
-- pnpm 9+
-
-### Setup
+## Installation
 
 ```bash
-# Install dependencies
-pnpm install
+npm install @factorialco/factorial-one-react-native
+# or
+yarn add @factorialco/factorial-one-react-native
+# or
+pnpm add @factorialco/factorial-one-react-native
 ```
+
+## Usage
+
+```tsx
+import { ExampleComponent } from '@factorialco/factorial-one-react-native';
+
+export default function App() {
+  return (
+    <ExampleComponent text="Hello from Factorial One!" />
+  );
+}
+```
+
+## Development
 
 ### Building
 
 ```bash
-# Build all packages
 pnpm build
-
-# Build a specific package
-pnpm --filter @factorialco/factorial-one-core build
-pnpm --filter @factorialco/factorial-one-react-native build
 ```
 
 ### Testing
 
 ```bash
-# Run tests for all packages
 pnpm test
-
-# Run tests for a specific package
-pnpm --filter @factorialco/factorial-one-core test
-pnpm --filter @factorialco/factorial-one-react-native test
 ```
 
 ## License
 
-MIT
+MIT 
