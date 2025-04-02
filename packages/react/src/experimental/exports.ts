@@ -10,6 +10,7 @@ export * from "./OneDataCollection/exports"
 export * from "./OnePagination"
 export * from "./Overlays/exports"
 export * from "./PageLayouts/exports"
+export * from "./RichText/exports"
 export * from "./Utilities/exports"
 export * from "./Widgets/exports"
 
