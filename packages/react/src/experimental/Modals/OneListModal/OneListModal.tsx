@@ -57,24 +57,17 @@ export const ListModal: React.FC<ListModalProps> = ({
 
   const Content = () => (
     <>
-      <div
-        className={cn(
-          "bg-f1-background",
-          !isSmallScreen && "sticky left-0 right-0 top-0"
-        )}
-      >
-        <OneModalHeader
-          title={title}
-          dropdownItems={dropdownItems}
-          onClose={handleClose}
-        />
+      <OneModalHeader
+        title={title}
+        dropdownItems={dropdownItems}
+        onClose={handleClose}
+      />
 
-        {tabs && (
-          <div className="-mx-2">
-            <Tabs tabs={tabs} />
-          </div>
-        )}
-      </div>
+      {tabs && (
+        <div className="-mx-2">
+          <Tabs tabs={tabs} />
+        </div>
+      )}
       <ScrollArea
         className={cn(
           "[*[data-state=visible]_div]:bg-f1-background flex flex-col",
