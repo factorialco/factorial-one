@@ -2,16 +2,16 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import avatar from "../../../../storybook-assets/avatar.jpeg"
 import { Check, Placeholder } from "../../../icons/app"
-import { PersonListItem } from "./index"
+import { OnePersonListItem } from "./index"
 
 const meta = {
-  title: "List/PersonListItem",
-  component: PersonListItem,
+  title: "List/OnePersonListItem",
+  component: OnePersonListItem,
   tags: ["autodocs", "experimental"],
-} satisfies Meta<typeof PersonListItem>
+} satisfies Meta<typeof OnePersonListItem>
 
 export default meta
-type Story = StoryObj<typeof PersonListItem>
+type Story = StoryObj<typeof OnePersonListItem>
 
 export const Default: Story = {
   args: {
