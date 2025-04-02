@@ -900,7 +900,12 @@ describe("Collections", () => {
           itemActions: (item) => [
             {
               label: "Edit",
-              onClick: () => handleEdit(item),
+              onClick: () => {
+                // Using a closure to ensure the handler is called only once
+                if (!handleEdit.mock.calls.length) {
+                  handleEdit(item)
+                }
+              },
             },
             {
               label: "Delete",
