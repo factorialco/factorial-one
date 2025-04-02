@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.19.0...factorial-one-react-v1.19.1) (2025-04-02)
+
+
+### Bug Fixes
+
+* **DataCollection:** Various UI improvements ([#1525](https://github.com/factorialco/factorial-one/issues/1525)) ([8c60516](https://github.com/factorialco/factorial-one/commit/8c60516c0b1a89c29faca12e2bf3ccffde51e577))
+
 ## [1.19.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.18.2...factorial-one-react-v1.19.0) (2025-04-01)
 
 
