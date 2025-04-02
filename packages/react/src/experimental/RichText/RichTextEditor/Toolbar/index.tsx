@@ -313,6 +313,7 @@ const Toolbar = ({
 
   const linkGroup = [
     <LinkPopup
+      key="link-popup"
       editor={editor}
       linkPlaceholder={labels.linkPlaceholder}
       disabled={disableButtons}
