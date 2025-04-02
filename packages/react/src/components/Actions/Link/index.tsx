@@ -30,6 +30,7 @@ export interface LinkProps
   extends BaseLinkProps,
     VariantProps<typeof linkVariants> {
   stopPropagation?: boolean
+  [key: `data-${string}`]: string | undefined
 }
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
