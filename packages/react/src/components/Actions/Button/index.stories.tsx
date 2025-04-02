@@ -73,12 +73,12 @@ export const Default: Story = {
   args: {
     variant: "default",
     label: "Default Button",
-    "data-test": "data"
+    "data-test": "data",
   },
   play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+    const canvas = within(canvasElement)
 
-    const button = canvas.getByRole('button');
+    const button = canvas.getByRole("button")
     await expect(button.dataset.test).toBe("data")
   },
 }

@@ -28,9 +28,9 @@ const linkVariants = cva({
 
 export interface LinkProps
   extends BaseLinkProps,
-    VariantProps<typeof linkVariants> {
+    VariantProps<typeof linkVariants>,
+    DataAttributes {
   stopPropagation?: boolean
-  [key: `data-${string}`]: string | undefined
 }
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
