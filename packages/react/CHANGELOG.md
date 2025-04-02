@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.19.2...factorial-one-react-v1.20.0) (2025-04-02)
+
+
+### Features
+
+* expose data attributes for interactive elements ([#1535](https://github.com/factorialco/factorial-one/issues/1535)) ([a59c4c4](https://github.com/factorialco/factorial-one/commit/a59c4c4f31b00ea8ae919b2df621aaa9d7b65380))
+
 ## [1.19.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.19.1...factorial-one-react-v1.19.2) (2025-04-02)
 
 
