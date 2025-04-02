@@ -111,7 +111,6 @@ const CardLink = React.forwardRef<
       )}
       aria-label={title}
       {...props}
-      role="link"
     >
       <Icon size="sm" icon={icon} className="text-f1-icon-bold" />
     </Link>
