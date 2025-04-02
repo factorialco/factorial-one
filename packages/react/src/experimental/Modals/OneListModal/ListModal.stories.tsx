@@ -7,7 +7,10 @@ const meta: Meta<typeof ListModal> = {
   title: "Modals/ListModal",
   component: ListModal,
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
+    docs: {
+      story: { inline: false, height: "720px" },
+    },
   },
   tags: ["autodocs"],
 }
