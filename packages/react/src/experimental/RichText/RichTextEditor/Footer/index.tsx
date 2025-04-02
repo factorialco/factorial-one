@@ -77,10 +77,7 @@ const Footer = ({
   const useLittleMode = containerWidth < 500
 
   return (
-    <div
-      ref={containerRef}
-      className="flex max-w-full items-center gap-2 px-4 py-2 md:py-3"
-    >
+    <div ref={containerRef} className="flex max-w-full items-center gap-2 py-3">
       <div className="relative flex flex-grow items-center gap-2">
         <motion.div
           initial={{ width: 0 }}

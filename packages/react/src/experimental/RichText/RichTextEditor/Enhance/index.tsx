@@ -94,6 +94,7 @@ const EnhanceActivator = ({
           sideOffset={15}
           collisionPadding={10}
           style={{ zIndex: 1000 }}
+          className="subpopover-container"
         >
           <AnimatePresence>
             {open && (
