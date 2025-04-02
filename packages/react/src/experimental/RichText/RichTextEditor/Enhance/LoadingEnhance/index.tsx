@@ -1,17 +1,22 @@
 import { Spinner } from "@/experimental/exports"
+import { cn } from "@/lib/utils"
 
 interface LoadingEnhanceProps {
   label?: string
+  isFullscreen: boolean
 }
 
-const LoadingEnhance = ({ label }: LoadingEnhanceProps) => {
+const LoadingEnhance = ({ label, isFullscreen }: LoadingEnhanceProps) => {
   return (
-    <div className="absolute inset-0 z-50 flex items-center justify-center">
-      <div className="rounded-md bg-f1-background">
-        <div className="magicBackground magicColor flex items-center gap-2 rounded-md px-3 py-2">
-          <Spinner size="small" />
-          <p className="font-medium">{label || "Loading..."}</p>
-        </div>
+    <div
+      className={cn(
+        "absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-f1-background p-2",
+        !isFullscreen && "max-h-60"
+      )}
+    >
+      <div className="magicBackground flex h-full w-full flex-col items-center justify-center gap-3 rounded-md">
+        <Spinner size="small" />
+        <p className="font-medium">{label || "Loading..."}</p>
       </div>
     </div>
   )

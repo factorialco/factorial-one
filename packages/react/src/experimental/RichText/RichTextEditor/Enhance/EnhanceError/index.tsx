@@ -18,7 +18,10 @@ const EnhanceError = ({
         <div className="flex-shrink-0">
           <AlertAvatar size="sm" type="critical" />
         </div>
-        <p className="w-full flex-grow text-ellipsis text-sm font-semibold text-f1-foreground-critical">
+        <p
+          className="w-full max-w-xl flex-grow truncate text-ellipsis text-sm font-semibold text-f1-foreground-critical"
+          title={error || "Error"}
+        >
           {error || "Error"}
         </p>
       </div>

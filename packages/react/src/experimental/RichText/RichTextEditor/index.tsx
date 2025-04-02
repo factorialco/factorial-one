@@ -18,7 +18,6 @@ import { EnhanceError } from "./Enhance/EnhanceError"
 import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
-import { Loading } from "./Loading"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import { ExtensionsConfiguration } from "./utils/extensions"
 import {
@@ -50,8 +49,8 @@ interface RichTextEditorProps {
     content?: string
     files?: File[]
   }
-  isLoading?: boolean
   toolbarLabels: toolbarLabels
+  title: string
 }
 
 type RichTextEditorHandle = {
@@ -72,8 +71,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       initialEditorState,
       onChange,
       placeholder,
-      isLoading = false,
       toolbarLabels,
+      title,
     },
     ref
   ) {
@@ -83,8 +82,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     >(mentionsConfig?.users || [])
     const editorRef = useRef<HTMLDivElement>(null)
     const fileInputRef = useRef<HTMLInputElement>(null)
-    const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
     const containerRef = useRef<HTMLDivElement>(null)
+    const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
     const [enhanceError, setEnhanceError] = useState<string | null>(null)
@@ -110,7 +109,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const disableAllButtons = !!(
       isAcceptChangesOpen ||
       isLoadingEnhance ||
-      isLoading ||
       enhanceError
     )
 
@@ -212,175 +210,176 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     return (
       <div
         ref={containerRef}
-        className="relative flex h-auto flex-row bg-f1-background"
         id="rich-text-editor-container"
+        className={cn(
+          "relative flex w-full flex-col overflow-hidden bg-f1-background",
+          !isFullscreen && "rounded-xl border border-solid border-f1-border"
+        )}
       >
-        <div
-          className={cn(
-            "relative flex w-full flex-col overflow-hidden rounded-xl border border-solid border-f1-border bg-f1-background",
-            (isLoadingEnhance || isLoading) && "opacity-50 transition-opacity"
-          )}
-        >
-          <div className="absolute right-3 top-3 z-50">
-            <Button
-              onClick={(e) => {
-                e.preventDefault()
-                handleToggleFullscreen()
-              }}
-              label="Fullscreen"
-              aria-label="Toggle fullscreen mode"
-              variant="outline"
-              type="button"
-              hideLabel
-              round
-              size="sm"
-              icon={isFullscreen ? Minimize : Maximize}
-              disabled={disableAllButtons}
-            />
+        <div className="absolute right-3 top-3 z-50">
+          <Button
+            onClick={(e) => {
+              e.preventDefault()
+              handleToggleFullscreen()
+            }}
+            label="Fullscreen"
+            aria-label="Toggle fullscreen mode"
+            variant="outline"
+            type="button"
+            hideLabel
+            round
+            size="sm"
+            icon={isFullscreen ? Minimize : Maximize}
+            disabled={disableAllButtons}
+          />
+        </div>
+        {isFullscreen && (
+          <div className="pl-3 pr-10 pt-3">
+            <h1 className="font-bold truncate text-ellipsis text-lg">
+              {title}
+            </h1>
           </div>
+        )}
 
+        <div
+          ref={editorRef}
+          className={cn(
+            "relative w-full flex-grow",
+            isFullscreen && "h-full overflow-y-hidden"
+          )}
+          onClick={() => editor?.commands.focus()}
+        >
           <div
-            ref={editorRef}
             className={cn(
-              "relative w-full flex-grow",
-              isFullscreen &&
-                "h-full overflow-y-hidden px-3 pt-3 md:px-36 md:pt-7 lg:px-56 lg:pt-20"
+              "relative flex w-full items-start justify-center overflow-y-auto p-5 [scrollbar-width:thin]",
+              isFullscreen ? "h-full" : "h-auto max-h-60 pr-10"
             )}
-            onClick={() => editor?.commands.focus()}
           >
-            <div
-              className={cn(
-                "relative overflow-y-auto p-5 [scrollbar-width:thin]",
-                isFullscreen ? "h-full" : "h-auto max-h-60 pr-12"
-              )}
-            >
+            <div className={cn("w-full", isFullscreen && "max-w-4xl")}>
               <EditorContent editor={editor} />
             </div>
           </div>
 
-          <AnimatePresence>
-            {(isAcceptChangesOpen || enhanceError) && (
-              <motion.div
-                key="accordion"
-                initial={{ height: 0, opacity: 0, y: -20 }}
-                animate={{ height: "auto", opacity: 1, y: 0 }}
-                exit={{ height: 0, opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="flex w-full items-center justify-center"
-                aria-label="Accept changes dialog"
-              >
-                {isAcceptChangesOpen && (
-                  <AcceptChanges
-                    labels={enhanceConfig?.enhanceLabels}
-                    onAccept={() => {
-                      setIsAcceptChangesOpen(false)
-                      editor.setEditable(true)
-                      setLastIntent(null)
-                    }}
-                    onReject={() => {
-                      editor.chain().focus().undo().run()
-                      setIsAcceptChangesOpen(false)
-                      editor.setEditable(true)
-                      setLastIntent(null)
-                    }}
-                    onRepeat={() => {
-                      editor.chain().focus().undo().run()
-                      handleEnhanceWithAI(
-                        lastIntent?.selectedIntent,
-                        lastIntent?.customIntent
-                      )
-                    }}
-                  />
-                )}
-
-                {enhanceError && (
-                  <EnhanceError
-                    error={enhanceError}
-                    onClose={() => {
-                      setEnhanceError(null)
-                      editor.setEditable(true)
-                    }}
-                    closeErrorButtonLabel={
-                      enhanceConfig?.enhanceLabels.closeErrorButtonLabel
-                    }
-                  />
-                )}
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {filesConfig && (
-            <>
-              <input
-                id="rich-text-editor-upload-button"
-                type="file"
-                multiple={filesConfig.multipleFiles}
-                onChange={handleFileChange}
-                ref={fileInputRef}
-                className="hidden"
-                accept={getAcceptFileTypeString(filesConfig)}
-                aria-label="Upload file"
-              />
-              <AnimatePresence>
-                {files.length > 0 && (
-                  <motion.div
-                    key="filelist-accordion"
-                    initial={{ height: 0, opacity: 0, y: -20 }}
-                    animate={{ height: "auto", opacity: 1, y: 0 }}
-                    exit={{ height: 0, opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className=""
-                  >
-                    <FileList
-                      files={files}
-                      onRemoveFile={(fileIndex) =>
-                        handleRemoveFile(
-                          fileIndex,
-                          files,
-                          filesConfig,
-                          setFiles
-                        )
-                      }
-                      disabled={disableAllButtons}
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </>
+          {isLoadingEnhance && (
+            <LoadingEnhance
+              isFullscreen={isFullscreen}
+              label={enhanceConfig?.enhanceLabels.loadingEnhanceLabel}
+            />
           )}
-          <Footer
-            editor={editor}
-            maxCharacters={maxCharacters}
-            secondaryAction={secondaryAction}
-            primaryAction={primaryAction}
-            fileInputRef={fileInputRef}
-            canUseFiles={filesConfig ? true : false}
-            isLoadingEnhance={isLoadingEnhance}
-            disableButtons={disableAllButtons}
-            enhanceConfig={enhanceConfig}
-            isFullscreen={isFullscreen}
-            onEnhanceWithAI={handleEnhanceWithAI}
-            setLastIntent={setLastIntent}
-            toolbarLabels={toolbarLabels}
-          />
-
-          <EditorBubbleMenu
-            editor={editor}
-            disableButtons={disableAllButtons}
-            toolbarLabels={toolbarLabels}
-          />
         </div>
-        {isLoadingEnhance && (
-          <LoadingEnhance
-            label={enhanceConfig?.enhanceLabels.loadingEnhanceLabel}
-          />
+
+        <AnimatePresence>
+          {(isAcceptChangesOpen || enhanceError) && (
+            <motion.div
+              key="accordion"
+              initial={{ height: 0, opacity: 0, y: -20 }}
+              animate={{ height: "auto", opacity: 1, y: 0 }}
+              exit={{ height: 0, opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="flex w-full items-center justify-center pt-2"
+              aria-label="Accept changes dialog"
+            >
+              {isAcceptChangesOpen && (
+                <AcceptChanges
+                  labels={enhanceConfig?.enhanceLabels}
+                  onAccept={() => {
+                    setIsAcceptChangesOpen(false)
+                    editor.setEditable(true)
+                    setLastIntent(null)
+                  }}
+                  onReject={() => {
+                    editor.chain().focus().undo().run()
+                    setIsAcceptChangesOpen(false)
+                    editor.setEditable(true)
+                    setLastIntent(null)
+                  }}
+                  onRepeat={() => {
+                    editor.chain().focus().undo().run()
+                    handleEnhanceWithAI(
+                      lastIntent?.selectedIntent,
+                      lastIntent?.customIntent
+                    )
+                  }}
+                />
+              )}
+
+              {enhanceError && (
+                <EnhanceError
+                  error={enhanceError}
+                  onClose={() => {
+                    setEnhanceError(null)
+                    editor.setEditable(true)
+                  }}
+                  closeErrorButtonLabel={
+                    enhanceConfig?.enhanceLabels.closeErrorButtonLabel
+                  }
+                />
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {filesConfig && (
+          <>
+            <input
+              id="rich-text-editor-upload-button"
+              type="file"
+              multiple={filesConfig.multipleFiles}
+              onChange={handleFileChange}
+              ref={fileInputRef}
+              className="hidden"
+              accept={getAcceptFileTypeString(filesConfig)}
+              aria-label="Upload file"
+            />
+            <AnimatePresence>
+              {files.length > 0 && (
+                <motion.div
+                  key="filelist-accordion"
+                  initial={{ height: 0, opacity: 0, y: -20 }}
+                  animate={{ height: "auto", opacity: 1, y: 0 }}
+                  exit={{ height: 0, opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className=""
+                >
+                  <FileList
+                    files={files}
+                    onRemoveFile={(fileIndex) =>
+                      handleRemoveFile(fileIndex, files, filesConfig, setFiles)
+                    }
+                    disabled={disableAllButtons}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </>
         )}
-        {isLoading && <Loading />}
+        <Footer
+          editor={editor}
+          maxCharacters={maxCharacters}
+          secondaryAction={secondaryAction}
+          primaryAction={primaryAction}
+          fileInputRef={fileInputRef}
+          canUseFiles={filesConfig ? true : false}
+          isLoadingEnhance={isLoadingEnhance}
+          disableButtons={disableAllButtons}
+          enhanceConfig={enhanceConfig}
+          isFullscreen={isFullscreen}
+          onEnhanceWithAI={handleEnhanceWithAI}
+          setLastIntent={setLastIntent}
+          toolbarLabels={toolbarLabels}
+        />
+
+        <EditorBubbleMenu
+          editor={editor}
+          disableButtons={disableAllButtons}
+          toolbarLabels={toolbarLabels}
+        />
       </div>
     )
   }
 )
 
+export * from "./utils/constants"
 export * from "./utils/types"
 export { RichTextEditor }
 export type { RichTextEditorHandle, RichTextEditorProps }
