@@ -1460,8 +1460,6 @@ declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
 };
 
-export declare const ListModal: default_2.FC<ListModalProps>;
-
 export declare interface ListModalProps {
     /** Modal title */
     title: string;
@@ -1727,6 +1725,8 @@ declare type OneDropdownButtonItem<T = string> = {
     label: string;
     icon?: IconType;
 };
+
+export declare const OneListModal: default_2.FC<ListModalProps>;
 
 export declare function OnePagination({ totalPages, currentPage, onPageChange, showControls, ariaLabel, visibleRange, hasNextPage, }: OnePaginationProps): JSX_2.Element;
 
