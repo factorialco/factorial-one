@@ -1,4 +1,5 @@
 import { IconType } from "@/factorial-one"
+import { cn } from "@/lib/utils"
 import * as Popover from "@radix-ui/react-popover"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
@@ -11,10 +12,6 @@ interface ToolbarDropdownItem {
   onClick: () => void
   isActive?: boolean
   disabled?: boolean
-  tooltip?: {
-    label: string
-    shortcut?: string[]
-  }
 }
 
 interface ToolbarDropdownProps {
@@ -80,7 +77,10 @@ const ToolbarDropdown = ({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 5 }}
                 transition={{ duration: 0.15 }}
-                className="flex w-40 flex-col gap-0.5 overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm"
+                className={cn(
+                  "flex w-40 flex-col gap-0.5 overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background p-0.5 drop-shadow-sm",
+                  mode === "dark" && "dark"
+                )}
               >
                 {items.map((item, index) => (
                   <ToolbarButton
@@ -90,7 +90,6 @@ const ToolbarDropdown = ({
                     label={item.label}
                     disabled={disabled || !!item.disabled}
                     icon={item.icon}
-                    tooltip={item.tooltip}
                     mode={mode}
                     showLabel
                   />

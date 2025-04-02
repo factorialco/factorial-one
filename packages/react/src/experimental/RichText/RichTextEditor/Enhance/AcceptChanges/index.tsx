@@ -20,7 +20,7 @@ const AcceptChanges = ({
   const i18n = useI18n()
 
   return (
-    <div className="flex items-center gap-2 rounded-md border border-solid border-f1-border-secondary bg-f1-background p-2 drop-shadow-sm">
+    <div className="dark flex items-center gap-1 rounded-md border border-solid border-f1-border-secondary bg-f1-background p-0.5 drop-shadow-sm">
       <Button
         label={labels?.rejectChangesButtonLabel || i18n.actions.cancel}
         onClick={(e) => {
@@ -54,11 +54,9 @@ const AcceptChanges = ({
           onAccept()
         }}
         size="sm"
-        variant="ghost"
+        variant="default"
         icon={Check}
         type="button"
-        // @ts-expect-error - Magic background is not supported yet
-        className="magicBackground magicColor rounded-xs"
       />
     </div>
   )

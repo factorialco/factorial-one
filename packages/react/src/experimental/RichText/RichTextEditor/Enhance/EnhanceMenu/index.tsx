@@ -82,7 +82,7 @@ const AIEnhanceMenu = ({
 
   return (
     <div
-      className="flex max-h-52 w-96 flex-col overflow-hidden rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
+      className="flex max-h-72 w-96 flex-col overflow-hidden rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex w-full flex-row items-center p-2">

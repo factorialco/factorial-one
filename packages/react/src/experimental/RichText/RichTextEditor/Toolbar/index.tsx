@@ -287,30 +287,18 @@ const Toolbar = ({
             label: labels.codeBlock,
             onClick: () => editor.chain().focus().toggleCodeBlock().run(),
             isActive: editor.isActive("codeBlock"),
-            tooltip: {
-              label: `\`\`\`${labels.codeBlock}\`\`\``,
-              shortcut: ["cmd", "alt", "k"],
-            },
           },
           {
             icon: Minus,
             label: labels.divider,
             onClick: () => editor.chain().focus().setHorizontalRule().run(),
             isActive: editor.isActive("horizontalRule"),
-            tooltip: {
-              label: `--- ${labels.divider} ---`,
-              shortcut: ["cmd", "alt", "d"],
-            },
           },
           {
             icon: Quote,
             label: labels.quote,
             onClick: () => editor.chain().focus().toggleBlockquote().run(),
             isActive: editor.isActive("blockquote"),
-            tooltip: {
-              label: `> ${labels.quote}`,
-              shortcut: ["cmd", "alt", "q"],
-            },
           },
         ]}
         disabled={disableButtons}

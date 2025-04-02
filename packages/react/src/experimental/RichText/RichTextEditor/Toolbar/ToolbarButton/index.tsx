@@ -48,19 +48,27 @@ const ToolbarButton = ({
         "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
         active
           ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
-          : "border-none hover:bg-f1-background-secondary-hover",
-        mode === "dark" && "bg-transparent text-f1-foreground-inverse",
+          : "border-none bg-transparent hover:bg-f1-background-secondary-hover",
         showLabel ? "w-full items-center justify-start px-2" : "p-0"
       )}
       disabled={disabled}
       aria-label={label}
     >
       <Icon icon={icon} className={getIconColor()} />
-      {showLabel && <span className="text-sm">{label}</span>}
+      {showLabel && (
+        <span
+          className={cn(
+            "text-sm",
+            active && "text-f1-background-selected-bold"
+          )}
+        >
+          {label}
+        </span>
+      )}
     </Button>
   )
 
-  return tooltip ? (
+  return tooltip && mode === "light" ? (
     <Tooltip
       description={tooltip?.description || ""}
       label={tooltip?.label}

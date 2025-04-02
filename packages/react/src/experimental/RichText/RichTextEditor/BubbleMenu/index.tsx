@@ -38,7 +38,7 @@ const EditorBubbleMenu = ({
       }}
       editor={editor}
     >
-      <div className="z-50 flex w-max flex-row items-center rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
+      <div className="dark z-50 flex w-max flex-row items-center rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
         <Popover.Root
           open={openLinkPopover}
           onOpenChange={(open) => {
@@ -53,7 +53,6 @@ const EditorBubbleMenu = ({
               disabled={disableButtons}
               onClick={handleLinkButtonClick}
               tooltip={undefined}
-              mode="light"
             />
           </Popover.Trigger>
           <ToolbarDivider />
@@ -61,6 +60,7 @@ const EditorBubbleMenu = ({
             labels={toolbarLabels}
             editor={editor}
             disableButtons={disableButtons}
+            mode="dark"
           />
           <Popover.Portal
             container={
@@ -72,7 +72,7 @@ const EditorBubbleMenu = ({
             <Popover.Content
               side="top"
               align="start"
-              sideOffset={15}
+              sideOffset={10}
               alignOffset={-5}
               collisionPadding={10}
             >
@@ -88,6 +88,7 @@ const EditorBubbleMenu = ({
                     <LinkPopup
                       editor={editor}
                       linkPlaceholder={toolbarLabels.linkPlaceholder}
+                      onClose={() => setOpenLinkPopover(false)}
                     />
                   </motion.div>
                 )}
