@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { DownloadIcon, Mail, Tag, UploadIcon } from "lucide-react"
+import { useState } from "react"
 import { Observable } from "zen-observable-ts"
 import {
   Ai,
@@ -12,6 +13,7 @@ import {
   Star,
 } from "../../icons/app"
 import { PromiseState } from "../../lib/promise-to-observable"
+import { Dialog } from "../Overlays/Dialog"
 import { StandardLayout } from "../PageLayouts/StandardLayout"
 import { FilterDefinition, FiltersState } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
@@ -2347,4 +2349,152 @@ export const InLayout: Story = {
       <ExampleComponent frozenColumns={1} />
     </StandardLayout>
   ),
+}
+
+export const WithOnClick: Story = {
+  render: () => {
+    const [isOpen, setIsOpen] = useState(false)
+    const [item, setItem] = useState<string | undefined>(undefined)
+
+    const dataSource = useDataSource({
+      filters,
+      presets: filterPresets,
+      itemOnClick: (item) => () => {
+        setIsOpen(true)
+        setItem(item.name)
+      },
+      sortings: {
+        name: {
+          label: "Name",
+        },
+        email: {
+          label: "Email",
+        },
+        role: {
+          label: "Role",
+        },
+        department: {
+          label: "Department",
+        },
+        salary: {
+          label: "Salary",
+        },
+      },
+      dataAdapter: {
+        fetchData: createPromiseDataFetch(),
+      },
+      itemActions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+          description: "Modify user information",
+        },
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+        },
+        { type: "separator" },
+        {
+          label: item.isStarred ? "Remove Star" : "Star User",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
+        },
+        {
+          label: "Delete",
+          icon: Delete,
+          onClick: () => console.log(`Deleting ${item.name}`),
+          critical: true,
+          description: "Permanently remove user",
+          enabled:
+            item.department === "Engineering" && item.status === "active",
+        },
+      ],
+    })
+
+    return (
+      <>
+        <Dialog
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          header={{
+            title: `Viewing ${item}`,
+            description: `You clicked on the ${item} row`,
+            type: "info",
+          }}
+          actions={{
+            primary: {
+              label: "Ok",
+              variant: "default",
+              onClick: () => {
+                setIsOpen(false)
+              },
+            },
+            secondary: {
+              label: "Cancel",
+              onClick: () => setIsOpen(false),
+            },
+          }}
+        />
+        <div className="space-y-4">
+          <OneDataCollection
+            source={dataSource}
+            visualizations={[
+              {
+                type: "table",
+                options: {
+                  columns: [
+                    {
+                      label: "Name",
+                      render: (item) => item.name,
+                      sorting: "name",
+                    },
+                    {
+                      label: "Email",
+                      render: (item) => item.email,
+                      sorting: "email",
+                    },
+                    {
+                      label: "Role",
+                      render: (item) => item.role,
+                      sorting: "role",
+                    },
+                    {
+                      label: "Department",
+                      render: (item) => item.department,
+                      sorting: "department",
+                    },
+                  ],
+                },
+              },
+              {
+                type: "card",
+                options: {
+                  title: (item) => item.name,
+                  cardProperties: [
+                    {
+                      label: "Email",
+                      render: (item) => item.email,
+                    },
+                    {
+                      label: "Role",
+                      render: (item) => item.role,
+                    },
+                    {
+                      label: "Department",
+                      render: (item) => item.department,
+                    },
+                  ],
+                },
+              },
+            ]}
+          />
+        </div>
+      </>
+    )
+  },
 }
