@@ -17,6 +17,8 @@ export const CollectionActions = ({
   const buttonActions = (primaryActions && [primaryActions]) || []
   const dropdownActions = secondaryActions || []
 
+  if (buttonActions.length === 0 && dropdownActions.length === 0) return null
+
   return (
     <div className="flex flex-row-reverse gap-2">
       {buttonActions.map((action) => (

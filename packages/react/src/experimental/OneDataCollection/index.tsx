@@ -1,9 +1,11 @@
+import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
 import { OneActionBar } from "../OneActionBar"
+import { useLayout } from "../PageLayouts/LayoutProvider"
 import { CollectionActions } from "./CollectionActions/ColletionActions"
 import { FiltersChipsList } from "./Filters/Components/FiltersChipsList"
 import { FiltersControls } from "./Filters/Components/FiltersControls"
@@ -206,6 +208,8 @@ export const OneDataCollection = <
     (() => void) | undefined
   >(undefined)
 
+  const layout = useLayout()
+
   /**
    * Bulk actions
    */
@@ -270,8 +274,10 @@ export const OneDataCollection = <
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
+    <div
+      className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
+    >
+      <div className="flex items-center justify-between px-6">
         {filters && (
           <div className="flex-1">
             <FiltersControls
@@ -285,7 +291,6 @@ export const OneDataCollection = <
             />
           </div>
         )}
-        <div className="shrink-1 grow-1 flex"></div>
         <div className="flex shrink-0 items-center gap-2">
           {isLoading && (
             <MotionIcon

@@ -12,6 +12,7 @@ import {
   Star,
 } from "../../icons/app"
 import { PromiseState } from "../../lib/promise-to-observable"
+import { StandardLayout } from "../PageLayouts/StandardLayout"
 import { FilterDefinition, FiltersState } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
@@ -2338,4 +2339,12 @@ export const TableColumnProperties: Story = {
       />
     )
   },
+}
+
+export const InLayout: Story = {
+  render: () => (
+    <StandardLayout>
+      <ExampleComponent frozenColumns={1} />
+    </StandardLayout>
+  ),
 }
