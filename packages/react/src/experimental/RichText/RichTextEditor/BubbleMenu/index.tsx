@@ -12,12 +12,14 @@ interface EditorBubbleMenuProps {
   editor: Editor
   disableButtons: boolean
   toolbarLabels: toolbarLabels
+  isToolbarOpen: boolean
 }
 
 const EditorBubbleMenu = ({
   editor,
   disableButtons,
   toolbarLabels,
+  isToolbarOpen,
 }: EditorBubbleMenuProps) => {
   const [openLinkPopover, setOpenLinkPopover] = useState(false)
 
@@ -55,13 +57,15 @@ const EditorBubbleMenu = ({
               tooltip={undefined}
             />
           </Popover.Trigger>
-          <ToolbarDivider />
-          <Toolbar
-            labels={toolbarLabels}
-            editor={editor}
-            disableButtons={disableButtons}
-            mode="dark"
-          />
+          {!isToolbarOpen && <ToolbarDivider />}
+          {!isToolbarOpen && (
+            <Toolbar
+              labels={toolbarLabels}
+              editor={editor}
+              disableButtons={disableButtons}
+              mode="dark"
+            />
+          )}
           <Popover.Portal
             container={
               screenfull.isFullscreen && screenfull.element

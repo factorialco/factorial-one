@@ -87,6 +87,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
     const [enhanceError, setEnhanceError] = useState<string | null>(null)
+    const [isToolbarOpen, setIsToolbarOpen] = useState(false)
     const [lastIntent, setLastIntent] = useState<{
       selectedIntent?: string
       customIntent?: string
@@ -367,12 +368,15 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           onEnhanceWithAI={handleEnhanceWithAI}
           setLastIntent={setLastIntent}
           toolbarLabels={toolbarLabels}
+          setIsToolbarOpen={setIsToolbarOpen}
+          isToolbarOpen={isToolbarOpen}
         />
 
         <EditorBubbleMenu
           editor={editor}
           disableButtons={disableAllButtons}
           toolbarLabels={toolbarLabels}
+          isToolbarOpen={isToolbarOpen}
         />
       </div>
     )

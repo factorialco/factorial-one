@@ -35,6 +35,8 @@ interface FooterProps {
     } | null
   ) => void
   toolbarLabels: toolbarLabels
+  setIsToolbarOpen: (isToolbarOpen: boolean) => void
+  isToolbarOpen: boolean
 }
 
 const Footer = ({
@@ -51,8 +53,9 @@ const Footer = ({
   setLastIntent,
   toolbarLabels,
   disableButtons,
+  setIsToolbarOpen,
+  isToolbarOpen,
 }: FooterProps) => {
-  const [isToolbarOpen, setIsToolbarOpen] = useState(false)
   const [toolbarAnimationComplete, setToolbarAnimationComplete] =
     useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
