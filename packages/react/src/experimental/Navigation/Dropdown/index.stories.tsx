@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { expect, userEvent, within } from "@storybook/test"
 import * as Icons from "../../../icons/app"
 import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 import { Dropdown, MobileDropdown as MobileDropdownComponent } from "./index"
@@ -21,6 +22,7 @@ export const Default: Story = {
         onClick: () => console.log("Create clicked"),
         icon: Icons.Add,
         description: "New creation process",
+        "data-test": "foo",
       },
       {
         label: "Edit",
@@ -43,6 +45,19 @@ export const Default: Story = {
         icon: Icons.Delete,
       },
     ],
+  },
+  play: async ({ canvasElement }) => {
+    // Search the full page because the popup is rendered in a portal, outside the story canvas
+    const page = within(canvasElement.closest("body")!)
+
+    const openButton = page.getByRole("button")
+    await userEvent.click(openButton)
+    const menuItems = await page.findAllByRole("menuitem")
+    const itemWithDataset = menuItems.filter(
+      (item) => item.dataset.test === "foo"
+    )
+    await expect(itemWithDataset).toHaveLength(1)
+    await userEvent.click(itemWithDataset[0])
   },
 }
 

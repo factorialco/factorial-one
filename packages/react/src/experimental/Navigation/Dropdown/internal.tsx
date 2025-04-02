@@ -33,14 +33,22 @@ export type DropdownInternalProps = {
   align?: "start" | "end"
   open?: boolean
   onOpenChange?: (open: boolean) => void
-}
+} & DataAttributes
 
 const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
-  const { label: _label, ...props } = item
+  const {
+    label: _label,
+    icon: _icon,
+    avatar: _avatar,
+    description: _description,
+    href,
+    critical,
+    ...props
+  } = item
 
   const itemClass = cn(
     "flex items-start gap-1.5 w-full",
-    item.critical && "text-f1-foreground-critical"
+    critical && "text-f1-foreground-critical"
   )
 
   return (
@@ -52,9 +60,9 @@ const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
       }}
       className={itemClass}
     >
-      {item.href ? (
+      {href ? (
         <Link
-          href={item.href}
+          href={href}
           className={cn(
             itemClass,
             "text-f1-foreground no-underline hover:cursor-pointer"
@@ -64,7 +72,7 @@ const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
           <DropdownItemContent item={item} />
         </Link>
       ) : (
-        <div className={itemClass}>
+        <div {...props} className={itemClass}>
           <DropdownItemContent item={item} />
         </div>
       )}
@@ -80,12 +88,14 @@ export function DropdownInternal({
   children,
   open,
   onOpenChange,
+  ...rest
 }: DropdownInternalProps) {
   return (
     <DropdownMenu open={open} onOpenChange={onOpenChange}>
       <DropdownMenuTrigger asChild>
         {children || (
           <Button
+            {...rest}
             hideLabel
             icon={icon}
             size={size}

@@ -3,7 +3,7 @@
  * Button component.
  */
 import { forwardRef } from "react"
-import { ButtonInternal, ButtonInternalProps } from "./internal.tsx"
+import { ButtonInternal, ButtonInternalProps } from "./internal"
 
 const privateProps = ["append", "appendButton"] as const
 

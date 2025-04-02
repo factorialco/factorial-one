@@ -57,14 +57,13 @@ const MenuItemContent = ({
 
 const MenuItem = ({ item }: { item: MenuItem }) => {
   const { isActive } = useNavigation()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { label, ...props } = item
+  const { label: _label, icon: _icon, ...rest } = item
 
-  const active = isActive(props.href, { exact: props.exactMatch })
+  const active = isActive(rest.href, { exact: rest.exactMatch })
 
   return (
     <Link
-      {...props}
+      {...rest}
       className={cn(
         "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
         focusRing("focus-visible:ring-inset"),
