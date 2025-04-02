@@ -48,12 +48,14 @@ export const Default: Story = {
   },
   play: async ({ canvasElement }) => {
     // Search the full page because the popup is rendered in a portal, outside the story canvas
-    const page = within(canvasElement.closest('body')!)
+    const page = within(canvasElement.closest("body")!)
 
     const openButton = page.getByRole("button")
     await userEvent.click(openButton)
     const menuItems = await page.findAllByRole("menuitem")
-    await expect(menuItems.filter(item => item.dataset.test === "foo")).toHaveLength(1)
+    await expect(
+      menuItems.filter((item) => item.dataset.test === "foo")
+    ).toHaveLength(1)
   },
 }
 
