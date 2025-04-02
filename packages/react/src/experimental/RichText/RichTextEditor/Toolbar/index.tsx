@@ -15,6 +15,7 @@ import {
   Heading2,
   Heading3,
   Italic,
+  Link,
   List,
   Minus,
   OlList,
@@ -24,10 +25,14 @@ import {
   Underline,
 } from "@/icons/app"
 import { cn } from "@/lib/utils"
+import * as Popover from "@radix-ui/react-popover"
 import { Editor } from "@tiptap/react"
+import { AnimatePresence, motion } from "framer-motion"
 import { compact } from "lodash"
-import React from "react"
+import React, { useState } from "react"
+import screenfull from "screenfull"
 import { getTextAlignIcon, getTextAlignLabel } from "../utils/helpers"
+import { LinkPopup } from "./LinkPopup"
 import { ToolbarButton } from "./ToolbarButton"
 import { ToolbarDropdown } from "./ToolbarDropdown"
 
@@ -89,6 +94,13 @@ const Toolbar = ({
   labels,
   mode = "light",
 }: ToolbarProps) => {
+  const [openLinkPopover, setOpenLinkPopover] = useState(false)
+
+  const handleLinkButtonClick = () => {
+    if (disableButtons) return
+    setOpenLinkPopover(!openLinkPopover)
+  }
+
   // Format buttons configuration
   const formatButtons: ButtonConfig[] = [
     {
@@ -338,6 +350,59 @@ const Toolbar = ({
             : "overflow-hidden"
         )}
       >
+        <Popover.Root
+          open={openLinkPopover}
+          onOpenChange={(open) => {
+            setOpenLinkPopover(open)
+          }}
+        >
+          <Popover.Trigger asChild>
+            <ToolbarButton
+              active={editor.isActive("link") || openLinkPopover}
+              label={labels.linkLabel}
+              icon={Link}
+              disabled={disableButtons}
+              onClick={handleLinkButtonClick}
+              tooltip={undefined}
+            />
+          </Popover.Trigger>
+
+          <Popover.Portal
+            container={
+              screenfull.isFullscreen && screenfull.element
+                ? screenfull.element
+                : document.body
+            }
+          >
+            <Popover.Content
+              side="top"
+              align="start"
+              sideOffset={15}
+              collisionPadding={10}
+              alignOffset={-10}
+              style={{ zIndex: 1000 }}
+            >
+              <AnimatePresence>
+                {openLinkPopover && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    aria-label="Link popup"
+                  >
+                    <LinkPopup
+                      editor={editor}
+                      linkPlaceholder={labels.linkPlaceholder}
+                      onClose={() => setOpenLinkPopover(false)}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover.Root>
+        <ToolbarDivider mode={mode} />
         {intersperse(groups, <ToolbarDivider mode={mode} />)}
       </div>
     </div>
