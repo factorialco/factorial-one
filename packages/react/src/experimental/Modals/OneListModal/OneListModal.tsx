@@ -23,7 +23,7 @@ export interface ListModalProps {
   children: ReactNode
 }
 
-export const ListModal: React.FC<ListModalProps> = ({
+export const OneListModal: React.FC<ListModalProps> = ({
   title,
   dropdownItems,
   tabs,

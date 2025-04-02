@@ -8,11 +8,11 @@ import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
 import type { Meta, StoryObj } from "@storybook/react"
 import { FC } from "react"
-import { ListModal } from "./OneListModal"
+import { OneListModal } from "./OneListModal"
 
-const meta: Meta<typeof ListModal> = {
-  title: "Modals/ListModal",
-  component: ListModal,
+const meta: Meta<typeof OneListModal> = {
+  title: "Modals/OneListModal",
+  component: OneListModal,
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -30,7 +30,7 @@ const meta: Meta<typeof ListModal> = {
 }
 
 export default meta
-type Story = StoryObj<typeof ListModal>
+type Story = StoryObj<typeof OneListModal>
 
 const ExampleList = () => (
   <div className="flex flex-col gap-4 p-4">
