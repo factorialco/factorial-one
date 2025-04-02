@@ -45,7 +45,7 @@ const EditorBubbleMenu = ({
             setOpenLinkPopover(open)
           }}
         >
-          <Popover.Trigger>
+          <Popover.Trigger asChild>
             <ToolbarButton
               active={editor.isActive("link") || openLinkPopover}
               label={toolbarLabels.linkLabel}
@@ -72,9 +72,10 @@ const EditorBubbleMenu = ({
             <Popover.Content
               side="top"
               align="start"
-              sideOffset={10}
-              alignOffset={-5}
+              sideOffset={15}
               collisionPadding={10}
+              alignOffset={-10}
+              style={{ zIndex: 1000 }}
             >
               <AnimatePresence>
                 {openLinkPopover && (

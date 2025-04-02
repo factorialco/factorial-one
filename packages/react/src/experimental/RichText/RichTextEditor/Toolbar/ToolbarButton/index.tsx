@@ -3,7 +3,7 @@ import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { Icon, IconType } from "@/factorial-one"
 import { cn } from "@/lib/utils"
 import { Button } from "@/ui/button"
-import { ComponentProps } from "react"
+import { ComponentProps, forwardRef } from "react"
 
 interface ToolbarButtonProps {
   onClick?: () => void
@@ -20,65 +20,71 @@ interface ToolbarButtonProps {
   showLabel?: boolean
 }
 
-const ToolbarButton = ({
-  onClick = () => {},
-  active = false,
-  label,
-  disabled,
-  icon,
-  tooltip,
-  mode = "light",
-  showLabel = false,
-  ...props
-}: ToolbarButtonProps) => {
-  const getIconColor = () => {
-    if (mode === "dark") {
-      return active ? "text-f1-icon-selected" : "text-f1-foreground-inverse"
+const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
+  (
+    {
+      onClick = () => {},
+      active = false,
+      label,
+      disabled,
+      icon,
+      tooltip,
+      mode = "light",
+      showLabel = false,
+      ...props
+    },
+    ref
+  ) => {
+    const getIconColor = () => {
+      if (mode === "dark") {
+        return active ? "text-f1-icon-selected" : "text-f1-foreground-inverse"
+      }
+      return active ? "text-f1-icon-selected" : "text-f1-foreground"
     }
-    return active ? "text-f1-icon-selected" : "text-f1-foreground"
+
+    const button = (
+      <Button
+        {...props}
+        ref={ref}
+        variant="outline"
+        size="md"
+        onClick={onClick}
+        className={cn(
+          "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
+          active
+            ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
+            : "border-none bg-transparent hover:bg-f1-background-secondary-hover",
+          showLabel ? "w-full items-center justify-start px-2" : "p-0"
+        )}
+        disabled={disabled}
+        aria-label={label}
+      >
+        <Icon icon={icon} className={getIconColor()} />
+        {showLabel && (
+          <span
+            className={cn(
+              "text-sm",
+              active && "text-f1-background-selected-bold"
+            )}
+          >
+            {label}
+          </span>
+        )}
+      </Button>
+    )
+
+    return tooltip && mode === "light" ? (
+      <Tooltip
+        description={tooltip?.description || ""}
+        label={tooltip?.label}
+        shortcut={tooltip?.shortcut}
+      >
+        {button}
+      </Tooltip>
+    ) : (
+      button
+    )
   }
-
-  const button = (
-    <Button
-      {...props}
-      variant="outline"
-      size="md"
-      onClick={onClick}
-      className={cn(
-        "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
-        active
-          ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
-          : "border-none bg-transparent hover:bg-f1-background-secondary-hover",
-        showLabel ? "w-full items-center justify-start px-2" : "p-0"
-      )}
-      disabled={disabled}
-      aria-label={label}
-    >
-      <Icon icon={icon} className={getIconColor()} />
-      {showLabel && (
-        <span
-          className={cn(
-            "text-sm",
-            active && "text-f1-background-selected-bold"
-          )}
-        >
-          {label}
-        </span>
-      )}
-    </Button>
-  )
-
-  return tooltip && mode === "light" ? (
-    <Tooltip
-      description={tooltip?.description || ""}
-      label={tooltip?.label}
-      shortcut={tooltip?.shortcut}
-    >
-      {button}
-    </Tooltip>
-  ) : (
-    button
-  )
-}
+)
 
 export { ToolbarButton }
