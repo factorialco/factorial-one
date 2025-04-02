@@ -7,6 +7,7 @@ import { Default as PersonListItemDefault } from "@/experimental/Lists/PersonLis
 import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
 import type { Meta, StoryObj } from "@storybook/react"
+import { FC } from "react"
 import { ListModal } from "./OneListModal"
 
 const meta: Meta<typeof ListModal> = {
@@ -82,9 +83,11 @@ export const Default: Story = {
   },
 }
 
-const ExamplePersonList = () => (
+const ExamplePersonList: FC<{ numberOfItems?: number }> = ({
+  numberOfItems = 20,
+}) => (
   <div className="flex flex-col gap-0.5 p-2">
-    {Array.from({ length: 20 }, (_, i) => (
+    {Array.from({ length: numberOfItems }, (_, i) => (
       <PersonListItem
         key={i}
         {...(PersonListItemDefault.args as PersonListItemProps)}
@@ -97,5 +100,12 @@ export const WithPersonListItems: Story = {
   args: {
     ...Default.args,
     children: <ExamplePersonList />,
+  },
+}
+
+export const WithFewItems: Story = {
+  args: {
+    ...Default.args,
+    children: <ExamplePersonList numberOfItems={3} />,
   },
 }
