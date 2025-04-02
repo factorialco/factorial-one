@@ -31,12 +31,7 @@ const ExampleList = () => (
     {Array.from({ length: 20 }, (_, i) => (
       <div
         key={i}
-        style={{
-          padding: "16px",
-          backgroundColor: "white",
-          borderRadius: "8px",
-          border: "1px solid #e5e7eb",
-        }}
+        className="rounded-sm border border-solid border-f1-border-secondary p-4"
       >
         List Item {i + 1}
       </div>
