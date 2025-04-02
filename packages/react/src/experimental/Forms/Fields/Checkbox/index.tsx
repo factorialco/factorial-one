@@ -1,6 +1,6 @@
 import { Checkbox as CheckboxRoot } from "@/ui/checkbox"
 
-interface CheckboxProps {
+interface CheckboxProps extends DataAttributes {
   /**
    * The title of the checkbox
    */

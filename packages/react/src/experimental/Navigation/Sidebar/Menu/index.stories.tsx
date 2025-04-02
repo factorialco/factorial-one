@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { expect, within } from "@storybook/test"
 import * as Icons from "../../../../icons/app"
 import { Menu } from "./index"
 
@@ -34,6 +35,7 @@ export const Default: Story = {
             icon: Icons.Envelope,
             href: "/inbox",
             badge: 6,
+            "data-test": "foo",
           },
           {
             label: "Discover Factorial",
@@ -74,5 +76,11 @@ export const Default: Story = {
     onSort: (categories) => {
       console.log("Categories sorted:", categories)
     },
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const link = canvas.getByRole("link", { name: /inbox/i })
+    await expect(link.dataset.test).toBe("foo")
   },
 }

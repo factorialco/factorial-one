@@ -8,19 +8,20 @@ import { Icon, IconType } from "../../Utilities/Icon"
 export type ButtonInternalProps = Pick<
   ComponentProps<typeof ShadcnButton>,
   "variant" | "size" | "disabled" | "type" | "round"
-> & {
-  onClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void | Promise<unknown>
-  label: string
-  loading?: boolean
-  icon?: IconType
-  emoji?: string
-  hideLabel?: boolean
-  size?: "sm" | "md" | "lg"
-  append?: React.ReactNode
-  appendButton?: React.ReactNode
-}
+> &
+  DataAttributes & {
+    onClick?: (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => void | Promise<unknown>
+    label: string
+    loading?: boolean
+    icon?: IconType
+    emoji?: string
+    hideLabel?: boolean
+    size?: "sm" | "md" | "lg"
+    append?: React.ReactNode
+    appendButton?: React.ReactNode
+  }
 
 const iconVariants = cva({
   base: "-ml-0.5 transition-colors",

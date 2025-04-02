@@ -6,7 +6,7 @@ export type TabItem = {
   label: string
   href: string
   index?: boolean
-}
+} & DataAttributes
 
 export interface TabsProps {
   tabs: TabItem[]

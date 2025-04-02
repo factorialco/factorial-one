@@ -5,4 +5,4 @@ export type NavigationItem = Pick<
   "href" | "exactMatch" | "onClick"
 > & {
   label: string
-}
+} & DataAttributes

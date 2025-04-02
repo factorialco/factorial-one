@@ -28,7 +28,8 @@ const linkVariants = cva({
 
 export interface LinkProps
   extends BaseLinkProps,
-    VariantProps<typeof linkVariants> {
+    VariantProps<typeof linkVariants>,
+    DataAttributes {
   stopPropagation?: boolean
 }
 
