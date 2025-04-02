@@ -19,6 +19,7 @@ import { FieldPath } from 'react-hook-form';
 import { FieldValues } from 'react-hook-form';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
+import { FullscreenLayoutProps } from './FullscreenLayout';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
 import { IconType as IconType_3 } from '../../factorial-one';
@@ -36,7 +37,6 @@ import * as RechartsPrimitive from 'recharts';
 import { RefAttributes } from 'react';
 import { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { sizes as sizes_2 } from '../../../../ui/avatar';
-import { StandardLayoutProps as StandardLayoutProps_2 } from './FullscreenLayout';
 import { SVGProps } from 'react';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { type as type_2 } from '../../../../ui/avatar';
@@ -57,6 +57,14 @@ declare type Action = {
 };
 
 declare type ActionType = CopyActionType | NavigateActionType;
+
+export declare type actionType = {
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+    variant: "default" | "outline" | "neutral" | undefined;
+    icon?: IconType_2;
+};
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "positive" | "warning" | "destructive" | undefined;
@@ -500,7 +508,7 @@ export declare type BulkActionDefinition = {
 
 declare const Button: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round"> & {
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -670,7 +678,7 @@ export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_13 &
 
 export declare type ChatWidgetEmptyStateProps = Props_13;
 
-export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, overtimeOnly, }: ClockInControlsProps): JSX_2.Element;
+export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, }: ClockInControlsProps): JSX_2.Element;
 
 export declare interface ClockInControlsProps {
     /** Optional remaining time in minutes */
@@ -715,7 +723,6 @@ export declare interface ClockInControlsProps {
     onBreak?: (breakTypeId?: string) => void;
     canShowProject?: boolean;
     projectSelectorElement?: React.ReactNode;
-    overtimeOnly?: boolean;
 }
 
 declare interface ClockInGraphProps {
@@ -1080,7 +1087,7 @@ declare type DropdownInternalProps = {
     align?: "start" | "end";
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
-};
+} & DataAttributes;
 
 export declare type DropdownItem = DropdownItemObject | {
     type: "separator";
@@ -1115,6 +1122,42 @@ declare type EmployeeItemProps = {
     action?: ActionType;
 };
 
+export declare type enhanceConfig = {
+    onEnhanceText: (params: enhanceTextParams) => Promise<enhancedTextResponse>;
+    enhancementOptions?: EnhancementOption[];
+    enhanceLabels: enhanceLabelsType;
+};
+
+export declare type enhancedTextResponse = {
+    success: boolean;
+    text: string;
+    error?: string;
+};
+
+export declare type enhanceLabelsType = {
+    defaultError: string;
+    closeErrorButtonLabel: string;
+    enhanceButtonLabel: string;
+    acceptChangesButtonLabel: string;
+    rejectChangesButtonLabel: string;
+    repeatButtonLabel: string;
+    customPromptPlaceholder: string;
+    loadingEnhanceLabel: string;
+};
+
+export declare type EnhancementOption = {
+    id: string;
+    label: string;
+    subOptions?: EnhancementOption[];
+};
+
+export declare type enhanceTextParams = {
+    text: string;
+    selectedIntent?: string;
+    customIntent?: string;
+    context?: string;
+};
+
 /**
  * Extracts the property keys from a record type.
  * @template RecordType - The type containing the properties to extract
@@ -1133,6 +1176,38 @@ declare type F1SearchBoxProps = {
     autoFocus?: boolean;
     onChange?: (value: string) => void;
 };
+
+export declare const FILE_TYPES: {
+    readonly PDF: "pdf";
+    readonly IMAGE: "image";
+    readonly DOC: "doc";
+    readonly EXCEL: "excel";
+    readonly PPT: "ppt";
+    readonly TXT: "txt";
+    readonly VIDEO: "video";
+    readonly AUDIO: "audio";
+    readonly ARCHIVE: "archive";
+    readonly CSV: "csv";
+    readonly HTML: "html";
+    readonly MARKDOWN: "markdown";
+};
+
+export declare const FileItem: ({ file, onRemoveFile, disabled }: FileItemProps) => JSX_2.Element;
+
+declare interface FileItemProps {
+    file: File;
+    onRemoveFile: () => void;
+    disabled: boolean;
+}
+
+export declare type filesConfig = {
+    onFiles: (files: File[]) => void;
+    multipleFiles: boolean;
+    maxFileSize?: number;
+    acceptedFileType?: FileType[];
+};
+
+export declare type FileType = (typeof FILE_TYPES)[keyof typeof FILE_TYPES];
 
 /**
  * Filters the actions based on the enabled property
@@ -1321,7 +1396,7 @@ declare interface FrameContextType {
     toggleSidebar: () => void;
 }
 
-export declare const FullscreenLayout: ForwardRefExoticComponent<Omit<StandardLayoutProps_2 & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+export declare const FullscreenLayout: ForwardRefExoticComponent<Omit<FullscreenLayoutProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 declare type HeaderProps = {
     module: {
@@ -1461,6 +1536,23 @@ declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
 };
 
+export declare type MentionChangeResult = {
+    value: string;
+    ids: number[];
+};
+
+export declare type MentionedUser = {
+    id: number;
+    label: string;
+    image_url?: string;
+    href?: string;
+};
+
+export declare type mentionsConfig = {
+    onMentionQueryStringChanged?: (queryString: string) => Promise<MentionedUser[]> | undefined;
+    users: MentionedUser[];
+};
+
 export declare function Menu({ tree, onCollapse, onSort }: MenuProps): default_2.JSX.Element;
 
 export declare interface MenuCategory {
@@ -1570,7 +1662,7 @@ declare type NavigateActionType = {
 
 declare type NavigationItem = Pick<LinkProps, "href" | "exactMatch" | "onClick"> & {
     label: string;
-};
+} & DataAttributes;
 
 declare type NavigationProps = {
     previous?: {
@@ -1907,6 +1999,11 @@ declare interface PrimaryActionButton extends PrimaryAction {
  */
 export declare type PrimaryActionsDefinition = () => Pick<DropdownItemObject, "onClick" | "label" | "icon"> | undefined;
 
+export declare type primaryActionType = {
+    action: actionType;
+    subActions?: subActionType[];
+};
+
 declare interface PrimaryDropdownAction<T> extends PrimaryAction {
     items: OneDropdownButtonItem<T>[];
     value?: T;
@@ -2225,6 +2322,35 @@ declare type RendererDefinition = {
 
 export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_6) => JSX_2.Element;
 
+export declare const RichTextDisplay: ({ content }: {
+    content: string;
+}) => JSX_2.Element;
+
+export declare const RichTextEditor: ForwardRefExoticComponent<RichTextEditorProps & RefAttributes<RichTextEditorHandle>>;
+
+export declare type RichTextEditorHandle = {
+    clear: () => void;
+    clearFiles: () => void;
+    focus: () => void;
+};
+
+export declare interface RichTextEditorProps {
+    mentionsConfig?: mentionsConfig;
+    enhanceConfig?: enhanceConfig;
+    filesConfig?: filesConfig;
+    secondaryAction?: actionType;
+    primaryAction?: primaryActionType;
+    onChange: (html: string | MentionChangeResult | null) => void;
+    maxCharacters?: number;
+    placeholder: string;
+    initialEditorState?: {
+        content?: string;
+        files?: File[];
+    };
+    toolbarLabels: toolbarLabels;
+    title: string;
+}
+
 declare type SchemaType = ZodType;
 
 export declare const ScrollArea: ForwardRefExoticComponent<Omit<Omit<ScrollAreaProps & RefAttributes<HTMLDivElement>, "ref"> & {
@@ -2480,13 +2606,20 @@ export declare interface StatusTagProps {
 
 export declare type StatusVariant = Variant;
 
+export declare type subActionType = {
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+    icon?: IconType_2;
+};
+
 export declare const SummariesWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 export declare type TabItem = {
     label: string;
     href: string;
     index?: boolean;
-};
+} & DataAttributes;
 
 declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
 
@@ -2645,6 +2778,36 @@ export declare const ToggleGroupItem: React_2.ForwardRefExoticComponent<Omit<Tog
     class?: never;
     className?: ClassValue;
 })) | undefined) => string> & React_2.RefAttributes<HTMLButtonElement>>;
+
+export declare type toolbarLabels = {
+    bold: string;
+    italic: string;
+    underline: string;
+    strike: string;
+    highlight: string;
+    heading1: string;
+    heading2: string;
+    heading3: string;
+    left: string;
+    center: string;
+    right: string;
+    justify: string;
+    bulletList: string;
+    orderedList: string;
+    taskList: string;
+    codeBlock: string;
+    horizontalRule: string;
+    quote: string;
+    moreOptions: string;
+    code: string;
+    divider: string;
+    bullet: string;
+    ordered: string;
+    task: string;
+    linkPlaceholder: string;
+    linkLabel: string;
+    close: string;
+};
 
 declare interface TwoColumnsItemType {
     title: string;

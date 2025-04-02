@@ -28266,14 +28266,17 @@ function qd(e, t = "12px Inter, sans-serif") {
 }
 const gw = (e) => ({
   dataKey: "x",
+  domain: e == null ? void 0 : e.domain,
   tickLine: !1,
   axisLine: !1,
   tickMargin: 8,
+  ticks: e == null ? void 0 : e.ticks,
   tickCount: e == null ? void 0 : e.tickCount,
   tickFormatter: e == null ? void 0 : e.tickFormatter
 }), yw = (e) => ({
   tickLine: !1,
   axisLine: !1,
+  domain: e == null ? void 0 : e.domain,
   tickMargin: 8,
   ticks: e == null ? void 0 : e.ticks,
   tickCount: e == null ? void 0 : e.tickCount,
@@ -28483,65 +28486,66 @@ const Mse = ({
   label: i = !1,
   type: a = "simple",
   hideTooltip: o = !1,
-  aspect: s,
-  legend: c,
-  showValueUnderLabel: l = !1,
-  highlightLastBar: d = !1,
-  onClick: h
-}, p) => {
-  const m = Object.keys(e), b = bw(t).map((g, _, O) => {
-    var A;
-    return d && m.length === 1 && !((A = e[m[0]]) != null && A.color) ? {
-      ...g,
-      fill: _ === O.length - 1 ? pn(0) : `hsl(${pn(0, !1)} / 0.5)`
-    } : g;
-  }), y = Math.max(
-    ...b.flatMap(
-      (g) => m.map(
-        (_) => qd(
-          n != null && n.tickFormatter ? n.tickFormatter(`${g[_]}`) : `${g[_]}`
+  hideGrid: s = !1,
+  aspect: c,
+  legend: l,
+  showValueUnderLabel: d = !1,
+  highlightLastBar: h = !1,
+  onClick: p
+}, m) => {
+  const b = Object.keys(e), y = bw(t).map((_, O, A) => {
+    var P;
+    return h && b.length === 1 && !((P = e[b[0]]) != null && P.color) ? {
+      ..._,
+      fill: O === A.length - 1 ? pn(0) : `hsl(${pn(0, !1)} / 0.5)`
+    } : _;
+  }), g = Math.max(
+    ...y.flatMap(
+      (_) => b.map(
+        (O) => qd(
+          n != null && n.tickFormatter ? n.tickFormatter(`${_[O]}`) : `${_[O]}`
         )
       )
     )
   );
-  return /* @__PURE__ */ J(ys, { config: e, ref: p, aspect: s, children: /* @__PURE__ */ Ue(
+  return /* @__PURE__ */ J(ys, { config: e, ref: m, aspect: c, children: /* @__PURE__ */ Ue(
     yk,
     {
       accessibilityLayer: !0,
-      data: b,
+      data: y,
       margin: {
         left: n && !n.hide ? 0 : 12,
         right: 12,
         top: i ? 24 : 0,
-        bottom: l ? 24 : 12
+        bottom: d ? 24 : 12
       },
       stackOffset: a === "stacked-by-sign" ? "sign" : void 0,
-      onClick: (g) => {
-        if (!h || !g.activeLabel || !g.activePayload)
+      onClick: (_) => {
+        if (!p || !_.activeLabel || !_.activePayload)
           return;
-        const _ = {
-          label: g.activeLabel,
+        const O = {
+          label: _.activeLabel,
           values: {}
         };
-        for (const O of g.activePayload)
-          _.values[O.name] = O.value;
-        h(_);
+        for (const A of _.activePayload)
+          O.values[A.name] = A.value;
+        p(O);
       },
       children: [
-        o && /* @__PURE__ */ J(
+        !o && /* @__PURE__ */ J(
           bc,
           {
             cursor: !0,
             content: /* @__PURE__ */ J(bs, { yAxisFormatter: n.tickFormatter })
           }
         ),
-        /* @__PURE__ */ J(gc, { ...Vd() }),
+        !s && /* @__PURE__ */ J(gc, { ...Vd() }),
         /* @__PURE__ */ J(
           mi,
           {
             ...yw(n),
             tick: !0,
-            width: n.width ?? y + 20,
+            width: n.width ?? g + 20,
             hide: n.hide
           }
         ),
@@ -28550,10 +28554,10 @@ const Mse = ({
           {
             ...gw(r),
             hide: r == null ? void 0 : r.hide,
-            tick: l ? (g) => {
-              var E, M;
-              const { x: _, y: O, payload: A } = g, P = ((E = t.find(($) => $.label === A.value)) == null ? void 0 : E.values) || "", x = Object.keys(P).length === 1 ? (M = Object.values(P)) == null ? void 0 : M[0] : void 0, S = x !== void 0 && n.tickFormatter ? n.tickFormatter(`${x}`) : x.toLocaleString();
-              return /* @__PURE__ */ Ue("g", { transform: `translate(${_},${O})`, children: [
+            tick: d ? (_) => {
+              var M, $;
+              const { x: O, y: A, payload: P } = _, x = ((M = t.find((B) => B.label === P.value)) == null ? void 0 : M.values) || "", S = Object.keys(x).length === 1 ? ($ = Object.values(x)) == null ? void 0 : $[0] : void 0, E = S !== void 0 && n.tickFormatter ? n.tickFormatter(`${S}`) : S.toLocaleString();
+              return /* @__PURE__ */ Ue("g", { transform: `translate(${O},${A})`, children: [
                 /* @__PURE__ */ J(
                   "text",
                   {
@@ -28562,10 +28566,10 @@ const Mse = ({
                     dy: 12,
                     textAnchor: "middle",
                     className: "text-sm font-medium !text-f1-foreground-secondary",
-                    children: A.value
+                    children: P.value
                   }
                 ),
-                !!x && /* @__PURE__ */ J(
+                !!S && /* @__PURE__ */ J(
                   "text",
                   {
                     x: 0,
@@ -28573,20 +28577,20 @@ const Mse = ({
                     dy: 28,
                     textAnchor: "middle",
                     className: "!fill-f1-foreground text-sm font-medium",
-                    children: S
+                    children: E
                   }
                 )
               ] });
             } : void 0
           }
         ),
-        m.map((g, _) => /* @__PURE__ */ J(
+        b.map((_, O) => /* @__PURE__ */ J(
           Xi,
           {
             isAnimationActive: !1,
-            dataKey: g,
+            dataKey: _,
             stackId: a === "stacked" || a === "stacked-by-sign" ? "stack" : void 0,
-            fill: d ? (O) => O.fill : e[g].color ?? pn(_),
+            fill: h ? (A) => A.fill : e[_].color ?? pn(O),
             radius: a === "stacked-by-sign" ? [4, 4, 0, 0] : 4,
             maxBarSize: 32,
             children: i && /* @__PURE__ */ J(
@@ -28597,12 +28601,12 @@ const Mse = ({
                 className: "fill-f1-foreground",
                 fontSize: 12
               },
-              `label-${g}`
+              `label-${_}`
             )
           },
-          `bar-${g}`
+          `bar-${_}`
         )),
-        c && /* @__PURE__ */ J(
+        l && /* @__PURE__ */ J(
           mw,
           {
             content: /* @__PURE__ */ J(Fd, { nameKey: "label" }),
@@ -30943,52 +30947,54 @@ const $ce = ({ data: e, legend: t = !0, hideTooltip: r = !1 }, n) => {
   xAxis: r,
   yAxis: n = { hide: !0 },
   lineType: i = "natural",
-  aspect: a
-}, o) => {
-  const s = Object.keys(t), c = bw(e), l = Math.max(
-    ...c.flatMap(
-      (d) => s.map(
-        (h) => qd(
-          n != null && n.tickFormatter ? n.tickFormatter(`${d[h]}`) : `${d[h]}`
+  aspect: a,
+  hideTooltip: o = !1,
+  hideGrid: s = !1
+}, c) => {
+  const l = Object.keys(t), d = bw(e), h = Math.max(
+    ...d.flatMap(
+      (p) => l.map(
+        (m) => qd(
+          n != null && n.tickFormatter ? n.tickFormatter(`${p[m]}`) : `${p[m]}`
         )
       )
     )
   );
-  return /* @__PURE__ */ J(ys, { config: t, ref: o, aspect: a, children: /* @__PURE__ */ Ue(
+  return /* @__PURE__ */ J(ys, { config: t, ref: c, aspect: a, children: /* @__PURE__ */ Ue(
     bse,
     {
       accessibilityLayer: !0,
-      data: c,
+      data: d,
       margin: { left: n && !n.hide ? 0 : 12, right: 12 },
       children: [
-        /* @__PURE__ */ J(gc, { ...Vd() }),
+        !s && /* @__PURE__ */ J(gc, { ...Vd() }),
         !(r != null && r.hide) && /* @__PURE__ */ J(vi, { ...gw(r) }),
         !(n != null && n.hide) && /* @__PURE__ */ J(
           mi,
           {
             ...yw(n),
-            width: n.width ?? l + 20
+            width: n.width ?? h + 20
           }
         ),
-        /* @__PURE__ */ J(
+        !o && /* @__PURE__ */ J(
           bc,
           {
             cursor: !0,
             content: /* @__PURE__ */ J(bs, { yAxisFormatter: n == null ? void 0 : n.tickFormatter })
           }
         ),
-        s.map((d, h) => /* @__PURE__ */ J(
+        l.map((p, m) => /* @__PURE__ */ J(
           yc,
           {
-            dataKey: d,
+            dataKey: p,
             isAnimationActive: !1,
             type: i,
-            stroke: t[d].color || pn(h),
+            stroke: t[p].color || pn(m),
             strokeWidth: 1.5,
-            strokeDasharray: t[d].dashed ? "4 4" : void 0,
+            strokeDasharray: t[p].dashed ? "4 4" : void 0,
             dot: !1
           },
-          d
+          p
         ))
       ]
     }
@@ -34791,35 +34797,37 @@ const qce = (e) => {
   xAxis: r = { hide: !0 },
   yAxis: n,
   label: i = !1,
-  aspect: a
-}, o) => {
-  const s = Object.keys(e), c = Fce(t), l = Math.max(
-    ...c.map((p) => qd(`${p.x}`))
-  ), d = {
+  aspect: a,
+  hideTooltip: o = !1,
+  hideGrid: s = !1
+}, c) => {
+  const l = Object.keys(e), d = Fce(t), h = Math.max(
+    ...d.map((b) => qd(`${b.x}`))
+  ), p = {
     ...gw(r),
     type: "number",
-    dataKey: qce(c)
-  }, h = {
+    dataKey: qce(d)
+  }, m = {
     ...yw(n),
     type: "category",
     dataKey: "x"
   };
-  return /* @__PURE__ */ J(ys, { config: e, ref: o, aspect: a, children: /* @__PURE__ */ Ue(
+  return /* @__PURE__ */ J(ys, { config: e, ref: c, aspect: a, children: /* @__PURE__ */ Ue(
     yk,
     {
       layout: "vertical",
       accessibilityLayer: !0,
-      data: c,
+      data: d,
       margin: { left: n && !n.hide ? 0 : 12, right: i ? 32 : 0 },
       children: [
-        /* @__PURE__ */ J(
+        !o && /* @__PURE__ */ J(
           bc,
           {
             cursor: !0,
             content: /* @__PURE__ */ J(bs, { yAxisFormatter: n == null ? void 0 : n.tickFormatter })
           }
         ),
-        /* @__PURE__ */ J(
+        !s && /* @__PURE__ */ J(
           gc,
           {
             ...Vd(),
@@ -34827,22 +34835,22 @@ const qce = (e) => {
             horizontal: !1
           }
         ),
-        /* @__PURE__ */ J(vi, { ...d, hide: r == null ? void 0 : r.hide }),
+        /* @__PURE__ */ J(vi, { ...p, hide: r == null ? void 0 : r.hide }),
         /* @__PURE__ */ J(
           mi,
           {
-            ...h,
+            ...m,
             hide: n == null ? void 0 : n.hide,
-            width: (n == null ? void 0 : n.width) ?? l + 20
+            width: (n == null ? void 0 : n.width) ?? h + 20
           }
         ),
-        s.map((p, m) => /* @__PURE__ */ J(Sa, { children: /* @__PURE__ */ J(
+        l.map((b, y) => /* @__PURE__ */ J(Sa, { children: /* @__PURE__ */ J(
           Xi,
           {
             isAnimationActive: !1,
             layout: "vertical",
-            dataKey: p,
-            fill: e[p].color || pn(m),
+            dataKey: b,
+            fill: e[b].color || pn(y),
             radius: 4,
             maxBarSize: 24,
             children: i && /* @__PURE__ */ J(
@@ -34853,10 +34861,10 @@ const qce = (e) => {
                 className: "fill-f1-foreground",
                 fontSize: 12
               },
-              `label-{${p}}`
+              `label-{${b}}`
             )
           },
-          `bar-${p}`
+          `bar-${b}`
         ) }))
       ]
     }
@@ -35042,9 +35050,10 @@ export {
   rle as b3,
   dce as b4,
   nle as b5,
-  xse as b6,
-  pi as b7,
-  md as b8,
+  Bce as b6,
+  xse as b7,
+  pi as b8,
+  md as b9,
   _k as c,
   hle as d,
   ple as e,

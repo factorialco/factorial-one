@@ -40,7 +40,6 @@ values: {
 [x: string]: number;
 };
 }) => void) | undefined;
-hideTooltip?: boolean;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
@@ -49,7 +48,7 @@ export declare const Button: ForwardRefExoticComponent<ButtonProps & RefAttribut
 
 declare const Button_2: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round"> & {
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -203,7 +202,7 @@ declare type LinkContextValue = {
     component?: (props: LinkProps_2, ref: ForwardedRef<HTMLAnchorElement>) => JSX.Element;
 };
 
-export declare interface LinkProps extends LinkProps_2, VariantProps<typeof linkVariants> {
+export declare interface LinkProps extends LinkProps_2, VariantProps<typeof linkVariants>, DataAttributes {
     stopPropagation?: boolean;
 }
 
