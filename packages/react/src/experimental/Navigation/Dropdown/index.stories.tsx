@@ -53,9 +53,11 @@ export const Default: Story = {
     const openButton = page.getByRole("button")
     await userEvent.click(openButton)
     const menuItems = await page.findAllByRole("menuitem")
-    await expect(
-      menuItems.filter((item) => item.dataset.test === "foo")
-    ).toHaveLength(1)
+    const itemWithDataset = menuItems.filter(
+      (item) => item.dataset.test === "foo"
+    )
+    await expect(itemWithDataset).toHaveLength(1)
+    await userEvent.click(itemWithDataset[0])
   },
 }
 
