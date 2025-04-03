@@ -119,12 +119,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       return cleanupObservers
     }, [])
 
-    useEffect(() => {
-      if (error) {
-        editor?.setEditable(false)
-      }
-    }, [error])
-
     const handleToggleFullscreen = () => {
       if (containerRef.current && screenfull.isEnabled) {
         screenfull.toggle(containerRef.current)
@@ -178,6 +172,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       },
       []
     )
+
+    useEffect(() => {
+      if (error && editor) {
+        editor.setEditable(false)
+      }
+    }, [error, editor])
 
     useImperativeHandle(ref, () => ({
       clear: () => editor?.commands.clearContent(),

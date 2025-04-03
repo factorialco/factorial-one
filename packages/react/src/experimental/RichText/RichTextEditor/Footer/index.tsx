@@ -105,7 +105,7 @@ const Footer = ({
         </motion.div>
 
         <motion.div
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 overflow-hidden"
           initial={{ opacity: 1 }}
           animate={{
             opacity: isToolbarOpen ? 0 : 1,
@@ -115,7 +115,6 @@ const Footer = ({
             delay: isToolbarOpen ? 0 : 0.2,
             ease: "easeInOut",
           }}
-          style={{ overflow: "hidden" }}
         >
           <Button
             onClick={(e) => {

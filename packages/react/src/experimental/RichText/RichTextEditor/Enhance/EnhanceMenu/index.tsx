@@ -66,17 +66,16 @@ const AIEnhanceMenu = ({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (!selectedOption) return
+      if (!(event.target instanceof Element)) return
 
-      const clickedOnMainMenu = menuRef.current?.contains(event.target as Node)
-      const clickedOnSubMenu = subMenuRef.current?.contains(
-        event.target as Node
-      )
+      const clickedOnMainMenu = menuRef.current?.contains(event.target)
+      const clickedOnSubMenu = subMenuRef.current?.contains(event.target)
+      const optionItem = event.target.closest(".option-item")
+
       if (
         !clickedOnSubMenu &&
         (!clickedOnMainMenu ||
-          (clickedOnMainMenu &&
-            (event.target as HTMLElement).closest(".option-item")?.id !==
-              selectedOption.id))
+          (clickedOnMainMenu && optionItem?.id !== selectedOption.id))
       ) {
         setSelectedOption(null)
       }
@@ -129,7 +128,6 @@ const AIEnhanceMenu = ({
       <div
         ref={menuRef}
         className="flex max-h-60 w-80 flex-col overflow-hidden rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex w-full flex-row items-center p-2">
           <Input
@@ -170,7 +168,6 @@ const AIEnhanceMenu = ({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.2 }}
-              onClick={(e) => e.stopPropagation()}
             >
               <div className="scrollbar-macos flex flex-col overflow-y-auto">
                 {selectedOption.subOptions.map((subOption) => (
