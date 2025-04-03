@@ -36,10 +36,10 @@ const filters = {
     type: "search",
     label: "Search",
   },
-  department: {
+  departmentId: {
     type: "in",
     label: "Department",
-    options: DEPARTMENTS.map((value) => ({ value, label: value })),
+    options: DEPARTMENTS.map((value, i) => ({ value: i, label: value })),
   },
 } as const
 
@@ -48,25 +48,25 @@ const filterPresets: Presets<typeof filters> = [
   {
     label: "Engineering Team",
     filter: {
-      department: ["Engineering"],
+      departmentId: [0],
     },
   },
   {
     label: "Product Team",
     filter: {
-      department: ["Product"],
+      departmentId: [1],
     },
   },
   {
     label: "Design Team",
     filter: {
-      department: ["Design"],
+      departmentId: [2],
     },
   },
   {
     label: "Marketing Team",
     filter: {
-      department: ["Marketing"],
+      departmentId: [3],
     },
   },
 ]
@@ -77,6 +77,7 @@ const mockUsers: {
   name: string
   email: string
   role: string
+  departmentId: number
   department: (typeof DEPARTMENTS)[number]
   status: string
   isStarred: boolean
@@ -88,6 +89,7 @@ const mockUsers: {
     name: "John Doe",
     email: "john@example.com",
     role: "Senior Engineer",
+    departmentId: 0,
     department: DEPARTMENTS[0],
     status: "active",
     isStarred: true,
@@ -98,6 +100,7 @@ const mockUsers: {
     name: "Jane Smith",
     email: "jane@example.com",
     role: "Product Manager",
+    departmentId: 1,
     department: DEPARTMENTS[1],
     status: "active",
     isStarred: false,
@@ -108,6 +111,7 @@ const mockUsers: {
     name: "Bob Johnson",
     email: "bob@example.com",
     role: "Designer",
+    departmentId: 2,
     department: DEPARTMENTS[2],
     status: "inactive",
     isStarred: false,
@@ -118,6 +122,7 @@ const mockUsers: {
     name: "Alice Williams",
     email: "alice@example.com",
     role: "Marketing Lead",
+    departmentId: 3,
     department: DEPARTMENTS[3],
     status: "active",
     isStarred: true,
@@ -130,6 +135,7 @@ const filterUsers = <
   T extends RecordType & {
     name: string
     email: string
+    departmentId: number
     department: string
     salary: number | undefined
   },
@@ -192,13 +198,14 @@ const filterUsers = <
   }
 
   // Handle department filter
-  const departmentFilterValues = filterValues.department
+  const departmentFilterValues = filterValues.departmentId
+
   if (
     Array.isArray(departmentFilterValues) &&
     departmentFilterValues.length > 0
   ) {
     filteredUsers = filteredUsers.filter((user) =>
-      departmentFilterValues.some((d) => d === user.department)
+      departmentFilterValues.some((d) => d === user.departmentId)
     )
   }
 
@@ -317,7 +324,7 @@ const ExampleComponent = ({
         onClick: () => console.log(`Deleting ${item.name}`),
         critical: true,
         description: "Permanently remove user",
-        enabled: item.department === "Engineering" && item.status === "active",
+        enabled: item.departmentId === 0 && item.status === "active",
       },
     ],
     selectable,
@@ -541,8 +548,7 @@ export const BasicTableView: Story = {
           onClick: () => console.log(`Deleting ${item.name}`),
           critical: true,
           description: "Permanently remove user",
-          enabled:
-            item.department === "Engineering" && item.status === "active",
+          enabled: item.departmentId === 0 && item.status === "active",
         },
       ],
       primaryActions: () => ({
@@ -680,8 +686,7 @@ export const WithLinkedItems: Story = {
           onClick: () => console.log(`Deleting ${item.name}`),
           critical: true,
           description: "Permanently remove user",
-          enabled:
-            item.department === "Engineering" && item.status === "active",
+          enabled: item.departmentId === 0 && item.status === "active",
         },
       ],
     })
@@ -983,7 +988,7 @@ export const WithPreselectedFilters: Story = {
       sortings,
       presets: filterPresets,
       currentFilters: {
-        department: ["Engineering"],
+        departmentId: [0],
       },
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -1243,12 +1248,14 @@ function createDataAdapter<
 
     // Apply department filter if provided
     if (
-      "department" in filters &&
-      Array.isArray(filters.department) &&
-      filters.department.length > 0
+      "departmentId" in filters &&
+      Array.isArray(filters.departmentId) &&
+      filters.departmentId.length > 0
     ) {
       filteredRecords = filteredRecords.filter((record) =>
-        (filters.department as string[]).includes(record.department)
+        (filters.departmentId as number[]).includes(
+          record.departmentId as number
+        )
       )
     }
 
@@ -1531,18 +1538,19 @@ export const WithMultipleVisualizations: Story = {
 // Fix the generateMockUsers function to use the correct department types
 const generateMockUsers = (count: number) => {
   return Array.from({ length: count }).map((_, index) => {
-    const department = DEPARTMENTS[index % DEPARTMENTS.length]
+    const departmentId = index % DEPARTMENTS.length
     return {
       id: `user-${index + 1}`,
       name: `User ${index + 1}`,
       email: `user${index + 1}@example.com`,
       role:
         index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
-      department,
+      department: DEPARTMENTS[departmentId],
+      departmentId: departmentId,
       status: index % 5 === 0 ? "inactive" : "active",
       isStarred: index % 3 === 0,
       href: `/users/user-${index + 1}`,
-      salary: department === "Marketing" ? 50000 + index * 1000 : undefined,
+      salary: departmentId === 2 ? 50000 + index * 1000 : undefined,
     }
   })
 }
@@ -1754,7 +1762,7 @@ export const WithAdvancedActions: Story = {
           },
           critical: true,
           description: "This action cannot be undone",
-          enabled: item.department === "Engineering",
+          enabled: item.departmentId === 0,
         },
         // Toggle action
         {
@@ -1834,6 +1842,7 @@ export const WithSyncSearch: Story = {
               email: "john@example.com",
               role: "Senior Engineer",
               department: DEPARTMENTS[0],
+              departmentId: 0,
               status: "active",
               isStarred: true,
             },
@@ -1843,6 +1852,7 @@ export const WithSyncSearch: Story = {
               email: "jane@example.com",
               role: "Product Manager",
               department: DEPARTMENTS[1],
+              departmentId: 1,
               status: "active",
               isStarred: false,
             },
@@ -1852,6 +1862,7 @@ export const WithSyncSearch: Story = {
               email: "alice@example.com",
               role: "UX Designer",
               department: DEPARTMENTS[2],
+              departmentId: 2,
               status: "active",
               isStarred: false,
             },
@@ -1861,6 +1872,7 @@ export const WithSyncSearch: Story = {
               email: "bob@example.com",
               role: "Developer",
               department: DEPARTMENTS[0],
+              departmentId: 0,
               status: "inactive",
               isStarred: true,
             },
@@ -1870,6 +1882,7 @@ export const WithSyncSearch: Story = {
               email: "emma@example.com",
               role: "Marketing Lead",
               department: DEPARTMENTS[3],
+              departmentId: 3,
               status: "active",
               isStarred: false,
             },
@@ -1893,10 +1906,10 @@ export const WithSyncSearch: Story = {
           }
 
           // Apply department filter if provided
-          const departmentFilter = filters.department as string[] | undefined
+          const departmentFilter = filters.departmentId as number[] | undefined
           if (departmentFilter && departmentFilter.length > 0) {
             filteredUsers = filteredUsers.filter((user) =>
-              departmentFilter.includes(user.department)
+              departmentFilter.includes(user.departmentId)
             )
           }
 
@@ -2038,7 +2051,7 @@ export const WithAsyncSearch: Story = {
               }
 
               // Apply department filter if provided
-              const departmentFilter = filters.department as
+              const departmentFilter = filters.departmentId as
                 | string[]
                 | undefined
               if (departmentFilter && departmentFilter.length > 0) {
