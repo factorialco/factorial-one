@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.0...factorial-one-react-v1.21.1) (2025-04-03)
+
+
+### Bug Fixes
+
+* figma errors and new functionalities for RichTextEditor ([#1541](https://github.com/factorialco/factorial-one/issues/1541)) ([0d03644](https://github.com/factorialco/factorial-one/commit/0d036441c10274a0b0d3df5399edff5d609846a3))
+
 ## [1.21.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.20.2...factorial-one-react-v1.21.0) (2025-04-03)
 
 
