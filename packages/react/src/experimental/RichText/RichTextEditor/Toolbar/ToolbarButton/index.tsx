@@ -35,44 +35,53 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
     },
     ref
   ) => {
-    const button = (
-      <Button
-        ref={ref}
-        variant="outline"
-        size="md"
-        onClick={onClick}
-        className={cn(
-          "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
-          active
-            ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
-            : "border-none bg-transparent hover:bg-f1-background-secondary-hover",
-          showLabel ? "w-full items-center justify-start px-2" : "p-0"
-        )}
-        disabled={disabled}
-        aria-label={label}
-        {...props}
-      >
-        <Icon
-          icon={icon}
-          className={
-            active
-              ? "text-f1-icon-selected"
-              : mode === "dark"
-                ? "text-f1-foreground-inverse"
-                : "text-f1-foreground"
+    const CustomButton = (
+      <div
+        className="relative inline-block"
+        onClick={(e) => {
+          if (!disabled && e.currentTarget === e.target) {
+            onClick()
           }
-        />
-        {showLabel && (
-          <span
-            className={cn(
-              "text-sm",
-              active && "text-f1-background-selected-bold"
-            )}
-          >
-            {label}
-          </span>
-        )}
-      </Button>
+        }}
+      >
+        <Button
+          ref={ref}
+          variant="outline"
+          size="md"
+          onClick={onClick}
+          className={cn(
+            "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
+            active
+              ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
+              : "border-none bg-transparent hover:bg-f1-background-secondary-hover",
+            showLabel ? "w-full items-center justify-start px-2" : "p-0"
+          )}
+          disabled={disabled}
+          aria-label={label}
+          {...props}
+        >
+          <Icon
+            icon={icon}
+            className={
+              active
+                ? "text-f1-icon-selected"
+                : mode === "dark"
+                  ? "text-f1-foreground-inverse"
+                  : "text-f1-foreground"
+            }
+          />
+          {showLabel && (
+            <span
+              className={cn(
+                "text-sm",
+                active && "text-f1-background-selected-bold"
+              )}
+            >
+              {label}
+            </span>
+          )}
+        </Button>
+      </div>
     )
 
     return tooltip && mode === "light" ? (
@@ -81,10 +90,10 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         label={tooltip?.label}
         shortcut={tooltip?.shortcut}
       >
-        {button}
+        {CustomButton}
       </Tooltip>
     ) : (
-      button
+      CustomButton
     )
   }
 )

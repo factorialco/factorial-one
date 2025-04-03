@@ -1,11 +1,6 @@
 import { Calendar } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
-import {
-  EnhancementOption,
-  FILE_TYPES,
-  MentionChangeResult,
-  RichTextEditor,
-} from "."
+import { EnhancementOption, FILE_TYPES, resultType, RichTextEditor } from "."
 
 const meta = {
   component: RichTextEditor,
@@ -23,14 +18,6 @@ const enhancementOptions: EnhancementOption[] = [
   {
     id: "improve-writing",
     label: "Improve Writing",
-  },
-  {
-    id: "make-shorter",
-    label: "Make Shorter",
-  },
-  {
-    id: "make-longer",
-    label: "Make Longer",
   },
   {
     id: "change-tone",
@@ -104,12 +91,8 @@ export const Default: Story = {
   tags: ["experimental"],
   args: {
     title: "Ode to My Text Editor",
-    onChange: (html: string | MentionChangeResult | null) => {
-      if (html && !(html as MentionChangeResult).ids) {
-        console.log("HTML change", html)
-      } else {
-        console.log("Mention change", html)
-      }
+    onChange: (result: resultType) => {
+      console.log(result)
     },
     placeholder: "Write something here...",
     mentionsConfig: { users: users },
@@ -137,7 +120,6 @@ export const Default: Story = {
         rejectChangesButtonLabel: "Reject",
         repeatButtonLabel: "Repeat",
         customPromptPlaceholder: "What do you want to do?",
-        closeErrorButtonLabel: "Continue editing",
         loadingEnhanceLabel: "Loading the magic...",
       },
     },
@@ -196,13 +178,18 @@ export const Default: Story = {
       task: "Task",
       linkPlaceholder: "Enter link http://here...",
       linkLabel: "Link",
+      linkPaste: "Paste",
       close: "Close",
     },
 
     maxCharacters: 10000,
     initialEditorState: {
       content:
-        "<h2>Ode to My Text Editor</h2><p></p><p>There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, <strong>you appeared</strong>. Sleek, fast, and strangely comforting, my text editor. You didn’t just open files — you opened <em>possibilities</em>. </p><hr><p>Line by line, we found rhythm. Your autocomplete whispered the words I hadn’t yet typed. You colored my logic with care, turned my bugs into puzzles, and my drafts into structure. With every project, you became more than a tool — you became <em>home</em>. You learned how I think. From lonely midnight commits to the thrill of a clean build, you’ve been there, steady and quiet, letting me focus, letting me create. I don't just write code anymore — <strong><mark>I write it with you.</mark></strong></p>",
+        "<p>There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, <strong>you appeared</strong>. Sleek, fast, and strangely comforting, my text editor. You didn’t just open files — you opened <em>possibilities</em>",
+    },
+    errorConfig: {
+      onClose: () => alert("Close"),
+      closeErrorButtonLabel: "Continue editing",
     },
   },
 }

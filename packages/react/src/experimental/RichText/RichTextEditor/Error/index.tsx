@@ -1,17 +1,13 @@
 import { Button } from "@/components/Actions/Button"
 import { AlertAvatar } from "@/experimental/exports"
 
-interface EnhanceErrorProps {
+interface ErrorProps {
   error: string
   onClose: () => void
   closeErrorButtonLabel?: string
 }
 
-const EnhanceError = ({
-  error,
-  onClose,
-  closeErrorButtonLabel,
-}: EnhanceErrorProps) => {
+const Error = ({ error, onClose, closeErrorButtonLabel }: ErrorProps) => {
   return (
     <div className="flex w-max max-w-full items-center gap-10 rounded-md bg-f1-background-critical p-1 drop-shadow-sm">
       <div className="flex w-full flex-row items-center gap-2">
@@ -41,4 +37,4 @@ const EnhanceError = ({
   )
 }
 
-export { EnhanceError }
+export { Error }

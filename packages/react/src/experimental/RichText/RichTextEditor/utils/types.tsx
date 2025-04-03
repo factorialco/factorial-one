@@ -8,9 +8,9 @@ type MentionedUser = {
   href?: string
 }
 
-type MentionChangeResult = {
-  value: string
-  ids: number[]
+type resultType = {
+  value: string | null
+  mentionIds?: number[]
 }
 
 type enhanceTextParams = {
@@ -26,9 +26,13 @@ type enhancedTextResponse = {
   error?: string
 }
 
+type errorConfig = {
+  onClose?: () => void
+  closeErrorButtonLabel?: string
+}
+
 type enhanceLabelsType = {
   defaultError: string
-  closeErrorButtonLabel: string
   enhanceButtonLabel: string
   acceptChangesButtonLabel: string
   rejectChangesButtonLabel: string
@@ -110,6 +114,7 @@ type toolbarLabels = {
   task: string
   linkPlaceholder: string
   linkLabel: string
+  linkPaste: string
   close: string
 }
 
@@ -120,11 +125,12 @@ export type {
   enhanceLabelsType,
   EnhancementOption,
   enhanceTextParams,
+  errorConfig,
   filesConfig,
-  MentionChangeResult,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
+  resultType,
   subActionType,
   toolbarLabels,
 }
