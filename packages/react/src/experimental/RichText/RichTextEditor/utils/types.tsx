@@ -26,9 +26,13 @@ type enhancedTextResponse = {
   error?: string
 }
 
+type errorConfig = {
+  onClose?: () => void
+  closeErrorButtonLabel?: string
+}
+
 type enhanceLabelsType = {
   defaultError: string
-  closeErrorButtonLabel: string
   enhanceButtonLabel: string
   acceptChangesButtonLabel: string
   rejectChangesButtonLabel: string
@@ -121,6 +125,7 @@ export type {
   enhanceLabelsType,
   EnhancementOption,
   enhanceTextParams,
+  errorConfig,
   filesConfig,
   MentionChangeResult,
   MentionedUser,

@@ -14,8 +14,8 @@ import screenfull from "screenfull"
 import "../index.css"
 import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
-import { EnhanceError } from "./Enhance/EnhanceError"
 import { LoadingEnhance } from "./Enhance/LoadingEnhance"
+import { Error } from "./Error"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
@@ -29,6 +29,7 @@ import { setupContainerObservers } from "./utils/helpers"
 import {
   actionType,
   enhanceConfig,
+  errorConfig,
   filesConfig,
   MentionChangeResult,
   MentionedUser,
@@ -52,12 +53,14 @@ interface RichTextEditorProps {
   }
   toolbarLabels: toolbarLabels
   title: string
+  errorConfig?: errorConfig
 }
 
 type RichTextEditorHandle = {
   clear: () => void
   clearFiles: () => void
   focus: () => void
+  setError: (error: string | null) => void
 }
 
 const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
@@ -74,6 +77,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       placeholder,
       toolbarLabels,
       title,
+      errorConfig,
     },
     ref
   ) {
@@ -86,7 +90,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
     const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
-    const [enhanceError, setEnhanceError] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>(null)
     const [isToolbarOpen, setIsToolbarOpen] = useState(false)
     const [lastIntent, setLastIntent] = useState<{
       selectedIntent?: string
@@ -115,6 +119,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       return cleanupObservers
     }, [])
 
+    useEffect(() => {
+      if (error) {
+        editor?.setEditable(false)
+      }
+    }, [error])
+
     const handleToggleFullscreen = () => {
       if (containerRef.current && screenfull.isEnabled) {
         screenfull.toggle(containerRef.current)
@@ -124,7 +134,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const disableAllButtons = !!(
       isAcceptChangesOpen ||
       isLoadingEnhance ||
-      enhanceError
+      error
     )
 
     const editor = useEditor(
@@ -178,6 +188,14 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         }
       },
       focus: () => editor?.commands.focus(),
+      setError: (errorMessage: string | null) => {
+        setError(errorMessage)
+        if (errorMessage) {
+          editor?.setEditable(false)
+        } else {
+          editor?.setEditable(true)
+        }
+      },
     }))
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -210,9 +228,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             setIsAcceptChangesOpen(true)
           },
           onError: (error?: string) => {
-            editor.setEditable(false)
             setIsAcceptChangesOpen(false)
-            setEnhanceError(error || enhanceConfig.enhanceLabels.defaultError)
+            setError(error || enhanceConfig.enhanceLabels.defaultError)
           },
           selectedIntent,
           customIntent,
@@ -290,7 +307,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           )}
         >
           <AnimatePresence>
-            {(isAcceptChangesOpen || enhanceError) && (
+            {(isAcceptChangesOpen || error) && (
               <motion.div
                 key="accordion"
                 initial={{ height: 0, opacity: 0, y: -20 }}
@@ -324,16 +341,17 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                   />
                 )}
 
-                {enhanceError && (
-                  <EnhanceError
-                    error={enhanceError}
+                {error && (
+                  <Error
+                    error={error}
                     onClose={() => {
-                      setEnhanceError(null)
+                      setError(null)
                       editor.setEditable(true)
+                      if (errorConfig?.onClose) {
+                        errorConfig.onClose()
+                      }
                     }}
-                    closeErrorButtonLabel={
-                      enhanceConfig?.enhanceLabels.closeErrorButtonLabel
-                    }
+                    closeErrorButtonLabel={errorConfig?.closeErrorButtonLabel}
                   />
                 )}
               </motion.div>

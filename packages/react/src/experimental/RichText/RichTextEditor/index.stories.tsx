@@ -129,7 +129,6 @@ export const Default: Story = {
         rejectChangesButtonLabel: "Reject",
         repeatButtonLabel: "Repeat",
         customPromptPlaceholder: "What do you want to do?",
-        closeErrorButtonLabel: "Continue editing",
         loadingEnhanceLabel: "Loading the magic...",
       },
     },
@@ -196,6 +195,10 @@ export const Default: Story = {
     initialEditorState: {
       content:
         "<p>There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, <strong>you appeared</strong>. Sleek, fast, and strangely comforting, my text editor. You didn’t just open files — you opened <em>possibilities</em>",
+    },
+    errorConfig: {
+      onClose: () => alert("Close"),
+      closeErrorButtonLabel: "Continue editing",
     },
   },
 }
