@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.20.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.20.1...factorial-one-react-v1.20.2) (2025-04-03)
+
+
+### Bug Fixes
+
+* datacollection filters async label ([#1538](https://github.com/factorialco/factorial-one/issues/1538)) ([47229cd](https://github.com/factorialco/factorial-one/commit/47229cd8039f7807d47a59bb2504a0a17505342c))
+
 ## [1.20.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.20.0...factorial-one-react-v1.20.1) (2025-04-02)
 
 
