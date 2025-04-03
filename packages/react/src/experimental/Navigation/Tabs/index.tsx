@@ -1,24 +1,39 @@
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
+import { Dispatch, useEffect, useState } from "react"
 import { Link, useNavigation } from "../../../lib/linkHandler"
 import { withSkeleton } from "../../../lib/skeleton"
 
 export type TabItem = {
   label: string
-  href: string
   index?: boolean
-} & DataAttributes
+} & DataAttributes &
+  ({ href: string } | { id: string })
 
 export interface TabsProps {
   tabs: TabItem[]
+  activeTabId?: string
+  setActiveTabId?: Dispatch<string>
   secondary?: boolean
   embedded?: boolean
 }
 
 export const BaseTabs: React.FC<TabsProps> = ({
   tabs,
+  activeTabId: initialActiveTabId,
+  setActiveTabId: onChangeActiveTabId,
   secondary = false,
   embedded = false,
 }) => {
+  const firstTab = tabs[0]
+
+  const [activeTabId, setActiveTabId] = useState(
+    initialActiveTabId ?? ("id" in firstTab ? firstTab.id : undefined)
+  )
+
+  useEffect(() => {
+    if (activeTabId) onChangeActiveTabId?.(activeTabId)
+  }, [onChangeActiveTabId, activeTabId])
+
   const { isActive } = useNavigation()
 
   // If embedded, only show first tab
@@ -27,7 +42,9 @@ export const BaseTabs: React.FC<TabsProps> = ({
   const sortedTabs = [...visibleTabs].sort((a, b) =>
     a.index ? 1 : b.index ? -1 : 0
   )
-  const activeTab = sortedTabs.find((tab) => isActive(tab.href))
+  const activeTab = sortedTabs.find((tab) =>
+    "href" in tab ? isActive(tab.href) : activeTabId === tab.id
+  )
 
   return (
     <TabNavigation
@@ -40,19 +57,31 @@ export const BaseTabs: React.FC<TabsProps> = ({
           {visibleTabs[0].label}
         </li>
       ) : (
-        visibleTabs.map(({ label, ...props }, index) => (
-          <TabNavigationLink
-            key={index}
-            active={activeTab?.href === props.href}
-            href={props.href}
-            secondary={secondary}
-            asChild
-          >
-            <Link role="link" {...props}>
-              {label}
-            </Link>
-          </TabNavigationLink>
-        ))
+        visibleTabs.map(({ label, ...props }, index) => {
+          const active =
+            activeTab && "href" in activeTab && "href" in props
+              ? activeTab.href === props.href
+              : "id" in props && activeTabId === props.id
+
+          return (
+            <TabNavigationLink
+              key={index}
+              active={active}
+              href={"href" in props ? props.href : undefined}
+              onClick={() => {
+                if ("id" in props) {
+                  setActiveTabId?.(props.id)
+                }
+              }}
+              secondary={secondary}
+              asChild
+            >
+              <Link role="link" {...props}>
+                {label}
+              </Link>
+            </TabNavigationLink>
+          )
+        })
       )}
     </TabNavigation>
   )
