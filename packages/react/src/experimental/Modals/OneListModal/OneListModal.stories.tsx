@@ -63,20 +63,20 @@ export const Default: Story = {
     ],
     tabs: [
       {
+        id: "out-of-office",
         label: "Out of office",
-        href: "#team-status",
       },
       {
+        id: "missing-clock-in",
         label: "Missing clock in",
-        href: "#missing-clock-in",
       },
       {
+        id: "clocked-in",
         label: "Clocked in",
-        href: "#clocked-in",
       },
       {
+        id: "in-a-break",
         label: "In a break",
-        href: "#in-a-break",
       },
     ],
     children: <ExampleList />,
