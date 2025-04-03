@@ -92,6 +92,7 @@ const EnhanceActivator = ({
           side={position}
           align="start"
           sideOffset={15}
+          alignOffset={-10}
           collisionPadding={10}
           style={{ zIndex: 1000 }}
         >

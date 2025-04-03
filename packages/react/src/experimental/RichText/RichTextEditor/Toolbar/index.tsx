@@ -315,9 +315,8 @@ const Toolbar = ({
     <LinkPopup
       key="link-popup"
       editor={editor}
-      linkPlaceholder={labels.linkPlaceholder}
       disabled={disableButtons}
-      label={labels.linkLabel}
+      labels={labels}
       mode={mode}
     />,
   ]
@@ -351,7 +350,7 @@ const Toolbar = ({
         className={cn(
           "flex grow flex-row items-center",
           animationComplete
-            ? "overflow-x-auto [scrollbar-width:thin]"
+            ? "scrollbar-macos overflow-x-auto"
             : "overflow-hidden"
         )}
       >
