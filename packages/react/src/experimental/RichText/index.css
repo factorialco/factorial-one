@@ -75,17 +75,17 @@
   @apply line-through;
 }
 
-.ProseMirror ul,
-.ProseMirror ol {
-  @apply ml-5;
-}
-
-.ProseMirror[data-type="bulletList"] {
+.ProseMirror .f1-bullet-list {
   @apply list-disc;
 }
 
-.ProseMirror[data-type="orderedList"] {
+.ProseMirror .f1-ordered-list {
   @apply list-decimal;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  @apply ml-5;
 }
 
 .ProseMirror li {
