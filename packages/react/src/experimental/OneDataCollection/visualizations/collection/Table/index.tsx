@@ -236,6 +236,9 @@ export const TableCollection = <
         <TableBody>
           {data.map((item, index) => {
             const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
+            const itemOnClick = source.itemOnClick
+              ? source.itemOnClick(item)
+              : undefined
             const id = source.selectable ? source.selectable(item) : undefined
             return (
               <TableRow key={`row-${index}`}>
@@ -260,6 +263,7 @@ export const TableCollection = <
                     key={String(column.label)}
                     firstCell={cellIndex === 0}
                     href={itemHref}
+                    onClick={itemOnClick}
                     width={column.width}
                     sticky={
                       cellIndex < frozenColumnsLeft
@@ -292,6 +296,7 @@ export const TableCollection = <
                       right: 0,
                     }}
                     href={itemHref}
+                    onClick={itemOnClick}
                   >
                     <ActionsDropdown item={item} actions={source.itemActions} />
                   </TableCell>
