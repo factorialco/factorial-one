@@ -8,25 +8,25 @@ import { useMediaQuery } from "usehooks-ts"
 import { Dialog, DialogContent } from "../../../ui/dialog"
 import { OneModalHeader } from "../OneModalHeader/OneModalHeader"
 
-export interface ListModalProps {
+export type ListModalProps = {
   /** Modal title */
   title: string
   /** Dropdown items */
   dropdownItems?: DropdownInternalProps["items"]
-  /** Tabs */
-  tabs?: TabsProps["tabs"]
   /** Whether the modal is open */
   isOpen: boolean
   /** Callback when modal is closed */
   onClose: () => void
   /** Custom content to render in the list section */
   children: ReactNode
-}
+} & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>
 
 export const OneListModal: React.FC<ListModalProps> = ({
   title,
   dropdownItems,
   tabs,
+  activeTabId,
+  setActiveTabId,
   isOpen,
   onClose,
   children,
@@ -63,7 +63,11 @@ export const OneListModal: React.FC<ListModalProps> = ({
 
       {tabs && (
         <div className="-mx-2">
-          <Tabs tabs={tabs} />
+          <Tabs
+            tabs={tabs}
+            activeTabId={activeTabId}
+            setActiveTabId={setActiveTabId}
+          />
         </div>
       )}
       <ScrollArea
