@@ -10,9 +10,9 @@ import { cn, focusRing } from "../../../lib/utils"
 import { Counter } from "../../Information/Counter"
 import { Preset } from "../../OnePreset"
 import { Presets } from "../types"
-import { FilterButton } from "./Components/FilterButton"
-import { FilterContent } from "./Components/FilterContent"
-import { FilterList } from "./Components/FilterList"
+import { FilterButton } from "./components/FilterButton"
+import { FilterContent } from "./components/FilterContent"
+import { FilterList } from "./components/FilterList"
 import type {
   FilterOption,
   FiltersDefinition,

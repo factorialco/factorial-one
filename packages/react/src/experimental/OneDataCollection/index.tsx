@@ -7,8 +7,8 @@ import { Spinner } from "../../icons/app"
 import { OneActionBar } from "../OneActionBar"
 import { useLayout } from "../PageLayouts/LayoutProvider"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
-import { FiltersChipsList } from "./Filters/Components/FiltersChipsList"
-import { FiltersControls } from "./Filters/Components/FiltersControls"
+import { FiltersChipsList } from "./Filters/components/FiltersChipsList"
+import { FiltersControls } from "./Filters/components/FiltersControls"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { Search } from "./search"
@@ -194,7 +194,10 @@ export const OneDataCollection = <
   }
 
   const handleFilterRemove = (key: keyof Filters) => {
-    setCurrentFilters((prev) => ({ ...prev, [key]: undefined }))
+    setCurrentFilters((prev) => {
+      const { [key]: _, ...rest } = prev
+      return rest as FiltersState<Filters>
+    })
   }
 
   const handleFilterSelect = () => {
