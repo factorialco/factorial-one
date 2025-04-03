@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.1...factorial-one-react-v1.21.2) (2025-04-03)
+
+
+### Bug Fixes
+
+* dropdown variant button datacollection ([#1546](https://github.com/factorialco/factorial-one/issues/1546)) ([1256ef4](https://github.com/factorialco/factorial-one/commit/1256ef4a630585ff026c3fe26b2fe5f7e5a3d81d))
+
 ## [1.21.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.0...factorial-one-react-v1.21.1) (2025-04-03)
 
 
