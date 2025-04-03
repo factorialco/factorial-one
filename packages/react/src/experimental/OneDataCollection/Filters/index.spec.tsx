@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
-import { render, screen, within } from "../../../test-utils"
+import { render, screen, waitFor, within } from "../../../test-utils"
 import { Filters } from "./index"
 import type { FiltersDefinition } from "./types"
 
@@ -63,16 +63,18 @@ describe("Filters", () => {
       )
 
       // Check for active filters in the UI
-      const searchFilter = screen.getByText(/search:/i)
-      const departmentFilter = screen.getByText(/department:/i)
+      let searchFilter, departmentFilter
+      await waitFor(() => {
+        searchFilter = screen.getByText(/search:/i)
+        departmentFilter = screen.getByText(/department:/i)
 
-      // Verify both filters are visible in the UI
-      expect(searchFilter).toBeInTheDocument()
-      expect(departmentFilter).toBeInTheDocument()
+        // Verify both filters are visible in the UI
+        expect(searchFilter).toBeInTheDocument()
+        expect(departmentFilter).toBeInTheDocument()
 
-      // Simply verify both filters exist without checking order
-      // The order might be different in the current implementation
-      expect(screen.getAllByText(/search:|department:/i)).toHaveLength(2)
+        // Simply verify both filters exist without checking order
+        expect(screen.getAllByText(/search:|department:/i)).toHaveLength(2)
+      })
     })
 
     it("preserves filter order when reopening the filter panel", async () => {
@@ -84,6 +86,9 @@ describe("Filters", () => {
       // Open and configure filter
       await user.click(screen.getByRole("button", { name: /filters/i }))
       await user.click(screen.getByText("Department"))
+      await waitFor(() => {
+        expect(screen.getByText("Department")).toBeInTheDocument()
+      })
       await user.click(screen.getByText("Engineering"))
 
       // Apply the filter
@@ -226,8 +231,10 @@ describe("Filters", () => {
       )
 
       // Verify the UI shows the updated filter
-      expect(screen.getByText(/department:/i)).toBeInTheDocument()
-      expect(screen.getByText(/design/i)).toBeInTheDocument()
+      await waitFor(() => {
+        expect(screen.getByText(/department:/i)).toBeInTheDocument()
+        expect(screen.getByText(/design/i)).toBeInTheDocument()
+      })
     })
   })
 })

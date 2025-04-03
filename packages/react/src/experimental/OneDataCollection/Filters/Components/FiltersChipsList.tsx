@@ -28,11 +28,13 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
         <AnimatePresence presenceAffectsLayout initial={false}>
           {(Object.keys(currentFilters) as Array<keyof Filters>).map((key) => {
             const filter = filters[key]
-            if (!currentFilters[key]) return null
+            if (!currentFilters[key]) {
+              return null
+            }
 
             return (
               <FilterButton
-                key={String(key)}
+                key={`filter-${String(key)}`}
                 filter={filter}
                 value={currentFilters[key]}
                 onSelect={() => onFilterSelect(key)}

@@ -13,7 +13,12 @@ import { Presets } from "../types"
 import { FilterButton } from "./Components/FilterButton"
 import { FilterContent } from "./Components/FilterContent"
 import { FilterList } from "./Components/FilterList"
-import type { FiltersDefinition, FiltersState } from "./types"
+import type {
+  FilterOption,
+  FiltersDefinition,
+  FiltersState,
+  InFilterDefinition,
+} from "./types"
 
 /**
  * Props for the Filters component.
@@ -107,6 +112,47 @@ export function Filters<Definition extends FiltersDefinition>({
   })
   const [tempFilters, setTempFilters] =
     useState<FiltersState<Definition>>(value)
+
+  /** Created a local schema with instanciated options (options loaded in the case options is a promise or function) */
+  type LocalSchema = {
+    [K in keyof Definition]: Definition[K] extends InFilterDefinition
+      ? Definition[K] & {
+          _instanciatedOptions?: FilterOption<unknown>[]
+          _options: InFilterDefinition["options"]
+          options: Promise<FilterOption<unknown>[]>
+        }
+      : Definition[K]
+  }
+
+  const [localSchema] = useState<LocalSchema>(() =>
+    Object.keys(schema).reduce((acc, key) => {
+      const filter = schema[key as keyof Definition]
+      const isInFilter = "options" in filter
+      acc[key as keyof Definition] = {
+        ...filter,
+        ...(isInFilter
+          ? {
+              _instanciatedOptions: undefined,
+              options: async function (this: {
+                _instanciatedOptions?: FilterOption<unknown>[]
+              }) {
+                if (this._instanciatedOptions !== undefined) {
+                  return this._instanciatedOptions
+                }
+
+                const options = await (typeof filter.options === "function"
+                  ? filter.options()
+                  : filter.options)
+
+                this._instanciatedOptions = options
+                return options
+              },
+            }
+          : {}),
+      } as LocalSchema[keyof Definition]
+      return acc
+    }, {} as LocalSchema)
+  )
 
   const handleOpenChange = (open: boolean) => {
     if (open) {
@@ -203,7 +249,7 @@ export function Filters<Definition extends FiltersDefinition>({
             <div className="flex h-[min(448px,80vh)] flex-col">
               <div className="flex min-h-0 flex-1">
                 <FilterList
-                  definition={schema}
+                  definition={localSchema}
                   tempFilters={tempFilters}
                   selectedFilterKey={selectedFilterKey}
                   onFilterSelect={setSelectedFilterKey}
@@ -211,7 +257,7 @@ export function Filters<Definition extends FiltersDefinition>({
                 {selectedFilterKey && (
                   <FilterContent
                     selectedFilterKey={selectedFilterKey}
-                    definition={schema}
+                    definition={localSchema}
                     tempFilters={tempFilters}
                     onFilterChange={handleFilterChange}
                   />
@@ -241,7 +287,7 @@ export function Filters<Definition extends FiltersDefinition>({
         <div className="flex flex-wrap items-center gap-2">
           <AnimatePresence presenceAffectsLayout initial={false}>
             {(Object.keys(value) as Array<keyof Definition>).map((key) => {
-              const filter = schema[key]
+              const filter = localSchema[key]
               if (!value[key]) return null
 
               return (

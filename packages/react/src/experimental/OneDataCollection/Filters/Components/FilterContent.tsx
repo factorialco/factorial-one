@@ -17,7 +17,7 @@ import type {
  * Props for the FilterContent component.
  * @template Definition - The type defining the structure of available filters
  */
-interface FilterContentProps<Definition extends FiltersDefinition> {
+type FilterContentProps<Definition extends FiltersDefinition> = {
   /** The currently selected filter key, if any */
   selectedFilterKey: keyof Definition | null
   /** The schema defining available filters and their configurations */
@@ -99,16 +99,15 @@ export function FilterContent<Definition extends FiltersDefinition>({
 
     const loadOptions = async () => {
       try {
-        if (Array.isArray(filter.options)) {
-          // Static options
-          setLoadedOptions(filter.options)
-          setFilteredOptions(filter.options)
-        } else if (typeof filter.options === "function") {
-          // Function options (sync or async)
-          setIsLoading(true)
-          const result = await filter.options()
-          setLoadedOptions(result)
-          setFilteredOptions(result)
+        setIsLoading(true)
+        const ops = await (typeof filter.options === "function"
+          ? filter.options()
+          : filter.options)
+        if (ops !== undefined) {
+          setLoadedOptions(ops)
+          setFilteredOptions(ops)
+        } else {
+          throw new Error("No options found")
         }
       } catch (error) {
         console.error("Error loading options:", error)
