@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.20.2...factorial-one-react-v1.21.0) (2025-04-03)
+
+
+### Features
+
+* **DataCollection:** enable onClick in rows ([#1539](https://github.com/factorialco/factorial-one/issues/1539)) ([084bfe1](https://github.com/factorialco/factorial-one/commit/084bfe1cfe6b224739994bc5d2a6ab8401407db2))
+
 ## [1.20.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.20.1...factorial-one-react-v1.20.2) (2025-04-03)
 
 
