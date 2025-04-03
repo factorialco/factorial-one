@@ -82,7 +82,11 @@ const Footer = ({
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: isToolbarOpen ? "100%" : 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{
+            duration: 0.3,
+            delay: isToolbarOpen ? 0.15 : 0,
+            ease: "easeInOut",
+          }}
           onAnimationComplete={() => setToolbarAnimationComplete(isToolbarOpen)}
           className="absolute left-0 top-0 z-10 h-full bg-f1-background"
           aria-label="Rich text editor toolbar"
@@ -100,62 +104,76 @@ const Footer = ({
           />
         </motion.div>
 
-        <Button
-          onClick={(e) => {
-            e.preventDefault()
-            setIsToolbarOpen(true)
+        <motion.div
+          className="flex items-center gap-2"
+          initial={{ opacity: 1 }}
+          animate={{
+            opacity: isToolbarOpen ? 0 : 1,
           }}
-          variant="outline"
-          size="md"
-          label="Toolbar"
-          disabled={disableButtons}
-          type="button"
-          hideLabel
-          round
-          icon={TextSize}
-        />
-        {canUseFiles && (
+          transition={{
+            duration: isToolbarOpen ? 0.15 : 0.25,
+            delay: isToolbarOpen ? 0 : 0.2,
+            ease: "easeInOut",
+          }}
+          style={{ overflow: "hidden" }}
+        >
           <Button
-            icon={Paperclip}
             onClick={(e) => {
               e.preventDefault()
-              if (fileInputRef?.current) {
-                fileInputRef.current.click()
-              } else {
-                const fileInput = document.getElementById(
-                  "rich-text-editor-upload-button"
-                )
-                fileInput?.click()
-              }
+              setIsToolbarOpen(true)
             }}
+            variant="outline"
+            size="md"
+            label="Toolbar"
+            disabled={disableButtons}
+            type="button"
             hideLabel
             round
-            label="Add Attachment"
-            variant="outline"
-            type="button"
-            disabled={disableButtons}
+            icon={TextSize}
           />
-        )}
-        {enhanceConfig && (
-          <>
-            <ToolbarDivider />
-            <EnhanceActivator
-              editor={editor}
-              onEnhanceWithAI={onEnhanceWithAI}
-              isLoadingEnhance={isLoadingEnhance}
-              enhanceConfig={enhanceConfig}
-              disableButtons={disableButtons}
-              hideLabel={useLittleMode}
-              setLastIntent={setLastIntent}
-              position="top"
+          {canUseFiles && (
+            <Button
+              icon={Paperclip}
+              onClick={(e) => {
+                e.preventDefault()
+                if (fileInputRef?.current) {
+                  fileInputRef.current.click()
+                } else {
+                  const fileInput = document.getElementById(
+                    "rich-text-editor-upload-button"
+                  )
+                  fileInput?.click()
+                }
+              }}
+              hideLabel
+              round
+              label="Add Attachment"
+              variant="outline"
+              type="button"
+              disabled={disableButtons}
             />
-          </>
-        )}
-        {maxCharacters && !useLittleMode && (
-          <p className="text-sm font-normal text-f1-foreground-secondary">
-            {editor.storage.characterCount.characters()}/{maxCharacters}
-          </p>
-        )}
+          )}
+          {enhanceConfig && (
+            <>
+              <ToolbarDivider />
+              <EnhanceActivator
+                editor={editor}
+                onEnhanceWithAI={onEnhanceWithAI}
+                isLoadingEnhance={isLoadingEnhance}
+                enhanceConfig={enhanceConfig}
+                disableButtons={disableButtons}
+                hideLabel={useLittleMode}
+                setLastIntent={setLastIntent}
+                position="top"
+              />
+            </>
+          )}
+          {maxCharacters && !useLittleMode && (
+            <p className="text-sm font-normal text-f1-foreground-secondary">
+              {editor.storage.characterCount.characters()}/{maxCharacters}
+            </p>
+          )}
+        </motion.div>
       </div>
 
       <ActionsMenu

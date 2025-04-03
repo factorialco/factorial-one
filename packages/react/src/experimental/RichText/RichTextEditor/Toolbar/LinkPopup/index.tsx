@@ -88,7 +88,7 @@ const LinkPopup = ({
         }
       }}
     >
-      <Popover.Trigger>
+      <Popover.Trigger asChild>
         <ToolbarButton
           active={editor.isActive("link") || openLinkPopover}
           label={labels.linkLabel}
@@ -109,9 +109,9 @@ const LinkPopup = ({
         <Popover.Content
           side="top"
           align="start"
-          sideOffset={10}
+          sideOffset={15}
           collisionPadding={10}
-          alignOffset={-5}
+          alignOffset={-10}
           style={{ zIndex: 1000 }}
         >
           <AnimatePresence>

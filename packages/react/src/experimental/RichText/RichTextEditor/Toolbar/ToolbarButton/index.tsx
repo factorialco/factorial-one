@@ -35,7 +35,7 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
     },
     ref
   ) => {
-    const buttonWithWrapper = (
+    const CustomButton = (
       <div
         className="relative inline-block"
         onClick={(e) => {
@@ -90,10 +90,10 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
         label={tooltip?.label}
         shortcut={tooltip?.shortcut}
       >
-        {buttonWithWrapper}
+        {CustomButton}
       </Tooltip>
     ) : (
-      buttonWithWrapper
+      CustomButton
     )
   }
 )
