@@ -1,11 +1,6 @@
 import { Calendar } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
-import {
-  EnhancementOption,
-  FILE_TYPES,
-  MentionChangeResult,
-  RichTextEditor,
-} from "."
+import { EnhancementOption, FILE_TYPES, resultType, RichTextEditor } from "."
 
 const meta = {
   component: RichTextEditor,
@@ -96,12 +91,8 @@ export const Default: Story = {
   tags: ["experimental"],
   args: {
     title: "Ode to My Text Editor",
-    onChange: (html: string | MentionChangeResult | null) => {
-      if (html && !(html as MentionChangeResult).ids) {
-        console.log("HTML change", html)
-      } else {
-        console.log("Mention change", html)
-      }
+    onChange: (result: resultType) => {
+      console.log(result)
     },
     placeholder: "Write something here...",
     mentionsConfig: { users: users },

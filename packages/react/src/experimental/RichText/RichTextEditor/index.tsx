@@ -31,10 +31,10 @@ import {
   enhanceConfig,
   errorConfig,
   filesConfig,
-  MentionChangeResult,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
+  resultType,
   toolbarLabels,
 } from "./utils/types"
 
@@ -44,7 +44,7 @@ interface RichTextEditorProps {
   filesConfig?: filesConfig
   secondaryAction?: actionType
   primaryAction?: primaryActionType
-  onChange: (html: string | MentionChangeResult | null) => void
+  onChange: (result: resultType) => void
   maxCharacters?: number
   placeholder: string
   initialEditorState?: {
@@ -144,7 +144,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         content: initialEditorState?.content || "",
         onUpdate: ({ editor: editorInstance }) => {
           if (onChange) {
-            const html = editorInstance.getHTML()
             const mentions: MentionedUser[] = []
             const doc = editorInstance.state.doc
             doc.descendants((node) => {
@@ -158,14 +157,24 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               }
               return true
             })
-            if (mentions.length > 0) {
-              const ids = mentions.map((m) => Number(m.id))
+            // we check if the editor is empty to avoid sending an empty <p></p>
+            if (editorInstance.isEmpty) {
               onChange({
-                value: html,
-                ids,
+                value: null,
               })
             } else {
-              onChange(html || null)
+              const html = editorInstance.getHTML()
+
+              if (mentions.length > 0) {
+                onChange({
+                  value: html,
+                  mentionIds: mentions.map((m) => Number(m.id)),
+                })
+              } else {
+                onChange({
+                  value: html,
+                })
+              }
             }
           }
         },

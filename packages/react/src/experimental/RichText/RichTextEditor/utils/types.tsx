@@ -8,9 +8,9 @@ type MentionedUser = {
   href?: string
 }
 
-type MentionChangeResult = {
-  value: string
-  ids: number[]
+type resultType = {
+  value: string | null
+  mentionIds?: number[]
 }
 
 type enhanceTextParams = {
@@ -127,10 +127,10 @@ export type {
   enhanceTextParams,
   errorConfig,
   filesConfig,
-  MentionChangeResult,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
+  resultType,
   subActionType,
   toolbarLabels,
 }
