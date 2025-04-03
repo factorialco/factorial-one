@@ -315,9 +315,8 @@ const Toolbar = ({
     <LinkPopup
       key="link-popup"
       editor={editor}
-      linkPlaceholder={labels.linkPlaceholder}
       disabled={disableButtons}
-      label={labels.linkLabel}
+      labels={labels}
       mode={mode}
     />,
   ]

@@ -110,6 +110,7 @@ type toolbarLabels = {
   task: string
   linkPlaceholder: string
   linkLabel: string
+  linkPaste: string
   close: string
 }
 

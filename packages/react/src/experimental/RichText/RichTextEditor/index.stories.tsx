@@ -188,6 +188,7 @@ export const Default: Story = {
       task: "Task",
       linkPlaceholder: "Enter link http://here...",
       linkLabel: "Link",
+      linkPaste: "Paste",
       close: "Close",
     },
 

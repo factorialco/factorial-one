@@ -57,29 +57,31 @@ const EnhanceActivator = ({
         }
       }}
     >
-      <Popover.Trigger asChild>
-        <Button
-          type="button"
-          ref={enhanceButtonRef}
-          variant="outline"
-          size="md"
-          label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || ""}
-          icon={Ai}
-          hideLabel={
-            (hideLabel || !enhanceConfig?.enhanceLabels.enhanceButtonLabel) ??
-            false
-          }
-          onClick={(e) => {
-            e.preventDefault()
-            handleEnhanceClick()
-          }}
-          disabled={disableButtons}
-          // @ts-expect-error - Magic background is not supported yet
-          className={cn(
-            "magicBackground magicColor",
-            isLoadingEnhance && "animate-pulse"
-          )}
-        />
+      <Popover.Trigger>
+        <div>
+          <Button
+            type="button"
+            ref={enhanceButtonRef}
+            variant="outline"
+            size="md"
+            label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || ""}
+            icon={Ai}
+            hideLabel={
+              (hideLabel || !enhanceConfig?.enhanceLabels.enhanceButtonLabel) ??
+              false
+            }
+            onClick={(e) => {
+              e.preventDefault()
+              handleEnhanceClick()
+            }}
+            disabled={disableButtons}
+            // @ts-expect-error - Magic background is not supported yet
+            className={cn(
+              "magicBackground magicColor",
+              isLoadingEnhance && "animate-pulse"
+            )}
+          />
+        </div>
       </Popover.Trigger>
       <Popover.Portal
         container={
@@ -91,10 +93,9 @@ const EnhanceActivator = ({
         <Popover.Content
           side={position}
           align="start"
-          sideOffset={15}
+          sideOffset={10}
           collisionPadding={10}
           style={{ zIndex: 1000 }}
-          className="subpopover-container"
         >
           <AnimatePresence>
             {open && (

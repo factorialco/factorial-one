@@ -1,4 +1,4 @@
-import { Badge } from "@/experimental/exports"
+import { Badge, toolbarLabels } from "@/experimental/exports"
 import { Icon } from "@/factorial-one"
 import {
   Alert,
@@ -18,18 +18,16 @@ import screenfull from "screenfull"
 import { ToolbarButton } from "../ToolbarButton"
 
 interface LinkPopupProps {
-  linkPlaceholder: string
   editor: Editor
   disabled: boolean
-  label: string
+  labels: toolbarLabels
   mode?: "light" | "dark"
 }
 
 const LinkPopup = ({
-  linkPlaceholder,
   editor,
   disabled,
-  label,
+  labels,
   mode = "light",
 }: LinkPopupProps) => {
   const i18n = useI18n()
@@ -86,15 +84,14 @@ const LinkPopup = ({
       onOpenChange={(open) => {
         setOpenLinkPopover(open)
         if (open) {
-          // Actualizar el URL al abrir el popover
           setUrl(editor.getAttributes("link").href || "")
         }
       }}
     >
-      <Popover.Trigger asChild>
+      <Popover.Trigger>
         <ToolbarButton
           active={editor.isActive("link") || openLinkPopover}
-          label={label}
+          label={labels.linkLabel}
           icon={LinkIcon}
           disabled={disabled}
           onClick={handleLinkButtonClick}
@@ -112,9 +109,9 @@ const LinkPopup = ({
         <Popover.Content
           side="top"
           align="start"
-          sideOffset={15}
+          sideOffset={10}
           collisionPadding={10}
-          alignOffset={-10}
+          alignOffset={-5}
           style={{ zIndex: 1000 }}
         >
           <AnimatePresence>
@@ -175,7 +172,7 @@ const LinkPopup = ({
                     <input
                       className="w-full shrink text-f1-foreground disabled:cursor-not-allowed"
                       type="text"
-                      placeholder={linkPlaceholder}
+                      placeholder={labels.linkPlaceholder}
                       value={url}
                       onChange={(e) => setUrl(e.target.value)}
                       onKeyDown={(e) => {
@@ -200,7 +197,7 @@ const LinkPopup = ({
                       size="sm"
                       onClick={handlePaste}
                     >
-                      Paste
+                      {labels.linkPaste}
                     </Button>
                   </div>
                   <Button

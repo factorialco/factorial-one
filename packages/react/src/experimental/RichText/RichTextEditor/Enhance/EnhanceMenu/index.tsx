@@ -63,20 +63,14 @@ const AIEnhanceMenu = ({
     }
   }, [])
 
-  // Efecto para detectar clics fuera del popover de subopciones
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // Solo actuar si hay un submenú abierto
       if (!selectedOption) return
 
-      // Verificar si el clic fue fuera del submenú y fuera de la opción seleccionada
       const clickedOnMainMenu = menuRef.current?.contains(event.target as Node)
       const clickedOnSubMenu = subMenuRef.current?.contains(
         event.target as Node
       )
-
-      // Si el clic fue fuera del submenú y no fue en el menú principal (o fue en otra opción),
-      // cerramos el submenú
       if (
         !clickedOnSubMenu &&
         (!clickedOnMainMenu ||
@@ -88,12 +82,10 @@ const AIEnhanceMenu = ({
       }
     }
 
-    // Agregar event listener cuando el submenú está abierto
     if (selectedOption) {
       document.addEventListener("mousedown", handleClickOutside)
     }
 
-    // Limpiar event listener
     return () => {
       document.removeEventListener("mousedown", handleClickOutside)
     }
@@ -101,12 +93,10 @@ const AIEnhanceMenu = ({
 
   const handleOptionSelect = (option: EnhancementOption) => {
     if (option.subOptions && option.subOptions.length > 0) {
-      // Si tiene subopciones, seleccionamos la opción para mostrar el submenú
       setSelectedOption((prevSelected) =>
         prevSelected?.id === option.id ? null : option
       )
     } else {
-      // Si no tiene subopciones, ejecutamos la acción
       onSelect({ selectedIntent: option.id, customIntent: undefined })
       onClose()
     }
@@ -168,7 +158,6 @@ const AIEnhanceMenu = ({
         )}
       </div>
 
-      {/* Popover fijo para las subopciones */}
       <AnimatePresence>
         {selectedOption &&
           selectedOption.subOptions &&

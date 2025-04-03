@@ -46,7 +46,7 @@ const ToolbarDropdown = ({
 
   return (
     <Popover.Root open={open} modal={false} onOpenChange={setOpen}>
-      <Popover.Trigger asChild>
+      <Popover.Trigger>
         <ToolbarButton
           label={activator.label}
           icon={activator.icon}
@@ -65,7 +65,7 @@ const ToolbarDropdown = ({
         <Popover.Content
           side={position}
           align="end"
-          sideOffset={15}
+          sideOffset={10}
           collisionPadding={10}
           alignOffset={-5}
           style={{ zIndex: 1000 }}
