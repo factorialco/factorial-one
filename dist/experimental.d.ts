@@ -2526,9 +2526,12 @@ export declare const SummariesWidget: ForwardRefExoticComponent<Omit<WidgetProps
 
 export declare type TabItem = {
     label: string;
-    href: string;
     index?: boolean;
-} & DataAttributes;
+} & DataAttributes & ({
+    href: string;
+} | {
+    id: string;
+});
 
 declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
 
@@ -2586,6 +2589,8 @@ export declare const Tabs: FC<TabsProps> & {
 
 export declare interface TabsProps {
     tabs: TabItem[];
+    activeTabId?: string;
+    setActiveTabId?: Dispatch<string>;
     secondary?: boolean;
     embedded?: boolean;
 }
