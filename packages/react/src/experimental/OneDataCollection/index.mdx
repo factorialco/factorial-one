@@ -1,0 +1,23 @@
+import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
+
+import * as DataCollectionStories from "./index.stories"
+
+<Meta title="Data collection" />
+
+# Data collection
+
+## Introduction
+
+### Definition
+
+The Data Collection component is designed to standardize and optimize the visualization and manipulation of data across the platform. It provides a more intuitive, flexible experience that supports different ways to view data, primarily through table, card, and list formats.
+
+### Definition
+- **Unify the data experience:** Create a consistent and predictable experience for users when interacting with data across the application.
+- **Simplify complexity:** Automatically manage the technical aspects of data presentation, allowing users to focus on the information.
+- **Improve efficiency:** Enable quick analysis and optimize workflows with filtering, sorting, contextual visualization, and bulk actions.
+- **Scale with data:** Maintain performance and usability with both small datasets and large volumes of information.
+
+<Canvas of={DataCollectionStories.BasicTableView} meta={DataCollectionStories} />
+<Controls of={DataCollectionStories.BasicTableView} />
