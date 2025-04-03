@@ -20,7 +20,7 @@ export const CollectionActions = ({
   if (buttonActions.length === 0 && dropdownActions.length === 0) return null
 
   return (
-    <div className="flex flex-row-reverse gap-2 items-center">
+    <div className="flex flex-row-reverse items-center gap-2">
       {buttonActions.map((action) => (
         <Button
           size="md"
@@ -37,9 +37,8 @@ export const CollectionActions = ({
           <Button variant="outline" icon={Ellipsis} label="Actions" hideLabel />
         </Dropdown>
       )}
-      
-      <div className="mx-1 h-4 w-px bg-f1-border-secondary" />
 
+      <div className="mx-1 h-4 w-px bg-f1-border-secondary" />
     </div>
   )
 }
