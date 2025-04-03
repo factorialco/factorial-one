@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ExampleComponent } from "../components/ExampleComponent";
+import { ExampleComponent } from "../src/components/ExampleComponent";
 
 export default function Index() {
   return (
@@ -11,7 +11,7 @@ export default function Index() {
         backgroundColor: "white",
       }}
     >
-      <ExampleComponent />
+      <ExampleComponent text="Hello World" />
     </View>
   );
 }
