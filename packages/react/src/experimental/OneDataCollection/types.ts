@@ -25,6 +25,8 @@ export type DataSourceDefinition<
   presets?: Presets<Filters>
   /** URL for a single item in the collection */
   itemUrl?: (item: Record) => string | undefined
+  /** Click handler for a single item in the collection */
+  itemOnClick?: (item: Record) => () => void
   /** Available actions that can be performed on records */
   itemActions?: ItemActions
   /** Available primary actions that can be performed on the collection */
