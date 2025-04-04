@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.22.0...factorial-one-react-v1.22.1) (2025-04-04)
+
+
+### Bug Fixes
+
+* Text editor buttons and lists errors ([#1548](https://github.com/factorialco/factorial-one/issues/1548)) ([5f9b64d](https://github.com/factorialco/factorial-one/commit/5f9b64df331396a79b4ba164deb5cfdebe139d67))
+
 ## [1.22.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.3...factorial-one-react-v1.22.0) (2025-04-04)
 
 
