@@ -25,7 +25,7 @@ import {
   OnBulkActionCallback,
   OnSelectItemsCallback,
   PaginatedResponse,
-  Presets,
+  PresetsDefinition,
   RecordType,
 } from "./types"
 import { useData } from "./useData"
@@ -46,7 +46,7 @@ const filters = {
 } as const
 
 // Define presets for the filters
-const filterPresets: Presets<typeof filters> = [
+const filterPresets: PresetsDefinition<typeof filters> = [
   {
     label: "Engineering Team",
     filter: {
