@@ -25,7 +25,7 @@ const Wrapper: React.FC<WrapperProps> = ({ onClick, children }) => {
       : undefined
   )
   return onClick ? (
-    <a className={className} onClick={onClick} tabIndex={0}>
+    <a className={className} onClick={onClick}>
       {children}
     </a>
   ) : (
