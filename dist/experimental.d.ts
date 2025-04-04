@@ -1912,6 +1912,7 @@ export declare type OnePersonListItemProps = {
     };
     info?: string;
     onClick: () => void;
+    withPointerCursor?: boolean;
 };
 
 export declare type OnSelectItemsCallback<Record extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {

@@ -20682,14 +20682,18 @@ const uF = W(
 uF.displayName = "TeamTag";
 const Z4 = I.forwardRef(({ person: t, onClick: e, ...n }, i) => {
   var o, a;
+  const r = () => {
+    e();
+  };
   return /* @__PURE__ */ x(
     "div",
     {
       ref: i,
-      className: "flex w-full flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold",
-      onClick: () => {
-        e();
-      },
+      className: E(
+        "flex w-full flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold",
+        n.withPointerCursor && "cursor-pointer"
+      ),
+      onClick: r,
       children: [
         /* @__PURE__ */ d(
           En,
