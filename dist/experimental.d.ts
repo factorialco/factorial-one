@@ -976,6 +976,8 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     presets?: Presets<Filters>;
     /** URL for a single item in the collection */
     itemUrl?: (item: Record) => string | undefined;
+    /** Click handler for a single item in the collection */
+    itemOnClick?: (item: Record) => () => void;
     /** Available actions that can be performed on records */
     itemActions?: ItemActions;
     /** Available primary actions that can be performed on the collection */
@@ -1141,7 +1143,6 @@ export declare type enhancedTextResponse = {
 
 export declare type enhanceLabelsType = {
     defaultError: string;
-    closeErrorButtonLabel: string;
     enhanceButtonLabel: string;
     acceptChangesButtonLabel: string;
     rejectChangesButtonLabel: string;
@@ -1161,6 +1162,11 @@ export declare type enhanceTextParams = {
     selectedIntent?: string;
     customIntent?: string;
     context?: string;
+};
+
+export declare type errorConfig = {
+    onClose?: () => void;
+    closeErrorButtonLabel?: string;
 };
 
 /**
@@ -1539,11 +1545,6 @@ chart: LineChartProps;
 
 declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
-};
-
-export declare type MentionChangeResult = {
-    value: string;
-    ids: number[];
 };
 
 export declare type MentionedUser = {
@@ -2332,6 +2333,11 @@ declare type RendererDefinition = {
 
 export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_7) => JSX_2.Element;
 
+export declare type resultType = {
+    value: string | null;
+    mentionIds?: number[];
+};
+
 export declare const RichTextDisplay: ({ content }: {
     content: string;
 }) => JSX_2.Element;
@@ -2342,6 +2348,7 @@ export declare type RichTextEditorHandle = {
     clear: () => void;
     clearFiles: () => void;
     focus: () => void;
+    setError: (error: string | null) => void;
 };
 
 export declare interface RichTextEditorProps {
@@ -2350,7 +2357,7 @@ export declare interface RichTextEditorProps {
     filesConfig?: filesConfig;
     secondaryAction?: actionType;
     primaryAction?: primaryActionType;
-    onChange: (html: string | MentionChangeResult | null) => void;
+    onChange: (result: resultType) => void;
     maxCharacters?: number;
     placeholder: string;
     initialEditorState?: {
@@ -2359,6 +2366,7 @@ export declare interface RichTextEditorProps {
     };
     toolbarLabels: toolbarLabels;
     title: string;
+    errorConfig?: errorConfig;
 }
 
 declare type SchemaType = ZodType;
@@ -2816,6 +2824,7 @@ export declare type toolbarLabels = {
     task: string;
     linkPlaceholder: string;
     linkLabel: string;
+    linkPaste: string;
     close: string;
 };
 
