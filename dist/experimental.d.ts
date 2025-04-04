@@ -1885,7 +1885,9 @@ declare interface OnePaginationProps {
     hasNextPage?: boolean;
 }
 
-export declare const OnePersonListItem: default_2.ForwardRefExoticComponent<OnePersonListItemProps & default_2.RefAttributes<HTMLDivElement>>;
+export declare const OnePersonListItem: default_2.ForwardRefExoticComponent<OnePersonListItemProps & default_2.RefAttributes<HTMLDivElement>> & {
+    Skeleton: () => default_2.JSX.Element;
+};
 
 export declare type OnePersonListItemProps = {
     person: {
