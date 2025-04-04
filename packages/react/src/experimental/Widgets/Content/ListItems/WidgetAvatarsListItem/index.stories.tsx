@@ -25,6 +25,7 @@ export const Default: Story = {
     id: "1",
     emoji: "🤝",
     title: "Title",
+    subtitle: "4 people",
     avatars: [
       {
         type: "person",
@@ -59,6 +60,7 @@ export const WithLongTitle: Story = {
     ...Default.args,
     emoji: "🤝",
     title: "This item will show a really really really long title",
+    subtitle: "4 people",
     avatars: [
       {
         type: "person",

@@ -7,7 +7,7 @@ type Props<Id extends string | number = string | number> = {
   id: Id
   emoji: string
   title: string
-  subtitle?: string
+  subtitle: string
   avatars: AvatarVariant[]
   onClick?: (id: Id) => void
 }
@@ -53,16 +53,12 @@ export function WidgetAvatarsListItem({
     onClick?.(id)
   }
 
-  const computedSubtitle = subtitle || `${avatars.length} people`
-
   return (
     <Wrapper onClick={handleOnClick} className={className}>
       <EmojiAvatar emoji={emoji} size="md" />
       <div className="flex-1">
         <p className="line-clamp-1 font-medium">{title}</p>
-        <p className="line-clamp-1 text-f1-foreground-secondary">
-          {computedSubtitle}
-        </p>
+        <p className="line-clamp-1 text-f1-foreground-secondary">{subtitle}</p>
       </div>
       <AvatarList avatars={avatars} size="medium" type="person" />
     </Wrapper>
