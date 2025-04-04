@@ -1,7 +1,7 @@
 import { TabsProps } from "@/experimental/Navigation/Tabs"
+import { Dialog, DialogContent } from "@/ui/dialog"
 import { Drawer, DrawerContent, DrawerOverlay } from "@/ui/drawer"
 import React, { ComponentProps, useEffect, useState } from "react"
-import { Dialog, DialogContent } from "../../../ui/dialog"
 import { OneModalContent } from "./OneModalContent/OneModalContent"
 import { OneModalHeader } from "./OneModalHeader/OneModalHeader"
 import { OneModalProvider } from "./OneModalProvider"
@@ -54,7 +54,7 @@ export const OneModal: React.FC<OneModalProps> = ({
 
   if (isSmallScreen && asBottomSheetInMobile) {
     return (
-      <OneModalProvider isOpen={open} onClose={handleClose}>
+      <OneModalProvider isOpen={open} onClose={handleClose} shownBottomSheet>
         <Drawer open={open} onOpenChange={handleOpenChange}>
           <DrawerOverlay className="bg-f1-background-overlay" />
           <DrawerContent className="max-h-[95vh] bg-f1-background">

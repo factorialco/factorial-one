@@ -4,6 +4,8 @@ import {
   DropdownInternalProps,
 } from "@/experimental/Navigation/Dropdown/internal"
 import CrossIcon from "@/icons/app/Cross"
+import { DialogTitle } from "@/ui/dialog"
+import { DrawerTitle } from "@/ui/drawer"
 import { useOneModal } from "../OneModalProvider"
 
 export type OneModalHeaderProps = {
@@ -15,11 +17,17 @@ export const OneModalHeader = ({
   title,
   otherActions,
 }: OneModalHeaderProps) => {
-  const { onClose } = useOneModal()
+  const { onClose, shownBottomSheet } = useOneModal()
+
+  const dialogClassName = "text-lg font-semibold text-f1-foreground"
 
   return (
     <div className="flex flex-row items-center justify-between px-4 py-3">
-      <h2 className="text-lg font-semibold text-f1-foreground">{title}</h2>
+      {!shownBottomSheet ? (
+        <DialogTitle className={dialogClassName}>{title}</DialogTitle>
+      ) : (
+        <DrawerTitle className={dialogClassName}>{title}</DrawerTitle>
+      )}
       <div className="flex flex-row gap-2">
         {!!otherActions?.length && <DropdownInternal items={otherActions} />}
         <ButtonInternal
