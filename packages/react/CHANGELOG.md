@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.3...factorial-one-react-v1.22.0) (2025-04-04)
+
+
+### Features
+
+* add support to show break type name in ClockInControls ([#1553](https://github.com/factorialco/factorial-one/issues/1553)) ([e41f813](https://github.com/factorialco/factorial-one/commit/e41f813e2dd0c82a67f6b1ca3cefd494781a4fe2))
+
 ## [1.21.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.2...factorial-one-react-v1.21.3) (2025-04-04)
 
 
