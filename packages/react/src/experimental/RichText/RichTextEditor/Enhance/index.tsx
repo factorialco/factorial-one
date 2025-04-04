@@ -41,8 +41,8 @@ const EnhanceActivator = ({
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
 
-  const handleEnhanceClick = (e?: React.MouseEvent) => {
-    if (e) e.preventDefault()
+  const handleEnhanceClick = (e: React.MouseEvent) => {
+    e.preventDefault()
     if (!enhanceButtonRef.current) setOpen(false)
     else setOpen((prev) => !prev)
   }
