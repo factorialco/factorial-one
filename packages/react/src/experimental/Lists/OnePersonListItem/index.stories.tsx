@@ -24,6 +24,7 @@ export const Default: Story = {
         type: "positive",
       },
     },
+    info: "Manager: Agustín García",
     description: "Software Engineer",
     rightTag: {
       text: "Parental leave",

@@ -1,3 +1,4 @@
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
 import React from "react"
@@ -30,6 +31,7 @@ export type OnePersonListItemProps = {
       onClick: () => void
     }
   }
+  info?: string
   onClick: () => void
 }
 
@@ -57,11 +59,15 @@ const BaseOnePersonListItem = React.forwardRef<
       <div className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-row items-center gap-1">
           <span className="truncate font-medium">{`${person.firstName} ${person.lastName}`}</span>
-          <Icon
-            icon={InfoCircle}
-            size="sm"
-            className="text-f1-icon-secondary"
-          />
+          {props.info && (
+            <Tooltip label={props.info}>
+              <Icon
+                icon={InfoCircle}
+                size="sm"
+                className="text-f1-icon-secondary"
+              />
+            </Tooltip>
+          )}
         </div>
         {"bottomTags" in props && (
           <div className="-ml-1.5 flex flex-row items-center [&>div]:-mr-1">
