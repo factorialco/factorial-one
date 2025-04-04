@@ -1075,10 +1075,13 @@ onClose?: () => void;
 
 export declare const DotTag: ForwardRefExoticComponent<DotTagProps & RefAttributes<HTMLDivElement>>;
 
-export declare interface DotTagProps {
+export declare type DotTagProps = {
     text: string;
+} & ({
     color: NewColor;
-}
+} | {
+    customColor: string;
+});
 
 export declare const Dropdown: (props: DropdownProps) => JSX_2.Element;
 
