@@ -21,7 +21,7 @@
 }
 
 #rich-text-editor-container .ProseMirror::selection {
-  @apply bg-transparent;
+  background-color: transparent !important;
 }
 
 .magicColor {
@@ -73,6 +73,14 @@
 
 .ProseMirror s {
   @apply line-through;
+}
+
+.ProseMirror .f1-bullet-list {
+  @apply list-disc;
+}
+
+.ProseMirror .f1-ordered-list {
+  @apply list-decimal;
 }
 
 .ProseMirror ul,
