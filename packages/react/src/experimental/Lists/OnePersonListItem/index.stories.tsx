@@ -26,6 +26,7 @@ export const Default: Story = {
     },
     info: "Manager: Agustín García",
     description: "Software Engineer",
+    withPointerCursor: true,
     rightTag: {
       text: "Parental leave",
       color: "army",

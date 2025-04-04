@@ -1,5 +1,6 @@
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { withSkeleton } from "@/lib/skeleton"
+import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import React from "react"
 import { Button } from "../../../components/Actions/Button"
@@ -33,6 +34,7 @@ export type OnePersonListItemProps = {
   }
   info?: string
   onClick: () => void
+  withPointerCursor?: boolean
 }
 
 const BaseOnePersonListItem = React.forwardRef<
@@ -46,7 +48,10 @@ const BaseOnePersonListItem = React.forwardRef<
   return (
     <div
       ref={ref}
-      className="flex w-full flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold"
+      className={cn(
+        "flex w-full flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold",
+        props.withPointerCursor && "cursor-pointer"
+      )}
       onClick={handleClick}
     >
       <PersonAvatar
