@@ -25,12 +25,13 @@ import {
   handleAddFiles,
   handleRemoveFile,
 } from "./utils/files"
-import { setupContainerObservers } from "./utils/helpers"
+import { getHeight, setupContainerObservers } from "./utils/helpers"
 import {
   actionType,
   enhanceConfig,
   errorConfig,
   filesConfig,
+  heightType,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
@@ -54,6 +55,7 @@ interface RichTextEditorProps {
   toolbarLabels: toolbarLabels
   title: string
   errorConfig?: errorConfig
+  height: heightType
 }
 
 type RichTextEditorHandle = {
@@ -78,6 +80,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       toolbarLabels,
       title,
       errorConfig,
+      height = "auto",
     },
     ref
   ) {
@@ -283,17 +286,14 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         )}
 
         <div
-          className={cn(
-            "relative w-full flex-grow overflow-hidden",
-            isFullscreen && "h-full"
-          )}
+          className={cn("relative w-full flex-grow overflow-hidden")}
           onClick={() => editor?.commands.focus()}
         >
           <div
             ref={editorContentContainerRef}
             className={cn(
-              "scrollbar-macos relative flex w-full items-start justify-center overflow-y-auto pl-3 pr-4 pt-3",
-              isFullscreen ? "h-full" : "h-auto max-h-60 pr-10"
+              "scrollbar-macos relative flex w-full items-start justify-center overflow-y-auto pl-3 pr-10 pt-3",
+              isFullscreen ? "h-full" : getHeight(height)
             )}
           >
             <div className={cn("w-full", isFullscreen && "max-w-4xl")}>
