@@ -1,0 +1,160 @@
+/* Main styles */
+.mention {
+  @apply rounded-xs bg-f1-background-accent px-1.5 py-0.5 font-medium;
+}
+
+.mention:hover {
+  @apply bg-f1-background-critical;
+}
+
+.magicBackground {
+  background: linear-gradient(
+    95.27deg,
+    rgba(249, 240, 221, 0.5) 3.62%,
+    rgba(242, 223, 227, 0.5) 48.88%,
+    rgba(212, 204, 253, 0.5) 106.49%
+  );
+}
+
+.preserved-selection {
+  background-color: #07a2ad33 !important;
+}
+
+#rich-text-editor-container .ProseMirror::selection {
+  background-color: transparent !important;
+}
+
+.magicColor {
+  color: #6143a7 !important;
+}
+.magicColor svg {
+  color: #6143a7 !important;
+}
+
+/*********
+  tiptap styles
+  **********/
+
+.ProseMirror p {
+  @apply relative m-0 mb-2;
+}
+
+.ProseMirror p:last-child {
+  margin-bottom: 0;
+}
+
+.ProseMirror h1 {
+  @apply m-0 mb-3 p-0 text-3xl font-semibold;
+}
+
+.ProseMirror h2 {
+  @apply m-0 mt-2.5 p-0 text-2xl font-medium;
+}
+
+.ProseMirror h3 {
+  @apply m-0 mt-2.5 p-0 text-lg font-medium;
+}
+
+.ProseMirror a {
+  @apply font-medium text-f1-foreground-accent no-underline;
+}
+
+.ProseMirror strong {
+  @apply font-semibold;
+}
+
+.ProseMirror em {
+  @apply italic;
+}
+
+.ProseMirror u {
+  @apply underline;
+}
+
+.ProseMirror s {
+  @apply line-through;
+}
+
+.ProseMirror .f1-bullet-list {
+  @apply list-disc;
+}
+
+.ProseMirror .f1-ordered-list {
+  @apply list-decimal;
+}
+
+.ProseMirror ul,
+.ProseMirror ol {
+  @apply ml-5;
+}
+
+.ProseMirror li {
+  @apply mb-2;
+}
+
+.ProseMirror pre {
+  @apply relative mx-0 overflow-x-auto rounded-md bg-f1-background-secondary p-2;
+}
+
+.ProseMirror code {
+  @apply text-sm;
+  font-family: Menlo, Consolas, Monaco, monospace;
+}
+
+.ProseMirror blockquote {
+  @apply m-0 mb-2.5 border-0 border-l-4 border-solid border-f1-border pl-4;
+}
+
+.ProseMirror:focus {
+  @apply outline-none;
+}
+
+.ProseMirror hr {
+  @apply my-3 border-0 border-t border-f1-border;
+}
+
+.ProseMirror mark {
+  @apply rounded-xs bg-f1-background-promote p-0.5 text-f1-foreground;
+}
+
+.ProseMirror p:empty::before {
+  content: "\00a0";
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  @apply pointer-events-none float-left h-0 text-f1-foreground-tertiary;
+  content: attr(data-placeholder);
+}
+
+.ProseMirror ul[data-type="taskList"] {
+  @apply ml-0;
+}
+
+.shadow-editor-tools {
+  box-shadow: 0px -4px 20px 0px #0d162514;
+}
+
+.scrollbar-macos {
+  /* For Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.scrollbar-macos::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-macos::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+.scrollbar-macos::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.scrollbar-macos::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
+}

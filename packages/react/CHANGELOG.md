@@ -1,5 +1,68 @@
 # Changelog
 
+## [1.22.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.22.1...factorial-one-react-v1.22.2) (2025-04-04)
+
+
+### Bug Fixes
+
+* refactor documentation rules ([#1554](https://github.com/factorialco/factorial-one/issues/1554)) ([7031a2e](https://github.com/factorialco/factorial-one/commit/7031a2e27ba702a3eab317b0589e5c535f9b30e1))
+
+## [1.22.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.22.0...factorial-one-react-v1.22.1) (2025-04-04)
+
+
+### Bug Fixes
+
+* Text editor buttons and lists errors ([#1548](https://github.com/factorialco/factorial-one/issues/1548)) ([5f9b64d](https://github.com/factorialco/factorial-one/commit/5f9b64df331396a79b4ba164deb5cfdebe139d67))
+
+## [1.22.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.3...factorial-one-react-v1.22.0) (2025-04-04)
+
+
+### Features
+
+* add support to show break type name in ClockInControls ([#1553](https://github.com/factorialco/factorial-one/issues/1553)) ([e41f813](https://github.com/factorialco/factorial-one/commit/e41f813e2dd0c82a67f6b1ca3cefd494781a4fe2))
+
+## [1.21.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.2...factorial-one-react-v1.21.3) (2025-04-04)
+
+
+### Bug Fixes
+
+* **DataCollection:** check active filters to display Clear button ([#1549](https://github.com/factorialco/factorial-one/issues/1549)) ([518cb43](https://github.com/factorialco/factorial-one/commit/518cb43b96a701486d4441bcdedde8a1caef0238))
+
+## [1.21.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.1...factorial-one-react-v1.21.2) (2025-04-03)
+
+
+### Bug Fixes
+
+* dropdown variant button datacollection ([#1546](https://github.com/factorialco/factorial-one/issues/1546)) ([1256ef4](https://github.com/factorialco/factorial-one/commit/1256ef4a630585ff026c3fe26b2fe5f7e5a3d81d))
+
+## [1.21.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.0...factorial-one-react-v1.21.1) (2025-04-03)
+
+
+### Bug Fixes
+
+* figma errors and new functionalities for RichTextEditor ([#1541](https://github.com/factorialco/factorial-one/issues/1541)) ([0d03644](https://github.com/factorialco/factorial-one/commit/0d036441c10274a0b0d3df5399edff5d609846a3))
+
+## [1.21.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.20.2...factorial-one-react-v1.21.0) (2025-04-03)
+
+
+### Features
+
+* **DataCollection:** enable onClick in rows ([#1539](https://github.com/factorialco/factorial-one/issues/1539)) ([084bfe1](https://github.com/factorialco/factorial-one/commit/084bfe1cfe6b224739994bc5d2a6ab8401407db2))
+
+## [1.20.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.20.1...factorial-one-react-v1.20.2) (2025-04-03)
+
+
+### Bug Fixes
+
+* datacollection filters async label ([#1538](https://github.com/factorialco/factorial-one/issues/1538)) ([47229cd](https://github.com/factorialco/factorial-one/commit/47229cd8039f7807d47a59bb2504a0a17505342c))
+
+## [1.20.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.20.0...factorial-one-react-v1.20.1) (2025-04-02)
+
+
+### Bug Fixes
+
+* **DataCollection:** failing test ([a81a5d1](https://github.com/factorialco/factorial-one/commit/a81a5d132a0b45a3397eb6018f2c0944f7d643ea))
+
 ## [1.20.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.19.2...factorial-one-react-v1.20.0) (2025-04-02)
 
 

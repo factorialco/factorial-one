@@ -44,17 +44,19 @@ This applies when `factorial-one` is in your local computer and `factorial`'s mo
 **Prerequisites:**
 
 - [rsync](https://linux.die.net/man/1/rsync) in your local computer: `brew install rsync`
-- [coder cli](https://coder.com/docs/getting-started/installation) in your local computer
+- [coder cli](https://coder.com/docs/install/cli) in your local computer
     - ![Coder ssh](images/coder.png)
-- Create if not exists `.env.local` and add this line `CODER_REMOTE=[YOUR_CODER_SSH_CONNECTION_STRING]`, for example:
+- Configure coder cli if its the first time you connect by ssh: `coder login https://coder.factorial.dev`
+- Create if not exists `packages/react/.env.local` and add this line `CODER_REMOTE=[YOUR_CODER_SSH_CONNECTION_STRING]`, for example:
   `CODER_REMOTE=coder.sergiocarracedo-dev-env`
   > This file is in the `.gitignore` file, so it won't be pushed to the repository
 
 **Steps:**
 
-1. Go to the `factorial-one` folder: `cd factorial-one`
+1. Go to the `factorial-one` folder: `cd factorial-one/packages/react`
 2. Run `pnpm dev:coder` to rebuild the project on any change and sync that build to coder workspace
+3. On the `factorial` project you may need to clean vite cache (rm -Rf frontend/node_modules/.vite) and restart frontend service: make session.frontend
 
 > Now on each change in the `factorial-one`'s source code, the changes will be reflected in the coder workspace and the
-> frontend will be reloaded using always the latest `factorial-one`'s code
+> frontend will be reloaded using always the latest `factorial-one`'s code.
 

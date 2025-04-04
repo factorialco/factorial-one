@@ -80,8 +80,8 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "relative px-3 py-2.5 text-left align-middle font-medium text-f1-foreground-secondary",
-      "after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-1 after:rounded after:bg-transparent after:transition-colors after:content-[''] hover:after:bg-f1-background-hover",
+      "relative px-3 py-2.5 text-left align-middle font-medium text-f1-foreground-secondary first:pl-6 last:pr-6",
+      "after:pointer-events-none after:absolute after:inset-x-0 after:inset-y-1 after:rounded after:bg-transparent after:transition-colors after:content-[''] first:after:left-3 last:after:right-3 hover:after:bg-f1-background-hover",
       "[&:has([role=checkbox])]:px-2 [&:has([role=checkbox])]:hover:after:bg-transparent",
       className
     )}
@@ -97,7 +97,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "relative whitespace-nowrap p-3 align-middle",
+      "relative whitespace-nowrap p-3 align-middle first:pl-6 last:pr-6",
       "[&:has([role=checkbox])]:px-2",
       className
     )}

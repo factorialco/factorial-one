@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
 import { useEffect, useState } from "react"
 import { Input } from "../../../ui/input"
 import { Label } from "../../../ui/label"
@@ -23,16 +24,19 @@ const sampleDefinition: FiltersDefinition = {
   department: {
     type: "in",
     label: "Department",
-    options: [
-      {
-        value: "engineering",
-        label: "Engineering",
-      },
-      { value: "marketing", label: "Marketing" },
-      { value: "sales", label: "Sales" },
-      { value: "hr", label: "Human Resources" },
-      { value: "finance", label: "Finance" },
-    ],
+    options: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      return [
+        {
+          value: "engineering",
+          label: "Engineering",
+        },
+        { value: "marketing", label: "Marketing" },
+        { value: "sales", label: "Sales" },
+        { value: "hr", label: "Human Resources" },
+        { value: "finance", label: "Finance" },
+      ]
+    },
   },
   name: {
     type: "search",
@@ -194,6 +198,7 @@ export const Default: Story = {
   args: {
     schema: sampleDefinition,
     filters: {},
+    onChange: fn(),
   },
 }
 
@@ -206,6 +211,7 @@ export const WithPresetsArgs: Story = {
     schema: sampleDefinition,
     filters: {},
     presets: samplePresets,
+    onChange: fn(),
   },
 }
 
@@ -335,7 +341,7 @@ export const WithAsyncOptions: Story = {
       department: {
         type: "in"
         label: string
-        options: Array<{ value: string; label: string }>
+        options: () => Promise<Array<{ value: string; label: string }>>
       }
       users: {
         type: "in"
@@ -361,12 +367,19 @@ export const WithAsyncOptions: Story = {
       department: {
         type: "in",
         label: "Department",
-        options: [
-          { value: "engineering", label: "Engineering" },
-          { value: "marketing", label: "Marketing" },
-          { value: "sales", label: "Sales" },
-          { value: "hr", label: "Human Resources" },
-        ],
+        options: async () => {
+          // Simulate API call with a delay
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve([
+                { value: "engineering", label: "Engineering2" },
+                { value: "marketing", label: "Marketing" },
+                { value: "sales", label: "Sales" },
+                { value: "hr", label: "Human Resources" },
+              ])
+            }, 1500)
+          })
+        },
       },
       users: {
         type: "in",

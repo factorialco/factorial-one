@@ -165,7 +165,7 @@ export const TableCollection = <
     return renderProperty(item, column, "table")
   }
 
-  const checkColumnWidth = source.selectable ? 50 : 0
+  const checkColumnWidth = source.selectable ? 52 : 0
 
   return (
     <>
@@ -174,13 +174,15 @@ export const TableCollection = <
           <TableRow>
             {source.selectable && (
               <TableHead width={checkColumnWidth} sticky={{ left: 0 }}>
-                <Checkbox
-                  checked={isAllSelected}
-                  indeterminate={isPartiallySelected}
-                  onCheckedChange={handleSelectAll}
-                  title="Select all"
-                  hideLabel
-                />
+                <div className="flex w-full items-center justify-end">
+                  <Checkbox
+                    checked={isAllSelected}
+                    indeterminate={isPartiallySelected}
+                    onCheckedChange={handleSelectAll}
+                    title="Select all"
+                    hideLabel
+                  />
+                </div>
               </TableHead>
             )}
             {columns.map(({ sorting, label, ...column }, index) => (
@@ -220,7 +222,7 @@ export const TableCollection = <
             {source.itemActions && (
               <TableHead
                 key="actions"
-                width={50}
+                width={68}
                 hidden
                 sticky={{
                   right: 0,
@@ -234,20 +236,25 @@ export const TableCollection = <
         <TableBody>
           {data.map((item, index) => {
             const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
+            const itemOnClick = source.itemOnClick
+              ? source.itemOnClick(item)
+              : undefined
             const id = source.selectable ? source.selectable(item) : undefined
             return (
               <TableRow key={`row-${index}`}>
                 {source.selectable && (
                   <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
                     {id !== undefined && (
-                      <Checkbox
-                        checked={selectedItems.has(id)}
-                        onCheckedChange={(checked) =>
-                          handleSelectItemChange(item, checked)
-                        }
-                        title={`Select ${source.selectable(item)}`}
-                        hideLabel
-                      />
+                      <div className="flex items-center justify-end">
+                        <Checkbox
+                          checked={selectedItems.has(id)}
+                          onCheckedChange={(checked) =>
+                            handleSelectItemChange(item, checked)
+                          }
+                          title={`Select ${source.selectable(item)}`}
+                          hideLabel
+                        />
+                      </div>
                     )}
                   </TableCell>
                 )}
@@ -256,6 +263,7 @@ export const TableCollection = <
                     key={String(column.label)}
                     firstCell={cellIndex === 0}
                     href={itemHref}
+                    onClick={itemOnClick}
                     width={column.width}
                     sticky={
                       cellIndex < frozenColumnsLeft
@@ -283,11 +291,12 @@ export const TableCollection = <
                 {source.itemActions && (
                   <TableCell
                     key="actions"
-                    width={56}
+                    width={68}
                     sticky={{
                       right: 0,
                     }}
                     href={itemHref}
+                    onClick={itemOnClick}
                   >
                     <ActionsDropdown item={item} actions={source.itemActions} />
                   </TableCell>

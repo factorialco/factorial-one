@@ -1,101 +1,223 @@
-import { Meta, Story, Canvas, Controls } from "@storybook/blocks"
-import * as AvatarNameSelectorStories from "./index.stories"
+import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
+import * as ComponentStories from "./index.stories"
 
-<Meta of={AvatarNameSelectorStories} />
+<Meta of={ComponentStories} />
 
-# AvatarNameSelector
+# Avatar Name Selector
 
-The AvatarNameSelector component is an advanced selector that allows users to
-select entities with avatars, either in single or multiple mode. It supports
-grouping, search, and nested selection.
+## Introduction
 
-## Features
+### Definition
 
-- Single or multiple entity selection
-- Support for groups and subgroups
-- Real-time search with debounce
-- Always-open mode or popover type
-- Customizable trigger
-- Loading states support
-- Built-in accessibility
+The AvatarNameSelector is a versatile form component that enables users to
+select one or multiple entities (such as users, teams, or other named items)
+from a searchable, filterable list. Each entity is represented by an avatar and
+a name, providing visual recognition and clear identification.
 
-## Basic Usage
+### Purpose
+
+- Provide an intuitive interface for selecting users, teams, or other named
+  entities with visual identifiers
+- Support both single and multiple selection modes for flexible use cases
+- Enable quick navigation through large datasets with built-in search
+  functionality
+- Organize entities in hierarchical groups with expandable sections for better
+  organization
+- Maintain selection state across different views and group filters
+
+## Anatomy
+
+<Canvas of={ComponentStories.Default} />
+
+The AvatarNameSelector consists of several key elements:
+
+### Common elements
+
+#### Trigger
+
+- Displays the current selection state (empty, single item, or count)
+- Shows avatar and name for single selections
+- Includes a dropdown indicator for accessing the selection interface
+
+#### Search field
+
+- Enables quick filtering of available options
+- Supports instant search with debounced updates
+- Maintains search state while the selector is open
+
+#### Group selector
+
+- Allows switching between different entity groupings
+- Supports custom group types (e.g., "avatar", "team")
+- Updates the view while preserving selections
+
+#### Selection list
+
+- Displays entities with avatars and names
+- Supports hierarchical display with expandable items
+- Shows selection state (selected, partially selected)
+- Virtualizes long lists for performance
+
+#### Action buttons
+
+- "Select All" for bulk selection of visible items
+- "Clear" to remove all visible selections
+- Contextual actions based on selection mode
+
+<Controls of={ComponentStories.Default} />
+
+## Variants
+
+### With Selected Groups
+
+Demonstrates the component's ability to handle hierarchical data structures,
+showing entities organized into groups with parent-child relationships.
+
+<Canvas of={ComponentStories.WithSelectedGroup} />
+
+### Single Selection
+
+A simplified version that allows selecting only one entity at a time, ideal for
+picking a single user or team.
+
+<Canvas of={ComponentStories.SingleSelector} />
+
+### Always Open Mode
+
+A variant that remains expanded, suitable for forms or settings where constant
+visibility is desired.
+
+<Canvas of={ComponentStories.AlwaysOpen} />
+
+## Guidelines
+
+### Content best practices
+
+- Use clear, recognizable avatars to help with visual identification
+- Keep entity names concise and descriptive
+- Provide meaningful group labels that reflect the organizational structure
+- Include search keywords to improve findability
+
+### Design best practices
+
+<DoDonts
+  do={{
+    description: "Use AvatarNameSelector when:",
+    guidelines: [
+      "Users need to select from a list of people or teams",
+      "Visual identification through avatars is helpful",
+      "The dataset is large and requires search/filtering",
+      "Items have a natural hierarchical structure",
+      "Multiple selections need to be managed efficiently",
+    ],
+    children: null,
+  }}
+  dont={{
+    description: "Don't use AvatarNameSelector when:",
+    guidelines: [
+      "The selection list is very small (use radio buttons or checkboxes instead)",
+      "Visual identification isn't important for the items",
+      "The data has no natural grouping or hierarchy",
+      "Real-time selection updates aren't needed",
+      "The selection process needs to be extremely simple",
+    ],
+    children: null,
+  }}
+/>
+
+### Layout
+
+- Position the component with sufficient space for the dropdown
+- Consider the expanded state height when placing in forms
+- Allow enough width for long entity names
+- Maintain consistent spacing between list items
+- Ensure the search field is easily accessible
+
+## Usage
+
+The AvatarNameSelector can be implemented in both single and multiple selection
+modes:
 
 ```tsx
-import { AvatarNameSelector } from "@factorial/ds"
+import { AvatarNameSelector } from "@factorial/react"
 
-function MyComponent() {
-  const [selected, setSelected] = useState([])
+// Single selection
+const SingleSelector = () => {
+  const [selected, setSelected] = useState<AvatarNamedEntity | null>(null)
 
   return (
     <AvatarNameSelector
-      entities={myEntities}
+      singleSelector
+      entities={entities}
+      selectedAvatarName={selected ? [selected] : []}
+      onSelect={setSelected}
+      groups={[{ label: "All", value: "all", type: "avatar" }]}
+      selectedGroup="all"
+      triggerPlaceholder="Select a user..."
+      triggerSelected="selected"
+      searchPlaceholder="Search users..."
+    />
+  )
+}
+
+// Multiple selection
+const MultiSelector = () => {
+  const [selected, setSelected] = useState<AvatarNamedEntity[]>([])
+
+  return (
+    <AvatarNameSelector
+      entities={entities}
       selectedAvatarName={selected}
       onSelect={setSelected}
-      triggerPlaceholder="Select employees..."
+      groups={[
+        { label: "All", value: "all", type: "avatar" },
+        { label: "Teams", value: "teams", type: "team" },
+      ]}
+      selectedGroup="all"
+      triggerPlaceholder="Select users..."
+      triggerSelected="users selected"
+      searchPlaceholder="Search..."
     />
   )
 }
 ```
 
+## Accessibility
+
+- Supports keyboard navigation through all interactive elements
+- Maintains focus management within the selection interface
+- Provides clear visual indicators for selection states
+- Includes ARIA labels for search and selection functionality
+- Ensures proper contrast for text and interactive elements
+- Supports screen reader announcements for selection changes
+
 ## Props
 
-<Controls />
+The component accepts several prop groups that control its behavior:
 
-## Examples
+### Core Props
 
-### Default Multiple Selector
+- `entities`: Array of items to select from (required)
+- `groups`: Available grouping options (required)
+- `selectedGroup`: Currently active group (required)
+- `singleSelector`: Boolean to toggle single/multiple selection mode
 
-The default mode allows selecting multiple entities.
+### Selection Props
 
-<Canvas of={AvatarNameSelectorStories.Default} />
+- `selectedAvatarName`: Currently selected items
+- `onSelect`: Callback for selection changes
+- `onItemExpandedChange`: Callback for expanding/collapsing groups
 
-### Single Selector
+### Display Props
 
-Single selection mode that only allows selecting one entity at a time.
+- `triggerPlaceholder`: Text shown when nothing is selected
+- `triggerSelected`: Text shown with multiple selections
+- `searchPlaceholder`: Placeholder for the search input
+- `width`: Optional custom width for the component
 
-<Canvas of={AvatarNameSelectorStories.SingleSelector} />
+### State Props
 
-### Always Open
-
-Mode that keeps the selector always visible, useful for forms.
-
-<Canvas of={AvatarNameSelectorStories.AlwaysOpen} />
-
-### With Custom Trigger
-
-Example of how to customize the selector trigger.
-
-<Canvas of={AvatarNameSelectorStories.WithCustomTrigger} />
-
-## Types
-
-```typescript
-interface AvatarNamedEntity {
-  id: number
-  name: string
-  searchKeys?: string[]
-  expanded?: boolean
-  subItems?: AvatarNamedSubEntity[]
-}
-
-interface AvatarNamedSubEntity {
-  subId: number
-  subName: string
-  subSearchKeys?: string[]
-}
-
-interface AvatarNamedGroup {
-  label: string
-  value: string
-  type?: string
-}
-```
-
-## Best Practices
-
-1. Use `searchKeys` to enhance search with alternative terms
-2. Provide clear messages for empty states and errors
-3. Consider using `alwaysOpen` for long forms
-4. Implement loading state management for better UX
-5. Customize the trigger according to usage context
+- `loading`: Shows loading state
+- `disabled`: Disables the component
+- `alwaysOpen`: Forces the component to stay expanded

@@ -20,19 +20,24 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
   onClearAll,
 }: FiltersChipsListProps<Filters>) {
   const i18n = useI18n()
-  if (Object.keys(currentFilters).length === 0) return null
+
+  const activeFilterKeys = Object.keys(currentFilters).filter((key) => {
+    const value = currentFilters[key as keyof Filters]
+    const filter = filters[key as keyof Filters]
+    return filter.type === "in" && Array.isArray(value) && value.length > 0
+  }) as Array<keyof Filters>
+
+  if (activeFilterKeys.length === 0) return null
 
   return (
-    <div className="flex items-start justify-between gap-2">
+    <div className="flex items-start justify-between gap-2 px-6">
       <div className="flex flex-wrap items-center gap-2">
         <AnimatePresence presenceAffectsLayout initial={false}>
-          {(Object.keys(currentFilters) as Array<keyof Filters>).map((key) => {
+          {activeFilterKeys.map((key) => {
             const filter = filters[key]
-            if (!currentFilters[key]) return null
-
             return (
               <FilterButton
-                key={String(key)}
+                key={`filter-${String(key)}`}
                 filter={filter}
                 value={currentFilters[key]}
                 onSelect={() => onFilterSelect(key)}
