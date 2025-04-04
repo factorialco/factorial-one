@@ -6,7 +6,6 @@ export interface ExampleComponentProps {
    * Optional custom text to display
    */
   text?: string;
-  test?: string;
 }
 
 /**
