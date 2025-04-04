@@ -18,11 +18,16 @@ export type WidgetAvatarsListItemProps<
 
 type WrapperProps = {
   onClick?: (ev: React.MouseEvent<HTMLAnchorElement>) => void
-  className: string
   children: React.ReactNode
 }
 
-const Wrapper: React.FC<WrapperProps> = ({ onClick, className, children }) => {
+const Wrapper: React.FC<WrapperProps> = ({ onClick, children }) => {
+  const className = cn(
+    "flex flex-row gap-2 rounded-md border border-solid border-transparent p-2 text-f1-foreground",
+    onClick
+      ? "cursor-pointer hover:bg-f1-background-tertiary focus:border-f1-background-selected-bold focus:outline-none"
+      : undefined
+  )
   return onClick ? (
     <a className={className} onClick={onClick} tabIndex={0}>
       {children}
@@ -42,19 +47,13 @@ export function WidgetAvatarsListItem({
   avatars,
   onClick,
 }: Props) {
-  const className = cn(
-    "flex flex-row gap-2 rounded-md border border-solid border-transparent p-2 text-f1-foreground",
-    onClick
-      ? "cursor-pointer hover:bg-f1-background-tertiary focus:border-f1-background-selected-bold focus:outline-none"
-      : undefined
-  )
   const handleOnClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
     ev.preventDefault()
     onClick?.(id)
   }
 
   return (
-    <Wrapper onClick={handleOnClick} className={className}>
+    <Wrapper onClick={handleOnClick}>
       <EmojiAvatar emoji={emoji} size="md" />
       <div className="flex-1">
         <p className="line-clamp-1 font-medium">{title}</p>
