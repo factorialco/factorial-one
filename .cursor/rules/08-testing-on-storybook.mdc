@@ -1,8 +1,73 @@
 ---
-description: 
+description: Guidelines for Storybook testing
 globs: 
 alwaysApply: false
 ---
+# Storybook Testing and Documentation Standards
+
+## Core Purpose
+
+The primary goal of our Storybook documentation is to serve as a comprehensive reference for both designers and developers to resolve any questions about component behavior. Each document should:
+
+- Provide clear visual examples that designers can reference for UI consistency
+- Include technical implementation details that developers need for proper usage
+- Document edge cases and interactions that both teams should be aware of
+- Serve as a single source of truth for component behavior and appearance
+
+## Testing Requirements
+
+### Story Structure
+Each component MUST have:
+1. Default story showing basic usage
+2. Stories for each significant variant
+3. Stories demonstrating edge cases
+4. Interactive stories showing state changes
+
+### Testing Guidelines
+1. Use play functions for interaction testing
+2. Include accessibility (a11y) tests
+3. Test responsive behavior
+4. Document prop combinations
+
+## Writing Style
+
+### Headers
+- Use Title Case for main sections
+- Use sentence case for subsections
+- Keep headers concise and descriptive
+
+### Content Guidelines
+- Write in clear, direct language
+- Use bullet points for lists
+- Include code examples
+- Document props and their usage
+- Include visual examples where possible
+
+## Common Patterns
+
+### Layout Documentation
+- Show layout structure with images
+- Document spacing and alignment rules
+- Include responsive behavior
+
+### Interaction Documentation
+- Document hover states
+- Show loading states
+- Demonstrate error states
+- Include animation examples
+
+## Quality Checklist
+
+Before submitting documentation:
+- [ ] All required sections are present
+- [ ] Code examples are working and up to date
+- [ ] Images have proper alt text
+- [ ] Props are fully documented
+- [ ] Accessibility guidelines are included
+- [ ] Interactive examples are working
+- [ ] All variants are documented
+- [ ] Best practices are clearly stated
+
 **1. Generation of `{{dirPath}}/index.stories.tsx`:**
 
 *   **Required Imports:**
