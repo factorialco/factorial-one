@@ -58,6 +58,14 @@ declare type Action = {
 
 declare type ActionType = CopyActionType | NavigateActionType;
 
+export declare type actionType = {
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+    variant: "default" | "outline" | "neutral" | undefined;
+    icon?: IconType_2;
+};
+
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "positive" | "warning" | "destructive" | undefined;
 } & ({
@@ -88,7 +96,7 @@ declare const alertAvatarVariants: (props?: ({
 
 export declare const AlertDescription: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLParagraphElement> & React_2.RefAttributes<HTMLParagraphElement>>;
 
-export declare const AlertTag: ForwardRefExoticComponent<Props_8<string> & RefAttributes<HTMLDivElement>>;
+export declare const AlertTag: ForwardRefExoticComponent<Props_9<string> & RefAttributes<HTMLDivElement>>;
 
 export declare const AlertTitle: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLHeadingElement> & React_2.RefAttributes<HTMLParagraphElement>>;
 
@@ -223,7 +231,7 @@ declare const badgeVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-export declare const BalanceTag: ForwardRefExoticComponent<Props_9 & RefAttributes<HTMLDivElement>>;
+export declare const BalanceTag: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
 
 export declare const BarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: BarChartProps;
@@ -666,11 +674,11 @@ declare type ChartItem<K extends ChartConfig> = {
     };
 };
 
-export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
+export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
 
-export declare type ChatWidgetEmptyStateProps = Props_13;
+export declare type ChatWidgetEmptyStateProps = Props_14;
 
-export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, }: ClockInControlsProps): JSX_2.Element;
+export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, breakTypeName, }: ClockInControlsProps): JSX_2.Element;
 
 export declare interface ClockInControlsProps {
     /** Optional remaining time in minutes */
@@ -715,6 +723,7 @@ export declare interface ClockInControlsProps {
     onBreak?: (breakTypeId?: string) => void;
     canShowProject?: boolean;
     projectSelectorElement?: React.ReactNode;
+    breakTypeName?: string;
 }
 
 declare interface ClockInGraphProps {
@@ -850,7 +859,7 @@ export declare type CompanySelectorProps = {
     }[];
 };
 
-export declare const CompanyTag: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
+export declare const CompanyTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
 
 declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "item";
@@ -968,6 +977,8 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     presets?: Presets<Filters>;
     /** URL for a single item in the collection */
     itemUrl?: (item: Record) => string | undefined;
+    /** Click handler for a single item in the collection */
+    itemOnClick?: (item: Record) => () => void;
     /** Available actions that can be performed on records */
     itemActions?: ItemActions;
     /** Available primary actions that can be performed on the collection */
@@ -1107,11 +1118,56 @@ declare type DropdownProps = Omit<DropdownInternalProps, (typeof privateProps_2)
     onOpenChange?: (open: boolean) => void;
 };
 
+export declare const EmojiAvatar: {
+    ({ emoji, size }: Props_6): JSX_2.Element;
+    displayName: string;
+};
+
 declare type EmployeeItemProps = {
     firstName: string;
     lastName: string;
     avatarUrl?: URL_2;
     action?: ActionType;
+};
+
+export declare type enhanceConfig = {
+    onEnhanceText: (params: enhanceTextParams) => Promise<enhancedTextResponse>;
+    enhancementOptions?: EnhancementOption[];
+    enhanceLabels: enhanceLabelsType;
+};
+
+export declare type enhancedTextResponse = {
+    success: boolean;
+    text: string;
+    error?: string;
+};
+
+export declare type enhanceLabelsType = {
+    defaultError: string;
+    enhanceButtonLabel: string;
+    acceptChangesButtonLabel: string;
+    rejectChangesButtonLabel: string;
+    repeatButtonLabel: string;
+    customPromptPlaceholder: string;
+    loadingEnhanceLabel: string;
+};
+
+export declare type EnhancementOption = {
+    id: string;
+    label: string;
+    subOptions?: EnhancementOption[];
+};
+
+export declare type enhanceTextParams = {
+    text: string;
+    selectedIntent?: string;
+    customIntent?: string;
+    context?: string;
+};
+
+export declare type errorConfig = {
+    onClose?: () => void;
+    closeErrorButtonLabel?: string;
 };
 
 /**
@@ -1132,6 +1188,38 @@ declare type F1SearchBoxProps = {
     autoFocus?: boolean;
     onChange?: (value: string) => void;
 };
+
+export declare const FILE_TYPES: {
+    readonly PDF: "pdf";
+    readonly IMAGE: "image";
+    readonly DOC: "doc";
+    readonly EXCEL: "excel";
+    readonly PPT: "ppt";
+    readonly TXT: "txt";
+    readonly VIDEO: "video";
+    readonly AUDIO: "audio";
+    readonly ARCHIVE: "archive";
+    readonly CSV: "csv";
+    readonly HTML: "html";
+    readonly MARKDOWN: "markdown";
+};
+
+export declare const FileItem: ({ file, onRemoveFile, disabled }: FileItemProps) => JSX_2.Element;
+
+declare interface FileItemProps {
+    file: File;
+    onRemoveFile: () => void;
+    disabled: boolean;
+}
+
+export declare type filesConfig = {
+    onFiles: (files: File[]) => void;
+    multipleFiles: boolean;
+    maxFileSize?: number;
+    acceptedFileType?: FileType[];
+};
+
+export declare type FileType = (typeof FILE_TYPES)[keyof typeof FILE_TYPES];
 
 /**
  * Filters the actions based on the enabled property
@@ -1472,6 +1560,18 @@ export declare type ListModalProps = {
     /** Custom content to render in the list section */
     children: ReactNode;
 } & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
+
+export declare type MentionedUser = {
+    id: number;
+    label: string;
+    image_url?: string;
+    href?: string;
+};
+
+export declare type mentionsConfig = {
+    onMentionQueryStringChanged?: (queryString: string) => Promise<MentionedUser[]> | undefined;
+    users: MentionedUser[];
+};
 
 export declare function Menu({ tree, onCollapse, onSort }: MenuProps): default_2.JSX.Element;
 
@@ -1900,7 +2000,7 @@ declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
 
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
-export declare const PersonTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
+export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
 
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: PieChartProps;
@@ -1946,6 +2046,11 @@ declare interface PrimaryActionButton extends PrimaryAction {
  * @returns An action
  */
 export declare type PrimaryActionsDefinition = () => Pick<DropdownItemObject, "onClick" | "label" | "icon"> | undefined;
+
+export declare type primaryActionType = {
+    action: actionType;
+    subActions?: subActionType[];
+};
 
 declare interface PrimaryDropdownAction<T> extends PrimaryAction {
     items: OneDropdownButtonItem<T>[];
@@ -2079,25 +2184,30 @@ declare type Props = {
     badge?: BadgeProps;
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
 
-declare type Props_10 = {
+declare interface Props_10 {
+    text: string;
+    status: Status;
+}
+
+declare type Props_11 = {
     companyName: string;
     companyImageUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_11 = {
+declare type Props_12 = {
     name: string;
     avatarUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_12 = {
+declare type Props_13 = {
     teamName: string;
     teamImageUrl: string;
     onClick?: () => void;
 };
 
-declare interface Props_13 {
+declare interface Props_14 {
     title: string;
     content: string;
     buttonLabel?: string;
@@ -2106,7 +2216,7 @@ declare interface Props_13 {
     type: Type;
 }
 
-declare type Props_14 = {
+declare type Props_15 = {
     label: string;
     icon: IconType;
     iconClassName?: string;
@@ -2114,12 +2224,12 @@ declare type Props_14 = {
     onClick?: () => void;
 };
 
-declare type Props_15<Id extends string | number = string | number> = {
+declare type Props_16<Id extends string | number = string | number> = {
     items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
     onClickItem?: (id: Id) => void;
 };
 
-declare type Props_16<Id extends string | number = string | number> = {
+declare type Props_17<Id extends string | number = string | number> = {
     id: Id;
     icon?: IconType;
     title: string;
@@ -2127,12 +2237,12 @@ declare type Props_16<Id extends string | number = string | number> = {
     onClick?: (id: Id) => void;
 };
 
-declare type Props_17<Id extends string | number = string | number> = {
-    items: Omit<Props_18<Id>, "onClick">[];
+declare type Props_18<Id extends string | number = string | number> = {
+    items: Omit<Props_19<Id>, "onClick">[];
     onClickItem?: (id: Id) => void;
 };
 
-declare type Props_18<Id extends string | number = string | number> = {
+declare type Props_19<Id extends string | number = string | number> = {
     id: Id;
     title: string;
     icon?: IconType;
@@ -2179,9 +2289,14 @@ declare type Props_5 = {
     date: Date;
 };
 
-declare type Props_6 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
+declare type Props_6 = {
+    emoji: string;
+    size?: "sm" | "md" | "lg";
+};
 
-declare type Props_7 = {
+declare type Props_7 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
+
+declare type Props_8 = {
     /** Main heading text */
     title: string;
     /** Description text below the title */
@@ -2200,15 +2315,10 @@ declare type Props_7 = {
     separator?: "top" | "bottom";
 };
 
-declare type Props_8<Text extends string = string> = {
+declare type Props_9<Text extends string = string> = {
     text: Text extends "" ? never : Text;
     level: Level;
 };
-
-declare interface Props_9 {
-    text: string;
-    status: Status;
-}
 
 export declare const RadarChart: <K extends ChartConfig>(props: RadarChartProps<K> & RefAttributes<HTMLDivElement>) => React.ReactNode;
 
@@ -2263,7 +2373,43 @@ declare type RendererDefinition = {
     };
 }[keyof typeof propertyRenderers];
 
-export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_6) => JSX_2.Element;
+export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_7) => JSX_2.Element;
+
+export declare type resultType = {
+    value: string | null;
+    mentionIds?: number[];
+};
+
+export declare const RichTextDisplay: ({ content }: {
+    content: string;
+}) => JSX_2.Element;
+
+export declare const RichTextEditor: ForwardRefExoticComponent<RichTextEditorProps & RefAttributes<RichTextEditorHandle>>;
+
+export declare type RichTextEditorHandle = {
+    clear: () => void;
+    clearFiles: () => void;
+    focus: () => void;
+    setError: (error: string | null) => void;
+};
+
+export declare interface RichTextEditorProps {
+    mentionsConfig?: mentionsConfig;
+    enhanceConfig?: enhanceConfig;
+    filesConfig?: filesConfig;
+    secondaryAction?: actionType;
+    primaryAction?: primaryActionType;
+    onChange: (result: resultType) => void;
+    maxCharacters?: number;
+    placeholder: string;
+    initialEditorState?: {
+        content?: string;
+        files?: File[];
+    };
+    toolbarLabels: toolbarLabels;
+    title: string;
+    errorConfig?: errorConfig;
+}
 
 declare type SchemaType = ZodType;
 
@@ -2300,7 +2446,7 @@ export declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
     enabled?: boolean;
 }> | undefined;
 
-export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_7) => JSX_2.Element;
+export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_8) => JSX_2.Element;
 
 export declare const Select: ForwardRefExoticComponent<SelectProps<string, any> & RefAttributes<HTMLButtonElement>>;
 
@@ -2520,6 +2666,13 @@ export declare interface StatusTagProps {
 
 export declare type StatusVariant = Variant;
 
+export declare type subActionType = {
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+    icon?: IconType_2;
+};
+
 export declare const SummariesWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 export declare type TabItem = {
@@ -2654,7 +2807,7 @@ declare type TeamMetadata = BaseMetadata & {
     src?: string;
 };
 
-export declare const TeamTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
+export declare const TeamTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
 
 export declare const Textarea: React.FC<TextareaProps>;
 
@@ -2690,6 +2843,37 @@ export declare const ToggleGroupItem: React_2.ForwardRefExoticComponent<Omit<Tog
     class?: never;
     className?: ClassValue;
 })) | undefined) => string> & React_2.RefAttributes<HTMLButtonElement>>;
+
+export declare type toolbarLabels = {
+    bold: string;
+    italic: string;
+    underline: string;
+    strike: string;
+    highlight: string;
+    heading1: string;
+    heading2: string;
+    heading3: string;
+    left: string;
+    center: string;
+    right: string;
+    justify: string;
+    bulletList: string;
+    orderedList: string;
+    taskList: string;
+    codeBlock: string;
+    horizontalRule: string;
+    quote: string;
+    moreOptions: string;
+    code: string;
+    divider: string;
+    bullet: string;
+    ordered: string;
+    task: string;
+    linkPlaceholder: string;
+    linkLabel: string;
+    linkPaste: string;
+    close: string;
+};
 
 declare interface TwoColumnsItemType {
     title: string;
@@ -2859,13 +3043,13 @@ export declare type WidgetEmptyStateProps = {
     actions?: Action[];
 };
 
-export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_14): JSX_2.Element;
+export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_15): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, onClickItem }: Props_15): JSX_2.Element;
+export declare function WidgetInboxList({ items, onClickItem }: Props_16): JSX_2.Element;
 
-declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_16<Id>;
+declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_17<Id>;
 
-export declare type WidgetInboxListProps = Props_15;
+export declare type WidgetInboxListProps = Props_16;
 
 export declare interface WidgetProps {
     header?: {
@@ -2902,9 +3086,9 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, onClickItem }: Props_17): JSX_2.Element;
+export declare function WidgetSimpleList({ items, onClickItem }: Props_18): JSX_2.Element;
 
-export declare type WidgetSimpleListProps = Props_17;
+export declare type WidgetSimpleListProps = Props_18;
 
 export declare type WidgetSkeletonProps = {
     header?: {
