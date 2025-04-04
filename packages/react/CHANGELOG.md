@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.21.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.2...factorial-one-react-v1.21.3) (2025-04-04)
+
+
+### Bug Fixes
+
+* **DataCollection:** check active filters to display Clear button ([#1549](https://github.com/factorialco/factorial-one/issues/1549)) ([518cb43](https://github.com/factorialco/factorial-one/commit/518cb43b96a701486d4441bcdedde8a1caef0238))
+
 ## [1.21.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.21.1...factorial-one-react-v1.21.2) (2025-04-03)
 
 
