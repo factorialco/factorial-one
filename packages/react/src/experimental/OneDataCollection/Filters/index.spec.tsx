@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event"
 import { describe, expect, it, vi } from "vitest"
 import { render, screen, waitFor, within } from "../../../test-utils"
-import { Filters } from "./index"
+import * as Filters from "./index"
 import type { FiltersDefinition } from "./types"
 
 const definition = {
@@ -26,7 +26,13 @@ describe("Filters", () => {
       const user = userEvent.setup()
       const onChange = vi.fn()
 
-      render(<Filters schema={definition} filters={{}} onChange={onChange} />)
+      render(
+        <Filters.Root schema={definition} filters={{}} onChange={onChange}>
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
+      )
 
       // Open filter popover
       await user.click(screen.getByRole("button", { name: /filters/i }))
@@ -52,14 +58,18 @@ describe("Filters", () => {
 
       // Render with initial state
       render(
-        <Filters
+        <Filters.Root
           schema={definition}
           filters={{
             search: "test",
             department: ["engineering"],
           }}
           onChange={onChange}
-        />
+        >
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
       )
 
       // Check for active filters in the UI
@@ -81,7 +91,13 @@ describe("Filters", () => {
       const user = userEvent.setup()
       const onChange = vi.fn()
 
-      render(<Filters schema={definition} filters={{}} onChange={onChange} />)
+      render(
+        <Filters.Root schema={definition} filters={{}} onChange={onChange}>
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
+      )
 
       // Open and configure filter
       await user.click(screen.getByRole("button", { name: /filters/i }))
@@ -110,7 +126,7 @@ describe("Filters", () => {
 
       // Based on the error, the component now replaces the selection instead of adding to it
       expect(onChange).toHaveBeenCalledWith({
-        department: ["design"],
+        department: ["engineering", "design"],
       })
     })
   })
@@ -155,14 +171,18 @@ describe("Filters", () => {
 
       // Render with initial filters
       const { rerender } = render(
-        <Filters
+        <Filters.Root
           schema={definition}
           filters={{
             department: ["engineering"],
             search: "test",
           }}
           onChange={onChange}
-        />
+        >
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
       )
 
       // Find all close buttons in the document
@@ -178,13 +198,17 @@ describe("Filters", () => {
 
       // Simulate the update
       rerender(
-        <Filters
+        <Filters.Root
           schema={definition}
           filters={{
             search: "test",
           }}
           onChange={onChange}
-        />
+        >
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
       )
 
       // Verify department filter is gone
@@ -198,11 +222,15 @@ describe("Filters", () => {
 
       // Start with engineering selected
       const { rerender } = render(
-        <Filters
+        <Filters.Root
           schema={definition}
           filters={{ department: ["engineering"] }}
           onChange={onChange}
-        />
+        >
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
       )
 
       // Open filter panel
@@ -223,11 +251,15 @@ describe("Filters", () => {
 
       // Update the component with the new state
       rerender(
-        <Filters
+        <Filters.Root
           schema={definition}
           filters={{ department: ["design"] }}
           onChange={onChange}
-        />
+        >
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
       )
 
       // Verify the UI shows the updated filter
@@ -254,12 +286,16 @@ describe("Presets", () => {
     ]
 
     render(
-      <Filters
+      <Filters.Root
         schema={definition}
         filters={{}}
         presets={presets}
         onChange={onChange}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     // Verify preset buttons are rendered
@@ -282,12 +318,16 @@ describe("Presets", () => {
     ]
 
     render(
-      <Filters
+      <Filters.Root
         schema={definition}
         filters={{}}
         presets={presets}
         onChange={onChange}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     // Click on a preset
@@ -313,12 +353,16 @@ describe("Presets", () => {
 
     // Render with filters matching the first preset
     render(
-      <Filters
+      <Filters.Root
         schema={definition}
         filters={{ department: ["engineering"] }}
         presets={presets}
         onChange={onChange}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     // Get the preset elements
@@ -351,12 +395,16 @@ describe("Presets", () => {
     ]
 
     const { rerender } = render(
-      <Filters
+      <Filters.Root
         schema={definition}
         filters={{}}
         presets={presets}
         onChange={onChange}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     // Click on the first preset
@@ -366,12 +414,16 @@ describe("Presets", () => {
 
     // Simulate the update
     rerender(
-      <Filters
+      <Filters.Root
         schema={definition}
         filters={{ department: ["engineering"] }}
         presets={presets}
         onChange={onChange}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     // Reset the mock to track new calls
@@ -394,12 +446,16 @@ describe("Presets", () => {
     ]
 
     const { rerender } = render(
-      <Filters
+      <Filters.Root
         schema={definition}
         filters={{}}
         presets={presets}
         onChange={onChange}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     // Apply a preset
@@ -411,12 +467,16 @@ describe("Presets", () => {
 
     // Simulate the update
     rerender(
-      <Filters
+      <Filters.Root
         schema={definition}
         filters={{ department: ["engineering"] }}
         presets={presets}
         onChange={onChange}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     // Reset the mock to track new calls
@@ -454,12 +514,16 @@ describe("Presets", () => {
     ]
 
     render(
-      <Filters
+      <Filters.Root
         schema={definition}
         filters={{}}
         presets={presets}
         onChange={onChange}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     // Click on the preset
@@ -483,7 +547,7 @@ describe("Filters Type Safety", () => {
   it.skip("should enforce type safety in props", () => {
     // Valid usage - this should type check
     render(
-      <Filters
+      <Filters.Root
         schema={
           {
             status: {
@@ -498,11 +562,15 @@ describe("Filters Type Safety", () => {
         }
         filters={{ status: ["active"] }}
         onChange={() => {}}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     render(
-      <Filters
+      <Filters.Root
         schema={
           {
             status: {
@@ -514,11 +582,15 @@ describe("Filters Type Safety", () => {
         }
         filters={{}}
         onChange={() => {}}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     render(
-      <Filters
+      <Filters.Root
         schema={
           {
             // @ts-expect-error - Missing options in "in" filter
@@ -530,11 +602,15 @@ describe("Filters Type Safety", () => {
         }
         filters={{}}
         onChange={() => {}}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     render(
-      <Filters
+      <Filters.Root
         schema={
           {
             status: {
@@ -550,11 +626,15 @@ describe("Filters Type Safety", () => {
         // @ts-expect-error - Wrong value type for "in" filter (string instead of string[])
         filters={{ status: "active" }}
         onChange={() => {}}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     render(
-      <Filters
+      <Filters.Root
         schema={
           {
             status: {
@@ -570,11 +650,15 @@ describe("Filters Type Safety", () => {
         // @ts-expect-error - Invalid filter key in filters state
         filters={{ invalid: ["something"] }}
         onChange={() => {}}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     render(
-      <Filters
+      <Filters.Root
         schema={
           {
             status: {
@@ -590,11 +674,15 @@ describe("Filters Type Safety", () => {
         // @ts-expect-error - Invalid value in options array
         filters={{ status: ["nonexistent"] }}
         onChange={() => {}}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     render(
-      <Filters
+      <Filters.Root
         schema={
           {
             // @ts-expect-error - Missing required options in "in" filter
@@ -606,14 +694,18 @@ describe("Filters Type Safety", () => {
         }
         filters={{}}
         onChange={() => {}}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
   })
 
   it.skip("should enforce type safety in presets", () => {
     // Valid usage - this should type check
     render(
-      <Filters
+      <Filters.Root
         schema={
           {
             status: {
@@ -634,11 +726,15 @@ describe("Filters Type Safety", () => {
           },
         ]}
         onChange={() => {}}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
 
     render(
-      <Filters
+      <Filters.Root
         schema={
           {
             status: {
@@ -660,7 +756,11 @@ describe("Filters Type Safety", () => {
           },
         ]}
         onChange={() => {}}
-      />
+      >
+        <Filters.Controls />
+        <Filters.Presets />
+        <Filters.ChipsList />
+      </Filters.Root>
     )
   })
 })
