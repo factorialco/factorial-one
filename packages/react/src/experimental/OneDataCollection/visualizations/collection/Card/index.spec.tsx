@@ -1,14 +1,14 @@
 import { render, renderHook, screen, waitFor } from "@testing-library/react"
+import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
+import { I18nProvider } from "../../../../../lib/i18n-provider"
+import { defaultTranslations } from "../../../../../lib/i18n-provider-defaults"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
 import type { DataSource } from "../../../types"
 import { useData } from "../../../useData"
 import { CardCollection } from "./index"
-import { I18nProvider } from "../../../../../lib/i18n-provider"
-import { defaultTranslations } from "../../../../../lib/i18n-provider-defaults"
-import { ReactNode } from "react"
 
 type Person = {
   id: number
