@@ -80,3 +80,15 @@ export const Minimal: Story = {
     description: "Software Engineer",
   },
 }
+
+export const Skeleton: Story = {
+  decorators: [
+    (Story) => (
+      <div className="w-96">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {},
+  render: () => <OnePersonListItem.Skeleton />,
+}

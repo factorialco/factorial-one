@@ -1,3 +1,5 @@
+import { withSkeleton } from "@/lib/skeleton"
+import { Skeleton } from "@/ui/skeleton"
 import React from "react"
 import { Button } from "../../../components/Actions/Button"
 import { Icon, IconType } from "../../../components/Utilities/Icon"
@@ -31,7 +33,7 @@ export type OnePersonListItemProps = {
   onClick: () => void
 }
 
-export const OnePersonListItem = React.forwardRef<
+const BaseOnePersonListItem = React.forwardRef<
   HTMLDivElement,
   OnePersonListItemProps
 >(({ person, onClick, ...props }, ref) => {
@@ -114,4 +116,21 @@ export const OnePersonListItem = React.forwardRef<
   )
 })
 
-OnePersonListItem.displayName = "OnePersonListItem"
+const OnePersonListItemSkeleton = () => {
+  return (
+    <div className="flex w-full flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold">
+      <Skeleton className="aspect-square w-8 rounded-full" />
+      <div className="flex flex-1 flex-col gap-0.5">
+        <Skeleton className="h-4" />
+        <Skeleton className="h-4" />
+      </div>
+    </div>
+  )
+}
+
+BaseOnePersonListItem.displayName = "OnePersonListItem"
+
+export const OnePersonListItem = withSkeleton(
+  BaseOnePersonListItem,
+  OnePersonListItemSkeleton
+)
