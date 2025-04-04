@@ -191,6 +191,7 @@ export const Default: Story = {
       onClose: () => alert("Close"),
       closeErrorButtonLabel: "Continue editing",
     },
+    height: "lg",
   },
 }
 
@@ -198,6 +199,7 @@ export const WithoutEnhance: Story = {
   args: {
     ...Default.args,
     enhanceConfig: undefined,
+    height: "auto",
   },
 }
 

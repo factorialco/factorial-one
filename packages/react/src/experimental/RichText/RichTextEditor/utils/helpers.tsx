@@ -6,6 +6,7 @@ import {
 } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { RefObject } from "react"
+import { heightType } from "./types"
 
 const getTextAlignLabel = (editor: Editor) => {
   if (editor.isActive({ textAlign: "left" })) return "Left"
@@ -71,8 +72,22 @@ const setupContainerObservers = (
   }
 }
 
+const getHeight = (height: heightType) => {
+  if (height === "xxs") return "h-20"
+  if (height === "xs") return "h-28"
+  if (height === "sm") return "h-40"
+  if (height === "md") return "h-52"
+  if (height === "lg") return "h-60"
+  if (height === "xl") return "h-72"
+  if (height === "2xl") return "h-80"
+  if (height === "3xl") return "h-96"
+  if (height === "full") return "h-full"
+  if (height === "auto") return "h-auto max-h-60"
+}
+
 export {
   checkContainerHeight,
+  getHeight,
   getTextAlignIcon,
   getTextAlignLabel,
   isScrolledToBottom,
