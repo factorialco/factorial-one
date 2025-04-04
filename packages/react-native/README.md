@@ -1,43 +1,16 @@
-# Factorial One React Native
+# Starter base
 
-React Native implementation of the Factorial One Design System.
+A starting point to help you set up your project quickly and use the common components provided by `react-native-reusables`. The idea is to make it easier for you to get started.
 
-## Installation
+## Features
 
-```bash
-npm install @factorialco/factorial-one-react-native
-# or
-yarn add @factorialco/factorial-one-react-native
-# or
-pnpm add @factorialco/factorial-one-react-native
-```
+- NativeWind v4
+- Dark and light mode
+  - Android Navigation Bar matches mode
+  - Persistent mode
+- Common components
+  - ThemeToggle, Avatar, Button, Card, Progress, Text, Tooltip
 
-## Usage
-
-```tsx
-import { ExampleComponent } from '@factorialco/factorial-one-react-native';
-
-export default function App() {
-  return (
-    <ExampleComponent text="Hello from Factorial One!" />
-  );
-}
-```
-
-## Development
-
-### Building
-
-```bash
-pnpm build
-```
-
-### Testing
-
-```bash
-pnpm test
-```
-
-## License
-
-MIT 
+<img src="https://github.com/mrzachnugent/react-native-reusables/assets/63797719/42c94108-38a7-498b-9c70-18640420f1bc"
+     alt="starter-base-template"
+     style="width:270px;" />

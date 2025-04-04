@@ -1,30 +1,26 @@
 {
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "jsx": "react-native",
-    "esModuleInterop": true,
     "strict": true,
-    "declaration": true,
-    "outDir": "dist",
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./",
+    "jsx": "react-native",
     "paths": {
+      "~/*": [
+        "*"
+      ],
+      "@factorialco/factorial-one-react-native": [
+        "../../packages/react-native/src"
+      ],
       "@factorialco/factorial-one-core": [
-        "../core/src"
+        "../../packages/core/src"
       ]
-    },
-    "types": [
-      "vitest/globals"
-    ]
+    }
   },
   "include": [
-    "src",
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts",
     "nativewind-env.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
   ]
 }

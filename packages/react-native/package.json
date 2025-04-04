@@ -1,61 +1,60 @@
 {
   "name": "@factorialco/factorial-one-react-native",
-  "version": "0.0.1",
-  "type": "module",
-  "description": "React Native components for Factorial One Design System",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
+  "main": "index.js",
+  "version": "1.0.0",
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "dev": "expo start -c",
+    "dev:web": "expo start -c --web",
+    "dev:android": "expo start -c --android",
+    "android": "expo start -c --android",
+    "ios": "expo start -c --ios",
+    "web": "expo start -c --web",
+    "clean": "rm -rf .expo node_modules",
+    "postinstall": "npx tailwindcss -i global.css -o ./node_modules/.cache/nativewind/global.css",
     "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
-    "lint-fix": "pnpm run lint -- --fix",
-    "test": "vitest run"
-  },
-  "keywords": [
-    "factorial",
-    "design-system",
-    "react-native",
-    "components"
-  ],
-  "author": "Factorial",
-  "license": "MIT",
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-native": "^0.74.0",
-    "typescript": "^5.7.2"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.24.8",
-    "@babel/core": "^7.26.10",
-    "@babel/preset-typescript": "^7.26.7",
-    "@factorialco/factorial-one-core": "workspace:*",
-    "@testing-library/react-native": "^12.4.3",
-    "@types/react": "^18.2.0",
-    "@types/react-native": "^0.73.0",
-    "globals": "^16.0.0",
-    "prettier-plugin-tailwindcss": "^0.6.10",
-    "react": "^18.2.0",
-    "react-native": "^0.74.0",
-    "react-test-renderer": "^18.2.0",
-    "tsup": "^8.3.5",
-    "typescript": "^5.7.2",
-    "vitest": "^3.0.7"
+    "lint-fix": "pnpm run lint -- --fix"
   },
   "dependencies": {
+    "@babel/runtime": "^7.27.0",
+    "@factorialco/factorial-one-react-native": "workspace:*",
+    "@react-navigation/native": "^7.0.0",
+    "@rn-primitives/avatar": "~1.1.0",
+    "@rn-primitives/portal": "~1.1.0",
+    "@rn-primitives/progress": "~1.1.0",
+    "@rn-primitives/slot": "~1.1.0",
+    "@rn-primitives/tooltip": "~1.1.0",
+    "@rn-primitives/types": "~1.1.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "expo": "^52.0.25",
+    "expo-linking": "~7.0.4",
+    "expo-navigation-bar": "~4.0.7",
+    "expo-router": "~4.0.16",
+    "expo-splash-screen": "~0.29.20",
+    "expo-status-bar": "~2.0.1",
+    "expo-system-ui": "~4.0.7",
+    "lucide-react-native": "^0.378.0",
     "nativewind": "^4.1.23",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-native": "0.76.7",
+    "react-native-css-interop": "^0.1.22",
+    "react-native-reanimated": "~3.16.1",
+    "react-native-safe-area-context": "4.12.0",
+    "react-native-screens": "~4.4.0",
+    "react-native-svg": "15.8.0",
+    "react-native-web": "~0.19.13",
+    "tailwind-merge": "^2.2.1",
     "tailwindcss": "3.3.5",
-    "tailwindcss-animate": "^1.0.7"
-  }
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@types/react": "~18.3.12",
+    "prettier": "^3.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.10",
+    "typescript": "^5.3.3"
+  },
+  "private": true
 }
