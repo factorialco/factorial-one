@@ -1910,6 +1910,7 @@ export declare type OnePersonListItemProps = {
             onClick: () => void;
         };
     };
+    info?: string;
     onClick: () => void;
 };
 
