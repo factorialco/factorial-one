@@ -60,6 +60,7 @@ export interface ClockInControlsProps {
   onBreak?: (breakTypeId?: string) => void
   canShowProject?: boolean
   projectSelectorElement?: React.ReactNode
+  breakTypeName?: string
 }
 
 export function ClockInControls({
@@ -82,6 +83,7 @@ export function ClockInControls({
   onChangeLocationId,
   canShowProject = true,
   projectSelectorElement,
+  breakTypeName,
 }: ClockInControlsProps) {
   const { status, statusText, subtitle, statusColor } = getInfo({
     data,
@@ -135,6 +137,8 @@ export function ClockInControls({
     label: location.name,
     icon: location.icon,
   }))
+
+  const canShowBreakTypeName = status === "break"
 
   const [locationPickerOpen, setLocationPickerOpen] = useState(false)
 
@@ -284,6 +288,9 @@ export function ClockInControls({
                 </>
               )}
               {canShowProject && projectSelectorElement}
+              {canShowBreakTypeName && breakTypeName && (
+                <RawTag text={breakTypeName} />
+              )}
             </>
           )}
         </div>
