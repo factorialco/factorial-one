@@ -48,7 +48,12 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
           ref={ref}
           variant="outline"
           size="md"
-          onClick={onClick}
+          onClick={(e) => {
+            e.preventDefault()
+            if (!disabled) {
+              onClick()
+            }
+          }}
           className={cn(
             "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
             active

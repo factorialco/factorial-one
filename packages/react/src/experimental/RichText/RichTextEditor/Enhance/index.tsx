@@ -41,7 +41,8 @@ const EnhanceActivator = ({
   const enhanceButtonRef = useRef<HTMLButtonElement>(null)
   const [open, setOpen] = useState(false)
 
-  const handleEnhanceClick = () => {
+  const handleEnhanceClick = (e: React.MouseEvent) => {
+    e.preventDefault()
     if (!enhanceButtonRef.current) setOpen(false)
     else setOpen((prev) => !prev)
   }
@@ -70,8 +71,7 @@ const EnhanceActivator = ({
             false
           }
           onClick={(e) => {
-            e.preventDefault()
-            handleEnhanceClick()
+            handleEnhanceClick(e)
           }}
           disabled={disableButtons}
           // @ts-expect-error - Magic background is not supported yet

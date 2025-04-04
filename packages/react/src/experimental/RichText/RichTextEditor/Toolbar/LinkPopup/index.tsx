@@ -34,7 +34,8 @@ const LinkPopup = ({
   const [openLinkPopover, setOpenLinkPopover] = useState(false)
   const [url, setUrl] = useState(editor.getAttributes("link").href || "")
 
-  const handleLinkButtonClick = () => {
+  const handleLinkButtonClick = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault()
     if (disabled) return
     setOpenLinkPopover(!openLinkPopover)
   }
