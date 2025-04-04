@@ -1,6 +1,6 @@
-import { ExampleComponent } from "@factorialco/factorial-one-react-native";
 import * as React from "react";
 import { View } from "react-native";
+import { ExampleComponent } from "@factorialco/factorial-one-react-native";
 
 export default function Screen() {
   return (
