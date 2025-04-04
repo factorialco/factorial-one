@@ -9,7 +9,7 @@ export type Props = {
   title: string
   subtitle: string
   avatars: AvatarVariant[]
-  onClick?: (id: Id) => void
+  onClick?: (id: string | number) => void
 }
 
 type WrapperProps = {
