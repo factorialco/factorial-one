@@ -166,7 +166,7 @@
   },
   "dependencies": {
     "@radix-ui/react-hover-card": "^1.1.6",
-    "@tanstack/react-virtual": "^3.13.2",
+    "@tanstack/react-virtual": "^3.13.6",
     "@tiptap/extension-bubble-menu": "^2.11.5",
     "@tiptap/extension-character-count": "^2.11.5",
     "@tiptap/extension-color": "^2.11.5",
