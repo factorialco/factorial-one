@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.23.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.23.0...factorial-one-react-v1.23.1) (2025-04-04)
+
+
+### Bug Fixes
+
+* exports widgets components ([#1562](https://github.com/factorialco/factorial-one/issues/1562)) ([fe912c0](https://github.com/factorialco/factorial-one/commit/fe912c0107107e5d9676f7f814eff3bf715dc251))
+
 ## [1.23.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.22.2...factorial-one-react-v1.23.0) (2025-04-04)
 
 
