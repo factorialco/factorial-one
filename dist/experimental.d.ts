@@ -1548,19 +1548,6 @@ declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
 };
 
-export declare type ListModalProps = {
-    /** Modal title */
-    title: string;
-    /** Dropdown items */
-    dropdownItems?: DropdownInternalProps["items"];
-    /** Whether the modal is open */
-    isOpen: boolean;
-    /** Callback when modal is closed */
-    onClose: () => void;
-    /** Custom content to render in the list section */
-    children: ReactNode;
-} & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
-
 export declare type MentionedUser = {
     id: number;
     label: string;
@@ -1824,7 +1811,38 @@ declare type OneDropdownButtonItem<T = string> = {
     icon?: IconType;
 };
 
-export declare const OneListModal: default_2.FC<ListModalProps>;
+export declare const OneModal: OneModalComponent;
+
+declare const OneModal_2: default_2.FC<OneModalProps>;
+
+declare type OneModalComponent = typeof OneModal_2 & {
+    Header: typeof OneModalHeader;
+    Content: typeof OneModalContent;
+};
+
+declare const OneModalContent: ({ tabs, activeTabId, setActiveTabId, children, }: OneModalContentProps) => JSX_2.Element;
+
+declare type OneModalContentProps = {
+    children: React.ReactNode;
+} & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
+
+declare const OneModalHeader: ({ title, otherActions, }: OneModalHeaderProps) => JSX_2.Element;
+
+declare type OneModalHeaderProps = {
+    title: string;
+    otherActions?: DropdownInternalProps["items"];
+};
+
+declare type OneModalProps = {
+    /** Whether the modal is open */
+    isOpen: boolean;
+    /** Callback when modal is closed */
+    onClose: () => void;
+    /** Whether to render the modal as a bottom sheet on mobile */
+    asBottomSheetInMobile?: boolean;
+    /** Custom content to render in the modal. Only accepts OneModal.Header and OneModal.Content components */
+    children: default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>> | default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>>[];
+} & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
 
 export declare function OnePagination({ totalPages, currentPage, onPageChange, showControls, ariaLabel, visibleRange, hasNextPage, }: OnePaginationProps): JSX_2.Element;
 
