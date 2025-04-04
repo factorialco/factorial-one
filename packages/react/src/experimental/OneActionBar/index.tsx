@@ -78,7 +78,7 @@ export const OneActionBar = ({
         >
           {selectedNumber && (
             <div className="dark flex h-8 w-full items-center justify-between gap-2 px-2 sm:h-auto sm:w-fit sm:justify-start sm:pl-2 sm:pr-0">
-              <span className="text-sm font-medium tabular-nums">
+              <span className="font-medium tabular-nums">
                 <NumberFlow
                   value={selectedNumber}
                   spinTiming={{
