@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.23.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.22.2...factorial-one-react-v1.23.0) (2025-04-04)
+
+
+### Features
+
+* widget list item for avatars ([#1558](https://github.com/factorialco/factorial-one/issues/1558)) ([c2e0c83](https://github.com/factorialco/factorial-one/commit/c2e0c83a6bc38ed541a730cb82446b37dd4579cd))
+
 ## [1.22.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.22.1...factorial-one-react-v1.22.2) (2025-04-04)
 
 
