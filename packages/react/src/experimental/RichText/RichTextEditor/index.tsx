@@ -27,12 +27,13 @@ import {
   handleAddFiles,
   handleRemoveFile,
 } from "./utils/files"
-import { setupContainerObservers } from "./utils/helpers"
+import { getHeight, setupContainerObservers } from "./utils/helpers"
 import {
   actionType,
   enhanceConfig,
   errorConfig,
   filesConfig,
+  heightType,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
@@ -56,6 +57,7 @@ interface RichTextEditorProps {
   toolbarLabels: toolbarLabels
   title: string
   errorConfig?: errorConfig
+  height: heightType
 }
 
 type RichTextEditorHandle = {
@@ -65,29 +67,28 @@ type RichTextEditorHandle = {
   setError: (error: string | null) => void
 }
 
-const RichTextEditorComponent = forwardRef<
-  RichTextEditorHandle,
-  RichTextEditorProps
->(function RichTextEditor(
-  {
-    mentionsConfig,
-    enhanceConfig,
-    filesConfig,
-    secondaryAction,
-    primaryAction,
-    maxCharacters,
-    initialEditorState,
-    onChange,
-    placeholder,
-    toolbarLabels,
-    title,
-    errorConfig,
-  },
-  ref
-) {
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const editorContentContainerRef = useRef<HTMLDivElement>(null)
+const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
+  function RichTextEditor(
+    {
+      mentionsConfig,
+      enhanceConfig,
+      filesConfig,
+      secondaryAction,
+      primaryAction,
+      maxCharacters,
+      initialEditorState,
+      onChange,
+      placeholder,
+      toolbarLabels,
+      title,
+      errorConfig,
+      height = "auto",
+    },
+    ref
+  ) {
+    const fileInputRef = useRef<HTMLInputElement>(null)
+    const containerRef = useRef<HTMLDivElement>(null)
+    const editorContentContainerRef = useRef<HTMLDivElement>(null)
 
   const [hasFullHeight, setHasFullHeight] = useState(false)
   const [isScrolledToBottom, setIsScrolledToBottom] = useState(true)
@@ -348,22 +349,21 @@ const RichTextEditorComponent = forwardRef<
                 />
               )}
 
-              {error && (
-                <Error
-                  error={error}
-                  onClose={() => {
-                    setError(null)
-                    editor.setEditable(true)
-                    if (errorConfig?.onClose) {
-                      errorConfig.onClose()
-                    }
-                  }}
-                  closeErrorButtonLabel={errorConfig?.closeErrorButtonLabel}
-                />
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div
+          className={cn("relative w-full flex-grow overflow-hidden")}
+          onClick={() => editor?.commands.focus()}
+        >
+          <div
+            ref={editorContentContainerRef}
+            className={cn(
+              "scrollbar-macos relative flex w-full items-start justify-center overflow-y-auto pl-3 pr-10 pt-3",
+              isFullscreen ? "h-full" : getHeight(height)
+            )}
+          >
+            <div className={cn("w-full", isFullscreen && "max-w-4xl")}>
+              <EditorContent editor={editor} />
+            </div>
+          </div>
 
         {filesConfig && (
           <>

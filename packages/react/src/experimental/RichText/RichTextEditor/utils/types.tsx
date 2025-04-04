@@ -118,6 +118,18 @@ type toolbarLabels = {
   close: string
 }
 
+type heightType =
+  | "xxs"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "3xl"
+  | "full"
+  | "auto"
+
 export type {
   actionType,
   enhanceConfig,
@@ -127,6 +139,7 @@ export type {
   enhanceTextParams,
   errorConfig,
   filesConfig,
+  heightType,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
