@@ -28,7 +28,7 @@ const Wrapper: React.FC<WrapperProps> = ({ onClick, className, children }) => {
       {children}
     </a>
   ) : (
-    <div className={className} tabIndex={-1}>
+    <div className={className}>
       {children}
     </div>
   )
