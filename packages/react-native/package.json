@@ -1,7 +1,22 @@
 {
   "name": "@factorialco/factorial-one-react-native",
-  "main": "index.js",
   "version": "1.0.0",
+  "description": "Factorial One Design System for React Native",
+  "main": "index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
   "scripts": {
     "dev": "expo start -c",
     "dev:web": "expo start -c --web",
@@ -9,10 +24,13 @@
     "android": "expo start -c --android",
     "ios": "expo start -c --ios",
     "web": "expo start -c --web",
-    "clean": "rm -rf .expo node_modules",
+    "clean": "rm -rf .expo node_modules dist",
     "postinstall": "npx tailwindcss -i global.css -o ./node_modules/.cache/nativewind/global.css",
     "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
-    "lint-fix": "pnpm run lint -- --fix"
+    "lint-fix": "pnpm run lint -- --fix",
+    "build": "pnpm run build:tailwind && tsc -p tsconfig.build.json",
+    "build:tailwind": "tailwindcss -i global.css -o ./dist/global.css",
+    "prepare": "pnpm run build"
   },
   "dependencies": {
     "@babel/runtime": "^7.27.0",
@@ -56,5 +74,13 @@
     "prettier-plugin-tailwindcss": "^0.6.10",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "private": true,
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0",
+    "nativewind": "^4.0.0"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
 }
