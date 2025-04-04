@@ -100,6 +100,7 @@ export const OnBreak: Story = {
         variant: "break",
       },
     ],
+    breakTypeName: "Lunch break",
   },
 }
 
