@@ -4,7 +4,7 @@ import { OnePagination } from "./index"
 
 const meta: Meta<typeof OnePagination> = {
   component: OnePagination,
-  title: "Data Collection/Pagination",
+  title: "Pagination",
   parameters: {
     layout: "centered",
   },
@@ -47,6 +47,11 @@ const meta: Meta<typeof OnePagination> = {
       description:
         "Used in indeterminate state (totalPages = 0) to indicate if there are more pages available.",
       defaultValue: { summary: true },
+      control: "boolean",
+    },
+    disabled: {
+      description: "Whether to disable the pagination.",
+      defaultValue: { summary: false },
       control: "boolean",
     },
   },
@@ -136,5 +141,11 @@ export const Indeterminate: Story = {
         hasNextPage={hasNextPage}
       />
     )
+  },
+}
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
   },
 }

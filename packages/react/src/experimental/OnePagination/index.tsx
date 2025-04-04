@@ -50,6 +50,12 @@ interface OnePaginationProps {
    * @default true
    */
   hasNextPage?: boolean
+
+  /**
+   * Whether to disable the pagination.
+   * @default false
+   */
+  disabled?: boolean
 }
 
 export function OnePagination({
@@ -60,6 +66,7 @@ export function OnePagination({
   ariaLabel = "Page navigation",
   visibleRange = 3,
   hasNextPage = true,
+  disabled = false,
 }: OnePaginationProps) {
   const isIndeterminate = totalPages === 0
 
@@ -138,10 +145,12 @@ export function OnePagination({
         {showControls && (
           <PaginationItem>
             <PaginationPrevious
-              aria-disabled={currentPage === 1}
+              aria-disabled={currentPage === 1 || disabled}
               tabIndex={currentPage === 1 ? -1 : 0}
               className={
-                currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                currentPage === 1 || disabled
+                  ? "pointer-events-none opacity-50"
+                  : ""
               }
               onClick={() => handlePageChange(currentPage - 1)}
               onKeyDown={(e) => {
@@ -157,7 +166,11 @@ export function OnePagination({
           getPageNumbers.map((page, index) => (
             <PaginationItem
               key={index}
-              className={cn("hidden sm:flex", page === currentPage && "flex")}
+              className={cn(
+                "hidden sm:flex",
+                page === currentPage && "flex",
+                disabled && "pointer-events-none opacity-50"
+              )}
             >
               {page === "..." ? (
                 <PaginationEllipsis />
@@ -183,7 +196,9 @@ export function OnePagination({
           <PaginationItem>
             <PaginationNext
               aria-disabled={
-                !isIndeterminate ? currentPage === totalPages : !hasNextPage
+                (!isIndeterminate
+                  ? currentPage === totalPages
+                  : !hasNextPage) || disabled
               }
               tabIndex={
                 !isIndeterminate
@@ -196,7 +211,8 @@ export function OnePagination({
               }
               className={
                 (!isIndeterminate && currentPage === totalPages) ||
-                (!hasNextPage && isIndeterminate)
+                (!hasNextPage && isIndeterminate) ||
+                disabled
                   ? "pointer-events-none opacity-50"
                   : ""
               }
