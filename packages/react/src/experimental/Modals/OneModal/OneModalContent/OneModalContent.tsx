@@ -1,7 +1,7 @@
 import { Tabs, TabsProps } from "@/experimental/Navigation/Tabs"
 import { cn } from "@/lib/utils"
 import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
-import { useMediaQuery } from "usehooks-ts"
+import { useIsSmallScreen } from "../utils"
 
 export type OneModalContentProps = {
   children: React.ReactNode
@@ -13,9 +13,7 @@ export const OneModalContent = ({
   setActiveTabId,
   children,
 }: OneModalContentProps) => {
-  const isSmallScreen = useMediaQuery("(max-width: 440px)", {
-    initializeWithValue: false,
-  })
+  const isSmallScreen = useIsSmallScreen()
 
   return (
     <>

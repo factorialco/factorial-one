@@ -1,11 +1,11 @@
 import { TabsProps } from "@/experimental/Navigation/Tabs"
 import { Drawer, DrawerContent, DrawerOverlay } from "@/ui/drawer"
 import React, { ComponentProps, useEffect, useState } from "react"
-import { useMediaQuery } from "usehooks-ts"
 import { Dialog, DialogContent } from "../../../ui/dialog"
 import { OneModalContent } from "./OneModalContent/OneModalContent"
 import { OneModalHeader } from "./OneModalHeader/OneModalHeader"
 import { OneModalProvider } from "./OneModalProvider"
+import { useIsSmallScreen } from "./utils"
 
 export type OneModalProps = {
   /** Whether the modal is open */
@@ -27,6 +27,7 @@ export type OneModalProps = {
 } & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>
 
 export const OneModal: React.FC<OneModalProps> = ({
+  asBottomSheetInMobile = true,
   onClose,
   isOpen,
   children,
@@ -49,11 +50,9 @@ export const OneModal: React.FC<OneModalProps> = ({
     onClose()
   }
 
-  const isSmallScreen = useMediaQuery("(max-width: 440px)", {
-    initializeWithValue: false,
-  })
+  const isSmallScreen = useIsSmallScreen()
 
-  if (isSmallScreen) {
+  if (isSmallScreen && asBottomSheetInMobile) {
     return (
       <OneModalProvider isOpen={open} onClose={handleClose}>
         <Drawer open={open} onOpenChange={handleOpenChange}>
