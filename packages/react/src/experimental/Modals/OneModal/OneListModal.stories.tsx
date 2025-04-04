@@ -8,11 +8,11 @@ import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
 import type { Meta, StoryObj } from "@storybook/react"
 import { FC } from "react"
-import { OneListModal } from "./OneListModal"
+import { OneModal } from "."
 
-const meta: Meta<typeof OneListModal> = {
-  title: "Modals/OneListModal",
-  component: OneListModal,
+const meta: Meta<typeof OneModal> = {
+  title: "Modals/OneModal",
+  component: OneModal,
   parameters: {
     layout: "fullscreen",
     docs: {
@@ -30,7 +30,39 @@ const meta: Meta<typeof OneListModal> = {
 }
 
 export default meta
-type Story = StoryObj<typeof OneListModal>
+type Story = StoryObj<typeof OneModal>
+
+const TABS = [
+  {
+    id: "out-of-office",
+    label: "Out of office",
+  },
+  {
+    id: "missing-clock-in",
+    label: "Missing clock in",
+  },
+  {
+    id: "clocked-in",
+    label: "Clocked in",
+  },
+  {
+    id: "in-a-break",
+    label: "In a break",
+  },
+]
+
+const OTHER_ACTIONS = [
+  {
+    label: "Edit",
+    icon: PencilIcon,
+    onClick: () => {},
+  },
+  {
+    label: "Delete",
+    icon: DeleteIcon,
+    onClick: () => {},
+  },
+]
 
 const ExampleList = () => (
   <div className="flex flex-col gap-4 p-4">
@@ -47,39 +79,16 @@ const ExampleList = () => (
 
 export const Default: Story = {
   args: {
-    title: "Team Status",
     isOpen: true,
-    dropdownItems: [
-      {
-        label: "Edit",
-        icon: PencilIcon,
-        onClick: () => {},
-      },
-      {
-        label: "Delete",
-        icon: DeleteIcon,
-        onClick: () => {},
-      },
-    ],
-    tabs: [
-      {
-        id: "out-of-office",
-        label: "Out of office",
-      },
-      {
-        id: "missing-clock-in",
-        label: "Missing clock in",
-      },
-      {
-        id: "clocked-in",
-        label: "Clocked in",
-      },
-      {
-        id: "in-a-break",
-        label: "In a break",
-      },
-    ],
-    children: <ExampleList />,
+    onClose: () => {},
+    children: (
+      <>
+        <OneModal.Header title="Team Status" otherActions={OTHER_ACTIONS} />
+        <OneModal.Content tabs={TABS}>
+          <ExampleList />
+        </OneModal.Content>
+      </>
+    ),
   },
 }
 
@@ -99,13 +108,26 @@ const ExamplePersonList: FC<{ numberOfItems?: number }> = ({
 export const WithPersonListItems: Story = {
   args: {
     ...Default.args,
-    children: <ExamplePersonList />,
+    children: (
+      <>
+        <OneModal.Header title="Team Status" otherActions={OTHER_ACTIONS} />
+        <OneModal.Content tabs={TABS}>
+          <ExamplePersonList />
+        </OneModal.Content>
+      </>
+    ),
   },
 }
-
 export const WithFewItems: Story = {
   args: {
     ...Default.args,
-    children: <ExamplePersonList numberOfItems={3} />,
+    children: (
+      <>
+        <OneModal.Header title="Team Status" otherActions={OTHER_ACTIONS} />
+        <OneModal.Content tabs={TABS}>
+          <ExamplePersonList numberOfItems={3} />
+        </OneModal.Content>
+      </>
+    ),
   },
 }

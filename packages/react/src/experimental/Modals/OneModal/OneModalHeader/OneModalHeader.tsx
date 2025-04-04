@@ -4,23 +4,24 @@ import {
   DropdownInternalProps,
 } from "@/experimental/Navigation/Dropdown/internal"
 import CrossIcon from "@/icons/app/Cross"
+import { useOneModal } from "../OneModalProvider"
 
 export type OneModalHeaderProps = {
   title: string
-  dropdownItems?: DropdownInternalProps["items"]
-  onClose: () => void
+  otherActions?: DropdownInternalProps["items"]
 }
 
 export const OneModalHeader = ({
   title,
-  dropdownItems,
-  onClose,
+  otherActions,
 }: OneModalHeaderProps) => {
+  const { onClose } = useOneModal()
+
   return (
     <div className="flex flex-row items-center justify-between px-4 py-3">
       <h2 className="text-lg font-semibold text-f1-foreground">{title}</h2>
       <div className="flex flex-row gap-2">
-        {dropdownItems?.length && <DropdownInternal items={dropdownItems} />}
+        {!!otherActions?.length && <DropdownInternal items={otherActions} />}
         <ButtonInternal
           variant="outline"
           icon={CrossIcon}
