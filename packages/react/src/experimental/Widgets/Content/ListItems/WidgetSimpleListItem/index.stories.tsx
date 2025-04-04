@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Placeholder } from "../../../../../icons/app"
-import { Props, WidgetSimpleListItem } from "./index"
+import { WidgetSimpleListItem, WidgetSimpleListItemProps } from "./index"
 
-const meta: Meta<Props> = {
+const meta: Meta<WidgetSimpleListItemProps> = {
   title: "Widgets/WidgetSimpleListItem",
   component: WidgetSimpleListItem,
   tags: ["autodocs", "experimental"],
@@ -19,7 +19,7 @@ const meta: Meta<Props> = {
 }
 
 export default meta
-type Story = StoryObj<Props>
+type Story = StoryObj<WidgetSimpleListItemProps>
 
 export const Default: Story = {
   args: {

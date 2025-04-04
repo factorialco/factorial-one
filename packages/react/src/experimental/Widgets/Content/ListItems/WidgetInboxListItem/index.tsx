@@ -3,7 +3,7 @@ import { Bell as BellIcon } from "../../../../../icons/app"
 import { cn } from "../../../../../lib/utils"
 import { ModuleAvatar } from "../../../../Information/ModuleAvatar"
 
-type Props<Id extends string | number = string | number> = {
+type WidgetInboxListItemProps<Id extends string | number = string | number> = {
   id: Id
   icon?: IconType
   title: string
@@ -13,7 +13,7 @@ type Props<Id extends string | number = string | number> = {
 
 export type WidgetInboxListItemProps<
   Id extends string | number = string | number,
-> = Props<Id>
+> = WidgetInboxListItemProps<Id>
 
 type WrapperProps = {
   onClick?: (ev: React.MouseEvent<HTMLAnchorElement>) => void
@@ -39,7 +39,7 @@ export function WidgetInboxListItem({
   subtitle,
   icon = BellIcon,
   onClick,
-}: Props) {
+}: WidgetInboxListItemProps) {
   const className = cn(
     "flex flex-row gap-2 rounded-md border border-solid border-transparent p-2 text-f1-foreground",
     onClick
