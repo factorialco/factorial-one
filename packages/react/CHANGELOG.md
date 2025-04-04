@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.22.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.22.1...factorial-one-react-v1.22.2) (2025-04-04)
+
+
+### Bug Fixes
+
+* refactor documentation rules ([#1554](https://github.com/factorialco/factorial-one/issues/1554)) ([7031a2e](https://github.com/factorialco/factorial-one/commit/7031a2e27ba702a3eab317b0589e5c535f9b30e1))
+
 ## [1.22.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.22.0...factorial-one-react-v1.22.1) (2025-04-04)
 
 
