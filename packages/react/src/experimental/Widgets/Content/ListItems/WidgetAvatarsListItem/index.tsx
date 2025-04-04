@@ -3,7 +3,7 @@ import { AvatarVariant } from "../../../../Information/Avatars/Avatar"
 import { AvatarList } from "../../../../Information/Avatars/AvatarList/index.tsx"
 import { EmojiAvatar } from "../../../../Information/Avatars/EmojiAvatar"
 
-type Props<Id extends string | number = string | number> = {
+export type Props<Id extends string | number = string | number> = {
   id: string | number
   emoji: string
   title: string
