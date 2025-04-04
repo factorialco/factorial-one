@@ -4,17 +4,13 @@ import { AvatarList } from "../../../../Information/Avatars/AvatarList/index.tsx
 import { EmojiAvatar } from "../../../../Information/Avatars/EmojiAvatar"
 
 type Props<Id extends string | number = string | number> = {
-  id: Id
+  id: string | number
   emoji: string
   title: string
   subtitle: string
   avatars: AvatarVariant[]
   onClick?: (id: Id) => void
 }
-
-export type WidgetAvatarsListItemProps<
-  Id extends string | number = string | number,
-> = Props<Id>
 
 type WrapperProps = {
   onClick?: (ev: React.MouseEvent<HTMLAnchorElement>) => void
@@ -33,9 +29,7 @@ const Wrapper: React.FC<WrapperProps> = ({ onClick, children }) => {
       {children}
     </a>
   ) : (
-    <div className={className}>
-      {children}
-    </div>
+    <div className={className}>{children}</div>
   )
 }
 
