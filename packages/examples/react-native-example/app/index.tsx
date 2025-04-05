@@ -34,10 +34,10 @@ export default function Screen() {
     setProgress(Math.floor(Math.random() * 100));
   }
   return (
-    <View className="flex-1 justify-center items-center gap-5 p-6 bg-secondary/30">
-      <Card className="w-full max-w-sm p-6 rounded-2xl">
+    <View className="flex-1 items-center justify-center gap-5 bg-secondary/30 p-6">
+      <Card className="w-full max-w-sm rounded-2xl p-6">
         <CardHeader className="items-center">
-          <Avatar alt="Rick Sanchez's Avatar" className="w-24 h-24">
+          <Avatar alt="Rick Sanchez's Avatar" className="h-24 w-24">
             <AvatarImage source={{ uri: GITHUB_AVATAR_URI }} />
             <AvatarFallback>
               <Text>RS</Text>
@@ -54,10 +54,10 @@ export default function Screen() {
                 <Info
                   size={14}
                   strokeWidth={2.5}
-                  className="w-4 h-4 text-foreground/70"
+                  className="h-4 w-4 text-foreground/70"
                 />
               </TooltipTrigger>
-              <TooltipContent className="py-2 px-4 shadow">
+              <TooltipContent className="px-4 py-2 shadow">
                 <Text className="native:text-lg">Freelance</Text>
               </TooltipContent>
             </Tooltip>
