@@ -2371,7 +2371,7 @@ export declare interface RichTextEditorProps {
     toolbarLabels: toolbarLabels;
     title: string;
     errorConfig?: errorConfig;
-    height: heightType;
+    height?: heightType;
 }
 
 declare type SchemaType = ZodType;
