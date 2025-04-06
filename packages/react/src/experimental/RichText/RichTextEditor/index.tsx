@@ -56,7 +56,7 @@ interface RichTextEditorProps {
   toolbarLabels: toolbarLabels
   title: string
   errorConfig?: errorConfig
-  height: heightType
+  height?: heightType
 }
 
 type RichTextEditorHandle = {
