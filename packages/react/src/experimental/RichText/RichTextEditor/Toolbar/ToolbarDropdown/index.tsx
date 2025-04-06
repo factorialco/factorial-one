@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils"
 import * as Popover from "@radix-ui/react-popover"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
-import screenfull from "screenfull"
 import { ToolbarButton } from "../ToolbarButton"
 
 interface ToolbarDropdownItem {
@@ -55,20 +54,14 @@ const ToolbarDropdown = ({
           onClick={handleButtonClick}
         />
       </Popover.Trigger>
-      <Popover.Portal
-        container={
-          screenfull.isFullscreen && screenfull.element
-            ? screenfull.element
-            : undefined
-        }
-      >
+      <Popover.Portal container={document.body}>
         <Popover.Content
           side={position}
           align="end"
           sideOffset={15}
           collisionPadding={10}
           alignOffset={-10}
-          style={{ zIndex: 1000 }}
+          style={{ zIndex: 9999 }}
         >
           <AnimatePresence>
             {open && (

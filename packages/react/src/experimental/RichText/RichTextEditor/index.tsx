@@ -23,11 +23,12 @@ import { Footer } from "./Footer"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import { ExtensionsConfiguration } from "./utils/extensions"
 import {
-  getAcceptFileTypeString,
-  handleAddFiles,
-  handleRemoveFile,
-} from "./utils/files"
-import { getHeight, setupContainerObservers } from "./utils/helpers"
+  getHeight,
+  getHeightThreshold,
+  handleEditorUpdate,
+  setEditorContent,
+  setupContainerObservers,
+} from "./utils/helpers"
 import {
   actionType,
   enhanceConfig,
@@ -65,6 +66,7 @@ type RichTextEditorHandle = {
   clearFiles: () => void
   focus: () => void
   setError: (error: string | null) => void
+  setContent: (content: string) => void
 }
 
 const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
@@ -108,13 +110,28 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     >(mentionsConfig?.users || [])
 
     useEffect(() => {
-      const cleanupObservers = setupContainerObservers(
-        editorContentContainerRef,
-        setHasFullHeight,
-        setIsScrolledToBottom
-      )
+      if (isFullscreen) {
+        document.body.style.overflow = "hidden"
+      } else {
+        document.body.style.overflow = ""
+      }
+      return () => {
+        document.body.style.overflow = ""
+      }
+    }, [isFullscreen])
+
+    useEffect(() => {
+      const heightThreshold = isFullscreen
+        ? window.innerHeight
+        : getHeightThreshold(height)
+      const cleanupObservers = setupContainerObservers({
+        containerRef: editorContentContainerRef,
+        onHeightChange: setHasFullHeight,
+        onScrollChange: setIsScrolledToBottom,
+        heightThreshold,
+      })
       return cleanupObservers
-    }, [])
+    }, [height, isFullscreen])
 
     const handleToggleFullscreen = () => {
       setIsFullscreen((prev) => !prev)
@@ -138,104 +155,42 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           maxCharacters,
         }),
         content: initialContent,
-        onUpdate: ({ editor: editorInstance }) => {
-          if (onChange) {
-            const mentions: MentionedUser[] = []
-            const doc = editorInstance.state.doc
-            doc.descendants((node) => {
-              if (node.type.name === "mention") {
-                mentions.push({
-                  id: node.attrs.id,
-                  label: node.attrs.label,
-                  image_url: node.attrs.image_url,
-                  href: node.attrs.href,
-                })
-              }
-              return true
-            })
-            if (editorInstance.isEmpty) {
-              onChange({ value: null })
-            } else {
-              const html = editorInstance.getHTML()
-              if (mentions.length > 0) {
-                onChange({
-                  value: html,
-                  mentionIds: mentions.map((m) => Number(m.id)),
-                })
-              } else {
-                onChange({ value: html })
-              }
-            }
-          }
+        onUpdate: ({ editor }) => {
+          handleEditorUpdate({ editor, onChange })
+        },
+      },
+      []
+    )
+
+    useEffect(() => {
+      if (error && editor) {
+        editor.setEditable(false)
+      }
+    }, [error, editor])
+
+    useImperativeHandle(ref, () => ({
+      clear: () => editor?.commands.clearContent(),
+      clearFiles: () => {
+        setFiles([])
+        if (filesConfig) {
+          filesConfig.onFiles([])
         }
       },
-    },
-    []
-  )
-
-  useEffect(() => {
-    if (error && editor) {
-      editor.setEditable(false)
-    }
-  }, [error, editor])
-
-  useImperativeHandle(ref, () => ({
-    clear: () => editor?.commands.clearContent(),
-    clearFiles: () => {
-      setFiles([])
-      if (filesConfig) {
-        filesConfig.onFiles([])
-      }
-    },
-    focus: () => editor?.commands.focus(),
-    setError: (errorMessage: string | null) => {
-      setError(errorMessage)
-      if (errorMessage) {
-        editor?.setEditable(false)
-      } else {
-        editor?.setEditable(true)
-      }
-    },
-  }))
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = e.target.files
-    if (selectedFiles && selectedFiles.length > 0) {
-      let fileArray = Array.from(selectedFiles)
-      if (filesConfig?.maxFileSize) {
-        fileArray = fileArray.filter(
-          (file) => file.size <= filesConfig.maxFileSize!
-        )
-      }
-      handleAddFiles(fileArray, files, filesConfig, setFiles)
-    }
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""
-    }
-  }
-
-  const handleEnhanceWithAI = async (
-    selectedIntent?: string,
-    customIntent?: string
-  ) => {
-    if (enhanceConfig && editor) {
-      await handleEnhanceWithAIFunction({
-        editor: editor,
-        enhanceText: enhanceConfig.onEnhanceText,
-        setIsLoadingEnhance,
-        onSuccess: () => {
-          editor.setEditable(false)
-          setIsAcceptChangesOpen(true)
-        },
-        onError: (error?: string) => {
-          setIsAcceptChangesOpen(false)
-          setError(error || enhanceConfig.enhanceLabels.defaultError)
-        },
-        selectedIntent,
-        customIntent,
-      })
-    }
-  }
+      focus: () => editor?.commands.focus(),
+      setError: (errorMessage: string | null) => {
+        setError(errorMessage)
+        if (errorMessage) {
+          editor?.setEditable(false)
+        } else {
+          editor?.setEditable(true)
+        }
+      },
+      setContent: (content: string) => {
+        if (editor) {
+          setEditorContent({ editor, content })
+        }
+      },
+    }))
 
   if (!editor) return null
 
@@ -392,26 +347,38 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
   )
 })
 
-interface RichTextEditorSkeletonProps {
-  rows?: number
-}
+          <FileList
+            files={files}
+            disabled={disableAllButtons}
+            filesConfig={filesConfig}
+            setFiles={setFiles}
+            fileInputRef={fileInputRef}
+          />
+          <Footer
+            editor={editor}
+            maxCharacters={maxCharacters}
+            secondaryAction={secondaryAction}
+            primaryAction={primaryAction}
+            fileInputRef={fileInputRef}
+            canUseFiles={filesConfig ? true : false}
+            isLoadingEnhance={isLoadingEnhance}
+            disableButtons={disableAllButtons}
+            enhanceConfig={enhanceConfig}
+            isFullscreen={isFullscreen}
+            onEnhanceWithAI={handleEnhanceWithAI}
+            setLastIntent={setLastIntent}
+            toolbarLabels={toolbarLabels}
+            setIsToolbarOpen={setIsToolbarOpen}
+            isToolbarOpen={isToolbarOpen}
+          />
 
-const RichTextEditorSkeleton = ({ rows = 2 }: RichTextEditorSkeletonProps) => {
-  const staticWidthPattern = ["75%", "100%", "60%", "85%", "70%"]
-  const widths = Array.from(
-    { length: rows },
-    (_, i) => staticWidthPattern[i % staticWidthPattern.length]
-  )
-
-  return (
-    <div className="relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background">
-      <div className="relative w-full flex-grow overflow-hidden">
-        <div className="h-auto w-full pl-3 pr-4 pt-3">
-          <div className="flex flex-col gap-2">
-            {widths.map((width, index) => (
-              <Skeleton key={index} className="h-4" style={{ width }} />
-            ))}
-          </div>
+          <EditorBubbleMenu
+            editor={editor}
+            disableButtons={disableAllButtons}
+            toolbarLabels={toolbarLabels}
+            isToolbarOpen={isToolbarOpen}
+            isFullscreen={isFullscreen}
+          />
         </div>
       </div>
     )
