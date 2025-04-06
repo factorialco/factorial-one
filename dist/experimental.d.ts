@@ -2352,6 +2352,7 @@ export declare type RichTextEditorHandle = {
     clearFiles: () => void;
     focus: () => void;
     setError: (error: string | null) => void;
+    setContent: (content: string) => void;
 };
 
 export declare interface RichTextEditorProps {
