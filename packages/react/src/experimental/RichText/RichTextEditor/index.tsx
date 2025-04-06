@@ -12,7 +12,7 @@ import {
   useRef,
   useState,
 } from "react"
-import screenfull from "screenfull"
+import ReactDOM from "react-dom"
 import "../index.css"
 import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
@@ -90,27 +90,34 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const containerRef = useRef<HTMLDivElement>(null)
     const editorContentContainerRef = useRef<HTMLDivElement>(null)
 
-  const [hasFullHeight, setHasFullHeight] = useState(false)
-  const [isScrolledToBottom, setIsScrolledToBottom] = useState(true)
-  const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
-  const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
-  const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [isToolbarOpen, setIsToolbarOpen] = useState(false)
-  const [lastIntent, setLastIntent] = useState<{
-    selectedIntent?: string
-    customIntent?: string
-  } | null>(null)
-  const [files, setFiles] = useState<File[]>(initialEditorState?.files || [])
-  const [mentionSuggestions, setMentionSuggestions] = useState<MentionedUser[]>(
-    mentionsConfig?.users || []
-  )
+    const [initialContent] = useState(initialEditorState?.content || "")
+    const [hasFullHeight, setHasFullHeight] = useState(false)
+    const [isScrolledToBottom, setIsScrolledToBottom] = useState(true)
+    const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
+    const [isFullscreen, setIsFullscreen] = useState(false)
+    const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+    const [isToolbarOpen, setIsToolbarOpen] = useState(false)
+    const [lastIntent, setLastIntent] = useState<{
+      selectedIntent?: string
+      customIntent?: string
+    } | null>(null)
+    const [files, setFiles] = useState<File[]>(initialEditorState?.files || [])
+    const [mentionSuggestions, setMentionSuggestions] = useState<
+      MentionedUser[]
+    >(mentionsConfig?.users || [])
 
-  useEffect(() => {
-    if (screenfull.isEnabled) {
-      const handleChange = () => setIsFullscreen(screenfull.isFullscreen)
-      screenfull.on("change", handleChange)
-      return () => screenfull.off("change", handleChange)
+    useEffect(() => {
+      const cleanupObservers = setupContainerObservers(
+        editorContentContainerRef,
+        setHasFullHeight,
+        setIsScrolledToBottom
+      )
+      return cleanupObservers
+    }, [])
+
+    const handleToggleFullscreen = () => {
+      setIsFullscreen((prev) => !prev)
     }
   }, [])
 
@@ -121,60 +128,43 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       setIsScrolledToBottom
     )
 
-    return cleanupObservers
-  }, [])
-
-  const handleToggleFullscreen = () => {
-    if (containerRef.current && screenfull.isEnabled) {
-      screenfull.toggle(containerRef.current)
-    }
-  }
-
-  const disableAllButtons = !!(isAcceptChangesOpen || isLoadingEnhance || error)
-
-  const editor = useEditor(
-    {
-      extensions: ExtensionsConfiguration({
-        mentionsConfig,
-        mentionSuggestions,
-        setMentionSuggestions,
-        placeholder,
-        maxCharacters,
-      }),
-
-      content: initialEditorState?.content || "",
-      onUpdate: ({ editor: editorInstance }) => {
-        if (onChange) {
-          const mentions: MentionedUser[] = []
-          const doc = editorInstance.state.doc
-          doc.descendants((node) => {
-            if (node.type.name === "mention") {
-              mentions.push({
-                id: node.attrs.id,
-                label: node.attrs.label,
-                image_url: node.attrs.image_url,
-                href: node.attrs.href,
-              })
-            }
-            return true
-          })
-          // we check if the editor is empty to avoid sending an empty <p></p>
-          if (editorInstance.isEmpty) {
-            onChange({
-              value: null,
+    const editor = useEditor(
+      {
+        extensions: ExtensionsConfiguration({
+          mentionsConfig,
+          mentionSuggestions,
+          setMentionSuggestions,
+          placeholder,
+          maxCharacters,
+        }),
+        content: initialContent,
+        onUpdate: ({ editor: editorInstance }) => {
+          if (onChange) {
+            const mentions: MentionedUser[] = []
+            const doc = editorInstance.state.doc
+            doc.descendants((node) => {
+              if (node.type.name === "mention") {
+                mentions.push({
+                  id: node.attrs.id,
+                  label: node.attrs.label,
+                  image_url: node.attrs.image_url,
+                  href: node.attrs.href,
+                })
+              }
+              return true
             })
-          } else {
-            const html = editorInstance.getHTML()
-
-            if (mentions.length > 0) {
-              onChange({
-                value: html,
-                mentionIds: mentions.map((m) => Number(m.id)),
-              })
+            if (editorInstance.isEmpty) {
+              onChange({ value: null })
             } else {
-              onChange({
-                value: html,
-              })
+              const html = editorInstance.getHTML()
+              if (mentions.length > 0) {
+                onChange({
+                  value: html,
+                  mentionIds: mentions.map((m) => Number(m.id)),
+                })
+              } else {
+                onChange({ value: html })
+              }
             }
           }
         }
@@ -281,37 +271,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         </div>
       )}
 
+    const editorContent = (
       <div
         className={cn(
-          "relative w-full flex-grow overflow-hidden",
-          isFullscreen && "h-full"
-        )}
-        onClick={() => editor?.commands.focus()}
-      >
-        <div
-          ref={editorContentContainerRef}
-          className={cn(
-            "scrollbar-macos relative flex w-full items-start justify-center overflow-y-auto pl-3 pr-4 pt-3",
-            isFullscreen ? "h-full" : "h-auto max-h-60 pr-10"
-          )}
-        >
-          <div className={cn("w-full", isFullscreen && "max-w-4xl")}>
-            <EditorContent editor={editor} />
-          </div>
-        </div>
-
-        {isLoadingEnhance && (
-          <LoadingEnhance
-            isFullscreen={isFullscreen}
-            label={enhanceConfig?.enhanceLabels.loadingEnhanceLabel}
-          />
-        )}
-      </div>
-
-      <div
-        className={cn(
-          "rounded-b-lg bg-f1-background px-3",
-          hasFullHeight && !isScrolledToBottom && "shadow-editor-tools"
+          isFullscreen
+            ? "fixed inset-0 z-50 flex flex-col bg-f1-background"
+            : "relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background"
         )}
       >
         <AnimatePresence>
@@ -449,22 +414,13 @@ const RichTextEditorSkeleton = ({ rows = 2 }: RichTextEditorSkeletonProps) => {
           </div>
         </div>
       </div>
-      <div className="px-3 py-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-8 w-8 rounded-md" />
-            <Skeleton className="h-8 w-8 rounded-md" />
-            <Skeleton className="h-8 w-8 rounded-md" />
-          </div>
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-8 w-24 rounded-md" />
-            <Skeleton className="h-8 w-32 rounded-md" />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+    )
+
+    return isFullscreen
+      ? ReactDOM.createPortal(editorContent, document.body)
+      : editorContent
+  }
+)
 
 export * from "./utils/constants"
 export * from "./utils/types"
