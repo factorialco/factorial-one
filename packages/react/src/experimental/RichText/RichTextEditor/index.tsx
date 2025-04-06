@@ -21,11 +21,12 @@ import { Footer } from "./Footer"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import { ExtensionsConfiguration } from "./utils/extensions"
 import {
-  getAcceptFileTypeString,
-  handleAddFiles,
-  handleRemoveFile,
-} from "./utils/files"
-import { getHeight, setupContainerObservers } from "./utils/helpers"
+  getHeight,
+  getHeightThreshold,
+  handleEditorUpdate,
+  setEditorContent,
+  setupContainerObservers,
+} from "./utils/helpers"
 import {
   actionType,
   enhanceConfig,
@@ -63,6 +64,7 @@ type RichTextEditorHandle = {
   clearFiles: () => void
   focus: () => void
   setError: (error: string | null) => void
+  setContent: (content: string) => void
 }
 
 const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
@@ -106,13 +108,28 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     >(mentionsConfig?.users || [])
 
     useEffect(() => {
-      const cleanupObservers = setupContainerObservers(
-        editorContentContainerRef,
-        setHasFullHeight,
-        setIsScrolledToBottom
-      )
+      if (isFullscreen) {
+        document.body.style.overflow = "hidden"
+      } else {
+        document.body.style.overflow = ""
+      }
+      return () => {
+        document.body.style.overflow = ""
+      }
+    }, [isFullscreen])
+
+    useEffect(() => {
+      const heightThreshold = isFullscreen
+        ? window.innerHeight
+        : getHeightThreshold(height)
+      const cleanupObservers = setupContainerObservers({
+        containerRef: editorContentContainerRef,
+        onHeightChange: setHasFullHeight,
+        onScrollChange: setIsScrolledToBottom,
+        heightThreshold,
+      })
       return cleanupObservers
-    }, [])
+    }, [height, isFullscreen])
 
     const handleToggleFullscreen = () => {
       setIsFullscreen((prev) => !prev)
@@ -134,35 +151,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           maxCharacters,
         }),
         content: initialContent,
-        onUpdate: ({ editor: editorInstance }) => {
-          if (onChange) {
-            const mentions: MentionedUser[] = []
-            const doc = editorInstance.state.doc
-            doc.descendants((node) => {
-              if (node.type.name === "mention") {
-                mentions.push({
-                  id: node.attrs.id,
-                  label: node.attrs.label,
-                  image_url: node.attrs.image_url,
-                  href: node.attrs.href,
-                })
-              }
-              return true
-            })
-            if (editorInstance.isEmpty) {
-              onChange({ value: null })
-            } else {
-              const html = editorInstance.getHTML()
-              if (mentions.length > 0) {
-                onChange({
-                  value: html,
-                  mentionIds: mentions.map((m) => Number(m.id)),
-                })
-              } else {
-                onChange({ value: html })
-              }
-            }
-          }
+        onUpdate: ({ editor }) => {
+          handleEditorUpdate({ editor, onChange })
         },
       },
       []
@@ -191,23 +181,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           editor?.setEditable(true)
         }
       },
-    }))
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedFiles = e.target.files
-      if (selectedFiles && selectedFiles.length > 0) {
-        let fileArray = Array.from(selectedFiles)
-        if (filesConfig?.maxFileSize) {
-          fileArray = fileArray.filter(
-            (file) => file.size <= filesConfig.maxFileSize!
-          )
+      setContent: (content: string) => {
+        if (editor) {
+          setEditorContent({ editor, content })
         }
-        handleAddFiles(fileArray, files, filesConfig, setFiles)
-      }
-      if (fileInputRef.current) {
-        fileInputRef.current.value = ""
-      }
-    }
+      },
+    }))
 
     const handleEnhanceWithAI = async (
       selectedIntent?: string,
@@ -351,44 +330,13 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             )}
           </AnimatePresence>
 
-          {filesConfig && (
-            <>
-              <input
-                id="rich-text-editor-upload-button"
-                type="file"
-                multiple={filesConfig.multipleFiles}
-                onChange={handleFileChange}
-                ref={fileInputRef}
-                className="hidden"
-                accept={getAcceptFileTypeString(filesConfig)}
-                aria-label="Upload file"
-              />
-              <AnimatePresence>
-                {files.length > 0 && (
-                  <motion.div
-                    key="filelist-accordion"
-                    initial={{ height: 0, opacity: 0, y: -20 }}
-                    animate={{ height: "auto", opacity: 1, y: 0 }}
-                    exit={{ height: 0, opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <FileList
-                      files={files}
-                      onRemoveFile={(fileIndex) =>
-                        handleRemoveFile(
-                          fileIndex,
-                          files,
-                          filesConfig,
-                          setFiles
-                        )
-                      }
-                      disabled={disableAllButtons}
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </>
-          )}
+          <FileList
+            files={files}
+            disabled={disableAllButtons}
+            filesConfig={filesConfig}
+            setFiles={setFiles}
+            fileInputRef={fileInputRef}
+          />
           <Footer
             editor={editor}
             maxCharacters={maxCharacters}
@@ -412,6 +360,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             disableButtons={disableAllButtons}
             toolbarLabels={toolbarLabels}
             isToolbarOpen={isToolbarOpen}
+            isFullscreen={isFullscreen}
           />
         </div>
       </div>

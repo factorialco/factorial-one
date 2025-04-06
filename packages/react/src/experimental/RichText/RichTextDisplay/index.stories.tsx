@@ -66,6 +66,11 @@ const htmlContent = `<p>
   <code>Good luck guys </code>
 </pre>
 <p></p>
+
+<ul class="f1-task-list" data-type="taskList"><li class="f1-task-item"><div class="flex items-start gap-2"><button type="button" role="checkbox" aria-checked="false" disabled="disabled" class="custom-checkbox" style="appearance: none; -webkit-appearance: none;"></button><div class="content"><p>this</p></div></div></li><li class="f1-task-item"><div class="flex items-start gap-2"><button type="button" role="checkbox" aria-checked="true" disabled="disabled" class="custom-checkbox custom-checkbox-checked" style="appearance: none; -webkit-appearance: none;"></button><div class="text-f1-foreground-secondary line-through content"><p>is </p></div></div></li><li class="f1-task-item"><div class="flex items-start gap-2"><button type="button" role="checkbox" aria-checked="true" disabled="disabled" class="custom-checkbox custom-checkbox-checked" style="appearance: none; -webkit-appearance: none;"></button><div class="text-f1-foreground-secondary line-through content"><p>a </p></div></div></li><li class="f1-task-item"><div class="flex items-start gap-2"><button type="button" role="checkbox" aria-checked="false" disabled="disabled" class="custom-checkbox" style="appearance: none; -webkit-appearance: none;"></button><div class="content"><p>list</p></div></div></li></ul>
+
+
+<p></p>
 <img src="https://bmicalculator.mes.fm/img/memes/homer-after-one-day-at-the-gym.jpg" alt="Homer After One Day At the Gym | Memes | BMI Calculator">
 `
 

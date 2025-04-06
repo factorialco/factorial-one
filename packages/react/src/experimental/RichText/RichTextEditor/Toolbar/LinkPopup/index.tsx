@@ -14,7 +14,6 @@ import * as Popover from "@radix-ui/react-popover"
 import { Editor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
-import screenfull from "screenfull"
 import { ToolbarButton } from "../ToolbarButton"
 
 interface LinkPopupProps {
@@ -100,20 +99,14 @@ const LinkPopup = ({
         />
       </Popover.Trigger>
 
-      <Popover.Portal
-        container={
-          screenfull.isFullscreen && screenfull.element
-            ? screenfull.element
-            : document.body
-        }
-      >
+      <Popover.Portal container={document.body}>
         <Popover.Content
           side="top"
           align="start"
           sideOffset={15}
           collisionPadding={10}
           alignOffset={-10}
-          style={{ zIndex: 1000 }}
+          style={{ zIndex: 9999 }}
         >
           <AnimatePresence>
             {openLinkPopover && (

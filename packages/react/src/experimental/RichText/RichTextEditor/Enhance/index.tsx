@@ -5,7 +5,6 @@ import * as Popover from "@radix-ui/react-popover"
 import { Editor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useRef, useState } from "react"
-import screenfull from "screenfull"
 import { enhanceConfig } from "../utils/types"
 import { AIEnhanceMenu } from "./EnhanceMenu"
 
@@ -81,20 +80,14 @@ const EnhanceActivator = ({
           )}
         />
       </Popover.Trigger>
-      <Popover.Portal
-        container={
-          screenfull.isFullscreen && screenfull.element
-            ? screenfull.element
-            : undefined
-        }
-      >
+      <Popover.Portal container={document.body}>
         <Popover.Content
           side={position}
           align="start"
           sideOffset={15}
           alignOffset={-10}
           collisionPadding={10}
-          style={{ zIndex: 1000 }}
+          style={{ zIndex: 9999 }}
         >
           <AnimatePresence>
             {open && (

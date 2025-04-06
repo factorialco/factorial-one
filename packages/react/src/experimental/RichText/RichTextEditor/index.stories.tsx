@@ -191,7 +191,7 @@ export const Default: Story = {
       onClose: () => alert("Close"),
       closeErrorButtonLabel: "Continue editing",
     },
-    height: "lg",
+    height: "auto",
   },
 }
 
