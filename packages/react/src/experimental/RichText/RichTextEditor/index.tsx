@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from "react"
-import screenfull from "screenfull"
+import ReactDOM from "react-dom"
 import "../index.css"
 import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
@@ -88,10 +88,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const containerRef = useRef<HTMLDivElement>(null)
     const editorContentContainerRef = useRef<HTMLDivElement>(null)
 
+    const [initialContent] = useState(initialEditorState?.content || "")
     const [hasFullHeight, setHasFullHeight] = useState(false)
     const [isScrolledToBottom, setIsScrolledToBottom] = useState(true)
     const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
-    const [isFullscreen, setIsFullscreen] = useState(screenfull.isFullscreen)
+    const [isFullscreen, setIsFullscreen] = useState(false)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [isToolbarOpen, setIsToolbarOpen] = useState(false)
@@ -105,27 +106,16 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     >(mentionsConfig?.users || [])
 
     useEffect(() => {
-      if (screenfull.isEnabled) {
-        const handleChange = () => setIsFullscreen(screenfull.isFullscreen)
-        screenfull.on("change", handleChange)
-        return () => screenfull.off("change", handleChange)
-      }
-    }, [])
-
-    useEffect(() => {
       const cleanupObservers = setupContainerObservers(
         editorContentContainerRef,
         setHasFullHeight,
         setIsScrolledToBottom
       )
-
       return cleanupObservers
     }, [])
 
     const handleToggleFullscreen = () => {
-      if (containerRef.current && screenfull.isEnabled) {
-        screenfull.toggle(containerRef.current)
-      }
+      setIsFullscreen((prev) => !prev)
     }
 
     const disableAllButtons = !!(
@@ -143,8 +133,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           placeholder,
           maxCharacters,
         }),
-
-        content: initialEditorState?.content || "",
+        content: initialContent,
         onUpdate: ({ editor: editorInstance }) => {
           if (onChange) {
             const mentions: MentionedUser[] = []
@@ -160,23 +149,17 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               }
               return true
             })
-            // we check if the editor is empty to avoid sending an empty <p></p>
             if (editorInstance.isEmpty) {
-              onChange({
-                value: null,
-              })
+              onChange({ value: null })
             } else {
               const html = editorInstance.getHTML()
-
               if (mentions.length > 0) {
                 onChange({
                   value: html,
                   mentionIds: mentions.map((m) => Number(m.id)),
                 })
               } else {
-                onChange({
-                  value: html,
-                })
+                onChange({ value: html })
               }
             }
           }
@@ -251,13 +234,14 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
 
     if (!editor) return null
 
-    return (
+    const editorContent = (
       <div
         ref={containerRef}
         id="rich-text-editor-container"
         className={cn(
-          "relative flex w-full flex-col bg-f1-background",
-          !isFullscreen && "rounded-xl border border-solid border-f1-border"
+          isFullscreen
+            ? "fixed inset-0 z-50 flex flex-col bg-f1-background"
+            : "relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background"
         )}
       >
         <div className="absolute right-3 top-3 z-50">
@@ -432,6 +416,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         </div>
       </div>
     )
+
+    return isFullscreen
+      ? ReactDOM.createPortal(editorContent, document.body)
+      : editorContent
   }
 )
 
