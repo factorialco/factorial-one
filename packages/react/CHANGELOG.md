@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.23.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.23.1...factorial-one-react-v1.23.2) (2025-04-07)
+
+
+### Bug Fixes
+
+* remove section header padding top ([#1565](https://github.com/factorialco/factorial-one/issues/1565)) ([b2d9cac](https://github.com/factorialco/factorial-one/commit/b2d9cac0e2b279cffb8fb4b8f8781b4fde76da65))
+
 ## [1.23.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.23.0...factorial-one-react-v1.23.1) (2025-04-04)
 
 
