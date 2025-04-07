@@ -38,10 +38,10 @@ export const SectionHeader = ({
   return (
     <div
       className={cn(
-        "border-1 flex flex-col justify-between gap-4 border-dashed border-transparent px-6 py-5 md:flex-row md:gap-2",
+        "border-1 flex flex-col justify-between gap-4 border-dashed border-transparent px-6 pb-5 pt-5 first:pb-0 first:pt-0 md:flex-row md:gap-2",
         layout === "standard" && "-mx-6",
-        separator === "top" && "border-t-f1-border",
-        separator === "bottom" && "border-b-f1-border"
+        separator === "top" && "border-t-f1-border first:pt-5",
+        separator === "bottom" && "border-b-f1-border first:pb-5"
       )}
     >
       <div className="flex grow flex-col gap-3">
