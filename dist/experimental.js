@@ -48633,8 +48633,8 @@ function _J(t, e, n, i) {
           position: "absolute",
           top: c.bottom + window.scrollY,
           left: c.left + window.scrollX,
-          width: c.width,
-          height: c.height
+          width: 0,
+          height: 0
         };
         return /* @__PURE__ */ _(
           Bs,
@@ -48652,7 +48652,7 @@ function _J(t, e, n, i) {
                 {
                   side: "top",
                   align: "start",
-                  sideOffset: 25,
+                  sideOffset: 20,
                   collisionPadding: 10,
                   style: { zIndex: 9999 },
                   onMouseDownCapture: () => {
