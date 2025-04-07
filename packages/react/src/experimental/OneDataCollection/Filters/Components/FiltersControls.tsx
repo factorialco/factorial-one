@@ -81,7 +81,8 @@ export function FiltersControls<Filters extends FiltersDefinition>({
                   setSelectedFilterKey(key)
                 }
               />
-              {selectedFilterKey && (
+
+              {selectedFilterKey && (            
                 <FilterContent
                   selectedFilterKey={selectedFilterKey}
                   definition={schema}

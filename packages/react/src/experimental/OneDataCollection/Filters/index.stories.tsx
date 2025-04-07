@@ -49,6 +49,11 @@ const sampleDefinition: FiltersDefinition = {
       ]
     },
   },
+  date: {
+    type: "date",
+    label: "Date",
+    options: "sadfsdf",
+  },
   name: {
     type: "search",
     label: "Employee name",
@@ -151,6 +156,7 @@ const FiltersWithInitialState = () => {
       department: ["engineering", "marketing"],
       name: "John",
       manager: ["alice"],
+      date: "2024-01-01",
     }
   )
 

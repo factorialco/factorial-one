@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { useEffect, useState } from "react"
-import { Search } from "../../../../icons/app"
-import { Input } from "../../../../ui/input"
-import type { FilterOption } from "../types"
+import { Search } from "../../../../../icons/app"
+import { Input } from "../../../../../ui/input"
+import type { FilterOption } from "../../types"
 import { InFilter } from "./InFilter"
 
 const meta = {

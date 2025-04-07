@@ -1,8 +1,9 @@
 import { Button } from "@/components/Actions/Button"
 import { AnimatePresence } from "framer-motion"
 import { useI18n } from "../../../../lib/i18n-provider"
+import filterTypes from "../FilterTypes"
 import type { FiltersDefinition, FiltersState } from "../types"
-import { FilterButton } from "./FilterButton"
+import { FilterChipButton } from "./FilterChipButton"
 
 interface FiltersChipsListProps<Filters extends FiltersDefinition> {
   schema: Filters
@@ -22,18 +23,14 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
   const i18n = useI18n()
 
   const activeFilterKeys = Object.keys(filters).filter((key) => {
-    const filterValue = filters[key as keyof Filters]
-    const filterSchema = schema[key as keyof Filters]
-    console.log("filterValue", filterValue)
-    console.log("filterSchema", filterSchema)
-    return (
-      (filterSchema.type === "in" &&
-        Array.isArray(filterValue) &&
-        filterValue.length > 0) ||
-      !!filterValue
-    )
+    const filterValue = filters[key]
+    const filterSchema = schema[key]
+    const filterType = filterTypes[filterSchema.type]
+
+    return !filterType.isEmpty(filterValue)
   }) as Array<keyof Filters>
 
+  console.log(activeFilterKeys)
   if (activeFilterKeys.length === 0) return null
 
   return (
@@ -46,7 +43,7 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
               return null
             }
             return (
-              <FilterButton
+              <FilterChipButton
                 key={`filter-${String(key)}`}
                 filter={filterSchema}
                 value={filters[key]}
