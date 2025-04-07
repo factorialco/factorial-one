@@ -93,6 +93,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const editorContentContainerRef = useRef<HTMLDivElement>(null)
 
     const [initialContent] = useState(initialEditorState?.content || "")
+    const [currentContent, setCurrentContent] = useState<string>(initialContent)
     const [hasFullHeight, setHasFullHeight] = useState(false)
     const [isScrolledToBottom, setIsScrolledToBottom] = useState(true)
     const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
@@ -134,6 +135,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     }, [height, isFullscreen])
 
     const handleToggleFullscreen = () => {
+      if (editor) {
+        const content = editor.getHTML()
+        setCurrentContent(content)
+      }
       setIsFullscreen((prev) => !prev)
     }
   }, [])
@@ -154,12 +159,14 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           placeholder,
           maxCharacters,
         }),
-        content: initialContent,
+        content: currentContent,
         onUpdate: ({ editor }) => {
+          const html = editor.getHTML()
+          setCurrentContent(html)
           handleEditorUpdate({ editor, onChange })
         },
       },
-      []
+      [isFullscreen]
     )
 
     useEffect(() => {
