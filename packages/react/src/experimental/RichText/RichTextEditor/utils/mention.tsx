@@ -144,9 +144,10 @@ function Suggestion(
           position: "absolute",
           top: anchorRect.bottom + window.scrollY,
           left: anchorRect.left + window.scrollX,
-          width: anchorRect.width,
-          height: anchorRect.height,
+          width: 0,
+          height: 0,
         }
+
         return (
           <Popover.Root
             open
@@ -164,7 +165,7 @@ function Suggestion(
             <Popover.Content
               side="top"
               align="start"
-              sideOffset={25}
+              sideOffset={20}
               collisionPadding={10}
               style={{ zIndex: 9999 }}
               onMouseDownCapture={() => {
