@@ -1,28 +1,37 @@
 import { cn } from "@/lib/utils"
+import { Avatar, AvatarFallback } from "@/ui/avatar"
+import * as React from "react"
 import { getFileTypeInfo } from "./utils"
 
-interface FileAvatarProps {
+type FileAvatarProps = React.ComponentPropsWithoutRef<typeof Avatar> & {
   file: File
-  className?: string
 }
 
 /**
  * FileAvatar component displays a visual representation of a file type
  * with appropriate coloring based on the file extension or MIME type.
  */
-const FileAvatar = ({ file, className }: FileAvatarProps) => {
-  const { type, color } = getFileTypeInfo(file)
+const FileAvatar = React.forwardRef<
+  React.ElementRef<typeof Avatar>,
+  FileAvatarProps
+>(({ file, className, ...props }, ref) => {
+  const { type: fileType, color: fileColor } = getFileTypeInfo(file)
 
   return (
-    <div
+    <Avatar
+      ref={ref}
       className={cn(
-        "flex h-8 w-8 shrink-0 items-center justify-center rounded border border-solid border-f1-border-secondary bg-f1-background",
+        "border border-solid border-f1-border-secondary bg-f1-background",
         className
       )}
+      {...props}
     >
-      <p className={cn("text-xs font-semibold", color)}>{type}</p>
-    </div>
+      <AvatarFallback className={cn("text-xs font-semibold", fileColor)}>
+        {fileType}
+      </AvatarFallback>
+    </Avatar>
   )
-}
+})
+FileAvatar.displayName = "FileAvatar"
 
 export { FileAvatar }
