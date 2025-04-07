@@ -1204,9 +1204,9 @@ export declare const FILE_TYPES: {
     readonly MARKDOWN: "markdown";
 };
 
-export declare const FileItem: ({ file, onRemoveFile, disabled }: FileItemProps) => JSX_2.Element;
+export declare const FileItem: React_2.ForwardRefExoticComponent<FileItemProps & React_2.RefAttributes<HTMLDivElement>>;
 
-declare interface FileItemProps {
+declare interface FileItemProps extends React_2.HTMLAttributes<HTMLDivElement> {
     file: File;
     onRemoveFile: () => void;
     disabled: boolean;
