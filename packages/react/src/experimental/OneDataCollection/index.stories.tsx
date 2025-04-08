@@ -7,7 +7,6 @@ import {
   ArrowRight,
   Delete,
   Download,
-  EyeInvisible,
   Pencil,
   Share,
   Star,

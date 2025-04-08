@@ -126,7 +126,6 @@ export const BasicActionsExample: Story = {
 
     return (
       <div className="space-y-8">
-        
         <OneDataCollection
           source={dataSource}
           visualizations={[
