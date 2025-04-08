@@ -102,7 +102,7 @@ const preview: Preview = {
     docs: {
       container: DocsContainer,
       toc: {
-        headingSelector: "h2, h3",
+        headingSelector: "h2, h3, h4",
       },
     },
     controls: {

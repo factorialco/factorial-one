@@ -1,8 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { DownloadIcon, Mail, Tag, UploadIcon } from "lucide-react"
-import { useState } from "react"
 import { Observable } from "zen-observable-ts"
 import {
+  Add,
   Ai,
   ArrowRight,
   Delete,
@@ -13,8 +13,6 @@ import {
   Star,
 } from "../../icons/app"
 import { PromiseState } from "../../lib/promise-to-observable"
-import { Dialog } from "../Overlays/Dialog"
-import { StandardLayout } from "../PageLayouts/StandardLayout"
 import { FilterDefinition, FiltersState } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
@@ -38,10 +36,10 @@ const filters = {
     type: "search",
     label: "Search",
   },
-  departmentId: {
+  department: {
     type: "in",
     label: "Department",
-    options: DEPARTMENTS.map((value, i) => ({ value: i, label: value })),
+    options: DEPARTMENTS.map((value) => ({ value, label: value })),
   },
 } as const
 
@@ -50,25 +48,25 @@ const filterPresets: Presets<typeof filters> = [
   {
     label: "Engineering Team",
     filter: {
-      departmentId: [0],
+      department: ["Engineering"],
     },
   },
   {
     label: "Product Team",
     filter: {
-      departmentId: [1],
+      department: ["Product"],
     },
   },
   {
     label: "Design Team",
     filter: {
-      departmentId: [2],
+      department: ["Design"],
     },
   },
   {
     label: "Marketing Team",
     filter: {
-      departmentId: [3],
+      department: ["Marketing"],
     },
   },
 ]
@@ -79,7 +77,6 @@ const mockUsers: {
   name: string
   email: string
   role: string
-  departmentId: number
   department: (typeof DEPARTMENTS)[number]
   status: string
   isStarred: boolean
@@ -91,7 +88,6 @@ const mockUsers: {
     name: "John Doe",
     email: "john@example.com",
     role: "Senior Engineer",
-    departmentId: 0,
     department: DEPARTMENTS[0],
     status: "active",
     isStarred: true,
@@ -102,7 +98,6 @@ const mockUsers: {
     name: "Jane Smith",
     email: "jane@example.com",
     role: "Product Manager",
-    departmentId: 1,
     department: DEPARTMENTS[1],
     status: "active",
     isStarred: false,
@@ -113,7 +108,6 @@ const mockUsers: {
     name: "Bob Johnson",
     email: "bob@example.com",
     role: "Designer",
-    departmentId: 2,
     department: DEPARTMENTS[2],
     status: "inactive",
     isStarred: false,
@@ -124,7 +118,6 @@ const mockUsers: {
     name: "Alice Williams",
     email: "alice@example.com",
     role: "Marketing Lead",
-    departmentId: 3,
     department: DEPARTMENTS[3],
     status: "active",
     isStarred: true,
@@ -137,7 +130,6 @@ const filterUsers = <
   T extends RecordType & {
     name: string
     email: string
-    departmentId: number
     department: string
     salary: number | undefined
   },
@@ -200,14 +192,13 @@ const filterUsers = <
   }
 
   // Handle department filter
-  const departmentFilterValues = filterValues.departmentId
-
+  const departmentFilterValues = filterValues.department
   if (
     Array.isArray(departmentFilterValues) &&
     departmentFilterValues.length > 0
   ) {
     filteredUsers = filteredUsers.filter((user) =>
-      departmentFilterValues.some((d) => d === user.departmentId)
+      departmentFilterValues.some((d) => d === user.department)
     )
   }
 
@@ -326,7 +317,7 @@ const ExampleComponent = ({
         onClick: () => console.log(`Deleting ${item.name}`),
         critical: true,
         description: "Permanently remove user",
-        enabled: item.departmentId === 0 && item.status === "active",
+        enabled: item.department === "Engineering" && item.status === "active",
       },
     ],
     selectable,
@@ -550,12 +541,13 @@ export const BasicTableView: Story = {
           onClick: () => console.log(`Deleting ${item.name}`),
           critical: true,
           description: "Permanently remove user",
-          enabled: item.departmentId === 0 && item.status === "active",
+          enabled:
+            item.department === "Engineering" && item.status === "active",
         },
       ],
       primaryActions: () => ({
-        label: "Primary action",
-        icon: EyeInvisible,
+        label: "New employee",
+        icon: Add,
         onClick: () => console.log(`Primary action`),
       }),
       secondaryActions: () => [
@@ -688,7 +680,8 @@ export const WithLinkedItems: Story = {
           onClick: () => console.log(`Deleting ${item.name}`),
           critical: true,
           description: "Permanently remove user",
-          enabled: item.departmentId === 0 && item.status === "active",
+          enabled:
+            item.department === "Engineering" && item.status === "active",
         },
       ],
     })
@@ -990,7 +983,7 @@ export const WithPreselectedFilters: Story = {
       sortings,
       presets: filterPresets,
       currentFilters: {
-        departmentId: [0],
+        department: ["Engineering"],
       },
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
@@ -1154,7 +1147,6 @@ export const WithTableVisualization: Story = {
         field: "name",
         order: "asc",
       },
-      presets: filterPresets,
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
         typeof filters,
@@ -1250,14 +1242,12 @@ function createDataAdapter<
 
     // Apply department filter if provided
     if (
-      "departmentId" in filters &&
-      Array.isArray(filters.departmentId) &&
-      filters.departmentId.length > 0
+      "department" in filters &&
+      Array.isArray(filters.department) &&
+      filters.department.length > 0
     ) {
       filteredRecords = filteredRecords.filter((record) =>
-        (filters.departmentId as number[]).includes(
-          record.departmentId as number
-        )
+        (filters.department as string[]).includes(record.department)
       )
     }
 
@@ -1481,7 +1471,6 @@ export const WithMultipleVisualizations: Story = {
   render: () => {
     const source = useDataSource({
       filters,
-      presets: filterPresets,
       sortings,
       dataAdapter: createDataAdapter({
         data: mockUsers,
@@ -1540,19 +1529,18 @@ export const WithMultipleVisualizations: Story = {
 // Fix the generateMockUsers function to use the correct department types
 const generateMockUsers = (count: number) => {
   return Array.from({ length: count }).map((_, index) => {
-    const departmentId = index % DEPARTMENTS.length
+    const department = DEPARTMENTS[index % DEPARTMENTS.length]
     return {
       id: `user-${index + 1}`,
       name: `User ${index + 1}`,
       email: `user${index + 1}@example.com`,
       role:
         index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
-      department: DEPARTMENTS[departmentId],
-      departmentId: departmentId,
+      department,
       status: index % 5 === 0 ? "inactive" : "active",
       isStarred: index % 3 === 0,
       href: `/users/user-${index + 1}`,
-      salary: departmentId === 2 ? 50000 + index * 1000 : undefined,
+      salary: department === "Marketing" ? 50000 + index * 1000 : undefined,
     }
   })
 }
@@ -1764,7 +1752,7 @@ export const WithAdvancedActions: Story = {
           },
           critical: true,
           description: "This action cannot be undone",
-          enabled: item.departmentId === 0,
+          enabled: item.department === "Engineering",
         },
         // Toggle action
         {
@@ -1844,7 +1832,6 @@ export const WithSyncSearch: Story = {
               email: "john@example.com",
               role: "Senior Engineer",
               department: DEPARTMENTS[0],
-              departmentId: 0,
               status: "active",
               isStarred: true,
             },
@@ -1854,7 +1841,6 @@ export const WithSyncSearch: Story = {
               email: "jane@example.com",
               role: "Product Manager",
               department: DEPARTMENTS[1],
-              departmentId: 1,
               status: "active",
               isStarred: false,
             },
@@ -1864,7 +1850,6 @@ export const WithSyncSearch: Story = {
               email: "alice@example.com",
               role: "UX Designer",
               department: DEPARTMENTS[2],
-              departmentId: 2,
               status: "active",
               isStarred: false,
             },
@@ -1874,7 +1859,6 @@ export const WithSyncSearch: Story = {
               email: "bob@example.com",
               role: "Developer",
               department: DEPARTMENTS[0],
-              departmentId: 0,
               status: "inactive",
               isStarred: true,
             },
@@ -1884,7 +1868,6 @@ export const WithSyncSearch: Story = {
               email: "emma@example.com",
               role: "Marketing Lead",
               department: DEPARTMENTS[3],
-              departmentId: 3,
               status: "active",
               isStarred: false,
             },
@@ -1908,10 +1891,10 @@ export const WithSyncSearch: Story = {
           }
 
           // Apply department filter if provided
-          const departmentFilter = filters.departmentId as number[] | undefined
+          const departmentFilter = filters.department as string[] | undefined
           if (departmentFilter && departmentFilter.length > 0) {
             filteredUsers = filteredUsers.filter((user) =>
-              departmentFilter.includes(user.departmentId)
+              departmentFilter.includes(user.department)
             )
           }
 
@@ -2053,7 +2036,7 @@ export const WithAsyncSearch: Story = {
               }
 
               // Apply department filter if provided
-              const departmentFilter = filters.departmentId as
+              const departmentFilter = filters.department as
                 | string[]
                 | undefined
               if (departmentFilter && departmentFilter.length > 0) {
@@ -2352,162 +2335,6 @@ export const TableColumnProperties: Story = {
           },
         ]}
       />
-    )
-  },
-}
-
-export const InLayout: Story = {
-  render: () => (
-    <StandardLayout>
-      <ExampleComponent frozenColumns={1} />
-    </StandardLayout>
-  ),
-}
-
-export const WithOnClick: Story = {
-  render: () => {
-    const [isOpen, setIsOpen] = useState(false)
-    const [item, setItem] = useState<string | undefined>(undefined)
-
-    const dataSource = useDataSource({
-      filters,
-      presets: filterPresets,
-      itemOnClick: (item) => () => {
-        setIsOpen(true)
-        setItem(item.name)
-      },
-      sortings: {
-        name: {
-          label: "Name",
-        },
-        email: {
-          label: "Email",
-        },
-        role: {
-          label: "Role",
-        },
-        department: {
-          label: "Department",
-        },
-        salary: {
-          label: "Salary",
-        },
-      },
-      dataAdapter: {
-        fetchData: createPromiseDataFetch(),
-      },
-      itemActions: (item) => [
-        {
-          label: "Edit",
-          icon: Pencil,
-          onClick: () => console.log(`Editing ${item.name}`),
-          description: "Modify user information",
-        },
-        {
-          label: "View Profile",
-          icon: Ai,
-          onClick: () => console.log(`Viewing ${item.name}'s profile`),
-        },
-        { type: "separator" },
-        {
-          label: item.isStarred ? "Remove Star" : "Star User",
-          icon: Star,
-          onClick: () => console.log(`Toggling star for ${item.name}`),
-          description: item.isStarred
-            ? "Remove from favorites"
-            : "Add to favorites",
-        },
-        {
-          label: "Delete",
-          icon: Delete,
-          onClick: () => console.log(`Deleting ${item.name}`),
-          critical: true,
-          description: "Permanently remove user",
-          enabled:
-            item.department === "Engineering" && item.status === "active",
-        },
-      ],
-    })
-
-    return (
-      <>
-        <Dialog
-          open={isOpen}
-          onClose={() => setIsOpen(false)}
-          header={{
-            title: `Viewing ${item}`,
-            description: `You clicked on the ${item} row`,
-            type: "info",
-          }}
-          actions={{
-            primary: {
-              label: "Ok",
-              variant: "default",
-              onClick: () => {
-                setIsOpen(false)
-              },
-            },
-            secondary: {
-              label: "Cancel",
-              onClick: () => setIsOpen(false),
-            },
-          }}
-        />
-        <div className="space-y-4">
-          <OneDataCollection
-            source={dataSource}
-            visualizations={[
-              {
-                type: "table",
-                options: {
-                  columns: [
-                    {
-                      label: "Name",
-                      render: (item) => item.name,
-                      sorting: "name",
-                    },
-                    {
-                      label: "Email",
-                      render: (item) => item.email,
-                      sorting: "email",
-                    },
-                    {
-                      label: "Role",
-                      render: (item) => item.role,
-                      sorting: "role",
-                    },
-                    {
-                      label: "Department",
-                      render: (item) => item.department,
-                      sorting: "department",
-                    },
-                  ],
-                },
-              },
-              {
-                type: "card",
-                options: {
-                  title: (item) => item.name,
-                  cardProperties: [
-                    {
-                      label: "Email",
-                      render: (item) => item.email,
-                    },
-                    {
-                      label: "Role",
-                      render: (item) => item.role,
-                    },
-                    {
-                      label: "Department",
-                      render: (item) => item.department,
-                    },
-                  ],
-                },
-              },
-            ]}
-          />
-        </div>
-      </>
     )
   },
 }

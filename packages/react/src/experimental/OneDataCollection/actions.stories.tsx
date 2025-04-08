@@ -126,18 +126,7 @@ export const BasicActionsExample: Story = {
 
     return (
       <div className="space-y-8">
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">
-            Data Collection Actions Example
-          </h2>
-          <p className="mb-4 text-f1-foreground-secondary">
-            This example demonstrates various types of actions that can be used
-            in Collections. Click in the top right button or top right actions
-            menu (three dots) to see the available actions for the data
-            collection.
-          </p>
-        </div>
-
+        
         <OneDataCollection
           source={dataSource}
           visualizations={[
