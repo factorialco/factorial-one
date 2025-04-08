@@ -2,7 +2,7 @@ import { Icon } from "@/components/Utilities/Icon"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
-import * as React from "react"
+import { forwardRef } from "react"
 import { FileAvatar } from "../FileAvatar"
 
 interface FileItemProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -11,7 +11,7 @@ interface FileItemProps extends React.HTMLAttributes<HTMLDivElement> {
   disabled: boolean
 }
 
-const FileItem = React.forwardRef<HTMLDivElement, FileItemProps>(
+const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
   ({ file, onRemoveFile, disabled, className, ...props }, ref) => {
     return (
       <Tooltip label={file.name}>
