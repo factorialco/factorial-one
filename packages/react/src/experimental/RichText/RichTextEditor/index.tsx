@@ -1,6 +1,3 @@
-import { Button } from "@/components/Actions/Button"
-import { Maximize, Minimize } from "@/icons/app"
-import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import { EditorContent, useEditor } from "@tiptap/react"
@@ -20,6 +17,7 @@ import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { Error } from "./Error"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
+import { Head } from "./Head"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import { ExtensionsConfiguration } from "./utils/extensions"
 import {
@@ -31,10 +29,12 @@ import {
 } from "./utils/helpers"
 import {
   actionType,
+  editorStateType,
   enhanceConfig,
   errorConfig,
   filesConfig,
   heightType,
+  lastIntentType,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
@@ -92,8 +92,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const containerRef = useRef<HTMLDivElement>(null)
     const editorContentContainerRef = useRef<HTMLDivElement>(null)
 
-    const [initialContent] = useState(initialEditorState?.content || "")
-    const [currentContent, setCurrentContent] = useState<string>(initialContent)
     const [hasFullHeight, setHasFullHeight] = useState(false)
     const [isScrolledToBottom, setIsScrolledToBottom] = useState(true)
     const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
@@ -101,14 +99,15 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [isToolbarOpen, setIsToolbarOpen] = useState(false)
-    const [lastIntent, setLastIntent] = useState<{
-      selectedIntent?: string
-      customIntent?: string
-    } | null>(null)
+    const [lastIntent, setLastIntent] = useState<lastIntentType>(null)
     const [files, setFiles] = useState<File[]>(initialEditorState?.files || [])
     const [mentionSuggestions, setMentionSuggestions] = useState<
       MentionedUser[]
     >(mentionsConfig?.users || [])
+    const [editorState, setEditorState] = useState<editorStateType>({
+      html: initialEditorState?.content || "",
+      json: null,
+    })
 
     useEffect(() => {
       if (isFullscreen) {
@@ -136,8 +135,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
 
     const handleToggleFullscreen = () => {
       if (editor) {
-        const content = editor.getHTML()
-        setCurrentContent(content)
+        // Save the current editor state in json format, cause it's easier to handle for tiptap all the states and we can keep all the states
+        setEditorState({
+          ...editorState,
+          json: editor.getJSON(),
+        })
       }
       setIsFullscreen((prev) => !prev)
     }
@@ -159,11 +161,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           placeholder,
           maxCharacters,
         }),
-        content: currentContent,
+        content: editorState.json || editorState.html,
         onUpdate: ({ editor }) => {
-          const html = editor.getHTML()
-          setCurrentContent(html)
-          handleEditorUpdate({ editor, onChange })
+          handleEditorUpdate({ editor, onChange, setEditorState })
         },
       },
       [isFullscreen]
@@ -174,6 +174,16 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         editor.setEditable(false)
       }
     }, [error, editor])
+
+    useEffect(() => {
+      if (editor && editorState.json) {
+        // Reset the editor state to the json format when the editor is mounted
+        setEditorState({
+          ...editorState,
+          json: null,
+        })
+      }
+    }, [editor, editorState.json])
 
     useImperativeHandle(ref, () => ({
       clear: () => editor?.commands.clearContent(),
@@ -195,6 +205,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       setContent: (content: string) => {
         if (editor) {
           setEditorContent({ editor, content })
+          setEditorState({
+            html: content,
+            json: null,
+          })
         }
       },
     }))
@@ -241,40 +255,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             : "relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background"
         )}
       >
-        <AnimatePresence>
-          {(isAcceptChangesOpen || error) && (
-            <motion.div
-              key="accordion"
-              initial={{ height: 0, opacity: 0, y: -20 }}
-              animate={{ height: "auto", opacity: 1, y: 0 }}
-              exit={{ height: 0, opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="flex w-full items-center justify-center pt-2"
-              aria-label="Accept changes dialog"
-            >
-              {isAcceptChangesOpen && (
-                <AcceptChanges
-                  labels={enhanceConfig?.enhanceLabels}
-                  onAccept={() => {
-                    setIsAcceptChangesOpen(false)
-                    editor.setEditable(true)
-                    setLastIntent(null)
-                  }}
-                  onReject={() => {
-                    editor.chain().focus().undo().run()
-                    setIsAcceptChangesOpen(false)
-                    editor.setEditable(true)
-                    setLastIntent(null)
-                  }}
-                  onRepeat={() => {
-                    editor.chain().focus().undo().run()
-                    handleEnhanceWithAI(
-                      lastIntent?.selectedIntent,
-                      lastIntent?.customIntent
-                    )
-                  }}
-                />
-              )}
+        <Head
+          isFullscreen={isFullscreen}
+          handleToggleFullscreen={handleToggleFullscreen}
+          disableAllButtons={disableAllButtons}
+          title={title}
+        />
 
         <div
           className={cn("relative w-full flex-grow overflow-hidden")}
@@ -304,55 +290,48 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               accept={getAcceptFileTypeString(filesConfig)}
               aria-label="Upload file"
             />
-            <AnimatePresence>
-              {files.length > 0 && (
-                <motion.div
-                  key="filelist-accordion"
-                  initial={{ height: 0, opacity: 0, y: -20 }}
-                  animate={{ height: "auto", opacity: 1, y: 0 }}
-                  exit={{ height: 0, opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <FileList
-                    files={files}
-                    onRemoveFile={(fileIndex) =>
-                      handleRemoveFile(fileIndex, files, filesConfig, setFiles)
-                    }
-                    disabled={disableAllButtons}
-                  />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </>
-        )}
-        <Footer
-          editor={editor}
-          maxCharacters={maxCharacters}
-          secondaryAction={secondaryAction}
-          primaryAction={primaryAction}
-          fileInputRef={fileInputRef}
-          canUseFiles={filesConfig ? true : false}
-          isLoadingEnhance={isLoadingEnhance}
-          disableButtons={disableAllButtons}
-          enhanceConfig={enhanceConfig}
-          isFullscreen={isFullscreen}
-          onEnhanceWithAI={handleEnhanceWithAI}
-          setLastIntent={setLastIntent}
-          toolbarLabels={toolbarLabels}
-          setIsToolbarOpen={setIsToolbarOpen}
-          isToolbarOpen={isToolbarOpen}
-        />
+          )}
+        </div>
 
-        <EditorBubbleMenu
-          editor={editor}
-          disableButtons={disableAllButtons}
-          toolbarLabels={toolbarLabels}
-          isToolbarOpen={isToolbarOpen}
-        />
-      </div>
-    </div>
-  )
-})
+        <div
+          className={cn(
+            "rounded-b-lg bg-f1-background px-3",
+            hasFullHeight && !isScrolledToBottom && "shadow-editor-tools"
+          )}
+        >
+          <AnimatePresence>
+            {(isAcceptChangesOpen || error) && (
+              <motion.div
+                key="accordion"
+                initial={{ height: 0, opacity: 0, y: -20 }}
+                animate={{ height: "auto", opacity: 1, y: 0 }}
+                exit={{ height: 0, opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="flex w-full items-center justify-center pt-2"
+                aria-label="Accept changes dialog"
+              >
+                {isAcceptChangesOpen && (
+                  <AcceptChanges
+                    labels={enhanceConfig?.enhanceLabels}
+                    setLastIntent={setLastIntent}
+                    setIsAcceptChangesOpen={setIsAcceptChangesOpen}
+                    editor={editor}
+                    handleEnhanceWithAI={handleEnhanceWithAI}
+                    lastIntent={lastIntent}
+                  />
+                )}
+                {error && (
+                  <Error
+                    error={error}
+                    setError={setError}
+                    editor={editor}
+                    errorConfig={errorConfig}
+                    closeErrorButtonLabel={errorConfig?.closeErrorButtonLabel}
+                  />
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <FileList
             files={files}
@@ -361,6 +340,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             setFiles={setFiles}
             fileInputRef={fileInputRef}
           />
+
           <Footer
             editor={editor}
             maxCharacters={maxCharacters}
@@ -395,6 +375,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       : editorContent
   }
 )
+
+
 
 export * from "./utils/constants"
 export * from "./utils/types"

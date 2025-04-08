@@ -4,7 +4,7 @@ import {
   AlignTextLeft,
   AlignTextRight,
 } from "@/icons/app"
-import { Editor } from "@tiptap/react"
+import { Editor, JSONContent } from "@tiptap/react"
 import { RefObject } from "react"
 import { heightType, resultType } from "./types"
 
@@ -122,9 +122,19 @@ const setupContainerObservers = ({
 interface HandleEditorUpdateProps {
   editor: Editor
   onChange: (result: resultType) => void
+  setEditorState: (state: { html: string; json: JSONContent | null }) => void
 }
 
-const handleEditorUpdate = ({ editor, onChange }: HandleEditorUpdateProps) => {
+const handleEditorUpdate = ({
+  editor,
+  onChange,
+  setEditorState,
+}: HandleEditorUpdateProps) => {
+  setEditorState({
+    html: editor.getHTML(),
+    json: null,
+  })
+
   const mentions: number[] = []
   const doc = editor.state.doc
 
