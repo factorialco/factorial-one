@@ -72,19 +72,19 @@ export const Archive: Story = {
 
 export const CSV: Story = {
   args: {
-    file: new File([""], "data.csv", { type: "text/csv" }),
+    file: new File([""], "data.csv", { type: "csv" }),
   },
 }
 
 export const HTML: Story = {
   args: {
-    file: new File([""], "page.html", { type: "text/html" }),
+    file: new File([""], "page.html", { type: "html" }),
   },
 }
 
 export const Markdown: Story = {
   args: {
-    file: new File([""], "readme.md", { type: "text/markdown" }),
+    file: new File([""], "readme.md", { type: "markdown" }),
   },
 }
 
