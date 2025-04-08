@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.24.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.23.2...factorial-one-react-v1.24.0) (2025-04-08)
+
+
+### Features
+
+* create OneModal component ([#1567](https://github.com/factorialco/factorial-one/issues/1567)) ([0d13b49](https://github.com/factorialco/factorial-one/commit/0d13b49f38832f842339aa1fe78f3f4f9a8a1137))
+
 ## [1.23.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.23.1...factorial-one-react-v1.23.2) (2025-04-07)
 
 
