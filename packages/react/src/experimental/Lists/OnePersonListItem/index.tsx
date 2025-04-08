@@ -60,7 +60,6 @@ const BaseOnePersonListItem = React.forwardRef<
         src={person.avatarUrl}
         badge={person.avatarBadge}
       />
-
       <div className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-row items-center gap-1">
           <span className="truncate font-medium">{`${person.firstName} ${person.lastName}`}</span>
@@ -95,7 +94,6 @@ const BaseOnePersonListItem = React.forwardRef<
           </p>
         )}
       </div>
-
       <div className="flex flex-row items-center justify-between gap-2">
         {"rightTag" in props && props.rightTag && (
           <DotTag {...props.rightTag} />
