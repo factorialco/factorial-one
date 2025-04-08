@@ -4,13 +4,12 @@ import { useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { CalendarMode, CalendarView, DateRange } from "./types"
 import { MonthView } from "./views/month"
+import { YearView } from "./views/year"
 
 export interface OneCalendarProps {
   mode: CalendarMode
   view: CalendarView
   onSelect?: (date: Date | DateRange | null) => void
-  fromDate?: Date
-  toDate?: Date
   defaultMonth?: Date
   defaultSelected?: Date | DateRange | null
   showNavigation?: boolean
@@ -20,8 +19,6 @@ export function OneCalendar({
   mode = "single",
   view = "month",
   onSelect,
-  fromDate,
-  toDate,
   defaultMonth = new Date(),
   defaultSelected = null,
   showNavigation = true,
@@ -41,6 +38,10 @@ export function OneCalendar({
       newDate.setFullYear(newDate.getFullYear() - 1)
     }
 
+    if (view === "year") {
+      newDate.setFullYear(newDate.getFullYear() - 10)
+    }
+
     setViewDate(newDate)
   }
 
@@ -51,6 +52,10 @@ export function OneCalendar({
       newDate.setFullYear(newDate.getFullYear() + 1)
     }
 
+    if (view === "year") {
+      newDate.setFullYear(newDate.getFullYear() + 10)
+    }
+
     setViewDate(newDate)
   }
 
@@ -58,6 +63,13 @@ export function OneCalendar({
   const getHeaderLabel = () => {
     if (view === "month") {
       return viewDate.getFullYear().toString()
+    }
+
+    if (view === "year") {
+      const startYear = viewDate.getFullYear() - (viewDate.getFullYear() % 10)
+      const endYear = startYear + 9
+
+      return `${startYear}-${endYear}`
     }
   }
 
@@ -106,11 +118,16 @@ export function OneCalendar({
             year={viewDate.getFullYear()}
             selected={selected}
             onSelect={handleSelect}
-            fromDate={fromDate}
-            toDate={toDate}
           />
         )}
-        {view === "year" && <div>Year calendar</div>}
+        {view === "year" && (
+          <YearView
+            mode={mode}
+            decade={viewDate.getFullYear()}
+            selected={selected}
+            onSelect={handleSelect}
+          />
+        )}
       </div>
     </div>
   )

@@ -14,18 +14,9 @@ interface MonthViewProps {
   selected?: Date | DateRange | null
   onSelect?: (date: Date | DateRange | null) => void
   year: number
-  fromDate?: Date
-  toDate?: Date
 }
 
-export function MonthView({
-  mode,
-  selected,
-  onSelect,
-  year,
-  fromDate,
-  toDate,
-}: MonthViewProps) {
+export function MonthView({ mode, selected, onSelect, year }: MonthViewProps) {
   const i18n = useI18n()
   const months = [
     { name: i18n.date.month.january, index: 0 },
@@ -119,7 +110,8 @@ export function MonthView({
         })
       } else if (selected.from) {
         return (
-          fromDate?.getMonth() === monthIndex && fromDate.getFullYear() === year
+          selected.from.getMonth() === monthIndex &&
+          selected.from.getFullYear() === year
         )
       }
     }

@@ -43,12 +43,32 @@ export const MonthRange: Story = {
   ],
 }
 
-export const YearView: Story = {
+export const YearSingle: Story = {
   args: {
     mode: "single",
     view: "year",
-    defaultMonth: new Date("2024-03-15"),
   },
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
+}
+
+export const YearRange: Story = {
+  args: {
+    mode: "range",
+    view: "year",
+  },
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export const DayView: Story = {
