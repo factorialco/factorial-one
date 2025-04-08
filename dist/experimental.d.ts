@@ -7,6 +7,7 @@ import { BarChartProps } from '../../../components/Charts/BarChart';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
 import { color as color_2 } from '../../../../ui/avatar';
+import { color as color_3 } from '../../../ui/avatar';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
@@ -37,9 +38,11 @@ import * as RechartsPrimitive from 'recharts';
 import { RefAttributes } from 'react';
 import { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { sizes as sizes_2 } from '../../../../ui/avatar';
+import { sizes as sizes_4 } from '../../../ui/avatar';
 import { SVGProps } from 'react';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { type as type_2 } from '../../../../ui/avatar';
+import { type as type_3 } from '../../../ui/avatar';
 import { useForm } from 'react-hook-form';
 import { UseFormHandleSubmit } from 'react-hook-form';
 import { UseFormReturn } from 'react-hook-form';
@@ -1204,9 +1207,17 @@ export declare const FILE_TYPES: {
     readonly MARKDOWN: "markdown";
 };
 
-export declare const FileItem: React_2.ForwardRefExoticComponent<FileItemProps & React_2.RefAttributes<HTMLDivElement>>;
+export declare const FileAvatar: ForwardRefExoticComponent<Omit<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
+size?: sizes_4[number];
+type?: type_3[number];
+color?: color_3[number];
+} & RefAttributes<HTMLSpanElement>, "ref"> & {
+file: File;
+} & RefAttributes<HTMLSpanElement>>;
 
-declare interface FileItemProps extends React_2.HTMLAttributes<HTMLDivElement> {
+export declare const FileItem: ForwardRefExoticComponent<FileItemProps & RefAttributes<HTMLDivElement>>;
+
+declare interface FileItemProps extends React.HTMLAttributes<HTMLDivElement> {
     file: File;
     onRemoveFile: () => void;
     disabled: boolean;
