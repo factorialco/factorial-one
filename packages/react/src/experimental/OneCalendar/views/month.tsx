@@ -1,5 +1,5 @@
 import { useI18n } from "@/lib/i18n-provider"
-import { cn } from "@/lib/utils"
+import { cn, focusRing } from "@/lib/utils"
 import {
   endOfMonth,
   isBefore,
@@ -59,23 +59,24 @@ export function MonthView({
       // Single select
       onSelect?.(selectedDate)
     } else if (mode === "range") {
-      if (!selected || isDateRange(selected)) {
-        // Start of new range
+      if (!selected || !isDateRange(selected)) {
+        // Start of range
         onSelect?.({
           from: selectedDate,
           to: undefined,
         })
-      } else if (isDateRange(selected) && selected.from && !selected.to) {
+      } else if (selected.from && !selected.to) {
+        // Complete the range
         const fromDate = selected.from
 
         if (isSameMonth(fromDate, selectedDate)) {
-          // Clicking on the same month, just select that month
+          // If clicking the same month, select just that month
           onSelect?.({
             from: startOfMonth(selectedDate),
             to: endOfMonth(selectedDate),
           })
         } else {
-          // Clicking on a different month, select the range
+          // Create a range between the two months
           const start = isBefore(fromDate, selectedDate)
             ? fromDate
             : selectedDate
@@ -86,6 +87,12 @@ export function MonthView({
             to: endOfMonth(end),
           })
         }
+      } else {
+        // Start a new range
+        onSelect?.({
+          from: selectedDate,
+          to: undefined,
+        })
       }
     }
   }
@@ -120,11 +127,33 @@ export function MonthView({
     return false
   }
 
+  // Check if the month is the start of the range
+  const isRangeStart = (monthIndex: number): boolean => {
+    if (!selected || !isDateRange(selected) || !selected.from) return false
+
+    return (
+      selected.from.getMonth() === monthIndex &&
+      selected.from.getFullYear() === year
+    )
+  }
+
+  // Check if the month is the end of the range
+  const isRangeEnd = (monthIndex: number): boolean => {
+    if (!selected || !isDateRange(selected) || !selected.to) return false
+
+    return (
+      selected.to.getMonth() === monthIndex &&
+      selected.to.getFullYear() === year
+    )
+  }
+
   return (
     <div className="grid grid-cols-3 gap-y-3">
       {months.map((month) => {
         const isCurrent = isCurrentMonth(month.index)
         const isSelected = isMonthSelected(month.index)
+        const isStart = isRangeStart(month.index)
+        const isEnd = isRangeEnd(month.index)
 
         return (
           <button
@@ -132,13 +161,35 @@ export function MonthView({
             key={month.index}
             onClick={() => handleMonthClick(month.index)}
             className={cn(
-              "relative flex items-center justify-center text-f1-foreground",
-              isSelected && "bg-f1-background-selected"
+              "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-[''] hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
+              focusRing(),
+              isSelected &&
+                mode === "single" &&
+                "bg-f1-background-selected-bold text-f1-foreground-inverse hover:bg-f1-background-selected-bold-hover",
+              isSelected &&
+                mode === "range" &&
+                "rounded-none bg-f1-background-selected hover:bg-f1-background-selected [&:nth-child(3n+1)]:rounded-s-md [&:nth-child(3n+3)]:rounded-e-md",
+              (isStart || isEnd) &&
+                mode === "range" &&
+                "rounded-none bg-f1-background-selected after:opacity-100 [&>span]:z-10 [&>span]:text-f1-foreground-inverse",
+              isStart && mode === "range" && isEnd && "rounded-s-md",
+              isEnd && mode === "range" && "rounded-e-md"
             )}
           >
-            {month.name}
+            <span>{month.name}</span>
             {isCurrent && (
-              <div className="absolute inset-x-0 bottom-1 h-0.5 w-1.5 rounded-full bg-f1-background-selected-bold" />
+              <div
+                className={cn(
+                  "absolute inset-x-0 bottom-1 z-20 mx-auto h-0.5 w-1.5 rounded-full bg-f1-background-selected-bold transition-colors duration-100",
+                  isSelected && mode === "single" && "bg-f1-background",
+                  (isStart || isEnd) && "bg-f1-background",
+                  !isStart &&
+                    !isEnd &&
+                    isSelected &&
+                    mode === "range" &&
+                    "bg-f1-background-selected-bold"
+                )}
+              />
             )}
           </button>
         )

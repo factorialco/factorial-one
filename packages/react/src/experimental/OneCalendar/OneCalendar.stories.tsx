@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { OneCalendar } from "./OneCalendar"
 
 const meta = {
-  title: "Experimental/OneCalendar",
+  title: "Calendar",
   component: OneCalendar,
   tags: ["autodocs"],
 } satisfies Meta<typeof OneCalendar>
@@ -10,12 +10,37 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {
+export const MonthSingle: Story = {
   args: {
     mode: "single",
     view: "month",
-    defaultMonth: new Date("2024-03-15"),
+    defaultSelected: new Date(),
   },
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
+}
+
+export const MonthRange: Story = {
+  args: {
+    mode: "range",
+    view: "month",
+    defaultSelected: {
+      from: new Date(),
+      to: new Date(new Date().setMonth(new Date().getMonth() + 4)),
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
 }
 
 export const YearView: Story = {
