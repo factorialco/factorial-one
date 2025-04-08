@@ -49136,7 +49136,7 @@ const SJ = ht.create({
         ...fe,
         json: null
       });
-    }, [re, fe.json]), P1(m, () => ({
+    }, [re, fe]), P1(m, () => ({
       clear: () => re == null ? void 0 : re.commands.clearContent(),
       clearFiles: () => {
         L([]), i && i.onFiles([]);
