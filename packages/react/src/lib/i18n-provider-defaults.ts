@@ -1,6 +1,8 @@
 export const defaultTranslations = {
   navigation: {
     sidebar: "Main navigation",
+    previous: "Previous",
+    next: "Next",
   },
   actions: {
     save: "Save",
