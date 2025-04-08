@@ -24,6 +24,7 @@ import { FullscreenLayoutProps } from './FullscreenLayout';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
 import { IconType as IconType_3 } from '../../factorial-one';
+import { JSONContent } from '@tiptap/react';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
 import { Observable } from 'zen-observable-ts';
@@ -1121,6 +1122,11 @@ declare type DropdownProps = Omit<DropdownInternalProps, (typeof privateProps_2)
     onOpenChange?: (open: boolean) => void;
 };
 
+export declare type editorStateType = {
+    html: string;
+    json: JSONContent | null;
+};
+
 export declare const EmojiAvatar: {
     ({ emoji, size }: Props_6): JSX_2.Element;
     displayName: string;
@@ -1540,6 +1546,11 @@ declare type ItemProps = {
 declare type Items = SelectItemObject<string>[];
 
 declare type Items_2 = typeof Item | typeof PersonItem | typeof CompanyItem | typeof TeamItem;
+
+export declare type lastIntentType = {
+    selectedIntent?: string;
+    customIntent?: string;
+} | null;
 
 declare const layoutVariants: (props?: ({
     variant?: "narrow" | undefined;
@@ -2352,9 +2363,14 @@ export declare type resultType = {
     mentionIds?: number[];
 };
 
-export declare const RichTextDisplay: ({ content }: {
+export declare const RichTextDisplay: ForwardRefExoticComponent<RichTextDisplayProps & RefAttributes<HTMLDivElement>>;
+
+export declare type RichTextDisplayHandle = HTMLDivElement;
+
+export declare interface RichTextDisplayProps extends HTMLAttributes<HTMLDivElement> {
     content: string;
-}) => JSX_2.Element;
+    className?: string;
+}
 
 export declare const RichTextEditor: ForwardRefExoticComponent<RichTextEditorProps & RefAttributes<RichTextEditorHandle>>;
 
