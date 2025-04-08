@@ -1,5 +1,3 @@
-import { Button } from "@/components/Actions/Button"
-import { Maximize, Minimize } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { EditorContent, useEditor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
@@ -18,6 +16,7 @@ import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { Error } from "./Error"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
+import { Head } from "./Head"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import { ExtensionsConfiguration } from "./utils/extensions"
 import {
@@ -29,10 +28,12 @@ import {
 } from "./utils/helpers"
 import {
   actionType,
+  editorStateType,
   enhanceConfig,
   errorConfig,
   filesConfig,
   heightType,
+  lastIntentType,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
@@ -90,8 +91,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const containerRef = useRef<HTMLDivElement>(null)
     const editorContentContainerRef = useRef<HTMLDivElement>(null)
 
-    const [initialContent] = useState(initialEditorState?.content || "")
-    const [currentContent, setCurrentContent] = useState<string>(initialContent)
     const [hasFullHeight, setHasFullHeight] = useState(false)
     const [isScrolledToBottom, setIsScrolledToBottom] = useState(true)
     const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
@@ -99,14 +98,15 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [isToolbarOpen, setIsToolbarOpen] = useState(false)
-    const [lastIntent, setLastIntent] = useState<{
-      selectedIntent?: string
-      customIntent?: string
-    } | null>(null)
+    const [lastIntent, setLastIntent] = useState<lastIntentType>(null)
     const [files, setFiles] = useState<File[]>(initialEditorState?.files || [])
     const [mentionSuggestions, setMentionSuggestions] = useState<
       MentionedUser[]
     >(mentionsConfig?.users || [])
+    const [editorState, setEditorState] = useState<editorStateType>({
+      html: initialEditorState?.content || "",
+      json: null,
+    })
 
     useEffect(() => {
       if (isFullscreen) {
@@ -134,8 +134,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
 
     const handleToggleFullscreen = () => {
       if (editor) {
-        const content = editor.getHTML()
-        setCurrentContent(content)
+        // Save the current editor state in json format, cause it's easier to handle for tiptap all the states and we can keep all the states
+        setEditorState({
+          ...editorState,
+          json: editor.getJSON(),
+        })
       }
       setIsFullscreen((prev) => !prev)
     }
@@ -155,11 +158,9 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           placeholder,
           maxCharacters,
         }),
-        content: currentContent,
+        content: editorState.json || editorState.html,
         onUpdate: ({ editor }) => {
-          const html = editor.getHTML()
-          setCurrentContent(html)
-          handleEditorUpdate({ editor, onChange })
+          handleEditorUpdate({ editor, onChange, setEditorState })
         },
       },
       [isFullscreen]
@@ -170,6 +171,16 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         editor.setEditable(false)
       }
     }, [error, editor])
+
+    useEffect(() => {
+      if (editor && editorState.json) {
+        // Reset the editor state to the json format when the editor is mounted
+        setEditorState({
+          ...editorState,
+          json: null,
+        })
+      }
+    }, [editor, editorState.json])
 
     useImperativeHandle(ref, () => ({
       clear: () => editor?.commands.clearContent(),
@@ -191,6 +202,10 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       setContent: (content: string) => {
         if (editor) {
           setEditorContent({ editor, content })
+          setEditorState({
+            html: content,
+            json: null,
+          })
         }
       },
     }))
@@ -230,30 +245,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             : "relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background"
         )}
       >
-        <div className="absolute right-3 top-3 z-50">
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              handleToggleFullscreen()
-            }}
-            label="Fullscreen"
-            aria-label="Toggle fullscreen mode"
-            variant="outline"
-            type="button"
-            hideLabel
-            round
-            size="sm"
-            icon={isFullscreen ? Minimize : Maximize}
-            disabled={disableAllButtons}
-          />
-        </div>
-        {isFullscreen && (
-          <div className="pl-3 pr-10 pt-3">
-            <h1 className="font-bold truncate text-ellipsis text-lg">
-              {title}
-            </h1>
-          </div>
-        )}
+        <Head
+          isFullscreen={isFullscreen}
+          handleToggleFullscreen={handleToggleFullscreen}
+          disableAllButtons={disableAllButtons}
+          title={title}
+        />
 
         <div
           className={cn("relative w-full flex-grow overflow-hidden")}
@@ -299,37 +296,19 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 {isAcceptChangesOpen && (
                   <AcceptChanges
                     labels={enhanceConfig?.enhanceLabels}
-                    onAccept={() => {
-                      setIsAcceptChangesOpen(false)
-                      editor.setEditable(true)
-                      setLastIntent(null)
-                    }}
-                    onReject={() => {
-                      editor.chain().focus().undo().run()
-                      setIsAcceptChangesOpen(false)
-                      editor.setEditable(true)
-                      setLastIntent(null)
-                    }}
-                    onRepeat={() => {
-                      editor.chain().focus().undo().run()
-                      handleEnhanceWithAI(
-                        lastIntent?.selectedIntent,
-                        lastIntent?.customIntent
-                      )
-                    }}
+                    setLastIntent={setLastIntent}
+                    setIsAcceptChangesOpen={setIsAcceptChangesOpen}
+                    editor={editor}
+                    handleEnhanceWithAI={handleEnhanceWithAI}
+                    lastIntent={lastIntent}
                   />
                 )}
-
                 {error && (
                   <Error
                     error={error}
-                    onClose={() => {
-                      setError(null)
-                      editor.setEditable(true)
-                      if (errorConfig?.onClose) {
-                        errorConfig.onClose()
-                      }
-                    }}
+                    setError={setError}
+                    editor={editor}
+                    errorConfig={errorConfig}
                     closeErrorButtonLabel={errorConfig?.closeErrorButtonLabel}
                   />
                 )}
@@ -344,6 +323,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
             setFiles={setFiles}
             fileInputRef={fileInputRef}
           />
+
           <Footer
             editor={editor}
             maxCharacters={maxCharacters}
@@ -378,6 +358,8 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       : editorContent
   }
 )
+
+
 
 export * from "./utils/constants"
 export * from "./utils/types"

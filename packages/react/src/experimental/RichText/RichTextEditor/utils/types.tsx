@@ -1,4 +1,5 @@
 import { IconType } from "@/factorial-one"
+import { JSONContent } from "@tiptap/react"
 import { FileType } from "./constants"
 
 type MentionedUser = {
@@ -130,8 +131,19 @@ type heightType =
   | "full"
   | "auto"
 
+type lastIntentType = {
+  selectedIntent?: string
+  customIntent?: string
+} | null
+
+type editorStateType = {
+  html: string
+  json: JSONContent | null
+}
+
 export type {
   actionType,
+  editorStateType,
   enhanceConfig,
   enhancedTextResponse,
   enhanceLabelsType,
@@ -140,6 +152,7 @@ export type {
   errorConfig,
   filesConfig,
   heightType,
+  lastIntentType,
   MentionedUser,
   mentionsConfig,
   primaryActionType,
