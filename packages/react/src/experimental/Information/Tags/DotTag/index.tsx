@@ -18,16 +18,20 @@ export type NewColor = Extract<
   | "camel"
 >
 
-export interface DotTagProps {
+export type DotTagProps = {
   text: string
-  color: NewColor
-}
+} & ({ color: NewColor } | { customColor: string })
 
 export const DotTag = forwardRef<HTMLDivElement, DotTagProps>(
-  ({ text, color }, ref) => {
+  ({ text, ...props }, ref) => {
     useTextFormatEnforcer(text, { disallowEmpty: true })
 
-    const colorString = baseColors[color][50]
+    const backgroundColor =
+      "color" in props && props.color
+        ? `hsl(${baseColors[props.color][50]})`
+        : "customColor" in props && props.customColor
+
+    if (!backgroundColor) return null
 
     return (
       <BaseTag
@@ -37,7 +41,7 @@ export const DotTag = forwardRef<HTMLDivElement, DotTagProps>(
           <div
             className="m-1 aspect-square w-2 rounded-full"
             style={{
-              backgroundColor: `hsl(${colorString})`,
+              backgroundColor,
             }}
             aria-hidden
           />

@@ -25,7 +25,7 @@ function getSubtree(
 }
 
 const tabNavigationVariants = cva({
-  base: "relative flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap px-6 py-3 [scrollbar-width:none] before:absolute before:inset-x-0 before:bottom-0 before:h-px before:bg-f1-border-secondary before:content-[''] [&::-webkit-scrollbar]:hidden",
+  base: "relative flex items-center justify-start gap-1 overflow-x-auto whitespace-nowrap px-6 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
   variants: {
     secondary: {
       true: "bg-f1-foreground/[.02] dark:bg-f1-foreground/[.02]",
@@ -52,7 +52,9 @@ const TabNavigation = React.forwardRef<
       ref={forwardedRef}
       {...props}
       asChild={false}
+      className="relative"
     >
+      <div className="absolute inset-x-0 bottom-0 left-0 right-0 h-px bg-f1-border-secondary" />
       <LayoutGroup id={id}>
         <NavigationMenuPrimitives.List
           className={cn(tabNavigationVariants({ secondary }), className)}
