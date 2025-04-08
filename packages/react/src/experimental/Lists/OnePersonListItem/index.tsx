@@ -11,13 +11,16 @@ import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 import { DotTag, DotTagProps } from "../../Information/Tags/DotTag"
 import { RawTag, RawTagProps } from "../../Information/Tags/RawTag"
 
+type Person = {
+  id: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string
+  avatarBadge?: Omit<BadgeProps, "size">
+}
+
 export type OnePersonListItemProps = {
-  person: {
-    firstName: string
-    lastName: string
-    avatarUrl?: string
-    avatarBadge?: Omit<BadgeProps, "size">
-  }
+  person: Person
   description?: string
   bottomTags: Omit<RawTagProps, "noBorder">[]
   rightTag?: DotTagProps
@@ -25,15 +28,15 @@ export type OnePersonListItemProps = {
     primary?: {
       icon?: IconType
       label: string
-      onClick: () => void
+      onClick: (person: Person) => void
     }
     secondary?: {
       icon: IconType
-      onClick: () => void
+      onClick: (person: Person) => void
     }
   }
   info?: string
-  onClick: () => void
+  onClick: (person: Person) => void
   withPointerCursor?: boolean
 }
 
@@ -42,7 +45,15 @@ const BaseOnePersonListItem = React.forwardRef<
   OnePersonListItemProps
 >(({ person, onClick, ...props }, ref) => {
   const handleClick = () => {
-    onClick()
+    onClick(person)
+  }
+
+  const handlePrimaryActionClick = () => {
+    props.actions?.primary?.onClick(person)
+  }
+
+  const handleSecondaryActionClick = () => {
+    props.actions?.secondary?.onClick(person)
   }
 
   return (
@@ -105,7 +116,7 @@ const BaseOnePersonListItem = React.forwardRef<
             {props.actions?.primary && (
               <Button
                 variant="outline"
-                onClick={props.actions.primary.onClick}
+                onClick={handlePrimaryActionClick}
                 label={props.actions.primary.label}
                 icon={props.actions.primary.icon}
               />
@@ -114,7 +125,7 @@ const BaseOnePersonListItem = React.forwardRef<
             {props.actions?.secondary && (
               <Button
                 variant="outline"
-                onClick={props.actions.secondary.onClick}
+                onClick={handleSecondaryActionClick}
                 label="Secondary"
                 icon={props.actions.secondary.icon}
                 hideLabel
