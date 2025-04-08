@@ -60,7 +60,6 @@ const BaseOnePersonListItem = React.forwardRef<
         src={person.avatarUrl}
         badge={person.avatarBadge}
       />
-
       <div className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-row items-center gap-1">
           <span className="truncate font-medium">{`${person.firstName} ${person.lastName}`}</span>
