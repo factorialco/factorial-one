@@ -94,7 +94,6 @@ const BaseOnePersonListItem = React.forwardRef<
           </p>
         )}
       </div>
-
       <div className="flex flex-row items-center justify-between gap-2">
         {"rightTag" in props && props.rightTag && (
           <DotTag {...props.rightTag} />
