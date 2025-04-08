@@ -177,13 +177,12 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
 
     useEffect(() => {
       if (editor && editorState.json) {
-        // Reset the editor state to the json format when the editor is mounted
         setEditorState({
           ...editorState,
           json: null,
         })
       }
-    }, [editor, editorState.json])
+    }, [editor, editorState])
 
     useImperativeHandle(ref, () => ({
       clear: () => editor?.commands.clearContent(),
@@ -375,8 +374,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       : editorContent
   }
 )
-
-
 
 export * from "./utils/constants"
 export * from "./utils/types"
