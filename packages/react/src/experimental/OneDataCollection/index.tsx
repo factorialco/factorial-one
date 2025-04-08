@@ -277,51 +277,61 @@ export const OneDataCollection = <
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
     >
-      <div className="flex items-center justify-between px-6">
-        {filters && (
-          <div className="flex-1">
-            <FiltersControls
-              filters={filters}
-              currentFilters={currentFilters}
-              onFilterChange={handleFilterChange}
-              presets={presets}
-              onPresetsChange={setCurrentFilters}
-              isOpen={isFiltersOpen}
-              onOpenChange={setIsFiltersOpen}
-            />
+      {((filters && Object.keys(filters).length > 0) ||
+        search?.enabled ||
+        primaryActionItem ||
+        (secondaryActionsItems && secondaryActionsItems.length > 0)) && (
+        <div
+          className={cn(
+            "flex items-center justify-between px-6",
+            !filters && "justify-end"
+          )}
+        >
+          {filters && (
+            <div className="flex-1">
+              <FiltersControls
+                filters={filters}
+                currentFilters={currentFilters}
+                onFilterChange={handleFilterChange}
+                presets={presets}
+                onPresetsChange={setCurrentFilters}
+                isOpen={isFiltersOpen}
+                onOpenChange={setIsFiltersOpen}
+              />
+            </div>
+          )}
+          <div className="flex shrink-0 items-center gap-2">
+            {isLoading && (
+              <MotionIcon
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{
+                  opacity: 0,
+                }}
+                size="lg"
+                icon={Spinner}
+                className="animate-spin"
+              />
+            )}
+            {search && (
+              <Search onChange={setCurrentSearch} value={currentSearch} />
+            )}
+            {visualizations && visualizations.length > 1 && (
+              <VisualizationSelector
+                visualizations={visualizations}
+                currentVisualization={currentVisualization}
+                onVisualizationChange={setCurrentVisualization}
+              />
+            )}
+            {(primaryActionItem || secondaryActionsItems) && (
+              <CollectionActions
+                primaryActions={primaryActionItem}
+                secondaryActions={secondaryActionsItems}
+              />
+            )}
           </div>
-        )}
-        <div className="flex shrink-0 items-center gap-2">
-          {isLoading && (
-            <MotionIcon
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{
-                opacity: 0,
-              }}
-              size="lg"
-              icon={Spinner}
-              className="animate-spin"
-            />
-          )}
-          {search && (
-            <Search onChange={setCurrentSearch} value={currentSearch} />
-          )}
-          {visualizations && visualizations.length > 1 && (
-            <VisualizationSelector
-              visualizations={visualizations}
-              currentVisualization={currentVisualization}
-              onVisualizationChange={setCurrentVisualization}
-            />
-          )}
-          {(primaryActionItem || secondaryActionsItems) && (
-            <CollectionActions
-              primaryActions={primaryActionItem}
-              secondaryActions={secondaryActionsItems}
-            />
-          )}
         </div>
-      </div>
+      )}
       {filters && (
         <FiltersChipsList
           filters={filters}
