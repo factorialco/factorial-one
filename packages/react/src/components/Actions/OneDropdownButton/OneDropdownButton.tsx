@@ -1,13 +1,8 @@
 import { useMemo, useState } from "react"
 import { DropdownInternal } from "../../../experimental/Navigation/Dropdown/internal"
 import { ChevronDown } from "../../../icons/app"
-import { cn, focusRing } from "../../../lib/utils.ts"
 import { IconType } from "../../Utilities/Icon"
 import { ButtonInternal, ButtonInternalProps } from "../Button/internal"
-import {
-  internalButtonVariants,
-  internalButtonVariantsStyles,
-} from "./theme.ts"
 import { OneDropdownButtonSize, OneDropdownButtonVariant } from "./types.ts"
 
 export type OneDropdownButtonItem<T = string> = {
@@ -59,7 +54,7 @@ const OneDropdownButton = ({
 
   return (
     selectedItem && (
-      <>
+      <div className="flex items-center">
         <ButtonInternal
           onClick={handleClick}
           icon={selectedItem.icon}
@@ -67,30 +62,17 @@ const OneDropdownButton = ({
           {...props}
           appendButton={
             <DropdownInternal items={dropdownItems} align="end">
-              <a
-                className={cn(
-                  "h-full",
-                  internalButtonVariants({
-                    size: props.size,
-                  }),
-                  "flex",
-                  "hover:bg-[#0002]",
-                  "rounded-e",
-                  "align-middle",
-                  "justify-center",
-                  focusRing()
-                )}
-                style={internalButtonVariantsStyles(props.variant)}
-                aria-label="Open dropdown"
-                tabIndex={props.disabled ? -1 : 0}
-                role="combobox"
-              >
-                <ChevronDown></ChevronDown>
-              </a>
+              <ButtonInternal
+                variant={props.variant}
+                size={props.size}
+                label="Add"
+                icon={ChevronDown}
+                hideLabel
+              />
             </DropdownInternal>
           }
-        ></ButtonInternal>
-      </>
+        />
+      </div>
     )
   )
 }
