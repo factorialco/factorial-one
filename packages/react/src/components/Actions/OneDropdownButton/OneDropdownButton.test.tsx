@@ -1,50 +1,85 @@
+import "@testing-library/jest-dom"
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { IconType } from "../../Utilities/Icon"
-
+import type { HTMLAttributes, SVGProps } from "react"
+import React from "react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import { IconType } from "../../Utilities/Icon"
 import { OneDropdownButton } from "./OneDropdownButton"
+
+type ButtonInternalProps = {
+  label: string
+  icon?: IconType
+  onClick?: () => void
+  appendButton?: React.ReactNode
+} & HTMLAttributes<HTMLButtonElement>
+
+type DropdownInternalProps = {
+  children: React.ReactNode
+  items: any[]
+} & HTMLAttributes<HTMLDivElement>
 
 // Mock the imported components
 vi.mock("@/components/Actions/Button/internal.tsx", () => ({
-  ButtonInternal: ({ label, icon: Icon, onClick, appendButton, ...props }) => (
-    <button onClick={onClick} {...props} data-testid="button">
-      {Icon && <Icon data-testid="button-icon" />}
-      <span data-testid="button-label">{label}</span>
-      <div data-testid="button-append">{appendButton}</div>
-    </button>
+  ButtonInternal: React.forwardRef<HTMLButtonElement, ButtonInternalProps>(
+    ({ label, icon: Icon, onClick, appendButton, ...props }, ref) => (
+      <button
+        ref={ref}
+        onClick={onClick}
+        {...props}
+        data-testid="dropdown-main-button"
+      >
+        {Icon && <Icon data-testid="button-icon" />}
+        <span data-testid="dropdown-main-label">{label}</span>
+        <div data-testid="button-append">{appendButton}</div>
+      </button>
+    )
   ),
 }))
 
 vi.mock("@/experimental/Navigation/Dropdown/internal.tsx", () => ({
-  DropdownInternal: ({ children, items }) => (
-    <div data-testid="dropdown" data-items={JSON.stringify(items)}>
-      {children}
-    </div>
+  DropdownInternal: React.forwardRef<HTMLDivElement, DropdownInternalProps>(
+    ({ children, items, ...props }, ref) => (
+      <div
+        ref={ref}
+        {...props}
+        data-testid="dropdown"
+        data-items={JSON.stringify(items)}
+      >
+        {children}
+      </div>
+    )
   ),
 }))
 
 vi.mock("@/icons/app", () => ({
-  ChevronDown: () => <div data-testid="chevron-icon">▼</div>,
+  ChevronDown: React.forwardRef<HTMLDivElement>((props, ref) => (
+    <div ref={ref} data-testid="chevron-icon">
+      ▼
+    </div>
+  )),
 }))
 
 describe("OneDropdownButton", () => {
   const openDropdown = async (user: ReturnType<typeof userEvent.setup>) => {
     user.click(screen.getByRole("combobox"))
-
     await waitFor(() => expect(screen.getByRole("listbox")).toBeInTheDocument())
   }
 
-  const mockIcons: Record<string, () => IconType> = {
-    Icon1: () => (<div>Icon1</div>) as unknown as IconType,
-    Icon2: () => (<div>Icon2</div>) as unknown as IconType,
-    Icon3: () => (<div>Icon3</div>) as unknown as IconType,
+  const createMockIcon = () => {
+    return React.forwardRef<SVGSVGElement, SVGProps<SVGSVGElement>>(
+      (props, ref) => (
+        <svg ref={ref} {...props}>
+          <path d="M0 0h24v24H0z" />
+        </svg>
+      )
+    )
   }
 
   const mockItems = [
-    { value: "item1", label: "Item 1", icon: mockIcons.Icon1 },
-    { value: "item2", label: "Item 2", icon: mockIcons.Icon2 },
-    { value: "item3", label: "Item 3", icon: mockIcons.Icon3 },
+    { value: "item1", label: "Item 1", icon: createMockIcon() },
+    { value: "item2", label: "Item 2", icon: createMockIcon() },
+    { value: "item3", label: "Item 3", icon: createMockIcon() },
   ]
 
   const mockOnClick = vi.fn()
@@ -56,8 +91,10 @@ describe("OneDropdownButton", () => {
   it("renders with default selection (first item)", () => {
     render(<OneDropdownButton items={mockItems} onClick={mockOnClick} />)
 
-    expect(screen.getByTestId("button")).toBeInTheDocument()
-    expect(screen.getByTestId("button-label")).toHaveTextContent("Item 1")
+    expect(screen.getByTestId("dropdown-main-button")).toBeInTheDocument()
+    expect(screen.getByTestId("dropdown-main-label")).toHaveTextContent(
+      "Item 1"
+    )
     expect(screen.getByTestId("dropdown")).toBeInTheDocument()
     expect(screen.getByTestId("chevron-icon")).toBeInTheDocument()
   })
@@ -71,7 +108,9 @@ describe("OneDropdownButton", () => {
       />
     )
 
-    expect(screen.getByTestId("button-label")).toHaveTextContent("Item 2")
+    expect(screen.getByTestId("dropdown-main-label")).toHaveTextContent(
+      "Item 2"
+    )
   })
 
   it("passes dropdown items excluding the selected item", () => {
@@ -107,7 +146,7 @@ describe("OneDropdownButton", () => {
       />
     )
 
-    await user.click(screen.getByTestId("button"))
+    await user.click(screen.getByTestId("dropdown-main-button"))
 
     expect(mockOnClick).toHaveBeenCalledTimes(1)
     expect(mockOnClick).toHaveBeenCalledWith("item2", mockItems[1])
@@ -128,7 +167,7 @@ describe("OneDropdownButton", () => {
     userEvent.click(screen.getByText("Item 2"))
 
     // Now if we click the main button, it should use the new value
-    await userEvent.click(screen.getByTestId("button"))
+    await userEvent.click(screen.getByTestId("dropdown-main-button"))
     expect(mockOnClick).toHaveBeenCalledWith("item2", mockItems[1])
   })
 })

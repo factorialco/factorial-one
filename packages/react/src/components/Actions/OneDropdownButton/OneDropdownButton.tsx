@@ -11,9 +11,8 @@ export type OneDropdownButtonItem<T = string> = {
   icon?: IconType
 }
 
-export type OneDropdownButtonProps<T = string> = Pick<
-  ButtonInternalProps,
-  "disabled" | "loading"
+export type OneDropdownButtonProps<T = string> = Partial<
+  Pick<ButtonInternalProps, "disabled" | "loading">
 > & {
   size?: OneDropdownButtonSize
   items: OneDropdownButtonItem<T>[]
