@@ -268,7 +268,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
           <div
             ref={editorContentContainerRef}
             className={cn(
-              "scrollbar-macos relative flex w-full items-start justify-center overflow-y-auto pl-3 pr-10 pt-3",
+              "scrollbar-macos relative flex w-full items-start justify-center overflow-y-auto pb-1 pl-3 pr-10 pt-3",
               isFullscreen ? "h-full" : getHeight(height)
             )}
           >
