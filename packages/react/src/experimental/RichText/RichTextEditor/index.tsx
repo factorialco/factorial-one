@@ -96,6 +96,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
     const [isLoadingEnhance, setIsLoadingEnhance] = useState(false)
     const [isFullscreen, setIsFullscreen] = useState(false)
     const [isAcceptChangesOpen, setIsAcceptChangesOpen] = useState(false)
+    const [needsMinHeight, setNeedsMinHeight] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [isToolbarOpen, setIsToolbarOpen] = useState(false)
     const [lastIntent, setLastIntent] = useState<lastIntentType>(null)
@@ -131,6 +132,16 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       })
       return cleanupObservers
     }, [height, isFullscreen])
+
+    useEffect(() => {
+      if (isLoadingEnhance && editorContentContainerRef.current) {
+        const containerHeight =
+          editorContentContainerRef.current.getBoundingClientRect().height
+        setNeedsMinHeight(containerHeight < 64)
+      } else {
+        setNeedsMinHeight(false)
+      }
+    }, [isLoadingEnhance])
 
     const handleToggleFullscreen = () => {
       if (editor) {
@@ -238,11 +249,11 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
       <div
         ref={containerRef}
         id="rich-text-editor-container"
-        className={cn(
+        className={
           isFullscreen
             ? "fixed inset-0 z-50 flex flex-col bg-f1-background"
             : "relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background"
-        )}
+        }
       >
         <Head
           isFullscreen={isFullscreen}
@@ -252,7 +263,7 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
         />
 
         <div
-          className={cn("relative w-full flex-grow overflow-hidden")}
+          className="relative w-full flex-grow overflow-hidden"
           onClick={() => editor?.commands.focus()}
         >
           <div
@@ -262,17 +273,43 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
               isFullscreen ? "h-full" : getHeight(height)
             )}
           >
-            <div className={cn("w-full", isFullscreen && "max-w-4xl")}>
+            <motion.div
+              className={cn(
+                "w-full overflow-hidden",
+                isFullscreen && "max-w-4xl"
+              )}
+              initial={false}
+              animate={{
+                minHeight: needsMinHeight ? "4rem" : "auto",
+                opacity: needsMinHeight ? 0.8 : 1,
+                scale: needsMinHeight ? 0.98 : 1,
+              }}
+              transition={{
+                duration: 0.4,
+                ease: [0.04, 0.62, 0.23, 0.98],
+              }}
+            >
               <EditorContent editor={editor} />
-            </div>
+            </motion.div>
           </div>
 
-          {isLoadingEnhance && (
-            <LoadingEnhance
-              isFullscreen={isFullscreen}
-              label={enhanceConfig?.enhanceLabels.loadingEnhanceLabel}
-            />
-          )}
+          <AnimatePresence>
+            {isLoadingEnhance && (
+              <motion.div
+                key="loading-enhance"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="absolute inset-0"
+              >
+                <LoadingEnhance
+                  isFullscreen={isFullscreen}
+                  label={enhanceConfig?.enhanceLabels.loadingEnhanceLabel}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div
@@ -290,7 +327,6 @@ const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
                 exit={{ height: 0, opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
                 className="flex w-full items-center justify-center pt-2"
-                aria-label="Accept changes dialog"
               >
                 {isAcceptChangesOpen && (
                   <AcceptChanges
