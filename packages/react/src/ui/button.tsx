@@ -28,7 +28,7 @@ const buttonVariants = cva({
     },
     variant: {
       default:
-        "bg-f1-background-accent-bold text-f1-foreground-inverse shadow-[0_2px_6px_-1px_rgba(13,22,37,.10),inset_0_-2px_4px_rgba(13,22,37,.08)] before:absolute before:inset-0 before:rounded before:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)] before:content-[''] hover:bg-f1-background-accent-bold-hover",
+        "bg-f1-background-accent-bold text-f1-foreground-inverse shadow-[0_2px_6px_-1px_rgba(13,22,37,.10),inset_0_-2px_4px_rgba(13,22,37,.08)] after:pointer-events-none after:absolute after:inset-0 after:rounded after:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)] after:content-[''] hover:bg-f1-background-accent-bold-hover",
       outline:
         "bg-f1-background-inverse-secondary text-f1-foreground after:pointer-events-none after:absolute after:inset-0 after:rounded after:ring-1 after:ring-inset after:ring-f1-border after:transition-all after:content-[''] hover:bg-f1-background-tertiary hover:after:opacity-70 hover:after:ring-f1-border-hover",
       neutral:
@@ -83,48 +83,63 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     const Comp = asChild ? Slot : "div"
     return (
-      <Comp
-        className={cn(
-          buttonVariants({ variant, size, disabled: !!disabled }),
-          className
-        )}
-        aria-disabled={disabled}
-        tabIndex={disabled ? -1 : 0}
-        onClick={(e) => {
-          e.preventDefault()
-          buttonRef.current?.click()
-        }}
-        onKeyPress={(e) => {
-          e.preventDefault()
-          if (e.key === "Enter" || e.key === " ") {
-            buttonRef.current?.click()
-          }
-        }}
-      >
-        <button
-          ref={buttonRef}
-          tabIndex={-1}
-          role="button"
+      <>
+        <Comp
           className={cn(
-            "group inline-flex items-center justify-center gap-1 whitespace-nowrap",
-            "text-inherit font-inherit text-current",
-            size === "sm" && "h-6 px-2",
-            size === "md" && "h-8 px-3",
-            size === "lg" && "h-10 px-4",
-            round && "aspect-square px-0"
+            buttonVariants({ variant, size, disabled: !!disabled }),
+            appendButton &&
+              "rounded-r-none after:rounded-r-none [&>button]:rounded-r-none",
+            className
           )}
-          disabled={disabled}
-          {...props}
+          aria-disabled={disabled}
+          tabIndex={disabled ? -1 : 0}
           onClick={(e) => {
-            // Avoid the click event from bubbling up to the parent to avoid double clicks
-            e.stopPropagation()
-            props.onClick?.(e)
+            e.preventDefault()
+            buttonRef.current?.click()
+          }}
+          onKeyDown={(e) => {
+            e.preventDefault()
+            if (e.key === "Enter" || e.key === " ") {
+              buttonRef.current?.click()
+            }
           }}
         >
-          {children}
-        </button>
-        {appendButton}
-      </Comp>
+          <button
+            ref={buttonRef}
+            tabIndex={-1}
+            role="button"
+            className={cn(
+              "group inline-flex items-center justify-center gap-1 whitespace-nowrap",
+              "text-inherit font-inherit text-current",
+              size === "sm" && "h-6 px-2",
+              size === "md" && "h-8 px-3",
+              size === "lg" && "h-10 px-4",
+              round && "aspect-square px-0"
+            )}
+            disabled={disabled}
+            {...props}
+            onClick={(e) => {
+              // Avoid the click event from bubbling up to the parent to avoid double clicks
+              e.stopPropagation()
+              props.onClick?.(e)
+            }}
+          >
+            {children}
+          </button>
+        </Comp>
+        {appendButton && (
+          <div
+            className={cn(
+              "relative h-fit w-fit translate-x-[-1px] [&>button]:rounded-l-none [&>div:after]:rounded-l-none [&>div]:rounded-l-none",
+              size === "sm" && "h-6 w-6",
+              size === "md" && "h-8 w-8",
+              size === "lg" && "h-10 w-10"
+            )}
+          >
+            {appendButton}
+          </div>
+        )}
+      </>
     )
   }
 )
