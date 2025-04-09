@@ -7,6 +7,8 @@ import {
   ArrowRight,
   Delete,
   Download,
+  Exit,
+  File,
   Pencil,
   Share,
   Star,
@@ -40,14 +42,22 @@ const filters = {
     label: "Department",
     options: DEPARTMENTS.map((value) => ({ value, label: value })),
   },
+  status: {
+    type: "in",
+    label: "Status",
+    options: ["Active", "Pending", "Not invited"].map((value) => ({
+      value,
+      label: value,
+    })),
+  },
 } as const
 
 // Define presets for the filters
 const filterPresets: Presets<typeof filters> = [
   {
-    label: "Engineering Team",
+    label: "Active",
     filter: {
-      department: ["Engineering"],
+      status: ["Active"],
     },
   },
   {
@@ -81,46 +91,56 @@ const mockUsers: {
   isStarred: boolean
   href?: string
   salary: number | undefined
+  hired: string
+  teams: string[]
 }[] = [
   {
     id: "user-1",
-    name: "John Doe",
-    email: "john@example.com",
-    role: "Senior Engineer",
-    department: DEPARTMENTS[0],
-    status: "active",
+    name: "Desirée Navarro",
+    email: "dnavarro@example.com",
+    role: "Product Designer",
+    department: DEPARTMENTS[2],
+    status: "Pending",
     isStarred: true,
-    salary: 100000,
+    salary: 75000,
+    hired: "2025-06-20",
+    teams: [DEPARTMENTS[2], DEPARTMENTS[1]],
   },
   {
     id: "user-2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    role: "Product Manager",
-    department: DEPARTMENTS[1],
-    status: "active",
+    name: "Sergio Carracedo",
+    email: "scarracedo@example.com",
+    role: "Senior Engineer",
+    department: DEPARTMENTS[0],
+    status: "Active",
     isStarred: false,
     salary: 80000,
+    hired: "2025-02-03",
+    teams: [DEPARTMENTS[0], DEPARTMENTS[1]],
   },
   {
     id: "user-3",
-    name: "Bob Johnson",
-    email: "bob@example.com",
-    role: "Designer",
+    name: "Daniel Moreno",
+    email: "dmoreno@example.com",
+    role: "Design Engineer",
     department: DEPARTMENTS[2],
-    status: "inactive",
+    status: "Not invited",
     isStarred: false,
     salary: 90000,
+    hired: "-",
+    teams: [DEPARTMENTS[2], DEPARTMENTS[0], DEPARTMENTS[1]],
   },
   {
     id: "user-4",
-    name: "Alice Williams",
-    email: "alice@example.com",
-    role: "Marketing Lead",
+    name: "Nik Lopinto",
+    email: "nlopin@example.com",
+    role: "Senior Engineer",
     department: DEPARTMENTS[3],
-    status: "active",
+    status: "Active",
     isStarred: true,
     salary: undefined,
+    hired: "2025-01-12",
+    teams: [DEPARTMENTS[3]],
   },
 ]
 
@@ -503,6 +523,15 @@ export const BasicTableView: Story = {
         department: {
           label: "Department",
         },
+        status: {
+          label: "Status",
+        },
+        teams: {
+          label: "Teams",
+        },
+        hired: {
+          label: "Hired",
+        },
         salary: {
           label: "Salary",
         },
@@ -515,33 +544,24 @@ export const BasicTableView: Story = {
       },
       itemActions: (item) => [
         {
-          label: "Edit",
-          icon: Pencil,
-          onClick: () => console.log(`Editing ${item.name}`),
-          description: "Modify user information",
+          label: "View contract",
+          icon: File,
+          onClick: () => console.log(`Viewing ${item.name}'s contract`),
+          description: "View user contract",
         },
         {
-          label: "View Profile",
-          icon: Ai,
+          label: `Login as ${item.name.split(" ")[0]}`,
+          icon: Exit,
           onClick: () => console.log(`Viewing ${item.name}'s profile`),
+          description: "Login as this user",
         },
         { type: "separator" },
-        {
-          label: item.isStarred ? "Remove Star" : "Star User",
-          icon: Star,
-          onClick: () => console.log(`Toggling star for ${item.name}`),
-          description: item.isStarred
-            ? "Remove from favorites"
-            : "Add to favorites",
-        },
         {
           label: "Delete",
           icon: Delete,
           onClick: () => console.log(`Deleting ${item.name}`),
           critical: true,
           description: "Permanently remove user",
-          enabled:
-            item.department === "Engineering" && item.status === "active",
         },
       ],
       primaryActions: () => ({
@@ -584,19 +604,46 @@ export const BasicTableView: Story = {
                     sorting: "name",
                   },
                   {
-                    label: "Email",
-                    render: (item) => item.email,
-                    sorting: "email",
-                  },
-                  {
                     label: "Role",
                     render: (item) => item.role,
                     sorting: "role",
                   },
                   {
-                    label: "Department",
-                    render: (item) => item.department,
-                    sorting: "department",
+                    label: "Status",
+                    render: (item) => ({
+                      type: "status",
+                      value: {
+                        status:
+                          item.status === "Active"
+                            ? "positive"
+                            : item.status === "Pending"
+                              ? "warning"
+                              : "neutral",
+                        label: item.status,
+                      },
+                    }),
+                    sorting: "status",
+                  },
+                  {
+                    label: "Teams",
+                    render: (item) => ({
+                      type: "avatarList",
+                      value: {
+                        avatarList: item.teams.map((team) => ({
+                          type: "team",
+                          name: team,
+                        })),
+                      },
+                    }),
+                    sorting: "teams",
+                  },
+                  {
+                    label: "Hired",
+                    render: (item) => ({
+                      type: "date",
+                      value: new Date(item.hired),
+                    }),
+                    sorting: "hired",
                   },
                   {
                     label: "Salary",
@@ -1024,8 +1071,17 @@ const sortings = {
   role: {
     label: "Role",
   },
+  status: {
+    label: "Status",
+  },
+  teams: {
+    label: "Teams",
+  },
   salary: {
     label: "Salary",
+  },
+  hired: {
+    label: "Hired",
   },
 } as const
 
@@ -1540,6 +1596,7 @@ const generateMockUsers = (count: number) => {
       isStarred: index % 3 === 0,
       href: `/users/user-${index + 1}`,
       salary: department === "Marketing" ? 50000 + index * 1000 : undefined,
+      hired: "2020-01-01",
     }
   })
 }
