@@ -54,10 +54,15 @@ export function MonthView({
   // Handle click on a month
   const handleMonthClick = (monthIndex: number) => {
     const selectedDate = new Date(year, monthIndex, 1)
+    const monthStart = startOfMonth(selectedDate)
+    const monthEnd = endOfMonth(selectedDate)
 
     if (mode === "single") {
-      // Single select
-      onSelect?.(selectedDate)
+      // Return the full month range
+      onSelect?.({
+        from: monthStart,
+        to: monthEnd,
+      })
     } else if (mode === "range") {
       if (!selected || !isDateRange(selected)) {
         // Start of range

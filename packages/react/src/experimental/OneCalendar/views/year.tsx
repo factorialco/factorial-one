@@ -46,8 +46,11 @@ export function YearView({
     const selectedDate = new Date(year, 0, 1)
 
     if (mode === "single") {
-      // single select
-      onSelect?.(selectedDate)
+      // Return the full year range
+      onSelect?.({
+        from: startOfYear(selectedDate),
+        to: endOfYear(selectedDate),
+      })
     } else if (mode === "range") {
       if (!selected || !isDateRange(selected)) {
         // Start of range
