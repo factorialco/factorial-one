@@ -152,7 +152,7 @@ export const f1Colors = {
       alpha5: "hsl(var(--accent-50) / 0.05)",
     },
     promote: {
-      DEFAULT: "hsl(var(--promote-50) / 0.2)",
+      DEFAULT: "hsl(var(--promote-50) / 0.3)",
       hover: "hsl(var(--promote-50) / 0.4)",
       alpha5: "hsl(var(--promote-50) / 0.05)",
     },
