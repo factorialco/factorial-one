@@ -93,6 +93,9 @@ const Container = forwardRef<
         fullHeight ? "h-full" : "",
         "relative flex gap-3 border-f1-border-secondary"
       )}
+      style={{
+        backgroundColor: "hsl(var(--white-40))",
+      }}
       ref={ref}
     >
       {header && (
