@@ -19,7 +19,7 @@ export type ButtonSize = (typeof sizes)[number]
 
 const buttonVariants = cva({
   base: cn(
-    "group inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md border-none text-base font-medium transition-colors"
+    "group relative inline-flex items-center justify-center gap-1 whitespace-nowrap rounded border-none text-base font-medium shadow-[0_2px_6px_-1px_rgba(13,22,37,.04),inset_0_-2px_4px_rgba(13,22,37,.04)] transition-colors"
   ),
   variants: {
     disabled: {
@@ -28,22 +28,22 @@ const buttonVariants = cva({
     },
     variant: {
       default:
-        "bg-f1-background-accent-bold text-f1-foreground-inverse hover:bg-f1-background-accent-bold-hover",
+        "bg-f1-background-accent-bold text-f1-foreground-inverse shadow-[0_2px_6px_-1px_rgba(13,22,37,.10),inset_0_-2px_4px_rgba(13,22,37,.08)] before:absolute before:inset-0 before:rounded before:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.25)] before:content-[''] hover:bg-f1-background-accent-bold-hover",
       outline:
-        "border border-solid border-f1-border bg-f1-background-inverse-secondary text-f1-foreground hover:border-f1-border-hover",
+        "bg-f1-background-inverse-secondary text-f1-foreground after:pointer-events-none after:absolute after:inset-0 after:rounded after:ring-1 after:ring-inset after:ring-f1-border after:transition-all after:content-[''] hover:bg-f1-background-tertiary hover:after:opacity-70 hover:after:ring-f1-border-hover",
       neutral:
         "bg-f1-background-secondary text-f1-foreground hover:bg-f1-background-secondary-hover",
       critical:
         "border border-solid border-f1-border bg-f1-background-secondary text-f1-foreground-critical hover:border-transparent hover:bg-f1-background-critical-bold hover:text-f1-foreground-inverse dark:bg-transparent dark:hover:bg-f1-background-critical-bold",
       ghost:
-        "bg-transparent text-f1-foreground hover:bg-f1-background-secondary-hover",
+        "bg-transparent text-f1-foreground shadow-none hover:bg-f1-background-secondary-hover hover:shadow-[0_2px_6px_-1px_rgba(13,22,37,.04),inset_0_-2px_4px_rgba(13,22,37,.04)]",
       promote:
         "border border-solid border-f1-border-promote bg-f1-background-promote text-f1-foreground hover:bg-f1-background-promote-hover",
     } satisfies Record<ButtonVariant, string>,
     size: {
       sm: "h-6 rounded-sm px-2",
       md: "h-8 rounded px-3",
-      lg: "h-10 rounded px-4",
+      lg: "h-10 rounded-md px-4",
     } satisfies Record<ButtonSize, string>,
     round: {
       true: "aspect-square px-0",
