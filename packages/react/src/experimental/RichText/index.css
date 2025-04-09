@@ -3,8 +3,8 @@
   @apply rounded-xs bg-f1-background-accent px-1.5 py-0.5 font-medium;
 }
 
-.mention:hover {
-  @apply bg-f1-background-critical;
+.mention:focus {
+  @apply outline outline-1 outline-offset-1 outline-f1-border-selected-bold;
 }
 
 .magicBackground {
@@ -21,10 +21,6 @@
 }
 
 /* Make all selections transparent */
-.ProseMirror *::selection {
-  background-color: transparent !important;
-}
-
 #rich-text-editor-container *::selection {
   background-color: transparent !important;
 }
