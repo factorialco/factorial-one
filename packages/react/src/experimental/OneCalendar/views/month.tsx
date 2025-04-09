@@ -7,6 +7,7 @@ import {
   isWithinInterval,
   startOfMonth,
 } from "date-fns"
+import { AnimatePresence, motion } from "framer-motion"
 import { CalendarMode, DateRange } from "../types"
 
 interface MonthViewProps {
@@ -14,10 +15,18 @@ interface MonthViewProps {
   selected?: Date | DateRange | null
   onSelect?: (date: Date | DateRange | null) => void
   year: number
+  motionDirection?: number
 }
 
-export function MonthView({ mode, selected, onSelect, year }: MonthViewProps) {
+export function MonthView({
+  mode,
+  selected,
+  onSelect,
+  year,
+  motionDirection = 1,
+}: MonthViewProps) {
   const i18n = useI18n()
+
   const months = [
     { name: i18n.date.month.january, index: 0 },
     { name: i18n.date.month.february, index: 1 },
@@ -139,53 +148,76 @@ export function MonthView({ mode, selected, onSelect, year }: MonthViewProps) {
     )
   }
 
-  return (
-    <div className="grid grid-cols-3 gap-y-3">
-      {months.map((month) => {
-        const isCurrent = isCurrentMonth(month.index)
-        const isSelected = isMonthSelected(month.index)
-        const isStart = isRangeStart(month.index)
-        const isEnd = isRangeEnd(month.index)
+  const motionVariants = {
+    hidden: (direction: number) => ({
+      opacity: 0,
+      x: direction === 1 ? 40 : -40,
+    }),
+    visible: { opacity: 1, x: 0 },
+    exit: (direction: number) => ({
+      opacity: 0,
+      x: direction === 1 ? -40 : 40,
+    }),
+  }
 
-        return (
-          <button
-            type="button"
-            key={month.index}
-            onClick={() => handleMonthClick(month.index)}
-            className={cn(
-              "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-[''] hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
-              focusRing(),
-              isSelected &&
-                mode === "single" &&
-                "bg-f1-background-selected-bold text-f1-foreground-inverse hover:bg-f1-background-selected-bold-hover",
-              isSelected &&
-                mode === "range" &&
-                "rounded-none bg-f1-background-selected hover:bg-f1-background-selected [&:nth-child(3n+1)]:rounded-s-md [&:nth-child(3n+3)]:rounded-e-md",
-              (isStart || isEnd) &&
-                mode === "range" &&
-                "rounded-none bg-f1-background-selected after:opacity-100 [&>span]:z-10 [&>span]:text-f1-foreground-inverse",
-              isStart && mode === "range" && isEnd && "rounded-s-md",
-              isEnd && mode === "range" && "rounded-e-md"
-            )}
-          >
-            <span>{month.name}</span>
-            {isCurrent && (
-              <div
-                className={cn(
-                  "absolute inset-x-0 bottom-1 z-20 mx-auto h-0.5 w-1.5 rounded-full bg-f1-background-selected-bold transition-colors duration-100",
-                  isSelected && mode === "single" && "bg-f1-background",
-                  (isStart || isEnd) && "bg-f1-background",
-                  !isStart &&
-                    !isEnd &&
-                    isSelected &&
-                    mode === "range" &&
-                    "bg-f1-background-selected-bold"
-                )}
-              />
-            )}
-          </button>
-        )
-      })}
-    </div>
+  return (
+    <AnimatePresence mode="popLayout" initial={false} custom={motionDirection}>
+      <motion.div
+        key={year}
+        className="grid grid-cols-3 gap-y-3"
+        custom={motionDirection}
+        variants={motionVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{ duration: 0.15, ease: [0.455, 0.03, 0.515, 0.955] }}
+      >
+        {months.map((month) => {
+          const isCurrent = isCurrentMonth(month.index)
+          const isSelected = isMonthSelected(month.index)
+          const isStart = isRangeStart(month.index)
+          const isEnd = isRangeEnd(month.index)
+
+          return (
+            <button
+              type="button"
+              key={month.index}
+              onClick={() => handleMonthClick(month.index)}
+              className={cn(
+                "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-[''] hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
+                focusRing(),
+                isSelected &&
+                  mode === "single" &&
+                  "bg-f1-background-selected-bold text-f1-foreground-inverse hover:bg-f1-background-selected-bold-hover",
+                isSelected &&
+                  mode === "range" &&
+                  "rounded-none bg-f1-background-selected hover:bg-f1-background-selected [&:nth-child(3n+1)]:rounded-s-md [&:nth-child(3n+3)]:rounded-e-md [&>span]:text-f1-foreground-selected",
+                (isStart || isEnd) &&
+                  mode === "range" &&
+                  "rounded-none bg-f1-background-selected after:opacity-100 [&>span]:z-10 [&>span]:text-f1-foreground-inverse",
+                isStart && mode === "range" && isEnd && "rounded-s-md",
+                isEnd && mode === "range" && "rounded-e-md"
+              )}
+            >
+              <span>{month.name}</span>
+              {isCurrent && (
+                <div
+                  className={cn(
+                    "absolute inset-x-0 bottom-1 z-20 mx-auto h-0.5 w-1.5 rounded-full bg-f1-background-selected-bold transition-colors duration-100",
+                    isSelected && mode === "single" && "bg-f1-background",
+                    (isStart || isEnd) && "bg-f1-background",
+                    !isStart &&
+                      !isEnd &&
+                      isSelected &&
+                      mode === "range" &&
+                      "bg-f1-background-selected-bold"
+                  )}
+                />
+              )}
+            </button>
+          )
+        })}
+      </motion.div>
+    </AnimatePresence>
   )
 }

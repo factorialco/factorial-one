@@ -18,7 +18,7 @@ export const MonthSingle: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="mx-auto max-w-96">
+      <div className="mx-auto max-w-80">
         <Story />
       </div>
     ),
@@ -36,7 +36,7 @@ export const MonthRange: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="mx-auto max-w-96">
+      <div className="mx-auto max-w-80">
         <Story />
       </div>
     ),
@@ -50,7 +50,7 @@ export const YearSingle: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="mx-auto max-w-96">
+      <div className="mx-auto max-w-80">
         <Story />
       </div>
     ),
@@ -64,17 +64,39 @@ export const YearRange: Story = {
   },
   decorators: [
     (Story) => (
-      <div className="mx-auto max-w-96">
+      <div className="mx-auto max-w-80">
         <Story />
       </div>
     ),
   ],
 }
 
-export const DayView: Story = {
+export const DaySingle: Story = {
   args: {
     mode: "single",
     view: "day",
     defaultMonth: new Date("2024-03-15"),
   },
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-80">
+        <Story />
+      </div>
+    ),
+  ],
+}
+
+export const DayRange: Story = {
+  args: {
+    mode: "range",
+    view: "day",
+    defaultMonth: new Date("2024-03-15"),
+  },
+  decorators: [
+    (Story) => (
+      <div className="mx-auto max-w-80">
+        <Story />
+      </div>
+    ),
+  ],
 }

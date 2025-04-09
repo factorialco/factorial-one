@@ -1,11 +1,12 @@
 import { ChevronLeft, ChevronRight } from "@/icons/app"
 import { useI18n } from "@/lib/i18n-provider"
+import NumberFlow from "@number-flow/react"
 import { useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { CalendarMode, CalendarView, DateRange } from "./types"
+import { DayView } from "./views/day"
 import { MonthView } from "./views/month"
 import { YearView } from "./views/year"
-
 export interface OneCalendarProps {
   mode: CalendarMode
   view: CalendarView
@@ -30,9 +31,15 @@ export function OneCalendar({
     defaultSelected
   )
 
+  const [motionDirection, setMotionDirection] = useState(1)
+
   // Handle navigation
   const handlePrevious = () => {
     const newDate = new Date(viewDate)
+
+    if (view === "day") {
+      newDate.setMonth(newDate.getMonth() - 1)
+    }
 
     if (view === "month") {
       newDate.setFullYear(newDate.getFullYear() - 1)
@@ -42,11 +49,16 @@ export function OneCalendar({
       newDate.setFullYear(newDate.getFullYear() - 10)
     }
 
+    setMotionDirection(-1)
     setViewDate(newDate)
   }
 
   const handleNext = () => {
     const newDate = new Date(viewDate)
+
+    if (view === "day") {
+      newDate.setMonth(newDate.getMonth() + 1)
+    }
 
     if (view === "month") {
       newDate.setFullYear(newDate.getFullYear() + 1)
@@ -56,13 +68,32 @@ export function OneCalendar({
       newDate.setFullYear(newDate.getFullYear() + 10)
     }
 
+    setMotionDirection(1)
     setViewDate(newDate)
   }
 
   // Get header label
   const getHeaderLabel = () => {
+    if (view === "day") {
+      return new Intl.DateTimeFormat("en-US", {
+        month: "long",
+        year: "numeric",
+      }).format(viewDate)
+    }
+
     if (view === "month") {
-      return viewDate.getFullYear().toString()
+      return (
+        <NumberFlow
+          format={{
+            useGrouping: false,
+            maximumFractionDigits: 0,
+          }}
+          spinTiming={{
+            duration: 150,
+          }}
+          value={viewDate.getFullYear()}
+        />
+      )
     }
 
     if (view === "year") {
@@ -110,22 +141,35 @@ export function OneCalendar({
           </div>
         </div>
       )}
-      <div>
-        {view === "day" && <div>Day calendar</div>}
+      <div className="relative">
+        {view === "day" && (
+          <DayView
+            mode={mode}
+            selected={selected}
+            onSelect={handleSelect}
+            month={viewDate}
+            onMonthChange={setViewDate}
+            motionDirection={motionDirection}
+          />
+        )}
+
         {view === "month" && (
           <MonthView
             mode={mode}
             year={viewDate.getFullYear()}
             selected={selected}
             onSelect={handleSelect}
+            motionDirection={motionDirection}
           />
         )}
+
         {view === "year" && (
           <YearView
             mode={mode}
             decade={viewDate.getFullYear()}
             selected={selected}
             onSelect={handleSelect}
+            motionDirection={motionDirection}
           />
         )}
       </div>

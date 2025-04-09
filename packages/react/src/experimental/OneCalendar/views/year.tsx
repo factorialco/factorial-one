@@ -6,6 +6,7 @@ import {
   isWithinInterval,
   startOfYear,
 } from "date-fns"
+import { AnimatePresence, motion } from "framer-motion"
 import { CalendarMode, DateRange } from "../types"
 
 interface YearViewProps {
@@ -13,9 +14,16 @@ interface YearViewProps {
   selected?: Date | DateRange | null
   onSelect?: (date: Date | DateRange | null) => void
   decade: number
+  motionDirection?: number
 }
 
-export function YearView({ mode, selected, onSelect, decade }: YearViewProps) {
+export function YearView({
+  mode,
+  selected,
+  onSelect,
+  decade,
+  motionDirection = 1,
+}: YearViewProps) {
   const today = new Date()
 
   // Check if a value is a DateRange
@@ -124,53 +132,76 @@ export function YearView({ mode, selected, onSelect, decade }: YearViewProps) {
     return year < decadeStart || year >= decadeStart + 10
   }
 
+  const motionVariants = {
+    hidden: (direction: number) => ({
+      opacity: 0,
+      x: direction === 1 ? 40 : -40,
+    }),
+    visible: { opacity: 1, x: 0 },
+    exit: (direction: number) => ({
+      opacity: 0,
+      x: direction === 1 ? -40 : 40,
+    }),
+  }
+
   return (
-    <div className="grid grid-cols-4 gap-y-3">
-      {years.map((year) => {
-        const isSelected = isYearSelected(year)
-        const isStart = isRangeStart(year)
-        const isEnd = isRangeEnd(year)
-        const isOutside = isOutsideDecade(year)
-        const isCurrent = isCurrentYear(year)
-        return (
-          <button
-            key={year}
-            onClick={() => handleYearClick(year)}
-            className={cn(
-              "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-[''] hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
-              focusRing(),
-              isOutside && "[&>span]:opacity-30",
-              isSelected &&
-                mode === "single" &&
-                "bg-f1-background-selected-bold text-f1-foreground-inverse hover:bg-f1-background-selected-bold-hover [&>span]:opacity-100",
-              isSelected &&
-                mode === "range" &&
-                "rounded-none bg-f1-background-selected hover:bg-f1-background-selected [&:nth-child(4n+1)]:rounded-s-md [&:nth-child(4n+4)]:rounded-e-md [&>span]:opacity-100",
-              (isStart || isEnd) &&
-                mode === "range" &&
-                "rounded-none bg-f1-background-selected after:opacity-100 [&>span]:z-10 [&>span]:text-f1-foreground-inverse [&>span]:opacity-100",
-              isStart && mode === "range" && isEnd && "rounded-s-md",
-              isEnd && mode === "range" && "rounded-e-md"
-            )}
-          >
-            <span>{year}</span>
-            {isCurrent && (
-              <div
-                className={cn(
-                  "absolute inset-x-0 bottom-1 z-20 mx-auto h-0.5 w-1.5 rounded-full bg-f1-background-selected-bold transition-colors duration-100",
-                  isSelected && mode === "single" && "bg-f1-background",
-                  (isStart || isEnd) && "bg-f1-background",
-                  !isStart &&
-                    !isEnd &&
-                    isSelected &&
-                    mode === "range" &&
-                    "bg-f1-background-selected-bold"
-                )}
-              />
-            )}
-          </button>
-        )
-      })}
-    </div>
+    <AnimatePresence mode="popLayout" initial={false} custom={motionDirection}>
+      <motion.div
+        key={decade}
+        className="grid grid-cols-4 gap-y-3"
+        custom={motionDirection}
+        variants={motionVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{ duration: 0.15, ease: [0.455, 0.03, 0.515, 0.955] }}
+      >
+        {years.map((year) => {
+          const isSelected = isYearSelected(year)
+          const isStart = isRangeStart(year)
+          const isEnd = isRangeEnd(year)
+          const isOutside = isOutsideDecade(year)
+          const isCurrent = isCurrentYear(year)
+          return (
+            <button
+              key={year}
+              onClick={() => handleYearClick(year)}
+              className={cn(
+                "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-[''] hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
+                focusRing(),
+                isOutside && "[&>span]:opacity-30",
+                isSelected &&
+                  mode === "single" &&
+                  "bg-f1-background-selected-bold text-f1-foreground-inverse hover:bg-f1-background-selected-bold-hover [&>span]:opacity-100",
+                isSelected &&
+                  mode === "range" &&
+                  "rounded-none bg-f1-background-selected hover:bg-f1-background-selected [&:nth-child(4n+1)]:rounded-s-md [&:nth-child(4n+4)]:rounded-e-md [&>span]:text-f1-foreground-selected [&>span]:opacity-100",
+                (isStart || isEnd) &&
+                  mode === "range" &&
+                  "rounded-none bg-f1-background-selected after:opacity-100 [&>span]:z-10 [&>span]:text-f1-foreground-inverse [&>span]:opacity-100",
+                isStart && mode === "range" && isEnd && "rounded-s-md",
+                isEnd && mode === "range" && "rounded-e-md"
+              )}
+            >
+              <span>{year}</span>
+              {isCurrent && (
+                <div
+                  className={cn(
+                    "absolute inset-x-0 bottom-1 z-20 mx-auto h-0.5 w-1.5 rounded-full bg-f1-background-selected-bold transition-colors duration-100",
+                    isSelected && mode === "single" && "bg-f1-background",
+                    (isStart || isEnd) && "bg-f1-background",
+                    !isStart &&
+                      !isEnd &&
+                      isSelected &&
+                      mode === "range" &&
+                      "bg-f1-background-selected-bold"
+                  )}
+                />
+              )}
+            </button>
+          )
+        })}
+      </motion.div>
+    </AnimatePresence>
   )
 }
