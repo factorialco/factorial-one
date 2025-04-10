@@ -1,19 +1,4 @@
-import { cva } from "cva"
 import { OneDropdownButtonVariant } from "./types.ts"
-
-export const internalButtonVariants = cva({
-  base: "border-0 border-l border-solid",
-  variants: {
-    size: {
-      sm: "-mr-2 ml-1 w-6 px-1",
-      md: "-mr-3 ml-2 w-9 px-1",
-      lg: "-mr-4 ml-3 w-12 px-1",
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
-})
 
 export const internalButtonVariantsStyles = (
   variant?: OneDropdownButtonVariant
