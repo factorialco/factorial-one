@@ -1,10 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { expect, within } from "@storybook/test"
-
-import Add from "../../../icons/app/Add"
-import Archive from "../../../icons/app/Archive"
-import Delete from "../../../icons/app/Delete"
-import Save from "../../../icons/app/Save"
+import { Add, Archive, Delete, Save } from "../../../icons/app"
 import { Button } from "./index"
 
 const meta = {
@@ -83,40 +79,80 @@ export const Default: Story = {
   },
 }
 
-export const Critical: Story = {
-  args: {
-    variant: "critical",
-    label: "Delete Item",
-    icon: Delete,
-  },
-}
-
-export const Neutral: Story = {
-  args: {
-    variant: "neutral",
-    label: "Cancel",
-  },
-}
-
-export const Ghost: Story = {
-  args: {
-    variant: "ghost",
-    label: "View Details",
-  },
-}
-
-export const Outline: Story = {
-  args: {
-    variant: "outline",
-    label: "Secondary Action",
-  },
-}
-
-export const Promote: Story = {
-  args: {
-    variant: "promote",
-    label: "Upgrade Now",
-  },
+export const Variants: Story = {
+  render: (args) => (
+    <div className="flex flex-col gap-2">
+      <h3>Default</h3>
+      <div className="flex gap-2">
+        <Button {...args} variant="default" label="Default" />
+        <Button {...args} variant="critical" label="Critical" />
+        <Button {...args} variant="neutral" label="Neutral" />
+        <Button {...args} variant="ghost" label="Ghost" />
+        <Button {...args} variant="outline" label="Outline" />
+        <Button {...args} variant="promote" label="Promote" />
+      </div>
+      <h3 className="mt-4">With icon</h3>
+      <div className="flex gap-2">
+        <Button {...args} variant="default" label="Default" icon={Add} />
+        <Button {...args} variant="critical" label="Critical" icon={Delete} />
+        <Button {...args} variant="neutral" label="Neutral" icon={Archive} />
+        <Button {...args} variant="ghost" label="Ghost" icon={Save} />
+        <Button {...args} variant="outline" label="Outline" icon={Add} />
+        <Button {...args} variant="promote" label="Promote" icon={Add} />
+      </div>
+      <h3 className="mt-4">Only icon</h3>
+      <div className="flex gap-2">
+        <Button
+          {...args}
+          variant="default"
+          label="Default"
+          icon={Add}
+          hideLabel
+          round
+        />
+        <Button
+          {...args}
+          variant="critical"
+          label="Critical"
+          icon={Delete}
+          hideLabel
+          round
+        />
+        <Button
+          {...args}
+          variant="neutral"
+          label="Neutral"
+          icon={Archive}
+          hideLabel
+          round
+        />
+        <Button
+          {...args}
+          variant="ghost"
+          label="Ghost"
+          icon={Save}
+          hideLabel
+          round
+        />
+        <Button
+          {...args}
+          variant="outline"
+          label="Outline"
+          icon={Add}
+          hideLabel
+          round
+        />
+        <Button
+          {...args}
+          variant="promote"
+          label="Promote"
+          icon={Add}
+          hideLabel
+          round
+        />
+      </div>
+    </div>
+  ),
 }
 
 // Size Variants
@@ -128,23 +164,6 @@ export const Sizes: Story = {
       <Button {...args} size="lg" label="Large" />
     </div>
   ),
-}
-
-// Icon Variations
-export const WithIcon: Story = {
-  args: {
-    icon: Archive,
-    label: "Archive Item",
-  },
-}
-
-export const IconRound: Story = {
-  args: {
-    round: true,
-    hideLabel: true,
-    icon: Add,
-    label: "Add Item",
-  },
 }
 
 // States
@@ -175,24 +194,6 @@ export const AsyncAction: Story = {
     }
 
     return <Button {...args} onClick={onClick} />
-  },
-}
-
-// Common Use Cases
-export const PrimaryAction: Story = {
-  args: {
-    variant: "default",
-    label: "Create New Project",
-    icon: Add,
-    size: "lg",
-  },
-}
-
-export const DestructiveAction: Story = {
-  args: {
-    variant: "critical",
-    label: "Delete Account",
-    icon: Delete,
   },
 }
 
