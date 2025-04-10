@@ -15,6 +15,7 @@ import { PromiseState } from "../../lib/promise-to-observable"
 import { FilterDefinition, FiltersState } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
+import { NavigationFilterDefinition } from "./navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import {
   BulkActionDefinition,
@@ -252,12 +253,13 @@ const createPromiseDataFetch = (delay = 500) => {
     filters: FiltersState<FiltersType>
     sortings: SortingsState<typeof sortings>
     search?: string
-  }) =>
-    new Promise<(typeof mockUsers)[number][]>((resolve) => {
+  }) => {
+    return new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
         resolve(filterUsers(mockUsers, filters, sortingsState, search))
       }, delay)
     })
+  }
 }
 
 // Example component using useDataSource
@@ -267,6 +269,7 @@ const ExampleComponent = ({
   frozenColumns = 0,
   selectable,
   bulkActions,
+  navigationFilter,
 }: {
   useObservable?: boolean
   usePresets?: boolean
@@ -282,11 +285,13 @@ const ExampleComponent = ({
   }
   onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
+  navigationFilter?: NavigationFilterDefinition
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
   const dataSource = useDataSource({
     filters,
+    navigationFilter,
     presets: usePresets ? filterPresets : undefined,
     sortings,
     itemActions: (item: MockUser) => [
@@ -321,6 +326,7 @@ const ExampleComponent = ({
     ],
     selectable,
     bulkActions,
+    totalItemSummary: (total) => `${total} users`,
     dataAdapter: {
       fetchData: useObservable
         ? createObservableDataFetch()
@@ -615,6 +621,22 @@ export const BasicTableView: Story = {
       </div>
     )
   },
+}
+
+// With date navigator
+export const WithDateNavigation: Story = {
+  render: () => (
+    <ExampleComponent
+      frozenColumns={2}
+      navigationFilter={{
+        type: "date-navigator",
+        initialValue: new Date(),
+        options: {
+          granularity: "day",
+        },
+      }}
+    />
+  ),
 }
 
 // Examples with multiple visualizations
@@ -1037,7 +1059,8 @@ const JsonVisualization = ({
       (typeof mockUsers)[number],
       typeof filters,
       typeof sortings,
-      ItemActionsDefinition<(typeof mockUsers)[number]>
+      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      NavigationFilterDefinition
     >
   >
 }) => {
@@ -1149,7 +1172,8 @@ export const WithTableVisualization: Story = {
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
         typeof filters,
-        typeof sortings
+        typeof sortings,
+        undefined
       >({
         data: mockUsers,
         delay: 500,
@@ -1210,13 +1234,19 @@ function createDataAdapter<
   },
   TFilters extends Record<string, FilterDefinition<unknown>>,
   TSortings extends SortingsDefinition,
+  TNavigationFilter extends NavigationFilterDefinition | undefined = undefined,
 >({
   data,
   delay = 500,
   useObservable = false,
   paginationType,
   perPage = 20,
-}: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters, TSortings> {
+}: DataAdapterOptions<TRecord>): DataAdapter<
+  TRecord,
+  TFilters,
+  TSortings,
+  TNavigationFilter
+> {
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
@@ -1316,7 +1346,12 @@ function createDataAdapter<
   }
 
   if (paginationType === "pages") {
-    const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
+    const adapter: DataAdapter<
+      TRecord,
+      TFilters,
+      TSortings,
+      TNavigationFilter
+    > = {
       paginationType: "pages",
       perPage,
       fetchData: ({ filters, sortings, pagination }) => {
@@ -1381,51 +1416,52 @@ function createDataAdapter<
     return adapter
   }
 
-  const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
-    fetchData: ({ filters, sortings }) => {
-      if (useObservable) {
-        return new Observable<PromiseState<TRecord[]>>((observer) => {
-          observer.next({
-            loading: true,
-            error: null,
-            data: null,
-          })
+  const adapter: DataAdapter<TRecord, TFilters, TSortings, TNavigationFilter> =
+    {
+      fetchData: ({ filters, sortings }) => {
+        if (useObservable) {
+          return new Observable<PromiseState<TRecord[]>>((observer) => {
+            observer.next({
+              loading: true,
+              error: null,
+              data: null,
+            })
 
+            setTimeout(() => {
+              try {
+                const fetch = () =>
+                  filterData(data, filters, sortings) as TRecord[]
+
+                observer.next({
+                  loading: false,
+                  error: null,
+                  data: fetch(),
+                })
+                observer.complete()
+              } catch (error) {
+                observer.next({
+                  loading: false,
+                  error:
+                    error instanceof Error ? error : new Error(String(error)),
+                  data: null,
+                })
+                observer.complete()
+              }
+            }, delay)
+          })
+        }
+
+        return new Promise<TRecord[]>((resolve, reject) => {
           setTimeout(() => {
             try {
-              const fetch = () =>
-                filterData(data, filters, sortings) as TRecord[]
-
-              observer.next({
-                loading: false,
-                error: null,
-                data: fetch(),
-              })
-              observer.complete()
+              resolve(filterData(data, filters, sortings) as TRecord[])
             } catch (error) {
-              observer.next({
-                loading: false,
-                error:
-                  error instanceof Error ? error : new Error(String(error)),
-                data: null,
-              })
-              observer.complete()
+              reject(error)
             }
           }, delay)
         })
-      }
-
-      return new Promise<TRecord[]>((resolve, reject) => {
-        setTimeout(() => {
-          try {
-            resolve(filterData(data, filters, sortings) as TRecord[])
-          } catch (error) {
-            reject(error)
-          }
-        }, delay)
-      })
-    },
-  }
+      },
+    }
 
   return adapter
 }
@@ -1978,7 +2014,8 @@ export const WithAsyncSearch: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
-      MockActions
+      MockActions,
+      undefined
     >({
       filters,
       sortings,

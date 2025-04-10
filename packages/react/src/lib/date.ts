@@ -1,4 +1,10 @@
-import { format, formatDistanceToNowStrict } from "date-fns"
+import {
+  format,
+  formatDistanceToNowStrict,
+  startOfDay,
+  startOfMonth,
+  startOfYear,
+} from "date-fns"
 
 export function formatTime(date: Date) {
   return format(date, "p")
@@ -18,4 +24,18 @@ export function getDayOfMonth(date: Date) {
 
 export function getAgo(date: Date) {
   return formatDistanceToNowStrict(date, { addSuffix: true })
+}
+
+export type DateGranularity = "day" | "month" | "year"
+const dateGranularityFunction: Record<DateGranularity, (date: Date) => Date> = {
+  day: startOfDay,
+  month: startOfMonth,
+  year: startOfYear,
+}
+
+export function setDateGranularity(date: Date, granularity: DateGranularity) {
+  return (
+    dateGranularityFunction[granularity]?.(date) ||
+    new Error(`Invalid date granularity ${granularity}`)
+  )
 }

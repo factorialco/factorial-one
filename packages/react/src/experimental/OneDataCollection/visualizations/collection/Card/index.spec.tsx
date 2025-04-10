@@ -41,7 +41,8 @@ const createTestSource = (
   Person,
   FiltersDefinition,
   SortingsDefinition,
-  ItemActionsDefinition<Person>
+  ItemActionsDefinition<Person>,
+  undefined
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -58,6 +59,7 @@ const createTestSource = (
       return data
     },
   },
+  currentNavigationFilter: undefined,
 })
 
 describe("CardCollection", () => {
