@@ -3,7 +3,7 @@ import { AvatarVariant } from "../../../../Information/Avatars/Avatar"
 import { AvatarList } from "../../../../Information/Avatars/AvatarList/index.tsx"
 import { EmojiAvatar } from "../../../../Information/Avatars/EmojiAvatar"
 
-export type Props = {
+export type WidgetAvatarsListItemProps = {
   id: string | number
   emoji: string
   title: string
@@ -40,7 +40,7 @@ export function WidgetAvatarsListItem({
   emoji,
   avatars,
   onClick,
-}: Props) {
+}: WidgetAvatarsListItemProps) {
   const handleOnClick = (ev: React.MouseEvent<HTMLAnchorElement>) => {
     ev.preventDefault()
     onClick?.(id)

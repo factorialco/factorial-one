@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.24.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.24.0...factorial-one-react-v1.24.1) (2025-04-10)
+
+
+### Bug Fixes
+
+* Button & DropdownButton visuals  ([#1571](https://github.com/factorialco/factorial-one/issues/1571)) ([9a6c4db](https://github.com/factorialco/factorial-one/commit/9a6c4db45f93c93abe93f62130b9f3e27c0e8997))
+
+## [1.24.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.23.2...factorial-one-react-v1.24.0) (2025-04-08)
+
+
+### Features
+
+* create OneModal component ([#1567](https://github.com/factorialco/factorial-one/issues/1567)) ([0d13b49](https://github.com/factorialco/factorial-one/commit/0d13b49f38832f842339aa1fe78f3f4f9a8a1137))
+
+## [1.23.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.23.1...factorial-one-react-v1.23.2) (2025-04-07)
+
+
+### Bug Fixes
+
+* remove section header padding top ([#1565](https://github.com/factorialco/factorial-one/issues/1565)) ([b2d9cac](https://github.com/factorialco/factorial-one/commit/b2d9cac0e2b279cffb8fb4b8f8781b4fde76da65))
+
+## [1.23.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.23.0...factorial-one-react-v1.23.1) (2025-04-04)
+
+
+### Bug Fixes
+
+* exports widgets components ([#1562](https://github.com/factorialco/factorial-one/issues/1562)) ([fe912c0](https://github.com/factorialco/factorial-one/commit/fe912c0107107e5d9676f7f814eff3bf715dc251))
+
 ## [1.23.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.22.2...factorial-one-react-v1.23.0) (2025-04-04)
 
 

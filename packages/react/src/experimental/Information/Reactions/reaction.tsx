@@ -58,7 +58,7 @@ export function Reaction({
         handleClick(event, emoji)
       }}
       className={cn(
-        "flex items-center gap-1 px-2 py-1 font-medium leading-tight transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
+        "flex items-center gap-1 font-medium leading-tight shadow-none transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100 [&>button]:mx-[-3px]",
         isActive &&
           "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
       )}

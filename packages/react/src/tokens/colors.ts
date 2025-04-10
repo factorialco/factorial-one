@@ -84,7 +84,7 @@ export const baseColors = {
     70: "24 69% 40%",
   },
   red: {
-    50: "5 69% 56%",
+    50: "5 100% 65%",
     60: "4 61% 49%",
     70: "3 71% 41%",
   },
@@ -152,13 +152,13 @@ export const f1Colors = {
       alpha5: "hsl(var(--accent-50) / 0.05)",
     },
     promote: {
-      DEFAULT: "hsl(var(--promote-50) / 0.2)",
+      DEFAULT: "hsl(var(--promote-50) / 0.3)",
       hover: "hsl(var(--promote-50) / 0.4)",
       alpha5: "hsl(var(--promote-50) / 0.05)",
     },
     critical: {
       DEFAULT: "hsl(var(--critical-50) / 0.1)",
-      bold: "hsl(var(--critical-50))",
+      bold: "hsl(var(--critical-60))",
     },
     info: {
       DEFAULT: "hsl(var(--info-50) / 0.1)",
