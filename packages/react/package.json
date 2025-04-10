@@ -86,7 +86,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@factorialco/factorial-one-core": "workspace:*",
     "@chromatic-com/storybook": "^3.2.6",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
@@ -96,6 +95,7 @@
     "@eslint/compat": "^1.2.7",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",
+    "@factorialco/factorial-one-core": "workspace:*",
     "@microsoft/api-extractor": "7.52.2",
     "@playwright/test": "^1.51.0",
     "@storybook/addon-a11y": "^8.6.10",
@@ -167,6 +167,7 @@
   },
   "dependencies": {
     "@radix-ui/react-hover-card": "^1.1.6",
+    "@radix-ui/react-switch": "^1.1.4",
     "@tanstack/react-virtual": "^3.13.2",
     "@tiptap/extension-bubble-menu": "^2.11.5",
     "@tiptap/extension-character-count": "^2.11.5",
