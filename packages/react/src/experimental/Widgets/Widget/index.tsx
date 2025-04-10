@@ -86,7 +86,7 @@ const Container = forwardRef<
   const handleLinkClick = () => {
     header?.link?.onClick?.()
   }
-
+  console.log('Juan testing F1')
   return (
     <Card
       className={cn(
