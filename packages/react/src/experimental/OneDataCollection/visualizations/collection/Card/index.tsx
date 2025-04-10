@@ -158,6 +158,7 @@ export const CardCollection = <
           totalPages={paginationInfo.pagesCount}
           currentPage={paginationInfo.currentPage}
           onPageChange={setPage}
+          disabled={paginationInfo.pagesCount <= 1}
         />
       )}
     </>

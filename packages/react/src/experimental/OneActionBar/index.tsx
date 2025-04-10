@@ -74,11 +74,11 @@ export const OneActionBar = ({
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           exit={{ opacity: 0, y: 32, filter: "blur(6px)" }}
           transition={{ ease: [0.175, 0.885, 0.32, 1.275], duration: 0.3 }}
-          className="fixed bottom-2 left-2 right-2 z-50 flex h-fit w-[calc(100%-16px)] flex-col gap-2 rounded-xl bg-f1-background-inverse p-2 text-f1-foreground-inverse shadow-lg sm:bottom-5 sm:mx-auto sm:h-12 sm:w-max sm:flex-row sm:gap-8"
+          className="fixed bottom-2 left-2 right-2 z-50 flex h-fit w-[calc(100%-16px)] flex-col gap-2 rounded-xl bg-f1-background-inverse p-2 text-f1-foreground-inverse shadow-lg backdrop-blur-sm sm:bottom-5 sm:mx-auto sm:h-12 sm:w-max sm:flex-row sm:gap-8"
         >
           {selectedNumber && (
             <div className="dark flex h-8 w-full items-center justify-between gap-2 px-2 sm:h-auto sm:w-fit sm:justify-start sm:pl-2 sm:pr-0">
-              <span className="text-sm font-medium tabular-nums">
+              <span className="font-medium tabular-nums">
                 <NumberFlow
                   value={selectedNumber}
                   spinTiming={{
