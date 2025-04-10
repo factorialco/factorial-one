@@ -47,6 +47,12 @@ interface TableHeadProps {
    * @default false
    */
   hidden?: boolean
+
+  /**
+   * Alingment of the cell
+   * @default "left"
+   */
+  align?: "left" | "right"
 }
 
 export function TableHead({
@@ -57,6 +63,7 @@ export function TableHead({
   info,
   sticky,
   hidden = false,
+  align = "left",
 }: TableHeadProps) {
   const { isScrolled, isScrolledRight } = useTable()
 
@@ -73,7 +80,8 @@ export function TableHead({
       <div
         className={cn(
           "flex items-center whitespace-nowrap",
-          hasContent && "gap-1"
+          hasContent && "gap-1",
+          align === "right" && "flex-row-reverse"
         )}
       >
         {children}

@@ -194,6 +194,7 @@ export const TableCollection = <
                   currentSortings
                 )}
                 width={column.width}
+                align={column.align}
                 sticky={
                   index < frozenColumnsLeft
                     ? {
