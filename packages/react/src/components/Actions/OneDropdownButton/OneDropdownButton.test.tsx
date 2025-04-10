@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { I18nProvider } from "../../../lib/i18n-provider"
-import { defaultTranslations } from "../../../lib/i18n-provider-defaults"
+import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
 import { IconType } from "../../Utilities/Icon"
 
 import { beforeEach, describe, expect, it, vi } from "vitest"

@@ -8,11 +8,10 @@ import isChromatic from "chromatic/isChromatic"
 
 import "../src/styles.css"
 
-import { ThemeProvider } from "@/lib/theme-provider"
-import { FactorialOneProvider } from "@/lib/one-provider"
+import { ThemeProvider } from "@/lib/providers/theme"
+import { FactorialOneProvider } from "@/lib/providers/one-provider"
 import { DocsContainer } from "./DocsContainer.tsx"
-import { buildTranslations } from "@/lib/i18n-provider"
-import { defaultTranslations } from "@/lib/i18n-provider-defaults"
+import { buildTranslations, defaultTranslations } from "@/lib/providers/i18n"
 
 MotionGlobalConfig.skipAnimations = isChromatic()
 

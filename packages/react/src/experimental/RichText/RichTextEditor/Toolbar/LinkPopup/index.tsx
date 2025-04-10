@@ -7,7 +7,7 @@ import {
   CrossedCircle,
   Link as LinkIcon,
 } from "@/icons/app"
-import { useI18n } from "@/lib/i18n-provider"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import * as Popover from "@radix-ui/react-popover"

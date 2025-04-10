@@ -1,6 +1,6 @@
 import { TableCell as TableCellRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "framer-motion"
-import { useI18n } from "../../../lib/i18n-provider"
+import { useI18n } from "../../../lib/providers/i18n"
 import { Link } from "../../../lib/linkHandler"
 import { cn } from "../../../lib/utils"
 import { useTable } from "../utils/TableContext"
