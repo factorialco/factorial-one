@@ -6,7 +6,7 @@ import {
   DropdownItem,
   MobileDropdown,
 } from "@/experimental/Navigation/Dropdown"
-import { useI18n } from "@/lib/i18n-provider"
+import { useI18n } from "@/lib/providers/i18n"
 import NumberFlow from "@number-flow/react"
 import { AnimatePresence, motion } from "framer-motion"
 

@@ -1,4 +1,4 @@
-import { useI18n } from "@/lib/i18n-provider.tsx"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
