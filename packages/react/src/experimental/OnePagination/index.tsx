@@ -133,83 +133,85 @@ export function OnePagination({
   }, [currentPage, totalPages, visibleRange, isIndeterminate])
 
   return (
-    <PaginationRoot>
-      <PaginationContent role="navigation" aria-label={ariaLabel}>
-        {showControls && (
-          <PaginationItem>
-            <PaginationPrevious
-              aria-disabled={currentPage === 1}
-              tabIndex={currentPage === 1 ? -1 : 0}
-              className={
-                currentPage === 1 ? "pointer-events-none opacity-50" : ""
-              }
-              onClick={() => handlePageChange(currentPage - 1)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handlePageChange(currentPage - 1)
+    totalPages > 1 && (
+      <PaginationRoot>
+        <PaginationContent role="navigation" aria-label={ariaLabel}>
+          {showControls && (
+            <PaginationItem>
+              <PaginationPrevious
+                aria-disabled={currentPage === 1}
+                tabIndex={currentPage === 1 ? -1 : 0}
+                className={
+                  currentPage === 1 ? "pointer-events-none opacity-50" : ""
                 }
-              }}
-            />
-          </PaginationItem>
-        )}
-
-        {!isIndeterminate &&
-          getPageNumbers.map((page, index) => (
-            <PaginationItem
-              key={index}
-              className={cn("hidden sm:flex", page === currentPage && "flex")}
-            >
-              {page === "..." ? (
-                <PaginationEllipsis />
-              ) : (
-                <PaginationLink
-                  aria-current={page === currentPage ? "page" : undefined}
-                  isActive={page === currentPage}
-                  onClick={() => handlePageChange(page as number)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handlePageChange(page as number)
-                    }
-                  }}
-                  tabIndex={0}
-                >
-                  {page}
-                </PaginationLink>
-              )}
+                onClick={() => handlePageChange(currentPage - 1)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handlePageChange(currentPage - 1)
+                  }
+                }}
+              />
             </PaginationItem>
-          ))}
+          )}
 
-        {showControls && (
-          <PaginationItem>
-            <PaginationNext
-              aria-disabled={
-                !isIndeterminate ? currentPage === totalPages : !hasNextPage
-              }
-              tabIndex={
-                !isIndeterminate
-                  ? currentPage === totalPages
-                    ? -1
-                    : 0
-                  : !hasNextPage
-                    ? -1
-                    : 0
-              }
-              className={
-                (!isIndeterminate && currentPage === totalPages) ||
-                (!hasNextPage && isIndeterminate)
-                  ? "pointer-events-none opacity-50"
-                  : ""
-              }
-              onClick={() => handlePageChange(currentPage + 1)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handlePageChange(currentPage + 1)
+          {!isIndeterminate &&
+            getPageNumbers.map((page, index) => (
+              <PaginationItem
+                key={index}
+                className={cn("hidden sm:flex", page === currentPage && "flex")}
+              >
+                {page === "..." ? (
+                  <PaginationEllipsis />
+                ) : (
+                  <PaginationLink
+                    aria-current={page === currentPage ? "page" : undefined}
+                    isActive={page === currentPage}
+                    onClick={() => handlePageChange(page as number)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        handlePageChange(page as number)
+                      }
+                    }}
+                    tabIndex={0}
+                  >
+                    {page}
+                  </PaginationLink>
+                )}
+              </PaginationItem>
+            ))}
+
+          {showControls && (
+            <PaginationItem>
+              <PaginationNext
+                aria-disabled={
+                  !isIndeterminate ? currentPage === totalPages : !hasNextPage
                 }
-              }}
-            />
-          </PaginationItem>
-        )}
-      </PaginationContent>
-    </PaginationRoot>
+                tabIndex={
+                  !isIndeterminate
+                    ? currentPage === totalPages
+                      ? -1
+                      : 0
+                    : !hasNextPage
+                      ? -1
+                      : 0
+                }
+                className={
+                  (!isIndeterminate && currentPage === totalPages) ||
+                  (!hasNextPage && isIndeterminate)
+                    ? "pointer-events-none opacity-50"
+                    : ""
+                }
+                onClick={() => handlePageChange(currentPage + 1)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handlePageChange(currentPage + 1)
+                  }
+                }}
+              />
+            </PaginationItem>
+          )}
+        </PaginationContent>
+      </PaginationRoot>
+    )
   )
 }

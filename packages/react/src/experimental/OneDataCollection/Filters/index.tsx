@@ -1,18 +1,9 @@
-import { Icon } from "@/components/Utilities/Icon"
-import { OverflowList } from "@/ui/OverflowList"
-import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
-import { AnimatePresence } from "framer-motion"
-import { useState } from "react"
-import { Button } from "../../../components/Actions/Button"
-import { Filter } from "../../../icons/app"
-import { useI18n } from "../../../lib/i18n-provider"
-import { cn, focusRing } from "../../../lib/utils"
-import { Counter } from "../../Information/Counter"
-import { Preset } from "../../OnePreset"
-import { Presets } from "../types"
-import { FilterButton } from "./Components/FilterButton"
-import { FilterContent } from "./Components/FilterContent"
-import { FilterList } from "./Components/FilterList"
+import { createContext, useContext, useMemo, useState } from "react"
+import { PresetsDefinition } from "../types"
+import { FiltersChipsList as FiltersChipsListComponent } from "./Components/FiltersChipsList"
+import { FiltersControls as FiltersControlsComponent } from "./Components/FiltersControls"
+import { FiltersPresets as FiltersPresetsComponent } from "./Components/FiltersPresets"
+
 import type {
   FilterOption,
   FiltersDefinition,
@@ -24,16 +15,38 @@ import type {
  * Props for the Filters component.
  * @template Definition - The type defining the structure of available filters
  */
-export interface FiltersProps<Definition extends FiltersDefinition> {
+export interface FiltersRootProps<Definition extends FiltersDefinition> {
   /** The definition of available filters and their configurations */
-  schema: Definition
+  schema?: Definition
   /** Current state of applied filters */
   filters: FiltersState<Definition>
   /** Optional preset configurations that users can select */
-  presets?: Presets<Definition>
+  presets?: PresetsDefinition<Definition>
   /** Callback fired when filters are changed */
   onChange: (value: FiltersState<Definition>) => void
+  /** The children of the component */
+  children: React.ReactNode
 }
+
+type FiltersContextType<Definition extends FiltersDefinition> = {
+  schema: Definition | undefined
+  filters: FiltersState<Definition>
+  presets?: PresetsDefinition<Definition>
+  removeFilterValue: (key: keyof Definition) => void
+  setFiltersValue: (filters: FiltersState<Definition>) => void
+  isFiltersOpen: boolean
+  setIsFiltersOpen: (isOpen: boolean) => void
+}
+
+const FiltersContext = createContext<FiltersContextType<FiltersDefinition>>({
+  schema: {},
+  filters: {},
+  presets: [],
+  removeFilterValue: () => {},
+  setFiltersValue: () => {},
+  isFiltersOpen: false,
+  setIsFiltersOpen: () => {},
+})
 
 /**
  * A comprehensive filtering interface that manages multiple filter types.
@@ -95,217 +108,164 @@ export interface FiltersProps<Definition extends FiltersDefinition> {
  * @see {@link FiltersDefinition} for detailed schema structure
  * @see {@link FiltersState} for the structure of filter state
  */
-export function Filters<Definition extends FiltersDefinition>({
+const FiltersRoot = <Definition extends FiltersDefinition>({
+  filters,
   schema,
-  presets,
-  filters: value,
-  onChange,
-}: FiltersProps<Definition>) {
-  const i18n = useI18n()
-  const [isOpen, setIsOpen] = useState(false)
-  const [selectedFilterKey, setSelectedFilterKey] = useState<
-    keyof Definition | null
-  >(() => {
-    // Get the first key from the schema if available
-    const firstKey = Object.keys(schema)[0] as keyof Definition
-    return firstKey || null
-  })
-  const [tempFilters, setTempFilters] =
-    useState<FiltersState<Definition>>(value)
+  children,
+  ...props
+}: FiltersRootProps<Definition>) => {
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false)
 
-  /** Created a local schema with instanciated options (options loaded in the case options is a promise or function) */
-  type LocalSchema = {
-    [K in keyof Definition]: Definition[K] extends InFilterDefinition
-      ? Definition[K] & {
+  const [localFiltersValue, setLocalFiltersValue] = useState(filters)
+
+  const removeFilterValue = (key: keyof Definition) => {
+    setLocalFiltersValue((prev) => {
+      const { [key]: _, ...rest } = prev
+      return rest as FiltersState<Definition>
+    })
+    props.onChange(localFiltersValue)
+  }
+
+  const setFiltersValue = (filters: FiltersState<Definition>) => {
+    setLocalFiltersValue(filters)
+    props.onChange(filters)
+  }
+
+  /** Creates a local filters schema with instanciated options (options loaded in the case options is a promise or function) */
+  type LocalFiltersSchema = {
+    [K in keyof FiltersDefinition]: FiltersDefinition[K] extends InFilterDefinition
+      ? FiltersDefinition[K] & {
           _instanciatedOptions?: FilterOption<unknown>[]
           _options: InFilterDefinition["options"]
           options: Promise<FilterOption<unknown>[]>
         }
-      : Definition[K]
+      : FiltersDefinition[K]
   }
 
-  const [localSchema] = useState<LocalSchema>(() =>
-    Object.keys(schema).reduce((acc, key) => {
-      const filter = schema[key as keyof Definition]
-      const isInFilter = "options" in filter
-      acc[key as keyof Definition] = {
-        ...filter,
-        ...(isInFilter
-          ? {
-              _instanciatedOptions: undefined,
-              options: async function (this: {
-                _instanciatedOptions?: FilterOption<unknown>[]
-              }) {
-                if (this._instanciatedOptions !== undefined) {
-                  return this._instanciatedOptions
-                }
+  const localSchema: LocalFiltersSchema | undefined = useMemo(
+    () =>
+      schema
+        ? Object.keys(schema).reduce((acc, key) => {
+            const filterSchema = schema[key as keyof Definition]
+            const isInFilter = "options" in filterSchema
+            acc[key as keyof LocalFiltersSchema] = {
+              ...filterSchema,
+              ...(isInFilter
+                ? {
+                    _instanciatedOptions: undefined,
+                    options: async function (this: {
+                      _instanciatedOptions?: FilterOption<unknown>[]
+                    }) {
+                      if (this._instanciatedOptions !== undefined) {
+                        return this._instanciatedOptions
+                      }
 
-                const options = await (typeof filter.options === "function"
-                  ? filter.options()
-                  : filter.options)
+                      const options = await (typeof filterSchema.options ===
+                      "function"
+                        ? filterSchema.options()
+                        : filterSchema.options)
 
-                this._instanciatedOptions = options
-                return options
-              },
-            }
-          : {}),
-      } as LocalSchema[keyof Definition]
-      return acc
-    }, {} as LocalSchema)
+                      this._instanciatedOptions = options
+                      return options
+                    },
+                  }
+                : {}),
+            } as LocalFiltersSchema[keyof FiltersDefinition]
+            return acc
+          }, {} as LocalFiltersSchema)
+        : undefined,
+    [schema]
   )
-
-  const handleOpenChange = (open: boolean) => {
-    if (open) {
-      setTempFilters(value)
-    }
-    setIsOpen(open)
-  }
-
-  const handleRemoveFilter = (key: keyof Definition) => {
-    const newValue = { ...value }
-    delete newValue[key]
-    onChange(newValue)
-  }
-
-  const handleFilterChange = (key: keyof Definition, newValue: unknown) => {
-    setTempFilters((current) => ({
-      ...current,
-      [key]: newValue,
-    }))
-  }
-
-  const handleApplyFilters = () => {
-    onChange(tempFilters)
-    setIsOpen(false)
-  }
-
-  // Render preset item in the main list
-  const renderListPresetItem = (
-    preset: Presets<Definition>[number],
-    index: number,
-    isVisible = true
-  ) => {
-    const isSelected = JSON.stringify(preset.filter) === JSON.stringify(value)
-    return (
-      <Preset
-        key={index}
-        label={preset.label}
-        selected={isSelected}
-        onClick={() => onChange(preset.filter)}
-        data-visible={isVisible}
-      />
-    )
-  }
-
-  // Render preset item in the dropdown
-  const renderDropdownPresetItem = (
-    preset: Presets<Definition>[number],
-    index: number
-  ) => {
-    const isSelected = JSON.stringify(preset.filter) === JSON.stringify(value)
-    return (
-      <button
-        key={index}
-        className={cn(
-          "flex w-full cursor-pointer items-center justify-between rounded-sm p-2 text-left font-medium text-f1-foreground hover:bg-f1-background-secondary",
-          isSelected &&
-            "bg-f1-background-selected hover:bg-f1-background-selected",
-          focusRing()
-        )}
-        onClick={() => onChange(preset.filter)}
-        data-visible={true}
-      >
-        {preset.label}
-        <Counter
-          value={Object.keys(preset.filter).length}
-          type={isSelected ? "selected" : "default"}
-        />
-      </button>
-    )
-  }
 
   return (
-    <div className="flex w-full flex-1 flex-col gap-4">
-      <div className="flex items-center gap-2">
-        <Popover open={isOpen} onOpenChange={handleOpenChange}>
-          <PopoverTrigger asChild>
-            <button
-              className={cn(
-                "flex h-8 w-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary text-f1-foreground hover:border-f1-border-hover",
-                isOpen && "border-f1-border-hover",
-                focusRing()
-              )}
-              title={i18n.filters.label}
-            >
-              <Icon icon={Filter} />
-              <span className="sr-only">{i18n.filters.label}</span>
-            </button>
-          </PopoverTrigger>
-          <PopoverContent
-            className="w-[544px] rounded-xl border border-solid border-f1-border-secondary p-0 shadow-md"
-            align="start"
-            side="bottom"
-          >
-            <div className="flex h-[min(448px,80vh)] flex-col">
-              <div className="flex min-h-0 flex-1">
-                <FilterList
-                  definition={localSchema}
-                  tempFilters={tempFilters}
-                  selectedFilterKey={selectedFilterKey}
-                  onFilterSelect={setSelectedFilterKey}
-                />
-                {selectedFilterKey && (
-                  <FilterContent
-                    selectedFilterKey={selectedFilterKey}
-                    definition={localSchema}
-                    tempFilters={tempFilters}
-                    onFilterChange={handleFilterChange}
-                  />
-                )}
-              </div>
-
-              <div className="flex items-center justify-end gap-2 border-solid border-transparent border-t-f1-border-secondary px-3 py-2">
-                <Button
-                  onClick={handleApplyFilters}
-                  label={i18n.filters.applyFilters}
-                />
-              </div>
-            </div>
-          </PopoverContent>
-        </Popover>
-
-        {presets && presets.length > 0 && (
-          <OverflowList
-            items={presets}
-            renderListItem={renderListPresetItem}
-            renderDropdownItem={renderDropdownPresetItem}
-            className="flex-1"
-          />
-        )}
-      </div>
-      {Object.keys(value).length > 0 && (
-        <div className="flex flex-wrap items-center gap-2">
-          <AnimatePresence presenceAffectsLayout initial={false}>
-            {(Object.keys(value) as Array<keyof Definition>).map((key) => {
-              const filter = localSchema[key]
-              if (!value[key]) return null
-
-              return (
-                <FilterButton
-                  key={String(key)}
-                  filter={filter}
-                  value={value[key]}
-                  onSelect={() => {
-                    setSelectedFilterKey(key)
-                    setIsOpen(true)
-                  }}
-                  onRemove={() => handleRemoveFilter(key)}
-                />
-              )
-            })}
-          </AnimatePresence>
-        </div>
-      )}
-    </div>
+    <FiltersContext.Provider
+      value={{
+        ...props,
+        filters: localFiltersValue,
+        schema: localSchema,
+        removeFilterValue,
+        setFiltersValue: (filters: FiltersState<FiltersDefinition>) =>
+          setFiltersValue(filters as FiltersState<Definition>),
+        isFiltersOpen,
+        setIsFiltersOpen,
+      }}
+    >
+      {children}
+    </FiltersContext.Provider>
   )
 }
+FiltersRoot.displayName = "Filters.Root"
+
+/**
+ * Filter controls
+ */
+const FiltersControls = () => {
+  const { schema, filters, isFiltersOpen, setIsFiltersOpen, setFiltersValue } =
+    useContext(FiltersContext)
+
+  return (
+    schema && (
+      <FiltersControlsComponent
+        schema={schema}
+        filters={filters}
+        onChange={setFiltersValue}
+        onOpenChange={setIsFiltersOpen}
+        isOpen={isFiltersOpen}
+      />
+    )
+  )
+}
+FiltersControls.displayName = "Filters.Controls"
+
+/**
+ * Filter presets
+ */
+const FiltersPresets = () => {
+  const { presets, filters, setFiltersValue } = useContext(FiltersContext)
+
+  return (
+    presets && (
+      <FiltersPresetsComponent
+        presets={presets}
+        filters={filters}
+        onPresetsChange={setFiltersValue}
+      />
+    )
+  )
+}
+FiltersPresets.displayName = "Filters.Presets"
+
+/**
+ * Filter chips list
+ */
+const FiltersChipsList = () => {
+  const {
+    schema,
+    filters,
+    setIsFiltersOpen,
+    removeFilterValue,
+    setFiltersValue,
+  } = useContext(FiltersContext)
+
+  return (
+    schema && (
+      <FiltersChipsListComponent
+        schema={schema}
+        filters={filters}
+        onFilterSelect={() => setIsFiltersOpen(true)}
+        onFilterRemove={removeFilterValue}
+        onClearAll={() => setFiltersValue({})}
+      />
+    )
+  )
+}
+FiltersChipsList.displayName = "Filters.ChipsList"
+
+export {
+  FiltersChipsList as ChipsList,
+  FiltersControls as Controls,
+  FiltersPresets as Presets,
+  FiltersRoot as Root,
+}
+
+export type { FiltersRootProps as RootProps }
