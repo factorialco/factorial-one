@@ -4,6 +4,10 @@ import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
+import {
+  NavigationFilterDefinition,
+  NavigationFilterValue,
+} from "./navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "./sortings"
 
 /**
@@ -18,9 +22,12 @@ export type DataSourceDefinition<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition | undefined = undefined,
 > = {
   /** Available filter configurations */
   filters?: Filters
+  /** Navigation filters */
+  navigationFilter?: NavigationFilter
   /** Predefined filter configurations that can be applied */
   presets?: PresetsDefinition<Filters>
   /** URL for a single item in the collection */
@@ -37,11 +44,13 @@ export type DataSourceDefinition<
   search?: CollectionSearchOptions
   /** Current state of applied filters */
   currentFilters?: FiltersState<Filters>
+  /** Current state of applied navigation filter */
+  currentNavigationFilter?: NavigationFilterValue<NavigationFilter>
   /** Available sorting fields. If not provided, sorting is not allowed. */
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
   /** Data adapter responsible for fetching and managing data */
-  dataAdapter: DataAdapter<Record, Filters, Sortings>
+  dataAdapter: DataAdapter<Record, Filters, Sortings, NavigationFilter>
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
   /** Bulk actions that can be performed on the collection */
@@ -51,6 +60,7 @@ export type DataSourceDefinition<
     primary: BulkActionDefinition[]
     secondary?: BulkActionDefinition[]
   }
+  totalItemSummary?: (totalItems: number) => string
 }
 
 export type CollectionSearchOptions = {
@@ -109,11 +119,13 @@ export type PaginatedResponse<Record> = {
 export type BaseFetchOptions<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
 > = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
   sortings: SortingsState<Sortings>
   search?: string
+  navigationFilter?: NavigationFilterValue<NavigationFilter>
 }
 
 /**
@@ -123,7 +135,8 @@ export type BaseFetchOptions<
 export type PaginatedFetchOptions<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-> = BaseFetchOptions<Filters, Sortings> & {
+  NavigationFilter extends NavigationFilterDefinition | undefined,
+> = BaseFetchOptions<Filters, Sortings, NavigationFilter> & {
   /** Pagination configuration */
   pagination: { currentPage: number; perPage: number }
 }
@@ -137,6 +150,7 @@ export type BaseDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
 > = {
   /** Indicates this adapter doesn't use pagination */
   paginationType?: never
@@ -146,7 +160,7 @@ export type BaseDataAdapter<
    * @returns Array of records, promise of records, or observable of records
    */
   fetchData: (
-    options: BaseFetchOptions<Filters, Sortings>
+    options: BaseFetchOptions<Filters, Sortings, NavigationFilter>
   ) =>
     | BaseResponse<Record>
     | Promise<BaseResponse<Record>>
@@ -162,6 +176,7 @@ export type PaginatedDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
 > = {
   /** Indicates this adapter uses page-based pagination */
   paginationType: "pages"
@@ -173,7 +188,7 @@ export type PaginatedDataAdapter<
    * @returns Paginated response with records and pagination info
    */
   fetchData: (
-    options: PaginatedFetchOptions<Filters, Sortings>
+    options: PaginatedFetchOptions<Filters, Sortings, NavigationFilter>
   ) =>
     | PaginatedResponse<Record>
     | Promise<PaginatedResponse<Record>>
@@ -189,9 +204,10 @@ export type DataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
 > =
-  | BaseDataAdapter<Record, Filters, Sortings>
-  | PaginatedDataAdapter<Record, Filters, Sortings>
+  | BaseDataAdapter<Record, Filters, Sortings, NavigationFilter>
+  | PaginatedDataAdapter<Record, Filters, Sortings, NavigationFilter>
 
 /**
  * Represents a collection of selected items.
@@ -261,10 +277,11 @@ export type CollectionProps<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
   VisualizationOptions extends object,
 > = {
   /** The data source configuration and state */
-  source: DataSource<Record, Filters, Sortings, ItemActions>
+  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilter>
   /** Function to handle item selection */
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
 } & VisualizationOptions
@@ -280,9 +297,15 @@ export type DataSource<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  ItemActions extends
-    ItemActionsDefinition<Record> = ItemActionsDefinition<Record>,
-> = DataSourceDefinition<Record, Filters, Sortings, ItemActions> & {
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
+> = DataSourceDefinition<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilter
+> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
@@ -298,7 +321,17 @@ export type DataSource<
   setCurrentSearch: (search: string | undefined) => void
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
-}
+} & (NavigationFilter extends undefined
+    ? {
+        currentNavigationFilter?: never
+        setCurrentNavigationFilter?: never
+      }
+    : {
+        currentNavigationFilter: NavigationFilterValue<NavigationFilter>
+        setCurrentNavigationFilter: React.Dispatch<
+          React.SetStateAction<NavigationFilterValue<NavigationFilter>>
+        >
+      })
 
 /**
  * Utility type for handling both Promise and Observable return types.

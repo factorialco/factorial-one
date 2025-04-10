@@ -16,6 +16,8 @@ type UserPlatformProviderProps = {
 export const UserPlatformProvider = ({
   children,
   platform,
+
+  
 }: UserPlatformProviderProps) => {
   const [userPlatform, setUserPlatform] = useState<Platform>(
     platform ?? "unknown"

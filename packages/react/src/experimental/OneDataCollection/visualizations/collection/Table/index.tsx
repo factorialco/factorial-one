@@ -1,4 +1,5 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { NavigationFilterDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { OnePagination } from "@/experimental/OnePagination"
 import {
   OneTable,
@@ -61,6 +62,7 @@ export const TableCollection = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition | undefined = undefined,
 >({
   columns,
   source,
@@ -71,15 +73,13 @@ export const TableCollection = <
   Filters,
   Sortings,
   ItemActions,
+  NavigationFilter,
   TableVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
 
-  const { data, paginationInfo, setPage, isInitialLoading } = useData<
-    Record,
-    Filters,
-    Sortings
-  >(source)
+  const { data, paginationInfo, setPage, isInitialLoading, totalItems } =
+    useData<Record, Filters, Sortings, NavigationFilter>(source)
 
   const { currentSortings, setCurrentSortings, isLoading } = source
 

@@ -55,7 +55,8 @@ const createTestSource = (
   Person,
   TestFilters,
   SortingsDefinition,
-  ItemActionsDefinition<Person>
+  ItemActionsDefinition<Person>,
+  undefined
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -88,7 +89,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            undefined
           >
             columns={testColumns}
             source={createTestSource()}
@@ -250,7 +252,8 @@ describe("TableCollection", () => {
       Person,
       TestFilters,
       SortingsDefinition,
-      ItemActionsDefinition<Person>
+      ItemActionsDefinition<Person>,
+      undefined
     > => ({
       currentFilters: {},
       setCurrentFilters: vi.fn(),
