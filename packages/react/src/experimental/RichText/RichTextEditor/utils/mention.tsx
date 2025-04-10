@@ -165,7 +165,7 @@ function Suggestion(
             <Popover.Content
               side="top"
               align="start"
-              sideOffset={20}
+              sideOffset={25}
               collisionPadding={10}
               style={{ zIndex: 9999 }}
               onMouseDownCapture={() => {

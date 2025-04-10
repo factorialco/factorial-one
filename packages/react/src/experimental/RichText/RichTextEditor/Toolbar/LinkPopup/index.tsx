@@ -103,9 +103,9 @@ const LinkPopup = ({
         <Popover.Content
           side="top"
           align="start"
-          sideOffset={15}
+          sideOffset={10}
           collisionPadding={10}
-          alignOffset={-10}
+          alignOffset={-5}
           style={{ zIndex: 9999 }}
         >
           <AnimatePresence>
@@ -125,7 +125,7 @@ const LinkPopup = ({
                       e.preventDefault()
                       handleClose()
                     }}
-                    className="aspect-square p-0"
+                    className="[&>button]:aspect-square [&>button]:px-0"
                   >
                     <Icon icon={Cross} />
                   </Button>
@@ -197,6 +197,7 @@ const LinkPopup = ({
                   <Button
                     variant="default"
                     type="button"
+                    size="sm"
                     onClick={(e) => {
                       e.preventDefault()
                       handleSave()
