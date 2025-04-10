@@ -16,48 +16,61 @@ type ButtonInternalProps = {
 
 type DropdownInternalProps = {
   children: React.ReactNode
-  items: any[]
+  items: Array<{
+    label: string
+    value: string
+    onClick: () => void
+  }>
 } & HTMLAttributes<HTMLDivElement>
 
 // Mock the imported components
 vi.mock("@/components/Actions/Button/internal.tsx", () => ({
-  ButtonInternal: React.forwardRef<HTMLButtonElement, ButtonInternalProps>(
-    ({ label, icon: Icon, onClick, appendButton, ...props }, ref) => (
-      <button
-        ref={ref}
-        onClick={onClick}
-        {...props}
-        data-testid="dropdown-main-button"
-      >
-        {Icon && <Icon data-testid="button-icon" />}
-        <span data-testid="dropdown-main-label">{label}</span>
-        <div data-testid="button-append">{appendButton}</div>
-      </button>
-    )
+  ButtonInternal: Object.assign(
+    React.forwardRef<HTMLButtonElement, ButtonInternalProps>(
+      ({ label, icon: Icon, onClick, appendButton, ...props }, ref) => (
+        <button
+          ref={ref}
+          onClick={onClick}
+          {...props}
+          data-testid="dropdown-main-button"
+        >
+          {Icon && <Icon data-testid="button-icon" />}
+          <span data-testid="dropdown-main-label">{label}</span>
+          <div data-testid="button-append">{appendButton}</div>
+        </button>
+      )
+    ),
+    { displayName: "ButtonInternal" }
   ),
 }))
 
 vi.mock("@/experimental/Navigation/Dropdown/internal.tsx", () => ({
-  DropdownInternal: React.forwardRef<HTMLDivElement, DropdownInternalProps>(
-    ({ children, items, ...props }, ref) => (
-      <div
-        ref={ref}
-        {...props}
-        data-testid="dropdown"
-        data-items={JSON.stringify(items)}
-      >
-        {children}
-      </div>
-    )
+  DropdownInternal: Object.assign(
+    React.forwardRef<HTMLDivElement, DropdownInternalProps>(
+      ({ children, items, ...props }, ref) => (
+        <div
+          ref={ref}
+          {...props}
+          data-testid="dropdown"
+          data-items={JSON.stringify(items)}
+        >
+          {children}
+        </div>
+      )
+    ),
+    { displayName: "DropdownInternal" }
   ),
 }))
 
 vi.mock("@/icons/app", () => ({
-  ChevronDown: React.forwardRef<HTMLDivElement>((props, ref) => (
-    <div ref={ref} data-testid="chevron-icon">
-      ▼
-    </div>
-  )),
+  ChevronDown: Object.assign(
+    React.forwardRef<HTMLDivElement, SVGProps<SVGSVGElement>>((props, ref) => (
+      <div ref={ref} data-testid="chevron-icon">
+        ▼
+      </div>
+    )),
+    { displayName: "ChevronDown" }
+  ),
 }))
 
 describe("OneDropdownButton", () => {
