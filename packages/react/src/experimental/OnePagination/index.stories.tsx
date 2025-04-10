@@ -145,6 +145,12 @@ export const Indeterminate: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    // Skip a11y checks for this story as colors don't pass checks as the component is disabled
+    a11y: {
+      skipCi: true,
+    },
+  },
   args: {
     disabled: true,
   },
