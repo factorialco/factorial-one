@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.24.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.24.0...factorial-one-react-v1.24.1) (2025-04-10)
+
+
+### Bug Fixes
+
+* Button & DropdownButton visuals  ([#1571](https://github.com/factorialco/factorial-one/issues/1571)) ([9a6c4db](https://github.com/factorialco/factorial-one/commit/9a6c4db45f93c93abe93f62130b9f3e27c0e8997))
+
 ## [1.24.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.23.2...factorial-one-react-v1.24.0) (2025-04-08)
 
 
