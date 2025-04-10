@@ -1,4 +1,5 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { NavigationFilterDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
@@ -36,6 +37,7 @@ export const CardCollection = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition | undefined = undefined,
 >({
   cardProperties,
   title,
@@ -46,6 +48,7 @@ export const CardCollection = <
   Filters,
   Sortings,
   ItemActions,
+  NavigationFilter,
   CardVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
@@ -68,7 +71,8 @@ export const CardCollection = <
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
     Record,
     Filters,
-    Sortings
+    Sortings,
+    NavigationFilter
   >({
     ...source,
     dataAdapter: overridenDataAdapter,

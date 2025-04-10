@@ -7,6 +7,7 @@ import { useI18n } from "../../lib/providers/i18n"
 import { cn, focusRing } from "../../lib/utils"
 import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
+import { NavigationFilterDefinition } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
 import type { DataSource, OnSelectItemsCallback, RecordType } from "./types"
 import type { CardVisualizationOptions } from "./visualizations/collection/Card"
@@ -26,6 +27,8 @@ export type Visualization<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
 > =
   | {
       /** Card-based visualization type */
@@ -48,7 +51,13 @@ export type Visualization<
       icon: IconType
       /** Custom component to render the visualization */
       component: (props: {
-        source: DataSource<Record, Filters, Sortings>
+        source: DataSource<
+          Record,
+          Filters,
+          Sortings,
+          ItemActions,
+          NavigationFilter
+        >
       }) => JSX.Element
     }
 
@@ -70,9 +79,13 @@ export type VisualizationProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
 > = {
   /** Array of available visualization configurations */
-  visualizations?: ReadonlyArray<Visualization<Record, Filters, Sortings>>
+  visualizations?: ReadonlyArray<
+    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilter>
+  >
 }
 
 /**
@@ -93,12 +106,16 @@ export const VisualizationSelector = <
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
 >({
   visualizations,
   currentVisualization,
   onVisualizationChange,
 }: {
-  visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
+  visualizations: ReadonlyArray<
+    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilter>
+  >
   currentVisualization: number
   onVisualizationChange: (index: number) => void
 }): JSX.Element => {
@@ -187,20 +204,33 @@ export const VisualizationRenderer = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition | undefined,
 >({
   visualization,
   source,
   onSelectItems,
 }: {
-  visualization: Visualization<Record, Filters, Sortings>
-  source: DataSource<Record, Filters, Sortings, ItemActions>
+  visualization: Visualization<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilter
+  >
+  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilter>
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
   clearSelectedItems?: () => void
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
       return (
-        <TableCollection<Record, Filters, Sortings, ItemActions>
+        <TableCollection<
+          Record,
+          Filters,
+          Sortings,
+          ItemActions,
+          NavigationFilter
+        >
           source={source}
           {...visualization.options}
           onSelectItems={onSelectItems}
@@ -208,7 +238,13 @@ export const VisualizationRenderer = <
       )
     case "card":
       return (
-        <CardCollection<Record, Filters, Sortings, ItemActions>
+        <CardCollection<
+          Record,
+          Filters,
+          Sortings,
+          ItemActions,
+          NavigationFilter
+        >
           source={source}
           {...visualization.options}
           onSelectItems={onSelectItems}

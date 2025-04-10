@@ -38,12 +38,13 @@ type TestSource = DataSource<
   TestRecord,
   TestFilters,
   SortingsDefinition,
-  ItemActionsDefinition<TestRecord>
+  ItemActionsDefinition<TestRecord>,
+  undefined
 >
 
 const createMockDataSource = (
   fetchData: (
-    options: BaseFetchOptions<TestFilters, SortingsDefinition>
+    options: BaseFetchOptions<TestFilters, SortingsDefinition, undefined>
   ) =>
     | BaseResponse<TestRecord>
     | Promise<BaseResponse<TestRecord>>
@@ -53,7 +54,8 @@ const createMockDataSource = (
   const baseAdapter: BaseDataAdapter<
     TestRecord,
     TestFilters,
-    SortingsDefinition
+    SortingsDefinition,
+    undefined
   > = {
     fetchData,
   }
@@ -61,7 +63,8 @@ const createMockDataSource = (
   const paginatedAdapter: PaginatedDataAdapter<
     TestRecord,
     TestFilters,
-    SortingsDefinition
+    SortingsDefinition,
+    undefined
   > = {
     fetchData: async (options) => {
       const result = await Promise.resolve(fetchData(options))
