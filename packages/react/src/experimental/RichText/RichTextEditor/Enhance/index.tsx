@@ -84,8 +84,8 @@ const EnhanceActivator = ({
         <Popover.Content
           side={position}
           align="start"
-          sideOffset={15}
-          alignOffset={-10}
+          sideOffset={10}
+          alignOffset={0}
           collisionPadding={10}
           style={{ zIndex: 9999 }}
         >

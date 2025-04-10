@@ -58,9 +58,9 @@ const ToolbarDropdown = ({
         <Popover.Content
           side={position}
           align="end"
-          sideOffset={15}
+          sideOffset={10}
           collisionPadding={10}
-          alignOffset={-10}
+          alignOffset={0}
           style={{ zIndex: 9999 }}
         >
           <AnimatePresence>
