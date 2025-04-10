@@ -4,6 +4,10 @@ import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
+import {
+  NavigationFilterDefinition,
+  NavigationFilterValue,
+} from "./navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "./sortings"
 
 /**
@@ -18,9 +22,12 @@ export type DataSourceDefinition<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilter extends NavigationFilterDefinition,
 > = {
   /** Available filter configurations */
   filters?: Filters
+  /** Navigation filters */
+  navigationFilter?: NavigationFilter
   /** Predefined filter configurations that can be applied */
   presets?: PresetsDefinition<Filters>
   /** URL for a single item in the collection */
@@ -282,7 +289,15 @@ export type DataSource<
   Sortings extends SortingsDefinition,
   ItemActions extends
     ItemActionsDefinition<Record> = ItemActionsDefinition<Record>,
-> = DataSourceDefinition<Record, Filters, Sortings, ItemActions> & {
+  NavigationFilter extends
+    NavigationFilterDefinition = NavigationFilterDefinition,
+> = DataSourceDefinition<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilter
+> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
@@ -298,6 +313,10 @@ export type DataSource<
   setCurrentSearch: (search: string | undefined) => void
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
+  currentNavigationFilter: NavigationFilterValue<NavigationFilter>
+  setCurrentNavigationFilter: React.Dispatch<
+    React.SetStateAction<NavigationFilterValue<NavigationFilter>>
+  >
 }
 
 /**

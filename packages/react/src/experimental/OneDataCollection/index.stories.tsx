@@ -15,6 +15,7 @@ import { PromiseState } from "../../lib/promise-to-observable"
 import { FilterDefinition, FiltersState } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
+import { NavigationFilterDefinition } from "./navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import {
   BulkActionDefinition,
@@ -267,6 +268,7 @@ const ExampleComponent = ({
   frozenColumns = 0,
   selectable,
   bulkActions,
+  navigationFilter,
 }: {
   useObservable?: boolean
   usePresets?: boolean
@@ -282,11 +284,13 @@ const ExampleComponent = ({
   }
   onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
+  navigationFilter?: NavigationFilterDefinition
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
   const dataSource = useDataSource({
     filters,
+    navigationFilter,
     presets: usePresets ? filterPresets : undefined,
     sortings,
     itemActions: (item: MockUser) => [
@@ -615,6 +619,22 @@ export const BasicTableView: Story = {
       </div>
     )
   },
+}
+
+// With date navigator
+export const WithDateNavigation: Story = {
+  render: () => (
+    <ExampleComponent
+      frozenColumns={2}
+      navigationFilter={{
+        type: "date-navigator",
+        initialValue: new Date(),
+        options: {
+          granularity: "day",
+        },
+      }}
+    />
+  ),
 }
 
 // Examples with multiple visualizations
