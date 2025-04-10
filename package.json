@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.23.0",
+  "version": "1.24.1",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -30,9 +30,9 @@
     "lint": "eslint -c eslint.config.mjs src/**/*.{ts,tsx} --report-unused-disable-directives --max-warnings 0",
     "lint-fix": "eslint -c eslint.config.mjs src/**/*.{ts,tsx} --fix --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "generate-icons": "rm -fR src/icons/app/* icons/modules/* && run-p generate-app-icons generate-module-icons",
-    "generate-app-icons": "npx @svgr/cli --out-dir src/icons/app assets/icons/app",
-    "generate-module-icons": "npx @svgr/cli --out-dir src/icons/modules assets/icons/modules",
+    "generate-icons": "rm -fR src/icons/app/* src/icons/modules/* && run-p generate-app-icons generate-module-icons",
+    "generate-app-icons": "npx @svgr/cli --out-dir src/icons/app node_modules/@factorialco/factorial-one-core/assets/icons/app",
+    "generate-module-icons": "npx @svgr/cli --out-dir src/icons/modules node_modules/@factorialco/factorial-one-core/assets/icons/modules",
     "build-storybook": "storybook build",
     "serve-storybook": "http-server storybook-static",
     "test-storybook": "test-storybook --testTimeout=60000",
@@ -86,6 +86,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@factorialco/factorial-one-core": "workspace:*",
     "@chromatic-com/storybook": "^3.2.6",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",

@@ -64,6 +64,7 @@ export declare type ButtonProps = Omit<ButtonInternalProps, (typeof privateProps
 
 declare interface ButtonProps_2 extends React_2.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
     asChild?: boolean;
+    round?: boolean;
     size?: ButtonSize;
     variant?: ButtonVariant;
     appendButton?: React_2.ReactNode;
@@ -77,7 +78,6 @@ declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
     variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
-    round?: boolean | undefined;
 } & ({
     class?: ClassValue;
     className?: never;

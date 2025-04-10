@@ -528,6 +528,7 @@ declare type ButtonProps = Omit<ButtonInternalProps, (typeof privateProps)[numbe
 
 declare interface ButtonProps_2 extends React_2.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
     asChild?: boolean;
+    round?: boolean;
     size?: ButtonSize;
     variant?: ButtonVariant;
     appendButton?: React_2.ReactNode;
@@ -541,7 +542,6 @@ declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
     variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
-    round?: boolean | undefined;
 } & ({
     class?: ClassValue;
     className?: never;
@@ -1079,10 +1079,13 @@ onClose?: () => void;
 
 export declare const DotTag: ForwardRefExoticComponent<DotTagProps & RefAttributes<HTMLDivElement>>;
 
-export declare interface DotTagProps {
+export declare type DotTagProps = {
     text: string;
+} & ({
     color: NewColor;
-}
+} | {
+    customColor: string;
+});
 
 export declare const Dropdown: (props: DropdownProps) => JSX_2.Element;
 
@@ -1835,6 +1838,39 @@ declare type OneDropdownButtonItem<T = string> = {
     icon?: IconType;
 };
 
+export declare const OneModal: OneModalComponent;
+
+declare const OneModal_2: default_2.FC<OneModalProps>;
+
+declare type OneModalComponent = typeof OneModal_2 & {
+    Header: typeof OneModalHeader;
+    Content: typeof OneModalContent;
+};
+
+declare const OneModalContent: ({ tabs, activeTabId, setActiveTabId, children, }: OneModalContentProps) => JSX_2.Element;
+
+declare type OneModalContentProps = {
+    children: React.ReactNode;
+} & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
+
+declare const OneModalHeader: ({ title, otherActions, }: OneModalHeaderProps) => JSX_2.Element;
+
+declare type OneModalHeaderProps = {
+    title: string;
+    otherActions?: DropdownInternalProps["items"];
+};
+
+declare type OneModalProps = {
+    /** Whether the modal is open */
+    isOpen: boolean;
+    /** Callback when modal is closed */
+    onClose: () => void;
+    /** Whether to render the modal as a bottom sheet on mobile */
+    asBottomSheetInMobile?: boolean;
+    /** Custom content to render in the modal. Only accepts OneModal.Header and OneModal.Content components */
+    children: default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>> | default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>>[];
+} & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
+
 export declare function OnePagination({ totalPages, currentPage, onPageChange, showControls, ariaLabel, visibleRange, hasNextPage, }: OnePaginationProps): JSX_2.Element;
 
 declare interface OnePaginationProps {
@@ -1872,6 +1908,36 @@ declare interface OnePaginationProps {
      */
     hasNextPage?: boolean;
 }
+
+export declare const OnePersonListItem: default_2.ForwardRefExoticComponent<OnePersonListItemProps & default_2.RefAttributes<HTMLDivElement>> & {
+    Skeleton: () => default_2.JSX.Element;
+};
+
+export declare type OnePersonListItemProps = {
+    person: {
+        firstName: string;
+        lastName: string;
+        avatarUrl?: string;
+        avatarBadge?: Omit<BadgeProps, "size">;
+    };
+    description?: string;
+    bottomTags: Omit<RawTagProps, "noBorder">[];
+    rightTag?: DotTagProps;
+    actions?: {
+        primary?: {
+            icon?: IconType;
+            label: string;
+            onClick: () => void;
+        };
+        secondary?: {
+            icon: IconType;
+            onClick: () => void;
+        };
+    };
+    info?: string;
+    onClick: () => void;
+    withPointerCursor?: boolean;
+};
 
 export declare type OnSelectItemsCallback<Record extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {
     allSelected: boolean | "indeterminate";
@@ -2208,11 +2274,6 @@ declare type Props_15 = {
 };
 
 declare type Props_16<Id extends string | number = string | number> = {
-    items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
-    onClickItem?: (id: Id) => void;
-};
-
-declare type Props_17<Id extends string | number = string | number> = {
     id: Id;
     icon?: IconType;
     title: string;
@@ -2220,22 +2281,14 @@ declare type Props_17<Id extends string | number = string | number> = {
     onClick?: (id: Id) => void;
 };
 
-declare type Props_18<Id extends string | number = string | number> = {
-    items: Omit<Props_19<Id>, "onClick">[];
+declare type Props_17<Id extends string | number = string | number> = {
+    items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
     onClickItem?: (id: Id) => void;
 };
 
-declare type Props_19<Id extends string | number = string | number> = {
-    id: Id;
-    title: string;
-    icon?: IconType;
-    iconClassName?: string;
-    rightIcon?: IconType;
-    rightIconClassName?: string;
-    count?: number;
-    alert?: ComponentProps<typeof AlertTag>;
-    rawTag?: ComponentProps<typeof RawTag>;
-    onClick?: (id: Id) => void;
+declare type Props_18<Id extends string | number = string | number> = {
+    items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
+    onClickItem?: (id: Id) => void;
 };
 
 declare type Props_2 = {
@@ -2667,9 +2720,12 @@ export declare const SummariesWidget: ForwardRefExoticComponent<Omit<WidgetProps
 
 export declare type TabItem = {
     label: string;
-    href: string;
     index?: boolean;
-} & DataAttributes;
+} & DataAttributes & ({
+    href: string;
+} | {
+    id: string;
+});
 
 declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
 
@@ -2725,8 +2781,10 @@ export declare const Tabs: FC<TabsProps> & {
     Skeleton: FC<Pick<TabsProps, "secondary">>;
 };
 
-declare interface TabsProps {
+export declare interface TabsProps {
     tabs: TabItem[];
+    activeTabId?: string;
+    setActiveTabId?: Dispatch<string>;
     secondary?: boolean;
     embedded?: boolean;
 }
@@ -3019,6 +3077,17 @@ export declare const Widget: default_2.ForwardRefExoticComponent<WidgetProps & {
     })) | undefined) => string> & default_2.RefAttributes<HTMLDivElement>>;
 };
 
+export declare function WidgetAvatarsListItem({ id, title, subtitle, emoji, avatars, onClick, }: WidgetAvatarsListItemProps): JSX_2.Element;
+
+export declare type WidgetAvatarsListItemProps = {
+    id: string | number;
+    emoji: string;
+    title: string;
+    subtitle: string;
+    avatars: AvatarVariant[];
+    onClick?: (id: string | number) => void;
+};
+
 export declare function WidgetEmptyState({ title, description, emoji, actions, }: WidgetEmptyStateProps): JSX_2.Element;
 
 export declare type WidgetEmptyStateProps = {
@@ -3030,11 +3099,13 @@ export declare type WidgetEmptyStateProps = {
 
 export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_15): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, onClickItem }: Props_16): JSX_2.Element;
+export declare function WidgetInboxList({ items, onClickItem }: Props_17): JSX_2.Element;
 
-declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_17<Id>;
+export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_16): JSX_2.Element;
 
-export declare type WidgetInboxListProps = Props_16;
+export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_16<Id>;
+
+export declare type WidgetInboxListProps = Props_17;
 
 export declare interface WidgetProps {
     header?: {
@@ -3072,6 +3143,21 @@ title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
 export declare function WidgetSimpleList({ items, onClickItem }: Props_18): JSX_2.Element;
+
+export declare function WidgetSimpleListItem({ id, title, alert, rawTag, count, icon, rightIcon, iconClassName, rightIconClassName, onClick, }: WidgetSimpleListItemProps): JSX_2.Element;
+
+export declare type WidgetSimpleListItemProps<Id extends string | number = string | number> = {
+    id: Id;
+    title: string;
+    icon?: IconType;
+    iconClassName?: string;
+    rightIcon?: IconType;
+    rightIconClassName?: string;
+    count?: number;
+    alert?: ComponentProps<typeof AlertTag>;
+    rawTag?: ComponentProps<typeof RawTag>;
+    onClick?: (id: Id) => void;
+};
 
 export declare type WidgetSimpleListProps = Props_18;
 
