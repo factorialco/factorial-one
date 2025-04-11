@@ -23,7 +23,7 @@ const Switch = React.forwardRef<
         name={switchId}
         aria-label={props.title ?? "Switch"}
         className={cn(
-          "relative h-5 w-8 rounded-full bg-f1-border shadow-md hover:bg-f1-border-hover data-[state=checked]:bg-f1-background-selected-bold",
+          "relative h-5 w-[1.875rem] rounded-full bg-f1-border shadow-md hover:bg-f1-border-hover data-[state=checked]:bg-f1-background-selected-bold",
           disabled && "cursor-not-allowed opacity-50",
           focusRing(),
           className
@@ -32,7 +32,7 @@ const Switch = React.forwardRef<
       >
         <SwitchPrimitive.Thumb
           className={cn(
-            "block h-4 w-4 translate-x-[2px] rounded-full bg-f1-background shadow-md transition-transform duration-100 data-[state=checked]:translate-x-[14px]"
+            "block h-4 w-4 translate-x-[0.125rem] rounded-full bg-f1-background shadow-md transition-transform duration-300 data-[state=checked]:translate-x-[0.75rem]"
           )}
         />
       </SwitchPrimitive.Root>
