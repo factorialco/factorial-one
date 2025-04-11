@@ -7,9 +7,9 @@ type Props = {
 }
 
 const sizes = {
-  sm: "w-6 rounded-sm",
-  md: "w-9 rounded-md",
-  lg: "w-10 rounded-lg",
+  sm: "w-6 h-6 rounded-sm",
+  md: "w-9 h-9 rounded-md",
+  lg: "w-10 h-10 rounded-lg",
 }
 
 const imageSizes = {

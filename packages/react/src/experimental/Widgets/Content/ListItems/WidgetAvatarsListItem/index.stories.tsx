@@ -88,3 +88,12 @@ export const WithLongTitle: Story = {
     ],
   },
 }
+
+export const WithAlertAvatar: Story = {
+  args: {
+    ...Default.args,
+    emoji: undefined,
+    alert: "critical",
+    remainingCount: 10,
+  },
+}
