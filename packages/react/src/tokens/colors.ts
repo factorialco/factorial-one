@@ -206,6 +206,7 @@ export const f1Colors = {
     },
     warning: "hsl(var(--warning-50) / 0.1)",
     info: "hsl(var(--info-50) / 0.1)",
+    positive: "hsl(var(--positive-50) / 0.1)",
   },
   icon: {
     DEFAULT: "hsl(var(--neutral-solid-50))",
