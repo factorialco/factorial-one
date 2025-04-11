@@ -502,8 +502,8 @@ importers:
         specifier: ^5.4.1
         version: 5.4.1
       chromatic:
-        specifier: ^11.25.2
-        version: 11.25.2
+        specifier: ^11.28.0
+        version: 11.28.0
       consola:
         specifier: ^3.4.0
         version: 3.4.0
@@ -5019,8 +5019,8 @@ packages:
     resolution: {integrity: sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==}
     engines: {node: '>=10'}
 
-  chromatic@11.25.2:
-    resolution: {integrity: sha512-/9eQWn6BU1iFsop86t8Au21IksTRxwXAl7if8YHD05L2AbuMjClLWZo5cZojqrJHGKDhTqfrC2X2xE4uSm0iKw==}
+  chromatic@11.28.0:
+    resolution: {integrity: sha512-Xy3907MXY5UP7LoMksmsT02xCUsoLZpcC6sRITjd+KiXBteOxPF7J+QsFqy/VzQCEN6fpt/R2bOIpE+PwPfcZA==}
     hasBin: true
     peerDependencies:
       '@chromatic-com/cypress': ^0.*.* || ^1.0.0
@@ -12036,7 +12036,7 @@ snapshots:
 
   '@chromatic-com/storybook@3.2.6(react@18.3.1)(storybook@8.6.10(prettier@3.5.2))':
     dependencies:
-      chromatic: 11.25.2
+      chromatic: 11.28.0
       filesize: 10.1.6
       jsonfile: 6.1.0
       react-confetti: 6.4.0(react@18.3.1)
@@ -16401,7 +16401,7 @@ snapshots:
 
   chownr@2.0.0: {}
 
-  chromatic@11.25.2: {}
+  chromatic@11.28.0: {}
 
   chrome-launcher@0.15.2:
     dependencies:
