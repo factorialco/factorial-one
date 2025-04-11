@@ -21,7 +21,7 @@ const Switch = React.forwardRef<
         ref={ref}
         id={switchId}
         name={switchId}
-        aria-label={props.title}
+        aria-label={props.title ?? "Switch"}
         className={cn(
           "relative h-5 w-8 rounded-full bg-f1-border shadow-md hover:bg-f1-border-hover data-[state=checked]:bg-f1-background-selected-bold",
           disabled && "cursor-not-allowed opacity-50",
