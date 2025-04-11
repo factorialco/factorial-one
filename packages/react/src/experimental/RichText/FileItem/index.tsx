@@ -1,4 +1,4 @@
-import { Icon } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { FileAvatar } from "@/experimental/exports"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { CrossedCircle } from "@/icons/app"
@@ -7,12 +7,23 @@ import { forwardRef } from "react"
 
 interface FileItemProps extends React.HTMLAttributes<HTMLDivElement> {
   file: File
-  onRemoveFile: () => void
-  disabled: boolean
+  onAction?: () => void
+  actionIcon?: IconType
+  disabled?: boolean
 }
 
 const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
-  ({ file, onRemoveFile, disabled, className, ...props }, ref) => {
+  (
+    {
+      file,
+      onAction,
+      actionIcon = CrossedCircle,
+      disabled = false,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     return (
       <Tooltip label={file.name}>
         <div
@@ -31,15 +42,17 @@ const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
             {file.name}
           </p>
 
-          <Icon
-            size="md"
-            icon={CrossedCircle}
-            className={cn(
-              "cursor-pointer text-f1-icon",
-              disabled ? "cursor-not-allowed" : "hover:text-f1-icon-bold"
-            )}
-            onClick={disabled ? undefined : onRemoveFile}
-          />
+          {onAction && (
+            <Icon
+              size="md"
+              icon={actionIcon}
+              className={cn(
+                "cursor-pointer text-f1-icon",
+                disabled ? "cursor-not-allowed" : "hover:text-f1-icon-bold"
+              )}
+              onClick={disabled ? undefined : onAction}
+            />
+          )}
         </div>
       </Tooltip>
     )
