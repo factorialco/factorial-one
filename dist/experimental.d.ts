@@ -2718,6 +2718,47 @@ export declare type subActionType = {
 
 export declare const SummariesWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
+export declare function Switch({ title, onCheckedChange, id, disabled, checked, value, hideLabel, presentational, ...rest }: SwitchProps): JSX_2.Element;
+
+declare interface SwitchProps extends DataAttributes {
+    /**
+     * The title of the switch
+     */
+    title?: string;
+    /**
+     * The id of the switch
+     */
+    id?: string;
+    /**
+     * The checked state of the switch
+     * @default false
+     */
+    checked?: boolean;
+    /**
+     * The callback function that is called when the switch is toggled
+     */
+    onCheckedChange?: (checked: boolean) => void;
+    /**
+     * Whether the switch is disabled
+     * @default false
+     */
+    disabled?: boolean;
+    /**
+     * The value of the switch
+     */
+    value?: string;
+    /**
+     * Whether to hide the label
+     * @default false
+     */
+    hideLabel?: boolean;
+    /**
+     * Whether the switch is only presentational, so it does not have functionality
+     * @default false
+     */
+    presentational?: boolean;
+}
+
 export declare type TabItem = {
     label: string;
     index?: boolean;
