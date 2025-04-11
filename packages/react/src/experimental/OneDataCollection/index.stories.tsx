@@ -1215,7 +1215,7 @@ function createDataAdapter<
   delay = 500,
   useObservable = false,
   paginationType,
-  perPage = 10,
+  perPage = 20,
 }: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters, TSortings> {
   const filterData = (
     records: TRecord[],
@@ -1583,7 +1583,6 @@ export const WithPagination: Story = {
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "pages",
-        perPage: 10,
       }),
     })
 
