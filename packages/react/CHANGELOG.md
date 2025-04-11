@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.26.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.26.0...factorial-one-react-v1.26.1) (2025-04-11)
+
+
+### Bug Fixes
+
+* make widgets more transparent ([#1570](https://github.com/factorialco/factorial-one/issues/1570)) ([b02386c](https://github.com/factorialco/factorial-one/commit/b02386c8e32b54bd77e1f2af916bc4a2d23f5618))
+
 ## [1.26.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.25.0...factorial-one-react-v1.26.0) (2025-04-11)
 
 
