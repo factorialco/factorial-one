@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.25.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.24.1...factorial-one-react-v1.25.0) (2025-04-11)
+
+
+### Features
+
+* define default items per page as 20 ([#1543](https://github.com/factorialco/factorial-one/issues/1543)) ([aca28fa](https://github.com/factorialco/factorial-one/commit/aca28fa9de1e0416eb1f37c85f6055b9d5c97e1d))
+
 ## [1.24.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.24.0...factorial-one-react-v1.24.1) (2025-04-10)
 
 

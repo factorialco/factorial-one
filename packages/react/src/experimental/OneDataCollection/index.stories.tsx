@@ -22,7 +22,7 @@ import {
   OnBulkActionCallback,
   OnSelectItemsCallback,
   PaginatedResponse,
-  Presets,
+  PresetsDefinition,
   RecordType,
 } from "./types"
 import { useData } from "./useData"
@@ -43,7 +43,7 @@ const filters = {
 } as const
 
 // Define presets for the filters
-const filterPresets: Presets<typeof filters> = [
+const filterPresets: PresetsDefinition<typeof filters> = [
   {
     label: "Engineering Team",
     filter: {
@@ -1215,7 +1215,7 @@ function createDataAdapter<
   delay = 500,
   useObservable = false,
   paginationType,
-  perPage = 10,
+  perPage = 20,
 }: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters, TSortings> {
   const filterData = (
     records: TRecord[],
@@ -1583,7 +1583,6 @@ export const WithPagination: Story = {
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "pages",
-        perPage: 10,
       }),
     })
 
