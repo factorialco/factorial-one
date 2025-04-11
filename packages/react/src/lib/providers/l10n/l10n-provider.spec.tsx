@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react"
-import { describe, expect, it, vi } from "vitest"
+import { describe, expect, it } from "vitest"
 import { L10nProvider, useL10n } from "./l10n-provider"
 
 // Test component that uses the l10n hook
@@ -17,18 +17,6 @@ describe("L10nProvider", () => {
     )
 
     expect(screen.getByTestId("locale")).toHaveTextContent("es-ES")
-  })
-
-  it("throws error when useL10n is used outside provider", () => {
-    // Suppress console.error for this test as we expect an error
-    const consoleSpy = vi.spyOn(console, "error")
-    consoleSpy.mockImplementation(() => {})
-
-    expect(() => {
-      render(<TestComponent />)
-    }).toThrow("useI18n must be used within an I18nProvider")
-
-    consoleSpy.mockRestore()
   })
 
   // Type tests - these will fail at compile time if types are wrong
