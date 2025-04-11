@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.27.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.26.1...factorial-one-react-v1.27.0) (2025-04-11)
+
+
+### Features
+
+* create WidgetAvatarsListItem with alert ([#1585](https://github.com/factorialco/factorial-one/issues/1585)) ([4ee8a76](https://github.com/factorialco/factorial-one/commit/4ee8a76745e3456a513a735e646b6e6ba5256dae))
+
 ## [1.26.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.26.0...factorial-one-react-v1.26.1) (2025-04-11)
 
 
