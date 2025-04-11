@@ -15,6 +15,11 @@ interface TableCellProps {
   href?: string
 
   /**
+   * The onClick handler for the cell
+   */
+  onClick?: () => void
+
+  /**
    * Defines if the cell is the first cell in the row
    * @default false
    */
@@ -35,6 +40,7 @@ interface TableCellProps {
 export function TableCell({
   children,
   href,
+  onClick,
   width = "auto",
   firstCell = false,
   sticky,
@@ -105,6 +111,26 @@ export function TableCell({
         >
           <span className="sr-only">{actions.view}</span>
         </Link>
+      )}
+      {onClick && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            onClick()
+          }}
+          data-testid="table-cell-action-button"
+          className="table-cell-action-button absolute inset-0 !z-0 block"
+          tabIndex={firstCell ? undefined : -1}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              onClick()
+            }
+          }}
+        >
+          <span className="sr-only">{actions.view}</span>
+        </button>
       )}
     </TableCellRoot>
   )

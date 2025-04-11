@@ -1,24 +1,32 @@
 import { Icon } from "@/factorial-one"
-import { Ai, ChevronLeft, ChevronRight } from "@/icons/app"
+import { Ai, ChevronRight } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import { Input } from "@/ui/input"
+import { AnimatePresence, motion } from "framer-motion"
 import React, { useEffect, useRef, useState } from "react"
 import { EnhancementOption } from "../../utils/types"
 
 interface OptionProps {
   option: EnhancementOption
-  onClick: () => void
+  onClick: (option: EnhancementOption) => void
+  selectedOption?: EnhancementOption | null
 }
 
-const Option = ({ option, onClick }: OptionProps) => {
+const Option = ({ option, onClick, selectedOption = null }: OptionProps) => {
   return (
     <div
-      onClick={onClick}
-      className="flex cursor-pointer flex-row items-center gap-2 bg-f1-background px-3 py-2 hover:bg-f1-background-secondary"
+      onClick={() => onClick(option)}
+      className={cn(
+        "flex cursor-pointer flex-row items-center gap-2 rounded-md bg-f1-background p-2 hover:bg-f1-background-secondary",
+        selectedOption?.id === option.id && "bg-f1-background-secondary"
+      )}
     >
       <p className="text-neutral-40 text-md grow text-ellipsis font-normal">
         {option.label}
       </p>
-      {option.subOptions && <Icon icon={ChevronRight} size="md" />}
+      {option.subOptions && option.subOptions.length > 0 && (
+        <Icon icon={ChevronRight} size="md" className="text-f1-icon" />
+      )}
     </div>
   )
 }
@@ -42,11 +50,12 @@ const AIEnhanceMenu = ({
   enhancementOptions,
   inputPlaceholder,
 }: AIEnhanceMenuProps) => {
-  const [selectedParentOption, setSelectedParentOption] = useState<
-    string | null
-  >(null)
+  const [selectedOption, setSelectedOption] =
+    useState<EnhancementOption | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
   const customInputRef = useRef<HTMLInputElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const subMenuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (customInputRef.current) {
@@ -54,17 +63,47 @@ const AIEnhanceMenu = ({
     }
   }, [])
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!selectedOption) return
+      if (!(event.target instanceof Element)) return
+
+      const clickedOnMainMenu = menuRef.current?.contains(event.target)
+      const clickedOnSubMenu = subMenuRef.current?.contains(event.target)
+      const optionItem = event.target.closest(".option-item")
+
+      if (
+        !clickedOnSubMenu &&
+        (!clickedOnMainMenu ||
+          (clickedOnMainMenu && optionItem?.id !== selectedOption.id))
+      ) {
+        setSelectedOption(null)
+      }
+    }
+
+    if (selectedOption) {
+      document.addEventListener("mousedown", handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [selectedOption])
+
   const handleOptionSelect = (option: EnhancementOption) => {
-    if (option.subOptions) {
-      setSelectedParentOption(option.id)
+    if (option.subOptions && option.subOptions.length > 0) {
+      setSelectedOption((prevSelected) =>
+        prevSelected?.id === option.id ? null : option
+      )
     } else {
       onSelect({ selectedIntent: option.id, customIntent: undefined })
       onClose()
     }
   }
 
-  const handleBackToMainMenu = () => {
-    setSelectedParentOption(null)
+  const handleSubOptionSelect = (option: EnhancementOption) => {
+    onSelect({ selectedIntent: option.id, customIntent: undefined })
+    onClose()
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -80,67 +119,68 @@ const AIEnhanceMenu = ({
     }
   }
 
+  const filteredOptions = enhancementOptions.filter((option) =>
+    option.label.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+
   return (
-    <div
-      className="flex max-h-72 w-96 flex-col overflow-hidden rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className="flex w-full flex-row items-center p-2">
-        <Input
-          icon={Ai}
-          type="text"
-          placeholder={inputPlaceholder}
-          autoFocus
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          ref={customInputRef}
-        />
-      </div>
-      {enhancementOptions.length > 0 && (
-        <>
-          {selectedParentOption && (
-            <div
-              className="flex cursor-pointer flex-row items-center gap-2 bg-f1-background-secondary px-3 py-2 hover:bg-f1-background-secondary-hover"
-              onClick={handleBackToMainMenu}
-            >
-              <Icon icon={ChevronLeft} size="md" />
-              <p className="text-neutral-100 text-md grow text-ellipsis font-medium">
-                {
-                  enhancementOptions.find(
-                    (option) => option.id === selectedParentOption
-                  )?.label
-                }
-              </p>
-            </div>
-          )}
-          <div className="flex flex-col overflow-y-auto [scrollbar-width:thin]">
-            {selectedParentOption
-              ? enhancementOptions
-                  .find((option) => option.id === selectedParentOption)
-                  ?.subOptions?.map((subOption) => (
-                    <Option
-                      key={subOption.id}
-                      onClick={() => handleOptionSelect(subOption)}
-                      option={subOption}
-                    />
-                  ))
-              : enhancementOptions
-                  .filter((option) =>
-                    option.label
-                      .toLowerCase()
-                      .includes(searchQuery.toLowerCase())
-                  )
-                  .map((option) => (
-                    <Option
-                      key={option.id}
-                      onClick={() => handleOptionSelect(option)}
-                      option={option}
-                    />
-                  ))}
+    <div className="relative">
+      <div
+        ref={menuRef}
+        className="flex max-h-60 w-80 flex-col overflow-hidden rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
+      >
+        <div className="flex w-full flex-row items-center p-2">
+          <Input
+            icon={Ai}
+            type="text"
+            placeholder={inputPlaceholder}
+            autoFocus
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            ref={customInputRef}
+          />
+        </div>
+        {enhancementOptions.length > 0 && (
+          <div className="scrollbar-macos flex flex-col overflow-y-auto px-1 pb-1">
+            {filteredOptions.map((option) => (
+              <div id={option.id} className="option-item" key={option.id}>
+                <Option
+                  onClick={handleOptionSelect}
+                  option={option}
+                  selectedOption={selectedOption}
+                />
+              </div>
+            ))}
           </div>
-        </>
-      )}
+        )}
+      </div>
+
+      <AnimatePresence>
+        {selectedOption &&
+          selectedOption.subOptions &&
+          selectedOption.subOptions.length > 0 && (
+            <motion.div
+              ref={subMenuRef}
+              className="absolute bottom-0 left-full z-50 max-h-60 w-60 overflow-y-auto rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm"
+              style={{ marginLeft: "8px" }}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="scrollbar-macos flex flex-col overflow-y-auto">
+                {selectedOption.subOptions.map((subOption) => (
+                  <Option
+                    key={subOption.id}
+                    onClick={handleSubOptionSelect}
+                    option={subOption}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          )}
+      </AnimatePresence>
     </div>
   )
 }

@@ -21,7 +21,7 @@
 }
 
 #rich-text-editor-container .ProseMirror::selection {
-  @apply bg-transparent;
+  background-color: transparent !important;
 }
 
 .magicColor {
@@ -75,6 +75,14 @@
   @apply line-through;
 }
 
+.ProseMirror .f1-bullet-list {
+  @apply list-disc;
+}
+
+.ProseMirror .f1-ordered-list {
+  @apply list-decimal;
+}
+
 .ProseMirror ul,
 .ProseMirror ol {
   @apply ml-5;
@@ -114,10 +122,39 @@
 }
 
 .ProseMirror p.is-editor-empty:first-child::before {
-  @apply pointer-events-none float-left h-0 text-f1-foreground-secondary;
+  @apply pointer-events-none float-left h-0 text-f1-foreground-tertiary;
   content: attr(data-placeholder);
 }
 
 .ProseMirror ul[data-type="taskList"] {
   @apply ml-0;
+}
+
+.shadow-editor-tools {
+  box-shadow: 0px -4px 20px 0px #0d162514;
+}
+
+.scrollbar-macos {
+  /* For Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+.scrollbar-macos::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-macos::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+.scrollbar-macos::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.scrollbar-macos::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover);
 }

@@ -2,11 +2,11 @@ import { Meta, StoryObj } from "@storybook/react"
 import { DownloadIcon, Mail, Tag, UploadIcon } from "lucide-react"
 import { Observable } from "zen-observable-ts"
 import {
+  Add,
   Ai,
   ArrowRight,
   Delete,
   Download,
-  EyeInvisible,
   Pencil,
   Share,
   Star,
@@ -22,7 +22,7 @@ import {
   OnBulkActionCallback,
   OnSelectItemsCallback,
   PaginatedResponse,
-  Presets,
+  PresetsDefinition,
   RecordType,
 } from "./types"
 import { useData } from "./useData"
@@ -43,7 +43,7 @@ const filters = {
 } as const
 
 // Define presets for the filters
-const filterPresets: Presets<typeof filters> = [
+const filterPresets: PresetsDefinition<typeof filters> = [
   {
     label: "Engineering Team",
     filter: {
@@ -545,8 +545,8 @@ export const BasicTableView: Story = {
         },
       ],
       primaryActions: () => ({
-        label: "Primary action",
-        icon: EyeInvisible,
+        label: "New employee",
+        icon: Add,
         onClick: () => console.log(`Primary action`),
       }),
       secondaryActions: () => [
@@ -1146,7 +1146,6 @@ export const WithTableVisualization: Story = {
         field: "name",
         order: "asc",
       },
-      presets: filterPresets,
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
         typeof filters,
@@ -1216,7 +1215,7 @@ function createDataAdapter<
   delay = 500,
   useObservable = false,
   paginationType,
-  perPage = 10,
+  perPage = 20,
 }: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters, TSortings> {
   const filterData = (
     records: TRecord[],
@@ -1471,7 +1470,6 @@ export const WithMultipleVisualizations: Story = {
   render: () => {
     const source = useDataSource({
       filters,
-      presets: filterPresets,
       sortings,
       dataAdapter: createDataAdapter({
         data: mockUsers,
@@ -1585,7 +1583,6 @@ export const WithPagination: Story = {
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "pages",
-        perPage: 10,
       }),
     })
 

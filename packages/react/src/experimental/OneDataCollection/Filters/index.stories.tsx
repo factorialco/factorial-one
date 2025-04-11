@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { fn } from "@storybook/test"
 import { useEffect, useState } from "react"
 import { Input } from "../../../ui/input"
 import { Label } from "../../../ui/label"
-import { Presets } from "../types"
-import { Filters } from "./index"
+import { PresetsDefinition } from "../types"
+import * as Filters from "./index"
+import { FiltersRootProps } from "./index"
 import type { FiltersDefinition, FiltersState } from "./types"
 import {
   deserializeFilters,
@@ -14,7 +16,17 @@ import {
 
 const meta = {
   title: "Data Collection/Filters",
-  component: Filters,
+  component: (props: FiltersRootProps<FiltersDefinition>) => {
+    return (
+      <>
+        <Filters.Root {...props}>
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
+      </>
+    )
+  },
 } satisfies Meta<typeof Filters>
 
 export default meta
@@ -23,16 +35,19 @@ const sampleDefinition: FiltersDefinition = {
   department: {
     type: "in",
     label: "Department",
-    options: [
-      {
-        value: "engineering",
-        label: "Engineering",
-      },
-      { value: "marketing", label: "Marketing" },
-      { value: "sales", label: "Sales" },
-      { value: "hr", label: "Human Resources" },
-      { value: "finance", label: "Finance" },
-    ],
+    options: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      return [
+        {
+          value: "engineering",
+          label: "Engineering",
+        },
+        { value: "marketing", label: "Marketing" },
+        { value: "sales", label: "Sales" },
+        { value: "hr", label: "Human Resources" },
+        { value: "finance", label: "Finance" },
+      ]
+    },
   },
   name: {
     type: "search",
@@ -82,7 +97,7 @@ const sampleDefinition: FiltersDefinition = {
 }
 
 // Define sample presets for use in stories
-const samplePresets: Presets<typeof sampleDefinition> = [
+const samplePresets: PresetsDefinition<typeof sampleDefinition> = [
   {
     label: "Engineering Team",
     filter: {
@@ -106,15 +121,22 @@ const samplePresets: Presets<typeof sampleDefinition> = [
 
 const FiltersWithState = () => {
   const [filters, setFilters] = useState<FiltersState<typeof sampleDefinition>>(
-    {}
+    {
+      name: "John",
+      department: ["engineering"],
+    }
   )
 
   return (
-    <Filters
+    <Filters.Root
       schema={sampleDefinition}
       filters={filters}
       onChange={setFilters}
-    />
+    >
+      <Filters.Controls />
+      <Filters.Presets />
+      <Filters.ChipsList />
+    </Filters.Root>
   )
 }
 
@@ -133,11 +155,15 @@ const FiltersWithInitialState = () => {
   )
 
   return (
-    <Filters
+    <Filters.Root
       schema={sampleDefinition}
       filters={filters}
       onChange={setFilters}
-    />
+    >
+      <Filters.Controls />
+      <Filters.Presets />
+      <Filters.ChipsList />
+    </Filters.Root>
   )
 }
 
@@ -152,12 +178,16 @@ const FiltersWithPresets = () => {
   )
 
   return (
-    <Filters
+    <Filters.Root
       schema={sampleDefinition}
       filters={filters}
       presets={samplePresets}
       onChange={setFilters}
-    />
+    >
+      <Filters.Controls />
+      <Filters.Presets />
+      <Filters.ChipsList />
+    </Filters.Root>
   )
 }
 
@@ -175,12 +205,16 @@ const FiltersWithPresetsAndInitialState = () => {
   )
 
   return (
-    <Filters
+    <Filters.Root
       schema={sampleDefinition}
       filters={filters}
       presets={samplePresets}
       onChange={setFilters}
-    />
+    >
+      <Filters.Controls />
+      <Filters.Presets />
+      <Filters.ChipsList />
+    </Filters.Root>
   )
 }
 
@@ -188,12 +222,13 @@ export const WithPresetsAndInitialFilters: StoryObj = {
   render: () => <FiltersWithPresetsAndInitialState />,
 }
 
-type Story = StoryObj<typeof Filters>
+type Story = StoryObj<typeof Filters.Root>
 
 export const Default: Story = {
   args: {
     schema: sampleDefinition,
     filters: {},
+    onChange: fn(),
   },
 }
 
@@ -206,6 +241,7 @@ export const WithPresetsArgs: Story = {
     schema: sampleDefinition,
     filters: {},
     presets: samplePresets,
+    onChange: fn(),
   },
 }
 
@@ -259,7 +295,11 @@ export const WithUrlSerialization: Story = {
             in the URL. You can modify it to see how the filters update.
           </p>
         </div>
-        <Filters {...args} filters={filters} onChange={setFilters} />
+        <Filters.Root {...args} filters={filters} onChange={setFilters}>
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
       </div>
     )
   },
@@ -314,12 +354,16 @@ export const WithPresetsAndUrlSerialization: Story = {
             in the URL. You can modify it to see how the filters update.
           </p>
         </div>
-        <Filters
+        <Filters.Root
           {...args}
           filters={filters}
           presets={samplePresets}
           onChange={setFilters}
-        />
+        >
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
       </div>
     )
   },
@@ -335,7 +379,7 @@ export const WithAsyncOptions: Story = {
       department: {
         type: "in"
         label: string
-        options: Array<{ value: string; label: string }>
+        options: () => Promise<Array<{ value: string; label: string }>>
       }
       users: {
         type: "in"
@@ -361,12 +405,19 @@ export const WithAsyncOptions: Story = {
       department: {
         type: "in",
         label: "Department",
-        options: [
-          { value: "engineering", label: "Engineering" },
-          { value: "marketing", label: "Marketing" },
-          { value: "sales", label: "Sales" },
-          { value: "hr", label: "Human Resources" },
-        ],
+        options: async () => {
+          // Simulate API call with a delay
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve([
+                { value: "engineering", label: "Engineering2" },
+                { value: "marketing", label: "Marketing" },
+                { value: "sales", label: "Sales" },
+                { value: "hr", label: "Human Resources" },
+              ])
+            }, 1500)
+          })
+        },
       },
       users: {
         type: "in",
@@ -404,11 +455,15 @@ export const WithAsyncOptions: Story = {
 
     return (
       <div className="w-[600px]">
-        <Filters
+        <Filters.Root
           schema={asyncDefinition}
           filters={filters}
           onChange={setFilters}
-        />
+        >
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
       </div>
     )
   },
@@ -517,11 +572,15 @@ export const WithLargeAsyncOptions: Story = {
           This example loads a large list of countries asynchronously. Open the
           Countries filter and use the search field to filter the options.
         </p>
-        <Filters
+        <Filters.Root
           schema={largeAsyncDefinition}
           filters={filters}
           onChange={setFilters}
-        />
+        >
+          <Filters.Controls />
+          <Filters.Presets />
+          <Filters.ChipsList />
+        </Filters.Root>
       </div>
     )
   },

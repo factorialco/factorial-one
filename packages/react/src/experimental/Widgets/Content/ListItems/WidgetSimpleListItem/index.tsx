@@ -5,7 +5,9 @@ import { Counter } from "../../../../Information/Counter"
 import { AlertTag } from "../../../../Information/Tags/AlertTag"
 import { RawTag } from "../../../../Information/Tags/RawTag"
 
-export type Props<Id extends string | number = string | number> = {
+export type WidgetSimpleListItemProps<
+  Id extends string | number = string | number,
+> = {
   id: Id
   title: string
   icon?: IconType
@@ -47,7 +49,7 @@ export function WidgetSimpleListItem({
   iconClassName = "text-f1-icon-secondary",
   rightIconClassName = "text-f1-icon-secondary",
   onClick,
-}: Props) {
+}: WidgetSimpleListItemProps) {
   const className = cn(
     "flex flex-row items-start gap-1 rounded-md border border-solid border-transparent px-2 py-1.5 text-f1-foreground",
     onClick

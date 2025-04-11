@@ -67,7 +67,7 @@ const ToolbarDropdown = ({
           align="end"
           sideOffset={15}
           collisionPadding={10}
-          alignOffset={-5}
+          alignOffset={-10}
           style={{ zIndex: 1000 }}
         >
           <AnimatePresence>
