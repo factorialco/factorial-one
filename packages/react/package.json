@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.25.0",
+  "version": "1.26.0",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -86,7 +86,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@factorialco/factorial-one-core": "workspace:*",
     "@chromatic-com/storybook": "^3.2.6",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
@@ -96,6 +95,7 @@
     "@eslint/compat": "^1.2.7",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.23.0",
+    "@factorialco/factorial-one-core": "workspace:*",
     "@microsoft/api-extractor": "7.52.2",
     "@playwright/test": "^1.51.0",
     "@storybook/addon-a11y": "^8.6.10",
@@ -130,7 +130,7 @@
     "autoprefixer": "^10.4.21",
     "axe-playwright": "^2.1.0",
     "chalk": "^5.4.1",
-    "chromatic": "^11.25.2",
+    "chromatic": "^11.28.0",
     "consola": "^3.4.0",
     "dotenv": "^16.4.7",
     "emoji-mart": "^5.6.0",
@@ -157,7 +157,7 @@
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "user-agent-data-types": "^0.4.2",
-    "vite": "^6.2.3",
+    "vite": "^6.2.4",
     "vite-plugin-dts": "4.3.0",
     "vite-plugin-lib-inject-css": "^2.2.1",
     "vitest": "^3.0.7"
@@ -168,6 +168,7 @@
   "dependencies": {
     "@radix-ui/react-hover-card": "^1.1.6",
     "@tanstack/react-virtual": "^3.13.6",
+    "@radix-ui/react-switch": "^1.1.4",
     "@tiptap/extension-bubble-menu": "^2.11.5",
     "@tiptap/extension-character-count": "^2.11.5",
     "@tiptap/extension-color": "^2.11.5",
