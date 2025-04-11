@@ -10,7 +10,7 @@ import {
 import { useResizeObserver } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { ChevronDown } from "../../icons/app"
-import { useI18n } from "../../lib/i18n-provider"
+import { useI18n } from "../../lib/providers/i18n"
 import { cn, focusRing } from "../../lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "../popover"
 import { Skeleton } from "../skeleton"

@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/experimental/OneTable"
-import { useI18n } from "@/lib/i18n-provider"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { ComponentProps, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"

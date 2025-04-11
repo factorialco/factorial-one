@@ -8,8 +8,10 @@ import {
 } from "@testing-library/react"
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
-import { I18nProvider } from "../../../../../lib/i18n-provider"
-import { defaultTranslations } from "../../../../../lib/i18n-provider-defaults"
+import {
+  defaultTranslations,
+  I18nProvider,
+} from "../../../../../lib/providers/i18n"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
