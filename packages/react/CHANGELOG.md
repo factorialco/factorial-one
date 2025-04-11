@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.26.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.25.0...factorial-one-react-v1.26.0) (2025-04-11)
+
+
+### Features
+
+* new switch button component ([#1578](https://github.com/factorialco/factorial-one/issues/1578)) ([1703049](https://github.com/factorialco/factorial-one/commit/170304954f5daba00655574c685e11f0d25220d3))
+
 ## [1.25.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.24.1...factorial-one-react-v1.25.0) (2025-04-11)
 
 
