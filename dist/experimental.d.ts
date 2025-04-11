@@ -7,7 +7,6 @@ import { BarChartProps } from '../../../components/Charts/BarChart';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
 import { color as color_2 } from '../../../../ui/avatar';
-import { color as color_3 } from '../../../ui/avatar';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
@@ -39,11 +38,9 @@ import * as RechartsPrimitive from 'recharts';
 import { RefAttributes } from 'react';
 import { ScrollAreaProps } from '@radix-ui/react-scroll-area';
 import { sizes as sizes_2 } from '../../../../ui/avatar';
-import { sizes as sizes_4 } from '../../../ui/avatar';
 import { SVGProps } from 'react';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { type as type_2 } from '../../../../ui/avatar';
-import { type as type_3 } from '../../../ui/avatar';
 import { useForm } from 'react-hook-form';
 import { UseFormHandleSubmit } from 'react-hook-form';
 import { UseFormReturn } from 'react-hook-form';
@@ -1217,9 +1214,9 @@ export declare const FILE_TYPES: {
 };
 
 export declare const FileAvatar: ForwardRefExoticComponent<Omit<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
-size?: sizes_4[number];
-type?: type_3[number];
-color?: color_3[number];
+size?: sizes_2[number];
+type?: type_2[number];
+color?: color_2[number];
 } & RefAttributes<HTMLSpanElement>, "ref"> & {
 file: File;
 } & RefAttributes<HTMLSpanElement>>;
