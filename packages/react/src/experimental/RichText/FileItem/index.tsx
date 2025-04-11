@@ -1,9 +1,9 @@
 import { Icon } from "@/components/Utilities/Icon"
+import { FileAvatar } from "@/experimental/exports"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
-import { FileAvatar } from "../FileAvatar"
 
 interface FileItemProps extends React.HTMLAttributes<HTMLDivElement> {
   file: File

@@ -3,7 +3,7 @@ import { FileAvatar } from "."
 
 const meta = {
   component: FileAvatar,
-  title: "Rich text/FileAvatar",
+  title: "Avatars/FileAvatar",
   tags: ["experimental"],
 } satisfies Meta<typeof FileAvatar>
 
