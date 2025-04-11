@@ -11,7 +11,7 @@ export default meta
 type Story = StoryObj<typeof AlertAvatar>
 
 const SIZES = ["sm", "md", "lg"] as const
-const TYPES = ["info", "warning", "critical"] as const
+const TYPES = ["info", "warning", "critical", "positive"] as const
 export const Default: Story = {
   render: () => (
     <div className="flex w-fit flex-col gap-2">

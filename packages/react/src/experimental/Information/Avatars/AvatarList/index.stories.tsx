@@ -110,3 +110,10 @@ export const CompaniesWithMaxAvatars: Story = {
     max: 3,
   },
 }
+
+export const WithRemainingCount: Story = {
+  args: {
+    ...WithMaxAvatars.args,
+    remainingCount: 10,
+  },
+}
