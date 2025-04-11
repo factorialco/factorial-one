@@ -678,6 +678,14 @@ export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_14 &
 
 export declare type ChatWidgetEmptyStateProps = Props_14;
 
+/**
+ * Filter chips list
+ */
+export declare const ChipsList: {
+    (): JSX_2.Element | undefined;
+    displayName: string;
+};
+
 export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, breakTypeName, }: ClockInControlsProps): JSX_2.Element;
 
 export declare interface ClockInControlsProps {
@@ -873,6 +881,14 @@ declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "weekdays";
 });
 
+/**
+ * Filter controls
+ */
+export declare const Controls: {
+    (): JSX_2.Element | undefined;
+    displayName: string;
+};
+
 declare type CopyActionType = {
     type: "copy";
     text?: string;
@@ -974,7 +990,7 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     /** Available filter configurations */
     filters?: Filters;
     /** Predefined filter configurations that can be applied */
-    presets?: Presets<Filters>;
+    presets?: PresetsDefinition<Filters>;
     /** URL for a single item in the collection */
     itemUrl?: (item: Record) => string | undefined;
     /** Click handler for a single item in the collection */
@@ -1270,68 +1286,6 @@ export declare type FilterOption<T = unknown> = {
 export declare type FilterOptions<FilterKeys extends string> = Record<FilterKeys, FilterDefinition>;
 
 /**
- * A comprehensive filtering interface that manages multiple filter types.
- * Provides a popover interface for filter configuration and displays active filters as chips.
- *
- * The component supports multiple filter types through a unified interface:
- * - "in" type filters: Multi-select filters with predefined options
- * - "search" type filters: Free-text search filters
- *
- * Features:
- * - Search and multi-select filters with type safety
- * - Temporary filter state that's only applied when explicitly confirmed
- * - Animated filter chips for active filters
- * - Support for filter presets for quick selection of common filter combinations
- * - Responsive design for different viewport sizes
- *
- * The component maintains a temporary state of filters that are only applied
- * when the user explicitly clicks the "Apply Filters" button, allowing for
- * a more controlled filtering experience.
- *
- * @template Definition - The type defining the structure of available filters
- *
- * @example
- * ```tsx
- * // Example with multiple filter types and presets
- * <Filters
- *   schema={{
- *     department: {
- *       type: "in",
- *       label: "Department",
- *       options: [
- *         { value: "engineering", label: "Engineering" },
- *         { value: "marketing", label: "Marketing" },
- *         { value: "sales", label: "Sales" }
- *       ]
- *     },
- *     search: {
- *       type: "search",
- *       label: "Search"
- *     }
- *   }}
- *   filters={{
- *     department: ["engineering"]
- *   }}
- *   presets={[
- *     {
- *       label: "Engineering Only",
- *       filter: { department: ["engineering"] }
- *     },
- *     {
- *       label: "Sales & Marketing",
- *       filter: { department: ["sales", "marketing"] }
- *     }
- *   ]}
- *   onChange={setFilters}
- * />
- * ```
- *
- * @see {@link FiltersDefinition} for detailed schema structure
- * @see {@link FiltersState} for the structure of filter state
- */
-export declare function Filters<Definition extends FiltersDefinition>({ schema, presets, filters: value, onChange, }: FiltersProps<Definition>): JSX_2.Element;
-
-/**
  * Record of filter definitions for a collection.
  * Maps filter keys to their respective definitions.
  * Used to configure the available filters for a collection.
@@ -1343,16 +1297,20 @@ export declare type FiltersDefinition<Keys extends string = string> = Record<Key
  * Props for the Filters component.
  * @template Definition - The type defining the structure of available filters
  */
-export declare interface FiltersProps<Definition extends FiltersDefinition> {
+declare interface FiltersRootProps<Definition extends FiltersDefinition> {
     /** The definition of available filters and their configurations */
-    schema: Definition;
+    schema?: Definition;
     /** Current state of applied filters */
     filters: FiltersState<Definition>;
     /** Optional preset configurations that users can select */
-    presets?: Presets<Definition>;
+    presets?: PresetsDefinition<Definition>;
     /** Callback fired when filters are changed */
     onChange: (value: FiltersState<Definition>) => void;
+    /** The children of the component */
+    children: React.ReactNode;
 }
+export { FiltersRootProps }
+export { FiltersRootProps as RootProps }
 
 /**
  * Current state of all filters in a collection.
@@ -1847,7 +1805,7 @@ declare type OneModalProps = {
     children: default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>> | default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>>[];
 } & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
 
-export declare function OnePagination({ totalPages, currentPage, onPageChange, showControls, ariaLabel, visibleRange, hasNextPage, }: OnePaginationProps): JSX_2.Element;
+export declare function OnePagination({ totalPages, currentPage, onPageChange, showControls, ariaLabel, visibleRange, hasNextPage, }: OnePaginationProps): false | JSX_2.Element;
 
 declare interface OnePaginationProps {
     /**
@@ -2044,10 +2002,18 @@ declare type PostEventProps = {
 };
 
 /**
+ * Filter presets
+ */
+export declare const Presets: {
+    (): JSX_2.Element | undefined;
+    displayName: string;
+};
+
+/**
  * Defines preset filter configurations that can be applied to a collection.
  * @template Filters - The available filter configurations
  */
-export declare type Presets<Filters extends FiltersDefinition> = Array<{
+export declare type PresetsDefinition<Filters extends FiltersDefinition> = Array<{
     /** Display name for the preset */
     label: string;
     /** Filter configuration to apply when this preset is selected */
@@ -2422,6 +2388,71 @@ export declare interface RichTextEditorProps {
     title: string;
     errorConfig?: errorConfig;
 }
+
+/**
+ * A comprehensive filtering interface that manages multiple filter types.
+ * Provides a popover interface for filter configuration and displays active filters as chips.
+ *
+ * The component supports multiple filter types through a unified interface:
+ * - "in" type filters: Multi-select filters with predefined options
+ * - "search" type filters: Free-text search filters
+ *
+ * Features:
+ * - Search and multi-select filters with type safety
+ * - Temporary filter state that's only applied when explicitly confirmed
+ * - Animated filter chips for active filters
+ * - Support for filter presets for quick selection of common filter combinations
+ * - Responsive design for different viewport sizes
+ *
+ * The component maintains a temporary state of filters that are only applied
+ * when the user explicitly clicks the "Apply Filters" button, allowing for
+ * a more controlled filtering experience.
+ *
+ * @template Definition - The type defining the structure of available filters
+ *
+ * @example
+ * ```tsx
+ * // Example with multiple filter types and presets
+ * <Filters
+ *   schema={{
+ *     department: {
+ *       type: "in",
+ *       label: "Department",
+ *       options: [
+ *         { value: "engineering", label: "Engineering" },
+ *         { value: "marketing", label: "Marketing" },
+ *         { value: "sales", label: "Sales" }
+ *       ]
+ *     },
+ *     search: {
+ *       type: "search",
+ *       label: "Search"
+ *     }
+ *   }}
+ *   filters={{
+ *     department: ["engineering"]
+ *   }}
+ *   presets={[
+ *     {
+ *       label: "Engineering Only",
+ *       filter: { department: ["engineering"] }
+ *     },
+ *     {
+ *       label: "Sales & Marketing",
+ *       filter: { department: ["sales", "marketing"] }
+ *     }
+ *   ]}
+ *   onChange={setFilters}
+ * />
+ * ```
+ *
+ * @see {@link FiltersDefinition} for detailed schema structure
+ * @see {@link FiltersState} for the structure of filter state
+ */
+export declare const Root: {
+    <Definition extends FiltersDefinition>({ filters, schema, children, ...props }: FiltersRootProps<Definition>): JSX_2.Element;
+    displayName: string;
+};
 
 declare type SchemaType = ZodType;
 
@@ -2939,7 +2970,7 @@ declare type URL_2 = string;
  * - actions: Available actions for the collection
  * - presets: Available filter presets
  */
-export declare const useDataSource: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>>({ currentFilters: initialCurrentFilters, filters, search, defaultSorting, dataAdapter, ...rest }: DataSourceDefinition<Record, Filters, Sortings, ItemActions>, deps?: ReadonlyArray<unknown>) => DataSource<Record, Filters, Sortings, ItemActions>;
+export declare const useDataSource: <Record extends RecordType, FiltersSchema extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>>({ currentFilters: initialCurrentFilters, filters, search, defaultSorting, dataAdapter, ...rest }: DataSourceDefinition<Record, FiltersSchema, Sortings, ItemActions>, deps?: ReadonlyArray<unknown>) => DataSource<Record, FiltersSchema, Sortings, ItemActions>;
 
 export { useForm }
 

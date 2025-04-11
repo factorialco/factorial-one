@@ -1,16 +1,16 @@
 import { C as s, L as I, c as E, P as g, a as P, f as M, b as R, A as w, B as V, d as k, e as A, g as _, V as F, U as j, I as S, h as D, X, i as O, j as T, M as U, u as G } from "./imageHandler-DcxyVPlx.js";
-import { k as Ne, E as $e, l as Le, n as Be, q as Ie, r as Ee, m as Me, p as Re, o as we } from "./imageHandler-DcxyVPlx.js";
+import { k as $e, E as Le, l as Be, n as Ie, q as Ee, r as Me, m as Re, p as we, o as Ve } from "./imageHandler-DcxyVPlx.js";
 import { jsx as a, jsxs as q } from "react/jsx-runtime";
 import * as f from "react";
 import { createContext as C, useRef as z, useState as H } from "react";
-const de = s(
+const fe = s(
   {
     name: "Link",
     type: "info"
   },
   I
 );
-var m = "Progress", v = 100, [J, fe] = E(m), [K, Q] = J(m), x = f.forwardRef(
+var m = "Progress", v = 100, [J, me] = E(m), [K, Q] = J(m), x = f.forwardRef(
   (e, r) => {
     const {
       __scopeProgress: t,
@@ -123,62 +123,64 @@ const re = ({ value: e, max: r = 100, label: t, color: n }, o) => {
     ) }),
     t && /* @__PURE__ */ a("div", { className: "flex-shrink-0 text-sm font-medium", children: t })
   ] });
-}, ae = M(re), me = s(
+}, ae = M(re), ve = s(
   {
     name: "AreaChart",
     type: "info"
   },
   w
-), ve = s(
+), pe = s(
   {
     name: "BarChart",
     type: "info"
   },
   V
-), pe = s(
+), he = s(
   {
     name: "CategoryBarChart",
     type: "info"
   },
   k
-), he = s(
+), ge = s(
   {
     name: "LineChart",
     type: "info"
   },
   A
-), ge = s(
+), Pe = s(
   {
     name: "PieChart",
     type: "info"
   },
   _
-), Pe = s(
+), Ce = s(
   {
     name: "VerticalBarChart",
     type: "info"
   },
   F
-), Ce = s(
+), xe = s(
   {
     name: "ProgressBarChart",
     type: "info"
   },
   ae
-), oe = C(null);
-function te({
+), oe = {
+  locale: "en"
+}, te = C(oe);
+function ne({
   children: e,
   l10n: r
 }) {
-  return /* @__PURE__ */ a(oe.Provider, { value: r, children: e });
+  return /* @__PURE__ */ a(te.Provider, { value: r, children: e });
 }
-const ne = C(
+const se = C(
   null
-), se = ({ children: e, fullScreen: r = !0 }) => {
+), ie = ({ children: e, fullScreen: r = !0 }) => {
   const t = z(null), [n, o] = H(t.current);
   return G(() => {
     o(t.current);
-  }, []), /* @__PURE__ */ a(ne.Provider, { value: { element: n }, children: /* @__PURE__ */ a(
+  }, []), /* @__PURE__ */ a(se.Provider, { value: { element: n }, children: /* @__PURE__ */ a(
     "div",
     {
       ref: t,
@@ -189,9 +191,9 @@ const ne = C(
       children: e
     }
   ) });
-}, ie = ({
+}, le = ({
   children: e
-}) => /* @__PURE__ */ a(U, { reducedMotion: "user", children: e }), xe = ({
+}) => /* @__PURE__ */ a(U, { reducedMotion: "user", children: e }), ye = ({
   children: e,
   layout: r,
   link: t,
@@ -199,7 +201,7 @@ const ne = C(
   image: o,
   i18n: u,
   l10n: c
-}) => /* @__PURE__ */ a(ie, { children: /* @__PURE__ */ a(j, { children: /* @__PURE__ */ a(te, { ...c, children: /* @__PURE__ */ a(S, { ...u, children: /* @__PURE__ */ a(D, { ...t, children: /* @__PURE__ */ a(se, { ...r, children: /* @__PURE__ */ a(X, { children: /* @__PURE__ */ a(
+}) => /* @__PURE__ */ a(le, { children: /* @__PURE__ */ a(j, { children: /* @__PURE__ */ a(ne, { ...c, children: /* @__PURE__ */ a(S, { ...u, children: /* @__PURE__ */ a(D, { ...t, children: /* @__PURE__ */ a(ie, { ...r, children: /* @__PURE__ */ a(X, { children: /* @__PURE__ */ a(
   O,
   {
     initiallyEnabled: n,
@@ -207,23 +209,23 @@ const ne = C(
   }
 ) }) }) }) }) }) }) });
 export {
-  me as AreaChart,
-  ve as BarChart,
-  Ne as Button,
-  pe as CategoryBarChart,
-  $e as EmojiImage,
-  xe as FactorialOneProvider,
-  Le as Icon,
-  he as LineChart,
-  de as Link,
-  ge as PieChart,
+  ve as AreaChart,
+  pe as BarChart,
+  $e as Button,
+  he as CategoryBarChart,
+  Le as EmojiImage,
+  ye as FactorialOneProvider,
+  Be as Icon,
+  ge as LineChart,
+  fe as Link,
+  Pe as PieChart,
   O as PrivacyModeProvider,
-  Ce as ProgressBarChart,
-  Pe as VerticalBarChart,
-  Be as buildTranslations,
-  Ie as getEmojiLabel,
-  Ee as useEmojiConfetti,
-  Me as usePrivacyMode,
-  Re as useReducedMotion,
-  we as useXRay
+  xe as ProgressBarChart,
+  Ce as VerticalBarChart,
+  Ie as buildTranslations,
+  Ee as getEmojiLabel,
+  Me as useEmojiConfetti,
+  Re as usePrivacyMode,
+  we as useReducedMotion,
+  Ve as useXRay
 };
