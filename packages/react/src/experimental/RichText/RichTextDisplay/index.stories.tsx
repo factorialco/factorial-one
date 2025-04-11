@@ -67,6 +67,7 @@ const htmlContent = `<p>
 </pre>
 <p></p>
 <img src="https://bmicalculator.mes.fm/img/memes/homer-after-one-day-at-the-gym.jpg" alt="Homer After One Day At the Gym | Memes | BMI Calculator">
+
 `
 
 export const Default: Story = {

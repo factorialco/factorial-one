@@ -2,7 +2,6 @@ import * as Popover from "@radix-ui/react-popover"
 import Mention from "@tiptap/extension-mention"
 import { Editor, ReactRenderer } from "@tiptap/react"
 import { createRoot, Root } from "react-dom/client"
-import screenfull from "screenfull"
 import { MentionList } from "../MentionList"
 import { MentionedUser } from "./types"
 
@@ -145,9 +144,10 @@ function Suggestion(
           position: "absolute",
           top: anchorRect.bottom + window.scrollY,
           left: anchorRect.left + window.scrollX,
-          width: anchorRect.width,
-          height: anchorRect.height,
+          width: 0,
+          height: 0,
         }
+
         return (
           <Popover.Root
             open
@@ -167,7 +167,7 @@ function Suggestion(
               align="start"
               sideOffset={25}
               collisionPadding={10}
-              style={{ zIndex: 1000 }}
+              style={{ zIndex: 9999 }}
               onMouseDownCapture={() => {
                 editor?.commands.focus()
               }}
@@ -220,11 +220,7 @@ function Suggestion(
           const anchorRect = safeGetRect()
 
           container = document.createElement("div")
-          const parentElement =
-            screenfull.isFullscreen && screenfull.element
-              ? screenfull.element
-              : document.body
-          parentElement.appendChild(container)
+          document.body.appendChild(container)
 
           popoverRoot = createRoot(container)
           popoverRoot.render(
