@@ -21,7 +21,7 @@ const EditorBubbleMenu = ({
     <BubbleMenu
       tippyOptions={{
         duration: 100,
-        placement: "top",
+        placement: "top-start",
         hideOnClick: false,
         appendTo: () =>
           isFullscreen
