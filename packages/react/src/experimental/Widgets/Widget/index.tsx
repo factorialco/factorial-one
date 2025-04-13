@@ -32,7 +32,12 @@ export interface WidgetProps {
     subtitle?: string
     comment?: string
     canBeBlurred?: boolean
-    link?: { title: string; url: string; onClick?: () => void; icon?: IconType }
+    link?: {
+      title: string
+      url?: string
+      onClick?: () => void
+      icon?: IconType
+    }
     count?: number
   }
   action?: ButtonProps
