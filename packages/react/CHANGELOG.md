@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.28.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.27.0...factorial-one-react-v1.28.0) (2025-04-13)
+
+
+### Features
+
+* add support for custom icon in AlertAvatar component ([#1590](https://github.com/factorialco/factorial-one/issues/1590)) ([2ae0c10](https://github.com/factorialco/factorial-one/commit/2ae0c10329bcdc3a29db92f29c428e8e30637d11))
+
 ## [1.27.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.26.1...factorial-one-react-v1.27.0) (2025-04-11)
 
 
