@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.29.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.0...factorial-one-react-v1.29.1) (2025-04-13)
+
+
+### Bug Fixes
+
+* change positive badge color ([#1595](https://github.com/factorialco/factorial-one/issues/1595)) ([0fad991](https://github.com/factorialco/factorial-one/commit/0fad991f88eec4251f7b9e5b9115d97dda9f1f2c))
+
 ## [1.29.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.28.0...factorial-one-react-v1.29.0) (2025-04-13)
 
 
