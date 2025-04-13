@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.29.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.28.0...factorial-one-react-v1.29.0) (2025-04-13)
+
+
+### Features
+
+* add support to include custom alert icon in WidgetAvatarsListItem component ([#1593](https://github.com/factorialco/factorial-one/issues/1593)) ([bc34643](https://github.com/factorialco/factorial-one/commit/bc34643c5fce48dc4aa60168f3aeb7d4b79c5cdd))
+
 ## [1.28.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.27.0...factorial-one-react-v1.28.0) (2025-04-13)
 
 
