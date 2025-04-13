@@ -40,6 +40,7 @@ const Wrapper: React.FC<WrapperProps> = ({
       ? "hover:bg-f1-background-tertiary focus:border-f1-background-selected-bold focus:outline-none"
       : undefined
   )
+
   return onClick ? (
     <a className={className} onClick={onClick}>
       {children}
