@@ -1,3 +1,4 @@
+import { SolidPause as SolidPauseIcon } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { AlertAvatar } from "./index"
 
@@ -24,4 +25,11 @@ export const Default: Story = {
       ))}
     </div>
   ),
+}
+
+export const WithCustomIcon: Story = {
+  args: {
+    type: "warning",
+    icon: SolidPauseIcon,
+  },
 }
