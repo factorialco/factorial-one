@@ -1,3 +1,4 @@
+import { IconType } from "@/components/Utilities/Icon"
 import { ComponentProps } from "react"
 import { cn } from "../../../../../lib/utils"
 import { AlertAvatar } from "../../../../Information/Avatars/AlertAvatar"
@@ -13,7 +14,10 @@ export type WidgetAvatarsListItemProps = {
   remainingCount?: number
   withPointerCursor?: boolean
   onClick?: (id: string | number) => void
-} & ({ emoji: string } | { alert: ComponentProps<typeof AlertAvatar>["type"] })
+} & (
+  | { emoji: string }
+  | { alert: ComponentProps<typeof AlertAvatar>["type"]; alertIcon?: IconType }
+)
 
 type WrapperProps = {
   onClick?: (ev: React.MouseEvent<HTMLAnchorElement>) => void
@@ -66,7 +70,9 @@ export function WidgetAvatarsListItem({
       withEmoji={"emoji" in props && !!props.emoji}
       withPointerCursor={withPointerCursor}
     >
-      {"alert" in props && <AlertAvatar type={props.alert} />}
+      {"alert" in props && (
+        <AlertAvatar type={props.alert} icon={props.alertIcon} />
+      )}
       {"emoji" in props && props.emoji && <EmojiAvatar emoji={props.emoji} />}
       <div className="flex-1">
         <p className="line-clamp-1 font-medium">{title}</p>
