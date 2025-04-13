@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "cva"
-import { Icon } from "../../../../components/Utilities/Icon"
+import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import {
   AlertCircle,
   CheckCircle,
@@ -32,11 +32,12 @@ const alertAvatarVariants = cva({
 })
 
 export type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
+  icon?: IconType
   type: "critical" | "warning" | "info" | "positive"
   size?: "sm" | "md" | "lg"
 }
 
-export const AlertAvatar = ({ type, size }: AlertAvatarProps) => {
+export const AlertAvatar = ({ icon, type, size }: AlertAvatarProps) => {
   const iconMap = {
     critical: AlertCircle,
     warning: Warning,
@@ -46,7 +47,7 @@ export const AlertAvatar = ({ type, size }: AlertAvatarProps) => {
 
   return (
     <div className={alertAvatarVariants({ type, size })}>
-      <Icon icon={iconMap[type]} size={size} />
+      <Icon icon={icon ?? iconMap[type]} size={size} />
     </div>
   )
 }
