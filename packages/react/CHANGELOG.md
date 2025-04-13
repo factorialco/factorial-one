@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.29.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.1...factorial-one-react-v1.29.2) (2025-04-13)
+
+
+### Bug Fixes
+
+* set proper HighlightBanner button ([#1597](https://github.com/factorialco/factorial-one/issues/1597)) ([71010d3](https://github.com/factorialco/factorial-one/commit/71010d35a550a44a99ec383c07d0fe755e653a49))
+
 ## [1.29.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.0...factorial-one-react-v1.29.1) (2025-04-13)
 
 
