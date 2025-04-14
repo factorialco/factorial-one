@@ -106,10 +106,13 @@ export function ClockInControls({
   const [breakTypePickerOpen, setBreakTypePickerOpen] = useState(false)
 
   const handleClickBreakButton = () => {
-    if (breakTypeOptions?.length && !breakTypePickerOpen) {
-      setBreakTypePickerOpen(true)
-    } else if (!breakTypeOptions?.length) {
-      onBreak?.()
+    if ((breakTypeOptions?.length ?? 0) > 1) {
+      if (!breakTypePickerOpen) {
+        setBreakTypePickerOpen(true)
+      }
+    } else {
+      const firstBreakTypeValue = breakTypeOptions?.[0]?.value
+      onBreak?.(firstBreakTypeValue)
     }
   }
 
@@ -196,7 +199,9 @@ export function ClockInControls({
                 <>
                   {canShowBreakButton && (
                     <>
-                      {breakTypeOptions?.length && onChangeBreakTypeId ? (
+                      {breakTypeOptions &&
+                      (breakTypeOptions?.length ?? 0) > 1 &&
+                      onChangeBreakTypeId ? (
                         <Select
                           value=""
                           options={breakTypeOptions}
@@ -207,7 +212,6 @@ export function ClockInControls({
                         >
                           <div aria-label="Select break type">
                             <Button
-                              // onClick={handleClickBreakButton}
                               label={labels.break}
                               variant="neutral"
                               icon={SolidPause}
