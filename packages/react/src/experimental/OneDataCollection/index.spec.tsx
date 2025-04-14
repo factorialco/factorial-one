@@ -16,7 +16,7 @@ import type { FiltersDefinition } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
-import type { DataSource } from "./types"
+import type { DataSource, GroupingDefinition } from "./types"
 import { useData } from "./useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -294,16 +294,20 @@ describe("Collections", () => {
         Item,
         FiltersDefinition,
         SortingsDefinition,
-        ItemActionsDefinition<Item>
+        ItemActionsDefinition<Item>,
+        GroupingDefinition<Item>
       >
     }) => {
-      const { data } = useData<Item, FiltersDefinition, SortingsDefinition>(
-        source
-      )
+      const { data } = useData<
+        Item,
+        FiltersDefinition,
+        SortingsDefinition,
+        GroupingDefinition<Item>
+      >(source)
 
       return (
         <div data-testid="custom-visualization">
-          {data?.map((item) => (
+          {data?.records.map((item) => (
             <div key={item.email} className="custom-item">
               <h3>{item.name}</h3>
               <p>
@@ -408,7 +412,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
@@ -527,7 +532,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: fetchDataMock,
@@ -612,7 +618,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async () => [
@@ -654,7 +661,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
@@ -776,7 +784,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           filters: {
             department: {
@@ -891,7 +900,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async () => mockData,
@@ -1004,7 +1014,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ search }) => {
@@ -1093,7 +1104,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             paginationType: "pages",

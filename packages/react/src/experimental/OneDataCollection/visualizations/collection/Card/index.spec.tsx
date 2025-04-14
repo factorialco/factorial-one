@@ -6,7 +6,7 @@ import { defaultTranslations } from "../../../../../lib/providers/i18n/i18n-prov
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
-import type { DataSource } from "../../../types"
+import type { DataSource, GroupingDefinition } from "../../../types"
 import { useData } from "../../../useData"
 import { CardCollection } from "./index"
 
@@ -49,7 +49,8 @@ const createTestSource = (
   Person,
   FiltersDefinition,
   SortingsDefinition,
-  ItemActionsDefinition<Person>
+  ItemActionsDefinition<Person>,
+  GroupingDefinition<Person>
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -66,27 +67,28 @@ const createTestSource = (
       return data
     },
   },
+  currentGrouping: null,
+  setCurrentGrouping: vi.fn(),
 })
 
 describe("CardCollection", () => {
   describe("rendering", () => {
     it("shows loading state initially", () => {
       render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            ItemActionsDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={[
-              { label: "Email", render: (item) => item.email },
-              { label: "Role", render: (item) => item.role },
-            ]}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={[
+            { label: "Email", render: (item) => item.email },
+            { label: "Role", render: (item) => item.role },
+          ]}
+          source={createTestSource()}
+        />
       )
 
       // Look for skeleton elements
@@ -96,18 +98,17 @@ describe("CardCollection", () => {
 
     it("renders cards with data after loading", async () => {
       render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            ItemActionsDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          source={createTestSource()}
+        />
       )
 
       // Wait for loading state to disappear by checking for actual data
@@ -127,18 +128,17 @@ describe("CardCollection", () => {
   describe("features", () => {
     it("uses titleProperty when provided", async () => {
       render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            ItemActionsDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          source={createTestSource()}
+        />
       )
 
       await waitFor(() => {
@@ -154,18 +154,17 @@ describe("CardCollection", () => {
 
     it("displays all properties correctly when using titleProperty", async () => {
       render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            ItemActionsDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          source={createTestSource()}
+        />
       )
 
       await waitFor(() => {
@@ -206,18 +205,17 @@ describe("CardCollection", () => {
       ]
 
       render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            ItemActionsDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={propertiesWithCustomRender}
-            source={createTestSource()}
-          />
-        </TestWrapper>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={propertiesWithCustomRender}
+          source={createTestSource()}
+        />
       )
 
       await waitFor(() => {
@@ -231,18 +229,17 @@ describe("CardCollection", () => {
   describe("edge cases", () => {
     it("handles empty data gracefully", async () => {
       render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            ItemActionsDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            source={createTestSource([])}
-          />
-        </TestWrapper>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          source={createTestSource([])}
+        />
       )
 
       // Wait for loading state to finish
@@ -256,18 +253,17 @@ describe("CardCollection", () => {
       const error = new Error("Failed to fetch data")
 
       render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            ItemActionsDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            source={createTestSource([], error)}
-          />
-        </TestWrapper>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          source={createTestSource([], error)}
+        />
       )
 
       // Wait for loading state to finish and verify error state
@@ -319,18 +315,17 @@ describe("CardCollection", () => {
       }
 
       render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            ItemActionsDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            source={source}
-          />
-        </TestWrapper>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          source={source}
+        />
       )
 
       // Wait for the data to load
@@ -374,18 +369,17 @@ describe("CardCollection", () => {
       }
 
       render(
-        <TestWrapper>
-          <CardCollection<
-            Person,
-            FiltersDefinition,
-            SortingsDefinition,
-            ItemActionsDefinition<Person>
-          >
-            title={(item) => item.name}
-            cardProperties={testCardProperties}
-            source={source}
-          />
-        </TestWrapper>
+        <CardCollection<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
+        >
+          title={(item) => item.name}
+          cardProperties={testCardProperties}
+          source={source}
+        />
       )
 
       // Wait for the data to load
