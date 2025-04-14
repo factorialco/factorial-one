@@ -427,7 +427,7 @@ const RichTextEditorComponent = forwardRef<
   )
 })
 
-function RichTextEditorSkeleton() {
+const RichTextEditorSkeleton = () => {
   return (
     <div className="relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background">
       <div className="relative w-full flex-grow overflow-hidden">
