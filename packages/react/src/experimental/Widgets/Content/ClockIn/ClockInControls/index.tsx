@@ -94,19 +94,20 @@ export function ClockInControls({
 
   const showLocationAndProjectSelectors = status === "clocked-out"
 
-  const breakTypeOptions = breakTypes?.map((breakType) => ({
-    value: breakType.id,
-    label: breakType.duration
-      ? `${breakType.name} · ${breakType.duration}`
-      : breakType.name,
-    description: breakType.description,
-    tag: breakType.isPaid ? labels.paid : labels.unpaid,
-  }))
+  const breakTypeOptions =
+    breakTypes?.map((breakType) => ({
+      value: breakType.id,
+      label: breakType.duration
+        ? `${breakType.name} · ${breakType.duration}`
+        : breakType.name,
+      description: breakType.description,
+      tag: breakType.isPaid ? labels.paid : labels.unpaid,
+    })) ?? []
 
   const [breakTypePickerOpen, setBreakTypePickerOpen] = useState(false)
 
   const handleClickBreakButton = () => {
-    if ((breakTypeOptions?.length ?? 0) > 1) {
+    if (breakTypeOptions.length > 1) {
       if (!breakTypePickerOpen) {
         setBreakTypePickerOpen(true)
       }
@@ -199,9 +200,7 @@ export function ClockInControls({
                 <>
                   {canShowBreakButton && (
                     <>
-                      {breakTypeOptions &&
-                      (breakTypeOptions?.length ?? 0) > 1 &&
-                      onChangeBreakTypeId ? (
+                      {breakTypeOptions.length > 1 && onChangeBreakTypeId ? (
                         <Select
                           value=""
                           options={breakTypeOptions}
