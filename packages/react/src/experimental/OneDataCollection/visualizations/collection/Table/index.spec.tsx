@@ -1,3 +1,4 @@
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import {
   act,
   render,
@@ -18,7 +19,7 @@ import { useData } from "../../../useData"
 import { TableCollection } from "./index"
 
 type TestFilters = FiltersDefinition
-
+type TestNavigationFilters = NavigationFiltersDefinition
 type Person = {
   id: number
   name: string
@@ -54,12 +55,15 @@ const createTestSource = (
   TestFilters,
   SortingsDefinition,
   ItemActionsDefinition<Person>,
-  undefined
+  TestNavigationFilters
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
   currentSortings: null,
   setCurrentSortings: vi.fn(),
+  currentNavigationFilters: {},
+  setCurrentNavigationFilters: vi.fn(),
+  navigationFilters: undefined,
   currentSearch: undefined,
   debouncedCurrentSearch: undefined,
   setCurrentSearch: vi.fn(),
@@ -88,7 +92,7 @@ describe("TableCollection", () => {
             TestFilters,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            undefined
+            TestNavigationFilters
           >
             columns={testColumns}
             source={createTestSource()}
@@ -115,7 +119,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={testColumns}
             source={createTestSource()}
@@ -157,7 +162,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={columnsWithCustomRender}
             source={createTestSource()}
@@ -181,7 +187,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={testColumns}
             source={createTestSource([])}
@@ -209,7 +216,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={testColumns}
             source={createTestSource([], error)}
@@ -251,7 +259,7 @@ describe("TableCollection", () => {
       TestFilters,
       SortingsDefinition,
       ItemActionsDefinition<Person>,
-      undefined
+      TestNavigationFilters
     > => ({
       currentFilters: {},
       setCurrentFilters: vi.fn(),
@@ -262,6 +270,9 @@ describe("TableCollection", () => {
       setCurrentSearch: vi.fn(),
       isLoading: false,
       setIsLoading: vi.fn(),
+      setCurrentNavigationFilters: vi.fn(),
+      navigationFilters: undefined,
+      currentNavigationFilters: {},
       dataAdapter: {
         paginationType: "pages",
         perPage: itemsPerPage,
@@ -295,7 +306,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
@@ -318,7 +330,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
@@ -348,7 +361,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
@@ -380,7 +394,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={testColumns}
             source={createPaginatedTestSource(5, 10)}
@@ -401,7 +416,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={testColumns}
             source={createPaginatedTestSource(0, 10)}
@@ -449,7 +465,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={columnsWithSorting}
             source={sortableSource}
@@ -490,7 +507,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={[
               {
@@ -561,7 +579,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={[
               {
@@ -635,7 +654,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={[
               {
@@ -703,7 +723,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
           >
             columns={columnsWithSorting}
             source={createTestSource()} // No sortings defined

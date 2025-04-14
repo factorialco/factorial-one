@@ -1,3 +1,4 @@
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { render, renderHook, screen, waitFor } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
 import type { FiltersDefinition } from "../../../Filters/types"
@@ -42,7 +43,7 @@ const createTestSource = (
   FiltersDefinition,
   SortingsDefinition,
   ItemActionsDefinition<Person>,
-  undefined
+  NavigationFiltersDefinition
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -59,7 +60,9 @@ const createTestSource = (
       return data
     },
   },
-  currentNavigationFilter: undefined,
+  currentNavigationFilters: {},
+  setCurrentNavigationFilters: vi.fn(),
+  navigationFilters: undefined,
 })
 
 describe("CardCollection", () => {
@@ -70,7 +73,8 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition
         >
           title={(item) => item.name}
           cardProperties={[
@@ -92,7 +96,8 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -121,7 +126,8 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -146,7 +152,8 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -196,7 +203,8 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition
         >
           title={(item) => item.name}
           cardProperties={propertiesWithCustomRender}
@@ -219,7 +227,8 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -242,7 +251,8 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -280,6 +290,9 @@ describe("CardCollection", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
+        currentNavigationFilters: {},
+        setCurrentNavigationFilters: vi.fn(),
+        navigationFilters: undefined,
         dataAdapter: {
           paginationType: "pages" as const,
           perPage: 10,
@@ -298,7 +311,8 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
@@ -334,6 +348,9 @@ describe("CardCollection", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
+        currentNavigationFilters: {},
+        setCurrentNavigationFilters: vi.fn(),
+        navigationFilters: undefined,
         dataAdapter: {
           paginationType: "pages" as const,
           fetchData: async () => ({
@@ -351,7 +368,8 @@ describe("CardCollection", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          NavigationFiltersDefinition
         >
           title={(item) => item.name}
           cardProperties={testCardProperties}
