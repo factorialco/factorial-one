@@ -29,6 +29,7 @@ export type DataSourceDefinition<
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Available filter configurations */
   filters?: Filters
@@ -67,7 +68,49 @@ export type DataSourceDefinition<
     secondary?: BulkActionDefinition[]
   }
   totalItemSummary?: (totalItems: number) => string
+  /** Grouping configuration */
+  grouping?: Grouping
 }
+
+/**
+ * Defines the structure and configuration of a grouping for a data source.
+ * @template RecordType - The type of records in the collection
+ */
+export type GroupingDefinition<R extends RecordType> = {
+  /** Whether grouping is mandatory or the user can chose not to group */
+  mandatory: boolean
+  groupBy: Record<
+    string,
+    {
+      /** The field to group by */
+      field: keyof R
+      /** The label for the grouping */
+      name: string
+      /** The item count for the grouping */
+      label: (groupId: string) => string
+      itemCount?: (
+        groupId: string
+      ) => number | undefined | Promise<number | undefined>
+    }
+  >
+}
+
+export type GroupingField<Grouping> =
+  Grouping extends GroupingDefinition<infer R>
+    ? R extends RecordType
+      ? keyof R
+      : never
+    : never
+
+export type GroupingState<Grouping> =
+  Grouping extends GroupingDefinition<infer R>
+    ? R extends RecordType
+      ? {
+          field: keyof R
+          desc: boolean
+        }
+      : never
+    : never
 
 export type CollectionSearchOptions = {
   /** Whether search is enabled */
@@ -304,9 +347,17 @@ export type CollectionProps<
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   VisualizationOptions extends object,
+  Grouping extends GroupingDefinition<Record>,
 > = {
   /** The data source configuration and state */
-  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
   /** Function to handle item selection */
   onSelectItems: OnSelectItemsCallback<Record, Filters>
   /** Function to handle data load */
@@ -327,12 +378,14 @@ export type DataSource<
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > = DataSourceDefinition<
   Record,
   Filters,
   Sortings,
   ItemActions,
-  NavigationFilters
+  NavigationFilters,
+  Grouping
 > & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
@@ -352,6 +405,14 @@ export type DataSource<
   currentNavigationFilters: NavigationFiltersState<NavigationFilters>
   setCurrentNavigationFilters: React.Dispatch<
     React.SetStateAction<NavigationFiltersState<NavigationFilters>>
+  >
+  /** Current state of applied grouping */
+  currentGrouping?: Grouping["mandatory"] extends true
+    ? GroupingState<Grouping>
+    : null
+  /** Function to update the current grouping state */
+  setCurrentGrouping: React.Dispatch<
+    React.SetStateAction<GroupingState<Grouping> | undefined>
   >
 }
 /**
