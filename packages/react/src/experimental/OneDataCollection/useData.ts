@@ -97,7 +97,7 @@ export type Data<RecordType> = {
  */
 function useDataFetchState<Record>() {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [data, setData] = useState<Data<Record>>({ type: "flat", records: [] })
+  const [data, setData] = useState<Record[]>([])
   const [error, setError] = useState<DataError | null>(null)
 
   return {
@@ -220,8 +220,8 @@ export function useData<
   const {
     isInitialLoading,
     setIsInitialLoading,
-    data,
-    setData,
+    data: rawData,
+    setData: setRawData,
     error,
     setError,
   } = useDataFetchState<Record>()
@@ -260,37 +260,34 @@ export function useData<
         setTotalItems?.(result.length)
       }
 
-      // Group the data if grouping is enabled
-      if (currentGrouping) {
-        const groupedData = groupBy(records, currentGrouping.field)
-        setData({
-          type: "grouped",
-          records,
-          groups: Object.entries(groupedData).map(([key, value]) => ({
-            key,
-            label: grouping!.groupBy[currentGrouping.field].label(key),
-            itemCount:
-              grouping?.groupBy[currentGrouping.field]?.itemCount?.(key),
-            records: value,
-          })),
-        })
-      } else {
-        setData({ type: "flat", records })
-      }
+      setRawData(records)
+
       setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
     },
-    [
-      setData,
-      currentGrouping,
-      grouping,
-      setError,
-      setPaginationInfo,
-      setIsInitialLoading,
-      setIsLoading,
-    ]
+    [setRawData, setError, setPaginationInfo, setIsInitialLoading, setIsLoading]
   )
+
+  const data = useMemo(() => {
+    // Group the data if grouping is enabled
+    if (currentGrouping && grouping) {
+      const groupedData = groupBy(rawData, currentGrouping.field)
+
+      return {
+        type: "grouped" as const,
+        records: rawData,
+        groups: Object.entries(groupedData).map(([key, value]) => ({
+          key,
+          label: grouping!.groupBy[currentGrouping.field].label(key),
+          itemCount: grouping?.groupBy[currentGrouping.field]?.itemCount?.(key),
+          records: value,
+        })),
+      }
+    }
+
+    return { type: "flat" as const, records: rawData }
+  }, [rawData, currentGrouping, grouping])
 
   const handleFetchError = useCallback(
     (error: unknown) => {
@@ -322,14 +319,26 @@ export function useData<
         }
 
         const baseFetchOptions: BaseFetchOptions<
+          Record,
           Filters,
           Sortings,
-          NavigationFilters
+          NavigationFilters,
+          Grouping
         > = {
           filters,
           search: searchValue,
-          sortings: currentSortings,
-          navigationFilters,
+          sortings: {
+            ...(currentGrouping
+              ? {
+                  [currentGrouping.field]: currentGrouping.desc
+                    ? "desc"
+                    : "asc",
+                }
+              : {}),
+            ...(currentSortings
+              ? { [currentSortings.field]: currentSortings.order }
+              : {}),
+          },
         }
 
         const fetcher = (): PromiseOrObservable<ResultType> => {
