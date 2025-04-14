@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.30.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.2...factorial-one-react-v1.30.3) (2025-04-14)
+
+
+### Bug Fixes
+
+* make author url optional in CommunityPost component ([#1610](https://github.com/factorialco/factorial-one/issues/1610)) ([4fcc998](https://github.com/factorialco/factorial-one/commit/4fcc9989aa722cbf1f62ae7fba89388431d2ed35))
+
 ## [1.30.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.1...factorial-one-react-v1.30.2) (2025-04-14)
 
 
