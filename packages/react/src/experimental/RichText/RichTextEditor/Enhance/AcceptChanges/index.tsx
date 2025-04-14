@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { enhanceLabelsType, lastIntentType } from "@/experimental/exports"
 import { Check, Cross, Reset } from "@/icons/app"
-import { useI18n } from "@/lib/i18n-provider"
+import { useI18n } from "@/lib/providers/i18n"
 import { Editor } from "@tiptap/react"
 import { ToolbarDivider } from "../../Toolbar"
 
