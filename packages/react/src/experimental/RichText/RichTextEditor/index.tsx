@@ -2,7 +2,6 @@ import { Button } from "@/components/Actions/Button"
 import { Maximize, Minimize } from "@/icons/app"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
-import { Skeleton } from "@/ui/skeleton"
 import { EditorContent, useEditor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import {
@@ -20,6 +19,7 @@ import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { Error } from "./Error"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
+import { RichTextEditorSkeleton } from "./Skeleton"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import { ExtensionsConfiguration } from "./utils/extensions"
 import {
@@ -426,35 +426,6 @@ const RichTextEditorComponent = forwardRef<
     </div>
   )
 })
-
-const RichTextEditorSkeleton = () => {
-  return (
-    <div className="relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background">
-      <div className="relative w-full flex-grow overflow-hidden">
-        <div className="h-16 w-full pl-3 pr-4 pt-3">
-          <div className="flex flex-col gap-2">
-            <Skeleton className="h-4 w-3/4" />
-            <Skeleton className="h-4 w-full" />
-          </div>
-        </div>
-      </div>
-
-      <div className="border-t border-f1-border px-3 py-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-8 w-8 rounded-md" />
-            <Skeleton className="h-8 w-8 rounded-md" />
-            <Skeleton className="h-8 w-8 rounded-md" />
-          </div>
-          <div className="flex items-center gap-2">
-            <Skeleton className="h-8 w-24 rounded-md" />
-            <Skeleton className="h-8 w-32 rounded-md" />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
 
 export * from "./utils/constants"
 export * from "./utils/types"
