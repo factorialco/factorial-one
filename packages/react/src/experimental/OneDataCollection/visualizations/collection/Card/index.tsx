@@ -11,7 +11,7 @@ import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
-import { CollectionProps, RecordType } from "../../../types"
+import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
@@ -40,6 +40,7 @@ export const CardCollection = <
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >({
   cardProperties,
   title,
@@ -55,7 +56,8 @@ export const CardCollection = <
   Sortings,
   ItemActions,
   NavigationFilters,
-  CardVisualizationOptions<Record, Filters, Sortings>
+  CardVisualizationOptions<Record, Filters, Sortings>,
+  Grouping
 >) => {
   const t = useI18n()
 
@@ -78,7 +80,8 @@ export const CardCollection = <
     Record,
     Filters,
     Sortings,
-    NavigationFilters
+    NavigationFilters,
+    Grouping
   >(
     {
       ...source,
@@ -93,19 +96,18 @@ export const CardCollection = <
 
   useEffect(() => {
     onLoadData({
-      totalItems: paginationInfo?.total || data.length,
+      totalItems: paginationInfo?.total || data.records.length,
       filters: source.currentFilters,
       search: source.currentSearch,
       isInitialLoading,
-      data,
+      data: data.records,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
-  }, [paginationInfo?.total, data])
+  }, [paginationInfo?.total, data.records])
 
   /**
    * Item selection
    */
-
   const {
     selectedItems,
     handleSelectItemChange,
@@ -113,7 +115,7 @@ export const CardCollection = <
     // isAllSelected,
     // isPartiallySelected,
     // handleSelectAll,
-  } = useSelectable(data, paginationInfo, source, onSelectItems)
+  } = useSelectable(data.records, paginationInfo, source, onSelectItems)
 
   const renderValue = (
     item: Record,
@@ -143,7 +145,7 @@ export const CardCollection = <
                 </CardContent>
               </Card>
             ))
-          : data.map((item, index) => {
+          : data.records.map((item, index) => {
               const id = source.selectable ? source.selectable(item) : undefined
               const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
               const itemOnClick = source.itemOnClick
