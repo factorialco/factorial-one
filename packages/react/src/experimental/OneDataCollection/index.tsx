@@ -27,6 +27,8 @@ import type {
   CollectionSearchOptions,
   DataSource,
   DataSourceDefinition,
+  GroupingDefinition,
+  GroupingState,
   OnBulkActionCallback,
   OnLoadDataCallback,
   OnSelectItemsCallback,
@@ -77,9 +79,11 @@ export const useDataSource = <
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
+    currentGrouping: initialCurrentGrouping = undefined,
     filters,
     navigationFilters,
     search,
@@ -91,16 +95,11 @@ export const useDataSource = <
     FiltersSchema,
     Sortings,
     ItemActions,
-    NavigationFilters
+    NavigationFilters,
+    Grouping
   >,
   deps: ReadonlyArray<unknown> = []
-): DataSource<
-  Record,
-  FiltersSchema,
-  Sortings,
-  ItemActions,
-  NavigationFilters
-> => {
+): DataSource<Record, FiltersSchema, Sortings, ItemActions, Grouping> => {
   const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
@@ -153,6 +152,10 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
 
+  const [currentGrouping, setCurrentGrouping] = useState<
+    GroupingState<Grouping> | undefined
+  >(initialCurrentGrouping)
+
   return {
     filters: memoizedFilters,
     currentFilters,
@@ -169,6 +172,8 @@ export const useDataSource = <
     navigationFilters,
     currentNavigationFilters,
     setCurrentNavigationFilters,
+    setCurrentGrouping,
+    currentGrouping,
     ...rest,
   }
 }
@@ -203,6 +208,7 @@ export const OneDataCollection = <
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >({
   source,
   visualizations,
@@ -210,9 +216,23 @@ export const OneDataCollection = <
   onBulkAction,
   emptyStates,
 }: {
-  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
   visualizations: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
+    Visualization<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
   >
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
   onBulkAction?: OnBulkActionCallback<Record, Filters>
