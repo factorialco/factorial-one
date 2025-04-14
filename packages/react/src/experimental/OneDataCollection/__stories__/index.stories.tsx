@@ -232,6 +232,11 @@ export const WithGrouping: Story = {
             label: (groupId) => groupId,
             field: "department",
           },
+          role: {
+            name: "Role",
+            label: (groupId) => groupId,
+            field: "role",
+          },
         },
       }}
     />
@@ -243,20 +248,36 @@ export const WithPaginationAndGrouping: Story = {
     // Create a fixed set of paginated users so we're not regenerating them on every render
     const paginatedMockUsers = generateMockUsers(50)
 
+    const grouping: GroupingDefinition<(typeof mockUsers)[number]> = {
+      mandatory: true,
+      groupBy: {
+        department: {
+          name: "Department",
+          label: (groupId) => groupId,
+          field: "department",
+          itemCount: (groupId) => {
+            return paginatedMockUsers.filter(
+              (user) => user.department === groupId
+            ).length
+          },
+        },
+        role: {
+          name: "Role",
+          label: (groupId) => groupId,
+          field: "role",
+          itemCount: (groupId) => {
+            return paginatedMockUsers.filter((user) => user.role === groupId)
+              .length
+          },
+        },
+      },
+    }
+
     const source = useDataSource({
       filters,
       presets: filterPresets,
       sortings,
-      grouping: {
-        mandatory: true,
-        groupBy: {
-          department: {
-            name: "Department",
-            label: (groupId) => groupId,
-            field: "department",
-          },
-        },
-      },
+      grouping,
       currentGrouping: {
         field: "department",
         desc: false,
@@ -285,7 +306,8 @@ export const WithPaginationAndGrouping: Story = {
           salary: number | undefined
         },
         typeof filters,
-        typeof sortings
+        typeof sortings,
+        typeof grouping
       >({
         data: paginatedMockUsers,
         delay: 500,
@@ -904,7 +926,16 @@ export const WithTableVisualization: Story = {
         field: "name",
         order: "asc",
       },
+<<<<<<< HEAD
       dataAdapter: createDataAdapter({
+=======
+      dataAdapter: createDataAdapter<
+        (typeof mockUsers)[number],
+        typeof filters,
+        typeof sortings,
+        undefined
+      >({
+>>>>>>> 7913dd3d (feat: datacollection grouping)
         data: mockUsers,
         delay: 500,
       }),
@@ -947,6 +978,256 @@ export const WithTableVisualization: Story = {
   },
 }
 
+<<<<<<< HEAD
+=======
+interface DataAdapterOptions<TRecord> {
+  data: TRecord[]
+  delay?: number
+  useObservable?: boolean
+  paginationType?: "pages"
+  perPage?: number
+}
+
+function createDataAdapter<
+  TRecord extends RecordType & {
+    name: string
+    email: string
+    department: (typeof DEPARTMENTS)[number]
+    salary?: number
+  },
+  TFilters extends Record<string, FilterDefinition<unknown>>,
+  TSortings extends SortingsDefinition,
+  TGrouping extends GroupingDefinition<TRecord>,
+>({
+  data,
+  delay = 500,
+  useObservable = false,
+  paginationType,
+  perPage = 20,
+}: DataAdapterOptions<TRecord>): DataAdapter<
+  TRecord,
+  TFilters,
+  TSortings,
+  TGrouping
+> {
+  const filterData = (
+    records: TRecord[],
+    filters: FiltersState<TFilters>,
+    sortingsState: SortingsState<TSortings>,
+    pagination?: { currentPage?: number; perPage?: number }
+  ): TRecord[] | PaginatedResponse<TRecord> => {
+    let filteredRecords = [...records]
+
+    // Apply text search if available
+    if (
+      "search" in filters &&
+      typeof filters.search === "string" &&
+      filters.search.trim() !== ""
+    ) {
+      const searchTerm = (filters.search as string).toLowerCase()
+      filteredRecords = filteredRecords.filter(
+        (record) =>
+          record.name.toLowerCase().includes(searchTerm) ||
+          record.email.toLowerCase().includes(searchTerm)
+      )
+    }
+
+    // Apply department filter if provided
+    if (
+      "department" in filters &&
+      Array.isArray(filters.department) &&
+      filters.department.length > 0
+    ) {
+      filteredRecords = filteredRecords.filter((record) =>
+        (filters.department as string[]).includes(record.department)
+      )
+    }
+
+    // Apply sorting if available
+    if (sortingsState) {
+      Object.entries(sortingsState)
+        .reverse()
+        .forEach(([field, order]) => {
+          const sortField = field as keyof TRecord
+          const sortDirection = order
+
+          filteredRecords.sort((a, b) => {
+            const aValue = a[sortField]
+            const bValue = b[sortField]
+
+            // Handle string comparisons
+            if (typeof aValue === "string" && typeof bValue === "string") {
+              return sortDirection === "asc"
+                ? aValue.localeCompare(bValue)
+                : bValue.localeCompare(aValue)
+            }
+
+            // Handle number comparisons
+            if (typeof aValue === "number" && typeof bValue === "number") {
+              return sortDirection === "asc" ? aValue - bValue : bValue - aValue
+            }
+
+            // Handle boolean comparisons
+            if (typeof aValue === "boolean" && typeof bValue === "boolean") {
+              return sortDirection === "asc"
+                ? aValue === bValue
+                  ? 0
+                  : aValue
+                    ? 1
+                    : -1
+                : aValue === bValue
+                  ? 0
+                  : aValue
+                    ? -1
+                    : 1
+            }
+
+            // Default case: use string representation
+            return sortDirection === "asc"
+              ? String(aValue).localeCompare(String(bValue))
+              : String(bValue).localeCompare(String(aValue))
+          })
+        })
+    }
+
+    // Apply pagination if needed
+    if (pagination && paginationType === "pages") {
+      const { currentPage = 1 } = pagination
+      const pageSize = pagination.perPage || perPage
+      const startIndex = (currentPage - 1) * pageSize
+      const paginatedRecords = filteredRecords.slice(
+        startIndex,
+        startIndex + pageSize
+      )
+
+      return {
+        records: paginatedRecords,
+        total: filteredRecords.length,
+        currentPage,
+        perPage: pageSize,
+        pagesCount: Math.ceil(filteredRecords.length / pageSize),
+      }
+    }
+
+    return filteredRecords
+  }
+
+  if (paginationType === "pages") {
+    const adapter: DataAdapter<TRecord, TFilters, TSortings, TGrouping> = {
+      paginationType: "pages",
+      perPage,
+      fetchData: ({ filters, sortings, pagination }) => {
+        if (useObservable) {
+          return new Observable<PromiseState<PaginatedResponse<TRecord>>>(
+            (observer) => {
+              observer.next({
+                loading: true,
+                error: null,
+                data: null,
+              })
+
+              setTimeout(() => {
+                const fetch = () =>
+                  filterData(
+                    data,
+                    filters,
+                    sortings,
+                    pagination
+                  ) as PaginatedResponse<TRecord>
+
+                try {
+                  observer.next({
+                    loading: false,
+                    error: null,
+                    data: fetch(),
+                  })
+                  observer.complete()
+                } catch (error) {
+                  observer.next({
+                    loading: false,
+                    error:
+                      error instanceof Error ? error : new Error(String(error)),
+                    data: null,
+                  })
+                  observer.complete()
+                }
+              }, delay)
+            }
+          )
+        }
+
+        return new Promise<PaginatedResponse<TRecord>>((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              resolve(
+                filterData(
+                  data,
+                  filters,
+                  sortings,
+                  pagination
+                ) as PaginatedResponse<TRecord>
+              )
+            } catch (error) {
+              reject(error)
+            }
+          }, delay)
+        })
+      },
+    }
+
+    return adapter
+  }
+
+  const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
+    fetchData: ({ filters, sortings }) => {
+      if (useObservable) {
+        return new Observable<PromiseState<TRecord[]>>((observer) => {
+          observer.next({
+            loading: true,
+            error: null,
+            data: null,
+          })
+
+          setTimeout(() => {
+            try {
+              const fetch = () =>
+                filterData(data, filters, sortings) as TRecord[]
+
+              observer.next({
+                loading: false,
+                error: null,
+                data: fetch(),
+              })
+              observer.complete()
+            } catch (error) {
+              observer.next({
+                loading: false,
+                error:
+                  error instanceof Error ? error : new Error(String(error)),
+                data: null,
+              })
+              observer.complete()
+            }
+          }, delay)
+        })
+      }
+
+      return new Promise<TRecord[]>((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            resolve(filterData(data, filters, sortings) as TRecord[])
+          } catch (error) {
+            reject(error)
+          }
+        }, delay)
+      })
+    },
+  }
+
+  return adapter
+}
+
+>>>>>>> 7913dd3d (feat: datacollection grouping)
 // Example usage with card visualization
 export const WithCardVisualization: Story = {
   render: () => {
@@ -1063,7 +1344,26 @@ export const WithPagination: Story = {
           ],
         }
       },
+<<<<<<< HEAD
       dataAdapter: createDataAdapter({
+=======
+      dataAdapter: createDataAdapter<
+        {
+          id: string
+          name: string
+          email: string
+          role: string
+          department: (typeof DEPARTMENTS)[number]
+          status: string
+          isStarred: boolean
+          href: string
+          salary: number | undefined
+        },
+        typeof filters,
+        typeof sortings,
+        undefined
+      >({
+>>>>>>> 7913dd3d (feat: datacollection grouping)
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "pages",

@@ -11,6 +11,7 @@ import type {
   BaseFetchOptions,
   BaseResponse,
   DataSource,
+  GroupingDefinition,
   PaginatedDataAdapter,
   PaginatedResponse,
   RecordType,
@@ -39,15 +40,18 @@ type TestSource = DataSource<
   TestFilters,
   SortingsDefinition,
   ItemActionsDefinition<TestRecord>,
-  NavigationFiltersDefinition
+  NavigationFiltersDefinition,
+  GroupingDefinition<TestRecord>
 >
 
 const createMockDataSource = (
   fetchData: (
     options: BaseFetchOptions<
+      TestRecord,
       TestFilters,
       SortingsDefinition,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<TestRecord>
     >
   ) =>
     | BaseResponse<TestRecord>
@@ -59,7 +63,8 @@ const createMockDataSource = (
     TestRecord,
     TestFilters,
     SortingsDefinition,
-    NavigationFiltersDefinition
+    NavigationFiltersDefinition,
+    GroupingDefinition<TestRecord>
   > = {
     fetchData,
   }
@@ -68,7 +73,8 @@ const createMockDataSource = (
     TestRecord,
     TestFilters,
     SortingsDefinition,
-    NavigationFiltersDefinition
+    NavigationFiltersDefinition,
+    GroupingDefinition<TestRecord>
   > = {
     fetchData: async (options) => {
       const result = await Promise.resolve(fetchData(options))
@@ -101,6 +107,8 @@ const createMockDataSource = (
     currentNavigationFilters: {},
     setCurrentNavigationFilters: vi.fn(),
     navigationFilters: undefined,
+    currentGrouping: null,
+    setCurrentGrouping: vi.fn(),
   }
 }
 
@@ -380,6 +388,8 @@ describe("useData", () => {
         currentNavigationFilters: {},
         setCurrentNavigationFilters: vi.fn(),
         navigationFilters: undefined,
+        currentGrouping: null,
+        setCurrentGrouping: vi.fn(),
       }
 
       // Render the hook
