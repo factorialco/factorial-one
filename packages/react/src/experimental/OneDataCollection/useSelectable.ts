@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "./Filters/types"
+import { ItemActionsDefinition } from "./item-actions"
 import type { SortingsDefinition } from "./sortings"
 import {
   DataSource,
+  GroupingDefinition,
   OnSelectItemsCallback,
   PaginationInfo,
   RecordType,
 } from "./types"
-
 type UseSelectable<Record extends RecordType> = {
   isAllSelected: boolean
   selectedItems: Map<number | string, Record>
@@ -20,10 +21,12 @@ export function useSelectable<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  Grouping extends GroupingDefinition<Record>,
 >(
-  data: ReadonlyArray<Record>,
+  data: Record[],
   paginationInfo: PaginationInfo | null,
-  source: DataSource<Record, Filters, Sortings>,
+  source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>,
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
 ): UseSelectable<Record> {
   // itemsState is the state of the selected items

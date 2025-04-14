@@ -1,3 +1,4 @@
+import { groupBy } from "lodash"
 import {
   useCallback,
   useDeferredValue,
@@ -17,6 +18,7 @@ import { SortingsDefinition } from "./sortings"
 import {
   BaseFetchOptions,
   DataSource,
+  GroupingDefinition,
   PaginatedResponse,
   PromiseOrObservable,
   RecordType,
@@ -56,7 +58,7 @@ interface PaginationInfo {
  * Hook return type for useData
  */
 interface UseDataReturn<Record> {
-  data: Array<Record>
+  data: Data<Record>
   isInitialLoading: boolean
   isLoading: boolean
   error: DataError | null
@@ -66,12 +68,31 @@ interface UseDataReturn<Record> {
 
 type DataType<T> = PromiseState<T>
 
+type GroupRecord<RecordType> = {
+  key: string
+  label: string
+  itemCount: number | undefined | Promise<number | undefined>
+  records: RecordType[]
+}
+
+export type Data<RecordType> = {
+  records: RecordType[]
+} & (
+  | {
+      type: "grouped"
+      groups: GroupRecord<RecordType>[]
+    }
+  | {
+      type: "flat"
+    }
+)
+
 /**
  * Custom hook for handling data fetching state
  */
 function useDataFetchState<Record>() {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [data, setData] = useState<Array<Record>>([])
+  const [data, setData] = useState<Data<Record>>({ type: "flat", records: [] })
   const [error, setError] = useState<DataError | null>(null)
 
   return {
@@ -164,8 +185,15 @@ export function useData<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >(
-  source: DataSource<Record, Filters, Sortings, ItemActionsDefinition<Record>>,
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActionsDefinition<Record>,
+    Grouping
+  >,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
   const {
@@ -176,6 +204,8 @@ export function useData<
     currentSearch,
     isLoading,
     setIsLoading,
+    currentGrouping,
+    grouping,
   } = source
   const cleanup = useRef<(() => void) | undefined>()
 
@@ -205,8 +235,9 @@ export function useData<
 
   const handleFetchSuccess = useCallback(
     (result: PaginatedResponse<Record> | SimpleResult<Record>) => {
+      let records: Record[] = []
       if ("records" in result) {
-        setData(result.records)
+        records = result.records
         setPaginationInfo({
           total: result.total,
           currentPage: result.currentPage,
@@ -214,13 +245,39 @@ export function useData<
           pagesCount: result.pagesCount,
         })
       } else {
-        setData(result)
+        records = result
+      }
+
+      // Group the data if grouping is enabled
+      if (currentGrouping) {
+        const groupedData = groupBy(records, currentGrouping.field)
+        setData({
+          type: "grouped",
+          records,
+          groups: Object.entries(groupedData).map(([key, value]) => ({
+            key,
+            label: grouping!.groupBy[currentGrouping.field].label(key),
+            itemCount:
+              grouping?.groupBy[currentGrouping.field]?.itemCount?.(key),
+            records: value,
+          })),
+        })
+      } else {
+        setData({ type: "flat", records })
       }
       setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
     },
-    [setData, setError, setPaginationInfo, setIsInitialLoading, setIsLoading]
+    [
+      setData,
+      currentGrouping,
+      grouping,
+      setError,
+      setPaginationInfo,
+      setIsInitialLoading,
+      setIsLoading,
+    ]
   )
 
   const handleFetchError = useCallback(

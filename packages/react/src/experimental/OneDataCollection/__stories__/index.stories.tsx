@@ -22,6 +22,7 @@ import { SortingsDefinition, SortingsState } from "../sortings"
 import {
   BulkActionDefinition,
   DataAdapter,
+  GroupingDefinition,
   OnBulkActionCallback,
   OnSelectItemsCallback,
   PaginatedResponse,
@@ -270,6 +271,7 @@ const ExampleComponent = ({
   frozenColumns = 0,
   selectable,
   bulkActions,
+  grouping,
 }: {
   useObservable?: boolean
   usePresets?: boolean
@@ -285,6 +287,7 @@ const ExampleComponent = ({
   }
   onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
+  grouping?: GroupingDefinition<(typeof mockUsers)[number]>
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
@@ -292,6 +295,11 @@ const ExampleComponent = ({
     filters,
     presets: usePresets ? filterPresets : undefined,
     sortings,
+    grouping,
+    currentGrouping: {
+      field: "department",
+      desc: true,
+    },
     itemActions: (item: MockUser) => [
       {
         label: "Edit",
@@ -623,6 +631,134 @@ export const BasicTableView: Story = {
 // Examples with multiple visualizations
 export const TableFrozenCols: Story = {
   render: () => <ExampleComponent frozenColumns={2} />,
+}
+
+// Examples with multiple visualizations
+export const WithGrouping: Story = {
+  render: () => (
+    <ExampleComponent
+      frozenColumns={2}
+      grouping={{
+        mandatory: true,
+        groupBy: {
+          department: {
+            name: "Department",
+            label: (groupId) => groupId,
+            field: "department",
+          },
+        },
+      }}
+    />
+  ),
+}
+
+export const WithPaginationAndGrouping: Story = {
+  render: () => {
+    // Create a fixed set of paginated users so we're not regenerating them on every render
+    const paginatedMockUsers = generateMockUsers(50)
+
+    const source = useDataSource({
+      filters,
+      presets: filterPresets,
+      sortings,
+      grouping: {
+        mandatory: true,
+        groupBy: {
+          department: {
+            name: "Department",
+            label: (groupId) => groupId,
+            field: "department",
+          },
+        },
+      },
+      currentGrouping: {
+        field: "department",
+        desc: false,
+      },
+      bulkActions: (allSelected) => {
+        return {
+          primary: [
+            {
+              label: allSelected ? "Delete All" : "Delete",
+              icon: Delete,
+              id: "delete-all",
+            },
+          ],
+        }
+      },
+      dataAdapter: createDataAdapter<
+        {
+          id: string
+          name: string
+          email: string
+          role: string
+          department: (typeof DEPARTMENTS)[number]
+          status: string
+          isStarred: boolean
+          href: string
+          salary: number | undefined
+        },
+        typeof filters,
+        typeof sortings
+      >({
+        data: paginatedMockUsers,
+        delay: 500,
+        paginationType: "pages",
+      }),
+    })
+
+    return (
+      <OneDataCollection
+        source={source}
+        onSelectItems={(selectedItems) => {
+          console.log("Selected items", "->", selectedItems)
+        }}
+        onBulkAction={(action, selectedItems) => {
+          console.log(`Bulk action: ${action}`, "->", selectedItems)
+        }}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => item.name,
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+          {
+            type: "card",
+            options: {
+              cardProperties: [
+                { label: "Email", render: (item) => item.email },
+                { label: "Role", render: (item) => item.role },
+                { label: "Department", render: (item) => item.department },
+              ],
+              title: (item) => item.name,
+            },
+          },
+        ]}
+      />
+    )
+  },
 }
 
 // Basic examples with single visualization
@@ -1054,7 +1190,8 @@ const JsonVisualization = ({
       (typeof mockUsers)[number],
       typeof filters,
       typeof sortings,
-      ItemActionsDefinition<(typeof mockUsers)[number]>
+      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      GroupingDefinition<(typeof mockUsers)[number]>
     >
   >
 }) => {
@@ -1995,7 +2132,8 @@ export const WithAsyncSearch: Story = {
       MockUser,
       typeof filters,
       typeof sortings,
-      MockActions
+      MockActions,
+      GroupingDefinition<MockUser>
     >({
       filters,
       sortings,
