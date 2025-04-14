@@ -297,7 +297,7 @@ const ExampleComponent = ({
     sortings,
     grouping,
     currentGrouping: {
-      field: "department",
+      field: "role",
       desc: true,
     },
     itemActions: (item: MockUser) => [
@@ -646,6 +646,11 @@ export const WithGrouping: Story = {
             label: (groupId) => groupId,
             field: "department",
           },
+          role: {
+            name: "Role",
+            label: (groupId) => groupId,
+            field: "role",
+          },
         },
       }}
     />
@@ -657,20 +662,36 @@ export const WithPaginationAndGrouping: Story = {
     // Create a fixed set of paginated users so we're not regenerating them on every render
     const paginatedMockUsers = generateMockUsers(50)
 
+    const grouping: GroupingDefinition<(typeof mockUsers)[number]> = {
+      mandatory: true,
+      groupBy: {
+        department: {
+          name: "Department",
+          label: (groupId) => groupId,
+          field: "department",
+          itemCount: (groupId) => {
+            return paginatedMockUsers.filter(
+              (user) => user.department === groupId
+            ).length
+          },
+        },
+        role: {
+          name: "Role",
+          label: (groupId) => groupId,
+          field: "role",
+          itemCount: (groupId) => {
+            return paginatedMockUsers.filter((user) => user.role === groupId)
+              .length
+          },
+        },
+      },
+    }
+
     const source = useDataSource({
       filters,
       presets: filterPresets,
       sortings,
-      grouping: {
-        mandatory: true,
-        groupBy: {
-          department: {
-            name: "Department",
-            label: (groupId) => groupId,
-            field: "department",
-          },
-        },
-      },
+      grouping,
       currentGrouping: {
         field: "department",
         desc: false,
@@ -699,7 +720,8 @@ export const WithPaginationAndGrouping: Story = {
           salary: number | undefined
         },
         typeof filters,
-        typeof sortings
+        typeof sortings,
+        typeof grouping
       >({
         data: paginatedMockUsers,
         delay: 500,
@@ -1303,7 +1325,8 @@ export const WithTableVisualization: Story = {
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
         typeof filters,
-        typeof sortings
+        typeof sortings,
+        undefined
       >({
         data: mockUsers,
         delay: 500,
@@ -1364,13 +1387,19 @@ function createDataAdapter<
   },
   TFilters extends Record<string, FilterDefinition<unknown>>,
   TSortings extends SortingsDefinition,
+  TGrouping extends GroupingDefinition<TRecord>,
 >({
   data,
   delay = 500,
   useObservable = false,
   paginationType,
   perPage = 20,
-}: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters, TSortings> {
+}: DataAdapterOptions<TRecord>): DataAdapter<
+  TRecord,
+  TFilters,
+  TSortings,
+  TGrouping
+> {
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
@@ -1406,45 +1435,49 @@ function createDataAdapter<
 
     // Apply sorting if available
     if (sortingsState) {
-      const sortField = sortingsState.field as keyof TRecord
-      const sortDirection = sortingsState.order
+      Object.entries(sortingsState)
+        .reverse()
+        .forEach(([field, order]) => {
+          const sortField = field as keyof TRecord
+          const sortDirection = order
 
-      filteredRecords.sort((a, b) => {
-        const aValue = a[sortField]
-        const bValue = b[sortField]
+          filteredRecords.sort((a, b) => {
+            const aValue = a[sortField]
+            const bValue = b[sortField]
 
-        // Handle string comparisons
-        if (typeof aValue === "string" && typeof bValue === "string") {
-          return sortDirection === "asc"
-            ? aValue.localeCompare(bValue)
-            : bValue.localeCompare(aValue)
-        }
+            // Handle string comparisons
+            if (typeof aValue === "string" && typeof bValue === "string") {
+              return sortDirection === "asc"
+                ? aValue.localeCompare(bValue)
+                : bValue.localeCompare(aValue)
+            }
 
-        // Handle number comparisons
-        if (typeof aValue === "number" && typeof bValue === "number") {
-          return sortDirection === "asc" ? aValue - bValue : bValue - aValue
-        }
+            // Handle number comparisons
+            if (typeof aValue === "number" && typeof bValue === "number") {
+              return sortDirection === "asc" ? aValue - bValue : bValue - aValue
+            }
 
-        // Handle boolean comparisons
-        if (typeof aValue === "boolean" && typeof bValue === "boolean") {
-          return sortDirection === "asc"
-            ? aValue === bValue
-              ? 0
-              : aValue
-                ? 1
-                : -1
-            : aValue === bValue
-              ? 0
-              : aValue
-                ? -1
-                : 1
-        }
+            // Handle boolean comparisons
+            if (typeof aValue === "boolean" && typeof bValue === "boolean") {
+              return sortDirection === "asc"
+                ? aValue === bValue
+                  ? 0
+                  : aValue
+                    ? 1
+                    : -1
+                : aValue === bValue
+                  ? 0
+                  : aValue
+                    ? -1
+                    : 1
+            }
 
-        // Default case: use string representation
-        return sortDirection === "asc"
-          ? String(aValue).localeCompare(String(bValue))
-          : String(bValue).localeCompare(String(aValue))
-      })
+            // Default case: use string representation
+            return sortDirection === "asc"
+              ? String(aValue).localeCompare(String(bValue))
+              : String(bValue).localeCompare(String(aValue))
+          })
+        })
     }
 
     // Apply pagination if needed
@@ -1470,7 +1503,7 @@ function createDataAdapter<
   }
 
   if (paginationType === "pages") {
-    const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
+    const adapter: DataAdapter<TRecord, TFilters, TSortings, TGrouping> = {
       paginationType: "pages",
       perPage,
       fetchData: ({ filters, sortings, pagination }) => {
@@ -1732,7 +1765,8 @@ export const WithPagination: Story = {
           salary: number | undefined
         },
         typeof filters,
-        typeof sortings
+        typeof sortings,
+        undefined
       >({
         data: paginatedMockUsers,
         delay: 500,

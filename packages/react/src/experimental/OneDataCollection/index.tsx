@@ -69,11 +69,12 @@ export const useDataSource = <
 >(
   {
     currentFilters: initialCurrentFilters = {},
-    currentGrouping: initialCurrentGrouping = undefined,
+    currentGrouping: initialCurrentGrouping,
     filters,
     search,
     defaultSorting,
     dataAdapter,
+    grouping,
     ...rest
   }: DataSourceDefinition<
     Record,
@@ -116,9 +117,25 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
 
+  const defaultGrouping = grouping?.mandatory
+    ? ({
+        field: grouping.groupBy[Object.keys(grouping.groupBy)[0]]!.field,
+        desc: true,
+      } as GroupingState<Grouping>)
+    : undefined
+
   const [currentGrouping, setCurrentGrouping] = useState<
-    GroupingState<Grouping> | undefined
-  >(initialCurrentGrouping)
+    Grouping["mandatory"] extends true
+      ? GroupingState<Grouping>
+      : GroupingState<Grouping> | undefined | null
+  >(
+    initialCurrentGrouping ??
+      ((grouping?.mandatory
+        ? defaultGrouping
+        : undefined) as Grouping["mandatory"] extends true
+        ? GroupingState<Grouping>
+        : GroupingState<Grouping> | undefined | null)
+  )
 
   return {
     filters: memoizedFilters,
@@ -135,6 +152,7 @@ export const useDataSource = <
     dataAdapter: memoizedDataAdapter,
     setCurrentGrouping,
     currentGrouping,
+    grouping,
     ...rest,
   }
 }
@@ -176,7 +194,9 @@ export const OneDataCollection = <
   onBulkAction,
 }: {
   source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>
-  visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
+  visualizations: ReadonlyArray<
+    Visualization<Record, Filters, Sortings, ItemActions, Grouping>
+  >
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
   onBulkAction?: OnBulkActionCallback<Record, Filters>
 }): JSX.Element => {

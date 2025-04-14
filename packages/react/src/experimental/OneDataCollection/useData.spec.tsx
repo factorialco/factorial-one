@@ -10,6 +10,7 @@ import type {
   BaseFetchOptions,
   BaseResponse,
   DataSource,
+  GroupingDefinition,
   PaginatedDataAdapter,
   PaginatedResponse,
   RecordType,
@@ -38,7 +39,8 @@ type TestSource = DataSource<
   TestRecord,
   TestFilters,
   SortingsDefinition,
-  ItemActionsDefinition<TestRecord>
+  ItemActionsDefinition<TestRecord>,
+  GroupingDefinition<TestRecord>
 >
 
 const createMockDataSource = (
@@ -91,6 +93,8 @@ const createMockDataSource = (
     setCurrentSearch: vi.fn(),
     isLoading: false,
     setIsLoading: vi.fn(),
+    currentGrouping: null,
+    setCurrentGrouping: vi.fn(),
   }
 }
 
@@ -367,6 +371,8 @@ describe("useData", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
+        currentGrouping: null,
+        setCurrentGrouping: vi.fn(),
       }
 
       // Render the hook
