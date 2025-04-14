@@ -1,5 +1,5 @@
 import dateNavigatorFilter from "./filrerTypes/DateNavigation"
 
-export const navigationFilters = {
+export const navigationFilterTypes = {
   "date-navigator": dateNavigatorFilter,
 } as const

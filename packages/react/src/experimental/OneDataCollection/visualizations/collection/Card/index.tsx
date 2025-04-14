@@ -1,9 +1,9 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
-import { NavigationFilterDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import { useI18n } from "../../../../../lib/providers/i18n"
 import { OnePagination } from "../../../../OnePagination"
 import type { FiltersDefinition } from "../../../Filters/types"
@@ -37,18 +37,19 @@ export const CardCollection = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
-  NavigationFilter extends NavigationFilterDefinition | undefined = undefined,
+  NavigationFilters extends NavigationFiltersDefinition,
 >({
   cardProperties,
   title,
   source,
   onSelectItems,
+  onTotalItemsChange,
 }: CollectionProps<
   Record,
   Filters,
   Sortings,
   ItemActions,
-  NavigationFilter,
+  NavigationFilters,
   CardVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
@@ -72,11 +73,15 @@ export const CardCollection = <
     Record,
     Filters,
     Sortings,
-    NavigationFilter
+    NavigationFilters
   >({
     ...source,
     dataAdapter: overridenDataAdapter,
   })
+
+  useEffect(() => {
+    onTotalItemsChange?.(paginationInfo?.total || data.length)
+  }, [paginationInfo?.total, onTotalItemsChange, data])
 
   /**
    * Item selection

@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/exports"
 import { ChevronLeft, ChevronRight } from "@/icons/app"
 import { DateGranularity, setDateGranularity } from "@/lib/date"
-import { addDays, isAfter, isBefore } from "date-fns"
+import { addDays, isAfter, isBefore, isEqual } from "date-fns"
 import {
   NavigationFilterComponentProps,
   NavigationFilterDefinitionBase,
@@ -48,7 +48,8 @@ export function DateNavigation({
         label="Previous"
         disabled={
           minWithGranularity &&
-          isBefore(valueWithGranularity, minWithGranularity)
+          (isBefore(valueWithGranularity, minWithGranularity) ||
+            isEqual(valueWithGranularity, minWithGranularity))
         }
         onClick={() => handleChange(valueWithGranularity, -1)}
       />
@@ -58,7 +59,8 @@ export function DateNavigation({
         label="Next"
         disabled={
           maxWithGranularity &&
-          isAfter(valueWithGranularity, maxWithGranularity)
+          (isAfter(valueWithGranularity, maxWithGranularity) ||
+            isEqual(valueWithGranularity, maxWithGranularity))
         }
         onClick={() => handleChange(valueWithGranularity, 1)}
       />

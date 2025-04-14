@@ -14,8 +14,8 @@ import {
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import {
-  NavigationFilterDefinition,
-  NavigationFilterValue,
+  NavigationFiltersDefinition,
+  NavigationFiltersState,
 } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
 import {
@@ -169,14 +169,14 @@ export function useData<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  NavigationFilter extends NavigationFilterDefinition | undefined = undefined,
+  NavigationFilters extends NavigationFiltersDefinition,
 >(
   source: DataSource<
     Record,
     Filters,
     Sortings,
     ItemActionsDefinition<Record>,
-    NavigationFilter
+    NavigationFilters
   >,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
@@ -188,7 +188,7 @@ export function useData<
     currentSearch,
     isLoading,
     setIsLoading,
-    currentNavigationFilter,
+    currentNavigationFilters,
   } = source
   const cleanup = useRef<(() => void) | undefined>()
 
@@ -260,7 +260,7 @@ export function useData<
     async (
       filters: FiltersState<Filters>,
       currentPage = 1,
-      navigationFilter: NavigationFilterValue<NavigationFilter>
+      navigationFilters: NavigationFiltersState<NavigationFilters>
     ) => {
       try {
         // Clean up any existing subscription before creating a new one
@@ -272,12 +272,12 @@ export function useData<
         const baseFetchOptions: BaseFetchOptions<
           Filters,
           Sortings,
-          NavigationFilter
+          NavigationFilters
         > = {
           filters,
           search: searchValue,
           sortings: currentSortings,
-          navigationFilter,
+          navigationFilters,
         }
 
         const fetcher = (): PromiseOrObservable<ResultType> => {
@@ -342,26 +342,31 @@ export function useData<
       }
 
       setIsLoading(true)
-      fetchDataAndUpdate(mergedFilters, page, currentNavigationFilter)
+      fetchDataAndUpdate(mergedFilters, page, currentNavigationFilters)
     },
     [
       fetchDataAndUpdate,
       mergedFilters,
       setIsLoading,
       paginationInfo,
-      currentNavigationFilter,
+      currentNavigationFilters,
     ]
   )
 
   useEffect(() => {
     setIsLoading(true)
     // Always fetch page 1 when filters change
-    fetchDataAndUpdate(mergedFilters, 1, currentNavigationFilter)
+    fetchDataAndUpdate(mergedFilters, 1, currentNavigationFilters)
 
     return () => {
       cleanup.current?.()
     }
-  }, [fetchDataAndUpdate, mergedFilters, setIsLoading, currentNavigationFilter])
+  }, [
+    fetchDataAndUpdate,
+    mergedFilters,
+    setIsLoading,
+    currentNavigationFilters,
+  ])
 
   return {
     data,
