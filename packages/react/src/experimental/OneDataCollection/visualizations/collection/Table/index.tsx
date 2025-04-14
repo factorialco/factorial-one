@@ -1,5 +1,5 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
-import { NavigationFilterDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { OnePagination } from "@/experimental/OnePagination"
 import {
   OneTable,
@@ -11,7 +11,7 @@ import {
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { ComponentProps, useMemo } from "react"
+import { ComponentProps, useEffect, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { ActionsDropdown } from "../../../ItemActions/Dropdown"
@@ -62,24 +62,33 @@ export const TableCollection = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
-  NavigationFilter extends NavigationFilterDefinition | undefined = undefined,
+  NavigationFilters extends NavigationFiltersDefinition,
 >({
   columns,
   source,
   frozenColumns = 0,
   onSelectItems,
+  onTotalItemsChange,
 }: CollectionProps<
   Record,
   Filters,
   Sortings,
   ItemActions,
-  NavigationFilter,
+  NavigationFilters,
   TableVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
 
-  const { data, paginationInfo, setPage, isInitialLoading, totalItems } =
-    useData<Record, Filters, Sortings, NavigationFilter>(source)
+  const { data, paginationInfo, setPage, isInitialLoading } = useData<
+    Record,
+    Filters,
+    Sortings,
+    NavigationFilters
+  >(source)
+
+  useEffect(() => {
+    onTotalItemsChange?.(paginationInfo?.total || data.length)
+  }, [paginationInfo?.total, onTotalItemsChange, data])
 
   const { currentSortings, setCurrentSortings, isLoading } = source
 

@@ -7,7 +7,7 @@ import { useI18n } from "../../lib/providers/i18n"
 import { cn, focusRing } from "../../lib/utils"
 import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
-import { NavigationFilterDefinition } from "./navigationFilters/types"
+import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
 import type { DataSource, OnSelectItemsCallback, RecordType } from "./types"
 import type { CardVisualizationOptions } from "./visualizations/collection/Card"
@@ -28,7 +28,7 @@ export type Visualization<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
-  NavigationFilter extends NavigationFilterDefinition | undefined,
+  NavigationFilters extends NavigationFiltersDefinition,
 > =
   | {
       /** Card-based visualization type */
@@ -51,12 +51,13 @@ export type Visualization<
       icon: IconType
       /** Custom component to render the visualization */
       component: (props: {
+        onTotalItemsChange?: (totalItems: number) => void
         source: DataSource<
           Record,
           Filters,
           Sortings,
           ItemActions,
-          NavigationFilter
+          NavigationFilters
         >
       }) => JSX.Element
     }
@@ -80,11 +81,11 @@ export type VisualizationProps<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
-  NavigationFilter extends NavigationFilterDefinition | undefined,
+  NavigationFilters extends NavigationFiltersDefinition,
 > = {
   /** Array of available visualization configurations */
   visualizations?: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilter>
+    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
   >
 }
 
@@ -107,14 +108,14 @@ export const VisualizationSelector = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
-  NavigationFilter extends NavigationFilterDefinition | undefined,
+  NavigationFilters extends NavigationFiltersDefinition,
 >({
   visualizations,
   currentVisualization,
   onVisualizationChange,
 }: {
   visualizations: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilter>
+    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
   >
   currentVisualization: number
   onVisualizationChange: (index: number) => void
@@ -204,21 +205,23 @@ export const VisualizationRenderer = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
-  NavigationFilter extends NavigationFilterDefinition | undefined,
+  NavigationFilters extends NavigationFiltersDefinition,
 >({
   visualization,
   source,
   onSelectItems,
+  onTotalItemsChange,
 }: {
   visualization: Visualization<
     Record,
     Filters,
     Sortings,
     ItemActions,
-    NavigationFilter
+    NavigationFilters
   >
-  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilter>
+  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
+  onTotalItemsChange?: (totalItems: number | undefined) => void
   clearSelectedItems?: () => void
 }): JSX.Element => {
   switch (visualization.type) {
@@ -229,11 +232,12 @@ export const VisualizationRenderer = <
           Filters,
           Sortings,
           ItemActions,
-          NavigationFilter
+          NavigationFilters
         >
           source={source}
           {...visualization.options}
           onSelectItems={onSelectItems}
+          onTotalItemsChange={onTotalItemsChange}
         />
       )
     case "card":
@@ -243,14 +247,15 @@ export const VisualizationRenderer = <
           Filters,
           Sortings,
           ItemActions,
-          NavigationFilter
+          NavigationFilters
         >
           source={source}
           {...visualization.options}
           onSelectItems={onSelectItems}
+          onTotalItemsChange={onTotalItemsChange}
         />
       )
     case "custom":
-      return visualization.component({ source })
+      return visualization.component({ source, onTotalItemsChange })
   }
 }

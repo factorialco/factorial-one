@@ -47,6 +47,7 @@ export const defaultTranslations = {
       failedToLoadOptions: "Failed to load options",
       retry: "Retry",
     },
+    itemsCount: "items",
   },
   shortcut: "Shortcut",
   date: {

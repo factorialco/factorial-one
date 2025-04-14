@@ -11,6 +11,7 @@ import {
   Target,
   Upload,
 } from "@/icons/app"
+import { setDateGranularity } from "@/lib/date"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Meta, StoryObj } from "@storybook/react"
 import { Observable } from "zen-observable-ts"
@@ -18,6 +19,10 @@ import { dotTagColors } from "../../Information/Tags/DotTag"
 import { FilterDefinition, FiltersState } from "../Filters/types"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
+import {
+  NavigationFiltersDefinition,
+  NavigationFiltersState,
+} from "../navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "../sortings"
 import {
   BulkActionDefinition,
@@ -29,7 +34,6 @@ import {
   RecordType,
 } from "../types"
 import { useData } from "../useData"
-import { NavigationFilterDefinition } from "../navigationFilters/types"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
 const ROLES = [
@@ -104,6 +108,7 @@ const mockUsers: {
   isStarred: boolean
   href?: string
   salary: number | undefined
+  joinedAt: Date
 }[] = [
   {
     id: "user-1",
@@ -114,6 +119,7 @@ const mockUsers: {
     status: "active",
     isStarred: true,
     salary: 100000,
+    joinedAt: new Date(),
   },
   {
     id: "user-2",
@@ -124,6 +130,7 @@ const mockUsers: {
     status: "active",
     isStarred: false,
     salary: 80000,
+    joinedAt: new Date(),
   },
   {
     id: "user-3",
@@ -134,6 +141,7 @@ const mockUsers: {
     status: "inactive",
     isStarred: false,
     salary: 90000,
+    joinedAt: new Date(new Date().setDate(new Date().getDate() + 1)),
   },
   {
     id: "user-4",
@@ -144,6 +152,7 @@ const mockUsers: {
     status: "active",
     isStarred: true,
     salary: undefined,
+    joinedAt: new Date(new Date().setDate(new Date().getDate() + 1)),
   },
 ]
 
@@ -154,11 +163,13 @@ const filterUsers = <
     email: string
     department: string
     salary: number | undefined
+    joinedAt: Date
   },
 >(
   users: T[],
   filterValues: FiltersState<FiltersType>,
   sortingState: SortingsState<typeof sortings>,
+  navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
   search?: string
 ) => {
   let filteredUsers = [...users]
@@ -232,6 +243,16 @@ const filterUsers = <
     )
   }
 
+  if (navigationFilters) {
+    filteredUsers = filteredUsers.filter((user) => {
+      return (
+        !navigationFilters.date ||
+        +setDateGranularity(navigationFilters.date, "day") ===
+          +setDateGranularity(user.joinedAt, "day")
+      )
+    })
+  }
+
   return filteredUsers
 }
 
@@ -242,9 +263,11 @@ const createObservableDataFetch = (delay = 0) => {
   return ({
     filters,
     sortings: sortingsState,
+    navigationFilters,
   }: {
     filters: FiltersState<FiltersType>
     sortings: SortingsState<typeof sortings>
+    navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>
   }) =>
     new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
       observer.next({
@@ -257,7 +280,12 @@ const createObservableDataFetch = (delay = 0) => {
         observer.next({
           loading: false,
           error: null,
-          data: filterUsers(mockUsers, filters, sortingsState),
+          data: filterUsers(
+            mockUsers,
+            filters,
+            sortingsState,
+            navigationFilters
+          ),
         })
         observer.complete()
       }, delay)
@@ -271,14 +299,24 @@ const createPromiseDataFetch = (delay = 500) => {
     filters,
     sortings: sortingsState,
     search,
+    navigationFilters,
   }: {
     filters: FiltersState<FiltersType>
     sortings: SortingsState<typeof sortings>
     search?: string
+    navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>
   }) => {
     return new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
-        resolve(filterUsers(mockUsers, filters, sortingsState, search))
+        resolve(
+          filterUsers(
+            mockUsers,
+            filters,
+            sortingsState,
+            navigationFilters,
+            search
+          )
+        )
       }, delay)
     })
   }
@@ -291,7 +329,7 @@ const ExampleComponent = ({
   frozenColumns = 0,
   selectable,
   bulkActions,
-  navigationFilter,
+  navigationFilters,
 }: {
   useObservable?: boolean
   usePresets?: boolean
@@ -307,13 +345,14 @@ const ExampleComponent = ({
   }
   onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
-  navigationFilter?: NavigationFilterDefinition
+  navigationFilters?: NavigationFiltersDefinition
+  useDataWithDate?: boolean
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
   const dataSource = useDataSource({
     filters,
-    navigationFilter,
+    navigationFilters,
     presets: usePresets ? filterPresets : undefined,
     sortings,
     itemActions: (item: MockUser) => [
@@ -658,11 +697,15 @@ export const WithDateNavigation: Story = {
   render: () => (
     <ExampleComponent
       frozenColumns={2}
-      navigationFilter={{
-        type: "date-navigator",
-        initialValue: new Date(),
-        options: {
-          granularity: "day",
+      navigationFilters={{
+        date: {
+          type: "date-navigator",
+          initialValue: new Date(),
+          options: {
+            granularity: "day",
+            min: new Date(),
+            max: new Date(new Date().setDate(new Date().getDate() + 1)),
+          },
         },
       }}
     />
@@ -1104,7 +1147,7 @@ const JsonVisualization = ({
       typeof filters,
       typeof sortings,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFilterDefinition
+      NavigationFiltersDefinition
     >
   >
 }) => {
@@ -1217,7 +1260,7 @@ export const WithTableVisualization: Story = {
         (typeof mockUsers)[number],
         typeof filters,
         typeof sortings,
-        undefined
+        NavigationFiltersDefinition
       >({
         data: mockUsers,
         delay: 500,
@@ -1278,7 +1321,7 @@ function createDataAdapter<
   },
   TFilters extends Record<string, FilterDefinition>,
   TSortings extends SortingsDefinition,
-  TNavigationFilter extends NavigationFilterDefinition | undefined = undefined,
+  TNavigationFilters extends NavigationFiltersDefinition,
 >({
   data,
   delay = 500,
@@ -1289,7 +1332,7 @@ function createDataAdapter<
   TRecord,
   TFilters,
   TSortings,
-  TNavigationFilter
+  TNavigationFilters
 > {
   const filterData = (
     records: TRecord[],
@@ -1394,7 +1437,7 @@ function createDataAdapter<
       TRecord,
       TFilters,
       TSortings,
-      TNavigationFilter
+      TNavigationFilters
     > = {
       paginationType: "pages",
       perPage,
@@ -1460,7 +1503,7 @@ function createDataAdapter<
     return adapter
   }
 
-  const adapter: DataAdapter<TRecord, TFilters, TSortings, TNavigationFilter> =
+  const adapter: DataAdapter<TRecord, TFilters, TSortings, TNavigationFilters> =
     {
       fetchData: ({ filters, sortings }) => {
         if (useObservable) {
@@ -1620,6 +1663,9 @@ const generateMockUsers = (count: number) => {
       isStarred: index % 3 === 0,
       href: `/users/user-${index + 1}`,
       salary: department === "Marketing" ? 50000 + index * 1000 : undefined,
+      joinedAt: new Date(
+        new Date().setDate(new Date().getDate() + Math.floor(Math.random() * 4))
+      ),
     }
   })
 }
@@ -1658,7 +1704,8 @@ export const WithPagination: Story = {
           salary: number | undefined
         },
         typeof filters,
-        typeof sortings
+        typeof sortings,
+        NavigationFiltersDefinition
       >({
         data: paginatedMockUsers,
         delay: 500,
@@ -2059,7 +2106,7 @@ export const WithAsyncSearch: Story = {
       typeof filters,
       typeof sortings,
       MockActions,
-      undefined
+      NavigationFiltersDefinition
     >({
       filters,
       sortings,
