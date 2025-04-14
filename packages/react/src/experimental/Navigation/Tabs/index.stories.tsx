@@ -93,3 +93,18 @@ export const Embedded: Story = {
     embedded: true,
   },
 }
+
+const tabItemsWithIds: TabItem[] = [
+  { label: "Overview", id: "overview", index: true },
+  { label: "Courses", id: "courses" },
+  { label: "Categories", id: "categories" },
+  { label: "Catalog", id: "catalog" },
+  { label: "Requests", id: "requests", "data-test": "foo" },
+]
+
+export const WithIds: Story = {
+  args: {
+    tabs: tabItemsWithIds,
+    activeTabId: "overview",
+  },
+}
