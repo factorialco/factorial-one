@@ -194,6 +194,14 @@ export const Default: Story = {
   },
 }
 
+// Create a specific story type for the Skeleton component
+type SkeletonStory = StoryObj<typeof RichTextEditor.Skeleton>
+
+export const Skeleton: SkeletonStory = {
+  tags: ["experimental"],
+  render: () => <RichTextEditor.Skeleton />,
+}
+
 export const WithoutEnhance: Story = {
   args: {
     ...Default.args,
