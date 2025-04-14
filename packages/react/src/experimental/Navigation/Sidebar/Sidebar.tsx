@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import { ReactNode } from "react"
 import { useIntersectionObserver } from "usehooks-ts"
 import { useReducedMotion } from "../../../lib/a11y"
-import { useI18n } from "../../../lib/i18n-provider"
+import { useI18n } from "../../../lib/providers/i18n"
 import { cn } from "../../../lib/utils"
 import { useSidebar } from "../ApplicationFrame/FrameProvider"
 
