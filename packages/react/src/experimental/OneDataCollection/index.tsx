@@ -123,7 +123,7 @@ export const useDataSource = <
   }
 }
 
-const MotionIcon = motion(Icon)
+const MotionIcon = motion.create(Icon)
 
 /**
  * A component that renders a collection of data with filtering and visualization capabilities.

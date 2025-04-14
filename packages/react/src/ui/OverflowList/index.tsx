@@ -15,7 +15,7 @@ import { cn, focusRing } from "../../lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "../popover"
 import { Skeleton } from "../skeleton"
 
-const IconMotion = motion(Icon)
+const IconMotion = motion.create(Icon)
 
 /**
  * Custom hook for overflow calculations
