@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.30.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.0...factorial-one-react-v1.30.1) (2025-04-14)
+
+
+### Bug Fixes
+
+* deleted shadow from button ([#1588](https://github.com/factorialco/factorial-one/issues/1588)) ([55e4644](https://github.com/factorialco/factorial-one/commit/55e4644f49b198faf28150c4f025a71e6bf8c506))
+
 ## [1.30.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.4...factorial-one-react-v1.30.0) (2025-04-14)
 
 
