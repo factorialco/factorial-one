@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.29.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.3...factorial-one-react-v1.29.4) (2025-04-14)
+
+
+### Bug Fixes
+
+* start break when the amount of break types is only one ([#1602](https://github.com/factorialco/factorial-one/issues/1602)) ([f59cc36](https://github.com/factorialco/factorial-one/commit/f59cc36934154499a17082614eb5e9cf3e94e626))
+
 ## [1.29.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.2...factorial-one-react-v1.29.3) (2025-04-14)
 
 
