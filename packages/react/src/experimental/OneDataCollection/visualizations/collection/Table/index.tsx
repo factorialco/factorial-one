@@ -96,7 +96,7 @@ export const TableCollection = <
     isPartiallySelected,
     handleSelectItemChange,
     handleSelectAll,
-  } = useSelectable(data.records, paginationInfo, source, onSelectItems)
+  } = useSelectable(data?.records ?? [], paginationInfo, source, onSelectItems)
 
   /**
    * Determine the sort state of a column
