@@ -124,7 +124,7 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1(tailwindcss@3.4.17)
       '@tanstack/react-virtual':
-        specifier: ^3.13.6
+        specifier: ^3.13.2
         version: 3.13.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tiptap/extension-bubble-menu':
         specifier: ^2.11.5
