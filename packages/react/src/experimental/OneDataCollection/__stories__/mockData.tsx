@@ -4,6 +4,7 @@ import {
   DataAdapter,
   FilterDefinition,
   FiltersState,
+  GroupingDefinition,
   OnBulkActionCallback,
   OneDataCollection,
   OnSelectItemsCallback,
@@ -13,7 +14,7 @@ import {
   SortingsDefinition,
   SortingsState,
   useDataSource,
-} from "@/experimental/exports"
+} from "@/experimental/OneDataCollection/exports"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
 
@@ -325,6 +326,7 @@ export const ExampleComponent = ({
   frozenColumns = 0,
   selectable,
   bulkActions,
+  grouping,
   navigationFilters,
   totalItemSummary,
 }: {
@@ -340,6 +342,7 @@ export const ExampleComponent = ({
     primary: BulkActionDefinition[]
     secondary?: BulkActionDefinition[]
   }
+  grouping?: GroupingDefinition<(typeof mockUsers)[number]>
   onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
   navigationFilters?: NavigationFiltersDefinition
@@ -347,6 +350,7 @@ export const ExampleComponent = ({
 }) => {
   const dataSource = useDataSource({
     filters,
+    grouping,
     navigationFilters,
     presets: usePresets ? filterPresets : undefined,
     sortings,

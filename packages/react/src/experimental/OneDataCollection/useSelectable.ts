@@ -5,11 +5,11 @@ import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import type { SortingsDefinition } from "./sortings"
 import {
   DataSource,
+  GroupingDefinition,
   OnSelectItemsCallback,
   PaginationInfo,
   RecordType,
 } from "./types"
-
 type UseSelectable<Record extends RecordType> = {
   isAllSelected: boolean
   selectedItems: Map<number | string, Record>
@@ -24,10 +24,18 @@ export function useSelectable<
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >(
-  data: ReadonlyArray<Record>,
+  data: Record[],
   paginationInfo: PaginationInfo | null,
-  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>,
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >,
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
 ): UseSelectable<Record> {
   // itemsState is the state of the selected items
