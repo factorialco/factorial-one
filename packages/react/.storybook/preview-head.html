@@ -99,9 +99,11 @@
   }
 
   .sbdocs-wrapper {
-    padding-top: 64px !important;
-    padding-left: 72px !important;
-    padding-right: 72px !important;
+    @media screen and (min-width: 820px) {
+      padding-top: 64px !important;
+      padding-left: 72px !important;
+      padding-right: 190px !important;
+    }
   }
 
   .sbdocs-preview:not(.docs-story *) {
@@ -151,6 +153,11 @@
   .toc-wrapper {
     padding-right: 16px !important;
     font-size: 12px !important;
+    width: 145px !important;
+
+    @media screen and (max-width: 819px) {
+      display: none;
+    }
   }
 
   .toc-list li {
