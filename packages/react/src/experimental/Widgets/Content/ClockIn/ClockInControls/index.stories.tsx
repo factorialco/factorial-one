@@ -204,6 +204,21 @@ export const WithBreakTypes: Story = {
   },
 }
 
+export const WithOneBreakType: Story = {
+  args: {
+    ...ClockedIn.args,
+    breakTypes: [
+      {
+        id: "1",
+        name: "Break name",
+        duration: "1h",
+        description: "This is a description",
+        isPaid: true,
+      },
+    ],
+  },
+}
+
 export const WithDisabledSelectors: Story = {
   args: {
     ...ClockedOut.args,
