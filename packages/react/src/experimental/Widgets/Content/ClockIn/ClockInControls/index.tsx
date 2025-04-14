@@ -94,22 +94,26 @@ export function ClockInControls({
 
   const showLocationAndProjectSelectors = status === "clocked-out"
 
-  const breakTypeOptions = breakTypes?.map((breakType) => ({
-    value: breakType.id,
-    label: breakType.duration
-      ? `${breakType.name} · ${breakType.duration}`
-      : breakType.name,
-    description: breakType.description,
-    tag: breakType.isPaid ? labels.paid : labels.unpaid,
-  }))
+  const breakTypeOptions =
+    breakTypes?.map((breakType) => ({
+      value: breakType.id,
+      label: breakType.duration
+        ? `${breakType.name} · ${breakType.duration}`
+        : breakType.name,
+      description: breakType.description,
+      tag: breakType.isPaid ? labels.paid : labels.unpaid,
+    })) ?? []
 
   const [breakTypePickerOpen, setBreakTypePickerOpen] = useState(false)
 
   const handleClickBreakButton = () => {
-    if (breakTypeOptions?.length && !breakTypePickerOpen) {
-      setBreakTypePickerOpen(true)
-    } else if (!breakTypeOptions?.length) {
-      onBreak?.()
+    if (breakTypeOptions.length > 1) {
+      if (!breakTypePickerOpen) {
+        setBreakTypePickerOpen(true)
+      }
+    } else {
+      const firstBreakTypeValue = breakTypeOptions?.[0]?.value
+      onBreak?.(firstBreakTypeValue)
     }
   }
 
@@ -196,7 +200,7 @@ export function ClockInControls({
                 <>
                   {canShowBreakButton && (
                     <>
-                      {breakTypeOptions?.length && onChangeBreakTypeId ? (
+                      {breakTypeOptions.length > 1 && onChangeBreakTypeId ? (
                         <Select
                           value=""
                           options={breakTypeOptions}
@@ -207,7 +211,6 @@ export function ClockInControls({
                         >
                           <div aria-label="Select break type">
                             <Button
-                              // onClick={handleClickBreakButton}
                               label={labels.break}
                               variant="neutral"
                               icon={SolidPause}
