@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.30.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.4...factorial-one-react-v1.30.0) (2025-04-14)
+
+
+### Features
+
+* l10n-context ([#1576](https://github.com/factorialco/factorial-one/issues/1576)) ([0de2e6d](https://github.com/factorialco/factorial-one/commit/0de2e6d0708461fb526335f13d6107849b7b0162))
+
 ## [1.29.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.3...factorial-one-react-v1.29.4) (2025-04-14)
 
 
