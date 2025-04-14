@@ -2,6 +2,7 @@ import { Button } from "@/components/Actions/Button"
 import { Maximize, Minimize } from "@/icons/app"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
+import { Skeleton } from "@/ui/skeleton"
 import { EditorContent, useEditor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import {
@@ -19,7 +20,6 @@ import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { Error } from "./Error"
 import { FileList } from "./FileList"
 import { Footer } from "./Footer"
-import { RichTextEditorSkeleton } from "./Skeleton"
 import { handleEnhanceWithAIFunction } from "./utils/enhance"
 import { ExtensionsConfiguration } from "./utils/extensions"
 import {
@@ -426,6 +426,44 @@ const RichTextEditorComponent = forwardRef<
     </div>
   )
 })
+
+interface RichTextEditorSkeletonProps {
+  rows?: number
+}
+
+const RichTextEditorSkeleton = ({ rows = 2 }: RichTextEditorSkeletonProps) => {
+  const widths = Array.from(
+    { length: rows },
+    () => `${Math.floor(Math.random() * 60) + 40}%`
+  )
+
+  return (
+    <div className="relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background">
+      <div className="relative w-full flex-grow overflow-hidden">
+        <div className="h-auto w-full pl-3 pr-4 pt-3">
+          <div className="flex flex-col gap-2">
+            {widths.map((width, index) => (
+              <Skeleton key={index} className="h-4" style={{ width }} />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="px-3 py-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-8 w-8 rounded-md" />
+            <Skeleton className="h-8 w-8 rounded-md" />
+            <Skeleton className="h-8 w-8 rounded-md" />
+          </div>
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-8 w-24 rounded-md" />
+            <Skeleton className="h-8 w-32 rounded-md" />
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export * from "./utils/constants"
 export * from "./utils/types"
