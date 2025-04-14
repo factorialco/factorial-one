@@ -7,14 +7,15 @@ import {
   useState,
 } from "react"
 import { useIsomorphicLayoutEffect } from "usehooks-ts"
-import { I18nProvider, I18nProviderProps } from "./i18n-provider"
-import { UserPlatformProvider } from "./user-platform/UserPlatformProvider"
+import { I18nProvider, I18nProviderProps } from "../i18n"
+import { L10nProvider, L10nProviderProps } from "../l10n"
+import { UserPlatformProvider } from "../user-platafform"
 
-import { ImageContextValue, ImageProvider } from "./imageHandler"
-import { LinkContextValue, LinkProvider } from "./linkHandler"
-import { PrivacyModeProvider } from "./privacyMode"
-import { cn } from "./utils"
-import { XRayProvider } from "./xray"
+import { ImageContextValue, ImageProvider } from "../../imageHandler"
+import { LinkContextValue, LinkProvider } from "../../linkHandler"
+import { PrivacyModeProvider } from "../../privacyMode"
+import { cn } from "../../utils"
+import { XRayProvider } from "../../xray"
 
 interface LayoutProps {
   fullScreen?: boolean
@@ -73,23 +74,34 @@ export const FactorialOneProvider: React.FC<{
   image?: ImageContextValue
   layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">
   i18n: Omit<I18nProviderProps, "children">
-}> = ({ children, layout, link, privacyModeInitiallyEnabled, image, i18n }) => {
+  l10n: Omit<L10nProviderProps, "children">
+}> = ({
+  children,
+  layout,
+  link,
+  privacyModeInitiallyEnabled,
+  image,
+  i18n,
+  l10n,
+}) => {
   return (
     <MotionProvider>
       <UserPlatformProvider>
-        <I18nProvider {...i18n}>
-          <LinkProvider {...link}>
-            <LayoutProvider {...layout}>
-              <XRayProvider>
-                <PrivacyModeProvider
-                  initiallyEnabled={privacyModeInitiallyEnabled}
-                >
-                  <ImageProvider {...image}>{children}</ImageProvider>
-                </PrivacyModeProvider>
-              </XRayProvider>
-            </LayoutProvider>
-          </LinkProvider>
-        </I18nProvider>
+        <L10nProvider {...l10n}>
+          <I18nProvider {...i18n}>
+            <LinkProvider {...link}>
+              <LayoutProvider {...layout}>
+                <XRayProvider>
+                  <PrivacyModeProvider
+                    initiallyEnabled={privacyModeInitiallyEnabled}
+                  >
+                    <ImageProvider {...image}>{children}</ImageProvider>
+                  </PrivacyModeProvider>
+                </XRayProvider>
+              </LayoutProvider>
+            </LinkProvider>
+          </I18nProvider>
+        </L10nProvider>
       </UserPlatformProvider>
     </MotionProvider>
   )

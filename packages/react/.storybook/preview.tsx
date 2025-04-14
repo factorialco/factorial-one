@@ -8,11 +8,11 @@ import isChromatic from "chromatic/isChromatic"
 
 import "../src/styles.css"
 
-import { ThemeProvider } from "@/lib/theme-provider"
-import { FactorialOneProvider } from "@/lib/one-provider"
+import { ThemeProvider } from "@/lib/providers/theme"
+import { FactorialOneProvider } from "@/lib/providers/one"
 import { DocsContainer } from "./DocsContainer.tsx"
-import { buildTranslations } from "@/lib/i18n-provider"
-import { defaultTranslations } from "@/lib/i18n-provider-defaults"
+import { buildTranslations, defaultTranslations } from "@/lib/providers/i18n"
+import { defaults as l10nDefaults } from "@/lib/providers/l10n"
 
 MotionGlobalConfig.skipAnimations = isChromatic()
 
@@ -37,6 +37,9 @@ export const FactorialOne = (Story, { parameters }) => {
       }}
       i18n={{
         translations: buildTranslations(defaultTranslations),
+      }}
+      l10n={{
+        locale: "en",
       }}
       link={{
         currentPath,
