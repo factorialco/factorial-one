@@ -76,7 +76,9 @@ export function TableHead({
           hasContent && "gap-1"
         )}
       >
-        {children}
+        <div className={cn("truncate", width !== "auto" && "overflow-hidden")}>
+          {children}
+        </div>
         {hasContent && (
           <div className="flex items-center">
             {info && (
@@ -187,18 +189,7 @@ export function TableHead({
           />
         )}
       </AnimatePresence>
-      {!hidden &&
-        (info ? (
-          <Tooltip label={info}>
-            <div className={cn(width !== "auto" && "overflow-hidden")}>
-              {content}
-            </div>
-          </Tooltip>
-        ) : (
-          <div className={cn(width !== "auto" && "overflow-hidden")}>
-            {content}
-          </div>
-        ))}
+      {!hidden && (info ? <Tooltip label={info}>{content}</Tooltip> : content)}
     </TableHeadRoot>
   )
 }
