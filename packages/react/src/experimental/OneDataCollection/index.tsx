@@ -83,12 +83,13 @@ export const useDataSource = <
 >(
   {
     currentFilters: initialCurrentFilters = {},
-    currentGrouping: initialCurrentGrouping = undefined,
+    currentGrouping: initialCurrentGrouping,
     filters,
     navigationFilters,
     search,
     defaultSorting,
     dataAdapter,
+    grouping,
     ...rest
   }: DataSourceDefinition<
     Record,
@@ -99,7 +100,14 @@ export const useDataSource = <
     Grouping
   >,
   deps: ReadonlyArray<unknown> = []
-): DataSource<Record, FiltersSchema, Sortings, ItemActions, Grouping> => {
+): DataSource<
+  Record,
+  FiltersSchema,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping
+> => {
   const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
@@ -152,9 +160,25 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
 
+  const defaultGrouping = grouping?.mandatory
+    ? ({
+        field: grouping.groupBy[Object.keys(grouping.groupBy)[0]]!.field,
+        desc: true,
+      } as GroupingState<Grouping>)
+    : undefined
+
   const [currentGrouping, setCurrentGrouping] = useState<
-    GroupingState<Grouping> | undefined
-  >(initialCurrentGrouping)
+    Grouping["mandatory"] extends true
+      ? GroupingState<Grouping>
+      : GroupingState<Grouping> | undefined | null
+  >(
+    initialCurrentGrouping ??
+      ((grouping?.mandatory
+        ? defaultGrouping
+        : undefined) as Grouping["mandatory"] extends true
+        ? GroupingState<Grouping>
+        : GroupingState<Grouping> | undefined | null)
+  )
 
   return {
     filters: memoizedFilters,
@@ -174,6 +198,7 @@ export const useDataSource = <
     setCurrentNavigationFilters,
     setCurrentGrouping,
     currentGrouping,
+    grouping,
     ...rest,
   }
 }

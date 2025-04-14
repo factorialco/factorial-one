@@ -8,7 +8,11 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "./navigationFilters/types"
-import { SortingsDefinition, SortingsState } from "./sortings"
+import {
+  SortingsDefinition,
+  SortingsState,
+  SortingsStateMultiple,
+} from "./sortings"
 import { DataError } from "./useData"
 
 /**
@@ -57,7 +61,13 @@ export type DataSourceDefinition<
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
   /** Data adapter responsible for fetching and managing data */
-  dataAdapter: DataAdapter<Record, Filters, Sortings, NavigationFilters>
+  dataAdapter: DataAdapter<
+    Record,
+    Filters,
+    Sortings,
+    NavigationFilters,
+    Grouping
+  >
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
   /** Bulk actions that can be performed on the collection */
@@ -70,30 +80,35 @@ export type DataSourceDefinition<
   totalItemSummary?: (totalItems: number) => string
   /** Grouping configuration */
   grouping?: Grouping
-}
+} & (Grouping["mandatory"] extends true
+  ? { currentGrouping: GroupingState<Grouping> }
+  : { currentGrouping?: GroupingState<Grouping> | null })
 
 /**
  * Defines the structure and configuration of a grouping for a data source.
  * @template RecordType - The type of records in the collection
  */
-export type GroupingDefinition<R extends RecordType> = {
-  /** Whether grouping is mandatory or the user can chose not to group */
-  mandatory: boolean
-  groupBy: Record<
-    string,
-    {
-      /** The field to group by */
-      field: keyof R
-      /** The label for the grouping */
-      name: string
-      /** The item count for the grouping */
-      label: (groupId: string) => string
-      itemCount?: (
-        groupId: string
-      ) => number | undefined | Promise<number | undefined>
+export type GroupingDefinition<R extends RecordType> =
+  | {
+      /** Whether grouping is mandatory or the user can chose not to group */
+      mandatory: boolean
+      groupBy: Record<
+        string,
+        {
+          /** The field to group by */
+          field: keyof R
+          /** The label for the grouping */
+          name: string
+          /** The item count for the grouping */
+          label: (groupId: string) => string
+          itemCount?: (
+            groupId: string
+          ) => number | undefined | Promise<number | undefined>
+        }
+      >
     }
-  >
-}
+  | null
+  | undefined
 
 export type GroupingField<Grouping> =
   Grouping extends GroupingDefinition<infer R>
@@ -166,13 +181,15 @@ export type PaginatedResponse<Record> = {
  * @template Filters - The available filter configurations
  */
 export type BaseFetchOptions<
+  Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
-  sortings: SortingsState<Sortings>
+  sortings: SortingsStateMultiple<Record, Sortings, Grouping>
   search?: string
   navigationFilters?: NavigationFiltersState<NavigationFilters>
 }
@@ -182,10 +199,12 @@ export type BaseFetchOptions<
  * @template Filters - The available filter configurations
  */
 export type PaginatedFetchOptions<
+  Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
-> = BaseFetchOptions<Filters, Sortings, NavigationFilters> & {
+  Grouping extends GroupingDefinition<Record>,
+> = BaseFetchOptions<Record, Filters, Sortings, NavigationFilters, Grouping> & {
   /** Pagination configuration */
   pagination: { currentPage: number; perPage: number }
 }
@@ -200,6 +219,7 @@ export type BaseDataAdapter<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Indicates this adapter doesn't use pagination */
   paginationType?: never
@@ -209,7 +229,13 @@ export type BaseDataAdapter<
    * @returns Array of records, promise of records, or observable of records
    */
   fetchData: (
-    options: BaseFetchOptions<Filters, Sortings, NavigationFilters>
+    options: BaseFetchOptions<
+      Record,
+      Filters,
+      Sortings,
+      NavigationFilters,
+      Grouping
+    >
   ) =>
     | BaseResponse<Record>
     | Promise<BaseResponse<Record>>
@@ -226,6 +252,7 @@ export type PaginatedDataAdapter<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Indicates this adapter uses page-based pagination */
   paginationType: "pages"
@@ -237,7 +264,13 @@ export type PaginatedDataAdapter<
    * @returns Paginated response with records and pagination info
    */
   fetchData: (
-    options: PaginatedFetchOptions<Filters, Sortings, NavigationFilters>
+    options: PaginatedFetchOptions<
+      Record,
+      Filters,
+      Sortings,
+      NavigationFilters,
+      Grouping
+    >
   ) =>
     | PaginatedResponse<Record>
     | Promise<PaginatedResponse<Record>>
@@ -254,9 +287,10 @@ export type DataAdapter<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > =
-  | BaseDataAdapter<Record, Filters, Sortings, NavigationFilters>
-  | PaginatedDataAdapter<Record, Filters, Sortings, NavigationFilters>
+  | BaseDataAdapter<Record, Filters, Sortings, NavigationFilters, Grouping>
+  | PaginatedDataAdapter<Record, Filters, Sortings, NavigationFilters, Grouping>
 
 /**
  * Represents a collection of selected items.
@@ -407,7 +441,14 @@ export type DataSource<
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<Grouping> | undefined>
   >
-}
+} /** Current state of applied grouping */ & (Grouping extends undefined
+    ? { currentGrouping: null }
+    : Grouping extends null
+      ? { currentGrouping: null }
+      : Grouping["mandatory"] extends true
+        ? { currentGrouping: GroupingState<Grouping> }
+        : { currentGrouping?: GroupingState<Grouping> | null })
+
 /**
  * Utility type for handling both Promise and Observable return types.
  * @template T - The type of the value being promised or observed

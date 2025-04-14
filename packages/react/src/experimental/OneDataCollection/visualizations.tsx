@@ -11,6 +11,7 @@ import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
 import type {
   DataSource,
+  GroupingDefinition,
   OnLoadDataCallback,
   OnLoadErrorCallback,
   OnSelectItemsCallback,
@@ -35,6 +36,7 @@ export type Visualization<
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > =
   | {
       /** Card-based visualization type */
@@ -64,7 +66,8 @@ export type Visualization<
           Filters,
           Sortings,
           ItemActions,
-          NavigationFilters
+          NavigationFilters,
+          Grouping
         >
       }) => JSX.Element
     }
@@ -89,10 +92,18 @@ export type VisualizationProps<
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Array of available visualization configurations */
   visualizations?: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
+    Visualization<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
   >
 }
 
@@ -116,13 +127,21 @@ export const VisualizationSelector = <
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >({
   visualizations,
   currentVisualization,
   onVisualizationChange,
 }: {
   visualizations: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
+    Visualization<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
   >
   currentVisualization: number
   onVisualizationChange: (index: number) => void
@@ -213,6 +232,7 @@ export const VisualizationRenderer = <
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >({
   visualization,
   source,
@@ -225,23 +245,34 @@ export const VisualizationRenderer = <
     Filters,
     Sortings,
     ItemActions,
-    NavigationFilters
+    NavigationFilters,
+    Grouping
   >
-  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
   onSelectItems: OnSelectItemsCallback<Record, Filters>
   onLoadData: OnLoadDataCallback<Record, Filters>
   onLoadError: OnLoadErrorCallback
+  onTotalItemsChange?: (totalItems: number | undefined) => void
   clearSelectedItems?: () => void
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
+      console.log("source", source.currentSortings)
       return (
         <TableCollection<
           Record,
           Filters,
           Sortings,
           ItemActions,
-          NavigationFilters
+          NavigationFilters,
+          Grouping
         >
           source={source}
           {...visualization.options}
@@ -257,7 +288,8 @@ export const VisualizationRenderer = <
           Filters,
           Sortings,
           ItemActions,
-          NavigationFilters
+          NavigationFilters,
+          Grouping
         >
           source={source}
           {...visualization.options}
