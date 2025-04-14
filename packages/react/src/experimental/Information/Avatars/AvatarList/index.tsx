@@ -68,6 +68,11 @@ type Props = {
    * @default 3
    */
   max?: number
+
+  /**
+   * The remaining number to display.
+   */
+  remainingCount?: number
 }
 
 export const AvatarList = ({
@@ -75,11 +80,12 @@ export const AvatarList = ({
   size = "medium",
   type,
   noTooltip = false,
+  remainingCount: initialRemainingCount,
   max = 3,
 }: Props) => {
   const visibleAvatars = avatars.slice(0, max)
   const remainingAvatars = avatars.slice(max)
-  const remainingCount = avatars.length - max
+  const remainingCount = initialRemainingCount ?? avatars.length - max
   const showCounter = remainingCount > 0
 
   return (
@@ -121,7 +127,9 @@ export const AvatarList = ({
           count={remainingCount}
           size={size}
           type={type === "person" ? "rounded" : "base"}
-          list={noTooltip ? undefined : remainingAvatars}
+          list={
+            noTooltip || initialRemainingCount ? undefined : remainingAvatars
+          }
         />
       )}
     </div>

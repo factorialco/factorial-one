@@ -1,3 +1,7 @@
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { withSkeleton } from "@/lib/skeleton"
+import { cn } from "@/lib/utils"
+import { Skeleton } from "@/ui/skeleton"
 import React from "react"
 import { Button } from "../../../components/Actions/Button"
 import { Icon, IconType } from "../../../components/Utilities/Icon"
@@ -7,7 +11,7 @@ import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
 import { DotTag, DotTagProps } from "../../Information/Tags/DotTag"
 import { RawTag, RawTagProps } from "../../Information/Tags/RawTag"
 
-export type PersonListItemProps = {
+export type OnePersonListItemProps = {
   person: {
     firstName: string
     lastName: string
@@ -28,12 +32,14 @@ export type PersonListItemProps = {
       onClick: () => void
     }
   }
+  info?: string
   onClick: () => void
+  withPointerCursor?: boolean
 }
 
-export const PersonListItem = React.forwardRef<
+const BaseOnePersonListItem = React.forwardRef<
   HTMLDivElement,
-  PersonListItemProps
+  OnePersonListItemProps
 >(({ person, onClick, ...props }, ref) => {
   const handleClick = () => {
     onClick()
@@ -42,7 +48,10 @@ export const PersonListItem = React.forwardRef<
   return (
     <div
       ref={ref}
-      className="flex w-full flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold"
+      className={cn(
+        "flex w-full flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold",
+        props.withPointerCursor && "cursor-pointer"
+      )}
       onClick={handleClick}
     >
       <PersonAvatar
@@ -51,15 +60,18 @@ export const PersonListItem = React.forwardRef<
         src={person.avatarUrl}
         badge={person.avatarBadge}
       />
-
       <div className="flex flex-1 flex-col">
         <div className="flex flex-1 flex-row items-center gap-1">
           <span className="truncate font-medium">{`${person.firstName} ${person.lastName}`}</span>
-          <Icon
-            icon={InfoCircle}
-            size="sm"
-            className="text-f1-icon-secondary"
-          />
+          {props.info && (
+            <Tooltip label={props.info}>
+              <Icon
+                icon={InfoCircle}
+                size="sm"
+                className="text-f1-icon-secondary"
+              />
+            </Tooltip>
+          )}
         </div>
         {"bottomTags" in props && (
           <div className="-ml-1.5 flex flex-row items-center [&>div]:-mr-1">
@@ -82,7 +94,6 @@ export const PersonListItem = React.forwardRef<
           </p>
         )}
       </div>
-
       <div className="flex flex-row items-center justify-between gap-2">
         {"rightTag" in props && props.rightTag && (
           <DotTag {...props.rightTag} />
@@ -114,4 +125,21 @@ export const PersonListItem = React.forwardRef<
   )
 })
 
-PersonListItem.displayName = "PersonListItem"
+const OnePersonListItemSkeleton = () => {
+  return (
+    <div className="flex w-full flex-row flex-wrap items-center gap-2 rounded-md border p-2 hover:bg-f1-background-hover focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold">
+      <Skeleton className="aspect-square w-8 rounded-full" />
+      <div className="flex flex-1 flex-col gap-0.5">
+        <Skeleton className="h-4" />
+        <Skeleton className="h-4" />
+      </div>
+    </div>
+  )
+}
+
+BaseOnePersonListItem.displayName = "OnePersonListItem"
+
+export const OnePersonListItem = withSkeleton(
+  BaseOnePersonListItem,
+  OnePersonListItemSkeleton
+)

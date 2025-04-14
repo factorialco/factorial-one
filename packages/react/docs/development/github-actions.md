@@ -50,6 +50,9 @@ to authenticate with external services.
   not approve its own PRs, so we need a PAT to approve the PRs)
 - `CHROMATIC_PROJECT_TOKEN`: The token to publish the storybook to chromatic
   (TODO permissions/scopes)
+- `SLACK_WEBHOOK_URL`: The trigger url to launch the
+  [slack workflow](https://slack.com/shortcuts/Ft08MX2F6YKE/eb87d88fd13b11321d880e48609b8f14)
+  that logs the new release
 
 ## Workflows
 

@@ -19,3 +19,10 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const DefaultDotTag: Story = {}
+
+export const CustomColorDotTag: Story = {
+  args: {
+    color: undefined,
+    customColor: "#f00",
+  },
+}

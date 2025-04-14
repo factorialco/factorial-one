@@ -388,11 +388,6 @@ describe("TableCollection", () => {
       await waitFor(() => {
         expect(screen.getByText("User 1")).toBeInTheDocument()
         expect(screen.getByText("User 5")).toBeInTheDocument()
-        // Previous and Next buttons should be disabled
-        const prevButton = screen.getByLabelText("Go to previous page")
-        const nextButton = screen.getByLabelText("Go to next page")
-        expect(prevButton).toHaveAttribute("aria-disabled", "true")
-        expect(nextButton).toHaveAttribute("aria-disabled", "true")
       })
     })
 

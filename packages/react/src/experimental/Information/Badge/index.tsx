@@ -8,7 +8,7 @@ const badgeVariants = cva({
       neutral: "bg-transparent text-f1-icon",
       highlight: "text-f1-special-highlight",
       positive: "bg-f1-background-positive-bold text-f1-foreground-inverse",
-      critical: "bg-f1-background-critical-bold text-f1-foreground-inverse",
+      critical: "bg-f1-icon-critical text-f1-foreground-inverse",
       warning: "bg-f1-background-warning-bold text-f1-foreground-inverse",
     },
     size: {

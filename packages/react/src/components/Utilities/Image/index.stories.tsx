@@ -1,5 +1,5 @@
+import heart from "@factorialco/factorial-one-core/assets/icons/app/heart.svg"
 import type { Meta, StoryObj } from "@storybook/react"
-import heart from "../../../../assets/icons/app/heart.svg"
 
 import { Image } from "./index"
 
