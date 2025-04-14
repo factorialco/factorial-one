@@ -16,11 +16,13 @@
       ]
     },
     "types": [
-      "vitest/globals"
+      "vitest/globals",
+      "nativewind/types"
     ]
   },
   "include": [
-    "src"
+    "src",
+    "nativewind-env.d.ts"
   ],
   "exclude": [
     "node_modules",
