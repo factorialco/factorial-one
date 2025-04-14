@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.29.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.2...factorial-one-react-v1.29.3) (2025-04-14)
+
+
+### Bug Fixes
+
+* table head label truncate when not enough space ([#1577](https://github.com/factorialco/factorial-one/issues/1577)) ([e56aedb](https://github.com/factorialco/factorial-one/commit/e56aedb625df39d18553d613624971b66c3ea02c))
+
 ## [1.29.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.1...factorial-one-react-v1.29.2) (2025-04-13)
 
 
