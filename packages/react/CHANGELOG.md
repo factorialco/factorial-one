@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.30.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.1...factorial-one-react-v1.30.2) (2025-04-14)
+
+
+### Bug Fixes
+
+* storybook toc width ([#1606](https://github.com/factorialco/factorial-one/issues/1606)) ([9d63e84](https://github.com/factorialco/factorial-one/commit/9d63e843a0d430955cf5398ff343a4ec537897fa))
+
 ## [1.30.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.0...factorial-one-react-v1.30.1) (2025-04-14)
 
 
