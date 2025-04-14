@@ -66,7 +66,7 @@ const FileList = ({
                 <FileItem
                   key={`${file.name}-${index}`}
                   file={file}
-                  onRemoveFile={() =>
+                  onAction={() =>
                     handleRemoveFile(index, files, filesConfig, setFiles)
                   }
                   disabled={disabled}
