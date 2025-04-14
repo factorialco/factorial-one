@@ -1,3 +1,4 @@
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
@@ -15,7 +16,6 @@ import type {
   RecordType,
 } from "./types"
 import { useData } from "./useData"
-
 interface TestRecord extends RecordType {
   id: number
   name: string
@@ -39,12 +39,16 @@ type TestSource = DataSource<
   TestFilters,
   SortingsDefinition,
   ItemActionsDefinition<TestRecord>,
-  undefined
+  NavigationFiltersDefinition
 >
 
 const createMockDataSource = (
   fetchData: (
-    options: BaseFetchOptions<TestFilters, SortingsDefinition, undefined>
+    options: BaseFetchOptions<
+      TestFilters,
+      SortingsDefinition,
+      NavigationFiltersDefinition
+    >
   ) =>
     | BaseResponse<TestRecord>
     | Promise<BaseResponse<TestRecord>>
@@ -55,7 +59,7 @@ const createMockDataSource = (
     TestRecord,
     TestFilters,
     SortingsDefinition,
-    undefined
+    NavigationFiltersDefinition
   > = {
     fetchData,
   }
@@ -64,7 +68,7 @@ const createMockDataSource = (
     TestRecord,
     TestFilters,
     SortingsDefinition,
-    undefined
+    NavigationFiltersDefinition
   > = {
     fetchData: async (options) => {
       const result = await Promise.resolve(fetchData(options))
@@ -94,6 +98,9 @@ const createMockDataSource = (
     setCurrentSearch: vi.fn(),
     isLoading: false,
     setIsLoading: vi.fn(),
+    currentNavigationFilters: {},
+    setCurrentNavigationFilters: vi.fn(),
+    navigationFilters: undefined,
   }
 }
 
@@ -370,6 +377,9 @@ describe("useData", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
+        currentNavigationFilters: {},
+        setCurrentNavigationFilters: vi.fn(),
+        navigationFilters: undefined,
       }
 
       // Render the hook

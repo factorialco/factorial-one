@@ -15,7 +15,7 @@ import { defaultTranslations, I18nProvider } from "../../lib/providers/i18n"
 import type { FiltersDefinition } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
-import { NavigationFilterDefinition } from "./navigationFilters/types"
+import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
 import type { DataSource } from "./types"
 import { useData } from "./useData"
@@ -296,14 +296,14 @@ describe("Collections", () => {
         FiltersDefinition,
         SortingsDefinition,
         ItemActionsDefinition<Item>,
-        undefined
+        NavigationFiltersDefinition
       >
     }) => {
       const { data } = useData<
         Item,
         FiltersDefinition,
         SortingsDefinition,
-        undefined
+        NavigationFiltersDefinition
       >(source)
 
       return (
@@ -414,7 +414,7 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFilterDefinition
+          NavigationFiltersDefinition
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
@@ -534,7 +534,7 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFilterDefinition
+          NavigationFiltersDefinition
         >({
           dataAdapter: {
             fetchData: fetchDataMock,
@@ -620,7 +620,7 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFilterDefinition
+          NavigationFiltersDefinition
         >({
           dataAdapter: {
             fetchData: async () => [
@@ -663,7 +663,7 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFilterDefinition
+          NavigationFiltersDefinition
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
@@ -786,7 +786,7 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFilterDefinition
+          NavigationFiltersDefinition
         >({
           filters: {
             department: {
@@ -902,7 +902,7 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFilterDefinition
+          NavigationFiltersDefinition
         >({
           dataAdapter: {
             fetchData: async () => mockData,
@@ -1016,7 +1016,7 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFilterDefinition
+          NavigationFiltersDefinition
         >({
           dataAdapter: {
             fetchData: async ({ search }) => {
@@ -1106,7 +1106,7 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFilterDefinition
+          NavigationFiltersDefinition
         >({
           dataAdapter: {
             paginationType: "pages",
