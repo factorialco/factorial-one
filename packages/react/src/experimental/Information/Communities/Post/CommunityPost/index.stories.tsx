@@ -27,7 +27,6 @@ export const Default: Story = {
     author: {
       firstName: "Saúl",
       lastName: "Domínguez",
-      url: "https://google.com/",
       avatarUrl: "https://github.com/sauldom102.png",
     },
     group: {

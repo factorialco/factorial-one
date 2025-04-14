@@ -17,7 +17,7 @@ export type CommunityPostProps = {
     firstName: string
     lastName: string
     avatarUrl?: string
-    url: string
+    url?: string
   }
   group: {
     title: string
