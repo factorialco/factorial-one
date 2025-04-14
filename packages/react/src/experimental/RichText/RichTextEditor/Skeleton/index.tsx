@@ -1,13 +1,23 @@
 import { Skeleton } from "@/ui/skeleton"
 
-const RichTextEditorSkeleton = () => {
+interface RichTextEditorSkeletonProps {
+  rows?: number
+}
+
+const RichTextEditorSkeleton = ({ rows = 2 }: RichTextEditorSkeletonProps) => {
+  const widths = Array.from({ length: rows }, () => {
+    const randomWidth = Math.floor(Math.random() * 60) + 40
+    return `${randomWidth}%`
+  })
+
   return (
     <div className="relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background">
       <div className="relative w-full flex-grow overflow-hidden">
         <div className="h-auto w-full pl-3 pr-4 pt-3">
           <div className="flex flex-col gap-2">
-            <Skeleton className="h-4 w-3/4" />
-            <Skeleton className="h-4 w-full" />
+            {widths.map((width, index) => (
+              <Skeleton key={index} className="h-4" style={{ width }} />
+            ))}
           </div>
         </div>
       </div>
