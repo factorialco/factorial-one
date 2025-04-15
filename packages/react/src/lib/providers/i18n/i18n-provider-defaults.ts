@@ -30,8 +30,9 @@ export const defaultTranslations = {
       actions: "Actions",
     },
     visualizations: {
-      table: "Table view",
       card: "Card view",
+      kanban: "Kanban view",
+      table: "Table view",
       pagination: {
         of: "of",
       },
