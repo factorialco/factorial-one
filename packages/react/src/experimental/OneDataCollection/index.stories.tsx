@@ -2336,3 +2336,30 @@ export const TableColumnProperties: Story = {
     )
   },
 }
+
+// Example usage with card visualization
+export const WithKanbanVisualization: Story = {
+  render: () => {
+    const source = useDataSource({
+      dataAdapter: createDataAdapter({
+        data: mockUsers,
+        delay: 1000,
+        useObservable: true,
+      }),
+    })
+
+    return (
+      <OneDataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "kanban",
+            options: {
+              columns: [],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
