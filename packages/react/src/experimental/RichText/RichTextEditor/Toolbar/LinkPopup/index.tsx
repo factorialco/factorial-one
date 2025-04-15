@@ -7,7 +7,7 @@ import {
   CrossedCircle,
   Link as LinkIcon,
 } from "@/icons/app"
-import { useI18n } from "@/lib/i18n-provider"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
 import { Button } from "@/ui/button"
 import * as Popover from "@radix-ui/react-popover"
@@ -34,7 +34,8 @@ const LinkPopup = ({
   const [openLinkPopover, setOpenLinkPopover] = useState(false)
   const [url, setUrl] = useState(editor.getAttributes("link").href || "")
 
-  const handleLinkButtonClick = () => {
+  const handleLinkButtonClick = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault()
     if (disabled) return
     setOpenLinkPopover(!openLinkPopover)
   }

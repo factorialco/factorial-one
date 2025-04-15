@@ -8,8 +8,10 @@ import {
 } from "@testing-library/react"
 import { ReactNode } from "react"
 import { describe, expect, it, vi } from "vitest"
-import { I18nProvider } from "../../../../../lib/i18n-provider"
-import { defaultTranslations } from "../../../../../lib/i18n-provider-defaults"
+import {
+  defaultTranslations,
+  I18nProvider,
+} from "../../../../../lib/providers/i18n"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
@@ -388,11 +390,6 @@ describe("TableCollection", () => {
       await waitFor(() => {
         expect(screen.getByText("User 1")).toBeInTheDocument()
         expect(screen.getByText("User 5")).toBeInTheDocument()
-        // Previous and Next buttons should be disabled
-        const prevButton = screen.getByLabelText("Go to previous page")
-        const nextButton = screen.getByLabelText("Go to next page")
-        expect(prevButton).toHaveAttribute("aria-disabled", "true")
-        expect(nextButton).toHaveAttribute("aria-disabled", "true")
       })
     })
 

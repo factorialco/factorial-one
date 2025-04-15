@@ -100,6 +100,7 @@ export const OnBreak: Story = {
         variant: "break",
       },
     ],
+    breakTypeName: "Lunch break",
   },
 }
 
@@ -200,6 +201,21 @@ export const WithBreakTypes: Story = {
       },
     ],
     onChangeBreakTypeId: () => {},
+  },
+}
+
+export const WithOneBreakType: Story = {
+  args: {
+    ...ClockedIn.args,
+    breakTypes: [
+      {
+        id: "1",
+        name: "Break name",
+        duration: "1h",
+        description: "This is a description",
+        isPaid: true,
+      },
+    ],
   },
 }
 

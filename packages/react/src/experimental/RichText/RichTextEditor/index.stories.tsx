@@ -194,6 +194,13 @@ export const Default: Story = {
   },
 }
 
+type SkeletonStory = StoryObj<typeof RichTextEditor.Skeleton>
+
+export const Skeleton: SkeletonStory = {
+  tags: ["experimental"],
+  render: () => <RichTextEditor.Skeleton />,
+}
+
 export const WithoutEnhance: Story = {
   args: {
     ...Default.args,

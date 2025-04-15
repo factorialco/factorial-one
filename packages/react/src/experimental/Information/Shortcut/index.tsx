@@ -2,11 +2,11 @@ import { type VariantProps, cva } from "cva"
 
 import { Icon, IconProps } from "../../../components/Utilities/Icon"
 import { Windows } from "../../../icons/app"
-import { useI18n } from "../../../lib/i18n-provider"
+import { useI18n } from "../../../lib/providers/i18n"
 import {
   Platform,
   useUserPlatform,
-} from "../../../lib/user-platform/UserPlatformProvider"
+} from "../../../lib/providers/user-platafform/UserPlatformProvider"
 import { cn } from "../../../lib/utils"
 
 const shortcutVariants = cva({

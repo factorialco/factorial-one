@@ -1,6 +1,11 @@
 import { cva, type VariantProps } from "cva"
-import { Icon } from "../../../../components/Utilities/Icon"
-import { AlertCircle, InfoCircle, Warning } from "../../../../icons/app"
+import { Icon, IconType } from "../../../../components/Utilities/Icon"
+import {
+  AlertCircle,
+  CheckCircle,
+  InfoCircle,
+  Warning,
+} from "../../../../icons/app"
 
 const alertAvatarVariants = cva({
   base: "flex items-center justify-center border border-solid",
@@ -11,6 +16,8 @@ const alertAvatarVariants = cva({
       warning:
         "border-f1-border-warning bg-f1-background-warning text-f1-icon-warning",
       info: "border-f1-border-info bg-f1-background-info text-f1-icon-info",
+      positive:
+        "border-f1-border-positive bg-f1-background-positive text-f1-icon-positive",
     },
     size: {
       sm: "h-6 w-6 rounded-sm",
@@ -25,20 +32,22 @@ const alertAvatarVariants = cva({
 })
 
 export type AlertAvatarProps = VariantProps<typeof alertAvatarVariants> & {
-  type: "critical" | "warning" | "info"
+  icon?: IconType
+  type: "critical" | "warning" | "info" | "positive"
   size?: "sm" | "md" | "lg"
 }
 
-export const AlertAvatar = ({ type, size }: AlertAvatarProps) => {
+export const AlertAvatar = ({ icon, type, size }: AlertAvatarProps) => {
   const iconMap = {
     critical: AlertCircle,
     warning: Warning,
     info: InfoCircle,
+    positive: CheckCircle,
   }
 
   return (
     <div className={alertAvatarVariants({ type, size })}>
-      <Icon icon={iconMap[type]} size={size} />
+      <Icon icon={icon ?? iconMap[type]} size={size} />
     </div>
   )
 }

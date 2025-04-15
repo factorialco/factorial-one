@@ -130,7 +130,7 @@
     --special-highlight: theme("colors.special.highlight");
 
     --critical-50: theme("colors.red.60");
-    --critical-60: theme("colors.red.50");
+    --critical-60: theme("colors.red.60");
     --critical-70: theme("colors.red.50");
 
     --positive-50: theme("colors.grass.60");
