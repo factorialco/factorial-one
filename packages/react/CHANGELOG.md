@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.32.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.3...factorial-one-react-v1.32.0) (2025-04-15)
+
+
+### Features
+
+* add support to pass tracked minutes to ClockInControls and ClockInGraph component ([#1624](https://github.com/factorialco/factorial-one/issues/1624)) ([f5215f7](https://github.com/factorialco/factorial-one/commit/f5215f7845fded5a0cc189b9ff106d6687ff7863))
+
 ## [1.31.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.2...factorial-one-react-v1.31.3) (2025-04-15)
 
 
