@@ -688,13 +688,15 @@ export declare const ChipsList: {
     displayName: string;
 };
 
-export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, breakTypeName, }: ClockInControlsProps): JSX_2.Element;
+export declare function ClockInControls({ trackedMinutes, remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, breakTypeName, }: ClockInControlsProps): JSX_2.Element;
 
 export declare interface ClockInControlsProps {
     /** Optional remaining time in minutes */
     remainingMinutes?: number;
     /** Clock in entries data */
     data: ClockInGraphProps["data"];
+    /** Tracked minutes */
+    trackedMinutes: number;
     /** Labels for all text content */
     labels: {
         clockedOut: string;
@@ -737,13 +739,13 @@ export declare interface ClockInControlsProps {
 }
 
 declare interface ClockInGraphProps {
+    trackedMinutes?: number;
     data?: {
         from: Date;
         to: Date;
         variant: ClockInStatus;
     }[];
     remainingMinutes?: number;
-    overtimeOnly?: boolean;
 }
 
 declare type ClockInStatus = "clocked-in" | "break" | "clocked-out";
