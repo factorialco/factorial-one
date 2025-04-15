@@ -11,9 +11,12 @@ import { SortingsDefinition } from "./sortings"
 import type { DataSource, OnSelectItemsCallback, RecordType } from "./types"
 import type { CardVisualizationOptions } from "./visualizations/collection/Card"
 import { CardCollection } from "./visualizations/collection/Card"
+import {
+  KanbanCollection,
+  KanbanVisualizationOptions,
+} from "./visualizations/collection/Kanban"
 import type { TableVisualizationOptions } from "./visualizations/collection/Table"
 import { TableCollection } from "./visualizations/collection/Table"
-import { KanbanCollection, KanbanVisualizationOptions } from "./visualizations/collection/Kanban"
 
 /**
  * Represents a visualization configuration for displaying collection data.
