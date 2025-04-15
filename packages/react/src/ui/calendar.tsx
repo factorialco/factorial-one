@@ -39,7 +39,8 @@ function Calendar({
         day_range_start:
           "day-range-start aria-selected:text-f1-foreground-inverse",
         day_range_end: "day-range-end aria-selected:text-f1-foreground-inverse",
-        day_today: "bg-f1-background-secondary text-f1-foreground",
+        day_today:
+          "relative after:absolute after:inset-x-0 after:bottom-1 after:z-20 after:mx-auto after:h-0.5 after:w-1.5 after:rounded-full after:bg-f1-background-selected-bold after:transition-colors after:duration-100 after:content-[''] [&:has([aria-selected].day-selected)]:after:bg-f1-background",
         day_selected: cn(
           "day-selected",
           props.mode === "single" && "aria-selected:text-f1-foreground-inverse"

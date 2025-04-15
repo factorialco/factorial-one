@@ -100,7 +100,7 @@ export function OneCalendar({
       const startYear = viewDate.getFullYear() - (viewDate.getFullYear() % 10)
       const endYear = startYear + 9
 
-      return `${startYear}-${endYear}`
+      return `${startYear}  -  ${endYear}`
     }
   }
 
