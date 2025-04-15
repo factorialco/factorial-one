@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.31.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.0...factorial-one-react-v1.31.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* add missing onClick prop for Celebration component ([#1620](https://github.com/factorialco/factorial-one/issues/1620)) ([26dbaee](https://github.com/factorialco/factorial-one/commit/26dbaee98f8e3b380c124df3e49a4eef28588b38))
+
 ## [1.31.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.3...factorial-one-react-v1.31.0) (2025-04-15)
 
 
