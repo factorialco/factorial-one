@@ -6,6 +6,7 @@ const meta: Meta<typeof ClockInGraph> = {
   component: ClockInGraph,
   tags: ["autodocs", "experimental"],
   args: {
+    trackedMinutes: 60 * 2 + 21,
     remainingMinutes: 60 * 4 + 39,
     data: [],
   },
@@ -14,10 +15,16 @@ const meta: Meta<typeof ClockInGraph> = {
 export default meta
 type Story = StoryObj<typeof ClockInGraph>
 
-export const Default: Story = {}
+export const Default: Story = {
+  args: {
+    trackedMinutes: 0,
+  },
+}
 
 export const Empty: Story = {
-  args: {},
+  args: {
+    trackedMinutes: 0,
+  },
 }
 
 export const WithSomeProgress: Story = {
@@ -88,6 +95,7 @@ export const WithAlternatingEntries: Story = {
 
 export const WithAlternatingEntriesAndFinalClockedIn: Story = {
   args: {
+    trackedMinutes: 120,
     data: [
       {
         from: new Date("2024-03-20T09:00:00"),
@@ -120,6 +128,7 @@ export const WithAlternatingEntriesAndFinalClockedIn: Story = {
 
 export const WithoutRemainingMinutes: Story = {
   args: {
+    trackedMinutes: 120,
     remainingMinutes: undefined,
     data: [
       {
@@ -143,6 +152,7 @@ export const WithoutRemainingMinutes: Story = {
 
 export const WithOvertime: Story = {
   args: {
+    trackedMinutes: 8 * 60 + 12,
     remainingMinutes: -17,
     data: [
       {

@@ -3,22 +3,12 @@ import { ClockInControlsProps } from "./index"
 
 // to prevent having an overtime greater that the total time that we're showing
 export const getNormalizedRemainingMinutes = (
-  data: ClockInControlsProps["data"],
+  trackedMinutes: ClockInControlsProps["trackedMinutes"],
   remainingMinutes: ClockInControlsProps["remainingMinutes"]
 ) => {
-  const totalMinutesWithoutRemainingTime =
-    (data?.reduce(
-      (acc, entry) =>
-        acc +
-        (entry.variant === "clocked-in"
-          ? (entry.to.getTime() - entry.from.getTime()) / 1000
-          : 0),
-      0
-    ) ?? 0) / 60
-
   const res =
-    (remainingMinutes ?? 0) < -1 * (totalMinutesWithoutRemainingTime ?? 0)
-      ? -1 * totalMinutesWithoutRemainingTime
+    (remainingMinutes ?? 0) < -1 * (trackedMinutes ?? 0)
+      ? -1 * trackedMinutes
       : remainingMinutes
 
   return res ?? 0
@@ -27,11 +17,16 @@ export const getNormalizedRemainingMinutes = (
 export const getInfo = ({
   data = [],
   labels,
+  trackedMinutes,
   remainingMinutes,
   canSeeRemainingTime = true,
 }: Pick<
   ClockInControlsProps,
-  "data" | "labels" | "remainingMinutes" | "canSeeRemainingTime"
+  | "data"
+  | "labels"
+  | "trackedMinutes"
+  | "remainingMinutes"
+  | "canSeeRemainingTime"
 >) => {
   const lastEntry = data[data.length - 1]
   const status = lastEntry?.variant || "clocked-out"
@@ -48,7 +43,7 @@ export const getInfo = ({
     if (remainingMinutes === undefined) return
 
     const normalizedRemainingMinutes = getNormalizedRemainingMinutes(
-      data,
+      trackedMinutes,
       remainingMinutes
     )
 

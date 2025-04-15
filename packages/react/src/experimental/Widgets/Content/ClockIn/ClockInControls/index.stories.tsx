@@ -66,6 +66,7 @@ export const ClockedOut: Story = {
 
 export const ClockedIn: Story = {
   args: {
+    trackedMinutes: 4 * 60 + 21,
     remainingMinutes: 4 * 60 + 39,
     data: [
       {
@@ -106,6 +107,7 @@ export const OnBreak: Story = {
 
 export const WithOvertime: Story = {
   args: {
+    trackedMinutes: 4 * 60 + 21,
     remainingMinutes: -17,
     data: [
       {
@@ -130,6 +132,7 @@ export const WithOvertime: Story = {
 export const OvertimeOnly: Story = {
   args: {
     ...WithOvertime.args,
+    trackedMinutes: 6 * 60 + 21,
     remainingMinutes: -9 * 60,
   },
 }
@@ -144,6 +147,7 @@ export const Collapsed: Story = {
 
 export const WithNoLocationOrProject: Story = {
   args: {
+    trackedMinutes: 4 * 60 + 21,
     remainingMinutes: 4 * 60 + 39,
     data: [
       {
@@ -158,6 +162,7 @@ export const WithNoLocationOrProject: Story = {
 
 export const ClockedOutWithSomeTime: Story = {
   args: {
+    trackedMinutes: 2 * 60 + 40,
     remainingMinutes: 320,
     data: [
       {
