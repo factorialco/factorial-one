@@ -173,17 +173,19 @@ export const TableCollection = <
         <TableHeader>
           <TableRow>
             {source.selectable && (
-              <TableHead width={checkColumnWidth} sticky={{ left: 0 }}>
-                <div className="flex w-full items-center justify-end">
-                  <Checkbox
-                    checked={isAllSelected}
-                    indeterminate={isPartiallySelected}
-                    onCheckedChange={handleSelectAll}
-                    title="Select all"
-                    hideLabel
-                    disabled={data.length === 0}
-                  />
-                </div>
+              <TableHead
+                width={checkColumnWidth}
+                sticky={{ left: 0 }}
+                align="right"
+              >
+                <Checkbox
+                  checked={isAllSelected}
+                  indeterminate={isPartiallySelected}
+                  onCheckedChange={handleSelectAll}
+                  title="Select all"
+                  hideLabel
+                  disabled={data.length === 0}
+                />
               </TableHead>
             )}
             {columns.map(({ sorting, label, ...column }, index) => (
