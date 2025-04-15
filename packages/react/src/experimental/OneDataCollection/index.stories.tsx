@@ -2336,3 +2336,195 @@ export const TableColumnProperties: Story = {
     )
   },
 }
+
+export const TableWithNoFiltersAndSearch: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      sortings: {
+        name: { label: "Name" },
+        email: { label: "Email" },
+        role: { label: "Role" },
+        department: { label: "Department" },
+      },
+      itemActions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+          description: "Modify user information",
+        },
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+        },
+        { type: "separator" },
+        {
+          label: item.isStarred ? "Remove Star" : "Star User",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
+        },
+        {
+          label: "Delete",
+          icon: Delete,
+          onClick: () => console.log(`Deleting ${item.name}`),
+          critical: true,
+          description: "Permanently remove user",
+        },
+      ],
+      dataAdapter: {
+        fetchData: () => Promise.resolve(mockUsers),
+      },
+    })
+
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
+                    },
+                  }),
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+export const TableWithNoFilters: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      sortings: {
+        name: { label: "Name" },
+        email: { label: "Email" },
+        role: { label: "Role" },
+        department: { label: "Department" },
+      },
+      search: {
+        enabled: true,
+        sync: false,
+        debounceTime: 300,
+      },
+      itemActions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+          description: "Modify user information",
+        },
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+        },
+        { type: "separator" },
+        {
+          label: item.isStarred ? "Remove Star" : "Star User",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
+        },
+        {
+          label: "Delete",
+          icon: Delete,
+          onClick: () => console.log(`Deleting ${item.name}`),
+          critical: true,
+          description: "Permanently remove user",
+        },
+      ],
+      dataAdapter: {
+        fetchData: ({ search }) => {
+          let filteredUsers = [...mockUsers]
+
+          if (search) {
+            const searchLower = search.toLowerCase()
+            filteredUsers = filteredUsers.filter(
+              (user) =>
+                user.name.toLowerCase().includes(searchLower) ||
+                user.email.toLowerCase().includes(searchLower) ||
+                user.role.toLowerCase().includes(searchLower) ||
+                user.department.toLowerCase().includes(searchLower)
+            )
+          }
+
+          return Promise.resolve(filteredUsers)
+        },
+      },
+    })
+
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
+                    },
+                  }),
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
