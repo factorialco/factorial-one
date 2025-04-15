@@ -263,7 +263,7 @@ export const OneDataCollection = <
         search?.enabled ||
         primaryActionItem ||
         (secondaryActionsItems && secondaryActionsItems.length > 0)) && (
-        <div className="px-6">
+        <div className="flex flex-col gap-4 px-6">
           <Filters.Root
             schema={filters}
             filters={currentFilters}
