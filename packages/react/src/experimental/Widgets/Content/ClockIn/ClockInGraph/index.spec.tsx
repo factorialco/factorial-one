@@ -16,8 +16,8 @@ describe("ClockInGraph", () => {
         variant: "clocked-in",
       },
     ]
-    const hours = 9
+    const hours = 8
     render(<ClockInGraph data={data} trackedMinutes={hours * 60} />)
-    expect(screen.getByText(`${hours}:00`)).toBeInTheDocument()
+    expect(screen.getByText(`0${hours}:00`)).toBeInTheDocument()
   })
 })
