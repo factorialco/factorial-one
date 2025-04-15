@@ -1,11 +1,14 @@
 import { registerRootComponent } from "expo";
 import { ExpoRoot } from "expo-router";
 import StorybookUIRoot from "./.storybook";
+import "./global.css";
 
-// Flag to control whether to show Storybook or your app
-// Set to true to enable Storybook, false to run the normal app
-// You can implement a more sophisticated toggle mechanism later
-const SHOW_STORYBOOK = true;
+// Check for STORYBOOK_ENABLED environment variable
+// This allows using:
+// - yarn dev:storybook - to run with Storybook enabled
+// - yarn dev:app - to run the regular app
+// - yarn dev - to use the default setting below
+const SHOW_STORYBOOK = process.env.STORYBOOK_ENABLED === "true" || true;
 
 // https://docs.expo.dev/router/reference/troubleshooting/#expo_router_app_root-not-defined
 
