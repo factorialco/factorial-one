@@ -111,6 +111,13 @@ export const normalizeData = ({
 
   res = res.filter((entry) => entry.value > 0)
 
+  if (!res.length) {
+    res.push({
+      value: 1,
+      color: CLOCK_IN_COLORS.empty,
+    })
+  }
+
   return res
 }
 

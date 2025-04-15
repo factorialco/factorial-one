@@ -29,6 +29,7 @@ describe("ClockInControls helpers", () => {
     it("should return clocked-out status when no data provided", () => {
       const result = getInfo({
         data: [],
+        trackedMinutes: 0,
         labels: mockLabels,
         remainingMinutes: undefined,
       })
@@ -46,6 +47,7 @@ describe("ClockInControls helpers", () => {
 
       const result = getInfo({
         data: mockData,
+        trackedMinutes: 0,
         labels: mockLabels,
         remainingMinutes: undefined,
       })
@@ -65,6 +67,7 @@ describe("ClockInControls helpers", () => {
         data: mockData,
         labels: mockLabels,
         remainingMinutes: undefined,
+        trackedMinutes: 0,
       })
 
       expect(result).toEqual({
@@ -80,6 +83,7 @@ describe("ClockInControls helpers", () => {
         data: [],
         labels: mockLabels,
         remainingMinutes: 90, // 1 hour 30 minutes
+        trackedMinutes: 0,
       })
 
       expect(result.subtitle).toBe("Remaining: 01:30")
@@ -102,6 +106,7 @@ describe("ClockInControls helpers", () => {
         ],
         labels: mockLabels,
         remainingMinutes: -45, // 45 minutes overtime
+        trackedMinutes: 45,
       })
 
       expect(result.subtitle).toBe("Overtime: 00:45")
@@ -113,6 +118,7 @@ describe("ClockInControls helpers", () => {
         data: [],
         labels: mockLabels,
         remainingMinutes: 0,
+        trackedMinutes: 0,
       })
 
       expect(result.subtitle).toBe("Remaining: 00:00")
@@ -126,6 +132,7 @@ describe("ClockInControls helpers", () => {
         data: mockData,
         labels: mockLabels,
         remainingMinutes: undefined,
+        trackedMinutes: 0,
       })
 
       expect(result.status).toBe("break")
@@ -140,6 +147,7 @@ describe("ClockInControls helpers", () => {
         data: mockData,
         labels: mockLabels,
         remainingMinutes: undefined,
+        trackedMinutes: 0,
       })
 
       expect(result.subtitle).toBeUndefined()
@@ -150,6 +158,7 @@ describe("ClockInControls helpers", () => {
         data: [],
         labels: mockLabels,
         remainingMinutes: 120, // 2 hours
+        trackedMinutes: 0,
       })
 
       expect(result).toEqual({

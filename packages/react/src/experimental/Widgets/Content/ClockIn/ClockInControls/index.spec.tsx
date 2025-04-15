@@ -23,6 +23,7 @@ describe("ClockInControls", () => {
     render(
       <ClockInControls
         data={[]}
+        trackedMinutes={0}
         labels={defaultLabels}
         locations={[]}
         onChangeLocationId={() => {}}
@@ -36,6 +37,7 @@ describe("ClockInControls", () => {
     render(
       <ClockInControls
         labels={defaultLabels}
+        trackedMinutes={0}
         data={[
           {
             from: new Date(),
@@ -54,6 +56,7 @@ describe("ClockInControls", () => {
     render(
       <ClockInControls
         labels={defaultLabels}
+        trackedMinutes={0}
         data={[
           {
             from: new Date(),
@@ -73,6 +76,7 @@ describe("ClockInControls", () => {
     render(
       <ClockInControls
         labels={defaultLabels}
+        trackedMinutes={0}
         remainingMinutes={4 * 60 + 39}
         data={[
           {
@@ -94,6 +98,7 @@ describe("ClockInControls", () => {
     render(
       <ClockInControls
         labels={defaultLabels}
+        trackedMinutes={17}
         remainingMinutes={-17}
         data={[
           {
@@ -117,6 +122,7 @@ describe("ClockInControls", () => {
       <ClockInControls
         data={[]}
         labels={defaultLabels}
+        trackedMinutes={0}
         onClockIn={onClockIn}
         locations={[]}
         onChangeLocationId={() => {}}
