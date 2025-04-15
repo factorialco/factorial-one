@@ -1,4 +1,3 @@
-import { useI18n } from "@/lib/i18n-provider"
 import { cn, focusRing } from "@/lib/utils"
 import {
   endOfMonth,
@@ -8,6 +7,7 @@ import {
   startOfMonth,
 } from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
+import { useI18n } from "../../../lib/providers/i18n"
 import { CalendarMode, DateRange } from "../types"
 
 interface MonthViewProps {

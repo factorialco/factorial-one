@@ -1,10 +1,18 @@
 import { Calendar } from "@/ui/calendar"
+import * as locales from "date-fns/locale"
 import { AnimatePresence, motion } from "framer-motion"
 import {
   SelectRangeEventHandler,
   SelectSingleEventHandler,
 } from "react-day-picker"
+import { useL10n } from "../../../lib/providers/l10n"
 import { CalendarMode, DateRange } from "../types"
+
+// Get the locale object from date-fns/locale
+const getLocale = (localeKey: string) => {
+  const key = localeKey.split("-")[0] // Handle both 'es' and 'es-ES' formats
+  return locales[key as keyof typeof locales]
+}
 
 interface DayViewProps {
   mode: CalendarMode
@@ -23,6 +31,8 @@ export function DayView({
   onMonthChange,
   motionDirection = 1,
 }: DayViewProps) {
+  const { locale } = useL10n()
+
   const motionVariants = {
     hidden: (direction: number) => ({
       opacity: 0,
@@ -56,6 +66,8 @@ export function DayView({
             selected={selected as Date}
             onSelect={onSelect as SelectSingleEventHandler}
             month={month}
+            locale={getLocale(locale)}
+            weekStartsOn={1}
           />
         </motion.div>
       </AnimatePresence>
@@ -80,6 +92,8 @@ export function DayView({
           onSelect={onSelect as SelectRangeEventHandler}
           month={month}
           onMonthChange={onMonthChange}
+          locale={getLocale(locale)}
+          weekStartsOn={1}
         />
       </motion.div>
     </AnimatePresence>
