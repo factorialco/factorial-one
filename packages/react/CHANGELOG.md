@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.31.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.3...factorial-one-react-v1.31.0) (2025-04-15)
+
+
+### Features
+
+* skeleton for the RichTextEditor ([#1612](https://github.com/factorialco/factorial-one/issues/1612)) ([3c1d221](https://github.com/factorialco/factorial-one/commit/3c1d2216fdc36d577847b09306e60130783bd74d))
+
 ## [1.30.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.2...factorial-one-react-v1.30.3) (2025-04-14)
 
 
