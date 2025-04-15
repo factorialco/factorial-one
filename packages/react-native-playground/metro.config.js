@@ -1,9 +1,19 @@
-const { getDefaultConfig } = require('expo/metro-config');
-const { withNativeWind } = require('nativewind/metro');
+const { getDefaultConfig } = require("expo/metro-config");
+const { withNativeWind } = require("nativewind/metro");
+const path = require("path");
+const withStorybook = require("@storybook/react-native/metro/withStorybook");
 
 const config = getDefaultConfig(__dirname);
 
 config.resolver.disableHierarchicalLookup = true;
 
-module.exports = withNativeWind(config, { input: './global.css',
+// First apply NativeWind
+const nativeWindConfig = withNativeWind(config, { input: "./global.css" });
+
+// Then wrap with Storybook
+module.exports = withStorybook(nativeWindConfig, {
+  // Set to true to enable storybook
+  enabled: true,
+  // Path to your storybook config
+  configPath: path.resolve(__dirname, "./.storybook"),
 });
