@@ -15,6 +15,7 @@ export type CelebrationProps = {
   firstName: string
   lastName: string
   src?: string
+  onClick?: () => void
   canReact?: boolean
   lastEmojiReaction?: string
   onReactionSelect?: (emoji: string) => void
@@ -28,6 +29,7 @@ export const BaseCelebration = ({
   firstName,
   lastName,
   src,
+  onClick,
   canReact = true,
   lastEmojiReaction,
   onReactionSelect,
@@ -60,6 +62,7 @@ export const BaseCelebration = ({
   return (
     <Link
       href={link}
+      onClick={onClick}
       className={cn(
         "relative flex flex-col rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary no-underline transition-shadow hover:shadow",
         focusRing()
