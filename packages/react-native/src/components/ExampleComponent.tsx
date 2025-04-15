@@ -38,12 +38,6 @@ export const ExampleComponent: React.FC<ExampleComponentProps> = ({
           {text}
         </Text>
       </View>
-
-      <Text
-        className={`mt-4 text-sm ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}
-      >
-        This component automatically adapts to your system theme
-      </Text>
     </View>
   );
 };
