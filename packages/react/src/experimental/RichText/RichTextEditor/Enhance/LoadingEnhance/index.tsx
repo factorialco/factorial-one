@@ -14,7 +14,7 @@ const LoadingEnhance = ({ label, isFullscreen }: LoadingEnhanceProps) => {
         !isFullscreen && "max-h-60"
       )}
     >
-      <div className="magicBackground flex h-full w-full flex-row items-center justify-center gap-3 rounded-md">
+      <div className="flex h-full w-full flex-row items-center justify-center gap-3 rounded-md bg-gradient-to-r from-[#f9f0dd80] to-[#d4ccfd80]">
         <Spinner size="small" />
         <p className="font-medium">{label || "Loading..."}</p>
       </div>
