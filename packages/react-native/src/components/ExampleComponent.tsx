@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, useColorScheme } from "react-native";
+import { Text, View, useColorScheme } from "react-native";
 
 export interface ExampleComponentProps {
   /**
@@ -20,7 +20,6 @@ export const ExampleComponent: React.FC<ExampleComponentProps> = ({
   return (
     <View
       className={`rounded-lg p-6 ${isDarkMode ? "bg-gray-800" : "bg-blue-100"}`}
-      style={styles.container}
     >
       <Text
         className={`mb-4 text-lg font-bold ${isDarkMode ? "text-white" : "text-gray-800"}`}
@@ -30,7 +29,6 @@ export const ExampleComponent: React.FC<ExampleComponentProps> = ({
 
       <View
         className={`rounded-lg p-4 ${isDarkMode ? "bg-gray-700" : "bg-white"}`}
-        style={styles.contentBox}
       >
         <Text
           className={`text-base font-medium ${isDarkMode ? "text-gray-100" : "text-gray-800"}`}
@@ -41,21 +39,3 @@ export const ExampleComponent: React.FC<ExampleComponentProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    minWidth: 250,
-  },
-  contentBox: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
-  },
-});
