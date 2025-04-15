@@ -4,13 +4,13 @@ import { getLabels, normalizeData } from "./helpers"
 export type ClockInStatus = "clocked-in" | "break" | "clocked-out"
 
 export interface ClockInGraphProps {
+  trackedMinutes?: number
   data?: {
     from: Date
     to: Date
     variant: ClockInStatus
   }[]
   remainingMinutes?: number
-  overtimeOnly?: boolean
 }
 
 export const CLOCK_IN_COLORS = {
@@ -23,13 +23,18 @@ export const CLOCK_IN_COLORS = {
 
 export function ClockInGraph({
   data = [],
+  trackedMinutes = 0,
   remainingMinutes,
-  overtimeOnly = false,
 }: ClockInGraphProps) {
-  const normalizedData = normalizeData(data, remainingMinutes, overtimeOnly)
+  const normalizedData = normalizeData({
+    data,
+    trackedMinutes,
+    remainingMinutes,
+  })
 
   const { primaryLabel, secondaryLabel, time } = getLabels({
     data,
+    trackedMinutes,
     remainingMinutes,
   })
 

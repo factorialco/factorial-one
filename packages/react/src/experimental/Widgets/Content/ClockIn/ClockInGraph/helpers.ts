@@ -20,13 +20,20 @@ const getLeftEntry = (remainingMinutes: number, totalSeconds: number) => {
   }
 }
 
-export const normalizeData = (
-  data: ClockInGraphProps["data"] = [],
-  remainingMinutes?: number,
-  overtimeOnly?: boolean
-) => {
+export const normalizeData = ({
+  data = [],
+  trackedMinutes,
+  remainingMinutes = 0,
+}: {
+  data: ClockInGraphProps["data"]
+  trackedMinutes: number
+  remainingMinutes?: number
+}) => {
+  const overtimeOnly =
+    remainingMinutes < 0 && remainingMinutes < -1 * trackedMinutes
+
   const normalizedRemainingMinutes = getNormalizedRemainingMinutes(
-    data,
+    trackedMinutes,
     remainingMinutes
   )
 
@@ -110,6 +117,7 @@ export const normalizeData = (
 export const getLabels = ({
   data = [],
   remainingMinutes,
+  trackedMinutes = 0,
 }: ClockInGraphProps) => {
   const clockedInAt = data.find((entry) => entry.variant === "clocked-in")?.from
 
@@ -129,12 +137,7 @@ export const getLabels = ({
   const isLastEntryBreak = lastEntry?.variant === "break"
 
   const totalTime = !isLastEntryBreak
-    ? data.reduce((acc, entry) => {
-        if (entry.variant === "clocked-in") {
-          return acc + (entry.to.getTime() - entry.from.getTime())
-        }
-        return acc
-      }, 0)
+    ? trackedMinutes * 60 * 1000
     : lastEntry?.to.getTime() - lastEntry?.from.getTime() || 0
 
   const hours = Math.floor(totalTime / (1000 * 60 * 60))

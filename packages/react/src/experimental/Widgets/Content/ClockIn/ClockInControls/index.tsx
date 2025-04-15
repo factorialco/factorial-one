@@ -22,6 +22,8 @@ export interface ClockInControlsProps {
   remainingMinutes?: number
   /** Clock in entries data */
   data: ClockInGraphProps["data"]
+  /** Tracked minutes */
+  trackedMinutes: number
   /** Labels for all text content */
   labels: {
     clockedOut: string
@@ -64,6 +66,7 @@ export interface ClockInControlsProps {
 }
 
 export function ClockInControls({
+  trackedMinutes,
   remainingMinutes,
   data = [],
   labels,
@@ -88,6 +91,7 @@ export function ClockInControls({
   const { status, statusText, subtitle, statusColor } = getInfo({
     data,
     labels,
+    trackedMinutes,
     remainingMinutes,
     canSeeRemainingTime,
   })
@@ -258,6 +262,7 @@ export function ClockInControls({
           {canSeeGraph && (
             <ClockInGraph
               data={data}
+              trackedMinutes={trackedMinutes}
               remainingMinutes={canSeeRemainingTime ? remainingMinutes : 0}
             />
           )}
