@@ -1,4 +1,4 @@
-import { useI18n } from "@/lib/i18n-provider"
+import { useI18n } from "@/lib/providers/i18n"
 import { useMemo, useState } from "react"
 import { DropdownInternal } from "../../../experimental/Navigation/Dropdown/internal"
 import { ChevronDown } from "../../../icons/app"

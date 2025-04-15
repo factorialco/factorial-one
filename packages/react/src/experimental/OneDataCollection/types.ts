@@ -22,7 +22,7 @@ export type DataSourceDefinition<
   /** Available filter configurations */
   filters?: Filters
   /** Predefined filter configurations that can be applied */
-  presets?: Presets<Filters>
+  presets?: PresetsDefinition<Filters>
   /** URL for a single item in the collection */
   itemUrl?: (item: Record) => string | undefined
   /** Click handler for a single item in the collection */
@@ -66,7 +66,7 @@ export type CollectionSearchOptions = {
  * Defines preset filter configurations that can be applied to a collection.
  * @template Filters - The available filter configurations
  */
-export type Presets<Filters extends FiltersDefinition> = Array<{
+export type PresetsDefinition<Filters extends FiltersDefinition> = Array<{
   /** Display name for the preset */
   label: string
   /** Filter configuration to apply when this preset is selected */

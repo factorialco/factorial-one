@@ -1,36 +1,26 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "../../../../components/Actions/Button"
 import { Icon } from "../../../../components/Utilities/Icon"
 import { Filter } from "../../../../icons/app"
-import { useI18n } from "../../../../lib/i18n-provider"
+import { useI18n } from "../../../../lib/providers/i18n"
 import { cn, focusRing } from "../../../../lib/utils"
-import { OverflowList } from "../../../../ui/OverflowList"
 import { Popover, PopoverContent, PopoverTrigger } from "../../../../ui/popover"
-import { Counter } from "../../../Information/Counter"
-import { Preset } from "../../../OnePreset"
 import type { FiltersDefinition, FiltersState } from "../types"
 import { FilterContent } from "./FilterContent"
 import { FilterList } from "./FilterList"
 
 interface FiltersControlsProps<Filters extends FiltersDefinition> {
-  filters: Filters
-  currentFilters: FiltersState<Filters>
-  onFilterChange: (key: keyof Filters, value: unknown) => void
-  presets?: Array<{
-    label: string
-    filter: FiltersState<Filters>
-  }>
-  onPresetsChange?: (filter: FiltersState<Filters>) => void
+  schema: Filters
+  filters: FiltersState<Filters>
+  onChange: (value: FiltersState<Filters>) => void
   isOpen?: boolean
   onOpenChange?: (open: boolean) => void
 }
 
 export function FiltersControls<Filters extends FiltersDefinition>({
+  schema,
   filters,
-  currentFilters,
-  onFilterChange,
-  presets,
-  onPresetsChange,
+  onChange,
   isOpen: controlledIsOpen,
   onOpenChange: controlledOnOpenChange,
 }: FiltersControlsProps<Filters>) {
@@ -43,53 +33,21 @@ export function FiltersControls<Filters extends FiltersDefinition>({
   const isOpen = controlledIsOpen ?? internalIsOpen
   const onOpenChange = controlledOnOpenChange ?? setInternalIsOpen
 
+  const [localFiltersValue, setLocalFiltersValue] = useState(filters)
+  useEffect(() => {
+    setLocalFiltersValue(filters)
+  }, [filters])
+
+  const updateFilterValue = (key: keyof Filters, newValue: unknown): void => {
+    setLocalFiltersValue((prev) => ({
+      ...prev,
+      [key]: newValue,
+    }))
+  }
+
   const handleApplyFilters = () => {
+    onChange(localFiltersValue)
     onOpenChange(false)
-  }
-
-  const renderListPresetItem = (
-    preset: NonNullable<typeof presets>[number],
-    index: number,
-    isVisible = true
-  ) => {
-    const isSelected =
-      JSON.stringify(preset.filter) === JSON.stringify(currentFilters)
-    return (
-      <Preset
-        key={index}
-        label={preset.label}
-        selected={isSelected}
-        onClick={() => onPresetsChange?.(preset.filter)}
-        data-visible={isVisible}
-      />
-    )
-  }
-
-  const renderDropdownPresetItem = (
-    preset: NonNullable<typeof presets>[number],
-    index: number
-  ) => {
-    const isSelected =
-      JSON.stringify(preset.filter) === JSON.stringify(currentFilters)
-    return (
-      <button
-        key={index}
-        className={cn(
-          "flex w-full cursor-pointer items-center justify-between rounded-sm p-2 text-left font-medium text-f1-foreground hover:bg-f1-background-secondary",
-          isSelected &&
-            "bg-f1-background-selected hover:bg-f1-background-selected",
-          focusRing()
-        )}
-        onClick={() => onPresetsChange?.(preset.filter)}
-        data-visible={true}
-      >
-        {preset.label}
-        <Counter
-          value={Object.keys(preset.filter).length}
-          type={isSelected ? "selected" : "default"}
-        />
-      </button>
-    )
   }
 
   return (
@@ -116,8 +74,8 @@ export function FiltersControls<Filters extends FiltersDefinition>({
           <div className="flex h-[min(448px,80vh)] flex-col">
             <div className="flex min-h-0 flex-1">
               <FilterList
-                definition={filters}
-                tempFilters={currentFilters}
+                definition={schema}
+                tempFilters={localFiltersValue}
                 selectedFilterKey={selectedFilterKey}
                 onFilterSelect={(key: keyof Filters) =>
                   setSelectedFilterKey(key)
@@ -126,9 +84,9 @@ export function FiltersControls<Filters extends FiltersDefinition>({
               {selectedFilterKey && (
                 <FilterContent
                   selectedFilterKey={selectedFilterKey}
-                  definition={filters}
-                  tempFilters={currentFilters}
-                  onFilterChange={onFilterChange}
+                  definition={schema}
+                  tempFilters={localFiltersValue}
+                  onFilterChange={updateFilterValue}
                 />
               )}
             </div>
@@ -142,18 +100,6 @@ export function FiltersControls<Filters extends FiltersDefinition>({
           </div>
         </PopoverContent>
       </Popover>
-
-      {presets && presets.length > 0 && (
-        <>
-          <div className="mx-1 h-4 w-px bg-f1-border-secondary" />
-          <OverflowList
-            items={presets}
-            renderListItem={renderListPresetItem}
-            renderDropdownItem={renderDropdownPresetItem}
-            className="flex-1"
-          />
-        </>
-      )}
     </div>
   )
 }

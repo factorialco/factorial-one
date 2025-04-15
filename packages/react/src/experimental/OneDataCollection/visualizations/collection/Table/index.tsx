@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/experimental/OneTable"
-import { useI18n } from "@/lib/i18n-provider"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { ComponentProps, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
@@ -181,6 +181,7 @@ export const TableCollection = <
                     onCheckedChange={handleSelectAll}
                     title="Select all"
                     hideLabel
+                    disabled={data.length === 0}
                   />
                 </div>
               </TableHead>
@@ -311,12 +312,13 @@ export const TableCollection = <
         </TableBody>
       </OneTable>
       {paginationInfo && (
-        <div className="flex w-full items-center justify-between">
+        <div className="flex w-full items-center justify-between px-6">
           <span className="shrink-0 text-f1-foreground-secondary">
-            {`${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
-              paginationInfo.currentPage * paginationInfo.perPage,
-              paginationInfo.total
-            )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
+            {paginationInfo.total > 0 &&
+              `${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
+                paginationInfo.currentPage * paginationInfo.perPage,
+                paginationInfo.total
+              )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
           </span>
           <div className="flex items-center">
             <OnePagination

@@ -1,5 +1,124 @@
 # Changelog
 
+## [1.31.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.1...factorial-one-react-v1.31.2) (2025-04-15)
+
+
+### Bug Fixes
+
+* **DataCollection:** Pagination spacing & toolbar positioning ([#1556](https://github.com/factorialco/factorial-one/issues/1556)) ([a90c10d](https://github.com/factorialco/factorial-one/commit/a90c10d53f6c7688c8b8003910a3c0d85abb5fab))
+
+## [1.31.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.0...factorial-one-react-v1.31.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* add missing onClick prop for Celebration component ([#1620](https://github.com/factorialco/factorial-one/issues/1620)) ([26dbaee](https://github.com/factorialco/factorial-one/commit/26dbaee98f8e3b380c124df3e49a4eef28588b38))
+
+## [1.31.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.3...factorial-one-react-v1.31.0) (2025-04-15)
+
+
+### Features
+
+* skeleton for the RichTextEditor ([#1612](https://github.com/factorialco/factorial-one/issues/1612)) ([3c1d221](https://github.com/factorialco/factorial-one/commit/3c1d2216fdc36d577847b09306e60130783bd74d))
+
+## [1.30.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.2...factorial-one-react-v1.30.3) (2025-04-14)
+
+
+### Bug Fixes
+
+* make author url optional in CommunityPost component ([#1610](https://github.com/factorialco/factorial-one/issues/1610)) ([4fcc998](https://github.com/factorialco/factorial-one/commit/4fcc9989aa722cbf1f62ae7fba89388431d2ed35))
+
+## [1.30.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.1...factorial-one-react-v1.30.2) (2025-04-14)
+
+
+### Bug Fixes
+
+* storybook toc width ([#1606](https://github.com/factorialco/factorial-one/issues/1606)) ([9d63e84](https://github.com/factorialco/factorial-one/commit/9d63e843a0d430955cf5398ff343a4ec537897fa))
+
+## [1.30.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.0...factorial-one-react-v1.30.1) (2025-04-14)
+
+
+### Bug Fixes
+
+* deleted shadow from button ([#1588](https://github.com/factorialco/factorial-one/issues/1588)) ([55e4644](https://github.com/factorialco/factorial-one/commit/55e4644f49b198faf28150c4f025a71e6bf8c506))
+
+## [1.30.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.4...factorial-one-react-v1.30.0) (2025-04-14)
+
+
+### Features
+
+* l10n-context ([#1576](https://github.com/factorialco/factorial-one/issues/1576)) ([0de2e6d](https://github.com/factorialco/factorial-one/commit/0de2e6d0708461fb526335f13d6107849b7b0162))
+
+## [1.29.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.3...factorial-one-react-v1.29.4) (2025-04-14)
+
+
+### Bug Fixes
+
+* start break when the amount of break types is only one ([#1602](https://github.com/factorialco/factorial-one/issues/1602)) ([f59cc36](https://github.com/factorialco/factorial-one/commit/f59cc36934154499a17082614eb5e9cf3e94e626))
+
+## [1.29.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.2...factorial-one-react-v1.29.3) (2025-04-14)
+
+
+### Bug Fixes
+
+* table head label truncate when not enough space ([#1577](https://github.com/factorialco/factorial-one/issues/1577)) ([e56aedb](https://github.com/factorialco/factorial-one/commit/e56aedb625df39d18553d613624971b66c3ea02c))
+
+## [1.29.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.1...factorial-one-react-v1.29.2) (2025-04-13)
+
+
+### Bug Fixes
+
+* set proper HighlightBanner button ([#1597](https://github.com/factorialco/factorial-one/issues/1597)) ([71010d3](https://github.com/factorialco/factorial-one/commit/71010d35a550a44a99ec383c07d0fe755e653a49))
+
+## [1.29.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.0...factorial-one-react-v1.29.1) (2025-04-13)
+
+
+### Bug Fixes
+
+* change positive badge color ([#1595](https://github.com/factorialco/factorial-one/issues/1595)) ([0fad991](https://github.com/factorialco/factorial-one/commit/0fad991f88eec4251f7b9e5b9115d97dda9f1f2c))
+
+## [1.29.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.28.0...factorial-one-react-v1.29.0) (2025-04-13)
+
+
+### Features
+
+* add support to include custom alert icon in WidgetAvatarsListItem component ([#1593](https://github.com/factorialco/factorial-one/issues/1593)) ([bc34643](https://github.com/factorialco/factorial-one/commit/bc34643c5fce48dc4aa60168f3aeb7d4b79c5cdd))
+
+## [1.28.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.27.0...factorial-one-react-v1.28.0) (2025-04-13)
+
+
+### Features
+
+* add support for custom icon in AlertAvatar component ([#1590](https://github.com/factorialco/factorial-one/issues/1590)) ([2ae0c10](https://github.com/factorialco/factorial-one/commit/2ae0c10329bcdc3a29db92f29c428e8e30637d11))
+
+## [1.27.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.26.1...factorial-one-react-v1.27.0) (2025-04-11)
+
+
+### Features
+
+* create WidgetAvatarsListItem with alert ([#1585](https://github.com/factorialco/factorial-one/issues/1585)) ([4ee8a76](https://github.com/factorialco/factorial-one/commit/4ee8a76745e3456a513a735e646b6e6ba5256dae))
+
+## [1.26.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.26.0...factorial-one-react-v1.26.1) (2025-04-11)
+
+
+### Bug Fixes
+
+* make widgets more transparent ([#1570](https://github.com/factorialco/factorial-one/issues/1570)) ([b02386c](https://github.com/factorialco/factorial-one/commit/b02386c8e32b54bd77e1f2af916bc4a2d23f5618))
+
+## [1.26.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.25.0...factorial-one-react-v1.26.0) (2025-04-11)
+
+
+### Features
+
+* new switch button component ([#1578](https://github.com/factorialco/factorial-one/issues/1578)) ([1703049](https://github.com/factorialco/factorial-one/commit/170304954f5daba00655574c685e11f0d25220d3))
+
+## [1.25.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.24.1...factorial-one-react-v1.25.0) (2025-04-11)
+
+
+### Features
+
+* define default items per page as 20 ([#1543](https://github.com/factorialco/factorial-one/issues/1543)) ([aca28fa](https://github.com/factorialco/factorial-one/commit/aca28fa9de1e0416eb1f37c85f6055b9d5c97e1d))
+
 ## [1.24.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.24.0...factorial-one-react-v1.24.1) (2025-04-10)
 
 

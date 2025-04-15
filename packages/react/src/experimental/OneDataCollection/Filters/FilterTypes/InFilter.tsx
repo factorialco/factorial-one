@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { useI18n } from "../../../../lib/i18n-provider"
+import { useI18n } from "../../../../lib/providers/i18n"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Checkbox } from "../../../Forms/Fields/Checkbox"
 import { Spinner } from "../../../Information/Spinner"
