@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.31.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.1...factorial-one-react-v1.31.2) (2025-04-15)
+
+
+### Bug Fixes
+
+* **DataCollection:** Pagination spacing & toolbar positioning ([#1556](https://github.com/factorialco/factorial-one/issues/1556)) ([a90c10d](https://github.com/factorialco/factorial-one/commit/a90c10d53f6c7688c8b8003910a3c0d85abb5fab))
+
 ## [1.31.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.0...factorial-one-react-v1.31.1) (2025-04-15)
 
 
