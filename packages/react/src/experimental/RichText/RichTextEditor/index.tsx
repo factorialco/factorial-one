@@ -432,9 +432,10 @@ interface RichTextEditorSkeletonProps {
 }
 
 const RichTextEditorSkeleton = ({ rows = 2 }: RichTextEditorSkeletonProps) => {
+  const staticWidthPattern = ["75%", "100%", "60%", "85%", "70%"]
   const widths = Array.from(
     { length: rows },
-    () => `${Math.floor(Math.random() * 60) + 40}%`
+    (_, i) => staticWidthPattern[i % staticWidthPattern.length]
   )
 
   return (
