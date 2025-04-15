@@ -195,6 +195,7 @@ export const TableCollection = <
                   currentSortings
                 )}
                 width={column.width}
+                align={column.align}
                 sticky={
                   index < frozenColumnsLeft
                     ? {
@@ -242,7 +243,10 @@ export const TableCollection = <
               : undefined
             const id = source.selectable ? source.selectable(item) : undefined
             return (
-              <TableRow key={`row-${index}`}>
+              <TableRow
+                key={`row-${index}`}
+                selected={!!id && selectedItems.has(id)}
+              >
                 {source.selectable && (
                   <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
                     {id !== undefined && (
@@ -321,6 +325,7 @@ export const TableCollection = <
               totalPages={paginationInfo.pagesCount}
               currentPage={paginationInfo.currentPage}
               onPageChange={setPage}
+              disabled={paginationInfo.pagesCount <= 1}
             />
           </div>
         </div>
