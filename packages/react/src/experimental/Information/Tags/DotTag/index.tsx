@@ -18,6 +18,8 @@ export type NewColor = Extract<
   | "camel"
 >
 
+export const dotTagColors = Object.keys(baseColors) as NewColor[]
+
 export type DotTagProps = {
   text: string
 } & ({ color: NewColor } | { customColor: string })
