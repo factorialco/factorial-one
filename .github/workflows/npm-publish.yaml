@@ -41,7 +41,7 @@ jobs:
       - name: Notify Slack
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{ "content": "⚛️ A new version of @factorialco/factorial-one-react was released.\n
-          \n\n ${{github.event.release.body}}"}\n\nhttps://www.npmjs.com/package/@factorialco/factorial-one-react?activeTab=versions' ${{ secrets.SLACK_WEBHOOK_URL }}
+          \n\n ${{github.event.release.body}}\n\nhttps://www.npmjs.com/package/@factorialco/factorial-one-react?activeTab=versions"}' ${{ secrets.SLACK_WEBHOOK_URL }}
 
   publish-react-native:
     name: "[📱 REACT NATIVE] Publish to npm"
@@ -68,4 +68,4 @@ jobs:
       - name: Notify Slack
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{ "content": "📱 A new version of @factorialco/factorial-one-react-native was released.\n
-          \n\n ${{github.event.release.body}}"}\n\nhttps://www.npmjs.com/package/@factorialco/factorial-one-react-native?activeTab=versions' ${{ secrets.SLACK_WEBHOOK_URL }}
+          \n\n ${{github.event.release.body}}\n\nhttps://www.npmjs.com/package/@factorialco/factorial-one-react-native?activeTab=versions"}' ${{ secrets.SLACK_WEBHOOK_URL }}
