@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.32.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.0...factorial-one-react-v1.32.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* **DataCollection:** Reported changes from teams ([#1575](https://github.com/factorialco/factorial-one/issues/1575)) ([378a3ec](https://github.com/factorialco/factorial-one/commit/378a3ec8c0a7fd79ad9238bc732a43214e7d158d))
+
 ## [1.32.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.3...factorial-one-react-v1.32.0) (2025-04-15)
 
 
