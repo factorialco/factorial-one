@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.32.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.1...factorial-one-react-v1.32.2) (2025-04-15)
+
+
+### Bug Fixes
+
+* **datacollection:** header checkbox alignment ([dd9934e](https://github.com/factorialco/factorial-one/commit/dd9934eb62e36c99616d9b6582718ba391516d4c))
+
 ## [1.32.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.0...factorial-one-react-v1.32.1) (2025-04-15)
 
 
