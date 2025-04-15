@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.31.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.2...factorial-one-react-v1.31.3) (2025-04-15)
+
+
+### Bug Fixes
+
+* **datacollection:** hotfix table spacing ([15a1fb2](https://github.com/factorialco/factorial-one/commit/15a1fb2bae6c600f34b50b2757292081209d40be))
+
 ## [1.31.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.1...factorial-one-react-v1.31.2) (2025-04-15)
 
 
