@@ -10,12 +10,13 @@ import {
   Pencil,
   Share,
   Star,
-} from "../../icons/app"
-import { PromiseState } from "../../lib/promise-to-observable"
-import { FilterDefinition, FiltersState } from "./Filters/types"
-import { OneDataCollection, useDataSource } from "./index"
-import { ItemActionsDefinition } from "./item-actions"
-import { SortingsDefinition, SortingsState } from "./sortings"
+} from "../../../icons/app"
+import { PromiseState } from "../../../lib/promise-to-observable"
+import { dotTagColors } from "../../Information/Tags/DotTag"
+import { FilterDefinition, FiltersState } from "../Filters/types"
+import { OneDataCollection, useDataSource } from "../index"
+import { ItemActionsDefinition } from "../item-actions"
+import { SortingsDefinition, SortingsState } from "../sortings"
 import {
   BulkActionDefinition,
   DataAdapter,
@@ -24,8 +25,8 @@ import {
   PaginatedResponse,
   PresetsDefinition,
   RecordType,
-} from "./types"
-import { useData } from "./useData"
+} from "../types"
+import { useData } from "../useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
 
@@ -846,6 +847,20 @@ export const RendererTypes: Story = {
                     },
                   }),
                   sorting: "role",
+                },
+                {
+                  label: "DotTag",
+                  render: (item) => ({
+                    type: "dotTag",
+                    value: {
+                      label: item.email,
+                      color:
+                        dotTagColors[
+                          Math.floor(Math.random() * dotTagColors.length)
+                        ],
+                    },
+                  }),
+                  sorting: "email",
                 },
                 {
                   label: "Department",
