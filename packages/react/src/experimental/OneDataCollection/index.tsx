@@ -253,59 +253,72 @@ export const OneDataCollection = <
       primary: (bulkActions?.primary || []).map(mapBulkActions),
       secondary: (bulkActions?.secondary || []).map(mapBulkActions),
     })
-    /** */
   }
 
   return (
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
     >
-      <Filters.Root
-        schema={filters}
-        filters={currentFilters}
-        presets={presets}
-        onChange={(value) => setCurrentFilters(value as FiltersState<Filters>)}
-      >
-        <div className="flex items-center justify-between px-6">
-          {filters && (
-            <div className="flex flex-1 gap-1">
-              <Filters.Controls />
-              <Filters.Presets />
+      {((filters && Object.keys(filters).length > 0) ||
+        search?.enabled ||
+        primaryActionItem ||
+        (secondaryActionsItems && secondaryActionsItems.length > 0)) && (
+        <div className="px-6">
+          <Filters.Root
+            schema={filters}
+            filters={currentFilters}
+            presets={presets}
+            onChange={(value) =>
+              setCurrentFilters(value as FiltersState<Filters>)
+            }
+          >
+            <div
+              className={cn(
+                "flex items-center justify-between",
+                !filters && "justify-end"
+              )}
+            >
+              {filters && (
+                <div className="flex flex-1 gap-1">
+                  <Filters.Controls />
+                  <Filters.Presets />
+                </div>
+              )}
+              <div className="flex shrink-0 items-center gap-2">
+                {isLoading && (
+                  <MotionIcon
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{
+                      opacity: 0,
+                    }}
+                    size="lg"
+                    icon={Spinner}
+                    className="animate-spin"
+                  />
+                )}
+                {search && (
+                  <Search onChange={setCurrentSearch} value={currentSearch} />
+                )}
+                {visualizations && visualizations.length > 1 && (
+                  <VisualizationSelector
+                    visualizations={visualizations}
+                    currentVisualization={currentVisualization}
+                    onVisualizationChange={setCurrentVisualization}
+                  />
+                )}
+                {(primaryActionItem || secondaryActionsItems) && (
+                  <CollectionActions
+                    primaryActions={primaryActionItem}
+                    secondaryActions={secondaryActionsItems}
+                  />
+                )}
+              </div>
             </div>
-          )}
-          <div className="flex shrink-0 items-center gap-2">
-            {isLoading && (
-              <MotionIcon
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{
-                  opacity: 0,
-                }}
-                size="lg"
-                icon={Spinner}
-                className="animate-spin"
-              />
-            )}
-            {search && (
-              <Search onChange={setCurrentSearch} value={currentSearch} />
-            )}
-            {visualizations && visualizations.length > 1 && (
-              <VisualizationSelector
-                visualizations={visualizations}
-                currentVisualization={currentVisualization}
-                onVisualizationChange={setCurrentVisualization}
-              />
-            )}
-            {(primaryActionItem || secondaryActionsItems) && (
-              <CollectionActions
-                primaryActions={primaryActionItem}
-                secondaryActions={secondaryActionsItems}
-              />
-            )}
-          </div>
+            <Filters.ChipsList />
+          </Filters.Root>
         </div>
-        <Filters.ChipsList />
-      </Filters.Root>
+      )}
       <VisualizationRenderer
         visualization={visualizations[currentVisualization]}
         source={source}
