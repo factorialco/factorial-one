@@ -2545,3 +2545,30 @@ export const TableWithNoFilters: Story = {
     )
   },
 }
+
+// Example usage with kanban visualization
+export const WithKanbanVisualization: Story = {
+  render: () => {
+    const source = useDataSource({
+      dataAdapter: createDataAdapter({
+        data: mockUsers,
+        delay: 1000,
+        useObservable: true,
+      }),
+    })
+
+    return (
+      <OneDataCollection
+        source={source}
+        visualizations={[
+          {
+            type: "kanban",
+            options: {
+              columns: [],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
