@@ -7,15 +7,6 @@
   @apply outline outline-1 outline-offset-1 outline-f1-border-selected-bold;
 }
 
-.magicBackground {
-  background: linear-gradient(
-    95.27deg,
-    rgba(249, 240, 221, 0.5) 3.62%,
-    rgba(242, 223, 227, 0.5) 48.88%,
-    rgba(212, 204, 253, 0.5) 106.49%
-  );
-}
-
 .preserved-selection {
   background-color: #07a2ad33 !important;
 }
@@ -27,13 +18,6 @@
 
 #rich-text-editor-container::selection {
   background-color: transparent !important;
-}
-
-.magicColor {
-  color: #6143a7 !important;
-}
-.magicColor svg {
-  color: #6143a7 !important;
 }
 
 /*********

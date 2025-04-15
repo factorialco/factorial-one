@@ -1,6 +1,7 @@
-import { Button } from "@/components/Actions/Button"
+import { Icon } from "@/components/Utilities/Icon"
 import { Ai } from "@/icons/app"
 import { cn } from "@/lib/utils"
+import { Button } from "@/ui/button"
 import * as Popover from "@radix-ui/react-popover"
 import { Editor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
@@ -63,22 +64,19 @@ const EnhanceActivator = ({
           ref={enhanceButtonRef}
           variant="outline"
           size="md"
-          label={enhanceConfig?.enhanceLabels.enhanceButtonLabel || ""}
-          icon={Ai}
-          hideLabel={
-            (hideLabel || !enhanceConfig?.enhanceLabels.enhanceButtonLabel) ??
-            false
-          }
           onClick={(e) => {
             handleEnhanceClick(e)
           }}
-          disabled={disableButtons}
-          // @ts-expect-error - Magic background is not supported yet
+          disabled={disableButtons || isLoadingEnhance}
           className={cn(
-            "magicBackground magicColor",
-            isLoadingEnhance && "animate-pulse"
+            "bg-gradient-to-r from-[#f9f0dd80] to-[#d4ccfd80] text-[#6143a7] dark:from-[#6143a7] dark:to-[#7846ef] dark:text-f1-foreground [&>button>svg]:text-[#6143a7] dark:[&>button>svg]:text-f1-foreground",
+            hideLabel && "[&>button]:aspect-square [&>button]:px-0"
           )}
-        />
+        >
+          <Icon icon={Ai} />
+          {!hideLabel &&
+            (enhanceConfig?.enhanceLabels.enhanceButtonLabel ?? "Magic")}
+        </Button>
       </Popover.Trigger>
       <Popover.Portal container={document.body}>
         <Popover.Content
