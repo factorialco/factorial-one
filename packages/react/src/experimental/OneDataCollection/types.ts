@@ -3,16 +3,13 @@ import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { GroupingDefinition, GroupingState } from "./grouping"
 import { ItemActionsDefinition } from "./item-actions"
 import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "./navigationFilters/types"
-import {
-  SortingsDefinition,
-  SortingsState,
-  SortingsStateMultiple,
-} from "./sortings"
+import { SortingsDefinition, SortingsState } from "./sortings"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
@@ -74,52 +71,9 @@ export type DataSourceDefinition<
   totalItemSummary?: (totalItems: number) => string
   /** Grouping configuration */
   grouping?: Grouping
-} & (Grouping["mandatory"] extends true
+} & (Grouping extends { mandatory: true }
   ? { currentGrouping: GroupingState<Grouping> }
   : { currentGrouping?: GroupingState<Grouping> | null })
-
-/**
- * Defines the structure and configuration of a grouping for a data source.
- * @template RecordType - The type of records in the collection
- */
-export type GroupingDefinition<R extends RecordType> =
-  | {
-      /** Whether grouping is mandatory or the user can chose not to group */
-      mandatory: boolean
-      groupBy: Record<
-        string,
-        {
-          /** The field to group by */
-          field: keyof R
-          /** The label for the grouping */
-          name: string
-          /** The item count for the grouping */
-          label: (groupId: string) => string
-          itemCount?: (
-            groupId: string
-          ) => number | undefined | Promise<number | undefined>
-        }
-      >
-    }
-  | null
-  | undefined
-
-export type GroupingField<Grouping> =
-  Grouping extends GroupingDefinition<infer R>
-    ? R extends RecordType
-      ? keyof R
-      : never
-    : never
-
-export type GroupingState<Grouping> =
-  Grouping extends GroupingDefinition<infer R>
-    ? R extends RecordType
-      ? {
-          field: keyof R
-          desc: boolean
-        }
-      : never
-    : never
 
 export type CollectionSearchOptions = {
   /** Whether search is enabled */
@@ -170,6 +124,13 @@ export type PaginatedResponse<Record> = {
   records: Record[]
 } & PaginationInfo
 
+export type SortingsStateMultiple<
+  Definition extends SortingsDefinition,
+  Grouping extends GroupingDefinition<RecordType>,
+> = {
+  [K in keyof Definition | keyof Grouping["groupBy"]]: SortOrder
+}
+
 /**
  * Base options for data fetching
  * @template Filters - The available filter configurations
@@ -183,7 +144,7 @@ export type BaseFetchOptions<
 > = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
-  sortings: SortingsStateMultiple<Record, Sortings, Grouping>
+  sortings: SortingsStateMultiple<Sortings, Grouping>
   search?: string
   navigationFilters?: NavigationFiltersState<NavigationFilters>
 }
@@ -420,15 +381,11 @@ export type DataSource<
     : null
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
-    React.SetStateAction<GroupingState<Grouping> | undefined>
+    React.SetStateAction<GroupingState<Grouping>>
   >
-} /** Current state of applied grouping */ & (Grouping extends undefined
-    ? { currentGrouping: null }
-    : Grouping extends null
-      ? { currentGrouping: null }
-      : Grouping["mandatory"] extends true
-        ? { currentGrouping: GroupingState<Grouping> }
-        : { currentGrouping?: GroupingState<Grouping> | null })
+} & (Grouping extends { mandatory: true }
+    ? { currentGrouping: GroupingState<Grouping> }
+    : { currentGrouping?: GroupingState<Grouping> })
 
 /**
  * Utility type for handling both Promise and Observable return types.

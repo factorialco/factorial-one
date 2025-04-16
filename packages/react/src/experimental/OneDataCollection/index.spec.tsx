@@ -425,10 +425,14 @@ describe("Collections", () => {
             fetchData: async ({ sortings }) => {
               const sorted = [...mockData]
 
-              if (sortings && sortings.field === "name") {
-                sorted.sort((a, b) => {
-                  const direction = sortings.order === "asc" ? 1 : -1
-                  return a.name.localeCompare(b.name) * direction
+              if (sortings) {
+                Object.entries(sortings).forEach(([field, order]) => {
+                  if (field === "name") {
+                    sorted.sort((a, b) => {
+                      const direction = order === "asc" ? 1 : -1
+                      return a.name.localeCompare(b.name) * direction
+                    })
+                  }
                 })
               }
 
