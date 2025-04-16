@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.32.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.2...factorial-one-react-v1.32.3) (2025-04-16)
+
+
+### Bug Fixes
+
+* **RichTextEditor:** height config, streamline fullscreen behavior, and add imperative methods ([#1563](https://github.com/factorialco/factorial-one/issues/1563)) ([9650111](https://github.com/factorialco/factorial-one/commit/96501110bb780d3cea4fba8eba612f5a99e563d8))
+
 ## [1.32.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.1...factorial-one-react-v1.32.2) (2025-04-15)
 
 
