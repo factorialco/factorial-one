@@ -1,15 +1,15 @@
 import { Calendar } from "@/ui/calendar"
+import { endOfWeek, startOfWeek } from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
 import {
-  SelectRangeEventHandler,
-  SelectSingleEventHandler,
+  DayClickEventHandler,
+  DateRange as DayPickerDateRange,
 } from "react-day-picker"
 import { useL10n } from "../../../lib/providers/l10n"
-import { CalendarMode, DateRange } from "../types"
+import { DateRange } from "../types"
 import { getLocale } from "../utils"
 
-interface DayViewProps {
-  mode: CalendarMode
+interface WeekViewProps {
   selected?: Date | DateRange | null
   onSelect?: (date: Date | DateRange | null) => void
   month: Date
@@ -17,14 +17,13 @@ interface DayViewProps {
   motionDirection?: number
 }
 
-export function DayView({
-  mode,
+export function WeekView({
   selected,
   onSelect,
   month,
   onMonthChange,
   motionDirection = 1,
-}: DayViewProps) {
+}: WeekViewProps) {
   const { locale } = useL10n()
 
   const motionVariants = {
@@ -39,34 +38,28 @@ export function DayView({
     }),
   }
 
-  if (mode === "single") {
-    return (
-      <AnimatePresence
-        mode="popLayout"
-        initial={false}
-        custom={motionDirection}
-      >
-        <motion.div
-          key={month.toISOString()}
-          variants={motionVariants}
-          custom={motionDirection}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          transition={{ duration: 0.15, ease: [0.455, 0.03, 0.515, 0.955] }}
-        >
-          <Calendar
-            mode="single"
-            selected={selected as Date}
-            onSelect={onSelect as SelectSingleEventHandler}
-            month={month}
-            locale={getLocale(locale)}
-            weekStartsOn={1}
-          />
-        </motion.div>
-      </AnimatePresence>
-    )
+  const handleDayClick: DayClickEventHandler = (day, modifiers) => {
+    if (modifiers.selected) {
+      onSelect?.(null)
+      return
+    }
+
+    const weekStart = startOfWeek(day, { weekStartsOn: 1 })
+    const weekEnd = endOfWeek(day, { weekStartsOn: 1 })
+
+    onSelect?.({
+      from: weekStart,
+      to: weekEnd,
+    })
   }
+
+  const selectedValue: DayPickerDateRange | undefined =
+    selected instanceof Date
+      ? {
+          from: startOfWeek(selected, { weekStartsOn: 1 }),
+          to: endOfWeek(selected, { weekStartsOn: 1 }),
+        }
+      : selected || undefined
 
   return (
     <AnimatePresence mode="popLayout" initial={false} custom={motionDirection}>
@@ -82,12 +75,13 @@ export function DayView({
         <Calendar
           key={month.toISOString()}
           mode="range"
-          selected={selected as DateRange}
-          onSelect={onSelect as SelectRangeEventHandler}
+          selected={selectedValue}
+          onDayClick={handleDayClick}
           month={month}
           onMonthChange={onMonthChange}
           locale={getLocale(locale)}
           weekStartsOn={1}
+          showOutsideDays
         />
       </motion.div>
     </AnimatePresence>

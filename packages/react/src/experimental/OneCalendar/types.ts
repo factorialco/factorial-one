@@ -1,4 +1,4 @@
-export type CalendarView = "day" | "month" | "year"
+export type CalendarView = "day" | "month" | "year" | "week"
 
 export type CalendarMode = "single" | "range"
 

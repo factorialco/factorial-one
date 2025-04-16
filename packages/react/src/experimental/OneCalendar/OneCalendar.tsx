@@ -6,7 +6,9 @@ import { useI18n } from "../../lib/providers/i18n"
 import { CalendarMode, CalendarView, DateRange } from "./types"
 import { DayView } from "./views/day"
 import { MonthView } from "./views/month"
+import { WeekView } from "./views/week"
 import { YearView } from "./views/year"
+
 export interface OneCalendarProps {
   mode: CalendarMode
   view: CalendarView
@@ -37,7 +39,7 @@ export function OneCalendar({
   const handlePrevious = () => {
     const newDate = new Date(viewDate)
 
-    if (view === "day") {
+    if (view === "day" || view === "week") {
       newDate.setMonth(newDate.getMonth() - 1)
     }
 
@@ -56,7 +58,7 @@ export function OneCalendar({
   const handleNext = () => {
     const newDate = new Date(viewDate)
 
-    if (view === "day") {
+    if (view === "day" || view === "week") {
       newDate.setMonth(newDate.getMonth() + 1)
     }
 
@@ -74,7 +76,7 @@ export function OneCalendar({
 
   // Get header label
   const getHeaderLabel = () => {
-    if (view === "day") {
+    if (view === "day" || view === "week") {
       return new Intl.DateTimeFormat("en-US", {
         month: "long",
         year: "numeric",
@@ -145,6 +147,16 @@ export function OneCalendar({
         {view === "day" && (
           <DayView
             mode={mode}
+            selected={selected}
+            onSelect={handleSelect}
+            month={viewDate}
+            onMonthChange={setViewDate}
+            motionDirection={motionDirection}
+          />
+        )}
+
+        {view === "week" && (
+          <WeekView
             selected={selected}
             onSelect={handleSelect}
             month={viewDate}

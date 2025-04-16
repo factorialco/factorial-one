@@ -1,5 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { endOfMonth, endOfYear, startOfYear } from "date-fns"
+import {
+  endOfMonth,
+  endOfWeek,
+  endOfYear,
+  startOfWeek,
+  startOfYear,
+} from "date-fns"
 import { useState } from "react"
 import { OneCalendar } from "./OneCalendar"
 import { DateRange } from "./types"
@@ -234,6 +240,44 @@ export const DayRange: Story = {
       if (!date) return
       if (date instanceof Date) return
       setSelectedRange(date)
+    }
+
+    return (
+      <div className="mx-auto max-w-80">
+        <OneCalendar
+          {...args}
+          defaultSelected={selectedRange}
+          onSelect={handleSelect}
+        />
+        {selectedRange && <SelectedDateDisplay range={selectedRange} />}
+      </div>
+    )
+  },
+}
+
+export const Week: Story = {
+  args: {
+    mode: "single",
+    view: "week",
+  },
+  render: (args) => {
+    const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
+      const now = new Date()
+      const start = startOfWeek(now, { weekStartsOn: 1 })
+      return {
+        from: start,
+        to: endOfWeek(start, { weekStartsOn: 1 }),
+      }
+    })
+
+    const handleSelect = (date: Date | DateRange | null) => {
+      if (!date) {
+        setSelectedRange(null)
+        return
+      }
+      if (!(date instanceof Date)) {
+        setSelectedRange(date)
+      }
     }
 
     return (
