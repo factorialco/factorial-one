@@ -45,8 +45,7 @@ function Calendar({
           "day-selected",
           props.mode === "single" && "aria-selected:text-f1-foreground-inverse"
         ),
-        day_outside:
-          "day-outside text-f1-foreground opacity-30 aria-selected:text-f1-foreground",
+        day_outside: "day-outside text-f1-foreground-secondary font-normal",
         day_disabled: "text-f1-foreground-disabled",
         day_range_middle:
           "day-range-middle aria-selected:text-f1-foreground-selected",

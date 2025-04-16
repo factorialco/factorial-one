@@ -172,7 +172,8 @@ export function YearView({
               className={cn(
                 "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-[''] hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
                 focusRing(),
-                isOutside && "[&>span]:opacity-30",
+                isOutside &&
+                  "[&>span]:font-normal [&>span]:text-f1-foreground-secondary",
                 isSelected &&
                   mode === "single" &&
                   "bg-f1-background-selected-bold text-f1-foreground-inverse hover:bg-f1-background-selected-bold-hover [&>span]:opacity-100",
