@@ -257,7 +257,7 @@ declare type BaseAvatarProps_2 = ComponentProps<typeof BaseAvatar>;
 
 declare type BaseAvatarProps_3 = ComponentProps<typeof BaseAvatar>;
 
-export declare const BaseCelebration: ({ link, firstName, lastName, src, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element;
+export declare const BaseCelebration: ({ link, firstName, lastName, src, onClick, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element;
 
 declare const baseColors: {
     white: {
@@ -627,7 +627,7 @@ declare interface CategoryBarSectionProps {
     hideTooltip?: boolean;
 }
 
-export declare const Celebration: (({ link, firstName, lastName, src, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element) & {
+export declare const Celebration: (({ link, firstName, lastName, src, onClick, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element) & {
     Skeleton: () => JSX_2.Element;
 };
 
@@ -636,6 +636,7 @@ export declare type CelebrationProps = {
     firstName: string;
     lastName: string;
     src?: string;
+    onClick?: () => void;
     canReact?: boolean;
     lastEmojiReaction?: string;
     onReactionSelect?: (emoji: string) => void;
@@ -687,13 +688,15 @@ export declare const ChipsList: {
     displayName: string;
 };
 
-export declare function ClockInControls({ remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, breakTypeName, }: ClockInControlsProps): JSX_2.Element;
+export declare function ClockInControls({ trackedMinutes, remainingMinutes, data, labels, locationId, locations, canShowLocation, locationSelectorDisabled, onClockIn, onClockOut, onBreak, breakTypes, onChangeBreakTypeId, canShowBreakButton, canSeeGraph, canSeeRemainingTime, onChangeLocationId, canShowProject, projectSelectorElement, breakTypeName, }: ClockInControlsProps): JSX_2.Element;
 
 export declare interface ClockInControlsProps {
     /** Optional remaining time in minutes */
     remainingMinutes?: number;
     /** Clock in entries data */
     data: ClockInGraphProps["data"];
+    /** Tracked minutes */
+    trackedMinutes: number;
     /** Labels for all text content */
     labels: {
         clockedOut: string;
@@ -736,13 +739,13 @@ export declare interface ClockInControlsProps {
 }
 
 declare interface ClockInGraphProps {
+    trackedMinutes?: number;
     data?: {
         from: Date;
         to: Date;
         variant: ClockInStatus;
     }[];
     remainingMinutes?: number;
-    overtimeOnly?: boolean;
 }
 
 declare type ClockInStatus = "clocked-in" | "break" | "clocked-out";
@@ -1806,7 +1809,7 @@ declare type OneModalProps = {
     children: default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>> | default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>>[];
 } & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
 
-export declare function OnePagination({ totalPages, currentPage, onPageChange, showControls, ariaLabel, visibleRange, hasNextPage, }: OnePaginationProps): false | JSX_2.Element;
+export declare function OnePagination({ totalPages, currentPage, onPageChange, showControls, ariaLabel, visibleRange, hasNextPage, disabled, }: OnePaginationProps): JSX_2.Element;
 
 declare interface OnePaginationProps {
     /**
@@ -1842,6 +1845,11 @@ declare interface OnePaginationProps {
      * @default true
      */
     hasNextPage?: boolean;
+    /**
+     * Whether to disable the pagination.
+     * @default false
+     */
+    disabled?: boolean;
 }
 
 export declare const OnePersonListItem: default_2.ForwardRefExoticComponent<OnePersonListItemProps & default_2.RefAttributes<HTMLDivElement>> & {
@@ -2137,9 +2145,9 @@ declare type PropertyRendererMetadata<T> = {
  * @returns The rendered property value
  */
 declare const propertyRenderers: {
-    readonly text: (text: string | number | undefined) => string | number | undefined;
+    readonly text: (text: string | number | undefined) => JSX_2.Element;
     readonly number: (number: number | undefined, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
-    readonly date: (date: Date | undefined) => string | undefined;
+    readonly date: (date: Date | undefined) => JSX_2.Element;
     readonly amount: (amount: number | undefined, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
     readonly avatarList: (args: {
         avatarList: AvatarVariant[];
@@ -2367,7 +2375,9 @@ export declare const RichTextDisplay: ({ content }: {
     content: string;
 }) => JSX_2.Element;
 
-export declare const RichTextEditor: ForwardRefExoticComponent<RichTextEditorProps & RefAttributes<RichTextEditorHandle>>;
+export declare const RichTextEditor: ForwardRefExoticComponent<RichTextEditorProps & RefAttributes<RichTextEditorHandle>> & {
+    Skeleton: ({ rows }: RichTextEditorSkeletonProps) => JSX_2.Element;
+};
 
 export declare type RichTextEditorHandle = {
     clear: () => void;
@@ -2392,6 +2402,10 @@ export declare interface RichTextEditorProps {
     toolbarLabels: toolbarLabels;
     title: string;
     errorConfig?: errorConfig;
+}
+
+declare interface RichTextEditorSkeletonProps {
+    rows?: number;
 }
 
 /**
@@ -2775,7 +2789,7 @@ export declare type TabItem = {
 
 declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
 
-declare function TableHead({ children, width, sortState, onSortClick, info, sticky, hidden, }: TableHeadProps): JSX_2.Element;
+declare function TableHead({ children, width, sortState, onSortClick, info, sticky, hidden, align, }: TableHeadProps): JSX_2.Element;
 
 declare interface TableHeadProps {
     children: React.ReactNode;
@@ -2816,6 +2830,11 @@ declare interface TableHeadProps {
      * @default false
      */
     hidden?: boolean;
+    /**
+     * Alingment of the cell
+     * @default "left"
+     */
+    align?: "left" | "right";
 }
 
 declare type TableVisualizationOptions<Record extends RecordType, _Filters extends FiltersDefinition, Sortings extends SortingsDefinition> = {
