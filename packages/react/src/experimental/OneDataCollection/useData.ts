@@ -302,23 +302,25 @@ export function useData<
           cleanup.current = undefined
         }
 
-        const baseFetchOptions: BaseFetchOptions<Record, Filters, Sortings, Grouping> =
-          {
-            filters,
-            search: searchValue,
-            sortings: {
-              ...(currentGrouping
-                ? {
-                    [currentGrouping.field]: currentGrouping.desc
-                      ? "desc"
-                      : "asc",
-                  }
-                : {}),
-              ...(currentSortings
-                ? { [currentSortings.field]: currentSortings.order }
-                : {}),
-            },
-          }
+        const baseFetchOptions: BaseFetchOptions<
+          Record,
+          Filters,
+          Sortings,
+          Grouping
+        > = {
+          filters,
+          search: searchValue,
+          sortings: {
+            ...(currentGrouping
+              ? {
+                  [currentGrouping.field]: currentGrouping.order,
+                }
+              : {}),
+            ...(currentSortings
+              ? { [currentSortings.field]: currentSortings.order }
+              : {}),
+          },
+        }
 
         const fetcher = (): PromiseOrObservable<ResultType> =>
           dataAdapter.paginationType === "pages"

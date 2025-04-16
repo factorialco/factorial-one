@@ -15,7 +15,7 @@ import { PromiseState } from "../../lib/promise-to-observable"
 import { FilterDefinition, FiltersState } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
-import { SortingsDefinition, SortingsState } from "./sortings"
+import { SortingsDefinition } from "./sortings"
 import {
   BulkActionDefinition,
   DataAdapter,
@@ -25,6 +25,7 @@ import {
   PaginatedResponse,
   PresetsDefinition,
   RecordType,
+  SortingsStateMultiple,
 } from "./types"
 import { useData } from "./useData"
 
@@ -136,7 +137,7 @@ const filterUsers = <
 >(
   users: T[],
   filterValues: FiltersState<FiltersType>,
-  sortingState: SortingsState<typeof sortings>,
+  sortingState: SortingsStateMultiple<typeof sortings, undefined>,
   search?: string
 ) => {
   let filteredUsers = [...users]
@@ -152,42 +153,44 @@ const filterUsers = <
   }
 
   if (sortingState) {
-    filteredUsers = filteredUsers.sort((a, b) => {
-      const aValue = a[sortingState.field]
-      const bValue = b[sortingState.field]
+    Object.entries(sortingState).forEach(([field, order]) => {
+      filteredUsers = filteredUsers.sort((a, b) => {
+        const aValue = a[field]
+        const bValue = b[field]
 
-      // Handle string comparisons
-      if (typeof aValue === "string" && typeof bValue === "string") {
-        return sortingState.order === "asc"
-          ? aValue.localeCompare(bValue)
-          : bValue.localeCompare(aValue)
-      }
+        // Handle string comparisons
+        if (typeof aValue === "string" && typeof bValue === "string") {
+          return order === "asc"
+            ? aValue.localeCompare(bValue)
+            : bValue.localeCompare(aValue)
+        }
 
-      // Handle number comparisons
-      if (typeof aValue === "number" && typeof bValue === "number") {
-        return sortingState.order === "asc" ? aValue - bValue : bValue - aValue
-      }
+        // Handle number comparisons
+        if (typeof aValue === "number" && typeof bValue === "number") {
+          return order === "asc" ? aValue - bValue : bValue - aValue
+        }
 
-      // Handle boolean comparisons
-      if (typeof aValue === "boolean" && typeof bValue === "boolean") {
-        // false comes before true when ascending
-        return sortingState.order === "asc"
-          ? aValue === bValue
-            ? 0
-            : aValue
-              ? 1
-              : -1
-          : aValue === bValue
-            ? 0
-            : aValue
-              ? -1
-              : 1
-      }
+        // Handle boolean comparisons
+        if (typeof aValue === "boolean" && typeof bValue === "boolean") {
+          // false comes before true when ascending
+          return order === "asc"
+            ? aValue === bValue
+              ? 0
+              : aValue
+                ? 1
+                : -1
+            : aValue === bValue
+              ? 0
+              : aValue
+                ? -1
+                : 1
+        }
 
-      // Default case: use string representation
-      return sortingState.order === "asc"
-        ? String(aValue).localeCompare(String(bValue))
-        : String(bValue).localeCompare(String(aValue))
+        // Default case: use string representation
+        return order === "asc"
+          ? String(aValue).localeCompare(String(bValue))
+          : String(bValue).localeCompare(String(aValue))
+      })
     })
   }
 
@@ -222,7 +225,7 @@ const createObservableDataFetch = (delay = 0) => {
     sortings: sortingsState,
   }: {
     filters: FiltersState<FiltersType>
-    sortings: SortingsState<typeof sortings>
+    sortings: SortingsStateMultiple<typeof sortings, undefined>
   }) =>
     new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
       observer.next({
@@ -251,7 +254,11 @@ const createPromiseDataFetch = (delay = 500) => {
     search,
   }: {
     filters: FiltersState<FiltersType>
-    sortings: SortingsState<typeof sortings>
+    sortings: SortingsStateMultiple<
+      typeof sortings,
+      GroupingDefinition<(typeof mockUsers)[number]>
+    >
+    grouping: GroupingDefinition<(typeof mockUsers)[number]>
     search?: string
   }) =>
     new Promise<(typeof mockUsers)[number][]>((resolve) => {
@@ -295,7 +302,7 @@ const ExampleComponent = ({
     grouping,
     currentGrouping: {
       field: "role",
-      desc: true,
+      order: "desc",
     },
     itemActions: (item: MockUser) => [
       {
@@ -641,12 +648,17 @@ export const WithGrouping: Story = {
           department: {
             name: "Department",
             label: (groupId) => groupId,
-            field: "department",
+            itemCount: (groupId) => {
+              return mockUsers.filter((user) => user.department === groupId)
+                .length
+            },
           },
           role: {
             name: "Role",
             label: (groupId) => groupId,
-            field: "role",
+            itemCount: (groupId) => {
+              return mockUsers.filter((user) => user.role === groupId).length
+            },
           },
         },
       }}
@@ -665,7 +677,6 @@ export const WithPaginationAndGrouping: Story = {
         department: {
           name: "Department",
           label: (groupId) => groupId,
-          field: "department",
           itemCount: (groupId) => {
             return paginatedMockUsers.filter(
               (user) => user.department === groupId
@@ -675,7 +686,6 @@ export const WithPaginationAndGrouping: Story = {
         role: {
           name: "Role",
           label: (groupId) => groupId,
-          field: "role",
           itemCount: (groupId) => {
             return paginatedMockUsers.filter((user) => user.role === groupId)
               .length
@@ -691,7 +701,7 @@ export const WithPaginationAndGrouping: Story = {
       grouping,
       currentGrouping: {
         field: "department",
-        desc: false,
+        order: "asc",
       },
       bulkActions: (allSelected) => {
         return {
@@ -1386,7 +1396,7 @@ function createDataAdapter<
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
-    sortingsState: SortingsState<TSortings>,
+    sortingsState: SortingsStateMultiple<TSortings, TGrouping>,
     pagination?: { currentPage?: number; perPage?: number }
   ): TRecord[] | PaginatedResponse<TRecord> => {
     let filteredRecords = [...records]
@@ -1551,7 +1561,7 @@ function createDataAdapter<
     return adapter
   }
 
-  const adapter: DataAdapter<TRecord, TFilters, TSortings> = {
+  const adapter: DataAdapter<TRecord, TFilters, TSortings, TGrouping> = {
     fetchData: ({ filters, sortings }) => {
       if (useObservable) {
         return new Observable<PromiseState<TRecord[]>>((observer) => {
@@ -2217,24 +2227,27 @@ export const WithAsyncSearch: Story = {
 
               // Apply sorting if provided
               if (sortings) {
-                const field = sortings.field as keyof MockUser
-                const direction = sortings.order
+                Object.entries(sortings)
+                  .reverse()
+                  .forEach(([field, order]) => {
+                    const direction = order
 
-                filteredUsers.sort((a, b) => {
-                  const aValue = a[field]
-                  const bValue = b[field]
+                    filteredUsers.sort((a, b) => {
+                      const aValue = a[field as keyof MockUser]
+                      const bValue = b[field as keyof MockUser]
 
-                  if (
-                    typeof aValue === "string" &&
-                    typeof bValue === "string"
-                  ) {
-                    return direction === "asc"
-                      ? aValue.localeCompare(bValue)
-                      : bValue.localeCompare(aValue)
-                  }
+                      if (
+                        typeof aValue === "string" &&
+                        typeof bValue === "string"
+                      ) {
+                        return direction === "asc"
+                          ? aValue.localeCompare(bValue)
+                          : bValue.localeCompare(aValue)
+                      }
 
-                  return 0
-                })
+                      return 0
+                    })
+                  })
               }
 
               resolve(filteredUsers)
