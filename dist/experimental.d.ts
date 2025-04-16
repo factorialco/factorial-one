@@ -1286,6 +1286,17 @@ export declare type FilterOption<T = unknown> = {
  */
 export declare type FilterOptions<FilterKeys extends string> = Record<FilterKeys, FilterDefinition>;
 
+export declare namespace Filters {
+    export {
+        FiltersRootProps,
+        ChipsList,
+        Controls,
+        Presets,
+        Root,
+        FiltersRootProps as RootProps
+    }
+}
+
 /**
  * Record of filter definitions for a collection.
  * Maps filter keys to their respective definitions.
@@ -1293,73 +1304,6 @@ export declare type FilterOptions<FilterKeys extends string> = Record<FilterKeys
  * @template Keys - String literal type for filter keys
  */
 export declare type FiltersDefinition<Keys extends string = string> = Record<Keys, FilterDefinition>;
-
-/**
- * A comprehensive filtering interface that manages multiple filter types.
- * Provides a popover interface for filter configuration and displays active filters as chips.
- *
- * The component supports multiple filter types through a unified interface:
- * - "in" type filters: Multi-select filters with predefined options
- * - "search" type filters: Free-text search filters
- *
- * Features:
- * - Search and multi-select filters with type safety
- * - Temporary filter state that's only applied when explicitly confirmed
- * - Animated filter chips for active filters
- * - Support for filter presets for quick selection of common filter combinations
- * - Responsive design for different viewport sizes
- *
- * The component maintains a temporary state of filters that are only applied
- * when the user explicitly clicks the "Apply Filters" button, allowing for
- * a more controlled filtering experience.
- *
- * @template Definition - The type defining the structure of available filters
- *
- * @example
- * ```tsx
- * // Example with multiple filter types and presets
- * <Filters
- *   schema={{
- *     department: {
- *       type: "in",
- *       label: "Department",
- *       options: [
- *         { value: "engineering", label: "Engineering" },
- *         { value: "marketing", label: "Marketing" },
- *         { value: "sales", label: "Sales" }
- *       ]
- *     },
- *     search: {
- *       type: "search",
- *       label: "Search"
- *     }
- *   }}
- *   filters={{
- *     department: ["engineering"]
- *   }}
- *   presets={[
- *     {
- *       label: "Engineering Only",
- *       filter: { department: ["engineering"] }
- *     },
- *     {
- *       label: "Sales & Marketing",
- *       filter: { department: ["sales", "marketing"] }
- *     }
- *   ]}
- *   onChange={setFilters}
- * />
- * ```
- *
- * @see {@link FiltersDefinition} for detailed schema structure
- * @see {@link FiltersState} for the structure of filter state
- */
-declare const FiltersRoot: {
-    <Definition extends FiltersDefinition>({ filters, schema, children, ...props }: FiltersRootProps<Definition>): JSX_2.Element;
-    displayName: string;
-};
-export { FiltersRoot as Filters }
-export { FiltersRoot as Root }
 
 /**
  * Props for the Filters component.
@@ -2460,6 +2404,71 @@ export declare interface RichTextEditorProps {
     title: string;
     errorConfig?: errorConfig;
 }
+
+/**
+ * A comprehensive filtering interface that manages multiple filter types.
+ * Provides a popover interface for filter configuration and displays active filters as chips.
+ *
+ * The component supports multiple filter types through a unified interface:
+ * - "in" type filters: Multi-select filters with predefined options
+ * - "search" type filters: Free-text search filters
+ *
+ * Features:
+ * - Search and multi-select filters with type safety
+ * - Temporary filter state that's only applied when explicitly confirmed
+ * - Animated filter chips for active filters
+ * - Support for filter presets for quick selection of common filter combinations
+ * - Responsive design for different viewport sizes
+ *
+ * The component maintains a temporary state of filters that are only applied
+ * when the user explicitly clicks the "Apply Filters" button, allowing for
+ * a more controlled filtering experience.
+ *
+ * @template Definition - The type defining the structure of available filters
+ *
+ * @example
+ * ```tsx
+ * // Example with multiple filter types and presets
+ * <Filters
+ *   schema={{
+ *     department: {
+ *       type: "in",
+ *       label: "Department",
+ *       options: [
+ *         { value: "engineering", label: "Engineering" },
+ *         { value: "marketing", label: "Marketing" },
+ *         { value: "sales", label: "Sales" }
+ *       ]
+ *     },
+ *     search: {
+ *       type: "search",
+ *       label: "Search"
+ *     }
+ *   }}
+ *   filters={{
+ *     department: ["engineering"]
+ *   }}
+ *   presets={[
+ *     {
+ *       label: "Engineering Only",
+ *       filter: { department: ["engineering"] }
+ *     },
+ *     {
+ *       label: "Sales & Marketing",
+ *       filter: { department: ["sales", "marketing"] }
+ *     }
+ *   ]}
+ *   onChange={setFilters}
+ * />
+ * ```
+ *
+ * @see {@link FiltersDefinition} for detailed schema structure
+ * @see {@link FiltersState} for the structure of filter state
+ */
+export declare const Root: {
+    <Definition extends FiltersDefinition>({ filters, schema, children, ...props }: FiltersRootProps<Definition>): JSX_2.Element;
+    displayName: string;
+};
 
 declare type SchemaType = ZodType;
 
