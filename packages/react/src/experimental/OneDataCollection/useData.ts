@@ -330,9 +330,7 @@ export function useData<
           sortings: {
             ...(currentGrouping
               ? {
-                  [currentGrouping.field]: currentGrouping.desc
-                    ? "desc"
-                    : "asc",
+                  [currentGrouping.field]: currentGrouping.order,
                 }
               : {}),
             ...(currentSortings

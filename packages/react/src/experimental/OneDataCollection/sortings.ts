@@ -1,4 +1,3 @@
-import { GroupingDefinition, RecordType } from "./types"
 export type SortingsDefinition = Record<
   string,
   {
@@ -13,15 +12,6 @@ export type SortingsState<Definition extends SortingsDefinition> = {
   order: SortOrder
 } | null
 
-export type SortingsStateMultiple<
-  Record extends RecordType,
-  Definition extends SortingsDefinition,
-  Grouping extends GroupingDefinition<Record>,
-> = {
-  [K in keyof Definition]: SortOrder
-} & {
-  [K in keyof Grouping]: SortOrder
-}
 /**
  * Type helper to extract keys from a SortingsDefinition
  */

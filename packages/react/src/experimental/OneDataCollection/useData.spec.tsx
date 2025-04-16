@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
 import type { PromiseState } from "../../lib/promise-to-observable"
 import type { FiltersState } from "./Filters/types"
+import { GroupingDefinition } from "./grouping"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
 import type {
@@ -11,7 +12,6 @@ import type {
   BaseFetchOptions,
   BaseResponse,
   DataSource,
-  GroupingDefinition,
   PaginatedDataAdapter,
   PaginatedResponse,
   RecordType,
