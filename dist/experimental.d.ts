@@ -2173,11 +2173,8 @@ declare const propertyRenderers: {
     }) => JSX_2.Element;
     readonly dotTag: (args: {
         label: string;
-    } & ({
         color: NewColor;
-    } | {
-        customColor: string;
-    })) => JSX_2.Element;
+    }) => JSX_2.Element;
 };
 
 declare type Props = {

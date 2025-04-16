@@ -27772,13 +27772,7 @@ const Fz = (t, e) => (t(e) || []).filter(
     /* @__PURE__ */ d("span", { children: t.name })
   ] }),
   tag: (t) => /* @__PURE__ */ d(ni, { text: t.label, icon: t.icon }),
-  dotTag: (t) => /* @__PURE__ */ d(
-    uc,
-    {
-      text: t.label,
-      ..."color" in t ? { color: t.color } : { customColor: t.customColor }
-    }
-  )
+  dotTag: (t) => /* @__PURE__ */ d(uc, { text: t.label, color: t.color })
 }, Bz = (t) => t !== void 0 && typeof t == "object", b_ = (t, e, n) => {
   const i = e.render(t), { type: r, value: o } = Bz(i) ? i : {
     type: "text",
