@@ -1,3 +1,4 @@
+import { ArrowRight, CrossedCircle } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { FileItem } from "."
 
@@ -13,10 +14,25 @@ export const Default: Story = {
   tags: ["experimental"],
   args: {
     file: new File(["test"], "test.txt", { type: "text/plain" }),
-    onRemoveFile: () => {
-      alert("remove file")
+    onAction: () => {
+      alert("file action")
     },
+    actionIcon: CrossedCircle,
     disabled: false,
+  },
+}
+
+export const WithCustomIcon: Story = {
+  args: {
+    ...Default.args,
+    actionIcon: ArrowRight,
+  },
+}
+
+export const WithoutAction: Story = {
+  args: {
+    ...Default.args,
+    onAction: undefined,
   },
 }
 
@@ -24,19 +40,5 @@ export const Disabled: Story = {
   args: {
     ...Default.args,
     disabled: true,
-  },
-}
-
-export const WithImage: Story = {
-  args: {
-    ...Default.args,
-    file: new File([], "test.png", { type: "image/png" }),
-  },
-}
-
-export const WithPDF: Story = {
-  args: {
-    ...Default.args,
-    file: new File([], "test.pdf", { type: "application/pdf" }),
   },
 }

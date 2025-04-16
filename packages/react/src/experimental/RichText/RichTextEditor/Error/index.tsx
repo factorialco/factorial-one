@@ -1,13 +1,22 @@
 import { Button } from "@/components/Actions/Button"
-import { AlertAvatar } from "@/experimental/exports"
+import { AlertAvatar, errorConfig } from "@/experimental/exports"
+import { Editor } from "@tiptap/react"
 
 interface ErrorProps {
   error: string
-  onClose: () => void
   closeErrorButtonLabel?: string
+  editor: Editor
+  errorConfig?: errorConfig
+  setError: (error: string | null) => void
 }
 
-const Error = ({ error, onClose, closeErrorButtonLabel }: ErrorProps) => {
+const Error = ({
+  error,
+  closeErrorButtonLabel,
+  editor,
+  errorConfig,
+  setError,
+}: ErrorProps) => {
   return (
     <div className="flex w-max max-w-full items-center gap-10 rounded-md bg-f1-background-critical p-1 drop-shadow-sm">
       <div className="flex w-full flex-row items-center gap-2">
@@ -26,7 +35,11 @@ const Error = ({ error, onClose, closeErrorButtonLabel }: ErrorProps) => {
           variant="outline"
           onClick={(e) => {
             e.preventDefault()
-            onClose()
+            setError(null)
+            editor.setEditable(true)
+            if (errorConfig?.onClose) {
+              errorConfig.onClose()
+            }
           }}
           label={closeErrorButtonLabel || "Continue editing"}
           type="button"
