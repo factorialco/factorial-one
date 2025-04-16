@@ -163,18 +163,10 @@ export const useDataSource = <
       } as GroupingState<Grouping>)
     : undefined
 
-  const [currentGrouping, setCurrentGrouping] = useState<
-    Grouping["mandatory"] extends true
-      ? GroupingState<Grouping>
-      : GroupingState<Grouping> | undefined | null
-  >(
-    initialCurrentGrouping ??
-      ((grouping?.mandatory
-        ? defaultGrouping
-        : undefined) as Grouping["mandatory"] extends true
-        ? GroupingState<Grouping>
-        : GroupingState<Grouping> | undefined | null)
-  )
+  const [currentGrouping, setCurrentGrouping] =
+    useState<GroupingState<Grouping> | null>(
+      initialCurrentGrouping ?? defaultGrouping ?? null
+    )
 
   return {
     filters: memoizedFilters,
