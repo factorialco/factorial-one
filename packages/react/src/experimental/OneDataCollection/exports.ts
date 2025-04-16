@@ -1,4 +1,5 @@
 export type * from "./actions"
+export { Root as Filters } from "./Filters"
 export type * from "./Filters/exports"
 export { OneDataCollection, useDataSource } from "./index"
 export type * from "./item-actions"
