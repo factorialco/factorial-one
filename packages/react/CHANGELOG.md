@@ -1,5 +1,82 @@
 # Changelog
 
+## [1.32.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.1...factorial-one-react-v1.32.2) (2025-04-15)
+
+
+### Bug Fixes
+
+* **datacollection:** header checkbox alignment ([dd9934e](https://github.com/factorialco/factorial-one/commit/dd9934eb62e36c99616d9b6582718ba391516d4c))
+
+## [1.32.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.0...factorial-one-react-v1.32.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* **DataCollection:** Reported changes from teams ([#1575](https://github.com/factorialco/factorial-one/issues/1575)) ([378a3ec](https://github.com/factorialco/factorial-one/commit/378a3ec8c0a7fd79ad9238bc732a43214e7d158d))
+
+## [1.32.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.3...factorial-one-react-v1.32.0) (2025-04-15)
+
+
+### Features
+
+* add support to pass tracked minutes to ClockInControls and ClockInGraph component ([#1624](https://github.com/factorialco/factorial-one/issues/1624)) ([f5215f7](https://github.com/factorialco/factorial-one/commit/f5215f7845fded5a0cc189b9ff106d6687ff7863))
+
+## [1.31.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.2...factorial-one-react-v1.31.3) (2025-04-15)
+
+
+### Bug Fixes
+
+* **datacollection:** hotfix table spacing ([15a1fb2](https://github.com/factorialco/factorial-one/commit/15a1fb2bae6c600f34b50b2757292081209d40be))
+
+## [1.31.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.1...factorial-one-react-v1.31.2) (2025-04-15)
+
+
+### Bug Fixes
+
+* **DataCollection:** Pagination spacing & toolbar positioning ([#1556](https://github.com/factorialco/factorial-one/issues/1556)) ([a90c10d](https://github.com/factorialco/factorial-one/commit/a90c10d53f6c7688c8b8003910a3c0d85abb5fab))
+
+## [1.31.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.0...factorial-one-react-v1.31.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* add missing onClick prop for Celebration component ([#1620](https://github.com/factorialco/factorial-one/issues/1620)) ([26dbaee](https://github.com/factorialco/factorial-one/commit/26dbaee98f8e3b380c124df3e49a4eef28588b38))
+
+## [1.31.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.3...factorial-one-react-v1.31.0) (2025-04-15)
+
+
+### Features
+
+* skeleton for the RichTextEditor ([#1612](https://github.com/factorialco/factorial-one/issues/1612)) ([3c1d221](https://github.com/factorialco/factorial-one/commit/3c1d2216fdc36d577847b09306e60130783bd74d))
+
+## [1.30.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.2...factorial-one-react-v1.30.3) (2025-04-14)
+
+
+### Bug Fixes
+
+* make author url optional in CommunityPost component ([#1610](https://github.com/factorialco/factorial-one/issues/1610)) ([4fcc998](https://github.com/factorialco/factorial-one/commit/4fcc9989aa722cbf1f62ae7fba89388431d2ed35))
+
+## [1.30.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.1...factorial-one-react-v1.30.2) (2025-04-14)
+
+
+### Bug Fixes
+
+* storybook toc width ([#1606](https://github.com/factorialco/factorial-one/issues/1606)) ([9d63e84](https://github.com/factorialco/factorial-one/commit/9d63e843a0d430955cf5398ff343a4ec537897fa))
+
+## [1.30.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.0...factorial-one-react-v1.30.1) (2025-04-14)
+
+
+### Bug Fixes
+
+* deleted shadow from button ([#1588](https://github.com/factorialco/factorial-one/issues/1588)) ([55e4644](https://github.com/factorialco/factorial-one/commit/55e4644f49b198faf28150c4f025a71e6bf8c506))
+
+## [1.30.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.4...factorial-one-react-v1.30.0) (2025-04-14)
+
+
+### Features
+
+* l10n-context ([#1576](https://github.com/factorialco/factorial-one/issues/1576)) ([0de2e6d](https://github.com/factorialco/factorial-one/commit/0de2e6d0708461fb526335f13d6107849b7b0162))
+
 ## [1.29.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.29.3...factorial-one-react-v1.29.4) (2025-04-14)
 
 

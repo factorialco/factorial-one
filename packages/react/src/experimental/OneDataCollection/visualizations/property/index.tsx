@@ -9,6 +9,7 @@ import {
   StatusVariant,
 } from "@/experimental/Information/Tags/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 import { PropertyDefinition } from "../../property-render"
 import { VisualizationType } from "../../visualizations"
@@ -33,21 +34,35 @@ export type PropertyRendererMetadata<T> = {
  * @returns The rendered property value
  */
 export const propertyRenderers = {
-  text: (text: string | number | undefined) => text,
+  text: (text: string | number | undefined) => (
+    <span className="text-f1-foreground">{text}</span>
+  ),
   number: (
     number: number | undefined,
     meta: PropertyRendererMetadata<never>
   ) => (
-    <div className={meta.visualization === "table" ? "text-right" : ""}>
+    <div
+      className={cn(
+        "text-f1-foreground",
+        meta.visualization === "table" && "text-right"
+      )}
+    >
       {number}
     </div>
   ),
-  date: (date: Date | undefined) => date?.toLocaleDateString(),
+  date: (date: Date | undefined) => (
+    <div className="text-f1-foreground">{date?.toLocaleDateString()}</div>
+  ),
   amount: (
     amount: number | undefined,
     meta: PropertyRendererMetadata<never>
   ) => (
-    <div className={meta.visualization === "table" ? "text-right" : ""}>
+    <div
+      className={cn(
+        "text-f1-foreground",
+        meta.visualization === "table" && "text-right"
+      )}
+    >
       {amount}
     </div>
   ),
@@ -68,7 +83,7 @@ export const propertyRenderers = {
         }}
         size="xsmall"
       />
-      <span className="text-sm font-medium">
+      <span className="text-f1-foreground">
         {args.firstName} {args.lastName}
       </span>
     </div>
@@ -83,7 +98,7 @@ export const propertyRenderers = {
         }}
         size="xsmall"
       />
-      <span className="text-sm font-medium">{args.name}</span>
+      <span className="text-f1-foreground">{args.name}</span>
     </div>
   ),
   team: (args: { name: string; src?: string }) => (
@@ -96,7 +111,7 @@ export const propertyRenderers = {
         }}
         size="xsmall"
       />
-      <span className="text-sm font-medium">{args.name}</span>
+      <span className="text-f1-foreground">{args.name}</span>
     </div>
   ),
   tag: (args: { label: string; icon?: IconType }) => (

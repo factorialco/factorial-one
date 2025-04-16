@@ -173,17 +173,19 @@ export const TableCollection = <
         <TableHeader>
           <TableRow>
             {source.selectable && (
-              <TableHead width={checkColumnWidth} sticky={{ left: 0 }}>
-                <div className="flex w-full items-center justify-end">
-                  <Checkbox
-                    checked={isAllSelected}
-                    indeterminate={isPartiallySelected}
-                    onCheckedChange={handleSelectAll}
-                    title="Select all"
-                    hideLabel
-                    disabled={data.length === 0}
-                  />
-                </div>
+              <TableHead
+                width={checkColumnWidth}
+                sticky={{ left: 0 }}
+                align="right"
+              >
+                <Checkbox
+                  checked={isAllSelected}
+                  indeterminate={isPartiallySelected}
+                  onCheckedChange={handleSelectAll}
+                  title="Select all"
+                  hideLabel
+                  disabled={data.length === 0}
+                />
               </TableHead>
             )}
             {columns.map(({ sorting, label, ...column }, index) => (
@@ -195,6 +197,7 @@ export const TableCollection = <
                   currentSortings
                 )}
                 width={column.width}
+                align={column.align}
                 sticky={
                   index < frozenColumnsLeft
                     ? {
@@ -242,7 +245,10 @@ export const TableCollection = <
               : undefined
             const id = source.selectable ? source.selectable(item) : undefined
             return (
-              <TableRow key={`row-${index}`}>
+              <TableRow
+                key={`row-${index}`}
+                selected={!!id && selectedItems.has(id)}
+              >
                 {source.selectable && (
                   <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
                     {id !== undefined && (
@@ -321,6 +327,7 @@ export const TableCollection = <
               totalPages={paginationInfo.pagesCount}
               currentPage={paginationInfo.currentPage}
               onPageChange={setPage}
+              disabled={paginationInfo.pagesCount <= 1}
             />
           </div>
         </div>
