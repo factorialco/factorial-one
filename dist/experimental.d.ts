@@ -1286,17 +1286,6 @@ export declare type FilterOption<T = unknown> = {
  */
 export declare type FilterOptions<FilterKeys extends string> = Record<FilterKeys, FilterDefinition>;
 
-export declare namespace Filters {
-    export {
-        FiltersRootProps,
-        ChipsList,
-        Controls,
-        Presets,
-        Root,
-        FiltersRootProps as RootProps
-    }
-}
-
 /**
  * Record of filter definitions for a collection.
  * Maps filter keys to their respective definitions.
@@ -1777,6 +1766,19 @@ export declare const OneDataCollection: <Record extends RecordType, Filters exte
     onSelectItems?: OnSelectItemsCallback<Record, Filters>;
     onBulkAction?: OnBulkActionCallback<Record, Filters>;
 }) => JSX.Element;
+
+export declare namespace OneDataCollectionFilters {
+    export {
+        FiltersRootProps,
+        ChipsList,
+        Controls,
+        Presets,
+        Root,
+        FiltersRootProps as RootProps
+    }
+}
+
+export declare const OneDataCollectionSearch: ({ value, onChange, loading }: SearchProps) => JSX_2.Element;
 
 declare type OneDropdownButtonItem<T = string> = {
     value: T;
@@ -2492,6 +2494,12 @@ export declare type SearchFilterDefinition = BaseFilterDefinition & {
     /** Identifies this as a "search" type filter */
     type: "search";
 };
+
+declare interface SearchProps {
+    value?: string;
+    onChange: (value: string | undefined) => void;
+    loading?: boolean;
+}
 
 declare interface SecondaryAction extends PrimaryActionButton {
     variant?: "outline" | "critical";
