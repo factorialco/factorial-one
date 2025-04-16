@@ -15,8 +15,8 @@ import StarterKit from "@tiptap/starter-kit"
 import { Plugin, PluginKey } from "prosemirror-state"
 import { Decoration, DecorationSet } from "prosemirror-view"
 import { configureMention } from "./mention"
+import { SummaryBlock } from "./summaryBlock"
 import { MentionedUser, mentionsConfig } from "./types"
-
 const persistSelectionKey = new PluginKey("persistSelection")
 
 const persistSelectionPlugin = new Plugin({
@@ -186,6 +186,7 @@ const ExtensionsConfiguration = ({
       : []),
     PersistSelection,
     Accessibility.configure({ label: placeholder || "Rich text editor" }),
+    SummaryBlock,
   ]
 }
 

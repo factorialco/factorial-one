@@ -104,6 +104,7 @@ const RichTextEditorComponent = forwardRef<
   const [mentionSuggestions, setMentionSuggestions] = useState<MentionedUser[]>(
     mentionsConfig?.users || []
   )
+  const [isLoadingSummary, setIsLoadingSummary] = useState(false)
 
   useEffect(() => {
     if (screenfull.isEnabled) {
@@ -126,6 +127,47 @@ const RichTextEditorComponent = forwardRef<
   const handleToggleFullscreen = () => {
     if (containerRef.current && screenfull.isEnabled) {
       screenfull.toggle(containerRef.current)
+    }
+  }
+
+  const handleGenerateSummary = async () => {
+    if (editor) {
+      try {
+        setIsLoadingSummary(true)
+
+        // Call your AI service to generate the summary (this is a placeholder)
+        // const response = await yourAIService.generateSummary(content)
+        const response = {
+          summary: "This is a summary",
+          highlights: ["highlight1", "highlight2"],
+          nextSteps: ["step1", "step2"],
+        }
+
+        // Insert the summary block at the current cursor position
+        editor
+          .chain()
+          .focus()
+          .insertContent({
+            type: "summaryBlock",
+            attrs: {
+              summary: response.summary,
+              highlights: response.highlights,
+              nextSteps: response.nextSteps,
+            },
+            content: [
+              {
+                type: "paragraph",
+              },
+            ],
+          })
+          .run()
+      } catch (error) {
+        console.error(error)
+        // Handle error
+        setError("Failed to generate summary. Please try again.")
+      } finally {
+        setIsLoadingSummary(false)
+      }
     }
   }
 
@@ -247,6 +289,19 @@ const RichTextEditorComponent = forwardRef<
   }
 
   if (!editor) return null
+
+  const onClickWithEditor = () => {
+    primaryAction?.action.onClick(editor)
+  }
+  const primaryActionWithEditor = {
+    ...primaryAction,
+    action: {
+      ...primaryAction?.action,
+      onClick: onClickWithEditor,
+      label: primaryAction?.action.label || "default",
+      variant: primaryAction?.action.variant || "default",
+    },
+  }
 
   return (
     <div
@@ -402,7 +457,7 @@ const RichTextEditorComponent = forwardRef<
           editor={editor}
           maxCharacters={maxCharacters}
           secondaryAction={secondaryAction}
-          primaryAction={primaryAction}
+          primaryAction={primaryActionWithEditor}
           fileInputRef={fileInputRef}
           canUseFiles={filesConfig ? true : false}
           isLoadingEnhance={isLoadingEnhance}
@@ -414,6 +469,8 @@ const RichTextEditorComponent = forwardRef<
           toolbarLabels={toolbarLabels}
           setIsToolbarOpen={setIsToolbarOpen}
           isToolbarOpen={isToolbarOpen}
+          onGenerateSummary={handleGenerateSummary}
+          isLoadingSummary={isLoadingSummary}
         />
 
         <EditorBubbleMenu

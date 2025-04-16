@@ -1,4 +1,6 @@
 import { IconType } from "@/factorial-one"
+import { Editor } from "@tiptap/react"
+
 import { FileType } from "./constants"
 
 type MentionedUser = {
@@ -69,7 +71,7 @@ type filesConfig = {
 
 type actionType = {
   label: string
-  onClick: () => void
+  onClick: (editor?: Editor) => void
   disabled?: boolean
   variant: "default" | "outline" | "neutral" | undefined
   icon?: IconType
@@ -77,7 +79,7 @@ type actionType = {
 
 type subActionType = {
   label: string
-  onClick: () => void
+  onClick: (editor?: Editor) => void
   disabled?: boolean
   icon?: IconType
 }

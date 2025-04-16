@@ -1,0 +1,73 @@
+/* Summary Block Selection Styles */
+.summary-block {
+  position: relative;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+}
+
+/* General selection styles for all content */
+.summary-block [data-selectable="true"],
+.summary-block .user-select-text,
+.summary-block p,
+.summary-block li,
+.summary-block ul,
+.summary-block .summary-content,
+.summary-block .highlights-content,
+.summary-block .next-steps-content {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+  cursor: text !important;
+  pointer-events: auto !important;
+}
+
+/* Fix for selection issues in Firefox */
+.summary-block p::selection,
+.summary-block li::selection,
+.summary-block *::selection {
+  background: rgba(0, 0, 0, 0.1) !important;
+  color: inherit !important;
+}
+
+/* Disable drag-n-drop to avoid interference with selection */
+.summary-block,
+.summary-block * {
+  -webkit-user-drag: none !important;
+  -khtml-user-drag: none !important;
+  -moz-user-drag: none !important;
+  -o-user-drag: none !important;
+  user-drag: none !important;
+}
+
+/* Fix for iOS selection issues */
+@supports (-webkit-touch-callout: none) {
+  .summary-block [data-selectable="true"],
+  .summary-block .user-select-text,
+  .summary-block p,
+  .summary-block li {
+    -webkit-touch-callout: default !important;
+  }
+}
+
+/* Override TipTap's default ProseMirror selection behavior */
+.ProseMirror .summary-block ::selection {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Prevent ProseMirror from interfering with text selection */
+.ProseMirror:focus .summary-block:not(:focus) {
+  pointer-events: auto;
+}
+
+/* Add specific styles for the content sections */
+.summary-content,
+.highlights-content,
+.next-steps-content {
+  isolation: isolate;
+  position: relative;
+  z-index: 1;
+  pointer-events: auto !important;
+}

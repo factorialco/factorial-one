@@ -1,7 +1,7 @@
 import { Calendar } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import { Editor } from "@tiptap/react"
 import { EnhancementOption, FILE_TYPES, resultType, RichTextEditor } from "."
-
 const meta = {
   component: RichTextEditor,
   title: "Rich text/RichTextEditor",
@@ -131,7 +131,16 @@ export const Default: Story = {
     primaryAction: {
       action: {
         label: "Add",
-        onClick: () => alert("Add"),
+        onClick: (editor?: Editor) => {
+          alert("Add2")
+          // serialize the editor content
+          if (editor) {
+            const content = editor.getHTML()
+            const jsonContent = editor.getJSON()
+            console.log(content)
+            console.log(jsonContent)
+          }
+        },
         variant: "default",
       },
       subActions: [
@@ -185,7 +194,7 @@ export const Default: Story = {
     maxCharacters: 10000,
     initialEditorState: {
       content:
-        "<p>There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, <strong>you appeared</strong>. Sleek, fast, and strangely comforting, my text editor. You didn’t just open files — you opened <em>possibilities</em>",
+        "<p>There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, <strong>you appeared</strong>. Sleek, fast, and strangely comforting, my text editor. You didn't just open files — you opened <em>possibilities</em>",
     },
     errorConfig: {
       onClose: () => alert("Close"),

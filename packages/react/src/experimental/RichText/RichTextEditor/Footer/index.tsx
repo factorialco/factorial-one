@@ -4,6 +4,7 @@ import { Editor } from "@tiptap/react"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { EnhanceActivator } from "../Enhance"
+import { SummaryActivator } from "../SummaryBlock/SummaryActivator"
 import { Toolbar, ToolbarDivider } from "../Toolbar"
 import {
   actionType,
@@ -37,6 +38,8 @@ interface FooterProps {
   toolbarLabels: toolbarLabels
   setIsToolbarOpen: (isToolbarOpen: boolean) => void
   isToolbarOpen: boolean
+  onGenerateSummary: () => Promise<void>
+  isLoadingSummary: boolean
 }
 
 const Footer = ({
@@ -55,6 +58,8 @@ const Footer = ({
   disableButtons,
   setIsToolbarOpen,
   isToolbarOpen,
+  onGenerateSummary,
+  isLoadingSummary,
 }: FooterProps) => {
   const [toolbarAnimationComplete, setToolbarAnimationComplete] =
     useState(false)
@@ -167,6 +172,76 @@ const Footer = ({
               />
             </>
           )}
+          <ToolbarDivider />
+          <SummaryActivator
+            editor={editor}
+            onGenerateSummary={onGenerateSummary}
+            isLoading={isLoadingSummary}
+            disableButtons={disableButtons}
+            hideLabel={useLittleMode}
+          />
+          <Button
+            label="Load JSON"
+            onClick={() => {
+              //load hardcoded json into the editor
+              const json = {
+                type: "doc",
+                content: [
+                  {
+                    type: "paragraph",
+                    attrs: {
+                      textAlign: null,
+                    },
+                    content: [
+                      {
+                        type: "text",
+                        text: "There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, ",
+                      },
+                      {
+                        type: "text",
+                        marks: [
+                          {
+                            type: "bold",
+                          },
+                        ],
+                        text: "you appeared",
+                      },
+                      {
+                        type: "text",
+                        text: ". Sleek, fast, and strangely comforting, my text editor. You didn't just open files — you opened ",
+                      },
+                      {
+                        type: "text",
+                        marks: [
+                          {
+                            type: "italic",
+                          },
+                        ],
+                        text: "possibilities",
+                      },
+                    ],
+                  },
+                  {
+                    type: "summaryBlock",
+                    attrs: {
+                      summary: "This is a summary",
+                      highlights: ["highlight1", "highlight2"],
+                      nextSteps: ["step1", "step2"],
+                    },
+                    content: [
+                      {
+                        type: "paragraph",
+                        attrs: {
+                          textAlign: null,
+                        },
+                      },
+                    ],
+                  },
+                ],
+              }
+              editor.chain().focus().insertContent(json).run()
+            }}
+          />
           {maxCharacters && !useLittleMode && (
             <p className="text-sm font-normal text-f1-foreground-secondary">
               {editor.storage.characterCount.characters()}/{maxCharacters}
