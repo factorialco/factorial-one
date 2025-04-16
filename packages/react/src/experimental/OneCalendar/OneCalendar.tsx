@@ -36,41 +36,22 @@ export function OneCalendar({
   const [motionDirection, setMotionDirection] = useState(1)
 
   // Handle navigation
-  const handlePrevious = () => {
+  const navigate = (direction: -1 | 1) => {
     const newDate = new Date(viewDate)
 
     if (view === "day" || view === "week") {
-      newDate.setMonth(newDate.getMonth() - 1)
+      newDate.setMonth(newDate.getMonth() + direction)
     }
 
     if (view === "month") {
-      newDate.setFullYear(newDate.getFullYear() - 1)
+      newDate.setFullYear(newDate.getFullYear() + direction)
     }
 
     if (view === "year") {
-      newDate.setFullYear(newDate.getFullYear() - 10)
+      newDate.setFullYear(newDate.getFullYear() + direction * 10)
     }
 
-    setMotionDirection(-1)
-    setViewDate(newDate)
-  }
-
-  const handleNext = () => {
-    const newDate = new Date(viewDate)
-
-    if (view === "day" || view === "week") {
-      newDate.setMonth(newDate.getMonth() + 1)
-    }
-
-    if (view === "month") {
-      newDate.setFullYear(newDate.getFullYear() + 1)
-    }
-
-    if (view === "year") {
-      newDate.setFullYear(newDate.getFullYear() + 10)
-    }
-
-    setMotionDirection(1)
+    setMotionDirection(direction)
     setViewDate(newDate)
   }
 
@@ -123,7 +104,7 @@ export function OneCalendar({
           </div>
           <div className="flex items-center gap-2">
             <Button
-              onClick={handlePrevious}
+              onClick={() => navigate(-1)}
               variant="outline"
               label={i18n.navigation.previous}
               hideLabel
@@ -132,7 +113,7 @@ export function OneCalendar({
               size="sm"
             />
             <Button
-              onClick={handleNext}
+              onClick={() => navigate(1)}
               variant="outline"
               label={i18n.navigation.next}
               hideLabel
