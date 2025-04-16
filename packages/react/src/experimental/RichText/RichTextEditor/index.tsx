@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import {
   forwardRef,
   useEffect,
+  useId,
   useImperativeHandle,
   useRef,
   useState,
@@ -91,8 +92,7 @@ const RichTextEditorComponent = forwardRef<
   },
   ref
 ) {
-  // Unique id for the editor to render popovers correctly if there are more than 1 editor on the page
-  const editorId = Math.random().toString(36).substring(2, 15)
+  const editorId = useId()
 
   const fileInputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -252,11 +252,12 @@ const RichTextEditorComponent = forwardRef<
     <div
       ref={containerRef}
       id={editorId}
-      className={
+      className={cn(
+        "rich-text-editor-container flex flex-col bg-f1-background",
         isFullscreen
-          ? "rich-text-editor-container fixed inset-0 z-50 flex flex-col bg-f1-background"
-          : "relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background"
-      }
+          ? "fixed inset-0 z-50"
+          : "relative w-full rounded-xl border border-solid border-f1-border"
+      )}
     >
       <Head
         isFullscreen={isFullscreen}
