@@ -27,8 +27,8 @@ export function YearView({
   const today = new Date()
 
   // Check if a value is a DateRange
-  const isDateRange = (value: any): value is DateRange => {
-    return (
+  const isDateRange = (value: unknown): value is DateRange => {
+    return Boolean(
       value && typeof value === "object" && ("from" in value || "to" in value)
     )
   }
