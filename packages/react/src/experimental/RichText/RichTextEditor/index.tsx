@@ -91,6 +91,9 @@ const RichTextEditorComponent = forwardRef<
   },
   ref
 ) {
+  // Unique id for the editor to render popovers correctly if there are more than 1 editor on the page
+  const editorId = Math.random().toString(36).substring(2, 15)
+
   const fileInputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const editorContentContainerRef = useRef<HTMLDivElement>(null)
@@ -248,10 +251,10 @@ const RichTextEditorComponent = forwardRef<
   const editorContent = (
     <div
       ref={containerRef}
-      id="rich-text-editor-container"
+      id={editorId}
       className={
         isFullscreen
-          ? "fixed inset-0 z-50 flex flex-col bg-f1-background"
+          ? "rich-text-editor-container fixed inset-0 z-50 flex flex-col bg-f1-background"
           : "relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background"
       }
     >
@@ -378,6 +381,7 @@ const RichTextEditorComponent = forwardRef<
         />
 
         <EditorBubbleMenu
+          editorId={editorId}
           editor={editor}
           disableButtons={disableAllButtons}
           toolbarLabels={toolbarLabels}
