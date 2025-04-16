@@ -36,57 +36,48 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
     ref
   ) => {
     const CustomButton = (
-      <div
-        className="relative inline-block"
+      <Button
+        ref={ref}
+        variant="ghost"
+        size="md"
         onClick={(e) => {
-          if (!disabled && e.currentTarget === e.target) {
+          e.preventDefault()
+          if (!disabled) {
             onClick()
           }
         }}
+        className={cn(
+          "flex items-center gap-1 border border-solid font-medium leading-tight shadow-none transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100 [&>button]:m-[-1px] [&>button]:aspect-square [&>button]:px-0",
+          active
+            ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
+            : "border-f1-background bg-transparent hover:border-f1-background-secondary hover:bg-f1-background-secondary-hover",
+          showLabel && "w-full items-center justify-start px-2"
+        )}
+        disabled={disabled}
+        aria-label={label}
+        {...props}
       >
-        <Button
-          ref={ref}
-          variant="outline"
-          size="md"
-          onClick={(e) => {
-            e.preventDefault()
-            if (!disabled) {
-              onClick()
-            }
-          }}
-          className={cn(
-            "flex aspect-square items-center transition-all active:scale-90 motion-reduce:transition-none motion-reduce:active:scale-100",
+        <Icon
+          icon={icon}
+          className={
             active
-              ? "border-f1-border-selected bg-f1-background-selected hover:border-f1-border-selected-bold"
-              : "border-none bg-transparent hover:bg-f1-background-secondary-hover",
-            showLabel ? "w-full items-center justify-start px-2" : "p-0"
-          )}
-          disabled={disabled}
-          aria-label={label}
-          {...props}
-        >
-          <Icon
-            icon={icon}
-            className={
-              active
-                ? "text-f1-icon-selected"
-                : mode === "dark"
-                  ? "text-f1-foreground-inverse"
-                  : "text-f1-foreground"
-            }
-          />
-          {showLabel && (
-            <span
-              className={cn(
-                "text-sm",
-                active && "text-f1-background-selected-bold"
-              )}
-            >
-              {label}
-            </span>
-          )}
-        </Button>
-      </div>
+              ? "text-f1-icon-selected"
+              : mode === "dark"
+                ? "text-f1-foreground-inverse"
+                : "text-f1-foreground"
+          }
+        />
+        {showLabel && (
+          <span
+            className={cn(
+              "text-sm",
+              active && "text-f1-background-selected-bold"
+            )}
+          >
+            {label}
+          </span>
+        )}
+      </Button>
     )
 
     return tooltip && mode === "light" ? (

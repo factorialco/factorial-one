@@ -1,21 +1,26 @@
 import { Button } from "@/components/Actions/Button"
-import { enhanceLabelsType } from "@/experimental/exports"
+import { enhanceLabelsType, lastIntentType } from "@/experimental/exports"
 import { Check, Cross, Reset } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
+import { Editor } from "@tiptap/react"
 import { ToolbarDivider } from "../../Toolbar"
 
 interface AcceptChangesProps {
-  onAccept: () => void
-  onReject: () => void
-  onRepeat: () => void
   labels?: enhanceLabelsType
+  setLastIntent: (lastIntent: lastIntentType) => void
+  lastIntent: lastIntentType
+  setIsAcceptChangesOpen: (isAcceptChangesOpen: boolean) => void
+  editor: Editor
+  handleEnhanceWithAI: (selectedIntent?: string, customIntent?: string) => void
 }
 
 const AcceptChanges = ({
-  onAccept,
-  onReject,
-  onRepeat,
   labels,
+  setLastIntent,
+  lastIntent,
+  setIsAcceptChangesOpen,
+  editor,
+  handleEnhanceWithAI,
 }: AcceptChangesProps) => {
   const i18n = useI18n()
 
@@ -25,7 +30,10 @@ const AcceptChanges = ({
         label={labels?.rejectChangesButtonLabel || i18n.actions.cancel}
         onClick={(e) => {
           e.preventDefault()
-          onReject()
+          editor.chain().focus().undo().run()
+          setIsAcceptChangesOpen(false)
+          editor.setEditable(true)
+          setLastIntent(null)
         }}
         size="sm"
         variant="outline"
@@ -37,7 +45,11 @@ const AcceptChanges = ({
         label={labels?.repeatButtonLabel || i18n.collections.filters.retry}
         onClick={(e) => {
           e.preventDefault()
-          onRepeat()
+          editor.chain().focus().undo().run()
+          handleEnhanceWithAI(
+            lastIntent?.selectedIntent,
+            lastIntent?.customIntent
+          )
         }}
         size="sm"
         variant="outline"
@@ -51,7 +63,9 @@ const AcceptChanges = ({
         label={labels?.acceptChangesButtonLabel || i18n.actions.save}
         onClick={(e) => {
           e.preventDefault()
-          onAccept()
+          setIsAcceptChangesOpen(false)
+          editor.setEditable(true)
+          setLastIntent(null)
         }}
         size="sm"
         variant="default"
