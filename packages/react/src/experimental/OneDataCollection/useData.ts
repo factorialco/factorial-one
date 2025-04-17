@@ -271,7 +271,7 @@ export function useData<
 
   const data = useMemo(() => {
     // Group the data if grouping is enabled
-    if (currentGrouping && grouping) {
+    if (currentGrouping && currentGrouping.field && grouping) {
       const groupedData = groupBy(rawData, currentGrouping.field)
 
       return {

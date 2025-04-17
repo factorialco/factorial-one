@@ -5,6 +5,7 @@ import {
   FilterDefinition,
   FiltersState,
   GroupingDefinition,
+  GroupingState,
   OnBulkActionCallback,
   OneDataCollection,
   OnSelectItemsCallback,
@@ -380,6 +381,7 @@ export const ExampleComponent = ({
   frozenColumns = 0,
   selectable,
   bulkActions,
+  currentGrouping,
   grouping,
   navigationFilters,
   totalItemSummary,
@@ -396,19 +398,24 @@ export const ExampleComponent = ({
     primary: BulkActionDefinition[]
     secondary?: BulkActionDefinition[]
   }
-  grouping?: GroupingDefinition<(typeof mockUsers)[number]>
   onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
   navigationFilters?: NavigationFiltersDefinition
   totalItemSummary?: (totalItems: number) => string
+  grouping?: GroupingDefinition<(typeof mockUsers)[number]>
+  currentGrouping?: GroupingState<
+    GroupingDefinition<(typeof mockUsers)[number]>
+  >
 }) => {
   const dataSource = useDataSource({
     filters,
-    grouping,
     navigationFilters,
     presets: usePresets ? filterPresets : undefined,
     sortings,
     itemActions: (item) => [
+    grouping,
+    currentGrouping: currentGrouping ?? null,
+    itemActions: (item: MockUser) => [
       {
         label: "Edit",
         icon: Pencil,

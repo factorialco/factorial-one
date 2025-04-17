@@ -61,8 +61,41 @@ export const WithGrouping: Story = {
   render: () => (
     <ExampleComponent
       frozenColumns={2}
+      currentGrouping={{
+        field: "role",
+        order: "desc",
+      }}
       grouping={{
         mandatory: true,
+        groupBy: {
+          department: {
+            name: "Department",
+            label: (groupId) => groupId,
+            itemCount: async (groupId) => {
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+              return mockUsers.filter((user) => user.department === groupId)
+                .length
+            },
+          },
+          role: {
+            name: "Role",
+            label: (groupId) => groupId,
+            itemCount: (groupId) => {
+              return mockUsers.filter((user) => user.role === groupId).length
+            },
+          },
+        },
+      }}
+    />
+  ),
+}
+
+// Examples with multiple visualizations
+export const WithOptionalGrouping: Story = {
+  render: () => (
+    <ExampleComponent
+      frozenColumns={2}
+      grouping={{
         groupBy: {
           department: {
             name: "Department",
