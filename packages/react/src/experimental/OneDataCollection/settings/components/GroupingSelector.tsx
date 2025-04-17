@@ -8,7 +8,7 @@ type GroupingSelectorProps = {
   grouping: GroupingDefinition<RecordType>
   currentGrouping: GroupingState<GroupingDefinition<RecordType>>
   onGroupingChange: (
-    groupingState: GroupingState<GroupingDefinition<RecordType>>
+    groupingState: GroupingState<GroupingDefinition<RecordType>> | null
   ) => void
 }
 
@@ -22,7 +22,7 @@ export const GroupingSelector = ({
       ? [
           {
             label: "No grouping",
-            value: "",
+            value: null,
           },
         ]
       : []),
@@ -39,29 +39,35 @@ export const GroupingSelector = ({
         <div className="shrink grow">
           <Select
             options={groupingOptions}
-            value={currentGrouping?.field}
-            onChange={(value: string) =>
-              onGroupingChange({
-                field: value,
-                order: currentGrouping.order,
-              })
+            value={currentGrouping?.field ?? null}
+            onChange={(value: string | null) =>
+              onGroupingChange(
+                value !== null
+                  ? {
+                      field: value,
+                      order: currentGrouping?.order ?? "asc",
+                    }
+                  : null
+              )
             }
           />
         </div>
-        <div>
-          <Button
-            hideLabel
-            label="Toggle sort direction"
-            variant="outline"
-            icon={currentGrouping?.order === "asc" ? ArrowUp : ArrowDown}
-            onClick={() =>
-              onGroupingChange({
-                field: currentGrouping.field,
-                order: currentGrouping.order === "asc" ? "desc" : "asc",
-              })
-            }
-          />
-        </div>
+        {currentGrouping?.field && (
+          <div>
+            <Button
+              hideLabel
+              label="Toggle sort direction"
+              variant="outline"
+              icon={currentGrouping?.order === "asc" ? ArrowUp : ArrowDown}
+              onClick={() =>
+                onGroupingChange({
+                  field: currentGrouping.field,
+                  order: currentGrouping.order === "asc" ? "desc" : "asc",
+                })
+              }
+            />
+          </div>
+        )}
       </div>
     </div>
   )
