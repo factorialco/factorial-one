@@ -45608,7 +45608,7 @@ const DG = ({
         animate: { height: "auto", opacity: 1, y: 0 },
         exit: { height: 0, opacity: 0, y: -20 },
         transition: { duration: 0.3 },
-        children: /* @__PURE__ */ d("div", { className: "scrollbar-macos flex w-full items-end gap-2 overflow-x-auto py-2", children: e.map((a, s) => /* @__PURE__ */ d(
+        children: /* @__PURE__ */ d("div", { className: "scrollbar-macos flex w-full items-end gap-2 overflow-x-auto pt-2", children: e.map((a, s) => /* @__PURE__ */ d(
           $_,
           {
             file: a,
