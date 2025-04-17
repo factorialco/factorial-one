@@ -11,7 +11,7 @@ import {
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { ReactNode } from "react"
 import { PropertyDefinition } from "../../property-render"
-import { VisualizationType } from "../../settings/components/VisualizationSelector"
+import { VisualizationType } from "../../Settings/components/VisualizationSelector"
 
 /**
  * The renderer function to use for a property.
