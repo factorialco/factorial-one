@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { VisualizationType } from "./Settings/components/VisualizationSelector"
+import { VisualizationType } from "./visualizations/collection/types"
 import {
   PropertyRendererMetadata,
   propertyRenderers,

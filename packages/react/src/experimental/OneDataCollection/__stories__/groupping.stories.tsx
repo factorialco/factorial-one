@@ -129,9 +129,12 @@ export const WithPaginationAndGrouping: Story = {
       groupBy: {
         department: {
           name: "Department",
-          label: (groupId) => groupId,
-          itemCount: async (groupId) => {
+          label: async (groupId) => {
             await new Promise((resolve) => setTimeout(resolve, 1000))
+            return groupId
+          },
+          itemCount: async (groupId) => {
+            await new Promise((resolve) => setTimeout(resolve, 1500))
             return paginatedMockUsers.filter(
               (user) => user.department === groupId
             ).length
