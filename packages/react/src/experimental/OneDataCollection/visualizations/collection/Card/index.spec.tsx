@@ -59,7 +59,7 @@ const createTestSource = (
       return data
     },
   },
-  currentGrouping: null,
+  currentGrouping: undefined,
   setCurrentGrouping: vi.fn(),
 })
 

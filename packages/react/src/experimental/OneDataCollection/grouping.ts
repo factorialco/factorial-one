@@ -9,7 +9,7 @@ export type GroupingDefinition<R extends RecordType> = {
   /** Whether grouping is mandatory or the user can chose not to group */
   mandatory?: boolean
   groupBy: {
-    [K in keyof R]?: {
+    [K in keyof R]: {
       /** The label for the grouping */
       name: string
       /** The item count for the grouping */

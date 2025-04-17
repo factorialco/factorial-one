@@ -6,11 +6,13 @@ import { RecordType } from "../../types"
 
 type GroupingSelectorProps = {
   grouping: GroupingDefinition<RecordType>
-  currentGrouping: GroupingState<GroupingDefinition<RecordType>>
+  currentGrouping: GroupingState<GroupingDefinition<RecordType>> | undefined
   onGroupingChange: (
-    groupingState: GroupingState<GroupingDefinition<RecordType>> | null
+    groupingState: GroupingState<GroupingDefinition<RecordType>> | undefined
   ) => void
 }
+
+const EmptyGroupingValue = "__no-grouping__"
 
 export const GroupingSelector = ({
   grouping,
@@ -22,11 +24,11 @@ export const GroupingSelector = ({
       ? [
           {
             label: "No grouping",
-            value: null,
+            value: EmptyGroupingValue,
           },
         ]
       : []),
-    ...Object.entries(grouping.groupBy).map(([key, value]) => ({
+    ...Object.entries(grouping.groupBy || {}).map(([key, value]) => ({
       label: value.name,
       value: key,
     })),
@@ -39,15 +41,15 @@ export const GroupingSelector = ({
         <div className="shrink grow">
           <Select
             options={groupingOptions}
-            value={currentGrouping?.field ?? null}
-            onChange={(value: string | null) =>
+            value={currentGrouping?.field ?? EmptyGroupingValue}
+            onChange={(value: string) =>
               onGroupingChange(
-                value !== null
+                value !== EmptyGroupingValue
                   ? {
                       field: value,
                       order: currentGrouping?.order ?? "asc",
                     }
-                  : null
+                  : undefined
               )
             }
           />
