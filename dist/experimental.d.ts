@@ -1233,12 +1233,12 @@ export declare const FILE_TYPES: {
     readonly MARKDOWN: "markdown";
 };
 
-declare interface FileAction {
+export declare type FileAction = {
     icon?: IconType;
     label: string;
     onClick: () => void;
     critical?: boolean;
-}
+};
 
 export declare const FileAvatar: ForwardRefExoticComponent<Omit<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
 size?: sizes_2[number];
