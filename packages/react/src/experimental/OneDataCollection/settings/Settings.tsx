@@ -23,7 +23,7 @@ type SettingsProps = {
   currentVisualization: number
   onVisualizationChange: (index: number) => void
   grouping: GroupingDefinition<RecordType>
-  currentGrouping: GroupingState<GroupingDefinition<RecordType>>
+  currentGrouping: GroupingState<GroupingDefinition<RecordType>> | null
   onGroupingChange: (
     groupingState: GroupingState<GroupingDefinition<RecordType>>
   ) => void
@@ -48,7 +48,9 @@ export const Settings = ({
     onVisualizationChange(index)
   }
 
-  const handleGroupingChange = (grouping: GroupingDefinition<RecordType>) => {
+  const handleGroupingChange = (
+    grouping: GroupingState<GroupingDefinition<RecordType>> | null
+  ) => {
     onGroupingChange(grouping)
   }
 
