@@ -9,7 +9,7 @@ import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
-interface FileAction {
+type FileAction = {
   icon?: IconType
   label: string
   onClick: () => void
@@ -78,3 +78,4 @@ const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
 FileItem.displayName = "FileItem"
 
 export { FileItem }
+export type { FileAction }
