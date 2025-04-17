@@ -73,7 +73,7 @@ const createTestSource = (
       return data
     },
   },
-  currentGrouping: null,
+  currentGrouping: undefined,
   setCurrentGrouping: vi.fn(),
 })
 
@@ -270,7 +270,7 @@ describe("TableCollection", () => {
       setCurrentSearch: vi.fn(),
       isLoading: false,
       setIsLoading: vi.fn(),
-      currentGrouping: null,
+      currentGrouping: undefined,
       setCurrentGrouping: vi.fn(),
       dataAdapter: {
         paginationType: "pages",
