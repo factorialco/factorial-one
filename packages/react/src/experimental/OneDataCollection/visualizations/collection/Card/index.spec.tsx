@@ -67,7 +67,7 @@ const createTestSource = (
       return data
     },
   },
-  currentGrouping: null,
+  currentGrouping: undefined,
   setCurrentGrouping: vi.fn(),
 })
 
@@ -301,6 +301,8 @@ describe("CardCollection", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
+        currentGrouping: undefined,
+        setCurrentGrouping: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           perPage: 10,
@@ -356,6 +358,8 @@ describe("CardCollection", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
+        currentGrouping: undefined,
+        setCurrentGrouping: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           fetchData: async () => ({

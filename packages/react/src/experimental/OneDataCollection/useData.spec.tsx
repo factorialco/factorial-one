@@ -10,6 +10,7 @@ import type {
   BaseFetchOptions,
   BaseResponse,
   DataSource,
+  GroupingDefinition,
   PaginatedDataAdapter,
   PaginatedResponse,
   RecordType,
@@ -99,7 +100,7 @@ const createMockDataSource = (
     setCurrentSearch: vi.fn(),
     isLoading: false,
     setIsLoading: vi.fn(),
-    currentGrouping: null,
+    currentGrouping: undefined,
     setCurrentGrouping: vi.fn(),
   }
 }
@@ -377,7 +378,7 @@ describe("useData", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
-        currentGrouping: null,
+        currentGrouping: undefined,
         setCurrentGrouping: vi.fn(),
       }
 
