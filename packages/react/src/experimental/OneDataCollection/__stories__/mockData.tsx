@@ -4,6 +4,7 @@ import {
   FilterDefinition,
   FiltersState,
   GroupingDefinition,
+  GroupingState,
   OnBulkActionCallback,
   OneDataCollection,
   OnSelectItemsCallback,
@@ -289,6 +290,7 @@ export const ExampleComponent = ({
   frozenColumns = 0,
   selectable,
   bulkActions,
+  currentGrouping,
   grouping,
 }: {
   useObservable?: boolean
@@ -306,6 +308,9 @@ export const ExampleComponent = ({
   onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
   grouping?: GroupingDefinition<(typeof mockUsers)[number]>
+  currentGrouping?: GroupingState<
+    GroupingDefinition<(typeof mockUsers)[number]>
+  >
 }) => {
   type MockUser = (typeof mockUsers)[number]
 
@@ -314,10 +319,7 @@ export const ExampleComponent = ({
     presets: usePresets ? filterPresets : undefined,
     sortings,
     grouping,
-    currentGrouping: {
-      field: "role",
-      order: "desc",
-    },
+    currentGrouping: currentGrouping ?? null,
     itemActions: (item: MockUser) => [
       {
         label: "Edit",
