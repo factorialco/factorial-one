@@ -16,6 +16,8 @@ import {
   SortOrder,
 } from "./sortings"
 import { DataError } from "./useData"
+export * from "./grouping"
+export * from "./sortings"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
