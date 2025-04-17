@@ -61,7 +61,7 @@ const FileList = ({
             exit={{ height: 0, opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="scrollbar-macos flex w-full items-end gap-2 overflow-x-auto py-2">
+            <div className="scrollbar-macos flex w-full items-end gap-2 overflow-x-auto pt-2">
               {files.map((file, index) => (
                 <FileItem
                   key={`${file.name}-${index}`}
