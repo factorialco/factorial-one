@@ -319,8 +319,12 @@ export const filterUsers = <
 >(
   users: T[],
   filterValues: FiltersState<typeof filters>,
-  sortingState: SortingsStateMultiple<typeof sortings>,
   navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
+  sortingState: SortingsStateMultiple<
+    T,
+    typeof sortings,
+    GroupingDefinition<T>
+  >,
   search?: string
 ) => {
   let filteredUsers = [...users]
@@ -336,7 +340,7 @@ export const filterUsers = <
   }
 
   if (sortingState) {
-    ;[sortingState].forEach(({ field, order }) => {
+    sortingState.forEach(({ field, order }) => {
       filteredUsers = filteredUsers.sort((a, b) => {
         const aValue = a[field]
         const bValue = b[field]
@@ -413,11 +417,12 @@ export const createObservableDataFetch = (delay = 0) => {
   return ({
     filters,
     sortings: sortingsState,
-    navigationFilters,
   }: BaseFetchOptions<
+    (typeof mockUsers)[number],
     FiltersType,
     typeof sortings,
     NavigationFiltersDefinition
+    GroupingDefinition<(typeof mockUsers)[number]>
   >) =>
     new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
       observer.next({
@@ -449,11 +454,12 @@ export const createPromiseDataFetch = (delay = 500) => {
     filters,
     sortings: sortingsState,
     search,
-    navigationFilters,
   }: BaseFetchOptions<
+    (typeof mockUsers)[number],
     FiltersType,
     typeof sortings,
     NavigationFiltersDefinition
+    GroupingDefinition<(typeof mockUsers)[number]>
   >) =>
     new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
@@ -511,8 +517,9 @@ export const ExampleComponent = ({
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
   navigationFilters?: NavigationFiltersDefinition
   totalItemSummary?: (totalItems: number) => string
-  grouping?: GroupingDefinition<(typeof mockUsers)[number]>
+  grouping?: GroupingDefinition<(typeof mockUsers)[number]> | undefined
   currentGrouping?: GroupingState<
+    (typeof mockUsers)[number],
     GroupingDefinition<(typeof mockUsers)[number]>
   >
 }) => {
@@ -641,7 +648,7 @@ export function createDataAdapter<
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
-    sortingsState: SortingsStateMultiple<TSortings, TGrouping>,
+    sortingsState: SortingsStateMultiple<TRecord, TSortings, TGrouping>,
     pagination?: { currentPage?: number; perPage?: number }
   ): TRecord[] | PaginatedResponse<TRecord> => {
     let filteredRecords = [...records]
@@ -673,49 +680,47 @@ export function createDataAdapter<
 
     // Apply sorting if available
     if (sortingsState) {
-      Object.entries(sortingsState)
-        .reverse()
-        .forEach(([field, order]) => {
-          const sortField = field as keyof TRecord
-          const sortDirection = order
+      sortingsState.reverse().forEach(({ field, order }) => {
+        const sortField = field as keyof TRecord
+        const sortDirection = order
 
-          filteredRecords.sort((a, b) => {
-            const aValue = a[sortField]
-            const bValue = b[sortField]
+        filteredRecords.sort((a, b) => {
+          const aValue = a[sortField]
+          const bValue = b[sortField]
 
-            // Handle string comparisons
-            if (typeof aValue === "string" && typeof bValue === "string") {
-              return sortDirection === "asc"
-                ? aValue.localeCompare(bValue)
-                : bValue.localeCompare(aValue)
-            }
-
-            // Handle number comparisons
-            if (typeof aValue === "number" && typeof bValue === "number") {
-              return sortDirection === "asc" ? aValue - bValue : bValue - aValue
-            }
-
-            // Handle boolean comparisons
-            if (typeof aValue === "boolean" && typeof bValue === "boolean") {
-              return sortDirection === "asc"
-                ? aValue === bValue
-                  ? 0
-                  : aValue
-                    ? 1
-                    : -1
-                : aValue === bValue
-                  ? 0
-                  : aValue
-                    ? -1
-                    : 1
-            }
-
-            // Default case: use string representation
+          // Handle string comparisons
+          if (typeof aValue === "string" && typeof bValue === "string") {
             return sortDirection === "asc"
-              ? String(aValue).localeCompare(String(bValue))
-              : String(bValue).localeCompare(String(aValue))
-          })
+              ? aValue.localeCompare(bValue)
+              : bValue.localeCompare(aValue)
+          }
+
+          // Handle number comparisons
+          if (typeof aValue === "number" && typeof bValue === "number") {
+            return sortDirection === "asc" ? aValue - bValue : bValue - aValue
+          }
+
+          // Handle boolean comparisons
+          if (typeof aValue === "boolean" && typeof bValue === "boolean") {
+            return sortDirection === "asc"
+              ? aValue === bValue
+                ? 0
+                : aValue
+                  ? 1
+                  : -1
+              : aValue === bValue
+                ? 0
+                : aValue
+                  ? -1
+                  : 1
+          }
+
+          // Default case: use string representation
+          return sortDirection === "asc"
+            ? String(aValue).localeCompare(String(bValue))
+            : String(bValue).localeCompare(String(aValue))
         })
+      })
     }
 
     // Apply pagination if needed

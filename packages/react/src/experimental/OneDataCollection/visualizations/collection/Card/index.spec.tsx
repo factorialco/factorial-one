@@ -72,7 +72,7 @@ const createTestSource = (
   currentNavigationFilters: {},
   setCurrentNavigationFilters: vi.fn(),
   navigationFilters: undefined,
-  currentGrouping: null,
+  currentGrouping: undefined,
   setCurrentGrouping: vi.fn(),
 })
 
@@ -351,6 +351,8 @@ describe("CardCollection", () => {
         currentNavigationFilters: {},
         setCurrentNavigationFilters: vi.fn(),
         navigationFilters: undefined,
+        currentGrouping: undefined,
+        setCurrentGrouping: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           perPage: 10,
@@ -415,6 +417,8 @@ describe("CardCollection", () => {
         currentNavigationFilters: {},
         setCurrentNavigationFilters: vi.fn(),
         navigationFilters: undefined,
+        currentGrouping: undefined,
+        setCurrentGrouping: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           fetchData: async () => ({
