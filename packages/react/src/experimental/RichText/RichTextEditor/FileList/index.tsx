@@ -66,9 +66,13 @@ const FileList = ({
                 <FileItem
                   key={`${file.name}-${index}`}
                   file={file}
-                  onAction={() =>
-                    handleRemoveFile(index, files, filesConfig, setFiles)
-                  }
+                  actions={[
+                    {
+                      label: "Delete",
+                      onClick: () =>
+                        handleRemoveFile(index, files, filesConfig, setFiles),
+                    },
+                  ]}
                   disabled={disabled}
                 />
               ))}

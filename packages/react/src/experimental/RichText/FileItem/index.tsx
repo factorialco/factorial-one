@@ -1,60 +1,77 @@
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { FileAvatar } from "@/experimental/exports"
+import {
+  DropdownInternal,
+  DropdownItem,
+} from "@/experimental/Navigation/Dropdown/internal"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
+interface FileAction {
+  icon?: IconType
+  label: string
+  onClick: () => void
+  critical?: boolean
+}
+
 interface FileItemProps extends React.HTMLAttributes<HTMLDivElement> {
   file: File
-  onAction?: () => void
-  actionIcon?: IconType
+  actions?: FileAction[]
   disabled?: boolean
 }
 
 const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
-  (
-    {
-      file,
-      onAction,
-      actionIcon = CrossedCircle,
-      disabled = false,
-      className,
-      ...props
-    },
-    ref
-  ) => {
+  ({ file, actions = [], disabled = false, className, ...props }, ref) => {
+    const hasActions = actions.length > 0
+    const singleAction = actions.length === 1 ? actions[0] : null
+
+    const dropdownItems: DropdownItem[] = actions.map((action) => ({
+      label: action.label,
+      icon: action.icon,
+      critical: action.critical,
+      onClick: disabled ? undefined : action.onClick,
+    }))
+
     return (
-      <Tooltip label={file.name}>
-        <div
-          ref={ref}
-          className={cn(
-            "flex w-fit max-w-48 flex-row items-center gap-1.5 rounded-md bg-f1-background-tertiary p-0.5 pr-2",
-            className
-          )}
-          {...props}
-        >
-          <FileAvatar file={file} />
+      <div
+        ref={ref}
+        className={cn(
+          "flex w-fit max-w-40 flex-row items-center gap-2 overflow-hidden rounded-md bg-f1-background-tertiary p-0.5 pr-2",
+          className
+        )}
+        {...props}
+      >
+        <FileAvatar file={file} />
+        <Tooltip label={file.name}>
           <p
             title={file.name}
             className="text-neutral-1000 grow overflow-hidden truncate text-ellipsis text-sm font-medium"
           >
             {file.name}
           </p>
-
-          {onAction && (
+        </Tooltip>
+        {hasActions &&
+          (singleAction ? (
             <Icon
               size="md"
-              icon={actionIcon}
+              icon={singleAction.icon ?? CrossedCircle}
               className={cn(
                 "cursor-pointer text-f1-icon",
-                disabled ? "cursor-not-allowed" : "hover:text-f1-icon-bold"
+                disabled ? "cursor-not-allowed" : "hover:text-f1-icon-bold",
+                singleAction.critical && "text-f1-foreground-critical"
               )}
-              onClick={disabled ? undefined : onAction}
+              onClick={disabled ? undefined : singleAction.onClick}
             />
-          )}
-        </div>
-      </Tooltip>
+          ) : (
+            <DropdownInternal
+              items={dropdownItems}
+              size="sm"
+              {...(disabled ? { "data-disabled": "true" } : {})}
+            />
+          ))}
+      </div>
     )
   }
 )
