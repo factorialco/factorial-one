@@ -1,13 +1,9 @@
+import { useI18n } from "@/lib/providers/i18n"
 import { useMemo, useState } from "react"
 import { DropdownInternal } from "../../../experimental/Navigation/Dropdown/internal"
 import { ChevronDown } from "../../../icons/app"
-import { cn, focusRing } from "../../../lib/utils.ts"
 import { IconType } from "../../Utilities/Icon"
 import { ButtonInternal, ButtonInternalProps } from "../Button/internal"
-import {
-  internalButtonVariants,
-  internalButtonVariantsStyles,
-} from "./theme.ts"
 import { OneDropdownButtonSize, OneDropdownButtonVariant } from "./types.ts"
 
 export type OneDropdownButtonItem<T = string> = {
@@ -16,9 +12,8 @@ export type OneDropdownButtonItem<T = string> = {
   icon?: IconType
 }
 
-export type OneDropdownButtonProps<T = string> = Pick<
-  ButtonInternalProps,
-  "disabled" | "loading"
+export type OneDropdownButtonProps<T = string> = Partial<
+  Pick<ButtonInternalProps, "disabled" | "loading">
 > & {
   size?: OneDropdownButtonSize
   items: OneDropdownButtonItem<T>[]
@@ -33,6 +28,8 @@ const OneDropdownButton = ({
   value,
   ...props
 }: OneDropdownButtonProps) => {
+  const t = useI18n()
+
   const [localValue] = useState(value || items[0].value)
 
   const selectedItem = useMemo(
@@ -59,38 +56,27 @@ const OneDropdownButton = ({
 
   return (
     selectedItem && (
-      <>
+      <div className="flex items-center">
         <ButtonInternal
           onClick={handleClick}
           icon={selectedItem.icon}
           label={selectedItem.label}
+          data-testid="button-main"
           {...props}
           appendButton={
             <DropdownInternal items={dropdownItems} align="end">
-              <a
-                className={cn(
-                  "h-full",
-                  internalButtonVariants({
-                    size: props.size,
-                  }),
-                  "flex",
-                  "hover:bg-[#0002]",
-                  "rounded-e",
-                  "align-middle",
-                  "justify-center",
-                  focusRing()
-                )}
-                style={internalButtonVariantsStyles(props.variant)}
-                aria-label="Open dropdown"
-                tabIndex={props.disabled ? -1 : 0}
-                role="combobox"
-              >
-                <ChevronDown></ChevronDown>
-              </a>
+              <ButtonInternal
+                variant={props.variant}
+                size={props.size}
+                label={t.actions.more}
+                icon={ChevronDown}
+                hideLabel
+                data-testid="button-menu"
+              />
             </DropdownInternal>
           }
-        ></ButtonInternal>
-      </>
+        />
+      </div>
     )
   )
 }

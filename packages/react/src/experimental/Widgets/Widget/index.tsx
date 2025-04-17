@@ -32,7 +32,12 @@ export interface WidgetProps {
     subtitle?: string
     comment?: string
     canBeBlurred?: boolean
-    link?: { title: string; url: string; onClick?: () => void; icon?: IconType }
+    link?: {
+      title: string
+      url?: string
+      onClick?: () => void
+      icon?: IconType
+    }
     count?: number
   }
   action?: ButtonProps
@@ -93,6 +98,9 @@ const Container = forwardRef<
         fullHeight ? "h-full" : "",
         "relative flex gap-3 border-f1-border-secondary"
       )}
+      style={{
+        backgroundColor: "hsl(var(--white-40))",
+      }}
       ref={ref}
     >
       {header && (

@@ -59,7 +59,7 @@ describe("ActionsDropdown", () => {
     render(<ActionsDropdown item={mockItem} actions={mockActions} />)
 
     expect(screen.getByTestId("dropdown")).toBeInTheDocument()
-    expect(screen.getByTestId("button")).toBeInTheDocument()
+    expect(screen.getByRole("button")).toBeInTheDocument()
     expect(screen.getByTestId("ellipsis-icon")).toBeInTheDocument()
 
     // Verify items are passed to dropdown

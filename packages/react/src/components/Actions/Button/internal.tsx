@@ -8,29 +8,30 @@ import { Icon, IconType } from "../../Utilities/Icon"
 export type ButtonInternalProps = Pick<
   ComponentProps<typeof ShadcnButton>,
   "variant" | "size" | "disabled" | "type" | "round"
-> & {
-  onClick?: (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => void | Promise<unknown>
-  label: string
-  loading?: boolean
-  icon?: IconType
-  emoji?: string
-  hideLabel?: boolean
-  size?: "sm" | "md" | "lg"
-  append?: React.ReactNode
-  appendButton?: React.ReactNode
-}
+> &
+  DataAttributes & {
+    onClick?: (
+      event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => void | Promise<unknown>
+    label: string
+    loading?: boolean
+    icon?: IconType
+    emoji?: string
+    hideLabel?: boolean
+    size?: "sm" | "md" | "lg"
+    append?: React.ReactNode
+    appendButton?: React.ReactNode
+  }
 
 const iconVariants = cva({
   base: "-ml-0.5 transition-colors",
   variants: {
     variant: {
-      default: "text-f1-icon-inverse/80",
+      default: "text-f1-icon-inverse dark:text-f1-icon-bold/80",
       outline: "text-f1-icon",
       neutral: "text-f1-icon",
       critical:
-        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse/80",
+        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold/80",
       ghost: "text-f1-icon",
       promote: "text-f1-icon",
     },
@@ -44,10 +45,11 @@ const iconOnlyVariants = cva({
   base: "transition-colors",
   variants: {
     variant: {
-      default: "text-f1-icon-inverse",
+      default: "text-f1-icon-inverse dark:text-f1-icon-bold",
       outline: "text-f1-icon-bold",
       neutral: "text-f1-icon-bold",
-      critical: "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse",
+      critical:
+        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold",
       ghost: "text-f1-icon-bold",
       promote: "text-f1-icon-bold",
     },

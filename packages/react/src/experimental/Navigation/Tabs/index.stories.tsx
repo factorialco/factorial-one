@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { expect, within } from "@storybook/test"
 import { TabItem, Tabs } from "./index"
 
 const tabItems: TabItem[] = [
@@ -6,7 +7,7 @@ const tabItems: TabItem[] = [
   { label: "Courses", href: "/courses" },
   { label: "Categories", href: "/categories" },
   { label: "Catalog", href: "/catalog" },
-  { label: "Requests", href: "/requests" },
+  { label: "Requests", href: "/requests", "data-test": "foo" },
 ]
 
 const secondaryTabItems = [
@@ -36,6 +37,12 @@ export const Primary: Story = {
   args: {
     tabs: tabItems,
     secondary: false,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    const link = canvas.getByRole("link", { name: /Requests/i })
+    await expect(link.dataset.test).toBe("foo")
   },
 }
 
@@ -84,5 +91,20 @@ export const Embedded: Story = {
   args: {
     tabs: tabItems,
     embedded: true,
+  },
+}
+
+const tabItemsWithIds: TabItem[] = [
+  { label: "Overview", id: "overview", index: true },
+  { label: "Courses", id: "courses" },
+  { label: "Categories", id: "categories" },
+  { label: "Catalog", id: "catalog" },
+  { label: "Requests", id: "requests", "data-test": "foo" },
+]
+
+export const WithIds: Story = {
+  args: {
+    tabs: tabItemsWithIds,
+    activeTabId: "overview",
   },
 }

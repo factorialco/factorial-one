@@ -1,7 +1,8 @@
 "use client"
 
+import { Skeleton } from "@/ui/skeleton"
 import { motion } from "framer-motion"
-import { ReactElement } from "react"
+import { ReactElement, useEffect, useMemo, useState } from "react"
 import { Chip } from "../../../OneChip"
 import type {
   FilterValue,
@@ -39,28 +40,49 @@ function InFilterButton<T>({
   onSelect,
   onRemove,
 }: InFilterButtonProps<T>) {
-  const selectedValues = value ?? []
-  if (selectedValues.length === 0) return null
+  const selectedValues = useMemo(() => value ?? [], [value])
+  const [label, setLabel] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getSelectedOptionLabel = (selectedValue: T): string => {
-    // Check if options is an array or a function
-    if (Array.isArray(filter.options)) {
-      const option = filter.options.find((opt) => opt.value === selectedValue)
-      return option?.label ?? String(selectedValue)
-    } else {
-      // For function-based options, we can't access them synchronously
-      // Return a fallback string representation
-      return String(selectedValue)
+  useEffect(() => {
+    const getSelectedOptionLabel = async (
+      selectedValue: T
+    ): Promise<string> => {
+      setIsLoading(true)
+      const options = await (typeof filter.options === "function"
+        ? filter.options()
+        : filter.options)
+      setIsLoading(false)
+      // Check if options is an array or a function
+      if (Array.isArray(options)) {
+        const option = options.find((opt) => opt.value === selectedValue)
+        return option?.label ?? String(selectedValue)
+      } else {
+        // For function-based options, we can't access them synchronously
+        // Return a fallback string representation
+        return String(selectedValue)
+      }
     }
-  }
 
-  const firstSelectedLabel = getSelectedOptionLabel(selectedValues[0])
-  const remainingCount = selectedValues.length - 1
-  const hasMultipleSelections = remainingCount > 0
+    const updateLabel = async () => {
+      if (selectedValues.length === 0) {
+        return
+      }
+      const firstSelectedLabel = await getSelectedOptionLabel(selectedValues[0])
+      const remainingCount = selectedValues.length - 1
+      const hasMultipleSelections = remainingCount > 0
 
-  const label = hasMultipleSelections
-    ? `${filter.label}: ${firstSelectedLabel} +${remainingCount}`
-    : `${filter.label}: ${firstSelectedLabel}`
+      setLabel(
+        hasMultipleSelections
+          ? `${filter.label}: ${firstSelectedLabel} +${remainingCount}`
+          : `${filter.label}: ${firstSelectedLabel}`
+      )
+    }
+
+    updateLabel()
+  }, [selectedValues, filter.label, filter.options, filter])
+
+  if (selectedValues.length === 0) return null
 
   return (
     <motion.div
@@ -70,12 +92,16 @@ function InFilterButton<T>({
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ type: "spring", duration: 0.2 }}
     >
-      <Chip
-        variant="selected"
-        label={label}
-        onClose={onRemove}
-        onClick={onSelect}
-      />
+      {isLoading ? (
+        <Skeleton className="h-5 w-[100px]" />
+      ) : (
+        <Chip
+          variant="selected"
+          label={label}
+          onClose={onRemove}
+          onClick={onSelect}
+        />
+      )}
     </motion.div>
   )
 }

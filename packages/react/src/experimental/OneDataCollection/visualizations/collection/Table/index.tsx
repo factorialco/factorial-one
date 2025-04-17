@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/experimental/OneTable"
-import { useI18n } from "@/lib/i18n-provider"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { ComponentProps, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
@@ -165,7 +165,7 @@ export const TableCollection = <
     return renderProperty(item, column, "table")
   }
 
-  const checkColumnWidth = source.selectable ? 50 : 0
+  const checkColumnWidth = source.selectable ? 52 : 0
 
   return (
     <>
@@ -173,13 +173,18 @@ export const TableCollection = <
         <TableHeader>
           <TableRow>
             {source.selectable && (
-              <TableHead width={checkColumnWidth} sticky={{ left: 0 }}>
+              <TableHead
+                width={checkColumnWidth}
+                sticky={{ left: 0 }}
+                align="right"
+              >
                 <Checkbox
                   checked={isAllSelected}
                   indeterminate={isPartiallySelected}
                   onCheckedChange={handleSelectAll}
                   title="Select all"
                   hideLabel
+                  disabled={data.length === 0}
                 />
               </TableHead>
             )}
@@ -192,6 +197,7 @@ export const TableCollection = <
                   currentSortings
                 )}
                 width={column.width}
+                align={column.align}
                 sticky={
                   index < frozenColumnsLeft
                     ? {
@@ -220,7 +226,7 @@ export const TableCollection = <
             {source.itemActions && (
               <TableHead
                 key="actions"
-                width={50}
+                width={68}
                 hidden
                 sticky={{
                   right: 0,
@@ -234,20 +240,28 @@ export const TableCollection = <
         <TableBody>
           {data.map((item, index) => {
             const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
+            const itemOnClick = source.itemOnClick
+              ? source.itemOnClick(item)
+              : undefined
             const id = source.selectable ? source.selectable(item) : undefined
             return (
-              <TableRow key={`row-${index}`}>
+              <TableRow
+                key={`row-${index}`}
+                selected={!!id && selectedItems.has(id)}
+              >
                 {source.selectable && (
                   <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
                     {id !== undefined && (
-                      <Checkbox
-                        checked={selectedItems.has(id)}
-                        onCheckedChange={(checked) =>
-                          handleSelectItemChange(item, checked)
-                        }
-                        title={`Select ${source.selectable(item)}`}
-                        hideLabel
-                      />
+                      <div className="flex items-center justify-end">
+                        <Checkbox
+                          checked={selectedItems.has(id)}
+                          onCheckedChange={(checked) =>
+                            handleSelectItemChange(item, checked)
+                          }
+                          title={`Select ${source.selectable(item)}`}
+                          hideLabel
+                        />
+                      </div>
                     )}
                   </TableCell>
                 )}
@@ -256,6 +270,7 @@ export const TableCollection = <
                     key={String(column.label)}
                     firstCell={cellIndex === 0}
                     href={itemHref}
+                    onClick={itemOnClick}
                     width={column.width}
                     sticky={
                       cellIndex < frozenColumnsLeft
@@ -283,11 +298,12 @@ export const TableCollection = <
                 {source.itemActions && (
                   <TableCell
                     key="actions"
-                    width={50}
+                    width={68}
                     sticky={{
                       right: 0,
                     }}
                     href={itemHref}
+                    onClick={itemOnClick}
                   >
                     <ActionsDropdown item={item} actions={source.itemActions} />
                   </TableCell>
@@ -298,18 +314,20 @@ export const TableCollection = <
         </TableBody>
       </OneTable>
       {paginationInfo && (
-        <div className="flex w-full items-center justify-between py-3">
+        <div className="flex w-full items-center justify-between px-6">
           <span className="shrink-0 text-f1-foreground-secondary">
-            {`${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
-              paginationInfo.currentPage * paginationInfo.perPage,
-              paginationInfo.total
-            )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
+            {paginationInfo.total > 0 &&
+              `${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
+                paginationInfo.currentPage * paginationInfo.perPage,
+                paginationInfo.total
+              )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
           </span>
           <div className="flex items-center">
             <OnePagination
               totalPages={paginationInfo.pagesCount}
               currentPage={paginationInfo.currentPage}
               onPageChange={setPage}
+              disabled={paginationInfo.pagesCount <= 1}
             />
           </div>
         </div>

@@ -219,5 +219,9 @@ export const semanticColors = {
       light: "hsl(216 90% 65% / 0.1)",
       dark: "hsl(216 90% 65% / 0.1)",
     },
+    positive: {
+      light: "hsl(160 84% 39% / 0.1)",
+      dark: "hsl(160 84% 39% / 0.1)",
+    },
   },
 }

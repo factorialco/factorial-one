@@ -1,7 +1,7 @@
 import { TableCell as TableCellRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "framer-motion"
-import { useI18n } from "../../../lib/i18n-provider"
 import { Link } from "../../../lib/linkHandler"
+import { useI18n } from "../../../lib/providers/i18n"
 import { cn } from "../../../lib/utils"
 import { useTable } from "../utils/TableContext"
 import { getColWidth } from "../utils/colWidth"
@@ -13,6 +13,11 @@ interface TableCellProps {
    * The URL to navigate to when the cell is clicked
    */
   href?: string
+
+  /**
+   * The onClick handler for the cell
+   */
+  onClick?: () => void
 
   /**
    * Defines if the cell is the first cell in the row
@@ -35,6 +40,7 @@ interface TableCellProps {
 export function TableCell({
   children,
   href,
+  onClick,
   width = "auto",
   firstCell = false,
   sticky,
@@ -56,8 +62,10 @@ export function TableCell({
         firstCell && "peer",
         isSticky &&
           isScrolled &&
-          "bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-[calc(100%-1px)] before:w-full before:bg-f1-background before:transition-all before:content-[''] group-hover:before:bg-f1-background-hover",
-        isSticky && "sticky z-10 bg-f1-background"
+          "bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-[calc(100%-1px)] before:w-full before:bg-f1-background before:transition-all before:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-f1-border-secondary after:content-[''] group-hover:before:bg-f1-background-hover",
+        isSticky && "sticky z-10",
+        isStickyRight &&
+          "bg-f1-background before:absolute before:inset-0 before:z-[-1] before:h-[calc(100%-1px)] before:w-full before:bg-f1-background before:transition-all before:content-[''] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-f1-border-secondary after:content-[''] group-hover:before:bg-f1-background-hover"
       )}
       // Min and max width is needed to prevent the cell from shrinking or expanding when the table is scrolled
       style={{
@@ -103,6 +111,26 @@ export function TableCell({
         >
           <span className="sr-only">{actions.view}</span>
         </Link>
+      )}
+      {onClick && (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            onClick()
+          }}
+          data-testid="table-cell-action-button"
+          className="table-cell-action-button absolute inset-0 !z-0 block"
+          tabIndex={firstCell ? undefined : -1}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault()
+              onClick()
+            }
+          }}
+        >
+          <span className="sr-only">{actions.view}</span>
+        </button>
       )}
     </TableCellRoot>
   )

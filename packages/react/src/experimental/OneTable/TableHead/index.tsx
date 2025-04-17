@@ -47,6 +47,12 @@ interface TableHeadProps {
    * @default false
    */
   hidden?: boolean
+
+  /**
+   * Alingment of the cell
+   * @default "left"
+   */
+  align?: "left" | "right"
 }
 
 export function TableHead({
@@ -57,6 +63,7 @@ export function TableHead({
   info,
   sticky,
   hidden = false,
+  align = "left",
 }: TableHeadProps) {
   const { isScrolled, isScrolledRight } = useTable()
 
@@ -66,59 +73,73 @@ export function TableHead({
   const stickyLeft = sticky?.left ?? 0
   const stickyRight = sticky?.right ?? 0
 
+  const hasContent = onSortClick || info
+
   const content = (
     <>
-      <div className="flex items-center gap-1 whitespace-nowrap">
-        {children}
-        {onSortClick && (
-          <motion.button
-            onClick={onSortClick}
-            className={cn(
-              "relative h-5 w-5 rounded-xs p-1 text-f1-foreground-secondary opacity-0 transition-all focus-within:opacity-100 hover:bg-f1-background-hover group-hover:opacity-100",
-              focusRing()
-            )}
-            aria-label="Sort"
-            whileTap={{ scale: 0.8 }}
-            transition={{ duration: 0.1 }}
-          >
-            <AnimatePresence>
-              <motion.div
-                key="sort-arrow"
-                className="absolute left-1 top-1 flex h-3 w-3 items-center justify-center"
-                animate={{
-                  rotate: sortState === "desc" ? 0 : 180,
-                  x: sortState === "none" ? -3 : 0,
-                  y: sortState === "none" ? -1 : 0,
-                  scale: sortState === "none" ? 0.9 : 1,
-                }}
-                transition={{
-                  duration: 0.2,
-                  ease: [0.175, 0.885, 0.32, 1.275],
-                }}
-              >
-                <Icon icon={ArrowDown} size="xs" />
-              </motion.div>
-              {sortState === "none" && (
-                <motion.div
-                  key="sort-arrow-secondary"
-                  className="absolute left-1 top-1 flex h-3 w-3 items-center justify-center"
-                  initial={{ opacity: 0, x: 0, y: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, x: 3, y: 1, scale: 0.9 }}
-                  exit={{ opacity: 0, x: 0, y: 0, scale: 0.9 }}
-                  transition={{
-                    duration: 0.2,
-                    ease: [0.175, 0.885, 0.32, 1.275],
-                  }}
-                >
-                  <Icon icon={ArrowDown} size="xs" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
+      <div
+        className={cn(
+          "flex items-center whitespace-nowrap",
+          hasContent && "gap-1",
+          align === "right" && "flex-row-reverse"
         )}
-        {info && (
-          <div className="flex h-6 w-6 items-center justify-center text-f1-foreground-secondary">
-            <Icon icon={InfoCircleLine} size="sm" />
+      >
+        <div className={cn("truncate", width !== "auto" && "overflow-hidden")}>
+          {children}
+        </div>
+        {hasContent && (
+          <div className="flex items-center">
+            {info && (
+              <div className="flex h-6 w-6 items-center justify-center text-f1-foreground-secondary">
+                <Icon icon={InfoCircleLine} size="sm" />
+              </div>
+            )}
+            {onSortClick && (
+              <motion.button
+                onClick={onSortClick}
+                className={cn(
+                  "relative h-5 w-5 rounded-xs p-1 text-f1-foreground-secondary opacity-0 transition-all focus-within:opacity-100 hover:bg-f1-background-hover group-hover:opacity-100",
+                  focusRing()
+                )}
+                aria-label="Sort"
+                whileTap={{ scale: 0.8 }}
+                transition={{ duration: 0.1 }}
+              >
+                <AnimatePresence>
+                  <motion.div
+                    key="sort-arrow"
+                    className="absolute left-1 top-1 flex h-3 w-3 items-center justify-center"
+                    animate={{
+                      rotate: sortState === "desc" ? 0 : 180,
+                      x: sortState === "none" ? -3 : 0,
+                      y: sortState === "none" ? -1 : 0,
+                      scale: sortState === "none" ? 0.9 : 1,
+                    }}
+                    transition={{
+                      duration: 0.2,
+                      ease: [0.175, 0.885, 0.32, 1.275],
+                    }}
+                  >
+                    <Icon icon={ArrowDown} size="xs" />
+                  </motion.div>
+                  {sortState === "none" && (
+                    <motion.div
+                      key="sort-arrow-secondary"
+                      className="absolute left-1 top-1 flex h-3 w-3 items-center justify-center"
+                      initial={{ opacity: 0, x: 0, y: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, x: 3, y: 1, scale: 0.9 }}
+                      exit={{ opacity: 0, x: 0, y: 0, scale: 0.9 }}
+                      transition={{
+                        duration: 0.2,
+                        ease: [0.175, 0.885, 0.32, 1.275],
+                      }}
+                    >
+                      <Icon icon={ArrowDown} size="xs" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            )}
           </div>
         )}
       </div>
@@ -131,7 +152,9 @@ export function TableHead({
     <TableHeadRoot
       className={cn(
         "group",
-        isSticky && (isScrolled || isScrolledRight) && "bg-f1-background",
+        isSticky &&
+          (isScrolled || isScrolledRight) &&
+          "relative bg-f1-background before:absolute before:inset-x-0 before:bottom-0 before:h-px before:w-full before:bg-f1-border-secondary before:content-['']",
         isSticky && "sticky z-10",
         hidden && "after:hidden"
       )}
@@ -155,6 +178,9 @@ export function TableHead({
           : undefined
       }
     >
+      {isSticky && (
+        <div className="absolute inset-x-0 top-0 z-[-1] h-px w-full bg-f1-border-secondary" />
+      )}
       <AnimatePresence>
         {((isStickyLeft && isScrolled) ||
           (isStickyRight && isScrolledRight)) && (
@@ -171,18 +197,7 @@ export function TableHead({
           />
         )}
       </AnimatePresence>
-      {!hidden &&
-        (info ? (
-          <Tooltip label={info}>
-            <div className={cn(width !== "auto" && "overflow-hidden")}>
-              {content}
-            </div>
-          </Tooltip>
-        ) : (
-          <div className={cn(width !== "auto" && "overflow-hidden")}>
-            {content}
-          </div>
-        ))}
+      {!hidden && (info ? <Tooltip label={info}>{content}</Tooltip> : content)}
     </TableHeadRoot>
   )
 }

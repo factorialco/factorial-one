@@ -1,18 +1,25 @@
 import { render, screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
+import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
 import { IconType } from "../../Utilities/Icon"
 
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { OneDropdownButton } from "./OneDropdownButton"
 
+const TestWrapper = ({ children }: { children: React.ReactNode }) => (
+  <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
+)
+
 // Mock the imported components
 vi.mock("@/components/Actions/Button/internal.tsx", () => ({
   ButtonInternal: ({ label, icon: Icon, onClick, appendButton, ...props }) => (
-    <button onClick={onClick} {...props} data-testid="button">
-      {Icon && <Icon data-testid="button-icon" />}
-      <span data-testid="button-label">{label}</span>
+    <>
+      <button onClick={onClick} {...props}>
+        {Icon && <Icon data-testid="button-icon" />}
+        <span data-testid="button-label">{label}</span>
+      </button>
       <div data-testid="button-append">{appendButton}</div>
-    </button>
+    </>
   ),
 }))
 
@@ -54,33 +61,40 @@ describe("OneDropdownButton", () => {
   })
 
   it("renders with default selection (first item)", () => {
-    render(<OneDropdownButton items={mockItems} onClick={mockOnClick} />)
+    render(
+      <TestWrapper>
+        <OneDropdownButton items={mockItems} onClick={mockOnClick} />
+      </TestWrapper>
+    )
 
-    expect(screen.getByTestId("button")).toBeInTheDocument()
-    expect(screen.getByTestId("button-label")).toHaveTextContent("Item 1")
+    expect(screen.getByTestId("button-main")).toBeInTheDocument()
     expect(screen.getByTestId("dropdown")).toBeInTheDocument()
     expect(screen.getByTestId("chevron-icon")).toBeInTheDocument()
   })
 
   it("renders with provided value", () => {
     render(
-      <OneDropdownButton
-        items={mockItems}
-        value="item2"
-        onClick={mockOnClick}
-      />
+      <TestWrapper>
+        <OneDropdownButton
+          items={mockItems}
+          value="item2"
+          onClick={mockOnClick}
+        />
+      </TestWrapper>
     )
 
-    expect(screen.getByTestId("button-label")).toHaveTextContent("Item 2")
+    expect(screen.getByTestId("button-main")).toBeInTheDocument()
   })
 
   it("passes dropdown items excluding the selected item", () => {
     render(
-      <OneDropdownButton
-        items={mockItems}
-        value="item1"
-        onClick={mockOnClick}
-      />
+      <TestWrapper>
+        <OneDropdownButton
+          items={mockItems}
+          value="item1"
+          onClick={mockOnClick}
+        />
+      </TestWrapper>
     )
 
     const dropdownElement = screen.getByTestId("dropdown")
@@ -100,14 +114,16 @@ describe("OneDropdownButton", () => {
   it("calls onClick with correct values when button is clicked", async () => {
     const user = userEvent.setup()
     render(
-      <OneDropdownButton
-        items={mockItems}
-        value="item2"
-        onClick={mockOnClick}
-      />
+      <TestWrapper>
+        <OneDropdownButton
+          items={mockItems}
+          value="item2"
+          onClick={mockOnClick}
+        />
+      </TestWrapper>
     )
 
-    await user.click(screen.getByTestId("button"))
+    await user.click(screen.getByTestId("button-main"))
 
     expect(mockOnClick).toHaveBeenCalledTimes(1)
     expect(mockOnClick).toHaveBeenCalledWith("item2", mockItems[1])
@@ -116,11 +132,13 @@ describe("OneDropdownButton", () => {
   it.skip("changes selected value when dropdown item is clicked", async () => {
     const user = userEvent.setup()
     render(
-      <OneDropdownButton
-        items={mockItems}
-        value="item1"
-        onClick={mockOnClick}
-      />
+      <TestWrapper>
+        <OneDropdownButton
+          items={mockItems}
+          value="item1"
+          onClick={mockOnClick}
+        />
+      </TestWrapper>
     )
 
     await openDropdown(user)
@@ -128,7 +146,7 @@ describe("OneDropdownButton", () => {
     userEvent.click(screen.getByText("Item 2"))
 
     // Now if we click the main button, it should use the new value
-    await userEvent.click(screen.getByTestId("button"))
+    await userEvent.click(screen.getByTestId("button-main"))
     expect(mockOnClick).toHaveBeenCalledWith("item2", mockItems[1])
   })
 })

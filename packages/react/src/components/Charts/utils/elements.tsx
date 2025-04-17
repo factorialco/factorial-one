@@ -19,9 +19,11 @@ export const xAxisProps = (
   config?: AxisConfig
 ): Partial<ComponentProps<typeof XAxis>> => ({
   dataKey: "x",
+  domain: config?.domain,
   tickLine: false,
   axisLine: false,
   tickMargin: 8,
+  ticks: config?.ticks,
   tickCount: config?.tickCount,
   tickFormatter: config?.tickFormatter,
 })
@@ -31,6 +33,7 @@ export const yAxisProps = (
 ): Partial<ComponentProps<typeof YAxis>> => ({
   tickLine: false,
   axisLine: false,
+  domain: config?.domain,
   tickMargin: 8,
   ticks: config?.ticks,
   tickCount: config?.tickCount,

@@ -1,3 +1,4 @@
+import { SolidPause as SolidPauseIcon } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { AlertAvatar } from "./index"
 
@@ -11,7 +12,7 @@ export default meta
 type Story = StoryObj<typeof AlertAvatar>
 
 const SIZES = ["sm", "md", "lg"] as const
-const TYPES = ["info", "warning", "critical"] as const
+const TYPES = ["info", "warning", "critical", "positive"] as const
 export const Default: Story = {
   render: () => (
     <div className="flex w-fit flex-col gap-2">
@@ -24,4 +25,11 @@ export const Default: Story = {
       ))}
     </div>
   ),
+}
+
+export const WithCustomIcon: Story = {
+  args: {
+    type: "warning",
+    icon: SolidPauseIcon,
+  },
 }

@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { Icon, IconType } from "../../components/Utilities/Icon"
 import { Kanban, Sliders, Table } from "../../icons/app"
-import { useI18n } from "../../lib/i18n-provider"
+import { useI18n } from "../../lib/providers/i18n"
 import { cn, focusRing } from "../../lib/utils"
 import type { FiltersDefinition } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
@@ -126,6 +126,8 @@ export const VisualizationSelector = <
         <PopoverContent
           className="w-[280px] rounded-md border border-solid border-f1-border-secondary p-2"
           align="end"
+          sideOffset={8}
+          alignOffset={-6}
         >
           <div className="grid grid-cols-2">
             {visualizations.map((visualization, index) => {

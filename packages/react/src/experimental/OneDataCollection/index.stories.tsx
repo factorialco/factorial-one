@@ -2,11 +2,11 @@ import { Meta, StoryObj } from "@storybook/react"
 import { DownloadIcon, Mail, Tag, UploadIcon } from "lucide-react"
 import { Observable } from "zen-observable-ts"
 import {
+  Add,
   Ai,
   ArrowRight,
   Delete,
   Download,
-  EyeInvisible,
   Pencil,
   Share,
   Star,
@@ -22,7 +22,7 @@ import {
   OnBulkActionCallback,
   OnSelectItemsCallback,
   PaginatedResponse,
-  Presets,
+  PresetsDefinition,
   RecordType,
 } from "./types"
 import { useData } from "./useData"
@@ -43,7 +43,7 @@ const filters = {
 } as const
 
 // Define presets for the filters
-const filterPresets: Presets<typeof filters> = [
+const filterPresets: PresetsDefinition<typeof filters> = [
   {
     label: "Engineering Team",
     filter: {
@@ -545,8 +545,8 @@ export const BasicTableView: Story = {
         },
       ],
       primaryActions: () => ({
-        label: "Primary action",
-        icon: EyeInvisible,
+        label: "New employee",
+        icon: Add,
         onClick: () => console.log(`Primary action`),
       }),
       secondaryActions: () => [
@@ -1146,7 +1146,6 @@ export const WithTableVisualization: Story = {
         field: "name",
         order: "asc",
       },
-      presets: filterPresets,
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
         typeof filters,
@@ -1216,7 +1215,7 @@ function createDataAdapter<
   delay = 500,
   useObservable = false,
   paginationType,
-  perPage = 10,
+  perPage = 20,
 }: DataAdapterOptions<TRecord>): DataAdapter<TRecord, TFilters, TSortings> {
   const filterData = (
     records: TRecord[],
@@ -1471,7 +1470,6 @@ export const WithMultipleVisualizations: Story = {
   render: () => {
     const source = useDataSource({
       filters,
-      presets: filterPresets,
       sortings,
       dataAdapter: createDataAdapter({
         data: mockUsers,
@@ -1585,7 +1583,6 @@ export const WithPagination: Story = {
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "pages",
-        perPage: 10,
       }),
     })
 
@@ -2330,6 +2327,198 @@ export const TableColumnProperties: Story = {
                   label: "Next Review",
                   render: (item) => item.nextReview,
                   sorting: "nextReview",
+                },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+export const TableWithNoFiltersAndSearch: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      sortings: {
+        name: { label: "Name" },
+        email: { label: "Email" },
+        role: { label: "Role" },
+        department: { label: "Department" },
+      },
+      itemActions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+          description: "Modify user information",
+        },
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+        },
+        { type: "separator" },
+        {
+          label: item.isStarred ? "Remove Star" : "Star User",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
+        },
+        {
+          label: "Delete",
+          icon: Delete,
+          onClick: () => console.log(`Deleting ${item.name}`),
+          critical: true,
+          description: "Permanently remove user",
+        },
+      ],
+      dataAdapter: {
+        fetchData: () => Promise.resolve(mockUsers),
+      },
+    })
+
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
+                    },
+                  }),
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}
+
+export const TableWithNoFilters: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      sortings: {
+        name: { label: "Name" },
+        email: { label: "Email" },
+        role: { label: "Role" },
+        department: { label: "Department" },
+      },
+      search: {
+        enabled: true,
+        sync: false,
+        debounceTime: 300,
+      },
+      itemActions: (item) => [
+        {
+          label: "Edit",
+          icon: Pencil,
+          onClick: () => console.log(`Editing ${item.name}`),
+          description: "Modify user information",
+        },
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing ${item.name}'s profile`),
+        },
+        { type: "separator" },
+        {
+          label: item.isStarred ? "Remove Star" : "Star User",
+          icon: Star,
+          onClick: () => console.log(`Toggling star for ${item.name}`),
+          description: item.isStarred
+            ? "Remove from favorites"
+            : "Add to favorites",
+        },
+        {
+          label: "Delete",
+          icon: Delete,
+          onClick: () => console.log(`Deleting ${item.name}`),
+          critical: true,
+          description: "Permanently remove user",
+        },
+      ],
+      dataAdapter: {
+        fetchData: ({ search }) => {
+          let filteredUsers = [...mockUsers]
+
+          if (search) {
+            const searchLower = search.toLowerCase()
+            filteredUsers = filteredUsers.filter(
+              (user) =>
+                user.name.toLowerCase().includes(searchLower) ||
+                user.email.toLowerCase().includes(searchLower) ||
+                user.role.toLowerCase().includes(searchLower) ||
+                user.department.toLowerCase().includes(searchLower)
+            )
+          }
+
+          return Promise.resolve(filteredUsers)
+        },
+      },
+    })
+
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
+                    },
+                  }),
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
                 },
               ],
             },

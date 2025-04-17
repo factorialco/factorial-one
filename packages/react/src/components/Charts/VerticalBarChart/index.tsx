@@ -59,6 +59,8 @@ const _VBarChart = <K extends ChartConfig>(
     yAxis,
     label = false,
     aspect,
+    hideTooltip = false,
+    hideGrid = false,
   }: VerticalBarChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -88,17 +90,21 @@ const _VBarChart = <K extends ChartConfig>(
         data={preparedData}
         margin={{ left: yAxis && !yAxis.hide ? 0 : 12, right: label ? 32 : 0 }}
       >
-        <ChartTooltip
-          cursor
-          content={
-            <ChartTooltipContent yAxisFormatter={yAxis?.tickFormatter} />
-          }
-        />
-        <CartesianGrid
-          {...cartesianGridProps()}
-          vertical={true}
-          horizontal={false}
-        />
+        {!hideTooltip && (
+          <ChartTooltip
+            cursor
+            content={
+              <ChartTooltipContent yAxisFormatter={yAxis?.tickFormatter} />
+            }
+          />
+        )}
+        {!hideGrid && (
+          <CartesianGrid
+            {...cartesianGridProps()}
+            vertical={true}
+            horizontal={false}
+          />
+        )}
         <XAxis {...xAxisProps} hide={xAxis?.hide} />
         <YAxis
           {...yAxisProps}

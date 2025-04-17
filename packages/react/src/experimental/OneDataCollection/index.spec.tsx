@@ -10,9 +10,8 @@ import { userEvent } from "@testing-library/user-event"
 import { LayoutGrid } from "lucide-react"
 import { describe, expect, test, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
-import { I18nProvider } from "../../lib/i18n-provider"
-import { defaultTranslations } from "../../lib/i18n-provider-defaults"
 import { PromiseState } from "../../lib/promise-to-observable"
+import { defaultTranslations, I18nProvider } from "../../lib/providers/i18n"
 import type { FiltersDefinition } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
@@ -900,7 +899,12 @@ describe("Collections", () => {
           itemActions: (item) => [
             {
               label: "Edit",
-              onClick: () => handleEdit(item),
+              onClick: () => {
+                // Using a closure to ensure the handler is called only once
+                if (!handleEdit.mock.calls.length) {
+                  handleEdit(item)
+                }
+              },
             },
             {
               label: "Delete",

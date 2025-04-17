@@ -36,6 +36,8 @@ export const _LineChart = <K extends LineChartConfig>(
     yAxis = { hide: true },
     lineType = "natural",
     aspect,
+    hideTooltip = false,
+    hideGrid = false,
   }: LineChartProps<K>,
   ref: ForwardedRef<HTMLDivElement>
 ) => {
@@ -60,7 +62,7 @@ export const _LineChart = <K extends LineChartConfig>(
         data={preparedData}
         margin={{ left: yAxis && !yAxis.hide ? 0 : 12, right: 12 }}
       >
-        <CartesianGrid {...cartesianGridProps()} />
+        {!hideGrid && <CartesianGrid {...cartesianGridProps()} />}
         {!xAxis?.hide && <XAxis {...xAxisProps(xAxis)} />}
         {!yAxis?.hide && (
           <YAxis
@@ -68,12 +70,14 @@ export const _LineChart = <K extends LineChartConfig>(
             width={yAxis.width ?? maxLabelWidth + 20}
           />
         )}
-        <ChartTooltip
-          cursor
-          content={
-            <ChartTooltipContent yAxisFormatter={yAxis?.tickFormatter} />
-          }
-        />
+        {!hideTooltip && (
+          <ChartTooltip
+            cursor
+            content={
+              <ChartTooltipContent yAxisFormatter={yAxis?.tickFormatter} />
+            }
+          />
+        )}
         {lines.map((line, index) => (
           <Line
             key={line}

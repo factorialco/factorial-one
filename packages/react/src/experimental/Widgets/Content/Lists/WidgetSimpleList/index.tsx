@@ -1,7 +1,7 @@
 import { VerticalOverflowList } from "@/ui/VerticalOverflowList"
 import {
   WidgetSimpleListItem,
-  Props as WidgetSimpleListItemProps,
+  WidgetSimpleListItemProps,
 } from "../../ListItems/WidgetSimpleListItem"
 
 type Props<Id extends string | number = string | number> = {
