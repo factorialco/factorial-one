@@ -12,7 +12,7 @@ import { RawTag } from "@/experimental/Information/Tags/RawTag"
 import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 import { PropertyDefinition } from "../../property-render"
-import { VisualizationType } from "../../visualizations"
+import { VisualizationType } from "../../settings/components/VisualizationSelector"
 
 /**
  * The renderer function to use for a property.

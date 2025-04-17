@@ -11,6 +11,7 @@ import * as Filters from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { Search } from "./search"
+import { Settings } from "./settings"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
   BulkActionDefinition,
@@ -23,9 +24,8 @@ import type {
   OnSelectItemsCallback,
   RecordType,
 } from "./types"
-import type { Visualization } from "./visualizations"
-import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
-
+import type { Visualization } from "./visualizations/collection"
+import { VisualizationRenderer } from "./visualizations/collection"
 /**
  * A hook that manages data source state and filtering capabilities for a collection.
  * It creates and returns a reusable data source that can be shared across different
@@ -203,6 +203,9 @@ export const OneDataCollection = <
     primaryActions,
     secondaryActions,
     presets,
+    currentGrouping,
+    setCurrentGrouping,
+    grouping,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
@@ -288,66 +291,60 @@ export const OneDataCollection = <
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
     >
-      {((filters && Object.keys(filters).length > 0) ||
-        search?.enabled ||
-        primaryActionItem ||
-        (secondaryActionsItems && secondaryActionsItems.length > 0)) && (
-        <div className="flex flex-col gap-4 px-6">
-          <Filters.Root
-            schema={filters}
-            filters={currentFilters}
-            presets={presets}
-            onChange={(value) =>
-              setCurrentFilters(value as FiltersState<Filters>)
-            }
-          >
-            <div
-              className={cn(
-                "flex items-center justify-between",
-                !filters && "justify-end"
-              )}
-            >
-              {filters && (
-                <div className="flex flex-1 gap-1">
-                  <Filters.Controls />
-                  <Filters.Presets />
-                </div>
-              )}
-              <div className="flex shrink-0 items-center gap-2">
-                {isLoading && (
-                  <MotionIcon
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{
-                      opacity: 0,
-                    }}
-                    size="lg"
-                    icon={Spinner}
-                    className="animate-spin"
-                  />
-                )}
-                {search && (
-                  <Search onChange={setCurrentSearch} value={currentSearch} />
-                )}
-                {visualizations && visualizations.length > 1 && (
-                  <VisualizationSelector
-                    visualizations={visualizations}
-                    currentVisualization={currentVisualization}
-                    onVisualizationChange={setCurrentVisualization}
-                  />
-                )}
-                {(primaryActionItem || secondaryActionsItems) && (
-                  <CollectionActions
-                    primaryActions={primaryActionItem}
-                    secondaryActions={secondaryActionsItems}
-                  />
-                )}
-              </div>
+      <Filters.Root
+        schema={filters}
+        filters={currentFilters}
+        presets={presets}
+        onChange={(value) => setCurrentFilters(value as FiltersState<Filters>)}
+      >
+        <div
+          className={cn(
+            "flex items-center justify-between",
+            !filters && "justify-end"
+          )}
+        >
+          {filters && (
+            <div className="flex flex-1 gap-1">
+              <Filters.Controls />
+              <Filters.Presets />
             </div>
-            <Filters.ChipsList />
-          </Filters.Root>
+          )}
+          <div className="flex shrink-0 items-center gap-2">
+            {isLoading && (
+              <MotionIcon
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{
+                  opacity: 0,
+                }}
+                size="lg"
+                icon={Spinner}
+                className="animate-spin"
+              />
+            )}
+            {search && (
+              <Search onChange={setCurrentSearch} value={currentSearch} />
+            )}
+
+            <Settings
+              visualizations={visualizations}
+              currentVisualization={currentVisualization}
+              onVisualizationChange={setCurrentVisualization}
+              grouping={grouping}
+              currentGrouping={currentGrouping}
+              onGroupingChange={setCurrentGrouping}
+            ></Settings>
+
+            {(primaryActionItem || secondaryActionsItems) && (
+              <CollectionActions
+                primaryActions={primaryActionItem}
+                secondaryActions={secondaryActionsItems}
+              />
+            )}
+          </div>
         </div>
-      )}
+        <Filters.ChipsList />
+      </Filters.Root>
       <VisualizationRenderer
         visualization={visualizations[currentVisualization]}
         source={source}
