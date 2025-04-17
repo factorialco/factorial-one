@@ -9,7 +9,7 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "./navigationFilters/types"
-import { SortingsDefinition, SortingsState, SortOrder } from "./sortings"
+import { SortingsDefinition, SortingsState } from "./sortings"
 export * from "./grouping"
 export * from "./sortings"
 
@@ -79,8 +79,8 @@ export type DataSourceDefinition<
   /** Grouping configuration */
   grouping?: Grouping
 } & (Grouping extends { mandatory: true }
-  ? { currentGrouping: GroupingState<Grouping> }
-  : { currentGrouping?: GroupingState<Grouping> | null })
+  ? { currentGrouping: GroupingState<Record, Grouping> }
+  : { currentGrouping?: GroupingState<Record, Grouping> | null })
 
 export type CollectionSearchOptions = {
   /** Whether search is enabled */
@@ -132,11 +132,10 @@ export type PaginatedResponse<Record> = {
 } & PaginationInfo
 
 export type SortingsStateMultiple<
+  Record extends RecordType,
   Definition extends SortingsDefinition,
-  Grouping extends GroupingDefinition<RecordType>,
-> = {
-  [K in keyof Definition | keyof Grouping["groupBy"]]: SortOrder
-}
+  Grouping extends GroupingDefinition<Record>,
+> = NonNullable<SortingsState<Definition> | GroupingState<Record, Grouping>>[]
 
 /**
  * Base options for data fetching
@@ -151,7 +150,7 @@ export type BaseFetchOptions<
 > = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
-  sortings: SortingsStateMultiple<Sortings, Grouping>
+  sortings: SortingsStateMultiple<Record, Sortings, Grouping>
   search?: string
   navigationFilters?: NavigationFiltersState<NavigationFilters>
 }
@@ -388,11 +387,15 @@ export type DataSource<
     : null
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
-    React.SetStateAction<GroupingState<Grouping>>
+    React.SetStateAction<
+      Grouping extends { mandatory: true }
+        ? GroupingState<Record, Grouping>
+        : GroupingState<Record, Grouping> | undefined
+    >
   >
 } & (Grouping extends { mandatory: true }
-    ? { currentGrouping: GroupingState<Grouping> }
-    : { currentGrouping?: GroupingState<Grouping> })
+    ? { currentGrouping: GroupingState<Record, Grouping> }
+    : { currentGrouping?: GroupingState<Record, Grouping> })
 
 /**
  * Utility type for handling both Promise and Observable return types.
