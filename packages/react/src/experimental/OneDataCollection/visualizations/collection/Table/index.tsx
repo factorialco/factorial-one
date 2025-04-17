@@ -1,3 +1,5 @@
+import { Await } from "@/components/Utilities/Await"
+import { Counter } from "@/experimental/exports"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { OnePagination } from "@/experimental/OnePagination"
 import {
@@ -9,6 +11,7 @@ import {
   TableRow,
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
+import { Skeleton } from "@/ui/skeleton"
 import { ComponentProps, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
@@ -236,6 +239,7 @@ export const TableCollection = <
         <TableBody>
           {data?.type === "grouped" &&
             data.groups.map((group) => {
+              const itemCount = group.itemCount
               return (
                 <>
                   <TableRow key={`group-${group.key}`}>
@@ -244,7 +248,25 @@ export const TableCollection = <
                         &nbsp;
                       </TableCell>
                     )}
-                    <TableCell>{group.label}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Await
+                          resolve={group.label}
+                          fallback={<Skeleton className="h-4 w-24" />}
+                        >
+                          {(label) => label}
+                        </Await>
+
+                        <Await
+                          resolve={itemCount}
+                          fallback={<Skeleton className="h-4 w-5" />}
+                        >
+                          {(count) =>
+                            count !== undefined && <Counter value={count} />
+                          }
+                        </Await>
+                      </div>
+                    </TableCell>
                   </TableRow>
                   {group.records.map((item, index) => {
                     return (

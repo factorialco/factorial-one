@@ -5,7 +5,7 @@ import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { GroupingDefinition, GroupingState } from "./grouping"
 import { ItemActionsDefinition } from "./item-actions"
-import { SortingsDefinition, SortingsState } from "./sortings"
+import { SortingsDefinition, SortingsState, SortOrder } from "./sortings"
 export * from "./grouping"
 export * from "./sortings"
 
