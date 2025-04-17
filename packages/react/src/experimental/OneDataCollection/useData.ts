@@ -26,6 +26,7 @@ import {
   PaginatedResponse,
   PromiseOrObservable,
   RecordType,
+  SortingsStateMultiple,
 } from "./types"
 
 /**
@@ -75,7 +76,7 @@ type DataType<T> = PromiseState<T>
 
 type GroupRecord<RecordType> = {
   key: string
-  label: string
+  label: string | Promise<string>
   itemCount: number | undefined | Promise<number | undefined>
   records: RecordType[]
 }
@@ -271,7 +272,12 @@ export function useData<
 
   const data = useMemo(() => {
     // Group the data if grouping is enabled
-    if (currentGrouping && currentGrouping.field && grouping) {
+    if (
+      currentGrouping &&
+      currentGrouping.field &&
+      grouping &&
+      grouping.groupBy[currentGrouping.field]
+    ) {
       const groupedData = groupBy(rawData, currentGrouping.field)
 
       return {
@@ -279,8 +285,8 @@ export function useData<
         records: rawData,
         groups: Object.entries(groupedData).map(([key, value]) => ({
           key,
-          label: grouping!.groupBy[currentGrouping.field].label(key),
-          itemCount: grouping?.groupBy[currentGrouping.field]?.itemCount?.(key),
+          label: grouping.groupBy[currentGrouping.field]!.label(key),
+          itemCount: grouping.groupBy[currentGrouping.field]?.itemCount?.(key),
           records: value,
         })),
       }
@@ -318,6 +324,25 @@ export function useData<
           cleanup.current = undefined
         }
 
+        const sortings: SortingsStateMultiple<Record, Sortings, Grouping> = [
+          ...(currentSortings
+            ? [
+                {
+                  field: currentSortings.field,
+                  order: currentSortings.order,
+                },
+              ]
+            : []),
+          ...(currentGrouping
+            ? [
+                {
+                  field: currentGrouping.field,
+                  order: currentGrouping.order,
+                },
+              ]
+            : []),
+        ]
+
         const baseFetchOptions: BaseFetchOptions<
           Record,
           Filters,
@@ -327,16 +352,7 @@ export function useData<
         > = {
           filters,
           search: searchValue,
-          sortings: {
-            ...(currentGrouping
-              ? {
-                  [currentGrouping.field]: currentGrouping.order,
-                }
-              : {}),
-            ...(currentSortings
-              ? { [currentSortings.field]: currentSortings.order }
-              : {}),
-          },
+          sortings,
         }
 
         const fetcher = (): PromiseOrObservable<ResultType> => {

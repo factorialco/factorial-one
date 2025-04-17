@@ -107,7 +107,7 @@ const createMockDataSource = (
     currentNavigationFilters: {},
     setCurrentNavigationFilters: vi.fn(),
     navigationFilters: undefined,
-    currentGrouping: null,
+    currentGrouping: undefined,
     setCurrentGrouping: vi.fn(),
   }
 }
@@ -388,7 +388,7 @@ describe("useData", () => {
         currentNavigationFilters: {},
         setCurrentNavigationFilters: vi.fn(),
         navigationFilters: undefined,
-        currentGrouping: null,
+        currentGrouping: undefined,
         setCurrentGrouping: vi.fn(),
       }
 

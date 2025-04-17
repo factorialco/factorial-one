@@ -157,15 +157,14 @@ export const useDataSource = <
 
   const defaultGrouping = grouping?.mandatory
     ? ({
-        field: grouping.groupBy[Object.keys(grouping.groupBy)[0]]!.field,
-        desc: true,
+        field: Object.keys(grouping.groupBy)[0],
+        order: "asc",
       } as GroupingState<Grouping>)
     : undefined
 
-  const [currentGrouping, setCurrentGrouping] =
-    useState<GroupingState<Grouping> | null>(
-      initialCurrentGrouping ?? defaultGrouping ?? null
-    )
+  const [currentGrouping, setCurrentGrouping] = useState<
+    GroupingState<Grouping> | undefined
+  >(initialCurrentGrouping ?? defaultGrouping)
 
   return {
     filters: memoizedFilters,
