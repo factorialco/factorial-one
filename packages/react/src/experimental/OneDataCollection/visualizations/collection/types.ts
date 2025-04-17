@@ -48,9 +48,9 @@ export type Visualization<
 
 /**
  * Represents the type of visualization.
- * TODO: This should be a union of all the types in the Visualization type.
  */
-export type VisualizationType = "card" | "table" | "custom"
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type VisualizationType = Visualization<any, any, any, any, any>["type"]
 
 /**
  * Props interface for components that support multiple visualizations.

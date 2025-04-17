@@ -78,7 +78,7 @@ const createTestSource = (
       return data
     },
   },
-  currentGrouping: null,
+  currentGrouping: undefined,
   setCurrentGrouping: vi.fn(),
 })
 
@@ -284,7 +284,7 @@ describe("TableCollection", () => {
       setCurrentNavigationFilters: vi.fn(),
       navigationFilters: undefined,
       currentNavigationFilters: {},
-      currentGrouping: null,
+      currentGrouping: undefined,
       setCurrentGrouping: vi.fn(),
       dataAdapter: {
         paginationType: "pages",

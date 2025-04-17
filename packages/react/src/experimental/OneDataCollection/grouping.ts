@@ -26,12 +26,11 @@ export type GroupingDefinition<R extends RecordType> = {
  * @template Grouping - The grouping definition
  */
 export type GroupingState<
-  Grouping extends { groupBy: { [key: string]: unknown } },
+  R extends RecordType,
+  Grouping extends GroupingDefinition<R>,
 > =
-  | (Grouping extends GroupingDefinition<RecordType>
-      ? {
-          field: keyof Grouping["groupBy"]
-          order: SortOrder
-        }
-      : never)
+  | {
+      field: keyof Grouping["groupBy"]
+      order: SortOrder
+    }
   | undefined
