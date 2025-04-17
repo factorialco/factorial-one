@@ -13,7 +13,7 @@ import {
   PresetsDefinition,
   RecordType,
   SortingsDefinition,
-  SortingsState,
+  SortingsStateMultiple,
   useDataSource,
 } from "@/experimental/OneDataCollection/exports"
 import { PromiseState } from "@/lib/promise-to-observable"
@@ -317,7 +317,7 @@ export const filterUsers = <
 >(
   users: T[],
   filterValues: FiltersState<typeof filters>,
-  sortingState: SortingsState<typeof sortings>,
+  sortingState: SortingsStateMultiple<typeof sortings>,
   navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
   search?: string
 ) => {
@@ -613,9 +613,10 @@ export function createDataAdapter<
     department: (typeof DEPARTMENTS_MOCK)[number]
     salary?: number
   },
-  TFilters extends Record<string, FilterDefinition>,
+  TFilters extends Record<string, FilterDefinition<unknown>>,
   TSortings extends SortingsDefinition,
   TNavigationFilters extends NavigationFiltersDefinition,
+  TGrouping extends GroupingDefinition<TRecord>,
 >({
   data,
   delay = 500,
@@ -626,12 +627,13 @@ export function createDataAdapter<
   TRecord,
   TFilters,
   TSortings,
-  TNavigationFilters
+  TNavigationFilters,
+  TGrouping
 > {
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
-    sortingsState: SortingsState<TSortings>,
+    sortingsState: SortingsStateMultiple<TSortings, TGrouping>,
     pagination?: { currentPage?: number; perPage?: number }
   ): TRecord[] | PaginatedResponse<TRecord> => {
     let filteredRecords = [...records]
@@ -663,47 +665,49 @@ export function createDataAdapter<
 
     // Apply sorting if available
     if (sortingsState) {
-      ;[sortingsState].reverse().forEach(({ field, order }) => {
-        const sortField = field as keyof TRecord
-        const sortDirection = order
+      Object.entries(sortingsState)
+        .reverse()
+        .forEach(([field, order]) => {
+          const sortField = field as keyof TRecord
+          const sortDirection = order
 
-        filteredRecords.sort((a, b) => {
-          const aValue = a[sortField]
-          const bValue = b[sortField]
+          filteredRecords.sort((a, b) => {
+            const aValue = a[sortField]
+            const bValue = b[sortField]
 
-          // Handle string comparisons
-          if (typeof aValue === "string" && typeof bValue === "string") {
+            // Handle string comparisons
+            if (typeof aValue === "string" && typeof bValue === "string") {
+              return sortDirection === "asc"
+                ? aValue.localeCompare(bValue)
+                : bValue.localeCompare(aValue)
+            }
+
+            // Handle number comparisons
+            if (typeof aValue === "number" && typeof bValue === "number") {
+              return sortDirection === "asc" ? aValue - bValue : bValue - aValue
+            }
+
+            // Handle boolean comparisons
+            if (typeof aValue === "boolean" && typeof bValue === "boolean") {
+              return sortDirection === "asc"
+                ? aValue === bValue
+                  ? 0
+                  : aValue
+                    ? 1
+                    : -1
+                : aValue === bValue
+                  ? 0
+                  : aValue
+                    ? -1
+                    : 1
+            }
+
+            // Default case: use string representation
             return sortDirection === "asc"
-              ? aValue.localeCompare(bValue)
-              : bValue.localeCompare(aValue)
-          }
-
-          // Handle number comparisons
-          if (typeof aValue === "number" && typeof bValue === "number") {
-            return sortDirection === "asc" ? aValue - bValue : bValue - aValue
-          }
-
-          // Handle boolean comparisons
-          if (typeof aValue === "boolean" && typeof bValue === "boolean") {
-            return sortDirection === "asc"
-              ? aValue === bValue
-                ? 0
-                : aValue
-                  ? 1
-                  : -1
-              : aValue === bValue
-                ? 0
-                : aValue
-                  ? -1
-                  : 1
-          }
-
-          // Default case: use string representation
-          return sortDirection === "asc"
-            ? String(aValue).localeCompare(String(bValue))
-            : String(bValue).localeCompare(String(aValue))
+              ? String(aValue).localeCompare(String(bValue))
+              : String(bValue).localeCompare(String(aValue))
+          })
         })
-      })
     }
 
     // Apply pagination if needed
@@ -733,7 +737,8 @@ export function createDataAdapter<
       TRecord,
       TFilters,
       TSortings,
-      TNavigationFilters
+      TNavigationFilters,
+      TGrouping
     > = {
       paginationType: "pages",
       perPage,
@@ -799,52 +804,57 @@ export function createDataAdapter<
     return adapter
   }
 
-  const adapter: DataAdapter<TRecord, TFilters, TSortings, TNavigationFilters> =
-    {
-      fetchData: ({ filters, sortings }) => {
-        if (useObservable) {
-          return new Observable<PromiseState<TRecord[]>>((observer) => {
-            observer.next({
-              loading: true,
-              error: null,
-              data: null,
-            })
-
-            setTimeout(() => {
-              try {
-                const fetch = () =>
-                  filterData(data, filters, sortings) as TRecord[]
-
-                observer.next({
-                  loading: false,
-                  error: null,
-                  data: fetch(),
-                })
-                observer.complete()
-              } catch (error) {
-                observer.next({
-                  loading: false,
-                  error:
-                    error instanceof Error ? error : new Error(String(error)),
-                  data: null,
-                })
-                observer.complete()
-              }
-            }, delay)
+  const adapter: DataAdapter<
+    TRecord,
+    TFilters,
+    TSortings,
+    TNavigationFilters,
+    TGrouping
+  > = {
+    fetchData: ({ filters, sortings }) => {
+      if (useObservable) {
+        return new Observable<PromiseState<TRecord[]>>((observer) => {
+          observer.next({
+            loading: true,
+            error: null,
+            data: null,
           })
-        }
 
-        return new Promise<TRecord[]>((resolve, reject) => {
           setTimeout(() => {
             try {
-              resolve(filterData(data, filters, sortings) as TRecord[])
+              const fetch = () =>
+                filterData(data, filters, sortings) as TRecord[]
+
+              observer.next({
+                loading: false,
+                error: null,
+                data: fetch(),
+              })
+              observer.complete()
             } catch (error) {
-              reject(error)
+              observer.next({
+                loading: false,
+                error:
+                  error instanceof Error ? error : new Error(String(error)),
+                data: null,
+              })
+              observer.complete()
             }
           }, delay)
         })
-      },
-    }
+      }
+
+      return new Promise<TRecord[]>((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            resolve(filterData(data, filters, sortings) as TRecord[])
+          } catch (error) {
+            reject(error)
+          }
+        }, delay)
+      })
+    },
+  }
 
   return adapter
 }
