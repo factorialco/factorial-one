@@ -1,7 +1,3 @@
-/**
- * Base colors for Factorial One Design System
- * These are the raw color values used to generate the semantic tokens
- */
 export const baseColors = {
   white: {
     3: "0 0% 100% / 0.03",
@@ -88,7 +84,7 @@ export const baseColors = {
     70: "24 69% 40%",
   },
   red: {
-    50: "5 69% 56%",
+    50: "5 100% 65%",
     60: "4 61% 49%",
     70: "3 71% 41%",
   },
@@ -117,111 +113,120 @@ export const baseColors = {
   },
 }
 
-/**
- * Semantic color tokens for Factorial One Design System
- * These are platform-agnostic and can be used in both web and native
- */
-export const semanticColors = {
+export const f1Colors = {
   foreground: {
-    default: {
-      light: "hsl(218 48% 10%)",
-      dark: "hsl(0 0% 100%)",
+    DEFAULT: "hsl(var(--neutral-100))",
+    secondary: "hsl(var(--neutral-50))",
+    tertiary: "hsl(var(--neutral-40))",
+    inverse: {
+      DEFAULT: "hsl(var(--white-100))",
+      secondary: "hsl(var(--white-80))",
     },
-    secondary: {
-      light: "hsl(217 96% 11% / 0.61)",
-      dark: "hsl(0 0% 100% / 0.8)",
-    },
-    tertiary: {
-      light: "hsl(219 97% 15% / 0.37)",
-      dark: "hsl(0 0% 100% / 0.6)",
-    },
-    disabled: {
-      light: "hsl(213 87% 15% / 0.14)",
-      dark: "hsl(0 0% 100% / 0.3)",
-    },
-    accent: {
-      light: "hsl(239 51% 44%)",
-      dark: "hsl(239 51% 44%)",
-    },
-    critical: {
-      light: "hsl(3 71% 41%)",
-      dark: "hsl(3 71% 41%)",
-    },
-    info: {
-      light: "hsl(216 48% 44%)",
-      dark: "hsl(216 48% 44%)",
-    },
-    warning: {
-      light: "hsl(38 80% 36%)",
-      dark: "hsl(38 80% 36%)",
-    },
-    positive: {
-      light: "hsl(161 84% 27%)",
-      dark: "hsl(161 84% 27%)",
-    },
+    disabled: "hsl(var(--neutral-30))",
+    accent: "hsl(var(--accent-70))",
+    critical: "hsl(var(--critical-70))",
+    info: "hsl(var(--info-70))",
+    warning: "hsl(var(--warning-70))",
+    positive: "hsl(var(--positive-70))",
+    selected: "hsl(var(--selected-70))",
   },
   background: {
-    default: {
-      light: "hsl(210 91% 22% / 0.02)",
-      dark: "hsl(219 88% 6% / 0.92)",
-    },
+    DEFAULT: "hsl(var(--neutral-0))",
+    hover: "hsl(var(--neutral-5))",
     secondary: {
-      light: "hsl(216 89% 18% / 0.06)",
-      dark: "hsl(219 94% 7% / 0.9)",
+      DEFAULT: "hsl(var(--neutral-10))",
+      hover: "hsl(var(--neutral-20))",
     },
-    tertiary: {
-      light: "hsl(220 88% 17% / 0.04)",
-      dark: "hsl(219 91% 8% / 0.88)",
+    tertiary: "hsl(var(--neutral-5))",
+    inverse: {
+      DEFAULT: "hsl(var(--neutral-90))",
+      secondary: "hsl(var(--white-60))",
     },
+    bold: "hsl(var(--neutral-90))",
     accent: {
-      light: "hsl(239 91% 64% / 0.1)",
-      dark: "hsl(239 91% 64% / 0.1)",
+      DEFAULT: "hsl(var(--accent-50) / 0.1)",
+      bold: {
+        DEFAULT: "hsl(var(--accent-50))",
+        hover: "hsl(var(--accent-60))",
+      },
+      alpha5: "hsl(var(--accent-50) / 0.05)",
+    },
+    promote: {
+      DEFAULT: "hsl(var(--promote-50) / 0.3)",
+      hover: "hsl(var(--promote-50) / 0.4)",
+      alpha5: "hsl(var(--promote-50) / 0.05)",
     },
     critical: {
-      light: "hsl(5 69% 56% / 0.1)",
-      dark: "hsl(5 69% 56% / 0.1)",
+      DEFAULT: "hsl(var(--critical-50) / 0.1)",
+      bold: "hsl(var(--critical-60))",
     },
     info: {
-      light: "hsl(216 90% 65% / 0.1)",
-      dark: "hsl(216 90% 65% / 0.1)",
+      DEFAULT: "hsl(var(--info-50) / 0.1)",
+      bold: "hsl(var(--info-50))",
     },
     warning: {
-      light: "hsl(38 92% 54% / 0.1)",
-      dark: "hsl(38 92% 54% / 0.1)",
+      DEFAULT: "hsl(var(--warning-50) / 0.1)",
+      bold: "hsl(var(--warning-50))",
     },
     positive: {
-      light: "hsl(160 84% 39% / 0.1)",
-      dark: "hsl(160 84% 39% / 0.1)",
+      DEFAULT: "hsl(var(--positive-50) / 0.1)",
+      bold: "hsl(var(--positive-50))",
+    },
+    selected: {
+      DEFAULT: "hsl(var(--selected-50) / 0.1)",
+      secondary: "hsl(var(--selected-50) / 0.05)",
+      bold: {
+        DEFAULT: "hsl(var(--selected-50))",
+        hover: "hsl(var(--selected-60))",
+      },
+    },
+    overlay: {
+      DEFAULT: "hsl(var(--neutral-40))",
     },
   },
   border: {
-    default: {
-      light: "hsl(213 87% 15% / 0.14)",
-      dark: "hsl(0 0% 100% / 0.2)",
+    DEFAULT: "hsl(var(--neutral-30))",
+    hover: "hsl(var(--neutral-40))",
+    secondary: "hsl(var(--neutral-10))",
+    inverse: "hsl(var(--neutral-0) / 0.2)",
+    promote: {
+      DEFAULT: "hsl(var(--promote-50) / 0.4)",
+      alpha30: "hsl(var(--promote-50) / 0.3)",
     },
-    secondary: {
-      light: "hsl(216 89% 18% / 0.06)",
-      dark: "hsl(219 94% 7% / 0.9)",
+    selected: {
+      DEFAULT: "hsl(var(--selected-50) / 0.4)",
+      bold: "hsl(var(--selected-50))",
     },
     accent: {
-      light: "hsl(239 91% 64% / 0.2)",
-      dark: "hsl(239 91% 64% / 0.2)",
+      alpha20: "hsl(var(--accent-50) / 0.2)",
     },
     critical: {
-      light: "hsl(5 69% 56% / 0.1)",
-      dark: "hsl(5 69% 56% / 0.1)",
+      DEFAULT: "hsl(var(--critical-50) / 0.1)",
+      bold: "hsl(var(--critical-50))",
     },
-    warning: {
-      light: "hsl(38 92% 54% / 0.1)",
-      dark: "hsl(38 92% 54% / 0.1)",
+    warning: "hsl(var(--warning-50) / 0.1)",
+    info: "hsl(var(--info-50) / 0.1)",
+    positive: "hsl(var(--positive-50) / 0.1)",
+  },
+  icon: {
+    DEFAULT: "hsl(var(--neutral-solid-50))",
+    secondary: "hsl(var(--neutral-solid-40))",
+    inverse: "hsl(var(--neutral-0))",
+    bold: "hsl(var(--neutral-100))",
+    critical: {
+      DEFAULT: "hsl(var(--critical-50))",
+      bold: "hsl(var(--critical-70))",
     },
-    info: {
-      light: "hsl(216 90% 65% / 0.1)",
-      dark: "hsl(216 90% 65% / 0.1)",
-    },
-    positive: {
-      light: "hsl(160 84% 39% / 0.1)",
-      dark: "hsl(160 84% 39% / 0.1)",
+    info: "hsl(var(--info-50))",
+    warning: "hsl(var(--warning-50))",
+    positive: "hsl(var(--positive-50))",
+    selected: {
+      DEFAULT: "hsl(var(--selected-50))",
+      hover: "hsl(var(--selected-60))",
     },
   },
+  ring: "hsl(var(--ring))",
+  link: "hsl(var(--link))",
+  page: "hsl(var(--page))",
+  "special-highlight": "hsl(var(--special-highlight))",
 }
