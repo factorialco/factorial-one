@@ -20,7 +20,7 @@ import {
   NavigationFiltersState,
 } from "./navigationFilters/types"
 import { Search } from "./search"
-import { Settings } from "./settings"
+import { Settings } from "./Settings"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
   BulkActionDefinition,
