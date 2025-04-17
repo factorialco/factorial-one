@@ -40,7 +40,6 @@ values: {
 [x: string]: number;
 };
 }) => void) | undefined;
-hideTooltip?: boolean;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
@@ -49,7 +48,7 @@ export declare const Button: ForwardRefExoticComponent<ButtonProps & RefAttribut
 
 declare const Button_2: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round"> & {
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -65,6 +64,7 @@ export declare type ButtonProps = Omit<ButtonInternalProps, (typeof privateProps
 
 declare interface ButtonProps_2 extends React_2.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
     asChild?: boolean;
+    round?: boolean;
     size?: ButtonSize;
     variant?: ButtonVariant;
     appendButton?: React_2.ReactNode;
@@ -78,7 +78,6 @@ declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
     variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
-    round?: boolean | undefined;
 } & ({
     class?: ClassValue;
     className?: never;
@@ -162,6 +161,7 @@ export declare const FactorialOneProvider: React.FC<{
     image?: ImageContextValue;
     layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">;
     i18n: Omit<I18nProviderProps, "children">;
+    l10n: Omit<L10nProviderProps, "children">;
 }>;
 
 export declare function getEmojiLabel(emoji: string): string;
@@ -183,6 +183,15 @@ declare type ImageContextValue = {
 
 declare type ImageProps = ImgHTMLAttributes<HTMLImageElement>;
 
+declare type L10nContextValue = {
+    locale: string;
+};
+
+declare interface L10nProviderProps {
+    children: ReactNode;
+    l10n: L10nContextValue;
+}
+
 declare interface LayoutProps {
     fullScreen?: boolean;
     addBodyClasses?: boolean;
@@ -203,7 +212,7 @@ declare type LinkContextValue = {
     component?: (props: LinkProps_2, ref: ForwardedRef<HTMLAnchorElement>) => JSX.Element;
 };
 
-export declare interface LinkProps extends LinkProps_2, VariantProps<typeof linkVariants> {
+export declare interface LinkProps extends LinkProps_2, VariantProps<typeof linkVariants>, DataAttributes {
     stopPropagation?: boolean;
 }
 
