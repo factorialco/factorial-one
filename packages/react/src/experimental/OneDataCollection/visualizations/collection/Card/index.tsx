@@ -11,7 +11,12 @@ import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
-import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
+import {
+  CollectionProps,
+  DataSource,
+  GroupingDefinition,
+  RecordType,
+} from "../../../types"
 import { useData } from "../../../useData"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
@@ -32,6 +37,136 @@ const findNextMultiple = (n: number): number => {
   // LCM of 2, 3, and 4 is 12
   const lcm = 12
   return Math.ceil(n / lcm) * lcm
+}
+
+const CardGrid = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <div className="grid grid-cols-1 gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {children}
+    </div>
+  )
+}
+
+/**
+ * Group Cards: Renders
+ */
+
+type GroupCardsProps<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+> = {
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
+  items: Record[]
+  selectedItems: Map<number | string, Record>
+  handleSelectItemChange: (item: Record, checked: boolean) => void
+  cardProperties: ReadonlyArray<CardPropertyDefinition<Record>>
+  title: (record: Record) => string
+  description?: (record: Record) => string
+  avatar?: (record: Record) => AvatarVariant
+}
+
+const GroupCards = <
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+>({
+  source,
+  items,
+  selectedItems,
+  handleSelectItemChange,
+  cardProperties,
+  title,
+  description,
+  avatar,
+}: GroupCardsProps<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping
+>) => {
+  const renderValue = (
+    item: Record,
+    property: CardPropertyDefinition<Record>
+  ) => {
+    return renderProperty(item, property, "card")
+  }
+
+  return (
+    <CardGrid>
+      {items.map((item, index) => {
+        const id = source.selectable ? source.selectable(item) : undefined
+        const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
+        const itemOnClick = source.itemOnClick
+          ? source.itemOnClick(item)
+          : undefined
+
+        const itemActions = (
+          source.itemActions ? source.itemActions(item) || [] : []
+        ).filter((action) => action.type !== "separator")
+
+        const otherActions = (
+          itemActions.filter(
+            (action) => action.type === "other" || !action.type
+          ) || []
+        ).map((action) => ({
+          ...action,
+          // Reconverts the type to DropdownItemObject
+          type: "item" as const,
+        }))
+
+        const primaryAction =
+          itemActions.find((action) => action.type === "primary") || undefined
+        const secondaryActions =
+          itemActions.filter((action) => action.type === "secondary") || []
+
+        const selectable = !!source.selectable && id !== undefined
+
+        return (
+          <OneCard
+            key={index}
+            title={title(item)}
+            selectable={selectable}
+            description={description ? description(item) : undefined}
+            avatar={avatar ? avatar(item) : undefined}
+            selected={selectable && selectedItems.has(id)}
+            onSelect={(selected) => handleSelectItemChange(item, selected)}
+            secondaryActions={secondaryActions}
+            primaryAction={primaryAction}
+            otherActions={otherActions}
+            onClick={itemOnClick}
+            link={itemHref}
+          >
+            <div className="flex flex-col gap-2">
+              {cardProperties.map((property) => (
+                <div key={String(property.label)}>
+                  <div className="text-muted-foreground text-sm font-medium">
+                    {property.label}
+                  </div>
+                  <div className="text-sm">{renderValue(item, property)}</div>
+                </div>
+              ))}
+            </div>
+          </OneCard>
+        )
+      })}
+    </CardGrid>
+  )
 }
 
 export const CardCollection = <
@@ -117,97 +252,74 @@ export const CardCollection = <
     // handleSelectAll,
   } = useSelectable(data.records, paginationInfo, source, onSelectItems)
 
-  const renderValue = (
-    item: Record,
-    property: CardPropertyDefinition<Record>
-  ) => {
-    return renderProperty(item, property, "card")
-  }
+  /**
+   * Groups
+   */
+  const { openGroups, setGroupOpen } = useGroups(
+    data?.type === "grouped" ? data.groups : []
+  )
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {isInitialLoading
-          ? Array.from({ length: 8 }).map((_, i) => (
-              <Card key={i}>
-                <CardHeader>
-                  <CardTitle>
-                    <Skeleton className="h-4 w-3/4" />
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {cardProperties.map((property) => (
-                    <div key={String(property.label)} className="space-y-1">
-                      <Skeleton className="h-3 w-1/4" />
-                      <Skeleton className="h-3 w-1/2" />
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            ))
-          : data.records.map((item, index) => {
-              const id = source.selectable ? source.selectable(item) : undefined
-              const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
-              const itemOnClick = source.itemOnClick
-                ? source.itemOnClick(item)
-                : undefined
-
-              const itemActions = (
-                source.itemActions ? source.itemActions(item) || [] : []
-              ).filter((action) => action.type !== "separator")
-
-              const otherActions = (
-                itemActions.filter(
-                  (action) => action.type === "other" || !action.type
-                ) || []
-              ).map((action) => ({
-                ...action,
-                // Reconverts the type to DropdownItemObject
-                type: "item" as const,
-              }))
-
-              const primaryAction =
-                itemActions.find((action) => action.type === "primary") ||
-                undefined
-              const secondaryActions =
-                itemActions.filter((action) => action.type === "secondary") ||
-                []
-
-              const selectable = !!source.selectable && id !== undefined
-
-              return (
-                <OneCard
-                  key={index}
-                  title={title(item)}
-                  selectable={selectable}
-                  description={description ? description(item) : undefined}
-                  avatar={avatar ? avatar(item) : undefined}
-                  selected={selectable && selectedItems.has(id)}
-                  onSelect={(selected) =>
-                    handleSelectItemChange(item, selected)
-                  }
-                  secondaryActions={secondaryActions}
-                  primaryAction={primaryAction}
-                  otherActions={otherActions}
-                  onClick={itemOnClick}
-                  link={itemHref}
-                >
-                  <div className="flex flex-col gap-2">
-                    {cardProperties.map((property) => (
-                      <div key={String(property.label)}>
-                        <div className="text-muted-foreground text-sm font-medium">
-                          {property.label}
-                        </div>
-                        <div className="text-sm">
-                          {renderValue(item, property)}
-                        </div>
-                      </div>
-                    ))}
+      {isInitialLoading ? (
+        <CardGrid>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <Card key={i}>
+              <CardHeader>
+                <CardTitle>
+                  <Skeleton className="h-4 w-3/4" />
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {cardProperties.map((property) => (
+                  <div key={String(property.label)} className="space-y-1">
+                    <Skeleton className="h-3 w-1/4" />
+                    <Skeleton className="h-3 w-1/2" />
                   </div>
-                </OneCard>
+                ))}
+              </CardContent>
+            </Card>
+          ))}
+        </CardGrid>
+      ) : (
+        <>
+          {data?.type === "grouped" &&
+            data.groups.map((group) => {
+              const itemCount = group.itemCount
+              return (
+                <>
+                  <GroupHeader
+                    label={group.label}
+                    itemCount={itemCount}
+                    onOpenChange={setGroupOpen}
+                    open={openGroups[group.key]}
+                  />
+                  <GroupCards
+                    source={source}
+                    items={group.records}
+                    selectedItems={selectedItems}
+                    handleSelectItemChange={handleSelectItemChange}
+                    title={title}
+                    cardProperties={cardProperties}
+                    description={description}
+                    avatar={avatar}
+                  />
+                </>
               )
             })}
-      </div>
+
+          {data?.type === "flat" && (
+            <GroupCards
+              source={source}
+              items={data.records}
+              selectedItems={selectedItems}
+              handleSelectItemChange={handleSelectItemChange}
+              title={title}
+              cardProperties={cardProperties}
+            />
+          )}
+        </>
+      )}
       {paginationInfo && (
         <div className="flex w-full items-center justify-between px-6">
           <span className="shrink-0 text-f1-foreground-secondary">
