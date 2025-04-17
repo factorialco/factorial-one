@@ -13,7 +13,7 @@ export type GroupingDefinition<R extends RecordType> = {
       /** The label for the grouping */
       name: string
       /** The item count for the grouping */
-      label: (groupId: R[K]) => string
+      label: (groupId: R[K]) => string | Promise<string>
       itemCount?: (
         groupId: R[K]
       ) => number | undefined | Promise<number | undefined>
@@ -25,7 +25,9 @@ export type GroupingDefinition<R extends RecordType> = {
  * The selected the grouping state
  * @template Grouping - The grouping definition
  */
-export type GroupingState<Grouping extends GroupingDefinition<RecordType>> =
+export type GroupingState<
+  Grouping extends { groupBy: { [key: string]: unknown } },
+> =
   | (Grouping extends GroupingDefinition<RecordType>
       ? {
           field: keyof Grouping["groupBy"]

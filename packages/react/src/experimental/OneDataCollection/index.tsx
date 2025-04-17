@@ -11,6 +11,7 @@ import * as Filters from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { Search } from "./search"
+import { Settings } from "./settings"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
   BulkActionDefinition,
@@ -23,9 +24,8 @@ import type {
   OnSelectItemsCallback,
   RecordType,
 } from "./types"
-import type { Visualization } from "./visualizations"
-import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
-
+import type { Visualization } from "./visualizations/collection"
+import { VisualizationRenderer } from "./visualizations/collection"
 /**
  * A hook that manages data source state and filtering capabilities for a collection.
  * It creates and returns a reusable data source that can be shared across different
@@ -203,6 +203,9 @@ export const OneDataCollection = <
     primaryActions,
     secondaryActions,
     presets,
+    currentGrouping,
+    setCurrentGrouping,
+    grouping,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
@@ -318,13 +321,16 @@ export const OneDataCollection = <
             {search && (
               <Search onChange={setCurrentSearch} value={currentSearch} />
             )}
-            {visualizations && visualizations.length > 1 && (
-              <VisualizationSelector
-                visualizations={visualizations}
-                currentVisualization={currentVisualization}
-                onVisualizationChange={setCurrentVisualization}
-              />
-            )}
+
+            <Settings
+              visualizations={visualizations}
+              currentVisualization={currentVisualization}
+              onVisualizationChange={setCurrentVisualization}
+              grouping={grouping}
+              currentGrouping={currentGrouping}
+              onGroupingChange={setCurrentGrouping}
+            ></Settings>
+
             {(primaryActionItem || secondaryActionsItems) && (
               <CollectionActions
                 primaryActions={primaryActionItem}
