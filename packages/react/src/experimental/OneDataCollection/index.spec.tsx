@@ -682,17 +682,19 @@ describe("Collections", () => {
               const sorted = [...mockData]
 
               if (sortings) {
-                if (sortings.field === "name") {
-                  sorted.sort((a, b) => {
-                    const direction = sortings.order === "asc" ? 1 : -1
-                    return a.name.localeCompare(b.name) * direction
-                  })
-                } else if (sortings.field === "email") {
-                  sorted.sort((a, b) => {
-                    const direction = sortings.order === "asc" ? 1 : -1
-                    return a.email.localeCompare(b.email) * direction
-                  })
-                }
+                Object.entries(sortings).forEach(([field, order]) => {
+                  if (field === "name") {
+                    sorted.sort((a, b) => {
+                      const direction = order === "asc" ? 1 : -1
+                      return a.name.localeCompare(b.name) * direction
+                    })
+                  } else if (field === "email") {
+                    sorted.sort((a, b) => {
+                      const direction = order === "asc" ? 1 : -1
+                      return a.email.localeCompare(b.email) * direction
+                    })
+                  }
+                })
               }
 
               return sorted
