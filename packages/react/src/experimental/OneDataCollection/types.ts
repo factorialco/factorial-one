@@ -9,7 +9,9 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "./navigationFilters/types"
-import { SortingsDefinition, SortingsState } from "./sortings"
+import { SortingsDefinition, SortingsState, SortOrder } from "./sortings"
+export * from "./grouping"
+export * from "./sortings"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
