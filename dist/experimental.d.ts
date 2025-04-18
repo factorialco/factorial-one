@@ -23,6 +23,7 @@ import { FullscreenLayoutProps } from './FullscreenLayout';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
 import { IconType as IconType_3 } from '../../factorial-one';
+import { JSONContent } from '@tiptap/react';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
 import { Observable } from 'zen-observable-ts';
@@ -1141,6 +1142,11 @@ declare type DropdownProps = Omit<DropdownInternalProps, (typeof privateProps_2)
     onOpenChange?: (open: boolean) => void;
 };
 
+export declare type editorStateType = {
+    html: string;
+    json: JSONContent | null;
+};
+
 export declare const EmojiAvatar: {
     ({ emoji, size }: Props_6): JSX_2.Element;
     displayName: string;
@@ -1227,12 +1233,21 @@ export declare const FILE_TYPES: {
     readonly MARKDOWN: "markdown";
 };
 
-export declare const FileItem: ({ file, onRemoveFile, disabled }: FileItemProps) => JSX_2.Element;
+export declare const FileAvatar: ForwardRefExoticComponent<Omit<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
+size?: sizes_2[number];
+type?: type_2[number];
+color?: color_2[number];
+} & RefAttributes<HTMLSpanElement>, "ref"> & {
+file: File;
+} & RefAttributes<HTMLSpanElement>>;
 
-declare interface FileItemProps {
+export declare const FileItem: ForwardRefExoticComponent<FileItemProps & RefAttributes<HTMLDivElement>>;
+
+declare interface FileItemProps extends React.HTMLAttributes<HTMLDivElement> {
     file: File;
-    onRemoveFile: () => void;
-    disabled: boolean;
+    onAction?: () => void;
+    actionIcon?: IconType;
+    disabled?: boolean;
 }
 
 export declare type filesConfig = {
@@ -1395,6 +1410,8 @@ declare type HeaderProps = {
     } & ProductUpdatesProp;
 };
 
+export declare type heightType = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full" | "auto";
+
 export declare const HighlightBanner: ({ title, subtitle, buttonLabel, onClick, }: HighlightBannerProps) => JSX_2.Element;
 
 declare type HighlightBannerProps = {
@@ -1492,6 +1509,11 @@ declare type ItemProps = {
 declare type Items = SelectItemObject<string>[];
 
 declare type Items_2 = typeof Item | typeof PersonItem | typeof CompanyItem | typeof TeamItem;
+
+export declare type lastIntentType = {
+    selectedIntent?: string;
+    customIntent?: string;
+} | null;
 
 declare const layoutVariants: (props?: ({
     variant?: "narrow" | undefined;
@@ -2371,9 +2393,14 @@ export declare type resultType = {
     mentionIds?: number[];
 };
 
-export declare const RichTextDisplay: ({ content }: {
+export declare const RichTextDisplay: ForwardRefExoticComponent<RichTextDisplayProps & RefAttributes<HTMLDivElement>>;
+
+export declare type RichTextDisplayHandle = HTMLDivElement;
+
+export declare interface RichTextDisplayProps extends HTMLAttributes<HTMLDivElement> {
     content: string;
-}) => JSX_2.Element;
+    className?: string;
+}
 
 export declare const RichTextEditor: ForwardRefExoticComponent<RichTextEditorProps & RefAttributes<RichTextEditorHandle>> & {
     Skeleton: ({ rows }: RichTextEditorSkeletonProps) => JSX_2.Element;
@@ -2384,6 +2411,7 @@ export declare type RichTextEditorHandle = {
     clearFiles: () => void;
     focus: () => void;
     setError: (error: string | null) => void;
+    setContent: (content: string) => void;
 };
 
 export declare interface RichTextEditorProps {
@@ -2402,6 +2430,7 @@ export declare interface RichTextEditorProps {
     toolbarLabels: toolbarLabels;
     title: string;
     errorConfig?: errorConfig;
+    height?: heightType;
 }
 
 declare interface RichTextEditorSkeletonProps {
