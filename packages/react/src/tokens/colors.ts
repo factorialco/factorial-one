@@ -75,7 +75,7 @@ export const baseColors = {
   },
   viridian: {
     50: "184 92% 35%",
-    60: "184 92% 30%",
+    60: "184 92% 28%",
     70: "184 92% 24%",
   },
   orange: {
@@ -176,8 +176,8 @@ export const f1Colors = {
       DEFAULT: "hsl(var(--selected-50) / 0.1)",
       secondary: "hsl(var(--selected-50) / 0.05)",
       bold: {
-        DEFAULT: "hsl(var(--selected-50))",
-        hover: "hsl(var(--selected-60))",
+        DEFAULT: "hsl(var(--selected-60))",
+        hover: "hsl(var(--selected-70))",
       },
     },
     overlay: {

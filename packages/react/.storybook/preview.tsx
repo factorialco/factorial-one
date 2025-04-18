@@ -39,7 +39,9 @@ export const FactorialOne = (Story, { parameters }) => {
         translations: buildTranslations(defaultTranslations),
       }}
       l10n={{
-        locale: "en",
+        l10n: {
+          locale: parameters.l10n?.locale ?? "en",
+        },
       }}
       link={{
         currentPath,
