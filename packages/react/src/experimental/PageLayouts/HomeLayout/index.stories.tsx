@@ -4,6 +4,11 @@ import { Placeholder } from "../../../lib/storybook-utils/placeholder"
 import { AreaChartWidget } from "../../Widgets/Charts/AreaChartWidget"
 import { HomeLayout } from "./index"
 
+import {
+  WidgetInboxList,
+  WidgetInboxListProps,
+} from "@/experimental/Widgets/Content/Lists/WidgetInboxList"
+import { Default as WidgetInboxListDefaultStory } from "@/experimental/Widgets/Content/Lists/WidgetInboxList/index.stories"
 import { AreaChartProps } from "../../../components/Charts/AreaChart"
 import AreaChartWidgetStoriesMeta from "../../Widgets/Charts/AreaChartWidget/index.stories"
 import { BarChartWidget } from "../../Widgets/Charts/BarChartWidget"
@@ -23,10 +28,9 @@ const widgets = [
     {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
   />,
   <Widget key="never-gonna" header={{ title: "A form widget" }}>
-    <p>
-      Never gonna give you up. Never gonna let you down. Never gonna turn around
-      and desert you.
-    </p>
+    <WidgetInboxList
+      {...(WidgetInboxListDefaultStory.args as WidgetInboxListProps)}
+    />
   </Widget>,
   <LineChartWidget key="line-chart" {...LineChartWidgetStoriesMeta.args} />,
   <BarChartWidget key="bar-chart" {...BarChartWidgetStoriesMeta.args} />,
