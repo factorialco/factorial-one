@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
+import { StandardLayout } from "@/components/layouts/StandardLayout"
 import * as Icon from "../../../../icons/app"
-import { StandardLayout } from "../../../PageLayouts/StandardLayout"
 import { SectionHeader } from "./index"
 
 const meta: Meta<typeof SectionHeader> = {

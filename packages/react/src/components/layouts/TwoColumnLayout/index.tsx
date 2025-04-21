@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils.ts"
+import { cn } from "@/lib/utils"
 import { ReactNode, forwardRef } from "react"
 
 export interface TwoColumnLayoutProps {

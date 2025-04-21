@@ -1,8 +1,8 @@
 import { Button, type ButtonProps } from "../../../../components/Actions/Button"
+import { useLayout } from "@/components/layouts/LayoutProvider"
 import { Icon, type IconType } from "../../../../components/Utilities/Icon"
 import ExternalLink from "../../../../icons/app/ExternalLink"
 import { cn, focusRing } from "../../../../lib/utils"
-import { useLayout } from "../../../PageLayouts/LayoutProvider"
 
 type Props = {
   /** Main heading text */

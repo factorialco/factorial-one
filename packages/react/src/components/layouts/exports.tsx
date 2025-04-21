@@ -1,15 +1,24 @@
-import { Component } from "../../lib/component"
+import { Component } from "@/lib/component"
 import { HomeLayout as HomeLayoutComponent } from "./HomeLayout"
 import {
   TwoColumnLayout as TwoColumnLayoutComponent,
   TwoColumnLayoutProps,
 } from "./TwoColumnLayout"
 
-export * from "./StandardLayout"
+import {
+  StandardLayout as StandardLayoutComponent,
+  StandardLayoutProps,
+} from "./StandardLayout"
 
-export type { TwoColumnLayoutProps }
+export type { StandardLayoutProps, TwoColumnLayoutProps }
 
-export * from "./Utils/exports"
+export const StandardLayout = Component(
+  {
+    name: "StandardLayout",
+    type: "layout",
+  },
+  StandardLayoutComponent
+)
 
 export const TwoColumnLayout = Component(
   {
