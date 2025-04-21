@@ -1,21 +1,22 @@
 import { Component } from "../../lib/component"
 import { HomeLayout as HomeLayoutComponent } from "./HomeLayout"
 import {
-  InfoPaneLayout as InfoPaneLayoutComponent,
-  InfoPaneLayoutProps,
-} from "./Utils/InfoPaneLayout"
+  TwoColumnLayout as TwoColumnLayoutComponent,
+  TwoColumnLayoutProps,
+} from "./TwoColumnLayout"
+
 export * from "./StandardLayout"
 
-export type { InfoPaneLayoutProps }
+export type { TwoColumnLayoutProps }
 
 export * from "./Utils/exports"
 
-export const InfoPaneLayout = Component(
+export const TwoColumnLayout = Component(
   {
-    name: "InfoPaneLayout",
+    name: "TwoColumnLayout",
     type: "layout",
   },
-  InfoPaneLayoutComponent
+  TwoColumnLayoutComponent
 )
 
 export const HomeLayout = Component(
