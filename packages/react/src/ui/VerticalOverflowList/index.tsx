@@ -87,10 +87,10 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
     const currentContainerSize = containerRef.current.clientHeight
     const itemSizes = measureItemSizes()
 
-    // Calculate how many items fit with an overflow button
-    const availableSize = currentContainerSize - gap
-
-    const visibleCount = calculateVisibleItemCount(itemSizes, availableSize)
+    const visibleCount = calculateVisibleItemCount(
+      itemSizes,
+      currentContainerSize
+    )
 
     // If no items can fit, put all items in the overflow
     if (visibleCount === 0) {
@@ -104,7 +104,7 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
         overflowItems: items.slice(visibleCount),
       })
     }
-  }, [items, gap, measureItemSizes, calculateVisibleItemCount])
+  }, [items, measureItemSizes, calculateVisibleItemCount])
 
   // Initial calculation and initialization
   useEffect(() => {
@@ -171,7 +171,7 @@ const VerticalOverflowList = function VerticalOverflowList<T>({
       <div
         ref={measurementContainerRef}
         aria-hidden="true"
-        className="pointer-events-none invisible absolute left-0 right-0 top-0 flex flex-col opacity-0"
+        className="pointer-events-none invisible absolute left-0 right-0 top-0 flex flex-col whitespace-nowrap opacity-0"
         style={{ gap: `${gap}px` }}
         data-testid="overflow-measurement-container"
       >
