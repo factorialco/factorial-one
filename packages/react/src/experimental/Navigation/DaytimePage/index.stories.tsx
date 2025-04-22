@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { ApplicationFrame } from "../ApplicationFrame"
 
-import { Default as DefaultHomeLayoutStory } from "@/components/layouts/HomeLayout/index.stories"
 import { HomeLayout } from "@/components/layouts/HomeLayout"
+import { Default as DefaultHomeLayoutStory } from "@/components/layouts/HomeLayout/index.stories"
 import { DaytimePage, DaytimePageProps } from "./index"
 
 const meta: Meta<typeof DaytimePage> = {

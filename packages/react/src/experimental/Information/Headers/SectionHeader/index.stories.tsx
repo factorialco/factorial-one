@@ -1,6 +1,6 @@
+import { StandardLayout } from "@/components/layouts/StandardLayout"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
-import { StandardLayout } from "@/components/layouts/StandardLayout"
 import * as Icon from "../../../../icons/app"
 import { SectionHeader } from "./index"
 
