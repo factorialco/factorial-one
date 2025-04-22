@@ -156,15 +156,22 @@ export const useDataSource = <
   const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
 
   const defaultGrouping = grouping?.mandatory
-    ? ({
-        field: Object.keys(grouping.groupBy)[0],
-        order: "asc",
-      } as GroupingState<Record, Grouping>)
+    ? {
+        field: Object.keys(
+          grouping.groupBy
+        )[0] as keyof typeof grouping.groupBy,
+        order: "asc" as const,
+      }
     : undefined
 
   const [currentGrouping, setCurrentGrouping] = useState<
-    GroupingState<Record, Grouping> | undefined
+    GroupingState<Record, Grouping>
   >(initialCurrentGrouping ?? defaultGrouping)
+
+  // For mandatory grouping, ensure we have a valid grouping state
+  if (grouping?.mandatory && !currentGrouping?.field) {
+    throw new Error("Grouping is mandatory but no grouping state is set")
+  }
 
   return {
     filters: memoizedFilters,
