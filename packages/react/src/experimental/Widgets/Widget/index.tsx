@@ -1,13 +1,14 @@
 import { Button, type ButtonProps } from "@/components/Actions/Button"
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Counter } from "@/experimental/Information/Counter"
 import { AlertTag } from "@/experimental/Information/Tags/AlertTag"
 import {
   StatusTag,
   StatusVariant,
 } from "@/experimental/Information/Tags/StatusTag"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
 import { PrivateBox } from "@/experimental/Utilities/PrivateBox"
-import { EyeInvisible, EyeVisible } from "@/icons/app"
+import { EyeInvisible, EyeVisible, InfoCircleLine } from "@/icons/app"
 import { usePrivacyMode } from "@/lib/privacyMode"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
@@ -31,6 +32,7 @@ export interface WidgetProps {
     title?: string
     subtitle?: string
     comment?: string
+    info?: string
     canBeBlurred?: boolean
     link?: {
       title: string
@@ -118,6 +120,15 @@ const Container = forwardRef<
                       {header.subtitle}
                     </CardSubtitle>
                   </div>
+                )}
+                {header.info && (
+                  <Tooltip label={header.info}>
+                    <Icon
+                      icon={InfoCircleLine}
+                      size="sm"
+                      className="text-f1-foreground-secondary"
+                    />
+                  </Tooltip>
                 )}
                 {header.count && (
                   <div className="ml-0.5">

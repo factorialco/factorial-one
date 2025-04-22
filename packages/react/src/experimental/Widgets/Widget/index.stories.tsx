@@ -57,6 +57,17 @@ export const WithLinkAndCustomIcon: Story = {
   },
 }
 
+export const WithInfo: Story = {
+  args: {
+    ...meta.args,
+    header: {
+      title: "Insight title",
+      subtitle: "Subtitle",
+      info: "This is a tooltip",
+    },
+  },
+}
+
 export const WithAction: Story = {
   args: {
     ...meta.args,
