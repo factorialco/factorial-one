@@ -168,13 +168,13 @@ function usePaginationState() {
  * }
  * ```
  *
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
  *
  * @param source - The data source object containing dataAdapter and filter state
  * @param options - Optional configuration including filter overrides
  *
- * @returns {UseDataReturn<Record>} An object containing:
+ * @returns {UseDataReturn<R>} An object containing:
  * - data: The current collection records
  * - isInitialLoading: Whether this is the first data load
  * - isLoading: Whether any data fetch is in progress
@@ -183,20 +183,14 @@ function usePaginationState() {
  * - setPage: Function to navigate to a specific page
  */
 export function useData<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  Grouping extends GroupingDefinition<Record>,
+  Grouping extends GroupingDefinition<R>,
 >(
-  source: DataSource<
-    Record,
-    Filters,
-    Sortings,
-    ItemActionsDefinition<Record>,
-    Grouping
-  >,
+  source: DataSource<R, Filters, Sortings, ItemActionsDefinition<R>, Grouping>,
   { filters }: UseDataOptions<Filters> = {}
-): UseDataReturn<Record> {
+): UseDataReturn<R> {
   const {
     dataAdapter,
     currentFilters,
@@ -217,7 +211,7 @@ export function useData<
     setData: setRawData,
     error,
     setError,
-  } = useDataFetchState<Record>()
+  } = useDataFetchState<R>()
 
   const { paginationInfo, setPaginationInfo } = usePaginationState()
 
@@ -235,8 +229,8 @@ export function useData<
       : deferredSearch
 
   const handleFetchSuccess = useCallback(
-    (result: PaginatedResponse<Record> | SimpleResult<Record>) => {
-      let records: Record[] = []
+    (result: PaginatedResponse<R> | SimpleResult<R>) => {
+      let records: R[] = []
       if ("records" in result) {
         records = result.records
         setPaginationInfo({
@@ -273,8 +267,12 @@ export function useData<
         records: rawData,
         groups: Object.entries(groupedData).map(([key, value]) => ({
           key,
-          label: grouping.groupBy[currentGrouping.field]!.label(key),
-          itemCount: grouping.groupBy[currentGrouping.field]?.itemCount?.(key),
+          label: grouping.groupBy[currentGrouping.field]!.label(
+            key as R[keyof R]
+          ),
+          itemCount: grouping.groupBy[currentGrouping.field]?.itemCount?.(
+            key as R[keyof R]
+          ),
           records: value,
         })),
       }
@@ -297,7 +295,7 @@ export function useData<
     [setError, setIsInitialLoading, setIsLoading]
   )
 
-  type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
+  type ResultType = PaginatedResponse<R> | SimpleResult<R>
 
   const fetchDataAndUpdate = useCallback(
     async (filters: FiltersState<Filters>, currentPage = 1) => {
@@ -308,7 +306,7 @@ export function useData<
           cleanup.current = undefined
         }
 
-        const sortings: SortingsStateMultiple<Record, Sortings, Grouping> = [
+        const sortings: SortingsStateMultiple<R, Sortings, Grouping> = [
           ...(currentSortings
             ? [
                 {
@@ -328,7 +326,7 @@ export function useData<
         ]
 
         const baseFetchOptions: BaseFetchOptions<
-          Record,
+          R,
           Filters,
           Sortings,
           Grouping
