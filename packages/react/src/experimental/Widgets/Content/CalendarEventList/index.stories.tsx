@@ -38,6 +38,7 @@ const meta: Meta = {
         toDate: new Date(2024, 6, 12),
       },
     ],
+    minSize: 210,
   },
   decorators: [
     (Story) => (

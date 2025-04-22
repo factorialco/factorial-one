@@ -14,6 +14,11 @@ import { RadialProgressWidget } from "@/experimental/Widgets/Charts/RadialProgre
 import RadialProgressWidgetStoriesMeta from "@/experimental/Widgets/Charts/RadialProgressWidget/index.stories"
 import { VerticalBarChartWidget } from "@/experimental/Widgets/Charts/VerticalBarChartWidget"
 import VerticalBarChartWidgetStoriesMeta from "@/experimental/Widgets/Charts/VerticalBarChartWidget/index.stories"
+import {
+  WidgetInboxList,
+  WidgetInboxListProps,
+} from "@/experimental/Widgets/Content/Lists/WidgetInboxList"
+import { Default as WidgetInboxListDefaultStory } from "@/experimental/Widgets/Content/Lists/WidgetInboxList/index.stories"
 import { Widget } from "@/experimental/Widgets/Widget"
 import { AreaChartProps } from "../../Charts/AreaChart"
 
@@ -23,10 +28,9 @@ const widgets = [
     {...(AreaChartWidgetStoriesMeta.args as ComposeChartContainerProps<AreaChartProps>)}
   />,
   <Widget key="never-gonna" header={{ title: "A form widget" }}>
-    <p>
-      Never gonna give you up. Never gonna let you down. Never gonna turn around
-      and desert you.
-    </p>
+    <WidgetInboxList
+      {...(WidgetInboxListDefaultStory.args as WidgetInboxListProps)}
+    />
   </Widget>,
   <LineChartWidget key="line-chart" {...LineChartWidgetStoriesMeta.args} />,
   <BarChartWidget key="bar-chart" {...BarChartWidgetStoriesMeta.args} />,
