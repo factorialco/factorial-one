@@ -57,9 +57,8 @@ export type DataSourceDefinition<
   }
   /** Grouping configuration */
   grouping?: Grouping
-} & (Grouping extends { mandatory: true }
-  ? { currentGrouping: GroupingState<Record, Grouping> }
-  : { currentGrouping?: GroupingState<Record, Grouping> | null })
+  currentGrouping?: GroupingState<Record, Grouping>
+}
 
 export type CollectionSearchOptions = {
   /** Whether search is enabled */
@@ -322,15 +321,9 @@ export type DataSource<
   setIsLoading: (loading: boolean) => void
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
-    React.SetStateAction<
-      Grouping extends { mandatory: true }
-        ? GroupingState<Record, Grouping>
-        : GroupingState<Record, Grouping> | undefined
-    >
+    React.SetStateAction<GroupingState<Record, Grouping>
   >
-} & (Grouping extends { mandatory: true }
-    ? { currentGrouping: GroupingState<Record, Grouping> }
-    : { currentGrouping?: GroupingState<Record, Grouping> })
+}
 
 /**
  * Utility type for handling both Promise and Observable return types.

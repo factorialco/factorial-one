@@ -324,7 +324,7 @@ export const ExampleComponent = ({
     presets: usePresets ? filterPresets : undefined,
     sortings,
     grouping,
-    currentGrouping: currentGrouping ?? null,
+    currentGrouping: currentGrouping,
     itemActions: (item: MockUser) => [
       {
         label: "Edit",
