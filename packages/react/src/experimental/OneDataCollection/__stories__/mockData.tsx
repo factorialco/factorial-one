@@ -143,7 +143,7 @@ export const sortings = {
 } as const
 
 // Helper function to filter users based on filters
-const filterUsers = <
+export const filterUsers = <
   T extends RecordType & {
     name: string
     email: string
