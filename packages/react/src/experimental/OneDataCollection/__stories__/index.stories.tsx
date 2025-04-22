@@ -11,455 +11,24 @@ import {
   Target,
   Upload,
 } from "@/icons/app"
-import { PromiseState } from "@/lib/promise-to-observable"
 import { Meta, StoryObj } from "@storybook/react"
-import { Observable } from "zen-observable-ts"
 import { dotTagColors } from "../../Information/Tags/DotTag"
-import {  FiltersState } from "../Filters/types"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import {
-  BulkActionDefinition,
-  GroupingDefinition,
-  OnBulkActionCallback,
-  OnSelectItemsCallback,
-  PresetsDefinition,
-  RecordType,
-  SortingsStateMultiple,
-} from "../types"
+  createDataAdapter,
+  createPromiseDataFetch,
+  DEPARTMENTS,
+  ExampleComponent,
+  filterPresets,
+  filters,
+  filterUsers,
+  generateMockUsers,
+  mockUsers,
+  sortings,
+} from "./mockData"
+import { GroupingDefinition } from "../grouping"
 import { useData } from "../useData"
-import { sortings } from "./mockData"
-
-const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
-
-// Example filter definition
-const filters = {
-  search: {
-    type: "search",
-    label: "Search",
-  },
-  department: {
-    type: "in",
-    label: "Department",
-    options: DEPARTMENTS.map((value) => ({ value, label: value })),
-  },
-} as const
-
-// Define presets for the filters
-const filterPresets: PresetsDefinition<typeof filters> = [
-  {
-    label: "Engineering Team",
-    filter: {
-      department: ["Engineering"],
-    },
-  },
-  {
-    label: "Product Team",
-    filter: {
-      department: ["Product"],
-    },
-  },
-  {
-    label: "Design Team",
-    filter: {
-      department: ["Design"],
-    },
-  },
-  {
-    label: "Marketing Team",
-    filter: {
-      department: ["Marketing"],
-    },
-  },
-]
-
-// Mock data
-const mockUsers: {
-  id: string
-  name: string
-  email: string
-  role: string
-  department: (typeof DEPARTMENTS)[number]
-  status: string
-  isStarred: boolean
-  href?: string
-  salary: number | undefined
-}[] = [
-  {
-    id: "user-1",
-    name: "John Doe",
-    email: "john@example.com",
-    role: "Senior Engineer",
-    department: DEPARTMENTS[0],
-    status: "active",
-    isStarred: true,
-    salary: 100000,
-  },
-  {
-    id: "user-2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    role: "Product Manager",
-    department: DEPARTMENTS[1],
-    status: "active",
-    isStarred: false,
-    salary: 80000,
-  },
-  {
-    id: "user-3",
-    name: "Bob Johnson",
-    email: "bob@example.com",
-    role: "Designer",
-    department: DEPARTMENTS[2],
-    status: "inactive",
-    isStarred: false,
-    salary: 90000,
-  },
-  {
-    id: "user-4",
-    name: "Alice Williams",
-    email: "alice@example.com",
-    role: "Marketing Lead",
-    department: DEPARTMENTS[3],
-    status: "active",
-    isStarred: true,
-    salary: undefined,
-  },
-]
-
-// Helper function to filter users based on filters
-const filterUsers = <
-  T extends RecordType & {
-    name: string
-    email: string
-    department: string
-    salary: number | undefined
-  },
->(
-  users: T[],
-  filterValues: FiltersState<FiltersType>,
-  sortingState: SortingsStateMultiple<typeof sortings, undefined>,
-  search?: string
-) => {
-  let filteredUsers = [...users]
-
-  const searchValue = filterValues.search
-  if (typeof searchValue === "string") {
-    const searchLower = searchValue.toLowerCase()
-    filteredUsers = filteredUsers.filter(
-      (user) =>
-        user.name.toLowerCase().includes(searchLower) ||
-        user.email.toLowerCase().includes(searchLower)
-    )
-  }
-
-  if (sortingState) {
-    Object.entries(sortingState).forEach(([field, order]) => {
-      filteredUsers = filteredUsers.sort((a, b) => {
-        const aValue = a[field]
-        const bValue = b[field]
-
-        // Handle string comparisons
-        if (typeof aValue === "string" && typeof bValue === "string") {
-          return order === "asc"
-            ? aValue.localeCompare(bValue)
-            : bValue.localeCompare(aValue)
-        }
-
-        // Handle number comparisons
-        if (typeof aValue === "number" && typeof bValue === "number") {
-          return order === "asc" ? aValue - bValue : bValue - aValue
-        }
-
-        // Handle boolean comparisons
-        if (typeof aValue === "boolean" && typeof bValue === "boolean") {
-          // false comes before true when ascending
-          return order === "asc"
-            ? aValue === bValue
-              ? 0
-              : aValue
-                ? 1
-                : -1
-            : aValue === bValue
-              ? 0
-              : aValue
-                ? -1
-                : 1
-        }
-
-        // Default case: use string representation
-        return order === "asc"
-          ? String(aValue).localeCompare(String(bValue))
-          : String(bValue).localeCompare(String(aValue))
-      })
-    })
-  }
-
-  // Handle department filter
-  const departmentFilterValues = filterValues.department
-  if (
-    Array.isArray(departmentFilterValues) &&
-    departmentFilterValues.length > 0
-  ) {
-    filteredUsers = filteredUsers.filter((user) =>
-      departmentFilterValues.some((d) => d === user.department)
-    )
-  }
-
-  if (search) {
-    filteredUsers = filteredUsers.filter(
-      (user) =>
-        user.name.toLowerCase().includes(search.toLowerCase()) ||
-        user.email.toLowerCase().includes(search.toLowerCase())
-    )
-  }
-
-  return filteredUsers
-}
-
-// Utility functions for data fetching
-type FiltersType = typeof filters
-
-const createObservableDataFetch = (delay = 0) => {
-  return ({
-    filters,
-    sortings: sortingsState,
-  }: {
-    filters: FiltersState<FiltersType>
-    sortings: SortingsStateMultiple<typeof sortings, undefined>
-  }) =>
-    new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
-      observer.next({
-        loading: true,
-        error: null,
-        data: null,
-      })
-
-      const timeoutId = setTimeout(() => {
-        observer.next({
-          loading: false,
-          error: null,
-          data: filterUsers(mockUsers, filters, sortingsState),
-        })
-        observer.complete()
-      }, delay)
-
-      return () => clearTimeout(timeoutId)
-    })
-}
-
-const createPromiseDataFetch = (delay = 500) => {
-  return ({
-    filters,
-    sortings: sortingsState,
-    search,
-  }: {
-    filters: FiltersState<FiltersType>
-    sortings: SortingsStateMultiple<
-      typeof sortings,
-      GroupingDefinition<(typeof mockUsers)[number]>
-    >
-    grouping: GroupingDefinition<(typeof mockUsers)[number]>
-    search?: string
-  }) =>
-    new Promise<(typeof mockUsers)[number][]>((resolve) => {
-      setTimeout(() => {
-        resolve(filterUsers(mockUsers, filters, sortingsState, search))
-      }, delay)
-    })
-}
-
-// Example component using useDataSource
-const ExampleComponent = ({
-  useObservable = false,
-  usePresets = false,
-  frozenColumns = 0,
-  selectable,
-  bulkActions,
-  grouping,
-}: {
-  useObservable?: boolean
-  usePresets?: boolean
-  frozenColumns?: 0 | 1 | 2
-  selectable?: (item: (typeof mockUsers)[number]) => string | number | undefined
-  bulkActions?: (
-    selectedItems: Parameters<
-      OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
-    >[1]
-  ) => {
-    primary: BulkActionDefinition[]
-    secondary?: BulkActionDefinition[]
-  }
-  onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
-  onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
-  grouping?: GroupingDefinition<(typeof mockUsers)[number]>
-}) => {
-  type MockUser = (typeof mockUsers)[number]
-
-  const dataSource = useDataSource({
-    filters,
-    presets: usePresets ? filterPresets : undefined,
-    sortings,
-    grouping,
-    currentGrouping: {
-      field: "role",
-      order: "desc",
-    },
-    itemActions: (item: MockUser) => [
-      {
-        label: "Edit",
-        icon: Pencil,
-        onClick: () => console.log(`Editing ${item.name}`),
-        description: "Modify user information",
-      },
-      {
-        label: "View Profile",
-        icon: Ai,
-        onClick: () => console.log(`Viewing ${item.name}'s profile`),
-      },
-      { type: "separator" },
-      {
-        label: item.isStarred ? "Remove Star" : "Star User",
-        icon: Star,
-        onClick: () => console.log(`Toggling star for ${item.name}`),
-        description: item.isStarred
-          ? "Remove from favorites"
-          : "Add to favorites",
-      },
-      {
-        label: "Delete",
-        icon: Delete,
-        onClick: () => console.log(`Deleting ${item.name}`),
-        critical: true,
-        description: "Permanently remove user",
-        enabled: item.department === "Engineering" && item.status === "active",
-      },
-    ],
-    selectable,
-    bulkActions,
-    dataAdapter: {
-      fetchData: useObservable
-        ? createObservableDataFetch()
-        : createPromiseDataFetch(),
-    },
-  })
-
-  return (
-    <div className="space-y-4">
-      <OneDataCollection
-        source={dataSource}
-        onSelectItems={(selectedItems) =>
-          console.log("Selected items", "->", selectedItems)
-        }
-        onBulkAction={(action, selectedItems) =>
-          console.log(`Bulk action: ${action}`, "->", selectedItems)
-        }
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              frozenColumns,
-              columns: [
-                {
-                  label: "Name",
-                  width: 140,
-                  render: (item) => ({
-                    type: "person",
-                    value: {
-                      firstName: item.name.split(" ")[0],
-                      lastName: item.name.split(" ")[1],
-                    },
-                  }),
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 2",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 2",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 2",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 3",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 3",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 3",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 4",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 4",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 4",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              title: (item) => item.name,
-              cardProperties: [
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                },
-              ],
-            },
-          },
-        ]}
-      />
-    </div>
-  )
-}
 
 const meta = {
   title: "Data Collection",
@@ -1162,7 +731,7 @@ export const WithTableVisualization: Story = {
         (typeof mockUsers)[number],
         typeof filters,
         typeof sortings,
-        undefined
+        GroupingDefinition<(typeof mockUsers)[number]>
       >({
         data: mockUsers,
         delay: 500,
@@ -1336,7 +905,7 @@ export const WithPagination: Story = {
         },
         typeof filters,
         typeof sortings,
-        undefined
+        GroupingDefinition<(typeof mockUsers)[number]>
       >({
         data: paginatedMockUsers,
         delay: 500,
@@ -1656,20 +1225,19 @@ export const WithSyncSearch: Story = {
 
           // Apply sorting if provided
           if (sortings) {
-            const field = sortings.field as keyof (typeof mockUserData)[0]
-            const direction = sortings.order
+            sortings.forEach(({ field, order }) => {
+              filteredUsers.sort((a, b) => {
+                const aValue = a[field]
+                const bValue = b[field]
 
-            filteredUsers.sort((a, b) => {
-              const aValue = a[field]
-              const bValue = b[field]
+                if (typeof aValue === "string" && typeof bValue === "string") {
+                  return order === "asc"
+                    ? aValue.localeCompare(bValue)
+                    : bValue.localeCompare(aValue)
+                }
 
-              if (typeof aValue === "string" && typeof bValue === "string") {
-                return direction === "asc"
-                  ? aValue.localeCompare(bValue)
-                  : bValue.localeCompare(aValue)
-              }
-
-              return 0
+                return 0
+              })
             })
           }
 
@@ -1804,27 +1372,25 @@ export const WithAsyncSearch: Story = {
 
               // Apply sorting if provided
               if (sortings) {
-                Object.entries(sortings)
-                  .reverse()
-                  .forEach(([field, order]) => {
-                    const direction = order
+                sortings.forEach(({ field, order }) => {
+                  const direction = order
 
-                    filteredUsers.sort((a, b) => {
-                      const aValue = a[field as keyof MockUser]
-                      const bValue = b[field as keyof MockUser]
+                  filteredUsers.sort((a, b) => {
+                    const aValue = a[field as keyof MockUser]
+                    const bValue = b[field as keyof MockUser]
 
-                      if (
-                        typeof aValue === "string" &&
-                        typeof bValue === "string"
-                      ) {
-                        return direction === "asc"
-                          ? aValue.localeCompare(bValue)
-                          : bValue.localeCompare(aValue)
-                      }
+                    if (
+                      typeof aValue === "string" &&
+                      typeof bValue === "string"
+                    ) {
+                      return direction === "asc"
+                        ? aValue.localeCompare(bValue)
+                        : bValue.localeCompare(aValue)
+                    }
 
-                      return 0
-                    })
+                    return 0
                   })
+                })
               }
 
               resolve(filteredUsers)
