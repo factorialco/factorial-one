@@ -4,25 +4,25 @@ import { ArrowDown, ArrowUp } from "@/icons/app"
 import { GroupingDefinition, GroupingState } from "../../grouping"
 import { RecordType } from "../../types"
 
-type GroupingSelectorProps = {
-  grouping: GroupingDefinition<RecordType>
-  currentGrouping:
-    | GroupingState<RecordType, GroupingDefinition<RecordType>>
-    | undefined
-  onGroupingChange: (
-    groupingState:
-      | GroupingState<RecordType, GroupingDefinition<RecordType>>
-      | undefined
-  ) => void
+type GroupingSelectorProps<
+  R extends RecordType,
+  Grouping extends GroupingDefinition<R>,
+> = {
+  grouping: Grouping
+  currentGrouping: GroupingState<R, Grouping> | undefined
+  onGroupingChange: (groupingState: GroupingState<R, Grouping>) => void
 }
 
 const EmptyGroupingValue = "__no-grouping__"
 
-export const GroupingSelector = ({
+export const GroupingSelector = <
+  R extends RecordType,
+  Grouping extends GroupingDefinition<R>,
+>({
   grouping,
   currentGrouping,
   onGroupingChange,
-}: GroupingSelectorProps) => {
+}: GroupingSelectorProps<R, Grouping>) => {
   const groupingOptions = [
     ...(!grouping.mandatory
       ? [
@@ -54,7 +54,7 @@ export const GroupingSelector = ({
         <div className="shrink grow">
           <Select
             options={groupingOptions}
-            value={currentGrouping?.field ?? EmptyGroupingValue}
+            value={currentGrouping?.field.toString() ?? EmptyGroupingValue}
             onChange={(value: string) =>
               onGroupingChange(
                 value !== EmptyGroupingValue
