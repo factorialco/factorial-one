@@ -159,11 +159,11 @@ export const useDataSource = <
     ? ({
         field: Object.keys(grouping.groupBy)[0],
         order: "asc",
-      } as GroupingState<Grouping>)
+      } as GroupingState<Record, Grouping>)
     : undefined
 
   const [currentGrouping, setCurrentGrouping] = useState<
-    GroupingState<Grouping> | undefined
+    GroupingState<Record, Grouping> | undefined
   >(initialCurrentGrouping ?? defaultGrouping)
 
   return {
