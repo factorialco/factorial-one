@@ -126,7 +126,7 @@ const Container = forwardRef<
                     <Icon
                       icon={InfoCircleLine}
                       size="sm"
-                      className="text-f1-icon-secondary"
+                      className="text-f1-foreground-secondary"
                     />
                   </Tooltip>
                 )}
