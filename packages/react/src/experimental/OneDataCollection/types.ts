@@ -321,7 +321,7 @@ export type DataSource<
   setIsLoading: (loading: boolean) => void
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
-    React.SetStateAction<GroupingState<Record, Grouping>
+    React.SetStateAction<GroupingState<Record, Grouping>>
   >
 }
 
