@@ -183,9 +183,7 @@ export const WithPaginationAndGrouping: Story = {
           href: string
           salary: number | undefined
         },
-        typeof filters,
-        typeof sortings,
-        typeof grouping
+        typeof filters
       >({
         data: paginatedMockUsers,
         delay: 500,
