@@ -952,7 +952,13 @@ export const WithPagination: Story = {
 
 export const WithSynchronousData: Story = {
   render: () => {
-    const source = useDataSource({
+    const source = useDataSource<
+      (typeof mockUsers)[number],
+      typeof filters,
+      typeof sortings,
+      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      GroupingDefinition<(typeof mockUsers)[number]>
+    >({
       filters,
       sortings,
       presets: filterPresets,
@@ -1122,7 +1128,61 @@ export const WithAdvancedActions: Story = {
 // Search functionality demonstration
 export const WithSyncSearch: Story = {
   render: () => {
-    const source = useDataSource({
+    const mockUserData = [
+      {
+        id: "user-1",
+        name: "John Doe",
+        email: "john@example.com",
+        role: "Senior Engineer",
+        department: DEPARTMENTS[0],
+        status: "active",
+        isStarred: true,
+      },
+      {
+        id: "user-2",
+        name: "Jane Smith",
+        email: "jane@example.com",
+        role: "Product Manager",
+        department: DEPARTMENTS[1],
+        status: "active",
+        isStarred: false,
+      },
+      {
+        id: "user-3",
+        name: "Alice Johnson",
+        email: "alice@example.com",
+        role: "UX Designer",
+        department: DEPARTMENTS[2],
+        status: "active",
+        isStarred: false,
+      },
+      {
+        id: "user-4",
+        name: "Bob Brown",
+        email: "bob@example.com",
+        role: "Developer",
+        department: DEPARTMENTS[0],
+        status: "inactive",
+        isStarred: true,
+      },
+      {
+        id: "user-5",
+        name: "Emma Wilson",
+        email: "emma@example.com",
+        role: "Marketing Lead",
+        department: DEPARTMENTS[3],
+        status: "active",
+        isStarred: false,
+      },
+    ]
+
+    const source = useDataSource<
+      (typeof mockUserData)[number],
+      typeof filters,
+      typeof sortings,
+      ItemActionsDefinition<(typeof mockUserData)[number]>,
+      GroupingDefinition<(typeof mockUserData)[number]>
+    >({
       filters,
       sortings,
       search: {
@@ -1133,53 +1193,6 @@ export const WithSyncSearch: Story = {
       dataAdapter: {
         fetchData: ({ filters, sortings, search }) => {
           // Store mock data in a local variable for filtering
-          const mockUserData = [
-            {
-              id: "user-1",
-              name: "John Doe",
-              email: "john@example.com",
-              role: "Senior Engineer",
-              department: DEPARTMENTS[0],
-              status: "active",
-              isStarred: true,
-            },
-            {
-              id: "user-2",
-              name: "Jane Smith",
-              email: "jane@example.com",
-              role: "Product Manager",
-              department: DEPARTMENTS[1],
-              status: "active",
-              isStarred: false,
-            },
-            {
-              id: "user-3",
-              name: "Alice Johnson",
-              email: "alice@example.com",
-              role: "UX Designer",
-              department: DEPARTMENTS[2],
-              status: "active",
-              isStarred: false,
-            },
-            {
-              id: "user-4",
-              name: "Bob Brown",
-              email: "bob@example.com",
-              role: "Developer",
-              department: DEPARTMENTS[0],
-              status: "inactive",
-              isStarred: true,
-            },
-            {
-              id: "user-5",
-              name: "Emma Wilson",
-              email: "emma@example.com",
-              role: "Marketing Lead",
-              department: DEPARTMENTS[3],
-              status: "active",
-              isStarred: false,
-            },
-          ]
 
           // Apply search filter if search term is provided
           let filteredUsers = [...mockUserData]
@@ -1210,8 +1223,8 @@ export const WithSyncSearch: Story = {
           if (sortings) {
             sortings.forEach(({ field, order }) => {
               filteredUsers.sort((a, b) => {
-                const aValue = a[field]
-                const bValue = b[field]
+                const aValue = a[field as keyof (typeof mockUserData)[number]]
+                const bValue = b[field as keyof (typeof mockUserData)[number]]
 
                 if (typeof aValue === "string" && typeof bValue === "string") {
                   return order === "asc"
