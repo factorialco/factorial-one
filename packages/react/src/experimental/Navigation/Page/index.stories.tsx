@@ -8,8 +8,8 @@ import { Tabs } from "../Tabs"
 import * as TabsStories from "../Tabs/index.stories"
 
 import { ComponentProps } from "react"
+import { StandardLayout } from "@/components/layouts/StandardLayout"
 import { Briefcase } from "../../../icons/app"
-import { StandardLayout } from "../../PageLayouts/StandardLayout"
 import { ApplicationFrame } from "../ApplicationFrame"
 
 type TabsProps = ComponentProps<typeof Tabs>

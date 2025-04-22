@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
+import { DetailsItemsList } from "@/experimental/Lists/DetailsItemsList"
+import * as DetailsItemsListStories from "@/experimental/Lists/DetailsItemsList/index.stories"
+import { Dashboard } from "@/experimental/Widgets/Layout/Dashboard"
+import * as DashboardStories from "@/experimental/Widgets/Layout/Dashboard/index.stories"
+import { PageDecorator } from "@/lib/storybook-utils/pageDecorator"
 import { ComponentProps } from "react"
-import { PageDecorator } from "../../../../lib/storybook-utils/pageDecorator"
-import { Dashboard } from "../../../Widgets/Layout/Dashboard"
-import * as DashboardStories from "../../../Widgets/Layout/Dashboard/index.stories"
-import { DetailsItemsList } from "../DetailsItemsList"
-import * as DetailsItemsListStories from "../DetailsItemsList/index.stories"
-import { InfoPaneLayout } from "./index"
+import { TwoColumnLayout } from "./index"
 
 const meta = {
-  title: "Layout/InfoPaneLayout",
-  component: InfoPaneLayout,
-  tags: ["autodocs", "experimental"],
+  title: "Layout/TwoColumnLayout",
+  component: TwoColumnLayout,
+  tags: ["autodocs"],
   decorators: [PageDecorator],
   args: {
     children: (
@@ -32,7 +32,7 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof InfoPaneLayout>
+} satisfies Meta<typeof TwoColumnLayout>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -49,5 +49,12 @@ export const Profile: Story = {
         >)}
       />
     ),
+  },
+}
+
+export const MainColumnRight: Story = {
+  args: {
+    ...Default.args,
+    mainColumnPosition: "right",
   },
 }
