@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.35.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.34.0...factorial-one-react-v1.35.0) (2025-04-22)
+
+
+### Features
+
+* add stable layout components ([#1643](https://github.com/factorialco/factorial-one/issues/1643)) ([5cf5390](https://github.com/factorialco/factorial-one/commit/5cf5390b5eef055b88868c6035bad58e47da74c5))
+
 ## [1.34.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.33.0...factorial-one-react-v1.34.0) (2025-04-22)
 
 
