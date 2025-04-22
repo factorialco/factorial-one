@@ -533,7 +533,7 @@ export const ExampleComponent = ({
     sortings,
     itemActions: (item) => [
     grouping,
-    currentGrouping: currentGrouping ?? null,
+    currentGrouping: currentGrouping,
     itemActions: (item: MockUser) => [
       {
         label: "Edit",
