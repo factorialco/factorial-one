@@ -712,9 +712,7 @@ export const WithTableVisualization: Story = {
       },
       dataAdapter: createDataAdapter<
         (typeof mockUsers)[number],
-        typeof filters,
-        typeof sortings,
-        GroupingDefinition<(typeof mockUsers)[number]>
+        typeof filters
       >({
         data: mockUsers,
         delay: 500,
@@ -886,9 +884,7 @@ export const WithPagination: Story = {
           href: string
           salary: number | undefined
         },
-        typeof filters,
-        typeof sortings,
-        GroupingDefinition<(typeof mockUsers)[number]>
+        typeof filters
       >({
         data: paginatedMockUsers,
         delay: 500,
@@ -1176,6 +1172,7 @@ export const WithSyncSearch: Story = {
       },
     ]
 
+    // TODO allow to infer the type of the data source
     const source = useDataSource<
       (typeof mockUserData)[number],
       typeof filters,
