@@ -426,7 +426,7 @@ describe("Collections", () => {
               const sorted = [...mockData]
 
               if (sortings) {
-                Object.entries(sortings).forEach(([field, order]) => {
+                sortings.forEach(({ field, order }) => {
                   if (field === "name") {
                     sorted.sort((a, b) => {
                       const direction = order === "asc" ? 1 : -1
@@ -682,7 +682,7 @@ describe("Collections", () => {
               const sorted = [...mockData]
 
               if (sortings) {
-                Object.entries(sortings).forEach(([field, order]) => {
+                sortings.forEach(({ field, order }) => {
                   if (field === "name") {
                     sorted.sort((a, b) => {
                       const direction = order === "asc" ? 1 : -1
