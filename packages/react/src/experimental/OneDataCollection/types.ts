@@ -45,7 +45,7 @@ export type DataSourceDefinition<
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
   /** Data adapter responsible for fetching and managing data */
-  dataAdapter: DataAdapter<Record, Filters, Sortings, Grouping>
+  dataAdapter: DataAdapter<Record, Filters>
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
   /** Bulk actions that can be performed on the collection */
@@ -55,6 +55,7 @@ export type DataSourceDefinition<
     primary: BulkActionDefinition[]
     secondary?: BulkActionDefinition[]
   }
+
   /** Grouping configuration */
   grouping?: Grouping
   currentGrouping?: GroupingState<Record, Grouping>
@@ -109,25 +110,25 @@ export type PaginatedResponse<Record> = {
   records: Record[]
 } & PaginationInfo
 
-export type SortingsStateMultiple<
-  Record extends RecordType,
-  Definition extends SortingsDefinition,
-  Grouping extends GroupingDefinition<Record>,
-> = NonNullable<SortingsState<Definition> | GroupingState<Record, Grouping>>[]
+export type SortingsStateMultiple = {
+  field: string
+  order: "asc" | "desc"
+}[]
+
+// export type SortingsStateMultiple<
+//   Record extends RecordType,
+//   Definition extends SortingsDefinition,
+//   Grouping extends GroupingDefinition<Record>,
+// > = NonNullable<SortingsState<Definition> | GroupingState<Record, Grouping>>[]
 
 /**
  * Base options for data fetching
  * @template Filters - The available filter configurations
  */
-export type BaseFetchOptions<
-  Record extends RecordType,
-  Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Grouping extends GroupingDefinition<Record>,
-> = {
+export type BaseFetchOptions<Filters extends FiltersDefinition> = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
-  sortings: SortingsStateMultiple<Record, Sortings, Grouping>
+  sortings: SortingsStateMultiple
   search?: string
 }
 
@@ -135,15 +136,11 @@ export type BaseFetchOptions<
  * Options for paginated data fetching
  * @template Filters - The available filter configurations
  */
-export type PaginatedFetchOptions<
-  Record extends RecordType,
-  Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Grouping extends GroupingDefinition<Record>,
-> = BaseFetchOptions<Record, Filters, Sortings, Grouping> & {
-  /** Pagination configuration */
-  pagination: { currentPage: number; perPage: number }
-}
+export type PaginatedFetchOptions<Filters extends FiltersDefinition> =
+  BaseFetchOptions<Filters> & {
+    /** Pagination configuration */
+    pagination: { currentPage: number; perPage: number }
+  }
 
 /**
  * Base data adapter configuration for non-paginated collections
@@ -153,8 +150,6 @@ export type PaginatedFetchOptions<
 export type BaseDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Indicates this adapter doesn't use pagination */
   paginationType?: never
@@ -164,7 +159,7 @@ export type BaseDataAdapter<
    * @returns Array of records, promise of records, or observable of records
    */
   fetchData: (
-    options: BaseFetchOptions<Record, Filters, Sortings, Grouping>
+    options: BaseFetchOptions<Filters>
   ) =>
     | BaseResponse<Record>
     | Promise<BaseResponse<Record>>
@@ -179,8 +174,6 @@ export type BaseDataAdapter<
 export type PaginatedDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Indicates this adapter uses page-based pagination */
   paginationType: "pages"
@@ -192,7 +185,7 @@ export type PaginatedDataAdapter<
    * @returns Paginated response with records and pagination info
    */
   fetchData: (
-    options: PaginatedFetchOptions<Record, Filters, Sortings, Grouping>
+    options: PaginatedFetchOptions<Filters>
   ) =>
     | PaginatedResponse<Record>
     | Promise<PaginatedResponse<Record>>
@@ -207,11 +200,7 @@ export type PaginatedDataAdapter<
 export type DataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  Grouping extends GroupingDefinition<Record>,
-> =
-  | BaseDataAdapter<Record, Filters, Sortings, Grouping>
-  | PaginatedDataAdapter<Record, Filters, Sortings, Grouping>
+> = BaseDataAdapter<Record, Filters> | PaginatedDataAdapter<Record, Filters>
 
 /**
  * Represents a collection of selected items.
@@ -319,6 +308,7 @@ export type DataSource<
   setCurrentSearch: (search: string | undefined) => void
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
+
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<Record, Grouping>>
