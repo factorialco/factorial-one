@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.35.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.2...factorial-one-react-v1.35.3) (2025-04-22)
+
+
+### Bug Fixes
+
+* miscalculation in VerticalOverflowList component ([#1658](https://github.com/factorialco/factorial-one/issues/1658)) ([575065c](https://github.com/factorialco/factorial-one/commit/575065c0e7d1b030484a8262dc2d3f732643bfe5))
+
 ## [1.35.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.1...factorial-one-react-v1.35.2) (2025-04-22)
 
 
