@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.33.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.3...factorial-one-react-v1.33.0) (2025-04-22)
+
+
+### Features
+
+* **FileItem:** fileItem component with multiple action handling ([#1642](https://github.com/factorialco/factorial-one/issues/1642)) ([889d50a](https://github.com/factorialco/factorial-one/commit/889d50ab53123bd7b7a57635ebebe7b41c8447ab))
+
 ## [1.32.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.2...factorial-one-react-v1.32.3) (2025-04-16)
 
 
