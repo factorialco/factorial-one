@@ -740,7 +740,16 @@ export const WithTableVisualization: Story = {
         field: "name",
         order: "asc",
       },
+<<<<<<< HEAD
       dataAdapter: createDataAdapter({
+=======
+      dataAdapter: createDataAdapter<
+        (typeof mockUsers)[number],
+        typeof filters,
+        typeof sortings,
+        GroupingDefinition<(typeof mockUsers)[number]>
+      >({
+>>>>>>> 39e14cf8 (chore: fix types)
         data: mockUsers,
         delay: 500,
       }),
@@ -899,7 +908,26 @@ export const WithPagination: Story = {
           ],
         }
       },
+<<<<<<< HEAD
       dataAdapter: createDataAdapter({
+=======
+      dataAdapter: createDataAdapter<
+        {
+          id: string
+          name: string
+          email: string
+          role: string
+          department: (typeof DEPARTMENTS)[number]
+          status: string
+          isStarred: boolean
+          href: string
+          salary: number | undefined
+        },
+        typeof filters,
+        typeof sortings,
+        GroupingDefinition<(typeof mockUsers)[number]>
+      >({
+>>>>>>> 39e14cf8 (chore: fix types)
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "pages",
@@ -1234,10 +1262,17 @@ export const WithSyncSearch: Story = {
 
           // Apply sorting if provided
           if (sortings) {
+<<<<<<< HEAD
             ;[sortings].forEach(({ field, order }) => {
               filteredUsers.sort((a, b) => {
                 const aValue = a[field as keyof (typeof mockUserData)[number]]
                 const bValue = b[field as keyof (typeof mockUserData)[number]]
+=======
+            sortings.forEach(({ field, order }) => {
+              filteredUsers.sort((a, b) => {
+                const aValue = a[field]
+                const bValue = b[field]
+>>>>>>> 39e14cf8 (chore: fix types)
 
                 if (typeof aValue === "string" && typeof bValue === "string") {
                   return order === "asc"
@@ -1382,27 +1417,25 @@ export const WithAsyncSearch: Story = {
 
               // Apply sorting if provided
               if (sortings) {
-                Object.entries(sortings)
-                  .reverse()
-                  .forEach(([field, order]) => {
-                    const direction = order
+                sortings.forEach(({ field, order }) => {
+                  const direction = order
 
-                    filteredUsers.sort((a, b) => {
-                      const aValue = a[field as keyof MockUser]
-                      const bValue = b[field as keyof MockUser]
+                  filteredUsers.sort((a, b) => {
+                    const aValue = a[field as keyof MockUser]
+                    const bValue = b[field as keyof MockUser]
 
-                      if (
-                        typeof aValue === "string" &&
-                        typeof bValue === "string"
-                      ) {
-                        return direction === "asc"
-                          ? aValue.localeCompare(bValue)
-                          : bValue.localeCompare(aValue)
-                      }
+                    if (
+                      typeof aValue === "string" &&
+                      typeof bValue === "string"
+                    ) {
+                      return direction === "asc"
+                        ? aValue.localeCompare(bValue)
+                        : bValue.localeCompare(aValue)
+                    }
 
-                      return 0
-                    })
+                    return 0
                   })
+                })
               }
 
               resolve(filteredUsers)
