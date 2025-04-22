@@ -276,21 +276,21 @@ export function useData<
       currentGrouping &&
       currentGrouping.field &&
       grouping &&
-      grouping.groupBy[currentGrouping.field]
+      grouping.groupBy[currentGrouping.field as keyof R]
     ) {
-      const groupedData = groupBy(rawData, currentGrouping.field)
+      const groupedData = groupBy(rawData, currentGrouping.field as keyof R)
 
       return {
         type: "grouped" as const,
         records: rawData,
         groups: Object.entries(groupedData).map(([key, value]) => ({
           key,
-          label: grouping.groupBy[currentGrouping.field]!.label(
+          label: grouping.groupBy[currentGrouping.field as keyof R]!.label(
             key as R[keyof R]
           ),
-          itemCount: grouping.groupBy[currentGrouping.field]?.itemCount?.(
-            key as R[keyof R]
-          ),
+          itemCount: grouping.groupBy[
+            currentGrouping.field as keyof R
+          ]?.itemCount?.(key as R[keyof R]),
           records: value,
         })),
       }
