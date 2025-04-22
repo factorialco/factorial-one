@@ -740,16 +740,7 @@ export const WithTableVisualization: Story = {
         field: "name",
         order: "asc",
       },
-<<<<<<< HEAD
       dataAdapter: createDataAdapter({
-=======
-      dataAdapter: createDataAdapter<
-        (typeof mockUsers)[number],
-        typeof filters,
-        typeof sortings,
-        GroupingDefinition<(typeof mockUsers)[number]>
-      >({
->>>>>>> 39e14cf8 (chore: fix types)
         data: mockUsers,
         delay: 500,
       }),
@@ -908,26 +899,7 @@ export const WithPagination: Story = {
           ],
         }
       },
-<<<<<<< HEAD
       dataAdapter: createDataAdapter({
-=======
-      dataAdapter: createDataAdapter<
-        {
-          id: string
-          name: string
-          email: string
-          role: string
-          department: (typeof DEPARTMENTS)[number]
-          status: string
-          isStarred: boolean
-          href: string
-          salary: number | undefined
-        },
-        typeof filters,
-        typeof sortings,
-        GroupingDefinition<(typeof mockUsers)[number]>
-      >({
->>>>>>> 39e14cf8 (chore: fix types)
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "pages",
@@ -1215,7 +1187,6 @@ export const WithSyncSearch: Story = {
       },
     ]
 
-    // TODO allow to infer the type of the data source
     const source = useDataSource<
       (typeof mockUserData)[number],
       typeof filters,
@@ -1270,9 +1241,14 @@ export const WithSyncSearch: Story = {
 =======
             sortings.forEach(({ field, order }) => {
               filteredUsers.sort((a, b) => {
+<<<<<<< HEAD
                 const aValue = a[field]
                 const bValue = b[field]
 >>>>>>> 39e14cf8 (chore: fix types)
+=======
+                const aValue = a[field as keyof (typeof mockUserData)[number]]
+                const bValue = b[field as keyof (typeof mockUserData)[number]]
+>>>>>>> 903b9fbc (chore: fix types)
 
                 if (typeof aValue === "string" && typeof bValue === "string") {
                   return order === "asc"
