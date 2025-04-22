@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.35.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.1...factorial-one-react-v1.35.2) (2025-04-22)
+
+
+### Bug Fixes
+
+* regenerated icons ([ce283f6](https://github.com/factorialco/factorial-one/commit/ce283f6ccea32b8033b32a532cbc2261a034c783))
+
 ## [1.35.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.0...factorial-one-react-v1.35.1) (2025-04-22)
 
 
