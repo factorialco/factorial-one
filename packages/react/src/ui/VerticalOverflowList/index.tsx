@@ -63,7 +63,7 @@ function useOverflowCalculation<T>(items: T[], gap: number) {
       for (let i = 0; i < itemSizes.length; i++) {
         const newSize = accumulatedSize + itemSizes[i]
 
-        if (newSize > availableSize) break
+        if (newSize > availableSize + 30) break
 
         accumulatedSize = newSize
         accumulatedSize = addGapBetweenItems(
@@ -171,7 +171,7 @@ const VerticalOverflowList = function VerticalOverflowList<T>({
       <div
         ref={measurementContainerRef}
         aria-hidden="true"
-        className="pointer-events-none invisible absolute left-0 right-0 top-0 flex flex-col whitespace-nowrap opacity-0"
+        className="pointer-events-none invisible absolute left-0 right-0 top-0 flex flex-col opacity-0"
         style={{ gap: `${gap}px` }}
         data-testid="overflow-measurement-container"
       >
@@ -183,7 +183,7 @@ const VerticalOverflowList = function VerticalOverflowList<T>({
       </div>
 
       <div
-        className="flex flex-col whitespace-nowrap"
+        className="flex flex-col"
         style={{ gap: `${gap}px` }}
         data-testid="overflow-visible-container"
       >
