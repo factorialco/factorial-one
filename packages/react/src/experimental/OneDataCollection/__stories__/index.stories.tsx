@@ -1187,6 +1187,7 @@ export const WithSyncSearch: Story = {
       },
     ]
 
+    // TODO allow to infer the type of the data source
     const source = useDataSource<
       (typeof mockUserData)[number],
       typeof filters,

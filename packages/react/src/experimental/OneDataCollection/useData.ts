@@ -334,11 +334,11 @@ export function useData<
           cleanup.current = undefined
         }
 
-        const sortings: SortingsStateMultiple<R, Sortings, Grouping> = [
+        const sortings: SortingsStateMultiple = [
           ...(currentSortings
             ? [
                 {
-                  field: currentSortings.field,
+                  field: currentSortings.field as string,
                   order: currentSortings.order,
                 },
               ]
@@ -346,7 +346,7 @@ export function useData<
           ...(currentGrouping
             ? [
                 {
-                  field: currentGrouping.field,
+                  field: currentGrouping.field as string,
                   order: currentGrouping.order,
                 },
               ]
