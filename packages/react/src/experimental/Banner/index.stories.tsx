@@ -28,7 +28,7 @@ export const Default: Story = {
     description: "Start creating invoices: it’s free with your plan!",
     buttonPrimaryLabel: "Request info",
     buttonSecondaryLabel: "See all invoices",
-    variant: 'info',
+    variant: "info",
     onRequestClick: fn(),
     onSeeClick: fn(),
   },
