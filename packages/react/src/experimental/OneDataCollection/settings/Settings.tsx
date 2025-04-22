@@ -10,37 +10,37 @@ import { Visualization } from "../visualizations/collection"
 import { GroupingSelector } from "./components/GroupingSelector"
 import { VisualizationSelector } from "./components/VisualizationSelector"
 
-type SettingsProps = {
+type SettingsProps<
+  R extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<R>,
+  Grouping extends GroupingDefinition<R>,
+> = {
   visualizations: ReadonlyArray<
-    Visualization<
-      RecordType,
-      FiltersDefinition,
-      SortingsDefinition,
-      ItemActionsDefinition<RecordType>,
-      GroupingDefinition<RecordType>
-    >
+    Visualization<R, Filters, Sortings, ItemActions, Grouping>
   >
   currentVisualization: number
   onVisualizationChange: (index: number) => void
-  grouping: GroupingDefinition<RecordType>
-  currentGrouping:
-    | GroupingState<RecordType, GroupingDefinition<RecordType>>
-    | undefined
-  onGroupingChange: (
-    groupingState:
-      | GroupingState<RecordType, GroupingDefinition<RecordType>>
-      | undefined
-  ) => void
+  grouping?: Grouping
+  currentGrouping?: GroupingState<R, Grouping>
+  onGroupingChange: (groupingState: GroupingState<R, Grouping>) => void
 }
 
-export const Settings = ({
+export const Settings = <
+  R extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<R>,
+  Grouping extends GroupingDefinition<R>,
+>({
   visualizations,
   currentVisualization,
   onVisualizationChange,
   grouping,
   currentGrouping,
   onGroupingChange,
-}: SettingsProps) => {
+}: SettingsProps<R, Filters, Sortings, ItemActions, Grouping>) => {
   const shouldShowSettings =
     (visualizations && visualizations.length > 1) ||
     (grouping && Object.keys(grouping.groupBy).length > 1)
@@ -53,9 +53,7 @@ export const Settings = ({
   }
 
   const handleGroupingChange = (
-    grouping:
-      | GroupingState<RecordType, GroupingDefinition<RecordType>>
-      | undefined
+    grouping: GroupingState<R, Grouping> | undefined
   ) => {
     onGroupingChange(grouping)
   }
