@@ -31,7 +31,7 @@ import {
 import { useData } from "../useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
-
+const STATUS = ["active", "inactive", "pending"] as const
 // Example filter definition
 const filters = {
   search: {
@@ -42,6 +42,11 @@ const filters = {
     type: "in",
     label: "Department",
     options: DEPARTMENTS.map((value) => ({ value, label: value })),
+  },
+  status: {
+    type: "eq",
+    label: "Status",
+    options: STATUS.map((value) => ({ value, label: value })),
   },
 } as const
 

@@ -39,6 +39,25 @@ export type InFilterDefinition<T = unknown> = BaseFilterDefinition & {
 }
 
 /**
+ * Single-select filter that allows selecting only one option from predefined options.
+ * Used for filtering based on equality with a single discrete value.
+ * @template T - Type of value that can be selected
+ */
+export type EqFilterDefinition<T = unknown> = BaseFilterDefinition & {
+  /** Identifies this as an "eq" type filter */
+  type: "eq"
+  /**
+   * Available options for selection.
+   * Can be either:
+   * - An array of options
+   * - A function that returns an array of options (sync or async)
+   */
+  options:
+    | Array<FilterOption<T>>
+    | (() => Array<FilterOption<T>> | Promise<Array<FilterOption<T>>>)
+}
+
+/**
  * Free-text search filter.
  * Used for performing text-based searches across specified fields.
  */
@@ -54,11 +73,13 @@ export type SearchFilterDefinition = BaseFilterDefinition & {
  */
 export type FilterDefinition<T = unknown> =
   | InFilterDefinition<T>
+  | EqFilterDefinition<T>
   | SearchFilterDefinition
 
 /**
  * Extracts the appropriate value type for a given filter:
  * - InFilter -> Array of selected values of type T
+ * - EqFilter -> Single value of type T or null (for deselected state)
  * - SearchFilter -> Search string
  *
  * This type is used to ensure type safety when working with filter values.
@@ -67,9 +88,11 @@ export type FilterDefinition<T = unknown> =
 export type FilterValue<T extends FilterDefinition> =
   T extends InFilterDefinition<infer U>
     ? U[]
-    : T extends SearchFilterDefinition
-      ? string
-      : never
+    : T extends EqFilterDefinition<infer U>
+      ? U | null
+      : T extends SearchFilterDefinition
+        ? string
+        : never
 
 /**
  * Current state of all filters in a collection.

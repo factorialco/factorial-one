@@ -4,9 +4,11 @@ import { Input } from "@/ui/input"
 import { ChangeEvent, useDeferredValue, useEffect, useState } from "react"
 import { Button } from "../../../../components/Actions/Button"
 import { Search } from "../../../../icons/app"
+import { EqFilter } from "../FilterTypes/EqFilter"
 import { InFilter } from "../FilterTypes/InFilter"
 import { SearchFilter } from "../FilterTypes/SearchFilter"
 import type {
+  EqFilterDefinition,
   FilterOption,
   FiltersDefinition,
   FiltersState,
@@ -196,6 +198,13 @@ export function FilterContent<Definition extends FiltersDefinition>({
               onChange={(value) => onFilterChange(selectedFilterKey, value)}
             />
           )}
+          {filter.type === "eq" && (
+            <EqFilter
+              filter={filter as EqFilterDefinition<unknown>}
+              value={currentValue as unknown}
+              onChange={(value) => onFilterChange(selectedFilterKey, value)}
+            />
+          )}
         </div>
         {filter.type === "in" && filteredOptions.length > 0 && (
           <div className="sticky bottom-0 left-0 right-0 flex items-center justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary bg-f1-background/80 p-2 backdrop-blur-[8px]">
@@ -218,6 +227,17 @@ export function FilterContent<Definition extends FiltersDefinition>({
                 !Array.isArray(currentValue) || currentValue.length === 0
               }
               size="sm"
+            />
+          </div>
+        )}
+        {filter.type === "eq" && (
+          <div className="sticky bottom-0 left-0 right-0 flex items-center justify-end gap-2 border border-solid border-transparent border-t-f1-border-secondary bg-f1-background/80 p-2 backdrop-blur-[8px]">
+            <Button
+              variant="ghost"
+              label="Clear"
+              size="sm"
+              disabled={!currentValue}
+              onClick={handleClear}
             />
           </div>
         )}
