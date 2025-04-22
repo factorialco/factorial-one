@@ -142,11 +142,16 @@ export type PaginatedResponse<Record> = {
   records: Record[]
 } & PaginationInfo
 
-export type SortingsStateMultiple<
-  Record extends RecordType,
-  Definition extends SortingsDefinition,
-  Grouping extends GroupingDefinition<Record>,
-> = NonNullable<SortingsState<Definition> | GroupingState<Record, Grouping>>[]
+export type SortingsStateMultiple = {
+  field: string
+  order: "asc" | "desc"
+}[]
+
+// export type SortingsStateMultiple<
+//   Record extends RecordType,
+//   Definition extends SortingsDefinition,
+//   Grouping extends GroupingDefinition<Record>,
+// > = NonNullable<SortingsState<Definition> | GroupingState<Record, Grouping>>[]
 
 /**
  * Base options for data fetching
@@ -161,7 +166,7 @@ export type BaseFetchOptions<
 > = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
-  sortings: SortingsStateMultiple<Record, Sortings, Grouping>
+  sortings: SortingsStateMultiple
   search?: string
   navigationFilters?: NavigationFiltersState<NavigationFilters>
 }

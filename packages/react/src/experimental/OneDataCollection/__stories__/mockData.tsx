@@ -320,11 +320,7 @@ export const filterUsers = <
   users: T[],
   filterValues: FiltersState<typeof filters>,
   navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
-  sortingState: SortingsStateMultiple<
-    T,
-    typeof sortings,
-    GroupingDefinition<T>
-  >,
+  sortingState: SortingsStateMultiple,
   search?: string
 ) => {
   let filteredUsers = [...users]
@@ -417,13 +413,7 @@ export const createObservableDataFetch = (delay = 0) => {
   return ({
     filters,
     sortings: sortingsState,
-  }: BaseFetchOptions<
-    (typeof mockUsers)[number],
-    FiltersType,
-    typeof sortings,
-    NavigationFiltersDefinition
-    GroupingDefinition<(typeof mockUsers)[number]>
-  >) =>
+  }: BaseFetchOptions<FiltersType>) =>
     new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
       observer.next({
         loading: true,
@@ -648,7 +638,7 @@ export function createDataAdapter<
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
-    sortingsState: SortingsStateMultiple<TRecord, TSortings, TGrouping>,
+    sortingsState: SortingsStateMultiple,
     pagination?: { currentPage?: number; perPage?: number }
   ): TRecord[] | PaginatedResponse<TRecord> => {
     let filteredRecords = [...records]
