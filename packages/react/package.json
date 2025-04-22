@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.30.3",
+  "version": "1.33.0",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -191,7 +191,6 @@
     "embla-carousel-wheel-gestures": "^8.0.1",
     "prosemirror-state": "^1.4.3",
     "prosemirror-view": "^1.38.1",
-    "screenfull": "^6.0.2",
     "vaul": "^1.1.2",
     "zen-observable-ts": "^1.1.0"
   }

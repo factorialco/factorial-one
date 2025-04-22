@@ -7,6 +7,7 @@ interface EditorBubbleMenuProps {
   disableButtons: boolean
   toolbarLabels: toolbarLabels
   isToolbarOpen: boolean
+  isFullscreen: boolean
 }
 
 const EditorBubbleMenu = ({
@@ -14,16 +15,20 @@ const EditorBubbleMenu = ({
   disableButtons,
   toolbarLabels,
   isToolbarOpen,
+  isFullscreen,
 }: EditorBubbleMenuProps) => {
   return (
     <BubbleMenu
       tippyOptions={{
         duration: 100,
-        placement: "top",
+        placement: "top-start",
         hideOnClick: false,
         appendTo: () =>
-          document.getElementById("rich-text-editor-container") ||
-          document.body,
+          isFullscreen
+            ? document.body
+            : document.getElementById("rich-text-editor-container") ||
+              document.body,
+        zIndex: 9999,
       }}
       editor={editor}
     >

@@ -14,7 +14,6 @@ import * as Popover from "@radix-ui/react-popover"
 import { Editor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
-import screenfull from "screenfull"
 import { ToolbarButton } from "../ToolbarButton"
 
 interface LinkPopupProps {
@@ -100,20 +99,14 @@ const LinkPopup = ({
         />
       </Popover.Trigger>
 
-      <Popover.Portal
-        container={
-          screenfull.isFullscreen && screenfull.element
-            ? screenfull.element
-            : document.body
-        }
-      >
+      <Popover.Portal container={document.body}>
         <Popover.Content
           side="top"
           align="start"
-          sideOffset={15}
+          sideOffset={10}
           collisionPadding={10}
-          alignOffset={-10}
-          style={{ zIndex: 1000 }}
+          alignOffset={-5}
+          style={{ zIndex: 9999 }}
         >
           <AnimatePresence>
             {openLinkPopover && (
@@ -132,7 +125,7 @@ const LinkPopup = ({
                       e.preventDefault()
                       handleClose()
                     }}
-                    className="aspect-square p-0"
+                    className="[&>button]:aspect-square [&>button]:px-0"
                   >
                     <Icon icon={Cross} />
                   </Button>
@@ -204,6 +197,7 @@ const LinkPopup = ({
                   <Button
                     variant="default"
                     type="button"
+                    size="sm"
                     onClick={(e) => {
                       e.preventDefault()
                       handleSave()

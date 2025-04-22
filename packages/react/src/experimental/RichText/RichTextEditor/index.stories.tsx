@@ -5,6 +5,86 @@ import { EnhancementOption, FILE_TYPES, resultType, RichTextEditor } from "."
 const meta = {
   component: RichTextEditor,
   title: "Rich text/RichTextEditor",
+  tags: ["experimental"],
+  argTypes: {
+    title: {
+      control: "text",
+      description: "Sets the title displayed in the editor header",
+      required: true,
+    },
+    placeholder: {
+      control: "text",
+      description: "Text displayed when the editor is empty",
+      required: true,
+    },
+    onChange: {
+      control: false,
+      description:
+        "Callback function triggered when editor content changes. Receives an object with { value: string | null, mentionIds?: number[] }",
+      required: true,
+    },
+    initialEditorState: {
+      control: "object",
+      description:
+        "Pre-populates the editor with content and/or files. Format: { content?: string, files?: File[] }",
+    },
+    mentionsConfig: {
+      control: "object",
+      description:
+        "Configures user mention functionality with available users and optional query handler",
+    },
+    enhanceConfig: {
+      control: "object",
+      description:
+        "Configures AI enhancement functionality including onEnhanceText function, enhancement options, and UI labels",
+    },
+    filesConfig: {
+      control: "object",
+      description:
+        "Configures file attachment capabilities including callbacks, multiple file support, and file type filtering",
+    },
+    primaryAction: {
+      control: "object",
+      description:
+        "Configures the primary action button and optional dropdown actions",
+    },
+    secondaryAction: {
+      control: "object",
+      description:
+        "Configures the secondary action button (usually cancel or discard)",
+    },
+    maxCharacters: {
+      control: "number",
+      description: "Limits the number of characters that can be entered",
+    },
+    toolbarLabels: {
+      control: "object",
+      description:
+        "Object with labels for all toolbar elements. Required for tooltips and accessibility",
+      required: true,
+    },
+    errorConfig: {
+      control: "object",
+      description: "Configures error message display and recovery options",
+    },
+    height: {
+      control: "select",
+      options: [
+        "xxs",
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "full",
+        "auto",
+      ],
+      description: "Controls the initial height of the editor",
+      defaultValue: "auto",
+    },
+  },
 } satisfies Meta<typeof RichTextEditor>
 
 export default meta
@@ -185,19 +265,28 @@ export const Default: Story = {
     maxCharacters: 10000,
     initialEditorState: {
       content:
-        "<p>There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, <strong>you appeared</strong>. Sleek, fast, and strangely comforting, my text editor. You didn’t just open files — you opened <em>possibilities</em>",
+        "<p>There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, <strong>you appeared</strong>. Sleek, fast, and strangely comforting, my text editor. You didn't just open files — you opened <em>possibilities</em>",
     },
     errorConfig: {
       onClose: () => alert("Close"),
       closeErrorButtonLabel: "Continue editing",
     },
+    height: "auto",
   },
+}
+
+type SkeletonStory = StoryObj<typeof RichTextEditor.Skeleton>
+
+export const Skeleton: SkeletonStory = {
+  tags: ["experimental"],
+  render: () => <RichTextEditor.Skeleton />,
 }
 
 export const WithoutEnhance: Story = {
   args: {
     ...Default.args,
     enhanceConfig: undefined,
+    height: "auto",
   },
 }
 

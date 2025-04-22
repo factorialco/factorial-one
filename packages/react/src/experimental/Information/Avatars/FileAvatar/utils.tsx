@@ -145,3 +145,4 @@ const getFileTypeInfo = (file: File): FileTypeInfo => {
 }
 
 export { getFileTypeInfo }
+export type { FileTypeInfo }

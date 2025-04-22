@@ -1,3 +1,5 @@
+@import "@factorialco/factorial-one-core/base.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

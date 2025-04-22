@@ -1,5 +1,68 @@
 # Changelog
 
+## [1.33.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.3...factorial-one-react-v1.33.0) (2025-04-22)
+
+
+### Features
+
+* **FileItem:** fileItem component with multiple action handling ([#1642](https://github.com/factorialco/factorial-one/issues/1642)) ([889d50a](https://github.com/factorialco/factorial-one/commit/889d50ab53123bd7b7a57635ebebe7b41c8447ab))
+
+## [1.32.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.2...factorial-one-react-v1.32.3) (2025-04-16)
+
+
+### Bug Fixes
+
+* **RichTextEditor:** height config, streamline fullscreen behavior, and add imperative methods ([#1563](https://github.com/factorialco/factorial-one/issues/1563)) ([9650111](https://github.com/factorialco/factorial-one/commit/96501110bb780d3cea4fba8eba612f5a99e563d8))
+
+## [1.32.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.1...factorial-one-react-v1.32.2) (2025-04-15)
+
+
+### Bug Fixes
+
+* **datacollection:** header checkbox alignment ([dd9934e](https://github.com/factorialco/factorial-one/commit/dd9934eb62e36c99616d9b6582718ba391516d4c))
+
+## [1.32.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.0...factorial-one-react-v1.32.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* **DataCollection:** Reported changes from teams ([#1575](https://github.com/factorialco/factorial-one/issues/1575)) ([378a3ec](https://github.com/factorialco/factorial-one/commit/378a3ec8c0a7fd79ad9238bc732a43214e7d158d))
+
+## [1.32.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.3...factorial-one-react-v1.32.0) (2025-04-15)
+
+
+### Features
+
+* add support to pass tracked minutes to ClockInControls and ClockInGraph component ([#1624](https://github.com/factorialco/factorial-one/issues/1624)) ([f5215f7](https://github.com/factorialco/factorial-one/commit/f5215f7845fded5a0cc189b9ff106d6687ff7863))
+
+## [1.31.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.2...factorial-one-react-v1.31.3) (2025-04-15)
+
+
+### Bug Fixes
+
+* **datacollection:** hotfix table spacing ([15a1fb2](https://github.com/factorialco/factorial-one/commit/15a1fb2bae6c600f34b50b2757292081209d40be))
+
+## [1.31.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.1...factorial-one-react-v1.31.2) (2025-04-15)
+
+
+### Bug Fixes
+
+* **DataCollection:** Pagination spacing & toolbar positioning ([#1556](https://github.com/factorialco/factorial-one/issues/1556)) ([a90c10d](https://github.com/factorialco/factorial-one/commit/a90c10d53f6c7688c8b8003910a3c0d85abb5fab))
+
+## [1.31.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.31.0...factorial-one-react-v1.31.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* add missing onClick prop for Celebration component ([#1620](https://github.com/factorialco/factorial-one/issues/1620)) ([26dbaee](https://github.com/factorialco/factorial-one/commit/26dbaee98f8e3b380c124df3e49a4eef28588b38))
+
+## [1.31.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.3...factorial-one-react-v1.31.0) (2025-04-15)
+
+
+### Features
+
+* skeleton for the RichTextEditor ([#1612](https://github.com/factorialco/factorial-one/issues/1612)) ([3c1d221](https://github.com/factorialco/factorial-one/commit/3c1d2216fdc36d577847b09306e60130783bd74d))
+
 ## [1.30.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.30.2...factorial-one-react-v1.30.3) (2025-04-14)
 
 
