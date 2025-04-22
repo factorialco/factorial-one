@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+import { RecordType } from "./types"
 import { VisualizationType } from "./visualizations/collection/types"
 import {
   PropertyRendererMetadata,
@@ -53,9 +54,9 @@ const renderIsRendererDefinition = (
 ): renderDef is RendererDefinition => {
   return renderDef !== undefined && typeof renderDef === "object"
 }
-export const renderProperty = <RecordType>(
-  item: RecordType,
-  property: PropertyDefinition<RecordType>,
+export const renderProperty = <R extends RecordType>(
+  item: R,
+  property: PropertyDefinition<R>,
   visualization: VisualizationType
 ): ReactNode => {
   const renderDefinition = property.render(item)
@@ -70,7 +71,7 @@ export const renderProperty = <RecordType>(
   // Type assertion to ensure the renderer function is typed correctly as typescript can't infer the type correctly
   const renderer = propertyRenderers[type] as (
     arg: Parameters<(typeof propertyRenderers)[typeof type]>[0],
-    meta: PropertyRendererMetadata<RecordType>
+    meta: PropertyRendererMetadata<R>
   ) => ReactNode
 
   if (!renderer) {
