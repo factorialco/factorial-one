@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.34.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.33.0...factorial-one-react-v1.34.0) (2025-04-22)
+
+
+### Features
+
+* add support for info popover in widgets ([#1651](https://github.com/factorialco/factorial-one/issues/1651)) ([922f288](https://github.com/factorialco/factorial-one/commit/922f288d9d2f30acb417cca14319d1c6267cf226))
+
 ## [1.33.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.32.3...factorial-one-react-v1.33.0) (2025-04-22)
 
 
