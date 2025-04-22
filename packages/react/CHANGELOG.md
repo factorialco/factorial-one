@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.35.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.0...factorial-one-react-v1.35.1) (2025-04-22)
+
+
+### Bug Fixes
+
+* export `DetailsItem` and `DetailsItemsList` ([#1655](https://github.com/factorialco/factorial-one/issues/1655)) ([bcd4901](https://github.com/factorialco/factorial-one/commit/bcd490161ac5b37955ddaa538d59486b26eef6da))
+
 ## [1.35.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.34.0...factorial-one-react-v1.35.0) (2025-04-22)
 
 ### Features
