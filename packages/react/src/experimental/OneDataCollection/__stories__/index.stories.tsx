@@ -19,7 +19,7 @@ import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import { useData } from "../useData"
 
 import { GroupingDefinition } from "../grouping"
-import { ExampleComponent, sortings } from "./mockData"
+import { createDataAdapter, ExampleComponent, mockUsers, sortings } from "./mockData"
 
 const meta = {
   title: "Data Collection",
@@ -1200,6 +1200,7 @@ export const WithSyncSearch: Story = {
       },
     ]
 
+    // TODO allow to infer the type of the data source
     const source = useDataSource<
       (typeof mockUserData)[number],
       typeof filters,
