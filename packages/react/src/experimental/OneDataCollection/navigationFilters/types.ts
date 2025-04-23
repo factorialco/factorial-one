@@ -1,4 +1,4 @@
-import { DateNavigatorFilterDefinition } from "./filrerTypes/DateNavigation/DateNavigation"
+import { DateNavigatorFilterDefinition } from "./filterTypes/DateNavigation/DateNavigation"
 
 export type NavigationFilter<T> = {
   render: (props: NavigationFilterComponentProps<T>) => React.ReactNode

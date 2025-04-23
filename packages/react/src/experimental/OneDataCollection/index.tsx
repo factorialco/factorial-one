@@ -1,5 +1,5 @@
 import { useLayout } from "@/components/layouts/LayoutProvider"
-import { useI18n } from "@/lib/i18n-provider"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { useEffect, useMemo, useState } from "react"
@@ -318,12 +318,12 @@ export const OneDataCollection = <
 
   return (
     <div className={cn(layout === "standard" && "-mx-6")}>
-      <div className={cn("border-f1-border-primary mb-3 flex flex-col gap-4")}>
-        <div className="flex flex-shrink flex-col gap-4">
+      <div className={cn("border-f1-border-primary mb-3 flex gap-4 px-6")}>
+        <div className="flex flex-1 flex-shrink gap-4">
           {isLoading && <Skeleton className="h-5 w-24" />}
           {!isLoading && totalItems && totalItemSummary(totalItems)}
         </div>
-        <div className="flex flex-1 flex-shrink">
+        <div className="flex flex-1 flex-shrink justify-end">
           {navigationFilters &&
             Object.entries(navigationFilters).map(([key, filter]) => {
               const filterDef = navigationFilterTypes[filter.type]

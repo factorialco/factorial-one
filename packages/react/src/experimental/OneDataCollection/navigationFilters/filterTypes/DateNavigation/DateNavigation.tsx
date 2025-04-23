@@ -19,6 +19,27 @@ export interface DateNavigatorFilterDefinition
 
 type DateNavigationProps = NavigationFilterComponentProps<Date>
 
+// type DateValue = {
+//   dateValue: [Date, Date]
+//   granularity: DateGranularity
+// } & (
+//   | {
+//       value: [`W${number}`, `W${number}`]
+//       granularity: "week"
+//     }
+//   | {
+//       value: [Date, Date]
+//       granularity: "day"
+//     }
+//   | {
+//       value: [Date, Date]
+//       granularity: "month"
+//     }
+//   | {
+//       value: [Date, Date]
+//       granularity: "year"
+//     }
+// )
 export function DateNavigation({
   filter,
   value,
@@ -41,7 +62,7 @@ export function DateNavigation({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="flex items-center gap-2">
       <Button
         size="sm"
         icon={ChevronLeft}
