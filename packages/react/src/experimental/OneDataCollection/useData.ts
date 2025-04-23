@@ -414,6 +414,7 @@ export function useData<
       handleFetchError,
       dataAdapter,
       currentSortings,
+      currentGrouping,
       searchValue,
       handleFetchSuccess,
       setIsLoading,
