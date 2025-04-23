@@ -26,7 +26,7 @@ export function useSelectable<
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 >(
-  data: Record[],
+  data: ReadonlyArray<Record>,
   paginationInfo: PaginationInfo | null,
   source: DataSource<
     Record,
