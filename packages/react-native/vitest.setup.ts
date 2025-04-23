@@ -46,13 +46,21 @@ vi.mock("react-native-svg", () => {
 
   // Create mock components for all SVG elements
   const createComponent = (name: string) => {
-    return React.forwardRef((props: any, ref: any) => {
-      return React.createElement("View", {
-        ...props,
-        ref,
-        testID: props.testID || `svg-${name}`,
-      });
-    });
+    const Component = React.forwardRef(
+      (
+        props: React.ComponentProps<typeof React.createElement>,
+        ref: React.Ref<unknown>,
+      ) => {
+        return React.createElement("View", {
+          ...props,
+          ref,
+          testID: props.testID || `svg-${name}`,
+        });
+      },
+    );
+
+    Component.displayName = `Svg${name.charAt(0).toUpperCase() + name.slice(1)}`;
+    return Component;
   };
 
   // Return an object with all the mock components
