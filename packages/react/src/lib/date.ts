@@ -7,6 +7,7 @@ import {
   isYesterday,
   startOfDay,
   startOfMonth,
+  startOfWeek,
   startOfYear,
 } from "date-fns"
 
@@ -85,10 +86,11 @@ export const categorizeItemsByDate = <
   return groups
 }
 
-export type DateGranularity = "day" | "month" | "year"
+export type DateGranularity = "day" | "week" | "month" | "year"
 const dateGranularityFunction: Record<DateGranularity, (date: Date) => Date> = {
   day: startOfDay,
   month: startOfMonth,
+  week: startOfWeek,
   year: startOfYear,
 }
 
