@@ -286,18 +286,19 @@ export function useData<
         groups: Object.entries(groupedData).map(([key, value]) => ({
           key,
           label: grouping.groupBy[currentGrouping.field as keyof R]!.label(
-            key as R[keyof R]
+            key as R[keyof R],
+            mergedFilters
           ),
           itemCount: grouping.groupBy[
             currentGrouping.field as keyof R
-          ]?.itemCount?.(key as R[keyof R]),
+          ]?.itemCount?.(key as R[keyof R], mergedFilters),
           records: value,
         })),
       }
     }
 
     return { type: "flat" as const, records: rawData }
-  }, [rawData, currentGrouping, grouping])
+  }, [rawData, currentGrouping, grouping, mergedFilters])
 
   const handleFetchError = useCallback(
     (error: unknown) => {
