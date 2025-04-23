@@ -14,7 +14,7 @@ const RichTextDisplay = forwardRef<RichTextDisplayHandle, RichTextDisplayProps>(
     return (
       <div
         ref={ref}
-        className={cn("ProseMirror", className)}
+        className={cn("rich-text-display-container", className)}
         dangerouslySetInnerHTML={{ __html: content }}
         {...props}
       />

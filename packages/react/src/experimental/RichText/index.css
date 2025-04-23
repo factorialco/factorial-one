@@ -12,11 +12,11 @@
 }
 
 /* Make all selections transparent */
-#rich-text-editor-container *::selection {
+.rich-text-editor-container *::selection {
   background-color: transparent !important;
 }
 
-#rich-text-editor-container::selection {
+.rich-text-editor-container::selection {
   background-color: transparent !important;
 }
 
@@ -24,98 +24,122 @@
   tiptap styles
   **********/
 
-.ProseMirror p {
+.ProseMirror p,
+.rich-text-display-container p {
   @apply relative m-0 mb-2;
 }
 
-.ProseMirror p:last-child {
+.ProseMirror p:last-child,
+.rich-text-display-container p:last-child {
   margin-bottom: 0;
 }
 
-.ProseMirror h1 {
+.ProseMirror h1,
+.rich-text-display-container h1 {
   @apply m-0 mb-3 p-0 text-3xl font-semibold;
 }
 
-.ProseMirror h2 {
+.ProseMirror h2,
+.rich-text-display-container h2 {
   @apply m-0 mt-2.5 p-0 text-2xl font-medium;
 }
 
-.ProseMirror h3 {
+.ProseMirror h3,
+.rich-text-display-container h3 {
   @apply m-0 mt-2.5 p-0 text-lg font-medium;
 }
 
-.ProseMirror a {
+.ProseMirror a,
+.rich-text-display-container a {
   @apply font-medium text-f1-foreground-accent no-underline;
 }
 
-.ProseMirror strong {
+.ProseMirror strong,
+.rich-text-display-container strong {
   @apply font-semibold;
 }
 
-.ProseMirror em {
+.ProseMirror em,
+.rich-text-display-container em {
   @apply italic;
 }
 
-.ProseMirror u {
+.ProseMirror u,
+.rich-text-display-container u {
   @apply underline;
 }
 
-.ProseMirror s {
+.ProseMirror s,
+.rich-text-display-container s {
   @apply line-through;
 }
 
-.ProseMirror .f1-bullet-list {
+.ProseMirror .f1-bullet-list,
+.rich-text-display-container .f1-bullet-list {
   @apply list-disc;
 }
 
-.ProseMirror .f1-ordered-list {
+.ProseMirror .f1-ordered-list,
+.rich-text-display-container .f1-ordered-list {
   @apply list-decimal;
 }
 
 .ProseMirror ul,
-.ProseMirror ol {
+.ProseMirror ol,
+.rich-text-display-container ul,
+.rich-text-display-container ol {
   @apply ml-5;
 }
 
-.ProseMirror li {
+.ProseMirror li,
+.rich-text-display-container li {
   @apply mb-2;
 }
 
-.ProseMirror pre {
+.ProseMirror pre,
+.rich-text-display-container pre {
   @apply relative mx-0 overflow-x-auto rounded-md bg-f1-background-secondary p-2;
 }
 
-.ProseMirror code {
+.ProseMirror code,
+.rich-text-display-container code {
   @apply text-sm;
   font-family: Menlo, Consolas, Monaco, monospace;
 }
 
-.ProseMirror blockquote {
+.ProseMirror blockquote,
+.rich-text-display-container blockquote {
   @apply m-0 mb-2.5 border-0 border-l-4 border-solid border-f1-border pl-4;
 }
 
-.ProseMirror:focus {
+.ProseMirror:focus,
+.rich-text-display-container:focus {
   @apply outline-none;
 }
 
-.ProseMirror hr {
+.ProseMirror hr,
+.rich-text-display-container hr {
   @apply my-3 border-0 border-t border-f1-border;
 }
 
-.ProseMirror mark {
+.ProseMirror mark,
+.rich-text-display-container mark {
   @apply rounded-xs bg-f1-background-promote p-0.5 text-f1-foreground;
 }
 
-.ProseMirror p:empty::before {
+.ProseMirror p:empty::before,
+.rich-text-display-container p:empty::before {
   content: "\00a0";
 }
 
-.ProseMirror p.is-editor-empty:first-child::before {
+.ProseMirror p.is-editor-empty:first-child::before,
+.rich-text-display-container p.is-editor-empty:first-child::before {
   @apply pointer-events-none float-left h-0 text-f1-foreground-tertiary;
   content: attr(data-placeholder);
 }
 
-.ProseMirror ul[data-type="taskList"] {
+.ProseMirror ul[data-type="taskList"],
+.rich-text-display-container ul[data-type="taskList"] {
   @apply ml-0;
 }
 

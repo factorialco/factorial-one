@@ -8,9 +8,11 @@ interface EditorBubbleMenuProps {
   toolbarLabels: toolbarLabels
   isToolbarOpen: boolean
   isFullscreen: boolean
+  editorId: string
 }
 
 const EditorBubbleMenu = ({
+  editorId,
   editor,
   disableButtons,
   toolbarLabels,
@@ -26,8 +28,7 @@ const EditorBubbleMenu = ({
         appendTo: () =>
           isFullscreen
             ? document.body
-            : document.getElementById("rich-text-editor-container") ||
-              document.body,
+            : document.getElementById(editorId) || document.body,
         zIndex: 9999,
       }}
       editor={editor}

@@ -1,7 +1,7 @@
+import { Comment as CommentIcon, EllipsisHorizontal } from "@/icons/app"
 import { Skeleton } from "@/ui/skeleton"
 import { Button } from "../../../../../components/Actions/Button"
 import { Link } from "../../../../../components/Actions/Link"
-import { EllipsisHorizontal } from "../../../../../icons/app"
 import { getAgo } from "../../../../../lib/date"
 import { withSkeleton } from "../../../../../lib/skeleton"
 import { Dropdown, DropdownItem } from "../../../../Navigation/Dropdown"
@@ -142,13 +142,6 @@ export const BaseCommunityPost = ({
 
             <div className="flex flex-row gap-2">
               <div className="hidden flex-row gap-2 md:flex">
-                <Link
-                  onClick={comment.onClick}
-                  title={comment.label}
-                  stopPropagation
-                >
-                  <Button label={comment.label} size="sm" variant="outline" />
-                </Link>
                 {dropdownItems?.length && (
                   <Dropdown
                     items={dropdownItems}
@@ -205,10 +198,20 @@ export const BaseCommunityPost = ({
           </div>
         )}
         <p className="text-f1-foreground-secondary">{countersDisplay}</p>
-        <Reactions
-          items={reactions?.items ?? []}
-          onInteraction={reactions?.onInteraction}
-        />
+        <div className="flex flex-row gap-2.5">
+          <Button
+            label={comment.label}
+            onClick={comment.onClick}
+            variant="outline"
+            icon={CommentIcon}
+            round
+            hideLabel
+          />
+          <Reactions
+            items={reactions?.items ?? []}
+            onInteraction={reactions?.onInteraction}
+          />
+        </div>
       </div>
     </div>
   )

@@ -1,0 +1,13 @@
+# Ignore SVG files
+**/*.svg
+
+# Icon directories
+packages/core/assets/icons/**/*.svg
+packages/*/icons/**/*.svg
+
+# Other common files to ignore
+node_modules
+dist
+build
+coverage
+.next

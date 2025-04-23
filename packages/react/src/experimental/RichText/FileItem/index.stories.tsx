@@ -1,4 +1,4 @@
-import { ArrowRight, CrossedCircle } from "@/icons/app"
+import { CrossedCircle } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { FileItem } from "."
 
@@ -14,25 +14,48 @@ export const Default: Story = {
   tags: ["experimental"],
   args: {
     file: new File(["test"], "test.txt", { type: "text/plain" }),
-    onAction: () => {
-      alert("file action")
-    },
-    actionIcon: CrossedCircle,
+    actions: [
+      {
+        label: "Delete file",
+        onClick: () => {
+          alert("file action")
+        },
+      },
+    ],
     disabled: false,
   },
 }
 
-export const WithCustomIcon: Story = {
+export const WithMultipleActions: Story = {
   args: {
-    ...Default.args,
-    actionIcon: ArrowRight,
+    file: new File(["test"], "test of a long file name.pdf", {
+      type: "application/pdf",
+    }),
+    actions: [
+      {
+        icon: CrossedCircle,
+        label: "Delete file",
+        onClick: () => {
+          alert("delete file")
+        },
+        critical: true,
+      },
+      {
+        label: "Forward file",
+        onClick: () => {
+          alert("forward file")
+        },
+      },
+    ],
   },
 }
 
-export const WithoutAction: Story = {
+export const WithoutActions: Story = {
   args: {
-    ...Default.args,
-    onAction: undefined,
+    file: new File(["test"], "test of a long file name.pdf", {
+      type: "application/pdf",
+    }),
+    actions: [],
   },
 }
 

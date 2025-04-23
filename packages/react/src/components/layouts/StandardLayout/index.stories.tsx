@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
-import { PageDecorator } from "../../../lib/storybook-utils/pageDecorator"
-import { Placeholder } from "../../../lib/storybook-utils/placeholder"
+import { PageDecorator } from "@/lib/storybook-utils/pageDecorator"
+import { Placeholder } from "@/lib/storybook-utils/placeholder"
 import { StandardLayout } from "./index"
 
 const meta = {
   title: "Layout/StandardLayout",
   component: StandardLayout,
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs"],
   decorators: [PageDecorator],
   args: {
     children: (

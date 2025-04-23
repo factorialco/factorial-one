@@ -98,13 +98,18 @@ const ProductUpdates = ({
       }}
     >
       <DropdownMenuTrigger asChild>
-        <button
-          title={label}
-          className="relative inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
-        >
-          <Icon icon={Megaphone} size="md" />
-          {hasUnread && <UnreadDot className="absolute -right-0.5 -top-0.5" />}
-        </button>
+        <div className="relative">
+          <Button
+            variant="outline"
+            icon={Megaphone}
+            hideLabel
+            round
+            label={label}
+          />
+          {hasUnread && (
+            <UnreadDot className="absolute -right-0.5 -top-[1px]" />
+          )}
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent
@@ -388,6 +393,7 @@ const ProductUpdatesSkeleton = () => (
 
 const UnreadDot = ({ className = "" }: { className?: string }) => (
   <div
+    aria-hidden="true"
     className={cn("size-2 rounded bg-f1-background-selected-bold", className)}
   />
 )

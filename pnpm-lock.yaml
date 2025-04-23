@@ -299,8 +299,8 @@ importers:
         specifier: 7.52.2
         version: 7.52.2(@types/node@22.13.9)
       "@playwright/test":
-        specifier: ^1.51.0
-        version: 1.51.0
+        specifier: ^1.52.0
+        version: 1.52.0
       "@storybook/addon-a11y":
         specifier: ^8.6.12
         version: 8.6.12(storybook@8.6.12(prettier@3.5.2))
@@ -393,7 +393,7 @@ importers:
         version: 10.4.21(postcss@8.5.3)
       axe-playwright:
         specifier: ^2.1.0
-        version: 2.1.0(playwright@1.51.1)
+        version: 2.1.0(playwright@1.52.0)
       chalk:
         specifier: ^5.4.1
         version: 5.4.1
@@ -506,9 +506,6 @@ importers:
       "@factorialco/factorial-one-core":
         specifier: workspace:*
         version: link:../core
-      "@svgr/cli":
-        specifier: ^8.1.0
-        version: 8.1.0(typescript@5.7.3)
       "@testing-library/react-native":
         specifier: ^12.4.3
         version: 12.9.0(jest@29.7.0(@types/node@22.13.14))(react-native@0.76.6(@babel/core@7.26.10)(@babel/preset-env@7.26.9(@babel/core@7.26.10))(@react-native-community/cli-server-api@13.6.9)(@types/react@18.3.18)(react@18.3.1))(react-test-renderer@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2742,7 +2739,7 @@ packages:
       {
         integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==,
       }
-    engines: { node: ">=0.10.0" }
+    engines: { "0": node >=0.10.0 }
 
   "@expo/cli@0.22.24":
     resolution:
@@ -3278,10 +3275,10 @@ packages:
       }
     engines: { node: ">=14" }
 
-  "@playwright/test@1.51.0":
+  "@playwright/test@1.52.0":
     resolution:
       {
-        integrity: sha512-dJ0dMbZeHhI+wb77+ljx/FeC8VBP6j/rj9OAojO08JI80wTZy6vRk9KvHKiDCUh4iMpEiseMgqRBIeW+eKX6RA==,
+        integrity: sha512-uh6W7sb55hl7D6vsAeA+V2p5JnlAqzhqFyF0VcJkKZXkgnFcVG9PziERRHQfPLfNGx1C292a4JqbWzhR8L4R1g==,
       }
     engines: { node: ">=18" }
     hasBin: true
@@ -13163,14 +13160,6 @@ packages:
         integrity: sha512-/Jm5M4RvtBFVkKWRu2BLUTNP8/M2a+UwuAX+ae4770q1qVGtfjG+WTCupoZixokjmHiry8uI+dlY8KXYV5HVVQ==,
       }
 
-  playwright-core@1.51.0:
-    resolution:
-      {
-        integrity: sha512-x47yPE3Zwhlil7wlNU/iktF7t2r/URR3VLbH6EknJd/04Qc/PSJ0EY3CMXipmglLG+zyRxW6HNo2EGbKLHPWMg==,
-      }
-    engines: { node: ">=18" }
-    hasBin: true
-
   playwright-core@1.51.1:
     resolution:
       {
@@ -13179,10 +13168,10 @@ packages:
     engines: { node: ">=18" }
     hasBin: true
 
-  playwright@1.51.0:
+  playwright-core@1.52.0:
     resolution:
       {
-        integrity: sha512-442pTfGM0xxfCYxuBa/Pu6B2OqxqqaYq39JS8QDMGThUvIOCd6s0ANDog3uwA0cHavVlnTQzGCN7Id2YekDSXA==,
+        integrity: sha512-l2osTgLXSMeuLZOML9qYODUQoPPnUsKsb5/P6LJ2e6uPKXUdPK5WYhN4z03G+YNbWmGDY4YENauNu4ZKczreHg==,
       }
     engines: { node: ">=18" }
     hasBin: true
@@ -13191,6 +13180,14 @@ packages:
     resolution:
       {
         integrity: sha512-kkx+MB2KQRkyxjYPc3a0wLZZoDczmppyGJIvQ43l+aZihkaVvmu/21kiyaHeHjiFxjxNNFnUncKmcGIyOojsaw==,
+      }
+    engines: { node: ">=18" }
+    hasBin: true
+
+  playwright@1.52.0:
+    resolution:
+      {
+        integrity: sha512-JAwMNMBlxJ2oD1kce4KPtMkDeKGHQstdpFPcPH3maElAXon/QZeTvtsfXmTMRyO9TslfoYOXkSsvao2nE1ilTw==,
       }
     engines: { node: ">=18" }
     hasBin: true
@@ -18723,9 +18720,9 @@ snapshots:
   "@pkgjs/parseargs@0.11.0":
     optional: true
 
-  "@playwright/test@1.51.0":
+  "@playwright/test@1.52.0":
     dependencies:
-      playwright: 1.51.0
+      playwright: 1.52.0
 
   "@popperjs/core@2.11.8": {}
 
@@ -21875,14 +21872,14 @@ snapshots:
       axe-core: 4.10.2
       mustache: 4.2.0
 
-  axe-playwright@2.1.0(playwright@1.51.1):
+  axe-playwright@2.1.0(playwright@1.52.0):
     dependencies:
       "@types/junit-report-builder": 3.0.2
       axe-core: 4.10.2
       axe-html-reporter: 2.2.11(axe-core@4.10.2)
       junit-report-builder: 5.1.1
       picocolors: 1.1.1
-      playwright: 1.51.1
+      playwright: 1.52.0
 
   axios@1.8.4:
     dependencies:
@@ -25955,19 +25952,19 @@ snapshots:
       mlly: 1.7.4
       pathe: 2.0.3
 
-  playwright-core@1.51.0: {}
-
   playwright-core@1.51.1: {}
 
-  playwright@1.51.0:
-    dependencies:
-      playwright-core: 1.51.0
-    optionalDependencies:
-      fsevents: 2.3.2
+  playwright-core@1.52.0: {}
 
   playwright@1.51.1:
     dependencies:
       playwright-core: 1.51.1
+    optionalDependencies:
+      fsevents: 2.3.2
+
+  playwright@1.52.0:
+    dependencies:
+      playwright-core: 1.52.0
     optionalDependencies:
       fsevents: 2.3.2
 
