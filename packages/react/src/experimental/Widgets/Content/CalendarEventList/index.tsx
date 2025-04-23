@@ -4,7 +4,6 @@ import { CalendarEvent, CalendarEventProps } from "../CalendarEvent"
 
 export interface CalendarEventListProps {
   events: CalendarEventProps[]
-  limit?: 1 | 2 | 3 | 4 | 5
   gap?: number
   showAllItems?: boolean
   minSize?: number
