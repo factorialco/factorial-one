@@ -1,0 +1,193 @@
+import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
+
+import * as DataCollectionNavigationFiltersStories from "./navigation-filters.stories"
+
+<Meta title="Data collection/Navigation filters" />
+
+# Data collection/Navigation filters
+
+## Introduction
+
+### Definition
+
+Navigation filters are filters that are used to filter the data in correlative
+chunksin the collection but they are not the same as the filters. Opposite to
+the filters those are not mandatory, navigation filters are mandatory (data
+always must be filtered by the navigation filter value(s)). Navigation filters
+also allow to navigate to the next or previous chunk of data.
+
+They are displayed in the top left of the collection. For example, a date
+navigator is a filter that allows you to filter the data by date, and using the
+arrow keys you can navigate through the dates.
+
+### Usage
+
+Navigation filters are defined on the `navigationFilters` prop of the
+`useDataSource` hook.
+
+#### Example
+
+```tsx
+const dataSource = useDataSource({
+  navigationFilters: {
+    date: {
+      type: "date-navigator",
+      initialValue: new Date(),
+      granularity: "day",
+      min: new Date(),
+      max: addDays(new Date(), 1),
+    },
+  },
+})
+```
+
+As the navigation filters are not nullable the initial value is mandatory. The
+`options` property depends on the type of the navigation filter.
+
+The current value of the filter is passed to the `dataAdapter.fetchData`
+function on the `useDataSource` hook as `filterValues` parameter.
+
+```tsx
+const dataSource = useDataSource({
+  dataAdapter: {
+    fetchData: ({ filters, navigationFilters }) =>
+      fetchData(filters, navigationFilters),
+  },
+})
+```
+
+#### Why is not a regular filter?
+
+We decided to keep this filter separate from the regular filters because it has
+a different semantics. But you can use it as a regular filter.
+
+## DateNavigation (type: "date-navigator")
+
+The DateNavigation filter is a navigation filter that allows you to filter the
+data by date defining a granularity (day, week, month, year) or a custom range
+of dates.
+
+Except for a custom range of dates, user is choosing the minimun date chuck the
+granularity represents, but this can be translated into a range of dates
+(datetimes).
+
+With this criteria, a week is a range of 7 days (staring on the first day of the
+week at 00:00:00 and ending on the last day of the week at 23:59:59), a month is
+a range of 30 days (staring on the first day of the month at 00:00:00 and ending
+on the last day of the month at 23:59:59), etc.
+
+### Options
+
+- `granularity`: The granularity of the date navigation filter. It can be a
+  single value or an array of values. if is an array with more than one item,
+  the filter will be displayed as a select with the available granularities.
+- `defaultGranularity`: The default granularity of the date navigation filter.
+  It is used when the filter is created.
+- `min`: The minimum date of the date navigation filter.
+- `max`: The maximum date of the date navigation filter.
+
+### Example
+
+```tsx
+const dataSource = useDataSource({
+  navigationFilters: {
+    date: {
+      type: "date-navigator",
+      initialValue: new Date(),
+      granularity: ["day", "week", "month", "year"],
+      defaultGranularity: "week",
+      min: new Date(),
+      max: addDays(new Date(), 1),
+    },
+  },
+})
+```
+
+### dataFetch values
+
+The DateNavigation pass to the `dataFetch` function the following values via
+`navigationFilters` property:
+
+- `value`: The current value of the date navigation filter depending on the
+  granularity.
+- `dateRange`: The range of dates to filter the data.
+- `granularity`: The granularity of the date navigation filter.
+
+### Add a new granularity
+
+If you need to add a new granularity level, you need to add a new handler to the
+`granularityHandlers` object in the file
+`navigationFilters/filterTypes/DateNavigation/granularities.ts`.
+
+```tsx
+const granularityHandlers = {
+    ...
+    yourGranularity: {
+        // Converts the value to a date range, for example if the yourGranularity is "week"
+        // the value is a Date and the dateRange is an array of 2 Dates, the first one is the start of the week and the second one is the end of the week
+        toDateRange: (date: Date) => DateRange,
+        // Returns the previous and next date range, for example if the yourGranularity is "week"
+        // the value is a DateRange and the options are the min and max dates
+        // the result is an array of 2 DateRanges, the first one is the previous date range and the second one is the next date range
+        // If the previous or next date range is outside the min or max dates, the result is false
+        getPrevNext: (value: DateRange, options: DateNavigationOptions) => [DateRange | false, DateRange | false],
+        // Returns the string representation of the date range, for example if the yourGranularity is "week"
+        // the value is a DateRange and the result is a string like "2021-01-01 - 2021-01-07"
+        toString: (date: DateRange) => string
+    }
+  },
+
+
+```
+
+### Examples
+
+#### Default / Day granularity
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.Default}
+  meta={DataCollectionNavigationFiltersStories}
+/>
+
+#### Week granularity
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.WeekGranularity}
+  meta={DataCollectionNavigationFiltersStories}
+/>
+
+#### Fortnight granularity
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.FortnightGranularity}
+  meta={DataCollectionNavigationFiltersStories}
+/>
+
+#### Month granularity
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.MonthGranularity}
+  meta={DataCollectionNavigationFiltersStories}
+/>
+
+#### Year granularity
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.YearGranularity}
+  meta={DataCollectionNavigationFiltersStories}
+/>
+
+#### Custom granularity
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.CustomGranularity}
+  meta={DataCollectionNavigationFiltersStories}
+/>
+
+#### Multiple granularities
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.MultipleGranularities}
+  meta={DataCollectionNavigationFiltersStories}
+/>

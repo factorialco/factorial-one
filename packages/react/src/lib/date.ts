@@ -3,6 +3,7 @@ import {
   formatDistanceToNowStrict,
   startOfDay,
   startOfMonth,
+  startOfWeek,
   startOfYear,
 } from "date-fns"
 
@@ -26,10 +27,11 @@ export function getAgo(date: Date) {
   return formatDistanceToNowStrict(date, { addSuffix: true })
 }
 
-export type DateGranularity = "day" | "month" | "year"
+export type DateGranularity = "day" | "week" | "month" | "year"
 const dateGranularityFunction: Record<DateGranularity, (date: Date) => Date> = {
   day: startOfDay,
   month: startOfMonth,
+  week: startOfWeek,
   year: startOfYear,
 }
 
