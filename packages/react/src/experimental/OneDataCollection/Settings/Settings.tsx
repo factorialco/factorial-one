@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
+import { Sliders } from "@/icons/app"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
-import { Sliders } from "../../../../icons/app"
 import { FiltersDefinition } from "../Filters/types"
 import { GroupingDefinition, GroupingState } from "../grouping"
 import { ItemActionsDefinition } from "../item-actions"
