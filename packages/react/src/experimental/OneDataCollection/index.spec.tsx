@@ -17,7 +17,7 @@ import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
-import type { DataSource, GroupingDefinition } from "./types"
+import type { DataSource, GroupingDefinition, SortingsState } from "./types"
 import { useData } from "./useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -526,11 +526,17 @@ describe("Collections", () => {
     const fetchDataMock = vi.fn().mockImplementation(({ sortings }) => {
       const sorted = [...mockData]
 
-      if (sortings && sortings.field === "name") {
-        sorted.sort((a, b) => {
-          const direction = sortings.order === "asc" ? 1 : -1
-          return a.name.localeCompare(b.name) * direction
-        })
+      if (sortings) {
+        const nameSorting = sortings.find(
+          (sorting: SortingsState<SortingsDefinition>) =>
+            sorting?.field === "name"
+        )
+        if (nameSorting) {
+          sorted.sort((a, b) => {
+            const direction = nameSorting.order === "asc" ? 1 : -1
+            return a.name.localeCompare(b.name) * direction
+          })
+        }
       }
 
       return sorted
@@ -591,10 +597,12 @@ describe("Collections", () => {
     // Verify the fetchData function was called with the correct default sorting
     expect(fetchDataMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        sortings: {
-          field: "name",
-          order: "desc",
-        },
+        sortings: [
+          {
+            field: "name",
+            order: "desc",
+          },
+        ],
       })
     )
 
