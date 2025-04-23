@@ -60567,13 +60567,13 @@ const $b = ({ loading: e }) => e ? /* @__PURE__ */ l(ce, { icon: yk, className: 
   currentGrouping: a,
   onGroupingChange: r
 }) => {
-  const o = e && e.length > 1 || i && Object.keys(i.groupBy).length > 1, [s, d] = K(!1), c = (f) => {
-    d(!1), n(f);
-  }, u = (f) => {
-    r(f);
+  const o = i ? Object.keys(i.groupBy).length + (i.mandatory ? 1 : 0) : 0, s = e && e.length > 1 || o > 0, [d, c] = K(!1), u = (m) => {
+    c(!1), n(m);
+  }, f = (m) => {
+    r(m);
   };
-  return o && /* @__PURE__ */ l("div", { className: "flex gap-2", children: /* @__PURE__ */ k(rd, { open: s, onOpenChange: d, children: [
-    /* @__PURE__ */ l(od, { asChild: !0, onClick: () => d(!s), children: /* @__PURE__ */ l(
+  return s && /* @__PURE__ */ l("div", { className: "flex gap-2", children: /* @__PURE__ */ k(rd, { open: d, onOpenChange: c, children: [
+    /* @__PURE__ */ l(od, { asChild: !0, onClick: () => c(!d), children: /* @__PURE__ */ l(
       ge,
       {
         variant: "outline",
@@ -60598,15 +60598,15 @@ const $b = ({ loading: e }) => e ? /* @__PURE__ */ l(ce, { icon: yk, className: 
             {
               visualizations: e,
               currentVisualization: t,
-              onVisualizationChange: c
+              onVisualizationChange: u
             }
           ) }),
-          i && Object.keys(i.groupBy).length > 1 && /* @__PURE__ */ l("div", { className: "mb-2", children: /* @__PURE__ */ l(
+          i && o > 0 && /* @__PURE__ */ l("div", { className: "mb-2", children: /* @__PURE__ */ l(
             TCe,
             {
               grouping: i,
               currentGrouping: a,
-              onGroupingChange: u
+              onGroupingChange: f
             }
           ) })
         ]
