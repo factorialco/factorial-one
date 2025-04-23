@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { ReactElement, useEffect, useMemo, useState } from "react"
 import { Chip } from "../../../OneChip"
 import type {
+  EqFilterDefinition,
   FilterValue,
   FiltersDefinition,
   InFilterDefinition,
@@ -27,6 +28,16 @@ interface InFilterButtonProps<T = unknown> {
 interface SearchFilterButtonProps {
   filter: SearchFilterDefinition
   value: string | undefined
+  onSelect: () => void
+  onRemove: () => void
+}
+
+/**
+ * Props for rendering EqFilterButton component
+ */
+interface EqFilterButtonProps<T = unknown> {
+  filter: EqFilterDefinition<T>
+  value: T | null | undefined
   onSelect: () => void
   onRemove: () => void
 }
@@ -137,6 +148,72 @@ function SearchFilterButton({
 }
 
 /**
+ * Renders a "eq" type filter button with single selection support
+ */
+function EqFilterButton<T>({
+  filter,
+  value,
+  onSelect,
+  onRemove,
+}: EqFilterButtonProps<T>) {
+  const [label, setLabel] = useState<string>("")
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    const getSelectedOptionLabel = async (
+      selectedValue: T
+    ): Promise<string> => {
+      setIsLoading(true)
+      const options = await (typeof filter.options === "function"
+        ? filter.options()
+        : filter.options)
+      setIsLoading(false)
+
+      if (Array.isArray(options)) {
+        const option = options.find((opt) => opt.value === selectedValue)
+        return option?.label ?? String(selectedValue)
+      } else {
+        return String(selectedValue)
+      }
+    }
+
+    const updateLabel = async () => {
+      if (value === null || value === undefined) {
+        return
+      }
+
+      const selectedLabel = await getSelectedOptionLabel(value)
+      setLabel(`${filter.label}: ${selectedLabel}`)
+    }
+
+    updateLabel()
+  }, [value, filter.label, filter.options, filter])
+
+  if (value === null || value === undefined) return null
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ type: "spring", duration: 0.2 }}
+    >
+      {isLoading ? (
+        <Skeleton className="h-5 w-[100px]" />
+      ) : (
+        <Chip
+          variant="selected"
+          label={label}
+          onClose={onRemove}
+          onClick={onSelect}
+        />
+      )}
+    </motion.div>
+  )
+}
+
+/**
  * Animated chip component that displays an active filter with its current value.
  * Uses discriminated unions to properly type the filter values based on filter type.
  *
@@ -173,6 +250,20 @@ export function FilterButton<Definition extends FiltersDefinition>({
         <InFilterButton
           filter={filter}
           value={inFilterValue}
+          onSelect={onSelect}
+          onRemove={onRemove}
+        />
+      )
+    }
+
+    case "eq": {
+      // When filter.type is "eq", we know:
+      // 1. filter is EqFilterDefinition<T>
+      // 2. value must be T | null | undefined (based on FilterValue type)
+      return (
+        <EqFilterButton
+          filter={filter}
+          value={value}
           onSelect={onSelect}
           onRemove={onRemove}
         />

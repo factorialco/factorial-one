@@ -31,7 +31,7 @@ import {
 import { useData } from "../useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
-const STATUS = ["active", "inactive", "pending"] as const
+const STATUS = ["active", "inactive"] as const
 // Example filter definition
 const filters = {
   search: {
@@ -206,6 +206,14 @@ const filterUsers = <
   ) {
     filteredUsers = filteredUsers.filter((user) =>
       departmentFilterValues.some((d) => d === user.department)
+    )
+  }
+
+  // Handle status filter (eq filter type)
+  const statusFilterValue = filterValues.status
+  if (statusFilterValue && typeof statusFilterValue === "string") {
+    filteredUsers = filteredUsers.filter(
+      (user) => user.status === statusFilterValue
     )
   }
 
@@ -423,6 +431,17 @@ const ExampleComponent = ({
                   label: "Department 4",
                   render: (item) => item.department,
                   sorting: "department",
+                },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
                 },
               ],
             },
@@ -1023,6 +1042,17 @@ export const WithPreselectedFilters: Story = {
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
+                },
               ],
             },
           },
@@ -1119,6 +1149,17 @@ export const WithCustomJsonView: Story = {
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
+                },
               ],
             },
           },
@@ -1206,6 +1247,17 @@ export const WithTableVisualization: Story = {
                   render: (item) => item.department,
                   sorting: "department",
                 },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
+                },
               ],
             },
           },
@@ -1269,6 +1321,17 @@ function createDataAdapter<
     ) {
       filteredRecords = filteredRecords.filter((record) =>
         (filters.department as string[]).includes(record.department)
+      )
+    }
+
+    // Apply status filter if provided (eq filter type)
+    if (
+      "status" in filters &&
+      typeof filters.status === "string" &&
+      filters.status
+    ) {
+      filteredRecords = filteredRecords.filter(
+        (record) => record.status === filters.status
       )
     }
 
@@ -1527,6 +1590,17 @@ export const WithMultipleVisualizations: Story = {
                   render: (item) => item.department,
                   sorting: "department",
                 },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
+                },
               ],
             },
           },
@@ -1642,6 +1716,17 @@ export const WithPagination: Story = {
                   render: (item) => item.department,
                   sorting: "department",
                 },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
+                },
               ],
             },
           },
@@ -1703,6 +1788,17 @@ export const WithSynchronousData: Story = {
                   label: "Department",
                   render: (item) => item.department,
                   sorting: "department",
+                },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
                 },
               ],
             },
@@ -1821,7 +1917,17 @@ export const WithAdvancedActions: Story = {
                   render: (item) => item.department,
                   sorting: "department",
                 },
-                { label: "Status", render: (item) => item.status },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
+                },
               ],
             },
           },
@@ -1969,6 +2075,17 @@ export const WithSyncSearch: Story = {
                   label: "Department",
                   render: (item) => item.department,
                   sorting: "department",
+                },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
                 },
               ],
             },
@@ -2121,6 +2238,17 @@ export const WithAsyncSearch: Story = {
                   label: "Department",
                   render: (item: MockUser) => item.department,
                   sorting: "department",
+                },
+                {
+                  label: "Status",
+                  render: (item: MockUser) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
                 },
               ],
             },
@@ -2299,6 +2427,17 @@ export const TableColumnProperties: Story = {
                   info: "Annual gross salary before taxes and deductions", // Info tooltip
                 },
                 {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
+                },
+                {
                   label: "Location",
                   render: (item) => item.location,
                   sorting: "location",
@@ -2436,6 +2575,17 @@ export const TableWithNoFiltersAndSearch: Story = {
                   render: (item) => item.department,
                   sorting: "department",
                 },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
+                },
               ],
             },
           },
@@ -2541,6 +2691,17 @@ export const TableWithNoFilters: Story = {
                   label: "Department",
                   render: (item) => item.department,
                   sorting: "department",
+                },
+                {
+                  label: "Status",
+                  render: (item) => ({
+                    type: "status",
+                    value: {
+                      status:
+                        item.status === "active" ? "positive" : "critical",
+                      label: item.status === "active" ? "Active" : "Inactive",
+                    },
+                  }),
                 },
               ],
             },

@@ -26,12 +26,21 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
     const filterSchema = schema[key as keyof Filters]
     console.log("filterValue", filterValue)
     console.log("filterSchema", filterSchema)
-    return (
-      (filterSchema.type === "in" &&
-        Array.isArray(filterValue) &&
-        filterValue.length > 0) ||
-      !!filterValue
-    )
+
+    const isActiveInFilter =
+      filterSchema.type === "in" &&
+      Array.isArray(filterValue) &&
+      filterValue.length > 0
+
+    const isActiveEqualityFilter =
+      filterSchema.type === "eq" &&
+      filterValue !== null &&
+      filterValue !== undefined
+
+    const isActiveOtherFilter =
+      filterSchema.type !== "in" && filterSchema.type !== "eq" && !!filterValue
+
+    return isActiveInFilter || isActiveEqualityFilter || isActiveOtherFilter
   }) as Array<keyof Filters>
 
   if (activeFilterKeys.length === 0) return null
