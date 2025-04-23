@@ -439,7 +439,7 @@ const ExampleComponent = ({
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -633,6 +633,17 @@ export const BasicTableView: Story = {
                     }),
                     align: "right",
                     sorting: "salary",
+                  },
+                  {
+                    label: "Status",
+                    render: (item) => ({
+                      type: "status",
+                      value: {
+                        status:
+                          item.status === "active" ? "positive" : "critical",
+                        label: item.status,
+                      },
+                    }),
                   },
                 ],
               },
@@ -1042,17 +1053,7 @@ export const WithPreselectedFilters: Story = {
                 { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
-                {
-                  label: "Status",
-                  render: (item) => ({
-                    type: "status",
-                    value: {
-                      status:
-                        item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
-                    },
-                  }),
-                },
+                { label: "Status", render: (item) => item.status },
               ],
             },
           },
@@ -1156,7 +1157,7 @@ export const WithCustomJsonView: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -1254,7 +1255,7 @@ export const WithTableVisualization: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -1597,7 +1598,7 @@ export const WithMultipleVisualizations: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -1723,7 +1724,7 @@ export const WithPagination: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -1796,7 +1797,7 @@ export const WithSynchronousData: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -1924,7 +1925,7 @@ export const WithAdvancedActions: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -2083,7 +2084,7 @@ export const WithSyncSearch: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -2246,7 +2247,7 @@ export const WithAsyncSearch: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -2433,7 +2434,7 @@ export const TableColumnProperties: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -2582,7 +2583,7 @@ export const TableWithNoFiltersAndSearch: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
@@ -2699,7 +2700,7 @@ export const TableWithNoFilters: Story = {
                     value: {
                       status:
                         item.status === "active" ? "positive" : "critical",
-                      label: item.status === "active" ? "Active" : "Inactive",
+                      label: item.status,
                     },
                   }),
                 },
