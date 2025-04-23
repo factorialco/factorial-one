@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { Ai, Download, Pencil } from "../../../icons/app"
+import { Ai, Download, Pencil } from "@/icons/app"
 import { SecondaryActionsDefinition } from "../actions"
 import { OneDataCollection, useDataSource } from "../index"
 
