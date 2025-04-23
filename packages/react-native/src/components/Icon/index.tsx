@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import { SvgProps } from "react-native-svg";
 import { cn } from "../../lib/utils";
+import { IconColorName } from "../../lib/colors";
 
 const iconVariants = cva({
   base: "shrink-0",
@@ -26,6 +27,7 @@ export interface IconProps extends SvgProps, VariantProps<typeof iconVariants> {
   icon: IconType;
   testID?: string;
   className?: string;
+  color?: IconColorName;
 }
 
 export type IconType = ForwardRefExoticComponent<
@@ -36,7 +38,7 @@ export type IconType = ForwardRefExoticComponent<
 >;
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
-  { size, icon, className, testID, ...props },
+  { size, icon, className, testID, color = "text-f1-icon", ...props },
   ref,
 ) {
   if (!icon) return null;
@@ -46,7 +48,7 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
     <Component
       ref={ref}
       {...props}
-      className={cn(iconVariants({ size }), className)}
+      className={cn(iconVariants({ size }), className, color)}
       testID={testID}
     />
   );

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollView } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
+import { TextInput } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   Icon,
   AppIcons,
   ModuleIcons,
 } from "@factorialco/factorial-one-react-native";
+import { IconColorName } from "@factorialco/factorial-one-react-native/src/lib/colors";
 
 const meta = {
   title: "Components/Icon",
@@ -35,12 +37,6 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    icon: AppIcons.ChevronDown,
-  },
-};
-
 // Helper components with proper TypeScript types
 interface IconDisplayProps {
   icon: any; // Using any to avoid import errors
@@ -52,13 +48,13 @@ interface SizeVariantProps extends IconDisplayProps {
 }
 
 interface StyledIconDisplayProps extends IconDisplayProps {
-  className: string;
+  color: IconColorName;
 }
 
 const IconDisplay = ({ icon, name }: IconDisplayProps) => (
-  <View className="items-center w-20 mb-4">
+  <View className="items-center w-20 mb-4 p-2">
     <Icon icon={icon} size="md" />
-    <Text className="text-xs mt-2 text-center">{name}</Text>
+    <Text className="text-sm mt-2 text-center">{name}</Text>
   </View>
 );
 
@@ -69,46 +65,109 @@ const SizeVariant = ({ icon, name, size }: SizeVariantProps) => (
   </View>
 );
 
-const StyledIconDisplay = ({
-  icon,
-  name,
-  className,
-}: StyledIconDisplayProps) => (
+const StyledIconDisplay = ({ icon, name, color }: StyledIconDisplayProps) => (
   <View className="items-center justify-center">
-    <Icon icon={icon} size="lg" className={className} />
+    <Icon icon={icon} size="lg" color={color} />
     <Text className="text-xs mt-2 text-center">{name}</Text>
   </View>
 );
 
-export const AppIconsShowcase: Story = {
+export const IconsShowcase: Story = {
   args: {
     icon: AppIcons.Archive,
   },
-  render: () => (
-    <ScrollView>
-      <Text className="text-lg font-bold mb-4 mt-6">App Icons</Text>
-      <View className="flex-row flex-wrap justify-start">
-        <IconDisplay icon={AppIcons.Archive} name="Archive" />
-        <IconDisplay icon={AppIcons.Bell} name="Bell" />
-        <IconDisplay icon={AppIcons.Calendar} name="Calendar" />
-        <IconDisplay icon={AppIcons.ChartLine} name="ChartLine" />
-        <IconDisplay icon={AppIcons.Check} name="Check" />
-        <IconDisplay icon={AppIcons.ChevronDown} name="ChevronDown" />
-        <IconDisplay icon={AppIcons.ChevronLeft} name="ChevronLeft" />
-        <IconDisplay icon={AppIcons.ChevronRight} name="ChevronRight" />
-        <IconDisplay icon={AppIcons.ChevronUp} name="ChevronUp" />
-        <IconDisplay icon={AppIcons.Clock} name="Clock" />
-        <IconDisplay icon={AppIcons.Download} name="Download" />
-        <IconDisplay icon={AppIcons.Heart} name="Heart" />
-        <IconDisplay icon={AppIcons.Home} name="Home" />
-        <IconDisplay icon={AppIcons.Info} name="Info" />
-        <IconDisplay icon={AppIcons.Pencil} name="Pencil" />
-        <IconDisplay icon={AppIcons.Search} name="Search" />
-        <IconDisplay icon={AppIcons.Settings} name="Settings" />
-        <IconDisplay icon={AppIcons.Upload} name="Upload" />
-      </View>
-    </ScrollView>
-  ),
+  render: () => {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [appIconList, setAppIconList] = useState<
+      Array<{ name: string; icon: any }>
+    >([]);
+    const [moduleIconList, setModuleIconList] = useState<
+      Array<{ name: string; icon: any }>
+    >([]);
+
+    // Generate icon lists on component mount
+    useEffect(() => {
+      // Create array of app icons
+      const appIcons = Object.entries(AppIcons).map(([name, icon]) => ({
+        name,
+        icon,
+      }));
+
+      // Create array of module icons
+      const modIcons = Object.entries(ModuleIcons).map(([name, icon]) => ({
+        name,
+        icon,
+      }));
+
+      setAppIconList(appIcons);
+      setModuleIconList(modIcons);
+    }, []);
+
+    // Filter icons based on search term
+    const filteredAppIcons = appIconList.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const filteredModuleIcons = moduleIconList.filter((item) =>
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    return (
+      <ScrollView>
+        <View className="mb-4">
+          <Text className="text-lg font-bold mb-2">Search Icons</Text>
+          <TextInput
+            className="border border-gray-300 rounded-lg p-2"
+            placeholder="Search icons..."
+            value={searchTerm}
+            onChangeText={setSearchTerm}
+          />
+        </View>
+
+        {filteredAppIcons.length > 0 && (
+          <>
+            <Text className="text-lg font-bold mb-4 mt-6">
+              App Icons ({filteredAppIcons.length})
+            </Text>
+            <View className="flex-row flex-wrap justify-start">
+              {filteredAppIcons.map((item) => (
+                <IconDisplay
+                  key={item.name}
+                  icon={item.icon}
+                  name={item.name}
+                />
+              ))}
+            </View>
+          </>
+        )}
+
+        {filteredModuleIcons.length > 0 && (
+          <>
+            <Text className="text-lg font-bold mb-4 mt-6">
+              Module Icons ({filteredModuleIcons.length})
+            </Text>
+            <View className="flex-row flex-wrap justify-start">
+              {filteredModuleIcons.map((item) => (
+                <IconDisplay
+                  key={item.name}
+                  icon={item.icon}
+                  name={item.name}
+                />
+              ))}
+            </View>
+          </>
+        )}
+
+        {filteredAppIcons.length === 0 && filteredModuleIcons.length === 0 && (
+          <View className="items-center justify-center p-10">
+            <Text className="text-lg">
+              No icons found matching "{searchTerm}"
+            </Text>
+          </View>
+        )}
+      </ScrollView>
+    );
+  },
 };
 
 export const ModuleIconsShowcase: Story = {
@@ -167,7 +226,7 @@ export const SizeVariants: Story = {
 export const Styling: Story = {
   args: {
     icon: AppIcons.Heart,
-    className: "text-red-500",
+    className: "text-f1-icon-critical",
   },
   render: () => (
     <ScrollView>
@@ -175,28 +234,23 @@ export const Styling: Story = {
       <View className="flex-row justify-around p-4 bg-gray-100 rounded-lg">
         <StyledIconDisplay
           icon={AppIcons.Heart}
-          name="red"
-          className="text-red-500"
+          name="critical"
+          color="text-f1-icon-critical"
         />
         <StyledIconDisplay
           icon={AppIcons.InfoCircle}
-          name="blue"
-          className="text-blue-500"
+          name="info"
+          color="text-f1-icon-info"
         />
         <StyledIconDisplay
           icon={AppIcons.Check}
-          name="green"
-          className="text-green-500"
+          name="positive"
+          color="text-f1-icon-positive"
         />
         <StyledIconDisplay
           icon={AppIcons.Warning}
-          name="yellow"
-          className="text-yellow-500"
-        />
-        <StyledIconDisplay
-          icon={AppIcons.Cross}
-          name="gray"
-          className="text-gray-500"
+          name="warning"
+          color="text-f1-icon-warning"
         />
       </View>
     </ScrollView>
