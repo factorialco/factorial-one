@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.35.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.5...factorial-one-react-v1.35.6) (2025-04-23)
+
+
+### Bug Fixes
+
+* show comment icon button next to reactions in CommunityPost component ([#1663](https://github.com/factorialco/factorial-one/issues/1663)) ([e4edf83](https://github.com/factorialco/factorial-one/commit/e4edf83f594f8fd9749a9ffa4dc057bea96d9d38))
+
 ## [1.35.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.4...factorial-one-react-v1.35.5) (2025-04-23)
 
 
