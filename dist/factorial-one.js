@@ -1,231 +1,306 @@
-import { C as s, L as I, c as E, P as g, a as P, f as M, b as R, A as w, B as V, d as k, e as A, g as _, V as F, U as j, I as S, h as D, X, i as O, j as T, M as U, u as G } from "./imageHandler-DcxyVPlx.js";
-import { k as $e, E as Le, l as Be, n as Ie, q as Ee, r as Me, m as Re, p as we, o as Ve } from "./imageHandler-DcxyVPlx.js";
-import { jsx as a, jsxs as q } from "react/jsx-runtime";
-import * as f from "react";
-import { createContext as C, useRef as z, useState as H } from "react";
-const fe = s(
+import { C as l, L as A, c as S, P, a as u, f as _, b as V, A as k, B as T, d as F, e as j, g as O, V as D, h as C, i as H, j as U, U as X, k as G, I as q, l as W, X as z, m as J, n as K, M as Q, u as Y } from "./imageHandler-IWys2tqL.js";
+import { o as Fe, E as je, p as Oe, r as De, v as He, w as Ue, q as Xe, t as Ge, s as qe } from "./imageHandler-IWys2tqL.js";
+import { jsx as r, jsxs as f } from "react/jsx-runtime";
+import * as v from "react";
+import Z, { forwardRef as N, useRef as b, useImperativeHandle as ee, Children as re, useState as ae, createContext as oe } from "react";
+const be = l(
   {
     name: "Link",
     type: "info"
   },
-  I
+  A
 );
-var m = "Progress", v = 100, [J, me] = E(m), [K, Q] = J(m), x = f.forwardRef(
-  (e, r) => {
+var h = "Progress", p = 100, [te, Le] = S(h), [se, le] = te(h), L = v.forwardRef(
+  (e, a) => {
     const {
       __scopeProgress: t,
-      value: n = null,
-      max: o,
-      getValueLabel: u = W,
-      ...c
+      value: o = null,
+      max: s,
+      getValueLabel: i = ne,
+      ...n
     } = e;
-    (o || o === 0) && !p(o) && console.error(Y(`${o}`, "Progress"));
-    const i = p(o) ? o : v;
-    n !== null && !h(n, i) && console.error(Z(`${n}`, "Progress"));
-    const l = h(n, i) ? n : null, B = d(l) ? u(l, i) : void 0;
-    return /* @__PURE__ */ a(K, { scope: t, value: l, max: i, children: /* @__PURE__ */ a(
-      g.div,
+    (s || s === 0) && !y(s) && console.error(ie(`${s}`, "Progress"));
+    const c = y(s) ? s : p;
+    o !== null && !g(o, c) && console.error(ce(`${o}`, "Progress"));
+    const d = g(o, c) ? o : null, M = m(d) ? i(d, c) : void 0;
+    return /* @__PURE__ */ r(se, { scope: t, value: d, max: c, children: /* @__PURE__ */ r(
+      P.div,
       {
-        "aria-valuemax": i,
+        "aria-valuemax": c,
         "aria-valuemin": 0,
-        "aria-valuenow": d(l) ? l : void 0,
-        "aria-valuetext": B,
+        "aria-valuenow": m(d) ? d : void 0,
+        "aria-valuetext": M,
         role: "progressbar",
-        "data-state": N(l, i),
-        "data-value": l ?? void 0,
-        "data-max": i,
-        ...c,
-        ref: r
+        "data-state": R(d, c),
+        "data-value": d ?? void 0,
+        "data-max": c,
+        ...n,
+        ref: a
       }
     ) });
   }
 );
-x.displayName = m;
-var y = "ProgressIndicator", b = f.forwardRef(
-  (e, r) => {
-    const { __scopeProgress: t, ...n } = e, o = Q(y, t);
-    return /* @__PURE__ */ a(
-      g.div,
+L.displayName = h;
+var w = "ProgressIndicator", $ = v.forwardRef(
+  (e, a) => {
+    const { __scopeProgress: t, ...o } = e, s = le(w, t);
+    return /* @__PURE__ */ r(
+      P.div,
       {
-        "data-state": N(o.value, o.max),
-        "data-value": o.value ?? void 0,
-        "data-max": o.max,
-        ...n,
-        ref: r
+        "data-state": R(s.value, s.max),
+        "data-value": s.value ?? void 0,
+        "data-max": s.max,
+        ...o,
+        ref: a
       }
     );
   }
 );
-b.displayName = y;
-function W(e, r) {
-  return `${Math.round(e / r * 100)}%`;
+$.displayName = w;
+function ne(e, a) {
+  return `${Math.round(e / a * 100)}%`;
 }
-function N(e, r) {
-  return e == null ? "indeterminate" : e === r ? "complete" : "loading";
+function R(e, a) {
+  return e == null ? "indeterminate" : e === a ? "complete" : "loading";
 }
-function d(e) {
+function m(e) {
   return typeof e == "number";
 }
-function p(e) {
-  return d(e) && !isNaN(e) && e > 0;
+function y(e) {
+  return m(e) && !isNaN(e) && e > 0;
 }
-function h(e, r) {
-  return d(e) && !isNaN(e) && e <= r && e >= 0;
+function g(e, a) {
+  return m(e) && !isNaN(e) && e <= a && e >= 0;
 }
-function Y(e, r) {
-  return `Invalid prop \`max\` of value \`${e}\` supplied to \`${r}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${v}\`.`;
+function ie(e, a) {
+  return `Invalid prop \`max\` of value \`${e}\` supplied to \`${a}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${p}\`.`;
 }
-function Z(e, r) {
-  return `Invalid prop \`value\` of value \`${e}\` supplied to \`${r}\`. The \`value\` prop must be:
+function ce(e, a) {
+  return `Invalid prop \`value\` of value \`${e}\` supplied to \`${a}\`. The \`value\` prop must be:
   - a positive number
-  - less than the value passed to \`max\` (or ${v} if no \`max\` prop is set)
+  - less than the value passed to \`max\` (or ${p} if no \`max\` prop is set)
   - \`null\` or \`undefined\` if the progress is indeterminate.
 
 Defaulting to \`null\`.`;
 }
-var $ = x, ee = b;
-const L = f.forwardRef(({ className: e, value: r, ...t }, n) => /* @__PURE__ */ a(
-  $,
+var I = L, de = $;
+const B = v.forwardRef(({ className: e, value: a, ...t }, o) => /* @__PURE__ */ r(
+  I,
   {
-    ref: n,
-    className: P(
+    ref: o,
+    className: u(
       "relative h-2 w-full overflow-hidden rounded-full bg-f1-background-secondary",
       e
     ),
     ...t,
-    children: /* @__PURE__ */ a(
-      ee,
+    children: /* @__PURE__ */ r(
+      de,
       {
         className: "h-full w-full flex-1 transition-all",
         style: {
           backgroundColor: t.color,
-          transform: `translateX(-${100 - (r || 0)}%)`
+          transform: `translateX(-${100 - (a || 0)}%)`
         }
       }
     )
   }
 ));
-L.displayName = $.displayName;
-const re = ({ value: e, max: r = 100, label: t, color: n }, o) => {
-  const u = n || R(0), c = e / r * 100;
-  return /* @__PURE__ */ q("div", { className: "flex items-center space-x-2", "aria-live": "polite", children: [
-    /* @__PURE__ */ a("div", { className: "flex-grow", children: /* @__PURE__ */ a(
-      L,
+B.displayName = I.displayName;
+const ue = ({ value: e, max: a = 100, label: t, color: o }, s) => {
+  const i = o || V(0), n = e / a * 100;
+  return /* @__PURE__ */ f("div", { className: "flex items-center space-x-2", "aria-live": "polite", children: [
+    /* @__PURE__ */ r("div", { className: "flex-grow", children: /* @__PURE__ */ r(
+      B,
       {
-        color: u,
-        value: c,
+        color: i,
+        value: n,
         className: "w-full",
         "aria-valuemin": 0,
-        "aria-valuemax": r,
+        "aria-valuemax": a,
         "aria-valuenow": e,
-        "aria-label": `${c.toFixed(1)}%`
+        "aria-label": `${n.toFixed(1)}%`
       }
     ) }),
-    t && /* @__PURE__ */ a("div", { className: "flex-shrink-0 text-sm font-medium", children: t })
+    t && /* @__PURE__ */ r("div", { className: "flex-shrink-0 text-sm font-medium", children: t })
   ] });
-}, ae = M(re), ve = s(
+}, fe = _(ue), we = l(
   {
     name: "AreaChart",
     type: "info"
   },
-  w
-), pe = s(
+  k
+), $e = l(
   {
     name: "BarChart",
     type: "info"
   },
-  V
-), he = s(
+  T
+), Re = l(
   {
     name: "CategoryBarChart",
     type: "info"
   },
-  k
-), ge = s(
+  F
+), Ie = l(
   {
     name: "LineChart",
     type: "info"
   },
-  A
-), Pe = s(
+  j
+), Be = l(
   {
     name: "PieChart",
     type: "info"
   },
-  _
-), Ce = s(
+  O
+), Ee = l(
   {
     name: "VerticalBarChart",
     type: "info"
   },
-  F
-), xe = s(
+  D
+), Me = l(
   {
     name: "ProgressBarChart",
     type: "info"
   },
-  ae
-), oe = {
-  locale: "en"
-}, te = C(oe);
-function ne({
-  children: e,
-  l10n: r
-}) {
-  return /* @__PURE__ */ a(te.Provider, { value: r, children: e });
-}
-const se = C(
+  fe
+), me = {
+  xs: 1,
+  sm: 2,
+  md: 2,
+  lg: 2
+}, ve = N(function({ widgets: a, children: t }, o) {
+  const s = b(null);
+  ee(o, () => s.current);
+  const i = re.toArray(a).filter((n) => !!n).map((n, c) => /* @__PURE__ */ r("div", { className: "h-full @5xl:h-auto [&>div]:h-full", children: n }, c));
+  return /* @__PURE__ */ r(C, { layout: "home", children: /* @__PURE__ */ f("div", { ref: s, className: "@container", children: [
+    /* @__PURE__ */ f("div", { className: "flex flex-col gap-6 px-5 pt-4 @md:pt-2 @5xl:hidden", children: [
+      /* @__PURE__ */ r(H, { columns: me, showArrows: !1, children: i }),
+      /* @__PURE__ */ r("main", { children: t })
+    ] }),
+    /* @__PURE__ */ f("div", { className: "hidden grid-cols-3 gap-5 px-6 pb-6 pt-2 @5xl:grid", children: [
+      /* @__PURE__ */ r("div", { className: "col-span-3 flex flex-row gap-5 *:flex-1", children: i.slice(0, 3) }),
+      /* @__PURE__ */ r("main", { className: "col-span-2", children: t }),
+      /* @__PURE__ */ r("div", { className: "flex flex-1 flex-col gap-5", children: i.slice(3) })
+    ] })
+  ] }) });
+}), he = N(
+  function({ children: a, sideContent: t, mainColumnPosition: o = "left" }, s) {
+    return /* @__PURE__ */ r("div", { ref: s, className: "h-full overflow-auto", children: /* @__PURE__ */ f(
+      "div",
+      {
+        className: u(
+          "flex h-full overflow-auto text-f1-foreground sm:flex-row",
+          o === "right" ? "flex-col" : "flex-col-reverse"
+        ),
+        children: [
+          o === "right" && /* @__PURE__ */ r(x, { children: t }),
+          /* @__PURE__ */ r(
+            "main",
+            {
+              className: u(
+                "h-fit min-h-full border-0 px-6 py-5 sm:basis-3/4 sm:border-solid",
+                o === "right" ? "sm:border-l sm:border-l-f1-border-secondary" : "sm:border-r sm:border-r-f1-border-secondary"
+              ),
+              children: a
+            }
+          ),
+          o === "left" && /* @__PURE__ */ r(x, { children: t })
+        ]
+      }
+    ) });
+  }
+), x = ({ children: e }) => /* @__PURE__ */ r("aside", { className: "py-5 pl-2 pr-4 sm:basis-1/4 sm:pb-6", children: e }), pe = U({
+  base: "relative flex min-h-full w-full flex-col gap-4 place-self-center overflow-y-auto px-6 py-5",
+  variants: {
+    variant: {
+      narrow: "max-w-screen-lg"
+    }
+  }
+}), E = Z.forwardRef(({ children: e, variant: a, className: t, ...o }, s) => /* @__PURE__ */ r(C, { layout: "standard", children: /* @__PURE__ */ r(
+  "section",
+  {
+    ref: s,
+    className: u("relative flex-1 overflow-auto", t),
+    ...o,
+    children: /* @__PURE__ */ r("div", { className: u(pe({ variant: a })), children: e })
+  }
+) }));
+E.displayName = "StandardLayout";
+const Ae = l(
+  {
+    name: "StandardLayout",
+    type: "layout"
+  },
+  E
+), Se = l(
+  {
+    name: "TwoColumnLayout",
+    type: "layout"
+  },
+  he
+), _e = l(
+  {
+    name: "HomeLayout",
+    type: "layout"
+  },
+  ve
+), ye = oe(
   null
-), ie = ({ children: e, fullScreen: r = !0 }) => {
-  const t = z(null), [n, o] = H(t.current);
-  return G(() => {
-    o(t.current);
-  }, []), /* @__PURE__ */ a(se.Provider, { value: { element: n }, children: /* @__PURE__ */ a(
+), ge = ({ children: e, fullScreen: a = !0 }) => {
+  const t = b(null), [o, s] = ae(t.current);
+  return Y(() => {
+    s(t.current);
+  }, []), /* @__PURE__ */ r(ye.Provider, { value: { element: o }, children: /* @__PURE__ */ r(
     "div",
     {
       ref: t,
       id: "factorial-one-layout",
-      className: P({
-        "flex h-screen w-screen flex-col bg-[#F5F6F8] dark:bg-[#0D1625]": r
+      className: u({
+        "flex h-screen w-screen flex-col bg-[#F5F6F8] dark:bg-[#0D1625]": a
       }),
       children: e
     }
   ) });
-}, le = ({
+}, xe = ({
   children: e
-}) => /* @__PURE__ */ a(U, { reducedMotion: "user", children: e }), ye = ({
+}) => /* @__PURE__ */ r(Q, { reducedMotion: "user", children: e }), Ve = ({
   children: e,
-  layout: r,
+  layout: a,
   link: t,
-  privacyModeInitiallyEnabled: n,
-  image: o,
-  i18n: u,
-  l10n: c
-}) => /* @__PURE__ */ a(le, { children: /* @__PURE__ */ a(j, { children: /* @__PURE__ */ a(ne, { ...c, children: /* @__PURE__ */ a(S, { ...u, children: /* @__PURE__ */ a(D, { ...t, children: /* @__PURE__ */ a(ie, { ...r, children: /* @__PURE__ */ a(X, { children: /* @__PURE__ */ a(
-  O,
+  privacyModeInitiallyEnabled: o,
+  image: s,
+  i18n: i,
+  l10n: n
+}) => /* @__PURE__ */ r(xe, { children: /* @__PURE__ */ r(X, { children: /* @__PURE__ */ r(G, { ...n, children: /* @__PURE__ */ r(q, { ...i, children: /* @__PURE__ */ r(W, { ...t, children: /* @__PURE__ */ r(ge, { ...a, children: /* @__PURE__ */ r(z, { children: /* @__PURE__ */ r(
+  J,
   {
-    initiallyEnabled: n,
-    children: /* @__PURE__ */ a(T, { ...o, children: e })
+    initiallyEnabled: o,
+    children: /* @__PURE__ */ r(K, { ...s, children: e })
   }
 ) }) }) }) }) }) }) });
 export {
-  ve as AreaChart,
-  pe as BarChart,
-  $e as Button,
-  he as CategoryBarChart,
-  Le as EmojiImage,
-  ye as FactorialOneProvider,
-  Be as Icon,
-  ge as LineChart,
-  fe as Link,
-  Pe as PieChart,
-  O as PrivacyModeProvider,
-  xe as ProgressBarChart,
-  Ce as VerticalBarChart,
-  Ie as buildTranslations,
-  Ee as getEmojiLabel,
-  Me as useEmojiConfetti,
-  Re as usePrivacyMode,
-  we as useReducedMotion,
-  Ve as useXRay
+  we as AreaChart,
+  $e as BarChart,
+  Fe as Button,
+  Re as CategoryBarChart,
+  je as EmojiImage,
+  Ve as FactorialOneProvider,
+  _e as HomeLayout,
+  Oe as Icon,
+  Ie as LineChart,
+  be as Link,
+  Be as PieChart,
+  J as PrivacyModeProvider,
+  Me as ProgressBarChart,
+  Ae as StandardLayout,
+  Se as TwoColumnLayout,
+  Ee as VerticalBarChart,
+  De as buildTranslations,
+  He as getEmojiLabel,
+  Ue as useEmojiConfetti,
+  Xe as usePrivacyMode,
+  Ge as useReducedMotion,
+  qe as useXRay
 };

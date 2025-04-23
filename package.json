@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.32.3",
+  "version": "1.35.3",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -97,7 +97,7 @@
     "@eslint/js": "^9.24.0",
     "@factorialco/factorial-one-core": "workspace:*",
     "@microsoft/api-extractor": "7.52.2",
-    "@playwright/test": "^1.51.0",
+    "@playwright/test": "^1.52.0",
     "@storybook/addon-a11y": "^8.6.12",
     "@storybook/addon-actions": "^8.6.12",
     "@storybook/addon-essentials": "^8.6.12",

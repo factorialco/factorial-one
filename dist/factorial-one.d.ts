@@ -5,8 +5,10 @@ import { ChartConfig as ChartConfig_2 } from './utils/types';
 import { ChartPropsBase } from './utils/types';
 import { ClassValue } from 'cva';
 import { ComponentProps } from 'react';
+import { default as default_2 } from 'react';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
+import { HTMLAttributes } from 'react';
 import { IconProps } from './Icon';
 import { ImgHTMLAttributes } from 'react';
 import { JSX as JSX_2 } from 'react';
@@ -95,6 +97,8 @@ declare const componentTypes: readonly ["layout", "info", "action", "form"];
 declare const defaultTranslations: {
     readonly navigation: {
         readonly sidebar: "Main navigation";
+        readonly previous: "Previous";
+        readonly next: "Next";
     };
     readonly actions: {
         readonly save: "Save";
@@ -137,6 +141,22 @@ declare const defaultTranslations: {
         };
     };
     readonly shortcut: "Shortcut";
+    readonly date: {
+        readonly month: {
+            readonly january: "January";
+            readonly february: "February";
+            readonly march: "March";
+            readonly april: "April";
+            readonly may: "May";
+            readonly june: "June";
+            readonly july: "July";
+            readonly august: "August";
+            readonly september: "September";
+            readonly october: "October";
+            readonly november: "November";
+            readonly december: "December";
+        };
+    };
 };
 
 export declare function EmojiImage({ emoji, size }: EmojiImageProps): JSX_2.Element;
@@ -166,6 +186,11 @@ export declare const FactorialOneProvider: React.FC<{
 }>;
 
 export declare function getEmojiLabel(emoji: string): string;
+
+export declare const HomeLayout: ForwardRefExoticComponent<Omit<{
+widgets?: ReactNode[];
+children?: ReactNode;
+} & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 declare interface I18nProviderProps {
     children: ReactNode;
@@ -201,6 +226,16 @@ declare interface LayoutProps {
 declare const LayoutProvider: React.FC<{
     children: React.ReactNode;
 } & LayoutProps>;
+
+declare const layoutVariants: (props?: ({
+    variant?: "narrow" | undefined;
+} & ({
+    class?: ClassValue;
+    className?: never;
+} | {
+    class?: never;
+    className?: ClassValue;
+})) | undefined) => string;
 
 export declare const LineChart: ForwardRefExoticComponent<Omit<LineChartPropsBase<LineChartConfig> & {
 lineType?: "natural" | "linear";
@@ -252,11 +287,25 @@ declare const sizes: readonly ["sm", "md", "lg"];
 
 declare type SrcProps = Pick<ImgHTMLAttributes<HTMLImageElement>, "src" | "srcSet" | "sizes">;
 
+export declare const StandardLayout: ForwardRefExoticComponent<Omit<StandardLayoutProps & HTMLAttributes<HTMLElement> & RefAttributes<HTMLElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+export declare interface StandardLayoutProps extends VariantProps<typeof layoutVariants> {
+    children?: default_2.ReactNode;
+}
+
 declare type TranslationShape<T> = {
     [K in keyof T]: T[K] extends string ? string : T[K] extends Record<string, string | Record<string, unknown>> ? TranslationShape<T[K]> : never;
 };
 
 export declare type TranslationsType = TranslationShape<typeof defaultTranslations>;
+
+export declare const TwoColumnLayout: ForwardRefExoticComponent<Omit<TwoColumnLayoutProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+export declare interface TwoColumnLayoutProps {
+    children: ReactNode;
+    sideContent: ReactNode;
+    mainColumnPosition?: "left" | "right";
+}
 
 export declare const useEmojiConfetti: () => {
     fireEmojiConfetti: (emoji: string, elementRef: RefObject<HTMLElement>) => void;

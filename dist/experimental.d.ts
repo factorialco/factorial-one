@@ -10,7 +10,6 @@ import { color as color_2 } from '../../../../ui/avatar';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
-import { DayPicker } from 'react-day-picker';
 import { default as default_2 } from 'react';
 import { Dispatch } from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
@@ -19,7 +18,6 @@ import { FieldPath } from 'react-hook-form';
 import { FieldValues } from 'react-hook-form';
 import { ForwardedRef } from 'react';
 import { ForwardRefExoticComponent } from 'react';
-import { FullscreenLayoutProps } from './FullscreenLayout';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
 import { IconType as IconType_3 } from '../../factorial-one';
@@ -27,7 +25,6 @@ import { JSONContent } from '@tiptap/react';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
 import { Observable } from 'zen-observable-ts';
-import { OverviewLayoutProps } from './OverviewLayout';
 import { PieChartProps } from '../../../components/Charts/PieChart';
 import { PopoverProps } from '@radix-ui/react-popover';
 import { PropsWithChildren } from 'react';
@@ -548,19 +545,15 @@ declare const buttonVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-export declare function Calendar({ className, classNames, showOutsideDays, ...props }: CalendarProps): React_2.JSX.Element;
-
-export declare namespace Calendar {
-    var displayName: string;
-}
-
 export declare const CalendarEvent: ForwardRefExoticComponent<CalendarEventProps & RefAttributes<HTMLDivElement>>;
 
-export declare const CalendarEventList: ForwardRefExoticComponent<CalendarEventListProps & RefAttributes<HTMLDivElement>>;
+export declare const CalendarEventList: FC<CalendarEventListProps>;
 
 export declare interface CalendarEventListProps {
     events: CalendarEventProps[];
-    limit?: 1 | 2 | 3 | 4 | 5;
+    gap?: number;
+    showAllItems?: boolean;
+    minSize?: number;
 }
 
 export declare interface CalendarEventProps {
@@ -577,7 +570,9 @@ export declare interface CalendarEventProps {
     noBackground?: boolean;
 }
 
-export declare type CalendarProps = React_2.ComponentProps<typeof DayPicker>;
+declare type CalendarMode = "single" | "range";
+
+declare type CalendarView = "day" | "month" | "year" | "week";
 
 declare type CardPropertyDefinition<T> = PropertyDefinition_2<T>;
 
@@ -957,7 +952,7 @@ declare const DataList: ForwardRefExoticComponent<DataListProps & RefAttributes<
 };
 
 declare type DataListProps = {
-    children: ReactElement<Items_2>[] | ReactElement<Items_2>;
+    children: ReactElement<Items>[] | ReactElement<Items>;
     label?: string;
 };
 
@@ -1025,6 +1020,11 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
 };
 
 export declare const DateAvatar: ({ date }: Props_5) => JSX_2.Element;
+
+declare type DateRange = {
+    from: Date;
+    to?: Date;
+};
 
 export declare function DaytimePage({ children, header, period, embedded, }: DaytimePageProps): JSX_2.Element;
 
@@ -1233,6 +1233,13 @@ export declare const FILE_TYPES: {
     readonly MARKDOWN: "markdown";
 };
 
+export declare type FileAction = {
+    icon?: IconType;
+    label: string;
+    onClick: () => void;
+    critical?: boolean;
+};
+
 export declare const FileAvatar: ForwardRefExoticComponent<Omit<Omit<AvatarProps & RefAttributes<HTMLSpanElement>, "ref"> & {
 size?: sizes_2[number];
 type?: type_2[number];
@@ -1245,8 +1252,7 @@ export declare const FileItem: ForwardRefExoticComponent<FileItemProps & RefAttr
 
 declare interface FileItemProps extends React.HTMLAttributes<HTMLDivElement> {
     file: File;
-    onAction?: () => void;
-    actionIcon?: IconType;
+    actions?: FileAction[];
     disabled?: boolean;
 }
 
@@ -1388,8 +1394,6 @@ declare interface FrameContextType {
     toggleSidebar: () => void;
 }
 
-export declare const FullscreenLayout: ForwardRefExoticComponent<Omit<FullscreenLayoutProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
-
 declare type HeaderProps = {
     module: {
         name: string;
@@ -1420,11 +1424,6 @@ declare type HighlightBannerProps = {
     buttonLabel: string;
     onClick?: () => void;
 };
-
-export declare const HomeLayout: ForwardRefExoticComponent<Omit<{
-widgets?: ReactNode[];
-children?: ReactNode;
-} & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 declare type HTMLString = string;
 
@@ -1476,13 +1475,6 @@ export declare type InFilterDefinition<T = unknown> = BaseFilterDefinition & {
     options: Array<FilterOption<T>> | (() => Array<FilterOption<T>> | Promise<Array<FilterOption<T>>>);
 };
 
-export declare const InfoPaneLayout: ForwardRefExoticComponent<Omit<InfoPaneLayoutProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
-
-export declare interface InfoPaneLayoutProps {
-    children: default_2.ReactNode;
-    sideContent: default_2.ReactNode;
-}
-
 export declare const Input: React.FC<InputProps>;
 
 declare const Input_2: React_2.ForwardRefExoticComponent<React_2.InputHTMLAttributes<HTMLInputElement> & {
@@ -1506,9 +1498,9 @@ declare type ItemProps = {
     action?: ActionType;
 };
 
-declare type Items = SelectItemObject<string>[];
+declare type Items = typeof Item | typeof PersonItem | typeof CompanyItem | typeof TeamItem;
 
-declare type Items_2 = typeof Item | typeof PersonItem | typeof CompanyItem | typeof TeamItem;
+declare type Items_2 = SelectItemObject<string>[];
 
 declare type KanbanColumnDefinition<_Record extends RecordType, _Filters extends FiltersDefinition, _Sortings extends SortingsDefinition> = {
     label: string;
@@ -1523,16 +1515,6 @@ export declare type lastIntentType = {
     selectedIntent?: string;
     customIntent?: string;
 } | null;
-
-declare const layoutVariants: (props?: ({
-    variant?: "narrow" | undefined;
-} & ({
-    class?: ClassValue;
-    className?: never;
-} | {
-    class?: never;
-    className?: ClassValue;
-})) | undefined) => string;
 
 declare type Level = "info" | "warning" | "critical";
 
@@ -1708,6 +1690,17 @@ export declare type OnBulkActionCallback<Record extends RecordType, Filters exte
 action: BulkAction,
 ...Parameters<OnSelectItemsCallback<Record, Filters>>
 ]) => void;
+
+export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaultSelected, showNavigation, }: OneCalendarProps): JSX_2.Element;
+
+export declare interface OneCalendarProps {
+    mode: CalendarMode;
+    view: CalendarView;
+    onSelect?: (date: Date | DateRange | null) => void;
+    defaultMonth?: Date;
+    defaultSelected?: Date | DateRange | null;
+    showNavigation?: boolean;
+}
 
 export declare function OneCard({ avatar, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, }: OneCardProps): JSX_2.Element;
 
@@ -1931,9 +1924,7 @@ declare interface Option_2 {
     onClick?: (event: any) => unknown;
 }
 
-declare type Options = Items | ((search?: string) => Promise<Items> | Items);
-
-export declare const OverviewLayout: ForwardRefExoticComponent<Omit<OverviewLayoutProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+declare type Options = Items_2 | ((search?: string) => Promise<Items_2> | Items_2);
 
 export declare function Page({ children, header, embedded }: PageProps): JSX_2.Element;
 
@@ -2265,12 +2256,17 @@ declare type Props_16<Id extends string | number = string | number> = {
 
 declare type Props_17<Id extends string | number = string | number> = {
     items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
+    minSize?: number;
     onClickItem?: (id: Id) => void;
+    showAllItems?: boolean;
 };
 
 declare type Props_18<Id extends string | number = string | number> = {
     items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
+    minSize?: number;
+    gap?: number;
     onClickItem?: (id: Id) => void;
+    showAllItems?: boolean;
 };
 
 declare type Props_2 = {
@@ -2737,12 +2733,6 @@ className?: never;
 class?: never;
 className?: ClassValue;
 })) | undefined) => string> & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
-
-export declare const StandardLayout: default_2.ForwardRefExoticComponent<StandardLayoutProps & default_2.HTMLAttributes<HTMLElement> & default_2.RefAttributes<HTMLElement>>;
-
-export declare interface StandardLayoutProps extends VariantProps<typeof layoutVariants> {
-    children?: default_2.ReactNode;
-}
 
 declare type Status = "positive" | "neutral" | "negative";
 
@@ -3213,7 +3203,7 @@ export declare type WidgetEmptyStateProps = {
 
 export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_15): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, onClickItem }: Props_17): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_17): JSX_2.Element;
 
 export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_16): JSX_2.Element;
 
@@ -3226,6 +3216,7 @@ export declare interface WidgetProps {
         title?: string;
         subtitle?: string;
         comment?: string;
+        info?: string;
         canBeBlurred?: boolean;
         link?: {
             title: string;
@@ -3256,7 +3247,7 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, onClickItem }: Props_18): JSX_2.Element;
+export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_18): JSX_2.Element;
 
 export declare function WidgetSimpleListItem({ id, title, alert, rawTag, count, icon, rightIcon, iconClassName, rightIconClassName, onClick, }: WidgetSimpleListItemProps): JSX_2.Element;
 
