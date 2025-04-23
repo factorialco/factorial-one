@@ -101,7 +101,10 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source))
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toEqual({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.isLoading).toBe(false)
       expect(result.current.isInitialLoading).toBe(false)
       expect(result.current.error).toBe(null)
@@ -116,7 +119,10 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toEqual({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.paginationInfo).toEqual({
         total: 2,
         currentPage: 1,
@@ -141,7 +147,10 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toEqual({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.isInitialLoading).toBe(false)
     })
 
@@ -184,7 +193,10 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toEqual({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.isInitialLoading).toBe(false)
     })
 
@@ -227,7 +239,10 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source, { filters }))
 
-      expect(result.current.data).toEqual([mockData[0]])
+      expect(result.current.data).toEqual({
+        records: [mockData[0]],
+        type: "flat",
+      })
     })
 
     it("should apply filters to synchronous data", () => {
@@ -243,7 +258,10 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source, { filters }))
 
-      expect(result.current.data).toEqual([mockData[0]])
+      expect(result.current.data).toEqual({
+        records: [mockData[0]],
+        type: "flat",
+      })
     })
   })
 

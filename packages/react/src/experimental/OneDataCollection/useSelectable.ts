@@ -24,7 +24,7 @@ export function useSelectable<
   ItemActions extends ItemActionsDefinition<Record>,
   Grouping extends GroupingDefinition<Record>,
 >(
-  data: Record[],
+  data: ReadonlyArray<Record>,
   paginationInfo: PaginationInfo | null,
   source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>,
   onSelectItems?: OnSelectItemsCallback<Record, Filters>

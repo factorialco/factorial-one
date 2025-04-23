@@ -13,8 +13,10 @@ import {
 } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react"
 import { dotTagColors } from "../../Information/Tags/DotTag"
+import { GroupingDefinition } from "../grouping"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
+import { useData } from "../useData"
 import {
   createDataAdapter,
   createPromiseDataFetch,
@@ -27,8 +29,6 @@ import {
   mockUsers,
   sortings,
 } from "./mockData"
-import { GroupingDefinition } from "../grouping"
-import { useData } from "../useData"
 
 const meta = {
   title: "Data Collection",
