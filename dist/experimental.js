@@ -59617,8 +59617,8 @@ function kCe({
   onClearAll: a
 }) {
   const r = $t(), o = Object.keys(t).filter((s) => {
-    const d = t[s], c = e[s];
-    return console.log("filterValue", d), console.log("filterSchema", c), c.type === "in" && Array.isArray(d) && d.length > 0 || !!d;
+    const d = t[s];
+    return e[s].type === "in" && Array.isArray(d) && d.length > 0 || !!d;
   });
   return o.length === 0 ? null : /* @__PURE__ */ k("div", { className: "flex items-start justify-between gap-2", children: [
     /* @__PURE__ */ l("div", { className: "flex flex-wrap items-center gap-2", children: /* @__PURE__ */ l(at, { presenceAffectsLayout: !0, initial: !1, children: o.map((s) => {
