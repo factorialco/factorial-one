@@ -1,5 +1,6 @@
-import { RecordType } from "./exports"
+import { FiltersDefinition, FiltersState } from "./Filters/types"
 import { SortOrder } from "./sortings"
+import { RecordType } from "./types"
 
 /**
  * Defines the structure and configuration of a grouping options for a data source.
@@ -13,9 +14,13 @@ export type GroupingDefinition<R extends RecordType> = {
       /** The label for the grouping */
       name: string
       /** The item count for the grouping */
-      label: (groupId: R[K]) => string | Promise<string>
+      label: (
+        groupId: R[K],
+        filters: FiltersState<FiltersDefinition>
+      ) => string | Promise<string>
       itemCount?: (
-        groupId: R[K]
+        groupId: R[K],
+        filters: FiltersState<FiltersDefinition>
       ) => number | undefined | Promise<number | undefined>
     }
   }
