@@ -1,3 +1,4 @@
+import { Kanban } from "@/experimental/OneKanban"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
@@ -26,6 +27,7 @@ export const KanbanCollection = <
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
 >({
+  columns,
   source: _source,
 }: CollectionProps<
   Record,
@@ -34,5 +36,12 @@ export const KanbanCollection = <
   ItemActions,
   KanbanVisualizationOptions<Record, Filters, Sortings>
 >) => {
-  return <>hello world from kanban</>
+  return (
+    <Kanban
+      columns={columns.map((column) => ({
+        label: column.label,
+        items: [],
+      }))}
+    />
+  )
 }

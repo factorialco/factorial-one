@@ -2564,7 +2564,20 @@ export const WithKanbanVisualization: Story = {
           {
             type: "kanban",
             options: {
-              columns: [],
+              columns: [
+                {
+                  label: "To Do",
+                  render: (item) => item.name,
+                },
+                {
+                  label: "In Progress",
+                  render: (item) => item.name,
+                },
+                {
+                  label: "Done",
+                  render: (item) => item.name,
+                },
+              ],
             },
           },
         ]}
