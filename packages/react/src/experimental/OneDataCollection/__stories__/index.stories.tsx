@@ -11,7 +11,7 @@ import {
   Share,
   Star,
 } from "../../../icons/app"
-import { PromiseState } from "../../../lib/promise-to-observable"
+import { PromiseState } from "@/lib/promise-to-observable"
 import { dotTagColors } from "../../Information/Tags/DotTag"
 import { FilterDefinition, FiltersState } from "../Filters/types"
 import { OneDataCollection, useDataSource } from "../index"
