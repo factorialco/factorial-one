@@ -1,17 +1,19 @@
-import { Meta, StoryObj } from "@storybook/react"
-import { DownloadIcon, Mail, Tag, UploadIcon } from "lucide-react"
-import { Observable } from "zen-observable-ts"
 import {
   Add,
   Ai,
   ArrowRight,
   Delete,
   Download,
+  Envelope,
   Pencil,
   Share,
   Star,
+  Target,
+  Upload,
 } from "@/icons/app"
 import { PromiseState } from "@/lib/promise-to-observable"
+import { Meta, StoryObj } from "@storybook/react"
+import { Observable } from "zen-observable-ts"
 import { dotTagColors } from "../../Information/Tags/DotTag"
 import { FilterDefinition, FiltersState } from "../Filters/types"
 import { OneDataCollection, useDataSource } from "../index"
@@ -553,12 +555,12 @@ export const BasicTableView: Story = {
       secondaryActions: () => [
         {
           label: "Import",
-          icon: UploadIcon,
+          icon: Upload,
           onClick: () => console.log(`Import`),
         },
         {
           label: "Export",
-          icon: DownloadIcon,
+          icon: Download,
           onClick: () => console.log(`Export`),
         },
       ],
@@ -769,12 +771,12 @@ export const BasicCardView: Story = {
       secondaryActions: () => [
         {
           label: "Import",
-          icon: DownloadIcon,
+          icon: Upload,
           onClick: () => console.log(`Import`),
         },
         {
           label: "Export",
-          icon: DownloadIcon,
+          icon: Download,
           onClick: () => console.log(`Export`),
         },
       ],
@@ -868,7 +870,7 @@ export const RendererTypes: Story = {
                     type: "tag",
                     value: {
                       label: item.department,
-                      icon: Tag,
+                      icon: Target,
                     },
                   }),
                   sorting: "department",
@@ -1135,7 +1137,7 @@ export const WithCustomJsonView: Story = {
                     type: "tag",
                     value: {
                       label: item.email,
-                      icon: Mail,
+                      icon: Envelope,
                     },
                   }),
                 },
