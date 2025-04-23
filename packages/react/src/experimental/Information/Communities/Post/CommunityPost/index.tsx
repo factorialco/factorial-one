@@ -86,7 +86,7 @@ export const BaseCommunityPost = ({
 
   return (
     <div
-      className="flex w-full cursor-pointer flex-row gap-3 rounded-xl border border-solid border-transparent p-3 pt-2 hover:bg-f1-background-hover focus:border-f1-border-secondary focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold md:pb-4 md:pt-3"
+      className="group flex w-full cursor-pointer flex-row gap-3 rounded-xl border border-solid border-transparent p-3 pt-2 hover:bg-f1-background-hover focus:border-f1-border-secondary focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold md:pb-4 md:pt-3"
       onClick={handleClick}
     >
       <div className="hidden md:block">
@@ -142,13 +142,14 @@ export const BaseCommunityPost = ({
 
             <div className="flex flex-row gap-2">
               <div className="hidden flex-row gap-2 md:flex">
-                <Link
-                  onClick={comment.onClick}
-                  title={comment.label}
-                  stopPropagation
-                >
-                  <Button label={comment.label} size="sm" variant="outline" />
-                </Link>
+                <div className="opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                  <Button
+                    label={comment.label}
+                    size="sm"
+                    variant="outline"
+                    onClick={comment.onClick}
+                  />
+                </div>
                 {dropdownItems?.length && (
                   <Dropdown
                     items={dropdownItems}
