@@ -296,21 +296,19 @@ export const ExampleComponent = ({
   }
   onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
-  grouping?: GroupingDefinition<(typeof mockUsers)[number]> | undefined
+  grouping?: GroupingDefinition<(typeof mockUsers)[number]>
   currentGrouping?: GroupingState<
     (typeof mockUsers)[number],
     GroupingDefinition<(typeof mockUsers)[number]>
   >
 }) => {
-  type MockUser = (typeof mockUsers)[number]
-
   const dataSource = useDataSource({
     filters,
     presets: usePresets ? filterPresets : undefined,
     sortings,
     grouping,
     currentGrouping: currentGrouping,
-    itemActions: (item: MockUser) => [
+    itemActions: (item) => [
       {
         label: "Edit",
         icon: Pencil,

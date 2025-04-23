@@ -24,8 +24,6 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
   const activeFilterKeys = Object.keys(filters).filter((key) => {
     const filterValue = filters[key as keyof Filters]
     const filterSchema = schema[key as keyof Filters]
-    console.log("filterValue", filterValue)
-    console.log("filterSchema", filterSchema)
     return (
       (filterSchema.type === "in" &&
         Array.isArray(filterValue) &&
