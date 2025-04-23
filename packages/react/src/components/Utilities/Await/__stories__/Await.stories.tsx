@@ -2,24 +2,25 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { Button } from "@/components/Actions/Button"
 import { Skeleton } from "@/ui/skeleton"
-import { ComponentProps, useEffect, useState } from "react"
+import { ComponentProps, useCallback, useEffect, useState } from "react"
 import { Await } from "../index"
 
 const ExampleComponent = (args: Story["args"]) => {
   const [count, setCount] = useState(0)
   const [value, setValue] = useState<Promise<string> | null>(null)
 
-  const triggerPromise = () => {
+  const triggerPromise = useCallback(() => {
     setValue(
       new Promise((resolve) =>
         setTimeout(() => resolve(`${args.resolve as string} - ${count}`), 1000)
       )
     )
     setCount(count + 1)
-  }
+  }, [args.resolve, count])
 
   useEffect(() => {
     triggerPromise()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
