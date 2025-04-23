@@ -6,6 +6,7 @@ import { AnimatePresence, motion } from "framer-motion"
 import {
   forwardRef,
   useEffect,
+  useId,
   useImperativeHandle,
   useRef,
   useState,
@@ -91,6 +92,8 @@ const RichTextEditorComponent = forwardRef<
   },
   ref
 ) {
+  const editorId = useId()
+
   const fileInputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const editorContentContainerRef = useRef<HTMLDivElement>(null)
@@ -248,12 +251,13 @@ const RichTextEditorComponent = forwardRef<
   const editorContent = (
     <div
       ref={containerRef}
-      id="rich-text-editor-container"
-      className={
+      id={editorId}
+      className={cn(
+        "rich-text-editor-container flex flex-col bg-f1-background",
         isFullscreen
-          ? "fixed inset-0 z-50 flex flex-col bg-f1-background"
-          : "relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background"
-      }
+          ? "fixed inset-0 z-50"
+          : "relative w-full rounded-xl border border-solid border-f1-border"
+      )}
     >
       <Head
         isFullscreen={isFullscreen}
@@ -378,6 +382,7 @@ const RichTextEditorComponent = forwardRef<
         />
 
         <EditorBubbleMenu
+          editorId={editorId}
           editor={editor}
           disableButtons={disableAllButtons}
           toolbarLabels={toolbarLabels}
