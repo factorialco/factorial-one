@@ -75,7 +75,6 @@ export const BaseCommunityPost = ({
   const ago = getAgo(createdAt)
 
   const handleClick = () => {
-    console.log("clicked")
     onClick(id)
   }
 
