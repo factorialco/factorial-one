@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.35.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.3...factorial-one-react-v1.35.4) (2025-04-23)
+
+
+### Bug Fixes
+
+* **RichTextEditor:** implement unique editor IDs ([#1637](https://github.com/factorialco/factorial-one/issues/1637)) ([b671d8e](https://github.com/factorialco/factorial-one/commit/b671d8e41591b3a35c411b68df7b3bd4bead48f7))
+
 ## [1.35.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.2...factorial-one-react-v1.35.3) (2025-04-22)
 
 
