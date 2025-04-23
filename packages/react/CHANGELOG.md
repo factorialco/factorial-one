@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.35.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.4...factorial-one-react-v1.35.5) (2025-04-23)
+
+
+### Bug Fixes
+
+* **PageHeader:** use Button component ([#1664](https://github.com/factorialco/factorial-one/issues/1664)) ([063f470](https://github.com/factorialco/factorial-one/commit/063f470eccbbca131131f81e3a6084459158722f))
+
 ## [1.35.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.3...factorial-one-react-v1.35.4) (2025-04-23)
 
 
