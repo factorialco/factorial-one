@@ -1,5 +1,5 @@
+import { Delete } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react"
-import { Delete } from "../../../icons/app"
 import {
   GroupingDefinition,
   OneDataCollection,
@@ -104,13 +104,6 @@ export const WithOptionalGrouping: Story = {
               await new Promise((resolve) => setTimeout(resolve, 1000))
               return mockUsers.filter((user) => user.department === groupId)
                 .length
-            },
-          },
-          role: {
-            name: "Role",
-            label: (groupId) => groupId,
-            itemCount: (groupId) => {
-              return mockUsers.filter((user) => user.role === groupId).length
             },
           },
         },

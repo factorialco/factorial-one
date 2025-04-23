@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
+import { Sliders } from "@/icons/app"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useState } from "react"
-import { Sliders } from "../../../../icons/app"
 import { FiltersDefinition } from "../Filters/types"
 import { GroupingDefinition, GroupingState } from "../grouping"
 import { ItemActionsDefinition } from "../item-actions"
@@ -41,9 +41,12 @@ export const Settings = <
   currentGrouping,
   onGroupingChange,
 }: SettingsProps<R, Filters, Sortings, ItemActions, Grouping>) => {
+  const groupByOptions = grouping
+    ? Object.keys(grouping.groupBy).length + (grouping.mandatory ? 1 : 0)
+    : 0
+
   const shouldShowSettings =
-    (visualizations && visualizations.length > 1) ||
-    (grouping && Object.keys(grouping.groupBy).length > 1)
+    (visualizations && visualizations.length > 1) || groupByOptions > 0
 
   const [open, setOpen] = useState(false)
 
@@ -87,7 +90,7 @@ export const Settings = <
                 />
               </div>
             )}
-            {grouping && Object.keys(grouping.groupBy).length > 1 && (
+            {grouping && groupByOptions > 0 && (
               <div className="mb-2">
                 <GroupingSelector
                   grouping={grouping}

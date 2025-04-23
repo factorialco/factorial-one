@@ -524,7 +524,7 @@ export const ExampleComponent = ({
     itemActions: (item) => [
     grouping,
     currentGrouping: currentGrouping,
-    itemActions: (item: MockUser) => [
+    itemActions: (item) => [
       {
         label: "Edit",
         icon: Pencil,
