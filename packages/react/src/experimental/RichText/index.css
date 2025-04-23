@@ -12,11 +12,11 @@
 }
 
 /* Make all selections transparent */
-#rich-text-editor-container *::selection {
+.rich-text-editor-container *::selection {
   background-color: transparent !important;
 }
 
-#rich-text-editor-container::selection {
+.rich-text-editor-container::selection {
   background-color: transparent !important;
 }
 
