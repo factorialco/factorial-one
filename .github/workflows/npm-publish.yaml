@@ -35,13 +35,16 @@ jobs:
         with:
           ref: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.sha }} # Checkout the tagged release
       - uses: ./.github/actions/publish-to-npmjs
+        id: publish
         with:
           workspace: "@factorialco/factorial-one-react"
           registry_token: ${{ secrets.NPMJS_TOKEN }}
       - name: Notify Slack
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{ "content": "⚛️ A new version of @factorialco/factorial-one-react was released.\n
-          \n\n ${{github.event.release.body}}\n\nhttps://www.npmjs.com/package/@factorialco/factorial-one-react?activeTab=versions"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+          if [ ${{ steps.publish.outputs.published }} == "true" ]; then
+            curl -X POST -H "Content-Type: application/json" -d '{ "content": "⚛️ A new version of @factorialco/factorial-one-react was released.\n
+            \n\n ${{github.event.release.body}}\n\nhttps://www.npmjs.com/package/@factorialco/factorial-one-react?activeTab=versions"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+          fi
 
   publish-react-native:
     name: "[📱 REACT NATIVE] Publish to npm"
@@ -62,10 +65,13 @@ jobs:
         with:
           ref: ${{ github.event.release.tag_name || github.event.inputs.release_tag || github.sha }} # Checkout the tagged release
       - uses: ./.github/actions/publish-to-npmjs
+        id: publish
         with:
           workspace: "@factorialco/factorial-one-react-native"
           registry_token: ${{ secrets.NPMJS_TOKEN }}
       - name: Notify Slack
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{ "content": "📱 A new version of @factorialco/factorial-one-react-native was released.\n
-          \n\n ${{github.event.release.body}}\n\nhttps://www.npmjs.com/package/@factorialco/factorial-one-react-native?activeTab=versions"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+          if [ ${{ steps.publish.outputs.published }} == "true" ]; then
+            curl -X POST -H "Content-Type: application/json" -d '{ "content": "📱 A new version of @factorialco/factorial-one-react-native was released.\n
+            \n\n ${{github.event.release.body}}\n\nhttps://www.npmjs.com/package/@factorialco/factorial-one-react-native?activeTab=versions"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+          fi
