@@ -1030,20 +1030,30 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
 
 export declare const DateAvatar: ({ date }: Props_5) => JSX_2.Element;
 
-declare type DateGranularity = "day" | "month" | "year";
+declare type DateGranularity = "day" | "week" | "fortnight" | "month" | "year" | "custom";
 
-declare interface DateNavigatorFilterDefinition extends NavigationFilterDefinitionBase<Date> {
+declare type DateNavigationOptions = {
+    granularity?: DateGranularity;
+    min?: Date;
+    max?: Date;
+};
+
+declare interface DateNavigatorFilterDefinition extends NavigationFilterDefinitionBase<Date | DateRange_2 | DateValue> {
     type: "date-navigator";
-    options?: {
-        granularity?: DateGranularity;
-        min?: Date;
-        max?: Date;
-    };
+    options?: DateNavigationOptions;
 }
 
 declare type DateRange = {
     from: Date;
     to?: Date;
+};
+
+declare type DateRange_2 = [Date, Date];
+
+declare type DateValue = {
+    value: Date | DateRange_2 | string;
+    dateRange: DateRange_2;
+    granularity: DateGranularity;
 };
 
 export declare function DaytimePage({ children, header, period, embedded, }: DaytimePageProps): JSX_2.Element;
@@ -1687,7 +1697,7 @@ declare type NavigationFiltersState<Definition extends Record<string, Navigation
  * Represents a navigation filter with its current value.
  * @template T - The type of the filter value
  */
-declare type NavigationFilterValue<T> = T extends DateNavigatorFilterDefinition ? Date : T extends undefined ? undefined : never;
+declare type NavigationFilterValue<T> = T extends DateNavigatorFilterDefinition ? DateValue : T extends undefined ? undefined : never;
 
 declare type NavigationItem = Pick<LinkProps, "href" | "exactMatch" | "onClick"> & {
     label: string;
