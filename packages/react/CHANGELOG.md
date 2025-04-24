@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.6...factorial-one-react-v1.36.0) (2025-04-24)
+
+
+### Features
+
+* datacollection dottag cell type ([#1626](https://github.com/factorialco/factorial-one/issues/1626)) ([cf564d3](https://github.com/factorialco/factorial-one/commit/cf564d3b556a7e7fa34b4c6c579cb17e92ceffcd))
+
 ## [1.35.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.5...factorial-one-react-v1.35.6) (2025-04-23)
 
 ### Bug Fixes
