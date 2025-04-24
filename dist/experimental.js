@@ -60452,14 +60452,14 @@ function RCe({
   const i = {
     granularity: "day",
     ...e.options
-  }, a = wh[i.granularity];
-  if (!a)
+  }, a = Array.isArray(i.granularity) ? i.granularity : [i.granularity], r = e.defaultGranularity || a[0], o = wh[r];
+  if (!o)
     throw new Error(`Invalid granularity: ${i.granularity}`);
-  const [r, o] = a.getPrevNext(t.dateRange, i), s = (d) => {
-    d && n({
-      value: d[0],
-      dateRange: d,
-      granularity: i.granularity
+  const [s, d] = o.getPrevNext(t.dateRange, i), c = (u) => {
+    u && n({
+      value: u[0],
+      dateRange: u,
+      granularity: r
     });
   };
   return /* @__PURE__ */ x("div", { className: "flex items-center gap-2", children: [
@@ -60469,50 +60469,50 @@ function RCe({
         size: "sm",
         icon: au,
         label: "Previous",
-        disabled: !r,
-        onClick: () => s(r)
+        disabled: !s,
+        onClick: () => c(s)
       }
     ),
-    /* @__PURE__ */ l("div", { className: "flex items-center gap-2", children: a.toString(t.dateRange) }),
+    /* @__PURE__ */ l("div", { className: "flex items-center gap-2", children: o.toString(t.dateRange) }),
     /* @__PURE__ */ l(
       pe,
       {
         size: "sm",
         icon: Qi,
         label: "Next",
-        disabled: !o,
-        onClick: () => s(o)
+        disabled: !d,
+        onClick: () => c(d)
       }
     )
   ] });
 }
 const jCe = {
   initialValueConverter: function(e, t) {
-    var i;
+    var a, r, o;
     if ("value" in e)
       return e;
-    const n = ((i = t.options) == null ? void 0 : i.granularity) || "day";
-    if (n === "custom") {
+    const n = Array.isArray((a = t.options) == null ? void 0 : a.granularity) ? (r = t.options) == null ? void 0 : r.granularity : [(o = t.options) == null ? void 0 : o.granularity], i = t.defaultGranularity || n[0] || "day";
+    if (i === "custom") {
       if (!Array.isArray(e))
         throw new Error(
           "Custom granularity requires a DateRange as initial value"
         );
-      const a = wh[n];
+      const s = wh[i];
       return {
         value: e,
-        dateRange: a.toDateRange(e),
-        granularity: n
+        dateRange: s.toDateRange(e),
+        granularity: i
       };
     } else {
       if (Array.isArray(e))
         throw new Error(
-          `${n} granularity requires a Date as initial value`
+          `${i} granularity requires a Date as initial value`
         );
-      const a = wh[n];
+      const s = wh[i];
       return {
         value: e,
-        dateRange: a.toDateRange(e),
-        granularity: n
+        dateRange: s.toDateRange(e),
+        granularity: i
       };
     }
   },

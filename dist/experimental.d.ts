@@ -1033,7 +1033,7 @@ export declare const DateAvatar: ({ date }: Props_5) => JSX_2.Element;
 declare type DateGranularity = "day" | "week" | "fortnight" | "month" | "year" | "custom";
 
 declare type DateNavigationOptions = {
-    granularity?: DateGranularity;
+    granularity?: DateGranularity[] | DateGranularity;
     min?: Date;
     max?: Date;
 };
@@ -1041,6 +1041,7 @@ declare type DateNavigationOptions = {
 declare interface DateNavigatorFilterDefinition extends NavigationFilterDefinitionBase<Date | DateRange_2 | DateValue> {
     type: "date-navigator";
     options?: DateNavigationOptions;
+    defaultGranularity?: DateGranularity;
 }
 
 declare type DateRange = {
