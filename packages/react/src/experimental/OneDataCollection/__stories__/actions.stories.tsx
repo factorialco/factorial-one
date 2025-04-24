@@ -1,11 +1,10 @@
+import { Ai, Download, Pencil } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react"
-import { Ai, Download, Pencil } from "../../icons/app"
-import { SecondaryActionsDefinition } from "./actions"
-import { OneDataCollection, useDataSource } from "./index"
-import { ItemActionsDefinition } from "./item-actions"
+import { SecondaryActionsDefinition } from "../actions"
+import { OneDataCollection, useDataSource } from "../index"
 
 const meta = {
-  title: "Data Collection/Item Actions",
+  title: "Data Collection/Actions",
   parameters: {
     layout: "padded",
     docs: {
@@ -82,44 +81,14 @@ const mockUsers = [
 
 // Example of a comprehensive actions definition with various types of actions
 const buildActions = (): SecondaryActionsDefinition => {
-  return () => [
-    {
-      label: "Export",
-      icon: Download,
-      onClick: () => console.log(`Downloading users`),
-      description: "Download users",
-    },
-    {
-      label: "Import",
-      icon: Download,
-      onClick: () => console.log(`Importing users`),
-      description: "Import users",
-    },
-  ]
-}
-
-const createUserActions = (): ItemActionsDefinition<
-  (typeof mockUsers)[number]
-> => {
-  return (user: (typeof mockUsers)[number]) => {
-    if (user.id === "user-1") {
-      return undefined
-    }
+  return () => {
     return [
-      // Basic action with icon
-      {
-        label: "View Profile",
-        icon: Ai,
-        onClick: () => console.log(`Viewing ${user.name}'s profile`),
-      },
-
       // Action with description
       {
-        label: "Edit User",
+        label: "Another user actions User",
         icon: Pencil,
-        onClick: () => console.log(`Editing ${user.name}`),
-        description: "Modify user information",
-        enabled: user.permissions.canEdit,
+        onClick: () => console.log(`Another user action`),
+        description: "User actions",
       },
 
       // Separator between action groups
@@ -153,21 +122,10 @@ export const BasicActionsExample: Story = {
         onClick: () => console.log(`Creating a user`),
       }),
       secondaryActions: buildActions(),
-      itemActions: createUserActions(),
     })
 
     return (
       <div className="space-y-8">
-        <div>
-          <h2 className="mb-2 text-xl font-semibold">Items Actions Example</h2>
-          <p className="mb-4 text-f1-foreground-secondary">
-            This example demonstrates various types of actions that can be used
-            in Collections. Click in the top right button or top right actions
-            menu (three dots) to see the available actions for the data
-            collection.
-          </p>
-        </div>
-
         <OneDataCollection
           source={dataSource}
           visualizations={[
@@ -208,17 +166,17 @@ export const CardActionsExample: Story = {
         fetchData: () => Promise.resolve(mockUsers),
       },
       secondaryActions: buildActions(),
-      itemActions: createUserActions(),
     })
 
     return (
       <div className="space-y-8">
         <div>
           <h2 className="mb-2 text-xl font-semibold">
-            Card Item Actions Example
+            Card Collection Actions Example
           </h2>
           <p className="mb-4 text-f1-foreground-secondary">
-            This example shows how actions work with card visualization.
+            This example shows how data collection actions work with card
+            visualization.
           </p>
         </div>
 
