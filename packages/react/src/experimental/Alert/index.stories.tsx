@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
-import { Banner } from "./index"
+import { Alert } from "./index"
 
-const meta: Meta<typeof Banner> = {
-  component: Banner,
-  title: "Home/ProjectManagement/Banner",
+const meta: Meta<typeof Alert> = {
+  component: Alert,
+  title: "Home/Alert",
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "centered",
@@ -20,7 +20,7 @@ const meta: Meta<typeof Banner> = {
 
 export default meta
 
-type Story = StoryObj<typeof Banner>
+type Story = StoryObj<typeof Alert>
 
 export const Default: Story = {
   args: {

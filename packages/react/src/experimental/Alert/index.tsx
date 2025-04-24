@@ -2,17 +2,17 @@ import { Button } from "@/components/Actions/Button"
 import Share from "@/icons/app/Share"
 import { AlertAvatar } from "../Information/Avatars/AlertAvatar"
 
-type BannerProps = {
+type AlertProps = {
   title: string
   description: string
   buttonPrimaryLabel: string
   buttonSecondaryLabel: string
   onRequestClick?: () => void
   onSeeClick?: () => void
-  variant: "neutral" | "info" | "warning" | "critical"
+  variant: "info" | "warning" | "critical"
 }
 
-interface BannerType {
+interface AlertType {
   buttonType: "outline" | "promote" | "critical"
   fontColor:
     | "text-f1-foreground"
@@ -20,14 +20,13 @@ interface BannerType {
     | "text-f1-foreground-warning"
     | "text-f1-foreground-critical"
   backgroundColor:
-    | "bg-f1-background-secondary"
     | "bg-f1-background-info"
     | "bg-f1-background-warning"
     | "bg-f1-background-critical"
-  alertType: "info" | "warning" | "positive" | "critical"
+  alertType: "info" | "warning" | "critical"
 }
 
-export const Banner = ({
+export const Alert = ({
   title,
   description,
   buttonPrimaryLabel,
@@ -35,8 +34,8 @@ export const Banner = ({
   onRequestClick,
   onSeeClick,
   variant,
-}: BannerProps) => {
-  const bannerType = (): BannerType => {
+}: AlertProps) => {
+  const alertType = (): AlertType => {
     switch (variant) {
       case "info":
         return {
@@ -59,27 +58,20 @@ export const Banner = ({
           backgroundColor: "bg-f1-background-critical",
           alertType: "critical",
         }
-      default:
-        return {
-          buttonType: "outline",
-          fontColor: "text-f1-foreground",
-          backgroundColor: "bg-f1-background-secondary",
-          alertType: "positive",
-        }
     }
   }
 
-  const bannerVariant = bannerType()
+  const alertVariant = alertType()
 
   return (
     <div
-      className={`flex w-full flex-col items-start justify-between gap-4 rounded-md ${bannerVariant.backgroundColor} px-3 py-3 text-f1-foreground ring-1 ring-inset ring-f1-border-secondary sm:flex-row sm:items-center sm:px-4`}
+      className={`flex w-full flex-col items-start justify-between gap-4 rounded-md ${alertVariant.backgroundColor} px-3 py-3 text-f1-foreground ring-1 ring-inset ring-f1-border-secondary sm:flex-row sm:items-center sm:px-4`}
     >
       <div className="flex flex-row items-center justify-between gap-16">
         <div className="flex flex-row gap-4">
-          <AlertAvatar type={bannerVariant.alertType} />
+          <AlertAvatar type={alertVariant.alertType} />
           <div className="flex flex-col gap-2">
-            <h3 className={`${bannerVariant.fontColor}`}>{title}</h3>
+            <h3 className={`${alertVariant.fontColor}`}>{title}</h3>
             <p className="text-base text-f1-foreground">{description}</p>
           </div>
         </div>
@@ -92,7 +84,7 @@ export const Banner = ({
           />
           <Button
             label={buttonPrimaryLabel}
-            variant={bannerVariant.buttonType}
+            variant={alertVariant.buttonType}
             onClick={onRequestClick}
           />
         </div>
