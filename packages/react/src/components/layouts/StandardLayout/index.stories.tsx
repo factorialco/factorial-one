@@ -7,7 +7,7 @@ import { StandardLayout } from "./index"
 const meta = {
   title: "Layout/StandardLayout",
   component: StandardLayout,
-  tags: ["autodocs","no-sidebar"],
+  tags: ["autodocs", "no-sidebar"],
   decorators: [PageDecorator],
   args: {
     children: (
