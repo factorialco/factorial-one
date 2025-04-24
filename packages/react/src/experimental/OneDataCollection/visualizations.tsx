@@ -11,6 +11,10 @@ import { SortingsDefinition } from "./sortings"
 import type { DataSource, OnSelectItemsCallback, RecordType } from "./types"
 import type { CardVisualizationOptions } from "./visualizations/collection/Card"
 import { CardCollection } from "./visualizations/collection/Card"
+import {
+  KanbanCollection,
+  KanbanVisualizationOptions,
+} from "./visualizations/collection/Kanban"
 import type { TableVisualizationOptions } from "./visualizations/collection/Table"
 import { TableCollection } from "./visualizations/collection/Table"
 
@@ -40,6 +44,12 @@ export type Visualization<
       options: TableVisualizationOptions<Record, Filters, Sortings>
     }
   | {
+      /** Kanban-based visualization type */
+      type: "kanban"
+      /** Configuration options for kanban visualization */
+      options: KanbanVisualizationOptions<Record, Filters, Sortings>
+    }
+  | {
       /** Custom visualization type */
       type: "custom"
       /** Human-readable label for the visualization */
@@ -56,7 +66,7 @@ export type Visualization<
  * Represents the type of visualization.
  * TODO: This should be a union of all the types in the Visualization type.
  */
-export type VisualizationType = "card" | "table" | "custom"
+export type VisualizationType = "card" | "table" | "kanban" | "custom"
 
 /**
  * Props interface for components that support multiple visualizations.
@@ -209,6 +219,14 @@ export const VisualizationRenderer = <
     case "card":
       return (
         <CardCollection<Record, Filters, Sortings, ItemActions>
+          source={source}
+          {...visualization.options}
+          onSelectItems={onSelectItems}
+        />
+      )
+    case "kanban":
+      return (
+        <KanbanCollection<Record, Filters, Sortings, ItemActions>
           source={source}
           {...visualization.options}
           onSelectItems={onSelectItems}
