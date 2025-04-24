@@ -1,0 +1,38 @@
+import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
+import { DoDonts } from "@/lib/storybook-utils/do-donts"
+
+import * as StandardLayoutStories from "./StandardLayout/index.stories"
+import * as TwoColumnLayoutStories from "./TwoColumnLayout/index.stories"
+
+<Meta title="Layout" />
+
+# Layouts
+
+## Introduction
+
+Los layouts son componentes que proporcionan estructuras predefinidas para organizar el contenido de la aplicación. Factorial One ofrece dos tipos principales de layouts:
+
+## StandardLayout
+
+El StandardLayout es un layout básico y flexible que proporciona una estructura de una sola columna con opciones de ancho personalizable.
+
+<Canvas of={StandardLayoutStories.Default} />
+
+### Props
+
+| Prop | Tipo | Descripción |
+|------|------|-------------|
+| `children` | `ReactNode` | Contenido principal del layout |
+| `variant` | `'narrow'` | Opcional. Si se especifica, limita el ancho máximo a screen-lg |
+| `className` | `string` | Opcional. Clases CSS adicionales |
+
+## TwoColumnLayout
+
+El TwoColumnLayout proporciona una estructura de dos columnas con la capacidad de cambiar la posición de la columna principal.
+
+<Canvas 
+  of={TwoColumnLayoutStories.Default}
+  meta={TwoColumnLayoutStories}
+/>
+<Controls of={TwoColumnLayoutStories.Default} />
+
