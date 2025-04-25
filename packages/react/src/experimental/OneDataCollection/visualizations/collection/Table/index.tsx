@@ -1,3 +1,5 @@
+import { Await } from "@/components/Utilities/Await"
+import { Counter } from "@/experimental/exports"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { OnePagination } from "@/experimental/OnePagination"
 import {
@@ -9,20 +11,20 @@ import {
   TableRow,
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
-import { cn } from "@/lib/utils"
+import { Skeleton } from "@/ui/skeleton"
 import { ComponentProps, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { ActionsDropdown } from "../../../ItemActions/Dropdown"
-import { PropertyDefinition, renderProperty } from "../../../property-render"
+import { PropertyDefinition } from "../../../property-render"
 import {
   SortingKey,
   SortingsDefinition,
   SortingsState,
 } from "../../../sortings"
-import { CollectionProps, RecordType } from "../../../types"
+import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
+import { Row } from "./components/Row"
 
 export type WithOptionalSorting<
   Record,
@@ -61,6 +63,7 @@ export const TableCollection = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  Grouping extends GroupingDefinition<Record>,
 >({
   columns,
   source,
@@ -71,14 +74,16 @@ export const TableCollection = <
   Filters,
   Sortings,
   ItemActions,
-  TableVisualizationOptions<Record, Filters, Sortings>
+  TableVisualizationOptions<Record, Filters, Sortings>,
+  Grouping
 >) => {
   const t = useI18n()
 
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
     Record,
     Filters,
-    Sortings
+    Sortings,
+    Grouping
   >(source)
 
   const { currentSortings, setCurrentSortings, isLoading } = source
@@ -88,14 +93,13 @@ export const TableCollection = <
   /**
    * Item selection
    */
-
   const {
     selectedItems,
     isAllSelected,
     isPartiallySelected,
     handleSelectItemChange,
     handleSelectAll,
-  } = useSelectable(data, paginationInfo, source, onSelectItems)
+  } = useSelectable(data?.records ?? [], paginationInfo, source, onSelectItems)
 
   /**
    * Determine the sort state of a column
@@ -158,13 +162,6 @@ export const TableCollection = <
     })
   }
 
-  const renderCell = (
-    item: Record,
-    column: TableColumnDefinition<Record, Sortings>
-  ) => {
-    return renderProperty(item, column, "table")
-  }
-
   const checkColumnWidth = source.selectable ? 52 : 0
 
   return (
@@ -178,14 +175,16 @@ export const TableCollection = <
                 sticky={{ left: 0 }}
                 align="right"
               >
-                <Checkbox
-                  checked={isAllSelected}
-                  indeterminate={isPartiallySelected}
-                  onCheckedChange={handleSelectAll}
-                  title="Select all"
-                  hideLabel
-                  disabled={data.length === 0}
-                />
+                <div className="flex w-full items-center justify-end">
+                  <Checkbox
+                    checked={isAllSelected}
+                    indeterminate={isPartiallySelected}
+                    onCheckedChange={handleSelectAll}
+                    title="Select all"
+                    hideLabel
+                    disabled={data?.records.length === 0}
+                  />
+                </div>
               </TableHead>
             )}
             {columns.map(({ sorting, label, ...column }, index) => (
@@ -238,79 +237,75 @@ export const TableCollection = <
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item, index) => {
-            const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
-            const itemOnClick = source.itemOnClick
-              ? source.itemOnClick(item)
-              : undefined
-            const id = source.selectable ? source.selectable(item) : undefined
-            return (
-              <TableRow
-                key={`row-${index}`}
-                selected={!!id && selectedItems.has(id)}
-              >
-                {source.selectable && (
-                  <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
-                    {id !== undefined && (
-                      <div className="flex items-center justify-end">
-                        <Checkbox
-                          checked={selectedItems.has(id)}
-                          onCheckedChange={(checked) =>
-                            handleSelectItemChange(item, checked)
-                          }
-                          title={`Select ${source.selectable(item)}`}
-                          hideLabel
-                        />
-                      </div>
+          {data?.type === "grouped" &&
+            data.groups.map((group) => {
+              const itemCount = group.itemCount
+              return (
+                <>
+                  <TableRow key={`group-${group.key}`}>
+                    {source.selectable && (
+                      <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
+                        &nbsp;
+                      </TableCell>
                     )}
-                  </TableCell>
-                )}
-                {columns.map((column, cellIndex) => (
-                  <TableCell
-                    key={String(column.label)}
-                    firstCell={cellIndex === 0}
-                    href={itemHref}
-                    onClick={itemOnClick}
-                    width={column.width}
-                    sticky={
-                      cellIndex < frozenColumnsLeft
-                        ? {
-                            left: columns
-                              .slice(0, Math.max(0, cellIndex))
-                              .reduce(
-                                (acc, column) => acc + (column.width ?? 0),
-                                checkColumnWidth
-                              ),
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Await
+                          resolve={group.label}
+                          fallback={<Skeleton className="h-4 w-24" />}
+                        >
+                          {(label) => label}
+                        </Await>
+
+                        <Await
+                          resolve={itemCount}
+                          fallback={<Skeleton className="h-4 w-5" />}
+                        >
+                          {(count) =>
+                            count !== undefined && <Counter value={count} />
                           }
-                        : undefined
-                    }
-                  >
-                    <div
-                      className={cn(
-                        column.align === "right" ? "justify-end" : "",
-                        "flex"
-                      )}
-                    >
-                      {renderCell(item, column)}
-                    </div>
-                  </TableCell>
-                ))}
-                {source.itemActions && (
-                  <TableCell
-                    key="actions"
-                    width={68}
-                    sticky={{
-                      right: 0,
-                    }}
-                    href={itemHref}
-                    onClick={itemOnClick}
-                  >
-                    <ActionsDropdown item={item} actions={source.itemActions} />
-                  </TableCell>
-                )}
-              </TableRow>
-            )
-          })}
+                        </Await>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                  {group.records.map((item, index) => {
+                    return (
+                      <Row
+                        key={`row-${index}`}
+                        source={source}
+                        item={item}
+                        index={index}
+                        onCheckedChange={(checked) =>
+                          handleSelectItemChange(item, checked)
+                        }
+                        selectedItems={selectedItems}
+                        columns={columns}
+                        frozenColumnsLeft={frozenColumnsLeft}
+                        checkColumnWidth={checkColumnWidth}
+                      />
+                    )
+                  })}
+                </>
+              )
+            })}
+          {data?.type === "flat" &&
+            data.records.map((item, index) => {
+              return (
+                <Row
+                  key={`row-${index}`}
+                  source={source}
+                  item={item}
+                  index={index}
+                  onCheckedChange={(checked) =>
+                    handleSelectItemChange(item, checked)
+                  }
+                  selectedItems={selectedItems}
+                  columns={columns}
+                  frozenColumnsLeft={frozenColumnsLeft}
+                  checkColumnWidth={checkColumnWidth}
+                />
+              )
+            })}
         </TableBody>
       </OneTable>
       {paginationInfo && (

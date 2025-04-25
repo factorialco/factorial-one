@@ -10,6 +10,7 @@ import type {
   BaseFetchOptions,
   BaseResponse,
   DataSource,
+  GroupingDefinition,
   PaginatedDataAdapter,
   PaginatedResponse,
   RecordType,
@@ -38,31 +39,24 @@ type TestSource = DataSource<
   TestRecord,
   TestFilters,
   SortingsDefinition,
-  ItemActionsDefinition<TestRecord>
+  ItemActionsDefinition<TestRecord>,
+  GroupingDefinition<TestRecord>
 >
 
 const createMockDataSource = (
   fetchData: (
-    options: BaseFetchOptions<TestFilters, SortingsDefinition>
+    options: BaseFetchOptions<TestFilters>
   ) =>
     | BaseResponse<TestRecord>
     | Promise<BaseResponse<TestRecord>>
     | Observable<PromiseState<BaseResponse<TestRecord>>>,
   paginationType?: "pages"
 ): TestSource => {
-  const baseAdapter: BaseDataAdapter<
-    TestRecord,
-    TestFilters,
-    SortingsDefinition
-  > = {
+  const baseAdapter: BaseDataAdapter<TestRecord, TestFilters> = {
     fetchData,
   }
 
-  const paginatedAdapter: PaginatedDataAdapter<
-    TestRecord,
-    TestFilters,
-    SortingsDefinition
-  > = {
+  const paginatedAdapter: PaginatedDataAdapter<TestRecord, TestFilters> = {
     fetchData: async (options) => {
       const result = await Promise.resolve(fetchData(options))
       if (result instanceof Observable) {
@@ -91,6 +85,8 @@ const createMockDataSource = (
     setCurrentSearch: vi.fn(),
     isLoading: false,
     setIsLoading: vi.fn(),
+    currentGrouping: undefined,
+    setCurrentGrouping: vi.fn(),
   }
 }
 
@@ -105,7 +101,10 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source))
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toEqual({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.isLoading).toBe(false)
       expect(result.current.isInitialLoading).toBe(false)
       expect(result.current.error).toBe(null)
@@ -120,7 +119,10 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toEqual({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.paginationInfo).toEqual({
         total: 2,
         currentPage: 1,
@@ -145,7 +147,10 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toEqual({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.isInitialLoading).toBe(false)
     })
 
@@ -188,7 +193,10 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual(mockData)
+      expect(result.current.data).toEqual({
+        records: mockData,
+        type: "flat",
+      })
       expect(result.current.isInitialLoading).toBe(false)
     })
 
@@ -231,7 +239,10 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source, { filters }))
 
-      expect(result.current.data).toEqual([mockData[0]])
+      expect(result.current.data).toEqual({
+        records: [mockData[0]],
+        type: "flat",
+      })
     })
 
     it("should apply filters to synchronous data", () => {
@@ -247,7 +258,10 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source, { filters }))
 
-      expect(result.current.data).toEqual([mockData[0]])
+      expect(result.current.data).toEqual({
+        records: [mockData[0]],
+        type: "flat",
+      })
     })
   })
 
@@ -367,6 +381,8 @@ describe("useData", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
+        currentGrouping: undefined,
+        setCurrentGrouping: vi.fn(),
       }
 
       // Render the hook

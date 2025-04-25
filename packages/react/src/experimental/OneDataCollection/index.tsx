@@ -11,19 +11,21 @@ import * as Filters from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
 import { Search } from "./search"
+import { Settings } from "./Settings"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
   BulkActionDefinition,
   CollectionSearchOptions,
   DataSource,
   DataSourceDefinition,
+  GroupingDefinition,
+  GroupingState,
   OnBulkActionCallback,
   OnSelectItemsCallback,
   RecordType,
 } from "./types"
-import type { Visualization } from "./visualizations"
-import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
-
+import type { Visualization } from "./visualizations/collection"
+import { VisualizationRenderer } from "./visualizations/collection"
 /**
  * A hook that manages data source state and filtering capabilities for a collection.
  * It creates and returns a reusable data source that can be shared across different
@@ -63,17 +65,26 @@ export const useDataSource = <
   FiltersSchema extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  Grouping extends GroupingDefinition<Record>,
 >(
   {
     currentFilters: initialCurrentFilters = {},
+    currentGrouping: initialCurrentGrouping,
     filters,
     search,
     defaultSorting,
     dataAdapter,
+    grouping,
     ...rest
-  }: DataSourceDefinition<Record, FiltersSchema, Sortings, ItemActions>,
+  }: DataSourceDefinition<
+    Record,
+    FiltersSchema,
+    Sortings,
+    ItemActions,
+    Grouping
+  >,
   deps: ReadonlyArray<unknown> = []
-): DataSource<Record, FiltersSchema, Sortings, ItemActions> => {
+): DataSource<Record, FiltersSchema, Sortings, ItemActions, Grouping> => {
   const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
@@ -106,6 +117,24 @@ export const useDataSource = <
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const memoizedDataAdapter = useMemo(() => dataAdapter, deps)
 
+  const defaultGrouping = grouping?.mandatory
+    ? {
+        field: Object.keys(
+          grouping.groupBy
+        )[0] as keyof typeof grouping.groupBy,
+        order: "asc" as const,
+      }
+    : undefined
+
+  const [currentGrouping, setCurrentGrouping] = useState<
+    GroupingState<Record, Grouping>
+  >(initialCurrentGrouping ?? defaultGrouping)
+
+  // For mandatory grouping, ensure we have a valid grouping state
+  if (grouping?.mandatory && !currentGrouping?.field) {
+    throw new Error("Grouping is mandatory but no grouping state is set")
+  }
+
   return {
     filters: memoizedFilters,
     currentFilters,
@@ -119,6 +148,9 @@ export const useDataSource = <
     isLoading,
     setIsLoading,
     dataAdapter: memoizedDataAdapter,
+    setCurrentGrouping,
+    currentGrouping,
+    grouping,
     ...rest,
   }
 }
@@ -152,14 +184,17 @@ export const OneDataCollection = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  Grouping extends GroupingDefinition<Record>,
 >({
   source,
   visualizations,
   onSelectItems,
   onBulkAction,
 }: {
-  source: DataSource<Record, Filters, Sortings, ItemActions>
-  visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
+  source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>
+  visualizations: ReadonlyArray<
+    Visualization<Record, Filters, Sortings, ItemActions, Grouping>
+  >
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
   onBulkAction?: OnBulkActionCallback<Record, Filters>
 }): JSX.Element => {
@@ -174,6 +209,9 @@ export const OneDataCollection = <
     primaryActions,
     secondaryActions,
     presets,
+    currentGrouping,
+    setCurrentGrouping,
+    grouping,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
@@ -259,66 +297,60 @@ export const OneDataCollection = <
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
     >
-      {((filters && Object.keys(filters).length > 0) ||
-        search?.enabled ||
-        primaryActionItem ||
-        (secondaryActionsItems && secondaryActionsItems.length > 0)) && (
-        <div className="flex flex-col gap-4 px-6">
-          <Filters.Root
-            schema={filters}
-            filters={currentFilters}
-            presets={presets}
-            onChange={(value) =>
-              setCurrentFilters(value as FiltersState<Filters>)
-            }
-          >
-            <div
-              className={cn(
-                "flex items-center justify-between",
-                !filters && "justify-end"
-              )}
-            >
-              {filters && (
-                <div className="flex flex-1 gap-1">
-                  <Filters.Controls />
-                  <Filters.Presets />
-                </div>
-              )}
-              <div className="flex shrink-0 items-center gap-2">
-                {isLoading && (
-                  <MotionIcon
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{
-                      opacity: 0,
-                    }}
-                    size="lg"
-                    icon={Spinner}
-                    className="animate-spin"
-                  />
-                )}
-                {search && (
-                  <Search onChange={setCurrentSearch} value={currentSearch} />
-                )}
-                {visualizations && visualizations.length > 1 && (
-                  <VisualizationSelector
-                    visualizations={visualizations}
-                    currentVisualization={currentVisualization}
-                    onVisualizationChange={setCurrentVisualization}
-                  />
-                )}
-                {(primaryActionItem || secondaryActionsItems) && (
-                  <CollectionActions
-                    primaryActions={primaryActionItem}
-                    secondaryActions={secondaryActionsItems}
-                  />
-                )}
-              </div>
+      <Filters.Root
+        schema={filters}
+        filters={currentFilters}
+        presets={presets}
+        onChange={(value) => setCurrentFilters(value as FiltersState<Filters>)}
+      >
+        <div
+          className={cn(
+            "flex items-center justify-between",
+            !filters && "justify-end"
+          )}
+        >
+          {filters && (
+            <div className="flex flex-1 gap-1">
+              <Filters.Controls />
+              <Filters.Presets />
             </div>
-            <Filters.ChipsList />
-          </Filters.Root>
+          )}
+          <div className="flex shrink-0 items-center gap-2">
+            {isLoading && (
+              <MotionIcon
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{
+                  opacity: 0,
+                }}
+                size="lg"
+                icon={Spinner}
+                className="animate-spin"
+              />
+            )}
+            {search && (
+              <Search onChange={setCurrentSearch} value={currentSearch} />
+            )}
+
+            <Settings
+              visualizations={visualizations}
+              currentVisualization={currentVisualization}
+              onVisualizationChange={setCurrentVisualization}
+              grouping={grouping}
+              currentGrouping={currentGrouping}
+              onGroupingChange={setCurrentGrouping}
+            ></Settings>
+
+            {(primaryActionItem || secondaryActionsItems) && (
+              <CollectionActions
+                primaryActions={primaryActionItem}
+                secondaryActions={secondaryActionsItems}
+              />
+            )}
+          </div>
         </div>
-      )}
+        <Filters.ChipsList />
+      </Filters.Root>
       <VisualizationRenderer
         visualization={visualizations[currentVisualization]}
         source={source}

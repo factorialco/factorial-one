@@ -16,7 +16,7 @@ import type { FiltersDefinition } from "./Filters/types"
 import { OneDataCollection, useDataSource } from "./index"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition } from "./sortings"
-import type { DataSource } from "./types"
+import type { DataSource, GroupingDefinition, SortingsState } from "./types"
 import { useData } from "./useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -294,16 +294,20 @@ describe("Collections", () => {
         Item,
         FiltersDefinition,
         SortingsDefinition,
-        ItemActionsDefinition<Item>
+        ItemActionsDefinition<Item>,
+        GroupingDefinition<Item>
       >
     }) => {
-      const { data } = useData<Item, FiltersDefinition, SortingsDefinition>(
-        source
-      )
+      const { data } = useData<
+        Item,
+        FiltersDefinition,
+        SortingsDefinition,
+        GroupingDefinition<Item>
+      >(source)
 
       return (
         <div data-testid="custom-visualization">
-          {data?.map((item) => (
+          {data?.records.map((item) => (
             <div key={item.email} className="custom-item">
               <h3>{item.name}</h3>
               <p>
@@ -408,16 +412,21 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
               const sorted = [...mockData]
 
-              if (sortings && sortings.field === "name") {
-                sorted.sort((a, b) => {
-                  const direction = sortings.order === "asc" ? 1 : -1
-                  return a.name.localeCompare(b.name) * direction
+              if (sortings) {
+                sortings.forEach(({ field, order }) => {
+                  if (field === "name") {
+                    sorted.sort((a, b) => {
+                      const direction = order === "asc" ? 1 : -1
+                      return a.name.localeCompare(b.name) * direction
+                    })
+                  }
                 })
               }
 
@@ -511,11 +520,17 @@ describe("Collections", () => {
     const fetchDataMock = vi.fn().mockImplementation(({ sortings }) => {
       const sorted = [...mockData]
 
-      if (sortings && sortings.field === "name") {
-        sorted.sort((a, b) => {
-          const direction = sortings.order === "asc" ? 1 : -1
-          return a.name.localeCompare(b.name) * direction
-        })
+      if (sortings) {
+        const nameSorting = sortings.find(
+          (sorting: SortingsState<SortingsDefinition>) =>
+            sorting?.field === "name"
+        )
+        if (nameSorting) {
+          sorted.sort((a, b) => {
+            const direction = nameSorting.order === "asc" ? 1 : -1
+            return a.name.localeCompare(b.name) * direction
+          })
+        }
       }
 
       return sorted
@@ -527,7 +542,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: fetchDataMock,
@@ -574,10 +590,12 @@ describe("Collections", () => {
     // Verify the fetchData function was called with the correct default sorting
     expect(fetchDataMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        sortings: {
-          field: "name",
-          order: "desc",
-        },
+        sortings: [
+          {
+            field: "name",
+            order: "desc",
+          },
+        ],
       })
     )
 
@@ -612,7 +630,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async () => [
@@ -654,24 +673,27 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
               const sorted = [...mockData]
 
               if (sortings) {
-                if (sortings.field === "name") {
-                  sorted.sort((a, b) => {
-                    const direction = sortings.order === "asc" ? 1 : -1
-                    return a.name.localeCompare(b.name) * direction
-                  })
-                } else if (sortings.field === "email") {
-                  sorted.sort((a, b) => {
-                    const direction = sortings.order === "asc" ? 1 : -1
-                    return a.email.localeCompare(b.email) * direction
-                  })
-                }
+                sortings.forEach(({ field, order }) => {
+                  if (field === "name") {
+                    sorted.sort((a, b) => {
+                      const direction = order === "asc" ? 1 : -1
+                      return a.name.localeCompare(b.name) * direction
+                    })
+                  } else if (field === "email") {
+                    sorted.sort((a, b) => {
+                      const direction = order === "asc" ? 1 : -1
+                      return a.email.localeCompare(b.email) * direction
+                    })
+                  }
+                })
               }
 
               return sorted
@@ -776,7 +798,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           filters: {
             department: {
@@ -891,7 +914,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async () => mockData,
@@ -1004,7 +1028,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ search }) => {
@@ -1093,7 +1118,8 @@ describe("Collections", () => {
           Person,
           FiltersDefinition,
           SortingsDefinition,
-          ItemActionsDefinition<Person>
+          ItemActionsDefinition<Person>,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             paginationType: "pages",

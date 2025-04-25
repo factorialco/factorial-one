@@ -3,8 +3,11 @@ import { Observable } from "zen-observable-ts"
 import { PromiseState } from "../../lib/promise-to-observable"
 import { PrimaryActionsDefinition, SecondaryActionsDefinition } from "./actions"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
+import { GroupingDefinition, GroupingState } from "./grouping"
 import { ItemActionsDefinition } from "./item-actions"
 import { SortingsDefinition, SortingsState } from "./sortings"
+export * from "./grouping"
+export * from "./sortings"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
@@ -18,6 +21,7 @@ export type DataSourceDefinition<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Available filter configurations */
   filters?: Filters
@@ -41,7 +45,7 @@ export type DataSourceDefinition<
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
   /** Data adapter responsible for fetching and managing data */
-  dataAdapter: DataAdapter<Record, Filters, Sortings>
+  dataAdapter: DataAdapter<Record, Filters>
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
   /** Bulk actions that can be performed on the collection */
@@ -51,6 +55,10 @@ export type DataSourceDefinition<
     primary: BulkActionDefinition[]
     secondary?: BulkActionDefinition[]
   }
+
+  /** Grouping configuration */
+  grouping?: Grouping
+  currentGrouping?: GroupingState<Record, Grouping>
 }
 
 export type CollectionSearchOptions = {
@@ -102,17 +110,25 @@ export type PaginatedResponse<Record> = {
   records: Record[]
 } & PaginationInfo
 
+export type SortingsStateMultiple = {
+  field: string
+  order: "asc" | "desc"
+}[]
+
+// export type SortingsStateMultiple<
+//   Record extends RecordType,
+//   Definition extends SortingsDefinition,
+//   Grouping extends GroupingDefinition<Record>,
+// > = NonNullable<SortingsState<Definition> | GroupingState<Record, Grouping>>[]
+
 /**
  * Base options for data fetching
  * @template Filters - The available filter configurations
  */
-export type BaseFetchOptions<
-  Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-> = {
+export type BaseFetchOptions<Filters extends FiltersDefinition> = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
-  sortings: SortingsState<Sortings>
+  sortings: SortingsStateMultiple
   search?: string
 }
 
@@ -120,13 +136,11 @@ export type BaseFetchOptions<
  * Options for paginated data fetching
  * @template Filters - The available filter configurations
  */
-export type PaginatedFetchOptions<
-  Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-> = BaseFetchOptions<Filters, Sortings> & {
-  /** Pagination configuration */
-  pagination: { currentPage: number; perPage: number }
-}
+export type PaginatedFetchOptions<Filters extends FiltersDefinition> =
+  BaseFetchOptions<Filters> & {
+    /** Pagination configuration */
+    pagination: { currentPage: number; perPage: number }
+  }
 
 /**
  * Base data adapter configuration for non-paginated collections
@@ -136,7 +150,6 @@ export type PaginatedFetchOptions<
 export type BaseDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
 > = {
   /** Indicates this adapter doesn't use pagination */
   paginationType?: never
@@ -146,7 +159,7 @@ export type BaseDataAdapter<
    * @returns Array of records, promise of records, or observable of records
    */
   fetchData: (
-    options: BaseFetchOptions<Filters, Sortings>
+    options: BaseFetchOptions<Filters>
   ) =>
     | BaseResponse<Record>
     | Promise<BaseResponse<Record>>
@@ -161,7 +174,6 @@ export type BaseDataAdapter<
 export type PaginatedDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
 > = {
   /** Indicates this adapter uses page-based pagination */
   paginationType: "pages"
@@ -173,7 +185,7 @@ export type PaginatedDataAdapter<
    * @returns Paginated response with records and pagination info
    */
   fetchData: (
-    options: PaginatedFetchOptions<Filters, Sortings>
+    options: PaginatedFetchOptions<Filters>
   ) =>
     | PaginatedResponse<Record>
     | Promise<PaginatedResponse<Record>>
@@ -188,10 +200,7 @@ export type PaginatedDataAdapter<
 export type DataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-> =
-  | BaseDataAdapter<Record, Filters, Sortings>
-  | PaginatedDataAdapter<Record, Filters, Sortings>
+> = BaseDataAdapter<Record, Filters> | PaginatedDataAdapter<Record, Filters>
 
 /**
  * Represents a collection of selected items.
@@ -262,9 +271,10 @@ export type CollectionProps<
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   VisualizationOptions extends object,
+  Grouping extends GroupingDefinition<Record>,
 > = {
   /** The data source configuration and state */
-  source: DataSource<Record, Filters, Sortings, ItemActions>
+  source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>
   /** Function to handle item selection */
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
 } & VisualizationOptions
@@ -280,9 +290,9 @@ export type DataSource<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  ItemActions extends
-    ItemActionsDefinition<Record> = ItemActionsDefinition<Record>,
-> = DataSourceDefinition<Record, Filters, Sortings, ItemActions> & {
+  ItemActions extends ItemActionsDefinition<Record>,
+  Grouping extends GroupingDefinition<Record>,
+> = DataSourceDefinition<Record, Filters, Sortings, ItemActions, Grouping> & {
   /** Current state of applied filters */
   currentFilters: FiltersState<Filters>
   /** Function to update the current filters state */
@@ -298,6 +308,11 @@ export type DataSource<
   setCurrentSearch: (search: string | undefined) => void
   isLoading: boolean
   setIsLoading: (loading: boolean) => void
+
+  /** Function to update the current grouping state */
+  setCurrentGrouping: React.Dispatch<
+    React.SetStateAction<GroupingState<Record, Grouping>>
+  >
 }
 
 /**

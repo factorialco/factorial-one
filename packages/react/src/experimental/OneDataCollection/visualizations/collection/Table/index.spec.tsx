@@ -15,7 +15,7 @@ import {
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
-import type { DataSource } from "../../../types"
+import type { DataSource, GroupingDefinition } from "../../../types"
 import { useData } from "../../../useData"
 import { TableCollection } from "./index"
 
@@ -55,7 +55,8 @@ const createTestSource = (
   Person,
   TestFilters,
   SortingsDefinition,
-  ItemActionsDefinition<Person>
+  ItemActionsDefinition<Person>,
+  GroupingDefinition<Person>
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -72,6 +73,8 @@ const createTestSource = (
       return data
     },
   },
+  currentGrouping: undefined,
+  setCurrentGrouping: vi.fn(),
 })
 
 // Test wrapper component that provides I18nProvider
@@ -88,7 +91,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource()}
@@ -115,7 +119,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource()}
@@ -157,7 +162,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={columnsWithCustomRender}
             source={createTestSource()}
@@ -181,7 +187,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource([])}
@@ -209,7 +216,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createTestSource([], error)}
@@ -250,7 +258,8 @@ describe("TableCollection", () => {
       Person,
       TestFilters,
       SortingsDefinition,
-      ItemActionsDefinition<Person>
+      ItemActionsDefinition<Person>,
+      GroupingDefinition<Person>
     > => ({
       currentFilters: {},
       setCurrentFilters: vi.fn(),
@@ -261,6 +270,8 @@ describe("TableCollection", () => {
       setCurrentSearch: vi.fn(),
       isLoading: false,
       setIsLoading: vi.fn(),
+      currentGrouping: undefined,
+      setCurrentGrouping: vi.fn(),
       dataAdapter: {
         paginationType: "pages",
         perPage: itemsPerPage,
@@ -294,7 +305,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
@@ -317,7 +329,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
@@ -347,7 +360,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
@@ -379,7 +393,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource(5, 10)}
@@ -400,7 +415,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={testColumns}
             source={createPaginatedTestSource(0, 10)}
@@ -448,7 +464,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={columnsWithSorting}
             source={sortableSource}
@@ -489,7 +506,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={[
               {
@@ -560,7 +578,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={[
               {
@@ -634,7 +653,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={[
               {
@@ -702,7 +722,8 @@ describe("TableCollection", () => {
             Person,
             TestFilters,
             SortingsDefinition,
-            ItemActionsDefinition<Person>
+            ItemActionsDefinition<Person>,
+            GroupingDefinition<Person>
           >
             columns={columnsWithSorting}
             source={createTestSource()} // No sortings defined
