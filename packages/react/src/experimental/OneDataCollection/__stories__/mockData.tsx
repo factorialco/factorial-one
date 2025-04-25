@@ -22,6 +22,7 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "../navigationFilters/types"
+import { TableColumnDefinition } from "../visualizations/collection/Table"
 
 export const DEPARTMENTS = [
   "Engineering",
@@ -299,6 +300,7 @@ export const createPromiseDataFetch = (delay = 500) => {
     NavigationFiltersDefinition
   >) =>
     new Promise<(typeof mockUsers)[number][]>((resolve) => {
+      console.log("fetching data")
       setTimeout(() => {
         resolve(
           filterUsers(
@@ -325,6 +327,7 @@ export const ExampleComponent = ({
   bulkActions,
   navigationFilters,
   totalItemSummary,
+  dynamicColumns,
 }: {
   useObservable?: boolean
   usePresets?: boolean
@@ -342,6 +345,10 @@ export const ExampleComponent = ({
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
   navigationFilters?: NavigationFiltersDefinition
   totalItemSummary?: (totalItems: number) => string
+  dynamicColumns?: TableColumnDefinition<
+    (typeof mockUsers)[number],
+    typeof sortings
+  >[]
 }) => {
   const dataSource = useDataSource({
     filters,
@@ -388,6 +395,84 @@ export const ExampleComponent = ({
     },
   })
 
+  const tableColumns: TableColumnDefinition<
+    (typeof mockUsers)[number],
+    typeof sortings
+  >[] = dynamicColumns ?? [
+    {
+      label: "Name",
+      width: 140,
+      render: (item) => ({
+        type: "person",
+        value: {
+          firstName: item.name.split(" ")[0],
+          lastName: item.name.split(" ")[1],
+        },
+      }),
+      sorting: "name",
+    },
+    {
+      label: "Email",
+      render: (item) => item.email,
+      sorting: "email",
+    },
+    {
+      label: "Role",
+      render: (item) => item.role,
+      sorting: "role",
+    },
+    {
+      label: "Department",
+      render: (item) => item.department,
+      sorting: "department",
+    },
+    {
+      label: "Email 2",
+      render: (item) => item.email,
+      sorting: "email",
+    },
+    {
+      label: "Role 2",
+      render: (item) => item.role,
+      sorting: "role",
+    },
+    {
+      label: "Department 2",
+      render: (item) => item.department,
+      sorting: "department",
+    },
+    {
+      label: "Email 3",
+      render: (item) => item.email,
+      sorting: "email",
+    },
+    {
+      label: "Role 3",
+      render: (item) => item.role,
+      sorting: "role",
+    },
+    {
+      label: "Department 3",
+      render: (item) => item.department,
+      sorting: "department",
+    },
+    {
+      label: "Email 4",
+      render: (item) => item.email,
+      sorting: "email",
+    },
+    {
+      label: "Role 4",
+      render: (item) => item.role,
+      sorting: "role",
+    },
+    {
+      label: "Department 4",
+      render: (item) => item.department,
+      sorting: "department",
+    },
+  ]
+
   return (
     <div className="space-y-4">
       <OneDataCollection
@@ -403,80 +488,7 @@ export const ExampleComponent = ({
             type: "table",
             options: {
               frozenColumns,
-              columns: [
-                {
-                  label: "Name",
-                  width: 140,
-                  render: (item) => ({
-                    type: "person",
-                    value: {
-                      firstName: item.name.split(" ")[0],
-                      lastName: item.name.split(" ")[1],
-                    },
-                  }),
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 2",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 2",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 2",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 3",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 3",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 3",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 4",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 4",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 4",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
+              columns: tableColumns,
             },
           },
           {
