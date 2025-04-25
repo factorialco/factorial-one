@@ -1034,15 +1034,14 @@ declare type DateGranularity = "day" | "week" | "fortnight" | "month" | "year" |
 
 declare type DateNavigationOptions = {
     granularity?: DateGranularity[] | DateGranularity;
+    defaultGranularity?: DateGranularity;
     min?: Date;
     max?: Date;
 };
 
-declare interface DateNavigatorFilterDefinition extends NavigationFilterDefinitionBase<Date | DateRange_2 | DateValue> {
+declare type DateNavigatorFilterDefinition = NavigationFilterDefinitionBase<Date | DateRange_2 | DateValue> & {
     type: "date-navigator";
-    options?: DateNavigationOptions;
-    defaultGranularity?: DateGranularity;
-}
+} & DateNavigationOptions;
 
 declare type DateRange = {
     from: Date;

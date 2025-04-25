@@ -60451,7 +60451,7 @@ function RCe({
 }) {
   const i = {
     granularity: "day",
-    ...e.options
+    ...e
   }, a = Array.isArray(i.granularity) ? i.granularity : [i.granularity], [r, o] = X(
     e.defaultGranularity || a[0]
   ), s = wh[r];
@@ -60472,6 +60472,7 @@ function RCe({
         icon: au,
         label: "Previous",
         disabled: !d,
+        variant: "outline",
         onClick: () => u(d)
       }
     ),
@@ -60493,6 +60494,7 @@ function RCe({
         size: "sm",
         icon: Qi,
         label: "Next",
+        variant: "outline",
         disabled: !c,
         onClick: () => u(c)
       }
@@ -60501,19 +60503,19 @@ function RCe({
 }
 const jCe = {
   initialValueConverter: function(e, t) {
-    var a, r, o;
     if ("value" in e)
       return e;
-    const n = Array.isArray((a = t.options) == null ? void 0 : a.granularity) ? (r = t.options) == null ? void 0 : r.granularity : [(o = t.options) == null ? void 0 : o.granularity], i = t.defaultGranularity || n[0] || "day";
+    console.log("test", t);
+    const n = Array.isArray(t.granularity) ? t.granularity : [t.granularity], i = t.defaultGranularity || n[0] || "day";
     if (i === "custom") {
       if (!Array.isArray(e))
         throw new Error(
           "Custom granularity requires a DateRange as initial value"
         );
-      const s = wh[i];
+      const a = wh[i];
       return {
         value: e,
-        dateRange: s.toDateRange(e),
+        dateRange: a.toDateRange(e),
         granularity: i
       };
     } else {
@@ -60521,10 +60523,10 @@ const jCe = {
         throw new Error(
           `${i} granularity requires a Date as initial value`
         );
-      const s = wh[i];
+      const a = wh[i];
       return {
         value: e,
-        dateRange: s.toDateRange(e),
+        dateRange: a.toDateRange(e),
         granularity: i
       };
     }
