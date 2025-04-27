@@ -1,3 +1,5 @@
+export * from "./CommentBox"
 export * from "./FileItem"
 export * from "./RichTextDisplay"
 export * from "./RichTextEditor"
+export * from "./RichTextEditorBase"

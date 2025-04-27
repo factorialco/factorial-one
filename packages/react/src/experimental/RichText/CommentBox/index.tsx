@@ -6,17 +6,13 @@ import {
   enhanceConfig,
   errorConfig,
   filesConfig,
-  heightType,
-  mentionsConfig,
   primaryActionType,
   resultType,
   RichTextEditorBase,
   RichTextEditorHandle,
-  toolbarLabels,
 } from "../RichTextEditorBase"
 
-interface RichTextEditorProps {
-  mentionsConfig?: mentionsConfig
+interface CommentBoxProps {
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
   secondaryAction?: actionType
@@ -28,38 +24,23 @@ interface RichTextEditorProps {
     content?: string
     files?: File[]
   }
-  toolbarLabels: toolbarLabels
   title: string
   errorConfig?: errorConfig
-  height?: heightType
 }
 
-const RichTextEditorComponent = forwardRef<
-  RichTextEditorHandle,
-  RichTextEditorProps
->((props, ref) => {
-  return <RichTextEditorBase {...props} isPlainText={false} ref={ref} />
-})
+const CommentBoxComponent = forwardRef<RichTextEditorHandle, CommentBoxProps>(
+  (props, ref) => {
+    return <RichTextEditorBase {...props} isPlainText={true} ref={ref} />
+  }
+)
 
-interface RichTextEditorSkeletonProps {
-  rows?: number
-}
-
-const RichTextEditorSkeleton = ({ rows = 2 }: RichTextEditorSkeletonProps) => {
-  const staticWidthPattern = ["75%", "100%", "60%", "85%", "70%"]
-  const widths = Array.from(
-    { length: rows },
-    (_, i) => staticWidthPattern[i % staticWidthPattern.length]
-  )
-
+const CommentBoxSkeleton = () => {
   return (
     <div className="relative flex w-full flex-col rounded-xl border border-solid border-f1-border bg-f1-background">
       <div className="relative w-full flex-grow overflow-hidden">
         <div className="h-auto w-full pl-3 pr-4 pt-3">
           <div className="flex flex-col gap-2">
-            {widths.map((width, index) => (
-              <Skeleton key={index} className="h-4" style={{ width }} />
-            ))}
+            <Skeleton className="h-4 w-1/3" />
           </div>
         </div>
       </div>
@@ -68,11 +49,9 @@ const RichTextEditorSkeleton = ({ rows = 2 }: RichTextEditorSkeletonProps) => {
           <div className="flex items-center gap-2">
             <Skeleton className="h-8 w-8 rounded-md" />
             <Skeleton className="h-8 w-8 rounded-md" />
-            <Skeleton className="h-8 w-8 rounded-md" />
           </div>
           <div className="flex items-center gap-2">
             <Skeleton className="h-8 w-24 rounded-md" />
-            <Skeleton className="h-8 w-32 rounded-md" />
           </div>
         </div>
       </div>
@@ -80,7 +59,4 @@ const RichTextEditorSkeleton = ({ rows = 2 }: RichTextEditorSkeletonProps) => {
   )
 }
 
-export const RichTextEditor = withSkeleton(
-  RichTextEditorComponent,
-  RichTextEditorSkeleton
-)
+export const CommentBox = withSkeleton(CommentBoxComponent, CommentBoxSkeleton)

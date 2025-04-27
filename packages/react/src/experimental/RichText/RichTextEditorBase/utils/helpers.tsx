@@ -123,12 +123,14 @@ interface HandleEditorUpdateProps {
   editor: Editor
   onChange: (result: resultType) => void
   setEditorState: (state: { html: string; json: JSONContent | null }) => void
+  isPlainText: boolean
 }
 
 const handleEditorUpdate = ({
   editor,
   onChange,
   setEditorState,
+  isPlainText,
 }: HandleEditorUpdateProps) => {
   setEditorState({
     html: editor.getHTML(),
@@ -147,14 +149,14 @@ const handleEditorUpdate = ({
   if (editor.isEmpty) {
     onChange({ value: null })
   } else {
-    const html = editor.getHTML()
+    const content = isPlainText ? editor.getText() : editor.getHTML()
     if (mentions.length > 0) {
       onChange({
-        value: html,
+        value: content,
         mentionIds: mentions,
       })
     } else {
-      onChange({ value: html })
+      onChange({ value: content })
     }
   }
 }

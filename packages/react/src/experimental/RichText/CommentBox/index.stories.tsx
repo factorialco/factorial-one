@@ -5,38 +5,33 @@ import {
   FILE_TYPES,
   resultType,
 } from "../RichTextEditorBase"
-import { RichTextEditor } from "./"
+import { CommentBox } from "./"
 
 const meta = {
-  component: RichTextEditor,
-  title: "Rich text/RichTextEditor",
+  component: CommentBox,
+  title: "Rich text/CommentBox",
   tags: ["experimental"],
   argTypes: {
     title: {
       control: "text",
-      description: "Sets the title displayed in the editor header",
+      description: "Sets the title displayed in the comment box header",
       required: true,
     },
     placeholder: {
       control: "text",
-      description: "Text displayed when the editor is empty",
+      description: "Text displayed when the comment box is empty",
       required: true,
     },
     onChange: {
       control: false,
       description:
-        "Callback function triggered when editor content changes. Receives an object with { value: string | null, mentionIds?: number[] }",
+        "Callback function triggered when comment box content changes. Receives an object with { value: string | null, mentionIds?: number[] }",
       required: true,
     },
     initialEditorState: {
       control: "object",
       description:
-        "Pre-populates the editor with content and/or files. Format: { content?: string, files?: File[] }",
-    },
-    mentionsConfig: {
-      control: "object",
-      description:
-        "Configures user mention functionality with available users and optional query handler",
+        "Pre-populates the comment box with content and/or files. Format: { content?: string, files?: File[] }",
     },
     enhanceConfig: {
       control: "object",
@@ -62,35 +57,12 @@ const meta = {
       control: "number",
       description: "Limits the number of characters that can be entered",
     },
-    toolbarLabels: {
-      control: "object",
-      description:
-        "Object with labels for all toolbar elements. Required for tooltips and accessibility",
-      required: true,
-    },
     errorConfig: {
       control: "object",
       description: "Configures error message display and recovery options",
     },
-    height: {
-      control: "select",
-      options: [
-        "xxs",
-        "xs",
-        "sm",
-        "md",
-        "lg",
-        "xl",
-        "2xl",
-        "3xl",
-        "full",
-        "auto",
-      ],
-      description: "Controls the initial height of the editor",
-      defaultValue: "auto",
-    },
   },
-} satisfies Meta<typeof RichTextEditor>
+} satisfies Meta<typeof CommentBox>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -154,24 +126,6 @@ const enhancementOptions: EnhancementOption[] = [
   },
 ]
 
-const users = [
-  {
-    id: 1,
-    label: "Raúl Sigüenza Sánchez",
-    href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
-  },
-  {
-    id: 2,
-    label: "Jacob Bamio Cordero",
-    href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
-  },
-  {
-    id: 3,
-    label: "Xavier Val Parejo",
-    href: "https://cdn.memegenerator.es/imagenes/memes/full/32/48/32486607.jpg",
-  },
-]
-
 export const Default: Story = {
   tags: ["experimental"],
   args: {
@@ -180,7 +134,6 @@ export const Default: Story = {
       console.log(result)
     },
     placeholder: "Write something here...",
-    mentionsConfig: { users: users },
     enhanceConfig: {
       onEnhanceText: (params: {
         text: string
@@ -236,55 +189,23 @@ export const Default: Story = {
       onClick: () => alert("Cancel"),
       variant: "outline",
     },
-    toolbarLabels: {
-      bold: "Bold",
-      italic: "Italic",
-      underline: "Underline",
-      strike: "Strike",
-      highlight: "Highlight",
-      heading1: "Heading 1",
-      heading2: "Heading 2",
-      heading3: "Heading 3",
-      left: "Left",
-      center: "Center",
-      right: "Right",
-      justify: "Justify",
-      bulletList: "Bullet List",
-      orderedList: "Ordered List",
-      taskList: "Task List",
-      codeBlock: "Code Block",
-      horizontalRule: "Horizontal Rule",
-      quote: "Quote",
-      moreOptions: "More Options",
-      code: "Code",
-      divider: "Divider",
-      bullet: "Bullet",
-      ordered: "Ordered",
-      task: "Task",
-      linkPlaceholder: "Enter link http://here...",
-      linkLabel: "Link",
-      linkPaste: "Paste",
-      close: "Close",
-    },
 
     maxCharacters: 10000,
     initialEditorState: {
-      content:
-        "<p>There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, <strong>you appeared</strong>. Sleek, fast, and strangely comforting, my text editor. You didn't just open files — you opened <em>possibilities</em>",
+      content: "Hi there!!! this is a comment box with AI functionalities",
     },
     errorConfig: {
       onClose: () => alert("Close"),
       closeErrorButtonLabel: "Continue editing",
     },
-    height: "auto",
   },
 }
 
-type SkeletonStory = StoryObj<typeof RichTextEditor.Skeleton>
+type SkeletonStory = StoryObj<typeof CommentBox.Skeleton>
 
 export const Skeleton: SkeletonStory = {
   tags: ["experimental"],
-  render: () => <RichTextEditor.Skeleton />,
+  render: () => <CommentBox.Skeleton />,
 }
 
 export const Blank: Story = {
@@ -295,7 +216,6 @@ export const Blank: Story = {
     primaryAction: undefined,
     secondaryAction: undefined,
     initialEditorState: undefined,
-    mentionsConfig: undefined,
     maxCharacters: undefined,
   },
 }

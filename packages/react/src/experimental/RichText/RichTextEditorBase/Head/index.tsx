@@ -8,6 +8,7 @@ interface HeadProps {
   handleToggleFullscreen: () => void
   disableAllButtons: boolean
   title: string
+  isPlainText: boolean
 }
 
 const Head = ({
@@ -15,7 +16,10 @@ const Head = ({
   handleToggleFullscreen,
   disableAllButtons,
   title,
+  isPlainText,
 }: HeadProps) => {
+  if (isPlainText) return null
+
   return (
     <>
       <div className="absolute right-3 top-3 z-50">

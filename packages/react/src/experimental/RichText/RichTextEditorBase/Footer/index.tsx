@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/exports"
+import { Picker } from "@/experimental/Information/Reactions/Picker"
 import { Paperclip, TextSize } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { motion } from "framer-motion"
@@ -34,9 +35,10 @@ interface FooterProps {
       customIntent?: string
     } | null
   ) => void
-  toolbarLabels: toolbarLabels
+  toolbarLabels?: toolbarLabels
   setIsToolbarOpen: (isToolbarOpen: boolean) => void
   isToolbarOpen: boolean
+  isPlainText: boolean
 }
 
 const Footer = ({
@@ -55,6 +57,7 @@ const Footer = ({
   disableButtons,
   setIsToolbarOpen,
   isToolbarOpen,
+  isPlainText,
 }: FooterProps) => {
   const [toolbarAnimationComplete, setToolbarAnimationComplete] =
     useState(false)
@@ -79,30 +82,34 @@ const Footer = ({
   return (
     <div ref={containerRef} className="flex max-w-full items-center gap-2 py-3">
       <div className="relative flex flex-grow items-center gap-2">
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: isToolbarOpen ? "100%" : 0 }}
-          transition={{
-            duration: 0.3,
-            delay: isToolbarOpen ? 0.15 : 0,
-            ease: "easeInOut",
-          }}
-          onAnimationComplete={() => setToolbarAnimationComplete(isToolbarOpen)}
-          className="absolute left-0 top-0 z-10 h-full bg-f1-background"
-          aria-label="Rich text editor toolbar"
-        >
-          <Toolbar
-            labels={toolbarLabels}
-            editor={editor}
-            isFullscreen={isFullscreen}
-            disableButtons={disableButtons}
-            onClose={() => {
-              setIsToolbarOpen(false)
-              setToolbarAnimationComplete(false)
+        {!isPlainText && toolbarLabels && (
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: isToolbarOpen ? "100%" : 0 }}
+            transition={{
+              duration: 0.3,
+              delay: isToolbarOpen ? 0.15 : 0,
+              ease: "easeInOut",
             }}
-            animationComplete={toolbarAnimationComplete}
-          />
-        </motion.div>
+            onAnimationComplete={() =>
+              setToolbarAnimationComplete(isToolbarOpen)
+            }
+            className="absolute left-0 top-0 z-10 h-full bg-f1-background"
+            aria-label="Rich text editor toolbar"
+          >
+            <Toolbar
+              labels={toolbarLabels}
+              editor={editor}
+              isFullscreen={isFullscreen}
+              disableButtons={disableButtons}
+              onClose={() => {
+                setIsToolbarOpen(false)
+                setToolbarAnimationComplete(false)
+              }}
+              animationComplete={toolbarAnimationComplete}
+            />
+          </motion.div>
+        )}
 
         <motion.div
           className="flex items-center gap-2 overflow-hidden"
@@ -116,20 +123,29 @@ const Footer = ({
             ease: "easeInOut",
           }}
         >
-          <Button
-            onClick={(e) => {
-              e.preventDefault()
-              setIsToolbarOpen(true)
-            }}
-            variant="outline"
-            size="md"
-            label="Toolbar"
-            disabled={disableButtons}
-            type="button"
-            hideLabel
-            round
-            icon={TextSize}
-          />
+          {isPlainText ? (
+            <Picker
+              variant="outline"
+              onSelect={(emoji) => {
+                editor.chain().focus().insertContent(emoji).run()
+              }}
+            />
+          ) : (
+            <Button
+              onClick={(e) => {
+                e.preventDefault()
+                setIsToolbarOpen(true)
+              }}
+              variant="outline"
+              size="md"
+              label="Toolbar"
+              disabled={disableButtons}
+              type="button"
+              hideLabel
+              round
+              icon={TextSize}
+            />
+          )}
           {canUseFiles && (
             <Button
               icon={Paperclip}
