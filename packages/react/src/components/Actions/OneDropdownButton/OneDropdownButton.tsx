@@ -1,5 +1,5 @@
 import { useI18n } from "@/lib/providers/i18n"
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { DropdownInternal } from "../../../experimental/Navigation/Dropdown/internal"
 import { ChevronDown } from "../../../icons/app"
 import { IconType } from "../../Utilities/Icon"
@@ -30,7 +30,7 @@ const OneDropdownButton = ({
 }: OneDropdownButtonProps) => {
   const t = useI18n()
 
-  const [localValue] = useState(value || items[0].value)
+  const localValue = useMemo(() => value || items[0].value, [value, items])
 
   const selectedItem = useMemo(
     () => items.find((item) => item.value === localValue),
