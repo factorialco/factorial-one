@@ -37,7 +37,7 @@ interface EqFilterProps<T> {
  * // Static options
  * <EqFilter
  *   filter={{
- *     type: "in",
+ *     type: "eq",
  *     label: "Status",
  *     options: [
  *       { value: "active", label: "Active" },
@@ -51,7 +51,7 @@ interface EqFilterProps<T> {
  * // Async options
  * <EqFilter
  *   filter={{
- *     type: "in",
+ *     type: "eq",
  *     label: "Category",
  *     options: async () => {
  *       const categories = await fetchCategories();
