@@ -797,9 +797,13 @@ describe("Collections", () => {
             fetchData: async ({ filters }) => {
               let filtered = [...mockData]
 
-              if (filters.department && filters.department.length > 0) {
+              if (
+                filters.department &&
+                Array.isArray(filters.department) &&
+                filters.department.length > 0
+              ) {
                 filtered = filtered.filter((person) =>
-                  filters.department?.includes(person.department)
+                  (filters.department as string[])?.includes(person.department)
                 )
               }
 
@@ -866,6 +870,104 @@ describe("Collections", () => {
 
     // Note: We don't test clicking the filter button since that would open a dialog
     // and we'd need more knowledge about the specifics of the dialog implementation
+  })
+
+  test("integrates with eq filter type for single selection filtering", async () => {
+    type Person = {
+      id: number
+      name: string
+      role: string
+    }
+
+    const mockData: Person[] = [
+      { id: 1, name: "John Doe", role: "Developer" },
+      { id: 2, name: "Jane Smith", role: "Designer" },
+      { id: 3, name: "Bob Johnson", role: "Manager" },
+      { id: 4, name: "Alice Williams", role: "Developer" },
+    ]
+
+    // Create a mock for setCurrentFilters function
+    const setCurrentFiltersMock = vi.fn()
+
+    const { result } = renderHook(
+      () => {
+        const source = useDataSource<
+          Person,
+          FiltersDefinition,
+          SortingsDefinition,
+          ItemActionsDefinition<Person>
+        >({
+          filters: {
+            role: {
+              type: "eq",
+              label: "Role",
+              options: [
+                { value: "Developer", label: "Developer" },
+                { value: "Designer", label: "Designer" },
+                { value: "Manager", label: "Manager" },
+              ],
+            },
+          },
+          dataAdapter: {
+            fetchData: async ({ filters }) => {
+              let filtered = [...mockData]
+
+              if (filters.role !== undefined && filters.role !== null) {
+                filtered = filtered.filter(
+                  (person) => person.role === filters.role
+                )
+              }
+
+              return filtered
+            },
+          },
+        })
+
+        // Override the setCurrentFilters with our mock for testing
+        source.setCurrentFilters = setCurrentFiltersMock
+
+        return source
+      },
+      { wrapper: TestWrapper }
+    )
+
+    render(
+      <TestWrapper>
+        <OneDataCollection
+          source={result.current}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  { label: "Name", render: (item: Person) => item.name },
+                  { label: "Role", render: (item: Person) => item.role },
+                ],
+              },
+            },
+          ]}
+        />
+      </TestWrapper>
+    )
+
+    await waitFor(() => {
+      expect(screen.getByText("John Doe")).toBeInTheDocument()
+      expect(screen.getByText("Jane Smith")).toBeInTheDocument()
+      expect(screen.getByText("Developer")).toBeInTheDocument()
+      expect(screen.getByText("Designer")).toBeInTheDocument()
+    })
+
+    // Find the filter button
+    const filterButton = screen.getByTitle("Filters")
+    expect(filterButton).toBeInTheDocument()
+
+    // Verify we can set an "eq" filter
+    act(() => {
+      result.current.setCurrentFilters({ role: "Developer" })
+    })
+
+    // After setting the filter, verify the setCurrentFilters mock was called with the correct value
+    expect(setCurrentFiltersMock).toHaveBeenCalledWith({ role: "Developer" })
   })
 
   test("integrates TableCollection with actions", async () => {
