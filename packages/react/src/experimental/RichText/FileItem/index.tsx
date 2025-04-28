@@ -5,7 +5,7 @@ import {
   DropdownItem,
 } from "@/experimental/Navigation/Dropdown/internal"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { CrossedCircle } from "@/icons/app"
+import { ChevronDown, CrossedCircle } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
@@ -67,8 +67,8 @@ const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
           ) : (
             <DropdownInternal
               items={dropdownItems}
+              icon={ChevronDown}
               size="sm"
-              {...(disabled ? { "data-disabled": "true" } : {})}
             />
           ))}
       </div>
