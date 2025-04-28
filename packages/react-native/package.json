@@ -29,10 +29,9 @@
     "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
     "lint-fix": "pnpm run lint -- --fix",
     "test": "vitest run",
-    "generate-icons": "rm -fR src/icons/app/* src/icons/modules/* && run-p generate-app-icons generate-module-icons && npm run process-icons",
+    "generate-icons": "rm -fR src/icons/app/* src/icons/modules/* && run-p generate-app-icons generate-module-icons",
     "generate-app-icons": "npx @svgr/cli --out-dir src/icons/app --native --svg-props className={props.className} ../../packages/core/assets/icons/app",
-    "generate-module-icons": "npx @svgr/cli --out-dir src/icons/modules --native --svg-props className={props.className} ../../packages/core/assets/icons/modules",
-    "process-icons": "node scripts/process-icons.js"
+    "generate-module-icons": "npx @svgr/cli --out-dir src/icons/modules --native --svg-props className={props.className} ../../packages/core/assets/icons/modules"
   },
   "keywords": [
     "factorial",
