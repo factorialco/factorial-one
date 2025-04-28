@@ -249,7 +249,7 @@ export function FilterButton<Definition extends FiltersDefinition>({
       return (
         <InFilterButton
           filter={filter}
-          value={inFilterValue}
+          value={inFilterValue as unknown[] | undefined}
           onSelect={onSelect}
           onRemove={onRemove}
         />

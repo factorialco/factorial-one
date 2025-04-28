@@ -5,6 +5,7 @@ import { FiltersControls as FiltersControlsComponent } from "./Components/Filter
 import { FiltersPresets as FiltersPresetsComponent } from "./Components/FiltersPresets"
 
 import type {
+  EqFilterDefinition,
   FilterOption,
   FiltersDefinition,
   FiltersState,
@@ -54,6 +55,7 @@ const FiltersContext = createContext<FiltersContextType<FiltersDefinition>>({
  *
  * The component supports multiple filter types through a unified interface:
  * - "in" type filters: Multi-select filters with predefined options
+ * - "eq" type filters: Single-select filters with predefined options
  * - "search" type filters: Free-text search filters
  *
  * Features:
@@ -83,13 +85,22 @@ const FiltersContext = createContext<FiltersContextType<FiltersDefinition>>({
  *         { value: "sales", label: "Sales" }
  *       ]
  *     },
+ *     status: {
+ *       type: "eq",
+ *       label: "Status",
+ *       options: [
+ *         { value: "active", label: "Active" },
+ *         { value: "inactive", label: "Inactive" }
+ *       ]
+ *     },
  *     search: {
  *       type: "search",
  *       label: "Search"
  *     }
  *   }}
  *   filters={{
- *     department: ["engineering"]
+ *     department: ["engineering"],
+ *     status: "active"
  *   }}
  *   presets={[
  *     {
@@ -132,10 +143,14 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
 
   /** Creates a local filters schema with instanciated options (options loaded in the case options is a promise or function) */
   type LocalFiltersSchema = {
-    [K in keyof FiltersDefinition]: FiltersDefinition[K] extends InFilterDefinition
+    [K in keyof FiltersDefinition]: FiltersDefinition[K] extends
+      | InFilterDefinition
+      | EqFilterDefinition
       ? FiltersDefinition[K] & {
           _instanciatedOptions?: FilterOption<unknown>[]
-          _options: InFilterDefinition["options"]
+          _options:
+            | InFilterDefinition["options"]
+            | EqFilterDefinition["options"]
           options: Promise<FilterOption<unknown>[]>
         }
       : FiltersDefinition[K]
@@ -146,10 +161,10 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
       schema
         ? Object.keys(schema).reduce((acc, key) => {
             const filterSchema = schema[key as keyof Definition]
-            const isInFilter = "options" in filterSchema
+            const isOptionsFilter = "options" in filterSchema
             acc[key as keyof LocalFiltersSchema] = {
               ...filterSchema,
-              ...(isInFilter
+              ...(isOptionsFilter
                 ? {
                     _instanciatedOptions: undefined,
                     options: async function (this: {

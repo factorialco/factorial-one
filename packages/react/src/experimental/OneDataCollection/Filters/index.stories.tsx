@@ -49,6 +49,14 @@ const sampleDefinition: FiltersDefinition = {
       ]
     },
   },
+  status: {
+    type: "eq",
+    label: "Status",
+    options: [
+      { value: "active", label: "Active" },
+      { value: "inactive", label: "Inactive" },
+    ],
+  },
   name: {
     type: "search",
     label: "Employee name",
@@ -112,6 +120,12 @@ const samplePresets: PresetsDefinition<typeof sampleDefinition> = [
     },
   },
   {
+    label: "Active Employees",
+    filter: {
+      status: "active",
+    },
+  },
+  {
     label: "Alice's Team",
     filter: {
       manager: ["alice"],
@@ -124,6 +138,7 @@ const FiltersWithState = () => {
     {
       name: "John",
       department: ["engineering"],
+      status: "active",
     }
   )
 
@@ -149,6 +164,7 @@ const FiltersWithInitialState = () => {
   const [filters, setFilters] = useState<FiltersState<typeof sampleDefinition>>(
     {
       department: ["engineering", "marketing"],
+      status: "active",
       name: "John",
       manager: ["alice"],
     }
@@ -200,6 +216,7 @@ const FiltersWithPresetsAndInitialState = () => {
   const [filters, setFilters] = useState<FiltersState<typeof sampleDefinition>>(
     {
       department: ["engineering"],
+      status: "active",
       role: ["engineer"],
     }
   )
@@ -387,9 +404,11 @@ export const WithAsyncOptions: Story = {
         options: () => Promise<Array<{ value: string; label: string }>>
       }
       status: {
-        type: "in"
+        type: "eq"
         label: string
-        options: () => Array<{ value: string; label: string }>
+        options:
+          | Array<{ value: string; label: string }>
+          | (() => Promise<Array<{ value: string; label: string }>>)
       }
       search: {
         type: "search"
@@ -438,14 +457,20 @@ export const WithAsyncOptions: Story = {
         },
       },
       status: {
-        type: "in",
+        type: "eq",
         label: "Status",
         // Sync function example
-        options: () => [
-          { value: "active", label: "Active" },
-          { value: "inactive", label: "Inactive" },
-          { value: "pending", label: "Pending" },
-        ],
+        options: async () => {
+          // Simulate API call with a delay
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              resolve([
+                { value: "active", label: "Active" },
+                { value: "inactive", label: "Inactive" },
+              ])
+            }, 1500)
+          })
+        },
       },
       search: {
         type: "search",
@@ -480,6 +505,11 @@ export const WithLargeAsyncOptions: Story = {
         type: "in"
         label: string
         options: () => Promise<Array<{ value: string; label: string }>>
+      }
+      status: {
+        type: "eq"
+        label: string
+        options: Array<{ value: string; label: string }>
       }
       search: {
         type: "search"
@@ -559,6 +589,14 @@ export const WithLargeAsyncOptions: Story = {
             }, 1000)
           })
         },
+      },
+      status: {
+        type: "eq",
+        label: "Status",
+        options: [
+          { value: "active", label: "Active" },
+          { value: "inactive", label: "Inactive" },
+        ],
       },
       search: {
         type: "search",
