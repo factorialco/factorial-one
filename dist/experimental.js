@@ -62397,94 +62397,109 @@ const Ab = Ft(aSe, rSe), oSe = ({
       secondary: ((ie == null ? void 0 : ie.secondary) || []).map(xe)
     });
   }, [F, q] = X(void 0);
-  return /* @__PURE__ */ x("div", { className: D(W === "standard" && "-mx-6"), children: [
-    /* @__PURE__ */ x("div", { className: D("border-f1-border-primary mb-3 flex gap-4 px-6"), children: [
-      /* @__PURE__ */ x("div", { className: "flex flex-1 flex-shrink gap-4", children: [
-        p && /* @__PURE__ */ l(De, { className: "h-5 w-24" }),
-        !p && F && y(F)
-      ] }),
-      /* @__PURE__ */ l("div", { className: "flex flex-1 flex-shrink justify-end", children: c && Object.entries(c).map(([I, G]) => u6[G.type].render({
-        filter: G,
-        value: d[I],
-        onChange: (xe) => {
-          u({
-            ...d,
-            [I]: xe
-          });
-        }
-      })) })
-    ] }),
-    /* @__PURE__ */ x("div", { className: D("flex flex-col gap-4"), children: [
-      /* @__PURE__ */ x(
-        s6,
-        {
-          schema: a,
-          filters: r,
-          presets: s,
-          onChange: (I) => o(I),
-          children: [
-            /* @__PURE__ */ x("div", { className: "flex items-center justify-between px-6", children: [
-              a && /* @__PURE__ */ x("div", { className: "flex flex-1 gap-1", children: [
-                /* @__PURE__ */ l(d6, {}),
-                /* @__PURE__ */ l(l6, {})
-              ] }),
-              /* @__PURE__ */ x("div", { className: "flex shrink-0 items-center gap-2", children: [
-                p && /* @__PURE__ */ l(
-                  lSe,
+  return /* @__PURE__ */ x(
+    "div",
+    {
+      className: D("flex flex-col gap-4", W === "standard" && "-mx-6"),
+      children: [
+        /* @__PURE__ */ x("div", { className: D("border-f1-border-primary mb-3 flex gap-4 px-6"), children: [
+          /* @__PURE__ */ x("div", { className: "flex flex-1 flex-shrink gap-4", children: [
+            p && /* @__PURE__ */ l(De, { className: "h-5 w-24" }),
+            !p && F && y(F)
+          ] }),
+          /* @__PURE__ */ l("div", { className: "flex flex-1 flex-shrink justify-end", children: c && Object.entries(c).map(([I, G]) => u6[G.type].render({
+            filter: G,
+            value: d[I],
+            onChange: (xe) => {
+              u({
+                ...d,
+                [I]: xe
+              });
+            }
+          })) })
+        ] }),
+        /* @__PURE__ */ x("div", { className: D("flex flex-col gap-4 px-6"), children: [
+          /* @__PURE__ */ x(
+            s6,
+            {
+              schema: a,
+              filters: r,
+              presets: s,
+              onChange: (I) => o(I),
+              children: [
+                /* @__PURE__ */ x(
+                  "div",
                   {
-                    initial: { opacity: 0 },
-                    animate: { opacity: 1 },
-                    exit: {
-                      opacity: 0
-                    },
-                    size: "lg",
-                    icon: yk,
-                    className: "animate-spin"
+                    className: D(
+                      "flex items-center justify-between",
+                      !a && "justify-end"
+                    ),
+                    children: [
+                      a && /* @__PURE__ */ x("div", { className: "flex flex-1 gap-1", children: [
+                        /* @__PURE__ */ l(d6, {}),
+                        /* @__PURE__ */ l(l6, {})
+                      ] }),
+                      /* @__PURE__ */ x("div", { className: "flex shrink-0 items-center gap-2", children: [
+                        p && /* @__PURE__ */ l(
+                          lSe,
+                          {
+                            initial: { opacity: 0 },
+                            animate: { opacity: 1 },
+                            exit: {
+                              opacity: 0
+                            },
+                            size: "lg",
+                            icon: yk,
+                            className: "animate-spin"
+                          }
+                        ),
+                        f && /* @__PURE__ */ l(LCe, { onChange: h, value: m }),
+                        t && t.length > 1 && /* @__PURE__ */ l(
+                          sSe,
+                          {
+                            visualizations: t,
+                            currentVisualization: k,
+                            onVisualizationChange: P
+                          }
+                        ),
+                        (b || C) && /* @__PURE__ */ l(
+                          kCe,
+                          {
+                            primaryActions: b,
+                            secondaryActions: C
+                          }
+                        )
+                      ] })
+                    ]
                   }
                 ),
-                f && /* @__PURE__ */ l(LCe, { onChange: h, value: m }),
-                t && t.length > 1 && /* @__PURE__ */ l(
-                  sSe,
-                  {
-                    visualizations: t,
-                    currentVisualization: k,
-                    onVisualizationChange: P
-                  }
-                ),
-                (b || C) && /* @__PURE__ */ l(
-                  kCe,
-                  {
-                    primaryActions: b,
-                    secondaryActions: C
-                  }
-                )
-              ] })
-            ] }),
-            /* @__PURE__ */ l(c6, {})
-          ]
-        }
-      ),
-      /* @__PURE__ */ l(
-        dSe,
-        {
-          visualization: t[k],
-          source: e,
-          onSelectItems: K,
-          onTotalItemsChange: q
-        }
-      ),
-      (E == null ? void 0 : E.primary) && ((E == null ? void 0 : E.primary) || []).length > 0 && /* @__PURE__ */ l(
-        wCe,
-        {
-          isOpen: z,
-          selectedNumber: O,
-          primaryActions: E.primary,
-          secondaryActions: E == null ? void 0 : E.secondary,
-          onUnselect: () => S == null ? void 0 : S()
-        }
-      )
-    ] })
-  ] });
+                /* @__PURE__ */ l(c6, {})
+              ]
+            }
+          ),
+          /* @__PURE__ */ l(
+            dSe,
+            {
+              visualization: t[k],
+              source: e,
+              onSelectItems: K,
+              onTotalItemsChange: q
+            }
+          ),
+          (E == null ? void 0 : E.primary) && ((E == null ? void 0 : E.primary) || []).length > 0 && /* @__PURE__ */ l(
+            wCe,
+            {
+              isOpen: z,
+              selectedNumber: O,
+              primaryActions: E.primary,
+              secondaryActions: E == null ? void 0 : E.secondary,
+              onUnselect: () => S == null ? void 0 : S()
+            }
+          )
+        ] })
+      ]
+    }
+  );
 }, O6 = H(
   ({ header: e, actions: t, open: n, onClose: i }, a) => {
     const [r, o] = X(!1), s = Ue(() => {
