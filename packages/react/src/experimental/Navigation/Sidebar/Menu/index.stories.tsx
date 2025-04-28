@@ -76,6 +76,24 @@ export const Default: Story = {
     onSort: (categories) => {
       console.log("Categories sorted:", categories)
     },
+    favorites: [
+      {
+        type: "icon",
+        label: "Staff Product Designer",
+        icon: Icons.SearchPerson,
+        href: "/ats/jobs/staff-product-designer",
+      },
+      {
+        type: "avatar",
+        label: "Dani Moreno",
+        avatar: {
+          type: "person",
+          firstName: "Dani",
+          lastName: "Moreno",
+        },
+        href: "/people/dani-moreno",
+      },
+    ],
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)

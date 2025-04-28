@@ -6,6 +6,7 @@ import { ChevronDown } from "../../../../icons/app"
 import { useReducedMotion } from "../../../../lib/a11y"
 import { Link, useNavigation } from "../../../../lib/linkHandler"
 import { cn, focusRing } from "../../../../lib/utils"
+import { Avatar, AvatarVariant } from "../../../Information/Avatars/Avatar"
 import { Counter } from "../../../Information/Counter"
 import { NavigationItem } from "../../utils"
 import { DragProvider, useDragContext } from "./DragContext"
@@ -14,6 +15,18 @@ export interface MenuItem extends NavigationItem {
   icon: IconType
   badge?: number
 }
+
+type FavoriteMenuItem = (
+  | {
+      type: "icon"
+      icon: IconType
+    }
+  | {
+      type: "avatar"
+      avatar?: AvatarVariant
+    }
+) &
+  NavigationItem
 
 export interface MenuCategory {
   id: string
@@ -26,6 +39,7 @@ export interface MenuCategory {
 
 interface MenuProps {
   tree: MenuCategory[]
+  favorites?: FavoriteMenuItem[]
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onSort?: (categories: MenuCategory[]) => void
 }
@@ -77,6 +91,135 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
   )
 }
 
+const FavoriteItem = ({ item }: { item: FavoriteMenuItem }) => {
+  const { isActive } = useNavigation()
+  const active = isActive(item.href, { exact: item.exactMatch })
+
+  return (
+    <Link
+      href={item.href}
+      exactMatch={item.exactMatch}
+      className={cn(
+        "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
+        focusRing("focus-visible:ring-inset"),
+        active
+          ? "bg-f1-background-secondary text-f1-foreground"
+          : "hover:bg-f1-background-secondary"
+      )}
+    >
+      <div className="flex w-full items-center gap-1.5">
+        {item.type === "icon" ? (
+          <Icon
+            icon={item.icon}
+            size="md"
+            className={cn(
+              "transition-colors",
+              active ? "text-f1-icon-bold" : "text-f1-icon"
+            )}
+          />
+        ) : item.avatar ? (
+          <Avatar size="xsmall" avatar={item.avatar} />
+        ) : null}
+        <span className="font-medium text-f1-foreground">{item.label}</span>
+      </div>
+    </Link>
+  )
+}
+
+interface BaseCategoryProps {
+  title: string
+  isOpen?: boolean
+  isRoot?: boolean
+  onCollapse?: (isOpen: boolean) => void
+  children?: React.ReactNode
+  isDragging?: boolean
+  wasDragging?: React.RefObject<boolean>
+}
+
+const BaseCategory = ({
+  title,
+  isOpen: initialIsOpen = true,
+  isRoot,
+  onCollapse,
+  children,
+  isDragging,
+  wasDragging,
+}: BaseCategoryProps) => {
+  const [isOpen, setIsOpen] = React.useState(initialIsOpen)
+  const shouldReduceMotion = useReducedMotion()
+
+  const handleClick = () => {
+    if (isDragging || wasDragging?.current) return
+
+    const newIsOpen = !isOpen
+    setIsOpen(newIsOpen)
+    onCollapse?.(newIsOpen)
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, translateY: -20 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{
+        opacity: { duration: 0.3 },
+        translateY: { duration: 0.2, ease: "easeInOut" },
+      }}
+    >
+      <Collapsible open={isOpen}>
+        <div className="group relative flex items-center">
+          <div
+            className={cn(
+              "group relative flex w-full select-none items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary transition-colors hover:cursor-pointer hover:bg-f1-background-secondary",
+              focusRing("focus-visible:ring-inset"),
+              isRoot && "hidden"
+            )}
+            onClick={handleClick}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleClick()
+              }
+            }}
+          >
+            {title}
+            <motion.div
+              initial={false}
+              animate={{ rotate: isOpen ? 0 : -90 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.1 }}
+              className="h-3 w-3"
+            >
+              <Icon
+                icon={ChevronDown}
+                size="xs"
+                className="text-f1-icon-secondary"
+              />
+            </motion.div>
+          </div>
+        </div>
+        <CollapsibleContent
+          forceMount
+          className="flex flex-col gap-1 overflow-hidden"
+        >
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{
+              height: isOpen ? "auto" : 0,
+              opacity: isOpen ? 1 : 0,
+              visibility: isOpen ? "visible" : "hidden",
+            }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.15,
+              ease: [0.165, 0.84, 0.44, 1],
+            }}
+          >
+            <div className="flex flex-col gap-0.5">{children}</div>
+          </motion.div>
+        </CollapsibleContent>
+      </Collapsible>
+    </motion.div>
+  )
+}
+
 interface CategoryItemProps {
   category: MenuCategory
   isSortable?: boolean
@@ -94,18 +237,8 @@ const CategoryItem = ({
   onDragEnd,
   currentOrder,
 }: CategoryItemProps) => {
-  const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
-  const shouldReduceMotion = useReducedMotion()
-  const wasDragging = useRef(false)
   const { isDragging, setIsDragging } = useDragContext()
-
-  const handleClick = () => {
-    if (!isDragging && !wasDragging.current) {
-      const newIsOpen = !isOpen
-      setIsOpen(newIsOpen)
-      onCollapse?.(category, newIsOpen)
-    }
-  }
+  const wasDragging = useRef(false)
 
   const handleDragStart = () => {
     setIsDragging(true)
@@ -122,81 +255,32 @@ const CategoryItem = ({
     }, 0)
   }
 
+  const handleCollapse = (isOpen: boolean) => {
+    if (!isDragging && !wasDragging.current) {
+      onCollapse?.(category, isOpen)
+    }
+  }
+
   const content = (
-    <motion.div
-      initial={{ opacity: 0, translateY: -20 }}
-      animate={{ opacity: 1, translateY: 0 }}
-      transition={{
-        opacity: { duration: 0.3 },
-        translateY: { duration: 0.2, ease: "easeInOut" },
-      }}
+    <BaseCategory
+      title={category.title}
+      isOpen={category.isOpen}
+      isRoot={category.isRoot}
+      onCollapse={handleCollapse}
+      isDragging={isDragging}
+      wasDragging={wasDragging}
     >
-      <Collapsible open={isOpen}>
-        <div className="group relative flex items-center">
-          <div
-            className={cn(
-              "group relative flex w-full items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary transition-colors hover:cursor-pointer hover:bg-f1-background-secondary",
-              isDragging && "hover:cursor-grabbing",
-              isDragging && wasDragging.current && "bg-f1-background-secondary",
-              focusRing("focus-visible:ring-inset"),
-              category.isRoot && "hidden"
-            )}
-            onClick={!isDragging ? handleClick : undefined}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                handleClick()
-              }
-            }}
-          >
-            {category.title}
-            <motion.div
-              initial={false}
-              animate={{ rotate: isOpen ? 0 : -90 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.1 }}
-              className="h-3 w-3"
-            >
-              <Icon
-                icon={ChevronDown}
-                size="xs"
-                className="text-f1-icon-secondary"
-              />
-            </motion.div>
-          </div>
-        </div>
-        <CollapsibleContent
-          forceMount
-          className={cn(
-            "flex flex-col gap-1 overflow-hidden",
-            isDragging && "pointer-events-none"
-          )}
-        >
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{
-              height: isOpen ? "auto" : 0,
-              opacity: isOpen ? 1 : 0,
-              visibility: isOpen ? "visible" : "hidden",
-            }}
-            transition={{
-              duration: shouldReduceMotion ? 0 : 0.15,
-              ease: [0.165, 0.84, 0.44, 1],
-            }}
-          >
-            <div
-              className={cn(
-                "flex flex-col gap-0.5",
-                isDragging && !wasDragging.current && "pointer-events-none"
-              )}
-            >
-              {category.items.map((item, index) => (
-                <MenuItem key={index} item={item} />
-              ))}
-            </div>
-          </motion.div>
-        </CollapsibleContent>
-      </Collapsible>
-    </motion.div>
+      <div
+        className={cn(
+          "flex flex-col gap-0.5",
+          isDragging && !wasDragging.current && "pointer-events-none"
+        )}
+      >
+        {category.items.map((item, index) => (
+          <MenuItem key={index} item={item} />
+        ))}
+      </div>
+    </BaseCategory>
   )
 
   if (!isSortable) return content
@@ -235,7 +319,7 @@ const CategoryItem = ({
   )
 }
 
-export function Menu({ tree, onCollapse, onSort }: MenuProps) {
+export function Menu({ tree, onCollapse, onSort, favorites }: MenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const nonSortableItems = tree.filter(
     (category) => category.isSortable === false
@@ -264,6 +348,7 @@ export function Menu({ tree, onCollapse, onSort }: MenuProps) {
         containerRef={containerRef}
         onCollapse={onCollapse}
         onDragEnd={handleDragEnd}
+        favorites={favorites}
       />
     </DragProvider>
   )
@@ -276,6 +361,7 @@ function MenuContent({
   containerRef,
   onCollapse,
   onDragEnd,
+  favorites,
 }: {
   nonSortableItems: MenuCategory[]
   sortableItems: MenuCategory[]
@@ -283,12 +369,14 @@ function MenuContent({
   containerRef: React.RefObject<HTMLDivElement>
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onDragEnd?: (categories: MenuCategory[]) => void
+  favorites?: FavoriteMenuItem[]
 }) {
   const { isDragging } = useDragContext()
   const hasRoot = nonSortableItems.some((category) => category.isRoot)
   const hasNonSortableItems =
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
+  const hasFavorites = favorites && favorites.length > 0
 
   return (
     <div
@@ -308,6 +396,16 @@ function MenuContent({
                 onCollapse={onCollapse}
               />
             ))}
+        </div>
+      )}
+
+      {hasFavorites && (
+        <div className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3">
+          <BaseCategory title="Favorites">
+            {favorites.map((item, index) => (
+              <FavoriteItem key={`favorite-${index}`} item={item} />
+            ))}
+          </BaseCategory>
         </div>
       )}
 
