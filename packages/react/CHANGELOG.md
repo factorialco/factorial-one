@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.0...factorial-one-react-v1.36.1) (2025-04-28)
+
+
+### Bug Fixes
+
+* improve filter removal logic in Filters component ([#1665](https://github.com/factorialco/factorial-one/issues/1665)) ([cfda323](https://github.com/factorialco/factorial-one/commit/cfda3237ee6a2fda5e87d7f4a4b89d1434f3af69))
+
 ## [1.36.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.6...factorial-one-react-v1.36.0) (2025-04-24)
 
 
