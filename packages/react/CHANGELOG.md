@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.1...factorial-one-react-v1.36.2) (2025-04-28)
+
+
+### Bug Fixes
+
+* update localValue when value or items are changed on re-render ([#1679](https://github.com/factorialco/factorial-one/issues/1679)) ([d6fd9a4](https://github.com/factorialco/factorial-one/commit/d6fd9a44d2138e570f6f20d5ed2e9cb845108785))
+
 ## [1.36.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.0...factorial-one-react-v1.36.1) (2025-04-28)
 
 
