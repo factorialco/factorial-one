@@ -3,6 +3,7 @@ import { ScrollView } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native";
 import { TextInput } from "react-native";
+import { TouchableOpacity } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   Icon,
@@ -72,12 +73,15 @@ const StyledIconDisplay = ({ icon, name, color }: StyledIconDisplayProps) => (
   </View>
 );
 
+type IconType = "app" | "module";
+
 export const IconsShowcase: Story = {
   args: {
     icon: AppIcons.Archive,
   },
   render: () => {
     const [searchTerm, setSearchTerm] = useState("");
+    const [selectedType, setSelectedType] = useState<IconType>("app");
     const [appIconList, setAppIconList] = useState<
       Array<{ name: string; icon: any }>
     >([]);
@@ -103,13 +107,39 @@ export const IconsShowcase: Story = {
       setModuleIconList(modIcons);
     }, []);
 
-    // Filter icons based on search term
-    const filteredAppIcons = appIconList.filter((item) =>
+    // Filter icons based on search term and selected type
+    const filteredIcons = (
+      selectedType === "app" ? appIconList : moduleIconList
+    ).filter((item) =>
       item.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
-    const filteredModuleIcons = moduleIconList.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    const TabButton = ({
+      type,
+      label,
+      count,
+    }: {
+      type: IconType;
+      label: string;
+      count: number;
+    }) => (
+      <View className="flex-1">
+        <TouchableOpacity
+          onPress={() => setSelectedType(type)}
+          className={`py-2 px-4 ${
+            selectedType === type ? "bg-f1-icon-info" : "bg-f1-icon-secondary"
+          }`}
+        >
+          <Text
+            className={`text-center font-medium ${
+              selectedType === type ? "text-white" : "text-gray-700"
+            }`}
+          >
+            {label} ({count})
+          </Text>
+        </TouchableOpacity>
+        {selectedType === type && <View className="h-0.5 bg-blue-500" />}
+      </View>
     );
 
     return (
@@ -117,48 +147,41 @@ export const IconsShowcase: Story = {
         <View className="mb-4">
           <Text className="text-lg font-bold mb-2">Search Icons</Text>
           <TextInput
-            className="border border-gray-300 rounded-lg p-2"
+            className="border border-gray-300 rounded-lg p-2 mb-4"
             placeholder="Search icons..."
             value={searchTerm}
             onChangeText={setSearchTerm}
           />
+
+          <View className="flex-row rounded-lg overflow-hidden mb-4">
+            <TabButton
+              type="app"
+              label="App Icons"
+              count={
+                appIconList.filter((item) =>
+                  item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+                ).length
+              }
+            />
+            <TabButton
+              type="module"
+              label="Module Icons"
+              count={
+                moduleIconList.filter((item) =>
+                  item.name.toLowerCase().includes(searchTerm.toLowerCase()),
+                ).length
+              }
+            />
+          </View>
         </View>
 
-        {filteredAppIcons.length > 0 && (
-          <>
-            <Text className="text-lg font-bold mb-4 mt-6">
-              App Icons ({filteredAppIcons.length})
-            </Text>
-            <View className="flex-row flex-wrap justify-start">
-              {filteredAppIcons.map((item) => (
-                <IconDisplay
-                  key={item.name}
-                  icon={item.icon}
-                  name={item.name}
-                />
-              ))}
-            </View>
-          </>
-        )}
-
-        {filteredModuleIcons.length > 0 && (
-          <>
-            <Text className="text-lg font-bold mb-4 mt-6">
-              Module Icons ({filteredModuleIcons.length})
-            </Text>
-            <View className="flex-row flex-wrap justify-start">
-              {filteredModuleIcons.map((item) => (
-                <IconDisplay
-                  key={item.name}
-                  icon={item.icon}
-                  name={item.name}
-                />
-              ))}
-            </View>
-          </>
-        )}
-
-        {filteredAppIcons.length === 0 && filteredModuleIcons.length === 0 && (
+        {filteredIcons.length > 0 ? (
+          <View className="flex-row flex-wrap justify-start">
+            {filteredIcons.map((item) => (
+              <IconDisplay key={item.name} icon={item.icon} name={item.name} />
+            ))}
+          </View>
+        ) : (
           <View className="items-center justify-center p-10">
             <Text className="text-lg">
               No icons found matching "{searchTerm}"
@@ -168,28 +191,6 @@ export const IconsShowcase: Story = {
       </ScrollView>
     );
   },
-};
-
-export const ModuleIconsShowcase: Story = {
-  args: {
-    icon: ModuleIcons.Home,
-  },
-  render: () => (
-    <ScrollView>
-      <Text className="text-lg font-bold mb-4 mt-6">Module Icons</Text>
-      <View className="flex-row flex-wrap justify-start">
-        <IconDisplay icon={ModuleIcons.Benefits} name="Benefits" />
-        <IconDisplay icon={ModuleIcons.Calendar} name="Calendar" />
-        <IconDisplay icon={ModuleIcons.ClockIn} name="ClockIn" />
-        <IconDisplay icon={ModuleIcons.Finance} name="Finance" />
-        <IconDisplay icon={ModuleIcons.Home} name="Home" />
-        <IconDisplay icon={ModuleIcons.Inbox} name="Inbox" />
-        <IconDisplay icon={ModuleIcons.Organization} name="Organization" />
-        <IconDisplay icon={ModuleIcons.Payroll} name="Payroll" />
-        <IconDisplay icon={ModuleIcons.Settings} name="Settings" />
-      </View>
-    </ScrollView>
-  ),
 };
 
 export const SizeVariants: Story = {
