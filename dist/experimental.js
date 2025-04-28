@@ -60505,7 +60505,6 @@ const jCe = {
   initialValueConverter: function(e, t) {
     if ("value" in e)
       return e;
-    console.log("test", t);
     const n = Array.isArray(t.granularity) ? t.granularity : [t.granularity], i = t.defaultGranularity || n[0] || "day";
     if (i === "custom") {
       if (!Array.isArray(e))
