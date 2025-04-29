@@ -1,100 +1,29 @@
-import { iconWithClassName } from "../../lib/iconWithClassName";
-
-import Benefits from "./Benefits";
-import Calendar from "./Calendar";
-import ClockIn from "./ClockIn";
-import Discover from "./Discover";
-import Documents from "./Documents";
-import Engagement from "./Engagement";
-import Finance from "./Finance";
-import Goals from "./Goals";
-import Home from "./Home";
-import Inbox from "./Inbox";
-import Kudos from "./Kudos";
-import MyDocuments from "./MyDocuments";
-import Organization from "./Organization";
-import Payroll from "./Payroll";
-import Performance from "./Performance";
-import Profile from "./Profile";
-import Projects from "./Projects";
-import Recruitment from "./Recruitment";
-import Reports from "./Reports";
-import Settings from "./Settings";
-import Shifts from "./Shifts";
-import Software from "./Software";
-import Spaces from "./Spaces";
-import Spending from "./Spending";
-import Tasks from "./Tasks";
-import TimeOff from "./TimeOff";
-import TimeTracking from "./TimeTracking";
-import Trainings from "./Trainings";
-import Workflows from "./Workflows";
-
-// Apply NativeWind className interop to all icons
-const icons = [
-  Benefits,
-  Calendar,
-  ClockIn,
-  Discover,
-  Documents,
-  Engagement,
-  Finance,
-  Goals,
-  Home,
-  Inbox,
-  Kudos,
-  MyDocuments,
-  Organization,
-  Payroll,
-  Performance,
-  Profile,
-  Projects,
-  Recruitment,
-  Reports,
-  Settings,
-  Shifts,
-  Software,
-  Spaces,
-  Spending,
-  Tasks,
-  TimeOff,
-  TimeTracking,
-  Trainings,
-  Workflows,
-];
-
-// Apply NativeWind className interop to all icons
-icons.forEach(iconWithClassName);
-
-// Export all icons
-export {
-  Benefits,
-  Calendar,
-  ClockIn,
-  Discover,
-  Documents,
-  Engagement,
-  Finance,
-  Goals,
-  Home,
-  Inbox,
-  Kudos,
-  MyDocuments,
-  Organization,
-  Payroll,
-  Performance,
-  Profile,
-  Projects,
-  Recruitment,
-  Reports,
-  Settings,
-  Shifts,
-  Software,
-  Spaces,
-  Spending,
-  Tasks,
-  TimeOff,
-  TimeTracking,
-  Trainings,
-  Workflows,
-};
+export { default as Benefits } from "./Benefits";
+export { default as Calendar } from "./Calendar";
+export { default as ClockIn } from "./ClockIn";
+export { default as Discover } from "./Discover";
+export { default as Documents } from "./Documents";
+export { default as Engagement } from "./Engagement";
+export { default as Finance } from "./Finance";
+export { default as Goals } from "./Goals";
+export { default as Home } from "./Home";
+export { default as Inbox } from "./Inbox";
+export { default as Kudos } from "./Kudos";
+export { default as MyDocuments } from "./MyDocuments";
+export { default as Organization } from "./Organization";
+export { default as Payroll } from "./Payroll";
+export { default as Performance } from "./Performance";
+export { default as Profile } from "./Profile";
+export { default as Projects } from "./Projects";
+export { default as Recruitment } from "./Recruitment";
+export { default as Reports } from "./Reports";
+export { default as Settings } from "./Settings";
+export { default as Shifts } from "./Shifts";
+export { default as Software } from "./Software";
+export { default as Spaces } from "./Spaces";
+export { default as Spending } from "./Spending";
+export { default as Tasks } from "./Tasks";
+export { default as TimeOff } from "./TimeOff";
+export { default as TimeTracking } from "./TimeTracking";
+export { default as Trainings } from "./Trainings";
+export { default as Workflows } from "./Workflows";

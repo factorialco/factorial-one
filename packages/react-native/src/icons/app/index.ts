@@ -1,514 +1,167 @@
-import { iconWithClassName } from "../../lib/iconWithClassName";
-
-import Add from "./Add";
-import Alert from "./Alert";
-import AlertCircle from "./AlertCircle";
-import AlertCircleLine from "./AlertCircleLine";
-import AlignTextCenter from "./AlignTextCenter";
-import AlignTextJustify from "./AlignTextJustify";
-import AlignTextLeft from "./AlignTextLeft";
-import AlignTextRight from "./AlignTextRight";
-import Ai from "./Ai";
-import AcademicCap from "./AcademicCap";
-import Appearance from "./Appearance";
-import Archive from "./Archive";
-import ArchiveOpen from "./ArchiveOpen";
-import ArrowDown from "./ArrowDown";
-import ArrowLeft from "./ArrowLeft";
-import ArrowRight from "./ArrowRight";
-import ArrowUp from "./ArrowUp";
-import Bank from "./Bank";
-import BarGraph from "./BarGraph";
-import Bell from "./Bell";
-import Bold from "./Bold";
-import BookOpen from "./BookOpen";
-import Briefcase from "./Briefcase";
-import Building from "./Building";
-import Bucket from "./Bucket";
-import Bullet from "./Bullet";
-import Calculator from "./Calculator";
-import Calendar from "./Calendar";
-import CalendarArrowDown from "./CalendarArrowDown";
-import CalendarArrowLeft from "./CalendarArrowLeft";
-import CalendarArrowRight from "./CalendarArrowRight";
-import ChartLine from "./ChartLine";
-import Check from "./Check";
-import CheckCircle from "./CheckCircle";
-import CheckCircleLine from "./CheckCircleLine";
-import CheckDouble from "./CheckDouble";
-import ChevronDown from "./ChevronDown";
-import ChevronLeft from "./ChevronLeft";
-import ChevronRight from "./ChevronRight";
-import ChevronUp from "./ChevronUp";
-import Circle from "./Circle";
-import Clock from "./Clock";
-import Code from "./Code";
-import Coffee from "./Coffee";
-import Comment from "./Comment";
-import Completed from "./Completed";
-import CreditCard from "./CreditCard";
-import Cross from "./Cross";
-import CrossedCircle from "./CrossedCircle";
-import Crown from "./Crown";
-import Delete from "./Delete";
-import Deny from "./Deny";
-import Desktop from "./Desktop";
-import DollarBill from "./DollarBill";
-import DottedCircle from "./DottedCircle";
-import Download from "./Download";
-import DropdownDefault from "./DropdownDefault";
-import DropdownOpen from "./DropdownOpen";
-import Ellipsis from "./Ellipsis";
-import EllipsisHorizontal from "./EllipsisHorizontal";
-import Envelope from "./Envelope";
-import EnvelopeOpen from "./EnvelopeOpen";
-import Exit from "./Exit";
-import ExternalLink from "./ExternalLink";
-import EyeInvisible from "./EyeInvisible";
-import EyeVisible from "./EyeVisible";
-import Feed from "./Feed";
-import File from "./File";
-import Filter from "./Filter";
-import Flag from "./Flag";
-import Folder from "./Folder";
-import Folders from "./Folders";
-import Globe from "./Globe";
-import Graph from "./Graph";
-import Handshake from "./Handshake";
-import Heading1 from "./Heading1";
-import Heading2 from "./Heading2";
-import Heading3 from "./Heading3";
-import Heart from "./Heart";
-import HoldHeart from "./HoldHeart";
-import Home from "./Home";
-import Image from "./Image";
-import Inbox from "./Inbox";
-import Info from "./Info";
-import InfoCircle from "./InfoCircle";
-import InfoCircleLine from "./InfoCircleLine";
-import InProgressTask from "./InProgressTask";
-import Italic from "./Italic";
-import Kanban from "./Kanban";
-import Laptop from "./Laptop";
-import LayersFront from "./LayersFront";
-import Lightbulb from "./Lightbulb";
-import Link from "./Link";
-import LinkRemove from "./LinkRemove";
-import List from "./List";
-import LockLocked from "./LockLocked";
-import LockUnlocked from "./LockUnlocked";
-import LogoAvatar from "./LogoAvatar";
-import LogoEruditai from "./LogoEruditai";
-import LogoTravelperk from "./LogoTravelperk";
-import Masonry from "./Masonry";
-import Maximize from "./Maximize";
-import Megaphone from "./Megaphone";
-import Menu from "./Menu";
-import MessageFrown from "./MessageFrown";
-import MessageHeart from "./MessageHeart";
-import Messages from "./Messages";
-import Minimize from "./Minimize";
-import Minus from "./Minus";
-import Mobile from "./Mobile";
-import Money from "./Money";
-import MoneyBag from "./MoneyBag";
-import MoveDown from "./MoveDown";
-import MoveTop from "./MoveTop";
-import MoveUp from "./MoveUp";
-import Office from "./Office";
-import OlList from "./OlList";
-import PalmTree from "./PalmTree";
-import Paperclip from "./Paperclip";
-import PartiallyCompleted from "./PartiallyCompleted";
-import PauseCircle from "./PauseCircle";
-import Pencil from "./Pencil";
-import People from "./People";
-import Person from "./Person";
-import Phone from "./Phone";
-import Pin from "./Pin";
-import PixBrazil from "./PixBrazil";
-import Placeholder from "./Placeholder";
-import Plane from "./Plane";
-import Present from "./Present";
-import Printer from "./Printer";
-import Proyector from "./Proyector";
-import Question from "./Question";
-import Quote from "./Quote";
-import Reaction from "./Reaction";
-import Receipt from "./Receipt";
-import Replace from "./Replace";
-import Reset from "./Reset";
-import Rocket from "./Rocket";
-import Salad from "./Salad";
-import Save from "./Save";
-import Schedule from "./Schedule";
-import Search from "./Search";
-import SearchPerson from "./SearchPerson";
-import Settings from "./Settings";
-import Share from "./Share";
-import Sliders from "./Sliders";
-import SolidPause from "./SolidPause";
-import SolidPlay from "./SolidPlay";
-import SolidStop from "./SolidStop";
-import Sparkles from "./Sparkles";
-import Spinner from "./Spinner";
-import Split from "./Split";
-import Star from "./Star";
-import Strikethrough from "./Strikethrough";
-import Suitcase from "./Suitcase";
-import Table from "./Table";
-import Target from "./Target";
-import TextSize from "./TextSize";
-import Timer from "./Timer";
-import Underline from "./Underline";
-import Upload from "./Upload";
-import Video from "./Video";
-import Wallet from "./Wallet";
-import Warning from "./Warning";
-import WhatsappChat from "./WhatsappChat";
-import Windows from "./Windows";
-
-// Apply NativeWind className interop to all icons
-const icons = [
-  Add,
-  Alert,
-  AlertCircle,
-  AlertCircleLine,
-  AlignTextCenter,
-  AlignTextJustify,
-  AlignTextLeft,
-  AlignTextRight,
-  Ai,
-  AcademicCap,
-  Appearance,
-  Archive,
-  ArchiveOpen,
-  ArrowDown,
-  ArrowLeft,
-  ArrowRight,
-  ArrowUp,
-  Bank,
-  BarGraph,
-  Bell,
-  Bold,
-  BookOpen,
-  Briefcase,
-  Building,
-  Bucket,
-  Bullet,
-  Calculator,
-  Calendar,
-  CalendarArrowDown,
-  CalendarArrowLeft,
-  CalendarArrowRight,
-  ChartLine,
-  Check,
-  CheckCircle,
-  CheckCircleLine,
-  CheckDouble,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  Circle,
-  Clock,
-  Code,
-  Coffee,
-  Comment,
-  Completed,
-  CreditCard,
-  Cross,
-  CrossedCircle,
-  Crown,
-  Delete,
-  Deny,
-  Desktop,
-  DollarBill,
-  DottedCircle,
-  Download,
-  DropdownDefault,
-  DropdownOpen,
-  Ellipsis,
-  EllipsisHorizontal,
-  Envelope,
-  EnvelopeOpen,
-  Exit,
-  ExternalLink,
-  EyeInvisible,
-  EyeVisible,
-  Feed,
-  File,
-  Filter,
-  Flag,
-  Folder,
-  Folders,
-  Globe,
-  Graph,
-  Handshake,
-  Heading1,
-  Heading2,
-  Heading3,
-  Heart,
-  HoldHeart,
-  Home,
-  Image,
-  Inbox,
-  Info,
-  InfoCircle,
-  InfoCircleLine,
-  InProgressTask,
-  Italic,
-  Kanban,
-  Laptop,
-  LayersFront,
-  Lightbulb,
-  Link,
-  LinkRemove,
-  List,
-  LockLocked,
-  LockUnlocked,
-  LogoAvatar,
-  LogoEruditai,
-  LogoTravelperk,
-  Masonry,
-  Maximize,
-  Megaphone,
-  Menu,
-  MessageFrown,
-  MessageHeart,
-  Messages,
-  Minimize,
-  Minus,
-  Mobile,
-  Money,
-  MoneyBag,
-  MoveDown,
-  MoveTop,
-  MoveUp,
-  Office,
-  OlList,
-  PalmTree,
-  Paperclip,
-  PartiallyCompleted,
-  PauseCircle,
-  Pencil,
-  People,
-  Person,
-  Phone,
-  Pin,
-  PixBrazil,
-  Placeholder,
-  Plane,
-  Present,
-  Printer,
-  Proyector,
-  Question,
-  Quote,
-  Reaction,
-  Receipt,
-  Replace,
-  Reset,
-  Rocket,
-  Salad,
-  Save,
-  Schedule,
-  Search,
-  SearchPerson,
-  Settings,
-  Share,
-  Sliders,
-  SolidPause,
-  SolidPlay,
-  SolidStop,
-  Sparkles,
-  Spinner,
-  Split,
-  Star,
-  Strikethrough,
-  Suitcase,
-  Table,
-  Target,
-  TextSize,
-  Timer,
-  Underline,
-  Upload,
-  Video,
-  Wallet,
-  Warning,
-  WhatsappChat,
-  Windows,
-];
-
-// Apply NativeWind className interop to all icons
-icons.forEach(iconWithClassName);
-
-// Export all icons
-export {
-  Add,
-  Alert,
-  AlertCircle,
-  AlertCircleLine,
-  AlignTextCenter,
-  AlignTextJustify,
-  AlignTextLeft,
-  AlignTextRight,
-  Ai,
-  AcademicCap,
-  Appearance,
-  Archive,
-  ArchiveOpen,
-  ArrowDown,
-  ArrowLeft,
-  ArrowRight,
-  ArrowUp,
-  Bank,
-  BarGraph,
-  Bell,
-  Bold,
-  BookOpen,
-  Briefcase,
-  Building,
-  Bucket,
-  Bullet,
-  Calculator,
-  Calendar,
-  CalendarArrowDown,
-  CalendarArrowLeft,
-  CalendarArrowRight,
-  ChartLine,
-  Check,
-  CheckCircle,
-  CheckCircleLine,
-  CheckDouble,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ChevronUp,
-  Circle,
-  Clock,
-  Code,
-  Coffee,
-  Comment,
-  Completed,
-  CreditCard,
-  Cross,
-  CrossedCircle,
-  Crown,
-  Delete,
-  Deny,
-  Desktop,
-  DollarBill,
-  DottedCircle,
-  Download,
-  DropdownDefault,
-  DropdownOpen,
-  Ellipsis,
-  EllipsisHorizontal,
-  Envelope,
-  EnvelopeOpen,
-  Exit,
-  ExternalLink,
-  EyeInvisible,
-  EyeVisible,
-  Feed,
-  File,
-  Filter,
-  Flag,
-  Folder,
-  Folders,
-  Globe,
-  Graph,
-  Handshake,
-  Heading1,
-  Heading2,
-  Heading3,
-  Heart,
-  HoldHeart,
-  Home,
-  Image,
-  Inbox,
-  Info,
-  InfoCircle,
-  InfoCircleLine,
-  InProgressTask,
-  Italic,
-  Kanban,
-  Laptop,
-  LayersFront,
-  Lightbulb,
-  Link,
-  LinkRemove,
-  List,
-  LockLocked,
-  LockUnlocked,
-  LogoAvatar,
-  LogoEruditai,
-  LogoTravelperk,
-  Masonry,
-  Maximize,
-  Megaphone,
-  Menu,
-  MessageFrown,
-  MessageHeart,
-  Messages,
-  Minimize,
-  Minus,
-  Mobile,
-  Money,
-  MoneyBag,
-  MoveDown,
-  MoveTop,
-  MoveUp,
-  Office,
-  OlList,
-  PalmTree,
-  Paperclip,
-  PartiallyCompleted,
-  PauseCircle,
-  Pencil,
-  People,
-  Person,
-  Phone,
-  Pin,
-  PixBrazil,
-  Placeholder,
-  Plane,
-  Present,
-  Printer,
-  Proyector,
-  Question,
-  Quote,
-  Reaction,
-  Receipt,
-  Replace,
-  Reset,
-  Rocket,
-  Salad,
-  Save,
-  Schedule,
-  Search,
-  SearchPerson,
-  Settings,
-  Share,
-  Sliders,
-  SolidPause,
-  SolidPlay,
-  SolidStop,
-  Sparkles,
-  Spinner,
-  Split,
-  Star,
-  Strikethrough,
-  Suitcase,
-  Table,
-  Target,
-  TextSize,
-  Timer,
-  Underline,
-  Upload,
-  Video,
-  Wallet,
-  Warning,
-  WhatsappChat,
-  Windows,
-};
+export { default as CheckDouble } from "./CheckDouble";
+export { default as Maximize } from "./Maximize";
+export { default as Minimize } from "./Minimize";
+export { default as AcademicCap } from "./AcademicCap";
+export { default as Add } from "./Add";
+export { default as Ai } from "./Ai";
+export { default as AlertCircleLine } from "./AlertCircleLine";
+export { default as AlertCircle } from "./AlertCircle";
+export { default as Alert } from "./Alert";
+export { default as AlignTextCenter } from "./AlignTextCenter";
+export { default as AlignTextJustify } from "./AlignTextJustify";
+export { default as AlignTextLeft } from "./AlignTextLeft";
+export { default as AlignTextRight } from "./AlignTextRight";
+export { default as Appearance } from "./Appearance";
+export { default as ArchiveOpen } from "./ArchiveOpen";
+export { default as Archive } from "./Archive";
+export { default as ArrowDown } from "./ArrowDown";
+export { default as ArrowLeft } from "./ArrowLeft";
+export { default as ArrowRight } from "./ArrowRight";
+export { default as ArrowUp } from "./ArrowUp";
+export { default as Bank } from "./Bank";
+export { default as BarGraph } from "./BarGraph";
+export { default as Bell } from "./Bell";
+export { default as Bold } from "./Bold";
+export { default as BookOpen } from "./BookOpen";
+export { default as Briefcase } from "./Briefcase";
+export { default as Bucket } from "./Bucket";
+export { default as Building } from "./Building";
+export { default as Bullet } from "./Bullet";
+export { default as Calculator } from "./Calculator";
+export { default as CalendarArrowDown } from "./CalendarArrowDown";
+export { default as CalendarArrowLeft } from "./CalendarArrowLeft";
+export { default as CalendarArrowRight } from "./CalendarArrowRight";
+export { default as Calendar } from "./Calendar";
+export { default as ChartLine } from "./ChartLine";
+export { default as CheckCircleLine } from "./CheckCircleLine";
+export { default as CheckCircle } from "./CheckCircle";
+export { default as Check } from "./Check";
+export { default as ChevronDown } from "./ChevronDown";
+export { default as ChevronLeft } from "./ChevronLeft";
+export { default as ChevronRight } from "./ChevronRight";
+export { default as ChevronUp } from "./ChevronUp";
+export { default as Circle } from "./Circle";
+export { default as Clock } from "./Clock";
+export { default as Code } from "./Code";
+export { default as Coffee } from "./Coffee";
+export { default as Comment } from "./Comment";
+export { default as Completed } from "./Completed";
+export { default as CreditCard } from "./CreditCard";
+export { default as Cross } from "./Cross";
+export { default as CrossedCircle } from "./CrossedCircle";
+export { default as Crown } from "./Crown";
+export { default as Delete } from "./Delete";
+export { default as Deny } from "./Deny";
+export { default as Desktop } from "./Desktop";
+export { default as DollarBill } from "./DollarBill";
+export { default as DottedCircle } from "./DottedCircle";
+export { default as Download } from "./Download";
+export { default as DropdownDefault } from "./DropdownDefault";
+export { default as DropdownOpen } from "./DropdownOpen";
+export { default as EllipsisHorizontal } from "./EllipsisHorizontal";
+export { default as Ellipsis } from "./Ellipsis";
+export { default as EnvelopeOpen } from "./EnvelopeOpen";
+export { default as Envelope } from "./Envelope";
+export { default as Exit } from "./Exit";
+export { default as ExternalLink } from "./ExternalLink";
+export { default as EyeInvisible } from "./EyeInvisible";
+export { default as EyeVisible } from "./EyeVisible";
+export { default as Feed } from "./Feed";
+export { default as File } from "./File";
+export { default as Filter } from "./Filter";
+export { default as Flag } from "./Flag";
+export { default as Folder } from "./Folder";
+export { default as Folders } from "./Folders";
+export { default as Globe } from "./Globe";
+export { default as Graph } from "./Graph";
+export { default as Handshake } from "./Handshake";
+export { default as Heading1 } from "./Heading1";
+export { default as Heading2 } from "./Heading2";
+export { default as Heading3 } from "./Heading3";
+export { default as Heart } from "./Heart";
+export { default as HoldHeart } from "./HoldHeart";
+export { default as Home } from "./Home";
+export { default as Image } from "./Image";
+export { default as InProgressTask } from "./InProgressTask";
+export { default as Inbox } from "./Inbox";
+export { default as InfoCircleLine } from "./InfoCircleLine";
+export { default as InfoCircle } from "./InfoCircle";
+export { default as Info } from "./Info";
+export { default as Italic } from "./Italic";
+export { default as Kanban } from "./Kanban";
+export { default as Laptop } from "./Laptop";
+export { default as LayersFront } from "./LayersFront";
+export { default as Lightbulb } from "./Lightbulb";
+export { default as LinkRemove } from "./LinkRemove";
+export { default as Link } from "./Link";
+export { default as List } from "./List";
+export { default as LockLocked } from "./LockLocked";
+export { default as LockUnlocked } from "./LockUnlocked";
+export { default as LogoAvatar } from "./LogoAvatar";
+export { default as LogoEruditai } from "./LogoEruditai";
+export { default as LogoTravelperk } from "./LogoTravelperk";
+export { default as Masonry } from "./Masonry";
+export { default as Megaphone } from "./Megaphone";
+export { default as Menu } from "./Menu";
+export { default as MessageFrown } from "./MessageFrown";
+export { default as MessageHeart } from "./MessageHeart";
+export { default as Messages } from "./Messages";
+export { default as Minus } from "./Minus";
+export { default as Mobile } from "./Mobile";
+export { default as MoneyBag } from "./MoneyBag";
+export { default as Money } from "./Money";
+export { default as MoveDown } from "./MoveDown";
+export { default as MoveTop } from "./MoveTop";
+export { default as MoveUp } from "./MoveUp";
+export { default as Office } from "./Office";
+export { default as OlList } from "./OlList";
+export { default as PalmTree } from "./PalmTree";
+export { default as Paperclip } from "./Paperclip";
+export { default as PartiallyCompleted } from "./PartiallyCompleted";
+export { default as PauseCircle } from "./PauseCircle";
+export { default as Pencil } from "./Pencil";
+export { default as People } from "./People";
+export { default as Person } from "./Person";
+export { default as Phone } from "./Phone";
+export { default as Pin } from "./Pin";
+export { default as PixBrazil } from "./PixBrazil";
+export { default as Placeholder } from "./Placeholder";
+export { default as Plane } from "./Plane";
+export { default as Present } from "./Present";
+export { default as Printer } from "./Printer";
+export { default as Proyector } from "./Proyector";
+export { default as Question } from "./Question";
+export { default as Quote } from "./Quote";
+export { default as Reaction } from "./Reaction";
+export { default as Receipt } from "./Receipt";
+export { default as Replace } from "./Replace";
+export { default as Reset } from "./Reset";
+export { default as Rocket } from "./Rocket";
+export { default as Salad } from "./Salad";
+export { default as Save } from "./Save";
+export { default as Schedule } from "./Schedule";
+export { default as SearchPerson } from "./SearchPerson";
+export { default as Search } from "./Search";
+export { default as Settings } from "./Settings";
+export { default as Share } from "./Share";
+export { default as Sliders } from "./Sliders";
+export { default as SolidPause } from "./SolidPause";
+export { default as SolidPlay } from "./SolidPlay";
+export { default as SolidStop } from "./SolidStop";
+export { default as Sparkles } from "./Sparkles";
+export { default as Spinner } from "./Spinner";
+export { default as Split } from "./Split";
+export { default as Star } from "./Star";
+export { default as Strikethrough } from "./Strikethrough";
+export { default as Suitcase } from "./Suitcase";
+export { default as Table } from "./Table";
+export { default as Target } from "./Target";
+export { default as TextSize } from "./TextSize";
+export { default as Timer } from "./Timer";
+export { default as Underline } from "./Underline";
+export { default as Upload } from "./Upload";
+export { default as Video } from "./Video";
+export { default as Wallet } from "./Wallet";
+export { default as Warning } from "./Warning";
+export { default as WhatsappChat } from "./WhatsappChat";
+export { default as Windows } from "./Windows";

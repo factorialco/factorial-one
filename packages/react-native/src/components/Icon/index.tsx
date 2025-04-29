@@ -7,6 +7,7 @@ import React, {
 import { SvgProps } from "react-native-svg";
 import { cn } from "../../lib/utils";
 import { IconColorName } from "../../lib/colors";
+import { cssInterop } from "nativewind";
 
 const iconVariants = cva({
   base: "shrink-0",
@@ -37,12 +38,34 @@ export type IconType = ForwardRefExoticComponent<
     }
 >;
 
+// Keep track of icons that have already had cssInterop applied
+const interopAppliedIcons = new WeakSet();
+
+// Function to apply NativeWind interop to an icon component
+function applyIconInterop(icon: IconType) {
+  if (!interopAppliedIcons.has(icon)) {
+    cssInterop(icon, {
+      className: {
+        target: "style",
+        nativeStyleToProp: {
+          color: true,
+          opacity: true,
+        },
+      },
+    });
+    interopAppliedIcons.add(icon);
+  }
+  return icon;
+}
+
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
   { size, icon, className, testID, color = "text-f1-icon", ...props },
   ref,
 ) {
   if (!icon) return null;
-  const Component = icon;
+
+  // Apply NativeWind interop to the icon if not already applied
+  const Component = applyIconInterop(icon);
 
   return (
     <Component
