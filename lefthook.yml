@@ -6,5 +6,6 @@ commit-msg:
 pre-commit:
   commands:
     format:
+      glob: "**/*.{js,jsx,ts,tsx,json,css,md,yml,yaml}"
       run: pnpm exec prettier {staged_files} --write
       stage_fixed: true

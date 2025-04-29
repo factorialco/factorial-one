@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react-native",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "description": "React Native components for Factorial One Design System",
   "main": "src/index.ts",
@@ -8,6 +8,15 @@
   "exports": {
     ".": {
       "import": "./src/index.ts"
+    },
+    "./icons": {
+      "import": "./src/icons/index.ts"
+    },
+    "./icons/app": {
+      "import": "./src/icons/app/index.ts"
+    },
+    "./icons/modules": {
+      "import": "./src/icons/modules/index.ts"
     },
     "./tailwind.config": "./tailwind.config.js"
   },
@@ -19,7 +28,10 @@
     "build": "echo 'we ship source code as is'; exit 0",
     "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
     "lint-fix": "pnpm run lint -- --fix",
-    "test": "vitest run"
+    "test": "vitest run",
+    "generate-icons": "rm -fR src/icons/app/* src/icons/modules/* && run-p generate-app-icons generate-module-icons",
+    "generate-app-icons": "npx @svgr/cli --out-dir src/icons/app --native --svg-props className={props.className} ../../packages/core/assets/icons/app",
+    "generate-module-icons": "npx @svgr/cli --out-dir src/icons/modules --native --svg-props className={props.className} ../../packages/core/assets/icons/modules"
   },
   "keywords": [
     "factorial",
@@ -34,8 +46,14 @@
     "nativewind": "^4.1.23",
     "react": "^18.2.0",
     "react-native": "^0.76.6",
+    "react-native-svg": "^15.8.0",
     "tailwindcss": "3.3.5",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "cva": "1.0.0-beta.3",
+    "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
     "@testing-library/react-native": "^12.4.3",
@@ -43,10 +61,12 @@
     "@types/react-native": "^0.73.0",
     "globals": "^16.0.0",
     "nativewind": "^4.1.23",
+    "npm-run-all": "^4.1.5",
     "prettier": "^3.5.2",
     "prettier-plugin-tailwindcss": "^0.6.10",
     "react": "^18.2.0",
     "react-native": "^0.76.6",
+    "react-native-svg": "^15.8.0",
     "react-test-renderer": "^18.2.0",
     "tailwindcss": "3.3.5",
     "tailwindcss-animate": "^1.0.7",

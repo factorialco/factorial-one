@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/Button"
+import { ButtonInternal } from "@/components/Actions/Button/internal"
 import { Icon } from "@/components/Utilities/Icon"
 import AlertCircle from "@/icons/app/AlertCircle"
 import ChevronRight from "@/icons/app/ChevronRight"
@@ -98,18 +99,18 @@ const ProductUpdates = ({
       }}
     >
       <DropdownMenuTrigger asChild>
-        <div className="relative">
-          <Button
-            variant="outline"
-            icon={Megaphone}
-            hideLabel
-            round
-            label={label}
-          />
-          {hasUnread && (
-            <UnreadDot className="absolute -right-0.5 -top-[1px]" />
-          )}
-        </div>
+        <ButtonInternal
+          variant="outline"
+          icon={Megaphone}
+          hideLabel
+          round
+          label={label}
+          append={
+            hasUnread && (
+              <UnreadDot className="absolute -right-0.5 -top-[1px]" />
+            )
+          }
+        />
       </DropdownMenuTrigger>
       <DropdownMenuPortal>
         <DropdownMenuContent

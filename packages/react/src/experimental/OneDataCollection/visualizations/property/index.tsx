@@ -4,6 +4,7 @@ import {
   Avatar,
   AvatarVariant,
 } from "@/experimental/Information/Avatars/exports"
+import { DotTag, NewColor } from "@/experimental/Information/Tags/DotTag"
 import {
   StatusTag,
   StatusVariant,
@@ -116,6 +117,9 @@ export const propertyRenderers = {
   ),
   tag: (args: { label: string; icon?: IconType }) => (
     <RawTag text={args.label} icon={args.icon} />
+  ),
+  dotTag: (args: { label: string; color: NewColor }) => (
+    <DotTag text={args.label} color={args.color} />
   ),
 } as const satisfies Record<string, PropertyRenderer<never>>
 

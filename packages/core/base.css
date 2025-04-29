@@ -82,7 +82,7 @@
     --scrollbar-thumb-hover: rgba(0, 0, 0, 0.6);
   }
 
-  .dark {
+  .dark:root {
     --neutral-0: theme("colors.grey.100");
     --neutral-2: theme("colors.grey.0");
     --neutral-5: theme("colors.white.5");
@@ -163,5 +163,5 @@
 }
 
 body {
-  @apply font-sans text-base text-f1-foreground antialiased;
+  @apply text-f1-foreground font-sans text-base antialiased;
 }
