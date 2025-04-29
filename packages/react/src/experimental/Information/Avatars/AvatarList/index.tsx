@@ -77,6 +77,8 @@ type Props = {
 
   /**
    * The layout of the avatar list.
+   * - "fill" - Avatars will expand to fill the available width, with overflow items shown in a counter
+   * - "compact" - Avatars will be stacked tightly together up to the max limit, with remaining shown in counter
    * @default "compact"
    */
   layout?: "fill" | "compact"
