@@ -76,10 +76,10 @@ type Props = {
   remainingCount?: number
 
   /**
-   * Whether to fill the container with avatars.
-   * @default false
+   * The layout of the avatar list.
+   * @default "compact"
    */
-  fillContainer?: boolean
+  layout?: "fill" | "compact"
 }
 
 export const AvatarList = ({
@@ -89,9 +89,9 @@ export const AvatarList = ({
   noTooltip = false,
   remainingCount: initialRemainingCount,
   max = 3,
-  fillContainer = false,
+  layout = "compact",
 }: Props) => {
-  if (fillContainer) {
+  if (layout === "fill") {
     return (
       <OverflowList
         items={avatars}

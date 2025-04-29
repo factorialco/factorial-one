@@ -114,7 +114,7 @@ export const FillContainer: Story = {
   args: {
     ...Default.args,
     avatars: getDummyAvatars(50, "person"),
-    fillContainer: true,
+    layout: "fill",
   },
 }
 
