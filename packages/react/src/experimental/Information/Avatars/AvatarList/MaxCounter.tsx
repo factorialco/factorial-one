@@ -64,7 +64,9 @@ export const MaxCounter = ({
   list,
 }: Props) => {
   const counter = (
-    <div className={cn("font-medium", sizeVariants({ size, type }))}>
+    <div
+      className={cn("cursor-default font-medium", sizeVariants({ size, type }))}
+    >
       {size === "xsmall" ? (
         <Icon icon={EllipsisHorizontal} size="xs" />
       ) : (
