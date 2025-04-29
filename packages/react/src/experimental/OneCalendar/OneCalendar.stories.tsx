@@ -260,6 +260,19 @@ export const Week: Story = {
     mode: "single",
     view: "week",
   },
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            // Disable color contrast check for week view as it gets a false positive for middle range days
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
       const now = new Date()
