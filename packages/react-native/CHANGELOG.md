@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.2...factorial-one-react-native-v0.2.3) (2025-04-29)
+
+
+### Bug Fixes
+
+* include src folder to the build ([#1698](https://github.com/factorialco/factorial-one/issues/1698)) ([9506ce8](https://github.com/factorialco/factorial-one/commit/9506ce8f57399f511e4672b1796d3f45d9dc4aba))
+
 ## [0.2.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.1...factorial-one-react-native-v0.2.2) (2025-04-29)
 
 
