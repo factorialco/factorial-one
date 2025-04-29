@@ -1,0 +1,5 @@
+# Ignore SVG files
+**/*.svg
+
+# Other common files to ignore
+packages/react/CHANGELOG.md
