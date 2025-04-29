@@ -30,7 +30,6 @@ The package includes a set of icons that can be imported and used in your React 
 import { Icon, AppIcons } from "@factorialco/factorial-one-react-native";
 
 // Basic usage
-<Icon icon={AppIcons.Calendar} size="md" />;
 <Icon icon={AppIcons.Calendar} size="sm" />;
 ```
 
