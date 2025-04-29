@@ -79,7 +79,7 @@ export const Default: Story = {
     favorites: [
       {
         type: "icon",
-        label: "Staff Product Designer",
+        label: "Mega staff Product Designer",
         icon: Icons.SearchPerson,
         href: "/ats/jobs/staff-product-designer",
       },
@@ -90,8 +90,30 @@ export const Default: Story = {
           type: "person",
           firstName: "Dani",
           lastName: "Moreno",
+          src: "https://github.com/dani-moreno.png",
         },
         href: "/people/dani-moreno",
+      },
+      {
+        type: "avatar",
+        label: "Nik Lopin",
+        avatar: {
+          type: "person",
+          firstName: "Nik",
+          lastName: "Lopin",
+          src: "https://github.com/nlopin.png",
+        },
+        href: "/people/nik-lopin",
+      },
+      {
+        type: "avatar",
+        label: "Saúl Domínguez",
+        avatar: {
+          type: "person",
+          firstName: "Saúl",
+          lastName: "Domínguez",
+        },
+        href: "/people/saul-dominguez",
       },
     ],
   },

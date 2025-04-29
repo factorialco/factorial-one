@@ -2,12 +2,13 @@ import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
 import { AnimatePresence, motion, Reorder } from "framer-motion"
 import React, { useRef } from "react"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
-import { ChevronDown } from "../../../../icons/app"
+import { ChevronDown, EllipsisHorizontal } from "../../../../icons/app"
 import { useReducedMotion } from "../../../../lib/a11y"
 import { Link, useNavigation } from "../../../../lib/linkHandler"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar, AvatarVariant } from "../../../Information/Avatars/Avatar"
 import { Counter } from "../../../Information/Counter"
+import { Dropdown } from "../../Dropdown"
 import { NavigationItem } from "../../utils"
 import { DragProvider, useDragContext } from "./DragContext"
 
@@ -37,11 +38,12 @@ export interface MenuCategory {
   isSortable?: boolean
 }
 
-interface MenuProps {
+export interface MenuProps {
   tree: MenuCategory[]
   favorites?: FavoriteMenuItem[]
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onSort?: (categories: MenuCategory[]) => void
+  onFavoritesSort?: (favorites: FavoriteMenuItem[]) => void
 }
 
 const MenuItemContent = ({
@@ -91,38 +93,93 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
   )
 }
 
-const FavoriteItem = ({ item }: { item: FavoriteMenuItem }) => {
+const FavoriteItem = ({
+  item,
+  dragConstraints,
+}: {
+  item: FavoriteMenuItem
+  dragConstraints?: React.RefObject<HTMLElement>
+}) => {
   const { isActive } = useNavigation()
   const active = isActive(item.href, { exact: item.exactMatch })
+  const { isDragging, setIsDragging } = useDragContext()
+  const wasDragging = useRef(false)
+
+  const handleDragStart = () => {
+    setIsDragging(true)
+    wasDragging.current = true
+  }
+
+  const handleDragEnd = () => {
+    setIsDragging(false)
+    setTimeout(() => {
+      wasDragging.current = false
+    }, 0)
+  }
+
+  const handleClick = () => {
+    if (!wasDragging.current && item.href) {
+      window.location.href = item.href
+    }
+  }
 
   return (
-    <Link
-      href={item.href}
-      exactMatch={item.exactMatch}
+    <Reorder.Item
+      value={item}
+      drag="y"
+      dragConstraints={dragConstraints}
+      dragElastic={0.1}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
       className={cn(
-        "flex cursor-pointer items-center rounded py-1.5 pl-1.5 pr-2 no-underline transition-colors",
-        focusRing("focus-visible:ring-inset"),
+        "relative cursor-pointer touch-none select-none list-none rounded backdrop-blur-sm active:cursor-grabbing",
         active
           ? "bg-f1-background-secondary text-f1-foreground"
           : "hover:bg-f1-background-secondary"
       )}
+      whileDrag={{
+        scale: 1.05,
+      }}
     >
-      <div className="flex w-full items-center gap-1.5">
-        {item.type === "icon" ? (
-          <Icon
-            icon={item.icon}
-            size="md"
-            className={cn(
-              "transition-colors",
-              active ? "text-f1-icon-bold" : "text-f1-icon"
-            )}
-          />
-        ) : item.avatar ? (
-          <Avatar size="xsmall" avatar={item.avatar} />
-        ) : null}
-        <span className="font-medium text-f1-foreground">{item.label}</span>
+      <div
+        className="isolate flex w-full items-center justify-between px-1.5 py-1.5"
+        onClick={handleClick}
+      >
+        <div className="flex w-full items-center gap-1.5">
+          {item.type === "icon" ? (
+            <Icon
+              icon={item.icon}
+              size="md"
+              className={cn(
+                "transition-colors",
+                active ? "text-f1-icon-bold" : "text-f1-icon"
+              )}
+            />
+          ) : item.avatar ? (
+            <Avatar size="xsmall" avatar={item.avatar} />
+          ) : null}
+          <span className="line-clamp-1 font-medium text-f1-foreground">
+            {item.label}
+          </span>
+        </div>
+        <div className="z-10 flex h-6 w-6 items-center justify-center rounded-sm hover:bg-f1-background-secondary">
+          <Dropdown
+            items={[
+              {
+                label: "Move up",
+                onClick: () => {},
+              },
+              {
+                label: "Move down",
+                onClick: () => {},
+              },
+            ]}
+          >
+            <Icon icon={EllipsisHorizontal} size="sm" />
+          </Dropdown>
+        </div>
       </div>
-    </Link>
+    </Reorder.Item>
   )
 }
 
@@ -196,10 +253,7 @@ const BaseCategory = ({
             </motion.div>
           </div>
         </div>
-        <CollapsibleContent
-          forceMount
-          className="flex flex-col gap-1 overflow-hidden"
-        >
+        <CollapsibleContent forceMount className="flex flex-col gap-1">
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{
@@ -319,7 +373,13 @@ const CategoryItem = ({
   )
 }
 
-export function Menu({ tree, onCollapse, onSort, favorites }: MenuProps) {
+export function Menu({
+  tree,
+  onCollapse,
+  onSort,
+  onFavoritesSort,
+  favorites,
+}: MenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const nonSortableItems = tree.filter(
     (category) => category.isSortable === false
@@ -349,6 +409,7 @@ export function Menu({ tree, onCollapse, onSort, favorites }: MenuProps) {
         onCollapse={onCollapse}
         onDragEnd={handleDragEnd}
         favorites={favorites}
+        onFavoritesSort={onFavoritesSort}
       />
     </DragProvider>
   )
@@ -362,6 +423,7 @@ function MenuContent({
   onCollapse,
   onDragEnd,
   favorites,
+  onFavoritesSort,
 }: {
   nonSortableItems: MenuCategory[]
   sortableItems: MenuCategory[]
@@ -370,6 +432,7 @@ function MenuContent({
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onDragEnd?: (categories: MenuCategory[]) => void
   favorites?: FavoriteMenuItem[]
+  onFavoritesSort?: (favorites: FavoriteMenuItem[]) => void
 }) {
   const { isDragging } = useDragContext()
   const hasRoot = nonSortableItems.some((category) => category.isRoot)
@@ -377,6 +440,22 @@ function MenuContent({
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
   const hasFavorites = favorites && favorites.length > 0
+  const [currentFavorites, setCurrentFavorites] = React.useState<
+    FavoriteMenuItem[]
+  >(favorites || [])
+  const favoritesRef = useRef<HTMLDivElement>(null)
+
+  React.useEffect(() => {
+    setCurrentFavorites(favorites || [])
+  }, [favorites])
+
+  const handleFavoritesReorder = React.useCallback(
+    (newOrder: FavoriteMenuItem[]) => {
+      setCurrentFavorites(newOrder)
+      onFavoritesSort?.(newOrder)
+    },
+    [onFavoritesSort]
+  )
 
   return (
     <div
@@ -402,9 +481,22 @@ function MenuContent({
       {hasFavorites && (
         <div className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3">
           <BaseCategory title="Favorites">
-            {favorites.map((item, index) => (
-              <FavoriteItem key={`favorite-${index}`} item={item} />
-            ))}
+            <div ref={favoritesRef}>
+              <Reorder.Group
+                axis="y"
+                values={currentFavorites}
+                onReorder={handleFavoritesReorder}
+                className="flex flex-col gap-0.5"
+              >
+                {currentFavorites.map((item) => (
+                  <FavoriteItem
+                    key={item.href}
+                    item={item}
+                    dragConstraints={favoritesRef}
+                  />
+                ))}
+              </Reorder.Group>
+            </div>
           </BaseCategory>
         </div>
       )}
