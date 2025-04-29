@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { cn, focusRing } from "../../../../lib/utils"
+import filterTypes from "../FilterTypes"
 import type { FiltersDefinition, FiltersState } from "../types"
 
 /**
@@ -40,11 +41,7 @@ export function FilterList<Definition extends FiltersDefinition>({
     <div className="w-[224px] shrink-0 border border-solid border-transparent border-r-f1-border-secondary">
       <div className="flex h-full w-full flex-col gap-1 overflow-y-auto p-2">
         {Object.entries(definition).map(([key, filter]) => {
-          const hasValue =
-            tempFilters[key] &&
-            (filter.type === "in"
-              ? (tempFilters[key] as unknown[]).length > 0
-              : tempFilters[key])
+          const filterType = filterTypes[filter.type]
 
           return (
             <button
@@ -62,7 +59,7 @@ export function FilterList<Definition extends FiltersDefinition>({
                   {filter.label}
                 </span>
                 <AnimatePresence>
-                  {hasValue && (
+                  {!filterType.isEmpty(tempFilters[key]) && (
                     <motion.div
                       className="h-2 w-2 shrink-0 rounded-full bg-f1-background-selected-bold"
                       initial={{ opacity: 0, scale: 0.7 }}

@@ -4,8 +4,8 @@ import { FiltersChipsList as FiltersChipsListComponent } from "./Components/Filt
 import { FiltersControls as FiltersControlsComponent } from "./Components/FiltersControls"
 import { FiltersPresets as FiltersPresetsComponent } from "./Components/FiltersPresets"
 
+import { FilterOption } from "./FilterTypes/InFilter/types"
 import type {
-  FilterOption,
   FiltersDefinition,
   FiltersState,
   InFilterDefinition,

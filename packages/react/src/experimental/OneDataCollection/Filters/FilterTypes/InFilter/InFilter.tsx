@@ -1,24 +1,21 @@
 "use client"
 
+import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { Spinner } from "@/experimental/Information/Spinner"
+import { useI18n } from "@/lib/providers/i18n"
+import { cn, focusRing } from "@/lib/utils"
 import { useEffect, useMemo, useState } from "react"
-import { useI18n } from "../../../../lib/providers/i18n"
-import { cn, focusRing } from "../../../../lib/utils"
-import { Checkbox } from "../../../Forms/Fields/Checkbox"
-import { Spinner } from "../../../Information/Spinner"
-import type { FilterOption, InFilterDefinition } from "../types"
+import { FilterTypeComponentProps } from "../types"
+import { FilterOption, InFilterOptions } from "./types"
 
 /**
  * Props for the InFilter component.
  * @template T - The type of values that can be selected
  */
-interface InFilterProps<T> {
-  /** The filter definition containing options and configuration */
-  filter: InFilterDefinition<T>
-  /** Array of currently selected values */
-  value: T[]
-  /** Callback fired when selected values change */
-  onChange: (value: T[]) => void
-}
+type InFilterComponentProps<T = unknown> = FilterTypeComponentProps<
+  T[],
+  InFilterOptions<T>
+>
 
 /**
  * A multi-select filter component that allows users to select multiple options from a predefined list.
@@ -64,14 +61,18 @@ interface InFilterProps<T> {
  * />
  * ```
  */
-export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
+export function InFilter<T>({
+  schema,
+  value,
+  onChange,
+}: InFilterComponentProps<T>) {
   // Determine if options are synchronous or asynchronous
-  const isAsyncOptions = typeof filter.options === "function"
+  const isAsyncOptions = typeof schema.options === "function"
 
   // For synchronous options, use useMemo to avoid unnecessary rerenders
   const syncOptions = useMemo(() => {
-    return Array.isArray(filter.options) ? filter.options : []
-  }, [filter.options])
+    return Array.isArray(schema.options) ? schema.options : []
+  }, [schema.options])
 
   // Only use state for async options
   const [asyncOptions, setAsyncOptions] = useState<FilterOption<T>[]>([])
@@ -90,11 +91,11 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
     // Load options from function
     const loadOptions = async () => {
       try {
-        if (typeof filter.options === "function") {
+        if (typeof schema.options === "function") {
           setIsLoading(true)
           setError(null)
-          const result = await filter.options()
-          setAsyncOptions(result)
+          const result = await schema.options()
+          setAsyncOptions(result as FilterOption<T>[])
         }
       } catch (err) {
         setError(
@@ -107,7 +108,7 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
     }
 
     loadOptions()
-  }, [filter, filter.options, isAsyncOptions])
+  }, [schema, schema.options, isAsyncOptions])
 
   if (isLoading) {
     return (
@@ -153,7 +154,7 @@ export function InFilter<T>({ filter, value, onChange }: InFilterProps<T>) {
     <div
       className="flex w-full flex-col gap-1"
       role="group"
-      aria-label={filter.label}
+      aria-label={schema.label}
     >
       {options.map((option) => {
         const isSelected = value.includes(option.value)

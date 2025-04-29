@@ -1,50 +1,30 @@
+import { FilterTypeKeys } from "./FilterTypes"
+import { FilterOption } from "./FilterTypes/InFilter/types"
+
 /**
  * Base definition for all filter types.
  * Provides common properties that all filters must implement.
  */
-export type BaseFilterDefinition = {
+export type BaseFilterDefinition<T extends FilterTypeKeys> = {
   /** Human-readable label for the filter */
   label: string
+  /** The type of filter */
+  type: T
 }
 
-/**
- * Represents a selectable option in filter components.
- * Used primarily with InFilterDefinition.
- * @template T - Type of the underlying value
- */
-export type FilterOption<T = unknown> = {
-  /** The value used for filtering */
-  value: T
-  /** Human-readable label for the option */
-  label: string
+export type SearchFilterDefinition = BaseFilterDefinition<"search">
+
+export type DateFilterDefinition = BaseFilterDefinition<"date"> & {
+  options: {
+    minDate?: Date
+    maxDate?: Date
+  }
 }
 
-/**
- * Multi-select filter that allows selecting from predefined options.
- * Used for filtering based on a set of discrete values.
- * @template T - Type of values that can be selected
- */
-export type InFilterDefinition<T = unknown> = BaseFilterDefinition & {
-  /** Identifies this as an "in" type filter */
-  type: "in"
-  /**
-   * Available options for selection.
-   * Can be either:
-   * - An array of options
-   * - A function that returns an array of options (sync or async)
-   */
+export type InFilterDefinition<T = unknown> = BaseFilterDefinition<"in"> & {
   options:
     | Array<FilterOption<T>>
     | (() => Array<FilterOption<T>> | Promise<Array<FilterOption<T>>>)
-}
-
-/**
- * Free-text search filter.
- * Used for performing text-based searches across specified fields.
- */
-export type SearchFilterDefinition = BaseFilterDefinition & {
-  /** Identifies this as a "search" type filter */
-  type: "search"
 }
 
 /**
@@ -53,8 +33,9 @@ export type SearchFilterDefinition = BaseFilterDefinition & {
  * @template T - Type of values for the InFilterDefinition
  */
 export type FilterDefinition<T = unknown> =
-  | InFilterDefinition<T>
   | SearchFilterDefinition
+  | DateFilterDefinition
+  | InFilterDefinition<T>
 
 /**
  * Extracts the appropriate value type for a given filter:
@@ -69,7 +50,9 @@ export type FilterValue<T extends FilterDefinition> =
     ? U[]
     : T extends SearchFilterDefinition
       ? string
-      : never
+      : T extends DateFilterDefinition
+        ? Date
+        : never
 
 /**
  * Current state of all filters in a collection.

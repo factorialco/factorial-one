@@ -154,7 +154,7 @@ export function FilterButton<Definition extends FiltersDefinition>({
   value: FilterValue<Definition[keyof Definition]> | undefined
   onSelect: () => void
   onRemove: () => void
-}): ReactElement {
+}): ReactElement | undefined {
   // Type-safe rendering based on filter type using discriminated unions
   switch (filter.type) {
     case "in": {

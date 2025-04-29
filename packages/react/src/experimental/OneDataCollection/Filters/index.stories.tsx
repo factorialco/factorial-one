@@ -1,8 +1,8 @@
+import { Input } from "@/ui/input"
+import { Label } from "@/ui/label"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { useEffect, useState } from "react"
-import { Input } from "../../../ui/input"
-import { Label } from "../../../ui/label"
 import { PresetsDefinition } from "../types"
 import * as Filters from "./index"
 import { FiltersRootProps } from "./index"
@@ -32,6 +32,11 @@ const meta = {
 export default meta
 
 const sampleDefinition: FiltersDefinition = {
+  date: {
+    type: "date",
+    label: "Date",
+    options: {},
+  },
   department: {
     type: "in",
     label: "Department",

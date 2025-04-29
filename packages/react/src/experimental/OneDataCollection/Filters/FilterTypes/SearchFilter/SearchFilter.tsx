@@ -1,19 +1,12 @@
 "use client"
 
 import { Input } from "@/ui/input"
-import type { SearchFilterDefinition } from "../types"
 
+import { FilterTypeComponentProps } from "../types"
 /**
  * Props for the SearchFilter component.
  */
-interface SearchFilterProps {
-  /** The filter definition containing configuration like label */
-  filter: SearchFilterDefinition
-  /** Current search value */
-  value: string
-  /** Callback fired when the search value changes */
-  onChange: (value: string) => void
-}
+export type SearchFilterComponentProps = FilterTypeComponentProps<string, never>
 
 /**
  * A search filter component that provides free-text search functionality.
@@ -28,11 +21,15 @@ interface SearchFilterProps {
  * />
  * ```
  */
-export function SearchFilter({ filter, value, onChange }: SearchFilterProps) {
+export function SearchFilter({
+  schema,
+  value,
+  onChange,
+}: SearchFilterComponentProps) {
   return (
     <div className="space-y-4">
       <Input
-        placeholder={`Search ${filter.label.toLowerCase()}...`}
+        placeholder={`Search ${schema.label.toLowerCase()}...`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
