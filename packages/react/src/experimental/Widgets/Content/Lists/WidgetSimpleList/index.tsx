@@ -23,7 +23,7 @@ export function WidgetSimpleList({
 }: Props) {
   if (showAllItems) {
     return (
-      <div className="flex flex-col" style={{ height: `${minSize}px` }}>
+      <div className="flex flex-col" style={{ minHeight: `${minSize}px` }}>
         {items.map((item) => (
           <WidgetSimpleListItem key={item.id} {...item} onClick={onClickItem} />
         ))}
