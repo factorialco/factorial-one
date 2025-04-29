@@ -31,9 +31,6 @@ import { Icon, AppIcons } from "@factorialco/factorial-one-react-native";
 
 // Basic usage
 <Icon icon={AppIcons.Calendar} size="md" />;
-
-// With a different size
-<Icon icon={AppIcons.Calendar} size="lg" />;
 ```
 
 ## Development
