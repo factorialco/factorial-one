@@ -56,6 +56,7 @@
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
+    "@svgr/cli": "^8.1.0",
     "@testing-library/react-native": "^12.4.3",
     "@types/react": "^18.2.0",
     "@types/react-native": "^0.73.0",
