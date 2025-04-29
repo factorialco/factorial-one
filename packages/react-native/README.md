@@ -26,6 +26,13 @@ export default function App() {
 
 The package includes a set of icons that can be imported and used in your React Native application.
 
+```tsx
+import { Icon, AppIcons } from "@factorialco/factorial-one-react-native";
+
+// Basic usage
+<Icon icon={AppIcons.Calendar} size="md" />;
+```
+
 ## Development
 
 ### Building
