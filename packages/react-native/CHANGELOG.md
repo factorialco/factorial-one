@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.0...factorial-one-react-native-v0.2.1) (2025-04-29)
+
+
+### Bug Fixes
+
+* trigger release ([#1692](https://github.com/factorialco/factorial-one/issues/1692)) ([dcf1555](https://github.com/factorialco/factorial-one/commit/dcf1555f8e54d9a2145d63bffd8684c3366d7b46))
+
 ## [0.2.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.1.0...factorial-one-react-native-v0.2.0) (2025-04-29)
 
 
