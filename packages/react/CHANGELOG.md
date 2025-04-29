@@ -2,58 +2,52 @@
 
 ## [1.36.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.6...factorial-one-react-v1.36.0) (2025-04-24)
 
+
 ### Features
 
-- datacollection dottag cell type
-  ([#1626](https://github.com/factorialco/factorial-one/issues/1626))
-  ([cf564d3](https://github.com/factorialco/factorial-one/commit/cf564d3b556a7e7fa34b4c6c579cb17e92ceffcd))
+* datacollection dottag cell type ([#1626](https://github.com/factorialco/factorial-one/issues/1626)) ([cf564d3](https://github.com/factorialco/factorial-one/commit/cf564d3b556a7e7fa34b4c6c579cb17e92ceffcd))
 
 ## [1.35.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.5...factorial-one-react-v1.35.6) (2025-04-23)
 
+
 ### Bug Fixes
 
-- show comment icon button next to reactions in CommunityPost component
-  ([#1663](https://github.com/factorialco/factorial-one/issues/1663))
-  ([e4edf83](https://github.com/factorialco/factorial-one/commit/e4edf83f594f8fd9749a9ffa4dc057bea96d9d38))
+* show comment icon button next to reactions in CommunityPost component ([#1663](https://github.com/factorialco/factorial-one/issues/1663)) ([e4edf83](https://github.com/factorialco/factorial-one/commit/e4edf83f594f8fd9749a9ffa4dc057bea96d9d38))
 
 ## [1.35.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.4...factorial-one-react-v1.35.5) (2025-04-23)
 
+
 ### Bug Fixes
 
-- **PageHeader:** use Button component
-  ([#1664](https://github.com/factorialco/factorial-one/issues/1664))
-  ([063f470](https://github.com/factorialco/factorial-one/commit/063f470eccbbca131131f81e3a6084459158722f))
+* **PageHeader:** use Button component ([#1664](https://github.com/factorialco/factorial-one/issues/1664)) ([063f470](https://github.com/factorialco/factorial-one/commit/063f470eccbbca131131f81e3a6084459158722f))
 
 ## [1.35.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.3...factorial-one-react-v1.35.4) (2025-04-23)
 
+
 ### Bug Fixes
 
-- **RichTextEditor:** implement unique editor IDs
-  ([#1637](https://github.com/factorialco/factorial-one/issues/1637))
-  ([b671d8e](https://github.com/factorialco/factorial-one/commit/b671d8e41591b3a35c411b68df7b3bd4bead48f7))
+* **RichTextEditor:** implement unique editor IDs ([#1637](https://github.com/factorialco/factorial-one/issues/1637)) ([b671d8e](https://github.com/factorialco/factorial-one/commit/b671d8e41591b3a35c411b68df7b3bd4bead48f7))
 
 ## [1.35.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.2...factorial-one-react-v1.35.3) (2025-04-22)
 
+
 ### Bug Fixes
 
-- miscalculation in VerticalOverflowList component
-  ([#1658](https://github.com/factorialco/factorial-one/issues/1658))
-  ([575065c](https://github.com/factorialco/factorial-one/commit/575065c0e7d1b030484a8262dc2d3f732643bfe5))
+* miscalculation in VerticalOverflowList component ([#1658](https://github.com/factorialco/factorial-one/issues/1658)) ([575065c](https://github.com/factorialco/factorial-one/commit/575065c0e7d1b030484a8262dc2d3f732643bfe5))
 
 ## [1.35.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.1...factorial-one-react-v1.35.2) (2025-04-22)
 
+
 ### Bug Fixes
 
-- regenerated icons
-  ([ce283f6](https://github.com/factorialco/factorial-one/commit/ce283f6ccea32b8033b32a532cbc2261a034c783))
+* regenerated icons ([ce283f6](https://github.com/factorialco/factorial-one/commit/ce283f6ccea32b8033b32a532cbc2261a034c783))
 
 ## [1.35.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.0...factorial-one-react-v1.35.1) (2025-04-22)
 
+
 ### Bug Fixes
 
-- export `DetailsItem` and `DetailsItemsList`
-  ([#1655](https://github.com/factorialco/factorial-one/issues/1655))
-  ([bcd4901](https://github.com/factorialco/factorial-one/commit/bcd490161ac5b37955ddaa538d59486b26eef6da))
+* export `DetailsItem` and `DetailsItemsList` ([#1655](https://github.com/factorialco/factorial-one/issues/1655)) ([bcd4901](https://github.com/factorialco/factorial-one/commit/bcd490161ac5b37955ddaa538d59486b26eef6da))
 
 ## [1.35.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.34.0...factorial-one-react-v1.35.0) (2025-04-22)
 
