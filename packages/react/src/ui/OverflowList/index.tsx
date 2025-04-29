@@ -201,6 +201,12 @@ interface OverflowListProps<T> {
    */
   renderOverflowIndicator?: (count: number, isOpen: boolean) => ReactNode
 
+  /**
+   * Whether to render the overflow indicator with a popover
+   * @default false
+   */
+  overflowIndicatorWithPopover?: boolean
+
   // Component styling
   /**
    * Additional styling for the container
@@ -218,6 +224,7 @@ const OverflowList = function OverflowList<T>({
   items,
   renderListItem,
   renderDropdownItem,
+  overflowIndicatorWithPopover = true,
   renderOverflowIndicator,
   className = "",
   gap = 8,
@@ -277,6 +284,8 @@ const OverflowList = function OverflowList<T>({
 
   const showOverflowDropdown = overflowItems.length > 0
 
+  console.log({ overflowItems: overflowItems.length })
+
   return (
     <div
       ref={containerRef}
@@ -316,7 +325,11 @@ const OverflowList = function OverflowList<T>({
         {placeholderElements}
       </div>
 
-      {showOverflowDropdown && (
+      {showOverflowDropdown &&
+        !overflowIndicatorWithPopover &&
+        (renderOverflowIndicator?.(overflowItems.length, false) ??
+          defaultOverflowIndicator(overflowItems.length, false))}
+      {showOverflowDropdown && overflowIndicatorWithPopover && (
         <Popover open={isOpen} onOpenChange={handleOpenChange}>
           <PopoverTrigger asChild>
             <button

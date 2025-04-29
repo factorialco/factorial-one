@@ -1,4 +1,5 @@
 import { sizes } from "@/ui/avatar"
+import { OverflowList } from "@/ui/OverflowList"
 import { cva } from "cva"
 import { Tooltip } from "../../../Overlays/Tooltip"
 import { Avatar, AvatarVariant } from "../Avatar"
@@ -73,6 +74,12 @@ type Props = {
    * The remaining number to display.
    */
   remainingCount?: number
+
+  /**
+   * Whether to fill the container with avatars.
+   * @default false
+   */
+  fillContainer?: boolean
 }
 
 export const AvatarList = ({
@@ -82,7 +89,39 @@ export const AvatarList = ({
   noTooltip = false,
   remainingCount: initialRemainingCount,
   max = 3,
+  fillContainer = false,
 }: Props) => {
+  if (fillContainer) {
+    return (
+      <OverflowList
+        items={avatars}
+        renderListItem={(avatar) => {
+          const displayName =
+            avatar.type === "person"
+              ? `${avatar.firstName} ${avatar.lastName}`
+              : avatar.name
+
+          return (
+            <Tooltip label={displayName}>
+              <Avatar avatar={avatar} size={size} />
+            </Tooltip>
+          )
+        }}
+        renderDropdownItem={() => null}
+        renderOverflowIndicator={(count) => (
+          <MaxCounter
+            count={count}
+            size={size}
+            type={type === "person" ? "rounded" : "base"}
+            list={avatars.slice(avatars.length - count)}
+          />
+        )}
+        overflowIndicatorWithPopover={false}
+        className="flex-1"
+      />
+    )
+  }
+
   const visibleAvatars = avatars.slice(0, max)
   const remainingAvatars = avatars.slice(max)
   const remainingCount = initialRemainingCount ?? avatars.length - max

@@ -71,6 +71,13 @@ const meta: Meta<typeof AvatarList> = {
   parameters: {
     layout: "centered",
   },
+  decorators: [
+    (Story) => (
+      <div className="w-[270px]">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof AvatarList>
 
 export default meta
@@ -100,6 +107,14 @@ export const WithMaxAvatars: Story = {
     ...Default.args,
     avatars: getDummyAvatars(50, "person"),
     max: 3,
+  },
+}
+
+export const FillContainer: Story = {
+  args: {
+    ...Default.args,
+    avatars: getDummyAvatars(50, "person"),
+    fillContainer: true,
   },
 }
 
