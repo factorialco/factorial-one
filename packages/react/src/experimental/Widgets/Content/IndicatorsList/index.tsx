@@ -12,14 +12,13 @@ export const IndicatorsList = forwardRef<HTMLDivElement, IndicatorsListProps>(
         ref={ref}
         className="grid auto-cols-fr grid-flow-col items-end gap-x-3"
       >
-        {items.map(({ label, content, icon, emoji, color }) => (
+        {items.map(({ label, content, color, ...item }) => (
           <Indicator
             key={`${label}-${content}`}
             label={label}
             content={content}
-            icon={icon}
-            emoji={emoji}
             color={color}
+            {...item}
           />
         ))}
       </div>

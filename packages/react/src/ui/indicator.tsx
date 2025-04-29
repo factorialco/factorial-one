@@ -3,16 +3,14 @@ import { forwardRef } from "react"
 import { Icon, IconType } from "../components/Utilities/Icon"
 import { cn } from "../lib/utils"
 
-interface IndicatorProps {
+type IndicatorProps = {
   content: string
   label: string
   color?: string
-  icon?: IconType
-  emoji?: string
-}
+} & ({ icon?: IconType } | { emoji?: string })
 
 export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
-  function Indicator({ content, label, icon, emoji, color }, ref) {
+  function Indicator({ content, label, color, ...props }, ref) {
     return (
       <div key={label} className="flex flex-col gap-1" ref={ref}>
         <p className="text-3xl font-semibold">{content}</p>
@@ -23,12 +21,16 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
           >
             {label}
           </p>
-          {icon && !emoji && (
+          {"icon" in props && props.icon && (
             <span className={cn("flex", color)}>
-              <Icon icon={icon} />
+              <Icon icon={props.icon} />
             </span>
           )}
-          {emoji && !icon && <EmojiImage emoji={emoji} size="md" />}
+          {"emoji" in props && props.emoji && (
+            <span className={cn("flex", color)}>
+              <EmojiImage emoji={props.emoji} size="md" />
+            </span>
+          )}
         </div>
       </div>
     )
