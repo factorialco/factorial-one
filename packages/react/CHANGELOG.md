@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.36.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.1...factorial-one-react-v1.36.2) (2025-04-28)
+
+
+### Bug Fixes
+
+* update localValue when value or items are changed on re-render ([#1679](https://github.com/factorialco/factorial-one/issues/1679)) ([d6fd9a4](https://github.com/factorialco/factorial-one/commit/d6fd9a44d2138e570f6f20d5ed2e9cb845108785))
+
+## [1.36.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.0...factorial-one-react-v1.36.1) (2025-04-28)
+
+
+### Bug Fixes
+
+* improve filter removal logic in Filters component ([#1665](https://github.com/factorialco/factorial-one/issues/1665)) ([cfda323](https://github.com/factorialco/factorial-one/commit/cfda3237ee6a2fda5e87d7f4a4b89d1434f3af69))
+
+## [1.36.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.6...factorial-one-react-v1.36.0) (2025-04-24)
+
+
+### Features
+
+* datacollection dottag cell type ([#1626](https://github.com/factorialco/factorial-one/issues/1626)) ([cf564d3](https://github.com/factorialco/factorial-one/commit/cf564d3b556a7e7fa34b4c6c579cb17e92ceffcd))
+
 ## [1.35.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.5...factorial-one-react-v1.35.6) (2025-04-23)
 
 

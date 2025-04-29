@@ -119,11 +119,10 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
   const [localFiltersValue, setLocalFiltersValue] = useState(filters)
 
   const removeFilterValue = (key: keyof Definition) => {
-    setLocalFiltersValue((prev) => {
-      const { [key]: _, ...rest } = prev
-      return rest as FiltersState<Definition>
-    })
-    props.onChange(localFiltersValue)
+    const newFilters = { ...localFiltersValue }
+    delete newFilters[key]
+    setLocalFiltersValue(newFilters as FiltersState<Definition>)
+    props.onChange(newFilters as FiltersState<Definition>)
   }
 
   const setFiltersValue = (filters: FiltersState<Definition>) => {

@@ -4,7 +4,7 @@ import { baseColors, f1Colors } from "./src/tokens/colors"
 import { absoluteSpacing, relativeSpacing } from "./src/tokens/spacing"
 
 export const baseConfig: Omit<Config, "content"> = {
-  darkMode: ["class"],
+  darkMode: "class",
   corePlugins: {
     preflight: false,
   },
@@ -30,7 +30,7 @@ export const baseConfig: Omit<Config, "content"> = {
       xs: [
         ".625rem",
         {
-          lineHeight: "0.5rem",
+          lineHeight: "0.75rem",
         },
       ],
       sm: [
