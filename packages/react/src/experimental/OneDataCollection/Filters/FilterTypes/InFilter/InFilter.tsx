@@ -61,7 +61,7 @@ type InFilterComponentProps<T = unknown> = FilterTypeComponentProps<
  * />
  * ```
  */
-export function InFilter<T>({
+export function InFilter<T extends string>({
   schema,
   value,
   onChange,

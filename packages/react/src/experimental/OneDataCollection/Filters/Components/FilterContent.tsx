@@ -1,7 +1,13 @@
 "use client"
 
-import filterTypes from "../FilterTypes"
-import type { FiltersDefinition, FiltersState } from "../types"
+import { filterTypes } from "../FilterTypes"
+import type {
+  FilterDefinition,
+  FilterDefinitionsByType,
+  FiltersDefinition,
+  FiltersState,
+  FilterValue,
+} from "../types"
 
 /**
  * Props for the FilterContent component.
@@ -49,17 +55,33 @@ export function FilterContent<Definition extends FiltersDefinition>({
   if (!filterType) {
     throw new Error(`Filter type ${filter.type} not found`)
   }
+  // TODO Find a way to avoid 'as'
+  // Type assertion to ensure the renderer function is typed correctly as typescript can't infer the type correctly
+  type FilterType = FilterDefinitionsByType[typeof filter.type]
+  const currentValue = (tempFilters[selectedFilterKey] ||
+    filterType.emptyValue) as FilterValue<FilterType>
 
-  const currentValue = tempFilters[selectedFilterKey] || filterType.emptyValue
+  function renderFilterForm<T extends FilterDefinition>(
+    schema: T,
+    value: FilterValue<T>,
+    onChange: (v: FilterValue<T>) => void
+  ): React.ReactNode {
+    // double-cast to resolve overload union into a single callable signature
+    return (
+      filterTypes[schema.type].render as unknown as (props: {
+        schema: T
+        value: FilterValue<T>
+        onChange: (v: FilterValue<T>) => void
+      }) => React.ReactNode
+    )({ schema, value, onChange })
+  }
 
   return (
     <div className="relative flex w-full flex-col gap-1">
       <div className="relative flex h-full flex-col justify-between overflow-y-auto">
-        {filterType.render({
-          schema: filter,
-          value: currentValue,
-          onChange: (value) => onFilterChange(selectedFilterKey, value),
-        })}
+        {renderFilterForm(filter, currentValue, (value) =>
+          onFilterChange(selectedFilterKey, value)
+        )}
       </div>
     </div>
   )

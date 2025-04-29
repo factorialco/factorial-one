@@ -14,11 +14,8 @@ export type FilterTypeDefinition<Value = unknown, Options = never> = {
   emptyValue: Value
   isEmpty: (value: Value) => boolean
   /** Render the filter form */
-  render: (props: {
-    schema: {
-      options: Options extends never ? never : Options
-      label: string
-    }
+  render: <Schema extends FilterTypeSchema<Options>>(props: {
+    schema: Schema
     value: Value
     onChange: (value: Value) => void
   }) => React.ReactNode

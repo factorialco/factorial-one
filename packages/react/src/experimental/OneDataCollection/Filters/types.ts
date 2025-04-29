@@ -15,7 +15,7 @@ export type BaseFilterDefinition<T extends FilterTypeKeys> = {
 export type SearchFilterDefinition = BaseFilterDefinition<"search">
 
 export type DateFilterDefinition = BaseFilterDefinition<"date"> & {
-  options: {
+  options?: {
     minDate?: Date
     maxDate?: Date
   }
@@ -28,14 +28,21 @@ export type InFilterDefinition<T = unknown> = BaseFilterDefinition<"in"> & {
 }
 
 /**
+ * All the available filter types
+ */
+export type FilterDefinitionsByType = {
+  in: InFilterDefinition<string>
+  search: SearchFilterDefinition
+  date: DateFilterDefinition
+}
+
+/**
  * Union of all available filter types.
  * Used to define possible filter configurations in a collection.
  * @template T - Type of values for the InFilterDefinition
  */
-export type FilterDefinition<T = unknown> =
-  | SearchFilterDefinition
-  | DateFilterDefinition
-  | InFilterDefinition<T>
+export type FilterDefinition =
+  FilterDefinitionsByType[keyof FilterDefinitionsByType]
 
 /**
  * Extracts the appropriate value type for a given filter:

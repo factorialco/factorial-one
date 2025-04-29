@@ -16,6 +16,5 @@ export const filterTypes = {
 //   ? T
 //   : never
 // export type FilterTypes = ValidateFilterType<typeof filterTypes>
-export type FilterTypeKeys = keyof typeof filterTypes
-
-export default filterTypes
+export type FilterTypes = typeof filterTypes
+export type FilterTypeKeys = keyof FilterTypes
