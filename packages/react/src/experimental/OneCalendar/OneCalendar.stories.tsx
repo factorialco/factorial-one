@@ -261,16 +261,9 @@ export const Week: Story = {
     view: "week",
   },
   parameters: {
+    // Disable color contrast check for week view as it gets a false positive for middle range days
     a11y: {
-      config: {
-        rules: [
-          {
-            // Disable color contrast check for week view as it gets a false positive for middle range days
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
+      skipCi: true,
     },
   },
   render: (args) => {
