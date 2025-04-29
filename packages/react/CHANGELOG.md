@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.2...factorial-one-react-v1.36.3) (2025-04-29)
+
+
+### Bug Fixes
+
+* avoid links to be cut-off in widget ([#1701](https://github.com/factorialco/factorial-one/issues/1701)) ([da902d2](https://github.com/factorialco/factorial-one/commit/da902d259fb157cad26f8bf18880d675b350a458))
+
 ## [1.36.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.1...factorial-one-react-v1.36.2) (2025-04-28)
 
 
