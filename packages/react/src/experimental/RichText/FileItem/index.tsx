@@ -5,7 +5,7 @@ import {
   DropdownItem,
 } from "@/experimental/Navigation/Dropdown/internal"
 import { Tooltip } from "@/experimental/Overlays/Tooltip"
-import { ChevronDown, CrossedCircle } from "@/icons/app"
+import { CrossedCircle, Ellipsis } from "@/icons/app"
 import { cn } from "@/lib/utils"
 import { forwardRef } from "react"
 
@@ -45,10 +45,7 @@ const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
       >
         <FileAvatar file={file} />
         <Tooltip label={file.name}>
-          <p
-            title={file.name}
-            className="text-neutral-1000 grow overflow-hidden truncate text-ellipsis text-sm font-medium"
-          >
+          <p className="text-neutral-1000 grow overflow-hidden truncate text-ellipsis text-sm font-medium">
             {file.name}
           </p>
         </Tooltip>
@@ -65,11 +62,7 @@ const FileItem = forwardRef<HTMLDivElement, FileItemProps>(
               onClick={disabled ? undefined : singleAction.onClick}
             />
           ) : (
-            <DropdownInternal
-              items={dropdownItems}
-              icon={ChevronDown}
-              size="sm"
-            />
+            <DropdownInternal items={dropdownItems} icon={Ellipsis} size="sm" />
           ))}
       </div>
     )
