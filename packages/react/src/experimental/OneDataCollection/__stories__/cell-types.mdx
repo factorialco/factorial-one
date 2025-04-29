@@ -1,8 +1,9 @@
-import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
+import { Canvas, Meta, Controls, Unstyled, Story } from "@storybook/blocks"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 import * as DataCollectionStories from "./index.stories"
 import * as ActionDataCollectionStories from "./actions.stories"
+import * as CellTypesDataCollectionStories from "./cell-types.stories"
 
 <Meta title="Data collection/Cell Types" />
 
@@ -22,6 +23,10 @@ The way a cell/property must be rendered is defined in the `render` function of
 the datacollection, the type is the cell type to render and the value depends on
 that type
 
+> Note each cell type could have an adapted visualizacion depending on the
+> datacollection type. Ex: Number cell type in a table will be rendered as a
+> right aligned text, but in a list it will be rendered aligned to the left.
+
 ## Cell types
 
 ### text
@@ -33,16 +38,18 @@ just a string.
 type value = string | undefined
 ```
 
-Example:
-
-```
+<Canvas
+  of={CellTypesDataCollectionStories.TextType}
+  source={{
+    code: `
 render: (item) => 'my text'
 // or
 render: (item) => ({
     type: 'text'
     value: 'my text'
-})
-```
+})`,
+  }}
+/>
 
 ### number
 
@@ -54,14 +61,17 @@ Renders a number (right align on table visualizacion)
 type value = number | undefined
 ```
 
-Example:
-
-```
+<Canvas
+  of={CellTypesDataCollectionStories.NumberType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'number'
     value: 1234
 })
-```
+`,
+  }}
+/>
 
 ### date
 
@@ -73,14 +83,17 @@ Renders a date
 type value = Date | undefined
 ```
 
-Example:
-
-```
+<Canvas
+  of={CellTypesDataCollectionStories.DateType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'date'
     value: new Date()
 })
-```
+`,
+  }}
+/>
 
 ### amount
 
@@ -92,14 +105,17 @@ Renders a monetary number (right align on table visualizacion)
 type value = number | undefined
 ```
 
-Example:
-
-```
+<Canvas
+  of={CellTypesDataCollectionStories.AmountType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'amount'
     value: 1234
 })
-```
+`,
+  }}
+/>
 
 ### avatarList
 
@@ -114,9 +130,10 @@ type value = {
 }
 ```
 
-Example:
-
-```
+<Canvas
+  of={CellTypesDataCollectionStories.AvatarListType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'avatarList'
     value: {
@@ -124,7 +141,9 @@ render: (item) => ({
         max: 3
     }
 })
-```
+`,
+  }}
+/>
 
 ### status
 
@@ -139,9 +158,10 @@ type value = {
 }
 ```
 
-Example:
-
-```
+<Canvas
+  of={CellTypesDataCollectionStories.StatusType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'status'
     value: {
@@ -149,7 +169,9 @@ render: (item) => ({
         label: item.name
     }
 })
-```
+`,
+  }}
+/>
 
 ### person
 
@@ -165,18 +187,21 @@ type value = {
 }
 ```
 
-Example:
-
-```
+<Canvas
+  of={CellTypesDataCollectionStories.PersonType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'person'
     value: {
-        firstName: 'Sergio'
-        lastName: 'Carracedo'
+        firstName: 'John',
+        lastName: 'Doe',
         src: '/pth/to/the/avatar.png'
     }
 })
-```
+`,
+  }}
+/>
 
 ### company
 
@@ -191,9 +216,10 @@ type value = {
 }
 ```
 
-Example:
-
-```
+<Canvas
+  of={CellTypesDataCollectionStories.CompanyType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'company'
     value: {
@@ -201,7 +227,9 @@ render: (item) => ({
         src: '/pth/to/the/avatar.png'
     }
 })
-```
+`,
+  }}
+/>
 
 ### team
 
@@ -218,7 +246,10 @@ type value = {
 
 Example:
 
-```
+<Canvas
+  of={CellTypesDataCollectionStories.TeamType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'team'
     value: {
@@ -226,7 +257,9 @@ render: (item) => ({
         src: '/pth/to/the/avatar.png'
     }
 })
-```
+`,
+  }}
+/>
 
 ### tag
 
@@ -235,23 +268,25 @@ Renders a tag
 #### Value type
 
 ```
-type value = {
-    label: string
-    icon?: IconType
-}
-```
 
-Example:
+type value = { label: string icon?: IconType }
 
 ```
+
+<Canvas
+  of={CellTypesDataCollectionStories.TagType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'tag'
     value: {
         name: 'Factorial'
-        src: FactorialLogoIcon
+        src: '/pth/to/the/avatar.png'
     }
 })
-```
+`,
+  }}
+/>
 
 ### dotTag
 
@@ -260,15 +295,15 @@ Renders a dot tag
 #### Value type
 
 ```
-type value = {
-  label: string,
-  color: NewColor
-)
-```
 
-Example:
+type value = { label: string, color: NewColor )
 
 ```
+
+<Canvas
+  of={CellTypesDataCollectionStories.DotTagType}
+  source={{
+    code: `
 render: (item) => ({
     type: 'dotTag'
     value: {
@@ -276,4 +311,6 @@ render: (item) => ({
         color: 'malibu'
     }
 })
-```
+`,
+  }}
+/>
