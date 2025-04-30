@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.4...factorial-one-react-v1.37.5) (2025-04-30)
+
+
+### Bug Fixes
+
+* **fileItem:** multilple actions icon  ([#1685](https://github.com/factorialco/factorial-one/issues/1685)) ([583a9bb](https://github.com/factorialco/factorial-one/commit/583a9bbde44e2f55e921606f6036679276b3aa2c))
+
 ## [1.37.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.3...factorial-one-react-v1.37.4) (2025-04-30)
 
 
