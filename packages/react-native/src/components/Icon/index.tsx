@@ -4,7 +4,7 @@ import React, {
   ForwardRefExoticComponent,
   RefAttributes,
 } from "react";
-import { SvgProps } from "react-native-svg";
+import { SvgProps, Svg } from "react-native-svg";
 import { cn } from "../../lib/utils";
 import { IconColorName } from "../../lib/colors";
 import { cssInterop } from "nativewind";
@@ -33,7 +33,7 @@ export interface IconProps extends SvgProps, VariantProps<typeof iconVariants> {
 
 export type IconType = ForwardRefExoticComponent<
   SvgProps &
-    RefAttributes<SVGSVGElement> & {
+    RefAttributes<Svg> & {
       className?: string;
     }
 >;
@@ -58,7 +58,7 @@ function applyIconInterop(icon: IconType) {
   return icon;
 }
 
-export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
+export const Icon = forwardRef<Svg, IconProps>(function Icon(
   { size, icon, className, testID, color = "text-f1-icon", ...props },
   ref,
 ) {

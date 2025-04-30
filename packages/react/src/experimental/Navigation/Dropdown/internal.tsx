@@ -52,14 +52,7 @@ const DropdownItem = ({ item }: { item: DropdownItemObject }) => {
   )
 
   return (
-    <DropdownMenuItem
-      asChild
-      onClick={(e) => {
-        e.stopPropagation()
-        item.onClick?.()
-      }}
-      className={itemClass}
-    >
+    <DropdownMenuItem asChild className={itemClass}>
       {href ? (
         <Link
           href={href}

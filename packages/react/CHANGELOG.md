@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.37.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.0...factorial-one-react-v1.37.1) (2025-04-30)
+
+
+### Bug Fixes
+
+* double click on dropdown ([#1708](https://github.com/factorialco/factorial-one/issues/1708)) ([a7b6796](https://github.com/factorialco/factorial-one/commit/a7b6796a888095a76c251e16c9e881c7c0afa91b))
+
+## [1.37.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.4...factorial-one-react-v1.37.0) (2025-04-30)
+
+
+### Features
+
+* add support to have double columns in carousel ([#1706](https://github.com/factorialco/factorial-one/issues/1706)) ([56be64e](https://github.com/factorialco/factorial-one/commit/56be64ed70a2315861b199f7663bf03b03434d8f))
+
+## [1.36.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.3...factorial-one-react-v1.36.4) (2025-04-30)
+
+
+### Bug Fixes
+
+* consider reduced animation preference ([#1703](https://github.com/factorialco/factorial-one/issues/1703)) ([8d9390c](https://github.com/factorialco/factorial-one/commit/8d9390c33c4e1397ee0e54998c635b0824499e60))
+
 ## [1.36.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.2...factorial-one-react-v1.36.3) (2025-04-29)
 
 
