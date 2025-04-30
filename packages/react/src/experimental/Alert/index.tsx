@@ -1,5 +1,7 @@
 import { Button } from "@/components/Actions/Button"
-import Share from "@/icons/app/Share"
+import { Icon } from "@/factorial-one"
+import { ExternalLink } from "@/icons/app"
+import { cn, focusRing } from "@/lib/utils"
 import { cva, type VariantProps } from "cva"
 import { AlertAvatar } from "../Information/Avatars/AlertAvatar"
 
@@ -42,20 +44,23 @@ const buttonVariants: Record<AlertVariant, "outline" | "promote" | "critical"> =
 interface AlertProps extends VariantProps<typeof alertVariants> {
   title: string
   description: string
-  buttonPrimaryLabel: string
-  buttonSecondaryLabel: string
-  onRequestClick?: () => void
-  onSeeClick?: () => void
+  primaryAction: {
+    label: string
+    onClick?: () => void
+  }
+  secondaryAction: {
+    label: string
+    href: string
+  }
+
   variant: AlertVariant
 }
 
 export const Alert = ({
   title,
   description,
-  buttonPrimaryLabel,
-  buttonSecondaryLabel,
-  onRequestClick,
-  onSeeClick,
+  primaryAction,
+  secondaryAction,
   variant = "info",
 }: AlertProps) => {
   return (
@@ -67,21 +72,33 @@ export const Alert = ({
           </div>
           <div className="flex flex-col gap-0.5">
             <h3 className={titleVariants({ variant })}>{title}</h3>
-            <p className="text-base text-f1-foreground">{description}</p>
+            <p className="text-base text-f1-foreground-secondary">
+              {description}
+            </p>
           </div>
         </div>
         <div className="flex flex-row gap-3">
-          <Button
-            icon={Share}
-            label={buttonSecondaryLabel}
-            variant="ghost"
-            onClick={onSeeClick}
-          />
-          <Button
-            label={buttonPrimaryLabel}
-            variant={buttonVariants[variant]}
-            onClick={onRequestClick}
-          />
+          {secondaryAction && (
+            <a
+              href={secondaryAction.href}
+              target="_blank"
+              rel="noreferrer"
+              className={cn(
+                "flex items-center gap-1 rounded-sm px-2 py-0.5 text-base font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary-hover [&>svg]:text-f1-foreground-secondary",
+                focusRing()
+              )}
+            >
+              {secondaryAction.label}
+              <Icon icon={ExternalLink} size="sm" />
+            </a>
+          )}
+          {primaryAction && (
+            <Button
+              label={primaryAction.label}
+              variant={buttonVariants[variant]}
+              onClick={primaryAction.onClick}
+            />
+          )}
         </div>
       </div>
     </div>

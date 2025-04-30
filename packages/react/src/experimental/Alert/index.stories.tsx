@@ -9,6 +9,24 @@ const meta: Meta<typeof Alert> = {
   parameters: {
     layout: "centered",
   },
+  argTypes: {
+    title: {
+      description: "Main heading for the alert",
+    },
+    description: {
+      description:
+        "Secondary text to provide additional information for the alert",
+    },
+    primaryAction: {
+      description: "Primary button configuration",
+    },
+    secondaryAction: {
+      description: "Secondary button configuration",
+    },
+    variant: {
+      description: "Variant for the alert composition",
+    },
+  },
   decorators: [
     (Story) => (
       <div className="p-2">
@@ -26,10 +44,14 @@ export const Default: Story = {
   args: {
     title: "Your workspace includes up to 3 invoices.",
     description: "Start creating invoices: it’s free with your plan!",
-    buttonPrimaryLabel: "Request info",
-    buttonSecondaryLabel: "See all invoices",
+    primaryAction: {
+      label: "Request info",
+      onClick: fn(),
+    },
+    secondaryAction: {
+      label: "See all invoices",
+      href: "https://factorialhr.com/",
+    },
     variant: "info",
-    onRequestClick: fn(),
-    onSeeClick: fn(),
   },
 }
