@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.4...factorial-one-react-v1.37.0) (2025-04-30)
+
+
+### Features
+
+* add support to have double columns in carousel ([#1706](https://github.com/factorialco/factorial-one/issues/1706)) ([56be64e](https://github.com/factorialco/factorial-one/commit/56be64ed70a2315861b199f7663bf03b03434d8f))
+
 ## [1.36.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.3...factorial-one-react-v1.36.4) (2025-04-30)
 
 
