@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.3...factorial-one-react-v1.37.4) (2025-04-30)
+
+
+### Bug Fixes
+
+* update avatar list remaining count depending on number of items shown ([#1720](https://github.com/factorialco/factorial-one/issues/1720)) ([783a290](https://github.com/factorialco/factorial-one/commit/783a29084868d46bd7da01aec846d4735e42e11d))
+
 ## [1.37.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.2...factorial-one-react-v1.37.3) (2025-04-30)
 
 
