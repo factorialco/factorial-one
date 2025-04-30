@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.2...factorial-one-react-v1.37.3) (2025-04-30)
+
+
+### Bug Fixes
+
+* add support to be more selective on double column breakpoints in carousel ([#1714](https://github.com/factorialco/factorial-one/issues/1714)) ([56c6f33](https://github.com/factorialco/factorial-one/commit/56c6f3361b9e06ea74fe598907d9a31d764233e3))
+
 ## [1.37.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.1...factorial-one-react-v1.37.2) (2025-04-30)
 
 
