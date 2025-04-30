@@ -1,29 +1,52 @@
 import { Button } from "@/components/Actions/Button"
 import Share from "@/icons/app/Share"
+import { cva, type VariantProps } from "cva"
 import { AlertAvatar } from "../Information/Avatars/AlertAvatar"
 
-type AlertProps = {
+type AlertVariant = "info" | "warning" | "critical"
+
+const alertVariants = cva({
+  base: "flex w-full flex-col items-start justify-between gap-4 rounded-md px-3 py-3 text-f1-foreground ring-1 ring-inset ring-f1-border-secondary sm:flex-row sm:items-center sm:px-4",
+  variants: {
+    variant: {
+      info: "bg-f1-background-info",
+      warning: "bg-f1-background-warning",
+      critical: "bg-f1-background-critical",
+    },
+  },
+  defaultVariants: {
+    variant: "info",
+  },
+})
+
+const titleVariants = cva({
+  variants: {
+    variant: {
+      info: "text-f1-foreground-info",
+      warning: "text-f1-foreground-warning",
+      critical: "text-f1-foreground-critical",
+    },
+  },
+  defaultVariants: {
+    variant: "info",
+  },
+})
+
+const buttonVariants: Record<AlertVariant, "outline" | "promote" | "critical"> =
+  {
+    info: "outline",
+    warning: "promote",
+    critical: "outline",
+  }
+
+interface AlertProps extends VariantProps<typeof alertVariants> {
   title: string
   description: string
   buttonPrimaryLabel: string
   buttonSecondaryLabel: string
   onRequestClick?: () => void
   onSeeClick?: () => void
-  variant: "info" | "warning" | "critical"
-}
-
-interface AlertType {
-  buttonType: "outline" | "promote" | "critical"
-  fontColor:
-    | "text-f1-foreground"
-    | "text-f1-foreground-info"
-    | "text-f1-foreground-warning"
-    | "text-f1-foreground-critical"
-  backgroundColor:
-    | "bg-f1-background-info"
-    | "bg-f1-background-warning"
-    | "bg-f1-background-critical"
-  alertType: "info" | "warning" | "critical"
+  variant: AlertVariant
 }
 
 export const Alert = ({
@@ -33,49 +56,21 @@ export const Alert = ({
   buttonSecondaryLabel,
   onRequestClick,
   onSeeClick,
-  variant,
+  variant = "info",
 }: AlertProps) => {
-  const alertType = (): AlertType => {
-    switch (variant) {
-      case "info":
-        return {
-          buttonType: "outline",
-          fontColor: "text-f1-foreground-info",
-          backgroundColor: "bg-f1-background-info",
-          alertType: "info",
-        }
-      case "warning":
-        return {
-          buttonType: "promote",
-          fontColor: "text-f1-foreground-warning",
-          backgroundColor: "bg-f1-background-warning",
-          alertType: "warning",
-        }
-      case "critical":
-        return {
-          buttonType: "outline",
-          fontColor: "text-f1-foreground-critical",
-          backgroundColor: "bg-f1-background-critical",
-          alertType: "critical",
-        }
-    }
-  }
-
-  const alertVariant = alertType()
-
   return (
-    <div
-      className={`flex w-full flex-col items-start justify-between gap-4 rounded-md ${alertVariant.backgroundColor} px-3 py-3 text-f1-foreground ring-1 ring-inset ring-f1-border-secondary sm:flex-row sm:items-center sm:px-4`}
-    >
+    <div className={alertVariants({ variant })}>
       <div className="flex flex-row items-center justify-between gap-16">
         <div className="flex flex-row gap-4">
-          <AlertAvatar type={alertVariant.alertType} />
-          <div className="flex flex-col gap-2">
-            <h3 className={`${alertVariant.fontColor}`}>{title}</h3>
+          <div className="h-6 w-6 flex-shrink-0">
+            <AlertAvatar type={variant} />
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <h3 className={titleVariants({ variant })}>{title}</h3>
             <p className="text-base text-f1-foreground">{description}</p>
           </div>
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-3">
           <Button
             icon={Share}
             label={buttonSecondaryLabel}
@@ -84,7 +79,7 @@ export const Alert = ({
           />
           <Button
             label={buttonPrimaryLabel}
-            variant={alertVariant.buttonType}
+            variant={buttonVariants[variant]}
             onClick={onRequestClick}
           />
         </div>
