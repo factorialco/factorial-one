@@ -39,3 +39,17 @@ export const WithSubtitle: Story = {
     },
   },
 }
+
+export const FullHeight: Story = {
+  decorators: [
+    (Story) => (
+      <div className="h-[350px] w-full min-w-72 max-w-96">
+        <Story />
+      </div>
+    ),
+  ],
+  args: {
+    ...meta.args,
+    height: "full",
+  },
+}
