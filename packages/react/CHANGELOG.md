@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.36.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.3...factorial-one-react-v1.36.4) (2025-04-30)
+
+
+### Bug Fixes
+
+* consider reduced animation preference ([#1703](https://github.com/factorialco/factorial-one/issues/1703)) ([8d9390c](https://github.com/factorialco/factorial-one/commit/8d9390c33c4e1397ee0e54998c635b0824499e60))
+
 ## [1.36.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.2...factorial-one-react-v1.36.3) (2025-04-29)
 
 
