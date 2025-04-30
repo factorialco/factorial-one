@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.3...factorial-one-react-native-v0.2.4) (2025-04-30)
+
+
+### Bug Fixes
+
+* icons typescript error ([#1710](https://github.com/factorialco/factorial-one/issues/1710)) ([02bf31f](https://github.com/factorialco/factorial-one/commit/02bf31fbdab9f382d870c71969aa586eb2636c5c))
+
 ## [0.2.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.2...factorial-one-react-native-v0.2.3) (2025-04-29)
 
 
