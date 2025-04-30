@@ -110,9 +110,10 @@ export const AvatarList = ({
           )
         }}
         renderDropdownItem={() => null}
+        forceShowingOverflowIndicator={initialRemainingCount !== undefined}
         renderOverflowIndicator={(count) => (
           <MaxCounter
-            count={initialRemainingCount ?? count}
+            count={(initialRemainingCount ?? 0) + count}
             size={size}
             type={type === "person" ? "rounded" : "base"}
             list={

@@ -33,6 +33,12 @@ interface OverflowListProps<T> {
    */
   overflowIndicatorWithPopover?: boolean
 
+  /**
+   * Whether to force showing the overflow indicator
+   * @default false
+   */
+  forceShowingOverflowIndicator?: boolean
+
   // Component styling
   /**
    * Additional styling for the container
@@ -52,6 +58,7 @@ const OverflowList = function OverflowList<T>({
   renderDropdownItem,
   overflowIndicatorWithPopover = true,
   renderOverflowIndicator,
+  forceShowingOverflowIndicator = false,
   className = "",
   gap = 8,
 }: OverflowListProps<T>) {
@@ -90,7 +97,7 @@ const OverflowList = function OverflowList<T>({
     ))
   }, [items, isInitialized])
 
-  const showOverflow = overflowItems.length > 0
+  const showOverflow = forceShowingOverflowIndicator || overflowItems.length > 0
 
   return (
     <div
