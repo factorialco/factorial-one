@@ -90,7 +90,16 @@ export const CustomColumns: Story = {
 export const DoubleColumns: Story = {
   args: {
     ...CustomColumns.args,
-    doubleColumnIndices: [0, 4],
+    doubleColumns: [
+      {
+        index: 0,
+        sizes: ["default", "lg"],
+      },
+      {
+        index: 4,
+        sizes: ["default", "lg"],
+      },
+    ],
   },
 }
 
