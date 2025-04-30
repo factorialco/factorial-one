@@ -1,3 +1,4 @@
+import { RichTextDisplay } from "@/experimental/exports"
 import type { Meta, StoryObj } from "@storybook/react"
 import { PostDescription } from "./index"
 
@@ -93,7 +94,7 @@ export const Collapsed: Story = {
   },
 }
 
-type SkeletonStory = StoryObj<typeof PostDescription.Skeleton>
+type SkeletonStory = StoryObj<typeof RichTextDisplay.Skeleton>
 
 export const Skeleton: SkeletonStory = {
   decorators: [
@@ -104,5 +105,5 @@ export const Skeleton: SkeletonStory = {
     ),
   ],
   args: {},
-  render: () => <PostDescription.Skeleton />,
+  render: () => <RichTextDisplay.Skeleton />,
 }

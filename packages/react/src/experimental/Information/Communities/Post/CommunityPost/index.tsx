@@ -1,3 +1,4 @@
+import { RichTextDisplay } from "@/experimental/exports"
 import { Comment as CommentIcon, EllipsisHorizontal } from "@/icons/app"
 import { Skeleton } from "@/ui/skeleton"
 import { Button } from "../../../../../components/Actions/Button"
@@ -240,7 +241,7 @@ export const CommunityPostSkeleton = ({
       </div>
       <Skeleton className="mt-3.5 h-3.5 w-1/5 rounded-2xs" />
       <div className="mt-3">
-        <PostDescription.Skeleton />
+        <RichTextDisplay.Skeleton />
       </div>
       {withImage && !withEvent && (
         <div className="mt-3 aspect-video w-full overflow-hidden rounded-xl md:w-2/3">

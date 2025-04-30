@@ -76,3 +76,17 @@ export const Default: Story = {
     content: htmlContent,
   },
 }
+
+export const Collapsed: Story = {
+  tags: ["experimental"],
+  args: {
+    content: htmlContent,
+    collapsed: true,
+  },
+}
+
+type SkeletonStory = StoryObj<typeof RichTextDisplay.Skeleton>
+
+export const Skeleton: SkeletonStory = {
+  render: () => <RichTextDisplay.Skeleton />,
+}
