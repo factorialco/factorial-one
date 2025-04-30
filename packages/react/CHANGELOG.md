@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.5...factorial-one-react-v1.37.6) (2025-04-30)
+
+
+### Bug Fixes
+
+* tooltips in AvatarList component with layout fill ([#1723](https://github.com/factorialco/factorial-one/issues/1723)) ([70b358e](https://github.com/factorialco/factorial-one/commit/70b358e36b6f52a6168923401bc75e33e4738d50))
+
 ## [1.37.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.4...factorial-one-react-v1.37.5) (2025-04-30)
 
 
