@@ -1,9 +1,8 @@
 import Svg, { Path } from "react-native-svg";
 import type { SvgProps } from "react-native-svg";
 import { Ref, forwardRef } from "react";
-const SvgBullet = (props: SvgProps, ref: Ref<SVGSVGElement>) => (
+const SvgBullet = (props: SvgProps, ref: Ref<Svg>) => (
   <Svg
-    xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 20 20"
     className={props.className}
