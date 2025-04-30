@@ -105,7 +105,9 @@ export const AvatarList = ({
 
           return (
             <Tooltip label={displayName}>
-              <Avatar avatar={avatar} size={size} />
+              <div>
+                <Avatar avatar={avatar} size={size} />
+              </div>
             </Tooltip>
           )
         }}
