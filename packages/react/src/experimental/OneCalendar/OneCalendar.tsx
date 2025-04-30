@@ -6,6 +6,7 @@ import { useI18n } from "../../lib/providers/i18n"
 import { CalendarMode, CalendarView, DateRange } from "./types"
 import { DayView } from "./views/day"
 import { MonthView } from "./views/month"
+import { QuarterView } from "./views/quarter"
 import { WeekView } from "./views/week"
 import { YearView } from "./views/year"
 
@@ -142,6 +143,16 @@ export function OneCalendar({
             onSelect={handleSelect}
             month={viewDate}
             onMonthChange={setViewDate}
+            motionDirection={motionDirection}
+          />
+        )}
+
+        {view === "quarter" && (
+          <QuarterView
+            mode={mode}
+            year={viewDate.getFullYear()}
+            selected={selected}
+            onSelect={handleSelect}
             motionDirection={motionDirection}
           />
         )}
