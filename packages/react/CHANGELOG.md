@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.0...factorial-one-react-v1.37.1) (2025-04-30)
+
+
+### Bug Fixes
+
+* double click on dropdown ([#1708](https://github.com/factorialco/factorial-one/issues/1708)) ([a7b6796](https://github.com/factorialco/factorial-one/commit/a7b6796a888095a76c251e16c9e881c7c0afa91b))
+
 ## [1.37.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.4...factorial-one-react-v1.37.0) (2025-04-30)
 
 
