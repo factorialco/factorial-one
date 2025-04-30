@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.37.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.1...factorial-one-react-v1.37.2) (2025-04-30)
+
+
+### Bug Fixes
+
+* add support for widget skeleton to be full height ([#1709](https://github.com/factorialco/factorial-one/issues/1709)) ([087d281](https://github.com/factorialco/factorial-one/commit/087d2818138abcacf0000f0917257de60311d1af))
+
 ## [1.37.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.0...factorial-one-react-v1.37.1) (2025-04-30)
 
 
