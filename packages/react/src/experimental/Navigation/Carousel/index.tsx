@@ -25,6 +25,20 @@ interface CarouselProps {
   delay?: number
   columns?: CarouselBreakpoints
   showPeek?: boolean
+  doubleColumnIndices?: number[]
+}
+
+function getVariantValue(
+  value: ColumnNumber | undefined,
+  showPeek: boolean,
+  isDoubleColumn?: boolean
+): ColumnNumber | PeekVariant {
+  if (isDoubleColumn) {
+    const doubleValue = ((value || 1) / 2) as ColumnNumber
+    return showPeek ? (`peek${doubleValue}` as PeekVariant) : doubleValue
+  }
+
+  return showPeek ? (`peek${value || 1}` as PeekVariant) : value || 1
 }
 
 export const Carousel = ({
@@ -35,6 +49,7 @@ export const Carousel = ({
   autoplay = false,
   delay = 3000,
   showPeek = false,
+  doubleColumnIndices,
 }: CarouselProps) => {
   const childrenArray = React.Children.toArray(children)
 
@@ -52,13 +67,6 @@ export const Carousel = ({
     if (plugin.current) {
       plugin.current.play()
     }
-  }
-
-  function getVariantValue(
-    value: ColumnNumber | undefined,
-    showPeek: boolean
-  ): ColumnNumber | PeekVariant {
-    return showPeek ? (`peek${value || 1}` as PeekVariant) : value || 1
   }
 
   if (!columns) {
@@ -81,21 +89,28 @@ export const Carousel = ({
       <div className="flex flex-col gap-5">
         <div className="relative">
           <CarouselContent>
-            {React.Children.map(childrenArray, (child, index) => (
-              <CarouselItem
-                key={index}
-                className={carouselItemVariants({
-                  default: getVariantValue(columns.default, showPeek),
-                  xs: getVariantValue(columns.xs, showPeek),
-                  sm: getVariantValue(columns.sm, showPeek),
-                  md: getVariantValue(columns.md, showPeek),
-                  lg: getVariantValue(columns.lg, showPeek),
-                  peek: showPeek,
-                })}
-              >
-                {child}
-              </CarouselItem>
-            ))}
+            {React.Children.map(childrenArray, (child, index) => {
+              const isDoubleColumn = doubleColumnIndices?.includes(index)
+              return (
+                <CarouselItem
+                  key={index}
+                  className={carouselItemVariants({
+                    default: getVariantValue(
+                      columns.default,
+                      showPeek,
+                      isDoubleColumn
+                    ),
+                    xs: getVariantValue(columns.xs, showPeek, isDoubleColumn),
+                    sm: getVariantValue(columns.sm, showPeek, isDoubleColumn),
+                    md: getVariantValue(columns.md, showPeek, isDoubleColumn),
+                    lg: getVariantValue(columns.lg, showPeek, isDoubleColumn),
+                    peek: showPeek,
+                  })}
+                >
+                  {child}
+                </CarouselItem>
+              )
+            })}
           </CarouselContent>
           {showArrows && (
             <>
