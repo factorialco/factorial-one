@@ -132,7 +132,7 @@ declare const Avatar_2: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.A
 } & React_2.RefAttributes<HTMLSpanElement>>;
 
 export declare const AvatarList: {
-    ({ avatars, size, type, noTooltip, remainingCount: initialRemainingCount, max, }: Props_4): JSX_2.Element;
+    ({ avatars, size, type, noTooltip, remainingCount: initialRemainingCount, max, layout, }: Props_4): JSX_2.Element;
     displayName: string;
 };
 
@@ -582,7 +582,7 @@ declare type CardVisualizationOptions<T, _Filters extends FiltersDefinition, _So
     title: (record: T) => string;
 };
 
-export declare const Carousel: ({ children, columns, showArrows, showDots, autoplay, delay, showPeek, }: CarouselProps) => default_2.JSX.Element;
+export declare const Carousel: ({ children, columns, showArrows, showDots, autoplay, delay, showPeek, doubleColumns, }: CarouselProps) => default_2.JSX.Element;
 
 declare interface CarouselBreakpoints {
     default?: ColumnNumber;
@@ -601,6 +601,10 @@ declare interface CarouselProps {
     delay?: number;
     columns?: CarouselBreakpoints;
     showPeek?: boolean;
+    doubleColumns?: {
+        index: number;
+        sizes: (keyof CarouselBreakpoints)[];
+    }[];
 }
 
 declare interface CategoryBarProps {
@@ -1108,16 +1112,16 @@ actions: {
 primary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
-icon?: IconType_3 | undefined;
 disabled?: boolean | undefined | undefined;
+icon?: IconType_3 | undefined;
 } & {
 variant?: "default" | "critical" | "neutral";
 };
 secondary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
-icon?: IconType_3 | undefined;
 disabled?: boolean | undefined | undefined;
+icon?: IconType_3 | undefined;
 };
 };
 open?: boolean;
@@ -1475,12 +1479,15 @@ declare type IconType_2 = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & Re
 
 declare const Indicator: ForwardRefExoticComponent<IndicatorProps & RefAttributes<HTMLDivElement>>;
 
-declare interface IndicatorProps {
+declare type IndicatorProps = {
     content: string;
     label: string;
     color?: string;
+} & ({
     icon?: IconType;
-}
+} | {
+    emoji?: string;
+});
 
 export declare const IndicatorsList: ForwardRefExoticComponent<IndicatorsListProps & RefAttributes<HTMLDivElement>>;
 
@@ -1547,6 +1554,7 @@ chart: LineChartProps;
 
 declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
+    disabled?: boolean;
 };
 
 export declare type MentionedUser = {
@@ -2359,6 +2367,13 @@ declare type Props_4 = {
      * The remaining number to display.
      */
     remainingCount?: number;
+    /**
+     * The layout of the avatar list.
+     * - "fill" - Avatars will expand to fill the available width, with overflow items shown in a counter
+     * - "compact" - Avatars will be stacked tightly together up to the max limit, with remaining shown in counter
+     * @default "compact"
+     */
+    layout?: "fill" | "compact";
 };
 
 declare type Props_5 = {
@@ -3213,20 +3228,7 @@ declare interface WeekdaysProps {
 export declare const Widget: default_2.ForwardRefExoticComponent<WidgetProps & {
     children: ReactNode;
 } & default_2.RefAttributes<HTMLDivElement>> & {
-    Skeleton: default_2.ForwardRefExoticComponent<{
-        header?: {
-            title?: string;
-            subtitle?: string;
-        };
-    } & VariantProps<(props?: ({
-        height?: "lg" | "md" | "sm" | undefined;
-    } & ({
-        class?: ClassValue;
-        className?: never;
-    } | {
-        class?: never;
-        className?: ClassValue;
-    })) | undefined) => string> & default_2.RefAttributes<HTMLDivElement>>;
+    Skeleton: default_2.ForwardRefExoticComponent<WidgetSkeletonProps & default_2.RefAttributes<HTMLDivElement>>;
 };
 
 export declare function WidgetAvatarsListItem({ id, title, subtitle, avatars, remainingCount, withPointerCursor, onClick, ...props }: WidgetAvatarsListItemProps): JSX_2.Element;
@@ -3325,7 +3327,9 @@ export declare type WidgetSkeletonProps = {
         title?: string;
         subtitle?: string;
     };
-} & VariantProps<typeof skeletonVariants>;
+} & (VariantProps<typeof skeletonVariants> | {
+    height: "full";
+});
 
 export declare const WidgetStrip: ForwardRefExoticComponent<DashboardProps_2 & RefAttributes<HTMLDivElement>> & {
     Skeleton: () => JSX_2.Element;

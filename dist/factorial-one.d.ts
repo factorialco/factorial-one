@@ -254,11 +254,13 @@ export declare interface LinkProps extends LinkProps_2, VariantProps<typeof link
 
 declare type LinkProps_2 = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
+    disabled?: boolean;
 };
 
 declare const linkVariants: (props?: ({
     variant?: "link" | "text" | undefined;
     active?: boolean | undefined;
+    disabled?: boolean | undefined;
 } & ({
     class?: ClassValue;
     className?: never;
