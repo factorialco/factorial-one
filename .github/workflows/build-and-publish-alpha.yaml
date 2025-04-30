@@ -68,8 +68,40 @@ jobs:
           pnpm --filter @factorialco/factorial-one-react-core build
           pnpm --filter @factorialco/factorial-one-react-native build
 
-      - name: Publish to release branch npm/alpha-pr-${{ github.event.pull_request.number }}
+      - name: Publish to release branch npm/alpha-pr-${{ github.event.pull_request.number }}-react-native
         uses: ./.github/actions/publish-release-branch
         with:
           branch-name: npm/alpha-pr-${{ github.event.pull_request.number }}-react-native
           directory: packages/react-native
+
+  publish-alpha-core:
+    name: "[🎯 CORE] Build and Publish ALPHA"
+    needs: detect-changes
+    if: |
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request &&
+       github.event.comment.body == 'build') ||
+      (github.event_name == 'pull_request' && 
+      needs.detect-changes.outputs.package_core == 'true')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: ./.github/actions/setup-node-pnpm
+        name: Setup Node and pnpm
+
+      - name: Build
+        run: |
+          pnpm --filter @factorialco/factorial-one-react-core build
+
+      - name: Publish to release branch npm/alpha-pr-${{ github.event.pull_request.number }}-core
+        uses: ./.github/actions/publish-release-branch
+        with:
+          branch-name: npm/alpha-pr-${{ github.event.pull_request.number }}-core
+          directory: packages/core
