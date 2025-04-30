@@ -55,7 +55,7 @@ interface StyledIconDisplayProps extends IconDisplayProps {
 const IconDisplay = ({ icon, name }: IconDisplayProps) => (
   <View className="items-center w-20 mb-4 p-2">
     <Icon icon={icon} size="md" />
-    <Text className="text-sm mt-2 text-center">{name}</Text>
+    <Text className="text-sm mt-2 text-center text-f1-foreground">{name}</Text>
   </View>
 );
 
@@ -69,7 +69,7 @@ const SizeVariant = ({ icon, name, size }: SizeVariantProps) => (
 const StyledIconDisplay = ({ icon, name, color }: StyledIconDisplayProps) => (
   <View className="items-center justify-center">
     <Icon icon={icon} size="lg" color={color} />
-    <Text className="text-xs mt-2 text-center">{name}</Text>
+    <Text className="text-xs mt-2 text-center text-f1-foreground">{name}</Text>
   </View>
 );
 

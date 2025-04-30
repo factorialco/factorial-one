@@ -1,9 +1,8 @@
 import Svg, { Path } from "react-native-svg";
 import type { SvgProps } from "react-native-svg";
 import { Ref, forwardRef } from "react";
-const SvgHeading3 = (props: SvgProps, ref: Ref<SVGSVGElement>) => (
+const SvgHeading3 = (props: SvgProps, ref: Ref<Svg>) => (
   <Svg
-    xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     className={props.className}
