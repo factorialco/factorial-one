@@ -2567,14 +2567,17 @@ export const WithKanbanVisualization: Story = {
               columns: [
                 {
                   label: "To Do",
+                  statusColor: "neutral",
                   render: (item) => item.name,
                 },
                 {
                   label: "In Progress",
+                  statusColor: "info",
                   render: (item) => item.name,
                 },
                 {
                   label: "Done",
+                  statusColor: "positive",
                   render: (item) => item.name,
                 },
               ],

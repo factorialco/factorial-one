@@ -10,6 +10,7 @@ export function Kanban({ columns }: KanbanProps) {
       <KanbanColumn
         key={column.label}
         label={column.label}
+        statusColor={column.statusColor}
         items={column.items}
       />
     )

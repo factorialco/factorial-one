@@ -1,3 +1,5 @@
+import { NewColor } from "@/experimental/Information/Tags/DotTag"
+import { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
 import { Kanban } from "@/experimental/OneKanban"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
@@ -10,6 +12,7 @@ export type KanbanColumnDefinition<
   _Sortings extends SortingsDefinition,
 > = {
   label: string
+  statusColor: StatusVariant | NewColor
   render: (item: _Record) => string
 }
 
@@ -40,6 +43,7 @@ export const KanbanCollection = <
     <Kanban
       columns={columns.map((column) => ({
         label: column.label,
+        statusColor: column.statusColor,
         items: [],
       }))}
     />
