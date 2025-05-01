@@ -48,6 +48,10 @@ export function OneCalendar({
       newDate.setFullYear(newDate.getFullYear() + direction)
     }
 
+    if (view === "quarter") {
+      newDate.setFullYear(newDate.getFullYear() + direction * 5)
+    }
+
     if (view === "year") {
       newDate.setFullYear(newDate.getFullYear() + direction * 10)
     }
@@ -78,6 +82,12 @@ export function OneCalendar({
           value={viewDate.getFullYear()}
         />
       )
+    }
+
+    if (view === "quarter") {
+      const baseYear = Math.floor(viewDate.getFullYear() / 5) * 5
+      const endYear = baseYear + 4
+      return `${baseYear}  -  ${endYear}`
     }
 
     if (view === "year") {

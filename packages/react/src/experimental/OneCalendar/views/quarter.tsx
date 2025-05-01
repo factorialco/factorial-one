@@ -28,8 +28,6 @@ interface QuarterViewProps {
   selected: Date | DateRange | null
   onSelect?: (date: Date | DateRange) => void
   year: number
-  fromDate?: Date
-  toDate?: Date
   motionDirection?: number
 }
 
@@ -38,14 +36,14 @@ export const QuarterView = ({
   selected,
   onSelect,
   year,
-  fromDate,
-  toDate,
   motionDirection = 1,
 }: QuarterViewProps) => {
   const quarters = [1, 2, 3, 4]
   const today = new Date()
   const currentYear = today.getFullYear()
   const currentQuarter = getQuarterFromMonth(today.getMonth())
+  const baseYear = Math.floor(year / 5) * 5
+  const years = Array.from({ length: 5 }, (_, i) => baseYear + i)
 
   // Check if a value is a DateRange
   const isDateRange = (value: unknown): value is DateRange => {
@@ -55,7 +53,7 @@ export const QuarterView = ({
   }
 
   // Handle click on a quarter
-  const handleQuarterClick = (quarter: number) => {
+  const handleQuarterClick = (quarter: number, year: number) => {
     const quarterRange = getQuarterRange(quarter, year)
 
     if (mode === "single") {
@@ -72,16 +70,18 @@ export const QuarterView = ({
         const fromYear = fromDate.getFullYear()
 
         if (fromQuarter === quarter && fromYear === year) {
+          // If clicking the same quarter, select just that quarter
           onSelect?.({
             from: quarterRange.from,
             to: quarterRange.to,
           })
         } else {
+          // Create a range between the two quarters
           const fromQuarterRange = getQuarterRange(fromQuarter, fromYear)
 
           const start = isBefore(fromQuarterRange.from, quarterRange.from)
-            ? quarterRange.from
-            : fromQuarterRange.from
+            ? fromQuarterRange.from
+            : quarterRange.from
 
           const end = isAfter(fromQuarterRange.to!, quarterRange.to!)
             ? fromQuarterRange.to
@@ -93,6 +93,7 @@ export const QuarterView = ({
           })
         }
       } else {
+        // Start a new range
         onSelect?.({
           from: quarterRange.from,
           to: undefined,
@@ -102,16 +103,16 @@ export const QuarterView = ({
   }
 
   // Check if a quarter is selected
-  const isQuarterSelected = (quarter: number): boolean => {
+  const isQuarterSelected = (quarter: number, year: number): boolean => {
     if (!selected) return false
 
     const quarterRange = getQuarterRange(quarter, year)
+    if (!quarterRange.to) return false
 
     if (!isDateRange(selected)) {
       // Single date selection
       const selectedMonth = selected.getMonth()
       const selectedQuarter = getQuarterFromMonth(selectedMonth)
-
       return selectedQuarter === quarter && selected.getFullYear() === year
     } else {
       // Range selection
@@ -122,8 +123,8 @@ export const QuarterView = ({
         // Check if any part of the quarter is within the selected range
         return (
           isWithinInterval(quarterRange.from, { start: from, end: to }) ||
-          isWithinInterval(quarterRange.to!, { start: from, end: to }) ||
-          (isBefore(quarterRange.from, from) && isAfter(quarterRange.to!, to))
+          isWithinInterval(quarterRange.to, { start: from, end: to }) ||
+          (isBefore(quarterRange.from, from) && isAfter(quarterRange.to, to))
         )
       } else if (from) {
         // Check if the from date is in this quarter
@@ -136,12 +137,12 @@ export const QuarterView = ({
   }
 
   // Check if a quarter is the current quarter
-  const isCurrentQuarter = (quarter: number): boolean => {
+  const isCurrentQuarter = (quarter: number, year: number): boolean => {
     return quarter === currentQuarter && year === currentYear
   }
 
   // Check if a quarter is the start of a range
-  const isRangeStart = (quarter: number): boolean => {
+  const isRangeStart = (quarter: number, year: number): boolean => {
     if (!selected || !isDateRange(selected) || !selected.from) return false
 
     const from = selected.from
@@ -150,7 +151,7 @@ export const QuarterView = ({
   }
 
   // Check if a quarter is the end of a range
-  const isRangeEnd = (quarter: number): boolean => {
+  const isRangeEnd = (quarter: number, year: number): boolean => {
     if (!selected || !isDateRange(selected) || !selected.to) return false
 
     const to = selected.to
@@ -174,7 +175,7 @@ export const QuarterView = ({
     <AnimatePresence mode="popLayout" initial={false} custom={motionDirection}>
       <motion.div
         key={year}
-        className="grid grid-cols-2 gap-3"
+        className="flex flex-col gap-4"
         custom={motionDirection}
         variants={motionVariants}
         initial="hidden"
@@ -182,29 +183,67 @@ export const QuarterView = ({
         exit="exit"
         transition={{ duration: 0.15, ease: [0.455, 0.03, 0.515, 0.955] }}
       >
-        {quarters.map((quarter) => {
-          const isSelected = isQuarterSelected(quarter)
-          const isCurrent = isCurrentQuarter(quarter)
-          const isStart = isRangeStart(quarter)
-          const isEnd = isRangeEnd(quarter)
+        {years.map((yearValue) => (
+          <div
+            key={yearValue}
+            className="flex items-center justify-center gap-3 pl-1.5"
+          >
+            <div className="text-medium text-right text-sm tabular-nums text-f1-foreground-secondary">
+              {yearValue}
+            </div>
+            <div className="flex flex-1">
+              {quarters.map((quarter) => {
+                const isSelected = isQuarterSelected(quarter, yearValue)
+                const isCurrent = isCurrentQuarter(quarter, yearValue)
+                const isStart = isRangeStart(quarter, yearValue)
+                const isEnd = isRangeEnd(quarter, yearValue)
 
-          return (
-            <button
-              key={quarter}
-              onClick={() => handleQuarterClick(quarter)}
-              className={cn(
-                "relative isolate flex h-10 items-center justify-center rounded-md p-2",
-                focusRing(),
-                isSelected && "bg-f1-background-selected-bold",
-                //isCurrent && "bg-f1-background-current",
-                isStart && "bg-f1-background-selected-bold",
-                isEnd && "bg-f1-background-selected-bold"
-              )}
-            >
-              Q{quarter}
-            </button>
-          )
-        })}
+                return (
+                  <button
+                    key={`${yearValue}-Q${quarter}`}
+                    onClick={() => handleQuarterClick(quarter, yearValue)}
+                    className={cn(
+                      "relative isolate flex h-10 flex-1 items-center justify-center rounded-md p-2 tabular-nums",
+                      "after:absolute after:inset-x-1 after:inset-y-0 after:z-0 after:rounded-md after:ring-1 after:ring-inset after:ring-f1-border-secondary after:transition-all after:duration-100 after:content-['']",
+                      "hover:after:bg-f1-background-hover",
+                      focusRing(),
+                      (isStart || isEnd) && "after:inset-x-0",
+                      isSelected &&
+                        "after:bg-f1-background-selected-bold after:ring-0 hover:after:bg-f1-background-selected-bold-hover [&>span]:text-f1-foreground-inverse",
+                      isSelected &&
+                        !isStart &&
+                        !isEnd &&
+                        mode === "range" &&
+                        "rounded-none bg-f1-background-selected after:opacity-0 after:transition-none first:rounded-l-md last:rounded-r-md hover:bg-f1-background-selected [&>span]:text-f1-foreground-selected"
+                    )}
+                  >
+                    {isStart && (
+                      <div className="absolute inset-y-0 right-0 z-0 w-1/2 bg-f1-background-selected" />
+                    )}
+                    {isEnd && (
+                      <div className="absolute inset-y-0 left-0 z-0 w-1/2 bg-f1-background-selected" />
+                    )}
+                    <span className="z-10 font-medium">Q{quarter}</span>
+                    {isCurrent && (
+                      <div
+                        className={cn(
+                          "absolute inset-x-0 bottom-1 z-20 mx-auto h-0.5 w-1.5 rounded-full bg-f1-background-selected-bold transition-colors duration-100",
+                          isSelected && mode === "single" && "bg-f1-background",
+                          (isStart || isEnd) && "bg-f1-background",
+                          !isStart &&
+                            !isEnd &&
+                            isSelected &&
+                            mode === "range" &&
+                            "bg-f1-background-selected-bold"
+                        )}
+                      />
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        ))}
       </motion.div>
     </AnimatePresence>
   )

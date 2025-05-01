@@ -349,7 +349,7 @@ export const QuarterRange: Story = {
       const now = new Date()
       const currentQuarter = Math.floor(now.getMonth() / 3)
       const currentQuarterStartMonth = currentQuarter * 3
-      const nextQuarter = (currentQuarter + 1) % 4
+      const nextQuarter = (currentQuarter + 2) % 4
       const nextQuarterStartMonth = nextQuarter * 3
       const nextQuarterYear = now.getFullYear() + (currentQuarter === 3 ? 1 : 0)
 
