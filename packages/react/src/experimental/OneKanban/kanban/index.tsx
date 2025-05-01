@@ -17,7 +17,7 @@ export function Kanban({ columns }: KanbanProps) {
   }
 
   return (
-    <div className="flex flex-row gap-8 overflow-x-auto pb-24">
+    <div className="flex flex-row gap-3 overflow-x-auto pb-6">
       {columns.map((column) => renderColumn(column))}
     </div>
   )

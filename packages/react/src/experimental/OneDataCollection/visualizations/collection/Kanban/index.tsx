@@ -13,7 +13,13 @@ export type KanbanColumnDefinition<
 > = {
   label: string
   statusColor: StatusVariant | NewColor
-  render: (item: _Record) => string
+  render: (item: _Record) => KanbanColumnDataDefinition[]
+}
+
+export type KanbanColumnDataDefinition = {
+  id: string
+  title: string
+  projections: React.ReactNode[]
 }
 
 export type KanbanVisualizationOptions<

@@ -15,14 +15,17 @@ export function KanbanColumn({ label, statusColor, items }: KanbanColumnProps) {
       status
     )
   }
-
   return (
-    <div className="bg-gray-100 flex flex-col gap-8 rounded-lg">
-      <div>
+    <div className="h-max max-h-[800px] min-h-[200px] w-max rounded-lg bg-f1-background-tertiary p-1">
+      <div className="flex w-[300px] flex-col gap-3">
         {isStatusVariant(statusColor) ? (
-          <StatusTag text={label} variant={statusColor} />
+          <div className="w-max">
+            <StatusTag text={label} variant={statusColor} />
+          </div>
         ) : (
-          <DotTag text={label} color={statusColor} />
+          <div className="w-max">
+            <DotTag text={label} color={statusColor} />
+          </div>
         )}
         {items.map((item) => (
           <KanbanCard

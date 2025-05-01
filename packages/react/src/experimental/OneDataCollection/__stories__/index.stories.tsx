@@ -2568,17 +2568,35 @@ export const WithKanbanVisualization: Story = {
                 {
                   label: "To Do",
                   statusColor: "neutral",
-                  render: (item) => item.name,
+                  render: (item) => [
+                    {
+                      id: item.id,
+                      title: item.name,
+                      projections: [],
+                    },
+                  ],
                 },
                 {
                   label: "In Progress",
                   statusColor: "info",
-                  render: (item) => item.name,
+                  render: (item) => [
+                    {
+                      id: item.id,
+                      title: item.name,
+                      projections: [],
+                    },
+                  ],
                 },
                 {
                   label: "Done",
                   statusColor: "positive",
-                  render: (item) => item.name,
+                  render: (item) => [
+                    {
+                      id: item.id,
+                      title: item.name,
+                      projections: [],
+                    },
+                  ],
                 },
               ],
             },
