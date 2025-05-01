@@ -381,3 +381,91 @@ export const QuarterRange: Story = {
     )
   },
 }
+
+export const HalfYearSingle: Story = {
+  args: {
+    mode: "single",
+    view: "halfyear",
+  },
+  render: (args) => {
+    const [selectedDate, setSelectedDate] = useState<Date | null>(() => {
+      const now = new Date()
+      const halfYearStartMonth = Math.floor(now.getMonth() / 6) * 6
+      return new Date(now.getFullYear(), halfYearStartMonth, 1)
+    })
+
+    const handleSelect = (date: Date | DateRange | null) => {
+      if (!date) {
+        setSelectedDate(null)
+        return
+      }
+      if (date instanceof Date) {
+        setSelectedDate(date)
+      }
+    }
+
+    const displayRange = selectedDate
+      ? {
+          from: selectedDate,
+          to: new Date(
+            selectedDate.getFullYear(),
+            Math.floor(selectedDate.getMonth() / 6) * 6 + 6,
+            0
+          ),
+        }
+      : null
+
+    return (
+      <div className="mx-auto max-w-80">
+        <OneCalendar
+          {...args}
+          defaultSelected={selectedDate}
+          onSelect={handleSelect}
+        />
+        {displayRange && <SelectedDateDisplay range={displayRange} />}
+      </div>
+    )
+  },
+}
+
+export const HalfYearRange: Story = {
+  args: {
+    mode: "range",
+    view: "halfyear",
+  },
+  render: (args) => {
+    const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
+      const now = new Date()
+      const currentHalfYear = Math.floor(now.getMonth() / 6)
+      const currentHalfYearStartMonth = currentHalfYear * 6
+      const endYear = now.getFullYear() + Math.floor((currentHalfYear + 2) / 2)
+      const endMonth = ((currentHalfYear + 2) % 2) * 6
+
+      return {
+        from: new Date(now.getFullYear(), currentHalfYearStartMonth, 1),
+        to: new Date(endYear, endMonth + 6, 0),
+      }
+    })
+
+    const handleSelect = (date: Date | DateRange | null) => {
+      if (!date) {
+        setSelectedRange(null)
+        return
+      }
+      if (!(date instanceof Date)) {
+        setSelectedRange(date)
+      }
+    }
+
+    return (
+      <div className="mx-auto max-w-80">
+        <OneCalendar
+          {...args}
+          defaultSelected={selectedRange}
+          onSelect={handleSelect}
+        />
+        {selectedRange && <SelectedDateDisplay range={selectedRange} />}
+      </div>
+    )
+  },
+}

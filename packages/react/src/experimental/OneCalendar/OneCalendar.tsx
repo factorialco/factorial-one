@@ -5,11 +5,11 @@ import { Button } from "../../components/Actions/Button"
 import { useI18n } from "../../lib/providers/i18n"
 import { CalendarMode, CalendarView, DateRange } from "./types"
 import { DayView } from "./views/day"
+import { HalfYearView } from "./views/halfyear"
 import { MonthView } from "./views/month"
 import { QuarterView } from "./views/quarter"
 import { WeekView } from "./views/week"
 import { YearView } from "./views/year"
-
 export interface OneCalendarProps {
   mode: CalendarMode
   view: CalendarView
@@ -52,6 +52,10 @@ export function OneCalendar({
       newDate.setFullYear(newDate.getFullYear() + direction * 5)
     }
 
+    if (view === "halfyear") {
+      newDate.setFullYear(newDate.getFullYear() + direction * 5)
+    }
+
     if (view === "year") {
       newDate.setFullYear(newDate.getFullYear() + direction * 10)
     }
@@ -85,6 +89,12 @@ export function OneCalendar({
     }
 
     if (view === "quarter") {
+      const baseYear = Math.floor(viewDate.getFullYear() / 5) * 5
+      const endYear = baseYear + 4
+      return `${baseYear}  -  ${endYear}`
+    }
+
+    if (view === "halfyear") {
       const baseYear = Math.floor(viewDate.getFullYear() / 5) * 5
       const endYear = baseYear + 4
       return `${baseYear}  -  ${endYear}`
@@ -157,6 +167,16 @@ export function OneCalendar({
           />
         )}
 
+        {view === "month" && (
+          <MonthView
+            mode={mode}
+            year={viewDate.getFullYear()}
+            selected={selected}
+            onSelect={handleSelect}
+            motionDirection={motionDirection}
+          />
+        )}
+
         {view === "quarter" && (
           <QuarterView
             mode={mode}
@@ -167,8 +187,8 @@ export function OneCalendar({
           />
         )}
 
-        {view === "month" && (
-          <MonthView
+        {view === "halfyear" && (
+          <HalfYearView
             mode={mode}
             year={viewDate.getFullYear()}
             selected={selected}
