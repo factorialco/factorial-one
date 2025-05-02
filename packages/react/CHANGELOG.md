@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.38.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.6...factorial-one-react-v1.38.0) (2025-05-02)
+
+
+### Features
+
+* **Calendar:** show week number & styles ([#1704](https://github.com/factorialco/factorial-one/issues/1704)) ([f373513](https://github.com/factorialco/factorial-one/commit/f373513a8348830cb1eec1a685a19d42bc1b8a68))
+
 ## [1.37.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.5...factorial-one-react-v1.37.6) (2025-04-30)
 
 
