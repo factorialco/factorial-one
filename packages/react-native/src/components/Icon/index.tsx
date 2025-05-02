@@ -42,7 +42,7 @@ export type IconType = ForwardRefExoticComponent<
 const interopAppliedIcons = new WeakSet();
 
 // Function to apply NativeWind interop to an icon component
-function applyIconInterop(icon: IconType) {
+export function applyIconInterop(icon: IconType) {
   if (!interopAppliedIcons.has(icon)) {
     cssInterop(icon, {
       className: {
