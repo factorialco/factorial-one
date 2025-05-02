@@ -56,7 +56,7 @@ interface AlertProps extends VariantProps<typeof alertVariants> {
   variant: AlertVariant
 }
 
-export const Alert = ({
+export const OneAlert = ({
   title,
   description,
   action,
