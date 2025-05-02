@@ -18,11 +18,11 @@
     "./icons/modules": {
       "import": "./src/icons/modules/index.ts"
     },
-    "./tailwind.config": "./tailwind.config.js"
+    "./tailwind.config": "./tailwind.config.ts"
   },
   "files": [
     "src",
-    "tailwind.config.js"
+    "tailwind.config.ts"
   ],
   "scripts": {
     "build": "echo 'we ship source code as is'; exit 0",
