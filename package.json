@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react-native",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "type": "module",
   "description": "React Native components for Factorial One Design System",
   "main": "src/index.ts",
@@ -18,11 +18,11 @@
     "./icons/modules": {
       "import": "./src/icons/modules/index.ts"
     },
-    "./tailwind.config": "./tailwind.config.js"
+    "./tailwind.config": "./tailwind.config.ts"
   },
   "files": [
     "src",
-    "tailwind.config.js"
+    "tailwind.config.ts"
   ],
   "scripts": {
     "build": "echo 'we ship source code as is'; exit 0",
