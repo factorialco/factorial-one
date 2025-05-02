@@ -131,7 +131,8 @@ const ProductUpdates = ({
           collisionPadding={20}
           align="end"
           hideWhenDetached
-          className="min-w-96 max-w-md overflow-y-auto"
+          className="max-h-[90vh min-h-[600px] min-w-96 max-w-md overflow-y-auto"
+          style={{ maxHeight: "min(90vh, 760px)", minHeight: 600 }}
         >
           <Header title={label} url={updatesPageUrl} onClick={onHeaderClick} />
           {state === "fetching" && <ProductUpdatesSkeleton />}
