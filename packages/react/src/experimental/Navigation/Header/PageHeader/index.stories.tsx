@@ -261,6 +261,21 @@ export const WithProductUpdate: Story = {
         alert("onHeaderClick")
       },
       currentModule: defaultModule.name,
+      crossSelling: {
+        isVisible: true,
+        type: "callout",
+        sectionTitle: "Discover other products",
+        title: "Benefits",
+        description:
+          "Improve your team’s salary without impacting your budget through flexible compensation.",
+        buttonText: "Learn more",
+        onClick: () => {
+          alert("onClick")
+        },
+        onClose: () => {
+          alert("onClose")
+        },
+      },
     },
   },
 }

@@ -2,7 +2,9 @@ import { Button } from "@/components/Actions/Button"
 import { ButtonInternal } from "@/components/Actions/Button/internal"
 import { Icon } from "@/components/Utilities/Icon"
 import AlertCircle from "@/icons/app/AlertCircle"
+import BellIcon from "@/icons/app/Bell"
 import ChevronRight from "@/icons/app/ChevronRight"
+import CrossIcon from "@/icons/app/Cross"
 import Megaphone from "@/icons/app/Megaphone"
 import { Image } from "@/lib/imageHandler"
 import { Link } from "@/lib/linkHandler"
@@ -24,6 +26,7 @@ import {
   useEffect,
   useState,
 } from "react"
+import { ModuleAvatar } from "../../../Information/ModuleAvatar"
 
 type ProductUpdate = {
   title: string
@@ -54,6 +57,15 @@ type ProductUpdatesProp = {
     description: string
     buttonText: string
   }
+  crossSelling: {
+    isVisible: boolean
+    type: "callout"
+    sectionTitle: string
+    title: string
+    description: string
+    buttonText: string
+    onClick: () => void
+  }
 }
 
 const ProductUpdates = ({
@@ -68,11 +80,11 @@ const ProductUpdates = ({
   onHeaderClick = () => {},
   onItemClick = () => {},
   hasUnread = false,
+  crossSelling,
 }: ProductUpdatesProp) => {
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
   const [featuredUpdate, ...restUpdates] = updates ?? []
-
   useEffect(() => {
     setUpdates(null)
     setState("idle")
@@ -118,7 +130,7 @@ const ProductUpdates = ({
           collisionPadding={20}
           align="end"
           hideWhenDetached
-          className="max-h-[600px] min-w-96 max-w-md overflow-y-auto"
+          className="min-w-96 max-w-md overflow-y-auto"
         >
           <Header title={label} url={updatesPageUrl} onClick={onHeaderClick} />
           {state === "fetching" && <ProductUpdatesSkeleton />}
@@ -154,6 +166,17 @@ const ProductUpdates = ({
                   </>
                 )}
               </div>
+              {crossSelling.isVisible && (
+                <>
+                  <DropdownMenuSeparator />
+                  <div className="px-1">
+                    <CrossSelling
+                      {...crossSelling}
+                      onClose={crossSelling.onClose}
+                    />
+                  </div>
+                </>
+              )}
             </>
           )}
           {state === "error" && (
@@ -398,5 +421,52 @@ const UnreadDot = ({ className = "" }: { className?: string }) => (
     className={cn("size-2 rounded bg-f1-background-selected-bold", className)}
   />
 )
+
+const CrossSelling = ({
+  sectionTitle,
+  title,
+  description,
+  buttonText,
+  onClick,
+  imageUrl,
+  onClose,
+  isVisible,
+  type,
+}: {
+  onClose: () => void
+} & ProductUpdatesProp["crossSelling"]) =>
+  isVisible &&
+  type === "callout" && (
+    <div>
+      <p className="text-balance px-3 pb-2 pt-3 text-sm font-medium text-f1-foreground-secondary">
+        {sectionTitle}
+      </p>
+      <div className="p-2">
+        <div className="flex flex-row gap-2 rounded-md border border-solid border-f1-border p-3 text-f1-foreground">
+          <ModuleAvatar icon={BellIcon} size="md" />
+          <div className="flex flex-1 flex-col justify-center">
+            <div>
+              <p className="font-medium">{title}</p>
+              <p className="text-f1-foreground-secondary">{description}</p>
+            </div>
+            <Button
+              variant="outline"
+              label={buttonText}
+              className="mt-3 w-[100px]"
+              onClick={onClick}
+            />
+          </div>
+          <Button
+            variant="ghost"
+            icon={CrossIcon}
+            size="sm"
+            className="h-6 w-6"
+            hideLabel
+            onClick={onClose}
+          />
+        </div>
+      </div>
+    </div>
+  )
 
 export { ProductUpdates, type ProductUpdate, type ProductUpdatesProp }
