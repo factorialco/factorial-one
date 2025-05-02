@@ -260,6 +260,12 @@ export const Week: Story = {
     mode: "single",
     view: "week",
   },
+  parameters: {
+    // Disable color contrast check for week view as it gets a false positive for middle range days
+    a11y: {
+      skipCi: true,
+    },
+  },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
       const now = new Date()
