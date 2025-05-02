@@ -8,7 +8,6 @@ const meta: Meta<typeof PulseAvatar> = {
   args: {
     firstName: "Dani",
     lastName: "Moreno",
-    src: "https://github.com/dani-moreno.png",
   },
 } satisfies Meta<typeof PulseAvatar>
 

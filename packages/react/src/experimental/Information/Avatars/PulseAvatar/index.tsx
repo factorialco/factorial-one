@@ -13,6 +13,7 @@ import { Button } from "@/ui/button"
 import { cva } from "cva"
 import { AnimatePresence, motion } from "framer-motion"
 import { ComponentProps, useState } from "react"
+import { EmojiImage } from "../../../../lib/emojis"
 import { BaseAvatar } from "../BaseAvatar"
 
 type Pulse =
@@ -66,80 +67,123 @@ export const PulseAvatar = ({
 
   return (
     <div className="relative inline-flex">
-      <BaseAvatar
-        type="rounded"
-        name={[firstName, lastName]}
-        src={src}
-        size="large"
-        color="random"
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledby}
-      />
-
-      <AnimatePresence>
+      <AnimatePresence mode="popLayout">
         {showWave ? (
           <motion.div
-            key="wave"
-            initial={{ opacity: 0, translateY: "-50%", translateX: "-50%" }}
-            animate={{
-              rotate: [-10, 15, -10],
-              opacity: 1,
-            }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{
-              opacity: { duration: 0.4, ease: "easeOut" },
-              scale: { duration: 0.4, ease: "easeOut" },
-              rotate: {
-                repeat: 1,
-                duration: 0.5,
-                ease: "linear",
-              },
-            }}
-            onAnimationComplete={() => setShowWave(false)}
-            className="absolute left-1/2 top-1/2 origin-bottom-right text-4xl"
-          >
-            👋
-          </motion.div>
-        ) : pulse ? (
-          <div className="absolute -bottom-1 -right-1 inline-flex rounded-sm bg-f1-background">
-            <Button
-              variant="neutral"
-              size="sm"
-              onClick={(event) => {
-                event.preventDefault()
-                event.stopPropagation()
-                onPulseClick()
-              }}
-              round
-              aria-label={translations.actions.edit}
-            >
-              <Icon icon={pulseIcon[pulse]} className={iconStyle({ pulse })} />
-            </Button>
-          </div>
-        ) : (
-          <motion.div
-            key="reaction-button"
-            initial={{ opacity: 0, scale: 0.5 }}
+            className="relative h-14 w-14 rounded-full bg-f1-background-selected-bold"
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{
-              opacity: { delay: 0.25 },
-              scale: { delay: 0.25 },
+              scale: {
+                type: "spring",
+                stiffness: 290,
+                damping: 15.1,
+                mass: 1.4,
+              },
+              opacity: {
+                type: "linear",
+                duration: 0.2,
+              },
             }}
-            className="absolute -bottom-1 -right-1 rounded-sm bg-f1-background"
           >
-            <ActionButton
-              label={translations.actions.add}
-              variant="neutral"
-              size="sm"
-              icon={Reaction}
-              onClick={(event) => {
-                event.preventDefault()
-                event.stopPropagation()
-                onPulseClick()
+            <motion.div
+              key="wave"
+              initial={{ opacity: 0, originX: 0.6, originY: 0.6 }}
+              animate={{
+                rotate: [-15, 20, -15],
+                opacity: 1,
               }}
-              hideLabel
+              exit={{ opacity: 0, scale: 0 }}
+              transition={{
+                opacity: { duration: 0.4, ease: "easeOut" },
+                scale: { duration: 0.4, ease: "easeOut" },
+                rotate: {
+                  repeat: 1,
+                  duration: 0.5,
+                  ease: "easeInOut",
+                },
+              }}
+              onAnimationComplete={() => setShowWave(false)}
+              className="absolute inset-0 flex select-none items-center justify-center text-4xl"
+            >
+              <EmojiImage emoji="👋" size="md" />
+            </motion.div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="avatar"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+            className="relative"
+            transition={{
+              scale: {
+                type: "spring",
+                stiffness: 290,
+                damping: 15.1,
+                mass: 1.4,
+              },
+              opacity: {
+                type: "linear",
+                duration: 0.2,
+              },
+            }}
+          >
+            <BaseAvatar
+              type="rounded"
+              name={[firstName, lastName]}
+              src={src}
+              size="large"
+              color="random"
+              aria-label={ariaLabel}
+              aria-labelledby={ariaLabelledby}
             />
+            {pulse ? (
+              <div className="absolute -bottom-1 -right-1 inline-flex rounded-sm bg-f1-background">
+                <Button
+                  variant="neutral"
+                  size="sm"
+                  onClick={(event) => {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    onPulseClick()
+                  }}
+                  round
+                  aria-label={translations.actions.edit}
+                >
+                  <Icon
+                    icon={pulseIcon[pulse]}
+                    className={iconStyle({ pulse })}
+                  />
+                </Button>
+              </div>
+            ) : (
+              <motion.div
+                key="reaction-button"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.5 }}
+                transition={{
+                  opacity: { delay: 0.25 },
+                  scale: { delay: 0.25 },
+                }}
+                className="absolute -bottom-1 -right-1 rounded-sm bg-f1-background"
+              >
+                <ActionButton
+                  label={translations.actions.add}
+                  variant="neutral"
+                  size="sm"
+                  icon={Reaction}
+                  onClick={(event) => {
+                    event.preventDefault()
+                    event.stopPropagation()
+                    onPulseClick()
+                  }}
+                  hideLabel
+                />
+              </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
