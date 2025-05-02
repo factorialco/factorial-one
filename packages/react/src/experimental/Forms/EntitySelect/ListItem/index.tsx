@@ -8,20 +8,21 @@ import LogoAvatar from "../../../../icons/app/LogoAvatar"
 import { cn } from "../../../../lib/utils"
 import { Counter } from "../../../exports"
 import { PersonAvatar } from "../../../Information/Avatars/PersonAvatar"
-import { HighlightText } from "../AvatarNameHighLightText"
-import { AvatarNamedEntity } from "../types"
+import { HighlightText } from "../HighLightText"
+import { EntitySelectEntity } from "../types"
 
 interface Props {
-  entity: AvatarNamedEntity
+  entity: EntitySelectEntity
   selected: boolean
-  onSelect: (entity: AvatarNamedEntity) => void
-  onRemove: (entity: AvatarNamedEntity) => void
+  onSelect: (entity: EntitySelectEntity) => void
+  onRemove: (entity: EntitySelectEntity) => void
   marginLeft: "ml-0" | "ml-6"
   search: string
   singleSelector?: boolean
   goToFirst?: () => void
   goToLast?: () => void
   disabled?: boolean
+  hiddenAvatar?: boolean
 }
 
 export function focusNextFocusable(
@@ -58,7 +59,7 @@ export function focusPreviousFocusable(
   }
 }
 
-export const AvatarNameListItemSingleContent = ({
+export const ListItemSingleContent = ({
   entity,
   selected,
   onSelect,
@@ -69,6 +70,7 @@ export const AvatarNameListItemSingleContent = ({
   goToLast,
   singleSelector = false,
   disabled = false,
+  hiddenAvatar = false,
 }: Props) => {
   const nameParts = entity.name.split(" ")
   const firstName = nameParts[0] || ""
@@ -114,12 +116,14 @@ export const AvatarNameListItemSingleContent = ({
             : ""
         )}
       >
-        <PersonAvatar
-          src={entity.avatar}
-          firstName={firstName}
-          lastName={lastName}
-          size="xsmall"
-        />
+        {!hiddenAvatar && (
+          <PersonAvatar
+            src={entity.avatar}
+            firstName={firstName}
+            lastName={lastName}
+            size="xsmall"
+          />
+        )}
 
         <div className="flex flex-1 flex-col">
           <div className="flex flex-1 flex-row items-center gap-2">
@@ -176,16 +180,17 @@ const AvatarNameListItem = ({
   showGroupIcon = false,
   singleSelector = false,
   disabled = false,
+  hiddenAvatar = false,
 }: {
-  entity: AvatarNamedEntity
+  entity: EntitySelectEntity
   groupView: boolean
   expanded: boolean
   selected: boolean
   partialSelected: boolean
   search: string
   showGroupIcon?: boolean
-  onSelect: (entity: AvatarNamedEntity) => void
-  onRemove: (entity: AvatarNamedEntity) => void
+  onSelect: (entity: EntitySelectEntity) => void
+  onRemove: (entity: EntitySelectEntity) => void
   onExpand: (expanded: boolean) => void
   singleSelector: boolean
   isChild?: boolean
@@ -193,11 +198,12 @@ const AvatarNameListItem = ({
   goToFirst?: () => void
   goToLast?: () => void
   disabled?: boolean
+  hiddenAvatar?: boolean
 }) => {
   const [pressingLabel, setPressingLabel] = useState<boolean>(false)
   if (!groupView) {
     return (
-      <AvatarNameListItemSingleContent
+      <ListItemSingleContent
         marginLeft={isChild ? "ml-6" : "ml-0"}
         entity={entity}
         search={search}
@@ -208,6 +214,7 @@ const AvatarNameListItem = ({
         goToFirst={goToFirst}
         goToLast={goToLast}
         disabled={disabled}
+        hiddenAvatar={hiddenAvatar}
       />
     )
   }

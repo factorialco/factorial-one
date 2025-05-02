@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { useState } from "react"
 import avatar from "../../../../storybook-assets/avatar.jpeg"
-import { AvatarNameSelector } from "./index"
-import { AvatarNamedEntity } from "./types"
+import { EntitySelect } from "./index"
+import { EntitySelectEntity } from "./types"
 
 // --------------------------------------
 // EXAMPLE GRAPHQL COMMENT BLOCK
@@ -209,7 +209,7 @@ export const Default: Story = {
     const [selectedGroup, setSelectedGroup] = useState<string>("all")
     const [expandedElements, setExpandedElements] = useState<number[]>([])
     const [selectedEmployees, setSelectedEmployees] = useState<
-      AvatarNamedEntity[]
+      EntitySelectEntity[]
     >([])
 
     const onOpenChange = (open: boolean) => {
@@ -223,7 +223,7 @@ export const Default: Story = {
       }
     }
 
-    const onSelect = (el: AvatarNamedEntity[] | AvatarNamedEntity | null) => {
+    const onSelect = (el: EntitySelectEntity[] | EntitySelectEntity | null) => {
       setSelectedEmployees(Array.isArray(el) ? el : el ? [el] : [])
     }
 
@@ -237,7 +237,7 @@ export const Default: Story = {
 
     return (
       <div className="w-60">
-        <AvatarNameSelector
+        <EntitySelect
           // Groups (hard-coded as an example)
           groups={[{ label: "None", value: "all", groupType: "avatar" }]}
           selectedGroup={selectedGroup}
@@ -265,7 +265,7 @@ export const Default: Story = {
           // Exposed props from EmployeeSelectorProps
           singleSelector={props.singleSelector}
           onSelect={onSelect}
-          selectedAvatarName={selectedEmployees}
+          selectedEntities={selectedEmployees}
         />
       </div>
     )

@@ -1,11 +1,8 @@
 import { Search } from "lucide-react"
 import { Icon } from "../../../../../components/Utilities/Icon"
-import {
-  focusNextFocusable,
-  focusPreviousFocusable,
-} from "../../AvatarNameListItem"
+import { focusNextFocusable, focusPreviousFocusable } from "../../ListItem"
 
-export const AvatarNameSelectorSearcher = ({
+export const Searcher = ({
   search,
   onSearch,
   searchPlaceholder,

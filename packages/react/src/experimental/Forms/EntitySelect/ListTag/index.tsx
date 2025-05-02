@@ -3,31 +3,36 @@ import { Cross } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
 import { BaseAvatar } from "../../../Information/Avatars/BaseAvatar"
 import { BaseTag } from "../../../Information/Tags/BaseTag"
-import { AvatarNamedSubEntity } from "../types"
+import { EntitySelectSubEntity } from "../types"
 
-export const AvatarNameListTag = ({
+export const ListTag = ({
   entity,
   onRemove,
   disabled = false,
+  hiddenAvatar = false,
 }: {
-  entity: AvatarNamedSubEntity
-  onRemove: (entity: AvatarNamedSubEntity) => void
+  entity: EntitySelectSubEntity
+  onRemove: (entity: EntitySelectSubEntity) => void
   disabled?: boolean
+  hiddenAvatar?: boolean
 }) => {
   return (
     <div className="pr-2 pt-1.5">
       <BaseTag
         className={cn(
           "max-w-54 w-fit gap-1 text-ellipsis border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]",
-          "rounded-full"
+          "rounded-full",
+          hiddenAvatar ? "pl-2" : "pl-1"
         )}
         left={
-          <BaseAvatar
-            src={entity.subAvatar}
-            name={entity.subName}
-            size="xsmall"
-            type="rounded"
-          />
+          !hiddenAvatar && (
+            <BaseAvatar
+              src={entity.subAvatar}
+              name={entity.subName}
+              size="xsmall"
+              type="rounded"
+            />
+          )
         }
         right={
           !disabled && (
