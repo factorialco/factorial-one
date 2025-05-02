@@ -222,3 +222,25 @@ export const DotTagType: Story = {
     },
   },
 }
+
+export const MultipleDotTagType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "multiple dotTag",
+      render: (item) => ({
+        type: "dotTag",
+        value: [
+          {
+            label: item.role,
+            color: "camel",
+          },
+          {
+            label: item.status,
+            color: "viridian",
+          },
+        ],
+      }),
+    },
+  },
+}

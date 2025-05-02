@@ -118,9 +118,21 @@ export const propertyRenderers = {
   tag: (args: { label: string; icon?: IconType }) => (
     <RawTag text={args.label} icon={args.icon} />
   ),
-  dotTag: (args: { label: string; color: NewColor }) => (
-    <DotTag text={args.label} color={args.color} />
-  ),
+  dotTag: (
+    args:
+      | Array<{ label: string; color: NewColor }>
+      | { label: string; color: NewColor }
+  ) => {
+    const tags = Array.isArray(args) ? args : [args]
+
+    return (
+      <div className="flex flex-wrap gap-2">
+        {tags.map((tag, index) => (
+          <DotTag key={index} text={tag.label} color={tag.color} />
+        ))}
+      </div>
+    )
+  },
 } as const satisfies Record<string, PropertyRenderer<never>>
 
 /**

@@ -295,9 +295,7 @@ Renders a dot tag
 #### Value type
 
 ```
-
-type value = { label: string, color: NewColor )
-
+type value = { label: string, color: NewColor }
 ```
 
 <Canvas
@@ -307,9 +305,32 @@ type value = { label: string, color: NewColor )
 render: (item) => ({
     type: 'dotTag'
     value: {
-        label: 'Factorial'
-        color: 'malibu'
+        label: 'Engineer'
+        color: 'viridian'
     }
+})
+`,
+  }}
+/>
+
+You can also render multiple dot tags by passing an array:
+
+<Canvas
+  of={CellTypesDataCollectionStories.MultipleDotTagType}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'dotTag'
+    value: [
+        {
+            label: 'Engineer',
+            color: 'camel'
+        },
+        {
+            label: 'Active',
+            color: 'viridian'
+        }
+    ]
 })
 `,
   }}
