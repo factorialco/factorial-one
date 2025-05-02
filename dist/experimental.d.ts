@@ -2118,7 +2118,7 @@ declare type ProductUpdatesProp = {
     };
     crossSelling: {
         isVisible: boolean;
-        type: "callout";
+        type: string;
         sectionTitle: string;
         title: string;
         description: string;
