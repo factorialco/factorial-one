@@ -65,6 +65,7 @@ type ProductUpdatesProp = {
     description: string
     buttonText: string
     onClick: () => void
+    onClose: () => void
   }
 }
 
@@ -428,7 +429,6 @@ const CrossSelling = ({
   description,
   buttonText,
   onClick,
-  imageUrl,
   onClose,
   isVisible,
   type,
@@ -449,21 +449,20 @@ const CrossSelling = ({
               <p className="font-medium">{title}</p>
               <p className="text-f1-foreground-secondary">{description}</p>
             </div>
+            <div className="mt-3 w-[100px]">
+              <Button variant="outline" label={buttonText} onClick={onClick} />
+            </div>
+          </div>
+          <div className="h-6 w-6">
             <Button
-              variant="outline"
-              label={buttonText}
-              className="mt-3 w-[100px]"
-              onClick={onClick}
+              variant="ghost"
+              icon={CrossIcon}
+              size="sm"
+              hideLabel
+              onClick={onClose}
+              label=""
             />
           </div>
-          <Button
-            variant="ghost"
-            icon={CrossIcon}
-            size="sm"
-            className="h-6 w-6"
-            hideLabel
-            onClick={onClose}
-          />
         </div>
       </div>
     </div>
