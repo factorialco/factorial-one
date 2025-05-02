@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.38.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.0...factorial-one-react-v1.38.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* palce tooltips in body of the page ([#1730](https://github.com/factorialco/factorial-one/issues/1730)) ([dba64e9](https://github.com/factorialco/factorial-one/commit/dba64e9df208ad696fd806229a453366ca4c1ab9))
+
 ## [1.38.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.6...factorial-one-react-v1.38.0) (2025-05-02)
 
 
