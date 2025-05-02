@@ -27,13 +27,16 @@ function Calendar({
           "text-f1-foreground-secondary rounded-xs w-full font-medium h-8 flex justify-center items-center",
         row: "flex w-full mt-2 items-center justify-between",
         cell: cn(
-          "rounded-md h-10 w-full text-center font-medium p-0 relative text-f1-foreground",
+          "rounded-md h-10 w-full text-center font-medium p-0 relative text-f1-foreground transition-all duration-100",
           "before:absolute before:inset-0 before:z-0 before:rounded-md before:bg-f1-background-selected-bold before:opacity-0 before:transition-all before:duration-100 before:content-[''] hover:before:bg-f1-background-selected-bold-hover before:pointer-events-none",
           "[&:has([aria-selected].day-range-start)]:before:opacity-100 [&:has([aria-selected].day-range-end)]:before:opacity-100",
           "[&:has([aria-selected].day-outside)]:bg-f1-background-selected focus-within:relative focus-within:z-20 [&:has([aria-selected].day-range-middle)]:rounded-none first:[&:has([aria-selected].day-range-middle)]:rounded-l-md last:[&:has([aria-selected].day-range-middle)]:rounded-r-md [&:has([aria-selected].day-range-start)]:rounded-r-none [&:has([aria-selected].day-range-end)]:rounded-l-none first:[&:has([aria-selected].day-range-end)]:rounded-r-md first:[&:has([aria-selected].day-range-end)]:rounded-l-md last:[&:has([aria-selected].day-range-start)]:rounded-l-md last:[&:has([aria-selected].day-range-start)]:rounded-r-md [&:has([aria-selected].day-range-start.day-range-end)]:rounded-md [&:has([aria-selected].day-range-middle)]:bg-f1-background-selected",
           "[&:has([aria-selected].day-range-start)]:bg-f1-background-selected [&:has([aria-selected].day-range-end)]:bg-f1-background-selected",
+          "[&>span.rdp-weeknumber]:text-f1-foreground-secondary [&>span.rdp-weeknumber]:flex [&>span.rdp-weeknumber]:items-center [&>span.rdp-weeknumber]:justify-center [&>span.rdp-weeknumber]:w-full [&>span.rdp-weeknumber]:h-full [&>span.rdp-weeknumber]:text-sm [&>span.rdp-weeknumber]:font-normal",
           props.mode === "single" &&
-            "[&:has([aria-selected].day-selected)]:before:opacity-100"
+            "[&:has([aria-selected].day-selected)]:before:opacity-100",
+          props.showWeekNumber &&
+            "[&:has([aria-selected].day-range-middle)]:bg-f1-background-selected-bold [&:has([aria-selected].day-range-start)]:bg-f1-background-selected-bold [&:has([aria-selected].day-range-end)]:bg-f1-background-selected-bold hover:before:bg-f1-background-selected-bold"
         ),
         day: "rounded-[inherit] h-10 w-10 p-0 aria-selected:opacity-100 z-20 relative",
         day_range_start:
@@ -47,8 +50,10 @@ function Calendar({
         ),
         day_outside: "day-outside text-f1-foreground-secondary font-normal",
         day_disabled: "text-f1-foreground-disabled",
-        day_range_middle:
+        day_range_middle: cn(
           "day-range-middle aria-selected:text-f1-foreground-selected",
+          props.showWeekNumber && "aria-selected:text-f1-foreground-inverse"
+        ),
         day_hidden: "invisible",
         ...classNames,
       }}
