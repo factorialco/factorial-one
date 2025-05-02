@@ -17,11 +17,11 @@ const meta: Meta<typeof Alert> = {
       description:
         "Secondary text to provide additional information for the alert",
     },
-    primaryAction: {
-      description: "Primary button configuration",
+    action: {
+      description: "Button configuration",
     },
-    secondaryAction: {
-      description: "Secondary button configuration",
+    link: {
+      description: "Link configuration",
     },
     variant: {
       description: "Variant for the alert composition",
@@ -44,11 +44,11 @@ export const Default: Story = {
   args: {
     title: "Your workspace includes up to 3 invoices.",
     description: "Start creating invoices: it’s free with your plan!",
-    primaryAction: {
+    action: {
       label: "Request info",
       onClick: fn(),
     },
-    secondaryAction: {
+    link: {
       label: "See all invoices",
       href: "https://factorialhr.com/",
     },

@@ -44,11 +44,11 @@ const buttonVariants: Record<AlertVariant, "outline" | "promote" | "critical"> =
 interface AlertProps extends VariantProps<typeof alertVariants> {
   title: string
   description: string
-  primaryAction: {
+  action: {
     label: string
     onClick?: () => void
   }
-  secondaryAction: {
+  link: {
     label: string
     href: string
   }
@@ -59,8 +59,8 @@ interface AlertProps extends VariantProps<typeof alertVariants> {
 export const Alert = ({
   title,
   description,
-  primaryAction,
-  secondaryAction,
+  action,
+  link,
   variant = "info",
 }: AlertProps) => {
   return (
@@ -78,27 +78,23 @@ export const Alert = ({
           </div>
         </div>
         <div className="flex flex-row gap-3">
-          {secondaryAction && (
-            <a
-              href={secondaryAction.href}
-              target="_blank"
-              rel="noreferrer"
-              className={cn(
-                "flex items-center gap-1 rounded-sm px-2 py-0.5 text-base font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary-hover [&>svg]:text-f1-foreground-secondary",
-                focusRing()
-              )}
-            >
-              {secondaryAction.label}
-              <Icon icon={ExternalLink} size="sm" />
-            </a>
-          )}
-          {primaryAction && (
-            <Button
-              label={primaryAction.label}
-              variant={buttonVariants[variant]}
-              onClick={primaryAction.onClick}
-            />
-          )}
+          <a
+            href={link.href}
+            target="_blank"
+            rel="noreferrer"
+            className={cn(
+              "flex items-center gap-1 rounded-sm px-2 py-0.5 text-base font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary-hover [&>svg]:text-f1-foreground-secondary",
+              focusRing()
+            )}
+          >
+            {link.label}
+            <Icon icon={ExternalLink} size="sm" />
+          </a>
+          <Button
+            label={action.label}
+            variant={buttonVariants[variant]}
+            onClick={action.onClick}
+          />
         </div>
       </div>
     </div>
