@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.4...factorial-one-react-native-v0.2.5) (2025-05-02)
+
+
+### Bug Fixes
+
+* tailwind native extensions ([34b7426](https://github.com/factorialco/factorial-one/commit/34b7426c823bb0db095a7193190004b5226e3ec9))
+
 ## [0.2.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.3...factorial-one-react-native-v0.2.4) (2025-04-30)
 
 
