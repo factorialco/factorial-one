@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.39.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.1...factorial-one-react-v1.39.0) (2025-05-05)
+
+
+### Features
+
+* add new banner component ([#1628](https://github.com/factorialco/factorial-one/issues/1628)) ([a1eaab0](https://github.com/factorialco/factorial-one/commit/a1eaab072ef096a1d5ef89b2a3d21119ec4b369a))
+
 ## [1.38.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.0...factorial-one-react-v1.38.1) (2025-05-02)
 
 
