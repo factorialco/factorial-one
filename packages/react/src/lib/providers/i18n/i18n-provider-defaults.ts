@@ -7,6 +7,7 @@ export const defaultTranslations = {
   actions: {
     save: "Save",
     cancel: "Cancel",
+    copy: "Copy",
     showAll: "Show all",
     showLess: "Show less",
     skipToContent: "Skip to content",

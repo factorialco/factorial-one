@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.40.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.1...factorial-one-react-v1.40.0) (2025-05-05)
+
+
+### Features
+
+* add new copy action to metada ([#1734](https://github.com/factorialco/factorial-one/issues/1734)) ([445a2e4](https://github.com/factorialco/factorial-one/commit/445a2e495bb5990c8c61794ea923e59e8703d78d))
+
+## [1.39.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.0...factorial-one-react-v1.39.1) (2025-05-05)
+
+
+### Bug Fixes
+
+* overflow-scroll to auto ([#1735](https://github.com/factorialco/factorial-one/issues/1735)) ([8de69d3](https://github.com/factorialco/factorial-one/commit/8de69d30aab7f01dc9c769b8cb10002ff2e0df8e))
+
+## [1.39.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.1...factorial-one-react-v1.39.0) (2025-05-05)
+
+
+### Features
+
+* add new banner component ([#1628](https://github.com/factorialco/factorial-one/issues/1628)) ([a1eaab0](https://github.com/factorialco/factorial-one/commit/a1eaab072ef096a1d5ef89b2a3d21119ec4b369a))
+
+## [1.38.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.0...factorial-one-react-v1.38.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* palce tooltips in body of the page ([#1730](https://github.com/factorialco/factorial-one/issues/1730)) ([dba64e9](https://github.com/factorialco/factorial-one/commit/dba64e9df208ad696fd806229a453366ca4c1ab9))
+
+## [1.38.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.6...factorial-one-react-v1.38.0) (2025-05-02)
+
+
+### Features
+
+* **Calendar:** show week number & styles ([#1704](https://github.com/factorialco/factorial-one/issues/1704)) ([f373513](https://github.com/factorialco/factorial-one/commit/f373513a8348830cb1eec1a685a19d42bc1b8a68))
+
 ## [1.37.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.5...factorial-one-react-v1.37.6) (2025-04-30)
 
 

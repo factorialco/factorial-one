@@ -82,6 +82,7 @@ export function WeekView({
           locale={getLocale(locale)}
           weekStartsOn={1}
           showOutsideDays
+          showWeekNumber
         />
       </motion.div>
     </AnimatePresence>
