@@ -43,6 +43,10 @@ const filters = {
     label: "Department",
     options: DEPARTMENTS.map((value) => ({ value, label: value })),
   },
+  date: {
+    type: "date",
+    label: "Date",
+  },
 } as const
 
 // Define presets for the filters
@@ -1225,7 +1229,7 @@ function createDataAdapter<
     department: (typeof DEPARTMENTS)[number]
     salary?: number
   },
-  TFilters extends Record<string, FilterDefinition<unknown>>,
+  TFilters extends Record<string, FilterDefinition>,
   TSortings extends SortingsDefinition,
 >({
   data,

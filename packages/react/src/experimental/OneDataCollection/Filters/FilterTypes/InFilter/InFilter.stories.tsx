@@ -1,9 +1,9 @@
+import { Search } from "@/icons/app"
+import { Input } from "@/ui/input"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useEffect, useState } from "react"
-import { Search } from "../../../../icons/app"
-import { Input } from "../../../../ui/input"
-import type { FilterOption } from "../types"
 import { InFilter } from "./InFilter"
+import type { FilterOption } from "./types"
 
 const meta = {
   title: "Data Collection/Filters/InFilter",
@@ -27,8 +27,7 @@ type Story = StoryObj<typeof InFilter>
 // Static options example
 export const Default: Story = {
   args: {
-    filter: {
-      type: "in",
+    schema: {
       label: "Department",
       options: [
         { value: "engineering", label: "Engineering" },
@@ -45,8 +44,7 @@ export const Default: Story = {
 // With selected values
 export const WithSelectedValues: Story = {
   args: {
-    filter: {
-      type: "in",
+    schema: {
       label: "Department",
       options: [
         { value: "engineering", label: "Engineering" },
@@ -66,10 +64,13 @@ const InteractiveExample = () => {
     "engineering",
   ])
 
+  const handleChange = (value: string[]) => {
+    setSelectedValues(value)
+  }
+
   return (
-    <InFilter
-      filter={{
-        type: "in",
+    <InFilter<string>
+      schema={{
         label: "Department",
         options: [
           { value: "engineering", label: "Engineering" },
@@ -79,7 +80,7 @@ const InteractiveExample = () => {
         ],
       }}
       value={selectedValues}
-      onChange={setSelectedValues}
+      onChange={handleChange}
     />
   )
 }
@@ -92,10 +93,13 @@ export const Interactive: Story = {
 const AsyncOptionsExample = () => {
   const [selectedValues, setSelectedValues] = useState<string[]>([])
 
+  const handleChange = (value: string[]) => {
+    setSelectedValues(value)
+  }
+
   return (
-    <InFilter
-      filter={{
-        type: "in",
+    <InFilter<string>
+      schema={{
         label: "Users",
         options: async () => {
           // Simulate API call with a small delay
@@ -112,7 +116,7 @@ const AsyncOptionsExample = () => {
         },
       }}
       value={selectedValues}
-      onChange={setSelectedValues}
+      onChange={handleChange}
     />
   )
 }
@@ -130,6 +134,10 @@ const AsyncOptionsWithSearchExample = () => {
     FilterOption<string>[]
   >([])
   const [isLoading, setIsLoading] = useState(true)
+
+  const handleChange = (value: string[]) => {
+    setSelectedValues(value)
+  }
 
   // Load options
   useEffect(() => {
@@ -192,9 +200,8 @@ const AsyncOptionsWithSearchExample = () => {
         clearable
       />
 
-      <InFilter
-        filter={{
-          type: "in",
+      <InFilter<string>
+        schema={{
           label: "Countries",
           options: isLoading
             ? async () => {
@@ -205,7 +212,7 @@ const AsyncOptionsWithSearchExample = () => {
             : filteredOptions,
         }}
         value={selectedValues}
-        onChange={setSelectedValues}
+        onChange={handleChange}
       />
     </div>
   )
@@ -227,10 +234,13 @@ export const AsyncOptionsWithSearch: Story = {
 const SlowAsyncOptionsExample = () => {
   const [selectedValues, setSelectedValues] = useState<string[]>([])
 
+  const handleChange = (value: string[]) => {
+    setSelectedValues(value)
+  }
+
   return (
-    <InFilter
-      filter={{
-        type: "in",
+    <InFilter<string>
+      schema={{
         label: "Countries",
         options: async () => {
           // Simulate slow API call
@@ -248,7 +258,7 @@ const SlowAsyncOptionsExample = () => {
         },
       }}
       value={selectedValues}
-      onChange={setSelectedValues}
+      onChange={handleChange}
     />
   )
 }
@@ -261,10 +271,13 @@ export const SlowAsyncOptions: Story = {
 const ErrorAsyncOptionsExample = () => {
   const [selectedValues, setSelectedValues] = useState<string[]>([])
 
+  const handleChange = (value: string[]) => {
+    setSelectedValues(value)
+  }
+
   return (
-    <InFilter
-      filter={{
-        type: "in",
+    <InFilter<string>
+      schema={{
         label: "Products",
         options: async () => {
           // Simulate API error
@@ -276,7 +289,7 @@ const ErrorAsyncOptionsExample = () => {
         },
       }}
       value={selectedValues}
-      onChange={setSelectedValues}
+      onChange={handleChange}
     />
   )
 }
@@ -288,8 +301,7 @@ export const AsyncOptionsWithError: Story = {
 // Empty options example
 export const EmptyOptions: Story = {
   args: {
-    filter: {
-      type: "in",
+    schema: {
       label: "Categories",
       options: [],
     },
@@ -301,8 +313,7 @@ export const EmptyOptions: Story = {
 // Sync function options example
 export const SyncFunctionOptions: Story = {
   args: {
-    filter: {
-      type: "in",
+    schema: {
       label: "Priorities",
       options: () => [
         { value: "high", label: "High" },
