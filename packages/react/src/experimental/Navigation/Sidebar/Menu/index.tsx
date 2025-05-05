@@ -103,10 +103,14 @@ const FavoriteItem = ({
   item,
   dragConstraints,
   onRemove,
+  index,
+  total,
 }: {
   item: FavoriteMenuItem
   dragConstraints?: React.RefObject<HTMLElement>
   onRemove?: (item: FavoriteMenuItem) => void
+  index: number
+  total: number
 }) => {
   const { isDragging, setIsDragging, draggedItemId, setDraggedItemId } =
     useDragContext()
@@ -114,6 +118,34 @@ const FavoriteItem = ({
   const active = isActive(item.href, { exact: item.exactMatch })
   const wasDragging = useRef(false)
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)
+  const isFirst = index === 0
+  const isLast = index === total - 1
+  const isOnly = total === 1
+
+  const dropdownItems: Array<
+    | { label: string; onClick: () => void; icon: IconType; critical?: boolean }
+    | { type: "separator" }
+  > = []
+
+  if (!isOnly && !isFirst) {
+    dropdownItems.push({ label: "Move up", onClick: () => {}, icon: MoveUp })
+  }
+  if (!isOnly && !isLast) {
+    dropdownItems.push({
+      label: "Move down",
+      onClick: () => {},
+      icon: MoveDown,
+    })
+  }
+  if (dropdownItems.length > 0) {
+    dropdownItems.push({ type: "separator" })
+  }
+  dropdownItems.push({
+    label: "Remove favorite",
+    onClick: () => onRemove?.(item),
+    icon: Delete,
+    critical: true,
+  })
 
   const handleDragStart = () => {
     setIsDragging(true)
@@ -189,25 +221,7 @@ const FavoriteItem = ({
         <Dropdown
           open={isDropdownOpen}
           onOpenChange={setIsDropdownOpen}
-          items={[
-            {
-              label: "Move up",
-              onClick: () => {},
-              icon: MoveUp,
-            },
-            {
-              label: "Move down",
-              onClick: () => {},
-              icon: MoveDown,
-            },
-            { type: "separator" },
-            {
-              label: "Remove favorite",
-              onClick: () => onRemove?.(item),
-              icon: Delete,
-              critical: true,
-            },
-          ]}
+          items={dropdownItems}
         >
           <Icon icon={EllipsisHorizontal} size="sm" />
         </Dropdown>
@@ -530,12 +544,14 @@ function MenuContent({
                 onReorder={handleFavoritesReorder}
                 className="flex flex-col gap-0.5"
               >
-                {currentFavorites.map((item) => (
+                {currentFavorites.map((item, idx) => (
                   <FavoriteItem
                     key={item.href}
                     item={item}
                     dragConstraints={favoritesRef}
                     onRemove={handleRemoveFavorite}
+                    index={idx}
+                    total={currentFavorites.length}
                   />
                 ))}
               </Reorder.Group>
