@@ -263,7 +263,6 @@ export const WithProductUpdate: Story = {
       currentModule: defaultModule.name,
       crossSelling: {
         isVisible: true,
-        type: "callout",
         sectionTitle: "Discover other products",
         title: "Benefits",
         description:
@@ -275,6 +274,8 @@ export const WithProductUpdate: Story = {
         onClose: () => {
           alert("onClose")
         },
+        icon: Briefcase,
+        variant: "outline",
       },
     },
   },

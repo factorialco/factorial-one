@@ -1,10 +1,9 @@
 import { Button } from "@/components/Actions/Button"
 import { ButtonInternal } from "@/components/Actions/Button/internal"
-import { Icon } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import ProductCard from "@/experimental/ProductCard"
 import AlertCircle from "@/icons/app/AlertCircle"
-import BellIcon from "@/icons/app/Bell"
 import ChevronRight from "@/icons/app/ChevronRight"
-import CrossIcon from "@/icons/app/Cross"
 import Megaphone from "@/icons/app/Megaphone"
 import { Image } from "@/lib/imageHandler"
 import { Link } from "@/lib/linkHandler"
@@ -26,7 +25,6 @@ import {
   useEffect,
   useState,
 } from "react"
-import { ModuleAvatar } from "../../../Information/ModuleAvatar"
 
 type ProductUpdate = {
   title: string
@@ -59,13 +57,14 @@ type ProductUpdatesProp = {
   }
   crossSelling: {
     isVisible: boolean
-    type: string
+    variant: "outline" | "promote"
     sectionTitle: string
     title: string
     description: string
     buttonText: string
     onClick: () => void
     onClose: () => void
+    icon: IconType
   }
 }
 
@@ -150,6 +149,21 @@ const ProductUpdates = ({
                   {...featuredUpdate}
                   onClick={onItemClick}
                 />
+                {crossSelling.isVisible && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <div className="px-1">
+                      <p className="text-balance px-3 pb-2 pt-3 text-sm font-medium text-f1-foreground-secondary">
+                        {crossSelling.sectionTitle}
+                      </p>
+                      <ProductCard
+                        {...crossSelling}
+                        icon={crossSelling.icon}
+                        onClose={crossSelling.onClose}
+                      />
+                    </div>
+                  </>
+                )}
                 {updates.length > 1 && (
                   <>
                     <div className="pb-1">
@@ -168,17 +182,6 @@ const ProductUpdates = ({
                   </>
                 )}
               </div>
-              {crossSelling.isVisible && (
-                <>
-                  <DropdownMenuSeparator />
-                  <div className="px-1">
-                    <CrossSelling
-                      {...crossSelling}
-                      onClose={crossSelling.onClose}
-                    />
-                  </div>
-                </>
-              )}
             </>
           )}
           {state === "error" && (
@@ -423,50 +426,5 @@ const UnreadDot = ({ className = "" }: { className?: string }) => (
     className={cn("size-2 rounded bg-f1-background-selected-bold", className)}
   />
 )
-
-const CrossSelling = ({
-  sectionTitle,
-  title,
-  description,
-  buttonText,
-  onClick,
-  onClose,
-  isVisible,
-  type,
-}: {
-  onClose: () => void
-} & ProductUpdatesProp["crossSelling"]) =>
-  isVisible &&
-  type === "callout" && (
-    <div>
-      <p className="text-balance px-3 pb-2 pt-3 text-sm font-medium text-f1-foreground-secondary">
-        {sectionTitle}
-      </p>
-      <div className="p-2">
-        <div className="flex flex-row gap-2 rounded-md border border-solid border-f1-border p-3 text-f1-foreground">
-          <ModuleAvatar icon={BellIcon} size="md" />
-          <div className="flex flex-1 flex-col justify-center">
-            <div>
-              <p className="font-medium">{title}</p>
-              <p className="text-f1-foreground-secondary">{description}</p>
-            </div>
-            <div className="mt-3 w-[100px]">
-              <Button variant="outline" label={buttonText} onClick={onClick} />
-            </div>
-          </div>
-          <div className="h-6 w-6">
-            <Button
-              variant="ghost"
-              icon={CrossIcon}
-              size="sm"
-              hideLabel
-              onClick={onClose}
-              label=""
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
 
 export { ProductUpdates, type ProductUpdate, type ProductUpdatesProp }
