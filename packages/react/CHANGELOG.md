@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.39.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.0...factorial-one-react-v1.39.1) (2025-05-05)
+
+
+### Bug Fixes
+
+* overflow-scroll to auto ([#1735](https://github.com/factorialco/factorial-one/issues/1735)) ([8de69d3](https://github.com/factorialco/factorial-one/commit/8de69d30aab7f01dc9c769b8cb10002ff2e0df8e))
+
 ## [1.39.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.1...factorial-one-react-v1.39.0) (2025-05-05)
 
 
