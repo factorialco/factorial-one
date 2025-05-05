@@ -105,12 +105,14 @@ const FavoriteItem = ({
   onRemove,
   index,
   total,
+  onMove,
 }: {
   item: FavoriteMenuItem
   dragConstraints?: React.RefObject<HTMLElement>
   onRemove?: (item: FavoriteMenuItem) => void
   index: number
   total: number
+  onMove?: (from: number, to: number) => void
 }) => {
   const { isDragging, setIsDragging, draggedItemId, setDraggedItemId } =
     useDragContext()
@@ -128,12 +130,16 @@ const FavoriteItem = ({
   > = []
 
   if (!isOnly && !isFirst) {
-    dropdownItems.push({ label: "Move up", onClick: () => {}, icon: MoveUp })
+    dropdownItems.push({
+      label: "Move up",
+      onClick: () => onMove?.(index, index - 1),
+      icon: MoveUp,
+    })
   }
   if (!isOnly && !isLast) {
     dropdownItems.push({
       label: "Move down",
-      onClick: () => {},
+      onClick: () => onMove?.(index, index + 1),
       icon: MoveDown,
     })
   }
@@ -486,11 +492,11 @@ function MenuContent({
   const hasNonSortableItems =
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
-  const hasFavorites = favorites && favorites.length > 0
   const [currentFavorites, setCurrentFavorites] = React.useState<
     FavoriteMenuItem[]
   >(favorites || [])
   const favoritesRef = useRef<HTMLDivElement>(null)
+  const hasFavorites = currentFavorites.length > 0
 
   React.useEffect(() => {
     setCurrentFavorites(favorites || [])
@@ -507,6 +513,18 @@ function MenuContent({
   const handleRemoveFavorite = React.useCallback(
     (item: FavoriteMenuItem) => {
       const updated = currentFavorites.filter((fav) => fav.href !== item.href)
+      setCurrentFavorites(updated)
+      onFavoritesChange?.(updated)
+    },
+    [currentFavorites, onFavoritesChange]
+  )
+
+  const handleMoveFavorite = React.useCallback(
+    (from: number, to: number) => {
+      if (to < 0 || to >= currentFavorites.length) return
+      const updated = [...currentFavorites]
+      const [moved] = updated.splice(from, 1)
+      updated.splice(to, 0, moved)
       setCurrentFavorites(updated)
       onFavoritesChange?.(updated)
     },
@@ -534,7 +552,7 @@ function MenuContent({
         </div>
       )}
 
-      {currentFavorites.length > 0 && (
+      {hasFavorites && (
         <div className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3">
           <BaseCategory title="Favorites">
             <div ref={favoritesRef}>
@@ -552,6 +570,7 @@ function MenuContent({
                     onRemove={handleRemoveFavorite}
                     index={idx}
                     total={currentFavorites.length}
+                    onMove={handleMoveFavorite}
                   />
                 ))}
               </Reorder.Group>
