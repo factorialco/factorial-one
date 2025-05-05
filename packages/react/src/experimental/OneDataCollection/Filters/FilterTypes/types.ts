@@ -9,10 +9,18 @@ export type FilterTypeComponentProps<Value = unknown, Options = never> = {
   onChange: (value: Value) => void
 }
 
-export type FilterTypeDefinition<Value = unknown, Options = never> = {
+export type FilterTypeContext<Options = never> = {
+  schema: FilterTypeSchema<Options>
+}
+
+export type FilterTypeDefinition<
+  Value = unknown,
+  Options = never,
+  EmptyValue = Value,
+> = {
   /** Check if the value is empty */
-  emptyValue: Value
-  isEmpty: (value: Value) => boolean
+  emptyValue: EmptyValue
+  isEmpty: (value: Value, context: FilterTypeContext<Options>) => boolean
   /** Render the filter form */
   render: <Schema extends FilterTypeSchema<Options>>(props: {
     schema: Schema
@@ -24,11 +32,11 @@ export type FilterTypeDefinition<Value = unknown, Options = never> = {
    */
   chipLabel: (
     value: Value,
-    context: { schema: FilterTypeSchema<Options> }
+    context: FilterTypeContext<Options>
   ) => string | Promise<string>
 
   /**
-   * The options to render a filter of this type, for example max and min date for a date filter, the list of options for an in filter, etc
+   * The default options to render a filter of this type, for example max and min date for a date filter, the list of options for an in filter, etc
    */
-  options?: Options
+  defaultOptions?: Options
 }
