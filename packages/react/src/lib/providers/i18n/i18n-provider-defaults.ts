@@ -5,6 +5,8 @@ export const defaultTranslations = {
     next: "Next",
   },
   actions: {
+    add: "Add",
+    edit: "Edit",
     save: "Save",
     cancel: "Cancel",
     copy: "Copy",
