@@ -1,7 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { cn, focusRing } from "../../../../lib/utils"
-import { FilterDefinitionsByType, filterTypes } from "../FilterTypes"
-import type { FilterTypeDefinition } from "../FilterTypes/types"
+import { FilterDefinitionsByType, getFilterType } from "../FilterTypes"
+import type {
+  FilterTypeDefinition,
+  FilterTypeSchema,
+} from "../FilterTypes/types"
 import type { FiltersDefinition, FiltersState, FilterValue } from "../types"
 
 /**
@@ -42,7 +45,7 @@ export function FilterList<Definition extends FiltersDefinition>({
     <div className="w-[224px] shrink-0 border border-solid border-transparent border-r-f1-border-secondary">
       <div className="flex h-full w-full flex-col gap-1 overflow-y-auto p-2">
         {Object.entries(definition).map(([key, filter]) => {
-          const filterType = filterTypes[filter.type]
+          const filterType = getFilterType(filter.type)
 
           type FilterType = FilterDefinitionsByType[typeof filter.type]
           const currentValue = tempFilters[key] as FilterValue<FilterType>
@@ -66,7 +69,9 @@ export function FilterList<Definition extends FiltersDefinition>({
                   {filter.label}
                 </span>
                 <AnimatePresence>
-                  {!typedFilterType.isEmpty(currentValue) && (
+                  {!typedFilterType.isEmpty(currentValue, {
+                    schema: filter as unknown as FilterTypeSchema,
+                  }) && (
                     <motion.div
                       className="h-2 w-2 shrink-0 rounded-full bg-f1-background-selected-bold"
                       initial={{ opacity: 0, scale: 0.7 }}

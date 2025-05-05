@@ -4,7 +4,7 @@ import { Skeleton } from "@/ui/skeleton"
 import { motion } from "framer-motion"
 import { ReactElement, useEffect, useState } from "react"
 import { Chip } from "../../../OneChip"
-import { filterTypes } from "../FilterTypes"
+import { getFilterType } from "../FilterTypes"
 import type { FilterValue, FiltersDefinition } from "../types"
 
 /**
@@ -23,7 +23,7 @@ export function FilterChipButton<Definition extends FiltersDefinition>({
 }): ReactElement {
   const [isLoading, setIsLoading] = useState(true)
 
-  const filterType = filterTypes[filter.type]
+  const filterType = getFilterType(filter.type)
 
   const [label, setLabel] = useState<string>("")
 
