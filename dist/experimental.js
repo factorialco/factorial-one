@@ -22133,7 +22133,7 @@ const Gj = {
           size: "sm",
           hideLabel: !0,
           onClick: a,
-          label: ""
+          label: "Close"
         }
       ) })
     ]
