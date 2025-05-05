@@ -476,10 +476,10 @@ export const HalfYearRange: Story = {
   },
 }
 
-// export const DayRangeWithInput: Story = {
-//   args: {
-//     mode: "range",
-//     view: "day",
-//     showInput: true,
-//   },
-// }
+export const DayRangeWithInput: Story = {
+  args: {
+    mode: "range",
+    view: "day",
+    showInput: true,
+  },
+}
