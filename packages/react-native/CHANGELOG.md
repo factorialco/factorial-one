@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.5...factorial-one-react-native-v0.2.6) (2025-05-05)
+
+
+### Bug Fixes
+
+* update peer dependency for factorial-one-core in package.json ([#1744](https://github.com/factorialco/factorial-one/issues/1744)) ([8efe621](https://github.com/factorialco/factorial-one/commit/8efe6214e15f2c6ff492620ac6820f8aa32c0b5f))
+
 ## [0.2.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.4...factorial-one-react-native-v0.2.5) (2025-05-02)
 
 
