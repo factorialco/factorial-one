@@ -1,6 +1,8 @@
+import type { BaseFilterDefinition } from "../"
 import { FilterTypeDefinition } from "../types"
 import { InFilter } from "./InFilter"
-import { InFilterOptions } from "./types"
+import { FilterOption, InFilterOptions } from "./types"
+import { loadOptions } from "./useLoadOptions"
 
 export const inFilter: FilterTypeDefinition<
   string[],
@@ -10,9 +12,7 @@ export const inFilter: FilterTypeDefinition<
   isEmpty: (value) => (value || []).length === 0,
   render: (props) => <InFilter {...props} />,
   chipLabel: async (value, { schema }) => {
-    const options = await (typeof schema.options === "function"
-      ? schema.options()
-      : schema.options)
+    const options = await loadOptions(schema.options)
 
     const selectedLabels = value.map((v) => {
       const option = options.find((opt) => opt.value === v)
@@ -30,3 +30,9 @@ export const inFilter: FilterTypeDefinition<
 }
 
 export default inFilter
+
+export type InFilterDefinition<T = unknown> = BaseFilterDefinition<"in"> & {
+  options:
+    | Array<FilterOption<T>>
+    | (() => Array<FilterOption<T>> | Promise<Array<FilterOption<T>>>)
+}

@@ -35,7 +35,7 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
   if (activeFilterKeys.length === 0) return null
 
   return (
-    <div className="flex items-start justify-between gap-2">
+    <div className="mt-2 flex items-start justify-between gap-2">
       <div className="flex flex-wrap items-center gap-2">
         <AnimatePresence presenceAffectsLayout initial={false}>
           {activeFilterKeys.map((key) => {

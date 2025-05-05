@@ -18,7 +18,7 @@ export type DateFilterComponentProps = FilterTypeComponentProps<
  */
 export function DateFilter({ value, onChange }: DateFilterComponentProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-3">
       <Input
         placeholder={`Date`}
         value={value}

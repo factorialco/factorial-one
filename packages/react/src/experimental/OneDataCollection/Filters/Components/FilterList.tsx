@@ -1,13 +1,8 @@
 import { AnimatePresence, motion } from "framer-motion"
 import { cn, focusRing } from "../../../../lib/utils"
-import { filterTypes } from "../FilterTypes"
+import { FilterDefinitionsByType, filterTypes } from "../FilterTypes"
 import type { FilterTypeDefinition } from "../FilterTypes/types"
-import type {
-  FilterDefinitionsByType,
-  FiltersDefinition,
-  FiltersState,
-  FilterValue,
-} from "../types"
+import type { FiltersDefinition, FiltersState, FilterValue } from "../types"
 
 /**
  * Props for the FilterList component.

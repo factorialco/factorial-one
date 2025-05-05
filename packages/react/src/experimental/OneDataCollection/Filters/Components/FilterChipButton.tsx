@@ -9,11 +9,6 @@ import type { FilterValue, FiltersDefinition } from "../types"
 
 /**
  * Animated chip component that displays an active filter with its current value.
- * Uses discriminated unions to properly type the filter values based on filter type.
- *
- * Note: This component uses minimal type assertions that are necessary due to
- * TypeScript limitations with generics across discriminated unions. These assertions
- * are type-safe because they are guarded by the filter.type check.
  */
 export function FilterChipButton<Definition extends FiltersDefinition>({
   filter,

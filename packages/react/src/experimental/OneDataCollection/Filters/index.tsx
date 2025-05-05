@@ -125,52 +125,6 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
     props.onChange(filters)
   }
 
-  // /** Creates a local filters schema with instanciated options (options loaded in the case options is a promise or function) */
-  // type LocalFiltersSchema = {
-  //   [K in keyof FiltersDefinition]: FiltersDefinition[K] extends InFilterDefinition
-  //     ? FiltersDefinition[K] & {
-  //         _instanciatedOptions?: FilterOption<unknown>[]
-  //         _options: InFilterDefinition["options"]
-  //         options: Promise<FilterOption<unknown>[]>
-  //       }
-  //     : FiltersDefinition[K]
-  // }
-
-  // const localSchema: LocalFiltersSchema | undefined = useMemo(
-  //   () =>
-  //     schema
-  //       ? Object.keys(schema).reduce((acc, key) => {
-  //           const filterSchema = schema[key as keyof Definition]
-  //           const isInFilter = "options" in filterSchema
-  //           acc[key as keyof LocalFiltersSchema] = {
-  //             ...filterSchema,
-  //             ...(isInFilter
-  //               ? {
-  //                   _instanciatedOptions: undefined,
-  //                   options: async function (this: {
-  //                     _instanciatedOptions?: FilterOption<unknown>[]
-  //                   }) {
-  //                     if (this._instanciatedOptions !== undefined) {
-  //                       return this._instanciatedOptions
-  //                     }
-
-  //                     const options = await (typeof filterSchema.options ===
-  //                     "function"
-  //                       ? filterSchema.options()
-  //                       : filterSchema.options)
-
-  //                     this._instanciatedOptions = options
-  //                     return options
-  //                   },
-  //                 }
-  //               : {}),
-  //           } as LocalFiltersSchema[keyof FiltersDefinition]
-  //           return acc
-  //         }, {} as LocalFiltersSchema)
-  //       : undefined,
-  //   [schema]
-  // )
-
   return (
     <FiltersContext.Provider
       value={{

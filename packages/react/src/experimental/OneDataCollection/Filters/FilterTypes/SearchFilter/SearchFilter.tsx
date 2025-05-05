@@ -27,7 +27,7 @@ export function SearchFilter({
   onChange,
 }: SearchFilterComponentProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 p-3">
       <Input
         placeholder={`Search ${schema.label.toLowerCase()}...`}
         value={value}

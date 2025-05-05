@@ -1,3 +1,4 @@
+import type { BaseFilterDefinition } from "../"
 import { FilterTypeDefinition } from "../types"
 import { SearchFilter } from "./SearchFilter"
 
@@ -9,3 +10,5 @@ export const searchFilter: FilterTypeDefinition<string> = {
 }
 
 export default searchFilter
+
+export type SearchFilterDefinition = BaseFilterDefinition<"search">

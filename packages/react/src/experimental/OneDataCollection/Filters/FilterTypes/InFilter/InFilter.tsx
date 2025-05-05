@@ -1,12 +1,16 @@
 "use client"
 
+import { Button } from "@/components/Actions/Button"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { Spinner } from "@/experimental/Information/Spinner"
+import { Search } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
-import { useEffect, useMemo, useState } from "react"
+import { Input } from "@/ui/input"
+import { ChangeEvent, useEffect, useMemo, useState } from "react"
 import { FilterTypeComponentProps } from "../types"
-import { FilterOption, InFilterOptions } from "./types"
+import { InFilterOptions } from "./types"
+import { useLoadOptions } from "./useLoadOptions"
 
 /**
  * Props for the InFilter component.
@@ -66,49 +70,23 @@ export function InFilter<T extends string>({
   value,
   onChange,
 }: InFilterComponentProps<T>) {
-  // Determine if options are synchronous or asynchronous
-  const isAsyncOptions = typeof schema.options === "function"
-
-  // For synchronous options, use useMemo to avoid unnecessary rerenders
-  const syncOptions = useMemo(() => {
-    return Array.isArray(schema.options) ? schema.options : []
-  }, [schema.options])
-
-  // Only use state for async options
-  const [asyncOptions, setAsyncOptions] = useState<FilterOption<T>[]>([])
-  const [isLoading, setIsLoading] = useState(isAsyncOptions)
-  const [error, setError] = useState<Error | null>(null)
-
   const i18n = useI18n()
 
-  // Determine which options to use for rendering
-  const options = isAsyncOptions ? asyncOptions : syncOptions
+  const [searchTerm, setSearchTerm] = useState("")
+
+  const { options, isLoading, error, loadOptions } = useLoadOptions(
+    schema.options
+  )
 
   useEffect(() => {
-    // Skip effect for synchronous options
-    if (!isAsyncOptions) return
+    setSearchTerm("")
+  }, [schema])
 
-    // Load options from function
-    const loadOptions = async () => {
-      try {
-        if (typeof schema.options === "function") {
-          setIsLoading(true)
-          setError(null)
-          const result = await schema.options()
-          setAsyncOptions(result as FilterOption<T>[])
-        }
-      } catch (err) {
-        setError(
-          err instanceof Error ? err : new Error("Failed to load options")
-        )
-        console.error("Error loading filter options:", err)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    loadOptions()
-  }, [schema, schema.options, isAsyncOptions])
+  const filteredOptions = useMemo(() => {
+    return options.filter((option) =>
+      option.label.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  }, [options, searchTerm])
 
   if (isLoading) {
     return (
@@ -131,9 +109,7 @@ export function InFilter<T extends string>({
           )}
           onClick={() => {
             // Re-trigger the effect to retry loading
-            setAsyncOptions([])
-            setError(null)
-            setIsLoading(true)
+            loadOptions(true)
           }}
         >
           {i18n.collections.filters.retry}
@@ -150,42 +126,101 @@ export function InFilter<T extends string>({
     )
   }
 
+  // Determine if we should show the search input
+  // Show search when we have loaded options (regardless of whether they came from static or async source)
+  const showSearch = options.length > 0 && !isLoading
+
+  const handleSelectAll = () => {
+    const allValues = filteredOptions.map((option) => option.value)
+    const currentValues = value ?? []
+    const newValues = [...currentValues]
+
+    allValues.forEach((value) => {
+      if (!newValues.includes(value)) {
+        newValues.push(value)
+      }
+    })
+
+    onChange(newValues)
+  }
+
+  const handleClear = () => {
+    onChange([])
+  }
+
   return (
     <div
-      className="flex w-full flex-col gap-1"
+      className="flex min-h-full w-full flex-col gap-1"
       role="group"
       aria-label={schema.label}
     >
-      {options.map((option) => {
-        const isSelected = value.includes(option.value)
-        const optionId = `option-${String(option.value)}`
+      {showSearch && (
+        <div className="sticky left-0 right-0 top-0 p-2 backdrop-blur-[8px]">
+          <Input
+            type="search"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setSearchTerm(e.target.value)
+            }
+            icon={Search}
+            clearable
+          />
+        </div>
+      )}
+      <div className="flex-1 overflow-y-auto px-3">
+        {filteredOptions.map((option) => {
+          const isSelected = value.includes(option.value)
+          const optionId = `option-${String(option.value)}`
 
-        return (
-          <div
-            key={String(option.value)}
-            className={cn(
-              "flex w-full cursor-pointer appearance-none items-center justify-between rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
-              focusRing()
-            )}
-            onClick={() => {
-              onChange(
-                isSelected
-                  ? value.filter((v) => v !== option.value)
-                  : [...value, option.value]
-              )
-            }}
-          >
-            <span className="line-clamp-1 w-fit text-left">{option.label}</span>
-            <Checkbox
-              id={optionId}
-              title={option.label}
-              checked={isSelected}
-              presentational
-              hideLabel
-            />
-          </div>
-        )
-      })}
+          return (
+            <div
+              key={String(option.value)}
+              className={cn(
+                "flex w-full flex-1 cursor-pointer appearance-none items-center justify-between rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
+                focusRing()
+              )}
+              onClick={() => {
+                onChange(
+                  isSelected
+                    ? value.filter((v) => v !== option.value)
+                    : [...value, option.value]
+                )
+              }}
+            >
+              <span className="line-clamp-1 w-fit text-left">
+                {option.label}
+              </span>
+              <Checkbox
+                id={optionId}
+                title={option.label}
+                checked={isSelected}
+                presentational
+                hideLabel
+              />
+            </div>
+          )
+        })}
+      </div>
+      <div className="sticky bottom-0 left-0 right-0 flex items-center justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary bg-f1-background/80 p-2 backdrop-blur-[8px]">
+        <Button
+          variant="outline"
+          label="Select all"
+          onClick={handleSelectAll}
+          disabled={
+            filteredOptions.length === 0 ||
+            (Array.isArray(value) && value.length === filteredOptions.length)
+          }
+          size="sm"
+        />
+        <Button
+          variant="ghost"
+          label="Clear"
+          onClick={handleClear}
+          disabled={!Array.isArray(value) || value.length === 0}
+          size="sm"
+        />
+      </div>
     </div>
   )
 }
