@@ -125,9 +125,7 @@ export const WithActions: Story = {
         value: { type: "text", content: "info@factorial.co" },
         actions: [
           {
-            label: "Copy",
-            icon: Icon.LayersFront,
-            onClick: fn(),
+            type: "copy",
           },
           {
             label: "Edit",
@@ -145,9 +143,7 @@ export const WithActions: Story = {
         },
         actions: [
           {
-            label: "Copy",
-            icon: Icon.LayersFront,
-            onClick: fn(),
+            type: "copy",
           },
         ],
       },
