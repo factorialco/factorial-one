@@ -6,7 +6,6 @@ import {
   Comment,
   Download,
   ExternalLink,
-  LayersFront,
   Pencil,
 } from "../../../../icons/app"
 import { PrimaryDropdownAction } from "../../utils"
@@ -152,9 +151,7 @@ export const Metadata: Story = {
         value: { type: "date", formattedDate: "2024-01-01", icon: "critical" },
         actions: [
           {
-            label: "Copy",
-            icon: LayersFront,
-            onClick: fn(),
+            type: "copy",
           },
         ],
       },
@@ -290,9 +287,7 @@ export const CompanyHeader: Story = {
         value: { type: "text", content: "Everyday Software S.L." },
         actions: [
           {
-            label: "Copy",
-            icon: Icon.LayersFront,
-            onClick: fn(),
+            type: "copy",
           },
         ],
       },
@@ -361,9 +356,7 @@ export const PersonHeader: Story = {
             onClick: fn(),
           },
           {
-            label: "Copy",
-            icon: Icon.LayersFront,
-            onClick: fn(),
+            type: "copy",
           },
         ],
       },
