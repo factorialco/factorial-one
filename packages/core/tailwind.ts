@@ -132,6 +132,7 @@ export const baseConfig: Omit<Config, "content"> = {
         xs: "480px",
       },
       strokeWidth: {
+        xl: "1.7px",
         lg: "1.4px",
         md: "1.3px",
         sm: "1.2px",
