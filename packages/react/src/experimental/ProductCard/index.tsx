@@ -54,7 +54,7 @@ const ProductCard = ({
               size="sm"
               hideLabel
               onClick={onClose}
-              label=""
+              label="Close"
             />
           </div>
         </div>
