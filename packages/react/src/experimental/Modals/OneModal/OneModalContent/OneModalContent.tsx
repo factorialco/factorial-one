@@ -1,6 +1,7 @@
 import { Tabs, TabsProps } from "@/experimental/Navigation/Tabs"
 import { cn } from "@/lib/utils"
 import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
+import { useOneModal } from "../OneModalProvider"
 import { useIsSmallScreen } from "../utils"
 
 export type OneModalContentProps = {
@@ -13,6 +14,8 @@ export const OneModalContent = ({
   setActiveTabId,
   children,
 }: OneModalContentProps) => {
+  const { position: modalPosition } = useOneModal()
+
   const isSmallScreen = useIsSmallScreen()
 
   return (
@@ -29,7 +32,7 @@ export const OneModalContent = ({
       <ScrollArea
         className={cn(
           "[*[data-state=visible]_div]:bg-f1-background flex flex-col",
-          !isSmallScreen && "max-h-[512px]"
+          !isSmallScreen && modalPosition === "center" && "max-h-[512px]"
         )}
       >
         {children}
