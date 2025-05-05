@@ -17,7 +17,14 @@ import { cn } from "../../../../lib/utils"
 import { NavigationItem } from "../../utils"
 
 import { motion } from "framer-motion"
-import React, { useLayoutEffect, useRef, useState } from "react"
+import {
+  ComponentPropsWithoutRef,
+  ReactNode,
+  forwardRef,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react"
 import { IconType } from "../../../../components/Utilities/Icon"
 import { SelectItemObject } from "../../../Forms/Fields/Select"
 import {
@@ -54,35 +61,43 @@ export type BreadcrumbItemType =
 
 interface BreadcrumbState {
   visibleCount: number
-  firstItem: BreadcrumbItemType | null
-  lastItems: BreadcrumbItemType[]
+  headItem: BreadcrumbItemType | null
+  tailItems: BreadcrumbItemType[]
   collapsedItems: BreadcrumbItemType[]
   isOnly: boolean
 }
 
+const DROPDOWN_WIDTH = 50
+const RIGHT_PADDING = 8
+
 /**
  * Calculates how many breadcrumb items can be displayed based on container width
+ *
  * @param containerWidth - Width of the container in pixels
- * @param totalItems - Total number of breadcrumb items
+ * @param breadcrumbWidths - Widths of individual breadcrumb items
  * @returns Number of items that can be displayed
  */
 function calculateVisibleCount(
   containerWidth: number,
-  totalItems: number
+  breadcrumbWidths: number[]
 ): number {
+  const totalItems = breadcrumbWidths.length
   if (totalItems <= 2) return totalItems
 
-  const ITEM_WIDTH = 150
-  const DROPDOWN_WIDTH = 50
-  const FIRST_ITEM_RESERVED_WIDTH = ITEM_WIDTH
-
-  let availableWidth = containerWidth - FIRST_ITEM_RESERVED_WIDTH
+  const firstItemWidth = breadcrumbWidths[0]
+  let availableWidth = containerWidth - firstItemWidth - RIGHT_PADDING
+  let lastItemAddedIndex = 0
   let count = 1 // Start with 1 for the first item
 
   // Calculate how many items can fit from the end
   for (let i = totalItems - 1; i > 0; i--) {
-    if (availableWidth < ITEM_WIDTH) break
-    availableWidth -= ITEM_WIDTH
+    const itemWidth = breadcrumbWidths[i]
+    console.log("step beginning", i, availableWidth, itemWidth)
+    if (availableWidth < itemWidth) {
+      break
+    }
+    availableWidth -= itemWidth
+    lastItemAddedIndex = i
     count++
   }
 
@@ -90,11 +105,13 @@ function calculateVisibleCount(
   if (count < totalItems - 1) {
     availableWidth -= DROPDOWN_WIDTH
     while (availableWidth < 0 && count > 1) {
-      availableWidth += ITEM_WIDTH
+      availableWidth += breadcrumbWidths[lastItemAddedIndex]
+      lastItemAddedIndex++
       count--
     }
   }
 
+  console.log("calc", containerWidth, availableWidth, count)
   return Math.max(2, count) // Ensure we show at least 2 items when possible
 }
 
@@ -103,17 +120,22 @@ function calculateVisibleCount(
  */
 function calculateBreadcrumbState(
   containerWidth: number | null,
-  breadcrumbs: BreadcrumbItemType[]
+  breadcrumbs: BreadcrumbItemType[],
+  breadcrumbsElements: HTMLElement[]
 ): BreadcrumbState {
   const isSimpleLayout = !containerWidth || breadcrumbs.length <= 2
+  // todo consider when we have no elements, but only breadcrumbs
   const visibleCount = isSimpleLayout
     ? breadcrumbs.length
-    : calculateVisibleCount(containerWidth, breadcrumbs.length)
+    : calculateVisibleCount(
+        containerWidth,
+        breadcrumbsElements.map((el) => el.offsetWidth)
+      )
 
   return {
     visibleCount,
-    firstItem: breadcrumbs[0] || null,
-    lastItems: isSimpleLayout
+    headItem: breadcrumbs[0] || null,
+    tailItems: isSimpleLayout
       ? breadcrumbs.slice(1)
       : breadcrumbs.slice(Math.max(1, breadcrumbs.length - (visibleCount - 1))),
     collapsedItems: isSimpleLayout
@@ -126,9 +148,9 @@ function calculateBreadcrumbState(
 /**
  * Loading skeleton for breadcrumb items
  */
-const BreadcrumbSkeleton = React.forwardRef<
+const BreadcrumbSkeleton = forwardRef<
   HTMLDivElement,
-  React.ComponentPropsWithoutRef<"div">
+  ComponentPropsWithoutRef<"div">
 >((props, ref) => (
   <div ref={ref} className="px-1.5" {...props}>
     <Skeleton className="h-4 w-24" aria-hidden="true" />
@@ -136,9 +158,9 @@ const BreadcrumbSkeleton = React.forwardRef<
 ))
 BreadcrumbSkeleton.displayName = "BreadcrumbSkeleton"
 
-const BreadcrumbSeparator = React.forwardRef<
+const BreadcrumbSeparator = forwardRef<
   HTMLSpanElement,
-  React.ComponentPropsWithoutRef<"span">
+  ComponentPropsWithoutRef<"span">
 >((props, ref) => (
   <span
     ref={ref}
@@ -163,82 +185,81 @@ interface BreadcrumbContentProps {
 
 type ContentType = "loading" | "select" | "page" | "link"
 
-const BreadcrumbContent = React.forwardRef<
-  HTMLDivElement,
-  BreadcrumbContentProps
->(({ item, isLast, isOnly = false, isFirst = false }, ref) => {
-  const isLoading = "loading" in item && item.loading
+const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbContentProps>(
+  ({ item, isLast, isOnly = false, isFirst = false }, ref) => {
+    const isLoading = "loading" in item && item.loading
 
-  const contentType: ContentType = isLoading
-    ? "loading"
-    : "type" in item && item.type
-      ? item.type
-      : isLast || isOnly
-        ? "page"
-        : "link"
+    const contentType: ContentType = isLoading
+      ? "loading"
+      : "type" in item && item.type
+        ? item.type
+        : isLast || isOnly
+          ? "page"
+          : "link"
 
-  const content = (
-    <motion.div
-      layoutId={`breadcrumb-${item.id}`}
-      className={cn(
-        "flex items-center gap-2 px-1.5",
-        isFirst && "pl-0",
-        isOnly && "text-2xl font-semibold"
-      )}
-      transition={{ duration: 0.15 }}
-    >
-      {!isLoading && "icon" in item && (isOnly || isFirst) && item.icon && (
-        <ModuleAvatar icon={item.icon} size={isOnly ? "lg" : "sm"} />
-      )}
-      <span className="truncate">
-        {!isLoading && "label" in item ? item.label : ""}
-      </span>
-    </motion.div>
-  )
+    const content = (
+      <motion.div
+        layoutId={`breadcrumb-${item.id}`}
+        className={cn(
+          "flex items-center gap-2 px-1.5",
+          isFirst && "pl-0",
+          isOnly && "text-2xl font-semibold"
+        )}
+        transition={{ duration: 0.15 }}
+      >
+        {!isLoading && "icon" in item && (isOnly || isFirst) && item.icon && (
+          <ModuleAvatar icon={item.icon} size={isOnly ? "lg" : "sm"} />
+        )}
+        <span className="truncate">
+          {!isLoading && "label" in item ? item.label : ""}
+        </span>
+      </motion.div>
+    )
 
-  // Different renders depending on the breadcrumbtype
-  const contents: Record<ContentType, React.ReactNode> = {
-    loading: <BreadcrumbSkeleton />,
-    select: "type" in item && item.type === "select" && (
-      <BreadcrumbSelect
-        options={item.options}
-        defaultItem={item.defaultItem}
-        onChange={item.onChange}
-        value={item.value}
-        showSearchBox={item.searchbox}
-      />
-    ),
-    page: (
-      <BreadcrumbPage aria-hidden="true" className="p-0">
-        {content}
-      </BreadcrumbPage>
-    ),
-    link: (
-      <ShadBreadcrumbLink asChild className="p-0">
-        <Link
-          {...("href" in item ? (item as BreadcrumbNavItemType) : {})}
-          className="block"
-        >
+    // Different renders depending on the breadcrumbtype
+    const contents: Record<ContentType, ReactNode> = {
+      loading: <BreadcrumbSkeleton />,
+      select: "type" in item && item.type === "select" && (
+        <BreadcrumbSelect
+          options={item.options}
+          defaultItem={item.defaultItem}
+          onChange={item.onChange}
+          value={item.value}
+          showSearchBox={item.searchbox}
+        />
+      ),
+      page: (
+        <BreadcrumbPage aria-hidden="true" className="p-0">
           {content}
-        </Link>
-      </ShadBreadcrumbLink>
-    ),
-  }
+        </BreadcrumbPage>
+      ),
+      link: (
+        <ShadBreadcrumbLink asChild className="p-0">
+          <Link
+            {...("href" in item ? (item as BreadcrumbNavItemType) : {})}
+            className="block"
+          >
+            {content}
+          </Link>
+        </ShadBreadcrumbLink>
+      ),
+    }
 
-  return (
-    <motion.div
-      ref={ref}
-      layout
-      className={cn(isLoading && "max-w-40")}
-      transition={{ duration: 0.15 }}
-    >
-      {contents[contentType]}
-    </motion.div>
-  )
-})
+    return (
+      <motion.div
+        ref={ref}
+        layout
+        className={cn(isLoading && "max-w-40")}
+        transition={{ duration: 0.15 }}
+      >
+        {contents[contentType]}
+      </motion.div>
+    )
+  }
+)
 BreadcrumbContent.displayName = "BreadcrumbContent"
 
-const BreadcrumbItem = React.forwardRef<HTMLLIElement, BreadcrumbContentProps>(
+const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbContentProps>(
   ({ item, isLast, isOnly = false, isFirst = false }, ref) => (
     <ShadBreadcrumbItem key={item.id} ref={ref}>
       {!isFirst && <BreadcrumbSeparator />}
@@ -260,7 +281,7 @@ interface CollapsedBreadcrumbItemProps {
 /**
  * Renders the collapsed breadcrumb items as a dropdown
  */
-const CollapsedBreadcrumbItem = React.forwardRef<
+const CollapsedBreadcrumbItem = forwardRef<
   HTMLLIElement,
   CollapsedBreadcrumbItemProps
 >(({ items }, ref) => (
@@ -280,6 +301,7 @@ CollapsedBreadcrumbItem.displayName = "CollapsedBreadcrumbItem"
 interface BreadcrumbsProps {
   /** Array of breadcrumb items to display */
   breadcrumbs: BreadcrumbItemType[]
+  children?: ReactNode
 }
 
 /**
@@ -305,19 +327,28 @@ interface BreadcrumbsProps {
  */
 export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLOListElement>(null)
   const [mounted, setMounted] = useState(false)
   const [state, setState] = useState<BreadcrumbState>(() =>
-    calculateBreadcrumbState(null, breadcrumbs)
+    //todo
+    calculateBreadcrumbState(null, breadcrumbs, [])
   )
 
   useLayoutEffect(() => {
     const container = containerRef.current
-    if (!container) return
+    const list = listRef.current
+    if (!container || !list) return
 
     const updateBreadcrumbState = () => {
-      const containerWidth =
-        containerRef.current?.getBoundingClientRect().width ?? null
-      setState(calculateBreadcrumbState(containerWidth, breadcrumbs))
+      const containerWidth = containerRef.current?.clientWidth ?? null
+      const breadcrumbsElements = Array.from(list.children) as HTMLElement[]
+      setState(
+        calculateBreadcrumbState(
+          containerWidth,
+          breadcrumbs,
+          breadcrumbsElements
+        )
+      )
     }
 
     const resizeObserver = new ResizeObserver(updateBreadcrumbState)
@@ -329,41 +360,53 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
     return () => resizeObserver.disconnect()
   }, [breadcrumbs])
 
-  if (!breadcrumbs.length || !state.firstItem) {
+  if (!breadcrumbs.length || !state.headItem) {
     return <Breadcrumb ref={containerRef} className="w-full" />
   }
 
   return (
     <Breadcrumb
       ref={containerRef}
-      className="w-full"
+      className="w-full overflow-hidden bg-f1-background-accent"
       key={breadcrumbs.at(-1)?.id}
     >
-      {mounted && (
-        <BreadcrumbList>
+      <ol
+        className="invisible absolute -left-full"
+        aria-hidden="true"
+        ref={listRef}
+      >
+        {breadcrumbs.map((item, index) => (
           <BreadcrumbItem
-            isOnly={state.isOnly}
-            isFirst={true}
-            key={`first-item-${state.firstItem.id}`}
-            item={state.firstItem}
-            isLast={false}
+            key={item.id}
+            item={item}
+            isLast={index === breadcrumbs.length - 1}
+            isFirst={index === 0}
           />
-          {state.collapsedItems.length > 0 && (
-            <CollapsedBreadcrumbItem
-              key="collapsed-items"
-              items={state.collapsedItems as DropdownItemWithoutIcon[]}
-            />
-          )}
-          {state.lastItems.map((item, index) => (
-            <BreadcrumbItem
-              key={item.id}
-              item={item}
-              isLast={index === state.lastItems.length - 1}
-              isFirst={false}
-            />
-          ))}
-        </BreadcrumbList>
-      )}
+        ))}
+      </ol>
+      <BreadcrumbList>
+        <BreadcrumbItem
+          isOnly={state.isOnly}
+          isFirst={true}
+          key={`first-item-${state.headItem.id}`}
+          item={state.headItem}
+          isLast={false}
+        />
+        {state.collapsedItems.length > 0 && (
+          <CollapsedBreadcrumbItem
+            key="collapsed-items"
+            items={state.collapsedItems as DropdownItemWithoutIcon[]}
+          />
+        )}
+        {state.tailItems.map((item, index) => (
+          <BreadcrumbItem
+            key={item.id}
+            item={item}
+            isLast={index === state.tailItems.length - 1}
+            isFirst={false}
+          />
+        ))}
+      </BreadcrumbList>
     </Breadcrumb>
   )
 }
