@@ -10,7 +10,7 @@ import {
   AppIcons,
   ModuleIcons,
 } from "@factorialco/factorial-one-react-native";
-import { IconColorName } from "@factorialco/factorial-one-react-native/src/lib/colors";
+import { type IconColorName } from "@factorialco/factorial-one-react-native/src/lib/colors";
 
 const meta = {
   title: "Components/Icon",

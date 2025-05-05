@@ -100,7 +100,9 @@ export const AllModules: Story = {
 
     return (
       <ScrollView>
-        <Text className="text-lg font-bold mb-4">All Module Icons</Text>
+        <Text className="text-lg font-bold mb-4 text-f1-foreground">
+          All Module Avatar Icons
+        </Text>
         <View className="flex-row flex-wrap justify-start">
           {moduleEntries.map(([name, icon]) => (
             <IconDisplay key={name} icon={icon} name={name} />
