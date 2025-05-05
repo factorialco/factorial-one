@@ -73,7 +73,7 @@ export function DaytimePage({
                 isSmallScreen ? "gap-1.5" : "gap-3"
               )}
             >
-              {header?.pulse && header?.onPulseClick ? (
+              {header?.onPulseClick ? (
                 <PulseAvatar
                   src={header.employeeAvatar}
                   firstName={header.employeeFirstName}

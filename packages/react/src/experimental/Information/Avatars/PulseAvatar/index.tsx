@@ -66,11 +66,11 @@ export const PulseAvatar = ({
   const [showWave, setShowWave] = useState(!pulse)
 
   return (
-    <div className="relative inline-flex">
-      <AnimatePresence mode="popLayout">
+    <div className="relative h-14 w-14">
+      <AnimatePresence mode="popLayout" initial={showWave ? true : false}>
         {showWave ? (
           <motion.div
-            className="relative h-14 w-14 rounded-full bg-f1-background-selected-bold"
+            className="relative h-14 w-14 rounded-full bg-f1-background-warning"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
