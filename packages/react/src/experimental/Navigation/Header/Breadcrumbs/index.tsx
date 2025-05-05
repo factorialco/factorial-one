@@ -367,7 +367,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   return (
     <Breadcrumb
       ref={containerRef}
-      className="w-full overflow-hidden bg-f1-background-accent"
+      className="w-full overflow-hidden"
       key={breadcrumbs.at(-1)?.id}
     >
       <ol
@@ -384,29 +384,31 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
           />
         ))}
       </ol>
-      <BreadcrumbList>
-        <BreadcrumbItem
-          isOnly={state.isOnly}
-          isFirst={true}
-          key={`first-item-${state.headItem.id}`}
-          item={state.headItem}
-          isLast={false}
-        />
-        {state.collapsedItems.length > 0 && (
-          <CollapsedBreadcrumbItem
-            key="collapsed-items"
-            items={state.collapsedItems as DropdownItemWithoutIcon[]}
-          />
-        )}
-        {state.tailItems.map((item, index) => (
+      {mounted && (
+        <BreadcrumbList>
           <BreadcrumbItem
-            key={item.id}
-            item={item}
-            isLast={index === state.tailItems.length - 1}
-            isFirst={false}
+            isOnly={state.isOnly}
+            isFirst={true}
+            key={`first-item-${state.headItem.id}`}
+            item={state.headItem}
+            isLast={false}
           />
-        ))}
-      </BreadcrumbList>
+          {state.collapsedItems.length > 0 && (
+            <CollapsedBreadcrumbItem
+              key="collapsed-items"
+              items={state.collapsedItems as DropdownItemWithoutIcon[]}
+            />
+          )}
+          {state.tailItems.map((item, index) => (
+            <BreadcrumbItem
+              key={item.id}
+              item={item}
+              isLast={index === state.tailItems.length - 1}
+              isFirst={false}
+            />
+          ))}
+        </BreadcrumbList>
+      )}
     </Breadcrumb>
   )
 }
