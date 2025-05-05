@@ -13,7 +13,6 @@ const SvgMinus = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M19 12H5"
     />
   </Svg>
