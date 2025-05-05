@@ -69,6 +69,10 @@ export function OneCalendar({
     defaultSelected
   )
 
+  useEffect(() => {
+    setSelected(defaultSelected)
+  }, [defaultSelected, setSelected])
+
   const [motionDirection, setMotionDirection] = useState(1)
 
   const granularity = useMemo(() => granularityDefinitions[view], [view])
