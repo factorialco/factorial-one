@@ -65,6 +65,7 @@ interface BreadcrumbState {
   tailItems: BreadcrumbItemType[]
   collapsedItems: BreadcrumbItemType[]
   isOnly: boolean
+  minWidth: number | undefined
 }
 
 const DROPDOWN_WIDTH = 50
@@ -115,16 +116,38 @@ function calculateVisibleCount(
 }
 
 /**
+ * Calculate minimal width ow the breadcrumb items, when fully collapsed
+ * @param breadcrumbElements HTMLElement of the all breadcrumb items
+ * @returns minimal width in pixels or undefined if it cannot be determined
+ */
+function calcMinWidth(
+  breadcrumbElements: HTMLElement[] = []
+): number | undefined {
+  switch (breadcrumbElements.length) {
+    case 0:
+      return undefined
+    case 1:
+      return breadcrumbElements[0].clientWidth + RIGHT_PADDING
+    default:
+      return (
+        breadcrumbElements[0].clientWidth +
+        DROPDOWN_WIDTH +
+        breadcrumbElements[breadcrumbElements.length - 1].clientWidth +
+        RIGHT_PADDING
+      )
+  }
+}
+
+/**
  * Calculate  the breadcrumb state
  * based on container width and breadcrumb items
  */
 function calculateBreadcrumbState(
   containerWidth: number | null,
   breadcrumbs: BreadcrumbItemType[],
-  breadcrumbsElements: HTMLElement[]
+  breadcrumbElements: HTMLElement[] = []
 ): BreadcrumbState {
   const isSimpleLayout = !containerWidth || breadcrumbs.length <= 2
-
   if (isSimpleLayout) {
     return {
       visibleCount: breadcrumbs.length,
@@ -132,12 +155,13 @@ function calculateBreadcrumbState(
       tailItems: breadcrumbs.slice(1),
       collapsedItems: [],
       isOnly: breadcrumbs.length === 1,
+      minWidth: calcMinWidth(breadcrumbElements),
     }
   }
 
   const visibleCount = calculateVisibleCount(
     containerWidth,
-    breadcrumbsElements.map((el) => el.offsetWidth)
+    breadcrumbElements.map((el) => el.offsetWidth)
   )
 
   return {
@@ -151,6 +175,7 @@ function calculateBreadcrumbState(
       breadcrumbs.length - (visibleCount - 1)
     ),
     isOnly: breadcrumbs.length === 1,
+    minWidth: calcMinWidth(breadcrumbElements),
   }
 }
 
@@ -376,6 +401,9 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
     <Breadcrumb
       ref={containerRef}
       className="w-full overflow-hidden"
+      style={{
+        minWidth: state.minWidth,
+      }}
       key={breadcrumbs.at(-1)?.id}
     >
       <ol
