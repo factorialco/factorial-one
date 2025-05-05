@@ -13,10 +13,11 @@ const iconVariants = cva({
   base: "shrink-0",
   variants: {
     size: {
-      lg: "w-6 h-6 stroke-2",
-      md: "w-5 h-5 stroke-2",
-      sm: "w-4 h-4 stroke-2",
-      xs: "w-3 h-3 stroke-2",
+      xl: "w-8 h-8 stroke-xl",
+      lg: "w-6 h-6 stroke-lg",
+      md: "w-5 h-5 stroke-md",
+      sm: "w-4 h-4 stroke-sm",
+      xs: "w-3 h-3 stroke-xs",
     },
   },
   defaultVariants: {
