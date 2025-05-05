@@ -1,4 +1,4 @@
-import { Button } from "../../../../components/Actions/Button"
+import { Button, CopyButton } from "../../../../components/Actions/Button"
 import { IconType } from "../../../../components/Utilities/Icon"
 
 import { AnimatePresence, motion } from "framer-motion"
@@ -25,12 +25,32 @@ type MetadataAction = {
   icon: IconType
   label: string
   onClick: () => void
+  type?: never
+}
+
+type MetadataCopyAction = {
+  icon?: never
+  label?: never
+  onClick?: never
+  copyValue?: string
+  type: "copy"
+}
+const isMetadataAction = (
+  action: MetadataAction | MetadataCopyAction
+): action is MetadataAction => {
+  return action?.type !== "copy"
+}
+
+const isMetadataCopyAction = (
+  action: MetadataAction | MetadataCopyAction
+): action is MetadataCopyAction => {
+  return action?.type === "copy"
 }
 
 interface MetadataItem {
   label: string
   value: MetadataItemValue
-  actions?: MetadataAction[]
+  actions?: (MetadataAction | MetadataCopyAction)[]
   hideLabel?: boolean
 }
 
@@ -54,6 +74,36 @@ function MetadataItem({ item }: { item: MetadataItem }) {
     (item.value.type === "tag-list" && item.value.tags.length > 1)
   const isAction = item.actions?.length
   const hasHover = isAction || isList
+
+  const getValueToCopy = (
+    value: MetadataItemValue,
+    copyValue?: string
+  ): string => {
+    if (copyValue) {
+      return copyValue
+    }
+    let _exhaustiveCheck: never
+    switch (value.type) {
+      case "text":
+        return value.content
+      case "avatar":
+        return value.text
+      case "status":
+      case "dot-tag":
+        return value.label
+      case "date":
+        return value.formattedDate
+      case "tag-list":
+        return value.tags.join(", ")
+      case "data-list":
+        return value.data.join(", ")
+      case "list":
+        return ""
+      default:
+        _exhaustiveCheck = value // Nice hack to ensure we covered all cases
+        return _exhaustiveCheck
+    }
+  }
 
   return (
     <div className="flex h-8 items-center gap-2">
@@ -87,7 +137,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
           <div className="w-full md:hidden">
             <MobileDropdown
               items={
-                item.actions?.map((action) => ({
+                item.actions?.filter(isMetadataAction).map((action) => ({
                   label: action.label,
                   icon: action.icon,
                   onClick: action.onClick,
@@ -127,20 +177,34 @@ function MetadataItem({ item }: { item: MetadataItem }) {
                   exit={{ x: -16 }}
                   transition={{ duration: 0.1 }}
                 >
-                  {item.actions?.map((action, index) => (
-                    <Tooltip label={action.label} key={`tooltip-${index}`}>
-                      <Button
-                        key={`action-${index}`}
-                        size="sm"
-                        variant="neutral"
-                        round
-                        label={action.label}
-                        hideLabel
-                        icon={action.icon}
-                        onClick={action.onClick}
-                      />
-                    </Tooltip>
-                  ))}
+                  {item.actions?.map((action, index) => {
+                    if (isMetadataCopyAction(action)) {
+                      return (
+                        <CopyButton
+                          key={`copy-${index}`}
+                          valueToCopy={getValueToCopy(
+                            item.value,
+                            action.copyValue
+                          )}
+                        />
+                      )
+                    } else {
+                      return (
+                        <Tooltip label={action.label} key={`tooltip-${index}`}>
+                          <Button
+                            key={`action-${index}`}
+                            size="sm"
+                            variant="neutral"
+                            round
+                            label={action.label}
+                            hideLabel
+                            icon={action.icon}
+                            onClick={action.onClick}
+                          />
+                        </Tooltip>
+                      )
+                    }
+                  })}
                 </motion.div>
               )}
             </motion.div>
