@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.42.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.41.0...factorial-one-react-v1.42.0) (2025-05-05)
+
+
+### Features
+
+* new Discover icon  ([3c3d081](https://github.com/factorialco/factorial-one/commit/3c3d08129cebfa234b666005cc9737c606d37bd2))
+
 ## [1.41.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.40.0...factorial-one-react-v1.41.0) (2025-05-05)
 
 
