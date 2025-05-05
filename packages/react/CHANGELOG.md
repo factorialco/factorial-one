@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.41.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.40.0...factorial-one-react-v1.41.0) (2025-05-05)
+
+
+### Features
+
+* add support to open modal on left and right sides ([#1747](https://github.com/factorialco/factorial-one/issues/1747)) ([1b77700](https://github.com/factorialco/factorial-one/commit/1b777005c12ce7eede7498240e93aa8eea002a2f))
+
 ## [1.40.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.1...factorial-one-react-v1.40.0) (2025-05-05)
 
 
