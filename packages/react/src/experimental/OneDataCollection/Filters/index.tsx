@@ -1,15 +1,10 @@
-import { createContext, useContext, useMemo, useState } from "react"
+import { createContext, useContext, useState } from "react"
 import { PresetsDefinition } from "../types"
 import { FiltersChipsList as FiltersChipsListComponent } from "./Components/FiltersChipsList"
 import { FiltersControls as FiltersControlsComponent } from "./Components/FiltersControls"
 import { FiltersPresets as FiltersPresetsComponent } from "./Components/FiltersPresets"
 
-import type {
-  FilterOption,
-  FiltersDefinition,
-  FiltersState,
-  InFilterDefinition,
-} from "./types"
+import type { FiltersDefinition, FiltersState } from "./types"
 
 /**
  * Props for the Filters component.
@@ -130,58 +125,12 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
     props.onChange(filters)
   }
 
-  /** Creates a local filters schema with instanciated options (options loaded in the case options is a promise or function) */
-  type LocalFiltersSchema = {
-    [K in keyof FiltersDefinition]: FiltersDefinition[K] extends InFilterDefinition
-      ? FiltersDefinition[K] & {
-          _instanciatedOptions?: FilterOption<unknown>[]
-          _options: InFilterDefinition["options"]
-          options: Promise<FilterOption<unknown>[]>
-        }
-      : FiltersDefinition[K]
-  }
-
-  const localSchema: LocalFiltersSchema | undefined = useMemo(
-    () =>
-      schema
-        ? Object.keys(schema).reduce((acc, key) => {
-            const filterSchema = schema[key as keyof Definition]
-            const isInFilter = "options" in filterSchema
-            acc[key as keyof LocalFiltersSchema] = {
-              ...filterSchema,
-              ...(isInFilter
-                ? {
-                    _instanciatedOptions: undefined,
-                    options: async function (this: {
-                      _instanciatedOptions?: FilterOption<unknown>[]
-                    }) {
-                      if (this._instanciatedOptions !== undefined) {
-                        return this._instanciatedOptions
-                      }
-
-                      const options = await (typeof filterSchema.options ===
-                      "function"
-                        ? filterSchema.options()
-                        : filterSchema.options)
-
-                      this._instanciatedOptions = options
-                      return options
-                    },
-                  }
-                : {}),
-            } as LocalFiltersSchema[keyof FiltersDefinition]
-            return acc
-          }, {} as LocalFiltersSchema)
-        : undefined,
-    [schema]
-  )
-
   return (
     <FiltersContext.Provider
       value={{
         ...props,
         filters: localFiltersValue,
-        schema: localSchema,
+        schema: schema,
         removeFilterValue,
         setFiltersValue: (filters: FiltersState<FiltersDefinition>) =>
           setFiltersValue(filters as FiltersState<Definition>),
