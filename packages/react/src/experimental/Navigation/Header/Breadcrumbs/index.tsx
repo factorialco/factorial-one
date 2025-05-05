@@ -110,11 +110,13 @@ function calculateVisibleCount(
     }
   }
 
-  return Math.max(2, count) // Ensure we show at least 2 items when possible
+  // Ensure we show at least 2 items when possible
+  return Math.max(2, count)
 }
 
 /**
- * Calculates the breadcrumb state based on container width and items
+ * Calculate  the breadcrumb state
+ * based on container width and breadcrumb items
  */
 function calculateBreadcrumbState(
   containerWidth: number | null,
@@ -122,23 +124,32 @@ function calculateBreadcrumbState(
   breadcrumbsElements: HTMLElement[]
 ): BreadcrumbState {
   const isSimpleLayout = !containerWidth || breadcrumbs.length <= 2
-  // todo consider when we have no elements, but only breadcrumbs
-  const visibleCount = isSimpleLayout
-    ? breadcrumbs.length
-    : calculateVisibleCount(
-        containerWidth,
-        breadcrumbsElements.map((el) => el.offsetWidth)
-      )
+
+  if (isSimpleLayout) {
+    return {
+      visibleCount: breadcrumbs.length,
+      headItem: breadcrumbs[0] ?? null,
+      tailItems: breadcrumbs.slice(1),
+      collapsedItems: [],
+      isOnly: breadcrumbs.length === 1,
+    }
+  }
+
+  const visibleCount = calculateVisibleCount(
+    containerWidth,
+    breadcrumbsElements.map((el) => el.offsetWidth)
+  )
 
   return {
     visibleCount,
     headItem: breadcrumbs[0] || null,
-    tailItems: isSimpleLayout
-      ? breadcrumbs.slice(1)
-      : breadcrumbs.slice(Math.max(1, breadcrumbs.length - (visibleCount - 1))),
-    collapsedItems: isSimpleLayout
-      ? []
-      : breadcrumbs.slice(1, breadcrumbs.length - (visibleCount - 1)),
+    tailItems: breadcrumbs.slice(
+      Math.max(1, breadcrumbs.length - (visibleCount - 1))
+    ),
+    collapsedItems: breadcrumbs.slice(
+      1,
+      breadcrumbs.length - (visibleCount - 1)
+    ),
     isOnly: breadcrumbs.length === 1,
   }
 }
@@ -328,7 +339,6 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   const listRef = useRef<HTMLOListElement>(null)
   const [mounted, setMounted] = useState(false)
   const [state, setState] = useState<BreadcrumbState>(() =>
-    //todo
     calculateBreadcrumbState(null, breadcrumbs, [])
   )
 
