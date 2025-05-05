@@ -59,13 +59,7 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
       >
         <Icon
           icon={icon}
-          className={
-            active
-              ? "text-f1-icon-selected"
-              : mode === "dark"
-                ? "text-f1-foreground-inverse"
-                : "text-f1-foreground"
-          }
+          className={active ? "text-f1-icon-selected" : "text-f1-foreground"}
         />
         {showLabel && (
           <span
