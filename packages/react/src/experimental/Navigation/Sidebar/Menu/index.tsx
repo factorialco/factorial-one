@@ -2,7 +2,13 @@ import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
 import { motion, Reorder } from "framer-motion"
 import React, { useRef } from "react"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
-import { ChevronDown, EllipsisHorizontal } from "../../../../icons/app"
+import {
+  ChevronDown,
+  Delete,
+  EllipsisHorizontal,
+  MoveDown,
+  MoveUp,
+} from "../../../../icons/app"
 import { useReducedMotion } from "../../../../lib/a11y"
 import { Link, useNavigation } from "../../../../lib/linkHandler"
 import { cn, focusRing } from "../../../../lib/utils"
@@ -43,7 +49,7 @@ export interface MenuProps {
   favorites?: FavoriteMenuItem[]
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onSort?: (categories: MenuCategory[]) => void
-  onFavoritesSort?: (favorites: FavoriteMenuItem[]) => void
+  onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void
 }
 
 const MenuItemContent = ({
@@ -96,22 +102,29 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
 const FavoriteItem = ({
   item,
   dragConstraints,
+  onRemove,
 }: {
   item: FavoriteMenuItem
   dragConstraints?: React.RefObject<HTMLElement>
+  onRemove?: (item: FavoriteMenuItem) => void
 }) => {
+  const { isDragging, setIsDragging, draggedItemId, setDraggedItemId } =
+    useDragContext()
   const { isActive } = useNavigation()
   const active = isActive(item.href, { exact: item.exactMatch })
-  const { isDragging, setIsDragging } = useDragContext()
   const wasDragging = useRef(false)
+  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)
 
   const handleDragStart = () => {
     setIsDragging(true)
+    setIsDropdownOpen(false)
+    setDraggedItemId(item.href || null)
     wasDragging.current = true
   }
 
   const handleDragEnd = () => {
     setIsDragging(false)
+    setDraggedItemId(null)
     setTimeout(() => {
       wasDragging.current = false
     }, 0)
@@ -122,6 +135,8 @@ const FavoriteItem = ({
       window.location.href = item.href
     }
   }
+
+  const isItemDragging = isDragging && draggedItemId === item.href
 
   return (
     <Reorder.Item
@@ -135,7 +150,9 @@ const FavoriteItem = ({
         "relative cursor-pointer touch-none select-none list-none rounded backdrop-blur-sm active:cursor-grabbing",
         active
           ? "bg-f1-background-secondary text-f1-foreground"
-          : "hover:bg-f1-background-secondary"
+          : "hover:bg-f1-background-secondary",
+        isDropdownOpen && "bg-f1-background-secondary",
+        isItemDragging && "bg-f1-background-secondary"
       )}
       whileDrag={{
         scale: 1.05,
@@ -163,16 +180,32 @@ const FavoriteItem = ({
           </span>
         </div>
       </div>
-      <div className="absolute inset-y-1 right-1 z-10 flex h-6 w-6 items-center justify-center rounded-sm hover:bg-f1-background-secondary">
+      <div
+        className={cn(
+          "absolute inset-y-1 right-1 z-10 flex h-6 w-6 items-center justify-center rounded-sm hover:bg-f1-background-secondary",
+          isDropdownOpen && "bg-f1-background-secondary"
+        )}
+      >
         <Dropdown
+          open={isDropdownOpen}
+          onOpenChange={setIsDropdownOpen}
           items={[
             {
               label: "Move up",
               onClick: () => {},
+              icon: MoveUp,
             },
             {
               label: "Move down",
               onClick: () => {},
+              icon: MoveDown,
+            },
+            { type: "separator" },
+            {
+              label: "Remove favorite",
+              onClick: () => onRemove?.(item),
+              icon: Delete,
+              critical: true,
             },
           ]}
         >
@@ -377,7 +410,7 @@ export function Menu({
   tree,
   onCollapse,
   onSort,
-  onFavoritesSort,
+  onFavoritesChange,
   favorites,
 }: MenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -409,7 +442,7 @@ export function Menu({
         onCollapse={onCollapse}
         onDragEnd={handleDragEnd}
         favorites={favorites}
-        onFavoritesSort={onFavoritesSort}
+        onFavoritesChange={onFavoritesChange}
       />
     </DragProvider>
   )
@@ -423,7 +456,7 @@ function MenuContent({
   onCollapse,
   onDragEnd,
   favorites,
-  onFavoritesSort,
+  onFavoritesChange,
 }: {
   nonSortableItems: MenuCategory[]
   sortableItems: MenuCategory[]
@@ -432,7 +465,7 @@ function MenuContent({
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onDragEnd?: (categories: MenuCategory[]) => void
   favorites?: FavoriteMenuItem[]
-  onFavoritesSort?: (favorites: FavoriteMenuItem[]) => void
+  onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void
 }) {
   const { isDragging } = useDragContext()
   const hasRoot = nonSortableItems.some((category) => category.isRoot)
@@ -452,9 +485,18 @@ function MenuContent({
   const handleFavoritesReorder = React.useCallback(
     (newOrder: FavoriteMenuItem[]) => {
       setCurrentFavorites(newOrder)
-      onFavoritesSort?.(newOrder)
+      onFavoritesChange?.(newOrder)
     },
-    [onFavoritesSort]
+    [onFavoritesChange]
+  )
+
+  const handleRemoveFavorite = React.useCallback(
+    (item: FavoriteMenuItem) => {
+      const updated = currentFavorites.filter((fav) => fav.href !== item.href)
+      setCurrentFavorites(updated)
+      onFavoritesChange?.(updated)
+    },
+    [currentFavorites, onFavoritesChange]
   )
 
   return (
@@ -478,7 +520,7 @@ function MenuContent({
         </div>
       )}
 
-      {hasFavorites && (
+      {currentFavorites.length > 0 && (
         <div className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3">
           <BaseCategory title="Favorites">
             <div ref={favoritesRef}>
@@ -493,6 +535,7 @@ function MenuContent({
                     key={item.href}
                     item={item}
                     dragConstraints={favoritesRef}
+                    onRemove={handleRemoveFavorite}
                   />
                 ))}
               </Reorder.Group>

@@ -76,6 +76,9 @@ export const Default: Story = {
     onSort: (categories) => {
       console.log("Categories sorted:", categories)
     },
+    onFavoritesChange: (favorites) => {
+      console.log("Favorites changed:", favorites)
+    },
     favorites: [
       {
         type: "icon",
