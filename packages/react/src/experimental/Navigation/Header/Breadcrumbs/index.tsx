@@ -92,7 +92,6 @@ function calculateVisibleCount(
   // Calculate how many items can fit from the end
   for (let i = totalItems - 1; i > 0; i--) {
     const itemWidth = breadcrumbWidths[i]
-    console.log("step beginning", i, availableWidth, itemWidth)
     if (availableWidth < itemWidth) {
       break
     }
@@ -111,7 +110,6 @@ function calculateVisibleCount(
     }
   }
 
-  console.log("calc", containerWidth, availableWidth, count)
   return Math.max(2, count) // Ensure we show at least 2 items when possible
 }
 
