@@ -102,7 +102,7 @@ function calculateVisibleCount(
   }
 
   // Adjust for dropdown if we can't show all items
-  if (count < totalItems - 1) {
+  if (count < totalItems) {
     availableWidth -= DROPDOWN_WIDTH
     while (availableWidth < 0 && count > 1) {
       availableWidth += breadcrumbWidths[lastItemAddedIndex]
