@@ -1,3 +1,4 @@
+import { useI18n } from "@/lib/providers/i18n"
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
 import { motion, Reorder } from "framer-motion"
 import React, { useRef } from "react"
@@ -114,6 +115,8 @@ const FavoriteItem = ({
   total: number
   onMove?: (from: number, to: number) => void
 }) => {
+  const t = useI18n()
+
   const { isDragging, setIsDragging, draggedItemId, setDraggedItemId } =
     useDragContext()
   const { isActive } = useNavigation()
@@ -131,14 +134,14 @@ const FavoriteItem = ({
 
   if (!isOnly && !isFirst) {
     dropdownItems.push({
-      label: "Move up",
+      label: t.actions.moveUp,
       onClick: () => onMove?.(index, index - 1),
       icon: MoveUp,
     })
   }
   if (!isOnly && !isLast) {
     dropdownItems.push({
-      label: "Move down",
+      label: t.actions.moveDown,
       onClick: () => onMove?.(index, index + 1),
       icon: MoveDown,
     })
@@ -147,7 +150,7 @@ const FavoriteItem = ({
     dropdownItems.push({ type: "separator" })
   }
   dropdownItems.push({
-    label: "Remove favorite",
+    label: t.favorites.remove,
     onClick: () => onRemove?.(item),
     icon: Delete,
     critical: true,
@@ -487,6 +490,8 @@ function MenuContent({
   favorites?: FavoriteMenuItem[]
   onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void
 }) {
+  const t = useI18n()
+
   const { isDragging } = useDragContext()
   const hasRoot = nonSortableItems.some((category) => category.isRoot)
   const hasNonSortableItems =
@@ -554,7 +559,7 @@ function MenuContent({
 
       {hasFavorites && (
         <div className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3">
-          <BaseCategory title="Favorites">
+          <BaseCategory title={t.favorites.favorites}>
             <div ref={favoritesRef}>
               <Reorder.Group
                 axis="y"
