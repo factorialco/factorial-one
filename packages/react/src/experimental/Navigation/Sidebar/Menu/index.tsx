@@ -1,5 +1,5 @@
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
-import { AnimatePresence, motion, Reorder } from "framer-motion"
+import { motion, Reorder } from "framer-motion"
 import React, { useRef } from "react"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import { ChevronDown, EllipsisHorizontal } from "../../../../icons/app"
@@ -162,22 +162,22 @@ const FavoriteItem = ({
             {item.label}
           </span>
         </div>
-        <div className="z-10 flex h-6 w-6 items-center justify-center rounded-sm hover:bg-f1-background-secondary">
-          <Dropdown
-            items={[
-              {
-                label: "Move up",
-                onClick: () => {},
-              },
-              {
-                label: "Move down",
-                onClick: () => {},
-              },
-            ]}
-          >
-            <Icon icon={EllipsisHorizontal} size="sm" />
-          </Dropdown>
-        </div>
+      </div>
+      <div className="absolute inset-y-1 right-1 z-10 flex h-6 w-6 items-center justify-center rounded-sm hover:bg-f1-background-secondary">
+        <Dropdown
+          items={[
+            {
+              label: "Move up",
+              onClick: () => {},
+            },
+            {
+              label: "Move down",
+              onClick: () => {},
+            },
+          ]}
+        >
+          <Icon icon={EllipsisHorizontal} size="sm" />
+        </Dropdown>
       </div>
     </Reorder.Item>
   )
@@ -528,19 +528,17 @@ function MenuContent({
             onReorder={setSortableItems}
             className="flex flex-col gap-3"
           >
-            <AnimatePresence>
-              {sortableItems.map((category) => (
-                <CategoryItem
-                  key={category.id}
-                  category={category}
-                  isSortable={true}
-                  dragConstraints={containerRef}
-                  onCollapse={onCollapse}
-                  onDragEnd={onDragEnd}
-                  currentOrder={sortableItems}
-                />
-              ))}
-            </AnimatePresence>
+            {sortableItems.map((category) => (
+              <CategoryItem
+                key={category.id}
+                category={category}
+                isSortable={true}
+                dragConstraints={containerRef}
+                onCollapse={onCollapse}
+                onDragEnd={onDragEnd}
+                currentOrder={sortableItems}
+              />
+            ))}
           </Reorder.Group>
         </div>
       )}
