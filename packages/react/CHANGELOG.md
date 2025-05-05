@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.40.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.1...factorial-one-react-v1.40.0) (2025-05-05)
+
+
+### Features
+
+* add new copy action to metada ([#1734](https://github.com/factorialco/factorial-one/issues/1734)) ([445a2e4](https://github.com/factorialco/factorial-one/commit/445a2e495bb5990c8c61794ea923e59e8703d78d))
+
 ## [1.39.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.0...factorial-one-react-v1.39.1) (2025-05-05)
 
 
