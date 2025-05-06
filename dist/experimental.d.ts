@@ -1106,6 +1106,7 @@ export declare type DotTagItem = DotTagItem_2;
 
 declare type DotTagItem_2 = {
     label: string;
+    description?: string;
     color: NewColor;
 };
 
