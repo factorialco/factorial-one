@@ -1,10 +1,13 @@
 import { ChevronLeft, ChevronRight } from "@/icons/app"
 import { Input } from "@/ui/input"
 
-import { ReactNode, useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { useI18n } from "../../lib/providers/i18n"
-import { granularityDefinitions } from "./granularities"
+import {
+  granularityDefinitions,
+  GranularityDefinitionSimple,
+} from "./granularities"
 import { CalendarMode, CalendarView, DateRange } from "./types"
 
 export interface OneCalendarProps {
@@ -16,27 +19,6 @@ export interface OneCalendarProps {
   showNavigation?: boolean
   showInput?: boolean
 }
-
-export interface GranularityDefinition {
-  label: (viewDate: Date) => ReactNode
-  toString: (date: Date | DateRange | undefined | null) => string
-  navigate: (viewDate: Date, direction: -1 | 1) => Date
-  render: (renderProps: {
-    mode: CalendarMode
-    selected: Date | DateRange | null
-    onSelect: (date: Date | DateRange | null) => void
-    month: Date
-    onMonthChange: (date: Date) => void
-    motionDirection: number
-    setViewDate: (date: Date) => void
-    viewDate: Date
-  }) => ReactNode
-}
-
-export type GranularityDefinitionSimple = Pick<
-  GranularityDefinition,
-  "toString"
->
 
 export const getGranularityDefinition = (
   view: CalendarView
@@ -94,15 +76,51 @@ export function OneCalendar({
   }
 
   const dateString = useMemo(() => {
-    if (!selected) return ""
-    return granularity.toString(selected)
+    if (!selected) return ["", ""]
+    return granularity.toStringRange(selected)
   }, [selected, granularity])
+
+  console.log("test")
+
+  const [inputError, setInputError] = useState<{
+    from: boolean
+    to: boolean
+  }>({
+    from: false,
+    to: false,
+  })
+
+  const handleInputChange = (input: "from" | "to", value: string) => {
+    const newDate = granularity.fromString([value, value])
+    console.log("newDate", newDate)
+    if (newDate instanceof Error) {
+      setInputError((prev) => ({
+        ...prev,
+        [input]: newDate.message,
+      }))
+      return
+    }
+    setSelected(newDate)
+  }
 
   return (
     <div className="flex flex-col">
       {showInput && (
-        <div className="mb-2">
-          <Input value={dateString} disabled />
+        <div className="mb-2 flex gap-2">
+          <Input
+            error={!!inputError.from}
+            value={dateString[0]}
+            onBlur={(e) => handleInputChange("from", e.target.value)}
+            onChange={(e) => console.log("from", e.target.value)}
+          />
+          {mode === "range" && (
+            <Input
+              error={!!inputError.to}
+              value={dateString[1]}
+              onBlur={(e) => handleInputChange("to", e.target.value)}
+              onChange={(e) => console.log("to", e.target.value)}
+            />
+          )}
         </div>
       )}
       {showNavigation && (
