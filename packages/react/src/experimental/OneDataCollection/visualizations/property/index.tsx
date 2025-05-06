@@ -6,6 +6,10 @@ import {
 } from "@/experimental/Information/Avatars/exports"
 import { DotTag, NewColor } from "@/experimental/Information/Tags/DotTag"
 import {
+  DotTagItem,
+  DotTagList,
+} from "@/experimental/Information/Tags/DotTagList"
+import {
   StatusTag,
   StatusVariant,
 } from "@/experimental/Information/Tags/exports"
@@ -118,21 +122,22 @@ export const propertyRenderers = {
   tag: (args: { label: string; icon?: IconType }) => (
     <RawTag text={args.label} icon={args.icon} />
   ),
-  dotTag: (
-    args:
-      | Array<{ label: string; color: NewColor }>
-      | { label: string; color: NewColor }
-  ) => {
-    const tags = Array.isArray(args) ? args : [args]
-
-    return (
-      <div className="flex flex-wrap gap-2">
-        {tags.map((tag, index) => (
-          <DotTag key={index} text={tag.label} color={tag.color} />
-        ))}
-      </div>
-    )
-  },
+  dotTag: (args: { label: string; color: NewColor }) => (
+    <DotTag text={args.label} color={args.color} />
+  ),
+  dotTagList: (args: {
+    tags: DotTagItem[]
+    max?: number
+    layout?: "fill" | "compact"
+    remainingCount?: number
+  }) => (
+    <DotTagList
+      tags={args.tags}
+      max={args.max}
+      layout={args.layout}
+      remainingCount={args.remainingCount}
+    />
+  ),
 } as const satisfies Record<string, PropertyRenderer<never>>
 
 /**

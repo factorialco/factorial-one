@@ -1,3 +1,4 @@
+import { NewColor } from "@/experimental/Information/Tags/DotTag"
 import { Meta, StoryObj } from "@storybook/react"
 import { PropertyDefinition, renderProperty } from "../property-render"
 
@@ -58,6 +59,13 @@ const mockItem = {
   companyLogo: "https://github.com/factorialco.png",
   teamName: "Engineering",
   teamLogo: "https://github.com/factorialco.png",
+  skills: [
+    { label: "React", color: "viridian" as NewColor },
+    { label: "TypeScript", color: "malibu" as NewColor },
+    { label: "UI/UX", color: "purple" as NewColor },
+    { label: "Testing", color: "yellow" as NewColor },
+    { label: "GraphQL", color: "lilac" as NewColor },
+  ],
 }
 
 // Basic story showing all action types
@@ -223,23 +231,17 @@ export const DotTagType: Story = {
   },
 }
 
-export const MultipleDotTagType: Story = {
+export const DotTagListType: Story = {
   args: {
     item: mockItem,
     property: {
-      label: "multiple dotTag",
+      label: "Skills",
       render: (item) => ({
-        type: "dotTag",
-        value: [
-          {
-            label: item.role,
-            color: "camel",
-          },
-          {
-            label: item.status,
-            color: "viridian",
-          },
-        ],
+        type: "dotTagList",
+        value: {
+          tags: item.skills,
+          max: 3,
+        },
       }),
     },
   },
