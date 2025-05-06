@@ -1,13 +1,18 @@
 import { ChevronLeft, ChevronRight } from "@/icons/app"
 import { Input } from "@/ui/input"
 
+<<<<<<< HEAD
 import { useCallback, useEffect, useMemo, useState } from "react"
+=======
+import { useEffect, useMemo, useState } from "react"
+>>>>>>> 53909660 (feat: one-calendar manual dates input)
 import { Button } from "../../components/Actions/Button"
 import { useI18n } from "../../lib/providers/i18n"
 import {
   granularityDefinitions,
   GranularityDefinitionSimple,
 } from "./granularities"
+<<<<<<< HEAD
 import {
   CalendarMode,
   CalendarView,
@@ -16,6 +21,9 @@ import {
   DateRangeString,
 } from "./types"
 import { isValidDate, toDateRange } from "./utils"
+=======
+import { CalendarMode, CalendarView, DateRange } from "./types"
+>>>>>>> 53909660 (feat: one-calendar manual dates input)
 
 export interface OneCalendarProps {
   mode: CalendarMode
@@ -27,7 +35,11 @@ export interface OneCalendarProps {
   showInput?: boolean
 }
 
+<<<<<<< HEAD
 export const getGranularitySimpleDefinition = (
+=======
+export const getGranularityDefinition = (
+>>>>>>> 53909660 (feat: one-calendar manual dates input)
   view: CalendarView
 ): GranularityDefinitionSimple => {
   const granularity = granularityDefinitions[view]
@@ -97,6 +109,7 @@ export function OneCalendar({
     onSelect?.(date)
   }
 
+<<<<<<< HEAD
   const [inputValue, setInputValue] = useState<DateRangeString>({
     from: "",
     to: "",
@@ -168,6 +181,35 @@ export function OneCalendar({
       handleInputNavigate(input, e.key === "ArrowDown" ? -1 : 1)
     }
   }
+=======
+  const dateString = useMemo(() => {
+    if (!selected) return ["", ""]
+    return granularity.toStringRange(selected)
+  }, [selected, granularity])
+>>>>>>> 53909660 (feat: one-calendar manual dates input)
+
+  console.log("test")
+
+  const [inputError, setInputError] = useState<{
+    from: boolean
+    to: boolean
+  }>({
+    from: false,
+    to: false,
+  })
+
+  const handleInputChange = (input: "from" | "to", value: string) => {
+    const newDate = granularity.fromString([value, value])
+    console.log("newDate", newDate)
+    if (newDate instanceof Error) {
+      setInputError((prev) => ({
+        ...prev,
+        [input]: newDate.message,
+      }))
+      return
+    }
+    setSelected(newDate)
+  }
 
   return (
     <div className="flex flex-col">
@@ -175,6 +217,7 @@ export function OneCalendar({
         <div className="mb-2 flex gap-2">
           <Input
             error={!!inputError.from}
+<<<<<<< HEAD
             value={inputValue.from}
             placeholder={mode === "range" ? i18n.date.from : i18n.date.date}
             onBlur={() => handleInputChange("from")}
@@ -182,10 +225,16 @@ export function OneCalendar({
             onChange={(e) =>
               setInputValue({ ...inputValue, from: e.target.value })
             }
+=======
+            value={dateString[0]}
+            onBlur={(e) => handleInputChange("from", e.target.value)}
+            onChange={(e) => console.log("from", e.target.value)}
+>>>>>>> 53909660 (feat: one-calendar manual dates input)
           />
           {mode === "range" && (
             <Input
               error={!!inputError.to}
+<<<<<<< HEAD
               value={inputValue.to}
               placeholder={i18n.date.to}
               onBlur={() => handleInputChange("to")}
@@ -193,6 +242,11 @@ export function OneCalendar({
               onChange={(e) =>
                 setInputValue({ ...inputValue, to: e.target.value })
               }
+=======
+              value={dateString[1]}
+              onBlur={(e) => handleInputChange("to", e.target.value)}
+              onChange={(e) => console.log("to", e.target.value)}
+>>>>>>> 53909660 (feat: one-calendar manual dates input)
             />
           )}
         </div>
