@@ -265,6 +265,28 @@ export const WithProductUpdate: Story = {
   },
 }
 
+export const withFavorites: Story = {
+  args: {
+    module: defaultModule,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
+    statusTag: {
+      text: "Draft",
+      tooltip: "This employee profile is not yet published",
+      variant: "critical",
+    },
+    favorites: {
+      isMarked: true,
+      onChange: (newValue) => {
+        console.log(`Favorite changed to ${newValue}`)
+      },
+    },
+    actions: defaultActions,
+  },
+}
+
 export const Embedded: Story = {
   args: {
     module: defaultModule,

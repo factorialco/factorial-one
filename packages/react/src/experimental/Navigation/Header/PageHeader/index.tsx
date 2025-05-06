@@ -12,6 +12,8 @@ import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 
+import Star from "@/icons/app/Star"
+import StarFilled from "@/icons/app/StarFilled"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 import { ProductUpdates, ProductUpdatesProp } from "../ProductUpdates"
 
@@ -187,11 +189,18 @@ export function PageHeader({
             <Breadcrumbs
               key={breadcrumbsTree[0].id}
               breadcrumbs={breadcrumbsTree}
+              append={
+                favorites !== undefined && (
+                  <Button
+                    variant="ghost"
+                    label="Favorites"
+                    hideLabel
+                    icon={favorites.isMarked ? StarFilled : Star}
+                  />
+                )
+              }
             ></Breadcrumbs>
           )}
-          {/*{favorites !== undefined && (*/}
-          {/*  <Button variant="ghost" label="Favorites" hideLabel icon={favorites.isMarked ? StarFilled : Star} />*/}
-          {/*)}*/}
         </div>
       </div>
       <div className="flex items-center gap-3">

@@ -77,17 +77,20 @@ const RIGHT_PADDING = 8
  *
  * @param containerWidth - Width of the container in pixels
  * @param breadcrumbWidths - Widths of individual breadcrumb items
+ * @param appendWidth - Width of an element added via the "append" slot
  * @returns Number of items that can be displayed
  */
 function calculateVisibleCount(
   containerWidth: number,
-  breadcrumbWidths: number[]
+  breadcrumbWidths: number[],
+  appendWidth: number
 ): number {
   const totalItems = breadcrumbWidths.length
   if (totalItems <= 2) return totalItems
 
   const firstItemWidth = breadcrumbWidths[0]
-  let availableWidth = containerWidth - firstItemWidth - RIGHT_PADDING
+  let availableWidth =
+    containerWidth - firstItemWidth - RIGHT_PADDING - appendWidth
   let lastItemAddedIndex = 0
   let count = 1 // Start with 1 for the first item
 
@@ -118,25 +121,46 @@ function calculateVisibleCount(
 
 /**
  * Calculate minimal width ow the breadcrumb items, when fully collapsed
- * @param breadcrumbElements HTMLElement of the all breadcrumb items
+ * @param breadcrumbWidths widths of all individual breadcrumb items
+ * @param appendedWidth - width of an extra element appended via the "append" slot
  * @returns minimal width in pixels or undefined if it cannot be determined
  */
 function calcMinWidth(
-  breadcrumbElements: HTMLElement[] = []
+  breadcrumbWidths: number[] = [],
+  appendedWidth: number
 ): number | undefined {
-  switch (breadcrumbElements.length) {
+  switch (breadcrumbWidths.length) {
     case 0:
       return undefined
     case 1:
-      return breadcrumbElements[0].clientWidth + RIGHT_PADDING
+      return breadcrumbWidths[0] + appendedWidth + RIGHT_PADDING
     default:
       return (
-        breadcrumbElements[0].clientWidth +
+        breadcrumbWidths[0] +
         DROPDOWN_WIDTH +
-        breadcrumbElements[breadcrumbElements.length - 1].clientWidth +
+        breadcrumbWidths[breadcrumbWidths.length - 1] +
+        appendedWidth +
         RIGHT_PADDING
       )
   }
+}
+
+function getElementWidths(
+  breadcrumbElements: HTMLElement[] = [],
+  hasAppend: boolean
+): {
+  breadcrumbWidths: number[]
+  appendWidth: number
+} {
+  const widths = breadcrumbElements.map((el) => el.offsetWidth)
+  if (hasAppend) {
+    return {
+      breadcrumbWidths: widths.slice(0, widths.length - 1),
+      appendWidth: widths[widths.length - 1],
+    }
+  }
+
+  return { breadcrumbWidths: widths, appendWidth: 0 }
 }
 
 /**
@@ -146,9 +170,20 @@ function calcMinWidth(
 function calculateBreadcrumbState(
   containerWidth: number | null,
   breadcrumbs: BreadcrumbItemType[],
-  breadcrumbElements: HTMLElement[] = []
+  breadcrumbElements: HTMLElement[] = [],
+  hasAppend: boolean = false
 ): BreadcrumbState {
   const isSimpleLayout = !containerWidth || breadcrumbs.length <= 2
+  const { breadcrumbWidths, appendWidth } = getElementWidths(
+    breadcrumbElements,
+    hasAppend
+  )
+
+  console.assert(
+    breadcrumbWidths.length === breadcrumbs.length,
+    `breadcrumb configuration counter (${breadcrumbs.length}) does not match the breadcrumb DOM elements counter (${breadcrumbWidths.length})`
+  )
+
   if (isSimpleLayout) {
     return {
       visibleCount: breadcrumbs.length,
@@ -156,13 +191,14 @@ function calculateBreadcrumbState(
       tailItems: breadcrumbs.slice(1),
       collapsedItems: [],
       isOnly: breadcrumbs.length === 1,
-      minWidth: calcMinWidth(breadcrumbElements),
+      minWidth: calcMinWidth(breadcrumbWidths, appendWidth),
     }
   }
 
   const visibleCount = calculateVisibleCount(
     containerWidth,
-    breadcrumbElements.map((el) => el.offsetWidth)
+    breadcrumbWidths,
+    appendWidth
   )
 
   return {
@@ -176,7 +212,7 @@ function calculateBreadcrumbState(
       breadcrumbs.length - (visibleCount - 1)
     ),
     isOnly: breadcrumbs.length === 1,
-    minWidth: calcMinWidth(breadcrumbElements),
+    minWidth: calcMinWidth(breadcrumbWidths, appendWidth),
   }
 }
 
@@ -337,7 +373,7 @@ CollapsedBreadcrumbItem.displayName = "CollapsedBreadcrumbItem"
 interface BreadcrumbsProps {
   /** Array of breadcrumb items to display */
   breadcrumbs: BreadcrumbItemType[]
-  children?: ReactNode
+  append?: ReactNode
 }
 
 /**
@@ -361,7 +397,7 @@ interface BreadcrumbsProps {
  * />
  * ```
  */
-export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
+export default function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLOListElement>(null)
   const [, startTransition] = useTransition()
@@ -383,7 +419,8 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
           calculateBreadcrumbState(
             containerWidth,
             breadcrumbs,
-            breadcrumbsElements
+            breadcrumbsElements,
+            !!append
           )
         )
       })
@@ -424,6 +461,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
             isFirst={index === 0}
           />
         ))}
+        {append}
       </ol>
       {mounted && (
         <BreadcrumbList>
@@ -447,6 +485,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
               isFirst={false}
             />
           ))}
+          {append}
         </BreadcrumbList>
       )}
     </Breadcrumb>
