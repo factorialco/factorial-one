@@ -14,7 +14,7 @@ const meta = {
   argTypes: {
     size: {
       control: "select",
-      options: ["sm", "md", "lg"],
+      options: ["sm", "md", "lg", "xl"],
     },
   },
   args: {
@@ -37,7 +37,7 @@ type Story = StoryObj<typeof meta>;
 interface SizeVariantProps {
   icon: any;
   name: string;
-  size: "sm" | "md" | "lg";
+  size: "sm" | "md" | "lg" | "xl";
 }
 
 interface IconDisplayProps {
@@ -77,18 +77,21 @@ export const SizeVariants: Story = {
         <SizeVariant icon={ModuleIcons.Home} name="sm" size="sm" />
         <SizeVariant icon={ModuleIcons.Home} name="md" size="md" />
         <SizeVariant icon={ModuleIcons.Home} name="lg" size="lg" />
+        <SizeVariant icon={ModuleIcons.Home} name="xl" size="xl" />
       </View>
 
       <View className="flex-row justify-around mb-8 p-4 bg-gray-100 rounded-lg">
         <SizeVariant icon={ModuleIcons.TimeTracking} name="sm" size="sm" />
         <SizeVariant icon={ModuleIcons.TimeTracking} name="md" size="md" />
         <SizeVariant icon={ModuleIcons.TimeTracking} name="lg" size="lg" />
+        <SizeVariant icon={ModuleIcons.TimeTracking} name="xl" size="xl" />
       </View>
 
       <View className="flex-row justify-around p-4 bg-gray-100 rounded-lg">
         <SizeVariant icon={ModuleIcons.Documents} name="sm" size="sm" />
         <SizeVariant icon={ModuleIcons.Documents} name="md" size="md" />
         <SizeVariant icon={ModuleIcons.Documents} name="lg" size="lg" />
+        <SizeVariant icon={ModuleIcons.Documents} name="xl" size="xl" />
       </View>
     </ScrollView>
   ),
