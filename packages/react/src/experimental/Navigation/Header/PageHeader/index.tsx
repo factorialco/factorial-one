@@ -12,9 +12,8 @@ import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 
-import Star from "@/icons/app/Star"
-import StarFilled from "@/icons/app/StarFilled"
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
+import { Favorites } from "../Favorites"
 import { ProductUpdates, ProductUpdatesProp } from "../ProductUpdates"
 
 export type PageAction = {
@@ -191,11 +190,9 @@ export function PageHeader({
               breadcrumbs={breadcrumbsTree}
               append={
                 favorites !== undefined && (
-                  <Button
-                    variant="ghost"
-                    label="Favorites"
-                    hideLabel
-                    icon={favorites.isMarked ? StarFilled : Star}
+                  <Favorites
+                    isMarked={favorites.isMarked}
+                    onChange={favorites?.onChange}
                   />
                 )
               }

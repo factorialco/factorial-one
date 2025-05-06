@@ -7,7 +7,7 @@ import { Icon, IconType } from "../../Utilities/Icon"
 
 export type ButtonInternalProps = Pick<
   ComponentProps<typeof ShadcnButton>,
-  "variant" | "size" | "disabled" | "type" | "round"
+  "variant" | "size" | "disabled" | "type" | "round" | "className"
 > &
   DataAttributes & {
     onClick?: (
