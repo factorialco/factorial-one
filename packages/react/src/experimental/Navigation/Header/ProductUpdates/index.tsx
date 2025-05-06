@@ -4,10 +4,13 @@ import { Icon, IconType } from "@/components/Utilities/Icon"
 import ProductCard from "@/experimental/ProductCard"
 import AlertCircle from "@/icons/app/AlertCircle"
 import ChevronRight from "@/icons/app/ChevronRight"
+import CrossIcon from "@/icons/app/Cross"
 import Megaphone from "@/icons/app/Megaphone"
 import { Image } from "@/lib/imageHandler"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
+
+import { Carousel } from "@/experimental/Navigation/Carousel"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -57,14 +60,16 @@ type ProductUpdatesProp = {
   }
   crossSelling: {
     isVisible: boolean
-    variant: "outline" | "promote"
     sectionTitle: string
-    title: string
-    description: string
-    buttonText: string
-    onClick: () => void
-    onClose: () => void
-    icon: IconType
+    onClose?: () => void
+    products: Array<{
+      title: string
+      description: string
+      onClick: () => void
+      icon: IconType
+      dismissable: boolean
+      onClose?: () => void
+    }>
   }
 }
 
@@ -130,40 +135,23 @@ const ProductUpdates = ({
           collisionPadding={20}
           align="end"
           hideWhenDetached
-          className="max-h-[90vh min-h-[600px] min-w-96 max-w-md overflow-y-auto"
-          style={{ maxHeight: "min(90vh, 760px)", minHeight: 600 }}
+          className="flex max-h-[90vh] min-h-[562px] min-w-96 max-w-md flex-col"
+          style={{ maxHeight: "min(90vh, 760px)", minHeight: 562 }}
         >
           <Header title={label} url={updatesPageUrl} onClick={onHeaderClick} />
           {state === "fetching" && <ProductUpdatesSkeleton />}
-          {state === "idle" && updates !== null && updates.length === 0 && (
-            <>
+          <div className="scrollbar-macos flex-1 overflow-y-auto">
+            {state === "idle" && updates !== null && updates.length === 0 && (
               <div className="p-2 pt-0">
                 <NoUpdates {...emptyScreen} buttonUrl={updatesPageUrl} />
               </div>
-            </>
-          )}
-          {state === "idle" && updates !== null && updates.length > 0 && (
-            <>
+            )}
+            {state === "idle" && updates !== null && updates.length > 0 && (
               <div className="px-1">
                 <FeaturedDropdownItem
                   {...featuredUpdate}
                   onClick={onItemClick}
                 />
-                {crossSelling.isVisible && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <div className="px-1">
-                      <p className="text-balance px-3 pb-2 pt-3 text-sm font-medium text-f1-foreground-secondary">
-                        {crossSelling.sectionTitle}
-                      </p>
-                      <ProductCard
-                        {...crossSelling}
-                        icon={crossSelling.icon}
-                        onClose={crossSelling.onClose}
-                      />
-                    </div>
-                  </>
-                )}
                 {updates.length > 1 && (
                   <>
                     <div className="pb-1">
@@ -182,10 +170,8 @@ const ProductUpdates = ({
                   </>
                 )}
               </div>
-            </>
-          )}
-          {state === "error" && (
-            <>
+            )}
+            {state === "error" && (
               <div className="p-2 pt-0">
                 <ErrorScreen
                   {...errorScreen}
@@ -194,7 +180,14 @@ const ProductUpdates = ({
                   }}
                 />
               </div>
-            </>
+            )}
+          </div>
+          {state === "idle" && crossSelling.isVisible && (
+            <DiscoverMoreProducts
+              isVisible={crossSelling.isVisible}
+              onClose={crossSelling.onClose}
+              crossSelling={crossSelling}
+            />
           )}
         </DropdownMenuContent>
       </DropdownMenuPortal>
@@ -426,5 +419,66 @@ const UnreadDot = ({ className = "" }: { className?: string }) => (
     className={cn("size-2 rounded bg-f1-background-selected-bold", className)}
   />
 )
+
+const DiscoverMoreProducts = ({
+  isVisible,
+  onClose,
+  crossSelling,
+}: {
+  isVisible: boolean
+  onClose?: () => void
+  crossSelling: ProductUpdatesProp["crossSelling"]
+}) => {
+  const [open, setOpen] = useState(isVisible)
+
+  useEffect(() => {
+    setOpen(isVisible)
+  }, [isVisible])
+
+  const handleClose = () => {
+    setOpen(false)
+    if (onClose) {
+      onClose()
+    }
+  }
+
+  return (
+    open && (
+      <>
+        <DropdownMenuSeparator />
+        <div className="px-1 pb-2">
+          <div className="flex flex-row items-center justify-between">
+            <p className="text-balance px-3 pb-2 pt-2 text-sm font-medium text-f1-foreground-secondary">
+              {crossSelling.sectionTitle}
+            </p>
+
+            <div className="relative z-10 h-6 w-6">
+              <Button
+                variant="ghost"
+                icon={CrossIcon}
+                size="sm"
+                hideLabel
+                onClick={handleClose}
+                label="Close"
+              />
+            </div>
+          </div>
+
+          <Carousel
+            columns={{
+              default: 1,
+            }}
+            showDots
+            showArrows={false}
+          >
+            {crossSelling.products.map((product) => (
+              <ProductCard {...product} isVisible={true} />
+            ))}
+          </Carousel>
+        </div>
+      </>
+    )
+  )
+}
 
 export { ProductUpdates, type ProductUpdate, type ProductUpdatesProp }

@@ -264,18 +264,37 @@ export const WithProductUpdate: Story = {
       crossSelling: {
         isVisible: true,
         sectionTitle: "Discover other products",
-        title: "Benefits",
-        description:
-          "Improve your team’s salary without impacting your budget through flexible compensation.",
-        buttonText: "Learn more",
-        onClick: () => {
-          alert("onClick")
-        },
         onClose: () => {
           alert("onClose")
         },
-        icon: Briefcase,
-        variant: "outline",
+        products: [
+          {
+            title: "Benefits",
+            description:
+              "Improve your team’s salary without impacting your budget through flexible compensation.",
+            onClick: () => {
+              alert("onClick")
+            },
+            onClose: () => {
+              alert("onClose")
+            },
+            icon: Briefcase,
+            dismissable: false,
+          },
+          {
+            title: "Projects",
+            description:
+              "Improve your team’s salary without impacting your budget through flexible compensation.",
+            onClick: () => {
+              alert("onClick")
+            },
+            onClose: () => {
+              alert("onClose")
+            },
+            icon: Briefcase,
+            dismissable: false,
+          },
+        ],
       },
     },
   },

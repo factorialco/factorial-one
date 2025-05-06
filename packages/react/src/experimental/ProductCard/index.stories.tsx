@@ -23,7 +23,6 @@ export const Default: Story = {
     title: "Benefits",
     description:
       "Improve your team’s salary without impacting your budget through flexible compensation.",
-    buttonText: "Learn more",
     onClick: () => {
       alert("onClick")
     },
@@ -31,13 +30,13 @@ export const Default: Story = {
       alert("onClose")
     },
     icon: Megaphone,
-    variant: "outline",
+    dismissable: false,
   },
 }
 
-export const Promote: Story = {
+export const Dismissable: Story = {
   args: {
     ...Default.args,
-    variant: "promote",
+    dismissable: true,
   },
 }
