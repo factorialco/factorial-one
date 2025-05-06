@@ -25,8 +25,8 @@ export function SidebarFooter({
   hasActivityUpdates,
 }: SidebarFooterProps) {
   return (
-    <div className="flex flex-row items-center justify-between">
-      <div className="mx-3 flex-1 pb-3 pt-3">
+    <div className="flex flex-row items-center justify-between gap-3 p-3">
+      <div className="flex-1">
         <Dropdown items={options}>
           <button
             className={cn(
