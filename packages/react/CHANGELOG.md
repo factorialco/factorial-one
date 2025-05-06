@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.43.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.0...factorial-one-react-v1.43.1) (2025-05-06)
+
+
+### Bug Fixes
+
+* add missing case in CommunityPost with no author ([#1757](https://github.com/factorialco/factorial-one/issues/1757)) ([55144de](https://github.com/factorialco/factorial-one/commit/55144dec779511f5e26ab4a5894c60a1ed5cc44c))
+
 ## [1.43.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.42.0...factorial-one-react-v1.43.0) (2025-05-06)
 
 
