@@ -37,6 +37,49 @@ const sampleDefinition: FiltersDefinition = {
     label: "Date",
     options: {},
   },
+  dateRange: {
+    type: "date",
+    label: "Date Range",
+    options: {
+      mode: "range",
+    },
+  },
+  dateWeek: {
+    type: "date",
+    label: "Date Week",
+    options: {
+      view: "week",
+    },
+  },
+  dateRangeWeek: {
+    type: "date",
+    label: "Date Range Week",
+    options: {
+      mode: "range",
+      view: "week",
+    },
+  },
+  dateQuarter: {
+    type: "date",
+    label: "Date Quarter",
+    options: {
+      view: "quarter",
+    },
+  },
+  dateHalfYear: {
+    type: "date",
+    label: "Date Half Year",
+    options: {
+      view: "halfyear",
+    },
+  },
+  dateYear: {
+    type: "date",
+    label: "Date Year",
+    options: {
+      view: "year",
+    },
+  },
   department: {
     type: "in",
     label: "Department",

@@ -5,7 +5,8 @@ import { Filter } from "../../../../icons/app"
 import { useI18n } from "../../../../lib/providers/i18n"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "../../../../ui/popover"
-import { filterTypes } from "../FilterTypes"
+import { getFilterType } from "../FilterTypes"
+import { FilterTypeContext, FilterTypeSchema } from "../FilterTypes/types"
 import type { FiltersDefinition, FiltersState } from "../types"
 import { FilterContent } from "./FilterContent"
 import { FilterList } from "./FilterList"
@@ -55,11 +56,13 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     const getFirstFilterNotEmpty = () => {
       return Object.entries(localFiltersValue).find(([key, value]) => {
         // TODO: Make this type better
-        const filterType = filterTypes[schema[key].type] as {
-          isEmpty: (value: unknown) => boolean
+        const filterType = getFilterType(schema[key].type) as unknown as {
+          isEmpty: (value: unknown, context: FilterTypeContext) => boolean
         }
 
-        return !filterType.isEmpty(value)
+        return !filterType.isEmpty(value, {
+          schema: schema[key] as unknown as FilterTypeSchema,
+        })
       })
     }
 
