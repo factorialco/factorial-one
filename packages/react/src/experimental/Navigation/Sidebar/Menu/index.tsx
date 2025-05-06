@@ -227,7 +227,6 @@ const CategoryItem = ({
         cursor: "grabbing",
         zIndex: 50,
       }}
-      style={{ zIndex: 10 }}
       className="relative backdrop-blur-sm"
     >
       {content}
