@@ -294,8 +294,18 @@ function MenuContent({
   const hasNonSortableItems =
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
+  const [isInitialized, setIsInitialized] = React.useState(false)
 
-  // Add effect to force layout recalculation when screen height changes
+  useEffect(() => {
+    if (sortableItems.length > 0 && !isInitialized) {
+      requestAnimationFrame(() => {
+        setSortableItems([...sortableItems])
+        setIsInitialized(true)
+      })
+    }
+  }, [sortableItems, setSortableItems, isInitialized])
+
+  // Handle resize events
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
@@ -304,9 +314,9 @@ function MenuContent({
         containerRef.current.style.display = ""
 
         if (sortableItems.length > 0) {
-          setTimeout(() => {
+          requestAnimationFrame(() => {
             setSortableItems([...sortableItems])
-          }, 50)
+          })
         }
       }
     }
