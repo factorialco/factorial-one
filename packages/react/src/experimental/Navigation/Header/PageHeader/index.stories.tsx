@@ -286,8 +286,7 @@ export const WithProductUpdate: Story = {
           },
           {
             title: "Projects",
-            description:
-              "Improve your team’s salary without impacting your budget through flexible compensation.",
+            description: "Improve your.",
             onClick: () => {
               alert("onClick")
             },
