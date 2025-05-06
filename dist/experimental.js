@@ -20685,17 +20685,18 @@ const qje = Rt(
   }
 ));
 Q5.displayName = sp.displayName;
-const Tp = w.forwardRef(({ className: e, children: t, ...n }, i) => /* @__PURE__ */ x(hj, { children: [
+const Tp = w.forwardRef(({ className: e, children: t, withTraslateAnimation: n = !0, ...i }, a) => /* @__PURE__ */ x(hj, { children: [
   /* @__PURE__ */ l(Q5, {}),
   /* @__PURE__ */ l(
     dp,
     {
-      ref: i,
+      ref: a,
       className: N(
-        "fixed left-[50%] top-[50%] z-50 grid w-[90%] translate-x-[-50%] translate-y-[-50%] rounded-xl border bg-f1-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
+        "fixed left-[50%] top-[50%] z-50 grid w-[90%] translate-x-[-50%] translate-y-[-50%] rounded-xl border bg-f1-background shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+        n && "data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
         e
       ),
-      ...n,
+      ...i,
       children: t
     }
   )
@@ -20779,12 +20780,20 @@ const n_ = Ht({
         ] })
       }
     );
-  let f = "max-h-[620px] max-w-[680px] overflow-y-auto overflow-x-hidden data-[state=closed]:slide-out-to-top-[2%] data-[state=open]:slide-in-from-top-[2%] sm:top-[50%] sm:translate-y-[-50%] sm:data-[state=closed]:slide-out-to-top-[48%] sm:data-[state=open]:slide-in-from-top-[48%]";
-  return (t === "left" || t === "right") && (f = N(
-    "overflow-x-hidden flex flex-col fixed top-3 bottom-3 translate-y-0 translate-x-0 max-w-[539px] rounded-md border border-solid border-f1-border-secondary data-[state=closed]:slide-out-to-top-0 data-[state=open]:slide-in-from-top-0 data-[state=open]:slide-in-from-left-0 data-[state=closed]:slide-out-to-left-0",
+  let f = "max-h-[620px] max-w-[680px] overflow-y-auto overflow-x-hidden";
+  const m = t === "left" || t === "right";
+  return m && (f = N(
+    "overflow-x-hidden flex flex-col fixed top-3 bottom-3 translate-y-0 translate-x-0 max-w-[539px] rounded-md border border-solid border-f1-border-secondary",
     t === "left" && (r === "locked" ? "left-[248px]" : "left-3"),
     t === "right" && "left-auto right-3"
-  )), /* @__PURE__ */ l(Qy, { isOpen: o, onClose: c, position: t, children: /* @__PURE__ */ l(J5, { open: o, onOpenChange: n, modal: t === "center", children: /* @__PURE__ */ l(Tp, { className: f, children: a }) }) });
+  )), /* @__PURE__ */ l(Qy, { isOpen: o, onClose: c, position: t, children: /* @__PURE__ */ l(J5, { open: o, onOpenChange: n, modal: t === "center", children: /* @__PURE__ */ l(
+    Tp,
+    {
+      withTraslateAnimation: !m,
+      className: f,
+      children: a
+    }
+  ) }) });
 };
 var Ro = "NavigationMenu", [Wp, r_, gj] = md(Ro), [hh, vj, yj] = md(Ro), [Op, Xje] = fn(
   Ro,
@@ -62831,7 +62840,7 @@ const Ab = Rt(ySe, bSe), wSe = ({
           Tp,
           {
             ref: a,
-            className: "bottom-3 top-auto max-w-[400px] translate-y-0 data-[state=closed]:slide-out-to-top-[2%] data-[state=open]:slide-in-from-top-[2%] sm:bottom-auto sm:top-[50%] sm:translate-y-[-50%] sm:data-[state=closed]:slide-out-to-top-[48%] sm:data-[state=open]:slide-in-from-top-[48%]",
+            className: "bottom-3 top-auto max-w-[400px] translate-y-0 sm:bottom-auto sm:top-[50%] sm:translate-y-[-50%]",
             children: [
               /* @__PURE__ */ x(Z5, { className: "flex flex-col gap-4 px-4 py-5", children: [
                 /* @__PURE__ */ l(bd, { type: e.type, size: "lg" }),
