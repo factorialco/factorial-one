@@ -3,7 +3,7 @@ import { Input } from "@/ui/input"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useEffect, useState } from "react"
 import { InFilter } from "./InFilter"
-import type { FilterItem } from "./types"
+import type { InFilterOptionItem } from "./types"
 
 const meta = {
   title: "Data Collection/Filters/InFilter",
@@ -110,7 +110,7 @@ const AsyncOptionsExample = () => {
         options: {
           options: async () => {
             // Simulate API call with a small delay
-            return new Promise<FilterItem<string>[]>((resolve) => {
+            return new Promise<InFilterOptionItem<string>[]>((resolve) => {
               setTimeout(() => {
                 resolve([
                   { value: "user1", label: "John Doe" },
@@ -137,10 +137,10 @@ export const AsyncOptions: Story = {
 const AsyncOptionsWithSearchExample = () => {
   const [selectedValues, setSelectedValues] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState("")
-  const [options, setOptions] = useState<FilterItem<string>[]>([])
-  const [filteredOptions, setFilteredOptions] = useState<FilterItem<string>[]>(
-    []
-  )
+  const [options, setOptions] = useState<InFilterOptionItem<string>[]>([])
+  const [filteredOptions, setFilteredOptions] = useState<
+    InFilterOptionItem<string>[]
+  >([])
   const [isLoading, setIsLoading] = useState(true)
 
   const handleChange = (value: string[]) => {
@@ -255,7 +255,7 @@ const SlowAsyncOptionsExample = () => {
         options: {
           options: async () => {
             // Simulate slow API call
-            return new Promise<FilterItem<string>[]>((resolve) => {
+            return new Promise<InFilterOptionItem<string>[]>((resolve) => {
               setTimeout(() => {
                 resolve([
                   { value: "us", label: "United States" },
@@ -294,7 +294,7 @@ const ErrorAsyncOptionsExample = () => {
         options: {
           options: async () => {
             // Simulate API error
-            return new Promise<FilterItem<string>[]>((_, reject) => {
+            return new Promise<InFilterOptionItem<string>[]>((_, reject) => {
               setTimeout(() => {
                 reject(new Error("Failed to fetch products"))
               }, 1000)

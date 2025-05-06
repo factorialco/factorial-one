@@ -12,7 +12,7 @@ export const inFilter: FilterTypeDefinition<
   isEmpty: (value) => (value || []).length === 0,
   render: (props) => <InFilter {...props} />,
   chipLabel: async (value, { schema }) => {
-    const options = await loadOptions(schema.options.options)
+    const options = await loadOptions(schema.label, schema.options.options)
 
     const selectedLabels = value.map((v) => {
       const option = options.find((opt) => opt.value === v)

@@ -79,6 +79,7 @@ export function InFilter<T extends string>({
   const [searchTerm, setSearchTerm] = useState("")
 
   const { options, isLoading, error, loadOptions } = useLoadOptions(
+    schema.label,
     schema.options.options
   )
 

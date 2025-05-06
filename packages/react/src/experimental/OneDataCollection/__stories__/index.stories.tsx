@@ -31,7 +31,12 @@ import {
 import { useData } from "../useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
-
+const ROLES = [
+  "Engineer",
+  "Product Manager",
+  "Designer",
+  "Marketing Lead",
+] as const
 // Example filter definition
 const filters = {
   search: {
@@ -42,7 +47,15 @@ const filters = {
     type: "in",
     label: "Department",
     options: {
-      options: DEPARTMENTS.map((value) => ({ value, label: value })),
+      options: () => DEPARTMENTS.map((value) => ({ value, label: value })),
+    },
+  },
+
+  role: {
+    type: "in",
+    label: "Role",
+    options: {
+      options: () => ROLES.map((value) => ({ value, label: value })),
     },
   },
   date: {
