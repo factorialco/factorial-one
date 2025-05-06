@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useState } from "react"
-import { FilterOption } from "./types"
+import { FilterItem } from "./types"
 
-const optionsCache = new Map<string, FilterOption<unknown>[]>()
+const optionsCache = new Map<string, FilterItem<unknown>[]>()
 
 export async function loadOptions<T>(
   optionsDef:
-    | FilterOption<T>[]
-    | Promise<FilterOption<T>[]>
-    | (() => Promise<FilterOption<T>[]> | FilterOption<T>[])
-): Promise<FilterOption<T>[]> {
+    | FilterItem<T>[]
+    | Promise<FilterItem<T>[]>
+    | (() => Promise<FilterItem<T>[]> | FilterItem<T>[])
+): Promise<FilterItem<T>[]> {
   const cacheKey = JSON.stringify(optionsDef)
 
   if (optionsCache.has(cacheKey)) {
-    return optionsCache.get(cacheKey) as FilterOption<T>[]
+    return optionsCache.get(cacheKey) as FilterItem<T>[]
   }
 
   const optionsProvider =
@@ -27,14 +27,14 @@ export async function loadOptions<T>(
 
 export function useLoadOptions<T>(
   optionsDef:
-    | FilterOption<T>[]
-    | Promise<FilterOption<T>[]>
-    | (() => Promise<FilterOption<T>[]> | FilterOption<T>[])
+    | FilterItem<T>[]
+    | Promise<FilterItem<T>[]>
+    | (() => Promise<FilterItem<T>[]> | FilterItem<T>[])
 ) {
   const cacheKey = JSON.stringify(optionsDef)
 
   // Only use state for async options
-  const [options, setOptions] = useState<FilterOption<T>[]>([])
+  const [options, setOptions] = useState<FilterItem<T>[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 

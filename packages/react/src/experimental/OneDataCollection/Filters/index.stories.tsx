@@ -83,18 +83,20 @@ const sampleDefinition: FiltersDefinition = {
   department: {
     type: "in",
     label: "Department",
-    options: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      return [
-        {
-          value: "engineering",
-          label: "Engineering",
-        },
-        { value: "marketing", label: "Marketing" },
-        { value: "sales", label: "Sales" },
-        { value: "hr", label: "Human Resources" },
-        { value: "finance", label: "Finance" },
-      ]
+    options: {
+      options: async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        return [
+          {
+            value: "engineering",
+            label: "Engineering",
+          },
+          { value: "marketing", label: "Marketing" },
+          { value: "sales", label: "Sales" },
+          { value: "hr", label: "Human Resources" },
+          { value: "finance", label: "Finance" },
+        ]
+      },
     },
   },
   name: {
@@ -104,43 +106,49 @@ const sampleDefinition: FiltersDefinition = {
   manager: {
     type: "in",
     label: "Manager",
-    options: [
-      { value: "alice", label: "Alice Johnson" },
-      { value: "bob", label: "Bob Smith" },
-      { value: "carol", label: "Carol Williams" },
-      { value: "dave", label: "Dave Brown" },
-    ],
+    options: {
+      options: [
+        { value: "alice", label: "Alice Johnson" },
+        { value: "bob", label: "Bob Smith" },
+        { value: "carol", label: "Carol Williams" },
+        { value: "dave", label: "Dave Brown" },
+      ],
+    },
   },
   location: {
     type: "in",
     label: "Office location",
-    options: [
-      { value: "london", label: "London" },
-      { value: "new_york", label: "New York" },
-      { value: "tokyo", label: "Tokyo" },
-      { value: "remote", label: "Remote" },
-    ],
+    options: {
+      options: [
+        { value: "london", label: "London" },
+        { value: "new_york", label: "New York" },
+        { value: "tokyo", label: "Tokyo" },
+        { value: "remote", label: "Remote" },
+      ],
+    },
   },
   role: {
     type: "in",
     label: "Role",
-    options: [
-      { value: "engineer", label: "Software Engineer" },
-      { value: "designer", label: "Product Designer" },
-      { value: "manager", label: "Product Manager" },
-      { value: "analyst", label: "Data Analyst" },
-      { value: "marketer", label: "Marketing Specialist" },
-      { value: "sales", label: "Sales Representative" },
-      { value: "hr", label: "Human Resources Specialist" },
-      { value: "finance", label: "Financial Analyst" },
-      { value: "customer_support", label: "Customer Support Specialist" },
-      { value: "legal", label: "Legal Counsel" },
-      { value: "operations", label: "Operations Manager" },
-      { value: "research", label: "Research Scientist" },
-      { value: "product", label: "Product Manager" },
-      { value: "security", label: "Security Specialist" },
-      { value: "other", label: "Other" },
-    ],
+    options: {
+      options: [
+        { value: "engineer", label: "Software Engineer" },
+        { value: "designer", label: "Product Designer" },
+        { value: "manager", label: "Product Manager" },
+        { value: "analyst", label: "Data Analyst" },
+        { value: "marketer", label: "Marketing Specialist" },
+        { value: "sales", label: "Sales Representative" },
+        { value: "hr", label: "Human Resources Specialist" },
+        { value: "finance", label: "Financial Analyst" },
+        { value: "customer_support", label: "Customer Support Specialist" },
+        { value: "legal", label: "Legal Counsel" },
+        { value: "operations", label: "Operations Manager" },
+        { value: "research", label: "Research Scientist" },
+        { value: "product", label: "Product Manager" },
+        { value: "security", label: "Security Specialist" },
+        { value: "other", label: "Other" },
+      ],
+    },
   },
 }
 
@@ -427,17 +435,23 @@ export const WithAsyncOptions: Story = {
       department: {
         type: "in"
         label: string
-        options: () => Promise<Array<{ value: string; label: string }>>
+        options: {
+          options: () => Promise<Array<{ value: string; label: string }>>
+        }
       }
       users: {
         type: "in"
         label: string
-        options: () => Promise<Array<{ value: string; label: string }>>
+        options: {
+          options: () => Promise<Array<{ value: string; label: string }>>
+        }
       }
       status: {
         type: "in"
         label: string
-        options: () => Array<{ value: string; label: string }>
+        options: {
+          options: () => Array<{ value: string; label: string }>
+        }
       }
       search: {
         type: "search"
@@ -453,47 +467,53 @@ export const WithAsyncOptions: Story = {
       department: {
         type: "in",
         label: "Department",
-        options: async () => {
-          // Simulate API call with a delay
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve([
-                { value: "engineering", label: "Engineering2" },
-                { value: "marketing", label: "Marketing" },
-                { value: "sales", label: "Sales" },
-                { value: "hr", label: "Human Resources" },
-              ])
-            }, 1500)
-          })
+        options: {
+          options: async () => {
+            // Simulate API call with a delay
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve([
+                  { value: "engineering", label: "Engineering2" },
+                  { value: "marketing", label: "Marketing" },
+                  { value: "sales", label: "Sales" },
+                  { value: "hr", label: "Human Resources" },
+                ])
+              }, 1500)
+            })
+          },
         },
       },
       users: {
         type: "in",
         label: "Users",
-        options: async () => {
-          // Simulate API call with a delay
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve([
-                { value: "user1", label: "John Doe" },
-                { value: "user2", label: "Jane Smith" },
-                { value: "user3", label: "Bob Johnson" },
-                { value: "user4", label: "Alice Williams" },
-                { value: "user5", label: "Michael Brown" },
-              ])
-            }, 1500)
-          })
+        options: {
+          options: async () => {
+            // Simulate API call with a delay
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve([
+                  { value: "user1", label: "John Doe" },
+                  { value: "user2", label: "Jane Smith" },
+                  { value: "user3", label: "Bob Johnson" },
+                  { value: "user4", label: "Alice Williams" },
+                  { value: "user5", label: "Michael Brown" },
+                ])
+              }, 1500)
+            })
+          },
         },
       },
       status: {
         type: "in",
         label: "Status",
         // Sync function example
-        options: () => [
-          { value: "active", label: "Active" },
-          { value: "inactive", label: "Inactive" },
-          { value: "pending", label: "Pending" },
-        ],
+        options: {
+          options: () => [
+            { value: "active", label: "Active" },
+            { value: "inactive", label: "Inactive" },
+            { value: "pending", label: "Pending" },
+          ],
+        },
       },
       search: {
         type: "search",
@@ -527,7 +547,9 @@ export const WithLargeAsyncOptions: Story = {
       countries: {
         type: "in"
         label: string
-        options: () => Promise<Array<{ value: string; label: string }>>
+        options: {
+          options: () => Promise<Array<{ value: string; label: string }>>
+        }
       }
       search: {
         type: "search"
@@ -599,13 +621,15 @@ export const WithLargeAsyncOptions: Story = {
       countries: {
         type: "in",
         label: "Countries",
-        options: async () => {
-          // Simulate API call with a delay
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              resolve(generateCountries())
-            }, 1000)
-          })
+        options: {
+          options: async () => {
+            // Simulate API call with a delay
+            return new Promise((resolve) => {
+              setTimeout(() => {
+                resolve(generateCountries())
+              }, 1000)
+            })
+          },
         },
       },
       search: {

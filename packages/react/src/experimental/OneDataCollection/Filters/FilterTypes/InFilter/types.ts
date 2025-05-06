@@ -5,7 +5,7 @@ import { FilterTypeComponentProps } from "../types"
  * Used primarily with InFilterDefinition.
  * @template T - Type of the underlying value
  */
-export type FilterOption<T = unknown> = {
+export type FilterItem<T = unknown> = {
   /** The value used for filtering */
   value: T
   /** Human-readable label for the option */
@@ -16,9 +16,11 @@ export type FilterOption<T = unknown> = {
  * Represents the options for the InFilter component.
  * @template T - Type of the underlying value
  */
-export type InFilterOptions<T> =
-  | Array<FilterOption<T>>
-  | (() => Array<FilterOption<T>> | Promise<Array<FilterOption<T>>>)
+export type InFilterOptions<T> = {
+  options:
+    | Array<FilterItem<T>>
+    | (() => Array<FilterItem<T>> | Promise<Array<FilterItem<T>>>)
+}
 
 /**
  * Represents the component props for the InFilter component.

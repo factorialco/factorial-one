@@ -7,8 +7,8 @@ import { FilterTypeDefinition } from "./types"
 /**
  * All the available filter types
  */
-export type FilterDefinitionsByType = {
-  in: InFilterDefinition<string>
+export type FilterDefinitionsByType<T = unknown> = {
+  in: InFilterDefinition<T>
   search: SearchFilterDefinition
   date: DateFilterDefinition
 }

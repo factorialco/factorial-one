@@ -3,7 +3,7 @@ import { Input } from "@/ui/input"
 import type { Meta, StoryObj } from "@storybook/react"
 import { useEffect, useState } from "react"
 import { InFilter } from "./InFilter"
-import type { FilterOption } from "./types"
+import type { FilterItem } from "./types"
 
 const meta = {
   title: "Data Collection/Filters/InFilter",
@@ -29,12 +29,14 @@ export const Default: Story = {
   args: {
     schema: {
       label: "Department",
-      options: [
-        { value: "engineering", label: "Engineering" },
-        { value: "marketing", label: "Marketing" },
-        { value: "sales", label: "Sales" },
-        { value: "hr", label: "Human Resources" },
-      ],
+      options: {
+        options: [
+          { value: "engineering", label: "Engineering" },
+          { value: "marketing", label: "Marketing" },
+          { value: "sales", label: "Sales" },
+          { value: "hr", label: "Human Resources" },
+        ],
+      },
     },
     value: ["engineering"],
     onChange: () => {},
@@ -46,12 +48,14 @@ export const WithSelectedValues: Story = {
   args: {
     schema: {
       label: "Department",
-      options: [
-        { value: "engineering", label: "Engineering" },
-        { value: "marketing", label: "Marketing" },
-        { value: "sales", label: "Sales" },
-        { value: "hr", label: "Human Resources" },
-      ],
+      options: {
+        options: [
+          { value: "engineering", label: "Engineering" },
+          { value: "marketing", label: "Marketing" },
+          { value: "sales", label: "Sales" },
+          { value: "hr", label: "Human Resources" },
+        ],
+      },
     },
     value: ["engineering", "marketing"],
     onChange: () => {},
@@ -72,12 +76,14 @@ const InteractiveExample = () => {
     <InFilter<string>
       schema={{
         label: "Department",
-        options: [
-          { value: "engineering", label: "Engineering" },
-          { value: "marketing", label: "Marketing" },
-          { value: "sales", label: "Sales" },
-          { value: "hr", label: "Human Resources" },
-        ],
+        options: {
+          options: [
+            { value: "engineering", label: "Engineering" },
+            { value: "marketing", label: "Marketing" },
+            { value: "sales", label: "Sales" },
+            { value: "hr", label: "Human Resources" },
+          ],
+        },
       }}
       value={selectedValues}
       onChange={handleChange}
@@ -101,18 +107,20 @@ const AsyncOptionsExample = () => {
     <InFilter<string>
       schema={{
         label: "Users",
-        options: async () => {
-          // Simulate API call with a small delay
-          return new Promise<FilterOption<string>[]>((resolve) => {
-            setTimeout(() => {
-              resolve([
-                { value: "user1", label: "John Doe" },
-                { value: "user2", label: "Jane Smith" },
-                { value: "user3", label: "Bob Johnson" },
-                { value: "user4", label: "Alice Williams" },
-              ])
-            }, 5000)
-          })
+        options: {
+          options: async () => {
+            // Simulate API call with a small delay
+            return new Promise<FilterItem<string>[]>((resolve) => {
+              setTimeout(() => {
+                resolve([
+                  { value: "user1", label: "John Doe" },
+                  { value: "user2", label: "Jane Smith" },
+                  { value: "user3", label: "Bob Johnson" },
+                  { value: "user4", label: "Alice Williams" },
+                ])
+              }, 5000)
+            })
+          },
         },
       }}
       value={selectedValues}
@@ -129,10 +137,10 @@ export const AsyncOptions: Story = {
 const AsyncOptionsWithSearchExample = () => {
   const [selectedValues, setSelectedValues] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState("")
-  const [options, setOptions] = useState<FilterOption<string>[]>([])
-  const [filteredOptions, setFilteredOptions] = useState<
-    FilterOption<string>[]
-  >([])
+  const [options, setOptions] = useState<FilterItem<string>[]>([])
+  const [filteredOptions, setFilteredOptions] = useState<FilterItem<string>[]>(
+    []
+  )
   const [isLoading, setIsLoading] = useState(true)
 
   const handleChange = (value: string[]) => {
@@ -203,13 +211,15 @@ const AsyncOptionsWithSearchExample = () => {
       <InFilter<string>
         schema={{
           label: "Countries",
-          options: isLoading
-            ? async () => {
-                // This will show loading state
-                await new Promise((resolve) => setTimeout(resolve, 500))
-                return []
-              }
-            : filteredOptions,
+          options: {
+            options: isLoading
+              ? async () => {
+                  // This will show loading state
+                  await new Promise((resolve) => setTimeout(resolve, 500))
+                  return []
+                }
+              : filteredOptions,
+          },
         }}
         value={selectedValues}
         onChange={handleChange}
@@ -242,19 +252,21 @@ const SlowAsyncOptionsExample = () => {
     <InFilter<string>
       schema={{
         label: "Countries",
-        options: async () => {
-          // Simulate slow API call
-          return new Promise<FilterOption<string>[]>((resolve) => {
-            setTimeout(() => {
-              resolve([
-                { value: "us", label: "United States" },
-                { value: "uk", label: "United Kingdom" },
-                { value: "ca", label: "Canada" },
-                { value: "au", label: "Australia" },
-                { value: "jp", label: "Japan" },
-              ])
-            }, 3000)
-          })
+        options: {
+          options: async () => {
+            // Simulate slow API call
+            return new Promise<FilterItem<string>[]>((resolve) => {
+              setTimeout(() => {
+                resolve([
+                  { value: "us", label: "United States" },
+                  { value: "uk", label: "United Kingdom" },
+                  { value: "ca", label: "Canada" },
+                  { value: "au", label: "Australia" },
+                  { value: "jp", label: "Japan" },
+                ])
+              }, 3000)
+            })
+          },
         },
       }}
       value={selectedValues}
@@ -279,13 +291,15 @@ const ErrorAsyncOptionsExample = () => {
     <InFilter<string>
       schema={{
         label: "Products",
-        options: async () => {
-          // Simulate API error
-          return new Promise<FilterOption<string>[]>((_, reject) => {
-            setTimeout(() => {
-              reject(new Error("Failed to fetch products"))
-            }, 1000)
-          })
+        options: {
+          options: async () => {
+            // Simulate API error
+            return new Promise<FilterItem<string>[]>((_, reject) => {
+              setTimeout(() => {
+                reject(new Error("Failed to fetch products"))
+              }, 1000)
+            })
+          },
         },
       }}
       value={selectedValues}
@@ -303,7 +317,9 @@ export const EmptyOptions: Story = {
   args: {
     schema: {
       label: "Categories",
-      options: [],
+      options: {
+        options: [],
+      },
     },
     value: [],
     onChange: () => {},
@@ -315,11 +331,13 @@ export const SyncFunctionOptions: Story = {
   args: {
     schema: {
       label: "Priorities",
-      options: () => [
-        { value: "high", label: "High" },
-        { value: "medium", label: "Medium" },
-        { value: "low", label: "Low" },
-      ],
+      options: {
+        options: [
+          { value: "high", label: "High" },
+          { value: "medium", label: "Medium" },
+          { value: "low", label: "Low" },
+        ],
+      },
     },
     value: [],
     onChange: () => {},
