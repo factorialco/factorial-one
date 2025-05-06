@@ -47,3 +47,9 @@ export const AsText: Story = {
     variant: "text",
   },
 }
+
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+  },
+}

@@ -260,6 +260,12 @@ export const Week: Story = {
     mode: "single",
     view: "week",
   },
+  parameters: {
+    // Disable color contrast check for week view as it gets a false positive for middle range days
+    a11y: {
+      skipCi: true,
+    },
+  },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
       const now = new Date()
@@ -267,6 +273,183 @@ export const Week: Story = {
       return {
         from: start,
         to: endOfWeek(start, { weekStartsOn: 1 }),
+      }
+    })
+
+    const handleSelect = (date: Date | DateRange | null) => {
+      if (!date) {
+        setSelectedRange(null)
+        return
+      }
+      if (!(date instanceof Date)) {
+        setSelectedRange(date)
+      }
+    }
+
+    return (
+      <div className="mx-auto max-w-80">
+        <OneCalendar
+          {...args}
+          defaultSelected={selectedRange}
+          onSelect={handleSelect}
+        />
+        {selectedRange && <SelectedDateDisplay range={selectedRange} />}
+      </div>
+    )
+  },
+}
+
+export const QuarterSingle: Story = {
+  args: {
+    mode: "single",
+    view: "quarter",
+  },
+  render: (args) => {
+    const [selectedDate, setSelectedDate] = useState<Date | null>(() => {
+      const now = new Date()
+      const quarterStartMonth = Math.floor(now.getMonth() / 3) * 3
+      return new Date(now.getFullYear(), quarterStartMonth, 1)
+    })
+
+    const handleSelect = (date: Date | DateRange | null) => {
+      if (!date) {
+        setSelectedDate(null)
+        return
+      }
+      if (date instanceof Date) {
+        setSelectedDate(date)
+      }
+    }
+
+    const displayRange = selectedDate
+      ? {
+          from: selectedDate,
+          to: new Date(
+            selectedDate.getFullYear(),
+            Math.floor(selectedDate.getMonth() / 3) * 3 + 3,
+            0
+          ),
+        }
+      : null
+
+    return (
+      <div className="mx-auto max-w-80">
+        <OneCalendar
+          {...args}
+          defaultSelected={selectedDate}
+          onSelect={handleSelect}
+        />
+        {displayRange && <SelectedDateDisplay range={displayRange} />}
+      </div>
+    )
+  },
+}
+
+export const QuarterRange: Story = {
+  args: {
+    mode: "range",
+    view: "quarter",
+  },
+  render: (args) => {
+    const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
+      const now = new Date()
+      const currentQuarter = Math.floor(now.getMonth() / 3)
+      const currentQuarterStartMonth = currentQuarter * 3
+      const nextQuarter = (currentQuarter + 2) % 4
+      const nextQuarterStartMonth = nextQuarter * 3
+      const nextQuarterYear = now.getFullYear() + (currentQuarter === 3 ? 1 : 0)
+
+      return {
+        from: new Date(now.getFullYear(), currentQuarterStartMonth, 1),
+        to: new Date(nextQuarterYear, nextQuarterStartMonth + 3, 0),
+      }
+    })
+
+    const handleSelect = (date: Date | DateRange | null) => {
+      if (!date) {
+        setSelectedRange(null)
+        return
+      }
+      if (!(date instanceof Date)) {
+        setSelectedRange(date)
+      }
+    }
+
+    return (
+      <div className="mx-auto max-w-80">
+        <OneCalendar
+          {...args}
+          defaultSelected={selectedRange}
+          onSelect={handleSelect}
+        />
+        {selectedRange && <SelectedDateDisplay range={selectedRange} />}
+      </div>
+    )
+  },
+}
+
+export const HalfYearSingle: Story = {
+  args: {
+    mode: "single",
+    view: "halfyear",
+  },
+  render: (args) => {
+    const [selectedDate, setSelectedDate] = useState<Date | null>(() => {
+      const now = new Date()
+      const halfYearStartMonth = Math.floor(now.getMonth() / 6) * 6
+      return new Date(now.getFullYear(), halfYearStartMonth, 1)
+    })
+
+    const handleSelect = (date: Date | DateRange | null) => {
+      if (!date) {
+        setSelectedDate(null)
+        return
+      }
+      if (date instanceof Date) {
+        setSelectedDate(date)
+      }
+    }
+
+    const displayRange = selectedDate
+      ? {
+          from: selectedDate,
+          to: new Date(
+            selectedDate.getFullYear(),
+            Math.floor(selectedDate.getMonth() / 6) * 6 + 6,
+            0
+          ),
+        }
+      : null
+
+    return (
+      <div className="mx-auto max-w-80">
+        <OneCalendar
+          {...args}
+          defaultSelected={selectedDate}
+          onSelect={handleSelect}
+        />
+        {displayRange && <SelectedDateDisplay range={displayRange} />}
+      </div>
+    )
+  },
+}
+
+export const HalfYearRange: Story = {
+  args: {
+    mode: "range",
+    view: "halfyear",
+  },
+  render: (args) => {
+    const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
+      const now = new Date()
+      const currentHalfYear = Math.floor(now.getMonth() / 6)
+      const currentHalfYearStartMonth = currentHalfYear * 6
+      const endYear = now.getFullYear() + Math.floor((currentHalfYear + 2) / 2)
+      const endMonth = ((currentHalfYear + 2) % 2) * 6
+
+      return {
+        from: new Date(now.getFullYear(), currentHalfYearStartMonth, 1),
+        to: new Date(endYear, endMonth + 6, 0),
       }
     })
 

@@ -1,17 +1,27 @@
+import { useReducedMotion } from "@/lib/a11y"
+import { cn } from "@/lib/utils"
 import { ScrollArea } from "@/ui/scrollarea"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { useVirtualizer } from "@tanstack/react-virtual"
-import * as React from "react"
-import { ReactNode, useContext, useEffect, useMemo, useRef } from "react"
-import { cn } from "../../../lib/utils.ts"
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  forwardRef,
+  ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import { VirtualItem } from "../index"
-import { SelectContext } from "../SelectContext.tsx"
+import { SelectContext } from "../SelectContext"
 
 /**
  * Select Content component
  */
 // Define two different prop types for the two mutually exclusive scenarios
-type SelectItemProps = React.ComponentPropsWithoutRef<
+type SelectItemProps = ComponentPropsWithoutRef<
   typeof SelectPrimitive.Content
 > & {
   top?: ReactNode
@@ -37,8 +47,8 @@ type SelectContentProps =
   | SelectContentWithItemsProps
   | SelectContentWithChildrenProps
 
-const SelectContent = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Content>,
+const SelectContent = forwardRef<
+  ElementRef<typeof SelectPrimitive.Content>,
   SelectContentProps
 >(
   (
@@ -64,10 +74,11 @@ const SelectContent = React.forwardRef<
       return !children
     }, [isVirtual, items, children])
 
+    const prefersReducedMotion = useReducedMotion()
     // State to check if the virtual list is ready and the scroll in the correct position
-    const [virtualReady, setVirtualReady] = React.useState(false)
+    const [virtualReady, setVirtualReady] = useState(prefersReducedMotion)
     // State to check if the radixui animation has started
-    const [animationStarted, setAnimationStarted] = React.useState(false)
+    const [animationStarted, setAnimationStarted] = useState(false)
 
     // Get the value and the open status from the select context
     const { value, open } = useContext(SelectContext)
@@ -81,7 +92,7 @@ const SelectContent = React.forwardRef<
       getScrollElement: () => parentRef.current,
       estimateSize: (i: number) => items?.[i]?.height || 0,
       overscan: 5,
-      enabled: animationStarted,
+      enabled: prefersReducedMotion || animationStarted,
     })
 
     useEffect(() => {

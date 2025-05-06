@@ -1,4 +1,4 @@
-import { CrossedCircle } from "@/icons/app"
+import { CrossedCircle, Download } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { FileItem } from "."
 
@@ -33,18 +33,19 @@ export const WithMultipleActions: Story = {
     }),
     actions: [
       {
+        icon: Download,
+        label: "Download file",
+        onClick: () => {
+          alert("forward file")
+        },
+      },
+      {
         icon: CrossedCircle,
         label: "Delete file",
         onClick: () => {
           alert("delete file")
         },
         critical: true,
-      },
-      {
-        label: "Forward file",
-        onClick: () => {
-          alert("forward file")
-        },
       },
     ],
   },

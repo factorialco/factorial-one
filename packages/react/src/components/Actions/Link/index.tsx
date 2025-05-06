@@ -20,6 +20,10 @@ const linkVariants = cva({
       true: "",
       false: "",
     },
+    disabled: {
+      true: "cursor-not-allowed no-underline",
+      false: "",
+    },
   },
   defaultVariants: {
     variant: "link",
@@ -54,7 +58,11 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {...props}
       onClick={handleClick}
       className={cn(
-        linkVariants({ variant, active: isActive(props.href) }),
+        linkVariants({
+          variant,
+          active: isActive(props.href),
+          disabled: props.disabled,
+        }),
         className
       )}
     >

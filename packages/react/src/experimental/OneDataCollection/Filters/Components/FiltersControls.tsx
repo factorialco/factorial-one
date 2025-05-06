@@ -5,6 +5,7 @@ import { Filter } from "../../../../icons/app"
 import { useI18n } from "../../../../lib/providers/i18n"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Popover, PopoverContent, PopoverTrigger } from "../../../../ui/popover"
+import { filterTypes } from "../FilterTypes"
 import type { FiltersDefinition, FiltersState } from "../types"
 import { FilterContent } from "./FilterContent"
 import { FilterList } from "./FilterList"
@@ -49,6 +50,24 @@ export function FiltersControls<Filters extends FiltersDefinition>({
     onChange(localFiltersValue)
     onOpenChange(false)
   }
+
+  useEffect(() => {
+    const getFirstFilterNotEmpty = () => {
+      return Object.entries(localFiltersValue).find(([key, value]) => {
+        // TODO: Make this type better
+        const filterType = filterTypes[schema[key].type] as {
+          isEmpty: (value: unknown) => boolean
+        }
+
+        return !filterType.isEmpty(value)
+      })
+    }
+
+    if (isOpen) {
+      setSelectedFilterKey(getFirstFilterNotEmpty()?.[0] as keyof Filters)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We only want to run this when the popover is opened
+  }, [isOpen])
 
   return (
     <div className="flex items-center gap-2">

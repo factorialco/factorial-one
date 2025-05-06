@@ -234,13 +234,21 @@ export type WidgetSkeletonProps = {
     title?: string
     subtitle?: string
   }
-} & VariantProps<typeof skeletonVariants>
+} & (
+  | VariantProps<typeof skeletonVariants>
+  | {
+      height: "full"
+    }
+)
 
 const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
   function Skeleton({ header, height }, ref) {
     return (
       <Card
-        className="flex gap-4 border-f1-border-secondary"
+        className={cn(
+          "flex gap-4 border-f1-border-secondary",
+          height === "full" && "h-full"
+        )}
         ref={ref}
         aria-live="polite"
         aria-busy={true}
@@ -260,7 +268,7 @@ const Skeleton = forwardRef<HTMLDivElement, WidgetSkeletonProps>(
         </CardHeader>
         <CardContent
           aria-hidden={true}
-          className={cn(skeletonVariants({ height }))}
+          className={cn(height !== "full" && skeletonVariants({ height }))}
         >
           {[...Array(4)].map((_, i) => (
             <SkeletonPrimitive

@@ -1,5 +1,138 @@
 # Changelog
 
+## [1.43.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.42.0...factorial-one-react-v1.43.0) (2025-05-06)
+
+
+### Features
+
+* **Calendar:** Quarter and Half-year views ([#1728](https://github.com/factorialco/factorial-one/issues/1728)) ([0f6c950](https://github.com/factorialco/factorial-one/commit/0f6c950f9779302739d9ee68aee1595dfa3bdd8c))
+
+## [1.42.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.41.0...factorial-one-react-v1.42.0) (2025-05-05)
+
+
+### Features
+
+* new Discover icon  ([3c3d081](https://github.com/factorialco/factorial-one/commit/3c3d08129cebfa234b666005cc9737c606d37bd2))
+
+## [1.41.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.40.0...factorial-one-react-v1.41.0) (2025-05-05)
+
+
+### Features
+
+* add support to open modal on left and right sides ([#1747](https://github.com/factorialco/factorial-one/issues/1747)) ([1b77700](https://github.com/factorialco/factorial-one/commit/1b777005c12ce7eede7498240e93aa8eea002a2f))
+
+## [1.40.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.1...factorial-one-react-v1.40.0) (2025-05-05)
+
+
+### Features
+
+* add new copy action to metada ([#1734](https://github.com/factorialco/factorial-one/issues/1734)) ([445a2e4](https://github.com/factorialco/factorial-one/commit/445a2e495bb5990c8c61794ea923e59e8703d78d))
+
+## [1.39.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.0...factorial-one-react-v1.39.1) (2025-05-05)
+
+
+### Bug Fixes
+
+* overflow-scroll to auto ([#1735](https://github.com/factorialco/factorial-one/issues/1735)) ([8de69d3](https://github.com/factorialco/factorial-one/commit/8de69d30aab7f01dc9c769b8cb10002ff2e0df8e))
+
+## [1.39.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.1...factorial-one-react-v1.39.0) (2025-05-05)
+
+
+### Features
+
+* add new banner component ([#1628](https://github.com/factorialco/factorial-one/issues/1628)) ([a1eaab0](https://github.com/factorialco/factorial-one/commit/a1eaab072ef096a1d5ef89b2a3d21119ec4b369a))
+
+## [1.38.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.0...factorial-one-react-v1.38.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* palce tooltips in body of the page ([#1730](https://github.com/factorialco/factorial-one/issues/1730)) ([dba64e9](https://github.com/factorialco/factorial-one/commit/dba64e9df208ad696fd806229a453366ca4c1ab9))
+
+## [1.38.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.6...factorial-one-react-v1.38.0) (2025-05-02)
+
+
+### Features
+
+* **Calendar:** show week number & styles ([#1704](https://github.com/factorialco/factorial-one/issues/1704)) ([f373513](https://github.com/factorialco/factorial-one/commit/f373513a8348830cb1eec1a685a19d42bc1b8a68))
+
+## [1.37.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.5...factorial-one-react-v1.37.6) (2025-04-30)
+
+
+### Bug Fixes
+
+* tooltips in AvatarList component with layout fill ([#1723](https://github.com/factorialco/factorial-one/issues/1723)) ([70b358e](https://github.com/factorialco/factorial-one/commit/70b358e36b6f52a6168923401bc75e33e4738d50))
+
+## [1.37.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.4...factorial-one-react-v1.37.5) (2025-04-30)
+
+
+### Bug Fixes
+
+* **fileItem:** multilple actions icon  ([#1685](https://github.com/factorialco/factorial-one/issues/1685)) ([583a9bb](https://github.com/factorialco/factorial-one/commit/583a9bbde44e2f55e921606f6036679276b3aa2c))
+
+## [1.37.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.3...factorial-one-react-v1.37.4) (2025-04-30)
+
+
+### Bug Fixes
+
+* update avatar list remaining count depending on number of items shown ([#1720](https://github.com/factorialco/factorial-one/issues/1720)) ([783a290](https://github.com/factorialco/factorial-one/commit/783a29084868d46bd7da01aec846d4735e42e11d))
+
+## [1.37.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.2...factorial-one-react-v1.37.3) (2025-04-30)
+
+
+### Bug Fixes
+
+* add support to be more selective on double column breakpoints in carousel ([#1714](https://github.com/factorialco/factorial-one/issues/1714)) ([56c6f33](https://github.com/factorialco/factorial-one/commit/56c6f3361b9e06ea74fe598907d9a31d764233e3))
+
+## [1.37.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.1...factorial-one-react-v1.37.2) (2025-04-30)
+
+
+### Bug Fixes
+
+* add support for widget skeleton to be full height ([#1709](https://github.com/factorialco/factorial-one/issues/1709)) ([087d281](https://github.com/factorialco/factorial-one/commit/087d2818138abcacf0000f0917257de60311d1af))
+
+## [1.37.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.0...factorial-one-react-v1.37.1) (2025-04-30)
+
+
+### Bug Fixes
+
+* double click on dropdown ([#1708](https://github.com/factorialco/factorial-one/issues/1708)) ([a7b6796](https://github.com/factorialco/factorial-one/commit/a7b6796a888095a76c251e16c9e881c7c0afa91b))
+
+## [1.37.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.4...factorial-one-react-v1.37.0) (2025-04-30)
+
+
+### Features
+
+* add support to have double columns in carousel ([#1706](https://github.com/factorialco/factorial-one/issues/1706)) ([56be64e](https://github.com/factorialco/factorial-one/commit/56be64ed70a2315861b199f7663bf03b03434d8f))
+
+## [1.36.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.3...factorial-one-react-v1.36.4) (2025-04-30)
+
+
+### Bug Fixes
+
+* consider reduced animation preference ([#1703](https://github.com/factorialco/factorial-one/issues/1703)) ([8d9390c](https://github.com/factorialco/factorial-one/commit/8d9390c33c4e1397ee0e54998c635b0824499e60))
+
+## [1.36.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.2...factorial-one-react-v1.36.3) (2025-04-29)
+
+
+### Bug Fixes
+
+* avoid links to be cut-off in widget ([#1701](https://github.com/factorialco/factorial-one/issues/1701)) ([da902d2](https://github.com/factorialco/factorial-one/commit/da902d259fb157cad26f8bf18880d675b350a458))
+
+## [1.36.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.1...factorial-one-react-v1.36.2) (2025-04-28)
+
+
+### Bug Fixes
+
+* update localValue when value or items are changed on re-render ([#1679](https://github.com/factorialco/factorial-one/issues/1679)) ([d6fd9a4](https://github.com/factorialco/factorial-one/commit/d6fd9a44d2138e570f6f20d5ed2e9cb845108785))
+
+## [1.36.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.36.0...factorial-one-react-v1.36.1) (2025-04-28)
+
+
+### Bug Fixes
+
+* improve filter removal logic in Filters component ([#1665](https://github.com/factorialco/factorial-one/issues/1665)) ([cfda323](https://github.com/factorialco/factorial-one/commit/cfda3237ee6a2fda5e87d7f4a4b89d1434f3af69))
+
 ## [1.36.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.35.6...factorial-one-react-v1.36.0) (2025-04-24)
 
 

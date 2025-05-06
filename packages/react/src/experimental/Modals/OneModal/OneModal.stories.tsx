@@ -1,13 +1,14 @@
-import { ApplicationFrame } from "@/experimental/exports"
 import {
   OnePersonListItem,
   OnePersonListItemProps,
 } from "@/experimental/Lists/OnePersonListItem"
 import { Default as OnePersonListItemDefault } from "@/experimental/Lists/OnePersonListItem/index.stories"
+import { ApplicationFrame } from "@/experimental/Navigation/ApplicationFrame"
+import ApplicationFrameStoryMeta from "@/experimental/Navigation/ApplicationFrame/index.stories"
 import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
 import type { Meta, StoryObj } from "@storybook/react"
-import { FC } from "react"
+import { ComponentProps, FC } from "react"
 import { OneModal } from "."
 
 const meta: Meta<typeof OneModal> = {
@@ -22,8 +23,14 @@ const meta: Meta<typeof OneModal> = {
   tags: ["autodocs"],
   decorators: [
     (Story) => (
-      <ApplicationFrame sidebar={null}>
-        <Story />
+      <ApplicationFrame
+        {...(ApplicationFrameStoryMeta.args as ComponentProps<
+          typeof ApplicationFrame
+        >)}
+      >
+        <div className="flex-1 rounded-md border border-solid border-f1-border-secondary bg-f1-background">
+          <Story />
+        </div>
       </ApplicationFrame>
     ),
   ],
@@ -118,6 +125,21 @@ export const WithPersonListItems: Story = {
     ),
   },
 }
+
+export const WithLeftPosition: Story = {
+  args: {
+    ...Default.args,
+    position: "left",
+  },
+}
+
+export const WithRightPosition: Story = {
+  args: {
+    ...Default.args,
+    position: "right",
+  },
+}
+
 export const WithFewItems: Story = {
   args: {
     ...Default.args,

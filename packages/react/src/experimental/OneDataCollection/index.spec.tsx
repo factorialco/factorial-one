@@ -772,12 +772,7 @@ describe("Collections", () => {
 
     const { result } = renderHook(
       () => {
-        const source = useDataSource<
-          Person,
-          FiltersDefinition,
-          SortingsDefinition,
-          ItemActionsDefinition<Person>
-        >({
+        const source = useDataSource({
           filters: {
             department: {
               type: "in",
