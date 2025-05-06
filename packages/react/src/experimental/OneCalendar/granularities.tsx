@@ -1,6 +1,7 @@
 import NumberFlow from "@number-flow/react"
-import { GranularityDefinition } from "./OneCalendar"
-import { CalendarView } from "./types"
+import { endOfISOWeek, parse, startOfISOWeek } from "date-fns"
+import { ReactNode } from "react"
+import { CalendarMode, CalendarView, DateRange } from "./types"
 import { formatDateRange, toDateRange } from "./utils"
 import { DayView } from "./views/day"
 import { HalfYearView } from "./views/halfyear"
@@ -9,12 +10,59 @@ import { QuarterView } from "./views/quarter"
 import { WeekView } from "./views/week"
 import { YearView } from "./views/year"
 
+export interface GranularityDefinition {
+  label: (viewDate: Date) => ReactNode
+  toString: (date: Date | DateRange | undefined | null) => string
+  toStringRange: (date: Date | DateRange | undefined | null) => [string, string]
+  fromString: (dateStr: string | [string, string]) => DateRange | null | Error
+  navigate: (viewDate: Date, direction: -1 | 1) => Date
+  render: (renderProps: {
+    mode: CalendarMode
+    selected: Date | DateRange | null
+    onSelect: (date: Date | DateRange | null) => void
+    month: Date
+    onMonthChange: (date: Date) => void
+    motionDirection: number
+    setViewDate: (date: Date) => void
+    viewDate: Date
+  }) => ReactNode
+}
+
+export type GranularityDefinitionSimple = Pick<
+  GranularityDefinition,
+  "toString"
+>
+
 export const granularityDefinitions: Record<
   CalendarView,
   GranularityDefinition
 > = {
   day: {
     toString: (date) => formatDateRange(date, "dd/MM/yyyy"),
+    toStringRange: (date) => formatDateRange(date, "dd/MM/yyyy"),
+    fromString: (dateStr) => {
+      const [fromStr, toStr] =
+        typeof dateStr === "string" ? dateStr.split("-") : dateStr
+
+      const parseDate = (dateStr: string) => {
+        const trimmed = dateStr.trim()
+
+        const [day, month, year] = trimmed.split(/[/.-]/)
+        const date = new Date(Number(year), Number(month) - 1, Number(day))
+        if (isNaN(date.getTime())) {
+          throw new Error("Invalid date format")
+        }
+        return date
+      }
+
+      try {
+        const fromDate = parseDate(fromStr)
+        const toDate = toStr ? parseDate(toStr) : undefined
+        return { from: fromDate, to: toDate }
+      } catch (error) {
+        return error as Error
+      }
+    },
     navigate: (viewDate, direction) => {
       const newDate = new Date(viewDate)
       newDate.setMonth(newDate.getMonth() + direction)
@@ -41,6 +89,43 @@ export const granularityDefinitions: Record<
   },
   week: {
     toString: (date) => formatDateRange(date, "'W'I yyyy"),
+    toStringRange: (date) => {
+      const dateRange = toDateRange(date)
+      if (!dateRange) {
+        return ["", ""]
+      }
+      return [
+        formatDateRange(dateRange.from, "'W'I yyyy"),
+        formatDateRange(dateRange.to, "'W'I yyyy"),
+      ]
+    },
+    fromString: (dateStr) => {
+      const [fromStr, toStr] =
+        typeof dateStr === "string" ? dateStr.split("-") : dateStr
+
+      const parseDate = (dateStr: string) => {
+        const trimmed = dateStr.trim()
+
+        const [weekStr, yearStr] = trimmed.split(/\s+/)
+
+        const year = isNaN(Number(yearStr))
+          ? new Date().getFullYear()
+          : +yearStr
+
+        const week = Number(weekStr.replace(/[wW\s]/g, ""))
+        return parse(`${week}`, "I", new Date().setFullYear(year))
+      }
+
+      try {
+        const fromDate = startOfISOWeek(parseDate(fromStr))
+        const toDate = endOfISOWeek(parseDate(toStr ? toStr : fromStr))
+        console.log(fromDate, toDate)
+        return { from: fromDate, to: toDate }
+      } catch (error) {
+        console.error(error)
+        return error as Error
+      }
+    },
     navigate: (viewDate, direction) => {
       const newDate = new Date(viewDate)
       newDate.setMonth(newDate.getMonth() + direction)
