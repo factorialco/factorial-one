@@ -1,6 +1,6 @@
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
-import { motion, Reorder } from "framer-motion"
-import React, { useRef } from "react"
+import { motion, Reorder, useDragControls } from "framer-motion"
+import React, { useEffect, useRef } from "react"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import { ChevronDown } from "../../../../icons/app"
 import { useReducedMotion } from "../../../../lib/a11y"
@@ -98,6 +98,7 @@ const CategoryItem = ({
   const shouldReduceMotion = useReducedMotion()
   const wasDragging = useRef(false)
   const { isDragging, setIsDragging } = useDragContext()
+  const dragControls = useDragControls()
 
   const handleClick = () => {
     if (!isDragging && !wasDragging.current) {
@@ -207,8 +208,10 @@ const CategoryItem = ({
       value={category}
       dragConstraints={dragConstraints}
       dragElastic={0.1}
+      dragControls={dragControls}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      layout
       initial={{ opacity: 1 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{
@@ -223,12 +226,14 @@ const CategoryItem = ({
           duration: 0.2,
           ease: [0.175, 0.885, 0.32, 1.275],
         },
+        layout: { duration: 0.4, ease: [0.175, 0.885, 0.32, 1.275] },
       }}
       whileDrag={{
         scale: 1.04,
         cursor: "grabbing",
+        zIndex: 10,
       }}
-      className={cn("relative backdrop-blur-sm")}
+      className="relative backdrop-blur-sm"
     >
       {content}
     </Reorder.Item>
@@ -290,6 +295,20 @@ function MenuContent({
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
 
+  // Add effect to force layout recalculation when screen height changes
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        containerRef.current.style.display = "none"
+        void containerRef.current.offsetHeight
+        containerRef.current.style.display = ""
+      }
+    }
+
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
   return (
     <div
       className={cn(
@@ -336,6 +355,7 @@ function MenuContent({
             axis="y"
             values={sortableItems}
             onReorder={setSortableItems}
+            layoutScroll
             className="flex flex-col gap-3"
           >
             {sortableItems.map((category) => (
