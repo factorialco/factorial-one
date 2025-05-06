@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.44.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.1...factorial-one-react-v1.44.0) (2025-05-06)
+
+
+### Features
+
+* datacollection add datefilter ([2288214](https://github.com/factorialco/factorial-one/commit/2288214f48033b3833b396d40ac94ca5fbdb3cc3))
+
 ## [1.43.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.0...factorial-one-react-v1.43.1) (2025-05-06)
 
 
