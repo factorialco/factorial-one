@@ -24,6 +24,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useTransition,
 } from "react"
 import { IconType } from "../../../../components/Utilities/Icon"
 import { SelectItemObject } from "../../../Forms/Fields/Select"
@@ -310,6 +311,7 @@ BreadcrumbItem.displayName = "BreadcrumbItem"
 
 interface CollapsedBreadcrumbItemProps {
   items: DropdownItemWithoutIcon[]
+  className?: string
 }
 
 /**
@@ -318,8 +320,8 @@ interface CollapsedBreadcrumbItemProps {
 const CollapsedBreadcrumbItem = forwardRef<
   HTMLLIElement,
   CollapsedBreadcrumbItemProps
->(({ items }, ref) => (
-  <ShadBreadcrumbItem ref={ref}>
+>(({ className, items }, ref) => (
+  <ShadBreadcrumbItem ref={ref} className={className}>
     <div className="flex items-center">
       <BreadcrumbSeparator />
       <Dropdown items={items}>
@@ -362,6 +364,7 @@ interface BreadcrumbsProps {
 export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLOListElement>(null)
+  const [, startTransition] = useTransition()
   const [mounted, setMounted] = useState(false)
   const [state, setState] = useState<BreadcrumbState>(() =>
     calculateBreadcrumbState(null, breadcrumbs, [])
@@ -375,13 +378,15 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
     const updateBreadcrumbState = () => {
       const containerWidth = containerRef.current?.clientWidth ?? null
       const breadcrumbsElements = Array.from(list.children) as HTMLElement[]
-      setState(
-        calculateBreadcrumbState(
-          containerWidth,
-          breadcrumbs,
-          breadcrumbsElements
+      startTransition(() => {
+        setState(
+          calculateBreadcrumbState(
+            containerWidth,
+            breadcrumbs,
+            breadcrumbsElements
+          )
         )
-      )
+      })
     }
 
     const resizeObserver = new ResizeObserver(updateBreadcrumbState)
@@ -400,7 +405,7 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
   return (
     <Breadcrumb
       ref={containerRef}
-      className="w-full overflow-hidden"
+      className="w-full"
       style={{
         minWidth: state.minWidth,
       }}
@@ -429,12 +434,11 @@ export default function Breadcrumbs({ breadcrumbs }: BreadcrumbsProps) {
             item={state.headItem}
             isLast={false}
           />
-          {state.collapsedItems.length > 0 && (
-            <CollapsedBreadcrumbItem
-              key="collapsed-items"
-              items={state.collapsedItems as DropdownItemWithoutIcon[]}
-            />
-          )}
+          <CollapsedBreadcrumbItem
+            key="collapsed-items"
+            items={state.collapsedItems as DropdownItemWithoutIcon[]}
+            className={state.collapsedItems.length > 0 ? "block" : "hidden"}
+          />
           {state.tailItems.map((item, index) => (
             <BreadcrumbItem
               key={item.id}

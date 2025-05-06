@@ -60,6 +60,10 @@ type HeaderProps = {
   productUpdates?: {
     isVisible?: boolean
   } & ProductUpdatesProp
+  favorites?: {
+    isMarked: boolean
+    onChange: (newValue: boolean) => void
+  }
 }
 
 function PageNavigationLink({
@@ -96,6 +100,7 @@ export function PageHeader({
   embedded = false,
   navigation,
   productUpdates,
+  favorites,
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
@@ -182,8 +187,11 @@ export function PageHeader({
             <Breadcrumbs
               key={breadcrumbsTree[0].id}
               breadcrumbs={breadcrumbsTree}
-            />
+            ></Breadcrumbs>
           )}
+          {/*{favorites !== undefined && (*/}
+          {/*  <Button variant="ghost" label="Favorites" hideLabel icon={favorites.isMarked ? StarFilled : Star} />*/}
+          {/*)}*/}
         </div>
       </div>
       <div className="flex items-center gap-3">

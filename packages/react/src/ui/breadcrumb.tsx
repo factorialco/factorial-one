@@ -50,7 +50,6 @@ const BreadcrumbItem = forwardRef<HTMLLIElement, HTMLMotionProps<"li">>(
       className={cn("inline-flex items-center gap-0.5 pr-1", className)}
       initial={{ opacity: 0, translateX: -8 }}
       animate={{ opacity: 1, translateX: 0 }}
-      exit={{ opacity: 0, translateX: -8 }}
       transition={{ duration: 0.15 }}
       {...props}
     />
