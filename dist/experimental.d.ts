@@ -676,9 +676,9 @@ declare type ChartItem<K extends ChartConfig> = {
     };
 };
 
-export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
+export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_15 & RefAttributes<HTMLDivElement>>;
 
-export declare type ChatWidgetEmptyStateProps = Props_14;
+export declare type ChatWidgetEmptyStateProps = Props_15;
 
 /**
  * Filter chips list
@@ -1101,6 +1101,18 @@ onClose?: () => void;
 export declare const DotTag: ForwardRefExoticComponent<DotTagProps & RefAttributes<HTMLDivElement>>;
 
 export declare const dotTagColors: NewColor[];
+
+export declare type DotTagItem = DotTagItem_2;
+
+declare type DotTagItem_2 = {
+    label: string;
+    color: NewColor;
+};
+
+export declare const DotTagList: {
+    ({ tags, noTooltip, max, remainingCount: initialRemainingCount, layout, }: Props_12): JSX_2.Element;
+    displayName: string;
+};
 
 export declare type DotTagProps = {
     text: string;
@@ -2015,7 +2027,7 @@ declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
 
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
-export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
+export declare const PersonTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
 
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: PieChartProps;
@@ -2197,12 +2209,15 @@ declare const propertyRenderers: {
         label: string;
         icon?: IconType;
     }) => JSX_2.Element;
-    readonly dotTag: (args: Array<{
+    readonly dotTag: (args: {
         label: string;
         color: NewColor;
-    }> | {
-        label: string;
-        color: NewColor;
+    }) => JSX_2.Element;
+    readonly dotTagList: (args: {
+        tags: DotTagItem[];
+        max?: number;
+        layout?: "fill" | "compact";
+        remainingCount?: number;
     }) => JSX_2.Element;
 };
 
@@ -2226,18 +2241,43 @@ declare type Props_11 = {
 };
 
 declare type Props_12 = {
+    tags: DotTagItem[];
+    /**
+     * Whether to hide tooltips for each tag
+     * @default false
+     */
+    noTooltip?: boolean;
+    /**
+     * The maximum number of tags to display.
+     * @default 4
+     */
+    max?: number;
+    /**
+     * The remaining number to display.
+     */
+    remainingCount?: number;
+    /**
+     * The layout of the tag list.
+     * - "fill" - Tags will expand to fill the available width, with overflow items shown in a counter
+     * - "compact" - Tags will be stacked together up to the max limit, with remaining shown in counter
+     * @default "compact"
+     */
+    layout?: "fill" | "compact";
+};
+
+declare type Props_13 = {
     name: string;
     avatarUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_13 = {
+declare type Props_14 = {
     teamName: string;
     teamImageUrl: string;
     onClick?: () => void;
 };
 
-declare interface Props_14 {
+declare interface Props_15 {
     title: string;
     content: string;
     buttonLabel?: string;
@@ -2246,7 +2286,7 @@ declare interface Props_14 {
     type: Type;
 }
 
-declare type Props_15 = {
+declare type Props_16 = {
     label: string;
     icon: IconType;
     iconClassName?: string;
@@ -2254,7 +2294,7 @@ declare type Props_15 = {
     onClick?: () => void;
 };
 
-declare type Props_16<Id extends string | number = string | number> = {
+declare type Props_17<Id extends string | number = string | number> = {
     id: Id;
     icon?: IconType;
     title: string;
@@ -2262,14 +2302,14 @@ declare type Props_16<Id extends string | number = string | number> = {
     onClick?: (id: Id) => void;
 };
 
-declare type Props_17<Id extends string | number = string | number> = {
+declare type Props_18<Id extends string | number = string | number> = {
     items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
     minSize?: number;
     onClickItem?: (id: Id) => void;
     showAllItems?: boolean;
 };
 
-declare type Props_18<Id extends string | number = string | number> = {
+declare type Props_19<Id extends string | number = string | number> = {
     items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
     minSize?: number;
     gap?: number;
@@ -2958,7 +2998,7 @@ declare type TeamMetadata = BaseMetadata & {
     src?: string;
 };
 
-export declare const TeamTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
+export declare const TeamTag: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
 
 export declare const Textarea: React.FC<TextareaProps>;
 
@@ -3198,15 +3238,15 @@ export declare type WidgetEmptyStateProps = {
     actions?: Action[];
 };
 
-export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_15): JSX_2.Element;
+export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_16): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_17): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_18): JSX_2.Element;
 
-export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_16): JSX_2.Element;
+export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_17): JSX_2.Element;
 
-export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_16<Id>;
+export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_17<Id>;
 
-export declare type WidgetInboxListProps = Props_17;
+export declare type WidgetInboxListProps = Props_18;
 
 export declare interface WidgetProps {
     header?: {
@@ -3244,7 +3284,7 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_18): JSX_2.Element;
+export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_19): JSX_2.Element;
 
 export declare function WidgetSimpleListItem({ id, title, alert, rawTag, count, icon, rightIcon, iconClassName, rightIconClassName, onClick, }: WidgetSimpleListItemProps): JSX_2.Element;
 
@@ -3261,7 +3301,7 @@ export declare type WidgetSimpleListItemProps<Id extends string | number = strin
     onClick?: (id: Id) => void;
 };
 
-export declare type WidgetSimpleListProps = Props_18;
+export declare type WidgetSimpleListProps = Props_19;
 
 export declare type WidgetSkeletonProps = {
     header?: {
