@@ -58,7 +58,7 @@ type ProductUpdatesProp = {
     description: string
     buttonText: string
   }
-  crossSelling: {
+  crossSelling?: {
     isVisible: boolean
     sectionTitle: string
     onClose?: () => void
@@ -183,7 +183,7 @@ const ProductUpdates = ({
               </div>
             )}
           </div>
-          {state === "idle" && crossSelling.isVisible && (
+          {state === "idle" && crossSelling && crossSelling.isVisible && (
             <DiscoverMoreProducts
               isVisible={crossSelling.isVisible}
               onClose={crossSelling.onClose}
@@ -450,7 +450,7 @@ const DiscoverMoreProducts = ({
         <div className="px-1 pb-2">
           <div className="flex flex-row items-center justify-between">
             <p className="text-balance px-3 pb-2 pt-2 text-sm font-medium text-f1-foreground-secondary">
-              {crossSelling.sectionTitle}
+              {crossSelling?.sectionTitle}
             </p>
 
             <div className="relative z-10 h-6 w-6">
@@ -472,7 +472,7 @@ const DiscoverMoreProducts = ({
             showDots
             showArrows={false}
           >
-            {crossSelling.products.map((product) => (
+            {crossSelling?.products.map((product) => (
               <ProductCard
                 key={product.title}
                 {...product}
