@@ -2127,6 +2127,7 @@ declare type ProductUpdatesProp = {
             icon: IconType;
             dismissable: boolean;
             onClose?: () => void;
+            trackVisibility?: (open: boolean) => void;
         }>;
     };
 };

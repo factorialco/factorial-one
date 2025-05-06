@@ -22103,12 +22103,13 @@ const Kj = ({
   onClose: i,
   isVisible: a,
   icon: r,
-  dismissable: o = !1
+  dismissable: o = !1,
+  trackVisibility: s
 }) => {
-  const [s, d] = G(a);
+  const [d, c] = G(a);
   return be(() => {
-    d(a);
-  }, [a]), s && /* @__PURE__ */ l("div", { children: /* @__PURE__ */ l("div", { className: "p-2", children: /* @__PURE__ */ x(
+    c(a), s && s(a);
+  }, [a, s]), d && /* @__PURE__ */ l("div", { children: /* @__PURE__ */ l("div", { className: "p-2", children: /* @__PURE__ */ x(
     "div",
     {
       className: "flex cursor-pointer flex-row gap-2 rounded-md border-f1-border p-3 text-f1-foreground shadow-md hover:bg-f1-background-secondary",
@@ -22127,7 +22128,7 @@ const Kj = ({
             size: "sm",
             hideLabel: !0,
             onClick: () => {
-              d(!1), i && i();
+              c(!1), i && i();
             },
             label: "Close"
           }
@@ -22460,7 +22461,15 @@ const Kj = ({
           },
           showDots: !0,
           showArrows: !1,
-          children: n.products.map((o) => /* @__PURE__ */ l(Kj, { ...o, isVisible: !0 }, o.title))
+          children: n.products.map((o) => /* @__PURE__ */ l(
+            Kj,
+            {
+              ...o,
+              isVisible: !0,
+              trackVisibility: o.trackVisibility
+            },
+            o.title
+          ))
         }
       )
     ] })
