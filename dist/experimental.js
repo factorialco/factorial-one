@@ -22460,7 +22460,7 @@ const Kj = ({
           },
           showDots: !0,
           showArrows: !1,
-          children: n.products.map((o) => /* @__PURE__ */ l(Kj, { ...o, isVisible: !0 }))
+          children: n.products.map((o) => /* @__PURE__ */ l(Kj, { ...o, isVisible: !0 }, o.title))
         }
       )
     ] })
