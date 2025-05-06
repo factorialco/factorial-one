@@ -1,6 +1,6 @@
 "use client"
 
-import { FilterDefinitionsByType, filterTypes } from "../FilterTypes"
+import { FilterDefinitionsByType, getFilterType } from "../FilterTypes"
 import type {
   FilterDefinition,
   FiltersDefinition,
@@ -49,7 +49,7 @@ export function FilterContent<Definition extends FiltersDefinition>({
 
   const filter = definition[selectedFilterKey]
 
-  const filterType = filterTypes[filter.type]
+  const filterType = getFilterType(filter.type)
 
   if (!filterType) {
     throw new Error(`Filter type ${filter.type} not found`)
@@ -66,8 +66,9 @@ export function FilterContent<Definition extends FiltersDefinition>({
     onChange: (v: FilterValue<T>) => void
   ): React.ReactNode {
     // double-cast to resolve overload union into a single callable signature
+    const filterType = getFilterType(schema.type)
     return (
-      filterTypes[schema.type].render as unknown as (props: {
+      filterType.render as unknown as (props: {
         schema: T
         value: FilterValue<T>
         onChange: (v: FilterValue<T>) => void

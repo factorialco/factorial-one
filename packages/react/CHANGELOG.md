@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.44.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.1...factorial-one-react-v1.44.0) (2025-05-06)
+
+
+### Features
+
+* datacollection add datefilter ([2288214](https://github.com/factorialco/factorial-one/commit/2288214f48033b3833b396d40ac94ca5fbdb3cc3))
+
+## [1.43.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.0...factorial-one-react-v1.43.1) (2025-05-06)
+
+
+### Bug Fixes
+
+* add missing case in CommunityPost with no author ([#1757](https://github.com/factorialco/factorial-one/issues/1757)) ([55144de](https://github.com/factorialco/factorial-one/commit/55144dec779511f5e26ab4a5894c60a1ed5cc44c))
+
+## [1.43.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.42.0...factorial-one-react-v1.43.0) (2025-05-06)
+
+
+### Features
+
+* **Calendar:** Quarter and Half-year views ([#1728](https://github.com/factorialco/factorial-one/issues/1728)) ([0f6c950](https://github.com/factorialco/factorial-one/commit/0f6c950f9779302739d9ee68aee1595dfa3bdd8c))
+
+## [1.42.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.41.0...factorial-one-react-v1.42.0) (2025-05-05)
+
+
+### Features
+
+* new Discover icon  ([3c3d081](https://github.com/factorialco/factorial-one/commit/3c3d08129cebfa234b666005cc9737c606d37bd2))
+
 ## [1.41.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.40.0...factorial-one-react-v1.41.0) (2025-05-05)
 
 

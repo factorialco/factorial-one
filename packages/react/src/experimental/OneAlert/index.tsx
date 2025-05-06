@@ -48,7 +48,7 @@ interface AlertProps extends VariantProps<typeof alertVariants> {
     label: string
     onClick?: () => void
   }
-  link: {
+  link?: {
     label: string
     href: string
   }
@@ -77,19 +77,21 @@ export const OneAlert = ({
             </p>
           </div>
         </div>
-        <div className="flex flex-row gap-3">
-          <a
-            href={link.href}
-            target="_blank"
-            rel="noreferrer"
-            className={cn(
-              "flex items-center gap-1 rounded-sm px-2 py-0.5 text-base font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary-hover [&>svg]:text-f1-foreground-secondary",
-              focusRing()
-            )}
-          >
-            {link.label}
-            <Icon icon={ExternalLink} size="sm" />
-          </a>
+        <div className="flex flex-row justify-end gap-3">
+          {link && (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noreferrer"
+              className={cn(
+                "flex items-center gap-1 rounded-sm px-2 py-0.5 text-base font-medium text-f1-foreground no-underline transition-colors hover:bg-f1-background-secondary-hover [&>svg]:text-f1-foreground-secondary",
+                focusRing()
+              )}
+            >
+              {link.label}
+              <Icon icon={ExternalLink} size="sm" />
+            </a>
+          )}
           <Button
             label={action.label}
             variant={buttonVariants[variant]}
