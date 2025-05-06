@@ -27,6 +27,7 @@ const meta: Meta<typeof IconAvatar> = {
         ],
       },
     },
+    chromatic: { disableSnapshot: true },
   },
 }
 
