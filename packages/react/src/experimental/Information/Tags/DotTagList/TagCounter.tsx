@@ -2,11 +2,13 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
 import { useState } from "react"
 import { cn, focusRing } from "../../../../lib/utils"
-import { DotTag, NewColor } from "../DotTag"
+import { NewColor } from "../DotTag"
 import { RawTag } from "../RawTag"
+import { TooltippedDotTag } from "./TooltippedDotTag"
 
 export type DotTagItem = {
   label: string
+  description?: string
   color: NewColor
 }
 
@@ -41,7 +43,11 @@ export const TagCounter = ({ count, list }: TagCounterProps) => {
               key={index}
               className="flex w-[180px] min-w-0 items-center gap-1.5 px-2 py-1 [&:first-child]:pt-2 [&:last-child]:pb-2"
             >
-              <DotTag text={tag.label} color={tag.color} />
+              <TooltippedDotTag
+                label={tag.label}
+                description={tag.description}
+                color={tag.color}
+              />
             </div>
           ))}
           <ScrollBar

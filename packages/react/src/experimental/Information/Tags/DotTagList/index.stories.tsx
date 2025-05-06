@@ -10,13 +10,25 @@ const meta: Meta = {
   },
   args: {
     tags: [
-      { label: "Design", color: "viridian" },
-      { label: "Development", color: "malibu" },
-      { label: "Product", color: "yellow" },
-      { label: "Marketing", color: "purple" },
-      { label: "Sales", color: "lilac" },
-      { label: "Finance", color: "barbie" },
-      { label: "Operations", color: "smoke" },
+      { label: "Design", color: "viridian", description: "Design description" },
+      {
+        label: "Development",
+        color: "malibu",
+        description: "Development description",
+      },
+      { label: "Product", color: "yellow", description: "Product description" },
+      {
+        label: "Marketing",
+        color: "purple",
+        description: "Marketing description",
+      },
+      { label: "Sales", color: "lilac", description: "Sales description" },
+      { label: "Finance", color: "barbie", description: "Finance description" },
+      {
+        label: "Operations",
+        color: "smoke",
+        description: "Operations description",
+      },
       { label: "HR", color: "army" },
     ],
   },

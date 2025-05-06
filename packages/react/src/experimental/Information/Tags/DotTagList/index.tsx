@@ -1,8 +1,7 @@
 import { OverflowList } from "@/ui/OverflowList"
 import { cva } from "cva"
-import { Tooltip } from "../../../Overlays/Tooltip"
-import { DotTag } from "../DotTag"
 import { TagCounter, DotTagItem as TagCounterDotTagItem } from "./TagCounter"
+import { TooltippedDotTag } from "./TooltippedDotTag"
 
 const dotTagListVariants = cva({
   base: "flex items-center gap-2",
@@ -50,20 +49,14 @@ export const DotTagList = ({
     return (
       <OverflowList
         items={tags}
-        renderListItem={(tag) => {
-          const displayName = tag.label
-
-          return (
-            <Tooltip
-              label={noTooltip ? undefined : displayName}
-              description={""}
-            >
-              <div>
-                <DotTag text={tag.label} color={tag.color} />
-              </div>
-            </Tooltip>
-          )
-        }}
+        renderListItem={(tag) => (
+          <TooltippedDotTag
+            label={tag.label}
+            description={tag.description}
+            color={tag.color}
+            noTooltip={noTooltip}
+          />
+        )}
         renderDropdownItem={() => null}
         forceShowingOverflowIndicator={initialRemainingCount !== undefined}
         renderOverflowIndicator={(count) => (
@@ -89,21 +82,15 @@ export const DotTagList = ({
 
   return (
     <div className={dotTagListVariants()}>
-      {visibleTags.map((tag, index) => {
-        const displayName = tag.label
-
-        return (
-          <div key={index}>
-            {noTooltip ? (
-              <DotTag text={tag.label} color={tag.color} />
-            ) : (
-              <Tooltip label={displayName} description={""}>
-                <DotTag text={tag.label} color={tag.color} />
-              </Tooltip>
-            )}
-          </div>
-        )
-      })}
+      {visibleTags.map((tag, index) => (
+        <TooltippedDotTag
+          key={index}
+          label={tag.label}
+          description={tag.description}
+          color={tag.color}
+          noTooltip={noTooltip}
+        />
+      ))}
       {showCounter && (
         <TagCounter
           count={remainingCount}
