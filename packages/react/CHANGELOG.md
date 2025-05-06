@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.43.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.42.0...factorial-one-react-v1.43.0) (2025-05-06)
+
+
+### Features
+
+* **Calendar:** Quarter and Half-year views ([#1728](https://github.com/factorialco/factorial-one/issues/1728)) ([0f6c950](https://github.com/factorialco/factorial-one/commit/0f6c950f9779302739d9ee68aee1595dfa3bdd8c))
+
 ## [1.42.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.41.0...factorial-one-react-v1.42.0) (2025-05-05)
 
 
