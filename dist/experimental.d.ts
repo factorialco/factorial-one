@@ -2118,14 +2118,16 @@ declare type ProductUpdatesProp = {
     };
     crossSelling: {
         isVisible: boolean;
-        variant: "outline" | "promote";
         sectionTitle: string;
-        title: string;
-        description: string;
-        buttonText: string;
-        onClick: () => void;
-        onClose: () => void;
-        icon: IconType;
+        onClose?: () => void;
+        products: Array<{
+            title: string;
+            description: string;
+            onClick: () => void;
+            icon: IconType;
+            dismissable: boolean;
+            onClose?: () => void;
+        }>;
     };
 };
 
