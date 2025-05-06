@@ -472,7 +472,7 @@ const DiscoverMoreProducts = ({
             showArrows={false}
           >
             {crossSelling.products.map((product) => (
-              <ProductCard {...product} isVisible={true} />
+              <ProductCard key={product.title} {...product} isVisible={true} />
             ))}
           </Carousel>
         </div>
