@@ -22229,7 +22229,7 @@ const Kj = ({
                   }
                 ) })
               ] }),
-              m === "idle" && f.isVisible && /* @__PURE__ */ l(
+              m === "idle" && f && f.isVisible && /* @__PURE__ */ l(
                 nL,
                 {
                   isVisible: f.isVisible,
@@ -22440,7 +22440,7 @@ const Kj = ({
     /* @__PURE__ */ l(Eu, {}),
     /* @__PURE__ */ x("div", { className: "px-1 pb-2", children: [
       /* @__PURE__ */ x("div", { className: "flex flex-row items-center justify-between", children: [
-        /* @__PURE__ */ l("p", { className: "text-balance px-3 pb-2 pt-2 text-sm font-medium text-f1-foreground-secondary", children: n.sectionTitle }),
+        /* @__PURE__ */ l("p", { className: "text-balance px-3 pb-2 pt-2 text-sm font-medium text-f1-foreground-secondary", children: n == null ? void 0 : n.sectionTitle }),
         /* @__PURE__ */ l("div", { className: "relative z-10 h-6 w-6", children: /* @__PURE__ */ l(
           me,
           {
@@ -22461,7 +22461,7 @@ const Kj = ({
           },
           showDots: !0,
           showArrows: !1,
-          children: n.products.map((o) => /* @__PURE__ */ l(
+          children: n == null ? void 0 : n.products.map((o) => /* @__PURE__ */ l(
             Kj,
             {
               ...o,

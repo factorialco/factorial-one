@@ -2116,7 +2116,7 @@ declare type ProductUpdatesProp = {
         description: string;
         buttonText: string;
     };
-    crossSelling: {
+    crossSelling?: {
         isVisible: boolean;
         sectionTitle: string;
         onClose?: () => void;
