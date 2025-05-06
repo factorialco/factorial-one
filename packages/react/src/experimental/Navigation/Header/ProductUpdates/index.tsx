@@ -69,6 +69,7 @@ type ProductUpdatesProp = {
       icon: IconType
       dismissable: boolean
       onClose?: () => void
+      trackVisibility?: (open: boolean) => void
     }>
   }
 }
@@ -472,7 +473,12 @@ const DiscoverMoreProducts = ({
             showArrows={false}
           >
             {crossSelling.products.map((product) => (
-              <ProductCard key={product.title} {...product} isVisible={true} />
+              <ProductCard
+                key={product.title}
+                {...product}
+                isVisible={true}
+                trackVisibility={product.trackVisibility}
+              />
             ))}
           </Carousel>
         </div>

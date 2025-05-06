@@ -11,6 +11,7 @@ export type ProductCardProps = {
   isVisible: boolean
   icon: IconType
   dismissable?: boolean
+  trackVisibility?: (open: boolean) => void
 }
 
 const ProductCard = ({
@@ -21,12 +22,16 @@ const ProductCard = ({
   isVisible,
   icon,
   dismissable = false,
+  trackVisibility,
 }: ProductCardProps) => {
   const [open, setOpen] = useState(isVisible)
 
   useEffect(() => {
     setOpen(isVisible)
-  }, [isVisible])
+    if (trackVisibility) {
+      trackVisibility(isVisible)
+    }
+  }, [isVisible, trackVisibility])
 
   const handleClose = () => {
     setOpen(false)

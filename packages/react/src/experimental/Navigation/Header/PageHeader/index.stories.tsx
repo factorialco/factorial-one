@@ -280,6 +280,9 @@ export const WithProductUpdate: Story = {
             },
             icon: Briefcase,
             dismissable: false,
+            trackVisibility: (open) => {
+              console.log("trackOpenChange", open)
+            },
           },
           {
             title: "Projects",
@@ -293,6 +296,9 @@ export const WithProductUpdate: Story = {
             },
             icon: Briefcase,
             dismissable: false,
+            trackVisibility: (open) => {
+              console.log("trackOpenChange", open)
+            },
           },
         ],
       },
