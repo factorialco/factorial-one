@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.3.0...factorial-one-core-v1.4.0) (2025-05-06)
+
+
+### Features
+
+* add new hub icon ([#1755](https://github.com/factorialco/factorial-one/issues/1755)) ([83b6068](https://github.com/factorialco/factorial-one/commit/83b6068693e5b7f41a51d0cf4316c7cb89408d24))
+
 ## [1.3.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.2.5...factorial-one-core-v1.3.0) (2025-05-05)
 
 
