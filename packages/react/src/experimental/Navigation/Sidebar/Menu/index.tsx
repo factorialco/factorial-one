@@ -1,5 +1,5 @@
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
-import { AnimatePresence, motion, Reorder } from "framer-motion"
+import { motion, Reorder } from "framer-motion"
 import React, { useRef } from "react"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import { ChevronDown } from "../../../../icons/app"
@@ -338,19 +338,17 @@ function MenuContent({
             onReorder={setSortableItems}
             className="flex flex-col gap-3"
           >
-            <AnimatePresence>
-              {sortableItems.map((category) => (
-                <CategoryItem
-                  key={category.id}
-                  category={category}
-                  isSortable={true}
-                  dragConstraints={containerRef}
-                  onCollapse={onCollapse}
-                  onDragEnd={onDragEnd}
-                  currentOrder={sortableItems}
-                />
-              ))}
-            </AnimatePresence>
+            {sortableItems.map((category) => (
+              <CategoryItem
+                key={category.id}
+                category={category}
+                isSortable={true}
+                dragConstraints={containerRef}
+                onCollapse={onCollapse}
+                onDragEnd={onDragEnd}
+                currentOrder={sortableItems}
+              />
+            ))}
           </Reorder.Group>
         </div>
       )}
