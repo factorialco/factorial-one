@@ -28,9 +28,12 @@ export const formatDateRange = (
   if (!dateRange) {
     return "-"
   }
+  try {
+    const formatFrom = format(dateRange.from, formatStr)
+    const formatTo = dateRange.to ? format(dateRange.to, formatStr) : ""
 
-  const formatFrom = format(dateRange.from, formatStr)
-  const formatTo = dateRange.to ? format(dateRange.to, formatStr) : ""
-
-  return `${formatFrom}${formatTo && formatFrom !== formatTo ? ` - ${formatTo}` : ""}`
+    return `${formatFrom}${formatTo && formatFrom !== formatTo ? ` - ${formatTo}` : ""}`
+  } catch {
+    return "-"
+  }
 }
