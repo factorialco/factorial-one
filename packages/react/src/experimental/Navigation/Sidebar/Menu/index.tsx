@@ -302,12 +302,18 @@ function MenuContent({
         containerRef.current.style.display = "none"
         void containerRef.current.offsetHeight
         containerRef.current.style.display = ""
+
+        if (sortableItems.length > 0) {
+          setTimeout(() => {
+            setSortableItems([...sortableItems])
+          }, 50)
+        }
       }
     }
 
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
-  }, [containerRef])
+  }, [containerRef, sortableItems, setSortableItems])
 
   return (
     <div
