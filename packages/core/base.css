@@ -4,6 +4,10 @@
 
 @layer base {
   :root {
+    --army-60: theme("colors.army.60");
+
+    --grass-50: theme("colors.grass.50");
+
     --neutral-0: theme("colors.white.100");
     --neutral-2: theme("colors.grey.0");
     --neutral-5: theme("colors.grey.5");
@@ -20,6 +24,10 @@
 
     --neutral-solid-40: theme("colors.grey.solid.40");
     --neutral-solid-50: theme("colors.grey.solid.50");
+
+    --orange-60: theme("colors.orange.60");
+
+    --smoke-60: theme("colors.smoke.60");
 
     --white-5: theme("colors.white.5");
     --white-10: theme("colors.white.10");
