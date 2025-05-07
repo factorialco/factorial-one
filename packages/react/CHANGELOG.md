@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.44.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.2...factorial-one-react-v1.44.3) (2025-05-07)
+
+
+### Bug Fixes
+
+* expose useFormSchema ([#1766](https://github.com/factorialco/factorial-one/issues/1766)) ([b7ab162](https://github.com/factorialco/factorial-one/commit/b7ab1624483a906a5b852c6c9396c47841b57e85))
+
 ## [1.44.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.1...factorial-one-react-v1.44.2) (2025-05-07)
 
 
