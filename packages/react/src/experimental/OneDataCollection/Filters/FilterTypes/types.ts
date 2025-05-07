@@ -1,21 +1,24 @@
-export type FilterTypeSchema<Options = never> = {
+export type FilterTypeSchema<Options extends object = never> = {
   options: Options extends never ? never : Options
   label: string
 }
 
-export type FilterTypeComponentProps<Value = unknown, Options = never> = {
+export type FilterTypeComponentProps<
+  Value = unknown,
+  Options extends object = never,
+> = {
   schema: FilterTypeSchema<Options>
   value: Value
   onChange: (value: Value) => void
 }
 
-export type FilterTypeContext<Options = never> = {
+export type FilterTypeContext<Options extends object = never> = {
   schema: FilterTypeSchema<Options>
 }
 
 export type FilterTypeDefinition<
   Value = unknown,
-  Options = never,
+  Options extends object = never,
   EmptyValue = Value,
 > = {
   /** Check if the value is empty */

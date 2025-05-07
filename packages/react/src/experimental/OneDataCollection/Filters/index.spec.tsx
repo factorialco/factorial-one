@@ -9,11 +9,13 @@ const definition = {
   department: {
     type: "in",
     label: "Department",
-    options: [
-      { label: "Engineering", value: "engineering" },
-      { label: "Design", value: "design" },
-      { label: "Product", value: "product" },
-    ],
+    options: {
+      options: [
+        { label: "Engineering", value: "engineering" },
+        { label: "Design", value: "design" },
+        { label: "Product", value: "product" },
+      ],
+    },
   },
   search: {
     type: "search",
@@ -589,10 +591,12 @@ describe("Filters Type Safety", () => {
               status: {
                 type: "in",
                 label: "Status",
-                options: [
-                  { value: "active", label: "Active" },
-                  { value: "inactive", label: "Inactive" },
-                ],
+                options: {
+                  options: [
+                    { value: "active", label: "Active" },
+                    { value: "inactive", label: "Inactive" },
+                  ],
+                },
               },
             } as const
           }
@@ -658,10 +662,12 @@ describe("Filters Type Safety", () => {
               status: {
                 type: "in",
                 label: "Status",
-                options: [
-                  { value: "active", label: "Active" },
-                  { value: "inactive", label: "Inactive" },
-                ],
+                options: {
+                  options: [
+                    { value: "active", label: "Active" },
+                    { value: "inactive", label: "Inactive" },
+                  ],
+                },
               },
             } as const
           }
@@ -684,10 +690,12 @@ describe("Filters Type Safety", () => {
               status: {
                 type: "in",
                 label: "Status",
-                options: [
-                  { value: "active", label: "Active" },
-                  { value: "inactive", label: "Inactive" },
-                ],
+                options: {
+                  options: [
+                    { value: "active", label: "Active" },
+                    { value: "inactive", label: "Inactive" },
+                  ],
+                },
               },
             } as const
           }
@@ -710,10 +718,12 @@ describe("Filters Type Safety", () => {
               status: {
                 type: "in",
                 label: "Status",
-                options: [
-                  { value: "active", label: "Active" },
-                  { value: "inactive", label: "Inactive" },
-                ],
+                options: {
+                  options: [
+                    { value: "active", label: "Active" },
+                    { value: "inactive", label: "Inactive" },
+                  ],
+                },
               },
             } as const
           }
@@ -761,10 +771,12 @@ describe("Filters Type Safety", () => {
               status: {
                 type: "in",
                 label: "Status",
-                options: [
-                  { value: "active", label: "Active" },
-                  { value: "inactive", label: "Inactive" },
-                ],
+                options: {
+                  options: [
+                    { value: "active", label: "Active" },
+                    { value: "inactive", label: "Inactive" },
+                  ],
+                },
               },
             } as const
           }
@@ -792,10 +804,12 @@ describe("Filters Type Safety", () => {
               status: {
                 type: "in",
                 label: "Status",
-                options: [
-                  { value: "active", label: "Active" },
-                  { value: "inactive", label: "Inactive" },
-                ],
+                options: {
+                  options: [
+                    { value: "active", label: "Active" },
+                    { value: "inactive", label: "Inactive" },
+                  ],
+                },
               },
             } as const
           }
