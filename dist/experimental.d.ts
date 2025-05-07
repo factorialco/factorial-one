@@ -2098,7 +2098,6 @@ declare type ProductUpdate = {
 
 declare type ProductUpdatesProp = {
     label: string;
-    moreUpdatesLabel: string;
     updatesPageUrl: string;
     getUpdates: () => Promise<Array<ProductUpdate>>;
     hasUnread?: boolean;
