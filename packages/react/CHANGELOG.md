@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.44.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.0...factorial-one-react-v1.44.1) (2025-05-07)
+
+
+### Bug Fixes
+
+* Sidebar grouping position bug ([#1754](https://github.com/factorialco/factorial-one/issues/1754)) ([a7ffc0f](https://github.com/factorialco/factorial-one/commit/a7ffc0f2cde4fed75630b227e4c5278dc0dce8e8))
+
 ## [1.44.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.1...factorial-one-react-v1.44.0) (2025-05-06)
 
 
