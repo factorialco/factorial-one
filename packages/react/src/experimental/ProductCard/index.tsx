@@ -48,10 +48,10 @@ const ProductCard = ({
             className="flex h-[90px] cursor-pointer flex-row gap-2 rounded-md border-f1-border p-3 text-f1-foreground shadow-md hover:bg-f1-background-secondary"
             onClick={onClick}
           >
-            <ModuleAvatar icon={icon} size="md" />
-            <div className="flex flex-1 flex-col justify-center">
+            <ModuleAvatar icon={icon} size="lg" />
+            <div className="flex flex-1 flex-col">
               <div>
-                <p className="font-medium">{title}</p>
+                <h3 className="text-lg font-medium">{title}</h3>
                 <p className="text-f1-foreground-secondary">{description}</p>
               </div>
             </div>

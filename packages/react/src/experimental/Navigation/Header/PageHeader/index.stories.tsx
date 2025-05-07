@@ -201,7 +201,6 @@ export const WithProductUpdate: Story = {
       isVisible: true,
       hasUnread: true,
       label: "Latest from Projects",
-      moreUpdatesLabel: "More updates",
       updatesPageUrl: "https://factorialmakers.atlassian.net/browse/FCT-24580",
       emptyScreen: {
         title: "There aren’t updates for Projects yet",

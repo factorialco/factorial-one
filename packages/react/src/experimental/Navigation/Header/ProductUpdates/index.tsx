@@ -156,10 +156,6 @@ const ProductUpdates = ({
                 {updates.length > 1 && (
                   <>
                     <div className="pb-1">
-                      <DropdownMenuSeparator />
-                      <p className="text-balance px-3 pb-2 pt-3 text-sm font-medium text-f1-foreground-secondary">
-                        {moreUpdatesLabel}
-                      </p>
                       {restUpdates.map((update, index) => (
                         <DropdownItem
                           key={index}
@@ -212,7 +208,7 @@ const FeaturedDropdownItem = ({
     <DropdownMenuPrimitive.Item
       onClick={onClick}
       asChild
-      className="relative mb-2 flex cursor-default select-none items-center rounded-md px-1 text-base font-medium outline-none transition-colors after:absolute after:inset-x-1 after:inset-y-0 after:h-full after:rounded after:bg-f1-background-hover after:opacity-0 after:transition-opacity after:duration-75 after:content-[''] hover:cursor-pointer hover:after:opacity-100 focus:after:opacity-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+      className="relative flex cursor-default select-none items-center rounded-md px-1 text-base font-medium outline-none transition-colors after:absolute after:inset-x-1 after:inset-y-0 after:h-full after:rounded after:bg-f1-background-hover after:opacity-0 after:transition-opacity after:duration-75 after:content-[''] hover:cursor-pointer hover:after:opacity-100 focus:after:opacity-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
     >
       <Link
         href={href}
@@ -448,8 +444,8 @@ const DiscoverMoreProducts = ({
       <>
         <DropdownMenuSeparator />
         <div className="px-1 pb-2">
-          <div className="flex flex-row items-center justify-between">
-            <p className="text-balance px-3 pb-2 pt-2 text-sm font-medium text-f1-foreground-secondary">
+          <div className="flex flex-row items-center justify-between px-3">
+            <p className="text-balance pb-2 pt-2 text-sm font-medium text-f1-foreground-secondary">
               {crossSelling?.sectionTitle}
             </p>
 
