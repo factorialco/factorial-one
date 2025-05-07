@@ -1,21 +1,16 @@
+import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
+import type { StatusVariant } from "@/experimental/Information/Tags/StatusTag"
+import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
+import { useSidebar } from "@/experimental/Navigation/ApplicationFrame/FrameProvider"
+import { Dropdown } from "@/experimental/Navigation/Dropdown"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { ChevronDown, ChevronLeft, ChevronUp, Menu } from "@/icons/app"
+import { Link } from "@/lib/linkHandler"
+import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
-import { Button } from "../../../../components/Actions/Button"
-import { Icon, IconType } from "../../../../components/Utilities/Icon"
-import {
-  ChevronDown,
-  ChevronLeft,
-  ChevronUp,
-  Menu,
-} from "../../../../icons/app"
-import { Link } from "../../../../lib/linkHandler"
-import { cn } from "../../../../lib/utils"
-import type { StatusVariant } from "../../../Information/Tags/StatusTag"
-import { StatusTag } from "../../../Information/Tags/StatusTag"
-import { Tooltip } from "../../../Overlays/Tooltip"
-import { useSidebar } from "../../ApplicationFrame/FrameProvider"
-import { Dropdown } from "../../Dropdown"
 
 import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
 import { ProductUpdates, ProductUpdatesProp } from "../ProductUpdates"
@@ -79,16 +74,16 @@ function PageNavigationLink({
   disabled?: boolean
 }) {
   return (
-    <Link
-      href={disabled ? "" : href}
-      title={label}
-      aria-label={label}
-      className={cn(
-        "inline-flex aspect-square h-6 items-center justify-center rounded-sm border border-solid border-f1-border bg-f1-background px-0 text-f1-foreground hover:border-f1-border-hover",
-        disabled && "pointer-events-none opacity-50"
-      )}
-    >
-      <Icon icon={icon} size="md" />
+    <Link href={href} title={label} aria-label={label} disabled={disabled}>
+      <Button
+        size="sm"
+        variant="outline"
+        round
+        label={label}
+        icon={icon}
+        hideLabel
+        disabled={disabled}
+      />
     </Link>
   )
 }
@@ -261,23 +256,26 @@ function PageAction({ action }: { action: PageAction }): ReactElement {
   if ("actions" in action) {
     return (
       <Dropdown items={action.actions}>
-        <button
-          title={action.label}
-          className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
-        >
-          <Icon icon={action.icon} size="md" />
-        </button>
+        <Button
+          size="md"
+          variant="outline"
+          label={action.label}
+          icon={action.icon}
+          hideLabel
+        />
       </Dropdown>
     )
   }
 
   return (
-    <Link
-      href={action.href}
-      title={action.label}
-      className="inline-flex aspect-square h-8 items-center justify-center rounded border border-solid border-f1-border bg-f1-background-inverse-secondary px-0 text-f1-foreground hover:border-f1-border-hover"
-    >
-      <Icon icon={action.icon} size="md" />
+    <Link href={action.href} title={action.label} aria-label={action.label}>
+      <Button
+        size="md"
+        variant="outline"
+        label={action.label}
+        icon={action.icon}
+        hideLabel
+      />
     </Link>
   )
 }

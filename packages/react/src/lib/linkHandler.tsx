@@ -42,6 +42,7 @@ export const useLinkContext = () => {
 
 export type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
   exactMatch?: boolean
+  disabled?: boolean
 }
 
 function stripTrailingSlash(path: string) {
@@ -74,25 +75,36 @@ export const useNavigation = () => {
   }
 }
 
-export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
-  function Link(props, ref) {
-    const { component } = useLinkContext()
-    const { isActive } = useNavigation()
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
+  { disabled, ...props },
+  ref
+) {
+  const { component } = useLinkContext()
+  const { isActive } = useNavigation()
 
-    const overridenProps = {
-      "data-is-active": isActive(props.href, { exact: props.exactMatch }),
-      ...props,
-    }
+  const active = isActive(props.href, { exact: props.exactMatch })
+  const isDisabled = !props.href || disabled
 
-    const Component = useMemo(
-      () =>
-        forwardRef<HTMLAnchorElement>(function Component(props, ref) {
-          if (!component) return <a ref={ref} {...props} />
-          return component(props, ref)
-        }),
-      [component]
-    )
-
-    return <Component ref={ref} {...overridenProps} />
+  const overridenProps = {
+    "data-is-active": active,
+    ...props,
+    disabled: isDisabled,
   }
-)
+
+  const Component = useMemo(
+    () =>
+      forwardRef<HTMLAnchorElement>(function Component(props, ref) {
+        if (!component) {
+          return isDisabled ? (
+            <span ref={ref} {...props} />
+          ) : (
+            <a ref={ref} {...props} />
+          )
+        }
+        return component(props, ref)
+      }),
+    [component, isDisabled]
+  )
+
+  return <Component ref={ref} {...overridenProps} />
+})

@@ -8,7 +8,7 @@ This monorepo contains the following packages:
 
 - `@factorialco/factorial-one-core`: Core tokens and utilities shared across platforms (located in `packages/core`)
 - `@factorialco/factorial-one-react-native`: React Native implementation of the design system (located in `packages/react-native`)
-- `@factorialco/factorial-one`: React implementation of the design system (existing)
+- `@factorialco/factorial-one-react`: React implementation of the design system (existing)
 
 ## Development
 

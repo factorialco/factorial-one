@@ -87,6 +87,22 @@ export const CustomColumns: Story = {
   },
 }
 
+export const DoubleColumns: Story = {
+  args: {
+    ...CustomColumns.args,
+    doubleColumns: [
+      {
+        index: 0,
+        sizes: ["default", "lg"],
+      },
+      {
+        index: 4,
+        sizes: ["default", "lg"],
+      },
+    ],
+  },
+}
+
 /**
  * `autoplay`: Whether to automatically scroll through the slides. Default is `false`.
  */

@@ -38,17 +38,11 @@ interface ToolbarDividerProps {
   mode?: "light" | "dark"
 }
 
-const ToolbarDivider = ({
-  hidden = false,
-  mode = "light",
-}: ToolbarDividerProps) => (
+const ToolbarDivider = ({ hidden = false }: ToolbarDividerProps) => (
   <div
     className={cn(
-      "mx-1 h-4 w-[1px] flex-shrink-0",
-      hidden && "hidden",
-      mode === "dark"
-        ? "bg-f1-foreground-inverse opacity-50"
-        : "bg-f1-foreground-disabled"
+      "mx-1 h-4 w-[1px] flex-shrink-0 bg-f1-foreground-disabled",
+      hidden && "hidden"
     )}
   />
 )
@@ -365,7 +359,7 @@ const Toolbar = ({
             : "overflow-hidden"
         )}
       >
-        {intersperse(groups, <ToolbarDivider mode={mode} />)}
+        {intersperse(groups, <ToolbarDivider />)}
       </div>
     </div>
   )

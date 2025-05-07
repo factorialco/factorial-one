@@ -1,7 +1,7 @@
 import { useI18n } from "@/lib/providers/i18n"
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
-import { motion, Reorder } from "framer-motion"
-import React, { useRef } from "react"
+import { LayoutGroup, motion, Reorder, useDragControls } from "framer-motion"
+import React, { useEffect, useRef, useState } from "react"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import {
   ChevronDown,
@@ -270,14 +270,7 @@ const BaseCategory = ({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, translateY: -20 }}
-      animate={{ opacity: 1, translateY: 0 }}
-      transition={{
-        opacity: { duration: 0.3 },
-        translateY: { duration: 0.2, ease: "easeInOut" },
-      }}
-    >
+    <div>
       <Collapsible open={isOpen}>
         <div className="group relative flex items-center">
           <div
@@ -311,7 +304,7 @@ const BaseCategory = ({
         </div>
         <CollapsibleContent forceMount className="flex flex-col gap-1">
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
+            initial={false}
             animate={{
               height: isOpen ? "auto" : 0,
               opacity: isOpen ? 1 : 0,
@@ -326,7 +319,7 @@ const BaseCategory = ({
           </motion.div>
         </CollapsibleContent>
       </Collapsible>
-    </motion.div>
+    </div>
   )
 }
 
@@ -349,6 +342,7 @@ const CategoryItem = ({
 }: CategoryItemProps) => {
   const { isDragging, setIsDragging } = useDragContext()
   const wasDragging = useRef(false)
+  const dragControls = useDragControls()
 
   const handleDragStart = () => {
     setIsDragging(true)
@@ -401,8 +395,11 @@ const CategoryItem = ({
       value={category}
       dragConstraints={dragConstraints}
       dragElastic={0.1}
+      dragControls={dragControls}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      layout
+      layoutId={`category-${category.id}`}
       initial={{ opacity: 1 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{
@@ -417,12 +414,14 @@ const CategoryItem = ({
           duration: 0.2,
           ease: [0.175, 0.885, 0.32, 1.275],
         },
+        layout: { type: "spring", bounce: 0.1, damping: 15 },
       }}
       whileDrag={{
         scale: 1.04,
         cursor: "grabbing",
+        zIndex: 50,
       }}
-      className={cn("relative backdrop-blur-sm")}
+      className="relative backdrop-blur-sm"
     >
       {content}
     </Reorder.Item>
@@ -443,6 +442,7 @@ export function Menu({
   const [sortableItems, setSortableItems] = React.useState(
     tree.filter((category) => category.isSortable !== false)
   )
+  const [forceUpdateKey, setForceUpdateKey] = useState(0)
 
   const handleSort = React.useCallback((newOrder: MenuCategory[]) => {
     setSortableItems(newOrder)
@@ -457,16 +457,20 @@ export function Menu({
 
   return (
     <DragProvider>
-      <MenuContent
-        nonSortableItems={nonSortableItems}
-        sortableItems={sortableItems}
-        setSortableItems={handleSort}
-        containerRef={containerRef}
-        onCollapse={onCollapse}
-        onDragEnd={handleDragEnd}
-        favorites={favorites}
-        onFavoritesChange={onFavoritesChange}
-      />
+      <LayoutGroup id="sidebar-menu">
+        <MenuContent
+          key={forceUpdateKey}
+          nonSortableItems={nonSortableItems}
+          sortableItems={sortableItems}
+          setSortableItems={handleSort}
+          containerRef={containerRef}
+          onCollapse={onCollapse}
+          onDragEnd={handleDragEnd}
+          favorites={favorites}
+          onFavoritesChange={onFavoritesChange}
+          forceUpdate={() => setForceUpdateKey((prev) => prev + 1)}
+        />
+      </LayoutGroup>
     </DragProvider>
   )
 }
@@ -480,6 +484,7 @@ function MenuContent({
   onDragEnd,
   favorites,
   onFavoritesChange,
+  forceUpdate,
 }: {
   nonSortableItems: MenuCategory[]
   sortableItems: MenuCategory[]
@@ -489,6 +494,7 @@ function MenuContent({
   onDragEnd?: (categories: MenuCategory[]) => void
   favorites?: FavoriteMenuItem[]
   onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void
+  forceUpdate: () => void
 }) {
   const t = useI18n()
 
@@ -535,6 +541,39 @@ function MenuContent({
     },
     [currentFavorites, onFavoritesChange]
   )
+  const [isInitialized, setIsInitialized] = React.useState(false)
+  const resizeTimeoutRef = useRef<number | null>(null)
+
+  // Initialize once when component mounts
+  useEffect(() => {
+    if (sortableItems.length > 0 && !isInitialized) {
+      setSortableItems([...sortableItems])
+      setIsInitialized(true)
+    }
+  }, [sortableItems, setSortableItems, isInitialized])
+
+  // Handle resize events - using a simple debounce but reacting to all resizes
+  useEffect(() => {
+    const handleResize = () => {
+      if (resizeTimeoutRef.current !== null) {
+        window.clearTimeout(resizeTimeoutRef.current)
+      }
+
+      resizeTimeoutRef.current = window.setTimeout(() => {
+        if (containerRef.current && sortableItems.length > 0) {
+          forceUpdate()
+        }
+      }, 50)
+    }
+
+    window.addEventListener("resize", handleResize)
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      if (resizeTimeoutRef.current !== null) {
+        window.clearTimeout(resizeTimeoutRef.current)
+      }
+    }
+  }, [containerRef, sortableItems, forceUpdate])
 
   return (
     <div
@@ -609,6 +648,7 @@ function MenuContent({
             axis="y"
             values={sortableItems}
             onReorder={setSortableItems}
+            layoutScroll
             className="flex flex-col gap-3"
           >
             {sortableItems.map((category) => (

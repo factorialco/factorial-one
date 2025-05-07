@@ -67,3 +67,5 @@ jobs:
         run: pnpm --filter @factorialco/factorial-one-core build
       - name: Check linting with eslint
         run: pnpm --filter @factorialco/factorial-one-react-native run lint
+      - name: Check typescript
+        run: pnpm --filter @factorialco/factorial-one-react-native exec tsc --noEmit

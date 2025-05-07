@@ -1,18 +1,18 @@
+import { EmojiImage } from "@/lib/emojis"
 import { forwardRef } from "react"
 import { Icon, IconType } from "../components/Utilities/Icon"
 import { cn } from "../lib/utils"
 
-interface IndicatorProps {
+type IndicatorProps = {
   content: string
   label: string
   color?: string
-  icon?: IconType
-}
+} & ({ icon?: IconType } | { emoji?: string })
 
 export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
-  function Indicator({ content, label, icon, color }, ref) {
+  function Indicator({ content, label, color, ...props }, ref) {
     return (
-      <div key={label} className="grid-row-2 col-span-1 grid" ref={ref}>
+      <div key={label} className="flex flex-col gap-1" ref={ref}>
         <p className="text-3xl font-semibold">{content}</p>
         <div className="flex items-center gap-1">
           <p
@@ -21,9 +21,14 @@ export const Indicator = forwardRef<HTMLDivElement, IndicatorProps>(
           >
             {label}
           </p>
-          {icon && (
+          {"icon" in props && props.icon && (
             <span className={cn("flex", color)}>
-              <Icon icon={icon} />
+              <Icon icon={props.icon} />
+            </span>
+          )}
+          {"emoji" in props && props.emoji && (
+            <span className={cn("flex", color)}>
+              <EmojiImage emoji={props.emoji} size="md" />
             </span>
           )}
         </div>

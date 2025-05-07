@@ -1,4 +1,5 @@
 import { sizes } from "@/ui/avatar"
+import { OverflowList } from "@/ui/OverflowList"
 import { cva } from "cva"
 import { Tooltip } from "../../../Overlays/Tooltip"
 import { Avatar, AvatarVariant } from "../Avatar"
@@ -73,6 +74,14 @@ type Props = {
    * The remaining number to display.
    */
   remainingCount?: number
+
+  /**
+   * The layout of the avatar list.
+   * - "fill" - Avatars will expand to fill the available width, with overflow items shown in a counter
+   * - "compact" - Avatars will be stacked tightly together up to the max limit, with remaining shown in counter
+   * @default "compact"
+   */
+  layout?: "fill" | "compact"
 }
 
 export const AvatarList = ({
@@ -82,7 +91,46 @@ export const AvatarList = ({
   noTooltip = false,
   remainingCount: initialRemainingCount,
   max = 3,
+  layout = "compact",
 }: Props) => {
+  if (layout === "fill") {
+    return (
+      <OverflowList
+        items={avatars}
+        renderListItem={(avatar) => {
+          const displayName =
+            avatar.type === "person"
+              ? `${avatar.firstName} ${avatar.lastName}`
+              : avatar.name
+
+          return (
+            <Tooltip label={displayName}>
+              <div>
+                <Avatar avatar={avatar} size={size} />
+              </div>
+            </Tooltip>
+          )
+        }}
+        renderDropdownItem={() => null}
+        forceShowingOverflowIndicator={initialRemainingCount !== undefined}
+        renderOverflowIndicator={(count) => (
+          <MaxCounter
+            count={(initialRemainingCount ?? 0) + count}
+            size={size}
+            type={type === "person" ? "rounded" : "base"}
+            list={
+              initialRemainingCount
+                ? undefined
+                : avatars.slice(avatars.length - count)
+            }
+          />
+        )}
+        overflowIndicatorWithPopover={false}
+        className="flex-1"
+      />
+    )
+  }
+
   const visibleAvatars = avatars.slice(0, max)
   const remainingAvatars = avatars.slice(max)
   const remainingCount = initialRemainingCount ?? avatars.length - max

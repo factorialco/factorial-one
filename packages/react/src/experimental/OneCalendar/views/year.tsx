@@ -176,7 +176,7 @@ export function YearView({
                   "[&>span]:font-normal [&>span]:text-f1-foreground-secondary",
                 isSelected &&
                   mode === "single" &&
-                  "bg-f1-background-selected-bold text-f1-foreground-inverse hover:bg-f1-background-selected-bold-hover [&>span]:opacity-100",
+                  "bg-f1-background-selected-bold after:opacity-100 hover:bg-f1-background-selected-bold-hover [&>span]:z-10 [&>span]:text-f1-foreground-inverse [&>span]:opacity-100",
                 isSelected &&
                   mode === "range" &&
                   "rounded-none bg-f1-background-selected hover:bg-f1-background-selected [&:nth-child(4n+1)]:rounded-s-md [&:nth-child(4n+4)]:rounded-e-md [&>span]:text-f1-foreground-selected [&>span]:opacity-100",
