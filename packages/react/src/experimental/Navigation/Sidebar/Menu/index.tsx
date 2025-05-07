@@ -1,6 +1,6 @@
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
-import { AnimatePresence, motion, Reorder } from "framer-motion"
-import React, { useRef } from "react"
+import { LayoutGroup, motion, Reorder, useDragControls } from "framer-motion"
+import React, { useEffect, useRef, useState } from "react"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import { ChevronDown } from "../../../../icons/app"
 import { useReducedMotion } from "../../../../lib/a11y"
@@ -98,6 +98,7 @@ const CategoryItem = ({
   const shouldReduceMotion = useReducedMotion()
   const wasDragging = useRef(false)
   const { isDragging, setIsDragging } = useDragContext()
+  const dragControls = useDragControls()
 
   const handleClick = () => {
     if (!isDragging && !wasDragging.current) {
@@ -123,14 +124,7 @@ const CategoryItem = ({
   }
 
   const content = (
-    <motion.div
-      initial={{ opacity: 0, translateY: -20 }}
-      animate={{ opacity: 1, translateY: 0 }}
-      transition={{
-        opacity: { duration: 0.3 },
-        translateY: { duration: 0.2, ease: "easeInOut" },
-      }}
-    >
+    <div>
       <Collapsible open={isOpen}>
         <div className="group relative flex items-center">
           <div
@@ -172,7 +166,7 @@ const CategoryItem = ({
           )}
         >
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
+            initial={false}
             animate={{
               height: isOpen ? "auto" : 0,
               opacity: isOpen ? 1 : 0,
@@ -196,7 +190,7 @@ const CategoryItem = ({
           </motion.div>
         </CollapsibleContent>
       </Collapsible>
-    </motion.div>
+    </div>
   )
 
   if (!isSortable) return content
@@ -207,8 +201,11 @@ const CategoryItem = ({
       value={category}
       dragConstraints={dragConstraints}
       dragElastic={0.1}
+      dragControls={dragControls}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      layout
+      layoutId={`category-${category.id}`}
       initial={{ opacity: 1 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{
@@ -223,12 +220,14 @@ const CategoryItem = ({
           duration: 0.2,
           ease: [0.175, 0.885, 0.32, 1.275],
         },
+        layout: { type: "spring", bounce: 0.1, damping: 15 },
       }}
       whileDrag={{
         scale: 1.04,
         cursor: "grabbing",
+        zIndex: 50,
       }}
-      className={cn("relative backdrop-blur-sm")}
+      className="relative backdrop-blur-sm"
     >
       {content}
     </Reorder.Item>
@@ -243,6 +242,7 @@ export function Menu({ tree, onCollapse, onSort }: MenuProps) {
   const [sortableItems, setSortableItems] = React.useState(
     tree.filter((category) => category.isSortable !== false)
   )
+  const [forceUpdateKey, setForceUpdateKey] = useState(0)
 
   const handleSort = React.useCallback((newOrder: MenuCategory[]) => {
     setSortableItems(newOrder)
@@ -257,14 +257,18 @@ export function Menu({ tree, onCollapse, onSort }: MenuProps) {
 
   return (
     <DragProvider>
-      <MenuContent
-        nonSortableItems={nonSortableItems}
-        sortableItems={sortableItems}
-        setSortableItems={handleSort}
-        containerRef={containerRef}
-        onCollapse={onCollapse}
-        onDragEnd={handleDragEnd}
-      />
+      <LayoutGroup id="sidebar-menu">
+        <MenuContent
+          key={forceUpdateKey}
+          nonSortableItems={nonSortableItems}
+          sortableItems={sortableItems}
+          setSortableItems={handleSort}
+          containerRef={containerRef}
+          onCollapse={onCollapse}
+          onDragEnd={handleDragEnd}
+          forceUpdate={() => setForceUpdateKey((prev) => prev + 1)}
+        />
+      </LayoutGroup>
     </DragProvider>
   )
 }
@@ -276,6 +280,7 @@ function MenuContent({
   containerRef,
   onCollapse,
   onDragEnd,
+  forceUpdate,
 }: {
   nonSortableItems: MenuCategory[]
   sortableItems: MenuCategory[]
@@ -283,12 +288,46 @@ function MenuContent({
   containerRef: React.RefObject<HTMLDivElement>
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onDragEnd?: (categories: MenuCategory[]) => void
+  forceUpdate: () => void
 }) {
   const { isDragging } = useDragContext()
   const hasRoot = nonSortableItems.some((category) => category.isRoot)
   const hasNonSortableItems =
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
+  const [isInitialized, setIsInitialized] = React.useState(false)
+  const resizeTimeoutRef = useRef<number | null>(null)
+
+  // Initialize once when component mounts
+  useEffect(() => {
+    if (sortableItems.length > 0 && !isInitialized) {
+      setSortableItems([...sortableItems])
+      setIsInitialized(true)
+    }
+  }, [sortableItems, setSortableItems, isInitialized])
+
+  // Handle resize events - using a simple debounce but reacting to all resizes
+  useEffect(() => {
+    const handleResize = () => {
+      if (resizeTimeoutRef.current !== null) {
+        window.clearTimeout(resizeTimeoutRef.current)
+      }
+
+      resizeTimeoutRef.current = window.setTimeout(() => {
+        if (containerRef.current && sortableItems.length > 0) {
+          forceUpdate()
+        }
+      }, 50)
+    }
+
+    window.addEventListener("resize", handleResize)
+    return () => {
+      window.removeEventListener("resize", handleResize)
+      if (resizeTimeoutRef.current !== null) {
+        window.clearTimeout(resizeTimeoutRef.current)
+      }
+    }
+  }, [containerRef, sortableItems, forceUpdate])
 
   return (
     <div
@@ -336,21 +375,20 @@ function MenuContent({
             axis="y"
             values={sortableItems}
             onReorder={setSortableItems}
+            layoutScroll
             className="flex flex-col gap-3"
           >
-            <AnimatePresence>
-              {sortableItems.map((category) => (
-                <CategoryItem
-                  key={category.id}
-                  category={category}
-                  isSortable={true}
-                  dragConstraints={containerRef}
-                  onCollapse={onCollapse}
-                  onDragEnd={onDragEnd}
-                  currentOrder={sortableItems}
-                />
-              ))}
-            </AnimatePresence>
+            {sortableItems.map((category) => (
+              <CategoryItem
+                key={category.id}
+                category={category}
+                isSortable={true}
+                dragConstraints={containerRef}
+                onCollapse={onCollapse}
+                onDragEnd={onDragEnd}
+                currentOrder={sortableItems}
+              />
+            ))}
           </Reorder.Group>
         </div>
       )}
