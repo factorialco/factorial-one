@@ -11,14 +11,12 @@ const SvgMoveDown = (props: SvgProps, ref: Ref<Svg>) => (
   >
     <Path
       stroke="currentColor"
-      strokeWidth={1.3}
       d="M12.5 7H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2.5"
     />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="m8 19 2-2-2-2"
     />
     <Rect
@@ -28,7 +26,6 @@ const SvgMoveDown = (props: SvgProps, ref: Ref<Svg>) => (
       y={-0.65}
       fill="currentColor"
       stroke="currentColor"
-      strokeWidth={1.3}
       rx={1.35}
       transform="matrix(1 0 0 -1 12 19.7)"
     />
@@ -38,7 +35,6 @@ const SvgMoveDown = (props: SvgProps, ref: Ref<Svg>) => (
       x={0.65}
       y={-0.65}
       stroke="currentColor"
-      strokeWidth={1.3}
       rx={1.35}
       transform="matrix(1 0 0 -1 12 9.7)"
     />

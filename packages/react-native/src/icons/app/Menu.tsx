@@ -13,7 +13,6 @@ const SvgMenu = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M5 7h14M5 12h14M5 17h14"
     />
   </Svg>

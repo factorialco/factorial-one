@@ -29,7 +29,7 @@
     "lint": "eslint -c eslint.config.mjs . --report-unused-disable-directives --max-warnings 0",
     "lint-fix": "pnpm run lint -- --fix",
     "test": "vitest run",
-    "generate-icons": "rm -fR src/icons/app/* src/icons/modules/* && run-p generate-app-icons generate-module-icons && find src/icons -name '*.tsx' -exec sed -i '' 's/SVGSVGElement/Svg/g; s/ xmlns=\"http:\\/\\/www.w3.org\\/2000\\/svg\"//g' {} +",
+    "generate-icons": "rm -fR src/icons/app/* src/icons/modules/* && run-p generate-app-icons generate-module-icons && find src/icons -name '*.tsx' -exec sed -i '' 's/SVGSVGElement/Svg/g; s/ xmlns=\"http:\\/\\/www.w3.org\\/2000\\/svg\"//g; s/ strokeWidth={[^}]*}//g; s/ strokeWidth=\"[^\"]*\"//g' {} +",
     "generate-app-icons": "npx @svgr/cli --out-dir src/icons/app --native --svg-props className={props.className} ../../packages/core/assets/icons/app",
     "generate-module-icons": "npx @svgr/cli --out-dir src/icons/modules --native --svg-props className={props.className} ../../packages/core/assets/icons/modules"
   },
@@ -50,7 +50,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@factorialco/factorial-one-core": "workspace:*",
+    "@factorialco/factorial-one-core": "1.4.0",
     "clsx": "^2.1.1",
     "cva": "1.0.0-beta.3",
     "tailwind-merge": "^2.6.0"

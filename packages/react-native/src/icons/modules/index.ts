@@ -7,6 +7,7 @@ export { default as Engagement } from "./Engagement";
 export { default as Finance } from "./Finance";
 export { default as Goals } from "./Goals";
 export { default as Home } from "./Home";
+export { default as Hub } from "./Hub";
 export { default as Inbox } from "./Inbox";
 export { default as Kudos } from "./Kudos";
 export { default as MyDocuments } from "./MyDocuments";

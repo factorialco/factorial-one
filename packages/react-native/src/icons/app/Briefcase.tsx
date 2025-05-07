@@ -9,26 +9,9 @@ const SvgBriefcase = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Rect
-      width={16}
-      height={12}
-      x={4}
-      y={7}
-      stroke="currentColor"
-      strokeWidth={1.3}
-      rx={3}
-    />
-    <Path
-      stroke="currentColor"
-      strokeWidth={1.3}
-      d="M9 7V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"
-    />
-    <Path
-      stroke="currentColor"
-      strokeLinejoin="round"
-      strokeWidth={1.3}
-      d="M8 7v12M16 7v12"
-    />
+    <Rect width={16} height={12} x={4} y={7} stroke="currentColor" rx={3} />
+    <Path stroke="currentColor" d="M9 7V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" />
+    <Path stroke="currentColor" strokeLinejoin="round" d="M8 7v12M16 7v12" />
   </Svg>
 );
 const ForwardRef = forwardRef(SvgBriefcase);

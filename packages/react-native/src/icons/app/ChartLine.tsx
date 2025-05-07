@@ -12,14 +12,12 @@ const SvgChartLine = (props: SvgProps, ref: Ref<Svg>) => (
     <Path
       stroke="currentColor"
       strokeLinecap="round"
-      strokeWidth={1.3}
       d="M4 6v9a3 3 0 0 0 3 3h13"
     />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="m4 13 4.5-4 3.5 1 4.5-4L20 9M5.5 17 9 13.5l3.5 2 4-3.5 3.5 2.5"
     />
   </Svg>
