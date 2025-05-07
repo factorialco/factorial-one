@@ -19,7 +19,7 @@ const meta: Meta<typeof ActivityItemList> = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs", "experimental", "no-sidebar"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -43,7 +43,7 @@ const ITEMS = new Array(10).fill(null).map((_, index) => ({
     const today = new Date()
 
     const groups = [
-      today, // today
+      new Date(today.getTime() - 1 * 60 * 60 * 1000), // today
       new Date(today.getTime() - 24 * 60 * 60 * 1000), // yesterday
       new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000), // last week
       new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000), // last month
