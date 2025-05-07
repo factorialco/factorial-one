@@ -12,14 +12,12 @@ const SvgDesktop = (props: SvgProps, ref: Ref<Svg>) => (
     <Path
       stroke="currentColor"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M6 4h12a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"
     />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M7 20h10M9 20v-4M15 20v-4"
     />
   </Svg>

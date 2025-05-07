@@ -13,7 +13,6 @@ const SvgBuilding = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="m5.53 6.64 5-2.813a3 3 0 0 1 2.94 0l5 2.813A3 3 0 0 1 20 9.255v5.49a3 3 0 0 1-1.53 2.615l-5 2.813a3 3 0 0 1-2.94 0l-5-2.813A3 3 0 0 1 4 14.746V9.255A3 3 0 0 1 5.53 6.64M5 8l7 4m0 8v-8m7-4-7 4"
     />
     <Path

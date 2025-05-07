@@ -13,7 +13,6 @@ const SvgFeed = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M4 12h3l2.5-5.5 5 11L17 12h3"
     />
   </Svg>

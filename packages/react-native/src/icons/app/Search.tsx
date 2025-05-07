@@ -9,21 +9,8 @@ const SvgSearch = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Path
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeWidth={1.3}
-      d="m16 16 3 3"
-    />
-    <Rect
-      width={14}
-      height={14}
-      x={4}
-      y={4}
-      stroke="currentColor"
-      strokeWidth={1.3}
-      rx={7}
-    />
+    <Path stroke="currentColor" strokeLinecap="round" d="m16 16 3 3" />
+    <Rect width={14} height={14} x={4} y={4} stroke="currentColor" rx={7} />
   </Svg>
 );
 const ForwardRef = forwardRef(SvgSearch);
