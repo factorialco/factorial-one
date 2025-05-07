@@ -38,7 +38,7 @@ const iconStyle = cva({
       negative: "text-[hsl(theme(colors.orange.60))]",
       neutral: "text-[hsl(theme(colors.smoke.60))]",
       positive: "text-[hsl(theme(colors.army.50))]",
-      superPositive: "text-[hsl(theme(colors.grass.60))]",
+      superPositive: "text-[hsl(theme(colors.grass.50))]",
     },
   },
 })
