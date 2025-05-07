@@ -27,7 +27,7 @@ export const BaseActivityItem = ({
   onClick,
 }: ActivityItemProps) => {
   const ago = getDisplayDateBasedOnDuration(createdAt, {
-    yesterdayWithAgo: false,
+    yesterdayRelative: false,
   })
 
   const handleClick = () => {

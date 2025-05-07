@@ -28,19 +28,19 @@ export function getAgo(date: Date, addSuffix = true) {
 }
 
 type GetDisplayDateBasedOnDurationOptions = {
-  yesterdayWithAgo?: boolean
+  yesterdayRelative?: boolean
 }
 
 export function getDisplayDateBasedOnDuration(
   date: Date,
-  { yesterdayWithAgo = true }: GetDisplayDateBasedOnDurationOptions = {}
+  { yesterdayRelative = true }: GetDisplayDateBasedOnDurationOptions = {}
 ) {
   if (isToday(date)) {
     return getAgo(date)
   }
 
   if (isYesterday(date)) {
-    return yesterdayWithAgo ? getAgo(date) : format(date, "p")
+    return yesterdayRelative ? getAgo(date) : format(date, "p")
   }
 
   return format(date, "PPPp")
