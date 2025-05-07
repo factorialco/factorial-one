@@ -19,8 +19,8 @@ import { NavigationItem } from "../../utils"
 import { motion } from "framer-motion"
 import {
   ComponentPropsWithoutRef,
-  ReactNode,
   forwardRef,
+  ReactNode,
   useLayoutEffect,
   useRef,
   useState,
@@ -69,7 +69,8 @@ interface BreadcrumbState {
   minWidth: number | undefined
 }
 
-const DROPDOWN_WIDTH = 50
+const COLLAPSED_ITEM_WIDTH = 50
+const AVERAGE_ITEM_WIDTH = 120
 const RIGHT_PADDING = 8
 
 /**
@@ -105,9 +106,9 @@ function calculateVisibleCount(
     count++
   }
 
-  // Adjust for dropdown if we can't show all items
+  // Adjust for the collapsed item if we can't show all items
   if (count < totalItems) {
-    availableWidth -= DROPDOWN_WIDTH
+    availableWidth -= COLLAPSED_ITEM_WIDTH
     while (availableWidth < 0 && count > 1) {
       availableWidth += breadcrumbWidths[lastItemAddedIndex]
       lastItemAddedIndex++
@@ -137,7 +138,7 @@ function calcMinWidth(
     default:
       return (
         breadcrumbWidths[0] +
-        DROPDOWN_WIDTH +
+        COLLAPSED_ITEM_WIDTH +
         breadcrumbWidths[breadcrumbWidths.length - 1] +
         appendedWidth +
         RIGHT_PADDING
@@ -163,6 +164,17 @@ function getElementWidths(
   return { breadcrumbWidths: widths, appendWidth: 0 }
 }
 
+function estimateMinWidth(
+  breadcrumbCount: number,
+  hasCollapsedItem: boolean
+): number {
+  return (
+    AVERAGE_ITEM_WIDTH * breadcrumbCount +
+    (hasCollapsedItem ? COLLAPSED_ITEM_WIDTH : 0) +
+    RIGHT_PADDING
+  )
+}
+
 /**
  * Calculate  the breadcrumb state
  * based on container width and breadcrumb items
@@ -173,15 +185,25 @@ function calculateBreadcrumbState(
   breadcrumbElements: HTMLElement[] = [],
   hasAppend: boolean = false
 ): BreadcrumbState {
-  const isSimpleLayout = !containerWidth || breadcrumbs.length <= 2
+  if (!containerWidth) {
+    const minimalBreadcrumbCount = Math.min(breadcrumbs.length, 2)
+    return {
+      visibleCount: minimalBreadcrumbCount,
+      headItem: breadcrumbs[0] ?? null,
+      tailItems: breadcrumbs.slice(breadcrumbs.length - 1),
+      collapsedItems: breadcrumbs.slice(1, breadcrumbs.length - 1),
+      isOnly: breadcrumbs.length === 1,
+      minWidth: estimateMinWidth(
+        minimalBreadcrumbCount,
+        breadcrumbs.length > 2
+      ),
+    }
+  }
+
+  const isSimpleLayout = breadcrumbs.length <= 2
   const { breadcrumbWidths, appendWidth } = getElementWidths(
     breadcrumbElements,
     hasAppend
-  )
-
-  console.assert(
-    breadcrumbWidths.length === breadcrumbs.length,
-    `breadcrumb configuration counter (${breadcrumbs.length}) does not match the breadcrumb DOM elements counter (${breadcrumbWidths.length})`
   )
 
   if (isSimpleLayout) {
@@ -401,28 +423,25 @@ export default function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const listRef = useRef<HTMLOListElement>(null)
   const [, startTransition] = useTransition()
-  const [mounted, setMounted] = useState(false)
-  const [state, setState] = useState<BreadcrumbState>(() =>
-    calculateBreadcrumbState(null, breadcrumbs, [])
-  )
+  const [state, setState] = useState<BreadcrumbState | null>(null)
+  const hasCollapsedElements = (state?.collapsedItems || []).length > 0
 
   useLayoutEffect(() => {
     const container = containerRef.current
     const list = listRef.current
-    if (!container || !list) return
+    if (!container || !list || list.children.length < breadcrumbs.length) return
 
     const updateBreadcrumbState = () => {
       const containerWidth = containerRef.current?.clientWidth ?? null
       const breadcrumbsElements = Array.from(list.children) as HTMLElement[]
       startTransition(() => {
-        setState(
-          calculateBreadcrumbState(
-            containerWidth,
-            breadcrumbs,
-            breadcrumbsElements,
-            !!append
-          )
+        const state = calculateBreadcrumbState(
+          containerWidth,
+          breadcrumbs,
+          breadcrumbsElements,
+          !!append
         )
+        setState(state)
       })
     }
 
@@ -430,23 +449,22 @@ export default function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
     resizeObserver.observe(container)
 
     updateBreadcrumbState()
-    setMounted(true)
 
     return () => resizeObserver.disconnect()
-  }, [breadcrumbs])
+  }, [breadcrumbs, append])
 
-  if (!breadcrumbs.length || !state.headItem) {
+  if (!breadcrumbs.length || (state && !state.headItem)) {
     return <Breadcrumb ref={containerRef} className="w-full" />
   }
 
   return (
     <Breadcrumb
       ref={containerRef}
-      className="w-full"
+      className="w-full overflow-x-hidden"
       style={{
-        minWidth: state.minWidth,
+        minWidth: state?.minWidth,
       }}
-      key={breadcrumbs.at(-1)?.id}
+      key={`breadcrumb-${breadcrumbs.at(-1)?.id ?? 0}`}
     >
       <ol
         className="invisible absolute -left-full"
@@ -463,7 +481,7 @@ export default function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
         ))}
         {append}
       </ol>
-      {mounted && (
+      {state && state.headItem && (
         <BreadcrumbList>
           <BreadcrumbItem
             isOnly={state.isOnly}
@@ -472,20 +490,42 @@ export default function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
             item={state.headItem}
             isLast={false}
           />
-          <CollapsedBreadcrumbItem
-            key="collapsed-items"
-            items={state.collapsedItems as DropdownItemWithoutIcon[]}
-            className={state.collapsedItems.length > 0 ? "block" : "hidden"}
-          />
-          {state.tailItems.map((item, index) => (
-            <BreadcrumbItem
-              key={item.id}
-              item={item}
-              isLast={index === state.tailItems.length - 1}
-              isFirst={false}
-            />
-          ))}
-          {append}
+          {/* IMPORTANT:
+            when the collapsed element appears, we re-render it together with the tail items
+            to avoid partially modified UI when a collapsed element is added, but a breadcrumb is not yet removed
+            this triggers resize observer and starts an infinite loop.
+            The only way to make this transactional is to rerender all tail breadcrumbs together with the collapsed element
+          */}
+          {hasCollapsedElements && (
+            <>
+              <CollapsedBreadcrumbItem
+                key="collapsed-items"
+                items={state.collapsedItems as DropdownItemWithoutIcon[]}
+              />
+              {state.tailItems.map((item, index) => (
+                <BreadcrumbItem
+                  key={item.id}
+                  item={item}
+                  isLast={index === state.tailItems.length - 1}
+                  isFirst={false}
+                />
+              ))}
+              {append}
+            </>
+          )}
+          {!hasCollapsedElements && (
+            <>
+              {state.tailItems.map((item, index) => (
+                <BreadcrumbItem
+                  key={item.id}
+                  item={item}
+                  isLast={index === state.tailItems.length - 1}
+                  isFirst={false}
+                />
+              ))}
+              {append}
+            </>
+          )}
         </BreadcrumbList>
       )}
     </Breadcrumb>
