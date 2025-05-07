@@ -26,7 +26,9 @@ export const BaseActivityItem = ({
   isUnread = false,
   onClick,
 }: ActivityItemProps) => {
-  const ago = getDisplayDateBasedOnDuration(createdAt)
+  const ago = getDisplayDateBasedOnDuration(createdAt, {
+    yesterdayWithAgo: false,
+  })
 
   const handleClick = () => {
     onClick(id)
