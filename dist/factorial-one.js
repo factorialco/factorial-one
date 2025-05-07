@@ -1,5 +1,5 @@
-import { C as l, L as A, c as S, P, a as u, f as _, b as V, A as k, B as T, d as F, e as j, g as O, V as D, h as C, i as H, j as U, U as X, k as G, I as q, l as W, X as z, m as J, n as K, M as Q, u as Y } from "./imageHandler-BQWJotkg.js";
-import { o as Fe, E as je, p as Oe, r as De, v as He, w as Ue, q as Xe, t as Ge, s as qe } from "./imageHandler-BQWJotkg.js";
+import { C as l, L as A, c as S, P as C, a as u, f as _, b as V, A as k, B as T, d as F, e as j, g as O, V as D, h as P, i as H, j as U, U as X, k as G, I as q, l as W, X as z, m as J, n as K, M as Q, u as Y } from "./imageHandler-FL2JZvfM.js";
+import { o as Fe, p as je, E as Oe, q as De, s as He, w as Ue, x as Xe, r as Ge, v as qe, t as We } from "./imageHandler-FL2JZvfM.js";
 import { jsx as r, jsxs as f } from "react/jsx-runtime";
 import * as v from "react";
 import Z, { forwardRef as N, useRef as b, useImperativeHandle as ee, Children as re, useState as ae, createContext as oe } from "react";
@@ -10,7 +10,7 @@ const be = l(
   },
   A
 );
-var h = "Progress", p = 100, [te, Le] = S(h), [se, le] = te(h), L = v.forwardRef(
+var p = "Progress", h = 100, [te, Le] = S(p), [se, le] = te(p), L = v.forwardRef(
   (e, a) => {
     const {
       __scopeProgress: t,
@@ -20,11 +20,11 @@ var h = "Progress", p = 100, [te, Le] = S(h), [se, le] = te(h), L = v.forwardRef
       ...n
     } = e;
     (s || s === 0) && !y(s) && console.error(ie(`${s}`, "Progress"));
-    const c = y(s) ? s : p;
-    o !== null && !g(o, c) && console.error(ce(`${o}`, "Progress"));
-    const d = g(o, c) ? o : null, M = m(d) ? i(d, c) : void 0;
+    const c = y(s) ? s : h;
+    o !== null && !x(o, c) && console.error(ce(`${o}`, "Progress"));
+    const d = x(o, c) ? o : null, M = m(d) ? i(d, c) : void 0;
     return /* @__PURE__ */ r(se, { scope: t, value: d, max: c, children: /* @__PURE__ */ r(
-      P.div,
+      C.div,
       {
         "aria-valuemax": c,
         "aria-valuemin": 0,
@@ -40,12 +40,12 @@ var h = "Progress", p = 100, [te, Le] = S(h), [se, le] = te(h), L = v.forwardRef
     ) });
   }
 );
-L.displayName = h;
+L.displayName = p;
 var w = "ProgressIndicator", $ = v.forwardRef(
   (e, a) => {
     const { __scopeProgress: t, ...o } = e, s = le(w, t);
     return /* @__PURE__ */ r(
-      P.div,
+      C.div,
       {
         "data-state": R(s.value, s.max),
         "data-value": s.value ?? void 0,
@@ -69,23 +69,23 @@ function m(e) {
 function y(e) {
   return m(e) && !isNaN(e) && e > 0;
 }
-function g(e, a) {
+function x(e, a) {
   return m(e) && !isNaN(e) && e <= a && e >= 0;
 }
 function ie(e, a) {
-  return `Invalid prop \`max\` of value \`${e}\` supplied to \`${a}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${p}\`.`;
+  return `Invalid prop \`max\` of value \`${e}\` supplied to \`${a}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${h}\`.`;
 }
 function ce(e, a) {
   return `Invalid prop \`value\` of value \`${e}\` supplied to \`${a}\`. The \`value\` prop must be:
   - a positive number
-  - less than the value passed to \`max\` (or ${p} if no \`max\` prop is set)
+  - less than the value passed to \`max\` (or ${h} if no \`max\` prop is set)
   - \`null\` or \`undefined\` if the progress is indeterminate.
 
 Defaulting to \`null\`.`;
 }
-var I = L, de = $;
-const B = v.forwardRef(({ className: e, value: a, ...t }, o) => /* @__PURE__ */ r(
-  I,
+var B = L, de = $;
+const I = v.forwardRef(({ className: e, value: a, ...t }, o) => /* @__PURE__ */ r(
+  B,
   {
     ref: o,
     className: u(
@@ -105,12 +105,12 @@ const B = v.forwardRef(({ className: e, value: a, ...t }, o) => /* @__PURE__ */ 
     )
   }
 ));
-B.displayName = I.displayName;
+I.displayName = B.displayName;
 const ue = ({ value: e, max: a = 100, label: t, color: o }, s) => {
   const i = o || V(0), n = e / a * 100;
   return /* @__PURE__ */ f("div", { className: "flex items-center space-x-2", "aria-live": "polite", children: [
     /* @__PURE__ */ r("div", { className: "flex-grow", children: /* @__PURE__ */ r(
-      B,
+      I,
       {
         color: i,
         value: n,
@@ -141,13 +141,13 @@ const ue = ({ value: e, max: a = 100, label: t, color: o }, s) => {
     type: "info"
   },
   F
-), Ie = l(
+), Be = l(
   {
     name: "LineChart",
     type: "info"
   },
   j
-), Be = l(
+), Ie = l(
   {
     name: "PieChart",
     type: "info"
@@ -174,7 +174,7 @@ const ue = ({ value: e, max: a = 100, label: t, color: o }, s) => {
   const s = b(null);
   ee(o, () => s.current);
   const i = re.toArray(a).filter((n) => !!n).map((n, c) => /* @__PURE__ */ r("div", { className: "h-full @5xl:h-auto [&>div]:h-full", children: n }, c));
-  return /* @__PURE__ */ r(C, { layout: "home", children: /* @__PURE__ */ f("div", { ref: s, className: "@container", children: [
+  return /* @__PURE__ */ r(P, { layout: "home", children: /* @__PURE__ */ f("div", { ref: s, className: "@container", children: [
     /* @__PURE__ */ f("div", { className: "flex flex-col gap-6 px-5 pt-4 @md:pt-2 @5xl:hidden", children: [
       /* @__PURE__ */ r(H, { columns: me, showArrows: !1, children: i }),
       /* @__PURE__ */ r("main", { children: t })
@@ -185,7 +185,7 @@ const ue = ({ value: e, max: a = 100, label: t, color: o }, s) => {
       /* @__PURE__ */ r("div", { className: "flex flex-1 flex-col gap-5", children: i.slice(3) })
     ] })
   ] }) });
-}), he = N(
+}), pe = N(
   function({ children: a, sideContent: t, mainColumnPosition: o = "left" }, s) {
     return /* @__PURE__ */ r("div", { ref: s, className: "h-full overflow-auto", children: /* @__PURE__ */ f(
       "div",
@@ -195,7 +195,7 @@ const ue = ({ value: e, max: a = 100, label: t, color: o }, s) => {
           o === "right" ? "flex-col" : "flex-col-reverse"
         ),
         children: [
-          o === "right" && /* @__PURE__ */ r(x, { children: t }),
+          o === "right" && /* @__PURE__ */ r(g, { children: t }),
           /* @__PURE__ */ r(
             "main",
             {
@@ -206,25 +206,25 @@ const ue = ({ value: e, max: a = 100, label: t, color: o }, s) => {
               children: a
             }
           ),
-          o === "left" && /* @__PURE__ */ r(x, { children: t })
+          o === "left" && /* @__PURE__ */ r(g, { children: t })
         ]
       }
     ) });
   }
-), x = ({ children: e }) => /* @__PURE__ */ r("aside", { className: "py-5 pl-2 pr-4 sm:basis-1/4 sm:pb-6", children: e }), pe = U({
+), g = ({ children: e }) => /* @__PURE__ */ r("aside", { className: "py-5 pl-2 pr-4 sm:basis-1/4 sm:pb-6", children: e }), he = U({
   base: "relative flex min-h-full w-full flex-col gap-4 place-self-center overflow-y-auto px-6 py-5",
   variants: {
     variant: {
       narrow: "max-w-screen-lg"
     }
   }
-}), E = Z.forwardRef(({ children: e, variant: a, className: t, ...o }, s) => /* @__PURE__ */ r(C, { layout: "standard", children: /* @__PURE__ */ r(
+}), E = Z.forwardRef(({ children: e, variant: a, className: t, ...o }, s) => /* @__PURE__ */ r(P, { layout: "standard", children: /* @__PURE__ */ r(
   "section",
   {
     ref: s,
     className: u("relative flex-1 overflow-auto", t),
     ...o,
-    children: /* @__PURE__ */ r("div", { className: u(pe({ variant: a })), children: e })
+    children: /* @__PURE__ */ r("div", { className: u(he({ variant: a })), children: e })
   }
 ) }));
 E.displayName = "StandardLayout";
@@ -239,7 +239,7 @@ const Ae = l(
     name: "TwoColumnLayout",
     type: "layout"
   },
-  he
+  pe
 ), _e = l(
   {
     name: "HomeLayout",
@@ -248,7 +248,7 @@ const Ae = l(
   ve
 ), ye = oe(
   null
-), ge = ({ children: e, fullScreen: a = !0 }) => {
+), xe = ({ children: e, fullScreen: a = !0 }) => {
   const t = b(null), [o, s] = ae(t.current);
   return Y(() => {
     s(t.current);
@@ -263,7 +263,7 @@ const Ae = l(
       children: e
     }
   ) });
-}, xe = ({
+}, ge = ({
   children: e
 }) => /* @__PURE__ */ r(Q, { reducedMotion: "user", children: e }), Ve = ({
   children: e,
@@ -273,7 +273,7 @@ const Ae = l(
   image: s,
   i18n: i,
   l10n: n
-}) => /* @__PURE__ */ r(xe, { children: /* @__PURE__ */ r(X, { children: /* @__PURE__ */ r(G, { ...n, children: /* @__PURE__ */ r(q, { ...i, children: /* @__PURE__ */ r(W, { ...t, children: /* @__PURE__ */ r(ge, { ...a, children: /* @__PURE__ */ r(z, { children: /* @__PURE__ */ r(
+}) => /* @__PURE__ */ r(ge, { children: /* @__PURE__ */ r(X, { children: /* @__PURE__ */ r(G, { ...n, children: /* @__PURE__ */ r(q, { ...i, children: /* @__PURE__ */ r(W, { ...t, children: /* @__PURE__ */ r(xe, { ...a, children: /* @__PURE__ */ r(z, { children: /* @__PURE__ */ r(
   J,
   {
     initiallyEnabled: o,
@@ -285,22 +285,23 @@ export {
   $e as BarChart,
   Fe as Button,
   Re as CategoryBarChart,
-  je as EmojiImage,
+  je as CopyButton,
+  Oe as EmojiImage,
   Ve as FactorialOneProvider,
   _e as HomeLayout,
-  Oe as Icon,
-  Ie as LineChart,
+  De as Icon,
+  Be as LineChart,
   be as Link,
-  Be as PieChart,
+  Ie as PieChart,
   J as PrivacyModeProvider,
   Me as ProgressBarChart,
   Ae as StandardLayout,
   Se as TwoColumnLayout,
   Ee as VerticalBarChart,
-  De as buildTranslations,
-  He as getEmojiLabel,
-  Ue as useEmojiConfetti,
-  Xe as usePrivacyMode,
-  Ge as useReducedMotion,
-  qe as useXRay
+  He as buildTranslations,
+  Ue as getEmojiLabel,
+  Xe as useEmojiConfetti,
+  Ge as usePrivacyMode,
+  qe as useReducedMotion,
+  We as useXRay
 };

@@ -94,6 +94,14 @@ declare type ComponentTypes = (typeof componentTypes)[number];
 
 declare const componentTypes: readonly ["layout", "info", "action", "form"];
 
+export declare const CopyButton: ForwardRefExoticComponent<Omit<CopyButtonProps, "ref"> & RefAttributes<HTMLButtonElement>>;
+
+declare type CopyButtonProps = Omit<ComponentProps<typeof Button_2>, "onClick" | "children" | "title" | "label" | "hideLabel" | "icon" | "round"> & {
+    valueToCopy: string;
+    copiedTooltipLabel?: string;
+    copyTooltipLabel?: string;
+};
+
 declare const defaultTranslations: {
     readonly navigation: {
         readonly sidebar: "Main navigation";
@@ -101,8 +109,11 @@ declare const defaultTranslations: {
         readonly next: "Next";
     };
     readonly actions: {
+        readonly add: "Add";
+        readonly edit: "Edit";
         readonly save: "Save";
         readonly cancel: "Cancel";
+        readonly copy: "Copy";
         readonly showAll: "Show all";
         readonly showLess: "Show less";
         readonly skipToContent: "Skip to content";
