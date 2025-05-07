@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --army-60: theme("colors.army.60");
+    --army-50: theme("colors.army.50");
 
     --grass-50: theme("colors.grass.50");
 
