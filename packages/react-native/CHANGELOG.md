@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.6...factorial-one-react-native-v0.3.0) (2025-05-07)
+
+
+### Features
+
+* add ModuleAvatar component with size variants and icon support ([#1733](https://github.com/factorialco/factorial-one/issues/1733)) ([027f976](https://github.com/factorialco/factorial-one/commit/027f976ccad9286970b58130fc7296f88e852429))
+
 ## [0.2.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.5...factorial-one-react-native-v0.2.6) (2025-05-05)
 
 
