@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.44.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.3...factorial-one-react-v1.44.4) (2025-05-07)
+
+
+### Bug Fixes
+
+* update avatar pulse with the correct colours ([#1771](https://github.com/factorialco/factorial-one/issues/1771)) ([8d7b60a](https://github.com/factorialco/factorial-one/commit/8d7b60a35f78005d0fcbd407851ca4659cb6272d))
+
 ## [1.44.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.2...factorial-one-react-v1.44.3) (2025-05-07)
 
 
