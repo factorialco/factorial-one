@@ -4,9 +4,11 @@
 
 @layer base {
   :root {
-    --army-50: theme("colors.army.50");
-
-    --grass-50: theme("colors.grass.50");
+    --mood-accent-super-negative: theme("colors.radical.50");
+    --mood-positive: theme("colors.army.50");
+    --mood-super-positive: theme("colors.grass.50");
+    --mood-negative: theme("colors.orange.60");
+    --mood-neutral: theme("colors.smoke.60");
 
     --neutral-0: theme("colors.white.100");
     --neutral-2: theme("colors.grey.0");
@@ -24,10 +26,6 @@
 
     --neutral-solid-40: theme("colors.grey.solid.40");
     --neutral-solid-50: theme("colors.grey.solid.50");
-
-    --orange-60: theme("colors.orange.60");
-
-    --smoke-60: theme("colors.smoke.60");
 
     --white-5: theme("colors.white.5");
     --white-10: theme("colors.white.10");
