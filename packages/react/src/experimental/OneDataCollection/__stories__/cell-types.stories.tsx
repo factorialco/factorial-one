@@ -230,19 +230,3 @@ export const DotTagType: Story = {
     },
   },
 }
-
-export const DotTagListType: Story = {
-  args: {
-    item: mockItem,
-    property: {
-      label: "Skills",
-      render: (item) => ({
-        type: "dotTagList",
-        value: {
-          tags: item.skills,
-          max: 3,
-        },
-      }),
-    },
-  },
-}

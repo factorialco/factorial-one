@@ -1,17 +1,15 @@
 import { OverflowList } from "@/ui/OverflowList"
 import { cva } from "cva"
-import { TagCounter, DotTagItem as TagCounterDotTagItem } from "./TagCounter"
-import { TooltippedDotTag } from "./TooltippedDotTag"
+import { Tooltip } from "../../../Overlays/Tooltip"
+import { Tag, TagVariant } from "../Tag"
+import { TagCounter } from "./TagCounter"
 
-const dotTagListVariants = cva({
+const tagListVariants = cva({
   base: "flex items-center gap-2",
 })
 
-export type DotTagItem = TagCounterDotTagItem
-
 type Props = {
-  tags: DotTagItem[]
-
+  tags: TagVariant[]
   /**
    * Whether to hide tooltips for each tag
    * @default false
@@ -38,7 +36,7 @@ type Props = {
   layout?: "fill" | "compact"
 }
 
-export const DotTagList = ({
+export const TagList = ({
   tags,
   noTooltip = false,
   max = 4,
@@ -49,14 +47,19 @@ export const DotTagList = ({
     return (
       <OverflowList
         items={tags}
-        renderListItem={(tag) => (
-          <TooltippedDotTag
-            label={tag.label}
-            description={tag.description}
-            color={tag.color}
-            noTooltip={noTooltip}
-          />
-        )}
+        renderListItem={(tag) => {
+          const displayName = getTagDisplayName(tag)
+
+          return noTooltip ? (
+            <Tag tag={tag} />
+          ) : (
+            <Tooltip label={displayName}>
+              <div>
+                <Tag tag={tag} />
+              </div>
+            </Tooltip>
+          )
+        }}
         renderDropdownItem={() => null}
         forceShowingOverflowIndicator={initialRemainingCount !== undefined}
         renderOverflowIndicator={(count) => (
@@ -81,16 +84,20 @@ export const DotTagList = ({
   const showCounter = remainingCount > 0
 
   return (
-    <div className={dotTagListVariants()}>
-      {visibleTags.map((tag, index) => (
-        <TooltippedDotTag
-          key={index}
-          label={tag.label}
-          description={tag.description}
-          color={tag.color}
-          noTooltip={noTooltip}
-        />
-      ))}
+    <div className={tagListVariants()}>
+      {visibleTags.map((tag, index) => {
+        const displayName = getTagDisplayName(tag)
+
+        return noTooltip ? (
+          <Tag key={index} tag={tag} />
+        ) : (
+          <Tooltip key={index} label={displayName}>
+            <div>
+              <Tag tag={tag} />
+            </div>
+          </Tooltip>
+        )
+      })}
       {showCounter && (
         <TagCounter
           count={remainingCount}
@@ -101,4 +108,23 @@ export const DotTagList = ({
   )
 }
 
-DotTagList.displayName = "DotTagList"
+const getTagDisplayName = (tag: TagVariant): string => {
+  switch (tag.type) {
+    case "dot":
+      return tag.text
+    case "person":
+      return tag.name
+    case "team":
+      return tag.teamName
+    case "company":
+      return tag.companyName
+    case "alert":
+    case "status":
+    case "balance":
+      return tag.text
+    default:
+      return ""
+  }
+}
+
+TagList.displayName = "TagList"

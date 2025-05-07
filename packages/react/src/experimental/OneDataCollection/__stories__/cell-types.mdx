@@ -312,37 +312,3 @@ render: (item) => ({
 `,
   }}
 />
-
-### dotTagList
-
-Renders a list of dot tags
-
-#### Value type
-
-```
-type value = {
-    tags: Array<{ label: string, color: NewColor }>
-    max?: number // Max tags to render (default: 4)
-    layout?: "fill" | "compact" // Layout strategy (default: "compact")
-    remainingCount?: number // Optional custom count to show for remaining items
-}
-```
-
-<Canvas
-  of={CellTypesDataCollectionStories.DotTagListType}
-  source={{
-    code: `
-render: (item) => ({
-    type: 'dotTagList'
-    value: {
-        tags: [
-            { label: 'React', color: 'viridian' },
-            { label: 'TypeScript', color: 'malibu' },
-            { label: 'UI/UX', color: 'purple' }
-        ],
-        max: 3
-    }
-})
-`,
-  }}
-/>

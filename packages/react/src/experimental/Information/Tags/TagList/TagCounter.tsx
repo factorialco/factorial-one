@@ -2,22 +2,17 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { ScrollArea, ScrollBar } from "@/ui/scrollarea"
 import { useState } from "react"
 import { cn, focusRing } from "../../../../lib/utils"
-import { NewColor } from "../DotTag"
 import { RawTag } from "../RawTag"
-import { TooltippedDotTag } from "./TooltippedDotTag"
+import { Tag, TagVariant } from "../Tag"
 
-export type DotTagItem = {
-  label: string
-  description?: string
-  color: NewColor
-}
+export type TagCounterItem = TagVariant
 
-type TagCounterProps = {
+type Props = {
   count: number
-  list?: DotTagItem[]
+  list?: TagCounterItem[]
 }
 
-export const TagCounter = ({ count, list }: TagCounterProps) => {
+export const TagCounter = ({ count, list }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const counter = <RawTag text={`+${count}`} />
@@ -41,13 +36,9 @@ export const TagCounter = ({ count, list }: TagCounterProps) => {
           {list.map((tag, index) => (
             <div
               key={index}
-              className="flex w-[180px] min-w-0 items-center gap-1.5 px-2 py-1 [&:first-child]:pt-2 [&:last-child]:pb-2"
+              className="flex w-[220px] min-w-0 items-center gap-1.5 px-2 py-1 [&:first-child]:pt-2 [&:last-child]:pb-2"
             >
-              <TooltippedDotTag
-                label={tag.label}
-                description={tag.description}
-                color={tag.color}
-              />
+              <Tag tag={tag} />
             </div>
           ))}
           <ScrollBar
