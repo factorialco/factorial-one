@@ -1,4 +1,11 @@
-import { format, formatDistanceToNowStrict } from "date-fns"
+import {
+  format,
+  formatDistanceToNowStrict,
+  isThisMonth,
+  isThisWeek,
+  isToday,
+  isYesterday,
+} from "date-fns"
 
 export function formatTime(date: Date) {
   return format(date, "p")
@@ -16,6 +23,54 @@ export function getDayOfMonth(date: Date) {
   return date.getDate()
 }
 
-export function getAgo(date: Date) {
-  return formatDistanceToNowStrict(date, { addSuffix: true })
+export function getAgo(date: Date, addSuffix = true) {
+  return formatDistanceToNowStrict(date, { addSuffix })
+}
+
+export function getDisplayDateBasedOnDuration(date: Date) {
+  if (isToday(date)) {
+    return getAgo(date)
+  }
+
+  if (isYesterday(date)) {
+    return format(date, "p")
+  }
+
+  return format(date, "PPPp")
+}
+
+type DateGroup = "today" | "yesterday" | "lastWeek" | "lastMonth" | "other"
+
+export const categorizeItemsByDate = <
+  T extends Record<D, Date>,
+  D extends keyof T,
+>(
+  items: T[],
+  dateField: D
+) => {
+  const groups: Record<DateGroup, T[]> = {
+    today: [],
+    yesterday: [],
+    lastWeek: [],
+    lastMonth: [],
+    other: [],
+  }
+
+  items.forEach((item) => {
+    const date = item[dateField]
+
+    if (isToday(date)) {
+      groups.today.push(item)
+    } else if (isYesterday(date)) {
+      groups.yesterday.push(item)
+    } else if (isThisWeek(date)) {
+      groups.lastWeek.push(item)
+    } else if (isThisMonth(date)) {
+      groups.lastMonth.push(item)
+    } else {
+      groups.other.push(item)
+    }
+  })
+
+  return groups
 }
