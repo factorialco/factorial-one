@@ -13,15 +13,9 @@ const SvgQuestion = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M9 9c0-2 1.5-3 3-3s3 1.5 3 3c0 3-3 2.5-3 5"
     />
-    <Path
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeWidth={1.3}
-      d="M12 17v.1"
-    />
+    <Path stroke="currentColor" strokeLinecap="round" d="M12 17v.1" />
   </Svg>
 );
 const ForwardRef = forwardRef(SvgQuestion);

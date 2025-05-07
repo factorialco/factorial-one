@@ -13,20 +13,17 @@ const SvgReaction = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M19 12a7 7 0 1 1-7-7"
     />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
-      strokeWidth={1.3}
       d="M10 10v1M14 10v1M9.5 14v0a4 4 0 0 0 5 0v0"
     />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M18 3v3m0 3V6m0 0h-3 6"
     />
   </Svg>

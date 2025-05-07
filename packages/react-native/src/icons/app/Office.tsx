@@ -13,19 +13,16 @@ const SvgOffice = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M6 7a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v12a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zM10 12h4M10 8h4"
     />
     <Path
       stroke="currentColor"
-      strokeWidth={1.3}
       d="M10 16.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V20h-4z"
     />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M19 20H5"
     />
   </Svg>

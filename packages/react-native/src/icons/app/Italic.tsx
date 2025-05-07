@@ -13,7 +13,6 @@ const SvgItalic = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M17 6h-4M9 6h4m0 0-2 12H7h8"
     />
   </Svg>

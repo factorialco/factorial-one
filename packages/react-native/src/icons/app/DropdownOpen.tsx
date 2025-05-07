@@ -18,7 +18,7 @@ const SvgDropdownOpen = (props: SvgProps, ref: Ref<Svg>) => (
       fillOpacity={0.06}
       rx={4}
     />
-    <Path stroke="#0D1625" strokeWidth={1.1} d="m15.5 13.75-3.5-3.5-3.5 3.5" />
+    <Path stroke="#0D1625" d="m15.5 13.75-3.5-3.5-3.5 3.5" />
   </Svg>
 );
 const ForwardRef = forwardRef(SvgDropdownOpen);

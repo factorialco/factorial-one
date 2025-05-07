@@ -11,15 +11,10 @@ const SvgImage = (props: SvgProps, ref: Ref<Svg>) => (
   >
     <Path
       stroke="currentColor"
-      strokeWidth={1.3}
       d="M4 15V9a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"
     />
-    <Path
-      stroke="currentColor"
-      strokeWidth={1.3}
-      d="m20 15-1.879-1.879a3 3 0 0 0-4.242 0L9 18"
-    />
-    <Circle cx={9} cy={11} r={2.35} stroke="currentColor" strokeWidth={1.3} />
+    <Path stroke="currentColor" d="m20 15-1.879-1.879a3 3 0 0 0-4.242 0L9 18" />
+    <Circle cx={9} cy={11} r={2.35} stroke="currentColor" />
   </Svg>
 );
 const ForwardRef = forwardRef(SvgImage);
