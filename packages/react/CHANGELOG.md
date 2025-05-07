@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.44.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.1...factorial-one-react-v1.44.2) (2025-05-07)
+
+
+### Bug Fixes
+
+* date type infer ([#1761](https://github.com/factorialco/factorial-one/issues/1761)) ([59eee12](https://github.com/factorialco/factorial-one/commit/59eee12bac50130331081c00c17eeb4ddf41f460))
+
 ## [1.44.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.0...factorial-one-react-v1.44.1) (2025-05-07)
 
 
