@@ -9,12 +9,7 @@ const SvgAlert = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Path
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeWidth={1.3}
-      d="M12 14V7M12 17.1V17"
-    />
+    <Path stroke="currentColor" strokeLinecap="round" d="M12 14V7M12 17.1V17" />
   </Svg>
 );
 const ForwardRef = forwardRef(SvgAlert);

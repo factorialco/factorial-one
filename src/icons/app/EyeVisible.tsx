@@ -12,10 +12,9 @@ const SvgEyeVisible = (props: SvgProps, ref: Ref<Svg>) => (
     <Path
       stroke="currentColor"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M20 12c-1-3-4-6-8-6s-7 3-8 6c1 3 4 6 8 6s7-3 8-6Z"
     />
-    <Circle cx={12} cy={12} r={2.35} stroke="currentColor" strokeWidth={1.3} />
+    <Circle cx={12} cy={12} r={2.35} stroke="currentColor" />
   </Svg>
 );
 const ForwardRef = forwardRef(SvgEyeVisible);

@@ -13,7 +13,6 @@ const SvgTextSize = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M4 6h5m5 0H9m0 0v12m4-6h3m3 0h-3m0 0v6"
     />
   </Svg>

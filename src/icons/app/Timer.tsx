@@ -9,18 +9,16 @@ const SvgTimer = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Circle cx={12} cy={13} r={7.35} stroke="currentColor" strokeWidth={1.3} />
+    <Circle cx={12} cy={13} r={7.35} stroke="currentColor" />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
-      strokeWidth={1.3}
       d="M12 10.33v2.667l3 1.666"
     />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M12 5.5V3M10 3h4M19.09 6l1.414 1.414M4.91 6 3.496 7.414"
     />
   </Svg>

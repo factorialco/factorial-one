@@ -12,27 +12,10 @@ const SvgSliders = (props: SvgProps, ref: Ref<Svg>) => (
     <Path
       stroke="currentColor"
       strokeLinecap="round"
-      strokeWidth={1.3}
       d="M8 13v8M16 3v8M8 3v1M16 20v1"
     />
-    <Rect
-      width={6}
-      height={3}
-      x={5}
-      y={7}
-      stroke="currentColor"
-      strokeWidth={1.3}
-      rx={1.5}
-    />
-    <Rect
-      width={6}
-      height={3}
-      x={13}
-      y={14}
-      stroke="currentColor"
-      strokeWidth={1.3}
-      rx={1.5}
-    />
+    <Rect width={6} height={3} x={5} y={7} stroke="currentColor" rx={1.5} />
+    <Rect width={6} height={3} x={13} y={14} stroke="currentColor" rx={1.5} />
   </Svg>
 );
 const ForwardRef = forwardRef(SvgSliders);

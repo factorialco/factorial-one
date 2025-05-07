@@ -13,7 +13,6 @@ const SvgCode = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="m9 17-5-5 5-5M15 17l5-5-5-5"
     />
   </Svg>

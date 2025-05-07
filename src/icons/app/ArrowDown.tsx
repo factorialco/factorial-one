@@ -19,7 +19,6 @@ const SvgArrowDown = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={5}
       d="M12 5v13.5"
     />
   </Svg>

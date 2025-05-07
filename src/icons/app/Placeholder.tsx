@@ -9,11 +9,10 @@ const SvgPlaceholder = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Circle cx={12} cy={12} r={8} stroke="currentColor" strokeWidth={1.3} />
+    <Circle cx={12} cy={12} r={8} stroke="currentColor" />
     <Path
       stroke="currentColor"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="m17.5 6.5-11 11M17.5 17.5l-11-11"
     />
   </Svg>

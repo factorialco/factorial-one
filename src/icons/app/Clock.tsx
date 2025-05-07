@@ -9,12 +9,11 @@ const SvgClock = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Circle cx={12} cy={12} r={8} stroke="currentColor" strokeWidth={1.3} />
+    <Circle cx={12} cy={12} r={8} stroke="currentColor" />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M12 9v3l3.5 2"
     />
   </Svg>

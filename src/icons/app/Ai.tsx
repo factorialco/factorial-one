@@ -12,7 +12,6 @@ const SvgAi = (props: SvgProps, ref: Ref<Svg>) => (
     <Path
       stroke="currentColor"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M4 13c3.314 0 6-3.134 6-7 0 3.866 2.686 7 6 7-3.314 0-6 3.134-6 7 0-3.866-2.686-7-6-7Z"
     />
     <Path

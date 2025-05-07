@@ -13,7 +13,6 @@ const SvgCross = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M16.95 7.05 12 12l-4.95 4.95M12 12 7.05 7.05l9.9 9.9"
     />
   </Svg>
