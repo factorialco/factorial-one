@@ -41,10 +41,12 @@ type InFilterComponentProps<T = unknown> = FilterTypeComponentProps<
  *   filter={{
  *     type: "in",
  *     label: "Status",
- *     options: [
- *       { value: "active", label: "Active" },
- *       { value: "inactive", label: "Inactive" }
- *     ]
+ *     options: {
+ *       options: [
+ *         { value: "active", label: "Active" },
+ *         { value: "inactive", label: "Inactive" }
+ *       ]
+ *     }
  *   }}
  *   value={["active"]}
  *   onChange={setSelectedStatus}
@@ -55,9 +57,11 @@ type InFilterComponentProps<T = unknown> = FilterTypeComponentProps<
  *   filter={{
  *     type: "in",
  *     label: "Users",
- *     options: async () => {
- *       const users = await fetchUsers();
- *       return users.map(user => ({ value: user.id, label: user.name }));
+ *     options: {
+ *       options: async () => {
+ *         const users = await fetchUsers();
+ *         return users.map(user => ({ value: user.id, label: user.name }));
+ *       }
  *     }
  *   }}
  *   value={[]}
@@ -75,7 +79,8 @@ export function InFilter<T extends string>({
   const [searchTerm, setSearchTerm] = useState("")
 
   const { options, isLoading, error, loadOptions } = useLoadOptions(
-    schema.options
+    schema.label,
+    schema.options.options
   )
 
   useEffect(() => {

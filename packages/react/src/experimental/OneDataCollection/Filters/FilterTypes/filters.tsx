@@ -1,3 +1,4 @@
+import { DateRange } from "@/experimental/OneCalendar/types"
 import dateFilter, { DateFilterDefinition } from "./DateFilter"
 import inFilter, { InFilterDefinition } from "./InFilter"
 import searchFilter, { SearchFilterDefinition } from "./SearchFilter"
@@ -6,8 +7,8 @@ import { FilterTypeDefinition } from "./types"
 /**
  * All the available filter types
  */
-export type FilterDefinitionsByType = {
-  in: InFilterDefinition<string>
+export type FilterDefinitionsByType<T = unknown> = {
+  in: InFilterDefinition<T>
   search: SearchFilterDefinition
   date: DateFilterDefinition
 }
@@ -32,7 +33,7 @@ export type FilterValue<T extends FilterDefinition> =
     : T extends SearchFilterDefinition
       ? string
       : T extends DateFilterDefinition
-        ? Date
+        ? DateRange | Date | undefined
         : never
 
 /**

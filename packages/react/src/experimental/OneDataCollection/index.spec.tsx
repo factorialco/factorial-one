@@ -208,10 +208,12 @@ describe("Collections", () => {
             department: {
               type: "in",
               label: "Department",
-              options: [
-                { value: "Engineering", label: "Engineering" },
-                { value: "Product", label: "Product" },
-              ],
+              options: {
+                options: [
+                  { value: "Engineering", label: "Engineering" },
+                  { value: "Product", label: "Product" },
+                ],
+              },
             },
           },
           dataAdapter: {
@@ -777,11 +779,13 @@ describe("Collections", () => {
             department: {
               type: "in",
               label: "Department",
-              options: [
-                { value: "Engineering", label: "Engineering" },
-                { value: "Product", label: "Product" },
-                { value: "Design", label: "Design" },
-              ],
+              options: {
+                options: [
+                  { value: "Engineering", label: "Engineering" },
+                  { value: "Product", label: "Product" },
+                  { value: "Design", label: "Design" },
+                ],
+              },
             },
             search: {
               type: "search",
