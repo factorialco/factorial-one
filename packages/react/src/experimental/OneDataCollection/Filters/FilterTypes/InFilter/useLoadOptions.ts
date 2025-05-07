@@ -41,7 +41,6 @@ export function useLoadOptions<T>(schema: InFilterDefinition<T>) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
-  console.log("useLoadOptions", cacheKey)
   const materializeOptions = useCallback(
     async (clearCache = false) => {
       if (clearCache) {
