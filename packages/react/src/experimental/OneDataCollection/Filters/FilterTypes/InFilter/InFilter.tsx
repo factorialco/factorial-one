@@ -78,7 +78,10 @@ export function InFilter<T extends string>({
 
   const [searchTerm, setSearchTerm] = useState("")
 
-  const { options, isLoading, error, loadOptions } = useLoadOptions(schema)
+  const { options, isLoading, error, loadOptions } = useLoadOptions({
+    ...schema,
+    type: "in",
+  })
 
   useEffect(() => {
     setSearchTerm("")
