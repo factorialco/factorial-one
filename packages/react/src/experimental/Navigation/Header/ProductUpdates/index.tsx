@@ -40,7 +40,6 @@ type ProductUpdate = {
 
 type ProductUpdatesProp = {
   label: string
-  moreUpdatesLabel: string
   updatesPageUrl: string
   getUpdates: () => Promise<Array<ProductUpdate>>
   hasUnread?: boolean
@@ -77,7 +76,6 @@ type ProductUpdatesProp = {
 const ProductUpdates = ({
   currentModule,
   label,
-  moreUpdatesLabel,
   getUpdates,
   updatesPageUrl,
   emptyScreen,
