@@ -34,10 +34,10 @@ const pulseIcon: Record<Pulse, IconType> = {
 const iconStyle = cva({
   variants: {
     pulse: {
-      superNegative: "text-[hsl(theme(colors.indigo.50))]",
-      negative: "text-[hsl(theme(colors.malibu.50))]",
-      neutral: "text-[hsl(theme(colors.smoke.50))]",
-      positive: "text-[hsl(theme(colors.flubber.50))]",
+      superNegative: "text-[hsl(theme(colors.radical.50))]",
+      negative: "text-[hsl(theme(colors.orange.60))]",
+      neutral: "text-[hsl(theme(colors.smoke.60))]",
+      positive: "text-[hsl(theme(colors.army.50))]",
       superPositive: "text-[hsl(theme(colors.grass.50))]",
     },
   },
