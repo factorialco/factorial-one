@@ -97,6 +97,10 @@ export declare const AlertDescription: React_2.ForwardRefExoticComponent<React_2
 
 export declare const AlertTag: ForwardRefExoticComponent<Props_9<string> & RefAttributes<HTMLDivElement>>;
 
+declare type AlertTagData = Omit<Extract<TagVariant, {
+    type: "alert";
+}>, "type" | "description">;
+
 declare type AlertTagProps = ComponentProps<typeof AlertTag>;
 
 export declare const AlertTitle: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLHeadingElement> & React_2.RefAttributes<HTMLParagraphElement>>;
@@ -233,6 +237,10 @@ declare const badgeVariants: (props?: ({
 })) | undefined) => string;
 
 export declare const BalanceTag: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
+
+declare type BalanceTagData = Omit<Extract<TagVariant, {
+    type: "balance";
+}>, "type" | "description">;
 
 declare type BalanceTagProps = ComponentProps<typeof BalanceTag>;
 
@@ -877,6 +885,10 @@ export declare type CompanySelectorProps = {
 
 export declare const CompanyTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
 
+declare type CompanyTagData = Omit<Extract<TagVariant, {
+    type: "company";
+}>, "type" | "description">;
+
 declare type CompanyTagProps = ComponentProps<typeof CompanyTag>;
 
 declare type Content = (ComponentProps<typeof DataList.Item> & {
@@ -1107,6 +1119,10 @@ onClose?: () => void;
 export declare const DotTag: ForwardRefExoticComponent<DotTagProps & RefAttributes<HTMLDivElement>>;
 
 export declare const dotTagColors: NewColor[];
+
+declare type DotTagData = Omit<Extract<TagVariant, {
+    type: "dot";
+}>, "type" | "description">;
 
 export declare type DotTagProps = {
     text: string;
@@ -2025,6 +2041,10 @@ declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttri
 
 export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
 
+declare type PersonTagData = Omit<Extract<TagVariant, {
+    type: "person";
+}>, "type" | "description">;
+
 declare type PersonTagProps = ComponentProps<typeof PersonTag>;
 
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
@@ -2211,6 +2231,11 @@ declare const propertyRenderers: {
         label: string;
         color: NewColor;
     }) => JSX_2.Element;
+    readonly tagList: (args: {
+        tags: TagVariant[];
+        max?: number;
+        type: TagType;
+    }) => JSX_2.Element;
 };
 
 declare type Props = {
@@ -2239,7 +2264,20 @@ declare type Props_12 = {
 };
 
 declare type Props_13 = {
-    tags: TagVariant[];
+    teamName: string;
+    teamImageUrl: string;
+    onClick?: () => void;
+};
+
+declare type Props_14<T extends TagType> = {
+    /**
+     * The type of tags to display. Only one type can be used at a time.
+     */
+    type: T;
+    /**
+     * Array of tag data corresponding to the specified type.
+     */
+    tags: Array<TagTypeMapping[T] & WithTooltipDescription_2>;
     /**
      * Whether to hide tooltips for each tag
      * @default false
@@ -2261,12 +2299,6 @@ declare type Props_13 = {
      * @default "compact"
      */
     layout?: "fill" | "compact";
-};
-
-declare type Props_14 = {
-    teamName: string;
-    teamImageUrl: string;
-    onClick?: () => void;
 };
 
 declare interface Props_15 {
@@ -2791,6 +2823,10 @@ declare type StatusMetadata = BaseMetadata & {
 
 export declare const StatusTag: ForwardRefExoticComponent<StatusTagProps & RefAttributes<HTMLDivElement>>;
 
+declare type StatusTagData = Omit<Extract<TagVariant, {
+    type: "status";
+}>, "type" | "description">;
+
 export declare interface StatusTagProps {
     text: string;
     variant: Variant;
@@ -2938,7 +2974,7 @@ declare type Tag = {
 };
 
 export declare const TagList: {
-    ({ tags, noTooltip, max, remainingCount: initialRemainingCount, layout, }: Props_13): JSX_2.Element;
+    <T extends TagType>({ type, tags, noTooltip, max, remainingCount: initialRemainingCount, layout, }: Props_14<T>): JSX_2.Element;
     displayName: string;
 };
 
@@ -2946,6 +2982,18 @@ declare type TagMetadata = BaseMetadata & {
     type: "tag";
     label: string;
     tagIcon?: IconType;
+};
+
+export declare type TagType = keyof TagTypeMapping;
+
+declare type TagTypeMapping = {
+    dot: DotTagData;
+    person: PersonTagData;
+    team: TeamTagData;
+    company: CompanyTagData;
+    alert: AlertTagData;
+    status: StatusTagData;
+    balance: BalanceTagData;
 };
 
 declare type TagVariant = ({
@@ -3017,7 +3065,11 @@ declare type TeamMetadata = BaseMetadata & {
     src?: string;
 };
 
-export declare const TeamTag: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
+export declare const TeamTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
+
+declare type TeamTagData = Omit<Extract<TagVariant, {
+    type: "team";
+}>, "type" | "description">;
 
 declare type TeamTagProps = ComponentProps<typeof TeamTag>;
 
@@ -3357,6 +3409,10 @@ declare interface WithTooltipDescription {
      */
     description?: string;
 }
+
+declare type WithTooltipDescription_2 = {
+    description?: string;
+};
 
 export { }
 
