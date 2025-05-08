@@ -139,7 +139,7 @@ export function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
                   isFirst={false}
                 />
               ))}
-              {append}
+              <li key="append-slot">{append}</li>
             </>
           )}
           {!hasCollapsedElements && (
@@ -152,7 +152,7 @@ export function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
                   isFirst={false}
                 />
               ))}
-              {append}
+              <li key="append-slot">{append}</li>
             </>
           )}
         </BreadcrumbList>
