@@ -38,7 +38,7 @@ export const CollectionActions = ({
         </Dropdown>
       )}
 
-      <div className="mx-1 h-4 w-px bg-f1-border-secondary" />
+      <div className="mx-1 h-4 w-px bg-f1-background-secondary-hover" />
     </div>
   )
 }
