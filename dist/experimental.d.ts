@@ -99,10 +99,6 @@ export declare const AlertTag: ForwardRefExoticComponent<Props_9<string> & RefAt
 
 declare type AlertTagProps = ComponentProps<typeof AlertTag>;
 
-declare type AlertTagVariant = BaseTag<{
-    type: "alert";
-} & AlertTagProps>;
-
 export declare const AlertTitle: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLHeadingElement> & React_2.RefAttributes<HTMLParagraphElement>>;
 
 export declare function ApplicationFrame({ children, sidebar, banner, }: ApplicationFrameProps): JSX_2.Element;
@@ -239,10 +235,6 @@ declare const badgeVariants: (props?: ({
 export declare const BalanceTag: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
 
 declare type BalanceTagProps = ComponentProps<typeof BalanceTag>;
-
-declare type BalanceTagVariant = BaseTag<{
-    type: "balance";
-} & BalanceTagProps>;
 
 export declare const BarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: BarChartProps;
@@ -891,10 +883,6 @@ export declare const CompanyTag: ForwardRefExoticComponent<Props_11 & RefAttribu
 
 declare type CompanyTagProps = ComponentProps<typeof CompanyTag>;
 
-declare type CompanyTagVariant = BaseTag<{
-    type: "company";
-} & CompanyTagProps>;
-
 declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "item";
 }) | (ComponentProps<typeof DataList.PersonItem> & {
@@ -1131,12 +1119,6 @@ export declare type DotTagProps = {
 } | {
     customColor: string;
 });
-
-declare type DotTagProps_2 = ComponentProps<typeof DotTag>;
-
-declare type DotTagVariant = BaseTag<{
-    type: "dot";
-} & DotTagProps_2>;
 
 export declare const Dropdown: (props: DropdownProps) => JSX_2.Element;
 
@@ -2047,10 +2029,6 @@ export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttribut
 
 declare type PersonTagProps = ComponentProps<typeof PersonTag>;
 
-declare type PersonTagVariant = BaseTag<{
-    type: "person";
-} & PersonTagProps>;
-
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: PieChartProps;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
@@ -2832,10 +2810,6 @@ export declare interface StatusTagProps {
     additionalAccesibleText?: string;
 }
 
-declare type StatusTagVariant = BaseTag<{
-    type: "status";
-} & StatusTagProps>;
-
 export declare type StatusVariant = Variant;
 
 export declare type subActionType = {
@@ -2999,7 +2973,21 @@ declare type TagTypeMapping = {
     balance: TagDataType<"balance">;
 };
 
-declare type TagVariant = DotTagVariant | PersonTagVariant | TeamTagVariant | CompanyTagVariant | AlertTagVariant | StatusTagVariant | BalanceTagVariant;
+declare type TagVariant = BaseTag<{
+    type: "dot";
+} & DotTagProps> | BaseTag<{
+    type: "person";
+} & PersonTagProps> | BaseTag<{
+    type: "team";
+} & TeamTagProps> | BaseTag<{
+    type: "company";
+} & CompanyTagProps> | BaseTag<{
+    type: "alert";
+} & AlertTagProps> | BaseTag<{
+    type: "status";
+} & StatusTagProps> | BaseTag<{
+    type: "balance";
+} & BalanceTagProps>;
 
 declare interface Task {
     id: number | string;
@@ -3051,10 +3039,6 @@ declare type TeamMetadata = BaseMetadata & {
 export declare const TeamTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
 
 declare type TeamTagProps = ComponentProps<typeof TeamTag>;
-
-declare type TeamTagVariant = BaseTag<{
-    type: "team";
-} & TeamTagProps>;
 
 export declare const Textarea: React.FC<TextareaProps>;
 
