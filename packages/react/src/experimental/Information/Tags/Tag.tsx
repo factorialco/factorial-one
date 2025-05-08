@@ -42,28 +42,23 @@ export type TagVariant =
   | StatusTagVariant
   | BalanceTagVariant
 
-const tagComponents = {
-  dot: (tag: Extract<TagVariant, { type: "dot" }>) => <DotTag {...tag} />,
-  person: (tag: Extract<TagVariant, { type: "person" }>) => (
-    <PersonTag {...tag} />
-  ),
-  team: (tag: Extract<TagVariant, { type: "team" }>) => <TeamTag {...tag} />,
-  company: (tag: Extract<TagVariant, { type: "company" }>) => (
-    <CompanyTag {...tag} />
-  ),
-  alert: (tag: Extract<TagVariant, { type: "alert" }>) => <AlertTag {...tag} />,
-  status: (tag: Extract<TagVariant, { type: "status" }>) => (
-    <StatusTag {...tag} />
-  ),
-  balance: (tag: Extract<TagVariant, { type: "balance" }>) => (
-    <BalanceTag {...tag} />
-  ),
-} as const
+const tagComponent = (tag: TagVariant): ReactNode | undefined => {
+  const { type } = tag
+  if (type === "dot") return <DotTag {...tag} />
+  if (type === "person") return <PersonTag {...tag} />
+  if (type === "team") return <TeamTag {...tag} />
+  if (type === "company") return <CompanyTag {...tag} />
+  if (type === "alert") return <AlertTag {...tag} />
+  if (type === "status") return <StatusTag {...tag} />
+  if (type === "balance") return <BalanceTag {...tag} />
+
+  return undefined
+}
 
 export const Tag = ({ tag }: { tag: TagVariant }): ReactNode => {
-  const renderTag = tagComponents[tag.type]
+  const renderTag = tagComponent(tag)
 
   if (!renderTag) return "Invalid tag type"
 
-  return renderTag(tag as any)
+  return renderTag
 }
