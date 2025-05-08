@@ -188,7 +188,7 @@ const FavoriteItem = ({
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       className={cn(
-        "relative cursor-pointer touch-none select-none list-none rounded backdrop-blur-sm active:cursor-grabbing",
+        "group relative cursor-pointer touch-none select-none list-none rounded backdrop-blur-sm active:cursor-grabbing",
         active
           ? "bg-f1-background-secondary text-f1-foreground"
           : "hover:bg-f1-background-secondary",
@@ -223,8 +223,9 @@ const FavoriteItem = ({
       </div>
       <div
         className={cn(
-          "absolute inset-y-1 right-1 z-10 flex h-6 w-6 items-center justify-center rounded-sm hover:bg-f1-background-secondary",
-          isDropdownOpen && "bg-f1-background-secondary"
+          "absolute inset-y-1 right-1 z-10 flex h-6 w-6 items-center justify-center rounded-sm opacity-0 transition-opacity duration-100 hover:bg-f1-background-secondary group-hover:opacity-100",
+          isDropdownOpen && "bg-f1-background-secondary opacity-100",
+          isItemDragging && "opacity-100"
         )}
       >
         <Dropdown
@@ -232,7 +233,9 @@ const FavoriteItem = ({
           onOpenChange={setIsDropdownOpen}
           items={dropdownItems}
         >
-          <Icon icon={EllipsisHorizontal} size="sm" />
+          <div className="flex items-center justify-center" role="list">
+            <Icon icon={EllipsisHorizontal} size="sm" />
+          </div>
         </Dropdown>
       </div>
     </Reorder.Item>
