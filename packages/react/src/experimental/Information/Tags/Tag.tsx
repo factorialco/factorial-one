@@ -22,70 +22,48 @@ interface WithTooltipDescription {
   description?: string
 }
 
+// Base type for all tag variants
+type BaseTag<T extends { type: string }> = T & WithTooltipDescription
+
+type DotTagVariant = BaseTag<{ type: "dot" } & DotTagProps>
+type PersonTagVariant = BaseTag<{ type: "person" } & PersonTagProps>
+type TeamTagVariant = BaseTag<{ type: "team" } & TeamTagProps>
+type CompanyTagVariant = BaseTag<{ type: "company" } & CompanyTagProps>
+type AlertTagVariant = BaseTag<{ type: "alert" } & AlertTagProps>
+type StatusTagVariant = BaseTag<{ type: "status" } & StatusTagProps>
+type BalanceTagVariant = BaseTag<{ type: "balance" } & BalanceTagProps>
+
 export type TagVariant =
-  | ({ type: "dot" } & DotTagProps & WithTooltipDescription)
-  | ({ type: "person" } & PersonTagProps & WithTooltipDescription)
-  | ({ type: "team" } & TeamTagProps & WithTooltipDescription)
-  | ({ type: "company" } & CompanyTagProps & WithTooltipDescription)
-  | ({
-      type: "alert"
-      level: "info" | "warning" | "critical"
-      text: string
-      onClick?: () => void
-    } & AlertTagProps &
-      WithTooltipDescription)
-  | ({ type: "status" } & StatusTagProps & WithTooltipDescription)
-  | ({
-      type: "balance"
-      status: "positive" | "neutral" | "negative"
-      text: string
-      onClick?: () => void
-    } & BalanceTagProps &
-      WithTooltipDescription)
+  | DotTagVariant
+  | PersonTagVariant
+  | TeamTagVariant
+  | CompanyTagVariant
+  | AlertTagVariant
+  | StatusTagVariant
+  | BalanceTagVariant
+
+const tagComponents = {
+  dot: (tag: Extract<TagVariant, { type: "dot" }>) => <DotTag {...tag} />,
+  person: (tag: Extract<TagVariant, { type: "person" }>) => (
+    <PersonTag {...tag} />
+  ),
+  team: (tag: Extract<TagVariant, { type: "team" }>) => <TeamTag {...tag} />,
+  company: (tag: Extract<TagVariant, { type: "company" }>) => (
+    <CompanyTag {...tag} />
+  ),
+  alert: (tag: Extract<TagVariant, { type: "alert" }>) => <AlertTag {...tag} />,
+  status: (tag: Extract<TagVariant, { type: "status" }>) => (
+    <StatusTag {...tag} />
+  ),
+  balance: (tag: Extract<TagVariant, { type: "balance" }>) => (
+    <BalanceTag {...tag} />
+  ),
+} as const
 
 export const Tag = ({ tag }: { tag: TagVariant }): ReactNode => {
-  switch (tag.type) {
-    case "dot":
-      return "color" in tag ? (
-        <DotTag text={tag.text} color={tag.color} />
-      ) : (
-        <DotTag text={tag.text} customColor={tag.customColor} />
-      )
-    case "person":
-      return (
-        <PersonTag
-          name={tag.name}
-          avatarUrl={tag.avatarUrl}
-          onClick={tag.onClick}
-        />
-      )
-    case "team":
-      return (
-        <TeamTag
-          teamName={tag.teamName}
-          teamImageUrl={tag.teamImageUrl}
-          onClick={tag.onClick}
-        />
-      )
-    case "company":
-      return (
-        <CompanyTag
-          companyName={tag.companyName}
-          companyImageUrl={tag.companyImageUrl}
-          onClick={tag.onClick}
-        />
-      )
-    case "alert":
-      return <AlertTag level={tag.level} text={tag.text} />
-    case "status":
-      return (
-        <StatusTag
-          variant={tag.variant}
-          text={tag.text}
-          additionalAccesibleText={tag.additionalAccesibleText}
-        />
-      )
-    case "balance":
-      return <BalanceTag status={tag.status} text={tag.text} />
-  }
+  const renderTag = tagComponents[tag.type]
+
+  if (!renderTag) return "Invalid tag type"
+
+  return renderTag(tag as any)
 }

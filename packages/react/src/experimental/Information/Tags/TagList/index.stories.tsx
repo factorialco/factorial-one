@@ -10,30 +10,6 @@ const dotTags = [
   {
     text: "Category 1",
     color: "viridian" as const,
-  },
-  {
-    text: "Category 2",
-    color: "malibu" as const,
-  },
-  {
-    text: "Category 3",
-    color: "yellow" as const,
-  },
-  {
-    text: "Category 4",
-    color: "purple" as const,
-  },
-  {
-    text: "Category 5",
-    color: "lilac" as const,
-  },
-]
-
-// Sample dot tags with descriptions
-const dotTagsWithDescriptions = [
-  {
-    text: "Category 1",
-    color: "viridian" as const,
     description: "This is a category tag with a description",
   },
   {
@@ -44,6 +20,15 @@ const dotTagsWithDescriptions = [
   {
     text: "Category 3",
     color: "yellow" as const,
+  },
+  {
+    text: "Category 4",
+    color: "purple" as const,
+    description: "Yet another category description",
+  },
+  {
+    text: "Category 5",
+    color: "lilac" as const,
     description: "Yet another category description",
   },
 ]
@@ -247,12 +232,5 @@ export const WithFillLayout: Story = {
   },
   parameters: {
     layout: "padded",
-  },
-}
-
-export const WithDescriptions: Story = {
-  args: {
-    type: "dot",
-    tags: dotTagsWithDescriptions,
   },
 }

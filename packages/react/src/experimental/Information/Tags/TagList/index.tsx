@@ -43,12 +43,6 @@ type Props<T extends TagType> = {
   tags: Array<TagTypeMapping[T] & WithTooltipDescription>
 
   /**
-   * Whether to hide tooltips for each tag
-   * @default false
-   */
-  noTooltip?: boolean
-
-  /**
    * The maximum number of tags to display.
    * @default 4
    */
@@ -71,7 +65,6 @@ type Props<T extends TagType> = {
 export const TagList = <T extends TagType>({
   type,
   tags,
-  noTooltip = false,
   max = 4,
   remainingCount: initialRemainingCount,
   layout = "compact",
@@ -86,17 +79,16 @@ export const TagList = <T extends TagType>({
       <OverflowList
         items={tagVariants}
         renderListItem={(tag) => {
-          const displayName = getTagDisplayName(tag)
           const description = getTagDescription(tag)
 
-          return noTooltip ? (
-            <Tag tag={tag} />
-          ) : (
-            <Tooltip label={displayName} description={description}>
+          return description ? (
+            <Tooltip label={description}>
               <div>
                 <Tag tag={tag} />
               </div>
             </Tooltip>
+          ) : (
+            <Tag tag={tag} />
           )
         }}
         renderDropdownItem={() => null}
@@ -125,48 +117,27 @@ export const TagList = <T extends TagType>({
   return (
     <div className={tagListVariants()}>
       {visibleTags.map((tag, index) => {
-        const displayName = getTagDisplayName(tag)
         const description = getTagDescription(tag)
 
-        return noTooltip ? (
-          <Tag key={index} tag={tag} />
-        ) : (
-          <Tooltip key={index} label={displayName} description={description}>
+        return description ? (
+          <Tooltip key={index} label={description}>
             <div>
-              <Tag tag={tag} />
+              <Tag key={index} tag={tag} />
             </div>
           </Tooltip>
+        ) : (
+          <Tag key={index} tag={tag} />
         )
       })}
       {showCounter && (
         <TagCounter
           count={remainingCount}
-          list={noTooltip || initialRemainingCount ? undefined : remainingTags}
+          list={initialRemainingCount ? undefined : remainingTags}
         />
       )}
     </div>
   )
 }
-
-const getTagDisplayName = (tag: TagVariant): string => {
-  switch (tag.type) {
-    case "dot":
-      return tag.text
-    case "person":
-      return tag.name
-    case "team":
-      return tag.teamName
-    case "company":
-      return tag.companyName
-    case "alert":
-    case "status":
-    case "balance":
-      return tag.text
-    default:
-      return ""
-  }
-}
-
 const getTagDescription = (tag: TagVariant): string | undefined => {
   if ("description" in tag && typeof tag.description === "string") {
     return tag.description
