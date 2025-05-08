@@ -44,7 +44,7 @@ export interface BreadcrumbsProps {
  * />
  * ```
  */
-export default function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
+export function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
   // the component renders a hidden list of all breadcrumbs to measure their size
   // for calculations how many of them fits the container
   // it requires DOM element manipulation. refer to `layoutCalculation.ts` for details

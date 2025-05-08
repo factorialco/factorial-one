@@ -1,20 +1,38 @@
 import { Icon } from "@/components/Utilities/Icon"
 import Star from "@/icons/app/Star"
 import StarFilled from "@/icons/app/StarFilled"
+import { cn, focusRing } from "@/lib/utils"
 import { AnimatePresence, motion } from "framer-motion"
 
 const IconMotion = motion.create(Icon)
 
-export const Favorites = ({
-  isMarked,
-  onChange,
-}: {
+interface FavoriteButtonProps {
+  /**
+   * the state of the button pressed/unpressed
+   */
   isMarked: boolean
   onChange: (newValue: boolean) => void
-}) => {
+  /**
+   * Label of the button, will be used as accessibility
+   */
+  label: string
+}
+
+export const FavoriteButton = ({
+  isMarked,
+  onChange,
+  label,
+}: FavoriteButtonProps) => {
   return (
     <AnimatePresence mode="wait">
-      <button onClick={() => onChange(!isMarked)}>
+      <button
+        className={cn(
+          "flex h-6 w-6 items-center justify-center rounded",
+          focusRing()
+        )}
+        onClick={() => onChange(!isMarked)}
+        aria-label={label}
+      >
         {isMarked ? (
           <IconMotion
             size="sm"

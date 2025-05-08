@@ -3,7 +3,7 @@ import { expect, userEvent, waitFor, within } from "@storybook/test"
 import { useState } from "react"
 import { Documents, Recruitment } from "../../../../icons/modules"
 import { Button } from "../../../../ui/button"
-import Breadcrumbs, { BreadcrumbItemType } from "./index"
+import { Breadcrumbs, BreadcrumbsProps } from "./index"
 
 const meta: Meta<typeof Breadcrumbs> = {
   title: "Navigation/Breadcrumbs",
@@ -147,7 +147,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const Interactive: Story = {
   render: () => {
-    const recruitmentBreadcrumbs: BreadcrumbItemType[] = [
+    const recruitmentBreadcrumbs: BreadcrumbsProps["breadcrumbs"] = [
       {
         id: "recruitment",
         label: "Recruitment",
@@ -171,7 +171,7 @@ export const Interactive: Story = {
       },
     ]
 
-    const documentsBreadcrumbs: BreadcrumbItemType[] = [
+    const documentsBreadcrumbs: BreadcrumbsProps["breadcrumbs"] = [
       {
         id: "documents",
         label: "Documents",
@@ -198,9 +198,9 @@ export const Interactive: Story = {
     const [currentSection, setCurrentSection] = useState<
       "recruitment" | "documents"
     >("recruitment")
-    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItemType[]>(
-      recruitmentBreadcrumbs
-    )
+    const [breadcrumbs, setBreadcrumbs] = useState<
+      BreadcrumbsProps["breadcrumbs"]
+    >(recruitmentBreadcrumbs)
 
     const handleAdd = () => {
       const sourceBreadcrumbs =

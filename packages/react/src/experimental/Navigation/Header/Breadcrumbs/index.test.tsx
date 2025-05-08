@@ -8,7 +8,7 @@ import {
 import userEvent from "@testing-library/user-event"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Home, Settings } from "../../../../icons/app"
-import Breadcrumbs, { BreadcrumbItemType } from "./index"
+import { Breadcrumbs, BreadcrumbsProps } from "./index"
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
@@ -285,7 +285,7 @@ describe("Breadcrumbs", () => {
 
   it("renders select type breadcrumb with searchbox", async () => {
     const onChange = vi.fn()
-    const breadcrumbs: BreadcrumbItemType[] = [
+    const breadcrumbs: BreadcrumbsProps["breadcrumbs"] = [
       { id: "home", label: "Home", href: "/" },
       {
         id: "select",

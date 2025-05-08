@@ -24,7 +24,11 @@ type ContentType = "loading" | "select" | "page" | "link"
 
 const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
   ({ item, isLast, isOnly = false, isFirst = false }, ref) => (
-    <ShadBreadcrumbItem key={item.id} ref={ref}>
+    <ShadBreadcrumbItem
+      key={item.id}
+      ref={ref}
+      className={isLast ? "pr-0" : undefined}
+    >
       {!isFirst && <BreadcrumbSeparator />}
       <BreadcrumbContent
         item={item}
