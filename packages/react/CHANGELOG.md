@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.44.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.4...factorial-one-react-v1.44.5) (2025-05-08)
+
+
+### Bug Fixes
+
+* vertical separators ([#1774](https://github.com/factorialco/factorial-one/issues/1774)) ([670938e](https://github.com/factorialco/factorial-one/commit/670938e75420286f22ddb32589cac7f497e4a189))
+
 ## [1.44.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.3...factorial-one-react-v1.44.4) (2025-05-07)
 
 
