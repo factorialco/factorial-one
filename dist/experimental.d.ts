@@ -27,6 +27,7 @@ import { JSONContent } from '@tiptap/react';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
 import { Observable } from 'zen-observable-ts';
+import { Path } from 'react-hook-form';
 import { PieChartProps } from '../../../components/Charts/PieChart';
 import { PopoverProps } from '@radix-ui/react-popover';
 import { PropsWithChildren } from 'react';
@@ -42,6 +43,7 @@ import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { type as type_2 } from '../../../../ui/avatar';
 import { useForm } from 'react-hook-form';
 import { UseFormHandleSubmit } from 'react-hook-form';
+import { UseFormProps } from 'react-hook-form';
 import { UseFormReturn } from 'react-hook-form';
 import { VariantProps } from 'cva';
 import { VerticalBarChartProps } from '../../../components/Charts/VerticalBarChart';
@@ -64,6 +66,25 @@ export declare type actionType = {
     disabled?: boolean;
     variant: "default" | "outline" | "neutral" | undefined;
     icon?: IconType_2;
+};
+
+export declare const ActivityItemList: (({ items, onClickItem, }: ActivityItemListProps) => default_2.JSX.Element) & {
+    Skeleton: () => default_2.JSX.Element;
+};
+
+export declare type ActivityItemListProps = Pick<SectionProps, "items" | "onClickItem">;
+
+export declare const ActivityItemListSkeleton: () => default_2.JSX.Element;
+
+declare type ActivityItemProps = {
+    id: string;
+    createdAt: Date;
+    title: string;
+    description?: string;
+    icon?: IconType;
+    category: string;
+    isUnread?: boolean;
+    onClick: (id: string) => void;
 };
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
@@ -104,14 +125,14 @@ declare interface AlertProps extends VariantProps<typeof alertVariants> {
         label: string;
         onClick?: () => void;
     };
-    link: {
+    link?: {
         label: string;
         href: string;
     };
     variant: AlertVariant;
 }
 
-export declare const AlertTag: ForwardRefExoticComponent<Props_9<string> & RefAttributes<HTMLDivElement>>;
+export declare const AlertTag: ForwardRefExoticComponent<Props_10<string> & RefAttributes<HTMLDivElement>>;
 
 export declare const AlertTitle: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLHeadingElement> & React_2.RefAttributes<HTMLParagraphElement>>;
 
@@ -258,11 +279,13 @@ declare const badgeVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-export declare const BalanceTag: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
+export declare const BalanceTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
 
 export declare const BarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: BarChartProps;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+export declare const BaseActivityItemList: ({ items, onClickItem, }: ActivityItemListProps) => default_2.JSX.Element;
 
 declare const BaseAvatar: ForwardRefExoticComponent<    {
 type: ShadAvatarProps["type"];
@@ -435,7 +458,7 @@ export declare type BaseFetchOptions<Filters extends FiltersDefinition, Sortings
  * Base definition for all filter types.
  * Provides common properties that all filters must implement.
  */
-declare type BaseFilterDefinition<T extends FilterTypeKeys> = {
+declare type BaseFilterDefinition<T extends FilterTypeKey> = {
     /** Human-readable label for the filter */
     label: string;
     /** The type of filter */
@@ -708,9 +731,9 @@ declare type ChartItem<K extends ChartConfig> = {
     };
 };
 
-export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_15 & RefAttributes<HTMLDivElement>>;
+export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_16 & RefAttributes<HTMLDivElement>>;
 
-export declare type ChatWidgetEmptyStateProps = Props_15;
+export declare type ChatWidgetEmptyStateProps = Props_16;
 
 /**
  * Filter chips list
@@ -822,7 +845,7 @@ export declare const CommunityPost: (({ id, author, group, createdAt, title, des
 
 export declare type CommunityPostProps = {
     id: string;
-    author: {
+    author?: {
         firstName: string;
         lastName: string;
         avatarUrl?: string;
@@ -903,7 +926,7 @@ export declare type CompanySelectorProps = {
     }[];
 };
 
-export declare const CompanyTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
+export declare const CompanyTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
 
 declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "item";
@@ -1058,10 +1081,15 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
 export declare const DateAvatar: ({ date }: Props_5) => JSX_2.Element;
 
 declare type DateFilterDefinition = BaseFilterDefinition<"date"> & {
-    options?: {
-        minDate?: Date;
-        maxDate?: Date;
-    };
+    options?: DateFilterOptions_2;
+};
+
+declare type DateFilterOptions_2 = {
+    minDate?: Date;
+    maxDate?: Date;
+    mode?: CalendarMode;
+    defaultSelected?: Date | DateRange | null;
+    view?: CalendarView;
 };
 
 declare type DateRange = {
@@ -1332,8 +1360,8 @@ export declare type FilterDefinition = FilterDefinitionsByType[keyof FilterDefin
 /**
  * All the available filter types
  */
-declare type FilterDefinitionsByType = {
-    in: InFilterDefinition<string>;
+declare type FilterDefinitionsByType<T = unknown> = {
+    in: InFilterDefinition<T>;
     search: SearchFilterDefinition;
     date: DateFilterDefinition;
 };
@@ -1347,18 +1375,6 @@ declare type FilterDefinitionsByType = {
 export declare const filterItemActions: <T extends RecordType>(actions: ItemActionsDefinition<T>, item: T) => (DropdownItem & {
     enabled?: boolean;
 })[];
-
-/**
- * Represents a selectable option in filter components.
- * Used primarily with InFilterDefinition.
- * @template T - Type of the underlying value
- */
-declare type FilterOption<T = unknown> = {
-    /** The value used for filtering */
-    value: T;
-    /** Human-readable label for the option */
-    label: string;
-};
 
 /**
  * Configuration options for filters in a collection.
@@ -1404,10 +1420,14 @@ export declare type FiltersState<Definition extends Record<string, FilterDefinit
     [K in keyof Definition]?: FilterValue<Definition[K]>;
 };
 
-declare type FilterTypeDefinition<Value = unknown, Options = never> = {
+declare type FilterTypeContext<Options extends object = never> = {
+    schema: FilterTypeSchema<Options>;
+};
+
+declare type FilterTypeDefinition<Value = unknown, Options extends object = never, EmptyValue = Value> = {
     /** Check if the value is empty */
-    emptyValue: Value;
-    isEmpty: (value: Value) => boolean;
+    emptyValue: EmptyValue;
+    isEmpty: (value: Value, context: FilterTypeContext<Options>) => boolean;
     /** Render the filter form */
     render: <Schema extends FilterTypeSchema<Options>>(props: {
         schema: Schema;
@@ -1417,26 +1437,22 @@ declare type FilterTypeDefinition<Value = unknown, Options = never> = {
     /**
      * The value label to display in the filter chips
      */
-    chipLabel: (value: Value, context: {
-        schema: FilterTypeSchema<Options>;
-    }) => string | Promise<string>;
+    chipLabel: (value: Value, context: FilterTypeContext<Options>) => string | Promise<string>;
     /**
-     * The options to render a filter of this type, for example max and min date for a date filter, the list of options for an in filter, etc
+     * The default options to render a filter of this type, for example max and min date for a date filter, the list of options for an in filter, etc
      */
-    options?: Options;
+    defaultOptions?: Options;
 };
 
-declare type FilterTypeKeys = keyof FilterTypes;
-
-declare type FilterTypes = ValidateFilterType<typeof filterTypes>;
+declare type FilterTypeKey = keyof typeof filterTypes;
 
 declare const filterTypes: {
     readonly in: FilterTypeDefinition<string[], InFilterOptions<string>>;
     readonly search: FilterTypeDefinition<string>;
-    readonly date: FilterTypeDefinition<string, DateFilterOptions>;
+    readonly date: FilterTypeDefinition<Date | DateRange | undefined, DateFilterOptions>;
 };
 
-declare type FilterTypeSchema<Options = never> = {
+declare type FilterTypeSchema<Options extends object = never> = {
     options: Options extends never ? never : Options;
     label: string;
 };
@@ -1449,7 +1465,7 @@ declare type FilterTypeSchema<Options = never> = {
  * This type is used to ensure type safety when working with filter values.
  * @template T - The filter definition type
  */
-export declare type FilterValue<T extends FilterDefinition> = T extends InFilterDefinition<infer U> ? U[] : T extends SearchFilterDefinition ? string : T extends DateFilterDefinition ? Date : never;
+export declare type FilterValue<T extends FilterDefinition> = T extends InFilterDefinition<infer U> ? U[] : T extends SearchFilterDefinition ? string : T extends DateFilterDefinition ? DateRange | Date | undefined : never;
 
 export declare type FlattenedItem = {
     parent: AvatarNamedEntity | null;
@@ -1467,6 +1483,12 @@ export declare function FormActions<Schema extends SchemaType, FormData extends 
     submitLabel: string;
     form: FormType<Schema, FormData>;
 }): JSX_2.Element;
+
+declare type FormError<Fields extends FieldValues> = {
+    success: false;
+    rootMessage?: string;
+    errors: Partial<Record<Path<Fields>, string>>;
+};
 
 export declare const FormField: <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>({ label, description, children, ...props }: FormFieldProps<TFieldValues, TName> & {
     children: (field: ControllerRenderProps<TFieldValues>) => JSX.Element;
@@ -1487,6 +1509,26 @@ declare interface FrameContextType {
     prevSidebarState: SidebarState | null;
     toggleSidebar: () => void;
 }
+
+export declare const getGranularityDefinition: (view: CalendarView) => GranularityDefinitionSimple;
+
+export declare interface GranularityDefinition {
+    label: (viewDate: Date) => ReactNode;
+    toString: (date: Date | DateRange | undefined | null) => string;
+    navigate: (viewDate: Date, direction: -1 | 1) => Date;
+    render: (renderProps: {
+        mode: CalendarMode;
+        selected: Date | DateRange | null;
+        onSelect: (date: Date | DateRange | null) => void;
+        month: Date;
+        onMonthChange: (date: Date) => void;
+        motionDirection: number;
+        setViewDate: (date: Date) => void;
+        viewDate: Date;
+    }) => ReactNode;
+}
+
+export declare type GranularityDefinitionSimple = Pick<GranularityDefinition, "toString">;
 
 declare type HeaderProps = {
     module: {
@@ -1520,6 +1562,11 @@ declare type HighlightBannerProps = {
 };
 
 declare type HTMLString = string;
+
+export declare const IconAvatar: {
+    ({ icon, size, className }: Props_7): JSX_2.Element;
+    displayName: string;
+};
 
 declare const iconSizes: {
     readonly sm: "xs";
@@ -1556,7 +1603,27 @@ export declare interface IndicatorsListProps {
 declare type InferSchema<T extends SchemaType> = z.infer<T>;
 
 declare type InFilterDefinition<T = unknown> = BaseFilterDefinition<"in"> & {
-    options: Array<FilterOption<T>> | (() => Array<FilterOption<T>> | Promise<Array<FilterOption<T>>>);
+    options: InFilterOptions_2<T>;
+};
+
+/**
+ * Represents a selectable option in filter components.
+ * Used primarily with InFilterDefinition.
+ * @template T - Type of the underlying value
+ */
+declare type InFilterOptionItem<T = unknown> = {
+    /** The value used for filtering */
+    value: T;
+    /** Human-readable label for the option */
+    label: string;
+};
+
+/**
+ * Represents the options for the InFilter component.
+ * @template T - Type of the underlying value
+ */
+declare type InFilterOptions_2<T> = {
+    options: Array<InFilterOptionItem<T>> | (() => Array<InFilterOptionItem<T>> | Promise<Array<InFilterOptionItem<T>>>);
 };
 
 export declare const Input: React.FC<InputProps>;
@@ -1780,7 +1847,7 @@ action: BulkAction,
 
 export declare const OneAlert: ({ title, description, action, link, variant, }: AlertProps) => JSX_2.Element;
 
-export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaultSelected, showNavigation, }: OneCalendarProps): JSX_2.Element;
+export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaultSelected, showNavigation, showInput, }: OneCalendarProps): JSX_2.Element;
 
 export declare interface OneCalendarProps {
     mode: CalendarMode;
@@ -1789,6 +1856,7 @@ export declare interface OneCalendarProps {
     defaultMonth?: Date;
     defaultSelected?: Date | DateRange | null;
     showNavigation?: boolean;
+    showInput?: boolean;
 }
 
 export declare function OneCard({ avatar, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, }: OneCardProps): JSX_2.Element;
@@ -2006,6 +2074,8 @@ export declare type OnSelectItemsCallback<Record extends RecordType, Filters ext
     selectedCount: number;
 }, clearSelectedItems: () => void) => void;
 
+declare type OnSubmitHandler<TFieldValues extends FieldValues, TTransformedValues extends FieldValues | undefined = undefined> = (data: ReturnType<UseFormHandleSubmit<TFieldValues, TTransformedValues>>) => Promise<Success | FormError<TFieldValues>> | Success | FormError<TFieldValues>;
+
 declare interface Option_2 {
     title?: string;
     description?: string;
@@ -2104,7 +2174,7 @@ declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
 
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
-export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
+export declare const PersonTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
 
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: PieChartProps;
@@ -2300,30 +2370,35 @@ declare type Props = {
     badge?: BadgeProps;
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
 
-declare interface Props_10 {
+declare type Props_10<Text extends string = string> = {
+    text: Text extends "" ? never : Text;
+    level: Level;
+};
+
+declare interface Props_11 {
     text: string;
     status: Status;
 }
 
-declare type Props_11 = {
+declare type Props_12 = {
     companyName: string;
     companyImageUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_12 = {
+declare type Props_13 = {
     name: string;
     avatarUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_13 = {
+declare type Props_14 = {
     teamName: string;
     teamImageUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_14 = {
+declare type Props_15 = {
     firstName: string;
     lastName: string;
     src?: string;
@@ -2331,7 +2406,7 @@ declare type Props_14 = {
     onPulseClick: () => void;
 } & Pick<BaseAvatarProps_4, "aria-label" | "aria-labelledby">;
 
-declare interface Props_15 {
+declare interface Props_16 {
     title: string;
     content: string;
     buttonLabel?: string;
@@ -2340,7 +2415,7 @@ declare interface Props_15 {
     type: Type;
 }
 
-declare type Props_16 = {
+declare type Props_17 = {
     label: string;
     icon: IconType;
     iconClassName?: string;
@@ -2348,7 +2423,7 @@ declare type Props_16 = {
     onClick?: () => void;
 };
 
-declare type Props_17<Id extends string | number = string | number> = {
+declare type Props_18<Id extends string | number = string | number> = {
     id: Id;
     icon?: IconType;
     title: string;
@@ -2356,17 +2431,9 @@ declare type Props_17<Id extends string | number = string | number> = {
     onClick?: (id: Id) => void;
 };
 
-declare type Props_18<Id extends string | number = string | number> = {
+declare type Props_19<Id extends string | number = string | number> = {
     items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
     minSize?: number;
-    onClickItem?: (id: Id) => void;
-    showAllItems?: boolean;
-};
-
-declare type Props_19<Id extends string | number = string | number> = {
-    items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
-    minSize?: number;
-    gap?: number;
     onClickItem?: (id: Id) => void;
     showAllItems?: boolean;
 };
@@ -2377,6 +2444,14 @@ declare type Props_2 = {
     size?: BaseAvatarProps_2["size"];
     badge?: BadgeProps;
 } & Pick<BaseAvatarProps_2, "aria-label" | "aria-labelledby">;
+
+declare type Props_20<Id extends string | number = string | number> = {
+    items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
+    minSize?: number;
+    gap?: number;
+    onClickItem?: (id: Id) => void;
+    showAllItems?: boolean;
+};
 
 declare type Props_3 = {
     name: string;
@@ -2421,9 +2496,15 @@ declare type Props_6 = {
     size?: "sm" | "md" | "lg";
 };
 
-declare type Props_7 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
+declare type Props_7 = {
+    icon: IconType;
+    size?: "sm" | "md" | "lg";
+    className?: string;
+};
 
-declare type Props_8 = {
+declare type Props_8 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
+
+declare type Props_9 = {
     /** Main heading text */
     title: string;
     /** Description text below the title */
@@ -2442,15 +2523,10 @@ declare type Props_8 = {
     separator?: "top" | "bottom";
 };
 
-declare type Props_9<Text extends string = string> = {
-    text: Text extends "" ? never : Text;
-    level: Level;
-};
-
 declare type Pulse = "superNegative" | "negative" | "neutral" | "positive" | "superPositive";
 
 declare const PulseAvatar: {
-    ({ firstName, lastName, src, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, pulse, onPulseClick, }: Props_14): JSX_2.Element;
+    ({ firstName, lastName, src, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, pulse, onPulseClick, }: Props_15): JSX_2.Element;
     displayName: string;
 };
 
@@ -2507,7 +2583,7 @@ declare type RendererDefinition = {
     };
 }[keyof typeof propertyRenderers];
 
-export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_7) => JSX_2.Element;
+export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_8) => JSX_2.Element;
 
 export declare type resultType = {
     value: string | null;
@@ -2651,7 +2727,13 @@ export declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
     enabled?: boolean;
 }> | undefined;
 
-export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_8) => JSX_2.Element;
+export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_9) => JSX_2.Element;
+
+declare type SectionProps = {
+    title: string;
+    items: ActivityItemProps[];
+    onClickItem: (id: string) => void;
+};
 
 export declare const Select: ForwardRefExoticComponent<SelectProps<string, any> & RefAttributes<HTMLButtonElement>>;
 
@@ -2886,6 +2968,12 @@ export declare type subActionType = {
     icon?: IconType_2;
 };
 
+declare type Success = {
+    success: true;
+    rootMessage?: never;
+    errors?: never;
+};
+
 export declare const SummariesWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 export declare function Switch({ title, onCheckedChange, id, disabled, checked, value, hideLabel, presentational, ...rest }: SwitchProps): JSX_2.Element;
@@ -3066,7 +3154,7 @@ declare type TeamMetadata = BaseMetadata & {
     src?: string;
 };
 
-export declare const TeamTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
+export declare const TeamTag: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
 
 export declare const Textarea: React.FC<TextareaProps>;
 
@@ -3190,6 +3278,8 @@ export declare const useDataSource: <Record extends RecordType, FiltersSchema ex
 
 export { useForm }
 
+export declare function useFormSchema<Schema extends SchemaType, FormData extends InferSchema<Schema>>(schema: Schema, options: UseFormProps<FormData>, onSubmit: OnSubmitHandler<FormData>): FormType<Schema, FormData>;
+
 declare interface User {
     name: string;
 }
@@ -3202,10 +3292,6 @@ declare type UserMetadata = BaseMetadata & {
 };
 
 export declare function useSidebar(): FrameContextType;
-
-declare type ValidateFilterType<T> = T extends {
-    [K: string]: FilterTypeDefinition<unknown>;
-} ? T : never;
 
 declare type Variant = "neutral" | "info" | "positive" | "warning" | "critical";
 
@@ -3301,15 +3387,15 @@ export declare type WidgetEmptyStateProps = {
     actions?: Action[];
 };
 
-export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_16): JSX_2.Element;
+export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_17): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_18): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_19): JSX_2.Element;
 
-export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_17): JSX_2.Element;
+export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_18): JSX_2.Element;
 
-export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_17<Id>;
+export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_18<Id>;
 
-export declare type WidgetInboxListProps = Props_18;
+export declare type WidgetInboxListProps = Props_19;
 
 export declare interface WidgetProps {
     header?: {
@@ -3347,7 +3433,7 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_19): JSX_2.Element;
+export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_20): JSX_2.Element;
 
 export declare function WidgetSimpleListItem({ id, title, alert, rawTag, count, icon, rightIcon, iconClassName, rightIconClassName, onClick, }: WidgetSimpleListItemProps): JSX_2.Element;
 
@@ -3364,7 +3450,7 @@ export declare type WidgetSimpleListItemProps<Id extends string | number = strin
     onClick?: (id: Id) => void;
 };
 
-export declare type WidgetSimpleListProps = Props_19;
+export declare type WidgetSimpleListProps = Props_20;
 
 export declare type WidgetSkeletonProps = {
     header?: {

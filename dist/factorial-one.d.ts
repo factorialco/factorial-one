@@ -152,6 +152,13 @@ declare const defaultTranslations: {
     };
     readonly shortcut: "Shortcut";
     readonly date: {
+        readonly groups: {
+            readonly today: "Today";
+            readonly yesterday: "Yesterday";
+            readonly lastWeek: "Last week";
+            readonly lastMonth: "Last month";
+            readonly other: "Other";
+        };
         readonly month: {
             readonly january: "January";
             readonly february: "February";
