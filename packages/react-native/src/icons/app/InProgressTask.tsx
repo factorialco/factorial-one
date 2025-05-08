@@ -9,7 +9,7 @@ const SvgInProgressTask = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Circle cx={12} cy={12} r={8} stroke="currentColor" strokeWidth={1.3} />
+    <Circle cx={12} cy={12} r={8} stroke="currentColor" />
     <Path fill="currentColor" d="M12 18a6 6 0 0 0 0-12z" />
   </Svg>
 );

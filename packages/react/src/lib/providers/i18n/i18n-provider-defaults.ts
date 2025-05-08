@@ -48,6 +48,13 @@ export const defaultTranslations = {
   },
   shortcut: "Shortcut",
   date: {
+    groups: {
+      today: "Today",
+      yesterday: "Yesterday",
+      lastWeek: "Last week",
+      lastMonth: "Last month",
+      other: "Other",
+    },
     month: {
       january: "January",
       february: "February",

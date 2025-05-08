@@ -1,7 +1,13 @@
 import { Button } from "@/components/Actions/Button"
 import { AnimatePresence } from "framer-motion"
 import { useI18n } from "../../../../lib/providers/i18n"
-import type { FiltersDefinition, FiltersState } from "../types"
+import {
+  FilterDefinitionsByType,
+  FilterTypeDefinition,
+  FilterTypeSchema,
+  getFilterType,
+} from "../FilterTypes"
+import type { FiltersDefinition, FiltersState, FilterValue } from "../types"
 import { FilterChipButton } from "./FilterChipButton"
 
 interface FiltersChipsListProps<Filters extends FiltersDefinition> {
@@ -43,11 +49,29 @@ export function FiltersChipsList<Filters extends FiltersDefinition>({
             if (!filters[key]) {
               return null
             }
+
+            const currentValue = filters[key]
+
+            const filterType = getFilterType(filterSchema.type)
+            type FilterType = FilterDefinitionsByType[typeof filterSchema.type]
+
+            const typedFilterType = filterType as FilterTypeDefinition<
+              FilterValue<FilterType>
+            >
+
+            if (
+              typedFilterType.isEmpty(currentValue, {
+                schema: filterSchema as unknown as FilterTypeSchema,
+              })
+            ) {
+              return null
+            }
+
             return (
               <FilterChipButton
                 key={`filter-${String(key)}`}
                 filter={filterSchema}
-                value={filters[key]}
+                value={currentValue}
                 onSelect={() => onFilterSelect(key)}
                 onRemove={() => onFilterRemove(key)}
               />

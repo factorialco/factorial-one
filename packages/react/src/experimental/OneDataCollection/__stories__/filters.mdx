@@ -87,6 +87,15 @@ values to filter the data.
 The `date` filter is used to filter the data by a date value. The filter allows
 limit user select to a min and max date.
 
+#### Options
+
+- `minDate?`: The minimum date that the user can select.
+- `maxDate?`: The maximum date that the user can select.
+- `mode?`: The mode of the date filter, can be `single` (default), `range` or
+  `multiple`.
+- `view?`: The view of the date filter, can be `day` (default), `week`, `month`
+  or `year`.
+
 ```tsx
 const filters: FiltersDefinition<typeof mockUsers> = {
   date: {
@@ -95,6 +104,8 @@ const filters: FiltersDefinition<typeof mockUsers> = {
     options: {
       minDate: new Date("2021-01-01"),
       maxDate: new Date("2021-12-31"),
+      mode: "range",
+      view: "day",
     },
   },
 }
@@ -137,7 +148,7 @@ export const myFilter: FilterTypeDefinition<number> = {
 export type MyFilterDefinition = BaseFilterDefinition<"myFilter">
 ```
 
-3. Import the new filter type in the `OneDataCollection/filters/index.ts` file
+3. Import the new filter type in the `OneDataCollection/filters/filters.ts` file
    and add it to the `filterTypes` object.
 
 ```tsx

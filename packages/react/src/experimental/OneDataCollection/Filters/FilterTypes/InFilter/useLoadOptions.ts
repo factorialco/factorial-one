@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useState } from "react"
-import { FilterOption } from "./types"
+import { InFilterOptionItem } from "./types"
 
-const optionsCache = new Map<string, FilterOption<unknown>[]>()
+const optionsCache = new Map<string, InFilterOptionItem<unknown>[]>()
 
 export async function loadOptions<T>(
+  cacheKey: string,
   optionsDef:
-    | FilterOption<T>[]
-    | Promise<FilterOption<T>[]>
-    | (() => Promise<FilterOption<T>[]> | FilterOption<T>[])
-): Promise<FilterOption<T>[]> {
-  const cacheKey = JSON.stringify(optionsDef)
-
-  if (optionsCache.has(cacheKey)) {
-    return optionsCache.get(cacheKey) as FilterOption<T>[]
+    | InFilterOptionItem<T>[]
+    | Promise<InFilterOptionItem<T>[]>
+    | (() => Promise<InFilterOptionItem<T>[]> | InFilterOptionItem<T>[]),
+  cacheResults: boolean = false
+): Promise<InFilterOptionItem<T>[]> {
+  if (cacheResults && optionsCache.has(cacheKey)) {
+    return optionsCache.get(cacheKey) as InFilterOptionItem<T>[]
   }
 
   const optionsProvider =
@@ -26,15 +26,14 @@ export async function loadOptions<T>(
 }
 
 export function useLoadOptions<T>(
+  cacheKey: string,
   optionsDef:
-    | FilterOption<T>[]
-    | Promise<FilterOption<T>[]>
-    | (() => Promise<FilterOption<T>[]> | FilterOption<T>[])
+    | InFilterOptionItem<T>[]
+    | Promise<InFilterOptionItem<T>[]>
+    | (() => Promise<InFilterOptionItem<T>[]> | InFilterOptionItem<T>[])
 ) {
-  const cacheKey = JSON.stringify(optionsDef)
-
   // Only use state for async options
-  const [options, setOptions] = useState<FilterOption<T>[]>([])
+  const [options, setOptions] = useState<InFilterOptionItem<T>[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
@@ -46,7 +45,7 @@ export function useLoadOptions<T>(
       try {
         setIsLoading(true)
         setError(null)
-        const result = await loadOptions(optionsDef)
+        const result = await loadOptions(cacheKey, optionsDef)
         setOptions(result)
       } catch (err) {
         setError(

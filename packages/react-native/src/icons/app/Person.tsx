@@ -9,12 +9,11 @@ const SvgPerson = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Circle cx={12} cy={9} r={4} stroke="currentColor" strokeWidth={1.3} />
+    <Circle cx={12} cy={9} r={4} stroke="currentColor" />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M7 18s1.5-2 5-2 5 2 5 2"
     />
   </Svg>

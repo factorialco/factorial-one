@@ -1,5 +1,61 @@
 # Changelog
 
+## [1.45.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.5...factorial-one-react-v1.45.0) (2025-05-08)
+
+
+### Features
+
+* create ActivityItemList component ([#1768](https://github.com/factorialco/factorial-one/issues/1768)) ([c77daa4](https://github.com/factorialco/factorial-one/commit/c77daa42e3ea2c30dd2ab728ddbdd38d76fe1700))
+
+## [1.44.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.4...factorial-one-react-v1.44.5) (2025-05-08)
+
+
+### Bug Fixes
+
+* vertical separators ([#1774](https://github.com/factorialco/factorial-one/issues/1774)) ([670938e](https://github.com/factorialco/factorial-one/commit/670938e75420286f22ddb32589cac7f497e4a189))
+
+## [1.44.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.3...factorial-one-react-v1.44.4) (2025-05-07)
+
+
+### Bug Fixes
+
+* update avatar pulse with the correct colours ([#1771](https://github.com/factorialco/factorial-one/issues/1771)) ([8d7b60a](https://github.com/factorialco/factorial-one/commit/8d7b60a35f78005d0fcbd407851ca4659cb6272d))
+
+## [1.44.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.2...factorial-one-react-v1.44.3) (2025-05-07)
+
+
+### Bug Fixes
+
+* expose useFormSchema ([#1766](https://github.com/factorialco/factorial-one/issues/1766)) ([b7ab162](https://github.com/factorialco/factorial-one/commit/b7ab1624483a906a5b852c6c9396c47841b57e85))
+
+## [1.44.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.1...factorial-one-react-v1.44.2) (2025-05-07)
+
+
+### Bug Fixes
+
+* date type infer ([#1761](https://github.com/factorialco/factorial-one/issues/1761)) ([59eee12](https://github.com/factorialco/factorial-one/commit/59eee12bac50130331081c00c17eeb4ddf41f460))
+
+## [1.44.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.0...factorial-one-react-v1.44.1) (2025-05-07)
+
+
+### Bug Fixes
+
+* Sidebar grouping position bug ([#1754](https://github.com/factorialco/factorial-one/issues/1754)) ([a7ffc0f](https://github.com/factorialco/factorial-one/commit/a7ffc0f2cde4fed75630b227e4c5278dc0dce8e8))
+
+## [1.44.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.1...factorial-one-react-v1.44.0) (2025-05-06)
+
+
+### Features
+
+* datacollection add datefilter ([2288214](https://github.com/factorialco/factorial-one/commit/2288214f48033b3833b396d40ac94ca5fbdb3cc3))
+
+## [1.43.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.0...factorial-one-react-v1.43.1) (2025-05-06)
+
+
+### Bug Fixes
+
+* add missing case in CommunityPost with no author ([#1757](https://github.com/factorialco/factorial-one/issues/1757)) ([55144de](https://github.com/factorialco/factorial-one/commit/55144dec779511f5e26ab4a5894c60a1ed5cc44c))
+
 ## [1.43.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.42.0...factorial-one-react-v1.43.0) (2025-05-06)
 
 

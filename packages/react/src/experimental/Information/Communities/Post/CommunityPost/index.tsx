@@ -1,19 +1,25 @@
-import { Comment as CommentIcon, EllipsisHorizontal } from "@/icons/app"
+import { Button } from "@/components/Actions/Button"
+import { Link } from "@/components/Actions/Link"
+import { IconAvatar } from "@/experimental/Information/Avatars/IconAvatar"
+import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
+import { Reactions, ReactionsProps } from "@/experimental/Information/Reactions"
+import { Dropdown, DropdownItem } from "@/experimental/Navigation/Dropdown"
+import {
+  Comment as CommentIcon,
+  EllipsisHorizontal,
+  Person as PersonIcon,
+} from "@/icons/app"
+import { getDisplayDateBasedOnDuration } from "@/lib/date"
+import { withSkeleton } from "@/lib/skeleton"
+import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
-import { Button } from "../../../../../components/Actions/Button"
-import { Link } from "../../../../../components/Actions/Link"
-import { getAgo } from "../../../../../lib/date"
-import { withSkeleton } from "../../../../../lib/skeleton"
-import { Dropdown, DropdownItem } from "../../../../Navigation/Dropdown"
-import { PersonAvatar } from "../../../Avatars/PersonAvatar"
-import { Reactions, ReactionsProps } from "../../../Reactions"
 import { PostDescription, PostDescriptionProps } from "../PostDescription"
 import { PostEvent, PostEventProps } from "../PostEvent"
 import { isVideo } from "./video"
 
 export type CommunityPostProps = {
   id: string
-  author: {
+  author?: {
     firstName: string
     lastName: string
     avatarUrl?: string
@@ -72,7 +78,7 @@ export const BaseCommunityPost = ({
     .filter(Boolean)
     .join(" · ")
 
-  const ago = getAgo(createdAt)
+  const date = getDisplayDateBasedOnDuration(createdAt)
 
   const handleClick = () => {
     onClick(id)
@@ -82,7 +88,9 @@ export const BaseCommunityPost = ({
     event.stopPropagation()
   }
 
-  const authorFullName = `${author.firstName} ${author.lastName}`
+  const authorFullName = author
+    ? `${author.firstName} ${author.lastName}`
+    : undefined
 
   return (
     <div
@@ -90,42 +98,65 @@ export const BaseCommunityPost = ({
       onClick={handleClick}
     >
       <div className="hidden md:block">
-        <Link href={author.url} title={authorFullName} stopPropagation>
-          <PersonAvatar
-            firstName={author.firstName}
-            lastName={author.lastName}
-            src={author.avatarUrl}
-          />
-        </Link>
+        {author ? (
+          <Link href={author.url} title={authorFullName} stopPropagation>
+            <PersonAvatar
+              firstName={author.firstName}
+              lastName={author.lastName}
+              src={author.avatarUrl}
+            />
+          </Link>
+        ) : (
+          <IconAvatar icon={PersonIcon} className="rounded-full" />
+        )}
       </div>
       <div className="flex flex-1 flex-col gap-3">
         <div className="flex flex-col gap-2">
           <div className="flex flex-row justify-between">
             <div className="flex flex-1 flex-row flex-wrap items-center gap-1">
-              <Link
-                href={author.url}
-                className="block md:hidden"
-                title={authorFullName}
-                stopPropagation
-              >
-                <span className="flex items-center">
-                  <PersonAvatar
-                    firstName={author.firstName}
-                    lastName={author.lastName}
-                    src={author.avatarUrl}
-                    size="xsmall"
+              {author ? (
+                <>
+                  <Link
+                    href={author.url}
+                    className="block md:hidden"
+                    title={authorFullName}
+                    stopPropagation
+                  >
+                    <span className="flex items-center">
+                      <PersonAvatar
+                        firstName={author.firstName}
+                        lastName={author.lastName}
+                        src={author.avatarUrl}
+                        size="xsmall"
+                      />
+                    </span>
+                  </Link>
+                  <Link
+                    href={author.url}
+                    title={authorFullName}
+                    className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
+                    stopPropagation
+                  >
+                    {authorFullName}
+                  </Link>
+                </>
+              ) : (
+                <div className="block md:hidden">
+                  <IconAvatar
+                    icon={PersonIcon}
+                    size="sm"
+                    className="size-5 rounded-full"
                   />
-                </span>
-              </Link>
-              <Link
-                href={author.url}
-                title={authorFullName}
-                className="font-medium text-f1-foreground no-underline visited:text-f1-foreground"
-                stopPropagation
+                </div>
+              )}
+              <span
+                className={cn(
+                  "text-f1-foreground-secondary",
+                  !author && "capitalize"
+                )}
               >
-                {authorFullName}
-              </Link>
-              <span className="text-f1-foreground-secondary">{inLabel}</span>
+                {inLabel}
+              </span>
               <Link
                 onClick={group.onClick}
                 title={group.title}
@@ -137,7 +168,7 @@ export const BaseCommunityPost = ({
               <span className="hidden text-f1-foreground-secondary md:inline">
                 ·
               </span>
-              <span className="text-f1-foreground-secondary">{ago}</span>
+              <span className="text-f1-foreground-secondary">{date}</span>
             </div>
 
             <div className="flex flex-row gap-2">
