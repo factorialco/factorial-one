@@ -54,6 +54,39 @@ const sampleTags: TagVariant[] = [
   },
 ]
 
+const sampleTagsWithDescriptions: TagVariant[] = [
+  {
+    type: "dot",
+    text: "Category",
+    color: "viridian",
+    description: "This is a category tag with a description",
+  },
+  {
+    type: "person",
+    name: "John Doe",
+    avatarUrl: mockAvatarUrl,
+    description: "Team Lead - Engineering",
+  },
+  {
+    type: "team",
+    teamName: "Engineering",
+    teamImageUrl: mockTeamImageUrl,
+    description: "Frontend development team",
+  },
+  {
+    type: "company",
+    companyName: "Acme Inc",
+    companyImageUrl: mockCompanyImageUrl,
+    description: "Global technology company",
+  },
+  {
+    type: "status",
+    variant: "positive",
+    text: "Active",
+    description: "This project is currently active",
+  },
+]
+
 const meta: Meta<typeof TagList> = {
   title: "Tag/TagList",
   component: TagList,
@@ -100,6 +133,16 @@ export const WithRemainingCount: Story = {
   args: {
     tags: sampleTags.slice(0, 3),
     remainingCount: 10,
+  },
+}
+
+export const WithDescriptions: Story = {
+  args: {
+    tags: sampleTagsWithDescriptions,
+    max: 5,
+  },
+  parameters: {
+    layout: "padded",
   },
 }
 

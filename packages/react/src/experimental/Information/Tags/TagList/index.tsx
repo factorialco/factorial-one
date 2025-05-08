@@ -49,11 +49,12 @@ export const TagList = ({
         items={tags}
         renderListItem={(tag) => {
           const displayName = getTagDisplayName(tag)
+          const description = getTagDescription(tag)
 
           return noTooltip ? (
             <Tag tag={tag} />
           ) : (
-            <Tooltip label={displayName}>
+            <Tooltip label={displayName} description={description}>
               <div>
                 <Tag tag={tag} />
               </div>
@@ -87,11 +88,12 @@ export const TagList = ({
     <div className={tagListVariants()}>
       {visibleTags.map((tag, index) => {
         const displayName = getTagDisplayName(tag)
+        const description = getTagDescription(tag)
 
         return noTooltip ? (
           <Tag key={index} tag={tag} />
         ) : (
-          <Tooltip key={index} label={displayName}>
+          <Tooltip key={index} label={displayName} description={description}>
             <div>
               <Tag tag={tag} />
             </div>
@@ -125,6 +127,13 @@ const getTagDisplayName = (tag: TagVariant): string => {
     default:
       return ""
   }
+}
+
+const getTagDescription = (tag: TagVariant): string | undefined => {
+  if ("description" in tag && typeof tag.description === "string") {
+    return tag.description
+  }
+  return undefined
 }
 
 TagList.displayName = "TagList"

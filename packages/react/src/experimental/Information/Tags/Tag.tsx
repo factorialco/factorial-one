@@ -14,24 +14,34 @@ type CompanyTagProps = ComponentProps<typeof CompanyTag>
 type AlertTagProps = ComponentProps<typeof AlertTag>
 type BalanceTagProps = ComponentProps<typeof BalanceTag>
 
+// Base interface for optional tooltip description
+interface WithTooltipDescription {
+  /**
+   * Optional description to show in the tooltip
+   */
+  description?: string
+}
+
 export type TagVariant =
-  | ({ type: "dot" } & DotTagProps)
-  | ({ type: "person" } & PersonTagProps)
-  | ({ type: "team" } & TeamTagProps)
-  | ({ type: "company" } & CompanyTagProps)
+  | ({ type: "dot" } & DotTagProps & WithTooltipDescription)
+  | ({ type: "person" } & PersonTagProps & WithTooltipDescription)
+  | ({ type: "team" } & TeamTagProps & WithTooltipDescription)
+  | ({ type: "company" } & CompanyTagProps & WithTooltipDescription)
   | ({
       type: "alert"
       level: "info" | "warning" | "critical"
       text: string
       onClick?: () => void
-    } & AlertTagProps)
-  | ({ type: "status" } & StatusTagProps)
+    } & AlertTagProps &
+      WithTooltipDescription)
+  | ({ type: "status" } & StatusTagProps & WithTooltipDescription)
   | ({
       type: "balance"
       status: "positive" | "neutral" | "negative"
       text: string
       onClick?: () => void
-    } & BalanceTagProps)
+    } & BalanceTagProps &
+      WithTooltipDescription)
 
 export const Tag = ({ tag }: { tag: TagVariant }): ReactNode => {
   switch (tag.type) {
