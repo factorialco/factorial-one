@@ -145,9 +145,11 @@ export const IconsShowcase: Story = {
     return (
       <ScrollView>
         <View className="mb-4">
-          <Text className="text-lg font-bold mb-2">Search Icons</Text>
+          <Text className="text-lg font-bold mb-2 text-f1-foreground">
+            Search Icons
+          </Text>
           <TextInput
-            className="border border-gray-300 rounded-lg p-2 mb-4"
+            className="border border-gray-300 rounded-lg p-2 mb-4 text-f1-foreground"
             placeholder="Search icons..."
             value={searchTerm}
             onChangeText={setSearchTerm}
@@ -183,7 +185,7 @@ export const IconsShowcase: Story = {
           </View>
         ) : (
           <View className="items-center justify-center p-10">
-            <Text className="text-lg">
+            <Text className="text-lg text-f1-foreground">
               No icons found matching "{searchTerm}"
             </Text>
           </View>
