@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.45.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.5...factorial-one-react-v1.45.0) (2025-05-08)
+
+
+### Features
+
+* create ActivityItemList component ([#1768](https://github.com/factorialco/factorial-one/issues/1768)) ([c77daa4](https://github.com/factorialco/factorial-one/commit/c77daa42e3ea2c30dd2ab728ddbdd38d76fe1700))
+
 ## [1.44.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.4...factorial-one-react-v1.44.5) (2025-05-08)
 
 
