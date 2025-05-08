@@ -282,6 +282,7 @@ export const withFavorites: Story = {
         {...props}
         favorites={{
           isMarked,
+          label: "Mark as favorite",
           onChange: () => setIsMarked((current) => !current),
         }}
       />
