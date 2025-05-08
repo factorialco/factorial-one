@@ -12,43 +12,21 @@ type WithTooltipDescription = {
   description?: string
 }
 
-type DotTagData = Omit<
-  Extract<TagVariant, { type: "dot" }>,
-  "type" | "description"
->
-type PersonTagData = Omit<
-  Extract<TagVariant, { type: "person" }>,
-  "type" | "description"
->
-type TeamTagData = Omit<
-  Extract<TagVariant, { type: "team" }>,
-  "type" | "description"
->
-type CompanyTagData = Omit<
-  Extract<TagVariant, { type: "company" }>,
-  "type" | "description"
->
-type AlertTagData = Omit<
-  Extract<TagVariant, { type: "alert" }>,
-  "type" | "description"
->
-type StatusTagData = Omit<
-  Extract<TagVariant, { type: "status" }>,
-  "type" | "description"
->
-type BalanceTagData = Omit<
-  Extract<TagVariant, { type: "balance" }>,
+// Generic type helper to create tag data types
+type TagDataType<T extends string> = Omit<
+  Extract<TagVariant, { type: T }>,
   "type" | "description"
 >
 
+// Define tag types using the generic helper
 type TagTypeMapping = {
-  dot: DotTagData
-  person: PersonTagData
-  team: TeamTagData
-  company: CompanyTagData
-  alert: AlertTagData
-  status: StatusTagData
-  balance: BalanceTagData
+  dot: TagDataType<"dot">
+  person: TagDataType<"person">
+  team: TagDataType<"team">
+  company: TagDataType<"company">
+  alert: TagDataType<"alert">
+  status: TagDataType<"status">
+  balance: TagDataType<"balance">
 }
 
 export type TagType = keyof TagTypeMapping
