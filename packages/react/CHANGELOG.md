@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.46.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.45.0...factorial-one-react-v1.46.0) (2025-05-08)
+
+
+### Features
+
+* update react icons ([2ae6917](https://github.com/factorialco/factorial-one/commit/2ae69171e5d3097b95e6ad32f0730de2c1547404))
+
 ## [1.45.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.5...factorial-one-react-v1.45.0) (2025-05-08)
 
 
