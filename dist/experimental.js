@@ -20364,17 +20364,18 @@ const q_ = H(
   )
 );
 q_.displayName = "TeamTag";
-const ej = {
-  dot: (e) => /* @__PURE__ */ l(yd, { ...e }),
-  person: (e) => /* @__PURE__ */ l(B_, { ...e }),
-  team: (e) => /* @__PURE__ */ l(q_, { ...e }),
-  company: (e) => /* @__PURE__ */ l(H_, { ...e }),
-  alert: (e) => /* @__PURE__ */ l(Ou, { ...e }),
-  status: (e) => /* @__PURE__ */ l(Ma, { ...e }),
-  balance: (e) => /* @__PURE__ */ l(V_, { ...e })
+const ej = (e) => {
+  const { type: t } = e;
+  if (t === "dot") return /* @__PURE__ */ l(yd, { ...e });
+  if (t === "person") return /* @__PURE__ */ l(B_, { ...e });
+  if (t === "team") return /* @__PURE__ */ l(q_, { ...e });
+  if (t === "company") return /* @__PURE__ */ l(H_, { ...e });
+  if (t === "alert") return /* @__PURE__ */ l(Ou, { ...e });
+  if (t === "status") return /* @__PURE__ */ l(Ma, { ...e });
+  if (t === "balance") return /* @__PURE__ */ l(V_, { ...e });
 }, Vr = ({ tag: e }) => {
-  const t = ej[e.type];
-  return t ? t(e) : "Invalid tag type";
+  const t = ej(e);
+  return t || "Invalid tag type";
 }, uh = ({ count: e, list: t }) => {
   const [n, i] = G(!1), a = /* @__PURE__ */ l(Un, { text: `+${e}` });
   return t != null && t.length ? /* @__PURE__ */ x(No, { open: n, onOpenChange: i, children: [
