@@ -198,7 +198,7 @@ export function PageHeader({
                   />
                 )
               }
-            ></Breadcrumbs>
+            />
           )}
         </div>
       </div>
