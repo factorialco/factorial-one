@@ -9,7 +9,7 @@ import {
   EllipsisHorizontal,
   Person as PersonIcon,
 } from "@/icons/app"
-import { getAgo } from "@/lib/date"
+import { getDisplayDateBasedOnDuration } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
@@ -78,7 +78,7 @@ export const BaseCommunityPost = ({
     .filter(Boolean)
     .join(" · ")
 
-  const ago = getAgo(createdAt)
+  const date = getDisplayDateBasedOnDuration(createdAt)
 
   const handleClick = () => {
     onClick(id)
@@ -107,7 +107,7 @@ export const BaseCommunityPost = ({
             />
           </Link>
         ) : (
-          <IconAvatar icon={PersonIcon} />
+          <IconAvatar icon={PersonIcon} className="rounded-full" />
         )}
       </div>
       <div className="flex flex-1 flex-col gap-3">
@@ -142,7 +142,11 @@ export const BaseCommunityPost = ({
                 </>
               ) : (
                 <div className="block md:hidden">
-                  <IconAvatar icon={PersonIcon} size="xs" />
+                  <IconAvatar
+                    icon={PersonIcon}
+                    size="sm"
+                    className="size-5 rounded-full"
+                  />
                 </div>
               )}
               <span
@@ -164,7 +168,7 @@ export const BaseCommunityPost = ({
               <span className="hidden text-f1-foreground-secondary md:inline">
                 ·
               </span>
-              <span className="text-f1-foreground-secondary">{ago}</span>
+              <span className="text-f1-foreground-secondary">{date}</span>
             </div>
 
             <div className="flex flex-row gap-2">
