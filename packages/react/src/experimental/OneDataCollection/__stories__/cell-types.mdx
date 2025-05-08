@@ -305,10 +305,47 @@ type value = { label: string, color: NewColor }
 render: (item) => ({
     type: 'dotTag'
     value: {
-        label: 'Engineer'
+        label: 'Engineer',
         color: 'viridian'
     }
 })
 `,
   }}
 />
+
+### tagList
+
+Renders a list of tags of any type. This provides a unified way to display
+multiple tags of the same type with automatic overflow handling.
+
+#### Value type
+
+```
+type value = {
+  type: TagType,
+  tags: Array<TagVariant>,
+  max?: number
+}
+```
+
+<Canvas
+  of={CellTypesDataCollectionStories.TagArrayType}
+  source={{
+    code: `
+// Example with dot tags
+render: (item) => ({
+    type: 'tagList',
+    value: {
+        type: 'dot',
+        tags: item.skills.map(skill => ({
+            type: 'dot',
+            text: skill.label,
+            color: skill.color
+        })),
+        max: 3
+    }
+})
+
+// Example with status tags render: (item) => ({ type: 'tagList', value: { type:
+'status', tags: [ { type: 'status', variant: 'positive', text: 'Active' }, {
+type: 'status', variant: 'warning', text: 'Needs Review' } ] } }) `, }} />

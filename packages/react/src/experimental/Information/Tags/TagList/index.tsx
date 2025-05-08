@@ -8,8 +8,62 @@ const tagListVariants = cva({
   base: "flex items-center gap-2",
 })
 
-type Props = {
-  tags: TagVariant[]
+type WithTooltipDescription = {
+  description?: string
+}
+
+type DotTagData = Omit<
+  Extract<TagVariant, { type: "dot" }>,
+  "type" | "description"
+>
+type PersonTagData = Omit<
+  Extract<TagVariant, { type: "person" }>,
+  "type" | "description"
+>
+type TeamTagData = Omit<
+  Extract<TagVariant, { type: "team" }>,
+  "type" | "description"
+>
+type CompanyTagData = Omit<
+  Extract<TagVariant, { type: "company" }>,
+  "type" | "description"
+>
+type AlertTagData = Omit<
+  Extract<TagVariant, { type: "alert" }>,
+  "type" | "description"
+>
+type StatusTagData = Omit<
+  Extract<TagVariant, { type: "status" }>,
+  "type" | "description"
+>
+type BalanceTagData = Omit<
+  Extract<TagVariant, { type: "balance" }>,
+  "type" | "description"
+>
+
+type TagTypeMapping = {
+  dot: DotTagData
+  person: PersonTagData
+  team: TeamTagData
+  company: CompanyTagData
+  alert: AlertTagData
+  status: StatusTagData
+  balance: BalanceTagData
+}
+
+export type TagType = keyof TagTypeMapping
+
+type Props<T extends TagType> = {
+  /**
+   * The type of tags to display. Only one type can be used at a time.
+   */
+  type: T
+
+  /**
+   * Array of tag data corresponding to the specified type.
+   */
+  tags: Array<TagTypeMapping[T] & WithTooltipDescription>
+
   /**
    * Whether to hide tooltips for each tag
    * @default false
@@ -36,17 +90,23 @@ type Props = {
   layout?: "fill" | "compact"
 }
 
-export const TagList = ({
+export const TagList = <T extends TagType>({
+  type,
   tags,
   noTooltip = false,
   max = 4,
   remainingCount: initialRemainingCount,
   layout = "compact",
-}: Props) => {
+}: Props<T>) => {
+  // Convert tags to TagVariant
+  const tagVariants = tags.map(
+    (tagData) => ({ type, ...tagData }) as TagVariant
+  )
+
   if (layout === "fill") {
     return (
       <OverflowList
-        items={tags}
+        items={tagVariants}
         renderListItem={(tag) => {
           const displayName = getTagDisplayName(tag)
           const description = getTagDescription(tag)
@@ -69,7 +129,7 @@ export const TagList = ({
             list={
               initialRemainingCount
                 ? undefined
-                : tags.slice(tags.length - count)
+                : tagVariants.slice(tagVariants.length - count)
             }
           />
         )}
@@ -79,9 +139,9 @@ export const TagList = ({
     )
   }
 
-  const visibleTags = tags.slice(0, max)
-  const remainingTags = tags.slice(max)
-  const remainingCount = initialRemainingCount ?? tags.length - max
+  const visibleTags = tagVariants.slice(0, max)
+  const remainingTags = tagVariants.slice(max)
+  const remainingCount = initialRemainingCount ?? tagVariants.length - max
   const showCounter = remainingCount > 0
 
   return (
