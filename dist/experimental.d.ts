@@ -2950,25 +2950,25 @@ declare type TagMetadata = BaseMetadata & {
 
 declare type TagVariant = ({
     type: "dot";
-} & DotTagProps_2) | ({
+} & DotTagProps_2 & WithTooltipDescription) | ({
     type: "person";
-} & PersonTagProps) | ({
+} & PersonTagProps & WithTooltipDescription) | ({
     type: "team";
-} & TeamTagProps) | ({
+} & TeamTagProps & WithTooltipDescription) | ({
     type: "company";
-} & CompanyTagProps) | ({
+} & CompanyTagProps & WithTooltipDescription) | ({
     type: "alert";
     level: "info" | "warning" | "critical";
     text: string;
     onClick?: () => void;
-} & AlertTagProps) | ({
+} & AlertTagProps & WithTooltipDescription) | ({
     type: "status";
-} & StatusTagProps) | ({
+} & StatusTagProps & WithTooltipDescription) | ({
     type: "balance";
     status: "positive" | "neutral" | "negative";
     text: string;
     onClick?: () => void;
-} & BalanceTagProps);
+} & BalanceTagProps & WithTooltipDescription);
 
 declare interface Task {
     id: number | string;
@@ -3350,6 +3350,13 @@ declare type WithOptionalSorting<Record, Sortings extends SortingsDefinition> = 
      */
     width?: number;
 };
+
+declare interface WithTooltipDescription {
+    /**
+     * Optional description to show in the tooltip
+     */
+    description?: string;
+}
 
 export { }
 
