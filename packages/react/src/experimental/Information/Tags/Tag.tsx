@@ -2,12 +2,11 @@ import { ComponentProps, ReactNode } from "react"
 import { AlertTag } from "./AlertTag"
 import { BalanceTag } from "./BalanceTag"
 import { CompanyTag } from "./CompanyTag"
-import { DotTag } from "./DotTag"
+import { DotTag, DotTagProps } from "./DotTag"
 import { PersonTag } from "./PersonTag"
 import { StatusTag, StatusTagProps } from "./StatusTag"
 import { TeamTag } from "./TeamTag"
 
-type DotTagProps = ComponentProps<typeof DotTag>
 type PersonTagProps = ComponentProps<typeof PersonTag>
 type TeamTagProps = ComponentProps<typeof TeamTag>
 type CompanyTagProps = ComponentProps<typeof CompanyTag>
@@ -25,22 +24,14 @@ interface WithTooltipDescription {
 // Base type for all tag variants
 type BaseTag<T extends { type: string }> = T & WithTooltipDescription
 
-type DotTagVariant = BaseTag<{ type: "dot" } & DotTagProps>
-type PersonTagVariant = BaseTag<{ type: "person" } & PersonTagProps>
-type TeamTagVariant = BaseTag<{ type: "team" } & TeamTagProps>
-type CompanyTagVariant = BaseTag<{ type: "company" } & CompanyTagProps>
-type AlertTagVariant = BaseTag<{ type: "alert" } & AlertTagProps>
-type StatusTagVariant = BaseTag<{ type: "status" } & StatusTagProps>
-type BalanceTagVariant = BaseTag<{ type: "balance" } & BalanceTagProps>
-
 export type TagVariant =
-  | DotTagVariant
-  | PersonTagVariant
-  | TeamTagVariant
-  | CompanyTagVariant
-  | AlertTagVariant
-  | StatusTagVariant
-  | BalanceTagVariant
+  | BaseTag<{ type: "dot" } & DotTagProps>
+  | BaseTag<{ type: "person" } & PersonTagProps>
+  | BaseTag<{ type: "team" } & TeamTagProps>
+  | BaseTag<{ type: "company" } & CompanyTagProps>
+  | BaseTag<{ type: "alert" } & AlertTagProps>
+  | BaseTag<{ type: "status" } & StatusTagProps>
+  | BaseTag<{ type: "balance" } & BalanceTagProps>
 
 const tagComponent = (tag: TagVariant): ReactNode | undefined => {
   const { type } = tag
