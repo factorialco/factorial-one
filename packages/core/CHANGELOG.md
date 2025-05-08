@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.6.0...factorial-one-core-v1.7.0) (2025-05-08)
+
+
+### Features
+
+* update react icons ([2ae6917](https://github.com/factorialco/factorial-one/commit/2ae69171e5d3097b95e6ad32f0730de2c1547404))
+
 ## [1.6.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.5.0...factorial-one-core-v1.6.0) (2025-05-08)
 
 
