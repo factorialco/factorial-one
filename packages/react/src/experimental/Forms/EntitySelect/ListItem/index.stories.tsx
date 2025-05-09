@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { fn } from "@storybook/test"
 import { ComponentProps, useCallback, useState } from "react"
-import { famousEmployees } from "../avatar-name.factory"
+import { famousEmployees } from "../entity-select-name.factory"
 import { teamsWithEmployees } from "../groups-avatar-name.factory"
 import { AvatarNameListItem } from "./index"
 

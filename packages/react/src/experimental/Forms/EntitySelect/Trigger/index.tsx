@@ -4,46 +4,48 @@ import { ChevronDown } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
 import { PersonAvatar } from "../../../exports"
 import {
-  AvatarNamedEntity,
-  AvatarNamedSubEntity,
+  EntitySelectEntity,
+  EntitySelectSubEntity,
   FlattenedItem,
 } from "../types"
 
-export const AvatarNameSelectorTrigger = ({
+export const Trigger = ({
   placeholder,
   selected,
-  selectedAvatarName,
+  selectedEntities,
   disabled = false,
+  hiddenAvatar = false,
 }: {
   placeholder: string
   selected: string
   disabled?: boolean
-  selectedAvatarName: AvatarNamedEntity[]
+  selectedEntities: EntitySelectEntity[]
+  hiddenAvatar?: boolean
 }) => {
   const groupView = useMemo(
     () =>
-      selectedAvatarName.some(
+      selectedEntities.some(
         (entity) => entity.subItems && entity.subItems.length > 0
       ),
-    [selectedAvatarName]
+    [selectedEntities]
   )
   const flattenedList = useMemo<FlattenedItem[]>(() => {
     return !groupView
-      ? selectedAvatarName.map((el) => ({
+      ? selectedEntities.map((el) => ({
           parent: null,
           subItem: {
             subId: el.id,
             subName: el.name,
             subAvatar: el.avatar,
-          } as AvatarNamedSubEntity,
+          } as EntitySelectSubEntity,
         }))
-      : selectedAvatarName.flatMap((entity) =>
+      : selectedEntities.flatMap((entity) =>
           (entity.subItems ?? []).map((subItem) => ({
             parent: entity,
             subItem,
           }))
         )
-  }, [groupView, selectedAvatarName])
+  }, [groupView, selectedEntities])
 
   return (
     <div
@@ -52,19 +54,23 @@ export const AvatarNameSelectorTrigger = ({
         disabled ? "to-f1-background-secondary" : ""
       )}
     >
-      <span className="my-auto pl-1 text-f1-foreground-secondary">
+      <span className="my-auto pl-1 pr-1 text-f1-foreground-secondary">
         {flattenedList.length === 0 ? (
           placeholder
         ) : flattenedList.length === 1 ? (
-          <div className="flex flex-row gap-2 p-0">
-            <PersonAvatar
-              firstName={flattenedList[0].subItem.subName}
-              lastName={""}
-              src={flattenedList[0].subItem.subAvatar}
-              size="xsmall"
-            />
-            <span>{flattenedList[0].subItem.subName}</span>
-          </div>
+          !hiddenAvatar ? (
+            <div className="flex flex-row gap-2 p-0">
+              <PersonAvatar
+                firstName={flattenedList[0].subItem.subName}
+                lastName={""}
+                src={flattenedList[0].subItem.subAvatar}
+                size="xsmall"
+              />
+              <span>{flattenedList[0].subItem.subName}</span>
+            </div>
+          ) : (
+            flattenedList[0].subItem.subName
+          )
         ) : (
           flattenedList.length + " " + selected
         )}

@@ -1,31 +1,31 @@
 import { PopoverProps } from "@radix-ui/react-popover"
 
-export type AvatarNamedSubEntity = {
+export type EntitySelectSubEntity = {
   subId: number
   subName: string
   subAvatar?: string
   subSearchKeys?: string[]
 }
 
-export type AvatarNamedEntity = {
+export type EntitySelectEntity = {
   id: number
   name: string
   avatar?: string
   expanded?: boolean
   searchKeys?: string[]
-  subItems?: AvatarNamedSubEntity[]
+  subItems?: EntitySelectSubEntity[]
 }
 
-export type AvatarNamedGroup = {
+export type EntitySelectNamedGroup = {
   value: string
   label: string
   groupType?: "avatar" | "team"
 }
 
-interface AvatarNameSelectorCommonProps
+interface EntitySelectCommonProps
   extends Omit<PopoverProps, "children" | "modal"> {
-  entities: AvatarNamedEntity[]
-  groups: AvatarNamedGroup[]
+  entities: EntitySelectEntity[]
+  groups: EntitySelectNamedGroup[]
   selectedGroup: string
   triggerPlaceholder: string
   triggerSelected: string
@@ -40,30 +40,29 @@ interface AvatarNameSelectorCommonProps
   selectAllLabel?: string
   clearLabel?: string
   selectedLabel?: string
-  selectedAvatarName?: AvatarNamedEntity[]
+  selectedEntities?: EntitySelectEntity[]
   alwaysOpen?: boolean
   width?: number
+  hiddenAvatar?: boolean
 }
 
 export type FlattenedItem = {
-  parent: AvatarNamedEntity | null
-  subItem: AvatarNamedSubEntity & {
+  parent: EntitySelectEntity | null
+  subItem: EntitySelectSubEntity & {
     expanded?: boolean
-    subItems?: AvatarNamedSubEntity[]
+    subItems?: EntitySelectSubEntity[]
   }
 }
-export interface AvatarNameSelectorSingleProps
-  extends AvatarNameSelectorCommonProps {
-  onSelect: (entity: AvatarNamedEntity | null) => void
+export interface EntitySelectSingleProps extends EntitySelectCommonProps {
+  onSelect: (entity: EntitySelectEntity | null) => void
   singleSelector: true
 }
 
-export interface AvatarNameSelectorMultipleProps
-  extends AvatarNameSelectorCommonProps {
-  onSelect: (entities: AvatarNamedEntity[]) => void
+export interface EntitySelectMultipleProps extends EntitySelectCommonProps {
+  onSelect: (entities: EntitySelectEntity[]) => void
   singleSelector: false | undefined
 }
 
-export type AvatarNameSelectorProps =
-  | AvatarNameSelectorSingleProps
-  | AvatarNameSelectorMultipleProps
+export type EntitySelectProps =
+  | EntitySelectSingleProps
+  | EntitySelectMultipleProps
