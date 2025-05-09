@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.46.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.2...factorial-one-react-v1.46.3) (2025-05-09)
+
+
+### Bug Fixes
+
+* datacollection secondary actions dropdown alignment when no primary actions ([#1783](https://github.com/factorialco/factorial-one/issues/1783)) ([a1bf03d](https://github.com/factorialco/factorial-one/commit/a1bf03d897b954db2793722da1d604f65f5ad6a2))
+
 ## [1.46.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.1...factorial-one-react-v1.46.2) (2025-05-09)
 
 
