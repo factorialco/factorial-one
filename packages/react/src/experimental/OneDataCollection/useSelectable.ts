@@ -88,10 +88,11 @@ export function useSelectable<
     (paginationInfo && selectedCount === paginationInfo.total) ||
     (!paginationInfo && selectedCount === data.length)
 
-  const isPartiallySelected = selectedCount > 0 && unselectedCount > 0
-
   const isAllSelected =
     (allSelectedCheck || areAllKnownItemsSelected) && selectedCount > 0
+
+  const isPartiallySelected =
+    selectedCount > 0 || (isAllSelected && unselectedCount > 0)
 
   // If the filters change, we need to reset the selected items
   useEffect(() => {

@@ -1,5 +1,47 @@
 # Changelog
 
+## [1.46.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.1...factorial-one-react-v1.46.2) (2025-05-09)
+
+
+### Bug Fixes
+
+* pulse face icons updated ([54f503a](https://github.com/factorialco/factorial-one/commit/54f503aec4fe9f3a86adc1652cbae3e8d3c90622))
+
+## [1.46.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.0...factorial-one-react-v1.46.1) (2025-05-09)
+
+
+### Bug Fixes
+
+* mood colours ([#1782](https://github.com/factorialco/factorial-one/issues/1782)) ([f61955c](https://github.com/factorialco/factorial-one/commit/f61955c80ed9c1ff1d8df549b6f034dc28bf91ea))
+
+## [1.46.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.45.0...factorial-one-react-v1.46.0) (2025-05-08)
+
+
+### Features
+
+* update react icons ([2ae6917](https://github.com/factorialco/factorial-one/commit/2ae69171e5d3097b95e6ad32f0730de2c1547404))
+
+## [1.45.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.5...factorial-one-react-v1.45.0) (2025-05-08)
+
+
+### Features
+
+* create ActivityItemList component ([#1768](https://github.com/factorialco/factorial-one/issues/1768)) ([c77daa4](https://github.com/factorialco/factorial-one/commit/c77daa42e3ea2c30dd2ab728ddbdd38d76fe1700))
+
+## [1.44.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.4...factorial-one-react-v1.44.5) (2025-05-08)
+
+
+### Bug Fixes
+
+* vertical separators ([#1774](https://github.com/factorialco/factorial-one/issues/1774)) ([670938e](https://github.com/factorialco/factorial-one/commit/670938e75420286f22ddb32589cac7f497e4a189))
+
+## [1.44.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.3...factorial-one-react-v1.44.4) (2025-05-07)
+
+
+### Bug Fixes
+
+* update avatar pulse with the correct colours ([#1771](https://github.com/factorialco/factorial-one/issues/1771)) ([8d7b60a](https://github.com/factorialco/factorial-one/commit/8d7b60a35f78005d0fcbd407851ca4659cb6272d))
+
 ## [1.44.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.2...factorial-one-react-v1.44.3) (2025-05-07)
 
 

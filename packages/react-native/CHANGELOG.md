@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.3.0...factorial-one-react-native-v0.4.0) (2025-05-08)
+
+
+### Features
+
+* add new social and cards icons ([#1778](https://github.com/factorialco/factorial-one/issues/1778)) ([ecff670](https://github.com/factorialco/factorial-one/commit/ecff6700581baf0ca809f4018d2a4e8fd82c18a9))
+
 ## [0.3.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.6...factorial-one-react-native-v0.3.0) (2025-05-07)
 
 

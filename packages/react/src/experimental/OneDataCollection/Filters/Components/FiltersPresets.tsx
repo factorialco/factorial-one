@@ -65,7 +65,9 @@ export const FiltersPresets = ({
     presets &&
     presets.length > 0 && (
       <>
-        <div className="mx-1 h-4 w-px bg-f1-border-secondary" />
+        <div className="flex items-center">
+          <div className="mx-2 h-4 w-px bg-f1-background-secondary-hover" />
+        </div>
         <OverflowList
           items={presets}
           renderListItem={renderListPresetItem}

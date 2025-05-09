@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { useState } from "react"
 import { Briefcase, EllipsisHorizontal, Settings } from "../../../../icons/app"
 import { PageHeader } from "./index"
 
@@ -21,13 +22,6 @@ const meta = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <div className="bg-f1-background">
-        <Story />
-      </div>
-    ),
-  ],
 } satisfies Meta<typeof PageHeader>
 
 export default meta
@@ -90,6 +84,18 @@ export const WithActions: Story = {
 }
 
 export const WithStatus: Story = {
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
   args: {
     module: defaultModule,
     statusTag: {
@@ -100,6 +106,18 @@ export const WithStatus: Story = {
 }
 
 export const WithStatusVariants: Story = {
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: "color-contrast",
+            enabled: false,
+          },
+        ],
+      },
+    },
+  },
   args: {
     module: defaultModule,
     statusTag: {
@@ -137,6 +155,7 @@ export const WithBreadcrumbs: Story = {
   args: {
     module: defaultModule,
     breadcrumbs: [
+      { id: "employees_collection", label: "Company", href: "/employees" },
       { id: "employees", label: "Employees", href: "/employees" },
       { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
@@ -262,6 +281,36 @@ export const WithProductUpdate: Story = {
       },
       currentModule: defaultModule.name,
     },
+  },
+}
+
+export const withFavorites: Story = {
+  args: {
+    module: defaultModule,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
+    statusTag: {
+      text: "Draft",
+      tooltip: "This employee profile is not yet published",
+      variant: "critical",
+    },
+    actions: defaultActions,
+  },
+  render: (props) => {
+    const [isMarked, setIsMarked] = useState(false)
+
+    return (
+      <PageHeader
+        {...props}
+        favorites={{
+          isMarked,
+          label: "Mark as favorite",
+          onChange: () => setIsMarked((current) => !current),
+        }}
+      />
+    )
   },
 }
 

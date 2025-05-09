@@ -3,22 +3,23 @@ import { cn } from "@/lib/utils"
 
 type Props = {
   icon: IconType
-  size?: "xs" | "sm" | "md" | "lg"
+  size?: "sm" | "md" | "lg"
+  className?: string
 }
 
 const sizes = {
-  xs: "size-5",
-  sm: "size-6",
-  md: "size-8",
-  lg: "size-14",
+  sm: "size-6 rounded-sm",
+  md: "size-9 rounded-md",
+  lg: "size-10 rounded-lg",
 }
 
-export const IconAvatar = ({ icon, size = "md" }: Props) => {
+export const IconAvatar = ({ icon, size = "md", className }: Props) => {
   return (
     <div
       className={cn(
-        "flex aspect-square items-center justify-center rounded-full border border-solid border-f1-border-secondary bg-f1-background dark:bg-f1-background-inverse-secondary",
-        sizes[size]
+        "flex aspect-square items-center justify-center border border-solid border-f1-border-secondary",
+        sizes[size],
+        className
       )}
     >
       <Icon icon={icon} size={size} className="text-f1-foreground-secondary" />
