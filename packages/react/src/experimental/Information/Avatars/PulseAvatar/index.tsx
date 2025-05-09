@@ -35,9 +35,9 @@ const iconStyle = cva({
   variants: {
     pulse: {
       superNegative: "text-[hsl(theme(colors.radical.50))]",
-      negative: "text-[hsl(theme(colors.orange.60))]",
-      neutral: "text-[hsl(theme(colors.smoke.60))]",
-      positive: "text-[hsl(theme(colors.army.50))]",
+      negative: "text-[hsl(theme(colors.orange.50))]",
+      neutral: "text-[hsl(theme(colors.yellow.50))]",
+      positive: "text-[hsl(theme(colors.flubber.50))]",
       superPositive: "text-[hsl(theme(colors.grass.50))]",
     },
   },
