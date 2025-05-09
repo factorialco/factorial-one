@@ -10,19 +10,17 @@ type Props = {
   moduleName: string
   icon?: IconType
   onClick?: () => void
-  className?: string
 }
 
 export const ModuleTag = forwardRef<HTMLDivElement, Props>(
-  ({ moduleName, icon = Home, onClick, className }, ref) => {
+  ({ moduleName, icon = Home, onClick }, ref) => {
     useTextFormatEnforcer(moduleName, { disallowEmpty: true })
 
     return (
       <BaseTag
         ref={ref}
         className={cn(
-          "gap-1 rounded-[8px] border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]",
-          className
+          "gap-1 rounded-[8px] border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]"
         )}
         left={<ModuleAvatar icon={icon} size="sm" />}
         text={moduleName}
