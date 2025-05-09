@@ -1,21 +1,26 @@
+import * as Icons from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
-import * as Icons from "../../../../icons/app"
-import { User } from "./index"
+import { SidebarFooter } from "./index"
 
 const meta = {
-  title: "Sidebar/User",
-  component: User,
+  title: "Sidebar/SidebarFooter",
+  component: SidebarFooter,
   tags: ["autodocs", "experimental", "no-sidebar"],
-} satisfies Meta<typeof User>
+} satisfies Meta<typeof SidebarFooter>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    firstName: "Dani",
-    lastName: "Moreno",
-    avatarUrl: "https://github.com/dani-moreno.png",
+    user: {
+      firstName: "Dani",
+      lastName: "Moreno",
+      avatarUrl: "https://github.com/dani-moreno.png",
+    },
+    showActivityButton: true,
+    hasActivityUpdates: true,
+    onActivityButtonClick: () => {},
     options: [
       { label: "Preferences", href: "/preferences", icon: Icons.Sliders },
       { label: "Notifications", href: "/notifications", icon: Icons.Bell },

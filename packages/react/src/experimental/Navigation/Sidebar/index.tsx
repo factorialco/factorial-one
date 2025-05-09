@@ -1,6 +1,6 @@
 export * from "./CompanySelector"
+export * from "./Footer"
 export * from "./Header"
 export * from "./Menu"
 export * from "./Searchbar"
 export * from "./Sidebar"
-export * from "./User"

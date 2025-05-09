@@ -77,13 +77,13 @@ export const OneModal: React.FC<OneModalProps> = ({
   }
 
   let contentClassName =
-    "max-h-[620px] max-w-[680px] overflow-y-auto overflow-x-hidden data-[state=closed]:slide-out-to-top-[2%] data-[state=open]:slide-in-from-top-[2%] sm:top-[50%] sm:translate-y-[-50%] sm:data-[state=closed]:slide-out-to-top-[48%] sm:data-[state=open]:slide-in-from-top-[48%]"
+    "max-h-[620px] max-w-[680px] overflow-y-auto overflow-x-hidden"
 
   const isSidePosition = position === "left" || position === "right"
 
   if (isSidePosition) {
     contentClassName = cn(
-      "overflow-x-hidden flex flex-col fixed top-3 bottom-3 translate-y-0 translate-x-0 max-w-[539px] rounded-md border border-solid border-f1-border-secondary data-[state=closed]:slide-out-to-top-0 data-[state=open]:slide-in-from-top-0 data-[state=open]:slide-in-from-left-0 data-[state=closed]:slide-out-to-left-0",
+      "overflow-x-hidden flex flex-col fixed top-3 bottom-3 translate-y-0 translate-x-0 max-w-[539px] rounded-md border border-solid border-f1-border-secondary",
       position === "left" &&
         (sidebarState === "locked" ? "left-[248px]" : "left-3"),
       position === "right" && "left-auto right-3"
@@ -93,7 +93,12 @@ export const OneModal: React.FC<OneModalProps> = ({
   return (
     <OneModalProvider isOpen={open} onClose={handleClose} position={position}>
       <Dialog open={open} onOpenChange={onClose} modal={position === "center"}>
-        <DialogContent className={contentClassName}>{children}</DialogContent>
+        <DialogContent
+          withTraslateAnimation={!isSidePosition}
+          className={contentClassName}
+        >
+          {children}
+        </DialogContent>
       </Dialog>
     </OneModalProvider>
   )
