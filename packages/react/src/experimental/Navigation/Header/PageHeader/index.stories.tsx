@@ -247,6 +247,19 @@ export const WithProductUpdate: Story = {
                   updated: "2 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                 },
+                {
+                  title: "New Client section",
+                  mediaUrl: "https://placecats.com/neo/300/200",
+                  updated: "3 mar 2025",
+                  href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+                  unread: true,
+                },
+                {
+                  title: "Spending tab in projects",
+                  mediaUrl: "https://placecats.com/neo/300/200",
+                  updated: "2 mar 2025",
+                  href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+                },
               ]),
             1000
           )
