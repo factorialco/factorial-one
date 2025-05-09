@@ -12,7 +12,8 @@ import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "framer-motion"
 import { ReactElement } from "react"
 
-import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
+import { Breadcrumbs, BreadcrumbsProps } from "../Breadcrumbs"
+import { FavoriteButton } from "../Favorites"
 import { ProductUpdates, ProductUpdatesProp } from "../ProductUpdates"
 
 export type PageAction = {
@@ -56,10 +57,15 @@ type HeaderProps = {
   actions?: PageAction[]
   navigation?: NavigationProps
   embedded?: boolean
-  breadcrumbs?: BreadcrumbItemType[]
+  breadcrumbs?: BreadcrumbsProps["breadcrumbs"]
   productUpdates?: {
     isVisible?: boolean
   } & ProductUpdatesProp
+  favorites?: {
+    isMarked: boolean
+    onChange: (newValue: boolean) => void
+    label: string
+  }
 }
 
 function PageNavigationLink({
@@ -96,6 +102,7 @@ export function PageHeader({
   embedded = false,
   navigation,
   productUpdates,
+  favorites,
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
@@ -182,6 +189,15 @@ export function PageHeader({
             <Breadcrumbs
               key={breadcrumbsTree[0].id}
               breadcrumbs={breadcrumbsTree}
+              append={
+                favorites !== undefined && (
+                  <FavoriteButton
+                    label={favorites.label}
+                    isMarked={favorites.isMarked}
+                    onChange={favorites?.onChange}
+                  />
+                )
+              }
             />
           )}
         </div>
