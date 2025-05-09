@@ -41,7 +41,7 @@ const iconVariants = cva({
   },
 })
 
-const iconOnlyVariants = cva({
+export const iconOnlyVariants = cva({
   base: "transition-colors",
   variants: {
     variant: {

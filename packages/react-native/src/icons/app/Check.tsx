@@ -13,7 +13,6 @@ const SvgCheck = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="m10.75 16.75 7-9.5M6.25 11.75l4.5 5"
     />
   </Svg>

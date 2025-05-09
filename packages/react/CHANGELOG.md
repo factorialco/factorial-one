@@ -1,5 +1,131 @@
 # Changelog
 
+## [1.46.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.1...factorial-one-react-v1.46.2) (2025-05-09)
+
+
+### Bug Fixes
+
+* pulse face icons updated ([54f503a](https://github.com/factorialco/factorial-one/commit/54f503aec4fe9f3a86adc1652cbae3e8d3c90622))
+
+## [1.46.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.0...factorial-one-react-v1.46.1) (2025-05-09)
+
+
+### Bug Fixes
+
+* mood colours ([#1782](https://github.com/factorialco/factorial-one/issues/1782)) ([f61955c](https://github.com/factorialco/factorial-one/commit/f61955c80ed9c1ff1d8df549b6f034dc28bf91ea))
+
+## [1.46.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.45.0...factorial-one-react-v1.46.0) (2025-05-08)
+
+
+### Features
+
+* update react icons ([2ae6917](https://github.com/factorialco/factorial-one/commit/2ae69171e5d3097b95e6ad32f0730de2c1547404))
+
+## [1.45.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.5...factorial-one-react-v1.45.0) (2025-05-08)
+
+
+### Features
+
+* create ActivityItemList component ([#1768](https://github.com/factorialco/factorial-one/issues/1768)) ([c77daa4](https://github.com/factorialco/factorial-one/commit/c77daa42e3ea2c30dd2ab728ddbdd38d76fe1700))
+
+## [1.44.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.4...factorial-one-react-v1.44.5) (2025-05-08)
+
+
+### Bug Fixes
+
+* vertical separators ([#1774](https://github.com/factorialco/factorial-one/issues/1774)) ([670938e](https://github.com/factorialco/factorial-one/commit/670938e75420286f22ddb32589cac7f497e4a189))
+
+## [1.44.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.3...factorial-one-react-v1.44.4) (2025-05-07)
+
+
+### Bug Fixes
+
+* update avatar pulse with the correct colours ([#1771](https://github.com/factorialco/factorial-one/issues/1771)) ([8d7b60a](https://github.com/factorialco/factorial-one/commit/8d7b60a35f78005d0fcbd407851ca4659cb6272d))
+
+## [1.44.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.2...factorial-one-react-v1.44.3) (2025-05-07)
+
+
+### Bug Fixes
+
+* expose useFormSchema ([#1766](https://github.com/factorialco/factorial-one/issues/1766)) ([b7ab162](https://github.com/factorialco/factorial-one/commit/b7ab1624483a906a5b852c6c9396c47841b57e85))
+
+## [1.44.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.1...factorial-one-react-v1.44.2) (2025-05-07)
+
+
+### Bug Fixes
+
+* date type infer ([#1761](https://github.com/factorialco/factorial-one/issues/1761)) ([59eee12](https://github.com/factorialco/factorial-one/commit/59eee12bac50130331081c00c17eeb4ddf41f460))
+
+## [1.44.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.0...factorial-one-react-v1.44.1) (2025-05-07)
+
+
+### Bug Fixes
+
+* Sidebar grouping position bug ([#1754](https://github.com/factorialco/factorial-one/issues/1754)) ([a7ffc0f](https://github.com/factorialco/factorial-one/commit/a7ffc0f2cde4fed75630b227e4c5278dc0dce8e8))
+
+## [1.44.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.1...factorial-one-react-v1.44.0) (2025-05-06)
+
+
+### Features
+
+* datacollection add datefilter ([2288214](https://github.com/factorialco/factorial-one/commit/2288214f48033b3833b396d40ac94ca5fbdb3cc3))
+
+## [1.43.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.43.0...factorial-one-react-v1.43.1) (2025-05-06)
+
+
+### Bug Fixes
+
+* add missing case in CommunityPost with no author ([#1757](https://github.com/factorialco/factorial-one/issues/1757)) ([55144de](https://github.com/factorialco/factorial-one/commit/55144dec779511f5e26ab4a5894c60a1ed5cc44c))
+
+## [1.43.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.42.0...factorial-one-react-v1.43.0) (2025-05-06)
+
+
+### Features
+
+* **Calendar:** Quarter and Half-year views ([#1728](https://github.com/factorialco/factorial-one/issues/1728)) ([0f6c950](https://github.com/factorialco/factorial-one/commit/0f6c950f9779302739d9ee68aee1595dfa3bdd8c))
+
+## [1.42.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.41.0...factorial-one-react-v1.42.0) (2025-05-05)
+
+
+### Features
+
+* new Discover icon  ([3c3d081](https://github.com/factorialco/factorial-one/commit/3c3d08129cebfa234b666005cc9737c606d37bd2))
+
+## [1.41.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.40.0...factorial-one-react-v1.41.0) (2025-05-05)
+
+
+### Features
+
+* add support to open modal on left and right sides ([#1747](https://github.com/factorialco/factorial-one/issues/1747)) ([1b77700](https://github.com/factorialco/factorial-one/commit/1b777005c12ce7eede7498240e93aa8eea002a2f))
+
+## [1.40.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.1...factorial-one-react-v1.40.0) (2025-05-05)
+
+
+### Features
+
+* add new copy action to metada ([#1734](https://github.com/factorialco/factorial-one/issues/1734)) ([445a2e4](https://github.com/factorialco/factorial-one/commit/445a2e495bb5990c8c61794ea923e59e8703d78d))
+
+## [1.39.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.39.0...factorial-one-react-v1.39.1) (2025-05-05)
+
+
+### Bug Fixes
+
+* overflow-scroll to auto ([#1735](https://github.com/factorialco/factorial-one/issues/1735)) ([8de69d3](https://github.com/factorialco/factorial-one/commit/8de69d30aab7f01dc9c769b8cb10002ff2e0df8e))
+
+## [1.39.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.1...factorial-one-react-v1.39.0) (2025-05-05)
+
+
+### Features
+
+* add new banner component ([#1628](https://github.com/factorialco/factorial-one/issues/1628)) ([a1eaab0](https://github.com/factorialco/factorial-one/commit/a1eaab072ef096a1d5ef89b2a3d21119ec4b369a))
+
+## [1.38.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.38.0...factorial-one-react-v1.38.1) (2025-05-02)
+
+
+### Bug Fixes
+
+* palce tooltips in body of the page ([#1730](https://github.com/factorialco/factorial-one/issues/1730)) ([dba64e9](https://github.com/factorialco/factorial-one/commit/dba64e9df208ad696fd806229a453366ca4c1ab9))
+
 ## [1.38.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.37.6...factorial-one-react-v1.38.0) (2025-05-02)
 
 

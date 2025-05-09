@@ -4,6 +4,12 @@
 
 @layer base {
   :root {
+    --mood-super-negative: theme("colors.radical.50");
+    --mood-negative: theme("colors.orange.50");
+    --mood-neutral: theme("colors.yellow.50");
+    --mood-positive: theme("colors.flubber.50");
+    --mood-super-positive: theme("colors.grass.50");
+
     --neutral-0: theme("colors.white.100");
     --neutral-2: theme("colors.grey.0");
     --neutral-5: theme("colors.grey.5");

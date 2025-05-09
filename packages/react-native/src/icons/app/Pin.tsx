@@ -13,18 +13,9 @@ const SvgPin = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M12 20c3-3.2 6-6.065 6-9.6S15.314 4 12 4s-6 2.865-6 6.4 3 6.4 6 9.6"
     />
-    <Rect
-      width={4}
-      height={4}
-      x={10}
-      y={8}
-      stroke="currentColor"
-      strokeWidth={1.3}
-      rx={2}
-    />
+    <Rect width={4} height={4} x={10} y={8} stroke="currentColor" rx={2} />
   </Svg>
 );
 const ForwardRef = forwardRef(SvgPin);

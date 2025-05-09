@@ -9,24 +9,11 @@ const SvgSuitcase = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Rect
-      width={16}
-      height={12}
-      x={4}
-      y={7.5}
-      stroke="currentColor"
-      strokeWidth={1.3}
-      rx={3}
-    />
-    <Path
-      stroke="currentColor"
-      strokeWidth={1.3}
-      d="M9 7.5v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"
-    />
+    <Rect width={16} height={12} x={4} y={7.5} stroke="currentColor" rx={3} />
+    <Path stroke="currentColor" d="M9 7.5v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1" />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
-      strokeWidth={1.3}
       d="M20 12.5H4M11 12.5v1.75c0 .138.112.25.25.25h1.5a.25.25 0 0 0 .25-.25V12.5"
     />
   </Svg>

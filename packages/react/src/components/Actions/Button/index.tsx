@@ -3,6 +3,7 @@
  * Button component.
  */
 import { forwardRef } from "react"
+import { CopyButton } from "./copy"
 import { ButtonInternal, ButtonInternalProps } from "./internal"
 
 const privateProps = ["append", "appendButton", "className"] as const
@@ -23,4 +24,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
 
 Button.displayName = ButtonInternal.displayName
 
-export { Button }
+export { Button, CopyButton }

@@ -12,7 +12,6 @@ const SvgSpinner = (props: SvgProps, ref: Ref<Svg>) => (
     <Path
       stroke="currentColor"
       strokeLinecap="round"
-      strokeWidth={1.3}
       d="M19 12a7 7 0 1 1-7-7"
     />
   </Svg>

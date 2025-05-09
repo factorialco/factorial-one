@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.4.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.3.0...factorial-one-react-native-v0.4.0) (2025-05-08)
+
+
+### Features
+
+* add new social and cards icons ([#1778](https://github.com/factorialco/factorial-one/issues/1778)) ([ecff670](https://github.com/factorialco/factorial-one/commit/ecff6700581baf0ca809f4018d2a4e8fd82c18a9))
+
+## [0.3.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.6...factorial-one-react-native-v0.3.0) (2025-05-07)
+
+
+### Features
+
+* add ModuleAvatar component with size variants and icon support ([#1733](https://github.com/factorialco/factorial-one/issues/1733)) ([027f976](https://github.com/factorialco/factorial-one/commit/027f976ccad9286970b58130fc7296f88e852429))
+
+## [0.2.6](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.5...factorial-one-react-native-v0.2.6) (2025-05-05)
+
+
+### Bug Fixes
+
+* update peer dependency for factorial-one-core in package.json ([#1744](https://github.com/factorialco/factorial-one/issues/1744)) ([8efe621](https://github.com/factorialco/factorial-one/commit/8efe6214e15f2c6ff492620ac6820f8aa32c0b5f))
+
+## [0.2.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.4...factorial-one-react-native-v0.2.5) (2025-05-02)
+
+
+### Bug Fixes
+
+* tailwind native extensions ([34b7426](https://github.com/factorialco/factorial-one/commit/34b7426c823bb0db095a7193190004b5226e3ec9))
+
 ## [0.2.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.2.3...factorial-one-react-native-v0.2.4) (2025-04-30)
 
 

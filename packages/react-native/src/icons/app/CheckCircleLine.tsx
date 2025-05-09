@@ -9,12 +9,11 @@ const SvgCheckCircleLine = (props: SvgProps, ref: Ref<Svg>) => (
     ref={ref}
     {...props}
   >
-    <Circle cx={12} cy={12} r={8} stroke="currentColor" strokeWidth={1.3} />
+    <Circle cx={12} cy={12} r={8} stroke="currentColor" />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="m9 12 2.4 2.4L15 9.6"
     />
   </Svg>

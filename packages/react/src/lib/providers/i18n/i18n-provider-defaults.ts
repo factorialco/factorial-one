@@ -5,8 +5,11 @@ export const defaultTranslations = {
     next: "Next",
   },
   actions: {
+    add: "Add",
+    edit: "Edit",
     save: "Save",
     cancel: "Cancel",
+    copy: "Copy",
     showAll: "Show all",
     showLess: "Show less",
     skipToContent: "Skip to content",
@@ -45,6 +48,13 @@ export const defaultTranslations = {
   },
   shortcut: "Shortcut",
   date: {
+    groups: {
+      today: "Today",
+      yesterday: "Yesterday",
+      lastWeek: "Last week",
+      lastMonth: "Last month",
+      other: "Other",
+    },
     month: {
       january: "January",
       february: "February",

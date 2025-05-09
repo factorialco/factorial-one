@@ -1,4 +1,6 @@
+import { PulseAvatar } from "@/experimental/Information/Avatars/PulseAvatar"
 import { cva, type VariantProps } from "cva"
+import { ComponentProps } from "react"
 import { Button } from "../../../components/Actions/Button"
 import Menu from "../../../icons/app/Menu"
 import { cn } from "../../../lib/utils"
@@ -27,9 +29,12 @@ export interface DaytimePageProps
   children?: React.ReactNode
   header?: {
     title: string
+    description?: string
     employeeFirstName: string
     employeeLastName: string
     employeeAvatar?: string
+    pulse?: ComponentProps<typeof PulseAvatar>["pulse"]
+    onPulseClick?: ComponentProps<typeof PulseAvatar>["onPulseClick"]
   }
   embedded?: boolean
 }
@@ -65,23 +70,52 @@ export function DaytimePage({
             <div
               className={cn(
                 "flex flex-row items-center",
-                isSmallScreen ? "gap-1.5" : "gap-2"
+                isSmallScreen ? "gap-1.5" : "gap-3"
               )}
             >
-              <PersonAvatar
-                src={header.employeeAvatar}
-                firstName={header.employeeFirstName}
-                lastName={header.employeeLastName}
-                size={isSmallScreen ? "small" : "medium"}
-              />
-              <p
-                className={cn(
-                  isSmallScreen ? "text-lg" : "text-2xl",
-                  "font-semibold text-f1-foreground"
+              {header?.onPulseClick ? (
+                <PulseAvatar
+                  src={header.employeeAvatar}
+                  firstName={header.employeeFirstName}
+                  lastName={header.employeeLastName}
+                  pulse={header.pulse}
+                  onPulseClick={header.onPulseClick}
+                />
+              ) : (
+                <PersonAvatar
+                  src={header.employeeAvatar}
+                  firstName={header.employeeFirstName}
+                  lastName={header.employeeLastName}
+                  size={
+                    isSmallScreen
+                      ? "small"
+                      : header.description
+                        ? "large"
+                        : "medium"
+                  }
+                />
+              )}
+              <div className="flex flex-col">
+                <p
+                  className={cn(
+                    isSmallScreen ? "text-lg" : "text-2xl",
+                    "font-semibold text-f1-foreground"
+                  )}
+                >
+                  {header.title}
+                </p>
+
+                {header.description && (
+                  <p
+                    className={cn(
+                      isSmallScreen ? "text-md" : "text-lg",
+                      "text-f1-foreground-secondary"
+                    )}
+                  >
+                    {header.description}
+                  </p>
                 )}
-              >
-                {header.title}
-              </p>
+              </div>
             </div>
           </div>
         </div>

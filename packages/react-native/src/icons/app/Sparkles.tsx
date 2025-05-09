@@ -17,7 +17,6 @@ const SvgSparkles = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M12 11v8M6 14c1 .333 3 2 3 5M18 14c-1 .333-3 2-3 5"
     />
   </Svg>

@@ -1,13 +1,11 @@
 import { ChevronLeft, ChevronRight } from "@/icons/app"
-import NumberFlow from "@number-flow/react"
-import { useState } from "react"
+import { Input } from "@/ui/input"
+
+import { ReactNode, useEffect, useMemo, useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { useI18n } from "../../lib/providers/i18n"
+import { granularityDefinitions } from "./granularities"
 import { CalendarMode, CalendarView, DateRange } from "./types"
-import { DayView } from "./views/day"
-import { MonthView } from "./views/month"
-import { WeekView } from "./views/week"
-import { YearView } from "./views/year"
 
 export interface OneCalendarProps {
   mode: CalendarMode
@@ -16,6 +14,40 @@ export interface OneCalendarProps {
   defaultMonth?: Date
   defaultSelected?: Date | DateRange | null
   showNavigation?: boolean
+  showInput?: boolean
+}
+
+export interface GranularityDefinition {
+  label: (viewDate: Date) => ReactNode
+  toString: (date: Date | DateRange | undefined | null) => string
+  navigate: (viewDate: Date, direction: -1 | 1) => Date
+  render: (renderProps: {
+    mode: CalendarMode
+    selected: Date | DateRange | null
+    onSelect: (date: Date | DateRange | null) => void
+    month: Date
+    onMonthChange: (date: Date) => void
+    motionDirection: number
+    setViewDate: (date: Date) => void
+    viewDate: Date
+  }) => ReactNode
+}
+
+export type GranularityDefinitionSimple = Pick<
+  GranularityDefinition,
+  "toString"
+>
+
+export const getGranularityDefinition = (
+  view: CalendarView
+): GranularityDefinitionSimple => {
+  const granularity = granularityDefinitions[view]
+  if (!granularity) {
+    throw new Error(`Granularity definition for view ${view} not found`)
+  }
+  return {
+    toString: granularity.toString,
+  }
 }
 
 export function OneCalendar({
@@ -25,67 +57,33 @@ export function OneCalendar({
   defaultMonth = new Date(),
   defaultSelected = null,
   showNavigation = true,
+  showInput = false,
 }: OneCalendarProps) {
   const i18n = useI18n()
 
   const [viewDate, setViewDate] = useState<Date>(defaultMonth)
+
   const [selected, setSelected] = useState<Date | DateRange | null>(
     defaultSelected
   )
 
+  useEffect(() => {
+    setSelected(defaultSelected)
+  }, [defaultSelected, setSelected])
+
   const [motionDirection, setMotionDirection] = useState(1)
+
+  const granularity = granularityDefinitions[view]
 
   // Handle navigation
   const navigate = (direction: -1 | 1) => {
-    const newDate = new Date(viewDate)
-
-    if (view === "day" || view === "week") {
-      newDate.setMonth(newDate.getMonth() + direction)
-    }
-
-    if (view === "month") {
-      newDate.setFullYear(newDate.getFullYear() + direction)
-    }
-
-    if (view === "year") {
-      newDate.setFullYear(newDate.getFullYear() + direction * 10)
-    }
-
+    const newDate = granularity.navigate(viewDate, direction)
     setMotionDirection(direction)
     setViewDate(newDate)
   }
 
   // Get header label
-  const getHeaderLabel = () => {
-    if (view === "day" || view === "week") {
-      return new Intl.DateTimeFormat("en-US", {
-        month: "long",
-        year: "numeric",
-      }).format(viewDate)
-    }
-
-    if (view === "month") {
-      return (
-        <NumberFlow
-          format={{
-            useGrouping: false,
-            maximumFractionDigits: 0,
-          }}
-          spinTiming={{
-            duration: 150,
-          }}
-          value={viewDate.getFullYear()}
-        />
-      )
-    }
-
-    if (view === "year") {
-      const startYear = viewDate.getFullYear() - (viewDate.getFullYear() % 10)
-      const endYear = startYear + 9
-
-      return `${startYear}  -  ${endYear}`
-    }
-  }
+  const getHeaderLabel = () => granularity.label(viewDate)
 
   // Handle selection of a date
   const handleSelect = (date: Date | DateRange | null) => {
@@ -95,8 +93,18 @@ export function OneCalendar({
     onSelect?.(date)
   }
 
+  const dateString = useMemo(() => {
+    if (!selected) return ""
+    return granularity.toString(selected)
+  }, [selected, granularity])
+
   return (
     <div className="flex flex-col">
+      {showInput && (
+        <div className="mb-2">
+          <Input value={dateString} disabled />
+        </div>
+      )}
       {showNavigation && (
         <div className="flex items-center justify-between pb-3">
           <div className="text-lg font-medium text-f1-foreground">
@@ -125,46 +133,16 @@ export function OneCalendar({
         </div>
       )}
       <div className="relative">
-        {view === "day" && (
-          <DayView
-            mode={mode}
-            selected={selected}
-            onSelect={handleSelect}
-            month={viewDate}
-            onMonthChange={setViewDate}
-            motionDirection={motionDirection}
-          />
-        )}
-
-        {view === "week" && (
-          <WeekView
-            selected={selected}
-            onSelect={handleSelect}
-            month={viewDate}
-            onMonthChange={setViewDate}
-            motionDirection={motionDirection}
-          />
-        )}
-
-        {view === "month" && (
-          <MonthView
-            mode={mode}
-            year={viewDate.getFullYear()}
-            selected={selected}
-            onSelect={handleSelect}
-            motionDirection={motionDirection}
-          />
-        )}
-
-        {view === "year" && (
-          <YearView
-            mode={mode}
-            decade={viewDate.getFullYear()}
-            selected={selected}
-            onSelect={handleSelect}
-            motionDirection={motionDirection}
-          />
-        )}
+        {granularity.render({
+          mode,
+          selected,
+          onSelect: handleSelect,
+          month: viewDate,
+          onMonthChange: setViewDate,
+          motionDirection,
+          setViewDate,
+          viewDate,
+        })}
       </div>
     </div>
   )

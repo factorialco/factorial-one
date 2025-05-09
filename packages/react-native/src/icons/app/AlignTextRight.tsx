@@ -13,7 +13,6 @@ const SvgAlignTextRight = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M5 8h14M5 12h14M13 16h6"
     />
   </Svg>

@@ -13,7 +13,6 @@ const SvgChevronRight = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="m9 6 6 6M9 18l6-6"
     />
   </Svg>

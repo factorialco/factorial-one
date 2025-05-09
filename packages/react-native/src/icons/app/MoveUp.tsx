@@ -11,14 +11,12 @@ const SvgMoveUp = (props: SvgProps, ref: Ref<Svg>) => (
   >
     <Path
       stroke="currentColor"
-      strokeWidth={1.3}
       d="M12.5 17H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h2.5"
     />
     <Path
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="m8 5 2 2-2 2"
     />
     <Rect
@@ -28,7 +26,6 @@ const SvgMoveUp = (props: SvgProps, ref: Ref<Svg>) => (
       y={3.65}
       fill="currentColor"
       stroke="currentColor"
-      strokeWidth={1.3}
       rx={1.35}
     />
     <Rect
@@ -37,7 +34,6 @@ const SvgMoveUp = (props: SvgProps, ref: Ref<Svg>) => (
       x={12.65}
       y={13.65}
       stroke="currentColor"
-      strokeWidth={1.3}
       rx={1.35}
     />
   </Svg>

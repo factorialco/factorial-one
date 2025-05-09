@@ -13,7 +13,6 @@ const SvgList = (props: SvgProps, ref: Ref<Svg>) => (
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth={1.3}
       d="M9 8h10M9 12h10M9 16h10"
     />
     <Path

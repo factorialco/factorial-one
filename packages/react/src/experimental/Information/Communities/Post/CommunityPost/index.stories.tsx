@@ -119,6 +119,14 @@ export const NoImageNoEvent: Story = {
   },
 }
 
+export const NoAuthor: Story = {
+  decorators: Default.decorators,
+  args: {
+    ...Default.args,
+    author: undefined,
+  },
+}
+
 export const WithVideo: Story = {
   decorators: Default.decorators,
   args: {

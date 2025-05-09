@@ -13,10 +13,11 @@ const iconVariants = cva({
   base: "shrink-0",
   variants: {
     size: {
-      lg: "w-6 h-6",
-      md: "w-5 h-5",
-      sm: "w-4 h-4",
-      xs: "w-3 h-3",
+      xl: "w-8 h-8 stroke-xl",
+      lg: "w-6 h-6 stroke-lg",
+      md: "w-5 h-5 stroke-md",
+      sm: "w-4 h-4 stroke-sm",
+      xs: "w-3 h-3 stroke-xs",
     },
   },
   defaultVariants: {
@@ -42,7 +43,7 @@ export type IconType = ForwardRefExoticComponent<
 const interopAppliedIcons = new WeakSet();
 
 // Function to apply NativeWind interop to an icon component
-function applyIconInterop(icon: IconType) {
+export function applyIconInterop(icon: IconType) {
   if (!interopAppliedIcons.has(icon)) {
     cssInterop(icon, {
       className: {

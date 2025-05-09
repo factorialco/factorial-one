@@ -10,7 +10,7 @@ import {
   AppIcons,
   ModuleIcons,
 } from "@factorialco/factorial-one-react-native";
-import { IconColorName } from "@factorialco/factorial-one-react-native/src/lib/colors";
+import { type IconColorName } from "@factorialco/factorial-one-react-native/src/lib/colors";
 
 const meta = {
   title: "Components/Icon",
@@ -18,7 +18,7 @@ const meta = {
   argTypes: {
     size: {
       control: "select",
-      options: ["xs", "sm", "md", "lg"],
+      options: ["xs", "sm", "md", "lg", "xl"],
     },
   },
   args: {
@@ -45,7 +45,7 @@ interface IconDisplayProps {
 }
 
 interface SizeVariantProps extends IconDisplayProps {
-  size: "xs" | "sm" | "md" | "lg";
+  size: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
 interface StyledIconDisplayProps extends IconDisplayProps {
@@ -145,9 +145,11 @@ export const IconsShowcase: Story = {
     return (
       <ScrollView>
         <View className="mb-4">
-          <Text className="text-lg font-bold mb-2">Search Icons</Text>
+          <Text className="text-lg font-bold mb-2 text-f1-foreground">
+            Search Icons
+          </Text>
           <TextInput
-            className="border border-gray-300 rounded-lg p-2 mb-4"
+            className="border border-gray-300 rounded-lg p-2 mb-4 text-f1-foreground"
             placeholder="Search icons..."
             value={searchTerm}
             onChangeText={setSearchTerm}
@@ -183,7 +185,7 @@ export const IconsShowcase: Story = {
           </View>
         ) : (
           <View className="items-center justify-center p-10">
-            <Text className="text-lg">
+            <Text className="text-lg text-f1-foreground">
               No icons found matching "{searchTerm}"
             </Text>
           </View>
@@ -205,6 +207,7 @@ export const SizeVariants: Story = {
         <SizeVariant icon={AppIcons.ChevronDown} name="sm" size="sm" />
         <SizeVariant icon={AppIcons.ChevronDown} name="md" size="md" />
         <SizeVariant icon={AppIcons.ChevronDown} name="lg" size="lg" />
+        <SizeVariant icon={AppIcons.ChevronDown} name="xl" size="xl" />
       </View>
 
       <View className="flex-row justify-around mb-8 p-4 bg-gray-100 rounded-lg">
@@ -212,6 +215,7 @@ export const SizeVariants: Story = {
         <SizeVariant icon={AppIcons.Archive} name="sm" size="sm" />
         <SizeVariant icon={AppIcons.Archive} name="md" size="md" />
         <SizeVariant icon={AppIcons.Archive} name="lg" size="lg" />
+        <SizeVariant icon={AppIcons.Archive} name="xl" size="xl" />
       </View>
 
       <View className="flex-row justify-around p-4 bg-gray-100 rounded-lg">
@@ -219,6 +223,7 @@ export const SizeVariants: Story = {
         <SizeVariant icon={ModuleIcons.Home} name="sm" size="sm" />
         <SizeVariant icon={ModuleIcons.Home} name="md" size="md" />
         <SizeVariant icon={ModuleIcons.Home} name="lg" size="lg" />
+        <SizeVariant icon={ModuleIcons.Home} name="xl" size="xl" />
       </View>
     </ScrollView>
   ),

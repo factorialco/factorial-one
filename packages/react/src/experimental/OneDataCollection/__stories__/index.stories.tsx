@@ -31,7 +31,12 @@ import {
 import { useData } from "../useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
-
+const ROLES = [
+  "Engineer",
+  "Product Manager",
+  "Designer",
+  "Marketing Lead",
+] as const
 // Example filter definition
 const filters = {
   search: {
@@ -41,7 +46,21 @@ const filters = {
   department: {
     type: "in",
     label: "Department",
-    options: DEPARTMENTS.map((value) => ({ value, label: value })),
+    options: {
+      options: () => DEPARTMENTS.map((value) => ({ value, label: value })),
+    },
+  },
+
+  role: {
+    type: "in",
+    label: "Role",
+    options: {
+      options: () => ROLES.map((value) => ({ value, label: value })),
+    },
+  },
+  date: {
+    type: "date",
+    label: "Date",
   },
 } as const
 
@@ -514,7 +533,15 @@ export const BasicTableView: Story = {
         enabled: true,
       },
       dataAdapter: {
-        fetchData: createPromiseDataFetch(),
+        fetchData: ({ filters, sortings }) => {
+          console.log("fetchData", filters, sortings)
+
+          filters.department?.map((department) => {
+            console.log("department", department)
+          })
+          return createPromiseDataFetch()({ filters, sortings })
+        },
+        //createPromiseDataFetch(),
       },
       itemActions: (item) => [
         {
@@ -1225,7 +1252,7 @@ function createDataAdapter<
     department: (typeof DEPARTMENTS)[number]
     salary?: number
   },
-  TFilters extends Record<string, FilterDefinition<unknown>>,
+  TFilters extends Record<string, FilterDefinition>,
   TSortings extends SortingsDefinition,
 >({
   data,

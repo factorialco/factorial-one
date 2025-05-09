@@ -179,7 +179,7 @@ export const TableCollection = <
                 align="right"
               >
                 <Checkbox
-                  checked={isAllSelected}
+                  checked={isAllSelected || isPartiallySelected}
                   indeterminate={isPartiallySelected}
                   onCheckedChange={handleSelectAll}
                   title="Select all"
