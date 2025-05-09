@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react"
 
 import { ComponentProps } from "react"
-import { AvatarNameSelectorTrigger } from "./index"
+import { Trigger } from "./index"
 
 const meta: Meta = {
-  component: AvatarNameSelectorTrigger,
-  title: "AvatarNameSelector/AvatarNameSelectorTrigger",
+  component: Trigger,
+  title: "EntitySelect/Trigger",
   parameters: {
     layout: "centered",
   },
@@ -20,9 +20,9 @@ const meta: Meta = {
   args: {
     placeholder: "Select employees...",
     selected: "employees selected",
-    selectedAvatarName: [],
-  } satisfies ComponentProps<typeof AvatarNameSelectorTrigger>,
-} satisfies Meta<typeof AvatarNameSelectorTrigger>
+    selectedEntities: [],
+  } satisfies ComponentProps<typeof Trigger>,
+} satisfies Meta<typeof Trigger>
 
 export default meta
 type Story = StoryObj<typeof meta>

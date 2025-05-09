@@ -2,13 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react"
 
 import { fn } from "@storybook/test"
 import { ComponentProps } from "react"
-import { famousEmployees } from "../avatar-name.factory"
-import { mapAvatarNamedEntityToSubentity } from "../utils"
-import { AvatarNameListTag } from "./index"
+import { famousEmployees } from "../entity-select-name.factory"
+import { mapEntitySelectEntityToSubentity } from "../utils"
+import { ListTag } from "./index"
 
 const meta: Meta = {
-  component: AvatarNameListTag,
-  title: "AvatarNameSelector/AvatarNameListTag",
+  component: ListTag,
+  title: "EntitySelect/ListTag",
   parameters: {
     layout: "centered",
   },
@@ -21,10 +21,10 @@ const meta: Meta = {
     ),
   ],
   args: {
-    entity: mapAvatarNamedEntityToSubentity(famousEmployees[0]),
+    entity: mapEntitySelectEntityToSubentity(famousEmployees[0]),
     onRemove: fn(),
-  } satisfies ComponentProps<typeof AvatarNameListTag>,
-} satisfies Meta<typeof AvatarNameListTag>
+  } satisfies ComponentProps<typeof ListTag>,
+} satisfies Meta<typeof ListTag>
 
 export default meta
 type Story = StoryObj<typeof meta>

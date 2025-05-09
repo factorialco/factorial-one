@@ -1,16 +1,16 @@
 import {
-  AvatarNamedEntity,
-  AvatarNamedGroup,
-  AvatarNamedSubEntity,
+  EntitySelectEntity,
+  EntitySelectNamedGroup,
+  EntitySelectSubEntity,
 } from "../types"
-import { AvatarNameSelectorMainContent } from "./AvatarNameSelectorMainContent"
-import { AvatarNameSelectorSecondaryContent } from "./AvatarNameSelectorSecondaryContent"
+import { MainContent } from "./MainContent"
+import { SecondaryContent } from "./SecondaryContent"
 
 const breakpointToShowEmployeeList = 500
 const totalDefaultWidth = 520
 const asideWidth = 210
 
-export const AvatarNameSelectorContent = ({
+export const Content = ({
   groupView,
   onRemove,
   onSubItemRemove,
@@ -19,29 +19,30 @@ export const AvatarNameSelectorContent = ({
   width,
   singleSelector = false,
   loading = false,
+  hiddenAvatar = false,
   ...props
 }: {
   groupView: boolean
-  entities: AvatarNamedEntity[]
-  groups: AvatarNamedGroup[]
+  entities: EntitySelectEntity[]
+  groups: EntitySelectNamedGroup[]
   selectedGroup: string
   search: string
-  onSelect: (entity: AvatarNamedEntity) => void
-  onRemove: (entity: AvatarNamedEntity) => void
+  onSelect: (entity: EntitySelectEntity) => void
+  onRemove: (entity: EntitySelectEntity) => void
   onSubItemRemove: (
-    parentEntity: AvatarNamedEntity,
-    entity: AvatarNamedSubEntity
+    parentEntity: EntitySelectEntity,
+    entity: EntitySelectSubEntity
   ) => void
   onSubItemSelect: (
-    parentEntity: AvatarNamedEntity,
-    entity: AvatarNamedSubEntity
+    parentEntity: EntitySelectEntity,
+    entity: EntitySelectSubEntity
   ) => void
   onClear: () => void
   onSelectAll: () => void
   onSearch: (search: string) => void
-  selectedEntities: AvatarNamedEntity[]
+  selectedEntities: EntitySelectEntity[]
   onGroupChange: (key: string | null) => void
-  onToggleExpand: (entity: AvatarNamedEntity, expanded: boolean) => void
+  onToggleExpand: (entity: EntitySelectEntity, expanded: boolean) => void
   notFoundTitle: string
   notFoundSubtitle: string
   width?: number
@@ -52,6 +53,7 @@ export const AvatarNameSelectorContent = ({
   singleSelector?: boolean
   loading?: boolean
   disabled?: boolean
+  hiddenAvatar?: boolean
 }) => {
   const blockSecondaryContent =
     (width ?? totalDefaultWidth) < breakpointToShowEmployeeList
@@ -73,20 +75,21 @@ export const AvatarNameSelectorContent = ({
           width: asideWidth + "px",
         }}
       >
-        <AvatarNameSelectorSecondaryContent
+        <SecondaryContent
           groupView={groupView}
           onRemove={onRemove}
           onSubItemRemove={onSubItemRemove}
           selectedEntities={selectedEntities ?? []}
           selectedLabel={selectedLabel}
           disabled={props.disabled}
+          hiddenAvatar={hiddenAvatar}
         />
       </div>
       <div
         className="absolute left-0"
         style={{ width: finalWidthMain + 1 + "px" }}
       >
-        <AvatarNameSelectorMainContent
+        <MainContent
           {...props}
           groupView={groupView}
           onRemove={onRemove}
@@ -95,6 +98,7 @@ export const AvatarNameSelectorContent = ({
           singleSelector={singleSelector}
           loading={loading}
           disabled={props.disabled}
+          hiddenAvatar={hiddenAvatar}
         />
       </div>
     </div>
