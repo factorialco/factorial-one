@@ -7,7 +7,7 @@ import {
   startOfYear,
 } from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
-import { CalendarMode, DateRange } from "../types"
+import { CalendarMode, DateRange } from "../../types"
 
 interface YearViewProps {
   mode: CalendarMode

@@ -1,6 +1,7 @@
 import { format } from "date-fns"
 import * as locales from "date-fns/locale"
-import { DateRange } from "./types"
+import { rangeSeparator } from "./granularities/consts"
+import { DateRange, DateRangeString } from "./types"
 // Get the locale object from date-fns/locale
 export const getLocale = (localeKey: string) => {
   const key = localeKey.split("-")[0] // Handle both 'es' and 'es-ES' formats
@@ -20,20 +21,93 @@ export const toDateRange = (
   return value
 }
 
+/**
+ * Returns true if the date is valid or undefined or null
+ * @param date
+ * @returns
+ */
+export const isValidOrEmptyDate = (date: Date | undefined | null): boolean => {
+  if (date === undefined || date === null) {
+    return true
+  }
+  return isValidDate(date)
+}
+
+/**
+ * Returns true if the date is valid
+ * @param date
+ * @returns
+ */
+export const isValidDate = (date: Date | undefined | null): boolean => {
+  if (date === undefined || date === null) {
+    return false
+  }
+  return date instanceof Date && !isNaN(date.getTime())
+}
+
+/**
+ * Returns the date range string from a string or DateRangeString
+ * @param value
+ * @returns
+ */
+export const toDateRangeString = (
+  value: undefined | string | DateRangeString
+): DateRangeString | undefined => {
+  if (value === undefined) {
+    return undefined
+  }
+
+  if (typeof value === "string") {
+    const [fromStr, toStr] = value.split("-")
+    return {
+      from: fromStr,
+      to: toStr,
+    }
+  }
+
+  return value
+}
+
+export const formatDate = (date: Date, formatStr: string): string => {
+  return format(date, formatStr)
+}
+
+/**
+ * Formats the date range to a string
+ * @param date
+ * @param formatStr
+ * @returns
+ */
 export const formatDateRange = (
   date: Date | DateRange | undefined | null,
   formatStr: string
-) => {
+): DateRangeString => {
   const dateRange = toDateRange(date)
+  if (!dateRange) {
+    return {
+      from: "",
+      to: undefined,
+    }
+  }
+
+  const from = formatDate(dateRange.from, formatStr)
+  const to = dateRange.to ? formatDate(dateRange.to, formatStr) : undefined
+
+  return {
+    from,
+    to: to && from !== to ? to : undefined,
+  }
+}
+
+export const formatDateToString = (
+  date: Date | DateRange | undefined | null,
+  formatStr: string
+): string => {
+  const dateRange = formatDateRange(date, formatStr)
   if (!dateRange) {
     return "-"
   }
-  try {
-    const formatFrom = format(dateRange.from, formatStr)
-    const formatTo = dateRange.to ? format(dateRange.to, formatStr) : ""
+  const { from, to } = dateRange
 
-    return `${formatFrom}${formatTo && formatFrom !== formatTo ? ` - ${formatTo}` : ""}`
-  } catch {
-    return "-"
-  }
+  return `${from}${to && from !== to ? ` ${rangeSeparator} ${to}` : ""}`
 }

@@ -1,3 +1,4 @@
+import { rangeSeparator } from "@/experimental/OneCalendar/granularities/consts"
 import { getGranularityDefinition } from "@/experimental/OneCalendar/OneCalendar"
 import { DateRange } from "@/experimental/OneCalendar/types"
 import { type BaseFilterDefinition } from "../filters"
@@ -41,7 +42,10 @@ export const dateFilter: FilterTypeDefinition<
 
     const granularity = getGranularityDefinition(options.view)
 
-    return granularity.toString(value)
+    const rangeString = granularity.toRangeString(value)
+    return rangeString.from && rangeString.to
+      ? `${rangeString.from} ${rangeSeparator} ${rangeString.to}`
+      : rangeString.from || rangeString.to || ""
   },
 }
 
