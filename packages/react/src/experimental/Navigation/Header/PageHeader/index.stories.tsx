@@ -284,7 +284,7 @@ export const WithProductUpdate: Story = {
   },
 }
 
-export const withFavorites: Story = {
+export const WithFavorites: Story = {
   args: {
     module: defaultModule,
     breadcrumbs: [
