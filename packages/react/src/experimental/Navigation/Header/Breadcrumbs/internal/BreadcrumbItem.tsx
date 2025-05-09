@@ -26,11 +26,7 @@ const BreadcrumbItem = forwardRef<
   HTMLLIElement,
   PropsWithChildren<BreadcrumbItemProps>
 >(({ item, isLast, isOnly = false, isFirst = false, children }, ref) => (
-  <ShadBreadcrumbItem
-    key={item.id}
-    ref={ref}
-    className={isLast ? "pr-0" : undefined}
-  >
+  <ShadBreadcrumbItem key={item.id} ref={ref}>
     {!isFirst && <BreadcrumbSeparator />}
     <BreadcrumbContent
       item={item}
