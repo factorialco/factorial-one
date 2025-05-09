@@ -2572,3 +2572,82 @@ export const TableWithNoFilters: Story = {
     )
   },
 }
+
+export const TableWithSecondaryActions: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      sortings: {
+        name: { label: "Name" },
+        email: { label: "Email" },
+        role: { label: "Role" },
+        department: { label: "Department" },
+      },
+      secondaryActions: () => [
+        {
+          label: "View Profile",
+          icon: Ai,
+          onClick: () => console.log(`Viewing profile`),
+        },
+      ],
+      dataAdapter: {
+        fetchData: ({ search }) => {
+          let filteredUsers = [...mockUsers]
+
+          if (search) {
+            const searchLower = search.toLowerCase()
+            filteredUsers = filteredUsers.filter(
+              (user) =>
+                user.name.toLowerCase().includes(searchLower) ||
+                user.email.toLowerCase().includes(searchLower) ||
+                user.role.toLowerCase().includes(searchLower) ||
+                user.department.toLowerCase().includes(searchLower)
+            )
+          }
+
+          return Promise.resolve(filteredUsers)
+        },
+      },
+    })
+
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
+                    },
+                  }),
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+        ]}
+      />
+    )
+  },
+}

@@ -255,6 +255,14 @@ export const OneDataCollection = <
     })
   }
 
+  const elementsRightActions = useMemo(() => {
+    return [
+      isLoading,
+      search?.enabled,
+      visualizations && visualizations.length > 1,
+    ].some(Boolean)
+  }, [search, isLoading, visualizations])
+
   return (
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
@@ -307,11 +315,17 @@ export const OneDataCollection = <
                     onVisualizationChange={setCurrentVisualization}
                   />
                 )}
+
                 {(primaryActionItem || secondaryActionsItems) && (
-                  <CollectionActions
-                    primaryActions={primaryActionItem}
-                    secondaryActions={secondaryActionsItems}
-                  />
+                  <>
+                    {elementsRightActions && (
+                      <div className="mx-1 h-4 w-px bg-f1-background-secondary-hover" />
+                    )}
+                    <CollectionActions
+                      primaryActions={primaryActionItem}
+                      secondaryActions={secondaryActionsItems}
+                    />
+                  </>
                 )}
               </div>
             </div>
