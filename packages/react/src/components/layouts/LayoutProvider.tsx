@@ -1,3 +1,4 @@
+import "@copilotkit/react-ui/styles.css"
 import { createContext, ReactNode, useContext } from "react"
 
 export type LayoutType = "standard" | "fullscreen" | "home" | "overview" | null
