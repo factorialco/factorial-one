@@ -89,6 +89,8 @@ const ProductUpdates = ({
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
   const [featuredUpdate, ...restUpdates] = updates ?? []
+  const [open, setOpen] = useState(false)
+
   useEffect(() => {
     setUpdates(null)
     setState("idle")
@@ -107,11 +109,13 @@ const ProductUpdates = ({
 
   return (
     <DropdownMenu
-      onOpenChange={async (open) => {
-        if (open && updates === null) {
+      open={open}
+      onOpenChange={async (isOpen) => {
+        setOpen(isOpen)
+        if (isOpen && updates === null) {
           invokeGetUpdates()
         }
-        onOpenChange(open)
+        onOpenChange(isOpen)
       }}
     >
       <DropdownMenuTrigger asChild>
@@ -182,6 +186,7 @@ const ProductUpdates = ({
               isVisible={crossSelling.isVisible}
               onClose={crossSelling.onClose}
               crossSelling={crossSelling}
+              onDropdownClose={() => setOpen(false)}
             />
           )}
         </DropdownMenuContent>
@@ -419,10 +424,12 @@ const DiscoverMoreProducts = ({
   isVisible,
   onClose,
   crossSelling,
+  onDropdownClose,
 }: {
   isVisible: boolean
   onClose?: () => void
   crossSelling: ProductUpdatesProp["crossSelling"]
+  onDropdownClose: () => void
 }) => {
   const [open, setOpen] = useState(isVisible)
 
@@ -434,6 +441,14 @@ const DiscoverMoreProducts = ({
     setOpen(false)
     if (onClose) {
       onClose()
+    }
+  }
+
+  const handleProductClick = (onClick: () => void) => {
+    setOpen(false)
+    onDropdownClose()
+    if (onClick) {
+      onClick()
     }
   }
 
@@ -472,6 +487,7 @@ const DiscoverMoreProducts = ({
                 {...product}
                 isVisible={true}
                 trackVisibility={product.trackVisibility}
+                onClick={() => handleProductClick(product.onClick)}
               />
             ))}
           </Carousel>
