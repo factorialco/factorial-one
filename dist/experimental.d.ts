@@ -68,6 +68,25 @@ export declare type actionType = {
     icon?: IconType_2;
 };
 
+export declare const ActivityItemList: (({ items, onClickItem, }: ActivityItemListProps) => default_2.JSX.Element) & {
+    Skeleton: () => default_2.JSX.Element;
+};
+
+export declare type ActivityItemListProps = Pick<SectionProps, "items" | "onClickItem">;
+
+export declare const ActivityItemListSkeleton: () => default_2.JSX.Element;
+
+declare type ActivityItemProps = {
+    id: string;
+    createdAt: Date;
+    title: string;
+    description?: string;
+    icon?: IconType;
+    category: string;
+    isUnread?: boolean;
+    onClick: (id: string) => void;
+};
+
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
     variant?: "info" | "positive" | "warning" | "destructive" | undefined;
 } & ({
@@ -265,6 +284,8 @@ export declare const BalanceTag: ForwardRefExoticComponent<Props_11 & RefAttribu
 export declare const BarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: BarChartProps;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+export declare const BaseActivityItemList: ({ items, onClickItem, }: ActivityItemListProps) => default_2.JSX.Element;
 
 declare const BaseAvatar: ForwardRefExoticComponent<    {
 type: ShadAvatarProps["type"];
@@ -482,25 +503,48 @@ export declare type BaseResponse<Record> = Record[];
 
 export declare const BaseTabs: React.FC<TabsProps>;
 
-export declare type BreadcrumbBaseItemType = NavigationItem & {
+declare type BreadcrumbBaseItemType = NavigationItem & {
     id: string;
     loading?: boolean;
     label: string;
 };
 
-export declare type BreadcrumbItemType = BreadcrumbLoadingItemType | BreadcrumbNavItemType | BreadcrumbSelectItemType;
+declare type BreadcrumbItemType = BreadcrumbLoadingItemType | BreadcrumbNavItemType | BreadcrumbSelectItemType;
 
-export declare type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
+declare type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
     loading: true;
 };
 
-export declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
+declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
     icon?: IconType;
 };
 
+/**
+ * Responsive breadcrumb navigation component that automatically collapses items when space is limited.
+ *
+ * Features:
+ * - Responsive layout that adjusts to container width
+ * - Maintains first and last items visible
+ * - Collapses middle items into a dropdown when needed
+ * - Supports loading states
+ * - Animated transitions
+ *
+ * @example
+ * ```tsx
+ * <Breadcrumbs
+ *   breadcrumbs={[
+ *     { id: "home", label: "Home", href: "/" },
+ *     { id: "section", label: "Section", href: "/section" },
+ *     { id: "page", label: "Current Page" }
+ *   ]}
+ * />
+ * ```
+ */
+export declare function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps): JSX_2.Element;
+
 export declare function BreadcrumbSelect({ options, defaultItem, ...props }: BreadcrumbSelectProps): JSX_2.Element;
 
-export declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
+declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     type: "select";
     searchbox?: boolean;
     externalSearch?: boolean;
@@ -515,6 +559,12 @@ export declare type BreadcrumbSelectProps = Omit<SelectProps<string>, "options" 
     value?: string;
     defaultItem?: SelectItemObject<string>;
 };
+
+export declare interface BreadcrumbsProps {
+    /** Array of breadcrumb items to display */
+    breadcrumbs: BreadcrumbItemType[];
+    append?: ReactNode;
+}
 
 declare interface BreakType {
     id: string;
@@ -541,7 +591,7 @@ export declare type BulkActionDefinition = {
 
 declare const Button: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round"> & DataAttributes & {
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round" | "className"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -1531,10 +1581,15 @@ declare type HeaderProps = {
     actions?: PageAction[];
     navigation?: NavigationProps;
     embedded?: boolean;
-    breadcrumbs?: BreadcrumbItemType[];
+    breadcrumbs?: BreadcrumbsProps["breadcrumbs"];
     productUpdates?: {
         isVisible?: boolean;
     } & ProductUpdatesProp;
+    favorites?: {
+        isMarked: boolean;
+        onChange: (newValue: boolean) => void;
+        label: string;
+    };
 };
 
 export declare type heightType = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full" | "auto";
@@ -1551,7 +1606,7 @@ declare type HighlightBannerProps = {
 declare type HTMLString = string;
 
 export declare const IconAvatar: {
-    ({ icon, size }: Props_7): JSX_2.Element;
+    ({ icon, size, className }: Props_7): JSX_2.Element;
     displayName: string;
 };
 
@@ -2093,7 +2148,7 @@ export declare type PageAction = {
     }>;
 });
 
-export declare function PageHeader({ module, statusTag, breadcrumbs, actions, embedded, navigation, productUpdates, }: HeaderProps): JSX_2.Element;
+export declare function PageHeader({ module, statusTag, breadcrumbs, actions, embedded, navigation, productUpdates, favorites, }: HeaderProps): JSX_2.Element;
 
 declare interface PageProps {
     children?: React.ReactNode;
@@ -2231,7 +2286,7 @@ declare interface PrimaryDropdownAction<T> extends PrimaryAction {
 
 export declare const PrivateBox: FC<PropsWithChildren>;
 
-declare const privateProps: readonly ["append", "appendButton"];
+declare const privateProps: readonly ["append", "appendButton", "className"];
 
 declare const privateProps_2: readonly ["align"];
 
@@ -2487,7 +2542,8 @@ declare type Props_6 = {
 
 declare type Props_7 = {
     icon: IconType;
-    size?: "xs" | "sm" | "md" | "lg";
+    size?: "sm" | "md" | "lg";
+    className?: string;
 };
 
 declare type Props_8 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
@@ -2716,6 +2772,12 @@ export declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
 }> | undefined;
 
 export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_9) => JSX_2.Element;
+
+declare type SectionProps = {
+    title: string;
+    items: ActivityItemProps[];
+    onClickItem: (id: string) => void;
+};
 
 export declare const Select: ForwardRefExoticComponent<SelectProps<string, any> & RefAttributes<HTMLButtonElement>>;
 

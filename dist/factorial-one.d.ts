@@ -50,7 +50,7 @@ export declare const Button: ForwardRefExoticComponent<ButtonProps & RefAttribut
 
 declare const Button_2: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round"> & DataAttributes & {
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round" | "className"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -154,6 +154,13 @@ declare const defaultTranslations: {
     };
     readonly shortcut: "Shortcut";
     readonly date: {
+        readonly groups: {
+            readonly today: "Today";
+            readonly yesterday: "Yesterday";
+            readonly lastWeek: "Last week";
+            readonly lastMonth: "Last month";
+            readonly other: "Other";
+        };
         readonly month: {
             readonly january: "January";
             readonly february: "February";
@@ -292,7 +299,7 @@ export declare const PrivacyModeProvider: React_2.FC<{
     children: ReactNode;
 }>;
 
-declare const privateProps: readonly ["append", "appendButton"];
+declare const privateProps: readonly ["append", "appendButton", "className"];
 
 export declare const ProgressBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
 value: number;
