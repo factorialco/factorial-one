@@ -22191,8 +22191,8 @@ const Kj = ({
             collisionPadding: 20,
             align: "end",
             hideWhenDetached: !0,
-            className: "flex max-h-[90vh] min-h-[562px] min-w-96 max-w-md flex-col",
-            style: { maxHeight: "min(90vh, 760px)", minHeight: 562 },
+            className: "min-h-auto flex max-h-[90vh] min-w-96 max-w-md flex-col",
+            style: { maxHeight: "min(90vh, 760px)" },
             children: [
               /* @__PURE__ */ l(Qj, { title: t, url: i, onClick: s }),
               f === "fetching" && /* @__PURE__ */ l(tL, {}),
