@@ -10,20 +10,17 @@ const RIGHT_PADDING = 8
  *
  * @param containerWidth - Width of the container
  * @param breadcrumbWidths - Widths of individual breadcrumb items
- * @param appendWidth - Width of an element added via the "append" slot
  * @returns Number of items that can be displayed (minimum 2)
  */
 function calculateVisibleCount(
   containerWidth: number,
-  breadcrumbWidths: number[],
-  appendWidth: number
+  breadcrumbWidths: number[]
 ): number {
   const totalItems = breadcrumbWidths.length
   if (totalItems <= 2) return totalItems
 
   const firstItemWidth = breadcrumbWidths[0]
-  let availableWidth =
-    containerWidth - firstItemWidth - RIGHT_PADDING - appendWidth
+  let availableWidth = containerWidth - firstItemWidth - RIGHT_PADDING
   let lastItemAddedIndex = 0
   let count = 1 // the first item is always shown
 
@@ -57,45 +54,22 @@ function calculateVisibleCount(
  * All widths are in pixels
  *
  * @param breadcrumbWidths widths of all individual breadcrumb items
- * @param appendedWidth - width of an extra element appended via the "append" slot
  * @returns minimal width or undefined if it cannot be determined
  */
-function calcMinWidth(
-  breadcrumbWidths: number[] = [],
-  appendedWidth: number
-): number | undefined {
+function calcMinWidth(breadcrumbWidths: number[] = []): number | undefined {
   switch (breadcrumbWidths.length) {
     case 0:
       return undefined
     case 1:
-      return breadcrumbWidths[0] + appendedWidth + RIGHT_PADDING
+      return breadcrumbWidths[0] + RIGHT_PADDING
     default:
       return (
         breadcrumbWidths[0] +
         COLLAPSED_ITEM_WIDTH +
         breadcrumbWidths[breadcrumbWidths.length - 1] +
-        appendedWidth +
         RIGHT_PADDING
       )
   }
-}
-
-function getElementWidths(
-  breadcrumbElements: HTMLElement[] = [],
-  hasAppend: boolean
-): {
-  breadcrumbWidths: number[]
-  appendWidth: number
-} {
-  const widths = breadcrumbElements.map((el) => el.clientWidth)
-  if (hasAppend) {
-    return {
-      breadcrumbWidths: widths.slice(0, widths.length - 1),
-      appendWidth: widths[widths.length - 1],
-    }
-  }
-
-  return { breadcrumbWidths: widths, appendWidth: 0 }
 }
 
 function estimateMinWidth(
@@ -116,8 +90,7 @@ function estimateMinWidth(
 export function calculateBreadcrumbState(
   containerWidth: number | null,
   breadcrumbs: BreadcrumbItemType[],
-  breadcrumbElements: HTMLElement[] = [],
-  hasAppend: boolean = false
+  breadcrumbElements: HTMLElement[] = []
 ): BreadcrumbState {
   if (!containerWidth) {
     const minimalBreadcrumbCount = Math.min(breadcrumbs.length, 2)
@@ -135,10 +108,7 @@ export function calculateBreadcrumbState(
   }
 
   const isSimpleLayout = breadcrumbs.length <= 2
-  const { breadcrumbWidths, appendWidth } = getElementWidths(
-    breadcrumbElements,
-    hasAppend
-  )
+  const breadcrumbWidths = breadcrumbElements.map((el) => el.clientWidth)
 
   if (isSimpleLayout) {
     return {
@@ -147,15 +117,11 @@ export function calculateBreadcrumbState(
       tailItems: breadcrumbs.slice(1),
       collapsedItems: [],
       isOnly: breadcrumbs.length === 1,
-      minWidth: calcMinWidth(breadcrumbWidths, appendWidth),
+      minWidth: calcMinWidth(breadcrumbWidths),
     }
   }
 
-  const visibleCount = calculateVisibleCount(
-    containerWidth,
-    breadcrumbWidths,
-    appendWidth
-  )
+  const visibleCount = calculateVisibleCount(containerWidth, breadcrumbWidths)
 
   return {
     visibleCount,
@@ -168,6 +134,6 @@ export function calculateBreadcrumbState(
       breadcrumbs.length - (visibleCount - 1)
     ),
     isOnly: breadcrumbs.length === 1,
-    minWidth: calcMinWidth(breadcrumbWidths, appendWidth),
+    minWidth: calcMinWidth(breadcrumbWidths),
   }
 }

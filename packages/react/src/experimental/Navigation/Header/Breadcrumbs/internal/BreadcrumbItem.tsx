@@ -10,7 +10,7 @@ import {
   BreadcrumbLink as ShadBreadcrumbLink,
 } from "@/ui/breadcrumb"
 import { motion } from "framer-motion"
-import { forwardRef, ReactNode } from "react"
+import { forwardRef, PropsWithChildren, ReactNode } from "react"
 import { BreadcrumbSeparator } from "./BreadcrumbSeparator"
 
 interface BreadcrumbItemProps {
@@ -22,23 +22,25 @@ interface BreadcrumbItemProps {
 
 type ContentType = "loading" | "select" | "page" | "link"
 
-const BreadcrumbItem = forwardRef<HTMLLIElement, BreadcrumbItemProps>(
-  ({ item, isLast, isOnly = false, isFirst = false }, ref) => (
-    <ShadBreadcrumbItem
-      key={item.id}
-      ref={ref}
-      className={isLast ? "pr-0" : undefined}
-    >
-      {!isFirst && <BreadcrumbSeparator />}
-      <BreadcrumbContent
-        item={item}
-        isLast={isLast}
-        isOnly={isOnly}
-        isFirst={isFirst}
-      />
-    </ShadBreadcrumbItem>
-  )
-)
+const BreadcrumbItem = forwardRef<
+  HTMLLIElement,
+  PropsWithChildren<BreadcrumbItemProps>
+>(({ item, isLast, isOnly = false, isFirst = false, children }, ref) => (
+  <ShadBreadcrumbItem
+    key={item.id}
+    ref={ref}
+    className={isLast ? "pr-0" : undefined}
+  >
+    {!isFirst && <BreadcrumbSeparator />}
+    <BreadcrumbContent
+      item={item}
+      isLast={isLast}
+      isOnly={isOnly}
+      isFirst={isFirst}
+    />
+    {children}
+  </ShadBreadcrumbItem>
+))
 
 BreadcrumbItem.displayName = "BreadcrumbItem"
 

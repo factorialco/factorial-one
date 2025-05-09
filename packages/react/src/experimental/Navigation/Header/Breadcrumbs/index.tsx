@@ -67,8 +67,7 @@ export function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
         const state = calculateBreadcrumbState(
           containerWidth,
           breadcrumbs,
-          breadcrumbsElements,
-          !!append
+          breadcrumbsElements
         )
         setState(state)
       })
@@ -106,9 +105,10 @@ export function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
             item={item}
             isLast={index === breadcrumbs.length - 1}
             isFirst={index === 0}
-          />
+          >
+            {index === breadcrumbs.length - 1 ? append : undefined}
+          </BreadcrumbItem>
         ))}
-        {append}
       </ol>
       {state && state.headItem && (
         <BreadcrumbList>
@@ -137,9 +137,10 @@ export function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
                   item={item}
                   isLast={index === state.tailItems.length - 1}
                   isFirst={false}
-                />
+                >
+                  {index === state.tailItems.length - 1 ? append : undefined}
+                </BreadcrumbItem>
               ))}
-              <li key="append-slot">{append}</li>
             </>
           )}
           {!hasCollapsedElements && (
@@ -150,9 +151,10 @@ export function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps) {
                   item={item}
                   isLast={index === state.tailItems.length - 1}
                   isFirst={false}
-                />
+                >
+                  {index === state.tailItems.length - 1 ? append : undefined}
+                </BreadcrumbItem>
               ))}
-              <li key="append-slot">{append}</li>
             </>
           )}
         </BreadcrumbList>
