@@ -142,8 +142,6 @@ export const LongBreadcrumbs: Story = {
   },
 }
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
 export const Interactive: Story = {
   render: () => {
     const recruitmentBreadcrumbs: BreadcrumbsProps["breadcrumbs"] = [
