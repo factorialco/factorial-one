@@ -87,7 +87,7 @@ function getElementWidths(
   breadcrumbWidths: number[]
   appendWidth: number
 } {
-  const widths = breadcrumbElements.map((el) => el.offsetWidth)
+  const widths = breadcrumbElements.map((el) => el.clientWidth)
   if (hasAppend) {
     return {
       breadcrumbWidths: widths.slice(0, widths.length - 1),
