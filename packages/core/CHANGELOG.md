@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.7.1...factorial-one-core-v1.7.2) (2025-05-09)
+
+
+### Bug Fixes
+
+* pulse face icons updated ([54f503a](https://github.com/factorialco/factorial-one/commit/54f503aec4fe9f3a86adc1652cbae3e8d3c90622))
+
 ## [1.7.1](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.7.0...factorial-one-core-v1.7.1) (2025-05-09)
 
 
