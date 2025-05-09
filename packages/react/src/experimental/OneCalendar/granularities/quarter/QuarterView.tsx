@@ -1,40 +1,47 @@
 import { cn, focusRing } from "@/lib/utils"
 import { isAfter, isBefore, isWithinInterval } from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
-import { CalendarMode, DateRange } from "../types"
+import { CalendarMode, DateRange } from "../../types"
 
-export const getHalfYearFromMonth = (month: number): number =>
-  month < 6 ? 1 : 2
+const getQuarterFromMonth = (month: number): number => {
+  return Math.floor(month / 3) + 1
+}
 
-export const getHalfYearRange = (halfYear: number, year: number): DateRange => {
-  const firstMonth = halfYear === 1 ? 0 : 6 // Jan for H1, Jul for H2
-  const lastMonth = halfYear === 1 ? 5 : 11 // Jun for H1, Dec for H2
+const getQuarterMonths = (quarter: number): number[] =>
+  quarter >= 1 && quarter <= 4
+    ? [0, 1, 2].map((n) => n + (quarter - 1) * 3)
+    : []
+
+const getQuarterRange = (quarter: number, year: number): DateRange => {
+  const months = getQuarterMonths(quarter)
+  const firstMonth = months[0]
+  const lastMonth = months[months.length - 1]
 
   const from = new Date(year, firstMonth, 1)
-  const to = new Date(year, lastMonth + 1, 0) // Last day of the last month
+  const to = new Date(year, lastMonth + 1, 0)
 
   return { from, to }
 }
 
-interface HalfYearViewProps {
+interface QuarterViewProps {
   mode: CalendarMode
   selected: Date | DateRange | null
-  onSelect: (date: Date | DateRange) => void
+  onSelect?: (date: Date | DateRange) => void
   year: number
   motionDirection?: number
 }
 
-export const HalfYearView = ({
+export const QuarterView = ({
   mode,
   selected,
   onSelect,
   year,
   motionDirection = 1,
-}: HalfYearViewProps) => {
-  const halfYears = [1, 2]
+}: QuarterViewProps) => {
+  const quarters = [1, 2, 3, 4]
   const today = new Date()
   const currentYear = today.getFullYear()
-  const currentHalfYear = getHalfYearFromMonth(today.getMonth())
+  const currentQuarter = getQuarterFromMonth(today.getMonth())
   const baseYear = Math.floor(year / 5) * 5
   const years = Array.from({ length: 5 }, (_, i) => baseYear + i)
 
@@ -45,43 +52,40 @@ export const HalfYearView = ({
     )
   }
 
-  // Handle click on a half year
-  const handleHalfYearClick = (halfYear: number, year: number) => {
-    const halfYearRange = getHalfYearRange(halfYear, year)
+  // Handle click on a quarter
+  const handleQuarterClick = (quarter: number, year: number) => {
+    const quarterRange = getQuarterRange(quarter, year)
 
     if (mode === "single") {
-      // For single selection, use the first day of the half-year
-      onSelect?.(halfYearRange.from)
+      onSelect?.(quarterRange.from)
     } else if (mode === "range") {
       if (!selected || !isDateRange(selected)) {
-        // Start of range
         onSelect?.({
-          from: halfYearRange.from,
+          from: quarterRange.from,
           to: undefined,
         })
       } else if (selected && selected.from && !selected.to) {
-        // Complete the range
         const fromDate = selected.from
-        const fromHalfYear = getHalfYearFromMonth(fromDate.getMonth())
+        const fromQuarter = getQuarterFromMonth(fromDate.getMonth())
         const fromYear = fromDate.getFullYear()
 
-        if (fromHalfYear === halfYear && fromYear === year) {
-          // If clicking the same half-year, select just that half-year
+        if (fromQuarter === quarter && fromYear === year) {
+          // If clicking the same quarter, select just that quarter
           onSelect?.({
-            from: halfYearRange.from,
-            to: halfYearRange.to,
+            from: quarterRange.from,
+            to: quarterRange.to,
           })
         } else {
-          // Create a range between the two half-years
-          const fromHalfYearRange = getHalfYearRange(fromHalfYear, fromYear)
+          // Create a range between the two quarters
+          const fromQuarterRange = getQuarterRange(fromQuarter, fromYear)
 
-          const start = isBefore(fromHalfYearRange.from, halfYearRange.from)
-            ? fromHalfYearRange.from
-            : halfYearRange.from
+          const start = isBefore(fromQuarterRange.from, quarterRange.from)
+            ? fromQuarterRange.from
+            : quarterRange.from
 
-          const end = isAfter(fromHalfYearRange.to!, halfYearRange.to!)
-            ? fromHalfYearRange.to
-            : halfYearRange.to
+          const end = isAfter(fromQuarterRange.to!, quarterRange.to!)
+            ? fromQuarterRange.to
+            : quarterRange.to
 
           onSelect?.({
             from: start,
@@ -91,71 +95,68 @@ export const HalfYearView = ({
       } else {
         // Start a new range
         onSelect?.({
-          from: halfYearRange.from,
+          from: quarterRange.from,
           to: undefined,
         })
       }
     }
   }
 
-  // Check if a half-year is selected
-  const isHalfYearSelected = (halfYear: number, year: number): boolean => {
+  // Check if a quarter is selected
+  const isQuarterSelected = (quarter: number, year: number): boolean => {
     if (!selected) return false
 
-    const halfYearRange = getHalfYearRange(halfYear, year)
+    const quarterRange = getQuarterRange(quarter, year)
+    if (!quarterRange.to) return false
 
     if (!isDateRange(selected)) {
       // Single date selection
       const selectedMonth = selected.getMonth()
-      const selectedHalfYear = getHalfYearFromMonth(selectedMonth)
-      return selectedHalfYear === halfYear && selected.getFullYear() === year
+      const selectedQuarter = getQuarterFromMonth(selectedMonth)
+      return selectedQuarter === quarter && selected.getFullYear() === year
     } else {
       // Range selection
       const from = selected.from
       const to = selected.to
 
       if (from && to) {
-        // Check if any part of the half-year is within the selected range
-        const isWithinRange =
-          isWithinInterval(halfYearRange.from, { start: from, end: to }) ||
-          (!!halfYearRange.to &&
-            isWithinInterval(halfYearRange.to, { start: from, end: to })) ||
-          (isBefore(halfYearRange.from, from) &&
-            !!halfYearRange.to &&
-            isAfter(halfYearRange.to, to))
-
-        return isWithinRange
+        // Check if any part of the quarter is within the selected range
+        return (
+          isWithinInterval(quarterRange.from, { start: from, end: to }) ||
+          isWithinInterval(quarterRange.to, { start: from, end: to }) ||
+          (isBefore(quarterRange.from, from) && isAfter(quarterRange.to, to))
+        )
       } else if (from) {
-        // Check if the from date is in this half-year
-        const fromHalfYear = getHalfYearFromMonth(from.getMonth())
-        return fromHalfYear === halfYear && from.getFullYear() === year
+        // Check if the from date is in this quarter
+        const fromQuarter = getQuarterFromMonth(from.getMonth())
+        return fromQuarter === quarter && from.getFullYear() === year
       }
     }
 
     return false
   }
 
-  // Check if a half-year is the current half-year
-  const isCurrentHalfYear = (halfYear: number, year: number): boolean => {
-    return halfYear === currentHalfYear && year === currentYear
+  // Check if a quarter is the current quarter
+  const isCurrentQuarter = (quarter: number, year: number): boolean => {
+    return quarter === currentQuarter && year === currentYear
   }
 
-  // Check if a half-year is the start of a range
-  const isRangeStart = (halfYear: number, year: number): boolean => {
+  // Check if a quarter is the start of a range
+  const isRangeStart = (quarter: number, year: number): boolean => {
     if (!selected || !isDateRange(selected) || !selected.from) return false
 
     const from = selected.from
-    const fromHalfYear = getHalfYearFromMonth(from.getMonth())
-    return fromHalfYear === halfYear && from.getFullYear() === year
+    const fromQuarter = getQuarterFromMonth(from.getMonth())
+    return fromQuarter === quarter && from.getFullYear() === year
   }
 
-  // Check if a half-year is the end of a range
-  const isRangeEnd = (halfYear: number, year: number): boolean => {
+  // Check if a quarter is the end of a range
+  const isRangeEnd = (quarter: number, year: number): boolean => {
     if (!selected || !isDateRange(selected) || !selected.to) return false
 
     const to = selected.to
-    const toHalfYear = getHalfYearFromMonth(to.getMonth())
-    return toHalfYear === halfYear && to.getFullYear() === year
+    const toQuarter = getQuarterFromMonth(to.getMonth())
+    return toQuarter === quarter && to.getFullYear() === year
   }
 
   const motionVariants = {
@@ -191,16 +192,16 @@ export const HalfYearView = ({
               {yearValue}
             </div>
             <div className="flex flex-1">
-              {halfYears.map((halfYear) => {
-                const isSelected = isHalfYearSelected(halfYear, yearValue)
-                const isCurrent = isCurrentHalfYear(halfYear, yearValue)
-                const isStart = isRangeStart(halfYear, yearValue)
-                const isEnd = isRangeEnd(halfYear, yearValue)
+              {quarters.map((quarter) => {
+                const isSelected = isQuarterSelected(quarter, yearValue)
+                const isCurrent = isCurrentQuarter(quarter, yearValue)
+                const isStart = isRangeStart(quarter, yearValue)
+                const isEnd = isRangeEnd(quarter, yearValue)
 
                 return (
                   <button
-                    key={`${yearValue}-H${halfYear}`}
-                    onClick={() => handleHalfYearClick(halfYear, yearValue)}
+                    key={`${yearValue}-Q${quarter}`}
+                    onClick={() => handleQuarterClick(quarter, yearValue)}
                     className={cn(
                       "relative isolate flex h-10 flex-1 items-center justify-center rounded-md p-2 tabular-nums",
                       "after:absolute after:inset-x-1 after:inset-y-0 after:z-0 after:rounded-md after:ring-1 after:ring-inset after:ring-f1-border-secondary after:transition-all after:duration-100 after:content-['']",
@@ -222,7 +223,7 @@ export const HalfYearView = ({
                     {isEnd && (
                       <div className="absolute inset-y-0 left-0 z-0 w-1/2 bg-f1-background-selected" />
                     )}
-                    <span className="z-10 font-medium">H{halfYear}</span>
+                    <span className="z-10 font-medium">Q{quarter}</span>
                     {isCurrent && (
                       <div
                         className={cn(

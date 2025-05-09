@@ -18,3 +18,8 @@ export type DateRange = {
   from: Date
   to?: Date
 }
+
+export type DateRangeString = {
+  from: string
+  to?: string
+}
