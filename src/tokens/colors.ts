@@ -217,6 +217,7 @@ export const f1Colors = {
       DEFAULT: "hsl(var(--critical-50))",
       bold: "hsl(var(--critical-70))",
     },
+    accent: "hsl(var(--accent-50))",
     info: "hsl(var(--info-50))",
     warning: "hsl(var(--warning-50))",
     positive: "hsl(var(--positive-50))",
