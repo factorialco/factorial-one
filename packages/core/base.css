@@ -169,5 +169,5 @@
 }
 
 body {
-  @apply text-f1-foreground font-sans text-base antialiased;
+  @apply !text-f1-foreground font-sans text-base antialiased;
 }
