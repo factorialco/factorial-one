@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.46.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.0...factorial-one-react-v1.46.1) (2025-05-09)
+
+
+### Bug Fixes
+
+* mood colours ([#1782](https://github.com/factorialco/factorial-one/issues/1782)) ([f61955c](https://github.com/factorialco/factorial-one/commit/f61955c80ed9c1ff1d8df549b6f034dc28bf91ea))
+
 ## [1.46.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.45.0...factorial-one-react-v1.46.0) (2025-05-08)
 
 
