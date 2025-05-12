@@ -24,7 +24,7 @@ export function SidebarFooter({
   user,
   options,
   showActivityButton = false,
-  activityButtonShortcut = ["cmd", "⇧", "N"],
+  activityButtonShortcut = ["cmd", "ctrl", "N"],
   onActivityButtonClick,
   hasActivityUpdates,
 }: SidebarFooterProps) {
