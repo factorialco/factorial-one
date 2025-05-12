@@ -8,7 +8,7 @@ import { BaseTag } from "../BaseTag"
 
 type Props = {
   moduleName: string
-  icon?: IconType
+  icon: IconType
   onClick?: () => void
 }
 
