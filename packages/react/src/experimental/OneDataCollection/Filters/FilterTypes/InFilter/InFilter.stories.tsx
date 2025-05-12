@@ -343,3 +343,49 @@ export const SyncFunctionOptions: Story = {
     onChange: () => {},
   },
 }
+
+// Single select example
+const SingleSelectExample = () => {
+  const [selectedValues, setSelectedValues] = useState<string[]>([
+    "engineering",
+  ])
+
+  const handleChange = (value: string[]) => {
+    setSelectedValues(value)
+  }
+
+  return (
+    <InFilter<string>
+      schema={{
+        label: "Department",
+        options: {
+          options: [
+            {
+              label: "Admin",
+              value: "admin",
+            },
+            {
+              label: "User",
+              value: "user",
+            },
+            {
+              label: "Editor",
+              value: "editor",
+            },
+            {
+              label: "Viewer",
+              value: "viewer",
+            },
+          ],
+          singleSelect: true,
+        },
+      }}
+      value={selectedValues}
+      onChange={handleChange}
+    />
+  )
+}
+
+export const SingleSelect: Story = {
+  render: () => <SingleSelectExample />,
+}
