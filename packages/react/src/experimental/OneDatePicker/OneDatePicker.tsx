@@ -5,8 +5,7 @@ import { Button } from "../../components/Actions/Button"
 import { useI18n } from "../../lib/providers/i18n"
 import { OneCalendar } from "../OneCalendar"
 import { CalendarMode, CalendarView, DateRange } from "../OneCalendar/types"
-
-
+import { DatePreset } from "./types"
 
 export interface OneDatePickerProps {
   mode?: CalendarMode
