@@ -91,6 +91,8 @@ export function OneCalendar({
   const handleSelect = (date: Date | DateRange | null) => {
     if (!date) return
 
+    date = granularity.toRange(date)
+
     setSelected(date)
     onSelect?.(date)
   }

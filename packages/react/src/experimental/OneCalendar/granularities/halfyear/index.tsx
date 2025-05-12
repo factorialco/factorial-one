@@ -6,7 +6,11 @@ import {
   startOfYear,
 } from "date-fns"
 import { DateRange } from "../../types"
-import { toDateRange, toDateRangeString } from "../../utils"
+import {
+  toDateRange,
+  toDateRangeString,
+  toGranularityDateRange,
+} from "../../utils"
 import { rangeSeparator } from "../consts"
 import { GranularityDefinition } from "../types"
 import { HalfYearView } from "./HalfyearView"
@@ -35,8 +39,15 @@ const toRangeString = (date: Date | DateRange | undefined | null) => {
   }
 }
 
+const toHalfYearGranularityDateRange = (
+  date: Date | DateRange | undefined | null
+) => {
+  return toGranularityDateRange(date, startOfMonth, endOfMonth)
+}
+
 export const halfyearGranularity: GranularityDefinition = {
   toRangeString: (date) => toRangeString(date),
+  toRange: (date) => toHalfYearGranularityDateRange(date),
   toString: (date) => {
     const dateRange = toRangeString(date)
     if (!dateRange) {
@@ -65,10 +76,10 @@ export const halfyearGranularity: GranularityDefinition = {
       return new Date(year, (halfYear - 1) * 6, 1)
     }
 
-    return {
-      from: startOfMonth(parseDate(fromStr)),
-      to: toStr ? endOfMonth(parseDate(toStr)) : undefined,
-    }
+    return toHalfYearGranularityDateRange({
+      from: parseDate(fromStr),
+      to: toStr ? parseDate(toStr) : undefined,
+    })
   },
   navigate: (date, direction) => {
     return addMonths(date, direction * 6)
