@@ -111,3 +111,19 @@ export const formatDateToString = (
 
   return `${from}${to && from !== to ? ` ${rangeSeparator} ${to}` : ""}`
 }
+
+export const toGranularityDateRange = (
+  date: Date | DateRange | undefined | null,
+  fromFn: (date: Date) => Date,
+  toFn: (date: Date) => Date
+) => {
+  const dateRange = toDateRange(date)
+  if (!dateRange) {
+    return null
+  }
+  const { from, to } = dateRange
+  return {
+    from: fromFn(from),
+    to: toFn(to ? to : from),
+  }
+}

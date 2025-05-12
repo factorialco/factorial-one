@@ -1,15 +1,24 @@
 import { addMonths, addYears, endOfQuarter, startOfQuarter } from "date-fns"
+import { DateRange } from "../../types"
 import {
   formatDateRange,
   formatDateToString,
   toDateRangeString,
+  toGranularityDateRange,
 } from "../../utils"
 import { rangeSeparator } from "../consts"
 import { GranularityDefinition } from "../types"
 import { QuarterView } from "./QuarterView"
 
+const toQuarterGranularityDateRange = (
+  date: Date | DateRange | undefined | null
+) => {
+  return toGranularityDateRange(date, startOfQuarter, endOfQuarter)
+}
+
 export const quarterGranularity: GranularityDefinition = {
   toRangeString: (date) => formatDateRange(date, "'Q'Q yyyy"),
+  toRange: (date) => toQuarterGranularityDateRange(date),
   toString: (date) => formatDateToString(date, "'Q'Q yyyy"),
   fromString: (dateStr) => {
     const dateRangeString = toDateRangeString(dateStr)
@@ -28,10 +37,10 @@ export const quarterGranularity: GranularityDefinition = {
       return new Date(year, (quarter - 1) * 3, 1)
     }
 
-    return {
-      from: startOfQuarter(parseDate(fromStr)),
-      to: toStr ? endOfQuarter(parseDate(toStr)) : undefined,
-    }
+    return toQuarterGranularityDateRange({
+      from: parseDate(fromStr),
+      to: toStr ? parseDate(toStr) : undefined,
+    })
   },
   navigate: (date, direction) => {
     return startOfQuarter(addMonths(date, direction * 3))
