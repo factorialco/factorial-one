@@ -1,11 +1,12 @@
 import * as Icons from "@/icons/app"
+import { action } from "@storybook/addon-actions"
 import type { Meta, StoryObj } from "@storybook/react"
 import { SidebarFooter } from "./index"
 
 const meta = {
   title: "Sidebar/SidebarFooter",
   component: SidebarFooter,
-  tags: ["autodocs", "experimental", "no-sidebar"],
+  tags: ["autodocs", "experimental"],
 } satisfies Meta<typeof SidebarFooter>
 
 export default meta
@@ -20,7 +21,7 @@ export const Default: Story = {
     },
     showActivityButton: true,
     hasActivityUpdates: true,
-    onActivityButtonClick: () => {},
+    onActivityButtonClick: action("Activity button clicked"),
     options: [
       { label: "Preferences", href: "/preferences", icon: Icons.Sliders },
       { label: "Notifications", href: "/notifications", icon: Icons.Bell },

@@ -1,7 +1,9 @@
 import { Button } from "@/components/Actions/Button"
 import { Badge } from "@/experimental/exports"
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
-import { Circle as CircleIcon, Feed as FeedIcon } from "@/icons/app"
+import { Tooltip } from "@/experimental/Overlays/Tooltip"
+import { Bell as BellIcon, Circle as CircleIcon } from "@/icons/app"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
 import { Dropdown, DropdownItem } from "../../Dropdown"
 
@@ -13,6 +15,7 @@ interface SidebarFooterProps {
   }
   showActivityButton?: boolean
   hasActivityUpdates?: boolean
+  activityButtonShortcut?: string[]
   onActivityButtonClick?: () => void
   options: DropdownItem[]
 }
@@ -21,9 +24,12 @@ export function SidebarFooter({
   user,
   options,
   showActivityButton = false,
+  activityButtonShortcut = ["cmd", "N"],
   onActivityButtonClick,
   hasActivityUpdates,
 }: SidebarFooterProps) {
+  const i18n = useI18n()
+
   return (
     <div className="flex flex-row items-center justify-between gap-3 p-3">
       <div className="flex-1">
@@ -47,20 +53,22 @@ export function SidebarFooter({
         </Dropdown>
       </div>
       {showActivityButton && (
-        <div className="relative">
-          <Button
-            icon={FeedIcon}
-            label="Activity"
-            onClick={onActivityButtonClick}
-            variant="ghost"
-            hideLabel
-          />
-          {hasActivityUpdates && (
-            <div className="absolute -right-1 -top-1 rounded-full bg-f1-background">
-              <Badge type="highlight" size="sm" icon={CircleIcon} />
-            </div>
-          )}
-        </div>
+        <Tooltip label={i18n.notifications} shortcut={activityButtonShortcut}>
+          <div className="relative">
+            <Button
+              icon={BellIcon}
+              label="Notifications"
+              onClick={onActivityButtonClick}
+              variant="ghost"
+              hideLabel
+            />
+            {hasActivityUpdates && (
+              <div className="absolute -right-1 -top-1 rounded-full bg-f1-background">
+                <Badge type="highlight" size="sm" icon={CircleIcon} />
+              </div>
+            )}
+          </div>
+        </Tooltip>
       )}
     </div>
   )
