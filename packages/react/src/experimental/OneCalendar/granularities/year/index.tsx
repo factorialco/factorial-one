@@ -1,14 +1,22 @@
-import { addYears, parse, startOfYear } from "date-fns"
+import { addYears, endOfYear, parse, startOfYear } from "date-fns"
 import {
   formatDateRange,
   formatDateToString,
   toDateRangeString,
+  toGranularityDateRange,
 } from "../../utils"
 import { rangeSeparator } from "../consts"
 import { GranularityDefinition } from "../types"
 import { YearView } from "./YearView"
 
+const toYearGranularityDateRange = (
+  date: Date | DateRange | undefined | null
+) => {
+  return toGranularityDateRange(date, startOfYear, endOfYear)
+}
+
 export const yearGranularity: GranularityDefinition = {
+  toRange: (date) => toYearGranularityDateRange(date),
   toRangeString: (date) => formatDateRange(date, "yyyy"),
   toString: (date) => formatDateToString(date, "yyyy"),
   fromString: (dateStr) => {
@@ -23,10 +31,10 @@ export const yearGranularity: GranularityDefinition = {
       return parse(trimmed, "yyyy", new Date())
     }
 
-    return {
+    return toYearGranularityDateRange({
       from: parseDate(fromStr),
       to: toStr ? parseDate(toStr) : undefined,
-    }
+    })
   },
   getViewDateFromDate: (date) => {
     return startOfYear(date)

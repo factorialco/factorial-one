@@ -4,12 +4,20 @@ import {
   formatDateRange,
   formatDateToString,
   toDateRangeString,
+  toGranularityDateRange,
 } from "../../utils"
 import { GranularityDefinition } from "../types"
 import { MonthView } from "./MonthView"
 
+const toMonthGranularityDateRange = (
+  date: Date | DateRange | undefined | null
+) => {
+  return toGranularityDateRange(date, startOfMonth, endOfMonth)
+}
+
 export const monthGranularity: GranularityDefinition = {
   toRangeString: (date) => formatDateRange(date, "MM/yyyy"),
+  toRange: (date) => toMonthGranularityDateRange(date),
   toString: (date) => formatDateToString(date, "MM/yyyy"),
   fromString: (dateStr) => {
     const dateRangeString = toDateRangeString(dateStr)
@@ -32,10 +40,10 @@ export const monthGranularity: GranularityDefinition = {
       return new Date(Number(year), Number(month) - 1, 1)
     }
 
-    return {
-      from: startOfMonth(parseDate(fromStr)),
-      to: toStr ? endOfMonth(parseDate(toStr)) : undefined,
-    }
+    return toMonthGranularityDateRange({
+      from: parseDate(fromStr),
+      to: toStr ? parseDate(toStr) : undefined,
+    })
   },
   navigate: (date, direction) => {
     return addMonths(date, direction)
