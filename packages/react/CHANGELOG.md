@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.47.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.3...factorial-one-react-v1.47.0) (2025-05-12)
+
+
+### Features
+
+* **ResourceHeader:** add tooltip to metadata ([#1795](https://github.com/factorialco/factorial-one/issues/1795)) ([b74d5e6](https://github.com/factorialco/factorial-one/commit/b74d5e66d962eb88b40f9b8d5f6604ba7caabb98))
+
 ## [1.46.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.2...factorial-one-react-v1.46.3) (2025-05-09)
 
 
