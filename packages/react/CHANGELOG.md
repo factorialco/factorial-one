@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.48.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.47.1...factorial-one-react-v1.48.0) (2025-05-12)
+
+
+### Features
+
+* add activity button in Sidebar ([#1677](https://github.com/factorialco/factorial-one/issues/1677)) ([23eb340](https://github.com/factorialco/factorial-one/commit/23eb340ef1018396090a0812db39e40bc6359eb7))
+
 ## [1.47.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.47.0...factorial-one-react-v1.47.1) (2025-05-12)
 
 
