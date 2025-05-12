@@ -1,4 +1,5 @@
 import { addYears, endOfYear, parse, startOfYear } from "date-fns"
+import { DateRange } from "../../types"
 import {
   formatDateRange,
   formatDateToString,

@@ -33,5 +33,5 @@ export interface GranularityDefinition {
 
 export type GranularityDefinitionSimple = Pick<
   GranularityDefinition,
-  "toString"
+  "toRangeString"
 >
