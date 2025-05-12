@@ -3,12 +3,13 @@ import * as React from "react"
 import { useState } from "react"
 import { SelectContext } from "../SelectContext.tsx"
 
+type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root>
 /**
  * Select Root component
  */
-const Select = (props: React.ComponentProps<typeof SelectPrimitive.Root>) => {
+const Select = (props: SelectProps) => {
   // If open prop is not provided, we'll manage it internally
-  const [internalOpen, setInternalOpen] = useState(false)
+  const [internalOpen, setInternalOpen] = useState(props.asList ? false : false)
 
   // Use either the controlled open state from props or the internal state
   const isOpen = props.open !== undefined ? props.open : internalOpen

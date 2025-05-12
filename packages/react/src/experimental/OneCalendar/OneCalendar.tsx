@@ -14,14 +14,14 @@ import { isValidDate, toDateRange } from "./utils"
 export interface OneCalendarProps {
   mode: CalendarMode
   view: CalendarView
-  onSelect?: (date: Date | DateRange | null) => void
+  onSelect?: (date: DateRange | null) => void
   defaultMonth?: Date
   defaultSelected?: Date | DateRange | null
   showNavigation?: boolean
   showInput?: boolean
 }
 
-export const getGranularityDefinition = (
+export const getGranularitySimpleDefinition = (
   view: CalendarView
 ): GranularityDefinitionSimple => {
   const granularity = granularityDefinitions[view]
@@ -166,6 +166,7 @@ export function OneCalendar({
           <Input
             error={!!inputError.from}
             value={inputValue.from}
+            placeholder={mode === "range" ? i18n.date.from : i18n.date.date}
             onBlur={() => handleInputChange("from")}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -184,6 +185,7 @@ export function OneCalendar({
             <Input
               error={!!inputError.to}
               value={inputValue.to}
+              placeholder={i18n.date.to}
               onBlur={() => handleInputChange("to")}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {

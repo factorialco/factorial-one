@@ -7,7 +7,9 @@ export interface GranularityDefinition {
   // Format the date to a date range with dates as string
   toRangeString: (date: Date | DateRange | undefined | null) => DateRangeString
   // Convert the date to a date range (e.g for day granularity, this will be the start and end of the day)
-  toRange: (date: Date | DateRange | undefined | null) => DateRange | null
+  toRange: <T extends Date | DateRange | undefined | null>(
+    date: T
+  ) => T extends Date | DateRange ? DateRange : T
   // Format the date to a string (e.g W12 2025 -> W13 2025)
   toString: (date: Date | DateRange | undefined | null) => string
   // Parse the date range string to a date range
@@ -33,5 +35,5 @@ export interface GranularityDefinition {
 
 export type GranularityDefinitionSimple = Pick<
   GranularityDefinition,
-  "toString"
+  "toRangeString"
 >

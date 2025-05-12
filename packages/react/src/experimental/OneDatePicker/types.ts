@@ -5,5 +5,10 @@ import { CalendarView } from "../OneCalendar/types"
 export interface DatePreset {
   label: string
   granularity: CalendarView
-  value: () => Date | DateRange
+  value: DateRange | (() => DateRange)
+}
+
+export type DatePickerValue = {
+  date: DateRange | undefined
+  granularity: CalendarView
 }

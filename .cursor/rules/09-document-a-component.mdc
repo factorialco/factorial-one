@@ -166,4 +166,6 @@ On hover, the following may be shown:
 - Omit `Variants` section if none exist
 - Add a `## Props` section (optional) if props are complex or need explanation
 - Keep alignment with visual design and actual usage
+- Create the stories and docs in the`__stories__` subfolder 
+- The story title for a component must follow `Components/[Component name without the One prefix]`
 

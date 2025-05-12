@@ -6,6 +6,7 @@ import {
   startOfISOWeek,
   startOfMonth,
 } from "date-fns"
+import { DateRange } from "../../types"
 import {
   formatDateRange,
   formatDateToString,

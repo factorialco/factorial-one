@@ -1,90 +1,132 @@
-import { ChevronDown } from "@/icons/app"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectSeparator,
+  SelectTrigger,
+} from "@/ui/Select"
 import { useState } from "react"
-import { Button } from "../../components/Actions/Button"
-import { useI18n } from "../../lib/providers/i18n"
 import { OneCalendar } from "../OneCalendar"
 import { CalendarMode, CalendarView, DateRange } from "../OneCalendar/types"
-import { DatePreset } from "./types"
-
+import { DatePickerTrigger } from "./components/DateInput"
+import { GranularitySelector } from "./components/GranularitySelector"
+import { DatePickerValue, DatePreset } from "./types"
 export interface OneDatePickerProps {
   mode?: CalendarMode
-  onSelect?: (date: Date | DateRange | null) => void
-  defaultSelected?: Date | DateRange | null
+  onSelect?: (value: DatePickerValue | undefined) => void
+  defaultValue?: DatePickerValue
   presets?: DatePreset[]
   granularities?: CalendarView[]
-  defaultGranularity?: CalendarView
   className?: string
 }
 
+const presetCustom = "__custom__"
+
 export function OneDatePicker({
   mode = "single",
-  view = "month",
   onSelect,
-  defaultSelected = null,
+  defaultValue,
   presets = [],
+  granularities = ["day", "week", "month", "quarter", "halfyear", "year"],
   className,
+  ...props
 }: OneDatePickerProps) {
-  const i18n = useI18n()
-  const [selected, setSelected] = useState<Date | DateRange | null>(
-    defaultSelected
-  )
+  const [value, setValue] = useState<DatePickerValue | undefined>(defaultValue)
+  const [preset, setPreset] = useState<string | undefined>()
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleSelect = (date: Date | DateRange | null) => {
-    setSelected(date)
-    onSelect?.(date)
-    setIsOpen(false)
+  const handleSelectDate = (date: DateRange | null) => {
+    const currentGranularity = value?.granularity ?? "day"
+    handleSelect({
+      date: date ?? undefined,
+      granularity: currentGranularity,
+    })
   }
 
-  const handlePresetSelect = (preset: DatePreset) => {
-    setSelected(preset.value)
-    onSelect?.(preset.value)
-    setIsOpen(false)
+  const handleSelect = (value: DatePickerValue) => {
+    setValue(value)
+    onSelect?.(value)
+  }
+
+  const handlePresetSelect = (presetId: string) => {
+    setCustomRangeMode(presetId === presetCustom)
+    setPreset(presetId)
+
+    const selectedPreset = presetId ? presets[+presetId] : undefined
+    if (!selectedPreset) return
+
+    handleSelect({
+      date:
+        typeof selectedPreset.value === "function"
+          ? selectedPreset.value()
+          : selectedPreset.value,
+      granularity: selectedPreset.granularity,
+    })
+  }
+
+  const [customRangeMode, setCustomRangeMode] = useState(false)
+
+  const handleSelectGranularity = (granularity: CalendarView) => {
+    handleSelect({
+      date: value?.date,
+      granularity,
+    })
+  }
+
+  const setOpen = (open: boolean) => {
+    console.log("setOpen", open)
+    setIsOpen(open)
   }
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          style={className ? { className } : undefined}
-          label={selected ? selected.toString() : "Select date"}
-          icon={ChevronDown}
-          iconPosition="right"
-        />
-      </PopoverTrigger>
-      <PopoverContent className="flex w-[800px] p-0" align="start">
-        <div className="flex flex-1">
-          <div className="flex-1 p-4">
-            <OneCalendar
-              mode={mode}
-              view={view}
-              onSelect={handleSelect}
-              defaultSelected={selected}
-              showInput
-            />
-          </div>
-          {presets.length > 0 && (
-            <div className="w-48 border-l border-f1-border p-4">
-              <div className="mb-2 text-sm font-medium text-f1-foreground">
-                Presets
-              </div>
-              <div className="flex flex-col gap-2">
-                {presets.map((preset) => (
-                  <Button
-                    key={preset.label}
-                    variant="ghost"
-                    style={{ className: "justify-start" }}
-                    label={preset.label}
-                    onClick={() => handlePresetSelect(preset)}
-                  />
-                ))}
-              </div>
+    <>
+      {customRangeMode.toString()}
+      {!customRangeMode ? (
+        <Select
+          open={isOpen}
+          onOpenChange={setOpen}
+          defaultValue={preset}
+          onValueChange={handlePresetSelect}
+        >
+          <SelectTrigger>
+            <DatePickerTrigger value={value} />
+          </SelectTrigger>
+
+          <SelectContent>
+            {Object.entries(presets).map(([key, preset]) => (
+              <SelectItem key={key} value={key}>
+                {preset.label}
+              </SelectItem>
+            ))}
+            <SelectSeparator />
+            <SelectItem key={presetCustom} value={presetCustom}>
+              Custom
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      ) : (
+        <Popover open={isOpen} onOpenChange={setOpen}>
+          <PopoverTrigger>
+            <DatePickerTrigger value={value} />
+          </PopoverTrigger>
+          <PopoverContent>
+            <div className="flex flex-col gap-2">
+              <GranularitySelector
+                granularities={granularities}
+                value={value?.granularity}
+                onChange={handleSelectGranularity}
+              />
+              <OneCalendar
+                mode={mode}
+                view={value?.granularity ?? "day"}
+                onSelect={handleSelectDate}
+                defaultSelected={value?.date}
+              />
             </div>
-          )}
-        </div>
-      </PopoverContent>
-    </Popover>
+          </PopoverContent>
+        </Popover>
+      )}
+    </>
   )
 }
