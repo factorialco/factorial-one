@@ -24,7 +24,7 @@ export function SidebarFooter({
   user,
   options,
   showActivityButton = false,
-  activityButtonShortcut = ["cmd", "N"],
+  activityButtonShortcut = ["cmd", "⇧", "N"],
   onActivityButtonClick,
   hasActivityUpdates,
 }: SidebarFooterProps) {
@@ -57,7 +57,7 @@ export function SidebarFooter({
           <div className="relative">
             <Button
               icon={BellIcon}
-              label="Notifications"
+              label={i18n.notifications}
               onClick={onActivityButtonClick}
               variant="ghost"
               hideLabel
