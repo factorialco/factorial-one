@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.47.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.47.0...factorial-one-react-v1.47.1) (2025-05-12)
+
+
+### Bug Fixes
+
+* update key prop in OneCard metadata mapping to use index ([#1790](https://github.com/factorialco/factorial-one/issues/1790)) ([99be841](https://github.com/factorialco/factorial-one/commit/99be84115a1d495e15372026b41880b957b1abe2))
+
 ## [1.47.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.3...factorial-one-react-v1.47.0) (2025-05-12)
 
 
