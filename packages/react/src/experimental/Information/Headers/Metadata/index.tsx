@@ -1,8 +1,8 @@
-import { Button, CopyButton } from "../../../../components/Actions/Button"
-import { IconType } from "../../../../components/Utilities/Icon"
-
 import { AnimatePresence, motion } from "framer-motion"
 import { memo, useState } from "react"
+import { Button, CopyButton } from "../../../../components/Actions/Button"
+import { Icon, IconType } from "../../../../components/Utilities/Icon"
+import { InfoCircleLine } from "../../../../icons/app"
 import { cn } from "../../../../lib/utils"
 import { MobileDropdown } from "../../../Navigation/Dropdown"
 import { Tooltip } from "../../../Overlays/Tooltip"
@@ -52,6 +52,10 @@ interface MetadataItem {
   value: MetadataItemValue
   actions?: (MetadataAction | MetadataCopyAction)[]
   hideLabel?: boolean
+  tooltip?: {
+    title: string
+    description?: string
+  }
 }
 
 export interface MetadataProps {
@@ -109,11 +113,21 @@ function MetadataItem({ item }: { item: MetadataItem }) {
     <div className="flex h-8 items-center gap-2">
       <div
         className={cn(
-          "w-28 truncate text-f1-foreground-secondary md:w-fit",
+          "flex w-28 items-center gap-1 truncate text-f1-foreground-secondary md:w-fit",
           item.hideLabel && "md:hidden"
         )}
       >
         {item.label}
+        {item.tooltip && (
+          <div className="flex h-4 w-4 items-center text-f1-foreground-tertiary hover:cursor-help">
+            <Tooltip
+              label={item.tooltip.title}
+              description={item.tooltip.description}
+            >
+              <Icon icon={InfoCircleLine} size="sm" />
+            </Tooltip>
+          </div>
+        )}
       </div>
       <div
         role="button"

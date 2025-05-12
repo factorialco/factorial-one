@@ -148,6 +148,10 @@ export const Metadata: Story = {
     metadata: [
       {
         label: "Created",
+        tooltip: {
+          title: "Date of creation",
+          description: "When the job was created",
+        },
         value: { type: "date", formattedDate: "2024-01-01", icon: "critical" },
         actions: [
           {
