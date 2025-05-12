@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.49.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.48.0...factorial-one-react-v1.49.0) (2025-05-12)
+
+
+### Features
+
+* **PageHeader:** add cross-selling feature to ProductUpdates component ([#1736](https://github.com/factorialco/factorial-one/issues/1736)) ([f658f16](https://github.com/factorialco/factorial-one/commit/f658f166888683b56f6da1509c1321756551b587))
+
 ## [1.48.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.47.1...factorial-one-react-v1.48.0) (2025-05-12)
 
 
