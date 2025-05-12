@@ -60,7 +60,7 @@ const OneDialog = forwardRef<HTMLDivElement, DialogProps>(
       >
         <DialogContent
           ref={ref}
-          className="bottom-3 top-auto max-w-[400px] translate-y-0 data-[state=closed]:slide-out-to-top-[2%] data-[state=open]:slide-in-from-top-[2%] sm:bottom-auto sm:top-[50%] sm:translate-y-[-50%] sm:data-[state=closed]:slide-out-to-top-[48%] sm:data-[state=open]:slide-in-from-top-[48%]"
+          className="bottom-3 top-auto max-w-[400px] translate-y-0 sm:bottom-auto sm:top-[50%] sm:translate-y-[-50%]"
         >
           <DialogHeader className="flex flex-col gap-4 px-4 py-5">
             <AlertAvatar type={header.type} size="lg" />
