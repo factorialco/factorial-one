@@ -52,7 +52,12 @@ interface MetadataItem {
   value: MetadataItemValue
   actions?: (MetadataAction | MetadataCopyAction)[]
   hideLabel?: boolean
-  tooltip?: {
+
+  /**
+   * Optional info text. When provided, displays an info icon next to the label
+   * that shows this text in a tooltip when hovered.
+   */
+  info?: {
     title: string
     description?: string
   }
@@ -118,11 +123,11 @@ function MetadataItem({ item }: { item: MetadataItem }) {
         )}
       >
         {item.label}
-        {item.tooltip && (
+        {item.info && (
           <div className="flex h-4 w-4 items-center text-f1-foreground-tertiary hover:cursor-help">
             <Tooltip
-              label={item.tooltip.title}
-              description={item.tooltip.description}
+              label={item.info.title}
+              description={item.info.description}
             >
               <Icon icon={InfoCircleLine} size="sm" />
             </Tooltip>
