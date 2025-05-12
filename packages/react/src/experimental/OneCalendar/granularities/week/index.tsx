@@ -6,23 +6,15 @@ import {
   startOfISOWeek,
   startOfMonth,
 } from "date-fns"
-<<<<<<< HEAD
 import { DateRange } from "../../types"
-=======
->>>>>>> 53972ab5 (feat: fromString)
 import {
   formatDateRange,
   formatDateToString,
   toDateRangeString,
-<<<<<<< HEAD
   toGranularityDateRange,
-=======
->>>>>>> 53972ab5 (feat: fromString)
 } from "../../utils"
 import { GranularityDefinition } from "../types"
 import { WeekView } from "./WeekView"
-
-<<<<<<< HEAD
 const toWeekGranularityDateRange = (
   date: Date | DateRange | undefined | null
 ) => {
@@ -32,10 +24,6 @@ const toWeekGranularityDateRange = (
 export const weekGranularity: GranularityDefinition = {
   toRangeString: (date) => formatDateRange(date, "'W'I yyyy"),
   toRange: (date) => toWeekGranularityDateRange(date),
-=======
-export const weekGranularity: GranularityDefinition = {
-  toRangeString: (date) => formatDateRange(date, "'W'I yyyy"),
->>>>>>> 53972ab5 (feat: fromString)
   toString: (date) => formatDateToString(date, "'W'I yyyy"),
   fromString: (dateStr) => {
     const dateRangeString = toDateRangeString(dateStr)
@@ -55,17 +43,10 @@ export const weekGranularity: GranularityDefinition = {
       return parse(`${week}`, "I", new Date().setFullYear(year))
     }
 
-<<<<<<< HEAD
     return toWeekGranularityDateRange({
       from: parseDate(fromStr),
       to: toStr ? parseDate(toStr) : undefined,
     })
-=======
-    return {
-      from: startOfISOWeek(parseDate(fromStr)),
-      to: endOfISOWeek(parseDate(toStr ? toStr : fromStr)),
-    }
->>>>>>> 53972ab5 (feat: fromString)
   },
   getViewDateFromDate: (date) => {
     return startOfMonth(date)

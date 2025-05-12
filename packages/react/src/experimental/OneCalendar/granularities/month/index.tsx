@@ -1,22 +1,15 @@
 import NumberFlow from "@number-flow/react"
 import { addMonths, addYears, endOfMonth, parse, startOfMonth } from "date-fns"
-<<<<<<< HEAD
 import { DateRange } from "../../types"
-=======
->>>>>>> 53972ab5 (feat: fromString)
 import {
   formatDateRange,
   formatDateToString,
   toDateRangeString,
-<<<<<<< HEAD
   toGranularityDateRange,
-=======
->>>>>>> 53972ab5 (feat: fromString)
 } from "../../utils"
 import { GranularityDefinition } from "../types"
 import { MonthView } from "./MonthView"
 
-<<<<<<< HEAD
 const toMonthGranularityDateRange = (
   date: Date | DateRange | undefined | null
 ) => {
@@ -26,10 +19,6 @@ const toMonthGranularityDateRange = (
 export const monthGranularity: GranularityDefinition = {
   toRangeString: (date) => formatDateRange(date, "MM/yyyy"),
   toRange: (date) => toMonthGranularityDateRange(date),
-=======
-export const monthGranularity: GranularityDefinition = {
-  toRangeString: (date) => formatDateRange(date, "MM/yyyy"),
->>>>>>> 53972ab5 (feat: fromString)
   toString: (date) => formatDateToString(date, "MM/yyyy"),
   fromString: (dateStr) => {
     const dateRangeString = toDateRangeString(dateStr)
@@ -51,18 +40,10 @@ export const monthGranularity: GranularityDefinition = {
 
       return new Date(Number(year), Number(month) - 1, 1)
     }
-
-<<<<<<< HEAD
     return toMonthGranularityDateRange({
       from: parseDate(fromStr),
       to: toStr ? parseDate(toStr) : undefined,
     })
-=======
-    return {
-      from: startOfMonth(parseDate(fromStr)),
-      to: toStr ? endOfMonth(parseDate(toStr)) : undefined,
-    }
->>>>>>> 53972ab5 (feat: fromString)
   },
   navigate: (date, direction) => {
     return addMonths(date, direction)

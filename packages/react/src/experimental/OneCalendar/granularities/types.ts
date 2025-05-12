@@ -6,11 +6,8 @@ export interface GranularityDefinition {
   label: (viewDate: Date) => ReactNode
   // Format the date to a date range with dates as string
   toRangeString: (date: Date | DateRange | undefined | null) => DateRangeString
-<<<<<<< HEAD
   // Convert the date to a date range (e.g for day granularity, this will be the start and end of the day)
   toRange: (date: Date | DateRange | undefined | null) => DateRange | null
-=======
->>>>>>> 53972ab5 (feat: fromString)
   // Format the date to a string (e.g W12 2025 -> W13 2025)
   toString: (date: Date | DateRange | undefined | null) => string
   // Parse the date range string to a date range
@@ -36,9 +33,5 @@ export interface GranularityDefinition {
 
 export type GranularityDefinitionSimple = Pick<
   GranularityDefinition,
-<<<<<<< HEAD
-  "toRangeString"
-=======
-  "toString"
->>>>>>> 53972ab5 (feat: fromString)
+  "toRangeString" | "toString"
 >
