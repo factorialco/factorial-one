@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.46.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.2...factorial-one-react-v1.46.3) (2025-05-09)
+
+
+### Bug Fixes
+
+* datacollection secondary actions dropdown alignment when no primary actions ([#1783](https://github.com/factorialco/factorial-one/issues/1783)) ([a1bf03d](https://github.com/factorialco/factorial-one/commit/a1bf03d897b954db2793722da1d604f65f5ad6a2))
+
+## [1.46.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.1...factorial-one-react-v1.46.2) (2025-05-09)
+
+
+### Bug Fixes
+
+* pulse face icons updated ([54f503a](https://github.com/factorialco/factorial-one/commit/54f503aec4fe9f3a86adc1652cbae3e8d3c90622))
+
+## [1.46.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.0...factorial-one-react-v1.46.1) (2025-05-09)
+
+
+### Bug Fixes
+
+* mood colours ([#1782](https://github.com/factorialco/factorial-one/issues/1782)) ([f61955c](https://github.com/factorialco/factorial-one/commit/f61955c80ed9c1ff1d8df549b6f034dc28bf91ea))
+
+## [1.46.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.45.0...factorial-one-react-v1.46.0) (2025-05-08)
+
+
+### Features
+
+* update react icons ([2ae6917](https://github.com/factorialco/factorial-one/commit/2ae69171e5d3097b95e6ad32f0730de2c1547404))
+
 ## [1.45.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.44.5...factorial-one-react-v1.45.0) (2025-05-08)
 
 
