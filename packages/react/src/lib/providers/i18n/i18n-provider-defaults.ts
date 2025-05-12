@@ -70,6 +70,7 @@ export const defaultTranslations = {
       december: "December",
     },
   },
+  notifications: "Notifications",
 } as const
 
 type TranslationShape<T> = {
