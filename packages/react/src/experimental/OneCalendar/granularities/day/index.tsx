@@ -6,22 +6,51 @@ import {
   startOfMonth,
 } from "date-fns"
 import { GranularityDefinition } from ".."
-import { DateRange } from "../../types"
+import { DateRange, DateRangeComplete } from "../../types"
 import {
   formatDateRange,
   formatDateToString,
+  isAfterOrEqual,
+  isBeforeOrEqual,
   toDateRangeString,
   toGranularityDateRange,
 } from "../../utils"
 import { DayView } from "./DayView"
 
-const toDayGranularityDateRange = (
-  date: Date | DateRange | undefined | null
-) => {
+export function toDayGranularityDateRange<
+  T extends Date | DateRange | undefined | null,
+>(date: T): T extends Date | DateRange ? DateRangeComplete : T {
   return toGranularityDateRange(date, startOfDay, endOfDay)
 }
 
 export const dayGranularity: GranularityDefinition = {
+  calendarView: "day",
+  getPrevNext: (value: DateRange, options) => {
+    const dateRange = toDayGranularityDateRange(value)
+    if (!dateRange) {
+      return {
+        prev: false,
+        next: false,
+      }
+    }
+
+    const { from, to } = dateRange
+
+    const [prevFrom, prevTo] = [addDays(from, -1), addDays(to, -1)]
+    const [nextFrom, nextTo] = [addDays(from, 1), addDays(to, 1)]
+
+    const minWithGranularity = options.min && startOfDay(options.min)
+    const maxWithGranularity = options.max && endOfDay(options.max)
+
+    return {
+      prev: isAfterOrEqual(prevFrom, minWithGranularity)
+        ? { from: prevFrom, to: prevTo }
+        : false,
+      next: isBeforeOrEqual(nextTo, maxWithGranularity)
+        ? { from: nextFrom, to: nextTo }
+        : false,
+    }
+  },
   toRange: (date) => toDayGranularityDateRange(date),
   toRangeString: (date) => formatDateRange(date, "dd/MM/yyyy"),
   toString: (date) => formatDateToString(date, "dd/MM/yyyy"),

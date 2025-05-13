@@ -49,7 +49,7 @@ const meta = {
     a11y: {
       skipCi: true, // Todo add aria labels
     },
-    layout: "centered",
+    //layout: "centered",
     docs: {
       description: {
         component:
@@ -85,6 +85,14 @@ export const Default: Story = {}
 export const AsList: Story = {
   args: {
     asList: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "Renders the select as a list. Removes the triger and keeps it always open.",
+      },
+    },
   },
 }
 

@@ -76,6 +76,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
       size = "md",
       append,
       appendButton,
+      className,
       ...props
     },
     ref
@@ -108,6 +109,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
         size={size}
         round={hideLabel}
         appendButton={appendButton}
+        className={className}
         {...props}
       >
         {icon && (
