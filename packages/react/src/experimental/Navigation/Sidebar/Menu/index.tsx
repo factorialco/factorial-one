@@ -171,12 +171,6 @@ const FavoriteItem = ({
     }, 0)
   }
 
-  const handleClick = () => {
-    if (!wasDragging.current && item.href) {
-      window.location.href = item.href
-    }
-  }
-
   const isItemDragging = isDragging && draggedItemId === item.href
 
   return (
@@ -199,11 +193,16 @@ const FavoriteItem = ({
         scale: 1.05,
       }}
     >
-      <div
-        className="isolate flex w-full items-center justify-between px-1.5 py-1.5"
-        onClick={handleClick}
-      >
-        <div className="flex w-full items-center gap-1.5">
+      <div className="flex w-full items-center justify-between px-1.5 py-1.5">
+        <Link
+          href={item.href}
+          exactMatch={item.exactMatch}
+          className={cn(
+            "flex w-full items-center gap-1.5 no-underline",
+            isItemDragging && "pointer-events-none"
+          )}
+          draggable={false}
+        >
           {item.type === "icon" ? (
             <Icon
               icon={item.icon}
@@ -219,7 +218,7 @@ const FavoriteItem = ({
           <span className="line-clamp-1 font-medium text-f1-foreground">
             {item.label}
           </span>
-        </div>
+        </Link>
       </div>
       <div
         className={cn(
