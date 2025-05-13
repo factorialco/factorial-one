@@ -338,14 +338,12 @@ render: (item) => ({
     value: {
         type: 'dot',
         tags: item.skills.map(skill => ({
-            type: 'dot',
             text: skill.label,
             color: skill.color
         })),
         max: 3
     }
 })
-
-// Example with status tags render: (item) => ({ type: 'tagList', value: { type:
-'status', tags: [ { type: 'status', variant: 'positive', text: 'Active' }, {
-type: 'status', variant: 'warning', text: 'Needs Review' } ] } }) `, }} />
+`,
+  }}
+/>
