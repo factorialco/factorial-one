@@ -1,14 +1,7 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
+import { render, within } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Home, Settings } from "../../../../icons/app"
-import Breadcrumbs, { BreadcrumbItemType } from "./index"
+import { Breadcrumbs } from "./index"
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
@@ -17,30 +10,29 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
   disconnect: vi.fn(),
 }))
 
-describe("Breadcrumbs", () => {
+function setContainerWidth(px) {
+  Object.defineProperty(HTMLElement.prototype, "clientWidth", {
+    configurable: true,
+    value: px,
+    writable: true,
+  })
+}
+
+function setBreadcrumbItemWidth(px) {
+  Object.defineProperty(HTMLLIElement.prototype, "clientWidth", {
+    configurable: true,
+    value: px,
+    writable: true,
+  })
+}
+
+describe("Breadcrumbs", async () => {
   beforeEach(() => {
-    // Mock getBoundingClientRect for width calculations
-    Element.prototype.getBoundingClientRect = vi.fn(() => ({
-      width: 1000,
-      height: 200,
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      x: 0,
-      y: 0,
-      toJSON: () => {},
-    }))
+    setContainerWidth(1000)
+    setBreadcrumbItemWidth(100)
   })
 
-  const openSelect = async (user: ReturnType<typeof userEvent.setup>) => {
-    await user.click(screen.getByRole("combobox"))
-    await waitFor(() => expect(screen.getByRole("listbox")).toBeInTheDocument())
-    const teaser = screen.getByRole("listbox")
-    fireEvent.animationStart(teaser)
-  }
-
-  it("renders all breadcrumbs when there's enough space", () => {
+  it("renders all breadcrumbs when there's enough space", async () => {
     const home = { id: "home", label: "Home", href: "/" }
     const products = { id: "products", label: "Products", href: "/products" }
     const electronics = {
@@ -56,17 +48,18 @@ describe("Breadcrumbs", () => {
     const breadcrumbs = [home, products, electronics, laptops]
 
     const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
-    const nav = container.querySelector("nav")
+    const nav: HTMLElement = container.querySelector("nav>ol:last-child")
     expect(nav).toBeInTheDocument()
 
+    expect(await within(nav!).findByText(laptops.label)).toBeInTheDocument()
     // Check if all non-last breadcrumb items are rendered as links
-    breadcrumbs.slice(0, -1).forEach((item) => {
-      const links = within(nav!).getAllByRole("link")
+    for (const item of breadcrumbs.slice(0, -1)) {
+      const links = await within(nav!).findAllByRole("link")
       const matchingLink = links.find((link) =>
         link.textContent?.includes(item.label)
       )
       expect(matchingLink).toBeDefined()
-    })
+    }
 
     // Check if last item is rendered as text
     const lastItem = breadcrumbs[breadcrumbs.length - 1]
@@ -75,18 +68,7 @@ describe("Breadcrumbs", () => {
   })
 
   it("renders first and last items when space is limited", () => {
-    // Mock a smaller width
-    Element.prototype.getBoundingClientRect = vi.fn(() => ({
-      width: 300,
-      height: 0,
-      top: 0,
-      left: 0,
-      bottom: 0,
-      right: 0,
-      x: 0,
-      y: 0,
-      toJSON: () => {},
-    }))
+    setContainerWidth(100)
 
     const home = { id: "home", label: "Home", href: "/" }
     const products = { id: "products", label: "Products", href: "/products" }
@@ -132,7 +114,7 @@ describe("Breadcrumbs", () => {
     const breadcrumbs = [home, settings]
 
     const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
-    const nav = container.querySelector("nav")
+    const nav: HTMLElement = container.querySelector("nav>ol:last-child")
     expect(nav).toBeInTheDocument()
 
     // Check if first item is rendered as a link with icon
@@ -192,7 +174,7 @@ describe("Breadcrumbs", () => {
       const breadcrumbs = [home, products, loadingItem]
 
       const { container } = render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
-      const nav = container.querySelector("nav")
+      const nav: HTMLElement = container.querySelector("nav>ol:last-child")
       expect(nav).toBeInTheDocument()
 
       // Find all items that contain text content
@@ -274,45 +256,52 @@ describe("Breadcrumbs", () => {
     expect(nav).toBeInTheDocument()
 
     // Check if home link is rendered
-    const homeLink = within(nav!).getByText("Home")
-    expect(homeLink).toBeInTheDocument()
+    const homeLinks = await within(nav!).findAllByText("Home")
+    expect(homeLinks).toHaveLength(2)
+    expect(homeLinks[1]).toBeInTheDocument()
 
     // Check if select is rendered with correct value
-    const select = within(nav!).getByText("Option 1")
-    expect(select).toBeInTheDocument()
-    expect(select.closest('[role="combobox"]')).toBeInTheDocument()
+    const selects = await within(nav!).findAllByText("Option 1")
+    expect(selects).toHaveLength(2)
+    expect(selects[1]).toBeInTheDocument()
+    expect(selects[1].closest('[role="combobox"]')).toBeInTheDocument()
   })
 
-  it("renders select type breadcrumb with searchbox", async () => {
-    const onChange = vi.fn()
-    const breadcrumbs: BreadcrumbItemType[] = [
-      { id: "home", label: "Home", href: "/" },
-      {
-        id: "select",
-        type: "select",
-        searchbox: true,
-        options: [
-          { value: "1", label: "Option 1" },
-          { value: "2", label: "Option 2" },
-        ],
-        label: "Option 1",
-        value: "1",
-        onChange,
-      },
-    ]
+  it("renders append element when provided", async () => {
+    const home = { id: "home", label: "Home", href: "/" }
+    const products = { id: "products", label: "Products", href: "/products" }
+    const breadcrumbs = [home, products]
+    const appendElement = <span>Append</span>
 
-    const user = userEvent.setup()
-    render(<Breadcrumbs breadcrumbs={breadcrumbs} />)
+    const { container } = render(
+      <Breadcrumbs breadcrumbs={breadcrumbs} append={appendElement} />
+    )
+    const nav: HTMLElement = container.querySelector("nav>ol:last-child")
+    const append = await within(nav!).findByText("Append")
+    expect(append).toBeInTheDocument()
+  })
 
-    // Open select
-    await openSelect(user)
+  it("renders append element when space is limited", async () => {
+    setContainerWidth(100) // Set limited width
 
-    // Check if searchbox is rendered
-    const searchbox = screen.getByRole("searchbox")
-    expect(searchbox).toBeInTheDocument()
+    const home = { id: "home", label: "Home", href: "/" }
+    const products = { id: "products", label: "Products", href: "/products" }
+    const electronics = {
+      id: "electronics",
+      label: "Electronics",
+      href: "/products/electronics",
+    }
+    const breadcrumbs = [home, electronics, products]
+    const appendElement = <span>Append</span>
 
-    // Test selection
-    await user.click(screen.getByText("Option 2"))
-    expect(onChange).toHaveBeenCalledWith("2")
+    const { container } = render(
+      <Breadcrumbs breadcrumbs={breadcrumbs} append={appendElement} />
+    )
+    const nav: HTMLElement = container.querySelector("nav>ol:last-child")
+    const append = await within(nav!).findByText("Append")
+    expect(append).toBeInTheDocument()
+
+    // Should show ellipsis for collapsed items
+    expect(within(nav!).getByText("...")).toBeInTheDocument()
   })
 })

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
+import { useState } from "react"
 import { Briefcase, EllipsisHorizontal, Settings } from "../../../../icons/app"
 import { PageHeader } from "./index"
 
@@ -8,18 +9,6 @@ const meta = {
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "fullscreen",
-    a11y: {
-      // Disable color contrast checks for this component since the status tags
-      // are designed to be used with specific backgrounds in the actual application
-      config: {
-        rules: [
-          {
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
-    },
   },
   decorators: [
     (Story) => (
@@ -137,6 +126,7 @@ export const WithBreadcrumbs: Story = {
   args: {
     module: defaultModule,
     breadcrumbs: [
+      { id: "employees_collection", label: "Company", href: "/employees" },
       { id: "employees", label: "Employees", href: "/employees" },
       { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
     ],
@@ -314,6 +304,36 @@ export const WithProductUpdate: Story = {
         ],
       },
     },
+  },
+}
+
+export const WithFavorites: Story = {
+  args: {
+    module: defaultModule,
+    breadcrumbs: [
+      { id: "employees", label: "Employees", href: "/employees" },
+      { id: "employee", label: "Ainhoa Aznar Lago", href: "/employees/123" },
+    ],
+    statusTag: {
+      text: "Draft",
+      tooltip: "This employee profile is not yet published",
+      variant: "critical",
+    },
+    actions: defaultActions,
+  },
+  render: (props) => {
+    const [isMarked, setIsMarked] = useState(false)
+
+    return (
+      <PageHeader
+        {...props}
+        favorites={{
+          isMarked,
+          label: "Mark as favorite",
+          onChange: () => setIsMarked((current) => !current),
+        }}
+      />
+    )
   },
 }
 
