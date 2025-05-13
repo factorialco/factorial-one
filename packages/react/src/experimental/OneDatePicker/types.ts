@@ -1,6 +1,4 @@
-import { DateRange } from "../OneCalendar/types"
-
-import { CalendarView } from "../OneCalendar/types"
+import { CalendarView, DateRange } from "../OneCalendar/types"
 
 export interface DatePreset {
   label: string

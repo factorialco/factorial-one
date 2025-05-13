@@ -7,7 +7,7 @@ import { Icon, IconType } from "../../Utilities/Icon"
 
 export type ButtonInternalProps = Pick<
   ComponentProps<typeof ShadcnButton>,
-  "variant" | "size" | "disabled" | "type" | "round"
+  "variant" | "size" | "disabled" | "type" | "round" | "className"
 > &
   DataAttributes & {
     onClick?: (
@@ -76,6 +76,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
       size = "md",
       append,
       appendButton,
+      className,
       ...props
     },
     ref
@@ -108,6 +109,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
         size={size}
         round={hideLabel}
         appendButton={appendButton}
+        className={className}
         {...props}
       >
         {icon && (

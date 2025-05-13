@@ -92,7 +92,8 @@ const SelectContent = forwardRef<
       getScrollElement: () => parentRef.current,
       estimateSize: (i: number) => items?.[i]?.height || 0,
       overscan: 5,
-      enabled: prefersReducedMotion || animationStarted,
+      // If the content is a list, we need to check if the animation is enabled
+      enabled: asList || prefersReducedMotion || animationStarted,
     })
 
     useEffect(() => {
@@ -107,7 +108,7 @@ const SelectContent = forwardRef<
       // Measure the items when the animation is finished and scroll to item
       virtualizer.measure()
       virtualizer.scrollToIndex(positionIndex)
-    }, [virtualizer, positionIndex, animationStarted])
+    }, [virtualizer, positionIndex, animationStarted, asList])
 
     const virtualItems = virtualizer.getVirtualItems()
 
@@ -116,8 +117,8 @@ const SelectContent = forwardRef<
     ) : isVirtual ? (
       <div
         className={cn(
-          "transition-opacity delay-100",
-          virtualReady ? "" : "opacity-0"
+          !asList && "transition-opacity delay-100",
+          asList || virtualReady ? "" : "opacity-0"
         )}
         style={{
           height: virtualizer.getTotalSize(),
@@ -153,16 +154,17 @@ const SelectContent = forwardRef<
       <SelectPrimitive.Content
         ref={ref}
         className={cn(
-          "relative z-50 max-h-96 min-w-[8rem] overflow-hidden",
+          "relative z-50 max-h-96 min-w-[8rem] overflow-hidden text-f1-foreground",
           !asList &&
-            "rounded-md border border-solid border-f1-border-secondary bg-f1-background text-f1-foreground shadow-md data-[state=closed]:fade-out-0 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=open]:fade-in-0 motion-safe:data-[state=closed]:zoom-out-95 motion-safe:data-[state=open]:zoom-in-95 motion-safe:data-[side=bottom]:slide-in-from-top-2",
-          position === "popper" &&
+            "rounded-md border border-solid border-f1-border-secondary bg-f1-background shadow-md data-[state=closed]:fade-out-0 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=open]:fade-in-0 motion-safe:data-[state=closed]:zoom-out-95 motion-safe:data-[state=open]:zoom-in-95 motion-safe:data-[side=bottom]:slide-in-from-top-2",
+          !asList &&
+            position === "popper" &&
             "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
           className,
           // Hides the content when the virtual list is not ready
-          isVirtual && !virtualReady && "opacity-0"
+          !asList && isVirtual && !virtualReady && "opacity-0"
         )}
-        position={position}
+        position={asList ? "item-aligned" : position}
         {...props}
         onAnimationStart={() => {
           // Set the animation state to started as the elements are visible
@@ -176,7 +178,10 @@ const SelectContent = forwardRef<
         {!!props.top && <div>{props.top}</div>}
         <ScrollArea
           viewportRef={parentRef}
-          className="flex max-h-[300px] flex-col overflow-y-auto"
+          className={cn(
+            "flex flex-col overflow-y-auto",
+            asList ? "max-h-full" : "max-h-[300px]"
+          )}
         >
           {asList ? (
             viewportContent
@@ -184,7 +189,8 @@ const SelectContent = forwardRef<
             <SelectPrimitive.Viewport
               asChild
               className={cn(
-                position === "popper" &&
+                !asList &&
+                  position === "popper" &&
                   "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
               )}
             >

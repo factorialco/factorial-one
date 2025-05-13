@@ -11,7 +11,7 @@ type SelectProps = React.ComponentProps<typeof SelectPrimitive.Root> & {
  */
 const Select = (props: SelectProps) => {
   // If open prop is not provided, we'll manage it internally
-  const [internalOpen, setInternalOpen] = useState(props.asList ? false : true)
+  const [internalOpen, setInternalOpen] = useState(props.asList ? true : false)
 
   // Use either the controlled open state from props or the internal state
   const isOpen = props.asList
@@ -31,21 +31,23 @@ const Select = (props: SelectProps) => {
   }
 
   return (
-    <SelectPrimitive.Root
-      {...props}
-      open={isOpen}
-      onOpenChange={handleOpenChange}
-    >
-      <SelectContext.Provider
-        value={{
-          value: props.value,
-          open: isOpen,
-          asList: props.asList,
-        }}
+    <div className="[&>div]:!relative">
+      <SelectPrimitive.Root
+        {...props}
+        open={isOpen}
+        onOpenChange={handleOpenChange}
       >
-        {props.children}
-      </SelectContext.Provider>
-    </SelectPrimitive.Root>
+        <SelectContext.Provider
+          value={{
+            value: props.value,
+            open: isOpen,
+            asList: props.asList,
+          }}
+        >
+          {props.children}
+        </SelectContext.Provider>
+      </SelectPrimitive.Root>
+    </div>
   )
 }
 Select.displayName = SelectPrimitive.Root.displayName

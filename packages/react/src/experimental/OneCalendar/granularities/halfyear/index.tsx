@@ -5,8 +5,10 @@ import {
   startOfMonth,
   startOfYear,
 } from "date-fns"
-import { DateRange } from "../../types"
+import { DateRange, DateRangeComplete } from "../../types"
 import {
+  isAfterOrEqual,
+  isBeforeOrEqual,
   toDateRange,
   toDateRangeString,
   toGranularityDateRange,
@@ -39,13 +41,35 @@ const toRangeString = (date: Date | DateRange | undefined | null) => {
   }
 }
 
-const toHalfYearGranularityDateRange = (
-  date: Date | DateRange | undefined | null
-) => {
+export function toHalfYearGranularityDateRange<
+  T extends Date | DateRange | undefined | null,
+>(date: T): T extends Date | DateRange ? DateRangeComplete : T {
   return toGranularityDateRange(date, startOfMonth, endOfMonth)
 }
 
 export const halfyearGranularity: GranularityDefinition = {
+  getPrevNext: (value, options) => {
+    const dateRange = toHalfYearGranularityDateRange(value)
+    if (!dateRange) {
+      return { prev: false, next: false }
+    }
+    const { from, to } = dateRange
+
+    const [prevFrom, prevTo] = [addMonths(from, -6), addMonths(to, -6)]
+    const [nextFrom, nextTo] = [addMonths(from, 6), addMonths(to, 6)]
+
+    const minWithGranularity = options.min && startOfMonth(options.min)
+    const maxWithGranularity = options.max && endOfMonth(options.max)
+
+    return {
+      prev: isAfterOrEqual(prevFrom, minWithGranularity)
+        ? { from: prevFrom, to: prevTo }
+        : false,
+      next: isBeforeOrEqual(nextTo, maxWithGranularity)
+        ? { from: nextFrom, to: nextTo }
+        : false,
+    }
+  },
   toRangeString: (date) => toRangeString(date),
   toRange: (date) => toHalfYearGranularityDateRange(date),
   toString: (date) => {

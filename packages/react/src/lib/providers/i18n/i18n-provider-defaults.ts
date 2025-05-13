@@ -52,6 +52,7 @@ export const defaultTranslations = {
     to: "To",
     date: "Date",
     custom: "Custom period",
+    selectDate: "Select Date",
     presets: {
       last7Days: "Last 7 days",
       last30Days: "Last 30 days",
@@ -60,6 +61,15 @@ export const defaultTranslations = {
       lastYear: "Last year",
       last3Years: "Last 3 years",
       last100Years: "Last 100 years",
+    },
+    range: "Range",
+    selectedBy: "Selected by",
+    groups: {
+      today: "Today",
+      yesterday: "Yesterday",
+      lastWeek: "Last week",
+      lastMonth: "Last month",
+      other: "Other",
     },
     granularities: {
       day: {

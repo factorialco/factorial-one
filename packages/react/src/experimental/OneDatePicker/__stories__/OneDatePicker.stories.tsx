@@ -64,6 +64,18 @@ export const WithPresets: Story = {
   },
 }
 
+export const WithPresetsAndNavigation: Story = {
+  args: {
+    mode: "range",
+    defaultValue: {
+      granularity: "month",
+    } as DatePickerValue,
+    granularities: ["day", "week", "month", "quarter"],
+    presets,
+    navigation: true,
+  },
+}
+
 export const WeekView: Story = {
   args: {
     mode: "range",

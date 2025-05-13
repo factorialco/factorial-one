@@ -1,6 +1,16 @@
 import { ReactNode } from "react"
 import { CalendarMode, DateRange, DateRangeString } from "../types"
 
+export type DateNavigationOptions = {
+  min?: Date
+  max?: Date
+}
+
+export type PrevNextDateNavigation = {
+  prev: DateRange | false
+  next: DateRange | false
+}
+
 export interface GranularityDefinition {
   // Label for the granularity in the calendar view
   label: (viewDate: Date) => ReactNode
@@ -31,6 +41,10 @@ export interface GranularityDefinition {
     setViewDate: (date: Date) => void
     viewDate: Date
   }) => ReactNode
+  getPrevNext(
+    date: DateRange,
+    options: DateNavigationOptions
+  ): PrevNextDateNavigation
 }
 
 export type GranularityDefinitionSimple = Pick<
