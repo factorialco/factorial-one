@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.53.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.52.0...factorial-one-react-v1.53.0) (2025-05-13)
+
+
+### Features
+
+* applying colors on search or select in EntitySelector ([#1812](https://github.com/factorialco/factorial-one/issues/1812)) ([903a7e9](https://github.com/factorialco/factorial-one/commit/903a7e94690e696cce8de6a2b9df6ddf1cbe4e9d))
+
 ## [1.52.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.51.0...factorial-one-react-v1.52.0) (2025-05-13)
 
 
