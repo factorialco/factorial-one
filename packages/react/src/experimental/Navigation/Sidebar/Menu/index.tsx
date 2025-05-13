@@ -1,8 +1,11 @@
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { useReducedMotion } from "@/lib/a11y"
+import { Link, useNavigation } from "@/lib/linkHandler"
 import { useI18n } from "@/lib/providers/i18n"
+import { cn, focusRing } from "@/lib/utils"
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
 import { LayoutGroup, motion, Reorder, useDragControls } from "framer-motion"
 import React, { useEffect, useRef, useState } from "react"
-import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import {
   ChevronDown,
   Delete,
@@ -10,9 +13,6 @@ import {
   MoveDown,
   MoveUp,
 } from "../../../../icons/app"
-import { useReducedMotion } from "../../../../lib/a11y"
-import { Link, useNavigation } from "../../../../lib/linkHandler"
-import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar, AvatarVariant } from "../../../Information/Avatars/Avatar"
 import { Counter } from "../../../Information/Counter"
 import { Dropdown } from "../../Dropdown"
