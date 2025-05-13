@@ -332,7 +332,7 @@ export const MainContent = ({
     if (!entities.length) {
       return [false, false]
     }
-    const selectedMap = new Map<number, EntitySelectEntity>(
+    const selectedMap = new Map<number | string, EntitySelectEntity>(
       (selectedEntities ?? []).map((se) => [se.id, se])
     )
 

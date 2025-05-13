@@ -45,7 +45,7 @@ export const EntitySelect = (
       (filteredEntity.subItems ?? []).map((s) => s.subId)
     )
 
-    const parentIdsToUpdate = new Set<number>([filteredEntity.id])
+    const parentIdsToUpdate = new Set<number | string>([filteredEntity.id])
     filteredEntities.forEach((possibleParent) => {
       if (possibleParent.id !== filteredEntity.id) {
         const hasIntersection = (possibleParent.subItems ?? []).some((sub) =>
@@ -61,6 +61,7 @@ export const EntitySelect = (
 
     function upsertSelectedEntity(updated: EntitySelectEntity) {
       const idx = newSelectedEntities.findIndex((x) => x.id === updated.id)
+
       if (idx >= 0) {
         newSelectedEntities[idx] = updated
       } else {
@@ -111,9 +112,10 @@ export const EntitySelect = (
     } else {
       const prevSelected = props.selectedEntities ?? []
       const selectedIds = new Set(prevSelected.map((sel) => sel.id))
-      const selectedSubItemsMap = new Map<number, EntitySelectSubEntity[]>(
-        prevSelected.map((sel) => [sel.id, sel.subItems ?? []])
-      )
+      const selectedSubItemsMap = new Map<
+        number | string,
+        EntitySelectSubEntity[]
+      >(prevSelected.map((sel) => [sel.id, sel.subItems ?? []]))
 
       selectedIds.add(parentEntity.id)
 
@@ -247,7 +249,7 @@ export const EntitySelect = (
     let newSelected: EntitySelectEntity[] = []
 
     if (groupView) {
-      const visibleSubIds = new Set<number>(
+      const visibleSubIds = new Set<number | string>(
         filteredEntities.flatMap((ent) =>
           (ent.subItems ?? []).map((sub) => sub.subId)
         )
@@ -266,7 +268,9 @@ export const EntitySelect = (
         }
       }
     } else {
-      const visibleIds = new Set<number>(filteredEntities.map((ent) => ent.id))
+      const visibleIds = new Set<number | string>(
+        filteredEntities.map((ent) => ent.id)
+      )
       newSelected = (prevSelected ?? []).filter((el) => !visibleIds.has(el.id))
     }
 

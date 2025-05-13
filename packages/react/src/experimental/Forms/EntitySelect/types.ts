@@ -1,14 +1,14 @@
 import { PopoverProps } from "@radix-ui/react-popover"
 
 export type EntitySelectSubEntity = {
-  subId: number
+  subId: number | string
   subName: string
   subAvatar?: string
   subSearchKeys?: string[]
 }
 
 export type EntitySelectEntity = {
-  id: number
+  id: number | string
   name: string
   avatar?: string
   expanded?: boolean
@@ -31,7 +31,7 @@ interface EntitySelectCommonProps
   triggerSelected: string
   notFoundTitle: string
   notFoundSubtitle: string
-  onItemExpandedChange: (id: number, expanded: boolean) => void
+  onItemExpandedChange: (id: number | string, expanded: boolean) => void
   onGroupChange: (value: string | null) => void
   disabled?: boolean
   zIndex?: number

@@ -92,7 +92,9 @@ export const Default = {
   args: defaultArgs,
   render: (props: ComponentProps<typeof EntitySelect>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
-    const [expandedElements, setExpandedElements] = useState<number[]>([])
+    const [expandedElements, setExpandedElements] = useState<
+      (number | string)[]
+    >([])
     const [selected, setSelected] = useState<EntitySelectEntity[]>([
       {
         ...famousEmployees[0],
@@ -103,7 +105,7 @@ export const Default = {
       props.selectedGroup ?? "all"
     )
 
-    const onItemExpandedChange = (id: number, expanded: boolean) => {
+    const onItemExpandedChange = (id: number | string, expanded: boolean) => {
       if (expanded) {
         setExpandedElements([id].concat(expandedElements))
       } else {
@@ -217,7 +219,9 @@ export const WithSelectedGroup = {
   } as EntitySelectProps,
   render: (props: ComponentProps<typeof EntitySelect>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
-    const [expandedElements, setExpandedElements] = useState<number[]>([])
+    const [expandedElements, setExpandedElements] = useState<
+      (number | string)[]
+    >([])
     const [selected, setSelected] = useState<EntitySelectEntity[]>([
       {
         ...famousEmployees[0],
@@ -228,7 +232,7 @@ export const WithSelectedGroup = {
       props.selectedGroup ?? "all"
     )
 
-    const onItemExpandedChange = (id: number, expanded: boolean) => {
+    const onItemExpandedChange = (id: number | string, expanded: boolean) => {
       if (expanded) {
         setExpandedElements([id].concat(expandedElements))
       } else {
@@ -275,12 +279,14 @@ export const SingleSelector = {
   render: (props: ComponentProps<typeof EntitySelect>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
     const [selected, setSelected] = useState<EntitySelectEntity | undefined>()
-    const [expandedElements, setExpandedElements] = useState<number[]>([])
+    const [expandedElements, setExpandedElements] = useState<
+      (number | string)[]
+    >([])
     const [selectedGroup, setSelectedGroup] = useState<string>(
       props.selectedGroup ?? "all"
     )
 
-    const onItemExpandedChange = (id: number, expanded: boolean) => {
+    const onItemExpandedChange = (id: number | string, expanded: boolean) => {
       if (expanded) {
         setExpandedElements([id].concat(expandedElements))
       } else {
@@ -335,7 +341,9 @@ export const AlwaysOpen = {
   } as EntitySelectProps,
   render: (props: ComponentProps<typeof EntitySelect>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
-    const [expandedElements, setExpandedElements] = useState<number[]>([])
+    const [expandedElements, setExpandedElements] = useState<
+      (number | string)[]
+    >([])
     const [selected, setSelected] = useState<EntitySelectEntity[]>([
       {
         ...famousEmployees[0],
@@ -346,7 +354,7 @@ export const AlwaysOpen = {
       props.selectedGroup ?? "all"
     )
 
-    const onItemExpandedChange = (id: number, expanded: boolean) => {
+    const onItemExpandedChange = (id: number | string, expanded: boolean) => {
       if (expanded) {
         setExpandedElements([id].concat(expandedElements))
       } else {
@@ -396,7 +404,9 @@ export const AlwaysOpenInForm = {
     alwaysOpen: true,
   } as EntitySelectProps,
   render: (props: ComponentProps<typeof EntitySelect>) => {
-    const [expandedElements, setExpandedElements] = useState<number[]>([])
+    const [expandedElements, setExpandedElements] = useState<
+      (number | string)[]
+    >([])
     const [selected, setSelected] = useState<EntitySelectEntity[]>([
       {
         ...famousEmployees[0],
@@ -407,7 +417,7 @@ export const AlwaysOpenInForm = {
       props.selectedGroup ?? "all"
     )
 
-    const onItemExpandedChange = (id: number, expanded: boolean) => {
+    const onItemExpandedChange = (id: number | string, expanded: boolean) => {
       if (expanded) {
         setExpandedElements([id].concat(expandedElements))
       } else {
@@ -450,7 +460,9 @@ export const WithCustomTrigger = {
   } as EntitySelectProps,
   render: (props: ComponentProps<typeof EntitySelect>) => {
     const [loading, setLoading] = useState<boolean>(props.loading ?? true)
-    const [expandedElements, setExpandedElements] = useState<number[]>([])
+    const [expandedElements, setExpandedElements] = useState<
+      (number | string)[]
+    >([])
     const [selectedGroup, setSelectedGroup] = useState<string>(
       props.selectedGroup ?? "all"
     )
@@ -463,7 +475,7 @@ export const WithCustomTrigger = {
     const [numSelected, setNumSelected] = useState<number>(2)
     const [open, setOpen] = useState<boolean>(false)
 
-    const onItemExpandedChange = (id: number, expanded: boolean) => {
+    const onItemExpandedChange = (id: number | string, expanded: boolean) => {
       if (expanded) {
         setExpandedElements([id].concat(expandedElements))
       } else {
@@ -611,7 +623,9 @@ export const HiddenAvatar = {
     hiddenAvatar: true,
   },
   render: (props: ComponentProps<typeof EntitySelect>) => {
-    const [expandedElements, setExpandedElements] = useState<number[]>([])
+    const [expandedElements, setExpandedElements] = useState<
+      (number | string)[]
+    >([])
     const [selected, setSelected] = useState<EntitySelectEntity[]>([
       {
         ...famousEmployees[0],
@@ -622,7 +636,7 @@ export const HiddenAvatar = {
       props.selectedGroup ?? "all"
     )
 
-    const onItemExpandedChange = (id: number, expanded: boolean) => {
+    const onItemExpandedChange = (id: number | string, expanded: boolean) => {
       if (expanded) {
         setExpandedElements([id].concat(expandedElements))
       } else {

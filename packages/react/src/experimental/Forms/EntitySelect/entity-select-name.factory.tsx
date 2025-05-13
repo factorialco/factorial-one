@@ -24,7 +24,7 @@ export const famousEmployees: EntitySelectEntity[] = [
     avatar: avatar,
   },
   {
-    id: 1005,
+    id: 52,
     name: "Leonardo da Vinci",
     avatar: avatar,
   },
