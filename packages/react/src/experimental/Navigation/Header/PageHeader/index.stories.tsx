@@ -9,19 +9,14 @@ const meta = {
   tags: ["autodocs", "experimental"],
   parameters: {
     layout: "fullscreen",
-    a11y: {
-      // Disable color contrast checks for this component since the status tags
-      // are designed to be used with specific backgrounds in the actual application
-      config: {
-        rules: [
-          {
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
-    },
   },
+  decorators: [
+    (Story) => (
+      <div className="bg-f1-background">
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof PageHeader>
 
 export default meta
@@ -84,12 +79,6 @@ export const WithActions: Story = {
 }
 
 export const WithStatus: Story = {
-  parameters: {
-    a11y: {
-      // todo: fix color contrast issue
-      skipCi: true,
-    },
-  },
   args: {
     module: defaultModule,
     statusTag: {
@@ -100,12 +89,6 @@ export const WithStatus: Story = {
 }
 
 export const WithStatusVariants: Story = {
-  parameters: {
-    a11y: {
-      // todo: fix color contrast issue
-      skipCi: true,
-    },
-  },
   args: {
     module: defaultModule,
     statusTag: {
