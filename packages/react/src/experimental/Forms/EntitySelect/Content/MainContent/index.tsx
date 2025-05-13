@@ -402,7 +402,10 @@ export const MainContent = ({
               onChange={onGroupChange}
               options={groups}
               value={selectedGroup}
-              className="h-8 rounded-[10px] bg-transparent py-[5px] text-f1-foreground-secondary"
+              className={cn(
+                "h-8 rounded-[10px] bg-transparent py-[5px]",
+                selectedGroup === "all" ? "text-f1-foreground-secondary" : ""
+              )}
             />
           </div>
         )}
