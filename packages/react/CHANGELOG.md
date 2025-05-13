@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.52.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.51.0...factorial-one-react-v1.52.0) (2025-05-13)
+
+
+### Features
+
+* add favorites ([ef19ce1](https://github.com/factorialco/factorial-one/commit/ef19ce14f1fce60074dfd56434f8a14dfa533d6a))
+
 ## [1.51.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.50.0...factorial-one-react-v1.51.0) (2025-05-13)
 
 
