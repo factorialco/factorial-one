@@ -505,15 +505,11 @@ function MenuContent({
   const hasNonSortableItems =
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
+  const favoritesRef = useRef<HTMLDivElement>(null)
   const [currentFavorites, setCurrentFavorites] = React.useState<
     FavoriteMenuItem[]
   >(favorites || [])
-  const favoritesRef = useRef<HTMLDivElement>(null)
-  const hasFavorites = currentFavorites.length > 0
-
-  React.useEffect(() => {
-    setCurrentFavorites(favorites || [])
-  }, [favorites])
+  const hasFavorites = (favorites || []).length > 0
 
   const handleFavoritesReorder = React.useCallback(
     (newOrder: FavoriteMenuItem[]) => {
@@ -543,6 +539,7 @@ function MenuContent({
     },
     [currentFavorites, onFavoritesChange]
   )
+
   const [isInitialized, setIsInitialized] = React.useState(false)
   const resizeTimeoutRef = useRef<number | null>(null)
 
