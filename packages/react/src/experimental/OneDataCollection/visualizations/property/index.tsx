@@ -124,8 +124,12 @@ export const propertyRenderers = {
   dotTag: (args: { label: string; color: NewColor }) => (
     <DotTag text={args.label} color={args.color} />
   ),
-  tagList: (args: { tags: TagVariant[]; max?: number; type: TagType }) => (
-    <TagList type={args.type} tags={args.tags} max={args.max} />
+  tagList: (args: {
+    tags: Array<Omit<TagVariant, "type">>
+    max?: number
+    type: TagType
+  }) => (
+    <TagList type={args.type} tags={args.tags as TagVariant[]} max={args.max} />
   ),
 } as const satisfies Record<string, PropertyRenderer<never>>
 

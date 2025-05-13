@@ -266,7 +266,6 @@ export const TagArrayType: Story = {
         value: {
           type: "dot",
           tags: item.skills.map((skill) => ({
-            type: "dot",
             text: skill.label,
             description: skill.description,
             color: skill.color,
