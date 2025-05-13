@@ -1,5 +1,5 @@
 {
-  "packages/react": "1.51.0",
+  "packages/react": "1.52.0",
   "packages/react-native": "0.4.0",
-  "packages/core": "1.7.3"
+  "packages/core": "1.8.0"
 }
