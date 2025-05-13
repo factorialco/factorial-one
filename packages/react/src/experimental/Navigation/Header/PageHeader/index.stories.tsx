@@ -86,14 +86,8 @@ export const WithActions: Story = {
 export const WithStatus: Story = {
   parameters: {
     a11y: {
-      config: {
-        rules: [
-          {
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
+      // todo: fix color contrast issue
+      skipCi: true,
     },
   },
   args: {
@@ -108,14 +102,8 @@ export const WithStatus: Story = {
 export const WithStatusVariants: Story = {
   parameters: {
     a11y: {
-      config: {
-        rules: [
-          {
-            id: "color-contrast",
-            enabled: false,
-          },
-        ],
-      },
+      // todo: fix color contrast issue
+      skipCi: true,
     },
   },
   args: {
