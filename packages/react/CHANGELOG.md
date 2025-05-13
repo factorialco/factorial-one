@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.50.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.49.0...factorial-one-react-v1.50.0) (2025-05-13)
+
+
+### Features
+
+* adding defaultOpen prop to EntitySelector ([#1805](https://github.com/factorialco/factorial-one/issues/1805)) ([d98ecac](https://github.com/factorialco/factorial-one/commit/d98ecaced23d1e80ae1c3147e998c51d79824430))
+
 ## [1.49.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.48.0...factorial-one-react-v1.49.0) (2025-05-12)
 
 
