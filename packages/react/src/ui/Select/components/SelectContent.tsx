@@ -81,7 +81,7 @@ const SelectContent = forwardRef<
     const [animationStarted, setAnimationStarted] = useState(false)
 
     // Get the value and the open status from the select context
-    const { value, open } = useContext(SelectContext)
+    const { value, open, asList } = useContext(SelectContext)
 
     const positionIndex = useMemo(() => {
       return (items && items.findIndex((item) => item.value === value)) || 0
@@ -92,7 +92,8 @@ const SelectContent = forwardRef<
       getScrollElement: () => parentRef.current,
       estimateSize: (i: number) => items?.[i]?.height || 0,
       overscan: 5,
-      enabled: prefersReducedMotion || animationStarted,
+      // If the content is a list, we need to check if the animation is enabled
+      enabled: asList || prefersReducedMotion || animationStarted,
     })
 
     useEffect(() => {
@@ -107,88 +108,104 @@ const SelectContent = forwardRef<
       // Measure the items when the animation is finished and scroll to item
       virtualizer.measure()
       virtualizer.scrollToIndex(positionIndex)
-    }, [virtualizer, positionIndex, animationStarted])
+    }, [virtualizer, positionIndex, animationStarted, asList])
 
     const virtualItems = virtualizer.getVirtualItems()
 
-    return (
-      <SelectPrimitive.Portal>
-        <SelectPrimitive.Content
-          ref={ref}
-          className={cn(
-            "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background text-f1-foreground shadow-md data-[state=closed]:fade-out-0 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=open]:fade-in-0 motion-safe:data-[state=closed]:zoom-out-95 motion-safe:data-[state=open]:zoom-in-95 motion-safe:data-[side=bottom]:slide-in-from-top-2",
-            position === "popper" &&
-              "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-            className,
-            // Hides the content when the virtual list is not ready
-            isVirtual && !virtualReady && "opacity-0"
-          )}
-          position={position}
-          {...props}
-          onAnimationStart={() => {
-            // Set the animation state to started as the elements are visible
-            setAnimationStarted(true)
-            setTimeout(() => {
-              virtualizer.scrollToIndex(positionIndex, { align: "center" })
-              setVirtualReady(true)
-            })
+    const viewportContent = isEmpty ? (
+      <p className="p-2 text-center">{emptyMessage || "-"}</p>
+    ) : isVirtual ? (
+      <div
+        className={cn(
+          !asList && "transition-opacity delay-100",
+          asList || virtualReady ? "" : "opacity-0"
+        )}
+        style={{
+          height: virtualizer.getTotalSize(),
+          width: "100%",
+          position: "relative",
+        }}
+      >
+        <div
+          style={{
+            top: 0,
+            left: 0,
+            width: "100%",
+            transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
           }}
         >
-          {!!props.top && <div>{props.top}</div>}
-          <ScrollArea
-            viewportRef={parentRef}
-            className="flex max-h-[300px] flex-col overflow-y-auto"
-          >
+          {virtualItems.map((virtualItem) => (
+            <div
+              key={virtualItem.key}
+              data-index={virtualItem.index}
+              ref={virtualizer.measureElement}
+              tabIndex={virtualItem.index === positionIndex ? 0 : -1}
+            >
+              {items[virtualItem.index].item}
+            </div>
+          ))}
+        </div>
+      </div>
+    ) : (
+      <>{children}</>
+    )
+
+    const content = (
+      <SelectPrimitive.Content
+        ref={ref}
+        className={cn(
+          "relative z-50 max-h-96 min-w-[8rem] overflow-hidden text-f1-foreground",
+          !asList &&
+            "rounded-md border border-solid border-f1-border-secondary bg-f1-background shadow-md data-[state=closed]:fade-out-0 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 motion-safe:data-[state=open]:animate-in motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=open]:fade-in-0 motion-safe:data-[state=closed]:zoom-out-95 motion-safe:data-[state=open]:zoom-in-95 motion-safe:data-[side=bottom]:slide-in-from-top-2",
+          !asList &&
+            position === "popper" &&
+            "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+          className,
+          // Hides the content when the virtual list is not ready
+          !asList && isVirtual && !virtualReady && "opacity-0"
+        )}
+        position={asList ? "item-aligned" : position}
+        {...props}
+        onAnimationStart={() => {
+          // Set the animation state to started as the elements are visible
+          setAnimationStarted(true)
+          setTimeout(() => {
+            virtualizer.scrollToIndex(positionIndex, { align: "center" })
+            setVirtualReady(true)
+          })
+        }}
+      >
+        {!!props.top && <div>{props.top}</div>}
+        <ScrollArea
+          viewportRef={parentRef}
+          className={cn(
+            "flex flex-col overflow-y-auto",
+            asList ? "max-h-full" : "max-h-[300px]"
+          )}
+        >
+          {asList ? (
+            viewportContent
+          ) : (
             <SelectPrimitive.Viewport
               asChild
               className={cn(
-                position === "popper" &&
+                !asList &&
+                  position === "popper" &&
                   "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
               )}
             >
-              {isEmpty ? (
-                <p className="p-2 text-center">{emptyMessage || "-"}</p>
-              ) : isVirtual ? (
-                <div
-                  className={cn(
-                    "transition-opacity delay-100",
-                    virtualReady ? "" : "opacity-0"
-                  )}
-                  style={{
-                    height: virtualizer.getTotalSize(),
-                    width: "100%",
-                    position: "relative",
-                  }}
-                >
-                  <div
-                    style={{
-                      // position: "absolute",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      transform: `translateY(${virtualItems[0]?.start ?? 0}px)`,
-                    }}
-                  >
-                    {virtualItems.map((virtualItem) => (
-                      <div
-                        key={virtualItem.key}
-                        data-index={virtualItem.index}
-                        ref={virtualizer.measureElement}
-                        tabIndex={virtualItem.index === positionIndex ? 0 : -1}
-                      >
-                        {items[virtualItem.index].item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <>{children}</>
-              )}
+              {viewportContent}
             </SelectPrimitive.Viewport>
-          </ScrollArea>
-          {!!props.bottom && <div>{props.bottom}</div>}
-        </SelectPrimitive.Content>
-      </SelectPrimitive.Portal>
+          )}
+        </ScrollArea>
+        {!!props.bottom && <div>{props.bottom}</div>}
+      </SelectPrimitive.Content>
+    )
+
+    return asList ? (
+      content
+    ) : (
+      <SelectPrimitive.Portal>{content}</SelectPrimitive.Portal>
     )
   }
 )
