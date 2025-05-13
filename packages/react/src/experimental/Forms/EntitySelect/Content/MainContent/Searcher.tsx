@@ -40,7 +40,7 @@ export const Searcher = ({
         disabled={disabled}
         onKeyDown={handleKeyDown}
         type="text"
-        className="w-full border-none bg-transparent text-f1-foreground-secondary focus:outline-none"
+        className="w-full border-none bg-transparent focus:outline-none"
         placeholder={searchPlaceholder}
         value={search}
         onChange={(e) => onSearch(e.target.value)}
