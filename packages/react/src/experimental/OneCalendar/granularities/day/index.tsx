@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 00d04951 (fix: granularity date range)
 import {
   addDays,
   addMonths,
@@ -9,39 +5,57 @@ import {
   startOfDay,
   startOfMonth,
 } from "date-fns"
-<<<<<<< HEAD
 import { GranularityDefinition } from ".."
 import { DateRange } from "../../types"
-=======
-import { addDays, addMonths, startOfMonth } from "date-fns"
-import { GranularityDefinition } from ".."
->>>>>>> 53972ab5 (feat: fromString)
-=======
 import { GranularityDefinition } from ".."
 import { DateRange } from "../../types"
->>>>>>> 00d04951 (fix: granularity date range)
+import { DateRange, DateRangeComplete } from "../../types"
 import {
   formatDateRange,
   formatDateToString,
+  isAfterOrEqual,
+  isBeforeOrEqual,
   toDateRangeString,
-<<<<<<< HEAD
-<<<<<<< HEAD
   toGranularityDateRange,
 } from "../../utils"
 import { DayView } from "./DayView"
 
-const toDayGranularityDateRange = (
-  date: Date | DateRange | undefined | null
-) => {
+export function toDayGranularityDateRange<
+  T extends Date | DateRange | undefined | null,
+>(date: T): T extends Date | DateRange ? DateRangeComplete : T {
   return toGranularityDateRange(date, startOfDay, endOfDay)
 }
 
 export const dayGranularity: GranularityDefinition = {
+  calendarView: "day",
+  getPrevNext: (value: DateRange, options) => {
+    const dateRange = toDayGranularityDateRange(value)
+    if (!dateRange) {
+      return {
+        prev: false,
+        next: false,
+      }
+    }
+
+    const { from, to } = dateRange
+
+    const [prevFrom, prevTo] = [addDays(from, -1), addDays(to, -1)]
+    const [nextFrom, nextTo] = [addDays(from, 1), addDays(to, 1)]
+
+    const minWithGranularity = options.min && startOfDay(options.min)
+    const maxWithGranularity = options.max && endOfDay(options.max)
+
+    return {
+      prev: isAfterOrEqual(prevFrom, minWithGranularity)
+        ? { from: prevFrom, to: prevTo }
+        : false,
+      next: isBeforeOrEqual(nextTo, maxWithGranularity)
+        ? { from: nextFrom, to: nextTo }
+        : false,
+    }
+  },
   toRange: (date) => toDayGranularityDateRange(date),
-=======
-=======
   toGranularityDateRange,
->>>>>>> 00d04951 (fix: granularity date range)
 } from "../../utils"
 import { DayView } from "./DayView"
 

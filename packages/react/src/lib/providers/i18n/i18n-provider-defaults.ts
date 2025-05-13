@@ -53,12 +53,55 @@ export const defaultTranslations = {
     from: "From",
     to: "To",
     date: "Date",
+    custom: "Custom period",
+    selectDate: "Select Date",
+    presets: {
+      last7Days: "Last 7 days",
+      last30Days: "Last 30 days",
+      last3Months: "Last 3 months",
+      last6Months: "Last 6 months",
+      lastYear: "Last year",
+      last3Years: "Last 3 years",
+      last100Years: "Last 100 years",
+    },
+    range: "Range",
+    selectedBy: "Selected by",
     groups: {
       today: "Today",
       yesterday: "Yesterday",
       lastWeek: "Last week",
       lastMonth: "Last month",
       other: "Other",
+    },
+    granularities: {
+      day: {
+        currentDate: "Today",
+        label: "Day",
+      },
+      week: {
+        currentDate: "This week",
+        label: "Week",
+      },
+      month: {
+        currentDate: "This month",
+        label: "Month",
+      },
+      quarter: {
+        currentDate: "This quarter",
+        label: "Quarter",
+      },
+      halfyear: {
+        currentDate: "This half year",
+        label: "Half year",
+      },
+      year: {
+        currentDate: "This year",
+        label: "Year",
+      },
+      range: {
+        currentDate: "Today",
+        label: "Range",
+      },
     },
     month: {
       january: "January",

@@ -1,13 +1,4 @@
-import { rangeSeparator } from "@/experimental/OneCalendar/granularities/consts"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { getGranularitySimpleDefinition } from "@/experimental/OneCalendar/OneCalendar"
-=======
-import { getGranularityDefinition } from "@/experimental/OneCalendar/OneCalendar"
->>>>>>> 53972ab5 (feat: fromString)
-=======
-import { getGranularitySimpleDefinition } from "@/experimental/OneCalendar/OneCalendar"
->>>>>>> 7ab6c043 (fix: granularity date range)
+import { getGranularitySimpleDefinition } from "@/experimental/OneCalendar"
 import { DateRange } from "@/experimental/OneCalendar/types"
 import { type BaseFilterDefinition } from "../filters"
 import { FilterTypeContext, FilterTypeDefinition } from "../types"
