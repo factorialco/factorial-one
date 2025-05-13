@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.51.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.50.0...factorial-one-react-v1.51.0) (2025-05-13)
+
+
+### Features
+
+* adding clearSearch icon on EntitySelector ([#1807](https://github.com/factorialco/factorial-one/issues/1807)) ([1866571](https://github.com/factorialco/factorial-one/commit/186657189550e8e8533bdcb5df4d60c25c6cfa6d))
+
 ## [1.50.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.49.0...factorial-one-react-v1.50.0) (2025-05-13)
 
 
