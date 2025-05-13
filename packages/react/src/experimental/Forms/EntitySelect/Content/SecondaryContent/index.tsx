@@ -1,29 +1,31 @@
 import { useMemo } from "react"
 import { VirtualList } from "../../../../Navigation/VirtualList"
-import { AvatarNameListTag } from "../../AvatarNameListTag"
+import { ListTag } from "../../ListTag"
 import {
-  AvatarNamedEntity,
-  AvatarNamedSubEntity,
+  EntitySelectEntity,
+  EntitySelectSubEntity,
   FlattenedItem,
 } from "../../types"
 
-export const AvatarNameSelectorSecondaryContent = ({
+export const SecondaryContent = ({
   groupView,
   onSubItemRemove,
   onRemove,
   selectedEntities,
   selectedLabel,
   disabled = false,
+  hiddenAvatar = false,
 }: {
   groupView: boolean
-  onRemove: (entity: AvatarNamedEntity) => void
+  onRemove: (entity: EntitySelectEntity) => void
   onSubItemRemove: (
-    parentEntity: AvatarNamedEntity,
-    entity: AvatarNamedSubEntity
+    parentEntity: EntitySelectEntity,
+    entity: EntitySelectSubEntity
   ) => void
-  selectedEntities: AvatarNamedEntity[]
+  selectedEntities: EntitySelectEntity[]
   selectedLabel?: string
   disabled?: boolean
+  hiddenAvatar?: boolean
 }) => {
   const flattenedList = useMemo<FlattenedItem[]>(() => {
     const rawFlattened = !groupView
@@ -33,7 +35,7 @@ export const AvatarNameSelectorSecondaryContent = ({
             subId: el.id,
             subName: el.name,
             subAvatar: el.avatar,
-          } as AvatarNamedSubEntity,
+          } as EntitySelectSubEntity,
         }))
       : selectedEntities.flatMap((entity) =>
           (entity.subItems ?? []).map((subItem) => ({
@@ -76,9 +78,10 @@ export const AvatarNameSelectorSecondaryContent = ({
               return <></>
             }
             return (
-              <AvatarNameListTag
+              <ListTag
                 entity={current.subItem}
                 disabled={disabled}
+                hiddenAvatar={hiddenAvatar}
                 onRemove={() =>
                   current.parent
                     ? onSubItemRemove?.(current.parent, current.subItem)

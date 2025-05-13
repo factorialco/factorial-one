@@ -1,7 +1,7 @@
 import avatar from "../../../../storybook-assets/avatar.jpeg"
-import { AvatarNamedEntity, AvatarNamedSubEntity } from "./types"
+import { EntitySelectEntity, EntitySelectSubEntity } from "./types"
 
-export const famousEmployees: AvatarNamedEntity[] = [
+export const famousEmployees: EntitySelectEntity[] = [
   {
     id: 1000,
     name: "Albert Einstein",
@@ -154,7 +154,7 @@ export const famousEmployees: AvatarNamedEntity[] = [
   },
 ]
 
-export const famousEmployeesAsSubItems: AvatarNamedSubEntity[] =
+export const famousEmployeesAsSubItems: EntitySelectSubEntity[] =
   famousEmployees.map((employee) => ({
     subId: employee.id,
     subName: employee.name,

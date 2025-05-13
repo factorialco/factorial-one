@@ -2,20 +2,20 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { cn } from "../../../lib/utils"
-import { AvatarNameSelectorContent } from "./AvatarNameSelectorContent"
-import { AvatarNameSelectorTrigger } from "./AvatarNameSelectorTrigger"
+import { Content } from "./Content"
+import { Trigger } from "./Trigger"
 import {
-  AvatarNamedEntity,
-  AvatarNamedSubEntity,
-  AvatarNameSelectorProps,
+  EntitySelectEntity,
+  EntitySelectProps,
+  EntitySelectSubEntity,
 } from "./types"
 
-export const AvatarNameSelector = (
-  props: AvatarNameSelectorProps & { children?: React.ReactNode }
+export const EntitySelect = (
+  props: EntitySelectProps & { children?: React.ReactNode }
 ) => {
-  const [filteredEntities, setFilteredEntities] = useState<AvatarNamedEntity[]>(
-    props.entities
-  )
+  const [filteredEntities, setFilteredEntities] = useState<
+    EntitySelectEntity[]
+  >(props.entities)
 
   const [search, setSearch] = useState("")
   const [debouncedSearch, setDebouncedSearch] = useDebounceValue("", 300)
@@ -28,13 +28,13 @@ export const AvatarNameSelector = (
     [props.entities]
   )
 
-  function onPrivateSelect(entity: AvatarNamedEntity) {
+  function onPrivateSelect(entity: EntitySelectEntity) {
     if (props.singleSelector) {
       props.onSelect(entity)
       return
     }
 
-    const prevSelected = props.selectedAvatarName ?? []
+    const prevSelected = props.selectedEntities ?? []
 
     const filteredEntity = filteredEntities.find((fe) => fe.id === entity.id)
     if (!filteredEntity) {
@@ -59,7 +59,7 @@ export const AvatarNameSelector = (
 
     const newSelectedEntities = [...prevSelected]
 
-    function upsertSelectedEntity(updated: AvatarNamedEntity) {
+    function upsertSelectedEntity(updated: EntitySelectEntity) {
       const idx = newSelectedEntities.findIndex((x) => x.id === updated.id)
       if (idx >= 0) {
         newSelectedEntities[idx] = updated
@@ -103,15 +103,15 @@ export const AvatarNameSelector = (
   }
 
   function onSubItemSelect(
-    parentEntity: AvatarNamedEntity,
-    entity: AvatarNamedSubEntity
+    parentEntity: EntitySelectEntity,
+    entity: EntitySelectSubEntity
   ) {
     if (props.singleSelector) {
       props.onSelect({ ...parentEntity, subItems: [{ ...entity }] })
     } else {
-      const prevSelected = props.selectedAvatarName ?? []
+      const prevSelected = props.selectedEntities ?? []
       const selectedIds = new Set(prevSelected.map((sel) => sel.id))
-      const selectedSubItemsMap = new Map<number, AvatarNamedSubEntity[]>(
+      const selectedSubItemsMap = new Map<number, EntitySelectSubEntity[]>(
         prevSelected.map((sel) => [sel.id, sel.subItems ?? []])
       )
 
@@ -126,7 +126,7 @@ export const AvatarNameSelector = (
         }
       })
 
-      const newSelectedEntities: AvatarNamedEntity[] = []
+      const newSelectedEntities: EntitySelectEntity[] = []
 
       props.entities.forEach((parent) => {
         if (selectedIds.has(parent.id)) {
@@ -163,14 +163,14 @@ export const AvatarNameSelector = (
     }
   }
 
-  function onRemove(entityToRemove: AvatarNamedEntity) {
+  function onRemove(entityToRemove: EntitySelectEntity) {
     if (props.singleSelector) {
       props.onSelect(null)
       return
     }
 
-    let newSelectedEntities: AvatarNamedEntity[] = []
-    const prevSelected = props.selectedAvatarName ?? []
+    let newSelectedEntities: EntitySelectEntity[] = []
+    const prevSelected = props.selectedEntities ?? []
 
     if (groupView) {
       const parentElement = filteredEntities.find(
@@ -208,18 +208,18 @@ export const AvatarNameSelector = (
   }
 
   function onSubItemRemove(
-    _parentEntity: AvatarNamedEntity,
-    subEntity: AvatarNamedSubEntity
+    _parentEntity: EntitySelectEntity,
+    subEntity: EntitySelectSubEntity
   ) {
     if (props.singleSelector) {
       props.onSelect(null)
       return
     }
 
-    const prevSelected = props.selectedAvatarName ?? []
+    const prevSelected = props.selectedEntities ?? []
     const subIdToRemove = subEntity.subId
 
-    const newSelectedEntities: AvatarNamedEntity[] = []
+    const newSelectedEntities: EntitySelectEntity[] = []
 
     for (const parent of prevSelected) {
       const filteredSubItems =
@@ -242,9 +242,9 @@ export const AvatarNameSelector = (
       return
     }
 
-    const prevSelected = props.selectedAvatarName ?? []
+    const prevSelected = props.selectedEntities ?? []
 
-    let newSelected: AvatarNamedEntity[] = []
+    let newSelected: EntitySelectEntity[] = []
 
     if (groupView) {
       const visibleSubIds = new Set<number>(
@@ -274,7 +274,7 @@ export const AvatarNameSelector = (
   }
 
   function onSelectAll() {
-    const newSelected = [...(props.selectedAvatarName ?? [])]
+    const newSelected = [...(props.selectedEntities ?? [])]
 
     filteredEntities.forEach((entity) => {
       const existingEntity = newSelected.find((sel) => sel.id === entity.id)
@@ -303,7 +303,7 @@ export const AvatarNameSelector = (
     setDebouncedSearch(search)
   }
 
-  const onToggleExpand = (entity: AvatarNamedEntity, expanded: boolean) => {
+  const onToggleExpand = (entity: EntitySelectEntity, expanded: boolean) => {
     props.onItemExpandedChange(entity.id, expanded)
     setFilteredEntities(
       filteredEntities.map((e) =>
@@ -365,6 +365,12 @@ export const AvatarNameSelector = (
     props.onOpenChange?.(open)
   }
 
+  useEffect(() => {
+    if (props.defaultOpen) {
+      props.onOpenChange?.(true)
+    }
+  }, [props])
+
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState(0)
 
@@ -388,7 +394,7 @@ export const AvatarNameSelector = (
           !props.width ? "w-full" : "w-fit"
         )}
       >
-        <AvatarNameSelectorContent
+        <Content
           groupView={groupView}
           entities={filteredEntities}
           groups={props.groups}
@@ -400,7 +406,7 @@ export const AvatarNameSelector = (
           onSubItemSelect={onSubItemSelect}
           onClear={onClear}
           onSelectAll={onSelectAll}
-          selectedEntities={props.selectedAvatarName ?? []}
+          selectedEntities={props.selectedEntities ?? []}
           search={search}
           onSearch={onSearch}
           onToggleExpand={onToggleExpand}
@@ -414,6 +420,7 @@ export const AvatarNameSelector = (
           notFoundSubtitle={props.notFoundSubtitle}
           width={props.width ?? containerWidth - 2}
           disabled={props.disabled}
+          hiddenAvatar={props.hiddenAvatar}
         />
       </div>
     )
@@ -425,11 +432,12 @@ export const AvatarNameSelector = (
         {props.children ? (
           props.children
         ) : (
-          <AvatarNameSelectorTrigger
+          <Trigger
             placeholder={props.triggerPlaceholder}
             selected={props.triggerSelected}
-            selectedAvatarName={props.selectedAvatarName ?? []}
+            selectedEntities={props.selectedEntities ?? []}
             disabled={props.disabled}
+            hiddenAvatar={props.hiddenAvatar}
           />
         )}
       </PopoverTrigger>
@@ -438,7 +446,7 @@ export const AvatarNameSelector = (
           "scrollbar-macos relative w-full overflow-auto rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0"
         )}
       >
-        <AvatarNameSelectorContent
+        <Content
           groupView={groupView}
           entities={filteredEntities}
           groups={props.groups}
@@ -450,7 +458,7 @@ export const AvatarNameSelector = (
           onSubItemSelect={onSubItemSelect}
           onClear={onClear}
           onSelectAll={onSelectAll}
-          selectedEntities={props.selectedAvatarName ?? []}
+          selectedEntities={props.selectedEntities ?? []}
           search={search}
           onSearch={onSearch}
           onToggleExpand={onToggleExpand}
@@ -464,6 +472,7 @@ export const AvatarNameSelector = (
           notFoundSubtitle={props.notFoundSubtitle}
           width={props.width}
           disabled={props.disabled}
+          hiddenAvatar={props.hiddenAvatar}
         />
       </PopoverContent>
     </Popover>
@@ -490,7 +499,7 @@ function getMatchScore(text = "", searchKeys: string[]): number {
   return bestMatchIndex
 }
 
-function getBestScoreForEntity(entity: AvatarNamedEntity, search: string) {
+function getBestScoreForEntity(entity: EntitySelectEntity, search: string) {
   const nameScore = getMatchScore(
     search,
     entity.searchKeys ?? entity.name.split(" ")

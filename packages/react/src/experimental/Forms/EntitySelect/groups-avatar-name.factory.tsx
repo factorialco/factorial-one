@@ -1,8 +1,8 @@
 import avatar from "../../../../storybook-assets/avatar.jpeg"
-import { famousEmployeesAsSubItems } from "./avatar-name.factory"
-import { AvatarNamedEntity } from "./types"
+import { famousEmployeesAsSubItems } from "./entity-select-name.factory"
+import { EntitySelectEntity } from "./types"
 
-export const teamsWithEmployees: AvatarNamedEntity[] = [
+export const teamsWithEmployees: EntitySelectEntity[] = [
   {
     id: 51,
     name: "Engineering",
@@ -28,7 +28,7 @@ export const teamsWithEmployees: AvatarNamedEntity[] = [
   },
 ]
 
-export const workplaceWithEmployees: AvatarNamedEntity[] = [
+export const workplaceWithEmployees: EntitySelectEntity[] = [
   {
     id: 71,
     name: "New York",

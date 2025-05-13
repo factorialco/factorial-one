@@ -198,8 +198,8 @@ export function OneCard({
         </div>
         {metadata && (
           <div className="flex flex-col gap-0.5">
-            {metadata.map((item) => (
-              <CardMetadata key={item.type} metadata={item} />
+            {metadata.map((item, index) => (
+              <CardMetadata key={index} metadata={item} />
             ))}
           </div>
         )}

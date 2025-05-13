@@ -5,16 +5,16 @@ import { cn } from "../../../../../lib/utils"
 import { Spinner } from "../../../../exports"
 import { VirtualList } from "../../../../Navigation/VirtualList"
 import { Select } from "../../../Fields/Select"
-import { AvatarNameListItem } from "../../AvatarNameListItem"
+import { AvatarNameListItem } from "../../ListItem"
 import {
-  AvatarNamedEntity,
-  AvatarNamedGroup,
-  AvatarNamedSubEntity,
+  EntitySelectEntity,
+  EntitySelectNamedGroup,
+  EntitySelectSubEntity,
   FlattenedItem,
 } from "../../types"
-import { AvatarNameSelectorSearcher } from "./AvatarNameSelectorSearcher"
+import { Searcher } from "./Searcher"
 
-export const AvatarNameSelectorMainContent = ({
+export const MainContent = ({
   groupView,
   entities,
   groups,
@@ -39,28 +39,29 @@ export const AvatarNameSelectorMainContent = ({
   singleSelector = false,
   loading = false,
   disabled = false,
+  hiddenAvatar = false,
 }: {
   groupView: boolean
-  entities: AvatarNamedEntity[]
-  groups: AvatarNamedGroup[]
+  entities: EntitySelectEntity[]
+  groups: EntitySelectNamedGroup[]
   selectedGroup: string
   search: string
-  onSelect: (entity: AvatarNamedEntity) => void
-  onRemove: (entity: AvatarNamedEntity) => void
+  onSelect: (entity: EntitySelectEntity) => void
+  onRemove: (entity: EntitySelectEntity) => void
   onSubItemRemove: (
-    parentEntity: AvatarNamedEntity,
-    entity: AvatarNamedSubEntity
+    parentEntity: EntitySelectEntity,
+    entity: EntitySelectSubEntity
   ) => void
   onSubItemSelect: (
-    parentEntity: AvatarNamedEntity,
-    entity: AvatarNamedSubEntity
+    parentEntity: EntitySelectEntity,
+    entity: EntitySelectSubEntity
   ) => void
   onClear: () => void
   onSelectAll: () => void
   onSearch: (search: string) => void
-  selectedEntities?: AvatarNamedEntity[]
+  selectedEntities?: EntitySelectEntity[]
   onGroupChange: (key: string | null) => void
-  onToggleExpand: (entity: AvatarNamedEntity, expanded: boolean) => void
+  onToggleExpand: (entity: EntitySelectEntity, expanded: boolean) => void
   notFoundTitle: string
   notFoundSubtitle: string
   className?: string
@@ -70,6 +71,7 @@ export const AvatarNameSelectorMainContent = ({
   singleSelector?: boolean
   loading?: boolean
   disabled?: boolean
+  hiddenAvatar?: boolean
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null)
 
@@ -148,6 +150,7 @@ export const AvatarNameSelectorMainContent = ({
           goToFirst={goToFirst}
           goToLast={goToLast}
           disabled={disabled}
+          hiddenAvatar={hiddenAvatar}
         />
       )
     },
@@ -165,6 +168,7 @@ export const AvatarNameSelectorMainContent = ({
       selectedEntities,
       selectedGroup,
       singleSelector,
+      hiddenAvatar,
     ]
   )
 
@@ -177,7 +181,7 @@ export const AvatarNameSelectorMainContent = ({
             subName: el.name,
             subAvatar: el.avatar,
             subSearchKeys: el.searchKeys,
-          } as AvatarNamedSubEntity,
+          } as EntitySelectSubEntity,
         }))
       : entities
           .flatMap((entity) => {
@@ -218,7 +222,7 @@ export const AvatarNameSelectorMainContent = ({
       const parent = flattenedList[vi.index].parent
       const subItem = flattenedList[vi.index].subItem
       if (!parent) {
-        const recoveredEntity: AvatarNamedEntity = {
+        const recoveredEntity: EntitySelectEntity = {
           id: subItem.subId,
           name: subItem.subName,
           avatar: subItem.subAvatar,
@@ -259,6 +263,7 @@ export const AvatarNameSelectorMainContent = ({
             goToLast={goToLast}
             hideLine={vi.index === flattenedList.length - 1}
             disabled={disabled}
+            hiddenAvatar={hiddenAvatar}
           />
         )
       }
@@ -300,6 +305,7 @@ export const AvatarNameSelectorMainContent = ({
           goToFirst={goToFirst}
           goToLast={goToLast}
           isChild
+          hiddenAvatar={hiddenAvatar}
         />
       )
     },
@@ -318,6 +324,7 @@ export const AvatarNameSelectorMainContent = ({
       selectedGroup,
       onSubItemSelect,
       onSubItemRemove,
+      hiddenAvatar,
     ]
   )
 
@@ -325,7 +332,7 @@ export const AvatarNameSelectorMainContent = ({
     if (!entities.length) {
       return [false, false]
     }
-    const selectedMap = new Map<number, AvatarNamedEntity>(
+    const selectedMap = new Map<number, EntitySelectEntity>(
       (selectedEntities ?? []).map((se) => [se.id, se])
     )
 
@@ -380,7 +387,7 @@ export const AvatarNameSelectorMainContent = ({
         )}
       >
         <div className="flex-1">
-          <AvatarNameSelectorSearcher
+          <Searcher
             search={search}
             onSearch={onSearch}
             searchPlaceholder={searchPlaceholder}

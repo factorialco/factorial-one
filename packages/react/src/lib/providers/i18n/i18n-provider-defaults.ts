@@ -76,6 +76,7 @@ export const defaultTranslations = {
     favorites: "Favorites",
     remove: "Remove favorite",
   },
+  notifications: "Notifications",
 } as const
 
 type TranslationShape<T> = {

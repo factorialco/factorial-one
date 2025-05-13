@@ -220,7 +220,6 @@ export const WithProductUpdate: Story = {
       isVisible: true,
       hasUnread: true,
       label: "Latest from Projects",
-      moreUpdatesLabel: "More updates",
       updatesPageUrl: "https://factorialmakers.atlassian.net/browse/FCT-24580",
       emptyScreen: {
         title: "There aren’t updates for Projects yet",
@@ -267,6 +266,19 @@ export const WithProductUpdate: Story = {
                   updated: "2 mar 2025",
                   href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
                 },
+                {
+                  title: "New Client section",
+                  mediaUrl: "https://placecats.com/neo/300/200",
+                  updated: "3 mar 2025",
+                  href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+                  unread: true,
+                },
+                {
+                  title: "Spending tab in projects",
+                  mediaUrl: "https://placecats.com/neo/300/200",
+                  updated: "2 mar 2025",
+                  href: "https://factorialmakers.atlassian.net/browse/FCT-24580",
+                },
               ]),
             1000
           )
@@ -280,6 +292,46 @@ export const WithProductUpdate: Story = {
         alert("onHeaderClick")
       },
       currentModule: defaultModule.name,
+      crossSelling: {
+        isVisible: true,
+        sectionTitle: "Discover other products",
+        onClose: () => {
+          alert("onClose")
+        },
+        products: [
+          {
+            title: "Benefits",
+            description:
+              "Improve your team’s salary without impacting your budget through flexible compensation.",
+            onClick: () => {
+              alert("onClick")
+            },
+            onClose: () => {
+              alert("onClose")
+            },
+            icon: Briefcase,
+            dismissable: false,
+            trackVisibility: (open) => {
+              console.log("trackOpenChange", open)
+            },
+          },
+          {
+            title: "Projects",
+            description: "Improve your.",
+            onClick: () => {
+              alert("onClick")
+            },
+            onClose: () => {
+              alert("onClose")
+            },
+            icon: Briefcase,
+            dismissable: false,
+            trackVisibility: (open) => {
+              console.log("trackOpenChange", open)
+            },
+          },
+        ],
+      },
     },
   },
 }

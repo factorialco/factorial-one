@@ -1,11 +1,9 @@
+import { CrossedCircle } from "@/icons/app"
 import { Search } from "lucide-react"
 import { Icon } from "../../../../../components/Utilities/Icon"
-import {
-  focusNextFocusable,
-  focusPreviousFocusable,
-} from "../../AvatarNameListItem"
+import { focusNextFocusable, focusPreviousFocusable } from "../../ListItem"
 
-export const AvatarNameSelectorSearcher = ({
+export const Searcher = ({
   search,
   onSearch,
   searchPlaceholder,
@@ -47,6 +45,14 @@ export const AvatarNameSelectorSearcher = ({
         value={search}
         onChange={(e) => onSearch(e.target.value)}
       />
+      {search && (
+        <Icon
+          icon={CrossedCircle}
+          size="md"
+          onClick={() => onSearch("")}
+          className="cursor-pointer text-f1-icon-secondary"
+        />
+      )}
     </div>
   )
 }

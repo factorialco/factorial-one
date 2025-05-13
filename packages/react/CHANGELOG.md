@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.51.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.50.0...factorial-one-react-v1.51.0) (2025-05-13)
+
+
+### Features
+
+* adding clearSearch icon on EntitySelector ([#1807](https://github.com/factorialco/factorial-one/issues/1807)) ([1866571](https://github.com/factorialco/factorial-one/commit/186657189550e8e8533bdcb5df4d60c25c6cfa6d))
+
+## [1.50.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.49.0...factorial-one-react-v1.50.0) (2025-05-13)
+
+
+### Features
+
+* adding defaultOpen prop to EntitySelector ([#1805](https://github.com/factorialco/factorial-one/issues/1805)) ([d98ecac](https://github.com/factorialco/factorial-one/commit/d98ecaced23d1e80ae1c3147e998c51d79824430))
+
+## [1.49.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.48.0...factorial-one-react-v1.49.0) (2025-05-12)
+
+
+### Features
+
+* **PageHeader:** add cross-selling feature to ProductUpdates component ([#1736](https://github.com/factorialco/factorial-one/issues/1736)) ([f658f16](https://github.com/factorialco/factorial-one/commit/f658f166888683b56f6da1509c1321756551b587))
+
+## [1.48.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.47.1...factorial-one-react-v1.48.0) (2025-05-12)
+
+
+### Features
+
+* add activity button in Sidebar ([#1677](https://github.com/factorialco/factorial-one/issues/1677)) ([23eb340](https://github.com/factorialco/factorial-one/commit/23eb340ef1018396090a0812db39e40bc6359eb7))
+
+## [1.47.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.47.0...factorial-one-react-v1.47.1) (2025-05-12)
+
+
+### Bug Fixes
+
+* update key prop in OneCard metadata mapping to use index ([#1790](https://github.com/factorialco/factorial-one/issues/1790)) ([99be841](https://github.com/factorialco/factorial-one/commit/99be84115a1d495e15372026b41880b957b1abe2))
+
+## [1.47.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.3...factorial-one-react-v1.47.0) (2025-05-12)
+
+
+### Features
+
+* **ResourceHeader:** add tooltip to metadata ([#1795](https://github.com/factorialco/factorial-one/issues/1795)) ([b74d5e6](https://github.com/factorialco/factorial-one/commit/b74d5e66d962eb88b40f9b8d5f6604ba7caabb98))
+
+## [1.46.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.2...factorial-one-react-v1.46.3) (2025-05-09)
+
+
+### Bug Fixes
+
+* datacollection secondary actions dropdown alignment when no primary actions ([#1783](https://github.com/factorialco/factorial-one/issues/1783)) ([a1bf03d](https://github.com/factorialco/factorial-one/commit/a1bf03d897b954db2793722da1d604f65f5ad6a2))
+
 ## [1.46.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.46.1...factorial-one-react-v1.46.2) (2025-05-09)
 
 
