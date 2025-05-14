@@ -13,6 +13,12 @@ export const predefinedPresets: Record<string, DatePreset> = {
     granularity: "day",
     value: () => granularityDefinitions.day.toRange(subDays(new Date(), 1)),
   },
+  last7Days: {
+    label: "Last 7 days",
+    granularity: "day",
+    value: () =>
+      granularityDefinitions.day.toRange(subDays(new Date(), 7), new Date()),
+  },
   thisWeek: {
     label: "This week",
     granularity: "week",
@@ -28,4 +34,46 @@ export const predefinedPresets: Record<string, DatePreset> = {
     granularity: "month",
     value: () => granularityDefinitions.month.toRange(subMonths(new Date(), 1)),
   },
-}
+  last3Months: {
+    label: "Last 3 months",
+    granularity: "month",
+    value: () => granularityDefinitions.month.toRange(subMonths(new Date(), 3)),
+  },
+  last6Months: {
+    label: "Last 6 months",
+    granularity: "month",
+    value: () => granularityDefinitions.month.toRange(subMonths(new Date(), 6)),
+  },
+  thisQuarter: {
+    label: "This quarter",
+    granularity: "quarter",
+    value: () => granularityDefinitions.quarter.toRange(new Date()),
+  },
+  lastQuarter: {
+    label: "Last quarter",
+    granularity: "quarter",
+    value: () =>
+      granularityDefinitions.quarter.toRange(subMonths(new Date(), 3)),
+  },
+  thisHalfYear: {
+    label: "This half year",
+    granularity: "halfyear",
+    value: () => granularityDefinitions.halfyear.toRange(new Date()),
+  },
+  lastHalfYear: {
+    label: "Last half year",
+    granularity: "halfyear",
+    value: () =>
+      granularityDefinitions.halfyear.toRange(subMonths(new Date(), 6)),
+  },
+  lastYear: {
+    label: "Last year",
+    granularity: "year",
+    value: () => granularityDefinitions.year.toRange(subYears(new Date(), 1)),
+  },
+  last3Years: {
+    label: "Last 3 years",
+    granularity: "year",
+    value: () => granularityDefinitions.year.toRange(subYears(new Date(), 3)),
+  },
+} as const

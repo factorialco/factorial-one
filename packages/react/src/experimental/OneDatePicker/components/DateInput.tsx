@@ -12,9 +12,11 @@ import {
 import { ChevronLeft, ChevronRight } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
-import { useEffect, useMemo, useState } from "react"
+import { forwardRef, useEffect, useMemo, useState } from "react"
+import { GranularityDefinitionKey } from "../../OneCalendar/granularities"
 import { DatePickerValue } from "../types"
-type DatePickerTrigger = {
+
+type DatePickerTriggerProps = {
   value: DatePickerValue | undefined
   disabled?: boolean
   error?: boolean
@@ -29,115 +31,146 @@ type DatePickerTrigger = {
   hideGoToCurrent?: boolean
 }
 
-export const DatePickerTrigger = (props: DatePickerTrigger) => {
-  const i18n = useI18n()
+const DatePickerTrigger = forwardRef<HTMLDivElement, DatePickerTriggerProps>(
+  (
+    {
+      value,
+      onDateChange,
+      disabled,
+      error,
+      className,
+      highlighted,
+      onClick,
+      navigation,
+      granularity,
+      minDate,
+      maxDate,
+      hideGoToCurrent,
+    }: DatePickerTriggerProps,
+    ref
+  ) => {
+    const i18n = useI18n()
 
-  const current = useMemo(() => {
-    if (!props.value || !props.value.date) {
-      return i18n.date.selectDate
-    }
-    const granularity = granularityDefinitions[props.value.granularity]
-    return granularity.toString(props.value.date) ?? i18n.date.selectDate
-  }, [props.value, i18n.date.selectDate])
-
-  const handleNavigation = (date: DateRange | false) => {
-    if (!date) {
-      return
-    }
-    props.onDateChange?.(date)
-  }
-
-  const [currentDate, setCurrentDate] = useState<DateRange | null>(null)
-  useEffect(() => {
-    setCurrentDate(props.granularity?.toRange(new Date()) ?? null)
-
-    const interval = setInterval(() => {
-      console.log("interval")
-      const currentDate = props.granularity?.toRange(new Date()) ?? null
-      if (
-        currentDate &&
-        isAfterOrEqual(currentDate.from, props.minDate) &&
-        isBeforeOrEqual(currentDate.to || currentDate.from, props.maxDate)
-      ) {
-        setCurrentDate(currentDate)
+    const current = useMemo(() => {
+      if (!value || !value.value) {
+        return i18n.date.selectDate
       }
-      setCurrentDate(null)
-    }, 36000)
+      const granularity = granularityDefinitions[value.granularity]
+      return granularity.toString(value.value) ?? i18n.date.selectDate
+    }, [value, i18n.date.selectDate])
 
-    return () => clearInterval(interval)
-  }, [props.granularity, props.minDate, props.maxDate])
-
-  const nextPrev = props.value?.date
-    ? props.granularity?.getPrevNext(props.value?.date, {
-        min: props.minDate,
-        max: props.maxDate,
-      })
-    : undefined
-
-  const handleClickCurrentDate = () => {
-    // Recalculate the current date based on the granularity
-    const currentDate = props.granularity?.toRange(new Date())
-    if (!currentDate) {
-      return
+    const handleNavigation = (date: DateRange | false) => {
+      if (!date) {
+        return
+      }
+      onDateChange?.(date)
     }
-    props.onDateChange?.(currentDate)
-  }
 
-  return (
-    <div
-      className={cn(
-        "flex appearance-none rounded-md border-0 bg-f1-background px-1 ring-1 ring-inset ring-f1-border transition-all placeholder:text-f1-foreground-tertiary hover:ring-f1-border-hover",
-        "[%>*] py-1",
-        focusRing("focus:ring-f1-border-hover"),
-        props.disabled &&
-          "cursor-not-allowed bg-f1-background-secondary opacity-50",
-        props.error && "ring-f1-border-critical-bold",
-        props.className
-      )}
-    >
-      {props.navigation && (
-        <Button
-          size="sm"
-          variant="ghost"
-          icon={ChevronLeft}
-          label="Previous"
-          hideLabel
-          disabled={!nextPrev?.prev}
-          onClick={() => handleNavigation(nextPrev?.prev ?? false)}
-        />
-      )}
-      <ButtonInternal
-        size="sm"
-        variant="ghost"
-        label={current}
-        onClick={props.onClick}
-        disabled={props.disabled}
-        className={cn(props.highlighted && "bg-f1-background-secondary-hover")}
-      />
-      {props.navigation && (
-        <Button
-          variant="ghost"
-          icon={ChevronRight}
-          label="Next"
-          hideLabel
-          size="sm"
-          disabled={!nextPrev?.next}
-          onClick={() => handleNavigation(nextPrev?.next ?? false)}
-        />
-      )}
-      {!props.hideGoToCurrent && currentDate && (
-        <div className="border-l-solid flex-1 border-[#f00]">
+    const [currentDate, setCurrentDate] = useState<DateRange | null>(null)
+    useEffect(() => {
+      setCurrentDate(granularity?.toRange(new Date()) ?? null)
+
+      const interval = setInterval(() => {
+        const currentDate = granularity?.toRange(new Date()) ?? null
+        if (
+          currentDate &&
+          isAfterOrEqual(currentDate.from, minDate) &&
+          isBeforeOrEqual(currentDate.to || currentDate.from, maxDate)
+        ) {
+          setCurrentDate(currentDate)
+        }
+        setCurrentDate(null)
+      }, 36000)
+
+      return () => clearInterval(interval)
+    }, [granularity, minDate, maxDate])
+
+    const nextPrev = value?.value
+      ? granularity?.getPrevNext(value?.value, {
+          min: minDate,
+          max: maxDate,
+        })
+      : undefined
+
+    const handleClickCurrentDate = () => {
+      // Recalculate the current date based on the granularity
+      const currentDate = granularity?.toRange(new Date())
+      if (!currentDate) {
+        return
+      }
+      onDateChange?.(currentDate)
+    }
+
+    type GranularityTranslations = {
+      [key in GranularityDefinitionKey]: {
+        currentDate: string
+      }
+    }
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "inline-flex cursor-auto appearance-none gap-1 rounded-md border-0 bg-f1-background px-1 ring-1 ring-inset ring-f1-border transition-all placeholder:text-f1-foreground-tertiary hover:ring-f1-border-hover",
+          "[%>*] py-1",
+          focusRing("focus:ring-f1-border-hover"),
+          disabled &&
+            "cursor-not-allowed bg-f1-background-secondary opacity-50",
+          error && "ring-f1-border-critical-bold",
+          className
+        )}
+        // Prevent the date picker from being triggered when the user clicks on the input
+        onClick={(e) => e.stopPropagation()}
+      >
+        {navigation && (
           <Button
             size="sm"
             variant="ghost"
-            label={
-              i18n.date.granularities[props.value?.granularity ?? "day"]
-                .currentDate
-            }
-            onClick={handleClickCurrentDate}
+            icon={ChevronLeft}
+            label="Previous"
+            hideLabel
+            disabled={!nextPrev?.prev}
+            onClick={() => handleNavigation(nextPrev?.prev ?? false)}
           />
-        </div>
-      )}
-    </div>
-  )
-}
+        )}
+        <ButtonInternal
+          size="sm"
+          variant="ghost"
+          label={current}
+          onClick={onClick}
+          disabled={disabled}
+          className={cn(highlighted && "bg-f1-background-secondary-hover")}
+        />
+        {navigation && (
+          <Button
+            variant="ghost"
+            icon={ChevronRight}
+            label="Next"
+            hideLabel
+            size="sm"
+            disabled={!nextPrev?.next}
+            onClick={() => handleNavigation(nextPrev?.next ?? false)}
+          />
+        )}
+        {!hideGoToCurrent && currentDate && (
+          <div className="border-l-solid flex-1 border-[#f00]">
+            <Button
+              size="sm"
+              variant="ghost"
+              label={
+                (i18n.date.granularities as GranularityTranslations)[
+                  value?.granularity ?? "day"
+                ]?.currentDate
+              }
+              onClick={handleClickCurrentDate}
+            />
+          </div>
+        )}
+      </div>
+    )
+  }
+)
+
+// Add display name for better debugging
+DatePickerTrigger.displayName = "DatePickerTrigger"
+
+export { DatePickerTrigger }
