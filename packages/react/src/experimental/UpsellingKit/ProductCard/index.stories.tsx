@@ -5,7 +5,7 @@ import Megaphone from "@/icons/app/Megaphone"
 import { ComponentProps } from "react"
 
 const meta: Meta<typeof ProductCard> = {
-  title: "ProductCard",
+  title: "UpsellingKit/ProductCard",
   component: ProductCard,
   tags: ["autodocs", "experimental"],
   parameters: {
