@@ -15,7 +15,7 @@ const isDateMatchingPreset = (
   date: DatePickerValue | undefined,
   preset: DatePreset
 ): boolean => {
-  if (!date?.date) return false
+  if (!date?.value) return false
 
   const presetRange =
     typeof preset.value === "function" ? preset.value() : preset.value
@@ -25,8 +25,10 @@ const isDateMatchingPreset = (
 
   // Check if the date ranges match
   return (
-    isEqual(date.date.from, presetRange.from) &&
-    (!date.date.to || !presetRange.to || isEqual(date.date.to, presetRange.to))
+    isEqual(date.value.from, presetRange.from) &&
+    (!date.value.to ||
+      !presetRange.to ||
+      isEqual(date.value.to, presetRange.to))
   )
 }
 

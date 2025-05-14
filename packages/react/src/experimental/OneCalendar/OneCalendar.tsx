@@ -5,9 +5,11 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { useI18n } from "../../lib/providers/i18n"
 import {
+  GranularityDefinition,
+  GranularityDefinitionKey,
   granularityDefinitions,
   GranularityDefinitionSimple,
-} from "./granularities"
+} from "./granularities/index"
 import { CalendarMode, CalendarView, DateRange, DateRangeString } from "./types"
 import { isValidDate, toDateRange } from "./utils"
 
@@ -22,15 +24,28 @@ export interface OneCalendarProps {
 }
 
 export const getGranularitySimpleDefinition = (
-  view: CalendarView
+  granularityKey: GranularityDefinitionKey
 ): GranularityDefinitionSimple => {
-  const granularity = granularityDefinitions[view]
+  const granularity = granularityDefinitions[granularityKey]
   if (!granularity) {
-    throw new Error(`Granularity definition for view ${view} not found`)
+    throw new Error(
+      `Granularity simple definition for view ${granularityKey} not found`
+    )
   }
   return {
     toRangeString: granularity.toRangeString,
+    toString: granularity.toString,
   }
+}
+
+export const getGranularityDefinition = (
+  granularityKey: GranularityDefinitionKey
+): GranularityDefinition => {
+  const granularity = granularityDefinitions[granularityKey]
+  if (!granularity) {
+    throw new Error(`Granularity definition ${granularityKey} not found`)
+  }
+  return granularity
 }
 
 export function OneCalendar({
@@ -72,6 +87,10 @@ export function OneCalendar({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only needs to be rebuilt when the granularity changes
     [granularity]
   )
+
+  useEffect(() => {
+    setSelected(defaultSelected)
+  }, [defaultSelected, setSelected])
 
   useEffect(() => {
     // setSelected(defaultSelected)

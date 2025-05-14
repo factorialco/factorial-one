@@ -8,7 +8,22 @@ import { DatePickerValue } from "../types"
 const meta = {
   title: "DatePicker",
   component: OneDatePicker,
-  parameters: {},
+  parameters: {
+    docs: {
+      description: {
+        component: [
+          "The `OneDatePicker` component is a date picker that allows the user to select a <strong>range of time</strong> (from a start datetime to an end datetime). With different granularities (day, week, month, quarter, halfyear, year, range). When the user select an item in a granularity is selecting that range of time, e.g. when the user select a day, the range start of the day (30/07/2025 00:00:00) to the end of the day (30/07/2025 23:59:59) is selected.",
+          "The component allows you to define the available granularities for the user (if not defined the default ones is day).",
+          "The component also allows you to define presets that will be displayed in the component. Check the presets section for more information.",
+          "For each granularity the input selector will show a button to navigate to the current date in the granularity, you can hide that via props",
+          "The component also allows you navigation arrows to allow user to navigate to the next or previous item in the granularity.",
+          "Note the value and the default value are an object with the following shape: `{ value: { from: Date, to: Date }, granularity: GranularityDefinitionKey }`",
+        ]
+          .map((text) => `<p>${text}.</p>`)
+          .join(""),
+      },
+    },
+  },
   tags: ["autodocs"],
 } satisfies Meta<typeof OneDatePicker>
 
@@ -35,7 +50,6 @@ const presets = [
 
 export const Simple: Story = {
   args: {
-    mode: "single",
     defaultValue: {
       granularity: "day",
     } as DatePickerValue,
@@ -45,7 +59,6 @@ export const Simple: Story = {
 
 export const MonthGranularity: Story = {
   args: {
-    mode: "single",
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
@@ -55,7 +68,6 @@ export const MonthGranularity: Story = {
 
 export const MultipleGranularities: Story = {
   args: {
-    mode: "single",
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
@@ -65,7 +77,6 @@ export const MultipleGranularities: Story = {
 
 export const WithCustomRange: Story = {
   args: {
-    mode: "single",
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
@@ -83,36 +94,23 @@ export const WithCustomRange: Story = {
 
 export const HideGoToCurrent: Story = {
   args: {
-    mode: "single",
     hideGoToCurrent: true,
   },
 }
 
 export const WithDefaultDate: Story = {
   args: {
-    mode: "single",
     hideGoToCurrent: true,
     defaultValue: {
-      date: { from: new Date(), to: new Date() },
+      value: { from: new Date(), to: new Date() },
       granularity: "month",
     } as DatePickerValue,
     granularities: ["month"],
   },
 }
 
-export const Range: Story = {
-  args: {
-    mode: "range",
-    defaultValue: {
-      granularity: "month",
-    } as DatePickerValue,
-    granularities: ["day", "week", "month"],
-  },
-}
-
 export const WithPresets: Story = {
   args: {
-    mode: "range",
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
@@ -123,7 +121,6 @@ export const WithPresets: Story = {
 
 export const WithPresetsAndNavigation: Story = {
   args: {
-    mode: "range",
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
@@ -135,7 +132,6 @@ export const WithPresetsAndNavigation: Story = {
 
 export const WeekView: Story = {
   args: {
-    mode: "range",
     defaultValue: {
       granularity: "week",
     } as DatePickerValue,
@@ -145,7 +141,6 @@ export const WeekView: Story = {
 
 export const QuarterView: Story = {
   args: {
-    mode: "range",
     defaultValue: {
       granularity: "quarter",
     } as DatePickerValue,
@@ -155,7 +150,6 @@ export const QuarterView: Story = {
 
 export const HalfYearView: Story = {
   args: {
-    mode: "range",
     defaultValue: {
       granularity: "halfyear",
     } as DatePickerValue,
@@ -165,7 +159,6 @@ export const HalfYearView: Story = {
 
 export const YearView: Story = {
   args: {
-    mode: "range",
     defaultValue: {
       granularity: "year",
     } as DatePickerValue,

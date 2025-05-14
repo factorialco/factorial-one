@@ -133,30 +133,29 @@ export function OneDatePicker({
           />
         ) : (
           <div className="flex gap-4">
-            {presets.length > 0 ||
-              (granularities.length > 1 && (
-                <div>
-                  {presets.length > 0 && (
-                    <Button
-                      icon={ChevronLeft}
-                      variant="neutral"
-                      size="sm"
-                      round
-                      hideLabel
-                      label="Back"
-                      onClick={handleBackToPresets}
-                    />
-                  )}
-                  {granularities.length > 1 && (
-                    <GranularitySelector
-                      granularities={granularities}
-                      value={value?.granularity}
-                      onChange={handleSelectGranularity}
-                      mode={calendarMode}
-                    />
-                  )}
-                </div>
-              ))}
+            {(presets.length > 0 || granularities.length > 1) && (
+              <div>
+                {presets.length > 0 && (
+                  <Button
+                    icon={ChevronLeft}
+                    variant="neutral"
+                    size="sm"
+                    round
+                    hideLabel
+                    label="Back"
+                    onClick={handleBackToPresets}
+                  />
+                )}
+                {granularities.length > 1 && (
+                  <GranularitySelector
+                    granularities={granularities}
+                    value={value?.granularity}
+                    onChange={handleSelectGranularity}
+                    mode={calendarMode}
+                  />
+                )}
+              </div>
+            )}
             <div className="min-w-[300px] flex-1">
               <OneCalendar
                 showInput
