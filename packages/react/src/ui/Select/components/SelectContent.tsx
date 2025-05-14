@@ -152,6 +152,7 @@ const SelectContent = forwardRef<
 
     const content = (
       <SelectPrimitive.Content
+        asChild={asList}
         ref={ref}
         className={cn(
           "relative z-50 max-h-96 min-w-[8rem] overflow-hidden text-f1-foreground",
@@ -175,30 +176,32 @@ const SelectContent = forwardRef<
           })
         }}
       >
-        {!!props.top && <div>{props.top}</div>}
-        <ScrollArea
-          viewportRef={parentRef}
-          className={cn(
-            "flex flex-col overflow-y-auto",
-            asList ? "max-h-full" : "max-h-[300px]"
-          )}
-        >
-          {asList ? (
-            viewportContent
-          ) : (
-            <SelectPrimitive.Viewport
-              asChild
-              className={cn(
-                !asList &&
-                  position === "popper" &&
-                  "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
-              )}
-            >
-              {viewportContent}
-            </SelectPrimitive.Viewport>
-          )}
-        </ScrollArea>
-        {!!props.bottom && <div>{props.bottom}</div>}
+        <>
+          {!!props.top && <div>{props.top}</div>}
+          <ScrollArea
+            viewportRef={parentRef}
+            className={cn(
+              "flex flex-col overflow-y-auto",
+              asList ? "max-h-full" : "max-h-[300px]"
+            )}
+          >
+            {asList ? (
+              viewportContent
+            ) : (
+              <SelectPrimitive.Viewport
+                asChild
+                className={cn(
+                  !asList &&
+                    position === "popper" &&
+                    "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
+                )}
+              >
+                {viewportContent}
+              </SelectPrimitive.Viewport>
+            )}
+          </ScrollArea>
+          {!!props.bottom && <div>{props.bottom}</div>}
+        </>
       </SelectPrimitive.Content>
     )
 
