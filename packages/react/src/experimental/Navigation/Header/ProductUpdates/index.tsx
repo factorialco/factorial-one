@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { ButtonInternal } from "@/components/Actions/Button/internal"
 import { Icon, IconType } from "@/components/Utilities/Icon"
-import ProductCard from "@/experimental/ProductCard"
+import { ProductCard } from "@/experimental/ProductCard"
 import AlertCircle from "@/icons/app/AlertCircle"
 import ChevronRight from "@/icons/app/ChevronRight"
 import CrossIcon from "@/icons/app/Cross"
