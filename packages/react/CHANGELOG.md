@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.53.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.53.0...factorial-one-react-v1.53.1) (2025-05-14)
+
+
+### Bug Fixes
+
+* pagination spacing ([#1798](https://github.com/factorialco/factorial-one/issues/1798)) ([4f3715c](https://github.com/factorialco/factorial-one/commit/4f3715c9c05a072379ef7755d6dfdbf6aca1f28b))
+
 ## [1.53.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.52.0...factorial-one-react-v1.53.0) (2025-05-13)
 
 
