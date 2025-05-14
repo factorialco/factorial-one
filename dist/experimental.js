@@ -4234,6 +4234,7 @@ var Vd = fx, wE = hx, of = gx, sf = vx, ns = yx;
 const Bd = Vd, qd = of, is = k.forwardRef(({ className: e, align: t = "center", sideOffset: n = 4, ...i }, a) => /* @__PURE__ */ l(sf, { children: /* @__PURE__ */ l(
   ns,
   {
+    asChild: i.asChild,
     ref: a,
     align: t,
     sideOffset: n,
