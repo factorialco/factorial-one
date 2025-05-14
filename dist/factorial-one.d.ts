@@ -200,6 +200,10 @@ declare const defaultTranslations: {
                 readonly currentDate: "This year";
                 readonly label: "Year";
             };
+            readonly range: {
+                readonly currentDate: "Today";
+                readonly label: "Range";
+            };
         };
         readonly month: {
             readonly january: "January";

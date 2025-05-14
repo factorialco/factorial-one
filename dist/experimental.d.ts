@@ -1529,12 +1529,15 @@ declare interface FrameContextType {
     toggleSidebar: () => void;
 }
 
-export declare const getGranularitySimpleDefinition: (view: CalendarView) => GranularityDefinitionSimple;
+export declare const getGranularityDefinition: (granularityKey: GranularityDefinitionKey) => GranularityDefinition;
+
+export declare const getGranularitySimpleDefinition: (granularityKey: GranularityDefinitionKey) => GranularityDefinitionSimple;
 
 export declare interface GranularityDefinition {
+    calendarView: CalendarView;
     label: (viewDate: Date) => ReactNode;
     toRangeString: (date: Date | DateRange | undefined | null) => DateRangeString;
-    toRange: <T extends Date | DateRange | undefined | null>(date: T) => T extends Date | DateRange ? DateRange : T;
+    toRange: <T extends Date | DateRange | undefined | null>(date: T) => T extends Date | DateRange ? DateRangeComplete : T;
     toString: (date: Date | DateRange | undefined | null) => string;
     fromString: (dateStr: string | DateRangeString) => DateRange | null;
     navigateUIView: (viewDate: Date, direction: -1 | 1) => Date;
@@ -1553,9 +1556,11 @@ export declare interface GranularityDefinition {
     getPrevNext(date: DateRange, options: DateNavigationOptions): PrevNextDateNavigation;
 }
 
-export declare const granularityDefinitions: Record<CalendarView, GranularityDefinition>;
+export declare type GranularityDefinitionKey = keyof typeof granularityDefinitions;
 
-export declare type GranularityDefinitionSimple = Pick<GranularityDefinition, "toRangeString">;
+export declare const granularityDefinitions: Record<string, GranularityDefinition>;
+
+export declare type GranularityDefinitionSimple = Pick<GranularityDefinition, "toRangeString" | "toString">;
 
 declare type HeaderProps = {
     module: {
