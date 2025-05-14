@@ -1,3 +1,4 @@
+import { NewColor } from "@/experimental/Information/Tags/DotTag"
 import { Meta, StoryObj } from "@storybook/react"
 import { PropertyDefinition, renderProperty } from "../property-render"
 
@@ -58,6 +59,38 @@ const mockItem = {
   companyLogo: "https://github.com/factorialco.png",
   teamName: "Engineering",
   teamLogo: "https://github.com/factorialco.png",
+  skills: [
+    {
+      label: "React",
+      color: "viridian" as NewColor,
+      description:
+        "React is a JavaScript library for building user interfaces.",
+    },
+    {
+      label: "TypeScript",
+      color: "malibu" as NewColor,
+      description:
+        "TypeScript is a statically typed superset of JavaScript that adds optional types and other features to the language.",
+    },
+    {
+      label: "UI/UX",
+      color: "purple" as NewColor,
+      description:
+        "UI/UX design is the process of designing user interfaces and experiences for web and mobile applications.",
+    },
+    {
+      label: "Testing",
+      color: "yellow" as NewColor,
+      description:
+        "Testing is the process of verifying that a software application or system behaves as expected under specified conditions.",
+    },
+    {
+      label: "GraphQL",
+      color: "lilac" as NewColor,
+      description:
+        "GraphQL is a query language for APIs and a runtime for fulfilling those queries with existing data.",
+    },
+  ],
 }
 
 // Basic story showing all action types
@@ -217,6 +250,27 @@ export const DotTagType: Story = {
         value: {
           label: item.role,
           color: "viridian",
+        },
+      }),
+    },
+  },
+}
+
+export const TagArrayType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Multiple Tags",
+      render: (item) => ({
+        type: "tagList",
+        value: {
+          type: "dot",
+          tags: item.skills.map((skill) => ({
+            text: skill.label,
+            description: skill.description,
+            color: skill.color,
+          })),
+          max: 3,
         },
       }),
     },
