@@ -422,8 +422,9 @@ const CategoryItem = ({
         scale: 1.04,
         cursor: "grabbing",
         zIndex: 50,
+        backdropFilter: "blur(4px)",
       }}
-      className="relative backdrop-blur-sm"
+      className="relative"
     >
       {content}
     </Reorder.Item>
