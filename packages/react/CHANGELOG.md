@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.54.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.53.2...factorial-one-react-v1.54.0) (2025-05-14)
+
+
+### Features
+
+* **DataCollection:** support multiple dotTags ([#1729](https://github.com/factorialco/factorial-one/issues/1729)) ([eee963c](https://github.com/factorialco/factorial-one/commit/eee963c2560c07b42aafbba04c9d09d6597f977f))
+
 ## [1.53.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.53.1...factorial-one-react-v1.53.2) (2025-05-14)
 
 
