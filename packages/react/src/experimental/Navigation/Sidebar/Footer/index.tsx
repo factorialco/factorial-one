@@ -31,7 +31,7 @@ export function SidebarFooter({
   const i18n = useI18n()
 
   return (
-    <div className="flex flex-row items-center justify-between gap-3 p-3">
+    <div className="flex flex-row items-center justify-between gap-1 p-3">
       <div className="flex-1">
         <Dropdown items={options}>
           <button
@@ -46,7 +46,7 @@ export function SidebarFooter({
               lastName={user.lastName}
               size="xsmall"
             />
-            <span className="min-w-0 truncate text-f1-foreground">
+            <span className="line-clamp-1 flex-1 text-left text-f1-foreground">
               {user.firstName} {user.lastName}
             </span>
           </button>
