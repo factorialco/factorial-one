@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import ProductCard from "./index"
+import { ProductCard } from "./index"
 
 import Megaphone from "@/icons/app/Megaphone"
 import { ComponentProps } from "react"

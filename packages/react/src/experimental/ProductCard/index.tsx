@@ -45,7 +45,7 @@ export function ProductCard({
       <div>
         <div className="p-2">
           <div
-            className="flex h-[90px] cursor-pointer flex-row gap-2 rounded-md border-f1-border p-3 text-f1-foreground shadow-md hover:bg-f1-background-secondary"
+            className="flex h-[90px] w-auto cursor-pointer flex-row gap-2 rounded-md border-f1-border p-3 text-f1-foreground shadow-md hover:bg-f1-background-secondary"
             onClick={onClick}
           >
             <ModuleAvatar icon={icon} size="lg" />
