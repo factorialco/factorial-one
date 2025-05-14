@@ -42,7 +42,7 @@ export function OneDatePicker({
     return granularityDefinitions[value?.granularity ?? "day"]
   }, [value?.granularity])
 
-  const handleSelectDate = (date: DateRange | null) => {
+  const handleSelectDate = (date: Date | DateRange | null) => {
     const currentGranularity = value?.granularity ?? "day"
     handleSelect({
       value: granularityDefinition.toRange(date ?? undefined),
