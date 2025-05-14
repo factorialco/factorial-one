@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.54.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.53.2...factorial-one-react-v1.54.0) (2025-05-14)
+
+
+### Features
+
+* **DataCollection:** support multiple dotTags ([#1729](https://github.com/factorialco/factorial-one/issues/1729)) ([eee963c](https://github.com/factorialco/factorial-one/commit/eee963c2560c07b42aafbba04c9d09d6597f977f))
+
+## [1.53.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.53.1...factorial-one-react-v1.53.2) (2025-05-14)
+
+
+### Bug Fixes
+
+* **Sidebar:** Truncate long user names + small visual fixes ([#1817](https://github.com/factorialco/factorial-one/issues/1817)) ([8d702d3](https://github.com/factorialco/factorial-one/commit/8d702d3453d62b29e84fd292feb71ba66bfc5d7c))
+
+## [1.53.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.53.0...factorial-one-react-v1.53.1) (2025-05-14)
+
+
+### Bug Fixes
+
+* pagination spacing ([#1798](https://github.com/factorialco/factorial-one/issues/1798)) ([4f3715c](https://github.com/factorialco/factorial-one/commit/4f3715c9c05a072379ef7755d6dfdbf6aca1f28b))
+
+## [1.53.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.52.0...factorial-one-react-v1.53.0) (2025-05-13)
+
+
+### Features
+
+* applying colors on search or select in EntitySelector ([#1812](https://github.com/factorialco/factorial-one/issues/1812)) ([903a7e9](https://github.com/factorialco/factorial-one/commit/903a7e94690e696cce8de6a2b9df6ddf1cbe4e9d))
+
+## [1.52.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.51.0...factorial-one-react-v1.52.0) (2025-05-13)
+
+
+### Features
+
+* add favorites ([ef19ce1](https://github.com/factorialco/factorial-one/commit/ef19ce14f1fce60074dfd56434f8a14dfa533d6a))
+
 ## [1.51.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.50.0...factorial-one-react-v1.51.0) (2025-05-13)
 
 

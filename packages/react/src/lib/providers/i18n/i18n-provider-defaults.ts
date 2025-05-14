@@ -18,6 +18,8 @@ export const defaultTranslations = {
     search: "Search",
     clear: "Clear",
     more: "More",
+    moveUp: "Move up",
+    moveDown: "Move down",
   },
   status: {
     selected: {
@@ -69,6 +71,10 @@ export const defaultTranslations = {
       november: "November",
       december: "December",
     },
+  },
+  favorites: {
+    favorites: "Favorites",
+    remove: "Remove favorite",
   },
   notifications: "Notifications",
 } as const

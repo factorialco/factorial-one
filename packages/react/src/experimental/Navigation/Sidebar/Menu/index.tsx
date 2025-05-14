@@ -1,12 +1,21 @@
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { useReducedMotion } from "@/lib/a11y"
+import { Link, useNavigation } from "@/lib/linkHandler"
+import { useI18n } from "@/lib/providers/i18n"
+import { cn, focusRing } from "@/lib/utils"
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
 import { LayoutGroup, motion, Reorder, useDragControls } from "framer-motion"
 import React, { useEffect, useRef, useState } from "react"
-import { Icon, IconType } from "../../../../components/Utilities/Icon"
-import { ChevronDown } from "../../../../icons/app"
-import { useReducedMotion } from "../../../../lib/a11y"
-import { Link, useNavigation } from "../../../../lib/linkHandler"
-import { cn, focusRing } from "../../../../lib/utils"
+import {
+  ChevronDown,
+  Delete,
+  EllipsisHorizontal,
+  MoveDown,
+  MoveUp,
+} from "../../../../icons/app"
+import { Avatar, AvatarVariant } from "../../../Information/Avatars/Avatar"
 import { Counter } from "../../../Information/Counter"
+import { Dropdown } from "../../Dropdown"
 import { NavigationItem } from "../../utils"
 import { DragProvider, useDragContext } from "./DragContext"
 
@@ -14,6 +23,18 @@ export interface MenuItem extends NavigationItem {
   icon: IconType
   badge?: number
 }
+
+type FavoriteMenuItem = (
+  | {
+      type: "icon"
+      icon: IconType
+    }
+  | {
+      type: "avatar"
+      avatar?: AvatarVariant
+    }
+) &
+  NavigationItem
 
 export interface MenuCategory {
   id: string
@@ -24,10 +45,12 @@ export interface MenuCategory {
   isSortable?: boolean
 }
 
-interface MenuProps {
+export interface MenuProps {
   tree: MenuCategory[]
+  favorites?: FavoriteMenuItem[]
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onSort?: (categories: MenuCategory[]) => void
+  onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void
 }
 
 const MenuItemContent = ({
@@ -77,6 +100,231 @@ const MenuItem = ({ item }: { item: MenuItem }) => {
   )
 }
 
+const FavoriteItem = ({
+  item,
+  dragConstraints,
+  onRemove,
+  index,
+  total,
+  onMove,
+}: {
+  item: FavoriteMenuItem
+  dragConstraints?: React.RefObject<HTMLElement>
+  onRemove?: (item: FavoriteMenuItem) => void
+  index: number
+  total: number
+  onMove?: (from: number, to: number) => void
+}) => {
+  const t = useI18n()
+
+  const { isDragging, setIsDragging, draggedItemId, setDraggedItemId } =
+    useDragContext()
+  const { isActive } = useNavigation()
+  const active = isActive(item.href, { exact: item.exactMatch })
+  const wasDragging = useRef(false)
+  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)
+  const isFirst = index === 0
+  const isLast = index === total - 1
+  const isOnly = total === 1
+
+  const dropdownItems: Array<
+    | { label: string; onClick: () => void; icon: IconType; critical?: boolean }
+    | { type: "separator" }
+  > = []
+
+  if (!isOnly && !isFirst) {
+    dropdownItems.push({
+      label: t.actions.moveUp,
+      onClick: () => onMove?.(index, index - 1),
+      icon: MoveUp,
+    })
+  }
+  if (!isOnly && !isLast) {
+    dropdownItems.push({
+      label: t.actions.moveDown,
+      onClick: () => onMove?.(index, index + 1),
+      icon: MoveDown,
+    })
+  }
+  if (dropdownItems.length > 0) {
+    dropdownItems.push({ type: "separator" })
+  }
+  dropdownItems.push({
+    label: t.favorites.remove,
+    onClick: () => onRemove?.(item),
+    icon: Delete,
+    critical: true,
+  })
+
+  const handleDragStart = () => {
+    setIsDragging(true)
+    setIsDropdownOpen(false)
+    setDraggedItemId(item.href || null)
+    wasDragging.current = true
+  }
+
+  const handleDragEnd = () => {
+    setIsDragging(false)
+    setDraggedItemId(null)
+    setTimeout(() => {
+      wasDragging.current = false
+    }, 0)
+  }
+
+  const isItemDragging = isDragging && draggedItemId === item.href
+
+  return (
+    <Reorder.Item
+      value={item}
+      drag="y"
+      dragConstraints={dragConstraints}
+      dragElastic={0.1}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      className={cn(
+        "group relative cursor-pointer touch-none select-none list-none rounded backdrop-blur-sm active:cursor-grabbing",
+        active
+          ? "bg-f1-background-secondary text-f1-foreground"
+          : "hover:bg-f1-background-secondary",
+        isDropdownOpen && "bg-f1-background-secondary",
+        isItemDragging && "bg-f1-background-secondary"
+      )}
+      whileDrag={{
+        scale: 1.05,
+      }}
+    >
+      <div className="flex w-full items-center justify-between px-1.5 py-1.5">
+        <Link
+          href={item.href}
+          exactMatch={item.exactMatch}
+          className={cn(
+            "flex w-full items-center gap-1.5 no-underline",
+            isItemDragging && "pointer-events-none"
+          )}
+          draggable={false}
+        >
+          {item.type === "icon" ? (
+            <Icon
+              icon={item.icon}
+              size="md"
+              className={cn(
+                "transition-colors",
+                active ? "text-f1-icon-bold" : "text-f1-icon"
+              )}
+            />
+          ) : item.avatar ? (
+            <Avatar size="xsmall" avatar={item.avatar} />
+          ) : null}
+          <span className="line-clamp-1 font-medium text-f1-foreground">
+            {item.label}
+          </span>
+        </Link>
+      </div>
+      <div
+        className={cn(
+          "absolute inset-y-1 right-1 z-10 flex h-6 w-6 items-center justify-center rounded-sm opacity-0 transition-opacity duration-100 hover:bg-f1-background-secondary group-hover:opacity-100",
+          isDropdownOpen && "bg-f1-background-secondary opacity-100",
+          isItemDragging && "opacity-100"
+        )}
+      >
+        <Dropdown
+          open={isDropdownOpen}
+          onOpenChange={setIsDropdownOpen}
+          items={dropdownItems}
+        >
+          <div className="flex items-center justify-center" role="list">
+            <Icon icon={EllipsisHorizontal} size="sm" />
+          </div>
+        </Dropdown>
+      </div>
+    </Reorder.Item>
+  )
+}
+
+interface BaseCategoryProps {
+  title: string
+  isOpen?: boolean
+  isRoot?: boolean
+  onCollapse?: (isOpen: boolean) => void
+  children?: React.ReactNode
+  isDragging?: boolean
+  wasDragging?: React.RefObject<boolean>
+}
+
+const BaseCategory = ({
+  title,
+  isOpen: initialIsOpen = true,
+  isRoot,
+  onCollapse,
+  children,
+  isDragging,
+  wasDragging,
+}: BaseCategoryProps) => {
+  const [isOpen, setIsOpen] = React.useState(initialIsOpen)
+  const shouldReduceMotion = useReducedMotion()
+
+  const handleClick = () => {
+    if (isDragging || wasDragging?.current) return
+
+    const newIsOpen = !isOpen
+    setIsOpen(newIsOpen)
+    onCollapse?.(newIsOpen)
+  }
+
+  return (
+    <div>
+      <Collapsible open={isOpen}>
+        <div className="group relative flex items-center">
+          <div
+            className={cn(
+              "group relative flex w-full select-none items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary transition-colors hover:cursor-pointer hover:bg-f1-background-secondary",
+              focusRing("focus-visible:ring-inset"),
+              isRoot && "hidden"
+            )}
+            onClick={handleClick}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                handleClick()
+              }
+            }}
+          >
+            {title}
+            <motion.div
+              initial={false}
+              animate={{ rotate: isOpen ? 0 : -90 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.1 }}
+              className="h-3 w-3"
+            >
+              <Icon
+                icon={ChevronDown}
+                size="xs"
+                className="text-f1-icon-secondary"
+              />
+            </motion.div>
+          </div>
+        </div>
+        <CollapsibleContent forceMount className="flex flex-col gap-1">
+          <motion.div
+            initial={false}
+            animate={{
+              height: isOpen ? "auto" : 0,
+              opacity: isOpen ? 1 : 0,
+              visibility: isOpen ? "visible" : "hidden",
+            }}
+            transition={{
+              duration: shouldReduceMotion ? 0 : 0.15,
+              ease: [0.165, 0.84, 0.44, 1],
+            }}
+          >
+            <div className="flex flex-col gap-0.5">{children}</div>
+          </motion.div>
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
+  )
+}
+
 interface CategoryItemProps {
   category: MenuCategory
   isSortable?: boolean
@@ -94,19 +342,9 @@ const CategoryItem = ({
   onDragEnd,
   currentOrder,
 }: CategoryItemProps) => {
-  const [isOpen, setIsOpen] = React.useState(category.isOpen !== false)
-  const shouldReduceMotion = useReducedMotion()
-  const wasDragging = useRef(false)
   const { isDragging, setIsDragging } = useDragContext()
+  const wasDragging = useRef(false)
   const dragControls = useDragControls()
-
-  const handleClick = () => {
-    if (!isDragging && !wasDragging.current) {
-      const newIsOpen = !isOpen
-      setIsOpen(newIsOpen)
-      onCollapse?.(category, newIsOpen)
-    }
-  }
 
   const handleDragStart = () => {
     setIsDragging(true)
@@ -123,74 +361,32 @@ const CategoryItem = ({
     }, 0)
   }
 
+  const handleCollapse = (isOpen: boolean) => {
+    if (!isDragging && !wasDragging.current) {
+      onCollapse?.(category, isOpen)
+    }
+  }
+
   const content = (
-    <div>
-      <Collapsible open={isOpen}>
-        <div className="group relative flex items-center">
-          <div
-            className={cn(
-              "group relative flex w-full items-center gap-1 rounded px-1.5 py-2 text-sm font-medium text-f1-foreground-secondary transition-colors hover:cursor-pointer hover:bg-f1-background-secondary",
-              isDragging && "hover:cursor-grabbing",
-              isDragging && wasDragging.current && "bg-f1-background-secondary",
-              focusRing("focus-visible:ring-inset"),
-              category.isRoot && "hidden"
-            )}
-            onClick={!isDragging ? handleClick : undefined}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                handleClick()
-              }
-            }}
-          >
-            {category.title}
-            <motion.div
-              initial={false}
-              animate={{ rotate: isOpen ? 0 : -90 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.1 }}
-              className="h-3 w-3"
-            >
-              <Icon
-                icon={ChevronDown}
-                size="xs"
-                className="text-f1-icon-secondary"
-              />
-            </motion.div>
-          </div>
-        </div>
-        <CollapsibleContent
-          forceMount
-          className={cn(
-            "flex flex-col gap-1 overflow-hidden",
-            isDragging && "pointer-events-none"
-          )}
-        >
-          <motion.div
-            initial={false}
-            animate={{
-              height: isOpen ? "auto" : 0,
-              opacity: isOpen ? 1 : 0,
-              visibility: isOpen ? "visible" : "hidden",
-            }}
-            transition={{
-              duration: shouldReduceMotion ? 0 : 0.15,
-              ease: [0.165, 0.84, 0.44, 1],
-            }}
-          >
-            <div
-              className={cn(
-                "flex flex-col gap-0.5",
-                isDragging && !wasDragging.current && "pointer-events-none"
-              )}
-            >
-              {category.items.map((item, index) => (
-                <MenuItem key={index} item={item} />
-              ))}
-            </div>
-          </motion.div>
-        </CollapsibleContent>
-      </Collapsible>
-    </div>
+    <BaseCategory
+      title={category.title}
+      isOpen={category.isOpen}
+      isRoot={category.isRoot}
+      onCollapse={handleCollapse}
+      isDragging={isDragging}
+      wasDragging={wasDragging}
+    >
+      <div
+        className={cn(
+          "flex flex-col gap-0.5",
+          isDragging && !wasDragging.current && "pointer-events-none"
+        )}
+      >
+        {category.items.map((item, index) => (
+          <MenuItem key={index} item={item} />
+        ))}
+      </div>
+    </BaseCategory>
   )
 
   if (!isSortable) return content
@@ -226,15 +422,22 @@ const CategoryItem = ({
         scale: 1.04,
         cursor: "grabbing",
         zIndex: 50,
+        backdropFilter: "blur(4px)",
       }}
-      className="relative backdrop-blur-sm"
+      className="relative"
     >
       {content}
     </Reorder.Item>
   )
 }
 
-export function Menu({ tree, onCollapse, onSort }: MenuProps) {
+export function Menu({
+  tree,
+  onCollapse,
+  onSort,
+  onFavoritesChange,
+  favorites,
+}: MenuProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const nonSortableItems = tree.filter(
     (category) => category.isSortable === false
@@ -266,6 +469,8 @@ export function Menu({ tree, onCollapse, onSort }: MenuProps) {
           containerRef={containerRef}
           onCollapse={onCollapse}
           onDragEnd={handleDragEnd}
+          favorites={favorites}
+          onFavoritesChange={onFavoritesChange}
           forceUpdate={() => setForceUpdateKey((prev) => prev + 1)}
         />
       </LayoutGroup>
@@ -280,6 +485,8 @@ function MenuContent({
   containerRef,
   onCollapse,
   onDragEnd,
+  favorites,
+  onFavoritesChange,
   forceUpdate,
 }: {
   nonSortableItems: MenuCategory[]
@@ -288,13 +495,52 @@ function MenuContent({
   containerRef: React.RefObject<HTMLDivElement>
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onDragEnd?: (categories: MenuCategory[]) => void
+  favorites?: FavoriteMenuItem[]
+  onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void
   forceUpdate: () => void
 }) {
+  const t = useI18n()
+
   const { isDragging } = useDragContext()
   const hasRoot = nonSortableItems.some((category) => category.isRoot)
   const hasNonSortableItems =
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
+  const favoritesRef = useRef<HTMLDivElement>(null)
+  const [currentFavorites, setCurrentFavorites] = React.useState<
+    FavoriteMenuItem[]
+  >(favorites || [])
+  const hasFavorites = (favorites || []).length > 0
+
+  const handleFavoritesReorder = React.useCallback(
+    (newOrder: FavoriteMenuItem[]) => {
+      setCurrentFavorites(newOrder)
+      onFavoritesChange?.(newOrder)
+    },
+    [onFavoritesChange]
+  )
+
+  const handleRemoveFavorite = React.useCallback(
+    (item: FavoriteMenuItem) => {
+      const updated = currentFavorites.filter((fav) => fav.href !== item.href)
+      setCurrentFavorites(updated)
+      onFavoritesChange?.(updated)
+    },
+    [currentFavorites, onFavoritesChange]
+  )
+
+  const handleMoveFavorite = React.useCallback(
+    (from: number, to: number) => {
+      if (to < 0 || to >= currentFavorites.length) return
+      const updated = [...currentFavorites]
+      const [moved] = updated.splice(from, 1)
+      updated.splice(to, 0, moved)
+      setCurrentFavorites(updated)
+      onFavoritesChange?.(updated)
+    },
+    [currentFavorites, onFavoritesChange]
+  )
+
   const [isInitialized, setIsInitialized] = React.useState(false)
   const resizeTimeoutRef = useRef<number | null>(null)
 
@@ -347,6 +593,33 @@ function MenuContent({
                 onCollapse={onCollapse}
               />
             ))}
+        </div>
+      )}
+
+      {hasFavorites && (
+        <div className="mt-3 flex w-full flex-col gap-3 bg-transparent px-3">
+          <BaseCategory title={t.favorites.favorites}>
+            <div ref={favoritesRef}>
+              <Reorder.Group
+                axis="y"
+                values={currentFavorites}
+                onReorder={handleFavoritesReorder}
+                className="flex flex-col gap-0.5"
+              >
+                {currentFavorites.map((item, idx) => (
+                  <FavoriteItem
+                    key={item.href}
+                    item={item}
+                    dragConstraints={favoritesRef}
+                    onRemove={handleRemoveFavorite}
+                    index={idx}
+                    total={currentFavorites.length}
+                    onMove={handleMoveFavorite}
+                  />
+                ))}
+              </Reorder.Group>
+            </div>
+          </BaseCategory>
         </div>
       )}
 
