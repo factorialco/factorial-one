@@ -4,6 +4,7 @@ import { Bell as BellIcon } from "@/icons/app"
 import { getDisplayDateBasedOnDuration } from "@/lib/date"
 import { withSkeleton } from "@/lib/skeleton"
 import { Skeleton } from "@/ui/skeleton"
+import { useIntersectionObserver } from "usehooks-ts"
 
 export type ActivityItemProps = {
   id: string
@@ -14,6 +15,7 @@ export type ActivityItemProps = {
   category: string
   isUnread?: boolean
   onClick: (id: string) => void
+  onVisible?: (id: string) => void
 }
 
 export const BaseActivityItem = ({
@@ -25,7 +27,17 @@ export const BaseActivityItem = ({
   category,
   isUnread = false,
   onClick,
+  onVisible,
 }: ActivityItemProps) => {
+  const { ref } = useIntersectionObserver({
+    threshold: 0.1,
+    onChange(isIntersecting) {
+      if (isIntersecting) {
+        onVisible?.(id)
+      }
+    },
+  })
+
   const ago = getDisplayDateBasedOnDuration(createdAt, {
     yesterdayRelative: false,
   })
@@ -33,8 +45,10 @@ export const BaseActivityItem = ({
   const handleClick = () => {
     onClick(id)
   }
+
   return (
     <div
+      ref={ref}
       className="flex w-full cursor-pointer flex-row gap-2 rounded-lg p-2 pr-3 hover:bg-f1-background-hover focus:border-f1-border-secondary focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-f1-border-selected-bold"
       onClick={handleClick}
     >
