@@ -1,11 +1,12 @@
+import { GranularityDefinitionKey } from "@/experimental/OneCalendar/granularities/index"
 import {
   NavigationFilterComponentProps,
   NavigationFilterDefinitionBase,
 } from "../../types"
 
 export type DateNavigationOptions = {
-  granularity?: DateGranularity[] | DateGranularity
-  defaultGranularity?: DateGranularity
+  granularity?: GranularityDefinitionKey[] | GranularityDefinitionKey
+  defaultGranularity?: GranularityDefinitionKey
   min?: Date
   max?: Date
 }
@@ -16,22 +17,13 @@ export type DateNavigatorFilterDefinition = NavigationFilterDefinitionBase<
   type: "date-navigator"
 } & DateNavigationOptions
 
-export type DateGranularity =
-  | "day"
-  | "week"
-  | "fortnight"
-  | "month"
-  | "year"
-  | "custom"
-
 export type DateRange = [Date, Date]
 
 export type DateValue = {
-  // TODO: Returns the valus in a string format related to the granularity, for example "W12 2025"
-  value: Date | DateRange | string
-  // Represents the selected value in a date-time range, ex. "2021-01-01T00:00:00Z - 2021-01-07T23:59:59Z"
-  dateRange: DateRange
-  granularity: DateGranularity
+  value: Date | DateRange
+  // Represents the selected value in a date-time range, e.g  for a day "2021-01-01T00:00:00Z - 2021-01-07T23:59:59Z"
+  valueString: string
+  granularity: GranularityDefinitionKey
 }
 
 export type DateNavigationProps = NavigationFilterComponentProps<DateValue>

@@ -1,6 +1,6 @@
 import NumberFlow from "@number-flow/react"
+import { GranularityDefinitionKey } from "./granularities"
 import { GranularityDefinition } from "./OneCalendar"
-import { CalendarView } from "./types"
 import { formatDateRange, toDateRange } from "./utils"
 import { DayView } from "./views/day"
 import { HalfYearView } from "./views/halfyear"
@@ -10,7 +10,7 @@ import { WeekView } from "./views/week"
 import { YearView } from "./views/year"
 
 export const granularityDefinitions: Record<
-  CalendarView,
+  GranularityDefinitionKey,
   GranularityDefinition
 > = {
   day: {

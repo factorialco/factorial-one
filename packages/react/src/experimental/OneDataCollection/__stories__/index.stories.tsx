@@ -1945,7 +1945,8 @@ export const TableWithSecondaryActions: Story = {
       />
     )
   },
-// Examples with multiple visualizations
+}
+
 export const TotalItemsSummary: Story = {
   parameters: {
     docs: {
