@@ -1,6 +1,9 @@
-import { getGranularitySimpleDefinition } from "@/experimental/OneCalendar"
-import { OneDatePicker } from "@/experimental/OneDatePicker"
-import { DateNavigationProps, DateRange } from "./types"
+import { getGranularityDefinition } from "@/experimental/OneCalendar/OneCalendar"
+import {
+  type DatePickerValue,
+  OneDatePicker,
+} from "@/experimental/OneDatePicker"
+import { DateNavigationProps } from "./types"
 
 export function DateNavigation({
   filter,
@@ -16,19 +19,19 @@ export function DateNavigation({
     ? options.granularity
     : [options.granularity]
 
-  const granularityDefinition = getGranularitySimpleDefinition(
-    options.granularity
+  const granularityDefinition = getGranularityDefinition(
+    value.granularity || availableGranularities[0]
   )
 
-  const handleChange = (newDateRange: DateRange | undefined) => {
-    if (!newDateRange) {
+  const handleChange = (newDateRange: DatePickerValue | undefined) => {
+    if (!newDateRange || !newDateRange.value) {
       return
     }
 
     onChange({
-      value: newDateRange,
-      granularity: granularity,
-      valueString: granularityDefinition.toString(newDateRange),
+      value: newDateRange.value,
+      granularity: newDateRange.granularity,
+      valueString: granularityDefinition.toString(newDateRange.value),
     })
   }
 
@@ -36,11 +39,12 @@ export function DateNavigation({
     <div className="flex items-center gap-2">
       <OneDatePicker
         onSelect={handleChange}
-        value={value.dateRange}
+        defaultValue={value}
         granularities={availableGranularities}
         navigation={true}
-        minDate={options.minDate}
-        maxDate={options.maxDate}
+        minDate={options.min}
+        maxDate={options.max}
+        presets={options.presets}
       />
     </div>
   )

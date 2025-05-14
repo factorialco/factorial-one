@@ -39,7 +39,9 @@ export const filters = {
   department: {
     type: "in",
     label: "Department",
-    options: DEPARTMENTS.map((value) => ({ value, label: value })),
+    options: {
+      options: DEPARTMENTS.map((value) => ({ value, label: value })),
+    },
   },
 } as const
 
@@ -243,8 +245,8 @@ export const filterUsers = <
       console.log(navigationFilters.date)
       return (
         !navigationFilters.date ||
-        (navigationFilters.date.dateRange[0] <= user.joinedAt &&
-          navigationFilters.date.dateRange[1] >= user.joinedAt)
+        (navigationFilters.date.value.from <= user.joinedAt &&
+          navigationFilters.date.value.to >= user.joinedAt)
       )
     })
   }
@@ -542,7 +544,7 @@ export function createDataAdapter<
     department: (typeof DEPARTMENTS)[number]
     salary?: number
   },
-  TFilters extends Record<string, FilterDefinition<unknown>>,
+  TFilters extends Record<string, FilterDefinition>,
   TSortings extends SortingsDefinition,
   TNavigationFilters extends NavigationFiltersDefinition,
 >({

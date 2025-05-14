@@ -1,20 +1,24 @@
+import { DateRange, granularityDefinitions } from "@/experimental/OneCalendar"
 import { NavigationFilter, NavigationFilterComponentProps } from "../../types"
 import { DateNavigation } from "./DateNavigation"
-import { granularityHandlers } from "./granularities"
-import { DateNavigationGranularityHandler, DateRange, DateValue } from "./types"
+import { DateValue } from "./types"
+
+const isDateValue = (
+  value: Date | DateRange | DateValue
+): value is DateValue => {
+  return "date" in value
+}
 
 const dateNavigatorFilter: NavigationFilter<
   DateValue,
-  DateValue | Date | DateRange
+  DateValue | Date | DateRange | undefined | null
 > = {
-  initialValueConverter: function <
+  valueConverter: function <
     FilterDef extends NavigationFilterComponentProps<DateValue>["filter"],
-  >(initialValue: Date | DateRange | DateValue, filterDef: FilterDef) {
-    // If the initial value is already a DateValue, return it
-    if ("value" in initialValue) {
-      return initialValue
-    }
-
+  >(
+    value: Date | DateRange | DateValue | null | undefined,
+    filterDef: FilterDef
+  ) {
     const availableGranularities = Array.isArray(filterDef.granularity)
       ? filterDef.granularity
       : [filterDef.granularity]
@@ -22,36 +26,19 @@ const dateNavigatorFilter: NavigationFilter<
     const granularity =
       filterDef.defaultGranularity || availableGranularities[0] || "day"
 
-    // For custom granularity, we expect a DateRange
-    // For all other granularities, we expect a Date
-    if (granularity === "custom") {
-      if (!Array.isArray(initialValue)) {
-        throw new Error(
-          "Custom granularity requires a DateRange as initial value"
-        )
-      }
-      const handler = granularityHandlers[
-        granularity
-      ] as DateNavigationGranularityHandler<DateRange>
-      return {
-        value: initialValue,
-        dateRange: handler.toDateRange(initialValue),
-        granularity,
-      }
-    } else {
-      if (Array.isArray(initialValue)) {
-        throw new Error(
-          `${granularity} granularity requires a Date as initial value`
-        )
-      }
-      const handler = granularityHandlers[
-        granularity
-      ] as DateNavigationGranularityHandler<Date>
-      return {
-        value: initialValue,
-        dateRange: handler.toDateRange(initialValue),
-        granularity,
-      }
+    if (!value) {
+      value = new Date()
+    }
+    // If the initial value is already a DateValue, return it
+    if (isDateValue(value)) {
+      return value
+    }
+
+    const granularityDefinition = granularityDefinitions[granularity]
+    return {
+      value: granularityDefinition.toRange(value),
+      valueString: granularityDefinition.toString(value),
+      granularity,
     }
   },
   render: (props: NavigationFilterComponentProps<DateValue>) => {

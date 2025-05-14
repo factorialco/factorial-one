@@ -1,3 +1,4 @@
+import { granularityDefinitions } from "@/experimental/OneCalendar/granularities/index"
 import { Meta, StoryObj } from "@storybook/react"
 import { addDays } from "date-fns"
 import { ExampleComponent } from "./mockData"
@@ -25,7 +26,7 @@ export const Default: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        initialValue: new Date(),
+        defaultValue: new Date(),
         granularity: "day",
         min: new Date(),
         max: addDays(new Date(), 1),
@@ -39,22 +40,8 @@ export const WeekGranularity: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        initialValue: new Date(),
+        defaultValue: new Date(),
         granularity: "week",
-        min: new Date(),
-        max: addDays(new Date(), 1),
-      },
-    },
-  },
-}
-
-export const FortnightGranularity: Story = {
-  args: {
-    navigationFilters: {
-      date: {
-        type: "date-navigator",
-        initialValue: new Date(),
-        granularity: "fortnight",
         min: new Date(),
         max: addDays(new Date(), 1),
       },
@@ -67,7 +54,7 @@ export const MonthGranularity: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        initialValue: new Date(),
+        defaultValue: new Date(),
         granularity: "month",
         min: new Date(),
         max: addDays(new Date(), 1),
@@ -81,7 +68,7 @@ export const YearGranularity: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        initialValue: new Date(),
+        defaultValue: new Date(),
         granularity: "year",
         min: new Date(),
         max: addDays(new Date(), 1),
@@ -90,13 +77,17 @@ export const YearGranularity: Story = {
   },
 }
 
-export const CustomGranularity: Story = {
+export const RangeGranularity: Story = {
   args: {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        initialValue: [new Date(), addDays(new Date(), 3)],
-        granularity: "custom",
+        defaultValue: {
+          from: new Date(),
+          to: addDays(new Date(), 3),
+        },
+        defaultGranularity: "range",
+        granularity: ["range"],
         min: new Date(),
         max: addDays(new Date(), 100),
       },
@@ -109,11 +100,38 @@ export const MultipleGranularities: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        initialValue: new Date(),
+        defaultValue: new Date(),
         defaultGranularity: "day",
-        granularity: ["day", "week", "month", "year", "custom"],
+        granularity: ["day", "week", "month", "year", "range"],
         min: new Date(),
         max: addDays(new Date(), 100),
+      },
+    },
+  },
+}
+
+export const WithPresets: Story = {
+  args: {
+    navigationFilters: {
+      date: {
+        type: "date-navigator",
+        defaultValue: new Date(),
+        defaultGranularity: "day",
+        granularity: ["day", "week", "month", "year", "range"],
+        min: new Date(),
+        max: addDays(new Date(), 100),
+        presets: [
+          {
+            label: "Today",
+            granularity: "day",
+            value: granularityDefinitions.day.toRange(new Date()),
+          },
+          {
+            label: "Yesterday",
+            granularity: "day",
+            value: granularityDefinitions.day.toRange(addDays(new Date(), -1)),
+          },
+        ],
       },
     },
   },

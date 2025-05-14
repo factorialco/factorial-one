@@ -112,9 +112,9 @@ export const useDataSource = <
         const filterType = navigationFilterTypes[filter.type]
         return [
           key,
-          filterType.initialValueConverter
-            ? filterType.initialValueConverter(filter.initialValue, filter)
-            : filter.initialValue,
+          filterType.valueConverter
+            ? filterType.valueConverter(filter.defaultValue, filter)
+            : filter.defaultValue,
         ]
       })
     ) as NavigationFiltersState<NavigationFilters>

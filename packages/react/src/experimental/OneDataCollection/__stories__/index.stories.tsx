@@ -548,6 +548,11 @@ export const WithSelectableAndBulkActions: Story = {
               icon: Delete,
               id: "delete-all",
             },
+            {
+              label: "Another primary action",
+              icon: Delete,
+              id: "delete-all2",
+            },
           ],
           secondary: [
             ...(allSelected

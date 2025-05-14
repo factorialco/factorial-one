@@ -7,12 +7,12 @@ export type NavigationFilter<T, InitialValue = T> = {
   /**
    * Converts the initial value to the correct type for the filter.
    * This is useful for filters that have a complex internal state but the initial value is a simple type, for example a navigation filter. The initial can be a simple date but the internal state converts it to a date range based on the granularity.
-   * @param initialValue - The initial value to convert
+   * @param defaultValue - The initial value to convert
    * @param props - The props of the filter
    * @returns The converted value
    */
-  initialValueConverter?: (
-    initialValue: InitialValue,
+  valueConverter?: (
+    defaultValue: InitialValue,
     filterDef: NavigationFilterComponentProps<T>["filter"]
   ) => T
   /**
@@ -25,7 +25,7 @@ export type NavigationFilter<T, InitialValue = T> = {
 
 export type NavigationFilterDefinitionBase<T> = {
   type: string
-  initialValue: T
+  defaultValue: T
 }
 
 export type NavigationFilterDefinition = DateNavigatorFilterDefinition
