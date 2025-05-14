@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.53.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.53.1...factorial-one-react-v1.53.2) (2025-05-14)
+
+
+### Bug Fixes
+
+* **Sidebar:** Truncate long user names + small visual fixes ([#1817](https://github.com/factorialco/factorial-one/issues/1817)) ([8d702d3](https://github.com/factorialco/factorial-one/commit/8d702d3453d62b29e84fd292feb71ba66bfc5d7c))
+
 ## [1.53.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.53.0...factorial-one-react-v1.53.1) (2025-05-14)
 
 
