@@ -56,7 +56,7 @@ export const PresetList = ({ presets, ...props }: PresetListProps) => {
       <SelectContent>
         {Object.entries(presets).map(([key, preset]) => (
           <SelectItem key={key} value={key}>
-            {preset.label}
+            {preset?.label || key}
           </SelectItem>
         ))}
         <SelectSeparator />

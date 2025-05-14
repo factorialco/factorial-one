@@ -1,4 +1,4 @@
-import { subDays, subMonths } from "date-fns"
+import { subDays, subMonths, subYears } from "date-fns"
 import { granularityDefinitions } from "../OneCalendar/granularities"
 import { DatePreset } from "./types"
 
@@ -17,7 +17,10 @@ export const predefinedPresets: Record<string, DatePreset> = {
     label: "Last 7 days",
     granularity: "day",
     value: () =>
-      granularityDefinitions.day.toRange(subDays(new Date(), 7), new Date()),
+      granularityDefinitions.day.toRange({
+        from: subDays(new Date(), 7),
+        to: new Date(),
+      }),
   },
   thisWeek: {
     label: "This week",
@@ -28,6 +31,11 @@ export const predefinedPresets: Record<string, DatePreset> = {
     label: "Last week",
     granularity: "week",
     value: () => granularityDefinitions.week.toRange(subDays(new Date(), 7)),
+  },
+  thisMonth: {
+    label: "This month",
+    granularity: "month",
+    value: () => granularityDefinitions.month.toRange(new Date()),
   },
   lastMonth: {
     label: "Last month",
