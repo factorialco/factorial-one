@@ -14,7 +14,7 @@ export type ProductCardProps = {
   trackVisibility?: (open: boolean) => void
 }
 
-const ProductCard = ({
+export function ProductCard({
   title,
   description,
   onClick,
@@ -23,7 +23,7 @@ const ProductCard = ({
   icon,
   dismissable = false,
   trackVisibility,
-}: ProductCardProps) => {
+}: ProductCardProps) {
   const [open, setOpen] = useState(isVisible)
 
   useEffect(() => {
@@ -73,4 +73,3 @@ const ProductCard = ({
     )
   )
 }
-export default ProductCard
