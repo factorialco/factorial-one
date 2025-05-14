@@ -122,6 +122,8 @@ declare const defaultTranslations: {
         readonly search: "Search";
         readonly clear: "Clear";
         readonly more: "More";
+        readonly moveUp: "Move up";
+        readonly moveDown: "Move down";
     };
     readonly status: {
         readonly selected: {
@@ -220,6 +222,11 @@ declare const defaultTranslations: {
             readonly december: "December";
         };
     };
+    readonly favorites: {
+        readonly favorites: "Favorites";
+        readonly remove: "Remove favorite";
+    };
+    readonly notifications: "Notifications";
 };
 
 export declare function EmojiImage({ emoji, size }: EmojiImageProps): JSX_2.Element;

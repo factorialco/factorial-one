@@ -134,6 +134,8 @@ declare interface AlertProps extends VariantProps<typeof alertVariants> {
 
 export declare const AlertTag: ForwardRefExoticComponent<Props_10<string> & RefAttributes<HTMLDivElement>>;
 
+declare type AlertTagProps = ComponentProps<typeof AlertTag>;
+
 export declare const AlertTitle: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLHeadingElement> & React_2.RefAttributes<HTMLParagraphElement>>;
 
 declare type AlertVariant = "info" | "warning" | "critical";
@@ -220,6 +222,8 @@ declare const badgeVariants: (props?: ({
 })) | undefined) => string;
 
 export declare const BalanceTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
+
+declare type BalanceTagProps = ComponentProps<typeof BalanceTag>;
 
 export declare const BarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: BarChartProps;
@@ -443,25 +447,52 @@ export declare type BaseResponse<Record> = Record[];
 
 export declare const BaseTabs: React.FC<TabsProps>;
 
-export declare type BreadcrumbBaseItemType = NavigationItem & {
+declare type BaseTag<T extends {
+    type: string;
+}> = T & WithTooltipDescription;
+
+declare type BreadcrumbBaseItemType = NavigationItem & {
     id: string;
     loading?: boolean;
     label: string;
 };
 
-export declare type BreadcrumbItemType = BreadcrumbLoadingItemType | BreadcrumbNavItemType | BreadcrumbSelectItemType;
+declare type BreadcrumbItemType = BreadcrumbLoadingItemType | BreadcrumbNavItemType | BreadcrumbSelectItemType;
 
-export declare type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
+declare type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
     loading: true;
 };
 
-export declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
+declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
     icon?: IconType;
 };
 
+/**
+ * Responsive breadcrumb navigation component that automatically collapses items when space is limited.
+ *
+ * Features:
+ * - Responsive layout that adjusts to container width
+ * - Maintains first and last items visible
+ * - Collapses middle items into a dropdown when needed
+ * - Supports loading states
+ * - Animated transitions
+ *
+ * @example
+ * ```tsx
+ * <Breadcrumbs
+ *   breadcrumbs={[
+ *     { id: "home", label: "Home", href: "/" },
+ *     { id: "section", label: "Section", href: "/section" },
+ *     { id: "page", label: "Current Page" }
+ *   ]}
+ * />
+ * ```
+ */
+export declare function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps): JSX_2.Element;
+
 export declare function BreadcrumbSelect({ options, defaultItem, ...props }: BreadcrumbSelectProps): JSX_2.Element;
 
-export declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
+declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     type: "select";
     searchbox?: boolean;
     externalSearch?: boolean;
@@ -476,6 +507,12 @@ export declare type BreadcrumbSelectProps = Omit<SelectProps<string>, "options" 
     value?: string;
     defaultItem?: SelectItemObject<string>;
 };
+
+export declare interface BreadcrumbsProps {
+    /** Array of breadcrumb items to display */
+    breadcrumbs: BreadcrumbItemType[];
+    append?: ReactNode;
+}
 
 declare interface BreakType {
     id: string;
@@ -677,9 +714,9 @@ declare type ChartItem<K extends ChartConfig> = {
     };
 };
 
-export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_16 & RefAttributes<HTMLDivElement>>;
+export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_17 & RefAttributes<HTMLDivElement>>;
 
-export declare type ChatWidgetEmptyStateProps = Props_16;
+export declare type ChatWidgetEmptyStateProps = Props_17;
 
 /**
  * Filter chips list
@@ -873,6 +910,8 @@ export declare type CompanySelectorProps = {
 };
 
 export declare const CompanyTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
+
+declare type CompanyTagProps = ComponentProps<typeof CompanyTag>;
 
 declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "item";
@@ -1251,6 +1290,7 @@ declare interface EntitySelectCommonProps extends Omit<PopoverProps, "children" 
     selectedLabel?: string;
     selectedEntities?: EntitySelectEntity[];
     alwaysOpen?: boolean;
+    defaultOpen?: boolean;
     width?: number;
     hiddenAvatar?: boolean;
 }
@@ -1312,6 +1352,14 @@ declare type F1SearchBoxProps = {
     autoFocus?: boolean;
     onChange?: (value: string) => void;
 };
+
+declare type FavoriteMenuItem = ({
+    type: "icon";
+    icon: IconType;
+} | {
+    type: "avatar";
+    avatar?: AvatarVariant;
+}) & NavigationItem;
 
 export declare const FILE_TYPES: {
     readonly PDF: "pdf";
@@ -1576,10 +1624,15 @@ declare type HeaderProps = {
     actions?: PageAction[];
     navigation?: NavigationProps;
     embedded?: boolean;
-    breadcrumbs?: BreadcrumbItemType[];
+    breadcrumbs?: BreadcrumbsProps["breadcrumbs"];
     productUpdates?: {
         isVisible?: boolean;
     } & ProductUpdatesProp;
+    favorites?: {
+        isMarked: boolean;
+        onChange: (newValue: boolean) => void;
+        label: string;
+    };
 };
 
 export declare type heightType = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full" | "auto";
@@ -1714,7 +1767,7 @@ export declare type mentionsConfig = {
     users: MentionedUser[];
 };
 
-export declare function Menu({ tree, onCollapse, onSort }: MenuProps): default_2.JSX.Element;
+export declare function Menu({ tree, onCollapse, onSort, onFavoritesChange, favorites, }: MenuProps): default_2.JSX.Element;
 
 export declare interface MenuCategory {
     id: string;
@@ -1730,10 +1783,12 @@ export declare interface MenuItem extends NavigationItem {
     badge?: number;
 }
 
-declare interface MenuProps {
+export declare interface MenuProps {
     tree: MenuCategory[];
+    favorites?: FavoriteMenuItem[];
     onCollapse?: (category: MenuCategory, isOpen: boolean) => void;
     onSort?: (categories: MenuCategory[]) => void;
+    onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void;
 }
 
 declare type Metadata = SimpleMetadata | AvatarListMetadata | StatusMetadata | UserMetadata | CompanyMetadata | TeamMetadata | TagMetadata;
@@ -1762,6 +1817,14 @@ declare interface MetadataItem {
     value: MetadataItemValue;
     actions?: (MetadataAction | MetadataCopyAction)[];
     hideLabel?: boolean;
+    /**
+     * Optional info text. When provided, displays an info icon next to the label
+     * that shows this text in a tooltip when hovered.
+     */
+    info?: {
+        title: string;
+        description?: string;
+    };
 }
 
 declare type MetadataItemValue = {
@@ -1885,7 +1948,7 @@ export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaul
 export declare interface OneCalendarProps {
     mode: CalendarMode;
     view: CalendarView;
-    onSelect?: (date: DateRange | null) => void;
+    onSelect?: (date: Date | DateRange | null) => void;
     defaultMonth?: Date;
     defaultSelected?: Date | DateRange | null;
     showNavigation?: boolean;
@@ -2137,7 +2200,7 @@ export declare type PageAction = {
     }>;
 });
 
-export declare function PageHeader({ module, statusTag, breadcrumbs, actions, embedded, navigation, productUpdates, }: HeaderProps): JSX_2.Element;
+export declare function PageHeader({ module, statusTag, breadcrumbs, actions, embedded, navigation, productUpdates, favorites, }: HeaderProps): JSX_2.Element;
 
 declare interface PageProps {
     children?: React.ReactNode;
@@ -2208,6 +2271,8 @@ declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
 export declare const PersonTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
+
+declare type PersonTagProps = ComponentProps<typeof PersonTag>;
 
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: PieChartProps;
@@ -2295,7 +2360,6 @@ declare type ProductUpdate = {
 
 declare type ProductUpdatesProp = {
     label: string;
-    moreUpdatesLabel: string;
     updatesPageUrl: string;
     getUpdates: () => Promise<Array<ProductUpdate>>;
     hasUnread?: boolean;
@@ -2312,6 +2376,20 @@ declare type ProductUpdatesProp = {
         title: string;
         description: string;
         buttonText: string;
+    };
+    crossSelling?: {
+        isVisible: boolean;
+        sectionTitle: string;
+        onClose?: () => void;
+        products: Array<{
+            title: string;
+            description: string;
+            onClick: () => void;
+            icon: IconType;
+            dismissable: boolean;
+            onClose?: () => void;
+            trackVisibility?: (open: boolean) => void;
+        }>;
     };
 };
 
@@ -2398,6 +2476,11 @@ declare const propertyRenderers: {
         label: string;
         color: NewColor;
     }) => JSX_2.Element;
+    readonly tagList: (args: {
+        tags: Array<Omit<TagVariant, "type">>;
+        max?: number;
+        type: TagType;
+    }) => JSX_2.Element;
 };
 
 declare type Props = {
@@ -2436,7 +2519,34 @@ declare type Props_14 = {
     onClick?: () => void;
 };
 
-declare type Props_15 = {
+declare type Props_15<T extends TagType> = {
+    /**
+     * The type of tags to display. Only one type can be used at a time.
+     */
+    type: T;
+    /**
+     * Array of tag data corresponding to the specified type.
+     */
+    tags: Array<TagTypeMapping[T] & WithTooltipDescription_2>;
+    /**
+     * The maximum number of tags to display.
+     * @default 4
+     */
+    max?: number;
+    /**
+     * The remaining number to display.
+     */
+    remainingCount?: number;
+    /**
+     * The layout of the tag list.
+     * - "fill" - Tags will expand to fill the available width, with overflow items shown in a counter
+     * - "compact" - Tags will be stacked together up to the max limit, with remaining shown in counter
+     * @default "compact"
+     */
+    layout?: "fill" | "compact";
+};
+
+declare type Props_16 = {
     firstName: string;
     lastName: string;
     src?: string;
@@ -2444,7 +2554,7 @@ declare type Props_15 = {
     onPulseClick: () => void;
 } & Pick<BaseAvatarProps_4, "aria-label" | "aria-labelledby">;
 
-declare interface Props_16 {
+declare interface Props_17 {
     title: string;
     content: string;
     buttonLabel?: string;
@@ -2453,7 +2563,7 @@ declare interface Props_16 {
     type: Type;
 }
 
-declare type Props_17 = {
+declare type Props_18 = {
     label: string;
     icon: IconType;
     iconClassName?: string;
@@ -2461,19 +2571,12 @@ declare type Props_17 = {
     onClick?: () => void;
 };
 
-declare type Props_18<Id extends string | number = string | number> = {
+declare type Props_19<Id extends string | number = string | number> = {
     id: Id;
     icon?: IconType;
     title: string;
     subtitle: string;
     onClick?: (id: Id) => void;
-};
-
-declare type Props_19<Id extends string | number = string | number> = {
-    items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
-    minSize?: number;
-    onClickItem?: (id: Id) => void;
-    showAllItems?: boolean;
 };
 
 declare type Props_2 = {
@@ -2484,6 +2587,13 @@ declare type Props_2 = {
 } & Pick<BaseAvatarProps_2, "aria-label" | "aria-labelledby">;
 
 declare type Props_20<Id extends string | number = string | number> = {
+    items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
+    minSize?: number;
+    onClickItem?: (id: Id) => void;
+    showAllItems?: boolean;
+};
+
+declare type Props_21<Id extends string | number = string | number> = {
     items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
     minSize?: number;
     gap?: number;
@@ -2564,7 +2674,7 @@ declare type Props_9 = {
 declare type Pulse = "superNegative" | "negative" | "neutral" | "positive" | "superPositive";
 
 declare const PulseAvatar: {
-    ({ firstName, lastName, src, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, pulse, onPulseClick, }: Props_15): JSX_2.Element;
+    ({ firstName, lastName, src, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, pulse, onPulseClick, }: Props_16): JSX_2.Element;
     displayName: string;
 };
 
@@ -2596,7 +2706,7 @@ declare interface ReactionProps {
     emoji: string;
     initialCount: number;
     hasReacted?: boolean;
-    users?: User_2[];
+    users?: User[];
     onInteraction?: (emoji: string) => void;
 }
 
@@ -2837,6 +2947,21 @@ declare const shortcutVariants: (props?: ({
 })) | undefined) => string;
 
 export declare function Sidebar({ header, body, footer }: SidebarProps): JSX_2.Element;
+
+export declare function SidebarFooter({ user, options, showActivityButton, activityButtonShortcut, onActivityButtonClick, hasActivityUpdates, }: SidebarFooterProps): JSX_2.Element;
+
+declare interface SidebarFooterProps {
+    user: {
+        firstName: string;
+        lastName: string;
+        avatarUrl?: string;
+    };
+    showActivityButton?: boolean;
+    hasActivityUpdates?: boolean;
+    activityButtonShortcut?: string[];
+    onActivityButtonClick?: () => void;
+    options: DropdownItem[];
+}
 
 export declare function SidebarHeader({ companies, selected, onChange, withNotification, additionalOptions, }: SidebarHeaderProps): JSX_2.Element;
 
@@ -3127,11 +3252,48 @@ declare type Tag = {
     description?: string;
 };
 
+declare type TagDataType<T extends string> = Omit<Extract<TagVariant, {
+    type: T;
+}>, "type" | "description">;
+
+export declare const TagList: {
+    <T extends TagType>({ type, tags, max, remainingCount: initialRemainingCount, layout, }: Props_15<T>): JSX_2.Element;
+    displayName: string;
+};
+
 declare type TagMetadata = BaseMetadata & {
     type: "tag";
     label: string;
     tagIcon?: IconType;
 };
+
+export declare type TagType = keyof TagTypeMapping;
+
+declare type TagTypeMapping = {
+    dot: TagDataType<"dot">;
+    person: TagDataType<"person">;
+    team: TagDataType<"team">;
+    company: TagDataType<"company">;
+    alert: TagDataType<"alert">;
+    status: TagDataType<"status">;
+    balance: TagDataType<"balance">;
+};
+
+declare type TagVariant = BaseTag<{
+    type: "dot";
+} & DotTagProps> | BaseTag<{
+    type: "person";
+} & PersonTagProps> | BaseTag<{
+    type: "team";
+} & TeamTagProps> | BaseTag<{
+    type: "company";
+} & CompanyTagProps> | BaseTag<{
+    type: "alert";
+} & AlertTagProps> | BaseTag<{
+    type: "status";
+} & StatusTagProps> | BaseTag<{
+    type: "balance";
+} & BalanceTagProps>;
 
 declare interface Task {
     id: number | string;
@@ -3181,6 +3343,8 @@ declare type TeamMetadata = BaseMetadata & {
 };
 
 export declare const TeamTag: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
+
+declare type TeamTagProps = ComponentProps<typeof TeamTag>;
 
 export declare const Textarea: React.FC<TextareaProps>;
 
@@ -3306,9 +3470,7 @@ export { useForm }
 
 export declare function useFormSchema<Schema extends SchemaType, FormData extends InferSchema<Schema>>(schema: Schema, options: UseFormProps<FormData>, onSubmit: OnSubmitHandler<FormData>): FormType<Schema, FormData>;
 
-export declare function User({ firstName, lastName, avatarUrl, options }: UserProps): JSX_2.Element;
-
-declare interface User_2 {
+declare interface User {
     name: string;
 }
 
@@ -3318,13 +3480,6 @@ declare type UserMetadata = BaseMetadata & {
     lastName: string;
     src?: string;
 };
-
-declare interface UserProps {
-    firstName: string;
-    lastName: string;
-    avatarUrl?: string;
-    options: DropdownItem[];
-}
 
 export declare function useSidebar(): FrameContextType;
 
@@ -3422,15 +3577,15 @@ export declare type WidgetEmptyStateProps = {
     actions?: Action[];
 };
 
-export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_17): JSX_2.Element;
+export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_18): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_19): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_20): JSX_2.Element;
 
-export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_18): JSX_2.Element;
+export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_19): JSX_2.Element;
 
-export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_18<Id>;
+export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_19<Id>;
 
-export declare type WidgetInboxListProps = Props_19;
+export declare type WidgetInboxListProps = Props_20;
 
 export declare interface WidgetProps {
     header?: {
@@ -3468,7 +3623,7 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_20): JSX_2.Element;
+export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_21): JSX_2.Element;
 
 export declare function WidgetSimpleListItem({ id, title, alert, rawTag, count, icon, rightIcon, iconClassName, rightIconClassName, onClick, }: WidgetSimpleListItemProps): JSX_2.Element;
 
@@ -3485,7 +3640,7 @@ export declare type WidgetSimpleListItemProps<Id extends string | number = strin
     onClick?: (id: Id) => void;
 };
 
-export declare type WidgetSimpleListProps = Props_20;
+export declare type WidgetSimpleListProps = Props_21;
 
 export declare type WidgetSkeletonProps = {
     header?: {
@@ -3512,6 +3667,17 @@ declare type WithOptionalSorting<Record, Sortings extends SortingsDefinition> = 
      * The width of the column. If not provided, the width will be "auto"
      */
     width?: number;
+};
+
+declare interface WithTooltipDescription {
+    /**
+     * Optional description to show in the tooltip
+     */
+    description?: string;
+}
+
+declare type WithTooltipDescription_2 = {
+    description?: string;
 };
 
 export { }
