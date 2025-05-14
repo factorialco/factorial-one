@@ -72,7 +72,7 @@ export function Sidebar({ header, body, footer }: SidebarProps) {
         sidebarState === "locked"
           ? "h-full"
           : cn(
-              "border-solid border-f1-border-secondary shadow-lg backdrop-blur-2xl",
+              "shadow-lg ring-1 ring-f1-border-secondary backdrop-blur-2xl",
               isSmallScreen
                 ? "h-full border-y-transparent border-l-transparent bg-f1-background/90"
                 : "h-[calc(100%-16px)] bg-f1-background/60"
