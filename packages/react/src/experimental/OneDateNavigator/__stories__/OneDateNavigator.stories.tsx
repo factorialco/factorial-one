@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { subDays } from "date-fns"
 import { CalendarView, DateRange } from "../../OneCalendar/types"
-import { OneDatePicker } from "../OneDatePicker"
+import { OneDateNavigator } from "../OneDateNavigator"
 import { predefinedPresets } from "../presets"
 import { DatePickerValue } from "../types"
 
 const meta = {
-  title: "DatePicker",
-  component: OneDatePicker,
+  title: "DateNavigator",
+  component: OneDateNavigator,
   parameters: {
     docs: {
       description: {
@@ -25,7 +25,7 @@ const meta = {
     },
   },
   tags: ["autodocs", "experimental"],
-} satisfies Meta<typeof OneDatePicker>
+} satisfies Meta<typeof OneDateNavigator>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -53,6 +53,25 @@ export const Simple: Story = {
     defaultValue: {
       granularity: "day",
     } as DatePickerValue,
+    // granularities: ["day", "week", "month"],
+  },
+}
+
+export const MonthGranularity: Story = {
+  args: {
+    defaultValue: {
+      granularity: "month",
+    } as DatePickerValue,
+    granularities: ["month"],
+  },
+}
+
+export const MultipleGranularities: Story = {
+  args: {
+    defaultValue: {
+      granularity: "month",
+    } as DatePickerValue,
+    granularities: ["day", "week", "month", "quarter", "halfyear", "year"],
   },
 }
 
@@ -61,6 +80,15 @@ export const WithCustomRange: Story = {
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
+    granularities: [
+      "day",
+      "week",
+      "month",
+      "quarter",
+      "halfyear",
+      "year",
+      "range",
+    ],
   },
 }
 
@@ -75,8 +103,9 @@ export const WithDefaultDate: Story = {
     hideGoToCurrent: true,
     defaultValue: {
       value: { from: new Date(), to: new Date() },
-      granularity: "day",
+      granularity: "month",
     } as DatePickerValue,
+    granularities: ["month"],
   },
 }
 
@@ -87,6 +116,53 @@ export const WithPresets: Story = {
     } as DatePickerValue,
     granularities: ["day", "week", "month", "quarter"],
     presets,
+  },
+}
+
+export const WithPresetsAndNavigation: Story = {
+  args: {
+    defaultValue: {
+      granularity: "month",
+    } as DatePickerValue,
+    granularities: ["day", "week", "month", "quarter", "range"],
+    presets,
+    navigation: true,
+  },
+}
+
+export const WeekView: Story = {
+  args: {
+    defaultValue: {
+      granularity: "week",
+    } as DatePickerValue,
+    granularities: ["week"],
+  },
+}
+
+export const QuarterView: Story = {
+  args: {
+    defaultValue: {
+      granularity: "quarter",
+    } as DatePickerValue,
+    granularities: ["quarter"],
+  },
+}
+
+export const HalfYearView: Story = {
+  args: {
+    defaultValue: {
+      granularity: "halfyear",
+    } as DatePickerValue,
+    granularities: ["halfyear"],
+  },
+}
+
+export const YearView: Story = {
+  args: {
+    defaultValue: {
+      granularity: "year",
+    } as DatePickerValue,
+    granularities: ["year"],
   },
 }
 

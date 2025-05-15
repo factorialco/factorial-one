@@ -4,18 +4,21 @@ import {
 } from "@/ui/DatePickerPopup/OneDatePickerPopup"
 import { useMemo, useState } from "react"
 import { granularityDefinitions } from "../OneCalendar"
-import { DateInput } from "./components/DateInput"
+import { DateRange } from "../OneCalendar/types"
+import { DatePickerTrigger } from "./components/DateNavigatorTrigger"
 import { DatePickerValue } from "./types"
 export interface OneDatePickerProps extends OneDatePickerPopupProps {
   hideNavigation?: boolean
   hideGoToCurrent?: boolean
 }
 
-export function OneDatePicker({
+export function OneDateNavigator({
   onSelect,
   defaultValue,
   presets = [],
   granularities = ["day"],
+  hideNavigation = false,
+  hideGoToCurrent = false,
   ...props
 }: OneDatePickerProps) {
   const [value, setValue] = useState<DatePickerValue | undefined>(defaultValue)
@@ -25,9 +28,24 @@ export function OneDatePicker({
     return granularityDefinitions[value?.granularity ?? "day"]
   }, [value?.granularity])
 
+  // const handleSelectDate = (date: Date | DateRange | null) => {
+  //   const currentGranularity = value?.granularity ?? "day"
+  //   handleSelect({
+  //     value: granularityDefinition.toRange(date ?? undefined),
+  //     granularity: currentGranularity,
+  //   })
+  // }
+
   const handleSelect = (value: DatePickerValue | undefined) => {
     setValue(value)
     onSelect?.(value)
+  }
+
+  const handleNavigationChange = (date: DateRange) => {
+    handleSelect({
+      value: granularityDefinition.toRange(date),
+      granularity: value?.granularity ?? "day",
+    })
   }
 
   return (
@@ -42,14 +60,17 @@ export function OneDatePicker({
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      <DateInput
+      <DatePickerTrigger
         value={value}
+        highlighted={isOpen}
+        navigation={!hideNavigation}
+        onDateChange={handleNavigationChange}
         granularity={granularityDefinition}
         minDate={props.minDate}
         maxDate={props.maxDate}
         disabled={props.disabled}
-        open={isOpen}
-        onOpenChange={setIsOpen}
+        hideGoToCurrent={hideGoToCurrent}
+        onClick={() => setIsOpen(true)}
       />
     </OneDatePickerPopup>
   )
