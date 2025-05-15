@@ -27,11 +27,13 @@ const filters: FiltersDefinition<typeof mockUsers> = {
   department: {
     type: "in",
     label: "Department",
-    options: [
-      { value: "Engineering", label: "Engineering" },
-      { value: "Marketing", label: "Marketing" },
-      // …
-    ],
+    options: {
+      options: [
+        { value: "Engineering", label: "Engineering" },
+        { value: "Marketing", label: "Marketing" },
+        // …
+      ],
+    },
   },
   search: { type: "search", label: "Search" },
   date: { type: "date", label: "Date" },
@@ -69,13 +71,21 @@ independently if the filter was set manually or by a preset.
 
 The `in` filter is used to filter the data by a list of values.
 
+#### Options
+
+- `options`: `() => (Promise<{value: string, label: T}[]> | {value: string, label: T}[])` The list of options to filter the data. NOTE: By default the options are not cached so each time the filter is opened, the options will be loaded again (and to generate the chip label the options will be loaded again) You can cache it by yourself or use the `cache` option.
+- `cache?`: `boolean` Whether to cache the options.
+
 ```tsx
 const filters: FiltersDefinition<typeof mockUsers> = {
-  department: { type: "in", label: "Department", options: [
-    { value: "Engineering", label: "Engineering" },
-    { value: "Marketing", label: "Marketing" },
-    // ...
-  ] },
+  department: { type: "in", label: "Department", options: {
+    options: [
+      { value: "Engineering", label: "Engineering" },
+      { value: "Marketing", label: "Marketing" },
+      // ...
+    ],
+    cache: true,
+  } },
 }
 ````
 
