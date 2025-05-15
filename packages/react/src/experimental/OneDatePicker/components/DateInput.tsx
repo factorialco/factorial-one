@@ -70,7 +70,7 @@ const DatePickerTrigger = forwardRef<HTMLDivElement, DatePickerTriggerProps>(
     useEffect(() => {
       setCurrentDate(granularity?.toRange(new Date()) ?? null)
 
-      const interval = setInterval(() => {
+      const checkGoToCurrentIsAvailable = () => {
         const currentDate = granularity?.toRange(new Date()) ?? null
         if (
           currentDate &&
@@ -80,7 +80,11 @@ const DatePickerTrigger = forwardRef<HTMLDivElement, DatePickerTriggerProps>(
           setCurrentDate(currentDate)
         }
         setCurrentDate(null)
-      }, 36000)
+      }
+      const interval = setInterval(() => {
+        checkGoToCurrentIsAvailable()
+      }, 60000)
+      checkGoToCurrentIsAvailable()
 
       return () => clearInterval(interval)
     }, [granularity, minDate, maxDate])

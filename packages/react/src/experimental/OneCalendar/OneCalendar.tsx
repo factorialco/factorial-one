@@ -21,6 +21,8 @@ export interface OneCalendarProps {
   defaultSelected?: Date | DateRange | null
   showNavigation?: boolean
   showInput?: boolean
+  minDate?: Date
+  maxDate?: Date
 }
 
 export const getGranularitySimpleDefinition = (
@@ -56,6 +58,8 @@ export function OneCalendar({
   defaultSelected = null,
   showNavigation = true,
   showInput = false,
+  minDate,
+  maxDate,
 }: OneCalendarProps) {
   const i18n = useI18n()
 
@@ -259,6 +263,8 @@ export function OneCalendar({
           motionDirection,
           setViewDate,
           viewDate,
+          minDate,
+          maxDate,
         })}
       </div>
     </div>

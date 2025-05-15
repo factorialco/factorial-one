@@ -82,6 +82,8 @@ export const quarterGranularity: GranularityDefinition = {
     return startOfQuarter(date)
   },
   render: (renderProps) => {
+    const minDate = toQuarterGranularityDateRange(renderProps.minDate)
+    const maxDate = toQuarterGranularityDateRange(renderProps.maxDate)
     return (
       <QuarterView
         mode={renderProps.mode}
@@ -89,6 +91,8 @@ export const quarterGranularity: GranularityDefinition = {
         selected={renderProps.selected}
         onSelect={renderProps.onSelect}
         motionDirection={renderProps.motionDirection}
+        minDate={minDate ? minDate.from : undefined}
+        maxDate={maxDate ? maxDate.to : undefined}
       />
     )
   },

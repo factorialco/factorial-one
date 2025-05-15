@@ -6,7 +6,7 @@ import {
   SelectSingleEventHandler,
 } from "react-day-picker"
 import { CalendarMode, DateRange } from "../../types"
-import { getLocale } from "../../utils"
+import { getLocale, toCalendarPickerMatcher } from "../../utils"
 
 interface DayViewProps {
   mode: CalendarMode
@@ -15,6 +15,8 @@ interface DayViewProps {
   month: Date
   onMonthChange?: (month: Date) => void
   motionDirection?: number
+  minDate?: Date
+  maxDate?: Date
 }
 
 export function DayView({
@@ -24,8 +26,12 @@ export function DayView({
   month,
   onMonthChange,
   motionDirection = 1,
+  minDate,
+  maxDate,
 }: DayViewProps) {
   const { locale } = useL10n()
+
+  const disabled = toCalendarPickerMatcher({ minDate, maxDate })
 
   const motionVariants = {
     hidden: (direction: number) => ({
@@ -57,6 +63,7 @@ export function DayView({
         >
           <Calendar
             mode="single"
+            disabled={disabled}
             selected={selected as Date}
             onSelect={onSelect as SelectSingleEventHandler}
             month={month}
@@ -82,6 +89,7 @@ export function DayView({
         <Calendar
           key={month.toISOString()}
           mode="range"
+          disabled={disabled}
           selected={selected as DateRange}
           onSelect={onSelect as SelectRangeEventHandler}
           month={month}

@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import {
+  addDays,
+  addMonths,
+  addYears,
   endOfMonth,
   endOfWeek,
   endOfYear,
@@ -511,5 +514,58 @@ export const YearRangeWithInput: Story = {
     mode: "range",
     view: "year",
     showInput: true,
+  },
+}
+
+export const WithMinAndMaxDay: Story = {
+  args: {
+    mode: "single",
+    view: "day",
+    minDate: new Date(),
+    maxDate: addDays(new Date(), 30),
+  },
+}
+
+export const WithMinAndMaxWeek: Story = {
+  args: {
+    mode: "single",
+    view: "week",
+    minDate: new Date(),
+    maxDate: addDays(new Date(), 30),
+  },
+}
+
+export const WithMinAndMaxMonth: Story = {
+  args: {
+    mode: "single",
+    view: "month",
+    minDate: new Date(),
+    maxDate: addDays(new Date(), 30),
+  },
+}
+
+export const WithMinAndMaxHalfYear: Story = {
+  args: {
+    mode: "single",
+    view: "halfyear",
+    minDate: new Date(),
+    maxDate: addMonths(new Date(), 24),
+  },
+}
+export const WithMinAndMaxQuarter: Story = {
+  args: {
+    mode: "single",
+    view: "quarter",
+    minDate: new Date(),
+    maxDate: addMonths(new Date(), 6),
+  },
+}
+
+export const WithMinAndMaxYear: Story = {
+  args: {
+    mode: "single",
+    view: "year",
+    minDate: new Date(),
+    maxDate: addYears(new Date(), 2),
   },
 }
