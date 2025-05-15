@@ -1,25 +1,22 @@
 import { GranularityDefinitionKey } from "@/experimental/OneCalendar"
 import { useI18n } from "@/lib/providers/i18n"
 import { Select, SelectContent, SelectItem } from "@/ui/Select"
-import { CalendarMode } from "../../OneCalendar/types"
 
 interface GranularitySelectorProps {
   granularities: GranularityDefinitionKey[]
   value?: GranularityDefinitionKey
-  onChange: (granularity: GranularityDefinitionKey, mode: CalendarMode) => void
-  mode: CalendarMode
+  onChange: (granularity: GranularityDefinitionKey) => void
 }
 
 export function GranularitySelector({
   granularities,
   value,
-  mode,
   onChange,
 }: GranularitySelectorProps) {
   const i18n = useI18n()
 
   const handleChange = (granularity: GranularityDefinitionKey) => {
-    onChange(granularity, granularity === "range" ? "range" : mode || "single")
+    onChange(granularity)
   }
 
   return (

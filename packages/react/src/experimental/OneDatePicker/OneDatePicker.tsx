@@ -7,7 +7,7 @@ import {
   OneCalendar,
   granularityDefinitions,
 } from "../OneCalendar"
-import { CalendarMode, DateRange } from "../OneCalendar/types"
+import { DateRange } from "../OneCalendar/types"
 import { DatePickerTrigger } from "./components/DateInput"
 import { GranularitySelector } from "./components/GranularitySelector"
 import { PresetList } from "./components/PresetList"
@@ -36,7 +36,10 @@ export function OneDatePicker({
 }: OneDatePickerProps) {
   const [value, setValue] = useState<DatePickerValue | undefined>(defaultValue)
   const [isOpen, setIsOpen] = useState(false)
-  const [calendarMode, setCalendarMode] = useState<CalendarMode>("single")
+
+  const calendarMode = useMemo(() => {
+    return value?.granularity === "range" ? "range" : "single"
+  }, [value?.granularity])
 
   const granularityDefinition = useMemo(() => {
     return granularityDefinitions[value?.granularity ?? "day"]
@@ -76,15 +79,11 @@ export function OneDatePicker({
 
   const [customRangeMode, setCustomRangeMode] = useState(false)
 
-  const handleSelectGranularity = (
-    granularity: GranularityDefinitionKey,
-    mode: CalendarMode
-  ) => {
+  const handleSelectGranularity = (granularity: GranularityDefinitionKey) => {
     handleSelect({
       value: value?.value,
       granularity,
     })
-    setCalendarMode(mode)
   }
 
   const showPresets = useMemo(
@@ -151,7 +150,6 @@ export function OneDatePicker({
                     granularities={granularities}
                     value={value?.granularity}
                     onChange={handleSelectGranularity}
-                    mode={calendarMode}
                   />
                 )}
               </div>
