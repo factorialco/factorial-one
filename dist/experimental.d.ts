@@ -1598,6 +1598,8 @@ export declare interface GranularityDefinition {
         month: Date;
         onMonthChange: (date: Date) => void;
         motionDirection: number;
+        minDate?: Date;
+        maxDate?: Date;
         setViewDate: (date: Date) => void;
         viewDate: Date;
     }) => ReactNode;
@@ -1943,7 +1945,7 @@ action: BulkAction,
 
 export declare const OneAlert: ({ title, description, action, link, variant, }: AlertProps) => JSX_2.Element;
 
-export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaultSelected, showNavigation, showInput, }: OneCalendarProps): JSX_2.Element;
+export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaultSelected, showNavigation, showInput, minDate, maxDate, }: OneCalendarProps): JSX_2.Element;
 
 export declare interface OneCalendarProps {
     mode: CalendarMode;
@@ -1953,6 +1955,8 @@ export declare interface OneCalendarProps {
     defaultSelected?: Date | DateRange | null;
     showNavigation?: boolean;
     showInput?: boolean;
+    minDate?: Date;
+    maxDate?: Date;
 }
 
 export declare function OneCard({ avatar, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, }: OneCardProps): JSX_2.Element;
