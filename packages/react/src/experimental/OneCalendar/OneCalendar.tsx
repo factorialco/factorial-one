@@ -73,8 +73,6 @@ export function OneCalendar({
 
   const granularity = useMemo(() => granularityDefinitions[view], [view])
 
-  console.log(granularityDefinitions.day.fromString("15-01-2024"))
-
   const setSelected = useCallback(
     (date: Date | DateRange | null) => {
       setSelectedInternal(date)

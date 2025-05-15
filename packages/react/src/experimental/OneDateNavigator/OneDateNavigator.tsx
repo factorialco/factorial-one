@@ -7,7 +7,8 @@ import { granularityDefinitions } from "../OneCalendar"
 import { DateRange } from "../OneCalendar/types"
 import { DatePickerTrigger } from "./components/DateNavigatorTrigger"
 import { DatePickerValue } from "./types"
-export interface OneDatePickerProps extends OneDatePickerPopupProps {
+export interface OneDatePickerProps
+  extends Omit<OneDatePickerPopupProps, "children"> {
   hideNavigation?: boolean
   hideGoToCurrent?: boolean
 }
@@ -27,14 +28,6 @@ export function OneDateNavigator({
   const granularityDefinition = useMemo(() => {
     return granularityDefinitions[value?.granularity ?? "day"]
   }, [value?.granularity])
-
-  // const handleSelectDate = (date: Date | DateRange | null) => {
-  //   const currentGranularity = value?.granularity ?? "day"
-  //   handleSelect({
-  //     value: granularityDefinition.toRange(date ?? undefined),
-  //     granularity: currentGranularity,
-  //   })
-  // }
 
   const handleSelect = (value: DatePickerValue | undefined) => {
     setValue(value)

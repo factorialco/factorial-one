@@ -1,115 +1,62 @@
 import type {
-  DateRange,
+  DateRangeComplete,
   GranularityDefinition,
 } from "@/experimental/OneCalendar"
-import { granularityDefinitions } from "@/experimental/OneCalendar/granularities"
-import {
-  isAfterOrEqual,
-  isBeforeOrEqual,
-} from "@/experimental/OneCalendar/utils"
-import { useI18n } from "@/lib/providers/i18n"
+import { isValidDate } from "@/experimental/OneCalendar/utils"
 import { Input } from "@/ui/input"
-import { forwardRef, useEffect, useMemo, useState } from "react"
+import { forwardRef, useEffect, useState } from "react"
 import { DatePickerValue } from "../types"
 
 type DateInputProps = {
   value: DatePickerValue | undefined
   disabled?: boolean
-  error?: boolean
   className?: string
-  onDateChange?: (date: DateRange) => void
+  onDateChange?: (date: DateRangeComplete) => void
   onClick?: () => void
   granularity?: GranularityDefinition
-  minDate?: Date
-  maxDate?: Date
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }
 
-const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
+const DateInput = forwardRef<HTMLInputElement, DateInputProps>(
   (
-    {
-      value,
-      onDateChange,
-      disabled,
-      error,
-      className,
-      open,
-      onOpenChange,
-      granularity,
-      ...props
-    }: DateInputProps,
+    { value, onDateChange, disabled, className, granularity, onOpenChange },
     ref
   ) => {
-    const i18n = useI18n()
+    const [localValue, setLocalValue] = useState("")
+    const [error, setError] = useState(false)
 
-    const current = useMemo(() => {
-      if (!value || !value.value) {
-        return i18n.date.selectDate
-      }
-      const granularity = granularityDefinitions[value.granularity]
-      return granularity.toString(value.value) ?? i18n.date.selectDate
-    }, [value, i18n.date.selectDate])
-
-    const handleNavigation = (date: DateRange | false) => {
-      if (!date) {
-        return
-      }
-      onDateChange?.(date)
-    }
-
-    const minDate = useMemo(() => {
-      if (!props.minDate) {
-        return undefined
-      }
-      return granularity?.toRange(props.minDate)?.from
-    }, [props.minDate, granularity])
-
-    const maxDate = useMemo(() => {
-      if (!props.maxDate) {
-        return undefined
-      }
-      return granularity?.toRange(props.maxDate)?.to
-    }, [props.maxDate, granularity])
-
-    const [currentDate, setCurrentDate] = useState<DateRange | null>(null)
     useEffect(() => {
-      setCurrentDate(granularity?.toRange(new Date()) ?? null)
-
-      const checkGoToCurrentIsAvailable = () => {
-        const currentDate = granularity?.toRange(new Date()) ?? null
-        if (
-          currentDate &&
-          isAfterOrEqual(currentDate.from, minDate) &&
-          isBeforeOrEqual(currentDate.to || currentDate.from, maxDate)
-        ) {
-          setCurrentDate(currentDate)
-        } else {
-          setCurrentDate(null)
-        }
+      if (granularity) {
+        setLocalValue(granularity.toString(value?.value))
       }
-      const interval = setInterval(() => {
-        checkGoToCurrentIsAvailable()
-      }, 60000)
-      checkGoToCurrentIsAvailable()
+    }, [value, granularity])
 
-      return () => clearInterval(interval)
-    }, [granularity, minDate, maxDate])
+    const handleBlur = () => {
+      const range = granularity?.toRange(granularity?.fromString(localValue))
+      if (range && isValidDate(range?.from) && isValidDate(range?.to)) {
+        onDateChange?.(range)
+        onOpenChange?.(false)
+      } else {
+        setError(true)
+      }
+    }
 
     return (
       <Input
         ref={ref}
-        value={current}
+        placeholder="TODO component not ready, just a boilerplate"
+        value={localValue}
         disabled={disabled}
         error={error}
         className={className}
         onFocus={() => onOpenChange?.(true)}
+        onChange={(e) => setLocalValue(e.target.value)}
+        onBlur={handleBlur}
       />
     )
   }
 )
 
-// Add display name for better debugging
-DateInput.displayName = "DatePickerTrigger"
-
+DateInput.displayName = "DateInput"
 export { DateInput }
