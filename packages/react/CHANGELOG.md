@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.55.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.54.0...factorial-one-react-v1.55.0) (2025-05-15)
+
+
+### Features
+
+* **ProductCard:** export function ([#1820](https://github.com/factorialco/factorial-one/issues/1820)) ([49f2e13](https://github.com/factorialco/factorial-one/commit/49f2e13841378670e508d92a4f755fc43fdcce01))
+
 ## [1.54.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.53.2...factorial-one-react-v1.54.0) (2025-05-14)
 
 
