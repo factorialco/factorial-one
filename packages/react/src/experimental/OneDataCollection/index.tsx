@@ -231,12 +231,10 @@ export const OneDataCollection = <
     primaryActions,
     secondaryActions,
     // Summary
-    totalItemSummary = (totalItems: number | undefined) => {
-      if (totalItems === undefined) {
-        return null
-      }
-      return `${totalItems} ${i18n.collections.itemsCount}`
-    },
+    totalItemSummary = (totalItems: number | undefined) =>
+      totalItems === undefined
+        ? `${totalItems} ${i18n.collections.itemsCount}`
+        : null,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 

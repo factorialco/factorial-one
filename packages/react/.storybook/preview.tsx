@@ -40,7 +40,7 @@ export const FactorialOne = (Story, { parameters }) => {
       }}
       l10n={{
         l10n: {
-          locale: "es-ES", //parameters.l10n?.locale ?? "en",
+          locale: parameters.l10n?.locale ?? "en",
         },
       }}
       link={{
