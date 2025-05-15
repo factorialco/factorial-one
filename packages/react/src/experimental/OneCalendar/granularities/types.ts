@@ -46,6 +46,8 @@ export interface GranularityDefinition {
     month: Date
     onMonthChange: (date: Date) => void
     motionDirection: number
+    minDate?: Date
+    maxDate?: Date
     setViewDate: (date: Date) => void
     viewDate: Date
   }) => ReactNode

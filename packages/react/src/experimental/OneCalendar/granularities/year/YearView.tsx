@@ -1,6 +1,7 @@
 import { cn, focusRing } from "@/lib/utils"
 import {
   endOfYear,
+  isAfter,
   isBefore,
   isSameYear,
   isWithinInterval,
@@ -15,6 +16,8 @@ interface YearViewProps {
   onSelect?: (date: Date | DateRange | null) => void
   decade: number
   motionDirection?: number
+  minDate?: Date
+  maxDate?: Date
 }
 
 export function YearView({
@@ -23,6 +26,8 @@ export function YearView({
   onSelect,
   decade,
   motionDirection = 1,
+  minDate,
+  maxDate,
 }: YearViewProps) {
   const today = new Date()
 
@@ -165,12 +170,22 @@ export function YearView({
           const isEnd = isRangeEnd(year)
           const isOutside = isOutsideDecade(year)
           const isCurrent = isCurrentYear(year)
+
+          const currentYear = new Date(year, 0, 1)
+          const disabled =
+            (minDate && isBefore(startOfYear(currentYear), minDate)) ||
+            (maxDate && isAfter(endOfYear(currentYear), maxDate))
+
           return (
             <button
               key={year}
               onClick={() => handleYearClick(year)}
+              disabled={disabled}
               className={cn(
-                "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-[''] hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
+                "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-['']",
+                !disabled &&
+                  "hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
+                disabled && "cursor-not-allowed text-f1-foreground-secondary",
                 focusRing(),
                 isOutside &&
                   "[&>span]:font-normal [&>span]:text-f1-foreground-secondary",

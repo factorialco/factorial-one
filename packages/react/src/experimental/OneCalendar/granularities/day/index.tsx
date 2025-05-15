@@ -122,6 +122,8 @@ export const dayGranularity: GranularityDefinition = {
     }).format(viewDate)
   },
   render: (renderProps) => {
+    const minDate = toDayGranularityDateRange(renderProps.minDate)
+    const maxDate = toDayGranularityDateRange(renderProps.maxDate)
     return (
       <DayView
         mode={renderProps.mode}
@@ -130,6 +132,8 @@ export const dayGranularity: GranularityDefinition = {
         month={renderProps.month}
         onMonthChange={renderProps.onMonthChange}
         motionDirection={renderProps.motionDirection}
+        minDate={minDate ? minDate.from : undefined}
+        maxDate={maxDate ? maxDate.to : undefined}
       />
     )
   },

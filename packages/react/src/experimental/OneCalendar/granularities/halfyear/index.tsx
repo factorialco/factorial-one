@@ -2,6 +2,9 @@ import {
   addMonths,
   addYears,
   endOfMonth,
+  endOfYear,
+  getMonth,
+  setMonth,
   startOfMonth,
   startOfYear,
 } from "date-fns"
@@ -44,7 +47,21 @@ const toRangeString = (date: Date | DateRange | undefined | null) => {
 export function toHalfYearGranularityDateRange<
   T extends Date | DateRange | undefined | null,
 >(date: T): T extends Date | DateRange ? DateRangeComplete : T {
-  return toGranularityDateRange(date, startOfMonth, endOfMonth)
+  return toGranularityDateRange(
+    date,
+    (date) => {
+      if (getMonth(date) < 5) {
+        return startOfYear(date)
+      }
+      return startOfMonth(setMonth(date, 5))
+    },
+    (date) => {
+      if (getMonth(date) < 5) {
+        return endOfMonth(setMonth(date, 5))
+      }
+      return endOfYear(date)
+    }
+  )
 }
 
 export const halfyearGranularity: GranularityDefinition = {
@@ -121,6 +138,8 @@ export const halfyearGranularity: GranularityDefinition = {
     return startOfYear(date)
   },
   render: (renderProps) => {
+    const minDate = toHalfYearGranularityDateRange(renderProps.minDate)
+    const maxDate = toHalfYearGranularityDateRange(renderProps.maxDate)
     return (
       <HalfYearView
         mode={renderProps.mode}
@@ -128,6 +147,8 @@ export const halfyearGranularity: GranularityDefinition = {
         selected={renderProps.selected}
         onSelect={renderProps.onSelect}
         motionDirection={renderProps.motionDirection}
+        minDate={minDate ? minDate.from : undefined}
+        maxDate={maxDate ? maxDate.to : undefined}
       />
     )
   },

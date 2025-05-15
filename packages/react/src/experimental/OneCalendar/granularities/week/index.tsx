@@ -91,6 +91,8 @@ export const weekGranularity: GranularityDefinition = {
     }).format(viewDate)
   },
   render: (renderProps) => {
+    const minDate = toWeekGranularityDateRange(renderProps.minDate)
+    const maxDate = toWeekGranularityDateRange(renderProps.maxDate)
     return (
       <WeekView
         selected={renderProps.selected}
@@ -98,6 +100,8 @@ export const weekGranularity: GranularityDefinition = {
         month={renderProps.month}
         onMonthChange={renderProps.onMonthChange}
         motionDirection={renderProps.motionDirection}
+        minDate={minDate ? minDate.from : undefined}
+        maxDate={maxDate ? maxDate.to : undefined}
       />
     )
   },

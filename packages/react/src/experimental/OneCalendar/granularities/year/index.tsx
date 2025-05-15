@@ -78,6 +78,8 @@ export const yearGranularity: GranularityDefinition = {
     return `${startYear} ${rangeSeparator} ${endYear}`
   },
   render: (renderProps) => {
+    const minDate = toYearGranularityDateRange(renderProps.minDate)
+    const maxDate = toYearGranularityDateRange(renderProps.maxDate)
     return (
       <YearView
         mode={renderProps.mode}
@@ -85,6 +87,8 @@ export const yearGranularity: GranularityDefinition = {
         selected={renderProps.selected}
         onSelect={renderProps.onSelect}
         motionDirection={renderProps.motionDirection}
+        minDate={minDate ? minDate.from : undefined}
+        maxDate={maxDate ? maxDate.to : undefined}
       />
     )
   },

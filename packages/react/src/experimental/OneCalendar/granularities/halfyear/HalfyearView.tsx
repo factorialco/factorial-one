@@ -22,6 +22,8 @@ interface HalfYearViewProps {
   onSelect: (date: Date | DateRange) => void
   year: number
   motionDirection?: number
+  minDate?: Date
+  maxDate?: Date
 }
 
 export const HalfYearView = ({
@@ -29,6 +31,8 @@ export const HalfYearView = ({
   selected,
   onSelect,
   year,
+  minDate,
+  maxDate,
   motionDirection = 1,
 }: HalfYearViewProps) => {
   const halfYears = [1, 2]
@@ -197,14 +201,24 @@ export const HalfYearView = ({
                 const isStart = isRangeStart(halfYear, yearValue)
                 const isEnd = isRangeEnd(halfYear, yearValue)
 
+                const halfYearRange = getHalfYearRange(halfYear, yearValue)
+                const disabled =
+                  (minDate && isBefore(halfYearRange.from, minDate)) ||
+                  (maxDate &&
+                    halfYearRange.to &&
+                    isAfter(halfYearRange.to, maxDate))
+
                 return (
                   <button
                     key={`${yearValue}-H${halfYear}`}
                     onClick={() => handleHalfYearClick(halfYear, yearValue)}
+                    disabled={disabled}
                     className={cn(
                       "relative isolate flex h-10 flex-1 items-center justify-center rounded-md p-2 tabular-nums",
                       "after:absolute after:inset-x-1 after:inset-y-0 after:z-0 after:rounded-md after:ring-1 after:ring-inset after:ring-f1-border-secondary after:transition-all after:duration-100 after:content-['']",
-                      "hover:after:bg-f1-background-hover",
+                      disabled &&
+                        "cursor-not-allowed text-f1-foreground-secondary",
+                      !disabled && "hover:after:bg-f1-background-hover",
                       focusRing(),
                       (isStart || isEnd) && "after:inset-x-0",
                       isSelected &&
