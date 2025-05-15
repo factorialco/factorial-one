@@ -119,14 +119,14 @@ export const WithPresets: Story = {
   },
 }
 
-export const WithPresetsAndNavigation: Story = {
+export const WithPresetsHideNavigation: Story = {
   args: {
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
     granularities: ["day", "week", "month", "quarter", "range"],
     presets,
-    navigation: true,
+    hideNavigation: true,
   },
 }
 

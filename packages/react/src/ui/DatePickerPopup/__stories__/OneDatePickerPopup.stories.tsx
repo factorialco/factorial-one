@@ -1,13 +1,34 @@
 import { CalendarView, DateRange } from "@/experimental/OneCalendar/types"
 import type { Meta, StoryObj } from "@storybook/react"
 import { subDays } from "date-fns"
-import { OneDatePickerPopup } from "../OneDatePickerPopup"
+import { useState } from "react"
+import {
+  OneDatePickerPopup,
+  OneDatePickerPopupProps,
+} from "../OneDatePickerPopup"
 import { predefinedPresets } from "../presets"
 import { DatePickerValue } from "../types"
 
+const ExampleComponent = (props: Omit<OneDatePickerPopupProps, "children">) => {
+  const [value, setValue] = useState<DatePickerValue | undefined>(undefined)
+  const [open, setOpen] = useState(false)
+
+  return (
+    <OneDatePickerPopup
+      {...props}
+      onSelect={setValue}
+      value={value}
+      open={open}
+      onOpenChange={setOpen}
+    >
+      <button>Click me {JSON.stringify(value)}</button>
+    </OneDatePickerPopup>
+  )
+}
+
 const meta = {
-  title: "DatePickerPopup",
-  component: OneDatePickerPopup,
+  title: "Components/DatePickerPopup",
+  component: ExampleComponent,
   parameters: {
     docs: {
       description: {
@@ -15,8 +36,6 @@ const meta = {
           "The `OneDatePickerPopup` component is an internal component to render the date selection popup used in other components like date navigator or date input. It allows the user to select a <strong>range of time</strong> (from a start datetime to an end datetime). With different granularities (day, week, month, quarter, halfyear, year, range). When the user select an item in a granularity is selecting that range of time, e.g. when the user select a day, the range start of the day (30/07/2025 00:00:00) to the end of the day (30/07/2025 23:59:59) is selected.",
           "The component allows you to define the available granularities for the user (if not defined the default ones is day).",
           "The component also allows you to define presets that will be displayed in the component. Check the presets section for more information.",
-          "For each granularity the input selector will show a button to navigate to the current date in the granularity, you can hide that via props",
-          "The component also allows you navigation arrows to allow user to navigate to the next or previous item in the granularity.",
           "Note the value and the default value are an object with the following shape: `{ value: { from: Date, to: Date }, granularity: GranularityDefinitionKey }`",
         ]
           .map((text) => `<p>${text}.</p>`)
@@ -25,7 +44,7 @@ const meta = {
     },
   },
   tags: ["autodocs", "internal"],
-} satisfies Meta<typeof OneDatePicker>
+} satisfies Meta<typeof ExampleComponent>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -116,17 +135,6 @@ export const WithPresets: Story = {
     } as DatePickerValue,
     granularities: ["day", "week", "month", "quarter"],
     presets,
-  },
-}
-
-export const WithPresetsAndNavigation: Story = {
-  args: {
-    defaultValue: {
-      granularity: "month",
-    } as DatePickerValue,
-    granularities: ["day", "week", "month", "quarter", "range"],
-    presets,
-    navigation: true,
   },
 }
 
