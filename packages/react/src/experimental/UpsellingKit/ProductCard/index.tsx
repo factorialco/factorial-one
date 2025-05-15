@@ -1,7 +1,7 @@
 import { Button, IconType } from "@/factorial-one"
 import CrossIcon from "@/icons/app/Cross"
 import { useEffect, useState } from "react"
-import { ModuleAvatar } from "../Information/ModuleAvatar"
+import { ModuleAvatar } from "../../Information/ModuleAvatar"
 
 export type ProductCardProps = {
   title: string
@@ -14,7 +14,7 @@ export type ProductCardProps = {
   trackVisibility?: (open: boolean) => void
 }
 
-const ProductCard = ({
+export function ProductCard({
   title,
   description,
   onClick,
@@ -23,7 +23,7 @@ const ProductCard = ({
   icon,
   dismissable = false,
   trackVisibility,
-}: ProductCardProps) => {
+}: ProductCardProps) {
   const [open, setOpen] = useState(isVisible)
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const ProductCard = ({
       <div>
         <div className="p-2">
           <div
-            className="flex h-[90px] cursor-pointer flex-row gap-2 rounded-md border-f1-border p-3 text-f1-foreground shadow-md hover:bg-f1-background-secondary"
+            className="flex h-auto w-auto cursor-pointer flex-row gap-2 rounded-md border-f1-border p-3 text-f1-foreground shadow-md hover:bg-f1-background-secondary"
             onClick={onClick}
           >
             <ModuleAvatar icon={icon} size="lg" />
@@ -73,4 +73,3 @@ const ProductCard = ({
     )
   )
 }
-export default ProductCard
