@@ -1,5 +1,3 @@
-import { Button } from "@/components/Actions/Button"
-import { ButtonInternal } from "@/components/Actions/Button/internal"
 import type {
   DateRange,
   GranularityDefinition,
@@ -9,29 +7,26 @@ import {
   isAfterOrEqual,
   isBeforeOrEqual,
 } from "@/experimental/OneCalendar/utils"
-import { ChevronLeft, ChevronRight } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
-import { cn, focusRing } from "@/lib/utils"
+import { Input } from "@/ui/input"
 import { forwardRef, useEffect, useMemo, useState } from "react"
-import { GranularityDefinitionKey } from "../../OneCalendar/granularities"
 import { DatePickerValue } from "../types"
 
-type DatePickerTriggerProps = {
+type DateInputProps = {
   value: DatePickerValue | undefined
   disabled?: boolean
   error?: boolean
   className?: string
-  highlighted?: boolean
   onDateChange?: (date: DateRange) => void
   onClick?: () => void
-  navigation?: boolean
   granularity?: GranularityDefinition
   minDate?: Date
   maxDate?: Date
-  hideGoToCurrent?: boolean
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
-const DatePickerTrigger = forwardRef<HTMLDivElement, DatePickerTriggerProps>(
+const DateInput = forwardRef<HTMLDivElement, DateInputProps>(
   (
     {
       value,
@@ -39,13 +34,11 @@ const DatePickerTrigger = forwardRef<HTMLDivElement, DatePickerTriggerProps>(
       disabled,
       error,
       className,
-      highlighted,
-      onClick,
-      navigation,
+      open,
+      onOpenChange,
       granularity,
-      hideGoToCurrent,
       ...props
-    }: DatePickerTriggerProps,
+    }: DateInputProps,
     ref
   ) => {
     const i18n = useI18n()
@@ -103,92 +96,20 @@ const DatePickerTrigger = forwardRef<HTMLDivElement, DatePickerTriggerProps>(
       return () => clearInterval(interval)
     }, [granularity, minDate, maxDate])
 
-    const nextPrev = value?.value
-      ? granularity?.getPrevNext(value?.value, {
-          min: minDate,
-          max: maxDate,
-        })
-      : undefined
-
-    const handleClickCurrentDate = () => {
-      // Recalculate the current date based on the granularity
-      const currentDate = granularity?.toRange(new Date())
-      if (!currentDate) {
-        return
-      }
-      onDateChange?.(currentDate)
-    }
-
-    type GranularityTranslations = {
-      [key in GranularityDefinitionKey]: {
-        currentDate: string
-      }
-    }
     return (
-      <div
+      <Input
         ref={ref}
-        className={cn(
-          "inline-flex cursor-auto appearance-none gap-1 rounded-md border-0 bg-f1-background px-1 ring-1 ring-inset ring-f1-border transition-all placeholder:text-f1-foreground-tertiary hover:ring-f1-border-hover",
-          "[%>*] py-1",
-          focusRing("focus:ring-f1-border-hover"),
-          disabled &&
-            "cursor-not-allowed bg-f1-background-secondary opacity-50",
-          error && "ring-f1-border-critical-bold",
-          className
-        )}
-        // Prevent the date picker from being triggered when the user clicks on the input
-        onClick={(e) => e.stopPropagation()}
-      >
-        {navigation && (
-          <Button
-            size="sm"
-            variant="ghost"
-            icon={ChevronLeft}
-            label="Previous"
-            hideLabel
-            disabled={!nextPrev?.prev}
-            onClick={() => handleNavigation(nextPrev?.prev ?? false)}
-          />
-        )}
-        <ButtonInternal
-          size="sm"
-          variant="ghost"
-          label={current}
-          onClick={onClick}
-          disabled={disabled}
-          className={cn(highlighted && "bg-f1-background-secondary-hover")}
-        />
-        {navigation && (
-          <Button
-            variant="ghost"
-            icon={ChevronRight}
-            label="Next"
-            hideLabel
-            size="sm"
-            disabled={!nextPrev?.next}
-            onClick={() => handleNavigation(nextPrev?.next ?? false)}
-          />
-        )}
-        {!hideGoToCurrent && currentDate && (
-          <div className="border-l-solid flex-1 border-[#f00]">
-            <Button
-              size="sm"
-              variant="ghost"
-              label={
-                (i18n.date.granularities as GranularityTranslations)[
-                  value?.granularity ?? "day"
-                ]?.currentDate
-              }
-              onClick={handleClickCurrentDate}
-            />
-          </div>
-        )}
-      </div>
+        value={current}
+        disabled={disabled}
+        error={error}
+        className={className}
+        onFocus={() => onOpenChange?.(true)}
+      />
     )
   }
 )
 
 // Add display name for better debugging
-DatePickerTrigger.displayName = "DatePickerTrigger"
+DateInput.displayName = "DatePickerTrigger"
 
-export { DatePickerTrigger }
+export { DateInput }

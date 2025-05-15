@@ -1,18 +1,18 @@
+import { CalendarView, DateRange } from "@/experimental/OneCalendar/types"
 import type { Meta, StoryObj } from "@storybook/react"
 import { subDays } from "date-fns"
-import { CalendarView, DateRange } from "../../OneCalendar/types"
-import { OneDatePicker } from "../OneDatePicker"
+import { OneDatePickerPopup } from "../OneDatePickerPopup"
 import { predefinedPresets } from "../presets"
 import { DatePickerValue } from "../types"
 
 const meta = {
-  title: "DatePicker",
-  component: OneDatePicker,
+  title: "DatePickerPopup",
+  component: OneDatePickerPopup,
   parameters: {
     docs: {
       description: {
         component: [
-          "The `OneDatePicker` component is a date picker that allows the user to select a <strong>range of time</strong> (from a start datetime to an end datetime). With different granularities (day, week, month, quarter, halfyear, year, range). When the user select an item in a granularity is selecting that range of time, e.g. when the user select a day, the range start of the day (30/07/2025 00:00:00) to the end of the day (30/07/2025 23:59:59) is selected.",
+          "The `OneDatePickerPopup` component is an internal component to render the date selection popup used in other components like date navigator or date input. It allows the user to select a <strong>range of time</strong> (from a start datetime to an end datetime). With different granularities (day, week, month, quarter, halfyear, year, range). When the user select an item in a granularity is selecting that range of time, e.g. when the user select a day, the range start of the day (30/07/2025 00:00:00) to the end of the day (30/07/2025 23:59:59) is selected.",
           "The component allows you to define the available granularities for the user (if not defined the default ones is day).",
           "The component also allows you to define presets that will be displayed in the component. Check the presets section for more information.",
           "For each granularity the input selector will show a button to navigate to the current date in the granularity, you can hide that via props",
@@ -24,7 +24,7 @@ const meta = {
       },
     },
   },
-  tags: ["autodocs", "experimental"],
+  tags: ["autodocs", "internal"],
 } satisfies Meta<typeof OneDatePicker>
 
 export default meta
@@ -53,6 +53,25 @@ export const Simple: Story = {
     defaultValue: {
       granularity: "day",
     } as DatePickerValue,
+    // granularities: ["day", "week", "month"],
+  },
+}
+
+export const MonthGranularity: Story = {
+  args: {
+    defaultValue: {
+      granularity: "month",
+    } as DatePickerValue,
+    granularities: ["month"],
+  },
+}
+
+export const MultipleGranularities: Story = {
+  args: {
+    defaultValue: {
+      granularity: "month",
+    } as DatePickerValue,
+    granularities: ["day", "week", "month", "quarter", "halfyear", "year"],
   },
 }
 
@@ -61,6 +80,15 @@ export const WithCustomRange: Story = {
     defaultValue: {
       granularity: "month",
     } as DatePickerValue,
+    granularities: [
+      "day",
+      "week",
+      "month",
+      "quarter",
+      "halfyear",
+      "year",
+      "range",
+    ],
   },
 }
 
@@ -75,8 +103,9 @@ export const WithDefaultDate: Story = {
     hideGoToCurrent: true,
     defaultValue: {
       value: { from: new Date(), to: new Date() },
-      granularity: "day",
+      granularity: "month",
     } as DatePickerValue,
+    granularities: ["month"],
   },
 }
 
@@ -87,6 +116,53 @@ export const WithPresets: Story = {
     } as DatePickerValue,
     granularities: ["day", "week", "month", "quarter"],
     presets,
+  },
+}
+
+export const WithPresetsAndNavigation: Story = {
+  args: {
+    defaultValue: {
+      granularity: "month",
+    } as DatePickerValue,
+    granularities: ["day", "week", "month", "quarter", "range"],
+    presets,
+    navigation: true,
+  },
+}
+
+export const WeekView: Story = {
+  args: {
+    defaultValue: {
+      granularity: "week",
+    } as DatePickerValue,
+    granularities: ["week"],
+  },
+}
+
+export const QuarterView: Story = {
+  args: {
+    defaultValue: {
+      granularity: "quarter",
+    } as DatePickerValue,
+    granularities: ["quarter"],
+  },
+}
+
+export const HalfYearView: Story = {
+  args: {
+    defaultValue: {
+      granularity: "halfyear",
+    } as DatePickerValue,
+    granularities: ["halfyear"],
+  },
+}
+
+export const YearView: Story = {
+  args: {
+    defaultValue: {
+      granularity: "year",
+    } as DatePickerValue,
+    granularities: ["year"],
   },
 }
 
