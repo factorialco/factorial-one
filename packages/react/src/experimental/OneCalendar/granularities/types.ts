@@ -18,6 +18,8 @@ export type PrevNextDateNavigation = {
 }
 
 export interface GranularityDefinition {
+  // The mode of the calendar that this granularity is used in (single by default)
+  calendarMode?: CalendarMode
   // The view of the calendar that this granularity is used in
   calendarView: CalendarView
   // Label for the granularity in the calendar view

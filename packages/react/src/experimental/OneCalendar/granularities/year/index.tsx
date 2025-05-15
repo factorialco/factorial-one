@@ -27,19 +27,29 @@ export const yearGranularity: GranularityDefinition = {
     }
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [addYears(from, -1), addYears(to, -1)]
-    const [nextFrom, nextTo] = [addYears(from, 1), addYears(to, 1)]
+    const [prevFrom, prevTo] = [
+      startOfYear(addYears(from, -1)),
+      endOfYear(addYears(to, -1)),
+    ]
+    const [nextFrom, nextTo] = [
+      startOfYear(addYears(from, 1)),
+      endOfYear(addYears(to, 1)),
+    ]
 
     const minWithGranularity = options.min && startOfYear(options.min)
     const maxWithGranularity = options.max && endOfYear(options.max)
 
     return {
-      prev: isAfterOrEqual(prevFrom, minWithGranularity)
-        ? { from: prevFrom, to: prevTo }
-        : false,
-      next: isBeforeOrEqual(nextTo, maxWithGranularity)
-        ? { from: nextFrom, to: nextTo }
-        : false,
+      prev:
+        isAfterOrEqual(prevFrom, minWithGranularity) &&
+        isAfterOrEqual(prevTo, minWithGranularity)
+          ? { from: prevFrom, to: prevTo }
+          : false,
+      next:
+        isBeforeOrEqual(nextTo, maxWithGranularity) &&
+        isBeforeOrEqual(nextFrom, maxWithGranularity)
+          ? { from: nextFrom, to: nextTo }
+          : false,
     }
   },
   toRange: (date) => toYearGranularityDateRange(date),

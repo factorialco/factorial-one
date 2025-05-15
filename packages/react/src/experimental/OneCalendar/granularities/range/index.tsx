@@ -8,6 +8,7 @@ import { dayGranularity, toDayGranularityDateRange } from "../day"
  * It is not a real granularity, but a way to render a range of dates.
  */
 export const rangeGranularity: GranularityDefinition = {
+  calendarMode: "range",
   ...dayGranularity,
   getPrevNext: (value, options) => {
     const dateRange = toDayGranularityDateRange(value)
@@ -20,9 +21,15 @@ export const rangeGranularity: GranularityDefinition = {
 
     const { from, to } = dateRange
 
-    const delta = differenceInDays(to, from)
-    const [nextFrom, nextTo] = [addDays(from, delta), addDays(to, delta)]
-    const [prevFrom, prevTo] = [addDays(from, -delta), addDays(to, -delta)]
+    const delta = differenceInDays(to, from) + 1
+    const [nextFrom, nextTo] = [
+      startOfDay(addDays(from, delta)),
+      endOfDay(addDays(to, delta)),
+    ]
+    const [prevFrom, prevTo] = [
+      startOfDay(addDays(from, -delta)),
+      endOfDay(addDays(to, -delta)),
+    ]
 
     const minWithGranularity = options.min && startOfDay(options.min)
     const maxWithGranularity = options.max && endOfDay(options.max)

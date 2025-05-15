@@ -61,7 +61,7 @@ export const toDateRangeString = (
   }
 
   if (typeof value === "string") {
-    const [fromStr, toStr] = value.split("-")
+    const [fromStr, toStr] = value.split(/(?:\s+-\s+|\s+→\s+)/)
     return {
       from: fromStr,
       to: toStr,

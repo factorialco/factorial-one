@@ -165,3 +165,14 @@ export const YearView: Story = {
     granularities: ["year"],
   },
 }
+
+export const WithMinMaxDates: Story = {
+  args: {
+    defaultValue: {
+      granularity: "day",
+    } as DatePickerValue,
+    granularities: ["day", "week", "month"],
+    minDate: subDays(today, 30), // Can't select dates before 30 days ago
+    maxDate: today, // Can't select dates after today
+  },
+}
