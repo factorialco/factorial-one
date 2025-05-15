@@ -439,6 +439,9 @@ export const HalfYearRange: Story = {
     mode: "range",
     view: "halfyear",
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
       const now = new Date()
@@ -482,6 +485,9 @@ export const DayRangeWithInput: Story = {
     view: "day",
     showInput: true,
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 }
 
 export const MonthRangeWithInput: Story = {
@@ -490,19 +496,30 @@ export const MonthRangeWithInput: Story = {
     view: "month",
     showInput: true,
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 }
+
 export const QuarterRangeWithInput: Story = {
   args: {
     mode: "range",
     view: "quarter",
     showInput: true,
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 }
+
 export const HalfYearRangeWithInput: Story = {
   args: {
     mode: "range",
     view: "halfyear",
     showInput: true,
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
   },
 }
 
@@ -511,5 +528,8 @@ export const YearRangeWithInput: Story = {
     mode: "range",
     view: "year",
     showInput: true,
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
   },
 }

@@ -43,6 +43,7 @@ export const dateFilter: FilterTypeDefinition<
     const granularity = getGranularitySimpleDefinition(options.view)
 
     const rangeString = granularity.toRangeString(value)
+
     return rangeString.from && rangeString.to
       ? `${rangeString.from} ${rangeSeparator} ${rangeString.to}`
       : rangeString.from || rangeString.to || ""

@@ -43,7 +43,7 @@ export function DateFilter({
 
   return (
     <>
-      <div className="space-y-4 p-3">
+      <div className="space-y-4 overflow-x-hidden p-3">
         <OneCalendar
           defaultSelected={value || options.defaultSelected}
           onSelect={(date) => onChange(date ?? undefined)}

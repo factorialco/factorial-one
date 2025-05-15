@@ -8,7 +8,13 @@ import {
   granularityDefinitions,
   GranularityDefinitionSimple,
 } from "./granularities"
-import { CalendarMode, CalendarView, DateRange, DateRangeString } from "./types"
+import {
+  CalendarMode,
+  CalendarView,
+  DateRange,
+  DateRangeError,
+  DateRangeString,
+} from "./types"
 import { isValidDate, toDateRange } from "./utils"
 
 export interface OneCalendarProps {
@@ -57,8 +63,6 @@ export function OneCalendar({
   const setSelected = useCallback(
     (date: Date | DateRange | null) => {
       setSelectedInternal(date)
-
-      // Set the input value
       setInputValue(granularity.toRangeString(date))
 
       const newViewDate = granularity.getViewDateFromDate(
@@ -72,10 +76,6 @@ export function OneCalendar({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only needs to be rebuilt when the granularity changes
     [granularity]
   )
-
-  useEffect(() => {
-    // setSelected(defaultSelected)
-  }, [defaultSelected, setSelected])
 
   // Handle ui view navigation
   const navigate = (direction: -1 | 1) => {
@@ -102,10 +102,7 @@ export function OneCalendar({
     to: "",
   })
 
-  const [inputError, setInputError] = useState<{
-    from: boolean
-    to: boolean
-  }>({
+  const [inputError, setInputError] = useState<DateRangeError>({
     from: false,
     to: false,
   })
@@ -159,6 +156,19 @@ export function OneCalendar({
     }
   }
 
+  const handleInputKeyDown = (
+    input: "from" | "to",
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      handleInputChange(input)
+    }
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault()
+      handleInputNavigate(input, e.key === "ArrowDown" ? -1 : 1)
+    }
+  }
+
   return (
     <div className="flex flex-col">
       {showInput && (
@@ -168,15 +178,7 @@ export function OneCalendar({
             value={inputValue.from}
             placeholder={mode === "range" ? i18n.date.from : i18n.date.date}
             onBlur={() => handleInputChange("from")}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleInputChange("from")
-              }
-              if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                e.preventDefault()
-                handleInputNavigate("from", e.key === "ArrowDown" ? -1 : 1)
-              }
-            }}
+            onKeyDown={(e) => handleInputKeyDown("from", e)}
             onChange={(e) =>
               setInputValue({ ...inputValue, from: e.target.value })
             }
@@ -187,15 +189,7 @@ export function OneCalendar({
               value={inputValue.to}
               placeholder={i18n.date.to}
               onBlur={() => handleInputChange("to")}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleInputChange("to")
-                }
-                if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-                  e.preventDefault()
-                  handleInputNavigate("to", e.key === "ArrowDown" ? -1 : 1)
-                }
-              }}
+              onKeyDown={(e) => handleInputKeyDown("to", e)}
               onChange={(e) =>
                 setInputValue({ ...inputValue, to: e.target.value })
               }

@@ -23,3 +23,8 @@ export type DateRangeString = {
   from: string
   to?: string
 }
+
+export type DateRangeError = {
+  from: boolean
+  to: boolean
+}
