@@ -43,9 +43,8 @@ const DatePickerTrigger = forwardRef<HTMLDivElement, DatePickerTriggerProps>(
       onClick,
       navigation,
       granularity,
-      minDate,
-      maxDate,
       hideGoToCurrent,
+      ...props
     }: DatePickerTriggerProps,
     ref
   ) => {
@@ -66,6 +65,20 @@ const DatePickerTrigger = forwardRef<HTMLDivElement, DatePickerTriggerProps>(
       onDateChange?.(date)
     }
 
+    const minDate = useMemo(() => {
+      if (!props.minDate) {
+        return undefined
+      }
+      return granularity?.toRange(props.minDate)?.from
+    }, [props.minDate, granularity])
+
+    const maxDate = useMemo(() => {
+      if (!props.maxDate) {
+        return undefined
+      }
+      return granularity?.toRange(props.maxDate)?.to
+    }, [props.maxDate, granularity])
+
     const [currentDate, setCurrentDate] = useState<DateRange | null>(null)
     useEffect(() => {
       setCurrentDate(granularity?.toRange(new Date()) ?? null)
@@ -78,8 +91,9 @@ const DatePickerTrigger = forwardRef<HTMLDivElement, DatePickerTriggerProps>(
           isBeforeOrEqual(currentDate.to || currentDate.from, maxDate)
         ) {
           setCurrentDate(currentDate)
+        } else {
+          setCurrentDate(null)
         }
-        setCurrentDate(null)
       }
       const interval = setInterval(() => {
         checkGoToCurrentIsAvailable()

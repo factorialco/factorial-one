@@ -34,8 +34,14 @@ export const weekGranularity: GranularityDefinition = {
 
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [addDays(from, -7), addDays(to, -7)]
-    const [nextFrom, nextTo] = [addDays(from, 7), addDays(to, 7)]
+    const [prevFrom, prevTo] = [
+      startOfISOWeek(addDays(from, -7)),
+      endOfISOWeek(addDays(to, -7)),
+    ]
+    const [nextFrom, nextTo] = [
+      startOfISOWeek(addDays(from, 7)),
+      endOfISOWeek(addDays(to, 7)),
+    ]
 
     const minWithGranularity = options.min && startOfISOWeek(options.min)
     const maxWithGranularity = options.max && endOfISOWeek(options.max)

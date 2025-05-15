@@ -36,8 +36,14 @@ export const dayGranularity: GranularityDefinition = {
 
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [addDays(from, -1), addDays(to, -1)]
-    const [nextFrom, nextTo] = [addDays(from, 1), addDays(to, 1)]
+    const [prevFrom, prevTo] = [
+      startOfDay(addDays(from, -1)),
+      endOfDay(addDays(to, -1)),
+    ]
+    const [nextFrom, nextTo] = [
+      startOfDay(addDays(from, 1)),
+      endOfDay(addDays(to, 1)),
+    ]
 
     const minWithGranularity = options.min && startOfDay(options.min)
     const maxWithGranularity = options.max && endOfDay(options.max)
@@ -63,7 +69,6 @@ export const dayGranularity: GranularityDefinition = {
 
     const parseDate = (dateStr: string) => {
       const trimmed = dateStr.trim()
-
       const [day, month, year] = trimmed.split(/[/.-]/)
       return new Date(Number(year), Number(month) - 1, Number(day))
     }

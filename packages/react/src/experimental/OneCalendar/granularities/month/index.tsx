@@ -27,8 +27,14 @@ export const monthGranularity: GranularityDefinition = {
     }
 
     const { from, to } = dateRange
-    const [prevFrom, prevTo] = [addMonths(from, -1), addMonths(to, -1)]
-    const [nextFrom, nextTo] = [addMonths(from, 1), addMonths(to, 1)]
+    const [prevFrom, prevTo] = [
+      startOfMonth(addMonths(from, -1)),
+      endOfMonth(addMonths(to, -1)),
+    ]
+    const [nextFrom, nextTo] = [
+      startOfMonth(addMonths(from, 1)),
+      endOfMonth(addMonths(to, 1)),
+    ]
 
     const minWithGranularity = options.min && startOfMonth(options.min)
     const maxWithGranularity = options.max && endOfMonth(options.max)

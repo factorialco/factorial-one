@@ -37,12 +37,15 @@ export function OneDatePicker({
   const [value, setValue] = useState<DatePickerValue | undefined>(defaultValue)
   const [isOpen, setIsOpen] = useState(false)
 
-  const calendarMode = useMemo(() => {
-    return value?.granularity === "range" ? "range" : "single"
-  }, [value?.granularity])
-
   const granularityDefinition = useMemo(() => {
     return granularityDefinitions[value?.granularity ?? "day"]
+  }, [value?.granularity])
+
+  const calendarMode = useMemo(() => {
+    return (
+      granularityDefinitions[value?.granularity ?? "day"].calendarMode ||
+      "single"
+    )
   }, [value?.granularity])
 
   const handleSelectDate = (date: Date | DateRange | null) => {
@@ -108,64 +111,69 @@ export function OneDatePicker({
   )
 
   return (
-    <Popover open={isOpen} onOpenChange={setIsOpen}>
-      <PopoverTrigger asChild>
-        <DatePickerTrigger
-          value={value}
-          highlighted={isOpen}
-          navigation={navigation}
-          onDateChange={handleNavigationChange}
-          granularity={granularityDefinition}
-          minDate={props.minDate}
-          maxDate={props.maxDate}
-          disabled={props.disabled}
-          hideGoToCurrent={props.hideGoToCurrent}
-          onClick={() => setIsOpen(true)}
-        />
-      </PopoverTrigger>
-      <PopoverContent className="w-full overflow-auto" align="start">
-        {showPresets ? (
-          <PresetList
-            presets={presets}
-            date={value}
-            onSelect={handlePresetSelect}
+    <>
+      {JSON.stringify(value?.value)}
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger asChild>
+          <DatePickerTrigger
+            value={value}
+            highlighted={isOpen}
+            navigation={navigation}
+            onDateChange={handleNavigationChange}
+            granularity={granularityDefinition}
+            minDate={props.minDate}
+            maxDate={props.maxDate}
+            disabled={props.disabled}
+            hideGoToCurrent={props.hideGoToCurrent}
+            onClick={() => setIsOpen(true)}
           />
-        ) : (
-          <div className="flex gap-4">
-            {(presets.length > 0 || granularities.length > 1) && (
-              <div>
-                {presets.length > 0 && (
-                  <Button
-                    icon={ChevronLeft}
-                    variant="neutral"
-                    size="sm"
-                    round
-                    hideLabel
-                    label="Back"
-                    onClick={handleBackToPresets}
-                  />
-                )}
-                {granularities.length > 1 && (
-                  <GranularitySelector
-                    granularities={granularities}
-                    value={value?.granularity}
-                    onChange={handleSelectGranularity}
-                  />
-                )}
+        </PopoverTrigger>
+        <PopoverContent className="w-full overflow-auto" align="start">
+          {showPresets ? (
+            <PresetList
+              presets={presets}
+              date={value}
+              onSelect={handlePresetSelect}
+            />
+          ) : (
+            <div className="flex gap-4">
+              {(presets.length > 0 || granularities.length > 1) && (
+                <div>
+                  {presets.length > 0 && (
+                    <Button
+                      icon={ChevronLeft}
+                      variant="neutral"
+                      size="sm"
+                      round
+                      hideLabel
+                      label="Back"
+                      onClick={handleBackToPresets}
+                    />
+                  )}
+                  {granularities.length > 1 && (
+                    <GranularitySelector
+                      granularities={granularities}
+                      value={value?.granularity}
+                      onChange={handleSelectGranularity}
+                    />
+                  )}
+                </div>
+              )}
+              <div className="min-w-[300px] flex-1">
+                <OneCalendar
+                  showInput
+                  mode={calendarMode}
+                  view={calendarView}
+                  onSelect={handleSelectDate}
+                  defaultSelected={value?.value}
+                  minDate={props.minDate}
+                  maxDate={props.maxDate}
+                />
               </div>
-            )}
-            <div className="min-w-[300px] flex-1">
-              <OneCalendar
-                showInput
-                mode={calendarMode}
-                view={calendarView}
-                onSelect={handleSelectDate}
-                defaultSelected={value?.value}
-              />
             </div>
-          </div>
-        )}
-      </PopoverContent>
-    </Popover>
+          )}
+        </PopoverContent>
+      </Popover>
+    </>
   )
 }

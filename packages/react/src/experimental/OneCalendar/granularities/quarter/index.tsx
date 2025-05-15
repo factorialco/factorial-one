@@ -27,8 +27,14 @@ export const quarterGranularity: GranularityDefinition = {
     }
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [addMonths(from, -3), addMonths(to, -3)]
-    const [nextFrom, nextTo] = [addMonths(from, 3), addMonths(to, 3)]
+    const [prevFrom, prevTo] = [
+      startOfQuarter(addMonths(from, -3)),
+      endOfQuarter(addMonths(to, -3)),
+    ]
+    const [nextFrom, nextTo] = [
+      startOfQuarter(addMonths(from, 3)),
+      endOfQuarter(addMonths(to, 3)),
+    ]
 
     const minWithGranularity = options.min && startOfQuarter(options.min)
     const maxWithGranularity = options.max && endOfQuarter(options.max)

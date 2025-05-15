@@ -1,5 +1,11 @@
 import { cn, focusRing } from "@/lib/utils"
-import { isAfter, isBefore, isWithinInterval } from "date-fns"
+import {
+  endOfMonth,
+  isAfter,
+  isBefore,
+  isWithinInterval,
+  startOfMonth,
+} from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
 import { CalendarMode, DateRange } from "../../types"
 
@@ -10,8 +16,8 @@ export const getHalfYearRange = (halfYear: number, year: number): DateRange => {
   const firstMonth = halfYear === 1 ? 0 : 6 // Jan for H1, Jul for H2
   const lastMonth = halfYear === 1 ? 5 : 11 // Jun for H1, Dec for H2
 
-  const from = new Date(year, firstMonth, 1)
-  const to = new Date(year, lastMonth + 1, 0) // Last day of the last month
+  const from = startOfMonth(new Date(year, firstMonth, 1))
+  const to = endOfMonth(new Date(year, lastMonth + 1, 0)) // Last day of the last month
 
   return { from, to }
 }

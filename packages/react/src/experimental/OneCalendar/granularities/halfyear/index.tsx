@@ -12,7 +12,6 @@ import { DateRange, DateRangeComplete } from "../../types"
 import {
   isAfterOrEqual,
   isBeforeOrEqual,
-  toDateRange,
   toDateRangeString,
   toGranularityDateRange,
 } from "../../utils"
@@ -27,7 +26,7 @@ const formatHalfYear = (date: Date) => {
 }
 
 const toRangeString = (date: Date | DateRange | undefined | null) => {
-  const dateRange = toDateRange(date)
+  const dateRange = toHalfYearGranularityDateRange(date)
   if (!dateRange) {
     return {
       from: "",
@@ -53,14 +52,10 @@ export function toHalfYearGranularityDateRange<
       if (getMonth(date) < 5) {
         return startOfYear(date)
       }
-      return startOfMonth(setMonth(date, 5))
+      return startOfMonth(setMonth(date, 6))
     },
-    (date) => {
-      if (getMonth(date) < 5) {
-        return endOfMonth(setMonth(date, 5))
-      }
-      return endOfYear(date)
-    }
+    (date) =>
+      getMonth(date) < 6 ? endOfMonth(setMonth(date, 5)) : endOfYear(date)
   )
 }
 
@@ -73,8 +68,14 @@ export const halfyearGranularity: GranularityDefinition = {
     }
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [addMonths(from, -6), addMonths(to, -6)]
-    const [nextFrom, nextTo] = [addMonths(from, 6), addMonths(to, 6)]
+    const [prevFrom, prevTo] = [
+      startOfMonth(addMonths(from, -6)),
+      endOfMonth(addMonths(to, -6)),
+    ]
+    const [nextFrom, nextTo] = [
+      startOfMonth(addMonths(from, 6)),
+      endOfMonth(addMonths(to, 6)),
+    ]
 
     const minWithGranularity = options.min && startOfMonth(options.min)
     const maxWithGranularity = options.max && endOfMonth(options.max)
@@ -120,7 +121,7 @@ export const halfyearGranularity: GranularityDefinition = {
 
     return toHalfYearGranularityDateRange({
       from: parseDate(fromStr),
-      to: toStr ? parseDate(toStr) : undefined,
+      to: parseDate(toStr ? toStr : fromStr),
     })
   },
   navigate: (date, direction) => {
