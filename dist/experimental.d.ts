@@ -1582,6 +1582,7 @@ export declare const getGranularityDefinition: (granularityKey: GranularityDefin
 export declare const getGranularitySimpleDefinition: (granularityKey: GranularityDefinitionKey) => GranularityDefinitionSimple;
 
 export declare interface GranularityDefinition {
+    calendarMode?: CalendarMode;
     calendarView: CalendarView;
     label: (viewDate: Date) => ReactNode;
     toRangeString: (date: Date | DateRange | undefined | null) => DateRangeString;
