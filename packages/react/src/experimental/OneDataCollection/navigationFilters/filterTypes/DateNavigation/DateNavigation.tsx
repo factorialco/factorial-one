@@ -45,6 +45,7 @@ export function DateNavigation({
         minDate={options.min}
         maxDate={options.max}
         presets={options.presets}
+        hideGoToCurrent={options.hideGoToCurrent}
       />
     </div>
   )

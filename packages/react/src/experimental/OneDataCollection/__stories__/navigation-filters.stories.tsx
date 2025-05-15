@@ -95,6 +95,21 @@ export const RangeGranularity: Story = {
   },
 }
 
+export const NoGoToCurrent: Story = {
+  args: {
+    navigationFilters: {
+      date: {
+        type: "date-navigator",
+        defaultValue: new Date(),
+        granularity: "year",
+        min: new Date(),
+        max: addDays(new Date(), 1),
+        hideGoToCurrent: true,
+      },
+    },
+  },
+}
+
 export const MultipleGranularities: Story = {
   args: {
     navigationFilters: {

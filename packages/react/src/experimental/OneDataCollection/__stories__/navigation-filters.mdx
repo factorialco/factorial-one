@@ -132,6 +132,27 @@ definition in the `granularityDefinitions` object in the file
   meta={DataCollectionNavigationFiltersStories}
 />
 
+#### Multiple granularities
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.MultipleGranularities}
+  meta={DataCollectionNavigationFiltersStories}
+/>
+
+#### With presets
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.WithPresets}
+  meta={DataCollectionNavigationFiltersStories}
+/>
+
+#### With no go to current
+
+<Canvas
+  of={DataCollectionNavigationFiltersStories.NoGoToCurrent}
+  meta={DataCollectionNavigationFiltersStories}
+/>
+
 #### Week granularity
 
 <Canvas
@@ -153,16 +174,75 @@ definition in the `granularityDefinitions` object in the file
   meta={DataCollectionNavigationFiltersStories}
 />
 
-#### Custom range
+### Adding a new navigation filter
 
-<Canvas
-  of={DataCollectionNavigationFiltersStories.CustomGranularity}
-  meta={DataCollectionNavigationFiltersStories}
-/>
+> Remember navigation fitler need always a value can not be empty by definition
 
-#### Multiple granularities
+To add a new navigation filter, you need to create a folder in
+`OneDataCollection/navigationFilters/filterTypes/[your navigation filter name]`
+and add the following files:
 
-<Canvas
-  of={DataCollectionNavigationFiltersStories.MultipleGranularities}
-  meta={DataCollectionNavigationFiltersStories}
-/>
+- `index.ts`: The entry point of the filter.
+- `types.ts`: The types of the filter.
+- `{[your filter name]}.tsx`: The component of the filter.
+
+The `index.ts` file will export the filter definition and the component.
+
+```tsx
+export const MyFilterDefinition: NavigationFilter<
+  {the type of the filter},
+  {the type of the filter initial value (optional)}
+>  = {
+  valueConverter: (value, filterDef) => {
+    // return the value converted to the type of the filter
+    // This is usefull if you want to accept a value and convert it to the internal state and providing a default value
+  },
+  // The component of the filter
+  render: (props) => <MyComponent {...props} />,
+}
+```
+
+The `types.ts` file will export the types of the filter.
+
+```tsx
+export type MyFilterOptions = {
+  // The options of the filter
+  // e.g.
+  // granularity?: GranularityDefinitionKey[] | GranularityDefinitionKey
+}
+
+export type MyFilterDefinition = NavigationFilterDefinitionBase<
+  {the type of the filter}
+> & {
+  type: "[your filter name]"
+} & MyFilterOptions
+```
+
+Then modify the the `OneDataCollection/navigationFilters/index.ts` file to add
+the new filter to the `navigationFilterTypes` object.
+
+```tsx
+export const navigationFilterTypes = {
+  ...
+  "[your filter name]": MyFilterDefinition,
+} as const
+```
+
+> [!NOTE] The `[your filter name]` must be unique and the same used in the
+> `MyFilterDefinition`type
+
+You must also declare the types: Modify the
+`OneDataCollection/navigationFilters/types.ts` file to add the new filter type.
+
+```tsx
+export type NavigationFilterDefinition = ... | MyFilterDefinition
+
+export type NavigationFilterValue<T> = T extends DateNavigatorFilterDefinition
+  ? DateValue
+  : T extends MyFilterDefinition
+    ? MyFilterValue
+    : T extends undefined
+      ? undefined
+      : never
+
+```

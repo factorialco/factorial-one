@@ -11,6 +11,7 @@ export type DateNavigationOptions = {
   min?: Date
   max?: Date
   presets?: DatePreset[]
+  hideGoToCurrent?: boolean
 }
 
 export type DateNavigatorFilterDefinition = NavigationFilterDefinitionBase<
