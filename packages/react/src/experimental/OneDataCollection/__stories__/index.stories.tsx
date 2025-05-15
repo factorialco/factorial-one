@@ -981,10 +981,21 @@ export const WithSelectableAndBulkActions: Story = {
         return {
           primary: [
             {
-              label: allSelected ? "Delete All" : "Delete",
+              label: allSelected ? "Edit All" : "Edit",
+              icon: Pencil,
+              id: "edit-all",
+            },
+            {
+              label: "Download",
+              icon: Download,
+              id: "download",
+            },
+            {
+              label:  allSelected ? "Delete All" : "Delete",
               icon: Delete,
               id: "delete-all",
-            },
+              critical: true,
+            }
           ],
           secondary: [
             ...(allSelected
@@ -2651,3 +2662,4 @@ export const TableWithSecondaryActions: Story = {
     )
   },
 }
+
