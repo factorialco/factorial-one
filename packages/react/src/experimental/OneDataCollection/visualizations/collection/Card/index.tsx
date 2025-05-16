@@ -1,5 +1,6 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
+import { cn } from "@/lib/utils"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
 import { useMemo } from "react"
@@ -117,8 +118,23 @@ export const CardCollection = <
             ))
           : data.map((item, index) => {
               const id = source.selectable ? source.selectable(item) : undefined
+              const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
+              const itemOnClick = source.itemOnClick
+                ? source.itemOnClick(item)
+                : undefined
+
+              const hasHover = itemHref || itemOnClick
+
               return (
-                <Card key={index}>
+                <Card
+                  key={index}
+                  onClick={itemOnClick}
+                  href={itemHref}
+                  className={cn(
+                    hasHover &&
+                      "cursor-pointer hover:bg-f1-background-secondary"
+                  )}
+                >
                   <CardHeader>
                     {source.selectable && id !== undefined && (
                       <Checkbox
@@ -132,7 +148,7 @@ export const CardCollection = <
                     )}
                     <CardTitle>{title(item)}</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-2">
+                  <CardContent className={cn("space-y-2")}>
                     {cardProperties.map((property) => (
                       <div key={String(property.label)} className="space-y-1">
                         <div className="text-muted-foreground text-sm font-medium">
