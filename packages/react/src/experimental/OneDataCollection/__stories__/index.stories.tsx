@@ -991,11 +991,11 @@ export const WithSelectableAndBulkActions: Story = {
               id: "download",
             },
             {
-              label:  allSelected ? "Delete All" : "Delete",
+              label: allSelected ? "Delete All" : "Delete",
               icon: Delete,
               id: "delete-all",
               critical: true,
-            }
+            },
           ],
           secondary: [
             ...(allSelected
@@ -2662,4 +2662,3 @@ export const TableWithSecondaryActions: Story = {
     )
   },
 }
-
