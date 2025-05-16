@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.57.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.1...factorial-one-react-v1.57.2) (2025-05-16)
+
+
+### Bug Fixes
+
+* pageHeader prev next button reload page ([#1835](https://github.com/factorialco/factorial-one/issues/1835)) ([9f24d46](https://github.com/factorialco/factorial-one/commit/9f24d4674a441dbbef66c3daa2d70edb6f7b8a01))
+
 ## [1.57.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.0...factorial-one-react-v1.57.1) (2025-05-16)
 
 
