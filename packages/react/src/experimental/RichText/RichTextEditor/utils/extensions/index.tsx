@@ -1,7 +1,6 @@
 import CharacterCount from "@tiptap/extension-character-count"
 import Color from "@tiptap/extension-color"
 import Highlight from "@tiptap/extension-highlight"
-import Image from "@tiptap/extension-image"
 import Link from "@tiptap/extension-link"
 import Placeholder from "@tiptap/extension-placeholder"
 import TaskList from "@tiptap/extension-task-list"
@@ -48,7 +47,6 @@ const ExtensionsConfiguration = ({
     Underline,
     TextStyle,
     Color,
-    Image,
     Typography,
     Highlight,
     TaskList.configure({
