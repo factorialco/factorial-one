@@ -62,6 +62,13 @@ export const Default: Story = {
   },
 }
 
+export const LoadingMoreItems: Story = {
+  args: {
+    items: ITEMS,
+    loadingMoreItems: true,
+  },
+}
+
 export const Skeleton: Story = {
   args: {},
   render: () => <ActivityItemList.Skeleton />,
