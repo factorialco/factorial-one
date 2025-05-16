@@ -10,6 +10,7 @@ export type OneDropdownButtonItem<T = string> = {
   value: T
   label: string
   icon?: IconType
+  critical?: boolean
 }
 
 export type OneDropdownButtonProps<T = string> = Partial<
