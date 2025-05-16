@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.57.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.56.1...factorial-one-react-v1.57.0) (2025-05-16)
+
+
+### Features
+
+* **RichTextEditor:** enhance secondary action handling with toggle support ([#1819](https://github.com/factorialco/factorial-one/issues/1819)) ([aa7018e](https://github.com/factorialco/factorial-one/commit/aa7018e34b7fbade41f78a734a3453d567695e8e))
+
 ## [1.56.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.56.0...factorial-one-react-v1.56.1) (2025-05-16)
 
 
