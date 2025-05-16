@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.56.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.55.0...factorial-one-react-v1.56.0) (2025-05-16)
+
+
+### Features
+
+* internal component select asList mode ([#1809](https://github.com/factorialco/factorial-one/issues/1809)) ([73f721c](https://github.com/factorialco/factorial-one/commit/73f721c9dba0b945e4eeb6f52cef4808f11d1adf))
+
 ## [1.55.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.54.0...factorial-one-react-v1.55.0) (2025-05-15)
 
 
