@@ -25,11 +25,8 @@ export type DateRangeString = {
   from: string
   to?: string
 }
-<<<<<<< HEAD
 
 export type DateRangeError = {
   from: boolean
   to: boolean
 }
-=======
->>>>>>> 53972ab5 (feat: fromString)

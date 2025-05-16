@@ -6,9 +6,6 @@ import {
   startOfMonth,
 } from "date-fns"
 import { GranularityDefinition } from ".."
-import { DateRange } from "../../types"
-import { GranularityDefinition } from ".."
-import { DateRange } from "../../types"
 import { DateRange, DateRangeComplete } from "../../types"
 import {
   formatDateRange,
@@ -61,22 +58,6 @@ export const dayGranularity: GranularityDefinition = {
     }
   },
   toRange: (date) => toDayGranularityDateRange(date),
-  toGranularityDateRange,
-} from "../../utils"
-import { DayView } from "./DayView"
-
-const toDayGranularityDateRange = (
-  date: Date | DateRange | undefined | null
-) => {
-  return toGranularityDateRange(date, startOfDay, endOfDay)
-}
-
-export const dayGranularity: GranularityDefinition = {
-<<<<<<< HEAD
->>>>>>> 53972ab5 (feat: fromString)
-=======
-  toRange: (date) => toDayGranularityDateRange(date),
->>>>>>> 00d04951 (fix: granularity date range)
   toRangeString: (date) => formatDateRange(date, "dd/MM/yyyy"),
   toString: (date) => formatDateToString(date, "dd/MM/yyyy"),
   fromString: (dateStr) => {
@@ -92,24 +73,10 @@ export const dayGranularity: GranularityDefinition = {
       return new Date(Number(year), Number(month) - 1, Number(day))
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     return toDayGranularityDateRange({
       from: parseDate(fromStr),
       to: toStr ? parseDate(toStr) : undefined,
     })
-=======
-    return {
-      from: parseDate(fromStr),
-      to: toStr ? parseDate(toStr) : undefined,
-    }
->>>>>>> 53972ab5 (feat: fromString)
-=======
-    return toDayGranularityDateRange({
-      from: parseDate(fromStr),
-      to: toStr ? parseDate(toStr) : undefined,
-    })
->>>>>>> 00d04951 (fix: granularity date range)
   },
   navigate: (viewDate, direction) => {
     return addDays(viewDate, direction)
