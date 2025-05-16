@@ -3,11 +3,12 @@ import {
   OneDropdownButton,
   OneDropdownButtonItem,
 } from "@/components/Actions/OneDropdownButton"
+import { Switch } from "@/experimental/Forms/Fields/Switch"
 import { ToolbarDivider } from "../../Toolbar"
-import { actionType, primaryActionType } from "../../utils/types"
+import { primaryActionType, secondaryActionType } from "../../utils/types"
 
 interface ActionsMenuProps {
-  secondaryAction?: actionType
+  secondaryAction?: secondaryActionType
   primaryAction?: primaryActionType
   useLittleMode: boolean
   disableButtons: boolean
@@ -19,8 +20,7 @@ const getLabelID = (label?: string) =>
 
 const createActionItems = (
   primaryAction?: primaryActionType,
-  secondaryAction?: actionType,
-  useLittleMode?: boolean
+  secondaryAction?: secondaryActionType
 ): OneDropdownButtonItem<string>[] => {
   const primaryActionItems = primaryAction
     ? [
@@ -39,16 +39,15 @@ const createActionItems = (
       icon: sub.icon,
     })) || []
 
-  const secondaryActionItems =
-    secondaryAction && useLittleMode
-      ? [
-          {
-            label: secondaryAction.label,
-            value: getLabelID(secondaryAction.label),
-            icon: secondaryAction.icon,
-          },
-        ]
-      : []
+  const secondaryActionItems = secondaryAction
+    ? [
+        {
+          label: secondaryAction.label,
+          value: getLabelID(secondaryAction.label),
+          icon: "icon" in secondaryAction ? secondaryAction.icon : undefined,
+        },
+      ]
+    : []
 
   return [...primaryActionItems, ...subActionItems, ...secondaryActionItems]
 }
@@ -56,7 +55,7 @@ const createActionItems = (
 const handleActionClick = (
   labelID: string,
   primaryAction?: primaryActionType,
-  secondaryAction?: actionType
+  secondaryAction?: secondaryActionType
 ) => {
   if (labelID === getLabelID(primaryAction?.action.label)) {
     primaryAction?.action.onClick()
@@ -70,7 +69,7 @@ const handleActionClick = (
 }
 
 interface SecondaryActionButtonProps {
-  secondaryAction?: actionType
+  secondaryAction?: secondaryActionType
   useLittleMode: boolean
   primaryAction?: primaryActionType
   isFullscreen: boolean
@@ -84,8 +83,31 @@ const SecondaryActionButton = ({
   isFullscreen,
   disableButtons,
 }: SecondaryActionButtonProps) => {
-  if (!secondaryAction || (useLittleMode && primaryAction && !isFullscreen)) {
+  const shouldHideButton =
+    !secondaryAction ||
+    (useLittleMode &&
+      primaryAction &&
+      !isFullscreen &&
+      secondaryAction.type !== "switch")
+
+  if (shouldHideButton) {
     return null
+  }
+
+  if (secondaryAction.type === "switch") {
+    return (
+      <Switch
+        title={secondaryAction.label}
+        checked={"checked" in secondaryAction ? secondaryAction.checked : false}
+        onCheckedChange={(checked) => {
+          secondaryAction.onClick(checked)
+        }}
+        disabled={disableButtons || secondaryAction.disabled}
+        hideLabel={
+          "hideLabel" in secondaryAction ? secondaryAction.hideLabel : false
+        }
+      />
+    )
   }
 
   return (
@@ -94,11 +116,14 @@ const SecondaryActionButton = ({
         e.preventDefault()
         secondaryAction.onClick()
       }}
-      variant={secondaryAction.variant ?? "outline"}
+      variant={
+        "variant" in secondaryAction ? secondaryAction.variant : "outline"
+      }
       size="md"
       label={secondaryAction.label}
       disabled={disableButtons || secondaryAction.disabled}
       type="button"
+      icon={"icon" in secondaryAction ? secondaryAction.icon : undefined}
     />
   )
 }
@@ -133,6 +158,7 @@ interface PrimaryActionContentProps {
   listOfActions: OneDropdownButtonItem<string>[]
   handleOnClick: (labelID: string) => void
   disableButtons: boolean
+  includeSecondaryInDropdown: boolean
 }
 
 const renderPrimaryActionContent = ({
@@ -141,9 +167,10 @@ const renderPrimaryActionContent = ({
   listOfActions,
   handleOnClick,
   disableButtons,
+  includeSecondaryInDropdown,
 }: PrimaryActionContentProps) => {
   if (!isFullscreen) {
-    return primaryAction.subActions ? (
+    return primaryAction.subActions || includeSecondaryInDropdown ? (
       <OneDropdownButton
         items={listOfActions}
         onClick={handleOnClick}
@@ -180,7 +207,7 @@ const renderPrimaryActionContent = ({
           type="button"
         />
       ))}
-      <ToolbarDivider />
+      {primaryAction.subActions?.length && <ToolbarDivider />}
       <PrimaryActionButton
         primaryAction={primaryAction.action}
         disableButtons={disableButtons}
@@ -202,20 +229,29 @@ const ActionsMenu = ({
 }: ActionsMenuProps) => {
   if (!secondaryAction && !primaryAction) return null
 
+  const shouldIncludeSecondaryInDropdown =
+    secondaryAction &&
+    useLittleMode &&
+    secondaryAction.type !== "switch" &&
+    primaryAction
+      ? true
+      : false
+
   const listOfActions = createActionItems(
     primaryAction,
-    secondaryAction,
-    useLittleMode
+    shouldIncludeSecondaryInDropdown ? secondaryAction : undefined
   )
 
   const onActionClick = (labelID: string) =>
     handleActionClick(labelID, primaryAction, secondaryAction)
 
   const shouldShowDivider =
-    secondaryAction && primaryAction && (!useLittleMode || isFullscreen)
+    secondaryAction &&
+    primaryAction &&
+    (!useLittleMode || secondaryAction.type === "switch" || isFullscreen)
 
   return (
-    <div className="flex flex-shrink-0 items-center gap-2">
+    <div className="scrollbar-macos flex items-center gap-2 overflow-x-auto">
       <SecondaryActionButton
         secondaryAction={secondaryAction}
         useLittleMode={useLittleMode}
@@ -233,6 +269,7 @@ const ActionsMenu = ({
           listOfActions,
           handleOnClick: onActionClick,
           disableButtons,
+          includeSecondaryInDropdown: shouldIncludeSecondaryInDropdown,
         })}
     </div>
   )
