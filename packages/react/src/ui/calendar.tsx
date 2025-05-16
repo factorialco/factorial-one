@@ -15,6 +15,7 @@ function Calendar({
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={className}
+      disabled={props.disabled}
       classNames={{
         months: "flex flex-col",
         caption: "hidden",

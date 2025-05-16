@@ -1,3 +1,4 @@
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { act, renderHook } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
@@ -15,7 +16,6 @@ import type {
   RecordType,
 } from "./types"
 import { useData } from "./useData"
-
 interface TestRecord extends RecordType {
   id: number
   name: string
@@ -38,12 +38,17 @@ type TestSource = DataSource<
   TestRecord,
   TestFilters,
   SortingsDefinition,
-  ItemActionsDefinition<TestRecord>
+  ItemActionsDefinition<TestRecord>,
+  NavigationFiltersDefinition
 >
 
 const createMockDataSource = (
   fetchData: (
-    options: BaseFetchOptions<TestFilters, SortingsDefinition>
+    options: BaseFetchOptions<
+      TestFilters,
+      SortingsDefinition,
+      NavigationFiltersDefinition
+    >
   ) =>
     | BaseResponse<TestRecord>
     | Promise<BaseResponse<TestRecord>>
@@ -53,7 +58,8 @@ const createMockDataSource = (
   const baseAdapter: BaseDataAdapter<
     TestRecord,
     TestFilters,
-    SortingsDefinition
+    SortingsDefinition,
+    NavigationFiltersDefinition
   > = {
     fetchData,
   }
@@ -61,7 +67,8 @@ const createMockDataSource = (
   const paginatedAdapter: PaginatedDataAdapter<
     TestRecord,
     TestFilters,
-    SortingsDefinition
+    SortingsDefinition,
+    NavigationFiltersDefinition
   > = {
     fetchData: async (options) => {
       const result = await Promise.resolve(fetchData(options))
@@ -91,6 +98,9 @@ const createMockDataSource = (
     setCurrentSearch: vi.fn(),
     isLoading: false,
     setIsLoading: vi.fn(),
+    currentNavigationFilters: {},
+    setCurrentNavigationFilters: vi.fn(),
+    navigationFilters: undefined,
   }
 }
 
@@ -367,6 +377,9 @@ describe("useData", () => {
         setCurrentSearch: vi.fn(),
         isLoading: false,
         setIsLoading: vi.fn(),
+        currentNavigationFilters: {},
+        setCurrentNavigationFilters: vi.fn(),
+        navigationFilters: undefined,
       }
 
       // Render the hook

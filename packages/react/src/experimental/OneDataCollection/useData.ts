@@ -13,6 +13,10 @@ import {
 } from "../../lib/promise-to-observable"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
+import {
+  NavigationFiltersDefinition,
+  NavigationFiltersState,
+} from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
 import {
   BaseFetchOptions,
@@ -62,6 +66,7 @@ interface UseDataReturn<Record> {
   error: DataError | null
   paginationInfo: PaginationInfo | null
   setPage: (page: number) => void
+  totalItems: number | undefined
 }
 
 type DataType<T> = PromiseState<T>
@@ -164,8 +169,15 @@ export function useData<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  NavigationFilters extends NavigationFiltersDefinition,
 >(
-  source: DataSource<Record, Filters, Sortings, ItemActionsDefinition<Record>>,
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActionsDefinition<Record>,
+    NavigationFilters
+  >,
   { filters }: UseDataOptions<Filters> = {}
 ): UseDataReturn<Record> {
   const {
@@ -176,6 +188,7 @@ export function useData<
     currentSearch,
     isLoading,
     setIsLoading,
+    currentNavigationFilters,
   } = source
   const cleanup = useRef<(() => void) | undefined>()
 
@@ -189,6 +202,8 @@ export function useData<
   } = useDataFetchState<Record>()
 
   const { paginationInfo, setPaginationInfo } = usePaginationState()
+
+  const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
 
   const mergedFilters = useMemo(
     () => ({ ...currentFilters, ...filters }),
@@ -213,8 +228,10 @@ export function useData<
           perPage: result.perPage,
           pagesCount: result.pagesCount,
         })
+        setTotalItems(result.total)
       } else {
         setData(result)
+        setTotalItems?.(result.length)
       }
       setError(null)
       setIsInitialLoading(false)
@@ -240,7 +257,11 @@ export function useData<
   type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
 
   const fetchDataAndUpdate = useCallback(
-    async (filters: FiltersState<Filters>, currentPage = 1) => {
+    async (
+      filters: FiltersState<Filters>,
+      currentPage = 1,
+      navigationFilters: NavigationFiltersState<NavigationFilters>
+    ) => {
       try {
         // Clean up any existing subscription before creating a new one
         if (cleanup.current) {
@@ -248,14 +269,20 @@ export function useData<
           cleanup.current = undefined
         }
 
-        const baseFetchOptions: BaseFetchOptions<Filters, Sortings> = {
+        const baseFetchOptions: BaseFetchOptions<
+          Filters,
+          Sortings,
+          NavigationFilters
+        > = {
           filters,
           search: searchValue,
           sortings: currentSortings,
+          navigationFilters,
         }
 
-        const fetcher = (): PromiseOrObservable<ResultType> =>
-          dataAdapter.paginationType === "pages"
+        const fetcher = (): PromiseOrObservable<ResultType> => {
+          setTotalItems(undefined)
+          return dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 ...baseFetchOptions,
                 pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
@@ -263,6 +290,7 @@ export function useData<
             : dataAdapter.fetchData({
                 ...baseFetchOptions,
               })
+        }
 
         const result = fetcher()
 
@@ -314,20 +342,31 @@ export function useData<
       }
 
       setIsLoading(true)
-      fetchDataAndUpdate(mergedFilters, page)
+      fetchDataAndUpdate(mergedFilters, page, currentNavigationFilters)
     },
-    [fetchDataAndUpdate, mergedFilters, setIsLoading, paginationInfo]
+    [
+      fetchDataAndUpdate,
+      mergedFilters,
+      setIsLoading,
+      paginationInfo,
+      currentNavigationFilters,
+    ]
   )
 
   useEffect(() => {
     setIsLoading(true)
     // Always fetch page 1 when filters change
-    fetchDataAndUpdate(mergedFilters, 1)
+    fetchDataAndUpdate(mergedFilters, 1, currentNavigationFilters)
 
     return () => {
       cleanup.current?.()
     }
-  }, [fetchDataAndUpdate, mergedFilters, setIsLoading])
+  }, [
+    fetchDataAndUpdate,
+    mergedFilters,
+    setIsLoading,
+    currentNavigationFilters,
+  ])
 
   return {
     data,
@@ -336,5 +375,6 @@ export function useData<
     error,
     paginationInfo,
     setPage,
+    totalItems,
   }
 }

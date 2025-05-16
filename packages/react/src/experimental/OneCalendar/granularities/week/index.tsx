@@ -6,23 +6,55 @@ import {
   startOfISOWeek,
   startOfMonth,
 } from "date-fns"
-import { DateRange } from "../../types"
+import { DateRange, DateRangeComplete } from "../../types"
 import {
   formatDateRange,
   formatDateToString,
+  isAfterOrEqual,
+  isBeforeOrEqual,
   toDateRangeString,
   toGranularityDateRange,
 } from "../../utils"
 import { GranularityDefinition } from "../types"
 import { WeekView } from "./WeekView"
 
-const toWeekGranularityDateRange = (
-  date: Date | DateRange | undefined | null
-) => {
+export function toWeekGranularityDateRange<
+  T extends Date | DateRange | undefined | null,
+>(date: T): T extends Date | DateRange ? DateRangeComplete : T {
   return toGranularityDateRange(date, startOfISOWeek, endOfISOWeek)
 }
 
 export const weekGranularity: GranularityDefinition = {
+  calendarView: "week",
+  getPrevNext: (value: DateRange, options) => {
+    const dateRange = toWeekGranularityDateRange(value)
+    if (!dateRange) {
+      return { prev: false, next: false }
+    }
+
+    const { from, to } = dateRange
+
+    const [prevFrom, prevTo] = [
+      startOfISOWeek(addDays(from, -7)),
+      endOfISOWeek(addDays(to, -7)),
+    ]
+    const [nextFrom, nextTo] = [
+      startOfISOWeek(addDays(from, 7)),
+      endOfISOWeek(addDays(to, 7)),
+    ]
+
+    const minWithGranularity = options.min && startOfISOWeek(options.min)
+    const maxWithGranularity = options.max && endOfISOWeek(options.max)
+
+    return {
+      prev: isAfterOrEqual(prevFrom, minWithGranularity)
+        ? { from: prevFrom, to: prevTo }
+        : false,
+      next: isBeforeOrEqual(nextTo, maxWithGranularity)
+        ? { from: nextFrom, to: nextTo }
+        : false,
+    }
+  },
   toRangeString: (date) => formatDateRange(date, "'W'I yyyy"),
   toRange: (date) => toWeekGranularityDateRange(date),
   toString: (date) => formatDateToString(date, "'W'I yyyy"),
@@ -65,6 +97,8 @@ export const weekGranularity: GranularityDefinition = {
     }).format(viewDate)
   },
   render: (renderProps) => {
+    const minDate = toWeekGranularityDateRange(renderProps.minDate)
+    const maxDate = toWeekGranularityDateRange(renderProps.maxDate)
     return (
       <WeekView
         selected={renderProps.selected}
@@ -72,6 +106,8 @@ export const weekGranularity: GranularityDefinition = {
         month={renderProps.month}
         onMonthChange={renderProps.onMonthChange}
         motionDirection={renderProps.motionDirection}
+        minDate={minDate ? minDate.from : undefined}
+        maxDate={maxDate ? maxDate.to : undefined}
       />
     )
   },

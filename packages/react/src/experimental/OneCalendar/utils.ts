@@ -1,8 +1,11 @@
-import { format } from "date-fns"
+import { format, isAfter, isBefore, isEqual } from "date-fns"
 import * as locales from "date-fns/locale"
+import { Matcher } from "react-day-picker"
 import { rangeSeparator } from "./granularities/consts"
-import { DateRange, DateRangeString } from "./types"
+
+import { DateRange, DateRangeComplete, DateRangeString } from "./types"
 // Get the locale object from date-fns/locale
+
 export const getLocale = (localeKey: string) => {
   const key = localeKey.split("-")[0] // Handle both 'es' and 'es-ES' formats
   return locales[key as keyof typeof locales]
@@ -58,7 +61,7 @@ export const toDateRangeString = (
   }
 
   if (typeof value === "string") {
-    const [fromStr, toStr] = value.split("-")
+    const [fromStr, toStr] = value.split(/(?:\s+-\s+|\s+→\s+)/)
     return {
       from: fromStr,
       to: toStr,
@@ -112,18 +115,63 @@ export const formatDateToString = (
   return `${from}${to && from !== to ? ` ${rangeSeparator} ${to}` : ""}`
 }
 
-export const toGranularityDateRange = (
+export function toGranularityDateRange<
+  T extends Date | DateRange | undefined | null,
+>(
   date: Date | DateRange | undefined | null,
   fromFn: (date: Date) => Date,
   toFn: (date: Date) => Date
-) => {
+): T extends Date | DateRange ? DateRangeComplete : T {
+  type ReturnType<T> = T extends Date | DateRange ? DateRangeComplete : T
+
   const dateRange = toDateRange(date)
   if (!dateRange) {
-    return null
+    return null as ReturnType<T>
   }
   const { from, to } = dateRange
+
   return {
     from: fromFn(from),
     to: toFn(to ? to : from),
+  } as ReturnType<T>
+}
+
+/**
+ * Checks if the data is before or equal
+ * @param date
+ * @param min
+ * @returns
+ */
+export const isBeforeOrEqual = (date: Date, min: Date | undefined) =>
+  !min || isBefore(date, min) || isEqual(date, min)
+
+/**
+ * Checks if the data is after or equal
+ * @param date
+ * @param max
+ * @returns
+ */
+export const isAfterOrEqual = (date: Date, max: Date | undefined) =>
+  !max || isAfter(date, max) || isEqual(date, max)
+/**
+ * Converts a date range to a calendar picker matcher
+ * @param minDate
+ * @param maxDate
+ * @returns
+ */
+export const toCalendarPickerMatcher = ({
+  minDate,
+  maxDate,
+}: {
+  minDate?: Date
+  maxDate?: Date
+}): Matcher | Matcher[] => {
+  const res: Matcher[] = []
+  if (minDate) {
+    res.push({ before: minDate })
   }
+  if (maxDate) {
+    res.push({ after: maxDate })
+  }
+  return res
 }

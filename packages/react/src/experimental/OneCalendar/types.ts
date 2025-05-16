@@ -19,6 +19,8 @@ export type DateRange = {
   to?: Date
 }
 
+export type DateRangeComplete = Required<DateRange>
+
 export type DateRangeString = {
   from: string
   to?: string

@@ -5,16 +5,12 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { useI18n } from "../../lib/providers/i18n"
 import {
+  GranularityDefinition,
+  GranularityDefinitionKey,
   granularityDefinitions,
   GranularityDefinitionSimple,
-} from "./granularities"
-import {
-  CalendarMode,
-  CalendarView,
-  DateRange,
-  DateRangeError,
-  DateRangeString,
-} from "./types"
+} from "./granularities/index"
+import { CalendarMode, CalendarView, DateRange, DateRangeString } from "./types"
 import { isValidDate, toDateRange } from "./utils"
 
 export interface OneCalendarProps {
@@ -25,18 +21,33 @@ export interface OneCalendarProps {
   defaultSelected?: Date | DateRange | null
   showNavigation?: boolean
   showInput?: boolean
+  minDate?: Date
+  maxDate?: Date
 }
 
 export const getGranularitySimpleDefinition = (
-  view: CalendarView
+  granularityKey: GranularityDefinitionKey
 ): GranularityDefinitionSimple => {
-  const granularity = granularityDefinitions[view]
+  const granularity = granularityDefinitions[granularityKey]
   if (!granularity) {
-    throw new Error(`Granularity definition for view ${view} not found`)
+    throw new Error(
+      `Granularity simple definition for view ${granularityKey} not found`
+    )
   }
   return {
     toRangeString: granularity.toRangeString,
+    toString: granularity.toString,
   }
+}
+
+export const getGranularityDefinition = (
+  granularityKey: GranularityDefinitionKey
+): GranularityDefinition => {
+  const granularity = granularityDefinitions[granularityKey]
+  if (!granularity) {
+    throw new Error(`Granularity definition ${granularityKey} not found`)
+  }
+  return granularity
 }
 
 export function OneCalendar({
@@ -47,6 +58,8 @@ export function OneCalendar({
   defaultSelected = null,
   showNavigation = true,
   showInput = false,
+  minDate,
+  maxDate,
 }: OneCalendarProps) {
   const i18n = useI18n()
 
@@ -63,6 +76,8 @@ export function OneCalendar({
   const setSelected = useCallback(
     (date: Date | DateRange | null) => {
       setSelectedInternal(date)
+
+      // Set the input value
       setInputValue(granularity.toRangeString(date))
 
       const newViewDate = granularity.getViewDateFromDate(
@@ -76,6 +91,14 @@ export function OneCalendar({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only needs to be rebuilt when the granularity changes
     [granularity]
   )
+
+  useEffect(() => {
+    setSelected(defaultSelected)
+  }, [defaultSelected, setSelected])
+
+  useEffect(() => {
+    // setSelected(defaultSelected)
+  }, [defaultSelected, setSelected])
 
   // Handle ui view navigation
   const navigate = (direction: -1 | 1) => {
@@ -102,7 +125,10 @@ export function OneCalendar({
     to: "",
   })
 
-  const [inputError, setInputError] = useState<DateRangeError>({
+  const [inputError, setInputError] = useState<{
+    from: boolean
+    to: boolean
+  }>({
     from: false,
     to: false,
   })
@@ -156,19 +182,6 @@ export function OneCalendar({
     }
   }
 
-  const handleInputKeyDown = (
-    input: "from" | "to",
-    e: React.KeyboardEvent<HTMLInputElement>
-  ) => {
-    if (e.key === "Enter") {
-      handleInputChange(input)
-    }
-    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      e.preventDefault()
-      handleInputNavigate(input, e.key === "ArrowDown" ? -1 : 1)
-    }
-  }
-
   return (
     <div className="flex flex-col">
       {showInput && (
@@ -178,7 +191,15 @@ export function OneCalendar({
             value={inputValue.from}
             placeholder={mode === "range" ? i18n.date.from : i18n.date.date}
             onBlur={() => handleInputChange("from")}
-            onKeyDown={(e) => handleInputKeyDown("from", e)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleInputChange("from")
+              }
+              if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                e.preventDefault()
+                handleInputNavigate("from", e.key === "ArrowDown" ? -1 : 1)
+              }
+            }}
             onChange={(e) =>
               setInputValue({ ...inputValue, from: e.target.value })
             }
@@ -189,7 +210,15 @@ export function OneCalendar({
               value={inputValue.to}
               placeholder={i18n.date.to}
               onBlur={() => handleInputChange("to")}
-              onKeyDown={(e) => handleInputKeyDown("to", e)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleInputChange("to")
+                }
+                if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                  e.preventDefault()
+                  handleInputNavigate("to", e.key === "ArrowDown" ? -1 : 1)
+                }
+              }}
               onChange={(e) =>
                 setInputValue({ ...inputValue, to: e.target.value })
               }
@@ -234,6 +263,8 @@ export function OneCalendar({
           motionDirection,
           setViewDate,
           viewDate,
+          minDate,
+          maxDate,
         })}
       </div>
     </div>
