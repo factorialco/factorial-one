@@ -12,10 +12,12 @@ import {
 const SelectWithHooks = ({
   options,
   placeholder,
+  asList,
   ...props
 }: {
   options: { value: string; label: string }[]
   placeholder?: string
+  asList?: boolean
 }) => {
   const [value, setValue] = useState("")
 
@@ -30,7 +32,7 @@ const SelectWithHooks = ({
   )
 
   return (
-    <Select value={value} onValueChange={setValue} {...props}>
+    <Select value={value} onValueChange={setValue} {...props} asList={asList}>
       <SelectTrigger>
         {value}
         <SelectValue placeholder={placeholder} />
@@ -47,7 +49,7 @@ const meta = {
     a11y: {
       skipCi: true, // Todo add aria labels
     },
-    layout: "centered",
+    //layout: "centered",
     docs: {
       description: {
         component:
@@ -79,6 +81,20 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+export const AsList: Story = {
+  args: {
+    asList: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "Renders the select as a list. Removes the triger and keeps it always open.",
+      },
+    },
+  },
+}
 
 export const WithTopContent: Story = {
   render: ({ options, placeholder }) => {
