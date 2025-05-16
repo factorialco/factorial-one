@@ -7,6 +7,7 @@ import InfoCircleLine from "../icons/app/InfoCircleLine"
 
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Link } from "@/lib/linkHandler"
+import { useI18n } from "@/lib/providers/i18n"
 import {
   Tooltip,
   TooltipContent,
@@ -16,18 +17,28 @@ import {
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="article"
-    className={cn(
-      "flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-4 shadow",
-      className
-    )}
-    {...props}
-  />
-))
+  React.HTMLAttributes<HTMLDivElement> & { href?: string }
+>(({ className, href, children, ...props }, ref) => {
+  const { actions } = useI18n()
+  return (
+    <div
+      ref={ref}
+      role="article"
+      className={cn(
+        "relative flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-4 shadow",
+        className
+      )}
+      {...props}
+    >
+      {href && (
+        <Link href={href} className="absolute inset-0 block" tabIndex={0}>
+          <span className="sr-only">{actions.view}</span>
+        </Link>
+      )}
+      {children}
+    </div>
+  )
+})
 
 Card.displayName = "Card"
 
@@ -122,7 +133,11 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex grow flex-col", className)} {...props} />
+  <div
+    ref={ref}
+    className={cn("relative flex grow flex-col", className)}
+    {...props}
+  />
 ))
 CardContent.displayName = "CardContent"
 
@@ -130,7 +145,11 @@ const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex items-center", className)} {...props} />
+  <div
+    ref={ref}
+    className={cn("relative flex items-center", className)}
+    {...props}
+  />
 ))
 CardFooter.displayName = "CardFooter"
 
