@@ -1,0 +1,20 @@
+import type { SVGProps } from "react"
+import { Ref, forwardRef } from "react"
+
+const SvgUpsell = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 25"
+    ref={ref}
+    {...props}
+  >
+    <path
+      fill="currentColor"
+      d="M12 4.5C16.4183 4.5 20 8.08172 20 12.5C20 16.9183 16.4183 20.5 12 20.5C7.58172 20.5 4 16.9183 4 12.5C4 8.08172 7.58172 4.5 12 4.5ZM12.4092 8.0459C12.2097 7.84644 11.9013 7.82199 11.6748 7.97168L11.583 8.0459L8.88965 10.7393C8.66189 10.9672 8.6618 11.3376 8.88965 11.5654C9.11751 11.7932 9.48795 11.7932 9.71582 11.5654L11.4121 9.86914V16.5391C11.4122 16.8612 11.6739 17.123 11.9961 17.123C12.3183 17.123 12.5799 16.8612 12.5801 16.5391V9.86914L14.2764 11.5654L14.3682 11.6396C14.5946 11.7892 14.9031 11.7647 15.1025 11.5654C15.302 11.366 15.3263 11.0576 15.1768 10.8311L15.1025 10.7393L12.4092 8.0459Z"
+    />
+  </svg>
+)
+
+const ForwardRef = forwardRef(SvgUpsell)
+export default ForwardRef
