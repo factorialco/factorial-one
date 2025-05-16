@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.57.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.0...factorial-one-react-v1.57.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* add support to show activity item skeletons when loading more items on list ([#1832](https://github.com/factorialco/factorial-one/issues/1832)) ([745f21d](https://github.com/factorialco/factorial-one/commit/745f21dc5d45361d087da6f39fe520c99aba61c5))
+
 ## [1.57.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.56.1...factorial-one-react-v1.57.0) (2025-05-16)
 
 
