@@ -46,6 +46,7 @@ type InFilterComponentProps<T = unknown> = FilterTypeComponentProps<
  *         { value: "active", label: "Active" },
  *         { value: "inactive", label: "Inactive" }
  *       ]
+ *       singleSelect: false,
  *     }
  *   }}
  *   value={["active"]}
@@ -136,6 +137,11 @@ export function InFilter<T extends string>({
   const showSearch = options.length > 0 && !isLoading
 
   const handleSelectAll = () => {
+    if (schema.options.singleSelect) {
+      // if is single select skip the select all button
+      return
+    }
+
     const allValues = filteredOptions.map((option) => option.value)
     const currentValues = value ?? []
     const newValues = [...currentValues]
@@ -186,11 +192,17 @@ export function InFilter<T extends string>({
                 focusRing()
               )}
               onClick={() => {
-                onChange(
-                  isSelected
-                    ? value.filter((v) => v !== option.value)
-                    : [...value, option.value]
-                )
+                if (schema.options.singleSelect) {
+                  // If singleSelect is true, replace the entire array with just this value
+                  onChange(isSelected ? [] : [option.value])
+                } else {
+                  // Normal multi-select behavior
+                  onChange(
+                    isSelected
+                      ? value.filter((v) => v !== option.value)
+                      : [...value, option.value]
+                  )
+                }
               }}
             >
               <span className="line-clamp-1 w-fit text-left">
@@ -207,17 +219,24 @@ export function InFilter<T extends string>({
           )
         })}
       </div>
-      <div className="sticky bottom-0 left-0 right-0 flex items-center justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary bg-f1-background/80 p-2 backdrop-blur-[8px]">
-        <Button
-          variant="outline"
-          label="Select all"
-          onClick={handleSelectAll}
-          disabled={
-            filteredOptions.length === 0 ||
-            (Array.isArray(value) && value.length === filteredOptions.length)
-          }
-          size="sm"
-        />
+      <div
+        className={cn(
+          "sticky bottom-0 left-0 right-0 flex items-center justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary bg-f1-background/80 p-2 backdrop-blur-[8px]",
+          schema.options.singleSelect ? "justify-end" : "justify-between"
+        )}
+      >
+        {!schema.options.singleSelect && (
+          <Button
+            variant="outline"
+            label="Select all"
+            onClick={handleSelectAll}
+            disabled={
+              filteredOptions.length === 0 ||
+              (Array.isArray(value) && value.length === filteredOptions.length)
+            }
+            size="sm"
+          />
+        )}
         <Button
           variant="ghost"
           label="Clear"

@@ -32,7 +32,7 @@ import { useData } from "../useData"
 
 const DEPARTMENTS = ["Engineering", "Product", "Design", "Marketing"] as const
 const ROLES = [
-  "Engineer",
+  "Senior Engineer",
   "Product Manager",
   "Designer",
   "Marketing Lead",
@@ -56,6 +56,7 @@ const filters = {
     label: "Role",
     options: {
       options: () => ROLES.map((value) => ({ value, label: value })),
+      singleSelect: true,
     },
   },
   date: {
@@ -108,7 +109,7 @@ const mockUsers: {
     id: "user-1",
     name: "John Doe",
     email: "john@example.com",
-    role: "Senior Engineer",
+    role: ROLES[0],
     department: DEPARTMENTS[0],
     status: "active",
     isStarred: true,
@@ -118,7 +119,7 @@ const mockUsers: {
     id: "user-2",
     name: "Jane Smith",
     email: "jane@example.com",
-    role: "Product Manager",
+    role: ROLES[1],
     department: DEPARTMENTS[1],
     status: "active",
     isStarred: false,
@@ -128,7 +129,7 @@ const mockUsers: {
     id: "user-3",
     name: "Bob Johnson",
     email: "bob@example.com",
-    role: "Designer",
+    role: ROLES[2],
     department: DEPARTMENTS[2],
     status: "inactive",
     isStarred: false,
@@ -138,7 +139,7 @@ const mockUsers: {
     id: "user-4",
     name: "Alice Williams",
     email: "alice@example.com",
-    role: "Marketing Lead",
+    role: ROLES[3],
     department: DEPARTMENTS[3],
     status: "active",
     isStarred: true,
@@ -220,6 +221,14 @@ const filterUsers = <
   ) {
     filteredUsers = filteredUsers.filter((user) =>
       departmentFilterValues.some((d) => d === user.department)
+    )
+  }
+
+  // Handle role filter
+  const roleFilterValues = filterValues.role
+  if (Array.isArray(roleFilterValues) && roleFilterValues.length > 0) {
+    filteredUsers = filteredUsers.filter((user) =>
+      roleFilterValues.some((r) => r === user.role)
     )
   }
 
@@ -1294,6 +1303,17 @@ function createDataAdapter<
       )
     }
 
+    // Apply role filter if provided
+    if (
+      "role" in filters &&
+      Array.isArray(filters.role) &&
+      filters.role.length > 0
+    ) {
+      filteredRecords = filteredRecords.filter((record) =>
+        (filters.role as string[]).includes(record.role as string)
+      )
+    }
+
     // Apply sorting if available
     if (sortingsState) {
       const sortField = sortingsState.field as keyof TRecord
@@ -1940,6 +1960,14 @@ export const WithSyncSearch: Story = {
             )
           }
 
+          // Apply role filter if provided
+          const roleFilter = filters.role as string[] | undefined
+          if (roleFilter && roleFilter.length > 0) {
+            filteredUsers = filteredUsers.filter((user) =>
+              roleFilter.includes(user.role)
+            )
+          }
+
           // Apply sorting if provided
           if (sortings) {
             const field = sortings.field as keyof (typeof mockUserData)[0]
@@ -2084,6 +2112,14 @@ export const WithAsyncSearch: Story = {
               if (departmentFilter && departmentFilter.length > 0) {
                 filteredUsers = filteredUsers.filter((user) =>
                   departmentFilter.includes(user.department)
+                )
+              }
+
+              // Apply role filter if provided
+              const roleFilter = filters.role as string[] | undefined
+              if (roleFilter && roleFilter.length > 0) {
+                filteredUsers = filteredUsers.filter((user) =>
+                  roleFilter.includes(user.role)
                 )
               }
 

@@ -22,6 +22,11 @@ export type InFilterOptions<T> = {
     | (() =>
         | Array<InFilterOptionItem<T>>
         | Promise<Array<InFilterOptionItem<T>>>)
+  /**
+   * When true, only one option can be selected at a time
+   * @default false
+   */
+  singleSelect?: boolean
 }
 
 /**
