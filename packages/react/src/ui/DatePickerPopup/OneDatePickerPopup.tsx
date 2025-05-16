@@ -26,7 +26,7 @@ export interface OneDatePickerPopupProps {
   onOpenChange?: (open: boolean) => void
 }
 
-const presetCustom = "__custom__"
+const PRESET_CUSTOM = "__custom__"
 
 export function OneDatePickerPopup({
   onSelect,
@@ -40,22 +40,24 @@ export function OneDatePickerPopup({
   const [localValue, setLocalValue] = useState<DatePickerValue | undefined>(
     value || defaultValue
   )
+
+  const localGranularity = useMemo(
+    () => localValue?.granularity ?? "day",
+    [localValue?.granularity]
+  )
+
   const granularityDefinition = useMemo(() => {
-    return granularityDefinitions[localValue?.granularity ?? "day"]
-  }, [localValue?.granularity])
+    return granularityDefinitions[localGranularity]
+  }, [localGranularity])
 
   const calendarMode = useMemo(() => {
-    return (
-      granularityDefinitions[localValue?.granularity ?? "day"].calendarMode ||
-      "single"
-    )
-  }, [localValue?.granularity])
+    return granularityDefinitions[localGranularity].calendarMode || "single"
+  }, [localGranularity])
 
   const handleSelectDate = (date: Date | DateRange | null) => {
-    const currentGranularity = localValue?.granularity ?? "day"
     handleSelect({
       value: granularityDefinition.toRange(date ?? undefined),
-      granularity: currentGranularity,
+      granularity: localGranularity,
     })
   }
 
@@ -65,7 +67,7 @@ export function OneDatePickerPopup({
   }
 
   const handlePresetSelect = (presetId: string) => {
-    setCustomRangeMode(presetId === presetCustom)
+    setCustomRangeMode(presetId === PRESET_CUSTOM)
 
     const selectedPreset = presetId ? presets[+presetId] : undefined
     if (!selectedPreset) return
@@ -78,7 +80,7 @@ export function OneDatePickerPopup({
       ),
       granularity: selectedPreset.granularity,
     })
-    if (presetId !== presetCustom) {
+    if (presetId !== PRESET_CUSTOM) {
       props.onOpenChange?.(false)
     }
   }
@@ -134,7 +136,7 @@ export function OneDatePickerPopup({
                 {granularities.length > 1 && (
                   <GranularitySelector
                     granularities={granularities}
-                    value={localValue?.granularity}
+                    value={localGranularity}
                     onChange={handleSelectGranularity}
                   />
                 )}

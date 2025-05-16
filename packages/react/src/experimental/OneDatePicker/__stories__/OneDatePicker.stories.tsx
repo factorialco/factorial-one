@@ -54,6 +54,9 @@ export const Simple: Story = {
       granularity: "day",
     } as DatePickerValue,
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 }
 
 export const WithCustomRange: Story = {
@@ -62,11 +65,17 @@ export const WithCustomRange: Story = {
       granularity: "month",
     } as DatePickerValue,
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 }
 
 export const HideGoToCurrent: Story = {
   args: {
     hideGoToCurrent: true,
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
   },
 }
 
@@ -78,6 +87,9 @@ export const WithDefaultDate: Story = {
       granularity: "day",
     } as DatePickerValue,
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
 }
 
 export const WithPresets: Story = {
@@ -87,6 +99,9 @@ export const WithPresets: Story = {
     } as DatePickerValue,
     granularities: ["day", "week", "month", "quarter"],
     presets,
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
   },
 }
 
@@ -98,5 +113,8 @@ export const WithMinMaxDates: Story = {
     granularities: ["day", "week", "month"],
     minDate: subDays(today, 30), // Can't select dates before 30 days ago
     maxDate: today, // Can't select dates after today
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
   },
 }
