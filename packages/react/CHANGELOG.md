@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.56.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.56.0...factorial-one-react-v1.56.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* add support to know when user reaches end of ActivityItem list ([#1822](https://github.com/factorialco/factorial-one/issues/1822)) ([d773a33](https://github.com/factorialco/factorial-one/commit/d773a33c713bfe4976868064eb6359fa2d460cbd))
+
 ## [1.56.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.55.0...factorial-one-react-v1.56.0) (2025-05-16)
 
 
