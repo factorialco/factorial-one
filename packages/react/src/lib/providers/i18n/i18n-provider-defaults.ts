@@ -50,6 +50,9 @@ export const defaultTranslations = {
   },
   shortcut: "Shortcut",
   date: {
+    from: "From",
+    to: "To",
+    date: "Date",
     groups: {
       today: "Today",
       yesterday: "Yesterday",
