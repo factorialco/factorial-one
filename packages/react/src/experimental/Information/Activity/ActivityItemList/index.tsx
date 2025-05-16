@@ -1,6 +1,7 @@
 import { categorizeItemsByDate } from "@/lib/date"
 import { useI18n } from "@/lib/providers/i18n"
 import { withSkeleton } from "@/lib/skeleton"
+import throttle from "lodash/throttle"
 import React from "react"
 import { Section, SectionProps } from "./Section"
 
@@ -31,11 +32,11 @@ export const BaseActivityItemList = ({
     .flatMap((items) => items.map((item) => item.id))
     .slice(-onEndReachedItemsThreshold)
 
-  const handleItemVisible = (id: string) => {
+  const handleItemVisible = throttle((id: string) => {
     if (lastItemIds.includes(id)) {
       onEndReached?.()
     }
-  }
+  }, 1000)
 
   return (
     <div className="flex flex-col gap-2 px-2">
