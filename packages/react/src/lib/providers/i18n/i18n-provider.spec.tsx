@@ -27,6 +27,8 @@ describe("I18nProvider", () => {
         search: "Buscar",
         clear: "Borrar",
         more: "Más",
+        moveUp: "Mover arriba",
+        moveDown: "Mover abajo",
       },
     }
 

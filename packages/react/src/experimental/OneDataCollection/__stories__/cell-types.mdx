@@ -295,9 +295,7 @@ Renders a dot tag
 #### Value type
 
 ```
-
-type value = { label: string, color: NewColor )
-
+type value = { label: string, color: NewColor }
 ```
 
 <Canvas
@@ -307,8 +305,43 @@ type value = { label: string, color: NewColor )
 render: (item) => ({
     type: 'dotTag'
     value: {
-        label: 'Factorial'
-        color: 'malibu'
+        label: 'Engineer',
+        color: 'viridian'
+    }
+})
+`,
+  }}
+/>
+
+### tagList
+
+Renders a list of tags of any type. This provides a unified way to display
+multiple tags of the same type with automatic overflow handling.
+
+#### Value type
+
+```
+type value = {
+  type: TagType,
+  tags: Array<TagVariant>,
+  max?: number
+}
+```
+
+<Canvas
+  of={CellTypesDataCollectionStories.TagArrayType}
+  source={{
+    code: `
+// Example with dot tags
+render: (item) => ({
+    type: 'tagList',
+    value: {
+        type: 'dot',
+        tags: item.skills.map(skill => ({
+            text: skill.label,
+            color: skill.color
+        })),
+        max: 3
     }
 })
 `,

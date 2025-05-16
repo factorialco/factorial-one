@@ -365,6 +365,12 @@ export const EntitySelect = (
     props.onOpenChange?.(open)
   }
 
+  useEffect(() => {
+    if (props.defaultOpen) {
+      props.onOpenChange?.(true)
+    }
+  }, [props])
+
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState(0)
 

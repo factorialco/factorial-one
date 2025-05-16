@@ -65,7 +65,7 @@ export const OneAlert = ({
 }: AlertProps) => {
   return (
     <div className={alertVariants({ variant })}>
-      <div className="flex flex-row items-center justify-between gap-16">
+      <div className="flex flex-grow items-center justify-between gap-16">
         <div className="flex flex-row gap-4">
           <div className="h-6 w-6 flex-shrink-0">
             <AlertAvatar type={variant} />

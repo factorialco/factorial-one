@@ -42,6 +42,7 @@ interface EntitySelectCommonProps
   selectedLabel?: string
   selectedEntities?: EntitySelectEntity[]
   alwaysOpen?: boolean
+  defaultOpen?: boolean
   width?: number
   hiddenAvatar?: boolean
 }

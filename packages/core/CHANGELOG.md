@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.8.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.7.3...factorial-one-core-v1.8.0) (2025-05-13)
+
+
+### Features
+
+* add favorites ([ef19ce1](https://github.com/factorialco/factorial-one/commit/ef19ce14f1fce60074dfd56434f8a14dfa533d6a))
+
+## [1.7.3](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.7.2...factorial-one-core-v1.7.3) (2025-05-12)
+
+
+### Bug Fixes
+
+* apply in text-f1-foreground color in body ([#1787](https://github.com/factorialco/factorial-one/issues/1787)) ([9e3aa61](https://github.com/factorialco/factorial-one/commit/9e3aa61136f7b75205fdb79bb8a2bad518842da8))
+
 ## [1.7.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.7.1...factorial-one-core-v1.7.2) (2025-05-09)
 
 

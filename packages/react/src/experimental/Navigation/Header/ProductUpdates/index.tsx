@@ -1,12 +1,16 @@
 import { Button } from "@/components/Actions/Button"
 import { ButtonInternal } from "@/components/Actions/Button/internal"
-import { Icon } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
+import { ProductCard } from "@/experimental/UpsellingKit/ProductCard"
 import AlertCircle from "@/icons/app/AlertCircle"
 import ChevronRight from "@/icons/app/ChevronRight"
+import CrossIcon from "@/icons/app/Cross"
 import Megaphone from "@/icons/app/Megaphone"
 import { Image } from "@/lib/imageHandler"
 import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
+
+import { Carousel } from "@/experimental/Navigation/Carousel"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +40,6 @@ type ProductUpdate = {
 
 type ProductUpdatesProp = {
   label: string
-  moreUpdatesLabel: string
   updatesPageUrl: string
   getUpdates: () => Promise<Array<ProductUpdate>>
   hasUnread?: boolean
@@ -54,12 +57,25 @@ type ProductUpdatesProp = {
     description: string
     buttonText: string
   }
+  crossSelling?: {
+    isVisible: boolean
+    sectionTitle: string
+    onClose?: () => void
+    products: Array<{
+      title: string
+      description: string
+      onClick: () => void
+      icon: IconType
+      dismissable: boolean
+      onClose?: () => void
+      trackVisibility?: (open: boolean) => void
+    }>
+  }
 }
 
 const ProductUpdates = ({
   currentModule,
   label,
-  moreUpdatesLabel,
   getUpdates,
   updatesPageUrl,
   emptyScreen,
@@ -68,10 +84,12 @@ const ProductUpdates = ({
   onHeaderClick = () => {},
   onItemClick = () => {},
   hasUnread = false,
+  crossSelling,
 }: ProductUpdatesProp) => {
   const [state, setState] = useState<"idle" | "fetching" | "error">("idle")
   const [updates, setUpdates] = useState<Array<ProductUpdate> | null>(null)
   const [featuredUpdate, ...restUpdates] = updates ?? []
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     setUpdates(null)
@@ -91,11 +109,13 @@ const ProductUpdates = ({
 
   return (
     <DropdownMenu
-      onOpenChange={async (open) => {
-        if (open && updates === null) {
+      open={open}
+      onOpenChange={async (isOpen) => {
+        setOpen(isOpen)
+        if (isOpen && updates === null) {
           invokeGetUpdates()
         }
-        onOpenChange(open)
+        onOpenChange(isOpen)
       }}
     >
       <DropdownMenuTrigger asChild>
@@ -118,19 +138,18 @@ const ProductUpdates = ({
           collisionPadding={20}
           align="end"
           hideWhenDetached
-          className="max-h-[600px] min-w-96 max-w-md overflow-y-auto"
+          className="min-h-auto flex max-h-[90vh] min-w-96 max-w-md flex-col"
+          style={{ maxHeight: "min(90vh, 760px)" }}
         >
           <Header title={label} url={updatesPageUrl} onClick={onHeaderClick} />
           {state === "fetching" && <ProductUpdatesSkeleton />}
-          {state === "idle" && updates !== null && updates.length === 0 && (
-            <>
+          <div className="scrollbar-macos flex-1 overflow-y-auto">
+            {state === "idle" && updates !== null && updates.length === 0 && (
               <div className="p-2 pt-0">
                 <NoUpdates {...emptyScreen} buttonUrl={updatesPageUrl} />
               </div>
-            </>
-          )}
-          {state === "idle" && updates !== null && updates.length > 0 && (
-            <>
+            )}
+            {state === "idle" && updates !== null && updates.length > 0 && (
               <div className="px-1">
                 <FeaturedDropdownItem
                   {...featuredUpdate}
@@ -139,10 +158,6 @@ const ProductUpdates = ({
                 {updates.length > 1 && (
                   <>
                     <div className="pb-1">
-                      <DropdownMenuSeparator />
-                      <p className="text-balance px-3 pb-2 pt-3 text-sm font-medium text-f1-foreground-secondary">
-                        {moreUpdatesLabel}
-                      </p>
                       {restUpdates.map((update, index) => (
                         <DropdownItem
                           key={index}
@@ -154,10 +169,8 @@ const ProductUpdates = ({
                   </>
                 )}
               </div>
-            </>
-          )}
-          {state === "error" && (
-            <>
+            )}
+            {state === "error" && (
               <div className="p-2 pt-0">
                 <ErrorScreen
                   {...errorScreen}
@@ -166,7 +179,15 @@ const ProductUpdates = ({
                   }}
                 />
               </div>
-            </>
+            )}
+          </div>
+          {state === "idle" && crossSelling && crossSelling.isVisible && (
+            <DiscoverMoreProducts
+              isVisible={crossSelling.isVisible}
+              onClose={crossSelling.onClose}
+              crossSelling={crossSelling}
+              onDropdownClose={() => setOpen(false)}
+            />
           )}
         </DropdownMenuContent>
       </DropdownMenuPortal>
@@ -190,7 +211,7 @@ const FeaturedDropdownItem = ({
     <DropdownMenuPrimitive.Item
       onClick={onClick}
       asChild
-      className="relative mb-2 flex cursor-default select-none items-center rounded-md px-1 text-base font-medium outline-none transition-colors after:absolute after:inset-x-1 after:inset-y-0 after:h-full after:rounded after:bg-f1-background-hover after:opacity-0 after:transition-opacity after:duration-75 after:content-[''] hover:cursor-pointer hover:after:opacity-100 focus:after:opacity-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+      className="relative flex cursor-default select-none items-center rounded-md px-1 text-base font-medium outline-none transition-colors after:absolute after:inset-x-1 after:inset-y-0 after:h-full after:rounded after:bg-f1-background-hover after:opacity-0 after:transition-opacity after:duration-75 after:content-[''] hover:cursor-pointer hover:after:opacity-100 focus:after:opacity-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
     >
       <Link
         href={href}
@@ -398,5 +419,82 @@ const UnreadDot = ({ className = "" }: { className?: string }) => (
     className={cn("size-2 rounded bg-f1-background-selected-bold", className)}
   />
 )
+
+const DiscoverMoreProducts = ({
+  isVisible,
+  onClose,
+  crossSelling,
+  onDropdownClose,
+}: {
+  isVisible: boolean
+  onClose?: () => void
+  crossSelling: ProductUpdatesProp["crossSelling"]
+  onDropdownClose: () => void
+}) => {
+  const [open, setOpen] = useState(isVisible)
+
+  useEffect(() => {
+    setOpen(isVisible)
+  }, [isVisible])
+
+  const handleClose = () => {
+    setOpen(false)
+    if (onClose) {
+      onClose()
+    }
+  }
+
+  const handleProductClick = (onClick: () => void) => {
+    setOpen(false)
+    onDropdownClose()
+    if (onClick) {
+      onClick()
+    }
+  }
+
+  return (
+    open && (
+      <>
+        <DropdownMenuSeparator />
+        <div className="px-1 pb-2">
+          <div className="flex flex-row items-center justify-between px-3">
+            <p className="text-balance pb-2 pt-2 text-sm font-medium text-f1-foreground-secondary">
+              {crossSelling?.sectionTitle}
+            </p>
+
+            <div className="relative z-10 h-6 w-6">
+              <Button
+                variant="ghost"
+                icon={CrossIcon}
+                size="sm"
+                hideLabel
+                onClick={handleClose}
+                label="Close"
+              />
+            </div>
+          </div>
+
+          <Carousel
+            columns={{
+              default: 1,
+            }}
+            showDots
+            showArrows={false}
+          >
+            {crossSelling?.products.map((product) => (
+              <ProductCard
+                key={product.title}
+                {...product}
+                isVisible={true}
+                trackVisibility={product.trackVisibility}
+                onClick={() => handleProductClick(product.onClick)}
+              />
+            ))}
+          </Carousel>
+        </div>
+      </>
+    )
+  )
+}
 
 export { ProductUpdates, type ProductUpdate, type ProductUpdatesProp }
