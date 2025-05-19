@@ -1011,7 +1011,7 @@ export const WithSynchronousData: Story = {
       dataAdapter: {
         fetchData: ({ filters, sortings, navigationFilters }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, navigationFilters, sortings)
+          return filterUsers(mockUsers, filters, sortings, navigationFilters)
         },
       },
     })
