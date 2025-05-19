@@ -12,8 +12,8 @@ import {
   TableRow,
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
-import { ComponentProps, useEffect, useMemo } from "react"
 import { Skeleton } from "@/ui/skeleton"
+import { ComponentProps, useEffect, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition } from "../../../property-render"
