@@ -42,10 +42,6 @@ const meta = {
       control: "boolean",
       description: "Hide label and show only icon",
     },
-    showConfirmation: {
-      control: "boolean",
-      description: "Whether to show the confirmation dialog after request",
-    },
   },
 } satisfies Meta<typeof UpsellingButton>
 
@@ -62,17 +58,6 @@ export const WithoutIcon: Story = {
   args: {
     label: "Request Information",
     showIcon: false,
-  },
-}
-
-export const WithoutConfirmation: Story = {
-  args: {
-    label: "Request Information",
-    onRequest: async () => {
-      // Simulamos una llamada a la API
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-    },
-    showConfirmation: true,
   },
 }
 
@@ -98,28 +83,4 @@ export const Sizes: Story = {
       <UpsellingButton {...args} size="lg" label="Request Information" />
     </div>
   ),
-}
-
-export const SuccessExample: Story = {
-  args: {
-    label: "Request Information",
-    onRequest: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      // No lanza error → éxito
-    },
-    showConfirmation: true,
-  },
-}
-
-export const ErrorExample: Story = {
-  args: {
-    label: "Request Information",
-    onRequest: async () => {
-      await new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("fail")), 1000)
-      )
-      // Lanza error → error
-    },
-    showConfirmation: true,
-  },
 }
