@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.8.0...factorial-one-core-v1.9.0) (2025-05-19)
+
+
+### Features
+
+* icons for meetings ([55b38e3](https://github.com/factorialco/factorial-one/commit/55b38e3faee0aa36513be485b07a72d889a6183d))
+
 ## [1.8.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.7.3...factorial-one-core-v1.8.0) (2025-05-13)
 
 
