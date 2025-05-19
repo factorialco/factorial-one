@@ -318,39 +318,40 @@ export const EntitySelect = (
       return
     }
 
-    if (groupView) {
-      const nextEntities = props.entities
-        .map((entity) => {
-          const entityScore = getBestScoreForEntity(entity, debouncedSearch)
+    if (groupView && !props.applySearchToGroup) {
+      const nextEntities = props.entities.map((entity) => {
+        const entityScore = getBestScoreForEntity(entity, debouncedSearch)
 
-          const filteredSubItems = entity.subItems
-            ?.map((el) => ({
-              ...el,
-              score: getMatchScore(
-                debouncedSearch,
-                el.subSearchKeys ?? el.subName.split(" ")
-              ),
-            }))
-            .filter((subEntity) => subEntity.score < Infinity)
-            .sort((a, b) => a.score - b.score)
+        const filteredSubItems = entity.subItems
+          ?.map((el) => ({
+            ...el,
+            score: getMatchScore(
+              debouncedSearch,
+              el.subSearchKeys ?? [el.subName]
+            ),
+          }))
+          .filter((subEntity) => subEntity.score < Infinity)
+          .sort((a, b) => a.score - b.score)
 
-          return {
-            ...entity,
-            score: entityScore,
-            expanded: entity.expanded ?? (filteredSubItems?.length ?? 0) > 0,
-            subItems: filteredSubItems,
-          }
-        })
+        return {
+          ...entity,
+          score: entityScore,
+          expanded: entity.expanded ?? (filteredSubItems?.length ?? 0) > 0,
+          subItems: filteredSubItems,
+        }
+      })
+
+      const filteredNextEntities = nextEntities
         .filter((entity) => entity.score < Infinity)
         .sort((a, b) => a.score - b.score)
 
-      setFilteredEntities(nextEntities)
+      setFilteredEntities(filteredNextEntities)
     } else {
       const nextEntities = props.entities
         .map((entity) => {
           const entityScore = getMatchScore(
             debouncedSearch,
-            entity.searchKeys ?? entity.name.split(" ")
+            entity.searchKeys ?? [entity.name]
           )
           return { ...entity, score: entityScore }
         })
@@ -359,7 +360,13 @@ export const EntitySelect = (
 
       setFilteredEntities(nextEntities)
     }
-  }, [debouncedSearch, props.entities, groupView, setFilteredEntities])
+  }, [
+    debouncedSearch,
+    props.entities,
+    props.applySearchToGroup,
+    groupView,
+    setFilteredEntities,
+  ])
 
   const onOpenChange = (open: boolean) => {
     props.onOpenChange?.(open)
@@ -480,37 +487,26 @@ export const EntitySelect = (
 }
 
 function getMatchScore(text = "", searchKeys: string[]): number {
-  const lowerText = text.toLowerCase().trim()
+  const lowerText = text.trim().toLowerCase()
 
-  let bestMatchIndex = Infinity
-
-  for (let i = 0; i < searchKeys.length; i++) {
-    const lowerKey = searchKeys[i].toLowerCase()
-
-    if (lowerKey.startsWith(lowerText)) {
-      return -(searchKeys.length - i)
-    }
-
-    if (lowerKey.includes(lowerText) && bestMatchIndex === Infinity) {
-      bestMatchIndex = i + 1
+  for (const key of searchKeys) {
+    if (key.trim().toLowerCase().includes(lowerText)) {
+      return 1
     }
   }
 
-  return bestMatchIndex
+  return Infinity
 }
 
 function getBestScoreForEntity(entity: EntitySelectEntity, search: string) {
-  const nameScore = getMatchScore(
-    search,
-    entity.searchKeys ?? entity.name.split(" ")
-  )
+  const nameScore = getMatchScore(search, entity.searchKeys ?? [entity.name])
 
   let bestSubItemScore = Infinity
   if (entity.subItems?.length) {
     bestSubItemScore = entity.subItems.reduce((minScore, subItem) => {
       const current = getMatchScore(
         search,
-        subItem.subSearchKeys ?? subItem.subName.split(" ")
+        subItem.subSearchKeys ?? [subItem.subName]
       )
       return Math.min(minScore, current)
     }, Infinity)
