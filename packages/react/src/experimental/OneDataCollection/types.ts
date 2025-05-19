@@ -54,13 +54,7 @@ export type DataSourceDefinition<
   sortings?: Sortings
   defaultSorting?: SortingsState<Sortings>
   /** Data adapter responsible for fetching and managing data */
-  dataAdapter: DataAdapter<
-    Record,
-    Filters,
-    Sortings,
-    NavigationFilters,
-    Grouping
-  >
+  dataAdapter: DataAdapter<Record, Filters, NavigationFilters>
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
   /** Bulk actions that can be performed on the collection */
@@ -141,11 +135,8 @@ export type SortingsStateMultiple = {
  * @template Filters - The available filter configurations
  */
 export type BaseFetchOptions<
-  Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Currently applied filters */
   filters: FiltersState<Filters>
@@ -159,12 +150,9 @@ export type BaseFetchOptions<
  * @template Filters - The available filter configurations
  */
 export type PaginatedFetchOptions<
-  Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
-> = BaseFetchOptions<Record, Filters, Sortings, NavigationFilters, Grouping> & {
+> = BaseFetchOptions<Filters, NavigationFilters> & {
   /** Pagination configuration */
   pagination: { currentPage: number; perPage: number }
 }
@@ -177,9 +165,7 @@ export type PaginatedFetchOptions<
 export type BaseDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Indicates this adapter doesn't use pagination */
   paginationType?: never
@@ -189,13 +175,7 @@ export type BaseDataAdapter<
    * @returns Array of records, promise of records, or observable of records
    */
   fetchData: (
-    options: BaseFetchOptions<
-      Record,
-      Filters,
-      Sortings,
-      NavigationFilters,
-      Grouping
-    >
+    options: BaseFetchOptions<Filters, NavigationFilters>
   ) =>
     | BaseResponse<Record>
     | Promise<BaseResponse<Record>>
@@ -210,9 +190,7 @@ export type BaseDataAdapter<
 export type PaginatedDataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
 > = {
   /** Indicates this adapter uses page-based pagination */
   paginationType: "pages"
@@ -224,13 +202,7 @@ export type PaginatedDataAdapter<
    * @returns Paginated response with records and pagination info
    */
   fetchData: (
-    options: PaginatedFetchOptions<
-      Record,
-      Filters,
-      Sortings,
-      NavigationFilters,
-      Grouping
-    >
+    options: PaginatedFetchOptions<Filters, NavigationFilters>
   ) =>
     | PaginatedResponse<Record>
     | Promise<PaginatedResponse<Record>>
@@ -245,12 +217,10 @@ export type PaginatedDataAdapter<
 export type DataAdapter<
   Record extends RecordType,
   Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
 > =
-  | BaseDataAdapter<Record, Filters, Sortings, NavigationFilters, Grouping>
-  | PaginatedDataAdapter<Record, Filters, Sortings, NavigationFilters, Grouping>
+  | BaseDataAdapter<Record, Filters, NavigationFilters>
+  | PaginatedDataAdapter<Record, Filters, NavigationFilters>
 
 /**
  * Represents a collection of selected items.
@@ -382,7 +352,7 @@ export type DataSource<
   >
   /** Current state of applied grouping */
   currentGrouping?: Grouping["mandatory"] extends true
-    ? GroupingState<Grouping>
+    ? GroupingState<Record, Grouping>
     : null
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
