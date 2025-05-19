@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import ProductWidget from "."
+import { ProductWidget } from "."
 
 const meta: Meta<typeof ProductWidget> = {
   title: "UpsellingKit/ProductWidget",
