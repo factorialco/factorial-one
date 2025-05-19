@@ -258,7 +258,7 @@ export function useData<
         })
         setTotalItems(result.total)
       } else {
-        setData(result)
+        records = result
         setTotalItems?.(result.length)
       }
 
@@ -354,16 +354,11 @@ export function useData<
             : []),
         ]
 
-        const baseFetchOptions: BaseFetchOptions<
-          R,
-          Filters,
-          Sortings,
-          NavigationFilters,
-          Grouping
-        > = {
+        const baseFetchOptions: BaseFetchOptions<Filters, NavigationFilters> = {
           filters,
           search: searchValue,
           sortings,
+          navigationFilters,
         }
 
         const fetcher = (): PromiseOrObservable<ResultType> => {

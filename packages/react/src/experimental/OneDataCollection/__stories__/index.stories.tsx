@@ -974,9 +974,9 @@ export const WithSynchronousData: Story = {
       sortings,
       presets: filterPresets,
       dataAdapter: {
-        fetchData: ({ filters, sortings }) => {
+        fetchData: ({ filters, sortings, navigationFilters }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, sortings)
+          return filterUsers(mockUsers, filters, navigationFilters, sortings)
         },
       },
     })
@@ -1234,22 +1234,10 @@ export const WithSyncSearch: Story = {
 
           // Apply sorting if provided
           if (sortings) {
-<<<<<<< HEAD
-            ;[sortings].forEach(({ field, order }) => {
-              filteredUsers.sort((a, b) => {
-                const aValue = a[field as keyof (typeof mockUserData)[number]]
-                const bValue = b[field as keyof (typeof mockUserData)[number]]
-=======
             sortings.forEach(({ field, order }) => {
               filteredUsers.sort((a, b) => {
-<<<<<<< HEAD
-                const aValue = a[field]
-                const bValue = b[field]
->>>>>>> 39e14cf8 (chore: fix types)
-=======
                 const aValue = a[field as keyof (typeof mockUserData)[number]]
                 const bValue = b[field as keyof (typeof mockUserData)[number]]
->>>>>>> 903b9fbc (chore: fix types)
 
                 if (typeof aValue === "string" && typeof bValue === "string") {
                   return order === "asc"
