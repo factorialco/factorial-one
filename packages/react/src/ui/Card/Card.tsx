@@ -15,6 +15,9 @@ import {
   TooltipTrigger,
 } from "../tooltip"
 
+/**
+ * Card component Root
+ */
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
@@ -32,10 +35,10 @@ const Card = React.forwardRef<
       ref={ref}
       role="article"
       className={cn(
-        "relative flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary shadow",
-        className,
+        "flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-4 shadow",
         hasHover &&
-          "cursor-pointer transition-all duration-200 hover:border-f1-border-hover hover:shadow-md"
+          "cursor-pointer transition-all duration-200 hover:border-f1-border-hover hover:shadow-md",
+        className
       )}
       {...props}
       onClick={() => {
@@ -56,18 +59,24 @@ const Card = React.forwardRef<
 
 Card.displayName = "Card"
 
+/**
+ * Card Header
+ */
 const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-row gap-1.5 p-4", className)}
+    className={cn("flex flex-row gap-1.5", className)}
     {...props}
   />
 ))
 CardHeader.displayName = "CardHeader"
 
+/**
+ * Card Title
+ */
 const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
@@ -80,6 +89,9 @@ const CardTitle = React.forwardRef<
 ))
 CardTitle.displayName = "CardTitle"
 
+/**
+ * Card Subtitle
+ */
 const CardSubtitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
@@ -95,6 +107,9 @@ const CardSubtitle = React.forwardRef<
 ))
 CardSubtitle.displayName = "CardSubtitle"
 
+/**
+ * Card Info
+ */
 const CardInfo = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -120,6 +135,9 @@ const CardInfo = React.forwardRef<
 ))
 CardInfo.displayName = "CardInfo"
 
+/**
+ * Card Link
+ */
 const CardLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithoutRef<"a"> & { icon?: IconType }
@@ -144,33 +162,35 @@ const CardLink = React.forwardRef<
 })
 CardLink.displayName = "CardLink"
 
+/**
+ * Card Content
+ */
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("relative flex grow flex-col px-4 py-2", className)}
+    className={cn("relative flex grow flex-col", className)}
     {...props}
   />
 ))
 CardContent.displayName = "CardContent"
 
+/**
+ * Card Footer
+ */
 const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "relative flex items-center border-0 border-t border-solid border-t-f1-border-secondary px-4 py-2",
-      className
-    )}
-    {...props}
-  />
+  <div ref={ref} className={cn("flex items-center", className)} {...props} />
 ))
 CardFooter.displayName = "CardFooter"
 
+/**
+ * Card Comment
+ */
 const CardComment = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -178,7 +198,7 @@ const CardComment = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn("bo flex px-4 py-2 text-3xl font-semibold", className)}
+      className={cn("flex text-3xl font-semibold", className)}
       {...props}
     />
   )

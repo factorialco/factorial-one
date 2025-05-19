@@ -11,11 +11,12 @@ import { EllipsisHorizontal } from "@/icons/app"
 import { cn, focusRing } from "@/lib/utils"
 import {
   Card,
+  CardContent,
   CardFooter,
   CardHeader,
   CardSubtitle,
   CardTitle,
-} from "@/ui/Card/Card"
+} from "@/ui/Card"
 import { useState, type ReactNode } from "react"
 import { CardMetadata } from "./CardMetadata"
 import { type Metadata } from "./types"
@@ -67,7 +68,7 @@ interface OneCardProps {
    */
   secondaryActions?: {
     label: string
-    icon: IconType
+    icon?: IconType
     onClick: () => void
   }[]
 
@@ -90,6 +91,11 @@ interface OneCardProps {
    * The callback to handle the selection of the card
    */
   onSelect?: (selected: boolean) => void
+
+  /**
+   * The callback to handle the click of the card
+   */
+  onClick?: () => void
 }
 
 export function OneCard({
@@ -105,15 +111,17 @@ export function OneCard({
   selectable = false,
   selected = false,
   onSelect,
+  onClick,
 }: OneCardProps) {
-  const hasActions = primaryAction || secondaryActions
+  const hasActions =
+    primaryAction || (secondaryActions && secondaryActions?.length > 0)
   const hasOtherActions = otherActions && otherActions.length > 0
   const [isOpen, setIsOpen] = useState(false)
 
   return (
     <Card
       className={cn(
-        "group relative bg-f1-background p-0 shadow-none transition-all",
+        "group relative bg-f1-background shadow-none transition-all",
         (selectable || hasOtherActions) &&
           !selected &&
           "hover:border-f1-border",
@@ -122,6 +130,7 @@ export function OneCard({
         selected &&
           "border-f1-border-selected bg-f1-background-selected-secondary"
       )}
+      onClick={onClick}
     >
       {link && (
         <Link
@@ -131,9 +140,9 @@ export function OneCard({
         />
       )}
 
-      <div className="flex flex-col gap-2.5 p-4">
+      <div className="flex flex-col gap-2.5">
         <div className="flex flex-row items-start justify-between gap-1">
-          <CardHeader className="flex-col gap-0.5">
+          <CardHeader className="flex-col gap-0.5 p-0">
             {avatar && (
               <div className="mb-1.5 flex h-fit w-fit">
                 <Avatar avatar={avatar} size="medium" />
@@ -196,17 +205,24 @@ export function OneCard({
             </div>
           )}
         </div>
-        {metadata && (
-          <div className="flex flex-col gap-0.5">
-            {metadata.map((item, index) => (
-              <CardMetadata key={index} metadata={item} />
-            ))}
-          </div>
-        )}
-        {children}
+        <CardContent>
+          {metadata && (
+            <div className="flex flex-col gap-0.5">
+              {metadata.map((item, index) => (
+                <CardMetadata key={index} metadata={item} />
+              ))}
+            </div>
+          )}
+          {children}
+        </CardContent>
       </div>
       {hasActions && (
-        <CardFooter className="flex justify-between gap-2 border border-solid border-transparent border-t-f1-border-secondary px-4 py-3 [&>div]:z-[1]">
+        <CardFooter
+          className={cn(
+            "justify-between gap-2 [&>div]:z-[1]",
+            "relative -mx-4 mt-4 border-0 border-t border-solid border-t-f1-border-secondary px-4 pt-4"
+          )}
+        >
           {secondaryActions && (
             <div className="flex gap-2">
               {secondaryActions.map((action, index) => (

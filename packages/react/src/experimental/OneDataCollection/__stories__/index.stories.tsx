@@ -251,6 +251,7 @@ export const WithLinkedItems: Story = {
           icon: Pencil,
           onClick: () => console.log(`Editing ${item.name}`),
           description: "Modify user information",
+          type: "primary",
         },
         {
           label: "View Profile",
@@ -265,6 +266,7 @@ export const WithLinkedItems: Story = {
           description: item.isStarred
             ? "Remove from favorites"
             : "Add to favorites",
+          type: "secondary",
         },
         {
           label: "Delete",
@@ -380,8 +382,13 @@ export const BasicCardView: Story = {
           {
             type: "card",
             options: {
+              description: (item) => item.email,
+              avatar: (item) => ({
+                type: "person",
+                firstName: item.name.split(" ")[0],
+                lastName: item.name.split(" ")[1],
+              }),
               cardProperties: [
-                { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
               ],
