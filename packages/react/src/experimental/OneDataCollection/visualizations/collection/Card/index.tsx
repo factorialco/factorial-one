@@ -190,8 +190,8 @@ export const CardCollection = <
   Sortings,
   ItemActions,
   NavigationFilters,
-  CardVisualizationOptions<Record, Filters, Sortings>,
-  Grouping
+  Grouping,
+  CardVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
 

@@ -44,6 +44,7 @@ export type Visualization<
       icon: IconType
       /** Custom component to render the visualization */
       component: (props: {
+        onTotalItemsChange?: (totalItems: number) => void
         source: DataSource<
           Record,
           Filters,

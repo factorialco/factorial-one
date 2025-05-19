@@ -253,6 +253,7 @@ export const OneDataCollection = <
   >
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
   onBulkAction?: OnBulkActionCallback<Record, Filters>
+  onTotalItemsChange?: (totalItems: number) => void
 }): JSX.Element => {
   const {
     // Filters

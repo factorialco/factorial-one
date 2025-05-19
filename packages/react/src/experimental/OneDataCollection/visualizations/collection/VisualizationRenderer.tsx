@@ -74,7 +74,6 @@ export const VisualizationRenderer = <
 }): JSX.Element => {
   switch (visualization.type) {
     case "table":
-      console.log("source", source.currentSortings)
       return (
         <TableCollection<
           Record,
