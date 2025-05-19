@@ -45,7 +45,7 @@ export function ProductWidget({
   return (
     <>
       {!isDismissed ? (
-        <Card style={{ width }} className="relative p-1">
+        <Card style={{ width }} className="relative bg-f1-background p-1">
           <CardContent>
             {dismissible && (
               <div className="absolute right-2 top-2 z-10">
