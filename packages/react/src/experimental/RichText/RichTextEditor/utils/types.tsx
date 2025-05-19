@@ -76,6 +76,18 @@ type actionType = {
   icon?: IconType
 }
 
+type toggleActionType = {
+  label: string
+  checked: boolean
+  onClick: (checked?: boolean) => void
+  disabled?: boolean
+  hideLabel?: boolean
+}
+
+type secondaryActionType = (actionType | toggleActionType) & {
+  type?: "button" | "switch"
+}
+
 type subActionType = {
   label: string
   onClick: () => void
@@ -157,6 +169,7 @@ export type {
   mentionsConfig,
   primaryActionType,
   resultType,
+  secondaryActionType,
   subActionType,
   toolbarLabels,
 }

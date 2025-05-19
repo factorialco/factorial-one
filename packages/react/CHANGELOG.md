@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.57.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.1...factorial-one-react-v1.57.2) (2025-05-16)
+
+
+### Bug Fixes
+
+* pageHeader prev next button reload page ([#1835](https://github.com/factorialco/factorial-one/issues/1835)) ([9f24d46](https://github.com/factorialco/factorial-one/commit/9f24d4674a441dbbef66c3daa2d70edb6f7b8a01))
+
+## [1.57.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.0...factorial-one-react-v1.57.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* add support to show activity item skeletons when loading more items on list ([#1832](https://github.com/factorialco/factorial-one/issues/1832)) ([745f21d](https://github.com/factorialco/factorial-one/commit/745f21dc5d45361d087da6f39fe520c99aba61c5))
+
+## [1.57.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.56.1...factorial-one-react-v1.57.0) (2025-05-16)
+
+
+### Features
+
+* **RichTextEditor:** enhance secondary action handling with toggle support ([#1819](https://github.com/factorialco/factorial-one/issues/1819)) ([aa7018e](https://github.com/factorialco/factorial-one/commit/aa7018e34b7fbade41f78a734a3453d567695e8e))
+
+## [1.56.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.56.0...factorial-one-react-v1.56.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* add support to know when user reaches end of ActivityItem list ([#1822](https://github.com/factorialco/factorial-one/issues/1822)) ([d773a33](https://github.com/factorialco/factorial-one/commit/d773a33c713bfe4976868064eb6359fa2d460cbd))
+
 ## [1.56.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.55.0...factorial-one-react-v1.56.0) (2025-05-16)
 
 

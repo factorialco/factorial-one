@@ -6,9 +6,9 @@ import { useEffect, useRef, useState } from "react"
 import { EnhanceActivator } from "../Enhance"
 import { Toolbar, ToolbarDivider } from "../Toolbar"
 import {
-  actionType,
   enhanceConfig,
   primaryActionType,
+  secondaryActionType,
   toolbarLabels,
 } from "../utils/types"
 import { ActionsMenu } from "./ActionsMenu"
@@ -16,7 +16,7 @@ import { ActionsMenu } from "./ActionsMenu"
 interface FooterProps {
   editor: Editor
   maxCharacters: number | undefined
-  secondaryAction: actionType | undefined
+  secondaryAction: secondaryActionType | undefined
   primaryAction: primaryActionType | undefined
   fileInputRef: React.RefObject<HTMLInputElement>
   canUseFiles: boolean

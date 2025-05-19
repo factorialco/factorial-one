@@ -105,6 +105,7 @@ export const OneActionBar = ({
                     value: action.label,
                     label: action.label,
                     icon: action.icon,
+                    critical: action.critical,
                   }))}
                   onClick={(value) => {
                     const action = primaryActions.find((a) => a.label === value)
@@ -145,6 +146,7 @@ export const OneActionBar = ({
                     value: action.label,
                     label: action.label,
                     icon: action.icon,
+                    critical: action.critical,
                   }))}
                   onClick={(value) => {
                     const action = primaryActions.find((a) => a.label === value)

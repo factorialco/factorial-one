@@ -2,6 +2,7 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
 import {
   endOfMonth,
+  isAfter,
   isBefore,
   isSameMonth,
   isWithinInterval,
@@ -16,6 +17,8 @@ interface MonthViewProps {
   onSelect?: (date: Date | DateRange | null) => void
   year: number
   motionDirection?: number
+  minDate?: Date
+  maxDate?: Date
 }
 
 export function MonthView({
@@ -24,6 +27,8 @@ export function MonthView({
   onSelect,
   year,
   motionDirection = 1,
+  minDate,
+  maxDate,
 }: MonthViewProps) {
   const i18n = useI18n()
 
@@ -183,13 +188,25 @@ export function MonthView({
           const isStart = isRangeStart(month.index)
           const isEnd = isRangeEnd(month.index)
 
+          const selectedDate = new Date(year, month.index, 1)
+          const monthStart = startOfMonth(selectedDate)
+          const monthEnd = endOfMonth(selectedDate)
+
+          const disabled =
+            (minDate && isBefore(monthStart, minDate)) ||
+            (maxDate && isAfter(monthEnd, maxDate))
+
           return (
             <button
               type="button"
               key={month.index}
               onClick={() => handleMonthClick(month.index)}
+              disabled={disabled}
               className={cn(
-                "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-[''] hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
+                "relative isolate flex h-10 items-center justify-center rounded-md font-medium text-f1-foreground transition-colors duration-100 after:absolute after:inset-0 after:z-0 after:rounded-md after:bg-f1-background-selected-bold after:opacity-0 after:transition-all after:duration-100 after:content-['']",
+                !disabled &&
+                  "hover:bg-f1-background-hover hover:after:bg-f1-background-selected-bold-hover",
+                disabled && "cursor-not-allowed text-f1-foreground-secondary",
                 focusRing(),
                 isSelected &&
                   mode === "single" &&

@@ -4,8 +4,9 @@ import { ActivityItem, ActivityItemProps } from "../../ActivityItem"
 
 export type SectionProps = {
   title: string
-  items: ActivityItemProps[]
+  items: Omit<ActivityItemProps, "onClick">[]
   onClickItem: (id: string) => void
+  onItemVisible?: (id: string) => void
 }
 
 const SectionWrapper = ({
@@ -25,13 +26,19 @@ const SectionWrapper = ({
   </div>
 )
 
-const BaseSection = ({ title, items, onClickItem }: SectionProps) => (
+const BaseSection = ({
+  title,
+  items,
+  onClickItem,
+  onItemVisible,
+}: SectionProps) => (
   <SectionWrapper title={title}>
     {items.map((item) => (
       <ActivityItem
         key={item.id}
         {...item}
         onClick={() => onClickItem(item.id)}
+        onVisible={onItemVisible}
       />
     ))}
   </SectionWrapper>

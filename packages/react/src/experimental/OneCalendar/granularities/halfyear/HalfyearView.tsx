@@ -1,5 +1,11 @@
 import { cn, focusRing } from "@/lib/utils"
-import { isAfter, isBefore, isWithinInterval } from "date-fns"
+import {
+  endOfMonth,
+  isAfter,
+  isBefore,
+  isWithinInterval,
+  startOfMonth,
+} from "date-fns"
 import { AnimatePresence, motion } from "framer-motion"
 import { CalendarMode, DateRange } from "../../types"
 
@@ -10,8 +16,8 @@ export const getHalfYearRange = (halfYear: number, year: number): DateRange => {
   const firstMonth = halfYear === 1 ? 0 : 6 // Jan for H1, Jul for H2
   const lastMonth = halfYear === 1 ? 5 : 11 // Jun for H1, Dec for H2
 
-  const from = new Date(year, firstMonth, 1)
-  const to = new Date(year, lastMonth + 1, 0) // Last day of the last month
+  const from = startOfMonth(new Date(year, firstMonth, 1))
+  const to = endOfMonth(new Date(year, lastMonth + 1, 0)) // Last day of the last month
 
   return { from, to }
 }
@@ -22,6 +28,8 @@ interface HalfYearViewProps {
   onSelect: (date: Date | DateRange) => void
   year: number
   motionDirection?: number
+  minDate?: Date
+  maxDate?: Date
 }
 
 export const HalfYearView = ({
@@ -29,6 +37,8 @@ export const HalfYearView = ({
   selected,
   onSelect,
   year,
+  minDate,
+  maxDate,
   motionDirection = 1,
 }: HalfYearViewProps) => {
   const halfYears = [1, 2]
@@ -197,14 +207,24 @@ export const HalfYearView = ({
                 const isStart = isRangeStart(halfYear, yearValue)
                 const isEnd = isRangeEnd(halfYear, yearValue)
 
+                const halfYearRange = getHalfYearRange(halfYear, yearValue)
+                const disabled =
+                  (minDate && isBefore(halfYearRange.from, minDate)) ||
+                  (maxDate &&
+                    halfYearRange.to &&
+                    isAfter(halfYearRange.to, maxDate))
+
                 return (
                   <button
                     key={`${yearValue}-H${halfYear}`}
                     onClick={() => handleHalfYearClick(halfYear, yearValue)}
+                    disabled={disabled}
                     className={cn(
                       "relative isolate flex h-10 flex-1 items-center justify-center rounded-md p-2 tabular-nums",
                       "after:absolute after:inset-x-1 after:inset-y-0 after:z-0 after:rounded-md after:ring-1 after:ring-inset after:ring-f1-border-secondary after:transition-all after:duration-100 after:content-['']",
-                      "hover:after:bg-f1-background-hover",
+                      disabled &&
+                        "cursor-not-allowed text-f1-foreground-secondary",
+                      !disabled && "hover:after:bg-f1-background-hover",
                       focusRing(),
                       (isStart || isEnd) && "after:inset-x-0",
                       isSelected &&

@@ -30,7 +30,6 @@ import {
   setupContainerObservers,
 } from "./utils/helpers"
 import {
-  actionType,
   editorStateType,
   enhanceConfig,
   errorConfig,
@@ -41,6 +40,7 @@ import {
   mentionsConfig,
   primaryActionType,
   resultType,
+  secondaryActionType,
   toolbarLabels,
 } from "./utils/types"
 
@@ -48,7 +48,7 @@ interface RichTextEditorProps {
   mentionsConfig?: mentionsConfig
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
-  secondaryAction?: actionType
+  secondaryAction?: secondaryActionType
   primaryAction?: primaryActionType
   onChange: (result: resultType) => void
   maxCharacters?: number
