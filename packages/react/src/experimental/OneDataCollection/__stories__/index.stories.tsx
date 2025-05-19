@@ -1,4 +1,3 @@
-import { dotTagColors } from "@/experimental/exports"
 import {
   Add,
   Ai,
@@ -22,11 +21,19 @@ import { GroupingDefinition } from "../grouping"
 import {
   createDataAdapter,
   createPromiseDataFetch,
+  DEPARTMENTS,
+  DOT_TAG_COLORS_MOCK,
   ExampleComponent,
   filterPresets,
   filters,
+  filterUsers,
+  generateMockUsers,
   mockUsers,
+  PERFORMANCE_SCORE_MOCK,
+  PROJECTS_MOCK,
   sortings,
+  START_DATE_MOCK,
+  YEARS_OF_EXPERIENCIE_MOCK,
 } from "./mockData"
 
 const meta = {
@@ -446,8 +453,8 @@ export const RendererTypes: Story = {
                     value: {
                       label: item.email,
                       color:
-                        dotTagColors[
-                          Math.floor(Math.random() * dotTagColors.length)
+                        DOT_TAG_COLORS_MOCK[
+                          item.index % DOT_TAG_COLORS_MOCK.length
                         ],
                     },
                   }),
@@ -995,9 +1002,9 @@ export const WithSynchronousData: Story = {
       sortings,
       presets: filterPresets,
       dataAdapter: {
-        fetchData: ({ filters, sortings }) => {
+        fetchData: ({ filters, sortings, navigationFilters }) => {
           // Ensure sortings are properly applied
-          return filterUsers(mockUsers, filters, sortings)
+          return filterUsers(mockUsers, filters, sortings, navigationFilters)
         },
       },
     })
@@ -1504,7 +1511,7 @@ export const TableColumnProperties: Story = {
         salary: 50000 + index * 1000,
         location:
           index % 3 === 0 ? "Remote" : index % 3 === 1 ? "Office" : "Hybrid",
-        startDate: new Date(2020, index % 12, 1 + (index % 28))
+        startDate: START_DATE_MOCK[index % START_DATE_MOCK.length]
           .toISOString()
           .split("T")[0],
         performance:
@@ -1517,7 +1524,8 @@ export const TableColumnProperties: Story = {
                 : index % 5 === 3
                   ? "Below Average"
                   : "Needs Improvement",
-        yearsExperience: Math.floor(Math.random() * 15) + 1,
+        yearsExperience:
+          YEARS_OF_EXPERIENCIE_MOCK[index % YEARS_OF_EXPERIENCIE_MOCK.length],
         team: ["Alpha", "Beta", "Gamma", "Delta", "Epsilon"][index % 5],
         certifications:
           index % 3 === 0
@@ -1539,8 +1547,9 @@ export const TableColumnProperties: Story = {
             : index % 3 === 1
               ? "English, French, German"
               : "English, Mandarin",
-        projects: Math.floor(Math.random() * 10) + 1,
-        performanceScore: Math.floor(Math.random() * 100) + 1,
+        projects: PROJECTS_MOCK[index % PROJECTS_MOCK.length],
+        performanceScore:
+          PERFORMANCE_SCORE_MOCK[index % PERFORMANCE_SCORE_MOCK.length],
         lastReview: new Date(2023, index % 12, 1 + (index % 28))
           .toISOString()
           .split("T")[0],

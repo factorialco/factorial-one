@@ -56,9 +56,17 @@ type GroupCardsProps<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 > = {
-  source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
   items: Record[]
   selectedItems: Map<number | string, Record>
   handleSelectItemChange: (item: Record, checked: boolean) => void
@@ -71,6 +79,7 @@ const GroupCards = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 >({
   source,
@@ -79,7 +88,14 @@ const GroupCards = <
   handleSelectItemChange,
   cardProperties,
   title,
-}: GroupCardsProps<Record, Filters, Sortings, ItemActions, Grouping>) => {
+}: GroupCardsProps<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping
+>) => {
   const renderValue = (
     item: Record,
     property: CardPropertyDefinition<Record>
@@ -147,8 +163,8 @@ export const CardCollection = <
   Sortings,
   ItemActions,
   NavigationFilters,
-  CardVisualizationOptions<Record, Filters, Sortings>,
-  Grouping
+  Grouping,
+  CardVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
 

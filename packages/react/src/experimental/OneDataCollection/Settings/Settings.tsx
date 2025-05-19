@@ -5,6 +5,7 @@ import { useState } from "react"
 import { FiltersDefinition } from "../Filters/types"
 import { GroupingDefinition, GroupingState } from "../grouping"
 import { ItemActionsDefinition } from "../item-actions"
+import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import { RecordType, SortingsDefinition } from "../types"
 import { Visualization } from "../visualizations/collection"
 import { GroupingSelector } from "./components/GroupingSelector"
@@ -15,10 +16,18 @@ type SettingsProps<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<R>,
+  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 > = {
   visualizations: ReadonlyArray<
-    Visualization<R, Filters, Sortings, ItemActions, Grouping>
+    Visualization<
+      R,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
   >
   currentVisualization: number
   onVisualizationChange: (index: number) => void
@@ -32,6 +41,7 @@ export const Settings = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<R>,
+  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<R>,
 >({
   visualizations,
@@ -40,7 +50,14 @@ export const Settings = <
   grouping,
   currentGrouping,
   onGroupingChange,
-}: SettingsProps<R, Filters, Sortings, ItemActions, Grouping>) => {
+}: SettingsProps<
+  R,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping
+>) => {
   const groupByOptions = grouping
     ? Object.keys(grouping.groupBy).length + (grouping.mandatory ? 1 : 0)
     : 0
