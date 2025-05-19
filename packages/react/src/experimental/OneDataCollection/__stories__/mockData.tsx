@@ -318,8 +318,8 @@ export const filterUsers = <
 >(
   users: T[],
   filterValues: FiltersState<typeof filters>,
-  navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
   sortingState: SortingsStateMultiple,
+  navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
   search?: string
 ) => {
   let filteredUsers = [...users]
@@ -428,8 +428,8 @@ export const createObservableDataFetch = (delay = 0) => {
           data: filterUsers(
             mockUsers,
             filters,
-            navigationFilters,
-            sortingsState
+            sortingsState,
+            navigationFilters
           ),
         })
         observer.complete()
@@ -452,8 +452,8 @@ export const createPromiseDataFetch = (delay = 500) => {
           filterUsers(
             mockUsers,
             filters,
-            navigationFilters,
             sortingsState,
+            navigationFilters,
             search
           )
         )

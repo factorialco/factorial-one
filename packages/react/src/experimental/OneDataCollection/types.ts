@@ -320,8 +320,8 @@ export type CollectionProps<
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
-  VisualizationOptions extends object,
   Grouping extends GroupingDefinition<Record>,
+  VisualizationOptions extends object,
 > = {
   /** The data source configuration and state */
   source: DataSource<
@@ -380,10 +380,6 @@ export type DataSource<
   setCurrentNavigationFilters: React.Dispatch<
     React.SetStateAction<NavigationFiltersState<NavigationFilters>>
   >
-  /** Current state of applied grouping */
-  currentGrouping?: Grouping["mandatory"] extends true
-    ? GroupingState<Record, Grouping>
-    : null
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<Record, Grouping>>
