@@ -95,7 +95,7 @@ export const ErrorExample: Story = {
         await new Promise((_, reject) =>
           setTimeout(() => reject(new Error("fail")), 1000)
         )
-      } catch (error) {
+      } catch {
         setIsSuccess(false)
         setIsOpen(true)
       } finally {
