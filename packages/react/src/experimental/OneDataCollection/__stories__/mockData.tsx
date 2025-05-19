@@ -218,8 +218,8 @@ export const filterUsers = <
 >(
   users: T[],
   filterValues: FiltersState<typeof filters>,
-  navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
   sortingState: SortingsStateMultiple,
+  navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
   search?: string
 ) => {
   let filteredUsers = [...users]
@@ -297,7 +297,6 @@ export const filterUsers = <
 
   if (navigationFilters) {
     filteredUsers = filteredUsers.filter((user) => {
-      console.log(navigationFilters.date)
       return (
         !navigationFilters.date ||
         (navigationFilters.date.value.from <= user.joinedAt &&
@@ -329,8 +328,8 @@ export const createObservableDataFetch = (delay = 0) => {
           data: filterUsers(
             mockUsers,
             filters,
-            navigationFilters,
-            sortingsState
+            sortingsState,
+            navigationFilters
           ),
         })
         observer.complete()
@@ -353,8 +352,8 @@ export const createPromiseDataFetch = (delay = 500) => {
           filterUsers(
             mockUsers,
             filters,
-            navigationFilters,
             sortingsState,
+            navigationFilters,
             search
           )
         )

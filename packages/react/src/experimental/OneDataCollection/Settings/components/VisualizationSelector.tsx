@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { FiltersDefinition } from "../../Filters/types"
 import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
+import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { RecordType, SortingsDefinition } from "../../types"
 import { Visualization } from "../../visualizations/collection"
 
@@ -31,6 +32,7 @@ export const VisualizationSelector = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 >({
   visualizations,
@@ -38,7 +40,14 @@ export const VisualizationSelector = <
   onVisualizationChange,
 }: {
   visualizations: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, Grouping>
+    Visualization<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
   >
   currentVisualization: number
   onVisualizationChange: (index: number) => void
