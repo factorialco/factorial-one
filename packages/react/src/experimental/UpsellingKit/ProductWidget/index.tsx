@@ -2,7 +2,7 @@ import { Button } from "@/factorial-one"
 import CrossIcon from "@/icons/app/Cross"
 import { Card, CardContent, CardFooter } from "@/ui/card"
 import { Label } from "@/ui/label"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type ProductWidgetProps = {
   imageUrl: string
@@ -13,6 +13,7 @@ type ProductWidgetProps = {
   onClose: () => void
   dismissible: boolean
   width?: string
+  trackVisibility?: (visible: boolean) => void
 }
 
 export function ProductWidget({
@@ -24,6 +25,7 @@ export function ProductWidget({
   onClose,
   dismissible,
   width,
+  trackVisibility,
 }: ProductWidgetProps) {
   const [isDismissed, setIsDismissed] = useState(false)
 
@@ -33,6 +35,12 @@ export function ProductWidget({
       onClose()
     }
   }
+
+  useEffect(() => {
+    if (trackVisibility) {
+      trackVisibility(!isDismissed)
+    }
+  }, [trackVisibility, isDismissed])
 
   return (
     <>
