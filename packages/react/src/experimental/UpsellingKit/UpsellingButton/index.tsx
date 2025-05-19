@@ -8,19 +8,19 @@ import { UpsellRequestResponseDialog } from "../UpsellRequestResponseDialog"
 export interface UpsellingButtonProps
   extends Omit<ButtonProps, "variant" | "icon"> {
   /**
-   * El texto que se mostrará en el botón
+   * The text to be displayed in the button
    */
   label: string
   /**
-   * Si se debe mostrar el icono de Upsell. Por defecto es true.
+   * Whether to show the Upsell icon. Defaults to true.
    */
   showIcon?: boolean
   /**
-   * Función que se ejecuta al hacer clic en el botón. Debe devolver una Promise.
+   * Function to be executed when the button is clicked. Must return a Promise.
    */
   onRequest?: () => Promise<void>
   /**
-   * Si se debe mostrar el diálogo de confirmación después de la solicitud
+   * Whether to show the confirmation dialog after the request
    */
   showConfirmation?: boolean
 }

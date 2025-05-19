@@ -20,32 +20,6 @@ interface UpsellRequestResponseDialogProps {
   success?: boolean
 }
 
-const NextSteps = () => (
-  <div className="px-4 pb-2">
-    <Separator />
-    <div className="mb-2 text-sm text-f1-foreground-secondary">Next steps</div>
-
-    <div className="flex flex-col gap-2">
-      <StepItem
-        icon={CheckCircle}
-        iconClassName="text-f1-icon-positive"
-        text="Request information."
-        isCompleted
-      />
-      <StepItem
-        icon={DottedCircle}
-        iconClassName="text-f1-icon-secondary"
-        text="Product expert contacting you."
-      />
-      <StepItem
-        icon={DottedCircle}
-        iconClassName="text-f1-icon-secondary"
-        text="Demo to answer all your questions."
-      />
-    </div>
-  </div>
-)
-
 interface StepItemProps {
   icon: IconType
   iconClassName: string
@@ -70,6 +44,31 @@ const StepItem = ({
     >
       {text}
     </span>
+  </div>
+)
+
+const NextSteps = () => (
+  <div className="px-4 pb-2">
+    <div className="mb-2 text-sm text-f1-foreground-secondary">Next steps</div>
+
+    <div className="flex flex-col gap-2">
+      <StepItem
+        icon={CheckCircle}
+        iconClassName="text-f1-icon-positive"
+        text="Request information."
+        isCompleted
+      />
+      <StepItem
+        icon={DottedCircle}
+        iconClassName="text-f1-icon-secondary"
+        text="Product expert contacting you."
+      />
+      <StepItem
+        icon={DottedCircle}
+        iconClassName="text-f1-icon-secondary"
+        text="Demo to answer all your questions."
+      />
+    </div>
   </div>
 )
 
@@ -143,11 +142,16 @@ const UpsellRequestResponseDialog = forwardRef<
             <DialogDescription className="text-lg sm:text-base">
               {success
                 ? "One of our experts will contact you as soon as possible with all the details."
-                : "We're sorry but tour submission couldn't be completed. Please try again later."}
+                : "We're sorry but your submission couldn't be completed. Please try again later."}
             </DialogDescription>
           </div>
         </DialogHeader>
-        {success && <NextSteps />}
+        {success ? (
+          <>
+            <Separator />
+            <NextSteps />
+          </>
+        ) : null}
         <DialogActions onClose={handleClose} success={success} />
       </DialogContent>
     </Dialog>
