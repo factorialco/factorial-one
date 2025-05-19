@@ -32,7 +32,7 @@ const Card = React.forwardRef<
       ref={ref}
       role="article"
       className={cn(
-        "relative flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary shadow",
+        "relative flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary pt-4 shadow",
         className,
         hasHover &&
           "cursor-pointer transition-all duration-200 hover:border-f1-border-hover hover:shadow-md"
@@ -150,7 +150,7 @@ const CardContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("relative flex grow flex-col px-4 py-2", className)}
+    className={cn("relative flex grow flex-col px-4 pb-4", className)}
     {...props}
   />
 ))
@@ -163,7 +163,7 @@ const CardFooter = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "relative flex items-center border-0 border-t border-solid border-t-f1-border-secondary px-4 py-2",
+      "relative flex items-center border-0 border-t border-solid border-t-f1-border-secondary px-4 py-3",
       className
     )}
     {...props}

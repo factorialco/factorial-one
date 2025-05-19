@@ -10,8 +10,13 @@ const meta = {
     layout: "padded",
     docs: {
       description: {
-        component:
+        component: [
           "Data collection actions are a way to add actions to a data collection. There actions are displayed in the top right button or top right actions menu (three dots). The actions are data collection specific and are not related to the items in the collection. (check Item Actions for item specific actions)",
+          "The actions are defined in the `itemActions` prop of the `OneDataCollection` component.",
+          "You can define the type action: 'primary', 'secondary', 'other', but the visualizacion will depend on the view. For example, in a table, there are no distinction between types, but in a card view, the primary action and the secondary ones will be displayed in the card footer and the other actions will be displayed in the card actions menu.",
+        ]
+          .map((p) => <p>{p}</p>)
+          .join(""),
       },
     },
   },
