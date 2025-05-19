@@ -5,6 +5,10 @@ import {
   isThisWeek,
   isToday,
   isYesterday,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
 } from "date-fns"
 
 export function formatTime(date: Date) {
@@ -80,4 +84,19 @@ export const categorizeItemsByDate = <
   })
 
   return groups
+}
+
+export type DateGranularity = "day" | "week" | "month" | "year"
+const dateGranularityFunction: Record<DateGranularity, (date: Date) => Date> = {
+  day: startOfDay,
+  month: startOfMonth,
+  week: startOfWeek,
+  year: startOfYear,
+}
+
+export function setDateGranularity(date: Date, granularity: DateGranularity) {
+  return (
+    dateGranularityFunction[granularity]?.(date) ||
+    new Error(`Invalid date granularity ${granularity}`)
+  )
 }

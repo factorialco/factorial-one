@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react"
+import { render, screen, within } from "@testing-library/react"
+import React from "react"
 import { describe, expect, it, vi } from "vitest"
 import { defaultTranslations, I18nProvider } from "../../lib/providers/i18n"
 import { L10nProvider } from "../../lib/providers/l10n"
@@ -35,11 +36,12 @@ describe("OneCalendar", () => {
     )
 
     // Check if weekday headers are in Spanish
-    expect(screen.getByText("lu")).toBeInTheDocument() // Lunes
-    expect(screen.getByText("ma")).toBeInTheDocument() // Martes
-    expect(screen.getByText("mi")).toBeInTheDocument() // Miércoles
-    expect(screen.getByText("sá")).toBeInTheDocument() // Sábado
-    expect(screen.getByText("do")).toBeInTheDocument() // Domingo
+    const grid = screen.getAllByRole("grid")[0]
+    expect(within(grid).getByText("lu")).toBeInTheDocument() // Lunes
+    expect(within(grid).getByText("ma")).toBeInTheDocument() // Martes
+    expect(within(grid).getByText("mi")).toBeInTheDocument() // Miércoles
+    expect(within(grid).getByText("sá")).toBeInTheDocument() // Sábado
+    expect(within(grid).getByText("do")).toBeInTheDocument() // Domingo
 
     vi.useRealTimers()
   })

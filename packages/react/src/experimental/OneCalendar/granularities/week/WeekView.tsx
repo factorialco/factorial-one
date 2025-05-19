@@ -7,7 +7,7 @@ import {
 } from "react-day-picker"
 import { useL10n } from "../../../../lib/providers/l10n"
 import { DateRange } from "../../types"
-import { getLocale } from "../../utils"
+import { getLocale, toCalendarPickerMatcher } from "../../utils"
 
 interface WeekViewProps {
   selected?: Date | DateRange | null
@@ -15,6 +15,8 @@ interface WeekViewProps {
   month: Date
   onMonthChange?: (month: Date) => void
   motionDirection?: number
+  minDate?: Date
+  maxDate?: Date
 }
 
 export function WeekView({
@@ -23,6 +25,8 @@ export function WeekView({
   month,
   onMonthChange,
   motionDirection = 1,
+  minDate,
+  maxDate,
 }: WeekViewProps) {
   const { locale } = useL10n()
 
@@ -61,6 +65,8 @@ export function WeekView({
         }
       : selected || undefined
 
+  const disabled = toCalendarPickerMatcher({ minDate, maxDate })
+
   return (
     <AnimatePresence mode="popLayout" initial={false} custom={motionDirection}>
       <motion.div
@@ -75,6 +81,7 @@ export function WeekView({
         <Calendar
           key={month.toISOString()}
           mode="range"
+          disabled={disabled}
           selected={selectedValue}
           onDayClick={handleDayClick}
           month={month}
