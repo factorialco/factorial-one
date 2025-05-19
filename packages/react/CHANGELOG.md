@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.59.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.58.0...factorial-one-react-v1.59.0) (2025-05-19)
+
+
+### Features
+
+* search by group and improve search ([#1843](https://github.com/factorialco/factorial-one/issues/1843)) ([36d61ab](https://github.com/factorialco/factorial-one/commit/36d61abf977b894fb6237364399d1bc11f1c131b))
+
 ## [1.58.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.2...factorial-one-react-v1.58.0) (2025-05-19)
 
 
