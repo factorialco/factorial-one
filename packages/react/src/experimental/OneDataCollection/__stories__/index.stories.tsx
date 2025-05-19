@@ -346,6 +346,7 @@ export const BasicCardView: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      itemUrl: (item) => `/users/${item.id}`,
       itemActions: (item) => [
         {
           label: "Edit",

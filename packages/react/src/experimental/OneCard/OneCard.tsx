@@ -15,7 +15,7 @@ import {
   CardHeader,
   CardSubtitle,
   CardTitle,
-} from "@/ui/card"
+} from "@/ui/Card/Card"
 import { useState, type ReactNode } from "react"
 import { CardMetadata } from "./CardMetadata"
 import { type Metadata } from "./types"

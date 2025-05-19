@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card/Card"
 import { forwardRef } from "react"
 import { Button, ButtonProps } from "../../../components/Actions/Button"
 import { IconType } from "../../../components/Utilities/Icon"

@@ -2,7 +2,13 @@ import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
 import { cn } from "@/lib/utils"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/ui/Card/Card"
 import { Skeleton } from "@/ui/skeleton"
 import { useEffect, useMemo } from "react"
 import { useI18n } from "../../../../../lib/providers/i18n"
@@ -132,18 +138,8 @@ export const CardCollection = <
                 ? source.itemOnClick(item)
                 : undefined
 
-              const hasHover = itemHref || itemOnClick
-
               return (
-                <Card
-                  key={index}
-                  onClick={itemOnClick}
-                  href={itemHref}
-                  className={cn(
-                    hasHover &&
-                      "cursor-pointer hover:bg-f1-background-secondary"
-                  )}
-                >
+                <Card key={index} onClick={itemOnClick} href={itemHref}>
                   <CardHeader>
                     {source.selectable && id !== undefined && (
                       <Checkbox

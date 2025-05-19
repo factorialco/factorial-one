@@ -1,9 +1,9 @@
 import * as React from "react"
 
-import { cn } from "../lib/utils"
+import { cn } from "../../lib/utils"
 
-import ChevronRight from "../icons/app/ChevronRight"
-import InfoCircleLine from "../icons/app/InfoCircleLine"
+import ChevronRight from "../../icons/app/ChevronRight"
+import InfoCircleLine from "../../icons/app/InfoCircleLine"
 
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Link } from "@/lib/linkHandler"
@@ -13,24 +13,38 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./tooltip"
+} from "../tooltip"
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { href?: string }
->(({ className, href, children, ...props }, ref) => {
+  React.HTMLAttributes<HTMLDivElement> & {
+    href?: string
+    onClick?: () => void
+    disabled?: boolean
+  }
+>(({ className, href, onClick, disabled, children, ...props }, ref) => {
   const { actions } = useI18n()
+
+  const hasHover = (href || onClick) && !disabled
+
   return (
     <div
       ref={ref}
       role="article"
       className={cn(
-        "relative flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-4 shadow",
-        className
+        "relative flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary shadow",
+        className,
+        hasHover &&
+          "cursor-pointer transition-all duration-200 hover:border-f1-border-hover hover:shadow-md"
       )}
       {...props}
+      onClick={() => {
+        if (disabled) return
+        if (href) return
+        if (onClick) return onClick()
+      }}
     >
-      {href && (
+      {href && !disabled && (
         <Link href={href} className="absolute inset-0 block" tabIndex={0}>
           <span className="sr-only">{actions.view}</span>
         </Link>
@@ -48,7 +62,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-row gap-1.5", className)}
+    className={cn("flex flex-row gap-1.5 p-4", className)}
     {...props}
   />
 ))
@@ -135,7 +149,7 @@ const CardContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("relative flex grow flex-col", className)}
+    className={cn("relative flex grow flex-col px-4 py-2", className)}
     {...props}
   />
 ))
@@ -147,7 +161,10 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("relative flex items-center", className)}
+    className={cn(
+      "relative flex items-center border-0 border-t border-solid border-t-f1-border-secondary px-4 py-2",
+      className
+    )}
     {...props}
   />
 ))
@@ -160,7 +177,7 @@ const CardComment = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn("flex text-3xl font-semibold", className)}
+      className={cn("bo flex px-4 py-2 text-3xl font-semibold", className)}
       {...props}
     />
   )
