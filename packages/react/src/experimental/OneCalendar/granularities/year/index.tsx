@@ -1,8 +1,10 @@
 import { addYears, endOfYear, parse, startOfYear } from "date-fns"
-import { DateRange } from "../../types"
+import { DateRange, DateRangeComplete } from "../../types"
 import {
   formatDateRange,
   formatDateToString,
+  isAfterOrEqual,
+  isBeforeOrEqual,
   toDateRangeString,
   toGranularityDateRange,
 } from "../../utils"
@@ -10,13 +12,46 @@ import { rangeSeparator } from "../consts"
 import { GranularityDefinition } from "../types"
 import { YearView } from "./YearView"
 
-const toYearGranularityDateRange = (
-  date: Date | DateRange | undefined | null
-) => {
+export function toYearGranularityDateRange<
+  T extends Date | DateRange | undefined | null,
+>(date: T): T extends Date | DateRange ? DateRangeComplete : T {
   return toGranularityDateRange(date, startOfYear, endOfYear)
 }
 
 export const yearGranularity: GranularityDefinition = {
+  calendarView: "year",
+  getPrevNext: (value, options) => {
+    const dateRange = toYearGranularityDateRange(value)
+    if (!dateRange) {
+      return { prev: false, next: false }
+    }
+    const { from, to } = dateRange
+
+    const [prevFrom, prevTo] = [
+      startOfYear(addYears(from, -1)),
+      endOfYear(addYears(to, -1)),
+    ]
+    const [nextFrom, nextTo] = [
+      startOfYear(addYears(from, 1)),
+      endOfYear(addYears(to, 1)),
+    ]
+
+    const minWithGranularity = options.min && startOfYear(options.min)
+    const maxWithGranularity = options.max && endOfYear(options.max)
+
+    return {
+      prev:
+        isAfterOrEqual(prevFrom, minWithGranularity) &&
+        isAfterOrEqual(prevTo, minWithGranularity)
+          ? { from: prevFrom, to: prevTo }
+          : false,
+      next:
+        isBeforeOrEqual(nextTo, maxWithGranularity) &&
+        isBeforeOrEqual(nextFrom, maxWithGranularity)
+          ? { from: nextFrom, to: nextTo }
+          : false,
+    }
+  },
   toRange: (date) => toYearGranularityDateRange(date),
   toRangeString: (date) => formatDateRange(date, "yyyy"),
   toString: (date) => formatDateToString(date, "yyyy"),
@@ -53,6 +88,8 @@ export const yearGranularity: GranularityDefinition = {
     return `${startYear} ${rangeSeparator} ${endYear}`
   },
   render: (renderProps) => {
+    const minDate = toYearGranularityDateRange(renderProps.minDate)
+    const maxDate = toYearGranularityDateRange(renderProps.maxDate)
     return (
       <YearView
         mode={renderProps.mode}
@@ -60,6 +97,8 @@ export const yearGranularity: GranularityDefinition = {
         selected={renderProps.selected}
         onSelect={renderProps.onSelect}
         motionDirection={renderProps.motionDirection}
+        minDate={minDate ? minDate.from : undefined}
+        maxDate={maxDate ? maxDate.to : undefined}
       />
     )
   },
