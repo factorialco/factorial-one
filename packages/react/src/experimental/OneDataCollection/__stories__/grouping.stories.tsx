@@ -7,7 +7,6 @@ import {
 } from "../exports"
 import {
   createDataAdapter,
-  DEPARTMENTS,
   ExampleComponent,
   filterPresets,
   filters,
@@ -164,20 +163,7 @@ export const WithPaginationAndGrouping: Story = {
           ],
         }
       },
-      dataAdapter: createDataAdapter<
-        {
-          id: string
-          name: string
-          email: string
-          role: string
-          department: (typeof DEPARTMENTS)[number]
-          status: string
-          isStarred: boolean
-          href: string
-          salary: number | undefined
-        },
-        typeof filters
-      >({
+      dataAdapter: createDataAdapter({
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "pages",
