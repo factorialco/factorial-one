@@ -134,6 +134,7 @@ const CardLink = React.forwardRef<
         "cursor-pointer transition-colors hover:border-f1-border-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1", //interaction
         className
       )}
+      role="button"
       aria-label={title}
       {...props}
     >

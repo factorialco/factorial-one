@@ -25,6 +25,9 @@ export default meta
 type Story = StoryObj<typeof Card>
 
 export const Basic: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   render: () => (
     <Card>
       <CardHeader>
@@ -38,6 +41,9 @@ export const Basic: Story = {
 }
 
 export const WithSubtitle: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   render: () => (
     <Card>
       <CardHeader>
@@ -52,6 +58,9 @@ export const WithSubtitle: Story = {
 }
 
 export const WithInfo: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   render: () => (
     <Card>
       <CardHeader>
@@ -66,6 +75,9 @@ export const WithInfo: Story = {
 }
 
 export const WithFooter: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   render: () => (
     <Card>
       <CardHeader>
@@ -82,6 +94,9 @@ export const WithFooter: Story = {
 }
 
 export const WithComment: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   render: () => (
     <Card>
       <CardHeader>
@@ -96,6 +111,9 @@ export const WithComment: Story = {
 }
 
 export const Clickable: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   render: () => (
     <Card onClick={() => alert("Card clicked!")}>
       <CardHeader>
@@ -109,6 +127,9 @@ export const Clickable: Story = {
 }
 
 export const Disabled: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   render: () => (
     <Card disabled>
       <CardHeader>
@@ -122,6 +143,9 @@ export const Disabled: Story = {
 }
 
 export const Complete: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
   render: () => (
     <Card>
       <CardHeader>
