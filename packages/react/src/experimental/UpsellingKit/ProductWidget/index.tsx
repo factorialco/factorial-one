@@ -15,7 +15,7 @@ type ProductWidgetProps = {
   width?: string
 }
 
-const ProductWidget = ({
+export function ProductWidget({
   imageUrl,
   title,
   description,
@@ -24,7 +24,7 @@ const ProductWidget = ({
   onClose,
   dismissible,
   width,
-}: ProductWidgetProps) => {
+}: ProductWidgetProps) {
   const [isDismissed, setIsDismissed] = useState(false)
 
   const handleClose = () => {
@@ -82,5 +82,3 @@ const ProductWidget = ({
     </>
   )
 }
-
-export default ProductWidget
