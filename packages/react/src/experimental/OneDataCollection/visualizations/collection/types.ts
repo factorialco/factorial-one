@@ -1,6 +1,7 @@
 import { IconType } from "../../../../components/Utilities/Icon"
 import type { FiltersDefinition } from "../../Filters/types"
 import { ItemActionsDefinition } from "../../item-actions"
+import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { SortingsDefinition } from "../../sortings"
 import type { DataSource, GroupingDefinition, RecordType } from "../../types"
 import type { CardVisualizationOptions } from "../../visualizations/collection/Card"
@@ -19,6 +20,7 @@ export type Visualization<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 > =
   | {
@@ -42,15 +44,30 @@ export type Visualization<
       icon: IconType
       /** Custom component to render the visualization */
       component: (props: {
-        source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>
+        source: DataSource<
+          Record,
+          Filters,
+          Sortings,
+          ItemActions,
+          NavigationFilters,
+          Grouping
+        >
       }) => JSX.Element
     }
 
 /**
  * Represents the type of visualization.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type VisualizationType = Visualization<any, any, any, any, any>["type"]
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type VisualizationType = Visualization<
+  any,
+  any,
+  any,
+  any,
+  any,
+  any
+>["type"]
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 /**
  * Props interface for components that support multiple visualizations.
@@ -65,10 +82,18 @@ export type VisualizationProps<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 > = {
   /** Array of available visualization configurations */
   visualizations?: ReadonlyArray<
-    Visualization<Record, Filters, Sortings, ItemActions, Grouping>
+    Visualization<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
   >
 }
