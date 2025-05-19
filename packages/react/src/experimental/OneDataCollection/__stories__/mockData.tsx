@@ -328,8 +328,8 @@ export const createObservableDataFetch = (delay = 0) => {
           data: filterUsers(
             mockUsers,
             filters,
-            sortingsState,
-            navigationFilters
+            navigationFilters,
+            sortingsState
           ),
         })
         observer.complete()
@@ -352,8 +352,8 @@ export const createPromiseDataFetch = (delay = 500) => {
           filterUsers(
             mockUsers,
             filters,
-            sortingsState,
             navigationFilters,
+            sortingsState,
             search
           )
         )

@@ -44,7 +44,10 @@ export type Visualization<
       icon: IconType
       /** Custom component to render the visualization */
       component: (props: {
+<<<<<<< HEAD
         onTotalItemsChange?: (totalItems: number) => void
+=======
+>>>>>>> caebd2a5 (chore: rebase fixes)
         source: DataSource<
           Record,
           Filters,

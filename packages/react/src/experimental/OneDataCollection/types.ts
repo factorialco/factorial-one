@@ -356,6 +356,10 @@ export type DataSource<
   setCurrentNavigationFilters: React.Dispatch<
     React.SetStateAction<NavigationFiltersState<NavigationFilters>>
   >
+  /** Current state of applied grouping */
+  currentGrouping?: Grouping["mandatory"] extends true
+    ? GroupingState<Record, Grouping>
+    : null
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<Record, Grouping>>
