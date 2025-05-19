@@ -1,5 +1,5 @@
-import { Icon, IconType } from "../Icon";
 import { View } from "react-native";
+import { Icon, IconType } from "../Icon";
 import { cn } from "../../lib/utils";
 
 type Props = {

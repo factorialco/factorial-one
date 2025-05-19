@@ -194,7 +194,7 @@ importers:
         version: 1.0.0-beta.3(typescript@5.7.3)
       date-fns:
         specifier: ^3.6.0
-        version: 4.1.0
+        version: 3.6.0
       embla-carousel-autoplay:
         specifier: ^8.5.2
         version: 8.5.2(embla-carousel@8.6.0)
@@ -498,8 +498,8 @@ importers:
   packages/react-native:
     dependencies:
       '@factorialco/factorial-one-core':
-        specifier: 1.4.0
-        version: 1.4.0(@tailwindcss/container-queries@0.1.1(tailwindcss@3.3.5))(tailwindcss-animate@1.0.7(tailwindcss@3.3.5))(tailwindcss@3.3.5)(typescript@5.7.3)
+        specifier: 1.4.1
+        version: 1.4.1(@tailwindcss/container-queries@0.1.1(tailwindcss@3.3.5))(tailwindcss-animate@1.0.7(tailwindcss@3.3.5))(tailwindcss@3.3.5)(typescript@5.7.3)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -2373,8 +2373,8 @@ packages:
     resolution: {integrity: sha512-ReZxZ8pdnoI3tP/dNnJdnmAk7uLT4FjsKDGW7YeDdvdOMz2XCQSmSCM9IWlrXuWtMF9zeSB6WJtEhCQ41gQOfw==}
     hasBin: true
 
-  '@factorialco/factorial-one-core@1.4.0':
-    resolution: {integrity: sha512-1LEOHtB3qHYdwMxj7OFXElxLNhpV3hEeVouT/z/ijVrWyTdqrC8D0icUXMnB8ZTTXshzcSqTAb/aflaNTZnObw==}
+  '@factorialco/factorial-one-core@1.4.1':
+    resolution: {integrity: sha512-/DtaKdkRvuebupGaKtwYJHHyjuDglAJeNyxYbLXGsyFRYq/2RBh5Xl+rDjANZGjXmZjOkHerRDWHjzRwRDphrg==}
     peerDependencies:
       '@tailwindcss/container-queries': ^0.1.1
       tailwindcss: ^3.4.3
@@ -5905,9 +5905,6 @@ packages:
 
   date-fns@3.6.0:
     resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
-
-  date-fns@4.1.0:
-    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
   de-indent@1.0.2:
     resolution: {integrity: sha512-e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==}
@@ -11228,7 +11225,7 @@ snapshots:
 
   '@babel/highlight@7.25.9':
     dependencies:
-      '@babel/helper-validator-identifier': 7.25.9
+      '@babel/helper-validator-identifier': 7.27.1
       chalk: 2.4.2
       js-tokens: 4.0.0
       picocolors: 1.1.1
@@ -12917,7 +12914,7 @@ snapshots:
       find-up: 5.0.0
       js-yaml: 4.1.0
 
-  '@factorialco/factorial-one-core@1.4.0(@tailwindcss/container-queries@0.1.1(tailwindcss@3.3.5))(tailwindcss-animate@1.0.7(tailwindcss@3.3.5))(tailwindcss@3.3.5)(typescript@5.7.3)':
+  '@factorialco/factorial-one-core@1.4.1(@tailwindcss/container-queries@0.1.1(tailwindcss@3.3.5))(tailwindcss-animate@1.0.7(tailwindcss@3.3.5))(tailwindcss@3.3.5)(typescript@5.7.3)':
     dependencies:
       '@tailwindcss/container-queries': 0.1.1(tailwindcss@3.3.5)
       tailwindcss: 3.3.5
@@ -17311,8 +17308,6 @@ snapshots:
       is-data-view: 1.0.2
 
   date-fns@3.6.0: {}
-
-  date-fns@4.1.0: {}
 
   de-indent@1.0.2: {}
 

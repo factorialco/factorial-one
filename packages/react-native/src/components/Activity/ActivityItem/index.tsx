@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from "react-native";
-import { IconAvatar } from "../../IconAvatar";
-import { IconType } from "../../Icon";
 import { useState } from "react";
+import { IconType } from "../../Icon";
+import { IconAvatar } from "../../IconAvatar";
 
 export type ActivityItemProps = {
   id: string;
@@ -32,8 +32,13 @@ export const ActivityItem = ({
       onPressIn={() => setIsPressed(true)}
       onPressOut={() => setIsPressed(false)}
       onPress={() => onPress(id)}
+      accessibilityLabel="activity-item"
     >
-      {icon && <IconAvatar icon={icon} size="md" />}
+      {icon && (
+        <View accessibilityLabel="activity-icon-container">
+          <IconAvatar icon={icon} size="md" />
+        </View>
+      )}
       <View className="flex-1">
         <Text className="line-clamp-1 text-lg font-medium text-f1-foreground">
           {title}
@@ -47,7 +52,10 @@ export const ActivityItem = ({
       </View>
       <View className="ml-1">
         {isUnread && (
-          <View className="mt-1.5 h-2 w-2 rounded-full bg-f1-icon-critical" />
+          <View
+            accessibilityLabel="unread-indicator"
+            className="mt-1.5 h-2 w-2 rounded-full bg-f1-icon-critical"
+          />
         )}
       </View>
     </Pressable>
@@ -56,7 +64,10 @@ export const ActivityItem = ({
 
 export const ActivityItemSkeleton = () => {
   return (
-    <View className="flex w-full flex-row gap-2 rounded-lg p-2 pr-3">
+    <View
+      accessibilityLabel="activity-skeleton"
+      className="flex w-full flex-row gap-2 rounded-lg p-2 pr-3"
+    >
       {/* Avatar skeleton - match IconAvatar's border radius */}
       <View className="h-10 w-10 rounded-lg bg-f1-background-secondary" />
 
