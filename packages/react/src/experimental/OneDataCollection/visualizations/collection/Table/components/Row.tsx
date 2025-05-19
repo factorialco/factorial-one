@@ -2,6 +2,7 @@ import { ActionsDropdown } from "@/experimental/OneDataCollection/ItemActions/Dr
 
 import { FiltersDefinition } from "@/experimental/OneDataCollection/Filters/types"
 import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { renderProperty } from "@/experimental/OneDataCollection/property-render"
 import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
 import {
@@ -19,9 +20,17 @@ export type RowProps<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 > = {
-  source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
   item: Record
   index: number
   onCheckedChange: (checked: boolean) => void
@@ -36,6 +45,7 @@ export const Row = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
 >({
   source,
@@ -46,7 +56,14 @@ export const Row = <
   columns,
   frozenColumnsLeft,
   checkColumnWidth,
-}: RowProps<Record, Filters, Sortings, ItemActions, Grouping>) => {
+}: RowProps<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping
+>) => {
   const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
   const itemOnClick = source.itemOnClick ? source.itemOnClick(item) : undefined
   const id = source.selectable ? source.selectable(item) : undefined
