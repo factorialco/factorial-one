@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.58.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.2...factorial-one-react-v1.58.0) (2025-05-19)
+
+
+### Features
+
+* icons for meetings ([55b38e3](https://github.com/factorialco/factorial-one/commit/55b38e3faee0aa36513be485b07a72d889a6183d))
+
 ## [1.57.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.1...factorial-one-react-v1.57.2) (2025-05-16)
 
 
