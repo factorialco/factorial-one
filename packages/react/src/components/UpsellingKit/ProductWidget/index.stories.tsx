@@ -26,4 +26,5 @@ export const Default: Story = {
     dismissible: true,
     width: "300px",
   },
+  tags: ["autodocs", "experimental"],
 }
