@@ -32,6 +32,7 @@ export const Default: Story = {
     icon: Megaphone,
     dismissable: false,
   },
+  tags: ["autodocs", "experimental"],
 }
 
 export const Dismissable: Story = {
