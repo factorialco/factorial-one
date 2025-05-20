@@ -358,6 +358,33 @@ export declare const PrivacyModeProvider: React_2.FC<{
 
 declare const privateProps: readonly ["append", "appendButton", "className"];
 
+export declare function ProductCard({ title, description, onClick, onClose, isVisible, icon, dismissable, trackVisibility, }: ProductCardProps): false | JSX_2.Element;
+
+export declare type ProductCardProps = {
+    title: string;
+    description: string;
+    onClick: () => void;
+    onClose?: () => void;
+    isVisible: boolean;
+    icon: IconType;
+    dismissable?: boolean;
+    trackVisibility?: (open: boolean) => void;
+};
+
+export declare function ProductWidget({ imageUrl, title, description, buttonText, onClick, onClose, dismissible, width, trackVisibility, }: ProductWidgetProps): JSX_2.Element;
+
+declare type ProductWidgetProps = {
+    imageUrl: string;
+    title: string;
+    description: string;
+    buttonText: string;
+    onClick: () => void;
+    onClose: () => void;
+    dismissible: boolean;
+    width?: string;
+    trackVisibility?: (visible: boolean) => void;
+};
+
 export declare const ProgressBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
 value: number;
 max?: number;

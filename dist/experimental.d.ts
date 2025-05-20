@@ -2487,19 +2487,6 @@ declare const privateProps: readonly ["append", "appendButton", "className"];
 
 declare const privateProps_2: readonly [];
 
-export declare function ProductCard({ title, description, onClick, onClose, isVisible, icon, dismissable, trackVisibility, }: ProductCardProps): false | JSX_2.Element;
-
-export declare type ProductCardProps = {
-    title: string;
-    description: string;
-    onClick: () => void;
-    onClose?: () => void;
-    isVisible: boolean;
-    icon: IconType_2;
-    dismissable?: boolean;
-    trackVisibility?: (open: boolean) => void;
-};
-
 declare type ProductUpdate = {
     title: string;
     href: string;
