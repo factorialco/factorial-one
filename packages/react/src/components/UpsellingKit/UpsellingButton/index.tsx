@@ -81,7 +81,7 @@ export const UpsellingButton = ({
         if (showConfirmation) {
           setResponseStatus("success")
         }
-      } catch (error) {
+      } catch {
         setResponseStatus("error")
       } finally {
         setInternalLoading(false)
