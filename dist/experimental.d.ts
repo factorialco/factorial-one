@@ -10,6 +10,7 @@ import { color as color_2 } from '../../../../ui/avatar';
 import { ComponentProps } from 'react';
 import { ControllerProps } from 'react-hook-form';
 import { ControllerRenderProps } from 'react-hook-form';
+import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
 import { Dispatch } from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
@@ -21,10 +22,12 @@ import { ForwardRefExoticComponent } from 'react';
 import { HTMLAttributes } from 'react';
 import { HTMLInputTypeAttribute } from 'react';
 import { IconType as IconType_3 } from '../../factorial-one';
+import { InFilterOptions } from './InFilter/types';
 import { JSONContent } from '@tiptap/react';
 import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
 import { Observable } from 'zen-observable-ts';
+import { Path } from 'react-hook-form';
 import { PieChartProps } from '../../../components/Charts/PieChart';
 import { PopoverProps } from '@radix-ui/react-popover';
 import { PropsWithChildren } from 'react';
@@ -40,6 +43,7 @@ import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { type as type_2 } from '../../../../ui/avatar';
 import { useForm } from 'react-hook-form';
 import { UseFormHandleSubmit } from 'react-hook-form';
+import { UseFormProps } from 'react-hook-form';
 import { UseFormReturn } from 'react-hook-form';
 import { VariantProps } from 'cva';
 import { VerticalBarChartProps } from '../../../components/Charts/VerticalBarChart';
@@ -62,6 +66,30 @@ export declare type actionType = {
     disabled?: boolean;
     variant: "default" | "outline" | "neutral" | undefined;
     icon?: IconType_2;
+};
+
+export declare const ActivityItemList: (({ items, loadingMoreItems, onClickItem, onEndReached, onEndReachedItemsThreshold, }: ActivityItemListProps) => default_2.JSX.Element) & {
+    Skeleton: () => default_2.JSX.Element;
+};
+
+export declare type ActivityItemListProps = Pick<SectionProps, "items" | "onClickItem"> & {
+    onEndReached?: () => void;
+    onEndReachedItemsThreshold?: number;
+    loadingMoreItems?: boolean;
+};
+
+export declare const ActivityItemListSkeleton: () => default_2.JSX.Element;
+
+declare type ActivityItemProps = {
+    id: string;
+    createdAt: Date;
+    title: string;
+    description?: string;
+    icon?: IconType;
+    category: string;
+    isUnread?: boolean;
+    onClick: (id: string) => void;
+    onVisible?: (id: string) => void;
 };
 
 export declare const Alert: React_2.ForwardRefExoticComponent<Omit<React_2.HTMLAttributes<HTMLDivElement> & VariantProps<(props?: ({
@@ -95,9 +123,37 @@ declare const alertAvatarVariants: (props?: ({
 
 export declare const AlertDescription: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLParagraphElement> & React_2.RefAttributes<HTMLParagraphElement>>;
 
-export declare const AlertTag: ForwardRefExoticComponent<Props_9<string> & RefAttributes<HTMLDivElement>>;
+declare interface AlertProps extends VariantProps<typeof alertVariants> {
+    title: string;
+    description: string;
+    action: {
+        label: string;
+        onClick?: () => void;
+    };
+    link?: {
+        label: string;
+        href: string;
+    };
+    variant: AlertVariant;
+}
+
+export declare const AlertTag: ForwardRefExoticComponent<Props_10<string> & RefAttributes<HTMLDivElement>>;
+
+declare type AlertTagProps = ComponentProps<typeof AlertTag>;
 
 export declare const AlertTitle: React_2.ForwardRefExoticComponent<React_2.HTMLAttributes<HTMLHeadingElement> & React_2.RefAttributes<HTMLParagraphElement>>;
+
+declare type AlertVariant = "info" | "warning" | "critical";
+
+declare const alertVariants: (props?: ({
+    variant?: "info" | "critical" | "warning" | undefined;
+} & ({
+    class?: ClassValue;
+    className?: never;
+} | {
+    class?: never;
+    className?: ClassValue;
+})) | undefined) => string;
 
 export declare function ApplicationFrame({ children, sidebar, banner, }: ApplicationFrameProps): JSX_2.Element;
 
@@ -132,7 +188,7 @@ declare const Avatar_2: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.A
 } & React_2.RefAttributes<HTMLSpanElement>>;
 
 export declare const AvatarList: {
-    ({ avatars, size, type, noTooltip, remainingCount: initialRemainingCount, max, }: Props_4): JSX_2.Element;
+    ({ avatars, size, type, noTooltip, remainingCount: initialRemainingCount, max, layout, }: Props_4): JSX_2.Element;
     displayName: string;
 };
 
@@ -141,66 +197,6 @@ declare type AvatarListMetadata = BaseMetadata & {
     avatars: AvatarVariant[];
     max?: number;
 };
-
-export declare type AvatarNamedEntity = {
-    id: number;
-    name: string;
-    avatar?: string;
-    expanded?: boolean;
-    searchKeys?: string[];
-    subItems?: AvatarNamedSubEntity[];
-};
-
-export declare type AvatarNamedGroup = {
-    value: string;
-    label: string;
-    groupType?: "avatar" | "team";
-};
-
-export declare type AvatarNamedSubEntity = {
-    subId: number;
-    subName: string;
-    subAvatar?: string;
-    subSearchKeys?: string[];
-};
-
-export declare const AvatarNameSelector: (props: AvatarNameSelectorProps & {
-    children?: React.ReactNode;
-}) => JSX_2.Element;
-
-declare interface AvatarNameSelectorCommonProps extends Omit<PopoverProps, "children" | "modal"> {
-    entities: AvatarNamedEntity[];
-    groups: AvatarNamedGroup[];
-    selectedGroup: string;
-    triggerPlaceholder: string;
-    triggerSelected: string;
-    notFoundTitle: string;
-    notFoundSubtitle: string;
-    onItemExpandedChange: (id: number, expanded: boolean) => void;
-    onGroupChange: (value: string | null) => void;
-    disabled?: boolean;
-    zIndex?: number;
-    loading?: boolean;
-    searchPlaceholder?: string;
-    selectAllLabel?: string;
-    clearLabel?: string;
-    selectedLabel?: string;
-    selectedAvatarName?: AvatarNamedEntity[];
-    alwaysOpen?: boolean;
-    width?: number;
-}
-
-export declare interface AvatarNameSelectorMultipleProps extends AvatarNameSelectorCommonProps {
-    onSelect: (entities: AvatarNamedEntity[]) => void;
-    singleSelector: false | undefined;
-}
-
-export declare type AvatarNameSelectorProps = AvatarNameSelectorSingleProps | AvatarNameSelectorMultipleProps;
-
-export declare interface AvatarNameSelectorSingleProps extends AvatarNameSelectorCommonProps {
-    onSelect: (entity: AvatarNamedEntity | null) => void;
-    singleSelector: true;
-}
 
 declare type AvatarType = AvatarVariant["type"];
 
@@ -230,11 +226,15 @@ declare const badgeVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-export declare const BalanceTag: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
+export declare const BalanceTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
+
+declare type BalanceTagProps = ComponentProps<typeof BalanceTag>;
 
 export declare const BarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: BarChartProps;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+export declare const BaseActivityItemList: ({ items, loadingMoreItems, onClickItem, onEndReached, onEndReachedItemsThreshold, }: ActivityItemListProps) => default_2.JSX.Element;
 
 declare const BaseAvatar: ForwardRefExoticComponent<    {
 type: ShadAvatarProps["type"];
@@ -254,6 +254,8 @@ declare type BaseAvatarProps = ComponentProps<typeof BaseAvatar>;
 declare type BaseAvatarProps_2 = ComponentProps<typeof BaseAvatar>;
 
 declare type BaseAvatarProps_3 = ComponentProps<typeof BaseAvatar>;
+
+declare type BaseAvatarProps_4 = ComponentProps<typeof BaseAvatar>;
 
 export declare const BaseCelebration: ({ link, firstName, lastName, src, onClick, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element;
 
@@ -379,7 +381,7 @@ export declare const BaseCommunityPost: ({ id, author, group, createdAt, title, 
  * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations
  */
-export declare type BaseDataAdapter<Record extends RecordType, Filters extends FiltersDefinition> = {
+export declare type BaseDataAdapter<Record extends RecordType, Filters extends FiltersDefinition, NavigationFilters extends NavigationFiltersDefinition> = {
     /** Indicates this adapter doesn't use pagination */
     paginationType?: never;
     /**
@@ -387,27 +389,30 @@ export declare type BaseDataAdapter<Record extends RecordType, Filters extends F
      * @param options - The filter options to apply when fetching data
      * @returns Array of records, promise of records, or observable of records
      */
-    fetchData: (options: BaseFetchOptions<Filters>) => BaseResponse<Record> | Promise<BaseResponse<Record>> | Observable<PromiseState<BaseResponse<Record>>>;
+    fetchData: (options: BaseFetchOptions<Filters, NavigationFilters>) => BaseResponse<Record> | Promise<BaseResponse<Record>> | Observable<PromiseState<BaseResponse<Record>>>;
 };
 
 /**
  * Base options for data fetching
  * @template Filters - The available filter configurations
  */
-export declare type BaseFetchOptions<Filters extends FiltersDefinition> = {
+export declare type BaseFetchOptions<Filters extends FiltersDefinition, NavigationFilters extends NavigationFiltersDefinition> = {
     /** Currently applied filters */
     filters: FiltersState<Filters>;
     sortings: SortingsStateMultiple;
     search?: string;
+    navigationFilters?: NavigationFiltersState<NavigationFilters>;
 };
 
 /**
  * Base definition for all filter types.
  * Provides common properties that all filters must implement.
  */
-export declare type BaseFilterDefinition = {
+declare type BaseFilterDefinition<T extends FilterTypeKey> = {
     /** Human-readable label for the filter */
     label: string;
+    /** The type of filter */
+    type: T;
 };
 
 declare function BaseHeader({ title, avatar, description, primaryAction, secondaryActions, otherActions, status, metadata, }: BaseHeaderProps_2): JSX_2.Element;
@@ -448,25 +453,52 @@ export declare type BaseResponse<Record> = Record[];
 
 export declare const BaseTabs: React.FC<TabsProps>;
 
-export declare type BreadcrumbBaseItemType = NavigationItem & {
+declare type BaseTag<T extends {
+    type: string;
+}> = T & WithTooltipDescription;
+
+declare type BreadcrumbBaseItemType = NavigationItem & {
     id: string;
     loading?: boolean;
     label: string;
 };
 
-export declare type BreadcrumbItemType = BreadcrumbLoadingItemType | BreadcrumbNavItemType | BreadcrumbSelectItemType;
+declare type BreadcrumbItemType = BreadcrumbLoadingItemType | BreadcrumbNavItemType | BreadcrumbSelectItemType;
 
-export declare type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
+declare type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
     loading: true;
 };
 
-export declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
+declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
     icon?: IconType;
 };
 
+/**
+ * Responsive breadcrumb navigation component that automatically collapses items when space is limited.
+ *
+ * Features:
+ * - Responsive layout that adjusts to container width
+ * - Maintains first and last items visible
+ * - Collapses middle items into a dropdown when needed
+ * - Supports loading states
+ * - Animated transitions
+ *
+ * @example
+ * ```tsx
+ * <Breadcrumbs
+ *   breadcrumbs={[
+ *     { id: "home", label: "Home", href: "/" },
+ *     { id: "section", label: "Section", href: "/section" },
+ *     { id: "page", label: "Current Page" }
+ *   ]}
+ * />
+ * ```
+ */
+export declare function Breadcrumbs({ breadcrumbs, append }: BreadcrumbsProps): JSX_2.Element;
+
 export declare function BreadcrumbSelect({ options, defaultItem, ...props }: BreadcrumbSelectProps): JSX_2.Element;
 
-export declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
+declare type BreadcrumbSelectItemType = BreadcrumbBaseItemType & {
     type: "select";
     searchbox?: boolean;
     externalSearch?: boolean;
@@ -481,6 +513,12 @@ export declare type BreadcrumbSelectProps = Omit<SelectProps<string>, "options" 
     value?: string;
     defaultItem?: SelectItemObject<string>;
 };
+
+export declare interface BreadcrumbsProps {
+    /** Array of breadcrumb items to display */
+    breadcrumbs: BreadcrumbItemType[];
+    append?: ReactNode;
+}
 
 declare interface BreakType {
     id: string;
@@ -507,7 +545,7 @@ export declare type BulkActionDefinition = {
 
 declare const Button: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round"> & DataAttributes & {
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round" | "className"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -545,13 +583,18 @@ declare const buttonVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
+export declare type CalendarDate = {
+    day: number;
+    month: number;
+    year: number;
+};
+
 export declare const CalendarEvent: ForwardRefExoticComponent<CalendarEventProps & RefAttributes<HTMLDivElement>>;
 
 export declare const CalendarEventList: FC<CalendarEventListProps>;
 
 export declare interface CalendarEventListProps {
     events: CalendarEventProps[];
-    limit?: 1 | 2 | 3 | 4 | 5;
     gap?: number;
     showAllItems?: boolean;
     minSize?: number;
@@ -571,9 +614,9 @@ export declare interface CalendarEventProps {
     noBackground?: boolean;
 }
 
-declare type CalendarMode = "single" | "range";
+export declare type CalendarMode = "single" | "range";
 
-declare type CalendarView = "day" | "month" | "year" | "week";
+export declare type CalendarView = "day" | "month" | "year" | "week" | "quarter" | "halfyear";
 
 declare type CardPropertyDefinition<T> = PropertyDefinition_2<T>;
 
@@ -582,7 +625,7 @@ declare type CardVisualizationOptions<T, _Filters extends FiltersDefinition, _So
     title: (record: T) => string;
 };
 
-export declare const Carousel: ({ children, columns, showArrows, showDots, autoplay, delay, showPeek, }: CarouselProps) => default_2.JSX.Element;
+export declare const Carousel: ({ children, columns, showArrows, showDots, autoplay, delay, showPeek, doubleColumns, }: CarouselProps) => default_2.JSX.Element;
 
 declare interface CarouselBreakpoints {
     default?: ColumnNumber;
@@ -601,6 +644,10 @@ declare interface CarouselProps {
     delay?: number;
     columns?: CarouselBreakpoints;
     showPeek?: boolean;
+    doubleColumns?: {
+        index: number;
+        sizes: (keyof CarouselBreakpoints)[];
+    }[];
 }
 
 declare interface CategoryBarProps {
@@ -673,9 +720,9 @@ declare type ChartItem<K extends ChartConfig> = {
     };
 };
 
-export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
+export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_17 & RefAttributes<HTMLDivElement>>;
 
-export declare type ChatWidgetEmptyStateProps = Props_14;
+export declare type ChatWidgetEmptyStateProps = Props_17;
 
 /**
  * Filter chips list
@@ -754,11 +801,13 @@ declare type ClockInStatus = "clocked-in" | "break" | "clocked-out";
  * @template ItemActions - The available actions that can be performed on records
  * @template VisualizationOptions - Additional options for visualizing the collection
  */
-export declare type CollectionProps<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, VisualizationOptions extends object, Grouping extends GroupingDefinition<Record>> = {
+export declare type CollectionProps<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>, VisualizationOptions extends object> = {
     /** The data source configuration and state */
-    source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>;
+    source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters, Grouping>;
     /** Function to handle item selection */
     onSelectItems?: OnSelectItemsCallback<Record, Filters>;
+    /** Function to handle total items change */
+    onTotalItemsChange?: (totalItems: number | undefined) => void;
 } & VisualizationOptions;
 
 export declare type CollectionSearchOptions = {
@@ -787,7 +836,7 @@ export declare const CommunityPost: (({ id, author, group, createdAt, title, des
 
 export declare type CommunityPostProps = {
     id: string;
-    author: {
+    author?: {
         firstName: string;
         lastName: string;
         avatarUrl?: string;
@@ -868,7 +917,9 @@ export declare type CompanySelectorProps = {
     }[];
 };
 
-export declare const CompanyTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
+export declare const CompanyTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
+
+declare type CompanyTagProps = ComponentProps<typeof CompanyTag>;
 
 declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "item";
@@ -943,7 +994,7 @@ declare type DashboardProps_2 = {
  * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations
  */
-export declare type DataAdapter<Record extends RecordType, Filters extends FiltersDefinition> = BaseDataAdapter<Record, Filters> | PaginatedDataAdapter<Record, Filters>;
+export declare type DataAdapter<Record extends RecordType, Filters extends FiltersDefinition, NavigationFilters extends NavigationFiltersDefinition> = BaseDataAdapter<Record, Filters, NavigationFilters> | PaginatedDataAdapter<Record, Filters, NavigationFilters>;
 
 declare const DataList: ForwardRefExoticComponent<DataListProps & RefAttributes<HTMLUListElement>> & {
     Item: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
@@ -964,7 +1015,7 @@ declare type DataListProps = {
  * @template Filters - The available filter configurations for the collection
  * @template ItemActions - The available actions that can be performed on records
  */
-export declare type DataSource<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, Grouping extends GroupingDefinition<Record>> = DataSourceDefinition<Record, Filters, Sortings, ItemActions, Grouping> & {
+export declare type DataSource<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>> = DataSourceDefinition<Record, Filters, Sortings, ItemActions, NavigationFilters, Grouping> & {
     /** Current state of applied filters */
     currentFilters: FiltersState<Filters>;
     /** Function to update the current filters state */
@@ -978,6 +1029,8 @@ export declare type DataSource<Record extends RecordType, Filters extends Filter
     setCurrentSearch: (search: string | undefined) => void;
     isLoading: boolean;
     setIsLoading: (loading: boolean) => void;
+    currentNavigationFilters: NavigationFiltersState<NavigationFilters>;
+    setCurrentNavigationFilters: React.Dispatch<React.SetStateAction<NavigationFiltersState<NavigationFilters>>>;
     /** Function to update the current grouping state */
     setCurrentGrouping: React.Dispatch<React.SetStateAction<GroupingState<Record, Grouping>>>;
 };
@@ -989,9 +1042,11 @@ export declare type DataSource<Record extends RecordType, Filters extends Filter
  * @template ItemActions - The available actions that can be performed on records
  * @template SecondaryActions - The available actions that can be performed on the collection
  */
-export declare type DataSourceDefinition<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, Grouping extends GroupingDefinition<Record>> = {
+export declare type DataSourceDefinition<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>> = {
     /** Available filter configurations */
     filters?: Filters;
+    /** Navigation filters */
+    navigationFilters?: NavigationFilters;
     /** Predefined filter configurations that can be applied */
     presets?: PresetsDefinition<Filters>;
     /** URL for a single item in the collection */
@@ -1008,11 +1063,12 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     search?: CollectionSearchOptions;
     /** Current state of applied filters */
     currentFilters?: FiltersState<Filters>;
+    /** Current state of applied navigation filter */
     /** Available sorting fields. If not provided, sorting is not allowed. */
     sortings?: Sortings;
     defaultSorting?: SortingsState<Sortings>;
     /** Data adapter responsible for fetching and managing data */
-    dataAdapter: DataAdapter<Record, Filters>;
+    dataAdapter: DataAdapter<Record, Filters, NavigationFilters>;
     /** Selectable items value under the checkbox column (undefined if not selectable) */
     selectable?: (item: Record) => string | number | undefined;
     /** Bulk actions that can be performed on the collection */
@@ -1020,6 +1076,7 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
         primary: BulkActionDefinition[];
         secondary?: BulkActionDefinition[];
     };
+    totalItemSummary?: (totalItems: number) => string;
     /** Grouping configuration */
     grouping?: Grouping;
     currentGrouping?: GroupingState<Record, Grouping>;
@@ -1027,9 +1084,63 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
 
 export declare const DateAvatar: ({ date }: Props_5) => JSX_2.Element;
 
-declare type DateRange = {
+declare type DateFilterDefinition = BaseFilterDefinition<"date"> & {
+    options?: DateFilterOptions_2;
+};
+
+declare type DateFilterOptions_2 = {
+    minDate?: Date;
+    maxDate?: Date;
+    mode?: CalendarMode;
+    defaultSelected?: Date | DateRange | null;
+    view?: CalendarView;
+};
+
+export declare type DateNavigationOptions = {
+    min?: Date;
+    max?: Date;
+};
+
+declare type DateNavigationOptions_2 = {
+    granularity?: GranularityDefinitionKey[] | GranularityDefinitionKey;
+    defaultGranularity?: GranularityDefinitionKey;
+    min?: Date;
+    max?: Date;
+    presets?: DatePreset[];
+    hideGoToCurrent?: boolean;
+};
+
+declare type DateNavigatorFilterDefinition = NavigationFilterDefinitionBase<Date | DateRange | DateValue> & {
+    type: "date-navigator";
+} & DateNavigationOptions_2;
+
+declare interface DatePreset {
+    label: string;
+    granularity: GranularityDefinitionKey;
+    value: DateRange | (() => DateRange);
+}
+
+export declare type DateRange = {
     from: Date;
     to?: Date;
+};
+
+export declare type DateRangeComplete = Required<DateRange>;
+
+export declare type DateRangeError = {
+    from: boolean;
+    to: boolean;
+};
+
+export declare type DateRangeString = {
+    from: string;
+    to?: string;
+};
+
+declare type DateValue = {
+    value: DateRangeComplete;
+    valueString: string;
+    granularity: GranularityDefinitionKey;
 };
 
 export declare function DaytimePage({ children, header, period, embedded, }: DaytimePageProps): JSX_2.Element;
@@ -1042,9 +1153,12 @@ export declare interface DaytimePageProps extends VariantProps<typeof daytimePag
     children?: React.ReactNode;
     header?: {
         title: string;
+        description?: string;
         employeeFirstName: string;
         employeeLastName: string;
         employeeAvatar?: string;
+        pulse?: ComponentProps<typeof PulseAvatar>["pulse"];
+        onPulseClick?: ComponentProps<typeof PulseAvatar>["onPulseClick"];
     };
     embedded?: boolean;
 }
@@ -1084,16 +1198,16 @@ actions: {
 primary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
-icon?: IconType_3 | undefined;
 disabled?: boolean | undefined | undefined;
+icon?: IconType_3 | undefined;
 } & {
 variant?: "default" | "critical" | "neutral";
 };
 secondary: {
 label: string;
 onClick?: ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>) | undefined;
-icon?: IconType_3 | undefined;
 disabled?: boolean | undefined | undefined;
+icon?: IconType_3 | undefined;
 };
 };
 open?: boolean;
@@ -1101,6 +1215,8 @@ onClose?: () => void;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 export declare const DotTag: ForwardRefExoticComponent<DotTagProps & RefAttributes<HTMLDivElement>>;
+
+export declare const dotTagColors: NewColor[];
 
 export declare type DotTagProps = {
     text: string;
@@ -1200,6 +1316,69 @@ export declare type enhanceTextParams = {
     context?: string;
 };
 
+export declare const EntitySelect: (props: EntitySelectProps & {
+    children?: React.ReactNode;
+}) => JSX_2.Element;
+
+declare interface EntitySelectCommonProps extends Omit<PopoverProps, "children" | "modal"> {
+    entities: EntitySelectEntity[];
+    groups: EntitySelectNamedGroup[];
+    selectedGroup: string;
+    triggerPlaceholder: string;
+    triggerSelected: string;
+    notFoundTitle: string;
+    notFoundSubtitle: string;
+    onItemExpandedChange: (id: number, expanded: boolean) => void;
+    onGroupChange: (value: string | null) => void;
+    disabled?: boolean;
+    zIndex?: number;
+    loading?: boolean;
+    searchPlaceholder?: string;
+    selectAllLabel?: string;
+    clearLabel?: string;
+    selectedLabel?: string;
+    selectedEntities?: EntitySelectEntity[];
+    alwaysOpen?: boolean;
+    defaultOpen?: boolean;
+    width?: number;
+    hiddenAvatar?: boolean;
+    applySearchToGroup?: boolean;
+}
+
+export declare type EntitySelectEntity = {
+    id: number;
+    name: string;
+    avatar?: string;
+    expanded?: boolean;
+    searchKeys?: string[];
+    subItems?: EntitySelectSubEntity[];
+};
+
+export declare interface EntitySelectMultipleProps extends EntitySelectCommonProps {
+    onSelect: (entities: EntitySelectEntity[]) => void;
+    singleSelector: false | undefined;
+}
+
+export declare type EntitySelectNamedGroup = {
+    value: string;
+    label: string;
+    groupType?: "avatar" | "team";
+};
+
+export declare type EntitySelectProps = EntitySelectSingleProps | EntitySelectMultipleProps;
+
+export declare interface EntitySelectSingleProps extends EntitySelectCommonProps {
+    onSelect: (entity: EntitySelectEntity | null) => void;
+    singleSelector: true;
+}
+
+export declare type EntitySelectSubEntity = {
+    subId: number;
+    subName: string;
+    subAvatar?: string;
+    subSearchKeys?: string[];
+};
+
 export declare type errorConfig = {
     onClose?: () => void;
     closeErrorButtonLabel?: string;
@@ -1223,6 +1402,14 @@ declare type F1SearchBoxProps = {
     autoFocus?: boolean;
     onChange?: (value: string) => void;
 };
+
+declare type FavoriteMenuItem = ({
+    type: "icon";
+    icon: IconType;
+} | {
+    type: "avatar";
+    avatar?: AvatarVariant;
+}) & NavigationItem;
 
 export declare const FILE_TYPES: {
     readonly PDF: "pdf";
@@ -1285,7 +1472,16 @@ export declare const filterActions: (actions: SecondaryActionsDefinition) => (Dr
  * Used to define possible filter configurations in a collection.
  * @template T - Type of values for the InFilterDefinition
  */
-export declare type FilterDefinition<T = unknown> = InFilterDefinition<T> | SearchFilterDefinition;
+export declare type FilterDefinition = FilterDefinitionsByType[keyof FilterDefinitionsByType];
+
+/**
+ * All the available filter types
+ */
+declare type FilterDefinitionsByType<T = unknown> = {
+    in: InFilterDefinition<T>;
+    search: SearchFilterDefinition;
+    date: DateFilterDefinition;
+};
 
 /**
  * Filters the actions based on the enabled property
@@ -1296,18 +1492,6 @@ export declare type FilterDefinition<T = unknown> = InFilterDefinition<T> | Sear
 export declare const filterItemActions: <T extends RecordType>(actions: ItemActionsDefinition<T>, item: T) => (DropdownItem & {
     enabled?: boolean;
 })[];
-
-/**
- * Represents a selectable option in filter components.
- * Used primarily with InFilterDefinition.
- * @template T - Type of the underlying value
- */
-export declare type FilterOption<T = unknown> = {
-    /** The value used for filtering */
-    value: T;
-    /** Human-readable label for the option */
-    label: string;
-};
 
 /**
  * Configuration options for filters in a collection.
@@ -1353,6 +1537,43 @@ export declare type FiltersState<Definition extends Record<string, FilterDefinit
     [K in keyof Definition]?: FilterValue<Definition[K]>;
 };
 
+declare type FilterTypeContext<Options extends object = never> = {
+    schema: FilterTypeSchema<Options>;
+};
+
+declare type FilterTypeDefinition<Value = unknown, Options extends object = never, EmptyValue = Value> = {
+    /** Check if the value is empty */
+    emptyValue: EmptyValue;
+    isEmpty: (value: Value, context: FilterTypeContext<Options>) => boolean;
+    /** Render the filter form */
+    render: <Schema extends FilterTypeSchema<Options>>(props: {
+        schema: Schema;
+        value: Value;
+        onChange: (value: Value) => void;
+    }) => React.ReactNode;
+    /**
+     * The value label to display in the filter chips
+     */
+    chipLabel: (value: Value, context: FilterTypeContext<Options>) => string | Promise<string>;
+    /**
+     * The default options to render a filter of this type, for example max and min date for a date filter, the list of options for an in filter, etc
+     */
+    defaultOptions?: Options;
+};
+
+declare type FilterTypeKey = keyof typeof filterTypes;
+
+declare const filterTypes: {
+    readonly in: FilterTypeDefinition<string[], InFilterOptions<string>>;
+    readonly search: FilterTypeDefinition<string>;
+    readonly date: FilterTypeDefinition<Date | DateRange | undefined, DateFilterOptions>;
+};
+
+declare type FilterTypeSchema<Options extends object = never> = {
+    options: Options extends never ? never : Options;
+    label: string;
+};
+
 /**
  * Extracts the appropriate value type for a given filter:
  * - InFilter -> Array of selected values of type T
@@ -1361,13 +1582,13 @@ export declare type FiltersState<Definition extends Record<string, FilterDefinit
  * This type is used to ensure type safety when working with filter values.
  * @template T - The filter definition type
  */
-export declare type FilterValue<T extends FilterDefinition> = T extends InFilterDefinition<infer U> ? U[] : T extends SearchFilterDefinition ? string : never;
+export declare type FilterValue<T extends FilterDefinition> = T extends InFilterDefinition<infer U> ? U[] : T extends SearchFilterDefinition ? string : T extends DateFilterDefinition ? DateRange | Date | undefined : never;
 
 export declare type FlattenedItem = {
-    parent: AvatarNamedEntity | null;
-    subItem: AvatarNamedSubEntity & {
+    parent: EntitySelectEntity | null;
+    subItem: EntitySelectSubEntity & {
         expanded?: boolean;
-        subItems?: AvatarNamedSubEntity[];
+        subItems?: EntitySelectSubEntity[];
     };
 };
 
@@ -1379,6 +1600,12 @@ export declare function FormActions<Schema extends SchemaType, FormData extends 
     submitLabel: string;
     form: FormType<Schema, FormData>;
 }): JSX_2.Element;
+
+declare type FormError<Fields extends FieldValues> = {
+    success: false;
+    rootMessage?: string;
+    errors: Partial<Record<Path<Fields>, string>>;
+};
 
 export declare const FormField: <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>({ label, description, children, ...props }: FormFieldProps<TFieldValues, TName> & {
     children: (field: ControllerRenderProps<TFieldValues>) => JSX.Element;
@@ -1399,6 +1626,42 @@ declare interface FrameContextType {
     prevSidebarState: SidebarState | null;
     toggleSidebar: () => void;
 }
+
+export declare const getGranularityDefinition: (granularityKey: GranularityDefinitionKey) => GranularityDefinition;
+
+export declare const getGranularitySimpleDefinition: (granularityKey: GranularityDefinitionKey) => GranularityDefinitionSimple;
+
+export declare interface GranularityDefinition {
+    calendarMode?: CalendarMode;
+    calendarView: CalendarView;
+    label: (viewDate: Date) => ReactNode;
+    toRangeString: (date: Date | DateRange | undefined | null) => DateRangeString;
+    toRange: <T extends Date | DateRange | undefined | null>(date: T) => T extends Date | DateRange ? DateRangeComplete : T;
+    toString: (date: Date | DateRange | undefined | null) => string;
+    fromString: (dateStr: string | DateRangeString) => DateRange | null;
+    navigateUIView: (viewDate: Date, direction: -1 | 1) => Date;
+    navigate: (date: Date, direction: -1 | 1) => Date;
+    getViewDateFromDate: (date: Date) => Date;
+    render: (renderProps: {
+        mode: CalendarMode;
+        selected: Date | DateRange | null;
+        onSelect: (date: Date | DateRange | null) => void;
+        month: Date;
+        onMonthChange: (date: Date) => void;
+        motionDirection: number;
+        minDate?: Date;
+        maxDate?: Date;
+        setViewDate: (date: Date) => void;
+        viewDate: Date;
+    }) => ReactNode;
+    getPrevNext(date: DateRange, options: DateNavigationOptions): PrevNextDateNavigation;
+}
+
+export declare type GranularityDefinitionKey = keyof typeof granularityDefinitions;
+
+export declare const granularityDefinitions: Record<string, GranularityDefinition>;
+
+export declare type GranularityDefinitionSimple = Pick<GranularityDefinition, "toRangeString" | "toString">;
 
 /**
  * Defines the structure and configuration of a grouping options for a data source.
@@ -1441,10 +1704,15 @@ declare type HeaderProps = {
     actions?: PageAction[];
     navigation?: NavigationProps;
     embedded?: boolean;
-    breadcrumbs?: BreadcrumbItemType[];
+    breadcrumbs?: BreadcrumbsProps["breadcrumbs"];
     productUpdates?: {
         isVisible?: boolean;
     } & ProductUpdatesProp;
+    favorites?: {
+        isMarked: boolean;
+        onChange: (newValue: boolean) => void;
+        label: string;
+    };
 };
 
 export declare type heightType = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "full" | "auto";
@@ -1459,6 +1727,11 @@ declare type HighlightBannerProps = {
 };
 
 declare type HTMLString = string;
+
+export declare const IconAvatar: {
+    ({ icon, size, className }: Props_7): JSX_2.Element;
+    displayName: string;
+};
 
 declare const iconSizes: {
     readonly sm: "xs";
@@ -1476,12 +1749,15 @@ declare type IconType_2 = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & Re
 
 declare const Indicator: ForwardRefExoticComponent<IndicatorProps & RefAttributes<HTMLDivElement>>;
 
-declare interface IndicatorProps {
+declare type IndicatorProps = {
     content: string;
     label: string;
     color?: string;
+} & ({
     icon?: IconType;
-}
+} | {
+    emoji?: string;
+});
 
 export declare const IndicatorsList: ForwardRefExoticComponent<IndicatorsListProps & RefAttributes<HTMLDivElement>>;
 
@@ -1491,21 +1767,28 @@ export declare interface IndicatorsListProps {
 
 declare type InferSchema<T extends SchemaType> = z.infer<T>;
 
+declare type InFilterDefinition<T = unknown> = BaseFilterDefinition<"in"> & {
+    options: InFilterOptions_2<T>;
+};
+
 /**
- * Multi-select filter that allows selecting from predefined options.
- * Used for filtering based on a set of discrete values.
- * @template T - Type of values that can be selected
+ * Represents a selectable option in filter components.
+ * Used primarily with InFilterDefinition.
+ * @template T - Type of the underlying value
  */
-export declare type InFilterDefinition<T = unknown> = BaseFilterDefinition & {
-    /** Identifies this as an "in" type filter */
-    type: "in";
-    /**
-     * Available options for selection.
-     * Can be either:
-     * - An array of options
-     * - A function that returns an array of options (sync or async)
-     */
-    options: Array<FilterOption<T>> | (() => Array<FilterOption<T>> | Promise<Array<FilterOption<T>>>);
+declare type InFilterOptionItem<T = unknown> = {
+    /** The value used for filtering */
+    value: T;
+    /** Human-readable label for the option */
+    label: string;
+};
+
+/**
+ * Represents the options for the InFilter component.
+ * @template T - Type of the underlying value
+ */
+declare type InFilterOptions_2<T> = {
+    options: Array<InFilterOptionItem<T>> | (() => Array<InFilterOptionItem<T>> | Promise<Array<InFilterOptionItem<T>>>);
 };
 
 export declare const Input: React.FC<InputProps>;
@@ -1513,6 +1796,7 @@ export declare const Input: React.FC<InputProps>;
 declare const Input_2: React_2.ForwardRefExoticComponent<React_2.InputHTMLAttributes<HTMLInputElement> & {
     icon?: IconType;
     clearable?: boolean;
+    error?: boolean;
 } & React_2.RefAttributes<HTMLInputElement>>;
 
 export declare type InputProps = Pick<ComponentProps<typeof Input_2>, "ref" | "disabled" | "size" | "onChange" | "value" | "placeholder"> & {
@@ -1548,6 +1832,7 @@ chart: LineChartProps;
 
 declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
+    disabled?: boolean;
 };
 
 export declare type MentionedUser = {
@@ -1562,7 +1847,7 @@ export declare type mentionsConfig = {
     users: MentionedUser[];
 };
 
-export declare function Menu({ tree, onCollapse, onSort }: MenuProps): default_2.JSX.Element;
+export declare function Menu({ tree, onCollapse, onSort, onFavoritesChange, favorites, }: MenuProps): default_2.JSX.Element;
 
 export declare interface MenuCategory {
     id: string;
@@ -1578,10 +1863,12 @@ export declare interface MenuItem extends NavigationItem {
     badge?: number;
 }
 
-declare interface MenuProps {
+export declare interface MenuProps {
     tree: MenuCategory[];
+    favorites?: FavoriteMenuItem[];
     onCollapse?: (category: MenuCategory, isOpen: boolean) => void;
     onSort?: (categories: MenuCategory[]) => void;
+    onFavoritesChange?: (favorites: FavoriteMenuItem[]) => void;
 }
 
 declare type Metadata = SimpleMetadata | AvatarListMetadata | StatusMetadata | UserMetadata | CompanyMetadata | TeamMetadata | TagMetadata;
@@ -1590,6 +1877,15 @@ declare type MetadataAction = {
     icon: IconType;
     label: string;
     onClick: () => void;
+    type?: never;
+};
+
+declare type MetadataCopyAction = {
+    icon?: never;
+    label?: never;
+    onClick?: never;
+    copyValue?: string;
+    type: "copy";
 };
 
 declare function MetadataItem({ item }: {
@@ -1599,8 +1895,16 @@ declare function MetadataItem({ item }: {
 declare interface MetadataItem {
     label: string;
     value: MetadataItemValue;
-    actions?: MetadataAction[];
+    actions?: (MetadataAction | MetadataCopyAction)[];
     hideLabel?: boolean;
+    /**
+     * Optional info text. When provided, displays an info icon next to the label
+     * that shows this text in a tooltip when hovered.
+     */
+    info?: {
+        title: string;
+        description?: string;
+    };
 }
 
 declare type MetadataItemValue = {
@@ -1648,6 +1952,8 @@ declare interface MetadataProps {
 
 export declare const MobileDropdown: ({ items, children }: DropdownProps) => JSX_2.Element;
 
+declare type ModalPosition = "center" | "left" | "right";
+
 export declare function ModuleAvatar({ size, icon }: ModuleAvatarProps): JSX_2.Element;
 
 export declare interface ModuleAvatarProps extends VariantProps<typeof moduleAvatarVariants> {
@@ -1668,6 +1974,60 @@ declare type NavigateActionType = {
     type: "navigate";
     href: string;
 };
+
+export declare type NavigationFilter<T, InitialValue = T> = {
+    /**
+     * Converts the initial value to the correct type for the filter.
+     * This is useful for filters that have a complex internal state but the initial value is a simple type, for example a navigation filter. The initial can be a simple date but the internal state converts it to a date range based on the granularity.
+     * @param defaultValue - The initial value to convert
+     * @param props - The props of the filter
+     * @returns The converted value
+     */
+    valueConverter?: (defaultValue: InitialValue, filterDef: NavigationFilterComponentProps<T>["filter"]) => T;
+    /**
+     * Renders the filter component.
+     * @param props - The props of the filter
+     * @returns The rendered component
+     */
+    render: (props: NavigationFilterComponentProps<T>) => React.ReactNode;
+};
+
+export declare type NavigationFilterComponentProps<T> = {
+    filter: NavigationFilterDefinition;
+    value: T;
+    onChange: (value: T) => void;
+};
+
+export declare type NavigationFilterDefinition = DateNavigatorFilterDefinition;
+
+export declare type NavigationFilterDefinitionBase<T> = {
+    type: string;
+    defaultValue: T;
+};
+
+/**
+ * Record of navigation filter definitions for a collection.
+ * Maps filter keys to their respective definitions.
+ * Used to configure the available navigation filters for a collection.
+ * @template Keys - String literal type for filter keys
+ */
+export declare type NavigationFiltersDefinition<Keys extends string = string> = Record<Keys, NavigationFilterDefinition>;
+
+/**
+ * Current state of all navigation filters in a collection.
+ * Maps filter keys to their current values.
+ * This represents the active filter selections at any given time.
+ * @template Definition - Record of filter definitions
+ */
+export declare type NavigationFiltersState<Definition extends Record<string, NavigationFilterDefinition>> = {
+    [K in keyof Definition]?: NavigationFilterValue<Definition[K]>;
+};
+
+/**
+ * Represents a navigation filter with its current value.
+ * @template T - The type of the filter value
+ */
+export declare type NavigationFilterValue<T> = T extends DateNavigatorFilterDefinition ? DateValue : T extends undefined ? undefined : never;
 
 declare type NavigationItem = Pick<LinkProps, "href" | "exactMatch" | "onClick"> & {
     label: string;
@@ -1715,7 +2075,9 @@ action: BulkAction,
 ...Parameters<OnSelectItemsCallback<Record, Filters>>
 ]) => void;
 
-export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaultSelected, showNavigation, }: OneCalendarProps): JSX_2.Element;
+export declare const OneAlert: ({ title, description, action, link, variant, }: AlertProps) => JSX_2.Element;
+
+export declare function OneCalendar({ mode, view, onSelect, defaultMonth, defaultSelected, showNavigation, showInput, minDate, maxDate, }: OneCalendarProps): JSX_2.Element;
 
 export declare interface OneCalendarProps {
     mode: CalendarMode;
@@ -1724,6 +2086,9 @@ export declare interface OneCalendarProps {
     defaultMonth?: Date;
     defaultSelected?: Date | DateRange | null;
     showNavigation?: boolean;
+    showInput?: boolean;
+    minDate?: Date;
+    maxDate?: Date;
 }
 
 export declare function OneCard({ avatar, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, }: OneCardProps): JSX_2.Element;
@@ -1811,17 +2176,19 @@ declare interface OneCardProps {
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, Grouping extends GroupingDefinition<Record>>({ source, visualizations, onSelectItems, onBulkAction, }: {
-    source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>;
-    visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings, ItemActions, Grouping>>;
+export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>>({ source, visualizations, onSelectItems, onBulkAction, }: {
+    source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters, Grouping>;
+    visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters, Grouping>>;
     onSelectItems?: OnSelectItemsCallback<Record, Filters>;
     onBulkAction?: OnBulkActionCallback<Record, Filters>;
+    onTotalItemsChange?: (totalItems: number) => void;
 }) => JSX.Element;
 
 declare type OneDropdownButtonItem<T = string> = {
     value: T;
     label: string;
     icon?: IconType;
+    critical?: boolean;
 };
 
 export declare const OneModal: OneModalComponent;
@@ -1853,6 +2220,7 @@ declare type OneModalProps = {
     onClose: () => void;
     /** Whether to render the modal as a bottom sheet on mobile */
     asBottomSheetInMobile?: boolean;
+    position?: ModalPosition;
     /** Custom content to render in the modal. Only accepts OneModal.Header and OneModal.Content components */
     children: default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>> | default_2.ReactElement<ComponentProps<typeof OneModalHeader> | ComponentProps<typeof OneModalContent>>[];
 } & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
@@ -1940,6 +2308,8 @@ export declare type OnSelectItemsCallback<Record extends RecordType, Filters ext
     selectedCount: number;
 }, clearSelectedItems: () => void) => void;
 
+declare type OnSubmitHandler<TFieldValues extends FieldValues, TTransformedValues extends FieldValues | undefined = undefined> = (data: ReturnType<UseFormHandleSubmit<TFieldValues, TTransformedValues>>) => Promise<Success | FormError<TFieldValues>> | Success | FormError<TFieldValues>;
+
 declare interface Option_2 {
     title?: string;
     description?: string;
@@ -1968,7 +2338,7 @@ export declare type PageAction = {
     }>;
 });
 
-export declare function PageHeader({ module, statusTag, breadcrumbs, actions, embedded, navigation, productUpdates, }: HeaderProps): JSX_2.Element;
+export declare function PageHeader({ module, statusTag, breadcrumbs, actions, embedded, navigation, productUpdates, favorites, }: HeaderProps): JSX_2.Element;
 
 declare interface PageProps {
     children?: React.ReactNode;
@@ -1981,7 +2351,7 @@ declare interface PageProps {
  * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations
  */
-export declare type PaginatedDataAdapter<Record extends RecordType, Filters extends FiltersDefinition> = {
+export declare type PaginatedDataAdapter<Record extends RecordType, Filters extends FiltersDefinition, NavigationFilters extends NavigationFiltersDefinition> = {
     /** Indicates this adapter uses page-based pagination */
     paginationType: "pages";
     /** Default number of records per page */
@@ -1991,14 +2361,14 @@ export declare type PaginatedDataAdapter<Record extends RecordType, Filters exte
      * @param options - The filter and pagination options to apply when fetching data
      * @returns Paginated response with records and pagination info
      */
-    fetchData: (options: PaginatedFetchOptions<Filters>) => PaginatedResponse<Record> | Promise<PaginatedResponse<Record>> | Observable<PromiseState<PaginatedResponse<Record>>>;
+    fetchData: (options: PaginatedFetchOptions<Filters, NavigationFilters>) => PaginatedResponse<Record> | Promise<PaginatedResponse<Record>> | Observable<PromiseState<PaginatedResponse<Record>>>;
 };
 
 /**
  * Options for paginated data fetching
  * @template Filters - The available filter configurations
  */
-export declare type PaginatedFetchOptions<Filters extends FiltersDefinition> = BaseFetchOptions<Filters> & {
+export declare type PaginatedFetchOptions<Filters extends FiltersDefinition, NavigationFilters extends NavigationFiltersDefinition> = BaseFetchOptions<Filters, NavigationFilters> & {
     /** Pagination configuration */
     pagination: {
         currentPage: number;
@@ -2038,7 +2408,9 @@ declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
 
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
-export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
+export declare const PersonTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
+
+declare type PersonTagProps = ComponentProps<typeof PersonTag>;
 
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: PieChartProps;
@@ -2075,6 +2447,11 @@ export declare type PresetsDefinition<Filters extends FiltersDefinition> = Array
     filter: FiltersState<Filters>;
 }>;
 
+export declare type PrevNextDateNavigation = {
+    prev: DateRange | false;
+    next: DateRange | false;
+};
+
 declare interface PrimaryAction {
     disabled?: boolean;
     tooltip?: string;
@@ -2106,9 +2483,22 @@ declare interface PrimaryDropdownAction<T> extends PrimaryAction {
 
 export declare const PrivateBox: FC<PropsWithChildren>;
 
-declare const privateProps: readonly ["append", "appendButton"];
+declare const privateProps: readonly ["append", "appendButton", "className"];
 
-declare const privateProps_2: readonly ["align"];
+declare const privateProps_2: readonly [];
+
+export declare function ProductCard({ title, description, onClick, onClose, isVisible, icon, dismissable, trackVisibility, }: ProductCardProps): false | JSX_2.Element;
+
+export declare type ProductCardProps = {
+    title: string;
+    description: string;
+    onClick: () => void;
+    onClose?: () => void;
+    isVisible: boolean;
+    icon: IconType_2;
+    dismissable?: boolean;
+    trackVisibility?: (open: boolean) => void;
+};
 
 declare type ProductUpdate = {
     title: string;
@@ -2121,7 +2511,6 @@ declare type ProductUpdate = {
 
 declare type ProductUpdatesProp = {
     label: string;
-    moreUpdatesLabel: string;
     updatesPageUrl: string;
     getUpdates: () => Promise<Array<ProductUpdate>>;
     hasUnread?: boolean;
@@ -2138,6 +2527,20 @@ declare type ProductUpdatesProp = {
         title: string;
         description: string;
         buttonText: string;
+    };
+    crossSelling?: {
+        isVisible: boolean;
+        sectionTitle: string;
+        onClose?: () => void;
+        products: Array<{
+            title: string;
+            description: string;
+            onClick: () => void;
+            icon: IconType;
+            dismissable: boolean;
+            onClose?: () => void;
+            trackVisibility?: (open: boolean) => void;
+        }>;
     };
 };
 
@@ -2220,6 +2623,15 @@ declare const propertyRenderers: {
         label: string;
         icon?: IconType;
     }) => JSX_2.Element;
+    readonly dotTag: (args: {
+        label: string;
+        color: NewColor;
+    }) => JSX_2.Element;
+    readonly tagList: (args: {
+        tags: Array<Omit<TagVariant, "type">>;
+        max?: number;
+        type: TagType;
+    }) => JSX_2.Element;
 };
 
 declare type Props = {
@@ -2230,30 +2642,70 @@ declare type Props = {
     badge?: BadgeProps;
 } & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
 
-declare interface Props_10 {
+declare type Props_10<Text extends string = string> = {
+    text: Text extends "" ? never : Text;
+    level: Level;
+};
+
+declare interface Props_11 {
     text: string;
     status: Status;
 }
 
-declare type Props_11 = {
+declare type Props_12 = {
     companyName: string;
     companyImageUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_12 = {
+declare type Props_13 = {
     name: string;
     avatarUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_13 = {
+declare type Props_14 = {
     teamName: string;
     teamImageUrl: string;
     onClick?: () => void;
 };
 
-declare interface Props_14 {
+declare type Props_15<T extends TagType> = {
+    /**
+     * The type of tags to display. Only one type can be used at a time.
+     */
+    type: T;
+    /**
+     * Array of tag data corresponding to the specified type.
+     */
+    tags: Array<TagTypeMapping[T] & WithTooltipDescription_2>;
+    /**
+     * The maximum number of tags to display.
+     * @default 4
+     */
+    max?: number;
+    /**
+     * The remaining number to display.
+     */
+    remainingCount?: number;
+    /**
+     * The layout of the tag list.
+     * - "fill" - Tags will expand to fill the available width, with overflow items shown in a counter
+     * - "compact" - Tags will be stacked together up to the max limit, with remaining shown in counter
+     * @default "compact"
+     */
+    layout?: "fill" | "compact";
+};
+
+declare type Props_16 = {
+    firstName: string;
+    lastName: string;
+    src?: string;
+    pulse?: Pulse;
+    onPulseClick: () => void;
+} & Pick<BaseAvatarProps_4, "aria-label" | "aria-labelledby">;
+
+declare interface Props_17 {
     title: string;
     content: string;
     buttonLabel?: string;
@@ -2262,7 +2714,7 @@ declare interface Props_14 {
     type: Type;
 }
 
-declare type Props_15 = {
+declare type Props_18 = {
     label: string;
     icon: IconType;
     iconClassName?: string;
@@ -2270,27 +2722,12 @@ declare type Props_15 = {
     onClick?: () => void;
 };
 
-declare type Props_16<Id extends string | number = string | number> = {
+declare type Props_19<Id extends string | number = string | number> = {
     id: Id;
     icon?: IconType;
     title: string;
     subtitle: string;
     onClick?: (id: Id) => void;
-};
-
-declare type Props_17<Id extends string | number = string | number> = {
-    items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
-    minSize?: number;
-    onClickItem?: (id: Id) => void;
-    showAllItems?: boolean;
-};
-
-declare type Props_18<Id extends string | number = string | number> = {
-    items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
-    minSize?: number;
-    gap?: number;
-    onClickItem?: (id: Id) => void;
-    showAllItems?: boolean;
 };
 
 declare type Props_2 = {
@@ -2299,6 +2736,21 @@ declare type Props_2 = {
     size?: BaseAvatarProps_2["size"];
     badge?: BadgeProps;
 } & Pick<BaseAvatarProps_2, "aria-label" | "aria-labelledby">;
+
+declare type Props_20<Id extends string | number = string | number> = {
+    items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
+    minSize?: number;
+    onClickItem?: (id: Id) => void;
+    showAllItems?: boolean;
+};
+
+declare type Props_21<Id extends string | number = string | number> = {
+    items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
+    minSize?: number;
+    gap?: number;
+    onClickItem?: (id: Id) => void;
+    showAllItems?: boolean;
+};
 
 declare type Props_3 = {
     name: string;
@@ -2325,6 +2777,13 @@ declare type Props_4 = {
      * The remaining number to display.
      */
     remainingCount?: number;
+    /**
+     * The layout of the avatar list.
+     * - "fill" - Avatars will expand to fill the available width, with overflow items shown in a counter
+     * - "compact" - Avatars will be stacked tightly together up to the max limit, with remaining shown in counter
+     * @default "compact"
+     */
+    layout?: "fill" | "compact";
 };
 
 declare type Props_5 = {
@@ -2336,9 +2795,15 @@ declare type Props_6 = {
     size?: "sm" | "md" | "lg";
 };
 
-declare type Props_7 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
+declare type Props_7 = {
+    icon: IconType;
+    size?: "sm" | "md" | "lg";
+    className?: string;
+};
 
-declare type Props_8 = {
+declare type Props_8 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
+
+declare type Props_9 = {
     /** Main heading text */
     title: string;
     /** Description text below the title */
@@ -2357,9 +2822,11 @@ declare type Props_8 = {
     separator?: "top" | "bottom";
 };
 
-declare type Props_9<Text extends string = string> = {
-    text: Text extends "" ? never : Text;
-    level: Level;
+declare type Pulse = "superNegative" | "negative" | "neutral" | "positive" | "superPositive";
+
+declare const PulseAvatar: {
+    ({ firstName, lastName, src, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, pulse, onPulseClick, }: Props_16): JSX_2.Element;
+    displayName: string;
 };
 
 export declare const RadarChart: <K extends ChartConfig>(props: RadarChartProps<K> & RefAttributes<HTMLDivElement>) => React.ReactNode;
@@ -2373,6 +2840,8 @@ export declare type RadarChartProps<K extends ChartConfig> = {
     scaleMax?: number;
     aspect?: ComponentProps<typeof ChartContainer>["aspect"];
 };
+
+export declare const rangeSeparator = "\u2192";
 
 export declare const RawTag: ForwardRefExoticComponent<RawTagProps & RefAttributes<HTMLDivElement>>;
 
@@ -2388,7 +2857,7 @@ declare interface ReactionProps {
     emoji: string;
     initialCount: number;
     hasReacted?: boolean;
-    users?: User_2[];
+    users?: User[];
     onInteraction?: (emoji: string) => void;
 }
 
@@ -2415,7 +2884,7 @@ declare type RendererDefinition = {
     };
 }[keyof typeof propertyRenderers];
 
-export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_7) => JSX_2.Element;
+export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_8) => JSX_2.Element;
 
 export declare type resultType = {
     value: string | null;
@@ -2447,7 +2916,7 @@ export declare interface RichTextEditorProps {
     mentionsConfig?: mentionsConfig;
     enhanceConfig?: enhanceConfig;
     filesConfig?: filesConfig;
-    secondaryAction?: actionType;
+    secondaryAction?: secondaryActionType;
     primaryAction?: primaryActionType;
     onChange: (result: resultType) => void;
     maxCharacters?: number;
@@ -2545,14 +3014,7 @@ declare interface SearchBarProps extends ButtonHTMLAttributes<HTMLButtonElement>
     shortcut?: string[];
 }
 
-/**
- * Free-text search filter.
- * Used for performing text-based searches across specified fields.
- */
-export declare type SearchFilterDefinition = BaseFilterDefinition & {
-    /** Identifies this as a "search" type filter */
-    type: "search";
-};
+declare type SearchFilterDefinition = BaseFilterDefinition<"search">;
 
 declare interface SecondaryAction extends PrimaryActionButton {
     variant?: "outline" | "critical";
@@ -2566,7 +3028,18 @@ export declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
     enabled?: boolean;
 }> | undefined;
 
-export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_8) => JSX_2.Element;
+export declare type secondaryActionType = (actionType | toggleActionType) & {
+    type?: "button" | "switch";
+};
+
+export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_9) => JSX_2.Element;
+
+declare type SectionProps = {
+    title: string;
+    items: Omit<ActivityItemProps, "onClick">[];
+    onClickItem: (id: string) => void;
+    onItemVisible?: (id: string) => void;
+};
 
 export declare const Select: ForwardRefExoticComponent<SelectProps<string, any> & RefAttributes<HTMLButtonElement>>;
 
@@ -2630,6 +3103,21 @@ declare const shortcutVariants: (props?: ({
 })) | undefined) => string;
 
 export declare function Sidebar({ header, body, footer }: SidebarProps): JSX_2.Element;
+
+export declare function SidebarFooter({ user, options, showActivityButton, activityButtonShortcut, onActivityButtonClick, hasActivityUpdates, }: SidebarFooterProps): JSX_2.Element;
+
+declare interface SidebarFooterProps {
+    user: {
+        firstName: string;
+        lastName: string;
+        avatarUrl?: string;
+    };
+    showActivityButton?: boolean;
+    hasActivityUpdates?: boolean;
+    activityButtonShortcut?: string[];
+    onActivityButtonClick?: () => void;
+    options: DropdownItem[];
+}
 
 export declare function SidebarHeader({ companies, selected, onChange, withNotification, additionalOptions, }: SidebarHeaderProps): JSX_2.Element;
 
@@ -2713,8 +3201,8 @@ width?: "auto" | "full" | undefined;
 paddingY?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | undefined;
 basis?: "0" | undefined;
 inline?: boolean | undefined;
-justifyContent?: "center" | "end" | "start" | "space-between" | "stretch" | undefined;
-alignItems?: "center" | "end" | "start" | "space-between" | "stretch" | undefined;
+justifyContent?: "center" | "end" | "start" | "stretch" | "space-between" | undefined;
+alignItems?: "center" | "end" | "start" | "stretch" | "space-between" | undefined;
 grow?: boolean | undefined;
 shrink?: boolean | undefined;
 } & ({
@@ -2743,8 +3231,8 @@ width?: "auto" | "full" | undefined;
 paddingY?: "none" | "p-2" | "p-4" | "p-8" | "p-12" | "p-16" | undefined;
 basis?: "0" | undefined;
 inline?: boolean | undefined;
-justifyContent?: "center" | "end" | "start" | "space-between" | "stretch" | undefined;
-alignItems?: "center" | "end" | "start" | "space-between" | "stretch" | undefined;
+justifyContent?: "center" | "end" | "start" | "stretch" | "space-between" | undefined;
+alignItems?: "center" | "end" | "start" | "stretch" | "space-between" | undefined;
 grow?: boolean | undefined;
 shrink?: boolean | undefined;
 } & ({
@@ -2790,6 +3278,12 @@ export declare type subActionType = {
     onClick: () => void;
     disabled?: boolean;
     icon?: IconType_2;
+};
+
+declare type Success = {
+    success: true;
+    rootMessage?: never;
+    errors?: never;
 };
 
 export declare const SummariesWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
@@ -2919,11 +3413,48 @@ declare type Tag = {
     description?: string;
 };
 
+declare type TagDataType<T extends string> = Omit<Extract<TagVariant, {
+    type: T;
+}>, "type" | "description">;
+
+export declare const TagList: {
+    <T extends TagType>({ type, tags, max, remainingCount: initialRemainingCount, layout, }: Props_15<T>): JSX_2.Element;
+    displayName: string;
+};
+
 declare type TagMetadata = BaseMetadata & {
     type: "tag";
     label: string;
     tagIcon?: IconType;
 };
+
+export declare type TagType = keyof TagTypeMapping;
+
+declare type TagTypeMapping = {
+    dot: TagDataType<"dot">;
+    person: TagDataType<"person">;
+    team: TagDataType<"team">;
+    company: TagDataType<"company">;
+    alert: TagDataType<"alert">;
+    status: TagDataType<"status">;
+    balance: TagDataType<"balance">;
+};
+
+declare type TagVariant = BaseTag<{
+    type: "dot";
+} & DotTagProps> | BaseTag<{
+    type: "person";
+} & PersonTagProps> | BaseTag<{
+    type: "team";
+} & TeamTagProps> | BaseTag<{
+    type: "company";
+} & CompanyTagProps> | BaseTag<{
+    type: "alert";
+} & AlertTagProps> | BaseTag<{
+    type: "status";
+} & StatusTagProps> | BaseTag<{
+    type: "balance";
+} & BalanceTagProps>;
 
 declare interface Task {
     id: number | string;
@@ -2972,7 +3503,9 @@ declare type TeamMetadata = BaseMetadata & {
     src?: string;
 };
 
-export declare const TeamTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
+export declare const TeamTag: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
+
+declare type TeamTagProps = ComponentProps<typeof TeamTag>;
 
 export declare const Textarea: React.FC<TextareaProps>;
 
@@ -2985,6 +3518,14 @@ declare type TextareaProps_2 = React_2.TextareaHTMLAttributes<HTMLTextAreaElemen
 declare const THEMES: {
     readonly light: "";
     readonly dark: ".dark";
+};
+
+declare type toggleActionType = {
+    label: string;
+    checked: boolean;
+    onClick: (checked?: boolean) => void;
+    disabled?: boolean;
+    hideLabel?: boolean;
 };
 
 export declare const ToggleGroup: React_2.ForwardRefExoticComponent<((Omit<ToggleGroupPrimitive.ToggleGroupSingleProps & React_2.RefAttributes<HTMLDivElement>, "ref"> | Omit<ToggleGroupPrimitive.ToggleGroupMultipleProps & React_2.RefAttributes<HTMLDivElement>, "ref">) & VariantProps<(props?: ({
@@ -3092,13 +3633,13 @@ declare type URL_2 = string;
  * - actions: Available actions for the collection
  * - presets: Available filter presets
  */
-export declare const useDataSource: <Record extends RecordType, FiltersSchema extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, Grouping extends GroupingDefinition<Record>>({ currentFilters: initialCurrentFilters, currentGrouping: initialCurrentGrouping, filters, search, defaultSorting, dataAdapter, grouping, ...rest }: DataSourceDefinition<Record, FiltersSchema, Sortings, ItemActions, Grouping>, deps?: ReadonlyArray<unknown>) => DataSource<Record, FiltersSchema, Sortings, ItemActions, Grouping>;
+export declare const useDataSource: <Record extends RecordType, FiltersSchema extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>>({ currentFilters: initialCurrentFilters, currentGrouping: initialCurrentGrouping, filters, navigationFilters, search, defaultSorting, dataAdapter, grouping, ...rest }: DataSourceDefinition<Record, FiltersSchema, Sortings, ItemActions, NavigationFilters, Grouping>, deps?: ReadonlyArray<unknown>) => DataSource<Record, FiltersSchema, Sortings, ItemActions, NavigationFilters, Grouping>;
 
 export { useForm }
 
-export declare function User({ firstName, lastName, avatarUrl, options }: UserProps): JSX_2.Element;
+export declare function useFormSchema<Schema extends SchemaType, FormData extends InferSchema<Schema>>(schema: Schema, options: UseFormProps<FormData>, onSubmit: OnSubmitHandler<FormData>): FormType<Schema, FormData>;
 
-declare interface User_2 {
+declare interface User {
     name: string;
 }
 
@@ -3108,13 +3649,6 @@ declare type UserMetadata = BaseMetadata & {
     lastName: string;
     src?: string;
 };
-
-declare interface UserProps {
-    firstName: string;
-    lastName: string;
-    avatarUrl?: string;
-    options: DropdownItem[];
-}
 
 export declare function useSidebar(): FrameContextType;
 
@@ -3144,7 +3678,7 @@ chart: VerticalBarChartProps;
  * @template Filters - The filters type extending FiltersDefinition
  * @template ItemActions - The actions type extending Item ActionsDefinition
  */
-declare type Visualization<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, Grouping extends GroupingDefinition<Record>> = {
+declare type Visualization<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>> = {
     /** Card-based visualization type */
     type: "card";
     /** Configuration options for card visualization */
@@ -3163,14 +3697,15 @@ declare type Visualization<Record extends RecordType, Filters extends FiltersDef
     icon: IconType;
     /** Custom component to render the visualization */
     component: (props: {
-        source: DataSource<Record, Filters, Sortings, ItemActions, Grouping>;
+        onTotalItemsChange?: (totalItems: number) => void;
+        source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters, Grouping>;
     }) => JSX.Element;
 };
 
 /**
  * Represents the type of visualization.
  */
-declare type VisualizationType = Visualization<any, any, any, any, any>["type"];
+declare type VisualizationType = Visualization<any, any, any, any, any, any>["type"];
 
 export declare const Weekdays: ForwardRefExoticComponent<WeekdaysProps & RefAttributes<HTMLDivElement>>;
 
@@ -3182,20 +3717,7 @@ declare interface WeekdaysProps {
 export declare const Widget: default_2.ForwardRefExoticComponent<WidgetProps & {
     children: ReactNode;
 } & default_2.RefAttributes<HTMLDivElement>> & {
-    Skeleton: default_2.ForwardRefExoticComponent<{
-        header?: {
-            title?: string;
-            subtitle?: string;
-        };
-    } & VariantProps<(props?: ({
-        height?: "lg" | "md" | "sm" | undefined;
-    } & ({
-        class?: ClassValue;
-        className?: never;
-    } | {
-        class?: never;
-        className?: ClassValue;
-    })) | undefined) => string> & default_2.RefAttributes<HTMLDivElement>>;
+    Skeleton: default_2.ForwardRefExoticComponent<WidgetSkeletonProps & default_2.RefAttributes<HTMLDivElement>>;
 };
 
 export declare function WidgetAvatarsListItem({ id, title, subtitle, avatars, remainingCount, withPointerCursor, onClick, ...props }: WidgetAvatarsListItemProps): JSX_2.Element;
@@ -3224,15 +3746,15 @@ export declare type WidgetEmptyStateProps = {
     actions?: Action[];
 };
 
-export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_15): JSX_2.Element;
+export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_18): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_17): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_20): JSX_2.Element;
 
-export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_16): JSX_2.Element;
+export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_19): JSX_2.Element;
 
-export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_16<Id>;
+export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_19<Id>;
 
-export declare type WidgetInboxListProps = Props_17;
+export declare type WidgetInboxListProps = Props_20;
 
 export declare interface WidgetProps {
     header?: {
@@ -3270,7 +3792,7 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_18): JSX_2.Element;
+export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_21): JSX_2.Element;
 
 export declare function WidgetSimpleListItem({ id, title, alert, rawTag, count, icon, rightIcon, iconClassName, rightIconClassName, onClick, }: WidgetSimpleListItemProps): JSX_2.Element;
 
@@ -3287,14 +3809,16 @@ export declare type WidgetSimpleListItemProps<Id extends string | number = strin
     onClick?: (id: Id) => void;
 };
 
-export declare type WidgetSimpleListProps = Props_18;
+export declare type WidgetSimpleListProps = Props_21;
 
 export declare type WidgetSkeletonProps = {
     header?: {
         title?: string;
         subtitle?: string;
     };
-} & VariantProps<typeof skeletonVariants>;
+} & (VariantProps<typeof skeletonVariants> | {
+    height: "full";
+});
 
 export declare const WidgetStrip: ForwardRefExoticComponent<DashboardProps_2 & RefAttributes<HTMLDivElement>> & {
     Skeleton: () => JSX_2.Element;
@@ -3312,6 +3836,17 @@ declare type WithOptionalSorting<Record, Sortings extends SortingsDefinition> = 
      * The width of the column. If not provided, the width will be "auto"
      */
     width?: number;
+};
+
+declare interface WithTooltipDescription {
+    /**
+     * Optional description to show in the tooltip
+     */
+    description?: string;
+}
+
+declare type WithTooltipDescription_2 = {
+    description?: string;
 };
 
 export { }

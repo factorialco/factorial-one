@@ -1,5 +1,5 @@
-import { C as l, L as M, c as S, P, a as u, f as _, b as V, A as k, B as T, d as F, e as j, g as O, V as D, h as C, i as H, j as U, U as X, k as G, I as q, l as W, X as z, m as J, n as K, M as Q, u as Y } from "./imageHandler-3DNqY8dw.js";
-import { q as Fe, o as je, E as Oe, p as De, s as He, w as Ue, x as Xe, r as Ge, v as qe, t as We } from "./imageHandler-3DNqY8dw.js";
+import { C as l, L as M, c as S, P as C, a as u, f as _, b as V, A as k, B as T, d as F, e as j, g as O, V as D, h as P, i as H, j as U, U as X, k as G, I as q, l as W, X as z, m as J, n as K, M as Q, u as Y } from "./imageHandler-9rMPaOd3.js";
+import { r as Fe, o as je, p as Oe, E as De, q as He, t as Ue, x as Xe, y as Ge, s as qe, w as We, v as ze } from "./imageHandler-9rMPaOd3.js";
 import { jsx as a, jsxs as f } from "react/jsx-runtime";
 import * as v from "react";
 import Z, { forwardRef as N, useRef as b, useImperativeHandle as ee, Children as ae, useState as re, createContext as oe } from "react";
@@ -10,7 +10,7 @@ const be = l(
   },
   M
 );
-var h = "Progress", p = 100, [te, Le] = S(h), [se, le] = te(h), L = v.forwardRef(
+var p = "Progress", h = 100, [te, Le] = S(p), [se, le] = te(p), L = v.forwardRef(
   (e, r) => {
     const {
       __scopeProgress: t,
@@ -19,12 +19,12 @@ var h = "Progress", p = 100, [te, Le] = S(h), [se, le] = te(h), L = v.forwardRef
       getValueLabel: i = ne,
       ...n
     } = e;
-    (s || s === 0) && !x(s) && console.error(ie(`${s}`, "Progress"));
-    const c = x(s) ? s : p;
-    o !== null && !y(o, c) && console.error(ce(`${o}`, "Progress"));
-    const d = y(o, c) ? o : null, E = m(d) ? i(d, c) : void 0;
+    (s || s === 0) && !y(s) && console.error(ie(`${s}`, "Progress"));
+    const c = y(s) ? s : h;
+    o !== null && !x(o, c) && console.error(ce(`${o}`, "Progress"));
+    const d = x(o, c) ? o : null, E = m(d) ? i(d, c) : void 0;
     return /* @__PURE__ */ a(se, { scope: t, value: d, max: c, children: /* @__PURE__ */ a(
-      P.div,
+      C.div,
       {
         "aria-valuemax": c,
         "aria-valuemin": 0,
@@ -40,12 +40,12 @@ var h = "Progress", p = 100, [te, Le] = S(h), [se, le] = te(h), L = v.forwardRef
     ) });
   }
 );
-L.displayName = h;
+L.displayName = p;
 var w = "ProgressIndicator", $ = v.forwardRef(
   (e, r) => {
     const { __scopeProgress: t, ...o } = e, s = le(w, t);
     return /* @__PURE__ */ a(
-      P.div,
+      C.div,
       {
         "data-state": R(s.value, s.max),
         "data-value": s.value ?? void 0,
@@ -66,26 +66,26 @@ function R(e, r) {
 function m(e) {
   return typeof e == "number";
 }
-function x(e) {
+function y(e) {
   return m(e) && !isNaN(e) && e > 0;
 }
-function y(e, r) {
+function x(e, r) {
   return m(e) && !isNaN(e) && e <= r && e >= 0;
 }
 function ie(e, r) {
-  return `Invalid prop \`max\` of value \`${e}\` supplied to \`${r}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${p}\`.`;
+  return `Invalid prop \`max\` of value \`${e}\` supplied to \`${r}\`. Only numbers greater than 0 are valid max values. Defaulting to \`${h}\`.`;
 }
 function ce(e, r) {
   return `Invalid prop \`value\` of value \`${e}\` supplied to \`${r}\`. The \`value\` prop must be:
   - a positive number
-  - less than the value passed to \`max\` (or ${p} if no \`max\` prop is set)
+  - less than the value passed to \`max\` (or ${h} if no \`max\` prop is set)
   - \`null\` or \`undefined\` if the progress is indeterminate.
 
 Defaulting to \`null\`.`;
 }
-var I = L, de = $;
-const B = v.forwardRef(({ className: e, value: r, ...t }, o) => /* @__PURE__ */ a(
-  I,
+var B = L, de = $;
+const I = v.forwardRef(({ className: e, value: r, ...t }, o) => /* @__PURE__ */ a(
+  B,
   {
     ref: o,
     className: u(
@@ -105,12 +105,12 @@ const B = v.forwardRef(({ className: e, value: r, ...t }, o) => /* @__PURE__ */ 
     )
   }
 ));
-B.displayName = I.displayName;
+I.displayName = B.displayName;
 const ue = ({ value: e, max: r = 100, label: t, color: o }, s) => {
   const i = o || V(0), n = e / r * 100;
   return /* @__PURE__ */ f("div", { className: "flex items-center space-x-2", "aria-live": "polite", children: [
     /* @__PURE__ */ a("div", { className: "flex-grow", children: /* @__PURE__ */ a(
-      B,
+      I,
       {
         color: i,
         value: n,
@@ -141,13 +141,13 @@ const ue = ({ value: e, max: r = 100, label: t, color: o }, s) => {
     type: "info"
   },
   F
-), Ie = l(
+), Be = l(
   {
     name: "LineChart",
     type: "info"
   },
   j
-), Be = l(
+), Ie = l(
   {
     name: "PieChart",
     type: "info"
@@ -174,7 +174,7 @@ const ue = ({ value: e, max: r = 100, label: t, color: o }, s) => {
   const s = b(null);
   ee(o, () => s.current);
   const i = ae.toArray(r).filter((n) => !!n).map((n, c) => /* @__PURE__ */ a("div", { className: "h-full @5xl:h-auto [&>div]:h-full", children: n }, c));
-  return /* @__PURE__ */ a(C, { layout: "home", children: /* @__PURE__ */ f("div", { ref: s, className: "@container", children: [
+  return /* @__PURE__ */ a(P, { layout: "home", children: /* @__PURE__ */ f("div", { ref: s, className: "@container", children: [
     /* @__PURE__ */ f("div", { className: "flex flex-col gap-6 px-5 pt-4 @md:pt-2 @5xl:hidden", children: [
       /* @__PURE__ */ a(H, { columns: me, showArrows: !1, children: i }),
       /* @__PURE__ */ a("main", { children: t })
@@ -185,7 +185,7 @@ const ue = ({ value: e, max: r = 100, label: t, color: o }, s) => {
       /* @__PURE__ */ a("div", { className: "flex flex-1 flex-col gap-5", children: i.slice(3) })
     ] })
   ] }) });
-}), he = N(
+}), pe = N(
   function({ children: r, sideContent: t, mainColumnPosition: o = "left" }, s) {
     return /* @__PURE__ */ a("div", { ref: s, className: "h-full overflow-auto", children: /* @__PURE__ */ f(
       "div",
@@ -211,20 +211,20 @@ const ue = ({ value: e, max: r = 100, label: t, color: o }, s) => {
       }
     ) });
   }
-), g = ({ children: e }) => /* @__PURE__ */ a("aside", { className: "py-5 pl-2 pr-4 sm:basis-1/4 sm:pb-6", children: e }), pe = U({
+), g = ({ children: e }) => /* @__PURE__ */ a("aside", { className: "py-5 pl-2 pr-4 sm:basis-1/4 sm:pb-6", children: e }), he = U({
   base: "relative flex min-h-full w-full flex-col gap-4 place-self-center overflow-y-auto px-6 py-5",
   variants: {
     variant: {
       narrow: "max-w-screen-lg"
     }
   }
-}), A = Z.forwardRef(({ children: e, variant: r, className: t, ...o }, s) => /* @__PURE__ */ a(C, { layout: "standard", children: /* @__PURE__ */ a(
+}), A = Z.forwardRef(({ children: e, variant: r, className: t, ...o }, s) => /* @__PURE__ */ a(P, { layout: "standard", children: /* @__PURE__ */ a(
   "section",
   {
     ref: s,
     className: u("relative flex-1 overflow-auto", t),
     ...o,
-    children: /* @__PURE__ */ a("div", { className: u(pe({ variant: r })), children: e })
+    children: /* @__PURE__ */ a("div", { className: u(he({ variant: r })), children: e })
   }
 ) }));
 A.displayName = "StandardLayout";
@@ -239,20 +239,20 @@ const Me = l(
     name: "TwoColumnLayout",
     type: "layout"
   },
-  he
+  pe
 ), _e = l(
   {
     name: "HomeLayout",
     type: "layout"
   },
   ve
-), xe = oe(
+), ye = oe(
   null
-), ye = ({ children: e, fullScreen: r = !0 }) => {
+), xe = ({ children: e, fullScreen: r = !0 }) => {
   const t = b(null), [o, s] = re(t.current);
   return Y(() => {
     s(t.current);
-  }, []), /* @__PURE__ */ a(xe.Provider, { value: { element: o }, children: /* @__PURE__ */ a(
+  }, []), /* @__PURE__ */ a(ye.Provider, { value: { element: o }, children: /* @__PURE__ */ a(
     "div",
     {
       ref: t,
@@ -273,7 +273,7 @@ const Me = l(
   image: s,
   i18n: i,
   l10n: n
-}) => /* @__PURE__ */ a(ge, { children: /* @__PURE__ */ a(X, { children: /* @__PURE__ */ a(G, { ...n, children: /* @__PURE__ */ a(q, { ...i, children: /* @__PURE__ */ a(W, { ...t, children: /* @__PURE__ */ a(ye, { ...r, children: /* @__PURE__ */ a(z, { children: /* @__PURE__ */ a(
+}) => /* @__PURE__ */ a(ge, { children: /* @__PURE__ */ a(X, { children: /* @__PURE__ */ a(G, { ...n, children: /* @__PURE__ */ a(q, { ...i, children: /* @__PURE__ */ a(W, { ...t, children: /* @__PURE__ */ a(xe, { ...r, children: /* @__PURE__ */ a(z, { children: /* @__PURE__ */ a(
   J,
   {
     initiallyEnabled: o,
@@ -286,22 +286,23 @@ export {
   $e as BarChart,
   je as Button,
   Re as CategoryBarChart,
-  Oe as EmojiImage,
+  Oe as CopyButton,
+  De as EmojiImage,
   Ve as FactorialOneProvider,
   _e as HomeLayout,
-  De as Icon,
-  Ie as LineChart,
+  He as Icon,
+  Be as LineChart,
   be as Link,
-  Be as PieChart,
+  Ie as PieChart,
   J as PrivacyModeProvider,
   Ee as ProgressBarChart,
   Me as StandardLayout,
   Se as TwoColumnLayout,
   Ae as VerticalBarChart,
-  He as buildTranslations,
-  Ue as getEmojiLabel,
-  Xe as useEmojiConfetti,
-  Ge as usePrivacyMode,
-  qe as useReducedMotion,
-  We as useXRay
+  Ue as buildTranslations,
+  Xe as getEmojiLabel,
+  Ge as useEmojiConfetti,
+  qe as usePrivacyMode,
+  We as useReducedMotion,
+  ze as useXRay
 };
