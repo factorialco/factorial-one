@@ -4,6 +4,7 @@ import {
   DataAdapter,
   FilterDefinition,
   FiltersState,
+  NewColor,
   OnBulkActionCallback,
   OneDataCollection,
   OnSelectItemsCallback,
@@ -45,6 +46,53 @@ export const filters = {
   },
 } as const
 
+export const YEARS_OF_EXPERIENCIE_MOCK = [
+  8, 12, 4, 15, 7, 3, 11, 6, 13, 2, 9, 14, 5, 10, 1, 8, 13, 4, 11, 6,
+]
+export const START_DATE_MOCK = [
+  new Date(2020, 3, 15),
+  new Date(2020, 8, 22),
+  new Date(2020, 11, 5),
+  new Date(2020, 2, 18),
+  new Date(2020, 6, 9),
+  new Date(2020, 4, 27),
+  new Date(2020, 1, 12),
+  new Date(2020, 9, 3),
+  new Date(2020, 7, 19),
+  new Date(2020, 5, 8),
+  new Date(2020, 10, 25),
+  new Date(2020, 0, 14),
+  new Date(2020, 3, 7),
+  new Date(2020, 8, 16),
+  new Date(2020, 11, 28),
+  new Date(2020, 2, 11),
+  new Date(2020, 6, 23),
+  new Date(2020, 4, 4),
+  new Date(2020, 1, 20),
+  new Date(2020, 9, 13),
+]
+export const PROJECTS_MOCK = [
+  "Project A",
+  "Project B",
+  "Project C",
+  "Project D",
+]
+export const PERFORMANCE_SCORE_MOCK = [
+  85, 92, 78, 95, 88, 73, 91, 82, 94, 77, 89, 96, 81, 87, 93, 76, 90, 84, 97,
+  80,
+]
+
+export const DOT_TAG_COLORS_MOCK: NewColor[] = [
+  "yellow",
+  "purple",
+  "lilac",
+  "barbie",
+  "smoke",
+  "army",
+  "flubber",
+  "indigo",
+]
+
 // Define presets for the filters
 export const filterPresets: PresetsDefinition<typeof filters> = [
   {
@@ -75,6 +123,7 @@ export const filterPresets: PresetsDefinition<typeof filters> = [
 
 // Mock data
 export const mockUsers: {
+  index: number
   id: string
   name: string
   email: string
@@ -87,6 +136,7 @@ export const mockUsers: {
   joinedAt: Date
 }[] = [
   {
+    index: 0,
     id: "user-1",
     name: "John Doe",
     email: "john@example.com",
@@ -98,6 +148,7 @@ export const mockUsers: {
     joinedAt: new Date(),
   },
   {
+    index: 1,
     id: "user-2",
     name: "Jane Smith",
     email: "jane@example.com",
@@ -109,6 +160,7 @@ export const mockUsers: {
     joinedAt: new Date(),
   },
   {
+    index: 2,
     id: "user-3",
     name: "Bob Johnson",
     email: "bob@example.com",
@@ -120,6 +172,7 @@ export const mockUsers: {
     joinedAt: new Date(new Date().setDate(new Date().getDate() + 1)),
   },
   {
+    index: 3,
     id: "user-4",
     name: "Alice Williams",
     email: "alice@example.com",
@@ -154,6 +207,7 @@ export const sortings = {
 // Helper function to filter users based on filters
 export const filterUsers = <
   T extends RecordType & {
+    index: number
     name: string
     email: string
     department: string
@@ -512,6 +566,7 @@ export const generateMockUsers = (count: number) => {
   return Array.from({ length: count }).map((_, index) => {
     const department = DEPARTMENTS[index % DEPARTMENTS.length]
     return {
+      index,
       id: `user-${index + 1}`,
       name: `User ${index + 1}`,
       email: `user${index + 1}@example.com`,

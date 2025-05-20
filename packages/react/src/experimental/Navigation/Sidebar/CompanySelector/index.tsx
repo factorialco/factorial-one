@@ -129,7 +129,7 @@ const Selector = ({
     >
       <div
         className={cn(
-          "group flex w-fit max-w-full flex-nowrap items-center justify-center gap-1 truncate rounded p-1.5 text-f1-foreground transition-colors hover:bg-f1-background-hover data-[state=open]:bg-f1-background-hover",
+          "group flex w-fit max-w-full flex-nowrap items-center justify-center gap-1 rounded p-1.5 text-f1-foreground transition-colors hover:bg-f1-background-hover data-[state=open]:bg-f1-background-hover",
           focusRing()
         )}
         tabIndex={0}
@@ -174,7 +174,7 @@ const SelectedCompanyLabel = ({
         }
       />
       <div className="min-w-0 flex-1">
-        <span className="block truncate">{company?.name}</span>
+        <span className="line-clamp-1">{company?.name}</span>
       </div>
     </div>
   )
