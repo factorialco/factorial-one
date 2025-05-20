@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { subMonths } from "date-fns"
 import { CommunityPost } from "./index"
 
 const meta: Meta<typeof CommunityPost> = {
@@ -33,7 +32,7 @@ export const Default: Story = {
       title: "All company",
       onClick: () => {},
     },
-    createdAt: subMonths(new Date(), 1),
+    createdAt: new Date(2025, 3, 20, 7, 28, 0),
     title: "Title",
     description: `<p class="TextEditorTheme__paragraph" dir="ltr"><span>Super Kudos for </span><strong class="mentioned"><span><a href="/employees/1">First Employee</a></span></strong><span> and </span><strong class="mentioned"><span><a href="/employees/2">Second Employee</a></span></strong><span> , who always are available to help in any way they can and as quickly as possible. You guys are great! ⭐</span></p><p class="TextEditorTheme__paragraph" dir="ltr">Including some link here too: <a href="mailto:randomemail@factorial.co" class="TextEditorTheme__link"><span>randomemail@factorial.co</span></a></p></p>`,
     onClick: () => {},
