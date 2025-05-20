@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.59.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.59.0...factorial-one-react-v1.59.1) (2025-05-20)
+
+
+### Bug Fixes
+
+* missing datacollection filterNavigatioln types exports ([#1846](https://github.com/factorialco/factorial-one/issues/1846)) ([b19aa76](https://github.com/factorialco/factorial-one/commit/b19aa760907141a107e899d2f895abf009f17004))
+
 ## [1.59.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.58.0...factorial-one-react-v1.59.0) (2025-05-19)
 
 
