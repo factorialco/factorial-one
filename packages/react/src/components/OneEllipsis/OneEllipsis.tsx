@@ -96,6 +96,7 @@ const OneEllipsis = forwardRef<HTMLDivElement, OneEllipsisProps>(
           lines={lines}
           onHasEllipsisChange={setHasEllipsis}
           {...props}
+          data-testid="one-ellipsis"
         >
           {children}
         </EllipsisWrapper>
