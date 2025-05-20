@@ -41,7 +41,7 @@ export type SelectProps<T, R = any> = {
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
   return (
-    <SelectItemPrimitive value={item.value} withIndicator={false}>
+    <SelectItemPrimitive value={item.value}>
       <div className="flex w-full items-start gap-1.5">
         {item.avatar && <Avatar avatar={item.avatar} size="xsmall" />}
         {item.icon && (
