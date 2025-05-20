@@ -1,7 +1,7 @@
+import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
 import { Button, IconType } from "@/factorial-one"
 import CrossIcon from "@/icons/app/Cross"
 import { useEffect, useState } from "react"
-import { ModuleAvatar } from "../../Information/ModuleAvatar"
 
 export type ProductCardProps = {
   title: string

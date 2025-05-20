@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.60.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.59.1...factorial-one-react-v1.60.0) (2025-05-20)
+
+
+### Features
+
+* **UpsellingKit:** new product widget ([#1845](https://github.com/factorialco/factorial-one/issues/1845)) ([023b8e4](https://github.com/factorialco/factorial-one/commit/023b8e40466d161c0a7e46d5c762ce353b49ccff))
+
+
+### Bug Fixes
+
+* companySelector ellipsis ([#1849](https://github.com/factorialco/factorial-one/issues/1849)) ([71667f5](https://github.com/factorialco/factorial-one/commit/71667f5fd47847f200db1d5b899b07fc1a669fd4))
+
 ## [1.59.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.59.0...factorial-one-react-v1.59.1) (2025-05-20)
 
 
