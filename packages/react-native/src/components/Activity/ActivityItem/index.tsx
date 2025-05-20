@@ -54,7 +54,7 @@ export const ActivityItem = ({
         {isUnread && (
           <View
             accessibilityLabel="unread-indicator"
-            className="mt-1.5 h-2 w-2 rounded-full bg-f1-icon-critical"
+            className="mt-1.5 h-2 w-2 rounded-full bg-f1-icon-accent"
           />
         )}
       </View>
