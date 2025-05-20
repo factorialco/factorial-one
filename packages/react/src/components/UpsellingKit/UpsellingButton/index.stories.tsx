@@ -51,6 +51,7 @@ const meta = {
         },
       ],
     },
+    closeLabel: "Close",
   },
   argTypes: {
     size: {

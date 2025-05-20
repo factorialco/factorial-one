@@ -54,6 +54,10 @@ export interface UpsellingButtonProps
       isCompleted?: boolean
     }[]
   }
+  /**
+   * The label to be displayed in the close button of the confirmation dialog
+   */
+  closeLabel: string
 }
 
 type ResponseStatus = "success" | "error" | null
@@ -68,6 +72,7 @@ export function UpsellingButton({
   successMessage,
   loadingState,
   nextSteps,
+  closeLabel,
   ...props
 }: UpsellingButtonProps) {
   const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
@@ -110,6 +115,7 @@ export function UpsellingButton({
           errorMessage={errorMessage}
           successMessage={successMessage}
           nextSteps={nextSteps}
+          closeLabel={closeLabel}
         />
       )}
     </>

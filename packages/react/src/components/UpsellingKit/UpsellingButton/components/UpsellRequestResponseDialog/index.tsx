@@ -28,6 +28,7 @@ interface UpsellRequestResponseDialogProps {
     buttonOnClick: () => void
   }
   nextSteps: NextStepsProps
+  closeLabel: string
 }
 
 interface StepItemProps {
@@ -82,17 +83,19 @@ const DialogActions = ({
   success,
   successButtonOnClick,
   successButtonLabel,
+  closeLabel,
 }: {
   onClose?: () => void
   success: boolean
   successButtonOnClick: () => void
   successButtonLabel: string
+  closeLabel: string
 }) => {
   const renderButtons = (isSmallScreen = false) => (
     <>
       <Button
         variant="outline"
-        label="Close"
+        label={closeLabel}
         onClick={onClose}
         size={isSmallScreen ? "lg" : undefined}
       />
@@ -127,7 +130,15 @@ const UpsellRequestResponseDialog = forwardRef<
   UpsellRequestResponseDialogProps
 >(
   (
-    { open, onClose, success = true, errorMessage, successMessage, nextSteps },
+    {
+      open,
+      onClose,
+      success = true,
+      errorMessage,
+      successMessage,
+      nextSteps,
+      closeLabel,
+    },
     ref
   ) => {
     const [closing, setIsClosing] = useState(false)
@@ -179,6 +190,7 @@ const UpsellRequestResponseDialog = forwardRef<
             success={success}
             successButtonLabel={successMessage.buttonLabel}
             successButtonOnClick={successMessage.buttonOnClick}
+            closeLabel={closeLabel}
           />
         </DialogContent>
       </Dialog>
