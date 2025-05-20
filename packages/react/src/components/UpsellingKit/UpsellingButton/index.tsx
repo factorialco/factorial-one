@@ -58,7 +58,7 @@ export interface UpsellingButtonProps
 
 type ResponseStatus = "success" | "error" | null
 
-export const UpsellingButton = ({
+export function UpsellingButton({
   label,
   showIcon = true,
   onRequest,
@@ -69,7 +69,7 @@ export const UpsellingButton = ({
   loadingState,
   nextSteps,
   ...props
-}: UpsellingButtonProps) => {
+}: UpsellingButtonProps) {
   const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
   const [internalLoading, setInternalLoading] = useState(false)
 
