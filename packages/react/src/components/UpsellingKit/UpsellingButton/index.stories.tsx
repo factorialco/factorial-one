@@ -11,13 +11,46 @@ const meta = {
       url: "https://www.figma.com/design/pZzg1KTe9lpKTSGPUZa8OJ/Web-components?node-id=41-1256&t=99GWQFvFLZtKW49N-4",
     },
   },
-  tags: ["autodocs", "stable"],
+  tags: ["autodocs", "experimental"],
   args: {
-    onClick: () => {
-      console.log("Button clicked")
-    },
     label: "Request Information",
     size: "md",
+    showConfirmation: true,
+    onRequest: async () => {
+      console.log("onRequest")
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+    },
+    errorMessage: {
+      title: "Request failed",
+      description: "We couldn't process your request. Please try again later.",
+    },
+    successMessage: {
+      title: "Request submitted!",
+      description:
+        "One of our experts will contact you as soon as possible with all the details.",
+      buttonLabel: "Discover more products",
+      buttonOnClick: () => {
+        console.log("buttonOnClick")
+      },
+    },
+    loadingState: {
+      label: "Processing...",
+    },
+    nextSteps: {
+      title: "Next steps",
+      items: [
+        {
+          text: "Request information",
+          isCompleted: true,
+        },
+        {
+          text: "Product expert contacting you.",
+        },
+        {
+          text: "Demo to answer all your questions",
+        },
+      ],
+    },
   },
   argTypes: {
     size: {

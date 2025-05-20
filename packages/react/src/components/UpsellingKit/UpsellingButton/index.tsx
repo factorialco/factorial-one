@@ -2,8 +2,7 @@ import { ButtonProps } from "@/factorial-one"
 import { useState } from "react"
 import { Button } from "../../../components/Actions/Button"
 import UpsellIcon from "../../../icons/app/Upsell"
-import { Dialog } from "../../Overlays/Dialog"
-import { UpsellRequestResponseDialog } from "../UpsellRequestResponseDialog"
+import { UpsellRequestResponseDialog } from "./components/UpsellRequestResponseDialog"
 
 export interface UpsellingButtonProps
   extends Omit<ButtonProps, "variant" | "icon"> {
@@ -23,6 +22,38 @@ export interface UpsellingButtonProps
    * Whether to show the confirmation dialog after the request
    */
   showConfirmation?: boolean
+  /**
+   * The error message to be displayed in the confirmation dialog
+   */
+  errorMessage: {
+    title: string
+    description: string
+  }
+  /**
+   * The success message to be displayed in the confirmation dialog
+   */
+  successMessage: {
+    title: string
+    description: string
+    buttonLabel: string
+    buttonOnClick: () => void
+  }
+  /**
+   * The label to be displayed in the button when the request is being processed
+   */
+  loadingState: {
+    label: string
+  }
+  /**
+   * The next steps to be displayed in the confirmation dialog
+   */
+  nextSteps: {
+    title: string
+    items: {
+      text: string
+      isCompleted?: boolean
+    }[]
+  }
 }
 
 type ResponseStatus = "success" | "error" | null
@@ -32,14 +63,17 @@ export const UpsellingButton = ({
   showIcon = true,
   onRequest,
   showConfirmation = true,
-  onClick,
   loading: externalLoading,
+  errorMessage,
+  successMessage,
+  loadingState,
+  nextSteps,
   ...props
 }: UpsellingButtonProps) => {
   const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
   const [internalLoading, setInternalLoading] = useState(false)
 
-  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = async () => {
     if (onRequest) {
       setInternalLoading(true)
       try {
@@ -49,17 +83,14 @@ export const UpsellingButton = ({
         }
       } catch (error) {
         setResponseStatus("error")
-        console.error("Error processing request:", error)
       } finally {
         setInternalLoading(false)
       }
-    } else {
-      onClick?.(event)
     }
   }
 
   const isLoading = externalLoading || internalLoading
-  const buttonLabel = isLoading ? "Processing..." : label
+  const buttonLabel = isLoading ? loadingState.label : label
 
   return (
     <>
@@ -71,33 +102,14 @@ export const UpsellingButton = ({
         loading={isLoading}
         {...props}
       />
-      {showConfirmation && responseStatus === "success" && (
+      {showConfirmation && responseStatus && (
         <UpsellRequestResponseDialog
           open={true}
           onClose={() => setResponseStatus(null)}
-        />
-      )}
-      {showConfirmation && responseStatus === "error" && (
-        <Dialog
-          open={true}
-          onClose={() => setResponseStatus(null)}
-          header={{
-            type: "critical",
-            title: "Request failed",
-            description:
-              "We couldn't process your request. Please try again later.",
-          }}
-          actions={{
-            primary: {
-              label: "Try again",
-              onClick: () => setResponseStatus(null),
-              variant: "critical",
-            },
-            secondary: {
-              label: "Close",
-              onClick: () => setResponseStatus(null),
-            },
-          }}
+          success={responseStatus === "success"}
+          errorMessage={errorMessage}
+          successMessage={successMessage}
+          nextSteps={nextSteps}
         />
       )}
     </>
