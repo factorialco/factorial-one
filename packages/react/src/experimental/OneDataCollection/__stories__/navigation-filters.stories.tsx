@@ -26,10 +26,10 @@ export const Default: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        defaultValue: new Date(),
+        defaultValue: new Date(2025, 6, 30),
         granularity: "day",
-        min: new Date(),
-        max: addDays(new Date(), 1),
+        min: new Date(2025, 6, 30),
+        max: addDays(new Date(2025, 6, 30), 1),
       },
     },
   },
@@ -40,10 +40,10 @@ export const WeekGranularity: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        defaultValue: new Date(),
+        defaultValue: new Date(2025, 6, 30),
         granularity: "week",
-        min: new Date(),
-        max: addDays(new Date(), 1),
+        min: new Date(2025, 6, 30),
+        max: addDays(new Date(2025, 6, 30), 1),
       },
     },
   },
@@ -54,10 +54,10 @@ export const MonthGranularity: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        defaultValue: new Date(),
+        defaultValue: new Date(2025, 6, 30),
         granularity: "month",
-        min: new Date(),
-        max: addDays(new Date(), 1),
+        min: new Date(2025, 6, 30),
+        max: addDays(new Date(2025, 6, 30), 1),
       },
     },
   },
@@ -68,10 +68,10 @@ export const YearGranularity: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        defaultValue: new Date(),
+        defaultValue: new Date(2025, 6, 30),
         granularity: "year",
-        min: new Date(),
-        max: addDays(new Date(), 1),
+        min: new Date(2025, 6, 30),
+        max: addDays(new Date(2025, 6, 30), 1),
       },
     },
   },
@@ -83,13 +83,13 @@ export const RangeGranularity: Story = {
       date: {
         type: "date-navigator",
         defaultValue: {
-          from: new Date(),
-          to: addDays(new Date(), 3),
+          from: new Date(2025, 6, 30),
+          to: addDays(new Date(2025, 6, 30), 3),
         },
         defaultGranularity: "range",
         granularity: ["range"],
-        min: new Date(),
-        max: addDays(new Date(), 100),
+        min: new Date(2025, 6, 30),
+        max: addDays(new Date(2025, 6, 30), 100),
       },
     },
   },
@@ -100,10 +100,10 @@ export const NoGoToCurrent: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        defaultValue: new Date(),
+        defaultValue: new Date(2025, 6, 30),
         granularity: "year",
-        min: new Date(),
-        max: addDays(new Date(), 1),
+        min: new Date(2025, 6, 30),
+        max: addDays(new Date(2025, 6, 30), 1),
         hideGoToCurrent: true,
       },
     },
@@ -115,11 +115,11 @@ export const MultipleGranularities: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        defaultValue: new Date(),
+        defaultValue: new Date(2025, 6, 30),
         defaultGranularity: "day",
         granularity: ["day", "week", "month", "year", "range"],
-        min: new Date(),
-        max: addDays(new Date(), 100),
+        min: new Date(2025, 6, 30),
+        max: addDays(new Date(2025, 6, 30), 100),
       },
     },
   },
@@ -130,21 +130,23 @@ export const WithPresets: Story = {
     navigationFilters: {
       date: {
         type: "date-navigator",
-        defaultValue: new Date(),
+        defaultValue: new Date(2025, 6, 30),
         defaultGranularity: "day",
         granularity: ["day", "week", "month", "year", "range"],
-        min: new Date(),
-        max: addDays(new Date(), 100),
+        min: new Date(2025, 6, 30),
+        max: addDays(new Date(2025, 6, 30), 100),
         presets: [
           {
             label: "Today",
             granularity: "day",
-            value: granularityDefinitions.day.toRange(new Date()),
+            value: granularityDefinitions.day.toRange(new Date(2025, 6, 30)),
           },
           {
             label: "Yesterday",
             granularity: "day",
-            value: granularityDefinitions.day.toRange(addDays(new Date(), -1)),
+            value: granularityDefinitions.day.toRange(
+              addDays(new Date(2025, 6, 30), -1)
+            ),
           },
         ],
       },

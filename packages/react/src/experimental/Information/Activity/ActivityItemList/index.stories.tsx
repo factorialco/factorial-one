@@ -40,7 +40,7 @@ const ITEMS = new Array(10).fill(null).map((_, index) => ({
     return icons[index % icons.length]
   })(),
   createdAt: (() => {
-    const today = new Date()
+    const today = new Date(2025, 4, 20)
 
     const groups = [
       new Date(today.getTime() - 1 * 60 * 60 * 1000), // today
