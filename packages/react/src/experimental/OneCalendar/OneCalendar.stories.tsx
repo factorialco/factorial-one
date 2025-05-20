@@ -51,7 +51,7 @@ export const MonthSingle: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date()
+      const now = new Date(2025, 6, 30)
       const start = new Date(now.getFullYear(), now.getMonth(), 1)
       return {
         from: start,
@@ -85,7 +85,7 @@ export const MonthRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date()
+      const now = new Date(2025, 6, 30)
       const start = new Date(now.getFullYear(), now.getMonth(), 1)
       const end = new Date(now.getFullYear(), now.getMonth() + 4, 1)
       return {
@@ -120,7 +120,7 @@ export const YearSingle: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date()
+      const now = new Date(2025, 6, 30)
       return {
         from: startOfYear(now),
         to: endOfYear(now),
@@ -153,7 +153,7 @@ export const YearRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date()
+      const now = new Date(2025, 6, 30)
       const start = startOfYear(now)
       const end = endOfYear(new Date(now.getFullYear() + 4, 0, 1))
       return {
@@ -188,7 +188,7 @@ export const DaySingle: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const defaultDate = new Date()
+      const defaultDate = new Date(2025, 6, 30)
       return {
         from: defaultDate,
         to: defaultDate,
@@ -227,7 +227,7 @@ export const DayRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const start = new Date()
+      const start = new Date(2025, 6, 30)
       const end = new Date(
         start.getFullYear(),
         start.getMonth(),
@@ -271,7 +271,7 @@ export const Week: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date()
+      const now = new Date(2025, 6, 30)
       const start = startOfWeek(now, { weekStartsOn: 1 })
       return {
         from: start,
@@ -309,7 +309,7 @@ export const QuarterSingle: Story = {
   },
   render: (args) => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(() => {
-      const now = new Date()
+      const now = new Date(2025, 6, 30)
       const quarterStartMonth = Math.floor(now.getMonth() / 3) * 3
       return new Date(now.getFullYear(), quarterStartMonth, 1)
     })
@@ -355,7 +355,7 @@ export const QuarterRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date()
+      const now = new Date(2025, 6, 30)
       const currentQuarter = Math.floor(now.getMonth() / 3)
       const currentQuarterStartMonth = currentQuarter * 3
       const nextQuarter = (currentQuarter + 2) % 4
@@ -398,7 +398,7 @@ export const HalfYearSingle: Story = {
   },
   render: (args) => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(() => {
-      const now = new Date()
+      const now = new Date(2025, 6, 30)
       const halfYearStartMonth = Math.floor(now.getMonth() / 6) * 6
       return new Date(now.getFullYear(), halfYearStartMonth, 1)
     })
@@ -447,7 +447,7 @@ export const HalfYearRange: Story = {
   },
   render: (args) => {
     const [selectedRange, setSelectedRange] = useState<DateRange | null>(() => {
-      const now = new Date()
+      const now = new Date(2025, 6, 30)
       const currentHalfYear = Math.floor(now.getMonth() / 6)
       const currentHalfYearStartMonth = currentHalfYear * 6
       const endYear = now.getFullYear() + Math.floor((currentHalfYear + 2) / 2)
@@ -541,8 +541,8 @@ export const WithMinAndMaxDay: Story = {
   args: {
     mode: "single",
     view: "day",
-    minDate: new Date(),
-    maxDate: addDays(new Date(), 30),
+    minDate: new Date(2025, 6, 30),
+    maxDate: addDays(new Date(2025, 6, 30), 30),
   },
 }
 
@@ -550,8 +550,8 @@ export const WithMinAndMaxWeek: Story = {
   args: {
     mode: "single",
     view: "week",
-    minDate: new Date(),
-    maxDate: addDays(new Date(), 30),
+    minDate: new Date(2025, 6, 30),
+    maxDate: addDays(new Date(2025, 6, 30), 30),
   },
 }
 
@@ -559,8 +559,8 @@ export const WithMinAndMaxMonth: Story = {
   args: {
     mode: "single",
     view: "month",
-    minDate: new Date(),
-    maxDate: addDays(new Date(), 30),
+    minDate: new Date(2025, 6, 30),
+    maxDate: addDays(new Date(2025, 6, 30), 30),
   },
 }
 
@@ -568,16 +568,16 @@ export const WithMinAndMaxHalfYear: Story = {
   args: {
     mode: "single",
     view: "halfyear",
-    minDate: new Date(),
-    maxDate: addMonths(new Date(), 24),
+    minDate: new Date(2025, 6, 30),
+    maxDate: addMonths(new Date(2025, 6, 30), 24),
   },
 }
 export const WithMinAndMaxQuarter: Story = {
   args: {
     mode: "single",
     view: "quarter",
-    minDate: new Date(),
-    maxDate: addMonths(new Date(), 6),
+    minDate: new Date(2025, 6, 30),
+    maxDate: addMonths(new Date(2025, 6, 30), 6),
   },
 }
 
@@ -585,7 +585,7 @@ export const WithMinAndMaxYear: Story = {
   args: {
     mode: "single",
     view: "year",
-    minDate: new Date(),
-    maxDate: addYears(new Date(), 2),
+    minDate: new Date(2025, 6, 30),
+    maxDate: addYears(new Date(2025, 6, 30), 2),
   },
 }

@@ -30,7 +30,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const today = new Date()
+const today = new Date(2025, 6, 30)
 const presets = [
   predefinedPresets.today,
   predefinedPresets.lastWeek,
@@ -102,7 +102,7 @@ export const WithDefaultDate: Story = {
   args: {
     hideGoToCurrent: true,
     defaultValue: {
-      value: { from: new Date(), to: new Date() },
+      value: { from: new Date(2025, 6, 30), to: new Date(2025, 6, 30) },
       granularity: "month",
     } as DatePickerValue,
     granularities: ["month"],
