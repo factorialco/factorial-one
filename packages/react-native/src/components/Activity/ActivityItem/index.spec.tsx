@@ -1,20 +1,19 @@
 import { render, fireEvent } from "@testing-library/react-native";
 import React from "react";
 import { IconType } from "../../Icon";
-import { vi } from "vitest";
 import {
   ActivityItem,
   ActivityItemSkeleton,
 } from "../../Activity/ActivityItem";
 
 // Mock the IconAvatar component
-vi.mock("../../IconAvatar", () => ({
+jest.mock("../../IconAvatar", () => ({
   IconAvatar: () => null,
 }));
 
 // Mock dependencies
 const mockIcon: IconType = "check" as unknown as IconType;
-const mockOnPress = vi.fn();
+const mockOnPress = jest.fn();
 
 describe("ActivityItem", () => {
   const defaultProps = {
@@ -26,7 +25,7 @@ describe("ActivityItem", () => {
   };
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    jest.clearAllMocks();
   });
 
   it("renders correctly with required props", () => {

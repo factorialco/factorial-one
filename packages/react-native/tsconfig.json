@@ -11,21 +11,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@factorialco/factorial-one-core": [
-        "../core/src"
-      ]
+      "@factorialco/factorial-one-core": ["../core/src"]
     },
-    "types": [
-      "vitest/globals",
-      "nativewind/types"
-    ]
+    "types": ["vitest/globals", "nativewind/types", "jest"]
   },
-  "include": [
-    "src",
-    "nativewind-env.d.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src", "nativewind-env.d.ts"],
+  "exclude": ["node_modules", "dist"]
 }
