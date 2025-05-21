@@ -5,7 +5,7 @@ import { Label } from "@/ui/label"
 import { useEffect, useState } from "react"
 
 type ProductWidgetProps = {
-  imageUrl: string
+  mediaUrl: string
   title: string
   description: string
   buttonText: string
@@ -17,7 +17,7 @@ type ProductWidgetProps = {
 }
 
 export function ProductWidget({
-  imageUrl,
+  mediaUrl,
   title,
   description,
   buttonText,
@@ -42,6 +42,8 @@ export function ProductWidget({
     }
   }, [trackVisibility, isDismissed])
 
+  const isVideo = mediaUrl?.includes(".mp4")
+
   return (
     <>
       {!isDismissed ? (
@@ -61,9 +63,18 @@ export function ProductWidget({
             )}
             <div>
               <div>
-                {imageUrl && (
+                {isVideo ? (
+                  <video
+                    src={mediaUrl}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="h-full w-full rounded-md"
+                  />
+                ) : (
                   <img
-                    src={imageUrl}
+                    src={mediaUrl}
                     alt={title}
                     className="h-full w-full rounded-md"
                   />
