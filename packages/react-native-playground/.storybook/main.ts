@@ -1,6 +1,4 @@
-import { StorybookConfig } from "@storybook/react-native";
-
-const main: StorybookConfig = {
+const main = {
   stories: [
     "../components/**/*.stories.?(ts|tsx)",
     "./stories/**/*.stories.?(ts|tsx|js|jsx)",
