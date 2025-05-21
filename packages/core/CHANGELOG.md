@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.9.0...factorial-one-core-v1.10.0) (2025-05-21)
+
+
+### Features
+
+* videorecorder and microphone icons ([420c16f](https://github.com/factorialco/factorial-one/commit/420c16f1d27417e1d271c68bd1a59c571945903c))
+
 ## [1.9.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.8.0...factorial-one-core-v1.9.0) (2025-05-19)
 
 
