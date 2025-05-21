@@ -1,10 +1,14 @@
-import { Await } from "@/components/Utilities/Await"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import {
+  getAnimationVariants,
+  useGroups,
+} from "@/experimental/OneDataCollection/useGroups"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
-import { Counter } from "@/experimental/exports"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
 import { Skeleton } from "@/ui/skeleton"
+import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useMemo } from "react"
 import { useI18n } from "../../../../../lib/providers/i18n"
 import { OnePagination } from "../../../../OnePagination"
@@ -41,7 +45,7 @@ const findNextMultiple = (n: number): number => {
 
 const CardGrid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {children}
     </div>
   )
@@ -108,36 +112,49 @@ const GroupCards = <
       {items.map((item, index) => {
         const id = source.selectable ? source.selectable(item) : undefined
         return (
-          <Card key={index}>
-            <CardHeader>
-              {source.selectable && id !== undefined && (
-                <Checkbox
-                  checked={selectedItems.has(id)}
-                  onCheckedChange={(checked) =>
-                    handleSelectItemChange(item, checked)
-                  }
-                  title={`Select ${source.selectable(item)}`}
-                  hideLabel
-                />
-              )}
-              <CardTitle>{title(item)}</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {cardProperties.map((property) => (
-                <div key={String(property.label)} className="space-y-1">
-                  <div className="text-muted-foreground text-sm font-medium">
-                    {property.label}
+          <motion.div
+            key={index}
+            layout
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            custom={index}
+            variants={getAnimationVariants({
+              delay: 0.02,
+              duration: 0.3,
+            })}
+          >
+            <Card key={index}>
+              <CardHeader>
+                {source.selectable && id !== undefined && (
+                  <Checkbox
+                    checked={selectedItems.has(id)}
+                    onCheckedChange={(checked) =>
+                      handleSelectItemChange(item, checked)
+                    }
+                    title={`Select ${source.selectable(item)}`}
+                    hideLabel
+                  />
+                )}
+                <CardTitle>{title(item)}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                {cardProperties.map((property) => (
+                  <div key={String(property.label)} className="space-y-1">
+                    <div className="text-muted-foreground text-sm font-medium">
+                      {property.label}
+                    </div>
+                    <div className="text-sm">{renderValue(item, property)}</div>
                   </div>
-                  <div className="text-sm">{renderValue(item, property)}</div>
-                </div>
-              ))}
-            </CardContent>
-            {source.itemActions && (
-              <CardFooter className="justify-end">
-                <ActionsDropdown item={item} actions={source.itemActions} />
-              </CardFooter>
-            )}
-          </Card>
+                ))}
+              </CardContent>
+              {source.itemActions && (
+                <CardFooter className="justify-end">
+                  <ActionsDropdown item={item} actions={source.itemActions} />
+                </CardFooter>
+              )}
+            </Card>
+          </motion.div>
         )
       })}
     </CardGrid>
@@ -210,6 +227,13 @@ export const CardCollection = <
     // handleSelectAll,
   } = useSelectable(data.records, paginationInfo, source, onSelectItems)
 
+  /**
+   * Groups
+   */
+  const { openGroups, setGroupOpen } = useGroups(
+    data?.type === "grouped" ? data.groups : []
+  )
+
   return (
     <>
       {isInitialLoading ? (
@@ -236,34 +260,27 @@ export const CardCollection = <
         <>
           {data?.type === "grouped" &&
             data.groups.map((group) => {
-              const itemCount = group.itemCount
               return (
                 <>
-                  <div className="flex items-center gap-2">
-                    <Await
-                      resolve={group.label}
-                      fallback={<Skeleton className="h-4 w-24" />}
-                    >
-                      {(label) => label}
-                    </Await>
-
-                    <Await
-                      resolve={itemCount}
-                      fallback={<Skeleton className="h-4 w-5" />}
-                    >
-                      {(count) =>
-                        count !== undefined && <Counter value={count} />
-                      }
-                    </Await>
-                  </div>
-                  <GroupCards
-                    source={source}
-                    items={group.records}
-                    selectedItems={selectedItems}
-                    handleSelectItemChange={handleSelectItemChange}
-                    title={title}
-                    cardProperties={cardProperties}
+                  <GroupHeader
+                    label={group.label}
+                    itemCount={group.itemCount}
+                    open={openGroups[group.key]}
+                    onOpenChange={(open) => setGroupOpen(group.key, open)}
                   />
+                  <AnimatePresence>
+                    {openGroups[group.key] && (
+                      <GroupCards
+                        key={group.key}
+                        source={source}
+                        items={group.records}
+                        selectedItems={selectedItems}
+                        handleSelectItemChange={handleSelectItemChange}
+                        title={title}
+                        cardProperties={cardProperties}
+                      />
+                    )}
+                  </AnimatePresence>
                 </>
               )
             })}
