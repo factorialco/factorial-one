@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.61.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.60.0...factorial-one-react-v1.61.0) (2025-05-21)
+
+
+### Features
+
+* show less than 2 actions in modal header without dropdown ([#1853](https://github.com/factorialco/factorial-one/issues/1853)) ([5967a6d](https://github.com/factorialco/factorial-one/commit/5967a6ded7ee5f218b5a6c71a24acf44802fb3ba))
+
 ## [1.60.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.59.1...factorial-one-react-v1.60.0) (2025-05-20)
 
 
