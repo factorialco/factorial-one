@@ -63,6 +63,23 @@ export type TableVisualizationOptions<
   frozenColumns?: 0 | 1 | 2
 }
 
+export type TableCollectionProps<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+> = CollectionProps<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping,
+  TableVisualizationOptions<Record, Filters, Sortings>
+>
+
 export const TableCollection = <
   R extends RecordType,
   Filters extends FiltersDefinition,

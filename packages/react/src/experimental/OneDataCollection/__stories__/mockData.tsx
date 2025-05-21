@@ -6,6 +6,7 @@ import {
   FiltersState,
   GroupingDefinition,
   GroupingState,
+  ItemActionsDefinition,
   OnBulkActionCallback,
   OneDataCollection,
   OnSelectItemsCallback,
@@ -24,6 +25,7 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "../navigationFilters/types"
+import { Visualization, VisualizationType } from "../visualizations"
 
 export const DEPARTMENTS_MOCK = [
   "Engineering",
@@ -186,6 +188,140 @@ export const mockUsers: {
   },
 ]
 
+export const getMockVisualizations = (options?: {
+  frozenColumns?: 0 | 1 | 2
+}): Partial<
+  Record<
+    VisualizationType,
+    Visualization<
+      (typeof mockUsers)[number],
+      FiltersType,
+      typeof sortings,
+      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      NavigationFiltersDefinition
+    >
+  >
+> => ({
+  table: {
+    type: "table",
+    options: {
+      frozenColumns: options?.frozenColumns,
+      columns: [
+        {
+          label: "Name",
+          width: 140,
+          render: (item) => ({
+            type: "person",
+            value: {
+              firstName: item.name.split(" ")[0],
+              lastName: item.name.split(" ")[1],
+            },
+          }),
+          sorting: "name",
+        },
+        {
+          label: "Email",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Department",
+          render: (item) => item.department,
+          sorting: "department",
+        },
+        {
+          label: "Email 2",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role 2",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Department 2",
+          render: (item) => item.department,
+          sorting: "department",
+        },
+        {
+          label: "Email 3",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role 3",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Department 3",
+          render: (item) => item.department,
+          sorting: "department",
+        },
+        {
+          label: "Email 4",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role 4",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Department 4",
+          render: (item) => item.department,
+          sorting: "department",
+        },
+      ],
+    },
+  },
+  card: {
+    type: "card",
+    options: {
+      title: (item) => item.name,
+      cardProperties: [
+        {
+          label: "Email",
+          render: (item) => item.email,
+        },
+        {
+          label: "Role",
+          render: (item) => item.role,
+        },
+        {
+          label: "Department",
+          render: (item) => item.department,
+        },
+      ],
+    },
+  },
+  list: {
+    type: "list",
+    options: {
+      fields: [
+        {
+          label: "Email",
+          render: (item) => item.email,
+        },
+        {
+          label: "Role",
+          render: (item) => item.role,
+        },
+        {
+          label: "Department",
+          render: (item) => item.department,
+        },
+      ],
+    },
+  },
+})
 // Example of using the object-based approach (recommended)
 export const sortings = {
   name: {
@@ -375,10 +511,20 @@ export const ExampleComponent = ({
   grouping,
   navigationFilters,
   totalItemSummary,
+  visualizations,
 }: {
   useObservable?: boolean
   usePresets?: boolean
   frozenColumns?: 0 | 1 | 2
+  visualizations?: ReadonlyArray<
+    Visualization<
+      (typeof mockUsers)[number],
+      FiltersType,
+      typeof sortings,
+      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      NavigationFiltersDefinition
+    >
+  >
   selectable?: (item: (typeof mockUsers)[number]) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<
@@ -398,6 +544,10 @@ export const ExampleComponent = ({
     GroupingDefinition<(typeof mockUsers)[number]>
   >
 }) => {
+  const mockVisualizations = getMockVisualizations({
+    frozenColumns,
+  })
+
   const dataSource = useDataSource({
     filters,
     navigationFilters,
@@ -455,108 +605,13 @@ export const ExampleComponent = ({
         onBulkAction={(action, selectedItems) =>
           console.log(`Bulk action: ${action}`, "->", selectedItems)
         }
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              frozenColumns,
-              columns: [
-                {
-                  label: "Name",
-                  width: 140,
-                  render: (item) => ({
-                    type: "person",
-                    value: {
-                      firstName: item.name.split(" ")[0],
-                      lastName: item.name.split(" ")[1],
-                    },
-                  }),
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 2",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 2",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 2",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 3",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 3",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 3",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 4",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 4",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 4",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              title: (item) => item.name,
-              cardProperties: [
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                },
-              ],
-            },
-          },
-        ]}
+        visualizations={
+          visualizations ?? [
+            mockVisualizations.list,
+            mockVisualizations.table,
+            mockVisualizations.card,
+          ]
+        }
       />
     </div>
   )

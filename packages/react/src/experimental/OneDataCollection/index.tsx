@@ -33,8 +33,9 @@ import type {
   OnSelectItemsCallback,
   RecordType,
 } from "./types"
+import { VisualizationRenderer } from "./visualizations"
 import type { Visualization } from "./visualizations/collection"
-import { VisualizationRenderer } from "./visualizations/collection"
+
 /**
  * A hook that manages data source state and filtering capabilities for a collection.
  * It creates and returns a reusable data source that can be shared across different
