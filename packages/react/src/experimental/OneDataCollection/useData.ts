@@ -75,7 +75,7 @@ interface UseDataReturn<Record> {
 
 type DataType<T> = PromiseState<T>
 
-type GroupRecord<RecordType> = {
+export type GroupRecord<RecordType> = {
   key: string
   label: string | Promise<string>
   itemCount: number | undefined | Promise<number | undefined>

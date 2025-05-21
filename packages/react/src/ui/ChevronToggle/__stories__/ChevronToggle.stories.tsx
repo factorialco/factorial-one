@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { useState } from "react"
-import { ChevronToggle } from "../ChevronToogle"
+import { ChevronToggle } from "../ChevronToggle"
 
 const meta = {
   title: "Components/ChevronToggle",
