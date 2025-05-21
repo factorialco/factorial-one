@@ -13,7 +13,7 @@
     "paths": {
       "@factorialco/factorial-one-core": ["../core/src"]
     },
-    "types": ["vitest/globals", "nativewind/types", "jest"]
+    "types": ["nativewind/types", "jest"]
   },
   "include": ["src", "nativewind-env.d.ts"],
   "exclude": ["node_modules", "dist"]
