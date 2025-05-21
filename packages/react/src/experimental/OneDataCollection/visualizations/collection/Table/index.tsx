@@ -1,7 +1,10 @@
-import { Await } from "@/components/Utilities/Await"
-import { Counter } from "@/experimental/exports"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import {
+  getAnimationVariants,
+  useGroups,
+} from "@/experimental/OneDataCollection/useGroups"
 import { OnePagination } from "@/experimental/OnePagination"
 import {
   OneTable,
@@ -12,7 +15,7 @@ import {
   TableRow,
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
-import { Skeleton } from "@/ui/skeleton"
+import { AnimatePresence, motion } from "framer-motion"
 import { ComponentProps, useEffect, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
@@ -28,9 +31,9 @@ import { useSelectable } from "../../../useSelectable"
 import { Row } from "./components/Row"
 
 export type WithOptionalSorting<
-  Record,
+  R extends RecordType,
   Sortings extends SortingsDefinition,
-> = PropertyDefinition<Record> & {
+> = PropertyDefinition<R> & {
   sorting?: SortingKey<Sortings>
 
   /**
@@ -45,27 +48,27 @@ export type WithOptionalSorting<
 }
 
 export type TableColumnDefinition<
-  Record,
+  R extends RecordType,
   Sortings extends SortingsDefinition,
-> = WithOptionalSorting<Record, Sortings> &
+> = WithOptionalSorting<R, Sortings> &
   Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">
 
 export type TableVisualizationOptions<
-  Record extends RecordType,
+  R extends RecordType,
   _Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
 > = {
-  columns: ReadonlyArray<TableColumnDefinition<Record, Sortings>>
+  columns: ReadonlyArray<TableColumnDefinition<R, Sortings>>
   frozenColumns?: 0 | 1 | 2
 }
 
 export const TableCollection = <
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
+  Grouping extends GroupingDefinition<R>,
 >({
   columns,
   source,
@@ -74,18 +77,21 @@ export const TableCollection = <
   onLoadData,
   onLoadError,
 }: CollectionProps<
-  Record,
+  R,
   Filters,
   Sortings,
   ItemActions,
   NavigationFilters,
   Grouping,
-  TableVisualizationOptions<Record, Filters, Sortings>
+  TableVisualizationOptions<R, Filters, Sortings>
 >) => {
   const t = useI18n()
+  const MotionRow = motion.create(
+    Row<R, Filters, Sortings, ItemActions, NavigationFilters, Grouping>
+  )
 
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
-    Record,
+    R,
     Filters,
     Sortings,
     NavigationFilters,
@@ -164,6 +170,16 @@ export const TableCollection = <
     })
   }
 
+  /*
+   * Groups
+   */
+  const { openGroups, setGroupOpen } = useGroups(
+    data?.type === "grouped" ? data.groups : []
+  )
+
+  /*
+   * Initial loading
+   */
   if (isInitialLoading) {
     return (
       <OneTable.Skeleton
@@ -269,43 +285,41 @@ export const TableCollection = <
                         &nbsp;
                       </TableCell>
                     )}
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Await
-                          resolve={group.label}
-                          fallback={<Skeleton className="h-4 w-24" />}
-                        >
-                          {(label) => label}
-                        </Await>
-
-                        <Await
-                          resolve={itemCount}
-                          fallback={<Skeleton className="h-4 w-5" />}
-                        >
-                          {(count) =>
-                            count !== undefined && <Counter value={count} />
-                          }
-                        </Await>
-                      </div>
+                    <TableCell colSpan={columns.length}>
+                      <GroupHeader
+                        label={group.label}
+                        itemCount={itemCount}
+                        open={openGroups[group.key]}
+                        onOpenChange={(open) => setGroupOpen(group.key, open)}
+                      />
                     </TableCell>
                   </TableRow>
-                  {group.records.map((item, index) => {
-                    return (
-                      <Row
-                        key={`row-${index}`}
-                        source={source}
-                        item={item}
-                        index={index}
-                        onCheckedChange={(checked) =>
-                          handleSelectItemChange(item, checked)
-                        }
-                        selectedItems={selectedItems}
-                        columns={columns}
-                        frozenColumnsLeft={frozenColumnsLeft}
-                        checkColumnWidth={checkColumnWidth}
-                      />
-                    )
-                  })}
+                  <AnimatePresence>
+                    {openGroups[group.key] &&
+                      group.records.map((item, index) => {
+                        return (
+                          <MotionRow
+                            variants={getAnimationVariants()}
+                            initial="hidden"
+                            animate="visible"
+                            exit="hidden"
+                            custom={index}
+                            key={`row-${index}`}
+                            layout
+                            source={source}
+                            item={item}
+                            index={index}
+                            onCheckedChange={(checked) =>
+                              handleSelectItemChange(item, checked)
+                            }
+                            selectedItems={selectedItems}
+                            columns={columns}
+                            frozenColumnsLeft={frozenColumnsLeft}
+                            checkColumnWidth={checkColumnWidth}
+                          />
+                        )
+                      })}
+                  </AnimatePresence>
                 </>
               )
             })}

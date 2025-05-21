@@ -4,6 +4,7 @@ type AwaitProps<T> = {
   resolve: Promise<T> | T
   fallback: ReactNode
   error?: ReactNode
+  className?: string
   children: (value: T) => ReactNode
 }
 
