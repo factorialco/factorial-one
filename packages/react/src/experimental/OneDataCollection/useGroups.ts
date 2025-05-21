@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { RecordType } from "./types"
+import { GroupRecord } from "./useData"
 
-export const useGroups = (groups: Group[]) => {
+export const useGroups = <R extends RecordType>(groups: GroupRecord<R>[]) => {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(
     groups.reduce(
       (acc, group) => {
@@ -25,8 +27,8 @@ type AnimationVariantsOptions = {
 }
 
 const DEFAULT_ANIMATION_OPTIONS: Required<AnimationVariantsOptions> = {
-  delay: 0.1,
-  duration: 0.5,
+  delay: 0.03,
+  duration: 0.03,
   maxDelay: 20,
 }
 export const getAnimationVariants = (options?: AnimationVariantsOptions) => {
