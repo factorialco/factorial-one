@@ -5,10 +5,11 @@ import { cn, focusRing } from "../lib/utils"
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   icon?: IconType
   clearable?: boolean
+  error?: boolean
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, icon, clearable, ...props }, ref) => {
+  ({ className, type, icon, clearable, error, ...props }, ref) => {
     return (
       <div
         className={cn(
@@ -17,6 +18,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           icon ? "flex gap-1 py-1.5 ps-2" : "ps-3",
           props.disabled &&
             "cursor-not-allowed bg-f1-background-secondary opacity-50",
+          error && "ring-f1-border-critical-bold",
           className
         )}
       >

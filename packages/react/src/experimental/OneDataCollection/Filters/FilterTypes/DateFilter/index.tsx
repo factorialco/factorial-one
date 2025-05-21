@@ -1,4 +1,4 @@
-import { getGranularityDefinition } from "@/experimental/OneCalendar/OneCalendar"
+import { getGranularitySimpleDefinition } from "@/experimental/OneCalendar"
 import { DateRange } from "@/experimental/OneCalendar/types"
 import { type BaseFilterDefinition } from "../filters"
 import { FilterTypeContext, FilterTypeDefinition } from "../types"
@@ -39,7 +39,7 @@ export const dateFilter: FilterTypeDefinition<
   chipLabel: (value, context) => {
     const options = getOptionsWithDefaults(context.schema.options, defaults)
 
-    const granularity = getGranularityDefinition(options.view)
+    const granularity = getGranularitySimpleDefinition(options.view)
 
     return granularity.toString(value)
   },

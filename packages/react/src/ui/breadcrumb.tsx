@@ -1,12 +1,7 @@
 import { Slot } from "@radix-ui/react-slot"
-import {
-  AnimatePresence,
-  HTMLMotionProps,
-  LayoutGroup,
-  motion,
-} from "framer-motion"
+import { AnimatePresence, LayoutGroup } from "framer-motion"
 import { ChevronRight, MoreHorizontal } from "lucide-react"
-import { forwardRef, useId } from "react"
+import { ComponentProps, forwardRef, useId } from "react"
 
 import { Link } from "../lib/linkHandler"
 import { cn } from "../lib/utils"
@@ -43,18 +38,11 @@ const BreadcrumbList = forwardRef<
 
 BreadcrumbList.displayName = "BreadcrumbList"
 
-const BreadcrumbItem = forwardRef<HTMLLIElement, HTMLMotionProps<"li">>(
-  ({ className, ...props }, ref) => (
-    <motion.li
-      ref={ref}
-      className={cn("inline-flex items-center gap-0.5 pr-1", className)}
-      initial={{ opacity: 0, translateX: -8 }}
-      animate={{ opacity: 1, translateX: 0 }}
-      exit={{ opacity: 0, translateX: -8 }}
-      transition={{ duration: 0.15 }}
-      {...props}
-    />
-  )
+const BreadcrumbItem = ({ className, ...props }: ComponentProps<"li">) => (
+  <li
+    className={cn("inline-flex items-center gap-0.5 pr-1", className)}
+    {...props}
+  />
 )
 BreadcrumbItem.displayName = "BreadcrumbItem"
 

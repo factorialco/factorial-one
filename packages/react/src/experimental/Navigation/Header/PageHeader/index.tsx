@@ -10,9 +10,10 @@ import { Link } from "@/lib/linkHandler"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import { AnimatePresence, motion } from "framer-motion"
-import { ReactElement } from "react"
+import { ReactElement, useRef } from "react"
 
-import Breadcrumbs, { type BreadcrumbItemType } from "../Breadcrumbs"
+import { Breadcrumbs, BreadcrumbsProps } from "../Breadcrumbs"
+import { FavoriteButton } from "../Favorites"
 import { ProductUpdates, ProductUpdatesProp } from "../ProductUpdates"
 
 export type PageAction = {
@@ -56,10 +57,15 @@ type HeaderProps = {
   actions?: PageAction[]
   navigation?: NavigationProps
   embedded?: boolean
-  breadcrumbs?: BreadcrumbItemType[]
+  breadcrumbs?: BreadcrumbsProps["breadcrumbs"]
   productUpdates?: {
     isVisible?: boolean
   } & ProductUpdatesProp
+  favorites?: {
+    isMarked: boolean
+    onChange: (newValue: boolean) => void
+    label: string
+  }
 }
 
 function PageNavigationLink({
@@ -73,8 +79,15 @@ function PageNavigationLink({
   label: string
   disabled?: boolean
 }) {
+  const ref = useRef<HTMLAnchorElement>(null)
   return (
-    <Link href={href} title={label} aria-label={label} disabled={disabled}>
+    <Link
+      href={href}
+      title={label}
+      aria-label={label}
+      disabled={disabled}
+      ref={ref}
+    >
       <Button
         size="sm"
         variant="outline"
@@ -83,6 +96,10 @@ function PageNavigationLink({
         icon={icon}
         hideLabel
         disabled={disabled}
+        onClick={(e) => {
+          e.preventDefault()
+          ref.current?.click()
+        }}
       />
     </Link>
   )
@@ -96,6 +113,7 @@ export function PageHeader({
   embedded = false,
   navigation,
   productUpdates,
+  favorites,
 }: HeaderProps) {
   const { sidebarState, toggleSidebar } = useSidebar()
 
@@ -166,6 +184,7 @@ export function PageHeader({
                     round
                     label="Back"
                     icon={ChevronLeft}
+                    onClick={(e) => e.preventDefault()}
                   />
                 </Link>
               </div>
@@ -182,6 +201,15 @@ export function PageHeader({
             <Breadcrumbs
               key={breadcrumbsTree[0].id}
               breadcrumbs={breadcrumbsTree}
+              append={
+                favorites !== undefined && (
+                  <FavoriteButton
+                    label={favorites.label}
+                    isMarked={favorites.isMarked}
+                    onChange={favorites?.onChange}
+                  />
+                )
+              }
             />
           )}
         </div>
@@ -253,6 +281,8 @@ export function PageHeader({
 }
 
 function PageAction({ action }: { action: PageAction }): ReactElement {
+  const ref = useRef<HTMLAnchorElement>(null)
+
   if ("actions" in action) {
     return (
       <Dropdown items={action.actions}>
@@ -268,13 +298,22 @@ function PageAction({ action }: { action: PageAction }): ReactElement {
   }
 
   return (
-    <Link href={action.href} title={action.label} aria-label={action.label}>
+    <Link
+      href={action.href}
+      title={action.label}
+      aria-label={action.label}
+      ref={ref}
+    >
       <Button
         size="md"
         variant="outline"
         label={action.label}
         icon={action.icon}
         hideLabel
+        onClick={(e) => {
+          e.preventDefault()
+          ref.current?.click()
+        }}
       />
     </Link>
   )

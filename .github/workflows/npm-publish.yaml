@@ -45,6 +45,37 @@ jobs:
             curl -X POST -H "Content-Type: application/json" -d '{ "content": "⚛️ A new version of @factorialco/factorial-one-react was released.\n
             \n\n ${{github.event.release.body}}\n\nhttps://www.npmjs.com/package/@factorialco/factorial-one-react?activeTab=versions"}' ${{ secrets.SLACK_WEBHOOK_URL }}
           fi
+      - name: Notify Slack Test
+        run: |
+          if [ ${{ steps.publish.outputs.published }} == "true" ]; then
+            curl -X POST -H "Content-Type: application/json" -d '{
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*⚛️ A new version of <https://www.npmjs.com/package/@factorialco/factorial-one-react?activeTab=versions|@factorialco/factorial-one-react> was released*"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{github.event.release.body}}"
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*Version:*\n<${{github.event.release.url}}|${{github.event.release.name}}> "
+                    }
+                  ]
+                }
+              ]
+          }' ${{ secrets.SLACK_WEBHOOK_URL_TEST }}
+          fi
 
   publish-react-native:
     name: "[📱 REACT NATIVE] Publish to npm"

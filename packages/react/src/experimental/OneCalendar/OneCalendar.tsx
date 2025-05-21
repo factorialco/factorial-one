@@ -1,11 +1,17 @@
 import { ChevronLeft, ChevronRight } from "@/icons/app"
 import { Input } from "@/ui/input"
 
-import { ReactNode, useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { Button } from "../../components/Actions/Button"
 import { useI18n } from "../../lib/providers/i18n"
-import { granularityDefinitions } from "./granularities"
-import { CalendarMode, CalendarView, DateRange } from "./types"
+import {
+  GranularityDefinition,
+  GranularityDefinitionKey,
+  granularityDefinitions,
+  GranularityDefinitionSimple,
+} from "./granularities/index"
+import { CalendarMode, CalendarView, DateRange, DateRangeString } from "./types"
+import { isValidDate, toDateRange } from "./utils"
 
 export interface OneCalendarProps {
   mode: CalendarMode
@@ -15,39 +21,33 @@ export interface OneCalendarProps {
   defaultSelected?: Date | DateRange | null
   showNavigation?: boolean
   showInput?: boolean
+  minDate?: Date
+  maxDate?: Date
 }
 
-export interface GranularityDefinition {
-  label: (viewDate: Date) => ReactNode
-  toString: (date: Date | DateRange | undefined | null) => string
-  navigate: (viewDate: Date, direction: -1 | 1) => Date
-  render: (renderProps: {
-    mode: CalendarMode
-    selected: Date | DateRange | null
-    onSelect: (date: Date | DateRange | null) => void
-    month: Date
-    onMonthChange: (date: Date) => void
-    motionDirection: number
-    setViewDate: (date: Date) => void
-    viewDate: Date
-  }) => ReactNode
-}
-
-export type GranularityDefinitionSimple = Pick<
-  GranularityDefinition,
-  "toString"
->
-
-export const getGranularityDefinition = (
-  view: CalendarView
+export const getGranularitySimpleDefinition = (
+  granularityKey: GranularityDefinitionKey
 ): GranularityDefinitionSimple => {
-  const granularity = granularityDefinitions[view]
+  const granularity = granularityDefinitions[granularityKey]
   if (!granularity) {
-    throw new Error(`Granularity definition for view ${view} not found`)
+    throw new Error(
+      `Granularity simple definition for view ${granularityKey} not found`
+    )
   }
   return {
+    toRangeString: granularity.toRangeString,
     toString: granularity.toString,
   }
+}
+
+export const getGranularityDefinition = (
+  granularityKey: GranularityDefinitionKey
+): GranularityDefinition => {
+  const granularity = granularityDefinitions[granularityKey]
+  if (!granularity) {
+    throw new Error(`Granularity definition ${granularityKey} not found`)
+  }
+  return granularity
 }
 
 export function OneCalendar({
@@ -58,26 +58,51 @@ export function OneCalendar({
   defaultSelected = null,
   showNavigation = true,
   showInput = false,
+  minDate,
+  maxDate,
 }: OneCalendarProps) {
   const i18n = useI18n()
 
   const [viewDate, setViewDate] = useState<Date>(defaultMonth)
 
-  const [selected, setSelected] = useState<Date | DateRange | null>(
+  const [selected, setSelectedInternal] = useState<Date | DateRange | null>(
     defaultSelected
+  )
+
+  const [motionDirection, setMotionDirection] = useState(1)
+
+  const granularity = useMemo(() => granularityDefinitions[view], [view])
+
+  const setSelected = useCallback(
+    (date: Date | DateRange | null) => {
+      setSelectedInternal(date)
+
+      // Set the input value
+      setInputValue(granularity.toRangeString(date))
+
+      const newViewDate = granularity.getViewDateFromDate(
+        date instanceof Date ? date : date?.from || date?.to || new Date()
+      )
+
+      if (newViewDate !== granularity.getViewDateFromDate(viewDate)) {
+        setViewDate(newViewDate)
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only needs to be rebuilt when the granularity changes
+    [granularity]
   )
 
   useEffect(() => {
     setSelected(defaultSelected)
   }, [defaultSelected, setSelected])
 
-  const [motionDirection, setMotionDirection] = useState(1)
+  useEffect(() => {
+    // setSelected(defaultSelected)
+  }, [defaultSelected, setSelected])
 
-  const granularity = granularityDefinitions[view]
-
-  // Handle navigation
+  // Handle ui view navigation
   const navigate = (direction: -1 | 1) => {
-    const newDate = granularity.navigate(viewDate, direction)
+    const newDate = granularity.navigateUIView(viewDate, direction)
     setMotionDirection(direction)
     setViewDate(newDate)
   }
@@ -89,20 +114,116 @@ export function OneCalendar({
   const handleSelect = (date: Date | DateRange | null) => {
     if (!date) return
 
+    date = granularity.toRange(date)
+
     setSelected(date)
     onSelect?.(date)
   }
 
-  const dateString = useMemo(() => {
-    if (!selected) return ""
-    return granularity.toString(selected)
-  }, [selected, granularity])
+  const [inputValue, setInputValue] = useState<DateRangeString>({
+    from: "",
+    to: "",
+  })
+
+  const [inputError, setInputError] = useState<{
+    from: boolean
+    to: boolean
+  }>({
+    from: false,
+    to: false,
+  })
+
+  const handleInputChange = (input: "from" | "to") => {
+    setSelectFromInput(input, inputValue)
+  }
+
+  const setSelectFromInput = (
+    input: "from" | "to",
+    inputValue: DateRangeString
+  ) => {
+    const newDate = granularity.fromString(inputValue)
+    const error = newDate && newDate[input] && !isValidDate(newDate[input])
+    setInputError((prev) => ({
+      ...prev,
+      [input]: error,
+    }))
+
+    if (!error) {
+      setSelected(newDate)
+    }
+  }
+  useEffect(() => {
+    const range = toDateRange(selected)
+
+    const { from, to } = granularity.toRangeString(
+      range ? range : { from: new Date(), to: undefined }
+    )
+    setInputValue({
+      from: from || "",
+      to: to || "",
+    })
+  }, [granularity, selected])
+
+  const handleInputNavigate = (input: "from" | "to", direction: -1 | 1) => {
+    const currentDate = inputValue[input]
+      ? granularity.fromString(inputValue[input])
+      : undefined
+    const newDate = currentDate
+      ? granularity.navigate(currentDate.from, direction)
+      : undefined
+
+    if (isValidDate(newDate)) {
+      const newInputValue = {
+        ...inputValue,
+        [input]: granularity.toRangeString(newDate).from,
+      }
+      setInputValue(newInputValue)
+      setSelectFromInput(input, newInputValue)
+    }
+  }
 
   return (
     <div className="flex flex-col">
       {showInput && (
-        <div className="mb-2">
-          <Input value={dateString} disabled />
+        <div className="mb-2 flex gap-2">
+          <Input
+            error={!!inputError.from}
+            value={inputValue.from}
+            placeholder={mode === "range" ? i18n.date.from : i18n.date.date}
+            onBlur={() => handleInputChange("from")}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleInputChange("from")
+              }
+              if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                e.preventDefault()
+                handleInputNavigate("from", e.key === "ArrowDown" ? -1 : 1)
+              }
+            }}
+            onChange={(e) =>
+              setInputValue({ ...inputValue, from: e.target.value })
+            }
+          />
+          {mode === "range" && (
+            <Input
+              error={!!inputError.to}
+              value={inputValue.to}
+              placeholder={i18n.date.to}
+              onBlur={() => handleInputChange("to")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleInputChange("to")
+                }
+                if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+                  e.preventDefault()
+                  handleInputNavigate("to", e.key === "ArrowDown" ? -1 : 1)
+                }
+              }}
+              onChange={(e) =>
+                setInputValue({ ...inputValue, to: e.target.value })
+              }
+            />
+          )}
         </div>
       )}
       {showNavigation && (
@@ -142,6 +263,8 @@ export function OneCalendar({
           motionDirection,
           setViewDate,
           viewDate,
+          minDate,
+          maxDate,
         })}
       </div>
     </div>

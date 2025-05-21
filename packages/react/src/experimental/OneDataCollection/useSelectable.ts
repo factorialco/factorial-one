@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "./Filters/types"
+import { ItemActionsDefinition } from "./item-actions"
+import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import type { SortingsDefinition } from "./sortings"
 import {
   DataSource,
@@ -20,10 +22,12 @@ export function useSelectable<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
 >(
   data: ReadonlyArray<Record>,
   paginationInfo: PaginationInfo | null,
-  source: DataSource<Record, Filters, Sortings>,
+  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>,
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
 ): UseSelectable<Record> {
   // itemsState is the state of the selected items
@@ -88,10 +92,11 @@ export function useSelectable<
     (paginationInfo && selectedCount === paginationInfo.total) ||
     (!paginationInfo && selectedCount === data.length)
 
-  const isPartiallySelected = selectedCount > 0 && unselectedCount > 0
-
   const isAllSelected =
     (allSelectedCheck || areAllKnownItemsSelected) && selectedCount > 0
+
+  const isPartiallySelected =
+    selectedCount > 0 || (isAllSelected && unselectedCount > 0)
 
   // If the filters change, we need to reset the selected items
   useEffect(() => {

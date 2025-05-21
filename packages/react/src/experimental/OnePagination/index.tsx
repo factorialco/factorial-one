@@ -147,11 +147,12 @@ export function OnePagination({
             <PaginationPrevious
               aria-disabled={currentPage === 1 || disabled}
               tabIndex={currentPage === 1 ? -1 : 0}
-              className={
+              className={cn(
+                !isIndeterminate && "mr-1",
                 currentPage === 1 || disabled
                   ? "pointer-events-none opacity-50"
                   : ""
-              }
+              )}
               onClick={() => handlePageChange(currentPage - 1)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -209,13 +210,14 @@ export function OnePagination({
                     ? -1
                     : 0
               }
-              className={
+              className={cn(
+                !isIndeterminate && "ml-1",
                 (!isIndeterminate && currentPage === totalPages) ||
-                (!hasNextPage && isIndeterminate) ||
-                disabled
+                  (!hasNextPage && isIndeterminate) ||
+                  disabled
                   ? "pointer-events-none opacity-50"
                   : ""
-              }
+              )}
               onClick={() => handlePageChange(currentPage + 1)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {

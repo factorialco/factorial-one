@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { expect, userEvent, waitFor, within } from "@storybook/test"
 import { useState } from "react"
 import { Documents, Recruitment } from "../../../../icons/modules"
 import { Button } from "../../../../ui/button"
-import Breadcrumbs, { BreadcrumbItemType } from "./index"
+import { Breadcrumbs, BreadcrumbsProps } from "./index"
 
 const meta: Meta<typeof Breadcrumbs> = {
   title: "Navigation/Breadcrumbs",
@@ -143,11 +142,9 @@ export const LongBreadcrumbs: Story = {
   },
 }
 
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
 export const Interactive: Story = {
   render: () => {
-    const recruitmentBreadcrumbs: BreadcrumbItemType[] = [
+    const recruitmentBreadcrumbs: BreadcrumbsProps["breadcrumbs"] = [
       {
         id: "recruitment",
         label: "Recruitment",
@@ -171,7 +168,7 @@ export const Interactive: Story = {
       },
     ]
 
-    const documentsBreadcrumbs: BreadcrumbItemType[] = [
+    const documentsBreadcrumbs: BreadcrumbsProps["breadcrumbs"] = [
       {
         id: "documents",
         label: "Documents",
@@ -198,9 +195,9 @@ export const Interactive: Story = {
     const [currentSection, setCurrentSection] = useState<
       "recruitment" | "documents"
     >("recruitment")
-    const [breadcrumbs, setBreadcrumbs] = useState<BreadcrumbItemType[]>(
-      recruitmentBreadcrumbs
-    )
+    const [breadcrumbs, setBreadcrumbs] = useState<
+      BreadcrumbsProps["breadcrumbs"]
+    >(recruitmentBreadcrumbs)
 
     const handleAdd = () => {
       const sourceBreadcrumbs =
@@ -261,70 +258,5 @@ export const Interactive: Story = {
         </div>
       </div>
     )
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-
-    // Initial state - full Recruitment breadcrumbs
-    await waitFor(() => {
-      expect(canvas.getByText("Recruitment")).toBeInTheDocument()
-      expect(canvas.getByText("Candidates")).toBeInTheDocument()
-      expect(canvas.getByText("Dani Moreno")).toBeInTheDocument()
-      expect(canvas.getByText("Applications")).toBeInTheDocument()
-    })
-
-    // Remove some items
-    const removeButton = canvas.getByText("Remove Breadcrumb")
-    await userEvent.click(removeButton)
-    await waitFor(() => {
-      expect(canvas.queryByText("Applications")).not.toBeInTheDocument()
-    })
-    await sleep(500)
-
-    await userEvent.click(removeButton)
-    await waitFor(() => {
-      expect(canvas.queryByText("Dani Moreno")).not.toBeInTheDocument()
-    })
-    await sleep(500)
-
-    // Add items back
-    const addButton = canvas.getByText("Add Breadcrumb")
-    await userEvent.click(addButton)
-    await waitFor(() => {
-      expect(canvas.getByText("Dani Moreno")).toBeInTheDocument()
-    })
-    await sleep(500)
-
-    // Switch to Documents section
-    const switchButton = canvas.getByText("Switch Section")
-    await userEvent.click(switchButton)
-
-    // Verify full Documents section loaded
-    await waitFor(() => {
-      expect(canvas.getByText("Documents")).toBeInTheDocument()
-      expect(canvas.getByText("Employee Documents")).toBeInTheDocument()
-      expect(canvas.getByText("Contracts")).toBeInTheDocument()
-      expect(canvas.getByText("Templates")).toBeInTheDocument()
-    })
-    await sleep(500)
-
-    // Remove some items from Documents
-    await userEvent.click(removeButton)
-    await userEvent.click(removeButton)
-    await waitFor(() => {
-      expect(canvas.queryByText("Templates")).not.toBeInTheDocument()
-      expect(canvas.queryByText("Contracts")).not.toBeInTheDocument()
-    })
-    await sleep(500)
-
-    // Switch back to Recruitment
-    await userEvent.click(switchButton)
-    await waitFor(() => {
-      // Should show full Recruitment breadcrumbs again
-      expect(canvas.getByText("Recruitment")).toBeInTheDocument()
-      expect(canvas.getByText("Candidates")).toBeInTheDocument()
-      expect(canvas.getByText("Dani Moreno")).toBeInTheDocument()
-      expect(canvas.getByText("Applications")).toBeInTheDocument()
-    })
   },
 }

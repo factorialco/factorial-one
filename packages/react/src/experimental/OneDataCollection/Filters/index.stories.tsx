@@ -60,6 +60,21 @@ const sampleDefinition: FiltersDefinition = {
       view: "week",
     },
   },
+  dateMonth: {
+    type: "date",
+    label: "Date Month",
+    options: {
+      view: "month",
+    },
+  },
+  dateMonthRange: {
+    type: "date",
+    label: "Date Month Range",
+    options: {
+      view: "month",
+      mode: "range",
+    },
+  },
   dateQuarter: {
     type: "date",
     label: "Date Quarter",

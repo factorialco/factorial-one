@@ -1,15 +1,23 @@
 import { useLayout } from "@/components/layouts/LayoutProvider"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { useEffect, useMemo, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
+
+import { Skeleton } from "@/ui/skeleton"
 import { OneActionBar } from "../OneActionBar"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
 import * as Filters from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
 import { ItemActionsDefinition } from "./item-actions"
+import { navigationFilterTypes } from "./navigationFilters"
+import {
+  NavigationFiltersDefinition,
+  NavigationFiltersState,
+} from "./navigationFilters/types"
 import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
@@ -63,20 +71,54 @@ export const useDataSource = <
   FiltersSchema extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
 >(
   {
     currentFilters: initialCurrentFilters = {},
     filters,
+    navigationFilters,
     search,
     defaultSorting,
     dataAdapter,
     ...rest
-  }: DataSourceDefinition<Record, FiltersSchema, Sortings, ItemActions>,
+  }: DataSourceDefinition<
+    Record,
+    FiltersSchema,
+    Sortings,
+    ItemActions,
+    NavigationFilters
+  >,
   deps: ReadonlyArray<unknown> = []
-): DataSource<Record, FiltersSchema, Sortings, ItemActions> => {
+): DataSource<
+  Record,
+  FiltersSchema,
+  Sortings,
+  ItemActions,
+  NavigationFilters
+> => {
   const [currentFilters, setCurrentFilters] = useState<
     FiltersState<FiltersSchema>
   >(initialCurrentFilters)
+
+  const [currentNavigationFilters, setCurrentNavigationFilters] = useState<
+    NavigationFiltersState<NavigationFilters>
+  >(() => {
+    if (!navigationFilters) {
+      return {} as NavigationFiltersState<NavigationFilters>
+    }
+
+    return Object.fromEntries(
+      Object.entries(navigationFilters).map(([key, filter]) => {
+        const filterType = navigationFilterTypes[filter.type]
+        return [
+          key,
+          filterType.valueConverter
+            ? filterType.valueConverter(filter.defaultValue, filter)
+            : filter.defaultValue,
+        ]
+      })
+    ) as NavigationFiltersState<NavigationFilters>
+  })
 
   const [currentSortings, setCurrentSortings] =
     useState<SortingsState<Sortings> | null>(defaultSorting || null)
@@ -119,6 +161,9 @@ export const useDataSource = <
     isLoading,
     setIsLoading,
     dataAdapter: memoizedDataAdapter,
+    navigationFilters,
+    currentNavigationFilters,
+    setCurrentNavigationFilters,
     ...rest,
   }
 }
@@ -152,28 +197,44 @@ export const OneDataCollection = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
 >({
   source,
   visualizations,
   onSelectItems,
   onBulkAction,
 }: {
-  source: DataSource<Record, Filters, Sortings, ItemActions>
-  visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings>>
+  source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
+  visualizations: ReadonlyArray<
+    Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>
+  >
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
   onBulkAction?: OnBulkActionCallback<Record, Filters>
 }): JSX.Element => {
   const {
+    // Filters
     filters,
     currentFilters,
     setCurrentFilters,
+    presets,
+    // Navigation filter
+    currentNavigationFilters,
+    navigationFilters,
+    setCurrentNavigationFilters,
+    // Search
     search,
     currentSearch,
     setCurrentSearch,
+    //
     isLoading,
+    // Actions
     primaryActions,
     secondaryActions,
-    presets,
+    // Summary
+    totalItemSummary = (totalItems: number | undefined) =>
+      totalItems === undefined
+        ? `${totalItems} ${i18n.collections.itemsCount}`
+        : null,
   } = source
   const [currentVisualization, setCurrentVisualization] = useState(0)
 
@@ -207,6 +268,8 @@ export const OneDataCollection = <
   const [showActionBar, setShowActionBar] = useState(false)
 
   const [selectedItemsCount, setSelectedItemsCount] = useState(0)
+
+  const i18n = useI18n()
 
   const onSelectItemsLocal: OnSelectItemsCallback<Record, Filters> = (
     selectedItems,
@@ -255,84 +318,117 @@ export const OneDataCollection = <
     })
   }
 
+  const elementsRightActions = useMemo(() => {
+    return [
+      isLoading,
+      search?.enabled,
+      visualizations && visualizations.length > 1,
+    ].some(Boolean)
+  }, [search, isLoading, visualizations])
+
+  const [totalItems, setTotalItems] = useState<undefined | number>(undefined)
+
   return (
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
     >
-      {((filters && Object.keys(filters).length > 0) ||
-        search?.enabled ||
-        primaryActionItem ||
-        (secondaryActionsItems && secondaryActionsItems.length > 0)) && (
-        <div className="flex flex-col gap-4 px-6">
-          <Filters.Root
-            schema={filters}
-            filters={currentFilters}
-            presets={presets}
-            onChange={(value) =>
-              setCurrentFilters(value as FiltersState<Filters>)
-            }
+      <div className={cn("border-f1-border-primary mb-3 flex gap-4 px-6")}>
+        <div className="flex flex-1 flex-shrink gap-4">
+          {isLoading && <Skeleton className="h-5 w-24" />}
+          {!isLoading && totalItems && totalItemSummary(totalItems)}
+        </div>
+        <div className="flex flex-1 flex-shrink justify-end">
+          {navigationFilters &&
+            Object.entries(navigationFilters).map(([key, filter]) => {
+              const filterDef = navigationFilterTypes[filter.type]
+              return filterDef.render({
+                filter: filter,
+                value: currentNavigationFilters[key]!,
+                onChange: (value) => {
+                  setCurrentNavigationFilters({
+                    ...currentNavigationFilters,
+                    [key]: value,
+                  })
+                },
+              })
+            })}
+        </div>
+      </div>
+      <div className={cn("flex flex-col gap-4 px-6")}>
+        <Filters.Root
+          schema={filters}
+          filters={currentFilters}
+          presets={presets}
+          onChange={(value) =>
+            setCurrentFilters(value as FiltersState<Filters>)
+          }
+        >
+          <div
+            className={cn(
+              "flex items-center justify-between",
+              !filters && "justify-end"
+            )}
           >
-            <div
-              className={cn(
-                "flex items-center justify-between",
-                !filters && "justify-end"
+            {filters && (
+              <div className="flex flex-1 gap-1">
+                <Filters.Controls />
+                <Filters.Presets />
+              </div>
+            )}
+            <div className="flex shrink-0 items-center gap-2">
+              {isLoading && (
+                <MotionIcon
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{
+                    opacity: 0,
+                  }}
+                  size="lg"
+                  icon={Spinner}
+                  className="animate-spin"
+                />
               )}
-            >
-              {filters && (
-                <div className="flex flex-1 gap-1">
-                  <Filters.Controls />
-                  <Filters.Presets />
-                </div>
+              {search && (
+                <Search onChange={setCurrentSearch} value={currentSearch} />
               )}
-              <div className="flex shrink-0 items-center gap-2">
-                {isLoading && (
-                  <MotionIcon
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{
-                      opacity: 0,
-                    }}
-                    size="lg"
-                    icon={Spinner}
-                    className="animate-spin"
-                  />
-                )}
-                {search && (
-                  <Search onChange={setCurrentSearch} value={currentSearch} />
-                )}
-                {visualizations && visualizations.length > 1 && (
-                  <VisualizationSelector
-                    visualizations={visualizations}
-                    currentVisualization={currentVisualization}
-                    onVisualizationChange={setCurrentVisualization}
-                  />
-                )}
-                {(primaryActionItem || secondaryActionsItems) && (
+              {visualizations && visualizations.length > 1 && (
+                <VisualizationSelector
+                  visualizations={visualizations}
+                  currentVisualization={currentVisualization}
+                  onVisualizationChange={setCurrentVisualization}
+                />
+              )}
+              {(primaryActionItem || secondaryActionsItems) && (
+                <>
+                  {elementsRightActions && (
+                    <div className="mx-1 h-4 w-px bg-f1-background-secondary-hover" />
+                  )}
                   <CollectionActions
                     primaryActions={primaryActionItem}
                     secondaryActions={secondaryActionsItems}
                   />
-                )}
-              </div>
+                </>
+              )}
             </div>
-            <Filters.ChipsList />
-          </Filters.Root>
-        </div>
-      )}
-      <VisualizationRenderer
-        visualization={visualizations[currentVisualization]}
-        source={source}
-        onSelectItems={onSelectItemsLocal}
-      />
-      {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
-        <OneActionBar
-          isOpen={showActionBar}
-          selectedNumber={selectedItemsCount}
-          primaryActions={bulkActions.primary}
-          secondaryActions={bulkActions?.secondary}
-          onUnselect={() => clearSelectedItemsFunc?.()}
+          </div>
+          <Filters.ChipsList />
+        </Filters.Root>
+        <VisualizationRenderer
+          visualization={visualizations[currentVisualization]}
+          source={source}
+          onSelectItems={onSelectItemsLocal}
+          onTotalItemsChange={setTotalItems}
         />
-      )}
+        {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
+          <OneActionBar
+            isOpen={showActionBar}
+            selectedNumber={selectedItemsCount}
+            primaryActions={bulkActions.primary}
+            secondaryActions={bulkActions?.secondary}
+            onUnselect={() => clearSelectedItemsFunc?.()}
+          />
+        )}
+      </div>
     </div>
   )
 }

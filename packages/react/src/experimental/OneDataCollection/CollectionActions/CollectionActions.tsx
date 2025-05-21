@@ -19,6 +19,8 @@ export const CollectionActions = ({
 
   if (buttonActions.length === 0 && dropdownActions.length === 0) return null
 
+  const align = buttonActions.length > 0 ? "start" : "end"
+
   return (
     <div className="flex flex-row-reverse items-center gap-2">
       {buttonActions.map((action) => (
@@ -33,12 +35,10 @@ export const CollectionActions = ({
       ))}
 
       {dropdownActions.length > 0 && (
-        <Dropdown items={dropdownActions}>
+        <Dropdown items={dropdownActions} align={align}>
           <Button variant="outline" icon={Ellipsis} label="Actions" hideLabel />
         </Dropdown>
       )}
-
-      <div className="mx-1 h-4 w-px bg-f1-border-secondary" />
     </div>
   )
 }

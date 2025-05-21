@@ -1,5 +1,6 @@
 export { default as Benefits } from "./Benefits";
 export { default as Calendar } from "./Calendar";
+export { default as Cards } from "./Cards";
 export { default as ClockIn } from "./ClockIn";
 export { default as Discover } from "./Discover";
 export { default as Documents } from "./Documents";
@@ -20,6 +21,7 @@ export { default as Recruitment } from "./Recruitment";
 export { default as Reports } from "./Reports";
 export { default as Settings } from "./Settings";
 export { default as Shifts } from "./Shifts";
+export { default as Social } from "./Social";
 export { default as Software } from "./Software";
 export { default as Spaces } from "./Spaces";
 export { default as Spending } from "./Spending";

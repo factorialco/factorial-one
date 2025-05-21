@@ -1,4 +1,5 @@
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { OnePagination } from "@/experimental/OnePagination"
 import {
   OneTable,
@@ -10,7 +11,7 @@ import {
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { ComponentProps, useMemo } from "react"
+import { ComponentProps, useEffect, useMemo } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { ActionsDropdown } from "../../../ItemActions/Dropdown"
@@ -61,16 +62,19 @@ export const TableCollection = <
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
 >({
   columns,
   source,
   frozenColumns = 0,
   onSelectItems,
+  onTotalItemsChange,
 }: CollectionProps<
   Record,
   Filters,
   Sortings,
   ItemActions,
+  NavigationFilters,
   TableVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
@@ -78,8 +82,13 @@ export const TableCollection = <
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
     Record,
     Filters,
-    Sortings
+    Sortings,
+    NavigationFilters
   >(source)
+
+  useEffect(() => {
+    onTotalItemsChange?.(paginationInfo?.total || data.length)
+  }, [paginationInfo?.total, onTotalItemsChange, data])
 
   const { currentSortings, setCurrentSortings, isLoading } = source
 
@@ -179,7 +188,7 @@ export const TableCollection = <
                 align="right"
               >
                 <Checkbox
-                  checked={isAllSelected}
+                  checked={isAllSelected || isPartiallySelected}
                   indeterminate={isPartiallySelected}
                   onCheckedChange={handleSelectAll}
                   title="Select all"

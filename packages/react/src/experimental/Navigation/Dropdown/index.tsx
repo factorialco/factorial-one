@@ -18,7 +18,7 @@ import {
   DropdownItemObject,
 } from "./internal"
 
-const privateProps = ["align"] as const
+const privateProps = [] as const
 
 type DropdownProps = Omit<
   DropdownInternalProps,

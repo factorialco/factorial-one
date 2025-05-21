@@ -12,5 +12,6 @@ module.exports = {
     "#FF355E": "currentColor",
     "#515164": "currentColor",
     "#647084": "currentColor",
+    "#0D1625": "currentColor",
   },
 }

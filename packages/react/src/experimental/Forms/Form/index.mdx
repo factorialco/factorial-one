@@ -17,19 +17,23 @@ a form. We did a simplication of this process with the hook `useFormSchema`. But
 a more complete example can be:
 
 ```javascript
-const form = useForm<SchemaType>({
+const form = useFormSchema(
+  schema,
+  {
     defaultValues: {
-      companyId: getCurrentCompanyId(),
-      reporterId: useCurrentEmployeeId()
+      username: "",
+      fullName: "",
+      email: "",
+      acceptedTerms: false,
     },
-    context: formContext,
-    resolver: async (values, context, options) => {
-      const createResolver = zodResolver(
-       mySchema
-      )
+  },
+  async (data) => {
+    await sleep(2000)
+    alert(`Form has been submitted: ${JSON.stringify(data)}`)
 
-      return createResolver(values, context, options)
-    }
+    return { success: true }
+  }
+)
 ```
 
 As you can see you can specify different schemas if you define a function so you

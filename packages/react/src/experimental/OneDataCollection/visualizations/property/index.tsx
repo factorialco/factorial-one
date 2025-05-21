@@ -8,8 +8,11 @@ import { DotTag, NewColor } from "@/experimental/Information/Tags/DotTag"
 import {
   StatusTag,
   StatusVariant,
+  TagList,
+  TagType,
 } from "@/experimental/Information/Tags/exports"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { TagVariant } from "@/experimental/Information/Tags/Tag"
 import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 import { PropertyDefinition } from "../../property-render"
@@ -120,6 +123,13 @@ export const propertyRenderers = {
   ),
   dotTag: (args: { label: string; color: NewColor }) => (
     <DotTag text={args.label} color={args.color} />
+  ),
+  tagList: (args: {
+    tags: Array<Omit<TagVariant, "type">>
+    max?: number
+    type: TagType
+  }) => (
+    <TagList type={args.type} tags={args.tags as TagVariant[]} max={args.max} />
   ),
 } as const satisfies Record<string, PropertyRenderer<never>>
 
