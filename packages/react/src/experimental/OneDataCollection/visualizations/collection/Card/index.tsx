@@ -17,12 +17,7 @@ import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
-import {
-  CollectionProps,
-  DataSource,
-  GroupingDefinition,
-  RecordType,
-} from "../../../types"
+import { DataSource, GroupingDefinition, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
@@ -57,7 +52,7 @@ const CardGrid = ({ children }: { children: React.ReactNode }) => {
  * Group Cards: Renders
  */
 
-type GroupCardsProps<
+export type CardCollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -104,7 +99,8 @@ const GroupCards = <
   Sortings,
   ItemActions,
   NavigationFilters,
-  Grouping
+  Grouping,
+  CardVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const renderValue = (
     item: Record,
@@ -203,7 +199,7 @@ export const CardCollection = <
   source,
   onSelectItems,
   onTotalItemsChange,
-}: CollectionProps<
+}: CardCollectionProps<
   Record,
   Filters,
   Sortings,

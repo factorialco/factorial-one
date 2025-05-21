@@ -39,6 +39,7 @@ export const defaultTranslations = {
     visualizations: {
       table: "Table view",
       card: "Card view",
+      list: "List view",
       pagination: {
         of: "of",
       },
