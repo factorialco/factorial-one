@@ -48,6 +48,13 @@ jobs:
       - name: Notify Slack Test
         run: |
           if [ ${{ steps.publish.outputs.published }} == "true" ]; then
+            RELEASE_BODY=$(echo '${{github.event.release.body}}' | 
+              # Convert heading markdown
+              sed 's/^## /\*/' | 
+              sed 's/^### /\*/' | 
+              sed 's/$/*/' |
+              # Convert GitHub links to Slack format
+              sed -E 's/\[(.*)\]\((.*)\)/<\2|\1>/g')
             curl -X POST -H "Content-Type: application/json" -d '{
               "blocks": [
                 {
@@ -61,7 +68,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "${{github.event.release.body}}"
+                    "text": "'"$RELEASE_BODY"'"
                   }
                 },
                 {
