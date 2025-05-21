@@ -299,8 +299,13 @@ export const TableCollection = <
                   </TableRow>
 
                   <AnimatePresence key={`group-animate-${groupIndex}`}>
+<<<<<<< HEAD
                     {MotionRow &&
                       (!collapsible || openGroups[group.key]) &&
+=======
+                    {openGroups[group.key] &&
+                      MotionRow &&
+>>>>>>> 26a361e7 (fix: key in table)
                       group.records.map((item, index) => {
                         return (
                           <MotionRow
