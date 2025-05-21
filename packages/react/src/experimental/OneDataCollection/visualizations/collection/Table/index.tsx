@@ -16,7 +16,7 @@ import {
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
 import { AnimatePresence, motion } from "framer-motion"
-import { ComponentProps, useEffect, useMemo } from "react"
+import { ComponentProps, Fragment, useEffect, useMemo, useState } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition } from "../../../property-render"
@@ -86,8 +86,11 @@ export const TableCollection = <
   TableVisualizationOptions<R, Filters, Sortings>
 >) => {
   const t = useI18n()
-  const MotionRow = motion.create(
-    Row<R, Filters, Sortings, ItemActions, NavigationFilters, Grouping>
+  // Created a motion component for the row
+  const [MotionRow] = useState(() =>
+    motion.create(
+      Row<R, Filters, Sortings, ItemActions, NavigationFilters, Grouping>
+    )
   )
 
   const { data, paginationInfo, setPage, isInitialLoading } = useData<
@@ -226,7 +229,7 @@ export const TableCollection = <
             )}
             {columns.map(({ sorting, label, ...column }, index) => (
               <TableHead
-                key={String(label)}
+                key={`table-head-${index}`}
                 sortState={getColumnSortState(
                   sorting,
                   source.sortings,
@@ -275,11 +278,11 @@ export const TableCollection = <
         </TableHeader>
         <TableBody>
           {data?.type === "grouped" &&
-            data.groups.map((group) => {
+            data.groups.map((group, groupIndex) => {
               const itemCount = group.itemCount
               return (
-                <>
-                  <TableRow key={`group-${group.key}`}>
+                <Fragment key={`group-${groupIndex}`}>
+                  <TableRow key={`group-header-${groupIndex}`}>
                     {source.selectable && (
                       <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
                         &nbsp;
@@ -294,8 +297,10 @@ export const TableCollection = <
                       />
                     </TableCell>
                   </TableRow>
-                  <AnimatePresence>
+
+                  <AnimatePresence key={`group-animate-${groupIndex}`}>
                     {openGroups[group.key] &&
+                      MotionRow &&
                       group.records.map((item, index) => {
                         return (
                           <MotionRow
@@ -304,11 +309,12 @@ export const TableCollection = <
                             animate="visible"
                             exit="hidden"
                             custom={index}
-                            key={`row-${index}`}
+                            key={`row-${groupIndex}-${index}`}
                             layout
                             source={source}
                             item={item}
                             index={index}
+                            groupIndex={groupIndex}
                             onCheckedChange={(checked) =>
                               handleSelectItemChange(item, checked)
                             }
@@ -320,7 +326,7 @@ export const TableCollection = <
                         )
                       })}
                   </AnimatePresence>
-                </>
+                </Fragment>
               )
             })}
           {data?.type === "flat" &&
@@ -328,6 +334,7 @@ export const TableCollection = <
               return (
                 <Row
                   key={`row-${index}`}
+                  groupIndex={0}
                   source={source}
                   item={item}
                   index={index}
