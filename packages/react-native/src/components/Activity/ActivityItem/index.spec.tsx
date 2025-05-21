@@ -1,4 +1,5 @@
 import { render, fireEvent, screen } from "@testing-library/react-native";
+import renderer from "react-test-renderer";
 import React from "react";
 import { IconType } from "../../Icon";
 import {
@@ -26,6 +27,11 @@ describe("ActivityItem", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it("Snapshot", () => {
+    const tree = renderer.create(<ActivityItem {...defaultProps} />).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 
   it("renders correctly with required props", () => {
