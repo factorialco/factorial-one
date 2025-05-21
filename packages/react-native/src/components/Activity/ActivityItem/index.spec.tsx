@@ -1,5 +1,4 @@
 import { render, fireEvent, screen } from "@testing-library/react-native";
-import renderer from "react-test-renderer";
 import React from "react";
 import { IconType } from "../../Icon";
 import {
@@ -30,8 +29,8 @@ describe("ActivityItem", () => {
   });
 
   it("Snapshot", () => {
-    const tree = renderer.create(<ActivityItem {...defaultProps} />).toJSON();
-    expect(tree).toMatchSnapshot();
+    const { toJSON } = render(<ActivityItem {...defaultProps} />);
+    expect(toJSON()).toMatchSnapshot();
   });
 
   it("renders correctly with required props", () => {
