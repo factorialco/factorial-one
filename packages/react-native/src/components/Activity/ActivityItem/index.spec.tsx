@@ -1,4 +1,4 @@
-import { render, fireEvent } from "@testing-library/react-native";
+import { render, fireEvent, screen } from "@testing-library/react-native";
 import React from "react";
 import { IconType } from "../../Icon";
 import {
@@ -29,62 +29,70 @@ describe("ActivityItem", () => {
   });
 
   it("renders correctly with required props", () => {
-    const { getByText } = render(<ActivityItem {...defaultProps} />);
+    render(<ActivityItem {...defaultProps} />);
 
-    expect(getByText("Activity Title")).toBeTruthy();
-    expect(getByText("Time off · Today")).toBeTruthy();
+    const title = screen.getByText("Activity Title");
+    const moduleDate = screen.getByText("Time off · Today");
+
+    expect(title).toBeDefined();
+    expect(moduleDate).toBeDefined();
   });
 
   it("renders correctly with description", () => {
-    const { getByText } = render(
-      <ActivityItem {...defaultProps} description="Test description" />,
-    );
+    render(<ActivityItem {...defaultProps} description="Test description" />);
 
-    expect(getByText("Test description")).toBeTruthy();
+    const description = screen.getByText("Test description");
+
+    expect(description).toBeDefined();
   });
 
   it("renders icon container when icon is provided", () => {
-    const { getByLabelText } = render(
-      <ActivityItem {...defaultProps} icon={mockIcon} />,
-    );
+    render(<ActivityItem {...defaultProps} icon={mockIcon} />);
 
-    expect(getByLabelText("activity-icon-container")).toBeTruthy();
+    const icon = screen.getByLabelText("activity-icon-container");
+
+    expect(icon).toBeDefined();
   });
 
   it("does not render icon container when icon is not provided", () => {
-    const { queryByLabelText } = render(<ActivityItem {...defaultProps} />);
+    render(<ActivityItem {...defaultProps} />);
 
-    expect(queryByLabelText("activity-icon-container")).toBeNull();
+    const icon = screen.queryByLabelText("activity-icon-container");
+
+    expect(icon).toBeNull();
   });
 
   it("shows unread indicator when isUnread is true", () => {
-    const { getByLabelText } = render(
-      <ActivityItem {...defaultProps} isUnread={true} />,
-    );
+    render(<ActivityItem {...defaultProps} isUnread={true} />);
 
-    expect(getByLabelText("unread-indicator")).toBeTruthy();
+    const indicator = screen.getByLabelText("unread-indicator");
+
+    expect(indicator).toBeDefined();
   });
 
   it("does not show unread indicator when isUnread is false", () => {
-    const { queryByLabelText } = render(
-      <ActivityItem {...defaultProps} isUnread={false} />,
-    );
+    render(<ActivityItem {...defaultProps} isUnread={false} />);
 
-    expect(queryByLabelText("unread-indicator")).toBeNull();
+    const indicator = screen.queryByLabelText("unread-indicator");
+
+    expect(indicator).toBeNull();
   });
 
   it("calls onPress with correct id when pressed", () => {
-    const { getByLabelText } = render(<ActivityItem {...defaultProps} />);
+    render(<ActivityItem {...defaultProps} />);
 
-    fireEvent.press(getByLabelText("activity-item"));
+    fireEvent.press(screen.getByLabelText("activity-item"));
+
     expect(mockOnPress).toHaveBeenCalledWith("activity-123");
   });
 });
 
 describe("ActivityItemSkeleton", () => {
   it("renders skeleton correctly", () => {
-    const { getByLabelText } = render(<ActivityItemSkeleton />);
+    render(<ActivityItemSkeleton />);
 
-    expect(getByLabelText("activity-skeleton")).toBeTruthy();
+    const skeleton = screen.getByLabelText("activity-skeleton");
+
+    expect(skeleton).toBeDefined();
   });
 });
