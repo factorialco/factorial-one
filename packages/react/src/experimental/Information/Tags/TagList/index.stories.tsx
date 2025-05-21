@@ -37,15 +37,15 @@ const dotTags = [
 const personTags = [
   {
     name: "John Doe",
-    avatarUrl: mockAvatarUrl,
+    avatarUrl: `${mockAvatarUrl}?img=1`,
   },
   {
     name: "Jane Smith",
-    avatarUrl: mockAvatarUrl,
+    avatarUrl: `${mockAvatarUrl}?img=2`,
   },
   {
     name: "Bob Johnson",
-    avatarUrl: mockAvatarUrl,
+    avatarUrl: `${mockAvatarUrl}?img=3`,
   },
 ]
 
@@ -53,15 +53,15 @@ const personTags = [
 const teamTags = [
   {
     teamName: "Engineering",
-    teamImageUrl: mockTeamImageUrl,
+    teamImageUrl: `${mockTeamImageUrl}?img=1`,
   },
   {
     teamName: "Product",
-    teamImageUrl: mockTeamImageUrl,
+    teamImageUrl: `${mockTeamImageUrl}?img=2`,
   },
   {
     teamName: "Design",
-    teamImageUrl: mockTeamImageUrl,
+    teamImageUrl: `${mockTeamImageUrl}?img=3`,
   },
 ]
 
@@ -69,7 +69,7 @@ const teamTags = [
 const companyTags = [
   {
     companyName: "Acme Inc",
-    companyImageUrl: mockCompanyImageUrl,
+    companyImageUrl: `${mockCompanyImageUrl}?img=1`,
   },
   {
     companyName: "Globex Corp",

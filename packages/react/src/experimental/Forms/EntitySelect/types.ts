@@ -45,6 +45,7 @@ interface EntitySelectCommonProps
   defaultOpen?: boolean
   width?: number
   hiddenAvatar?: boolean
+  applySearchToGroup?: boolean
 }
 
 export type FlattenedItem = {

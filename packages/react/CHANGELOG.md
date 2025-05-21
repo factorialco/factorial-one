@@ -1,5 +1,38 @@
 # Changelog
 
+## [1.60.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.59.1...factorial-one-react-v1.60.0) (2025-05-20)
+
+
+### Features
+
+* **UpsellingKit:** new product widget ([#1845](https://github.com/factorialco/factorial-one/issues/1845)) ([023b8e4](https://github.com/factorialco/factorial-one/commit/023b8e40466d161c0a7e46d5c762ce353b49ccff))
+
+
+### Bug Fixes
+
+* companySelector ellipsis ([#1849](https://github.com/factorialco/factorial-one/issues/1849)) ([71667f5](https://github.com/factorialco/factorial-one/commit/71667f5fd47847f200db1d5b899b07fc1a669fd4))
+
+## [1.59.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.59.0...factorial-one-react-v1.59.1) (2025-05-20)
+
+
+### Bug Fixes
+
+* missing datacollection filterNavigatioln types exports ([#1846](https://github.com/factorialco/factorial-one/issues/1846)) ([b19aa76](https://github.com/factorialco/factorial-one/commit/b19aa760907141a107e899d2f895abf009f17004))
+
+## [1.59.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.58.0...factorial-one-react-v1.59.0) (2025-05-19)
+
+
+### Features
+
+* search by group and improve search ([#1843](https://github.com/factorialco/factorial-one/issues/1843)) ([36d61ab](https://github.com/factorialco/factorial-one/commit/36d61abf977b894fb6237364399d1bc11f1c131b))
+
+## [1.58.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.2...factorial-one-react-v1.58.0) (2025-05-19)
+
+
+### Features
+
+* icons for meetings ([55b38e3](https://github.com/factorialco/factorial-one/commit/55b38e3faee0aa36513be485b07a72d889a6183d))
+
 ## [1.57.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.57.1...factorial-one-react-v1.57.2) (2025-05-16)
 
 
