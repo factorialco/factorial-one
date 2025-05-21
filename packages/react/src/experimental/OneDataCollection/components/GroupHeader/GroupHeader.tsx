@@ -1,6 +1,6 @@
 import { Await } from "@/components/Utilities/Await"
 import { Counter } from "@/experimental/Information/Counter"
-import { ChevronToggle } from "@/ui/ChevronToggle/ChevronToogle"
+import { ChevronToggle } from "@/ui/ChevronToggle/ChevronToggle"
 import { Skeleton } from "@/ui/skeleton"
 import { useState } from "react"
 
