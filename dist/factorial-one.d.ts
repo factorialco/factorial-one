@@ -50,7 +50,7 @@ export declare const Button: ForwardRefExoticComponent<ButtonProps & RefAttribut
 
 declare const Button_2: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
-declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round"> & DataAttributes & {
+declare type ButtonInternalProps = Pick<ComponentProps<typeof Button_2>, "variant" | "size" | "disabled" | "type" | "round" | "className"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
     loading?: boolean;
@@ -122,6 +122,8 @@ declare const defaultTranslations: {
         readonly search: "Search";
         readonly clear: "Clear";
         readonly more: "More";
+        readonly moveUp: "Move up";
+        readonly moveDown: "Move down";
     };
     readonly status: {
         readonly selected: {
@@ -149,9 +151,63 @@ declare const defaultTranslations: {
             readonly failedToLoadOptions: "Failed to load options";
             readonly retry: "Retry";
         };
+        readonly itemsCount: "items";
     };
     readonly shortcut: "Shortcut";
     readonly date: {
+        readonly from: "From";
+        readonly to: "To";
+        readonly date: "Date";
+        readonly custom: "Custom period";
+        readonly selectDate: "Select Date";
+        readonly presets: {
+            readonly last7Days: "Last 7 days";
+            readonly last30Days: "Last 30 days";
+            readonly last3Months: "Last 3 months";
+            readonly last6Months: "Last 6 months";
+            readonly lastYear: "Last year";
+            readonly last3Years: "Last 3 years";
+            readonly last100Years: "Last 100 years";
+        };
+        readonly range: "Range";
+        readonly selectedBy: "Selected by";
+        readonly groups: {
+            readonly today: "Today";
+            readonly yesterday: "Yesterday";
+            readonly lastWeek: "Last week";
+            readonly lastMonth: "Last month";
+            readonly other: "Other";
+        };
+        readonly granularities: {
+            readonly day: {
+                readonly currentDate: "Today";
+                readonly label: "Day";
+            };
+            readonly week: {
+                readonly currentDate: "This week";
+                readonly label: "Week";
+            };
+            readonly month: {
+                readonly currentDate: "This month";
+                readonly label: "Month";
+            };
+            readonly quarter: {
+                readonly currentDate: "This quarter";
+                readonly label: "Quarter";
+            };
+            readonly halfyear: {
+                readonly currentDate: "This half year";
+                readonly label: "Half year";
+            };
+            readonly year: {
+                readonly currentDate: "This year";
+                readonly label: "Year";
+            };
+            readonly range: {
+                readonly currentDate: "Today";
+                readonly label: "Range";
+            };
+        };
         readonly month: {
             readonly january: "January";
             readonly february: "February";
@@ -167,6 +223,11 @@ declare const defaultTranslations: {
             readonly december: "December";
         };
     };
+    readonly favorites: {
+        readonly favorites: "Favorites";
+        readonly remove: "Remove favorite";
+    };
+    readonly notifications: "Notifications";
 };
 
 export declare function EmojiImage({ emoji, size }: EmojiImageProps): JSX_2.Element;
@@ -286,7 +347,34 @@ export declare const PrivacyModeProvider: React_2.FC<{
     children: ReactNode;
 }>;
 
-declare const privateProps: readonly ["append", "appendButton"];
+declare const privateProps: readonly ["append", "appendButton", "className"];
+
+export declare function ProductCard({ title, description, onClick, onClose, isVisible, icon, dismissable, trackVisibility, }: ProductCardProps): false | JSX_2.Element;
+
+export declare type ProductCardProps = {
+    title: string;
+    description: string;
+    onClick: () => void;
+    onClose?: () => void;
+    isVisible: boolean;
+    icon: IconType;
+    dismissable?: boolean;
+    trackVisibility?: (open: boolean) => void;
+};
+
+export declare function ProductWidget({ imageUrl, title, description, buttonText, onClick, onClose, dismissible, width, trackVisibility, }: ProductWidgetProps): JSX_2.Element;
+
+declare type ProductWidgetProps = {
+    imageUrl: string;
+    title: string;
+    description: string;
+    buttonText: string;
+    onClick: () => void;
+    onClose: () => void;
+    dismissible: boolean;
+    width?: string;
+    trackVisibility?: (visible: boolean) => void;
+};
 
 export declare const ProgressBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
 value: number;
