@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.61.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.61.0...factorial-one-react-v1.61.1) (2025-05-21)
+
+
+### Bug Fixes
+
+* update exported icons list ([ebe46c7](https://github.com/factorialco/factorial-one/commit/ebe46c79478fe145bfa2fb48aec1eeac2dd1bd5b))
+
 ## [1.61.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.60.0...factorial-one-react-v1.61.0) (2025-05-21)
 
 
