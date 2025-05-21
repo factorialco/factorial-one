@@ -1,8 +1,8 @@
+import { UpsellRequestResponseDialog } from "@/components/UpsellingKit/UpsellRequestResponseDialog"
 import { ButtonProps } from "@/factorial-one"
 import { useState } from "react"
 import { Button } from "../../../components/Actions/Button"
 import UpsellIcon from "../../../icons/app/Upsell"
-import { UpsellRequestResponseDialog } from "./components/UpsellRequestResponseDialog"
 
 export interface UpsellingButtonProps
   extends Omit<ButtonProps, "variant" | "icon"> {
