@@ -7,25 +7,6 @@ import {
 } from "@factorialco/factorial-one-react-native";
 import { AppIcons } from "@factorialco/factorial-one-react-native";
 
-// Helper function to format dates
-const formatDate = (date: Date): string => {
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffMins = Math.floor(diffMs / (1000 * 60));
-
-  if (diffMins < 1) return "Just now";
-  if (diffMins < 60) return `${diffMins} min ago`;
-
-  const diffHours = Math.floor(diffMins / 60);
-  if (diffHours < 24) return `${diffHours} hours ago`;
-
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    day: "numeric",
-  };
-  return date.toLocaleDateString(undefined, options);
-};
-
 const meta = {
   title: "Components/ActivityItem",
   component: ActivityItem,
@@ -37,7 +18,7 @@ const meta = {
   },
   args: {
     id: "1",
-    date: formatDate(new Date()),
+    date: "10 min ago",
     title: "Your time off request has been approved",
     description: "René Galindo has approved your time off request",
     category: "Time off",
@@ -60,7 +41,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     id: "1",
-    date: formatDate(new Date()),
+    date: "5 min ago",
     title: "Your time off request has been approved",
     description: "René Galindo has approved your time off request",
     category: "Time off",
@@ -97,7 +78,7 @@ export const ActivityItemList: Story = {
   args: {
     // Adding default args to fix type error
     id: "1",
-    date: formatDate(new Date()),
+    date: "Just now",
     title: "Default Title",
     category: "Default",
     onPress: () => {},
@@ -106,7 +87,7 @@ export const ActivityItemList: Story = {
     const activityItems = [
       {
         id: "1",
-        date: formatDate(new Date(Date.now() - 1000 * 60 * 30)), // 30 minutes ago
+        date: "30 min ago",
         title: "Your time off request has been approved",
         description: "René Galindo has approved your time off request",
         icon: AppIcons.PalmTree,
@@ -115,7 +96,7 @@ export const ActivityItemList: Story = {
       },
       {
         id: "2",
-        date: formatDate(new Date(Date.now() - 1000 * 60 * 60 * 2)), // 2 hours ago
+        date: "2 hours ago",
         title: "A document has been uploaded",
         description:
           "The document 04-2025 hs.pdf has been uploaded by Laia Moreno Padilla",
@@ -125,7 +106,7 @@ export const ActivityItemList: Story = {
       },
       {
         id: "3",
-        date: formatDate(new Date(Date.now() - 1000 * 60 * 60 * 24)), // 1 day ago
+        date: "May 18",
         title: "Ana Clever adjusted your holiday allowance",
         description: "René Galindo has approved your holidays request",
         icon: AppIcons.PalmTree,
@@ -134,7 +115,7 @@ export const ActivityItemList: Story = {
       },
       {
         id: "4",
-        date: formatDate(new Date(Date.now() - 1000 * 60 * 60 * 48)), // 2 days ago
+        date: "May 17",
         title: "Your time off request has been approved",
         description: "René Galindo has approved your time off request",
         icon: AppIcons.PalmTree,
@@ -173,7 +154,7 @@ export const ActivityItemList: Story = {
 export const Skeleton: Story = {
   args: {
     id: "1",
-    date: formatDate(new Date()),
+    date: "Just now",
     title: "Default Title",
     category: "Default",
     onPress: () => {},
