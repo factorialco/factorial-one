@@ -1,5 +1,6 @@
 // packages/react/src/experimental/ProductBlankslate/ProductBlankslate.stories.tsx
 import { Button } from "@/components/Actions/Button"
+import SalesIcon from "@/icons/modules/Sales"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ProductBlankslate } from "."
 import { UpsellingButton } from "../UpsellingButton"
@@ -38,6 +39,8 @@ const defaultArgs = {
     "Link invoices to projects and manage billable amounts.",
     "Export easily to PDF or Excel in one click.",
   ],
+  icon: SalesIcon,
+  moduleName: "Sales Invoices",
 }
 
 export const Default: Story = {
