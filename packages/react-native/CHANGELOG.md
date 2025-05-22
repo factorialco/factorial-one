@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.5.0...factorial-one-react-native-v0.6.0) (2025-05-22)
+
+
+### Features
+
+* new f1 react native buttons ([#1854](https://github.com/factorialco/factorial-one/issues/1854)) ([3f1ad8e](https://github.com/factorialco/factorial-one/commit/3f1ad8ea127ce1629a86a7706d99cc9cba019886))
+
 ## [0.5.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.4.0...factorial-one-react-native-v0.5.0) (2025-05-21)
 
 
