@@ -36,6 +36,7 @@ declare type AwaitProps<T> = {
     resolve: Promise<T> | T;
     fallback: ReactNode;
     error?: ReactNode;
+    className?: string;
     children: (value: T) => ReactNode;
 };
 
@@ -371,10 +372,10 @@ export declare type ProductCardProps = {
     trackVisibility?: (open: boolean) => void;
 };
 
-export declare function ProductWidget({ imageUrl, title, description, buttonText, onClick, onClose, dismissible, width, trackVisibility, }: ProductWidgetProps): JSX_2.Element;
+export declare function ProductWidget({ mediaUrl, title, description, buttonText, onClick, onClose, dismissible, width, trackVisibility, }: ProductWidgetProps): JSX_2.Element;
 
 declare type ProductWidgetProps = {
-    imageUrl: string;
+    mediaUrl: string;
     title: string;
     description: string;
     buttonText: string;

@@ -623,6 +623,8 @@ declare type CardPropertyDefinition<T> = PropertyDefinition_2<T>;
 declare type CardVisualizationOptions<T, _Filters extends FiltersDefinition, _Sortings extends SortingsDefinition> = {
     cardProperties: ReadonlyArray<CardPropertyDefinition<T>>;
     title: (record: T) => string;
+    description?: (record: T) => string;
+    avatar?: (record: T) => AvatarVariant;
 };
 
 export declare const Carousel: ({ children, columns, showArrows, showDots, autoplay, delay, showPeek, doubleColumns, }: CarouselProps) => default_2.JSX.Element;
@@ -1238,9 +1240,7 @@ declare type DropdownInternalProps = {
     onOpenChange?: (open: boolean) => void;
 } & DataAttributes;
 
-export declare type DropdownItem = DropdownItemObject | {
-    type: "separator";
-};
+export declare type DropdownItem = DropdownItemObject | DropdownItemSeparator;
 
 export declare type DropdownItemObject = NavigationItem & {
     type?: "item";
@@ -1249,6 +1249,10 @@ export declare type DropdownItemObject = NavigationItem & {
     description?: string;
     critical?: boolean;
     avatar?: AvatarVariant;
+};
+
+declare type DropdownItemSeparator = {
+    type: "separator";
 };
 
 declare const DropdownMenu: React_2.FC<DropdownMenuPrimitive.DropdownMenuProps>;
@@ -1489,9 +1493,11 @@ declare type FilterDefinitionsByType<T = unknown> = {
  * @param item - The item to filter the actions for
  * @returns An array of filtered actions
  */
-export declare const filterItemActions: <T extends RecordType>(actions: ItemActionsDefinition<T>, item: T) => (DropdownItem & {
+export declare const filterItemActions: <T extends RecordType>(actions: ItemActionsDefinition<T>, item: T) => (DropdownItemSeparator | (Omit<DropdownItemObject, "type" | "onClick"> & {
+    onClick: () => void;
     enabled?: boolean;
-})[];
+    type?: "primary" | "secondary" | "other";
+}))[];
 
 /**
  * Configuration options for filters in a collection.
@@ -1805,9 +1811,11 @@ export declare type InputProps = Pick<ComponentProps<typeof Input_2>, "ref" | "d
 
 declare const Item: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
 
-export declare type ItemActionsDefinition<T extends RecordType> = (item: T) => Array<DropdownItem & {
+export declare type ItemActionsDefinition<T extends RecordType> = (item: T) => Array<DropdownItemSeparator | (Omit<DropdownItemObject, "type" | "onClick"> & {
+    onClick: () => void;
     enabled?: boolean;
-}> | undefined;
+    type?: "primary" | "secondary" | "other";
+})> | undefined;
 
 declare type ItemProps = {
     text: string;
@@ -2091,7 +2099,7 @@ export declare interface OneCalendarProps {
     maxDate?: Date;
 }
 
-export declare function OneCard({ avatar, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, }: OneCardProps): JSX_2.Element;
+export declare function OneCard({ avatar, title, description, metadata, children, link, primaryAction, secondaryActions, otherActions, selectable, selected, onSelect, onClick, }: OneCardProps): JSX_2.Element;
 
 declare interface OneCardProps {
     /**
@@ -2133,7 +2141,7 @@ declare interface OneCardProps {
      */
     secondaryActions?: {
         label: string;
-        icon: IconType;
+        icon?: IconType;
         onClick: () => void;
     }[];
     /**
@@ -2152,6 +2160,10 @@ declare interface OneCardProps {
      * The callback to handle the selection of the card
      */
     onSelect?: (selected: boolean) => void;
+    /**
+     * The callback to handle the click of the card
+     */
+    onClick?: () => void;
 }
 
 /**
@@ -3325,7 +3337,7 @@ export declare type TabItem = {
     id: string;
 });
 
-declare type TableColumnDefinition<Record, Sortings extends SortingsDefinition> = WithOptionalSorting<Record, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
+declare type TableColumnDefinition<R extends RecordType, Sortings extends SortingsDefinition> = WithOptionalSorting<R, Sortings> & Pick<ComponentProps<typeof TableHead>, "hidden" | "info" | "sticky" | "width">;
 
 declare function TableHead({ children, width, sortState, onSortClick, info, sticky, hidden, align, }: TableHeadProps): JSX_2.Element;
 
@@ -3375,8 +3387,8 @@ declare interface TableHeadProps {
     align?: "left" | "right";
 }
 
-declare type TableVisualizationOptions<Record extends RecordType, _Filters extends FiltersDefinition, Sortings extends SortingsDefinition> = {
-    columns: ReadonlyArray<TableColumnDefinition<Record, Sortings>>;
+declare type TableVisualizationOptions<R extends RecordType, _Filters extends FiltersDefinition, Sortings extends SortingsDefinition> = {
+    columns: ReadonlyArray<TableColumnDefinition<R, Sortings>>;
     frozenColumns?: 0 | 1 | 2;
 };
 
@@ -3813,7 +3825,7 @@ export declare const WidgetStrip: ForwardRefExoticComponent<DashboardProps_2 & R
 
 declare type WidgetWidth = "sm" | "md" | "lg";
 
-declare type WithOptionalSorting<Record, Sortings extends SortingsDefinition> = PropertyDefinition_2<Record> & {
+declare type WithOptionalSorting<R extends RecordType, Sortings extends SortingsDefinition> = PropertyDefinition_2<R> & {
     sorting?: SortingKey<Sortings>;
     /**
      * The alignment of the column. If not provided, the alignment will be "left"
