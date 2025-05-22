@@ -12,7 +12,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    imageUrl: "https://placehold.co/300x160",
+    mediaUrl:
+      "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
     title: "More benefits to René & your team",
     description:
       "Enjoy greater savings through flexible benefits like meals, transport, and health insurance.",

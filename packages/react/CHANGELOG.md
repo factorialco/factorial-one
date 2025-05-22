@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.62.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.61.1...factorial-one-react-v1.62.0) (2025-05-21)
+
+
+### Features
+
+* videorecorder and microphone icons ([420c16f](https://github.com/factorialco/factorial-one/commit/420c16f1d27417e1d271c68bd1a59c571945903c))
+
+## [1.61.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.61.0...factorial-one-react-v1.61.1) (2025-05-21)
+
+
+### Bug Fixes
+
+* update exported icons list ([ebe46c7](https://github.com/factorialco/factorial-one/commit/ebe46c79478fe145bfa2fb48aec1eeac2dd1bd5b))
+
+## [1.61.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.60.0...factorial-one-react-v1.61.0) (2025-05-21)
+
+
+### Features
+
+* show less than 2 actions in modal header without dropdown ([#1853](https://github.com/factorialco/factorial-one/issues/1853)) ([5967a6d](https://github.com/factorialco/factorial-one/commit/5967a6ded7ee5f218b5a6c71a24acf44802fb3ba))
+
 ## [1.60.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.59.1...factorial-one-react-v1.60.0) (2025-05-20)
 
 
