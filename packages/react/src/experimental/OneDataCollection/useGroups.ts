@@ -39,8 +39,8 @@ type AnimationVariantsOptions = {
 }
 
 const DEFAULT_ANIMATION_OPTIONS: Required<AnimationVariantsOptions> = {
-  delay: 0.03,
-  duration: 0.03,
+  delay: 0.1,
+  duration: 0.5,
   maxDelay: 20,
 }
 export const getAnimationVariants = (options?: AnimationVariantsOptions) => {
