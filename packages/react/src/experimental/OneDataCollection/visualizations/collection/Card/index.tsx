@@ -264,18 +264,19 @@ export const CardCollection = <
    */
   const {
     selectedItems,
+    groupAllSelectedStatus,
     handleSelectItemChange,
-    // TODO Add all selection logic
-    // isAllSelected,
-    // isPartiallySelected,
-    // handleSelectAll,
-  } = useSelectable(data.records, paginationInfo, source, onSelectItems)
+    handleSelectGroupChange,
+  } = useSelectable(data, paginationInfo, source, onSelectItems)
 
   /**
    * Groups
    */
+  const collapsible = source.grouping?.collapsible
+  const defaultOpenGroups = source.grouping?.defaultOpenGroups
   const { openGroups, setGroupOpen } = useGroups(
-    data?.type === "grouped" ? data.groups : []
+    data?.type === "grouped" ? data.groups : [],
+    defaultOpenGroups
   )
 
   return (
@@ -311,16 +312,18 @@ export const CardCollection = <
                     itemCount={group.itemCount}
                     onOpenChange={(open) => setGroupOpen(group.key, open)}
                     open={openGroups[group.key]}
-                  />
-                  <GroupCards
-                    source={source}
-                    items={group.records}
-                    selectedItems={selectedItems}
-                    handleSelectItemChange={handleSelectItemChange}
-                    title={title}
-                    cardProperties={cardProperties}
-                    description={description}
-                    avatar={avatar}
+                    selectable={!!source.selectable}
+                    showOpenChange={collapsible}
+                    select={
+                      groupAllSelectedStatus[group.key]?.checked
+                        ? true
+                        : groupAllSelectedStatus[group.key]?.indeterminate
+                          ? "indeterminate"
+                          : false
+                    }
+                    onSelectChange={(checked) =>
+                      handleSelectGroupChange(group, checked)
+                    }
                   />
                   <AnimatePresence>
                     {openGroups[group.key] && (
@@ -332,6 +335,8 @@ export const CardCollection = <
                         handleSelectItemChange={handleSelectItemChange}
                         title={title}
                         cardProperties={cardProperties}
+                        description={description}
+                        avatar={avatar}
                       />
                     )}
                   </AnimatePresence>
