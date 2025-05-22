@@ -63,15 +63,17 @@ export const ProductBlankslate = forwardRef<
         {/* Contenido */}
         <div className="flex flex-col justify-center gap-8 px-8 py-5">
           <div className="flex flex-col gap-5">
-            <div className="flex flex-row items-center gap-2">
-              {icon && <ModuleAvatar icon={icon} />}
-              {moduleName && (
-                <p className="text-base font-medium text-f1-foreground">
-                  {moduleName}
-                </p>
-              )}
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-row items-center gap-2">
+                {icon && <ModuleAvatar icon={icon} />}
+                {moduleName && (
+                  <p className="text-base font-medium text-f1-foreground">
+                    {moduleName}
+                  </p>
+                )}
+              </div>
+              <h2 className="font-bold text-xl text-f1-foreground">{title}</h2>
             </div>
-            <h2 className="font-bold text-xl text-f1-foreground">{title}</h2>
             <Benefits benefits={benefits} />
           </div>
           {actions && <div className="flex gap-3">{actions}</div>}
