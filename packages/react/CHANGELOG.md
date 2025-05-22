@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.62.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.62.0...factorial-one-react-v1.62.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* itemUrl and onClick in datacollection cards view ([#1830](https://github.com/factorialco/factorial-one/issues/1830)) ([5ce1121](https://github.com/factorialco/factorial-one/commit/5ce1121243ca568e21097d8efa3aff0d1b385829))
+
 ## [1.62.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.61.1...factorial-one-react-v1.62.0) (2025-05-21)
 
 
