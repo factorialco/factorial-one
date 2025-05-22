@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.64.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.0...factorial-one-react-v1.64.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* set correct padding for ActivityItemList components ([#1867](https://github.com/factorialco/factorial-one/issues/1867)) ([6c5a41f](https://github.com/factorialco/factorial-one/commit/6c5a41fd96f8c8d9f31bc7424fb2e9dd83fe77d1))
+
 ## [1.64.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.63.0...factorial-one-react-v1.64.0) (2025-05-22)
 
 
