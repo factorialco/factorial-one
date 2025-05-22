@@ -277,16 +277,24 @@ export function useSelectable<
   // Try to determine if all items are selected when we select one by one
   // If there is pagination, we need to check if the selected items are less than the total number of items
   // If there is no pagination, we need to check if the selected items are less than the total number of items
-  const areAllKnownItemsSelected =
-    (paginationInfo && selectedCount === paginationInfo.total) ||
-    (!paginationInfo && selectedCount === data.records.length)
+  const areAllKnownItemsSelected = useMemo(
+    () =>
+      (paginationInfo && selectedCount === paginationInfo.total) ||
+      (!paginationInfo && selectedCount === data.records.length),
+    [paginationInfo, selectedCount, data.records.length]
+  )
 
-  const isAllSelected =
-    (allSelectedCheck || areAllKnownItemsSelected) && selectedCount > 0
+  const isAllSelected = useMemo(
+    () => (allSelectedCheck || areAllKnownItemsSelected) && selectedCount > 0,
+    [allSelectedCheck, areAllKnownItemsSelected, selectedCount]
+  )
 
-  const isPartiallySelected =
-    (selectedCount > 0 && !isAllSelected) ||
-    (isAllSelected && unselectedCount > 0)
+  const isPartiallySelected = useMemo(
+    () =>
+      (selectedCount > 0 && !isAllSelected) ||
+      (isAllSelected && unselectedCount > 0),
+    [selectedCount, isAllSelected, unselectedCount]
+  )
 
   // If the filters change, we need to reset the selected items
   useEffect(() => {
