@@ -1,5 +1,54 @@
 # Changelog
 
+## [1.64.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.1...factorial-one-react-v1.64.2) (2025-05-22)
+
+
+### Bug Fixes
+
+* remove remaingin avatarnameselector ([#1870](https://github.com/factorialco/factorial-one/issues/1870)) ([aae223c](https://github.com/factorialco/factorial-one/commit/aae223c5b69cb93ab6bef4bf1bea533c44fbed9b))
+
+## [1.64.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.0...factorial-one-react-v1.64.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* set correct padding for ActivityItemList components ([#1867](https://github.com/factorialco/factorial-one/issues/1867)) ([6c5a41f](https://github.com/factorialco/factorial-one/commit/6c5a41fd96f8c8d9f31bc7424fb2e9dd83fe77d1))
+
+## [1.64.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.63.0...factorial-one-react-v1.64.0) (2025-05-22)
+
+
+### Features
+
+* oneEllipsis component ([#1834](https://github.com/factorialco/factorial-one/issues/1834)) ([62cf170](https://github.com/factorialco/factorial-one/commit/62cf1701fd717d18444fe69daecbf8ccbd7a9211))
+
+## [1.63.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.62.1...factorial-one-react-v1.63.0) (2025-05-22)
+
+
+### Features
+
+* add arrowcycle icon ([7f1f680](https://github.com/factorialco/factorial-one/commit/7f1f680e5ad6a749ca1357832a41192daa0b48b7))
+
+## [1.62.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.62.0...factorial-one-react-v1.62.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* itemUrl and onClick in datacollection cards view ([#1830](https://github.com/factorialco/factorial-one/issues/1830)) ([5ce1121](https://github.com/factorialco/factorial-one/commit/5ce1121243ca568e21097d8efa3aff0d1b385829))
+
+## [1.62.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.61.1...factorial-one-react-v1.62.0) (2025-05-21)
+
+
+### Features
+
+* videorecorder and microphone icons ([420c16f](https://github.com/factorialco/factorial-one/commit/420c16f1d27417e1d271c68bd1a59c571945903c))
+
+## [1.61.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.61.0...factorial-one-react-v1.61.1) (2025-05-21)
+
+
+### Bug Fixes
+
+* update exported icons list ([ebe46c7](https://github.com/factorialco/factorial-one/commit/ebe46c79478fe145bfa2fb48aec1eeac2dd1bd5b))
+
 ## [1.61.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.60.0...factorial-one-react-v1.61.0) (2025-05-21)
 
 

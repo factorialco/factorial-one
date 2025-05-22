@@ -163,7 +163,7 @@ export const ListItemSingleContent = ({
   )
 }
 
-const AvatarNameListItem = ({
+const EntitySelectListItem = ({
   groupView,
   expanded,
   search,
@@ -325,6 +325,6 @@ const AvatarNameListItem = ({
   )
 }
 
-AvatarNameListItem.displayName = "AvatarNameListItem"
+EntitySelectListItem.displayName = "EntitySelectListItem"
 
-export { AvatarNameListItem }
+export { EntitySelectListItem }

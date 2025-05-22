@@ -23,6 +23,7 @@ alwaysApply: false
 - Test component variants and edge cases.
 - Avoid excessive mocking; test behavior, not internals.
 - Always run tests to confirm changes.
+- Do not import `@testing-library/jest-dom` 
 
 ## Example with Icon component
 

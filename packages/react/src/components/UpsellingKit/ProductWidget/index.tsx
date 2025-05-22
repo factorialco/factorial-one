@@ -1,6 +1,6 @@
 import { Button } from "@/factorial-one"
 import CrossIcon from "@/icons/app/Cross"
-import { Card, CardContent, CardFooter } from "@/ui/card"
+import { Card, CardContent, CardFooter } from "@/ui/Card"
 import { Label } from "@/ui/label"
 import { useEffect, useState } from "react"
 

@@ -14,7 +14,8 @@ import { AvatarVariant } from "../../Information/Avatars/Avatar"
 import { NavigationItem } from "../utils"
 import { DropdownItemContent } from "./DropdownItem"
 
-export type DropdownItem = DropdownItemObject | { type: "separator" }
+export type DropdownItemSeparator = { type: "separator" }
+export type DropdownItem = DropdownItemObject | DropdownItemSeparator
 
 export type DropdownItemObject = NavigationItem & {
   type?: "item"

@@ -1,36 +1,67 @@
 import * as React from "react"
 
-import { cn } from "../lib/utils"
+import { cn } from "../../lib/utils"
 
-import ChevronRight from "../icons/app/ChevronRight"
-import InfoCircleLine from "../icons/app/InfoCircleLine"
+import ChevronRight from "../../icons/app/ChevronRight"
+import InfoCircleLine from "../../icons/app/InfoCircleLine"
 
 import { Icon, IconType } from "@/components/Utilities/Icon"
 import { Link } from "@/lib/linkHandler"
+import { useI18n } from "@/lib/providers/i18n"
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./tooltip"
+} from "../tooltip"
 
+/**
+ * Card component Root
+ */
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    role="article"
-    className={cn(
-      "flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-4 shadow",
-      className
-    )}
-    {...props}
-  />
-))
+  React.HTMLAttributes<HTMLDivElement> & {
+    href?: string
+    onClick?: () => void
+    disabled?: boolean
+  }
+>(({ className, href, onClick, disabled, children, ...props }, ref) => {
+  const { actions } = useI18n()
+
+  const hasHover = (href || onClick) && !disabled
+
+  return (
+    <div
+      ref={ref}
+      role="article"
+      className={cn(
+        "flex flex-col items-stretch rounded-xl border border-solid border-f1-border-secondary bg-f1-background-inverse-secondary p-4 shadow",
+        hasHover &&
+          "cursor-pointer transition-all duration-200 hover:border-f1-border-hover hover:shadow-md",
+        className
+      )}
+      {...props}
+      onClick={() => {
+        if (disabled) return
+        if (href) return
+        if (onClick) return onClick()
+      }}
+    >
+      {href && !disabled && (
+        <Link href={href} className="absolute inset-0 block" tabIndex={0}>
+          <span className="sr-only">{actions.view}</span>
+        </Link>
+      )}
+      {children}
+    </div>
+  )
+})
 
 Card.displayName = "Card"
 
+/**
+ * Card Header
+ */
 const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -43,6 +74,9 @@ const CardHeader = React.forwardRef<
 ))
 CardHeader.displayName = "CardHeader"
 
+/**
+ * Card Title
+ */
 const CardTitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
@@ -55,6 +89,9 @@ const CardTitle = React.forwardRef<
 ))
 CardTitle.displayName = "CardTitle"
 
+/**
+ * Card Subtitle
+ */
 const CardSubtitle = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLHeadingElement>
@@ -70,6 +107,9 @@ const CardSubtitle = React.forwardRef<
 ))
 CardSubtitle.displayName = "CardSubtitle"
 
+/**
+ * Card Info
+ */
 const CardInfo = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -95,6 +135,9 @@ const CardInfo = React.forwardRef<
 ))
 CardInfo.displayName = "CardInfo"
 
+/**
+ * Card Link
+ */
 const CardLink = React.forwardRef<
   HTMLAnchorElement,
   React.ComponentPropsWithoutRef<"a"> & { icon?: IconType }
@@ -109,6 +152,7 @@ const CardLink = React.forwardRef<
         "cursor-pointer transition-colors hover:border-f1-border-hover focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-f1-ring focus-visible:ring-offset-1", //interaction
         className
       )}
+      role="button"
       aria-label={title}
       {...props}
     >
@@ -118,14 +162,24 @@ const CardLink = React.forwardRef<
 })
 CardLink.displayName = "CardLink"
 
+/**
+ * Card Content
+ */
 const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("flex grow flex-col", className)} {...props} />
+  <div
+    ref={ref}
+    className={cn("relative flex grow flex-col", className)}
+    {...props}
+  />
 ))
 CardContent.displayName = "CardContent"
 
+/**
+ * Card Footer
+ */
 const CardFooter = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -134,6 +188,9 @@ const CardFooter = React.forwardRef<
 ))
 CardFooter.displayName = "CardFooter"
 
+/**
+ * Card Comment
+ */
 const CardComment = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
