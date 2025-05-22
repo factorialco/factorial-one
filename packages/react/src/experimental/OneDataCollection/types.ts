@@ -266,12 +266,13 @@ export type BulkActionDefinition = {
 export type ExtractPropertyKeys<RecordType> = keyof RecordType
 
 export type OnSelectItemsCallback<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
 > = (
   selectedItems: {
     allSelected: boolean | "indeterminate"
-    itemsStatus: ReadonlyArray<{ item: Record; checked: boolean }>
+    itemsStatus: ReadonlyArray<{ item: R; checked: boolean }>
+    groupsStatus: Record<string, boolean>
     filters: FiltersState<Filters>
     selectedCount: number
   },
