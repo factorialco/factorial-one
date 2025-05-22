@@ -61,6 +61,14 @@ interface PaginationInfo {
 }
 
 /**
+ * Symbol used to identify the groupId in the data
+ */
+export const GROUP_ID_SYMBOL = Symbol("groupId")
+export type WithGroupId<RecordType> = RecordType & {
+  [GROUP_ID_SYMBOL]: unknown | undefined
+}
+
+/**
  * Hook return type for useData
  */
 interface UseDataReturn<Record> {
@@ -83,11 +91,11 @@ export type GroupRecord<RecordType> = {
 }
 
 export type Data<RecordType> = {
-  records: RecordType[]
+  records: WithGroupId<RecordType>[]
 } & (
   | {
       type: "grouped"
-      groups: GroupRecord<RecordType>[]
+      groups: GroupRecord<WithGroupId<RecordType>>[]
     }
   | {
       type: "flat"
@@ -272,18 +280,28 @@ export function useData<
   )
 
   const data = useMemo(() => {
-    // Group the data if grouping is enabled
+    // Add the groupId to the data if grouping is enabled
+    const data: WithGroupId<R>[] = rawData.map((record) => ({
+      ...record,
+      [GROUP_ID_SYMBOL]:
+        (currentGrouping?.field && record[currentGrouping.field as keyof R]) ||
+        undefined,
+    }))
+
+    /**
+     * Grouped data
+     */
     if (
       currentGrouping &&
       currentGrouping.field &&
       grouping &&
       grouping.groupBy[currentGrouping.field as keyof R]
     ) {
-      const groupedData = groupBy(rawData, currentGrouping.field as keyof R)
+      const groupedData = groupBy(data, GROUP_ID_SYMBOL)
 
       return {
         type: "grouped" as const,
-        records: rawData,
+        records: data,
         groups: Object.entries(groupedData).map(([key, value]) => ({
           key,
           label: grouping.groupBy[currentGrouping.field as keyof R]!.label(
@@ -298,7 +316,10 @@ export function useData<
       }
     }
 
-    return { type: "flat" as const, records: rawData }
+    /**
+     * Flat data
+     */
+    return { type: "flat" as const, records: data }
   }, [rawData, currentGrouping, grouping, mergedFilters])
 
   const handleFetchError = useCallback(

@@ -89,12 +89,58 @@ export const WithGrouping: Story = {
   ),
 }
 
-// Examples with multiple visualizations
 export const WithOptionalGrouping: Story = {
   render: () => (
     <ExampleComponent
       frozenColumns={2}
       grouping={{
+        groupBy: {
+          department: {
+            name: "Department",
+            label: (groupId) => groupId,
+            itemCount: async (groupId) => {
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+              return mockUsers.filter((user) => user.department === groupId)
+                .length
+            },
+          },
+        },
+      }}
+    />
+  ),
+}
+
+export const CollapsibleGrouping: Story = {
+  render: () => (
+    <ExampleComponent
+      frozenColumns={2}
+      grouping={{
+        collapsible: true,
+        mandatory: true,
+        groupBy: {
+          department: {
+            name: "Department",
+            label: (groupId) => groupId,
+            itemCount: async (groupId) => {
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+              return mockUsers.filter((user) => user.department === groupId)
+                .length
+            },
+          },
+        },
+      }}
+    />
+  ),
+}
+
+export const CollapsibleGroupingWithDefaultOpenGroups: Story = {
+  render: () => (
+    <ExampleComponent
+      frozenColumns={2}
+      grouping={{
+        mandatory: true,
+        collapsible: true,
+        defaultOpenGroups: ["Engineering"],
         groupBy: {
           department: {
             name: "Department",
@@ -118,6 +164,7 @@ export const WithPaginationAndGrouping: Story = {
 
     const grouping: GroupingDefinition<(typeof mockUsers)[number]> = {
       mandatory: true,
+      collapsible: true,
       groupBy: {
         department: {
           name: "Department",
@@ -144,6 +191,7 @@ export const WithPaginationAndGrouping: Story = {
     }
 
     const source = useDataSource({
+      selectable: (item) => item.id,
       filters,
       presets: filterPresets,
       sortings,
@@ -222,4 +270,29 @@ export const WithPaginationAndGrouping: Story = {
       />
     )
   },
+}
+
+export const SelectableGrouping: Story = {
+  render: () => (
+    <ExampleComponent
+      frozenColumns={2}
+      selectable={(item) => item.id}
+      grouping={{
+        mandatory: true,
+        collapsible: true,
+        defaultOpenGroups: ["Engineering"],
+        groupBy: {
+          department: {
+            name: "Department",
+            label: (groupId) => groupId,
+            itemCount: async (groupId) => {
+              await new Promise((resolve) => setTimeout(resolve, 1000))
+              return mockUsers.filter((user) => user.department === groupId)
+                .length
+            },
+          },
+        },
+      }}
+    />
+  ),
 }
