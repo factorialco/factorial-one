@@ -3,7 +3,12 @@ import type { FiltersDefinition } from "../../Filters/types"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { SortingsDefinition } from "../../sortings"
-import type { DataSource, GroupingDefinition, RecordType } from "../../types"
+import type {
+  DataSource,
+  GroupingDefinition,
+  OnSelectItemsCallback,
+  RecordType,
+} from "../../types"
 import type { CardVisualizationOptions } from "../../visualizations/collection/Card"
 import type { TableVisualizationOptions } from "../../visualizations/collection/Table"
 
@@ -22,7 +27,12 @@ export type Visualization<
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
-> =
+> = {
+  /** Human-readable label for the visualization */
+  label: string
+  /** Icon to represent the visualization in UI */
+  icon: IconType
+} & (
   | {
       /** Card-based visualization type */
       type: "card"
@@ -38,13 +48,10 @@ export type Visualization<
   | {
       /** Custom visualization type */
       type: "custom"
-      /** Human-readable label for the visualization */
-      label: string
-      /** Icon to represent the visualization in UI */
-      icon: IconType
       /** Custom component to render the visualization */
       component: (props: {
         onTotalItemsChange?: (totalItems: number) => void
+        onSelectItems?: OnSelectItemsCallback<Record, Filters>
         source: DataSource<
           Record,
           Filters,
@@ -55,6 +62,7 @@ export type Visualization<
         >
       }) => JSX.Element
     }
+)
 
 /**
  * Represents the type of visualization.

@@ -1,18 +1,3 @@
-/**
- * A component that renders the selected visualization for a collection.
- * Handles switching between different visualization types (table, card, or custom view)
- * and passes appropriate props to the specific visualization component.
- *
- * @template Record - The type of records in the collection
- * @template Filters - The filters type extending FiltersDefinition
- * @template ItemActions - The item actions type extending Item ActionsDefinition
- *
- * @param visualization - The configuration for the current visualization
- * @param source - The data source to visualize
- *
- * @returns The rendered visualization component (TableCollection, CardCollection, or custom component)
- */
-
 import { OnSelectItemsCallback } from "../../types"
 
 import { FiltersDefinition } from "../../Filters/types"
@@ -20,8 +5,6 @@ import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { DataSource, RecordType, SortingsDefinition } from "../../types"
-import { CardCollection } from "./Card"
-import { TableCollection } from "./Table"
 import { Visualization } from "./types"
 
 /**
@@ -72,40 +55,35 @@ export const VisualizationRenderer = <
   onTotalItemsChange?: (totalItems: number | undefined) => void
   clearSelectedItems?: () => void
 }): JSX.Element => {
-  switch (visualization.type) {
-    case "table":
-      return (
-        <TableCollection<
-          Record,
-          Filters,
-          Sortings,
-          ItemActions,
-          NavigationFilters,
-          Grouping
-        >
-          source={source}
-          {...visualization.options}
-          onSelectItems={onSelectItems}
-          onTotalItemsChange={onTotalItemsChange}
-        />
-      )
-    case "card":
-      return (
-        <CardCollection<
-          Record,
-          Filters,
-          Sortings,
-          ItemActions,
-          NavigationFilters,
-          Grouping
-        >
-          source={source}
-          {...visualization.options}
-          onSelectItems={onSelectItems}
-          onTotalItemsChange={onTotalItemsChange}
-        />
-      )
-    case "custom":
-      return visualization.component({ source, onTotalItemsChange })
+  if (visualization.type === "custom") {
+    return visualization.component({
+      source,
+      onTotalItemsChange,
+      onSelectItems,
+    })
   }
+
+  const visualizationType = collectionVisualizations[
+    visualization.type
+  ] as VisualizacionTypeDefinition<
+    CollectionProps<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      object
+    >
+  >
+
+  if (!visualizationType) {
+    throw new Error(`Visualization type ${visualization.type} not found`)
+  }
+
+  return visualizationType.render({
+    source,
+    ...visualization.options,
+    onSelectItems,
+    onTotalItemsChange,
+  })
 }
