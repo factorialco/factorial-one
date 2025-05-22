@@ -1,6 +1,6 @@
 export default {
   preset: "react-native",
-  setupFilesAfterEnv: ["@testing-library/jest-native/extend-expect"],
+  setupFilesAfterEnv: ["@testing-library/react-native/extend-expect"],
   transform: {
     "^.+\\.[jt]sx?$": "babel-jest",
   },
