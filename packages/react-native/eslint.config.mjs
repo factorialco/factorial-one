@@ -23,7 +23,7 @@ const reactSettings = {
 export default [
   // Ignore dist and other config files
   {
-    ignores: ["**/dist", "**/.eslintrc.cjs"],
+    ignores: ["**/dist", "**/.eslintrc.cjs", "**/babel.config.cjs"],
   },
 
   // Main React Native configuration
@@ -36,8 +36,8 @@ export default [
       "eslint:recommended",
       "plugin:react/recommended",
       "plugin:@typescript-eslint/recommended",
-      "plugin:react-hooks/recommended"
-    )
+      "plugin:react-hooks/recommended",
+    ),
   ).map((config) => ({
     ...config,
     settings: {
