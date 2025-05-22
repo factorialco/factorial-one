@@ -27,6 +27,7 @@ import {
   filters,
   filterUsers,
   generateMockUsers,
+  getMockVisualizations,
   mockUsers,
   PERFORMANCE_SCORE_MOCK,
   PROJECTS_MOCK,
@@ -870,51 +871,13 @@ export const WithMultipleVisualizations: Story = {
       }),
     })
 
-    return (
-      <OneDataCollection
-        source={source}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
-            },
-          },
-        ]}
-      />
+    const visualizations = Object.values(
+      getMockVisualizations({
+        frozenColumns: 0,
+      })
     )
+
+    return <OneDataCollection source={source} visualizations={visualizations} />
   },
 }
 

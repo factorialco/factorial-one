@@ -27,12 +27,7 @@ export type Visualization<
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
   Grouping extends GroupingDefinition<Record>,
-> = {
-  /** Human-readable label for the visualization */
-  label: string
-  /** Icon to represent the visualization in UI */
-  icon: IconType
-} & (
+> =
   | {
       /** Card-based visualization type */
       type: "card"
@@ -46,6 +41,10 @@ export type Visualization<
       options: TableVisualizationOptions<Record, Filters, Sortings>
     }
   | {
+      /** Human-readable label for the visualization */
+      label: string
+      /** Icon to represent the visualization in UI */
+      icon: IconType
       /** Custom visualization type */
       type: "custom"
       /** Custom component to render the visualization */
@@ -62,7 +61,6 @@ export type Visualization<
         >
       }) => JSX.Element
     }
-)
 
 /**
  * Represents the type of visualization.

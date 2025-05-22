@@ -1,10 +1,14 @@
-import { OnSelectItemsCallback } from "../../types"
+import { CollectionProps, OnSelectItemsCallback } from "../../types"
 
 import { FiltersDefinition } from "../../Filters/types"
 import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { DataSource, RecordType, SortingsDefinition } from "../../types"
+import {
+  collectionVisualizations,
+  VisualizacionTypeDefinition,
+} from "./collectionViewRegistry"
 import { Visualization } from "./types"
 
 /**
@@ -72,6 +76,7 @@ export const VisualizationRenderer = <
       Sortings,
       ItemActions,
       NavigationFilters,
+      Grouping,
       object
     >
   >
