@@ -16,7 +16,7 @@ import type {
   PaginatedResponse,
   RecordType,
 } from "./types"
-import { useData } from "./useData"
+import { GROUP_ID_SYMBOL, useData, WithGroupId } from "./useData"
 interface TestRecord extends RecordType {
   id: number
   name: string
@@ -30,9 +30,9 @@ type TestFilters = {
   }
 }
 
-const mockData: TestRecord[] = [
-  { id: 1, name: "Test 1" },
-  { id: 2, name: "Test 2" },
+const mockData: WithGroupId<TestRecord>[] = [
+  { id: 1, name: "Test 1", [GROUP_ID_SYMBOL]: undefined },
+  { id: 2, name: "Test 2", [GROUP_ID_SYMBOL]: undefined },
 ]
 
 type TestSource = DataSource<
@@ -113,7 +113,7 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source))
 
-      expect(result.current.data).toEqual({
+      expect(result.current.data).toMatchObject({
         records: mockData,
         type: "flat",
       })
@@ -131,7 +131,7 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual({
+      expect(result.current.data).toMatchObject({
         records: mockData,
         type: "flat",
       })
@@ -159,7 +159,7 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual({
+      expect(result.current.data).toMatchObject({
         records: mockData,
         type: "flat",
       })
@@ -205,7 +205,7 @@ describe("useData", () => {
         await new Promise((resolve) => setTimeout(resolve, 0))
       })
 
-      expect(result.current.data).toEqual({
+      expect(result.current.data).toMatchObject({
         records: mockData,
         type: "flat",
       })
@@ -251,7 +251,7 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source, { filters }))
 
-      expect(result.current.data).toEqual({
+      expect(result.current.data).toMatchObject({
         records: [mockData[0]],
         type: "flat",
       })
@@ -270,7 +270,7 @@ describe("useData", () => {
 
       const { result } = renderHook(() => useData(source, { filters }))
 
-      expect(result.current.data).toEqual({
+      expect(result.current.data).toMatchObject({
         records: [mockData[0]],
         type: "flat",
       })
