@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.64.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.63.0...factorial-one-react-v1.64.0) (2025-05-22)
+
+
+### Features
+
+* oneEllipsis component ([#1834](https://github.com/factorialco/factorial-one/issues/1834)) ([62cf170](https://github.com/factorialco/factorial-one/commit/62cf1701fd717d18444fe69daecbf8ccbd7a9211))
+
 ## [1.63.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.62.1...factorial-one-react-v1.63.0) (2025-05-22)
 
 
