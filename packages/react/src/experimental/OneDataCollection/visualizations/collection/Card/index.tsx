@@ -17,7 +17,12 @@ import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
-import { DataSource, GroupingDefinition, RecordType } from "../../../types"
+import {
+  CollectionProps,
+  DataSource,
+  GroupingDefinition,
+  RecordType,
+} from "../../../types"
 import { useData } from "../../../useData"
 
 export type CardPropertyDefinition<T> = PropertyDefinition<T>
@@ -53,6 +58,27 @@ const CardGrid = ({ children }: { children: React.ReactNode }) => {
  */
 
 export type CardCollectionProps<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+> = CollectionProps<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping,
+  CardVisualizationOptions<Record, Filters, Sortings>
+>
+
+/**
+ * Group Cards: Renders the cards for a group
+ */
+
+type GroupCardsProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
@@ -99,8 +125,7 @@ const GroupCards = <
   Sortings,
   ItemActions,
   NavigationFilters,
-  Grouping,
-  CardVisualizationOptions<Record, Filters, Sortings>
+  Grouping
 >) => {
   const renderValue = (
     item: Record,
@@ -205,8 +230,7 @@ export const CardCollection = <
   Sortings,
   ItemActions,
   NavigationFilters,
-  Grouping,
-  CardVisualizationOptions<Record, Filters, Sortings>
+  Grouping
 >) => {
   const t = useI18n()
 
@@ -320,6 +344,8 @@ export const CardCollection = <
               handleSelectItemChange={handleSelectItemChange}
               title={title}
               cardProperties={cardProperties}
+              description={description}
+              avatar={avatar}
             />
           )}
         </>

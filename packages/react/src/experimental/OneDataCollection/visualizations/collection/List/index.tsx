@@ -2,6 +2,10 @@ import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { OnePagination } from "@/experimental/OnePagination"
 
+import { AvatarVariant } from "@/experimental/exports"
+import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
+import { useGroups } from "@/experimental/OneDataCollection/useGroups"
+import { Link } from "@/factorial-one"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { useEffect } from "react"
@@ -14,11 +18,115 @@ import {
   SortingsDefinition,
   SortingsState,
 } from "../../../sortings"
-import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
+import {
+  CollectionProps,
+  DataSource,
+  GroupingDefinition,
+  RecordType,
+} from "../../../types"
 import { useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
 import { ListPropertyDefinition, ListVisualizationOptions } from "./types"
 
+/**
+ * Group List: Renders the list for a group
+ */
+
+type GroupItemsProps<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+> = {
+  source: DataSource<
+    Record,
+    Filters,
+    Sortings,
+    ItemActions,
+    NavigationFilters,
+    Grouping
+  >
+  items: Record[]
+  selectedItems: Map<number | string, Record>
+  handleSelectItemChange: (item: Record, checked: boolean) => void
+  fields: ListPropertyDefinition<Record, Sortings>[]
+  title: (record: Record) => string
+  description?: (record: Record) => string
+  avatar?: (record: Record) => AvatarVariant
+}
+
+const GroupListItems = <
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+>({
+  source,
+  items,
+  selectedItems,
+  handleSelectItemChange,
+  fields,
+  title,
+  description,
+  avatar,
+}: GroupItemsProps<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping
+>) => {
+  const renderCell = (
+    item: Record,
+    property: ListPropertyDefinition<Record, Sortings>
+  ) => {
+    return renderProperty(item, property, "table")
+  }
+
+  return items.map((item, index) => {
+    const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
+    const itemOnClick = source.itemOnClick
+      ? source.itemOnClick(item)
+      : undefined
+    const id = source.selectable ? source.selectable(item) : undefined
+    return (
+      <div key={`row-${index}`} selected={!!id && selectedItems.has(id)}>
+        {source.selectable && id !== undefined && (
+          <div className="flex items-center justify-end">
+            <Checkbox
+              checked={selectedItems.has(id)}
+              onCheckedChange={(checked) =>
+                handleSelectItemChange(item, checked)
+              }
+              title={`Select ${source.selectable(item)}`}
+              hideLabel
+            />
+          </div>
+        )}
+        <Link href={itemHref} className={cn()}>
+          TEST
+        </Link>
+        {(fields || []).map((field, fieldIndex) => (
+          <div key={String(field.label)} onClick={itemOnClick}>
+            <div className={cn()}>{renderCell(item, field)}</div>
+          </div>
+        ))}
+        {source.itemActions && (
+          <ActionsDropdown item={item} actions={source.itemActions} />
+        )}
+      </div>
+    )
+  })
+}
+
+/**
+ * Group List: Renders the list for a group
+ */
 export type ListCollectionProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
@@ -126,6 +234,13 @@ export const ListCollection = <
     })
   }
 
+  /**
+   * Groups
+   */
+  const { openGroups, setGroupOpen } = useGroups(
+    data?.type === "grouped" ? data.groups : []
+  )
+
   if (isInitialLoading) {
     return "TODO LOADING skeleton"
   }
@@ -159,38 +274,36 @@ export const ListCollection = <
       />
 
       <p>IsLoading: {isLoading.toString()}</p>
-      {data.map((item, index) => {
-        const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
-        const itemOnClick = source.itemOnClick
-          ? source.itemOnClick(item)
-          : undefined
-        const id = source.selectable ? source.selectable(item) : undefined
-        return (
-          <div key={`row-${index}`} selected={!!id && selectedItems.has(id)}>
-            {source.selectable && id !== undefined && (
-              <div className="flex items-center justify-end">
-                <Checkbox
-                  checked={selectedItems.has(id)}
-                  onCheckedChange={(checked) =>
-                    handleSelectItemChange(item, checked)
-                  }
-                  title={`Select ${source.selectable(item)}`}
-                  hideLabel
-                />
-              </div>
-            )}
-            {(fields || []).map((field, fieldIndex) => (
-              <div key={String(field.label)} onClick={itemOnClick}>
-                HOLA
-                <div className={cn()}>{renderCell(item, field)}</div>
-              </div>
-            ))}
-            {source.itemActions && (
-              <ActionsDropdown item={item} actions={source.itemActions} />
-            )}
-          </div>
-        )
-      })}
+      {data.type === "grouped" &&
+        data.groups.map((group, index) => {
+          return (
+            <>
+              <GroupHeader
+                label={group.label}
+                itemCount={group.itemCount}
+                open={openGroups[group.key]}
+                onOpenChange={(open) => setGroupOpen(group.key, open)}
+              />
+              <GroupListItems
+                source={source}
+                items={group.records}
+                selectedItems={selectedItems}
+                handleSelectItemChange={handleSelectItemChange}
+                fields={fields}
+              />
+            </>
+          )
+        })}
+
+      {data?.type === "flat" && (
+        <GroupListItems
+          source={source}
+          items={data.records}
+          selectedItems={selectedItems}
+          handleSelectItemChange={handleSelectItemChange}
+          fields={fields}
+        />
+      )}
 
       {paginationInfo && (
         <div className="flex w-full items-center justify-between px-6">
