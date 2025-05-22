@@ -72,7 +72,7 @@ const createStory = (success: boolean) => {
             )
           }
           setIsOpen(true)
-        } catch (error) {
+        } catch {
           setIsOpen(true)
         } finally {
           setIsLoading(false)
