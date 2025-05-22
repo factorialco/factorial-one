@@ -128,11 +128,12 @@ export const TableCollection = <
    */
   const {
     selectedItems,
-    isAllSelected,
-    isPartiallySelected,
+    allSelectedStatus,
+    groupAllSelectedStatus,
     handleSelectItemChange,
     handleSelectAll,
-  } = useSelectable(data?.records ?? [], paginationInfo, source, onSelectItems)
+    handleSelectGroupChange,
+  } = useSelectable(data, paginationInfo, source, onSelectItems)
 
   /**
    * Determine the sort state of a column
@@ -179,8 +180,12 @@ export const TableCollection = <
   /*
    * Groups
    */
+
+  const collapsible = source.grouping?.collapsible
+  const defaultOpenGroups = source.grouping?.defaultOpenGroups
   const { openGroups, setGroupOpen } = useGroups(
-    data?.type === "grouped" ? data.groups : []
+    data?.type === "grouped" ? data.groups : [],
+    defaultOpenGroups
   )
 
   /*
@@ -220,8 +225,8 @@ export const TableCollection = <
               >
                 <div className="flex w-full items-center justify-end">
                   <Checkbox
-                    checked={isAllSelected || isPartiallySelected}
-                    indeterminate={isPartiallySelected}
+                    checked={allSelectedStatus.checked}
+                    indeterminate={allSelectedStatus.indeterminate}
                     onCheckedChange={handleSelectAll}
                     title="Select all"
                     hideLabel
@@ -284,15 +289,25 @@ export const TableCollection = <
             data.groups.map((group, groupIndex) => {
               const itemCount = group.itemCount
               return (
-                <Fragment key={`group-${groupIndex}`}>
-                  <TableRow key={`group-header-${groupIndex}`}>
-                    {source.selectable && (
-                      <TableCell width={checkColumnWidth} sticky={{ left: 0 }}>
-                        &nbsp;
-                      </TableCell>
-                    )}
-                    <TableCell colSpan={columns.length}>
+                <Fragment key={`group-${group.key}`}>
+                  <TableRow key={`group-header-${group.key}`}>
+                    <TableCell
+                      colSpan={columns.length + (source.selectable ? 1 : 0)}
+                    >
                       <GroupHeader
+                        className="sticky left-0"
+                        selectable={!!source.selectable}
+                        select={
+                          groupAllSelectedStatus[group.key]?.checked
+                            ? true
+                            : groupAllSelectedStatus[group.key]?.indeterminate
+                              ? "indeterminate"
+                              : false
+                        }
+                        onSelectChange={(checked) =>
+                          handleSelectGroupChange(group, checked)
+                        }
+                        showOpenChange={collapsible}
                         label={group.label}
                         itemCount={itemCount}
                         open={openGroups[group.key]}
@@ -302,13 +317,13 @@ export const TableCollection = <
                   </TableRow>
 
                   <AnimatePresence key={`group-animate-${groupIndex}`}>
-                    {openGroups[group.key] &&
-                      MotionRow &&
+                    {MotionRow &&
+                      (!collapsible || openGroups[group.key]) &&
                       group.records.map((item, index) => {
                         return (
                           <MotionRow
                             variants={getAnimationVariants()}
-                            initial="hidden"
+                            initial={collapsible ? "hidden" : "visible"}
                             animate="visible"
                             exit="hidden"
                             custom={index}
