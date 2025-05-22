@@ -1,11 +1,15 @@
-import { Await } from "@/components/Utilities/Await"
 import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { OneCard } from "@/experimental/OneCard"
+import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
+import {
+  getAnimationVariants,
+  useGroups,
+} from "@/experimental/OneDataCollection/useGroups"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
-import { Counter } from "@/experimental/exports"
 import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { Skeleton } from "@/ui/skeleton"
+import { AnimatePresence, motion } from "framer-motion"
 import { useEffect, useMemo } from "react"
 import { useI18n } from "../../../../../lib/providers/i18n"
 import { OnePagination } from "../../../../OnePagination"
@@ -43,7 +47,7 @@ const findNextMultiple = (n: number): number => {
 
 const CardGrid = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="grid grid-cols-1 gap-4 px-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {children}
     </div>
   )
@@ -140,31 +144,44 @@ const GroupCards = <
         const selectable = !!source.selectable && id !== undefined
 
         return (
-          <OneCard
+          <motion.div
             key={index}
-            title={title(item)}
-            selectable={selectable}
-            description={description ? description(item) : undefined}
-            avatar={avatar ? avatar(item) : undefined}
-            selected={selectable && selectedItems.has(id)}
-            onSelect={(selected) => handleSelectItemChange(item, selected)}
-            secondaryActions={secondaryActions}
-            primaryAction={primaryAction}
-            otherActions={otherActions}
-            onClick={itemOnClick}
-            link={itemHref}
+            layout
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            custom={index}
+            variants={getAnimationVariants({
+              delay: 0.02,
+              duration: 0.3,
+            })}
           >
-            <div className="flex flex-col gap-2">
-              {cardProperties.map((property) => (
-                <div key={String(property.label)}>
-                  <div className="text-muted-foreground text-sm font-medium">
-                    {property.label}
+            <OneCard
+              key={index}
+              title={title(item)}
+              selectable={selectable}
+              description={description ? description(item) : undefined}
+              avatar={avatar ? avatar(item) : undefined}
+              selected={selectable && selectedItems.has(id)}
+              onSelect={(selected) => handleSelectItemChange(item, selected)}
+              secondaryActions={secondaryActions}
+              primaryAction={primaryAction}
+              otherActions={otherActions}
+              onClick={itemOnClick}
+              link={itemHref}
+            >
+              <div className="flex flex-col gap-2">
+                {cardProperties.map((property) => (
+                  <div key={String(property.label)}>
+                    <div className="text-muted-foreground text-sm font-medium">
+                      {property.label}
+                    </div>
+                    <div className="text-sm">{renderValue(item, property)}</div>
                   </div>
-                  <div className="text-sm">{renderValue(item, property)}</div>
-                </div>
-              ))}
-            </div>
-          </OneCard>
+                ))}
+              </div>
+            </OneCard>
+          </motion.div>
         )
       })}
     </CardGrid>
@@ -239,6 +256,13 @@ export const CardCollection = <
     // handleSelectAll,
   } = useSelectable(data.records, paginationInfo, source, onSelectItems)
 
+  /**
+   * Groups
+   */
+  const { openGroups, setGroupOpen } = useGroups(
+    data?.type === "grouped" ? data.groups : []
+  )
+
   return (
     <>
       {isInitialLoading ? (
@@ -265,36 +289,29 @@ export const CardCollection = <
         <>
           {data?.type === "grouped" &&
             data.groups.map((group) => {
-              const itemCount = group.itemCount
               return (
                 <>
-                  <div className="flex items-center gap-2">
-                    <Await
-                      resolve={group.label}
-                      fallback={<Skeleton className="h-4 w-24" />}
-                    >
-                      {(label) => label}
-                    </Await>
-
-                    <Await
-                      resolve={itemCount}
-                      fallback={<Skeleton className="h-4 w-5" />}
-                    >
-                      {(count) =>
-                        count !== undefined && <Counter value={count} />
-                      }
-                    </Await>
-                  </div>
-                  <GroupCards
-                    source={source}
-                    items={group.records}
-                    selectedItems={selectedItems}
-                    handleSelectItemChange={handleSelectItemChange}
-                    title={title}
-                    cardProperties={cardProperties}
-                    description={description}
-                    avatar={avatar}
+                  <GroupHeader
+                    label={group.label}
+                    itemCount={group.itemCount}
+                    open={openGroups[group.key]}
+                    onOpenChange={(open) => setGroupOpen(group.key, open)}
                   />
+                  <AnimatePresence>
+                    {openGroups[group.key] && (
+                      <GroupCards
+                        key={group.key}
+                        source={source}
+                        items={group.records}
+                        selectedItems={selectedItems}
+                        handleSelectItemChange={handleSelectItemChange}
+                        title={title}
+                        cardProperties={cardProperties}
+                        description={description}
+                        avatar={avatar}
+                      />
+                    )}
+                  </AnimatePresence>
                 </>
               )
             })}
