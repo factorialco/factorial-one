@@ -5,7 +5,7 @@ import { cn } from "../../../../../lib/utils"
 import { Spinner } from "../../../../exports"
 import { VirtualList } from "../../../../Navigation/VirtualList"
 import { Select } from "../../../Fields/Select"
-import { AvatarNameListItem } from "../../ListItem"
+import { EntitySelectListItem } from "../../ListItem"
 import {
   EntitySelectEntity,
   EntitySelectNamedGroup,
@@ -131,7 +131,7 @@ export const MainContent = ({
         ? !selected && selectedSubItems.length > 0
         : selected
       return (
-        <AvatarNameListItem
+        <EntitySelectListItem
           expanded={entity.expanded ?? false}
           onExpand={() => onToggleExpand(entity, true)}
           search={search}
@@ -244,7 +244,7 @@ export const MainContent = ({
         const partialSelected = !selected && selectedSubItems.length > 0
 
         return (
-          <AvatarNameListItem
+          <EntitySelectListItem
             groupView
             expanded={recoveredEntity.expanded ?? false}
             onExpand={(expanded) => onToggleExpand(recoveredEntity, expanded)}
@@ -284,7 +284,7 @@ export const MainContent = ({
       }
 
       return (
-        <AvatarNameListItem
+        <EntitySelectListItem
           expanded={false}
           onExpand={() => null}
           search={search}
