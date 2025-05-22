@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.10.0...factorial-one-core-v1.11.0) (2025-05-22)
+
+
+### Features
+
+* add arrowcycle icon ([7f1f680](https://github.com/factorialco/factorial-one/commit/7f1f680e5ad6a749ca1357832a41192daa0b48b7))
+
 ## [1.10.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.9.0...factorial-one-core-v1.10.0) (2025-05-21)
 
 
