@@ -10,15 +10,15 @@ import { userEvent } from "@testing-library/user-event"
 import { LayoutGrid } from "lucide-react"
 import { describe, expect, test, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
-import { PromiseState } from "../../lib/promise-to-observable"
-import { defaultTranslations, I18nProvider } from "../../lib/providers/i18n"
-import type { FiltersDefinition } from "./Filters/types"
-import { OneDataCollection, useDataSource } from "./index"
-import { ItemActionsDefinition } from "./item-actions"
-import { NavigationFiltersDefinition } from "./navigationFilters/types"
-import { SortingsDefinition } from "./sortings"
-import type { DataSource, GroupingDefinition, SortingsState } from "./types"
-import { useData } from "./useData"
+import { PromiseState } from "../../../lib/promise-to-observable"
+import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
+import type { FiltersDefinition } from "../Filters/types"
+import { OneDataCollection, useDataSource } from "../index"
+import { ItemActionsDefinition } from "../item-actions"
+import { NavigationFiltersDefinition } from "../navigationFilters/types"
+import { SortingsDefinition } from "../sortings"
+import type { DataSource, GroupingDefinition, SortingsState } from "../types"
+import { GROUP_ID_SYMBOL, useData, WithGroupId } from "../useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
@@ -26,7 +26,10 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 
 describe("Collections", () => {
   test("renders with basic search filter", async () => {
-    const mockData = [{ name: "John Doe" }, { name: "Jane Smith" }]
+    const mockData: WithGroupId<{ name: string }>[] = [
+      { name: "John Doe", [GROUP_ID_SYMBOL]: undefined },
+      { name: "Jane Smith", [GROUP_ID_SYMBOL]: undefined },
+    ]
 
     const { result } = renderHook(
       () =>
@@ -903,9 +906,17 @@ describe("Collections", () => {
       email: string
     }
 
-    const mockData = [
-      { id: 1, name: "John Doe", email: "john@example.com" },
-      { id: 2, name: "Jane Smith", email: "jane@example.com" },
+    const mockData: WithGroupId<Person>[] = [
+      {
+        id: 1,
+        name: "John Doe",
+        email: "john@example.com",
+      },
+      {
+        id: 2,
+        name: "Jane Smith",
+        email: "jane@example.com",
+      },
     ]
 
     // Create mock handlers for our actions
@@ -996,7 +1007,12 @@ describe("Collections", () => {
 
     // Verify our handler was called with the correct item
     expect(handleEdit).toHaveBeenCalledTimes(1)
-    expect(handleEdit).toHaveBeenCalledWith(mockData[0])
+    expect(handleEdit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ...mockData[0],
+        [GROUP_ID_SYMBOL]: undefined,
+      })
+    )
   })
 
   test("integrates search functionality", async () => {
