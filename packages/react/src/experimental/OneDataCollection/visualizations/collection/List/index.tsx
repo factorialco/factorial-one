@@ -14,7 +14,7 @@ import {
   SortingsDefinition,
   SortingsState,
 } from "../../../sortings"
-import { CollectionProps, RecordType } from "../../../types"
+import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
 import { ListPropertyDefinition, ListVisualizationOptions } from "./types"
@@ -25,12 +25,14 @@ export type ListCollectionProps<
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 > = CollectionProps<
   Record,
   Filters,
   Sortings,
   ItemActions,
   NavigationFilters,
+  Grouping,
   ListVisualizationOptions<Record, Filters, Sortings>
 >
 
@@ -40,6 +42,7 @@ export const ListCollection = <
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<Record>,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
 >({
   fields,
   source,
@@ -50,7 +53,8 @@ export const ListCollection = <
   Filters,
   Sortings,
   ItemActions,
-  NavigationFilters
+  NavigationFilters,
+  Grouping
 >) => {
   const t = useI18n()
 
@@ -58,7 +62,9 @@ export const ListCollection = <
     Record,
     Filters,
     Sortings,
-    NavigationFilters
+    ItemActions,
+    NavigationFilters,
+    Grouping
   >(source)
 
   useEffect(() => {
@@ -76,7 +82,7 @@ export const ListCollection = <
     isPartiallySelected,
     handleSelectItemChange,
     handleSelectAll,
-  } = useSelectable(data, paginationInfo, source, onSelectItems)
+  } = useSelectable(data.records, paginationInfo, source, onSelectItems)
 
   /**
    * Determine the sort state of a column
