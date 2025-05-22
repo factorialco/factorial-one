@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.64.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.1...factorial-one-react-v1.64.2) (2025-05-22)
+
+
+### Bug Fixes
+
+* remove remaingin avatarnameselector ([#1870](https://github.com/factorialco/factorial-one/issues/1870)) ([aae223c](https://github.com/factorialco/factorial-one/commit/aae223c5b69cb93ab6bef4bf1bea533c44fbed9b))
+
 ## [1.64.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.0...factorial-one-react-v1.64.1) (2025-05-22)
 
 
