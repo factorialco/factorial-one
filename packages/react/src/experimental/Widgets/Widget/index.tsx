@@ -21,7 +21,7 @@ import {
   CardLink,
   CardSubtitle,
   CardTitle,
-} from "@/ui/card"
+} from "@/ui/Card"
 import { Separator } from "@/ui/separator"
 import { Skeleton as SkeletonPrimitive } from "@/ui/skeleton"
 import { cva, type VariantProps } from "cva"
