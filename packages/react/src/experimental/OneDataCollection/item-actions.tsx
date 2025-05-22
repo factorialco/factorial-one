@@ -1,10 +1,20 @@
-import { DropdownItem } from "../exports"
+import {
+  DropdownItemObject,
+  DropdownItemSeparator,
+} from "../Navigation/Dropdown/internal"
 
 import { RecordType } from "./types"
 
-export type ItemActionsDefinition<T extends RecordType> = (
-  item: T
-) => Array<DropdownItem & { enabled?: boolean }> | undefined
+export type ItemActionsDefinition<T extends RecordType> = (item: T) =>
+  | Array<
+      | DropdownItemSeparator
+      | (Omit<DropdownItemObject, "type" | "onClick"> & {
+          onClick: () => void
+          enabled?: boolean
+          type?: "primary" | "secondary" | "other"
+        })
+    >
+  | undefined
 
 /**
  * Filters the actions based on the enabled property
@@ -17,5 +27,8 @@ export const filterItemActions = <T extends RecordType>(
   item: T
 ) =>
   (actions(item) || []).filter(
-    (action) => action.enabled === undefined || action.enabled
+    (action) =>
+      action.type === "separator" ||
+      action.enabled === undefined ||
+      action.enabled
   )
