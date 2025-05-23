@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.65.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.2...factorial-one-react-v1.65.0) (2025-05-23)
+
+
+### Features
+
+* add actions to Select ([#1874](https://github.com/factorialco/factorial-one/issues/1874)) ([cfe0b7a](https://github.com/factorialco/factorial-one/commit/cfe0b7a408940989700248293ac775c353c3297d))
+
 ## [1.64.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.1...factorial-one-react-v1.64.2) (2025-05-22)
 
 
