@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.11.0...factorial-one-core-v1.12.0) (2025-05-23)
+
+
+### Features
+
+* add actions to Select ([#1874](https://github.com/factorialco/factorial-one/issues/1874)) ([cfe0b7a](https://github.com/factorialco/factorial-one/commit/cfe0b7a408940989700248293ac775c353c3297d))
+
 ## [1.11.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.10.0...factorial-one-core-v1.11.0) (2025-05-22)
 
 
