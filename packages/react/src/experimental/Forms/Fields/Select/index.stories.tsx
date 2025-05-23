@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { Select, SelectProps } from "./index"
 
-import { Plus, Trash } from "lucide-react"
+import { Plus } from "lucide-react"
 import { useState } from "react"
 import { IconType } from "../../../../components/Utilities/Icon"
 import { Appearance, Circle, Desktop } from "../../../../icons/app"
@@ -97,7 +97,7 @@ const meta: Meta = {
       description:
         "<p>Array of options to show in the select. Each option can its an object of type `SelectItemObject` or `'separator'`" +
         " to render a separator line</p>" +
-        "```" +
+        "```typescript\n" +
         "type SelectItemObject<T> = {\n" +
         "  value: T\n" +
         "  label: string\n" +
@@ -110,6 +110,17 @@ const meta: Meta = {
     onChange: {
       description:
         "Function to handle the change event. Returns the value of the selected option, and the item object if it exists",
+    },
+    actions: {
+      description:
+        "<p>List of action buttons that will be displayed at the bottom of the select dropdown. Each action should have a label, onClick handler, optional icon, and variant.</p>" +
+        "```typescript\n" +
+        "type Action = {\n" +
+        "  label: string\n" +
+        "  onClick: () => void\n" +
+        "  icon?: IconType\n" +
+        "  variant?: 'ghost' | 'critical'\n" +
+        "}```",
     },
   },
   args: {
@@ -152,16 +163,10 @@ export const WithActions: Story = {
     searchBoxPlaceholder: "Search for a theme",
     actions: [
       {
-        label: "Create",
+        label: "Create new option",
         onClick: fn(),
         icon: Plus,
         variant: "ghost",
-      },
-      {
-        label: "Delete all",
-        onClick: fn(),
-        icon: Trash,
-        variant: "critical",
       },
     ],
   },
