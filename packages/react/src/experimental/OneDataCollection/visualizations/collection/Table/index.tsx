@@ -28,6 +28,7 @@ import {
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
+import { statusToChecked } from "../utils"
 import { Row } from "./components/Row"
 
 export type WithOptionalSorting<
@@ -297,13 +298,9 @@ export const TableCollection = <
                       <GroupHeader
                         className="px-4"
                         selectable={!!source.selectable}
-                        select={
-                          groupAllSelectedStatus[group.key]?.checked
-                            ? true
-                            : groupAllSelectedStatus[group.key]?.indeterminate
-                              ? "indeterminate"
-                              : false
-                        }
+                        select={statusToChecked(
+                          groupAllSelectedStatus[group.key]
+                        )}
                         onSelectChange={(checked) =>
                           handleSelectGroupChange(group, checked)
                         }
