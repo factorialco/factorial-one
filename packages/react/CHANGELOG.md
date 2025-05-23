@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.65.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.65.0...factorial-one-react-v1.65.1) (2025-05-23)
+
+
+### Bug Fixes
+
+* **sidebar:** update internal state when favorites prop changes ([#1876](https://github.com/factorialco/factorial-one/issues/1876)) ([f4a55a2](https://github.com/factorialco/factorial-one/commit/f4a55a2b17df9386567f23576f36440a1dfceb7a))
+
 ## [1.65.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.2...factorial-one-react-v1.65.0) (2025-05-23)
 
 
