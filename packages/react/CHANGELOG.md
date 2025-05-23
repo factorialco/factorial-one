@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.66.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.65.1...factorial-one-react-v1.66.0) (2025-05-23)
+
+
+### Features
+
+* **Button:** new pressed styles ([#1864](https://github.com/factorialco/factorial-one/issues/1864)) ([2df9128](https://github.com/factorialco/factorial-one/commit/2df9128c180358416a9263c55af0a3ad6d036801))
+
 ## [1.65.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.65.0...factorial-one-react-v1.65.1) (2025-05-23)
 
 
