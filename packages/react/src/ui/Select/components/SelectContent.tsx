@@ -121,7 +121,7 @@ const SelectContent = forwardRef<
           asList || virtualReady ? "" : "opacity-0"
         )}
         style={{
-          height: virtualizer.getTotalSize(),
+          height: virtualizer.getTotalSize() + 8, // Add 8px to the height to account for the padding
           width: "100%",
           position: "relative",
         }}
@@ -177,7 +177,7 @@ const SelectContent = forwardRef<
         }}
       >
         <>
-          {!!props.top && <div>{props.top}</div>}
+          {props.top}
           <ScrollArea
             viewportRef={parentRef}
             className={cn(
@@ -191,6 +191,7 @@ const SelectContent = forwardRef<
               <SelectPrimitive.Viewport
                 asChild
                 className={cn(
+                  "p-1",
                   !asList &&
                     position === "popper" &&
                     "h-[var(--radix-select-trigger-height)] min-w-[var(--radix-select-trigger-width)]"
@@ -200,7 +201,7 @@ const SelectContent = forwardRef<
               </SelectPrimitive.Viewport>
             )}
           </ScrollArea>
-          {!!props.bottom && <div>{props.bottom}</div>}
+          {props.bottom}
         </>
       </SelectPrimitive.Content>
     )

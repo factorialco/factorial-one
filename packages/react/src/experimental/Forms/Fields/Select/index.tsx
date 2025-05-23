@@ -1,4 +1,6 @@
+import { Button } from "@/components/Actions/Button"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { ButtonVariant } from "@/ui/button"
 import {
   SelectContent,
   SelectItem as SelectItemPrimitive,
@@ -9,7 +11,7 @@ import {
   VirtualItem,
 } from "@/ui/Select"
 import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
-import { Icon } from "../../../../components/Utilities/Icon"
+import { Icon, IconType } from "../../../../components/Utilities/Icon"
 import { ChevronDown } from "../../../../icons/app"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar } from "../../../Information/Avatars/Avatar"
@@ -17,6 +19,14 @@ import { F1SearchBox } from "../F1SearchBox"
 import type { SelectItemObject, SelectItemProps } from "./types"
 
 export * from "./types"
+
+type Action = {
+  label: string
+  onClick: () => void
+  icon?: IconType
+  variant?: ButtonVariant
+  disabled?: boolean
+}
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Allow to pass anything as item */
 export type SelectProps<T, R = any> = {
@@ -37,6 +47,7 @@ export type SelectProps<T, R = any> = {
   searchEmptyMessage?: string
   className?: string
   selectContentClassName?: string
+  actions?: Action[]
 }
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
@@ -104,6 +115,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
       searchEmptyMessage,
       className,
       selectContentClassName,
+      actions,
       ...props
     },
     ref
@@ -226,9 +238,27 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
             items={items}
             className={selectContentClassName}
             emptyMessage={searchEmptyMessage}
+            bottom={
+              actions && (
+                <>
+                  <div className="flex w-full flex-row gap-2 border-0 border-t border-solid border-f1-border-secondary p-2">
+                    {actions.map((action) => (
+                      <Button
+                        key={action.label}
+                        variant={action.variant}
+                        onClick={action.onClick}
+                        icon={action.icon}
+                        label={action.label}
+                        disabled={action.disabled}
+                      />
+                    ))}
+                  </div>
+                </>
+              )
+            }
             top={
               showSearchBox && (
-                <div className="p-2">
+                <div className="px-2 pt-2">
                   <F1SearchBox
                     placeholder={searchBoxPlaceholder}
                     onChange={onSearchChangeLocal}

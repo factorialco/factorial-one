@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { Select, SelectProps } from "./index"
 
+import { Plus, Trash } from "lucide-react"
 import { useState } from "react"
 import { IconType } from "../../../../components/Utilities/Icon"
 import { Appearance, Circle, Desktop } from "../../../../icons/app"
@@ -141,6 +142,28 @@ export const WithSearchBox: Story = {
     showSearchBox: true,
     searchEmptyMessage: "No results found",
     searchBoxPlaceholder: "Search for a theme",
+  },
+}
+
+export const WithActions: Story = {
+  args: {
+    showSearchBox: true,
+    searchEmptyMessage: "No results found",
+    searchBoxPlaceholder: "Search for a theme",
+    actions: [
+      {
+        label: "Create",
+        onClick: fn(),
+        icon: Plus,
+        variant: "ghost",
+      },
+      {
+        label: "Delete all",
+        onClick: fn(),
+        icon: Trash,
+        variant: "critical",
+      },
+    ],
   },
 }
 
