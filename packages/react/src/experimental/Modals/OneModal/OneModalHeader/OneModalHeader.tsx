@@ -57,7 +57,7 @@ export const OneModalHeader = ({
 
   if (modalPosition === "right" && !shownBottomSheet) {
     return (
-      <div className="flex flex-col gap-3 px-4 py-4">
+      <div className="flex flex-col gap-3 bg-f1-background p-4">
         <div className="flex flex-row justify-between">
           <ButtonInternal
             variant="outline"
@@ -76,7 +76,7 @@ export const OneModalHeader = ({
   }
 
   return (
-    <div className="flex flex-row items-center justify-between px-4 py-4">
+    <div className="flex flex-row items-center justify-between bg-f1-background p-4">
       {!shownBottomSheet ? (
         <DialogTitle className={dialogClassName}>{title}</DialogTitle>
       ) : (
