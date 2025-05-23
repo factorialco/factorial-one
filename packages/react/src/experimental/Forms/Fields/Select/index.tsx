@@ -11,7 +11,14 @@ import {
   SelectValue as SelectValuePrimitive,
   VirtualItem,
 } from "@/ui/Select"
-import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import { ChevronDown } from "../../../../icons/app"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar } from "../../../Information/Avatars/Avatar"
@@ -155,10 +162,13 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
       }
     }, [open])
 
-    const onSearchChangeLocal = (value: string) => {
-      setSearchValue(value)
-      onSearchChange?.(value)
-    }
+    const onSearchChangeLocal = useCallback(
+      (value: string) => {
+        setSearchValue(value)
+        onSearchChange?.(value)
+      },
+      [setSearchValue, onSearchChange]
+    )
 
     const onValueChange = (value: string) => {
       // Resets the search value when the option is selected
