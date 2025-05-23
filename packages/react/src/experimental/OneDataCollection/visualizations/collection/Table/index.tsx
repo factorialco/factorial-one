@@ -280,7 +280,7 @@ export const TableCollection = <
                       colSpan={columns.length + (source.selectable ? 1 : 0)}
                     >
                       <GroupHeader
-                        className="sticky left-0"
+                        className="px-4"
                         selectable={!!source.selectable}
                         select={
                           groupAllSelectedStatus[group.key]?.checked
