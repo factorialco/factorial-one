@@ -10,15 +10,15 @@ import { userEvent } from "@testing-library/user-event"
 import { LayoutGrid } from "lucide-react"
 import { describe, expect, test, vi } from "vitest"
 import { Observable } from "zen-observable-ts"
-import { PromiseState } from "../../lib/promise-to-observable"
-import { defaultTranslations, I18nProvider } from "../../lib/providers/i18n"
-import type { FiltersDefinition } from "./Filters/types"
-import { OneDataCollection, useDataSource } from "./index"
-import { ItemActionsDefinition } from "./item-actions"
-import { NavigationFiltersDefinition } from "./navigationFilters/types"
-import { SortingsDefinition } from "./sortings"
-import type { DataSource } from "./types"
-import { useData } from "./useData"
+import { PromiseState } from "../../../lib/promise-to-observable"
+import { defaultTranslations, I18nProvider } from "../../../lib/providers/i18n"
+import type { FiltersDefinition } from "../Filters/types"
+import { OneDataCollection, useDataSource } from "../index"
+import { ItemActionsDefinition } from "../item-actions"
+import { NavigationFiltersDefinition } from "../navigationFilters/types"
+import { SortingsDefinition } from "../sortings"
+import type { DataSource, GroupingDefinition, SortingsState } from "../types"
+import { GROUP_ID_SYMBOL, useData, WithGroupId } from "../useData"
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
@@ -26,7 +26,10 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 
 describe("Collections", () => {
   test("renders with basic search filter", async () => {
-    const mockData = [{ name: "John Doe" }, { name: "Jane Smith" }]
+    const mockData: WithGroupId<{ name: string }>[] = [
+      { name: "John Doe", [GROUP_ID_SYMBOL]: undefined },
+      { name: "Jane Smith", [GROUP_ID_SYMBOL]: undefined },
+    ]
 
     const { result } = renderHook(
       () =>
@@ -298,19 +301,21 @@ describe("Collections", () => {
         FiltersDefinition,
         SortingsDefinition,
         ItemActionsDefinition<Item>,
-        NavigationFiltersDefinition
+        NavigationFiltersDefinition,
+        GroupingDefinition<Item>
       >
     }) => {
       const { data } = useData<
         Item,
         FiltersDefinition,
         SortingsDefinition,
-        NavigationFiltersDefinition
+        NavigationFiltersDefinition,
+        GroupingDefinition<Item>
       >(source)
 
       return (
         <div data-testid="custom-visualization">
-          {data?.map((item) => (
+          {data?.records.map((item) => (
             <div key={item.email} className="custom-item">
               <h3>{item.name}</h3>
               <p>
@@ -416,16 +421,21 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFiltersDefinition
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
               const sorted = [...mockData]
 
-              if (sortings && sortings.field === "name") {
-                sorted.sort((a, b) => {
-                  const direction = sortings.order === "asc" ? 1 : -1
-                  return a.name.localeCompare(b.name) * direction
+              if (sortings) {
+                sortings.forEach(({ field, order }) => {
+                  if (field === "name") {
+                    sorted.sort((a, b) => {
+                      const direction = order === "asc" ? 1 : -1
+                      return a.name.localeCompare(b.name) * direction
+                    })
+                  }
                 })
               }
 
@@ -519,11 +529,17 @@ describe("Collections", () => {
     const fetchDataMock = vi.fn().mockImplementation(({ sortings }) => {
       const sorted = [...mockData]
 
-      if (sortings && sortings.field === "name") {
-        sorted.sort((a, b) => {
-          const direction = sortings.order === "asc" ? 1 : -1
-          return a.name.localeCompare(b.name) * direction
-        })
+      if (sortings) {
+        const nameSorting = sortings.find(
+          (sorting: SortingsState<SortingsDefinition>) =>
+            sorting?.field === "name"
+        )
+        if (nameSorting) {
+          sorted.sort((a, b) => {
+            const direction = nameSorting.order === "asc" ? 1 : -1
+            return a.name.localeCompare(b.name) * direction
+          })
+        }
       }
 
       return sorted
@@ -536,7 +552,8 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFiltersDefinition
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: fetchDataMock,
@@ -583,10 +600,12 @@ describe("Collections", () => {
     // Verify the fetchData function was called with the correct default sorting
     expect(fetchDataMock).toHaveBeenCalledWith(
       expect.objectContaining({
-        sortings: {
-          field: "name",
-          order: "desc",
-        },
+        sortings: [
+          {
+            field: "name",
+            order: "desc",
+          },
+        ],
       })
     )
 
@@ -622,7 +641,8 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFiltersDefinition
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async () => [
@@ -665,24 +685,27 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFiltersDefinition
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ sortings }) => {
               const sorted = [...mockData]
 
               if (sortings) {
-                if (sortings.field === "name") {
-                  sorted.sort((a, b) => {
-                    const direction = sortings.order === "asc" ? 1 : -1
-                    return a.name.localeCompare(b.name) * direction
-                  })
-                } else if (sortings.field === "email") {
-                  sorted.sort((a, b) => {
-                    const direction = sortings.order === "asc" ? 1 : -1
-                    return a.email.localeCompare(b.email) * direction
-                  })
-                }
+                sortings.forEach(({ field, order }) => {
+                  if (field === "name") {
+                    sorted.sort((a, b) => {
+                      const direction = order === "asc" ? 1 : -1
+                      return a.name.localeCompare(b.name) * direction
+                    })
+                  } else if (field === "email") {
+                    sorted.sort((a, b) => {
+                      const direction = order === "asc" ? 1 : -1
+                      return a.email.localeCompare(b.email) * direction
+                    })
+                  }
+                })
               }
 
               return sorted
@@ -883,9 +906,19 @@ describe("Collections", () => {
       email: string
     }
 
-    const mockData = [
-      { id: 1, name: "John Doe", email: "john@example.com" },
-      { id: 2, name: "Jane Smith", email: "jane@example.com" },
+    const mockData: WithGroupId<Person>[] = [
+      {
+        id: 1,
+        name: "John Doe",
+        email: "john@example.com",
+        [GROUP_ID_SYMBOL]: undefined,
+      },
+      {
+        id: 2,
+        name: "Jane Smith",
+        email: "jane@example.com",
+        [GROUP_ID_SYMBOL]: undefined,
+      },
     ]
 
     // Create mock handlers for our actions
@@ -900,7 +933,8 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFiltersDefinition
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async () => mockData,
@@ -975,7 +1009,12 @@ describe("Collections", () => {
 
     // Verify our handler was called with the correct item
     expect(handleEdit).toHaveBeenCalledTimes(1)
-    expect(handleEdit).toHaveBeenCalledWith(mockData[0])
+    expect(handleEdit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ...mockData[0],
+        [GROUP_ID_SYMBOL]: undefined,
+      })
+    )
   })
 
   test("integrates search functionality", async () => {
@@ -1014,7 +1053,8 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFiltersDefinition
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             fetchData: async ({ search }) => {
@@ -1104,7 +1144,8 @@ describe("Collections", () => {
           FiltersDefinition,
           SortingsDefinition,
           ItemActionsDefinition<Person>,
-          NavigationFiltersDefinition
+          NavigationFiltersDefinition,
+          GroupingDefinition<Person>
         >({
           dataAdapter: {
             paginationType: "pages",
