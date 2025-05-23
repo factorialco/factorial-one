@@ -24,7 +24,7 @@ import {
   NavigationFiltersState,
 } from "../navigationFilters/types"
 
-export const DEPARTMENTS = [
+export const DEPARTMENTS_MOCK = [
   "Engineering",
   "Product",
   "Design",
@@ -41,7 +41,7 @@ export const filters = {
     type: "in",
     label: "Department",
     options: {
-      options: DEPARTMENTS.map((value) => ({ value, label: value })),
+      options: DEPARTMENTS_MOCK.map((value) => ({ value, label: value })),
     },
   },
 } as const
@@ -128,7 +128,7 @@ export const mockUsers: {
   name: string
   email: string
   role: string
-  department: (typeof DEPARTMENTS)[number]
+  department: (typeof DEPARTMENTS_MOCK)[number]
   status: string
   isStarred: boolean
   href?: string
@@ -141,11 +141,11 @@ export const mockUsers: {
     name: "John Doe",
     email: "john@example.com",
     role: "Senior Engineer",
-    department: DEPARTMENTS[0],
+    department: DEPARTMENTS_MOCK[0],
     status: "active",
     isStarred: true,
     salary: 100000,
-    joinedAt: new Date(),
+    joinedAt: START_DATE_MOCK[0],
   },
   {
     index: 1,
@@ -153,11 +153,11 @@ export const mockUsers: {
     name: "Jane Smith",
     email: "jane@example.com",
     role: "Product Manager",
-    department: DEPARTMENTS[1],
+    department: DEPARTMENTS_MOCK[1],
     status: "active",
     isStarred: false,
     salary: 80000,
-    joinedAt: new Date(),
+    joinedAt: START_DATE_MOCK[1],
   },
   {
     index: 2,
@@ -165,11 +165,11 @@ export const mockUsers: {
     name: "Bob Johnson",
     email: "bob@example.com",
     role: "Designer",
-    department: DEPARTMENTS[2],
+    department: DEPARTMENTS_MOCK[2],
     status: "inactive",
     isStarred: false,
     salary: 90000,
-    joinedAt: new Date(new Date().setDate(new Date().getDate() + 1)),
+    joinedAt: START_DATE_MOCK[2],
   },
   {
     index: 3,
@@ -177,11 +177,11 @@ export const mockUsers: {
     name: "Alice Williams",
     email: "alice@example.com",
     role: "Marketing Lead",
-    department: DEPARTMENTS[3],
+    department: DEPARTMENTS_MOCK[3],
     status: "active",
     isStarred: true,
     salary: undefined,
-    joinedAt: new Date(new Date().setDate(new Date().getDate() + 2)),
+    joinedAt: START_DATE_MOCK[3],
   },
 ]
 
@@ -564,7 +564,7 @@ export const ExampleComponent = ({
 // Fix the generateMockUsers function to use the correct department types
 export const generateMockUsers = (count: number) => {
   return Array.from({ length: count }).map((_, index) => {
-    const department = DEPARTMENTS[index % DEPARTMENTS.length]
+    const department = DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length]
     return {
       index,
       id: `user-${index + 1}`,
@@ -577,9 +577,7 @@ export const generateMockUsers = (count: number) => {
       isStarred: index % 3 === 0,
       href: `/users/user-${index + 1}`,
       salary: department === "Marketing" ? 50000 + index * 1000 : undefined,
-      joinedAt: new Date(
-        new Date().setDate(new Date().getDate() + Math.floor(Math.random() * 4))
-      ),
+      joinedAt: START_DATE_MOCK[index % START_DATE_MOCK.length],
     }
   })
 }
@@ -596,7 +594,7 @@ export function createDataAdapter<
   TRecord extends RecordType & {
     name: string
     email: string
-    department: (typeof DEPARTMENTS)[number]
+    department: (typeof DEPARTMENTS_MOCK)[number]
     salary?: number
   },
   TFilters extends Record<string, FilterDefinition>,
