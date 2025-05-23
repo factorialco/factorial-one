@@ -6,7 +6,7 @@ import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import { SortingsDefinition } from "../sortings"
-import { DataSource } from "../types"
+import { DataSource, GroupingDefinition } from "../types"
 
 const meta = {
   title: "Data Collection/Collection Actions",
@@ -126,7 +126,8 @@ function BaseStory<
     Filters,
     Sortings,
     ItemActions,
-    NavigationFilters
+    NavigationFilters,
+    GroupingDefinition<(typeof mockUsers)[number]>
   >
 }) {
   return (
