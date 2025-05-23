@@ -17,6 +17,8 @@ import {
 import { VirtualItem } from "../index"
 import { SelectContext } from "../SelectContext"
 
+const VIEWBOX_VERTICAL_PADDING = 8
+
 /**
  * Select Content component
  */
@@ -121,7 +123,7 @@ const SelectContent = forwardRef<
           asList || virtualReady ? "" : "opacity-0"
         )}
         style={{
-          height: virtualizer.getTotalSize() + 8, // Add 8px to the height to account for the padding
+          height: virtualizer.getTotalSize() + VIEWBOX_VERTICAL_PADDING,
           width: "100%",
           position: "relative",
         }}
