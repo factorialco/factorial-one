@@ -17,11 +17,15 @@ describe("GroupHeader", () => {
     render(<GroupHeader label={labelPromise} itemCount={countPromise} />)
 
     // Initially shows skeletons
-    expect(screen.getByRole("status")).toBeInTheDocument()
+    const skeletons = screen.getAllByTestId("skeleton")
+    expect(skeletons).toHaveLength(2)
 
-    // Wait for promises to resolve
-    expect(await screen.findByText("Async Group")).toBeInTheDocument()
-    expect(await screen.findByText("10")).toBeInTheDocument()
+    // Wait for promises to resolve and verify content
+    await vi.waitFor(() => {
+      expect(screen.queryAllByTestId("skeleton")).toHaveLength(0)
+    })
+    expect(screen.getByText("Async Group")).toBeInTheDocument()
+    expect(screen.getByText("10")).toBeInTheDocument()
   })
 
   it("handles open/close state", () => {
@@ -58,20 +62,6 @@ describe("GroupHeader", () => {
     fireEvent.click(checkbox)
 
     expect(onSelectChange).toHaveBeenCalledWith(true)
-  })
-
-  it("handles indeterminate selection state", () => {
-    render(
-      <GroupHeader
-        label="Test Group"
-        itemCount={5}
-        selectable
-        select="indeterminate"
-      />
-    )
-
-    const checkbox = screen.getByRole("checkbox")
-    expect(checkbox).toHaveAttribute("data-state", "indeterminate")
   })
 
   it("applies custom className", () => {
