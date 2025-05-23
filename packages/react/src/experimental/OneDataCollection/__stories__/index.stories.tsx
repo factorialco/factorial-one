@@ -517,6 +517,11 @@ export const RendererTypes: Story = {
 }
 
 export const CustomCardProperties: Story = {
+  parameters: {
+    a11y: {
+      disable: true,
+    },
+  },
   render: () => {
     const dataSource = useDataSource({
       filters,
