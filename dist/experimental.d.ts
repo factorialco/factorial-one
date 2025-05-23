@@ -55,6 +55,14 @@ declare type Action = {
     label: string;
     onClick: () => void;
     icon?: IconType;
+    variant?: ButtonVariant;
+    disabled?: boolean;
+};
+
+declare type Action_2 = {
+    label: string;
+    onClick: () => void;
+    icon?: IconType;
     variant?: ButtonProps["variant"];
 };
 
@@ -216,7 +224,7 @@ export declare interface BadgeProps extends VariantProps<typeof badgeVariants> {
 }
 
 declare const badgeVariants: (props?: ({
-    type?: "critical" | "neutral" | "positive" | "highlight" | "warning" | undefined;
+    type?: "critical" | "neutral" | "positive" | "warning" | "highlight" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
 } & ({
     class?: ClassValue;
@@ -1685,7 +1693,15 @@ export declare type GroupingDefinition<R extends RecordType> = {
             itemCount?: (groupId: R[K], filters: FiltersState<FiltersDefinition>) => number | undefined | Promise<number | undefined>;
         };
     };
-};
+} & ({
+    /** Whether the grouping is non collapsible */
+    collapsible: true;
+    /** The initial open groups */
+    defaultOpenGroups?: boolean | string[];
+} | {
+    collapsible?: false;
+    defaultOpenGroups?: never;
+});
 
 /**
  * The selected the grouping state
@@ -1855,7 +1871,7 @@ export declare type mentionsConfig = {
     users: MentionedUser[];
 };
 
-export declare function Menu({ tree, onCollapse, onSort, onFavoritesChange, favorites, }: MenuProps): default_2.JSX.Element;
+export declare function Menu({ tree, onCollapse, onSort, onFavoritesChange, favorites, }: MenuProps): JSX_2.Element;
 
 export declare interface MenuCategory {
     id: string;
@@ -2310,12 +2326,13 @@ export declare type OnePersonListItemProps = {
     withPointerCursor?: boolean;
 };
 
-export declare type OnSelectItemsCallback<Record extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {
+export declare type OnSelectItemsCallback<R extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {
     allSelected: boolean | "indeterminate";
     itemsStatus: ReadonlyArray<{
-        item: Record;
+        item: R;
         checked: boolean;
     }>;
+    groupsStatus: Record<string, boolean>;
     filters: FiltersState<Filters>;
     selectedCount: number;
 }, clearSelectedItems: () => void) => void;
@@ -3081,6 +3098,7 @@ export declare type SelectProps<T, R = any> = {
     searchEmptyMessage?: string;
     className?: string;
     selectContentClassName?: string;
+    actions?: Action[];
 };
 
 declare type ShadAvatarProps = ComponentProps<typeof Avatar_2>;
@@ -3742,7 +3760,7 @@ export declare type WidgetEmptyStateProps = {
     title: string;
     description: string;
     emoji?: string;
-    actions?: Action[];
+    actions?: Action_2[];
 };
 
 export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_18): JSX_2.Element;

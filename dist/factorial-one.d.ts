@@ -350,6 +350,11 @@ declare const linkVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
+declare interface NextStepsProps {
+    title: string;
+    items: StepItemProps[];
+}
+
 export declare const PieChart: ForwardRefExoticComponent<Omit<PieChartProps & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
 
 export declare const PrivacyModeProvider: React_2.FC<{
@@ -403,6 +408,11 @@ export declare interface StandardLayoutProps extends VariantProps<typeof layoutV
     children?: default_2.ReactNode;
 }
 
+declare interface StepItemProps {
+    text: string;
+    isCompleted?: boolean;
+}
+
 declare type TranslationShape<T> = {
     [K in keyof T]: T[K] extends string ? string : T[K] extends Record<string, string | Record<string, unknown>> ? TranslationShape<T[K]> : never;
 };
@@ -415,6 +425,83 @@ export declare interface TwoColumnLayoutProps {
     children: ReactNode;
     sideContent: ReactNode;
     mainColumnPosition?: "left" | "right";
+}
+
+export declare function UpsellingButton({ label, showIcon, onRequest, showConfirmation, loading: externalLoading, errorMessage, successMessage, loadingState, nextSteps, closeLabel, ...props }: UpsellingButtonProps): JSX_2.Element;
+
+export declare interface UpsellingButtonProps extends Omit<ButtonProps, "variant" | "icon"> {
+    /**
+     * The text to be displayed in the button
+     */
+    label: string;
+    /**
+     * Whether to show the Upsell icon. Defaults to true.
+     */
+    showIcon?: boolean;
+    /**
+     * Function to be executed when the button is clicked. Must return a Promise.
+     */
+    onRequest?: () => Promise<void>;
+    /**
+     * Whether to show the confirmation dialog after the request
+     */
+    showConfirmation?: boolean;
+    /**
+     * The error message to be displayed in the confirmation dialog
+     */
+    errorMessage: {
+        title: string;
+        description: string;
+    };
+    /**
+     * The success message to be displayed in the confirmation dialog
+     */
+    successMessage: {
+        title: string;
+        description: string;
+        buttonLabel: string;
+        buttonOnClick: () => void;
+    };
+    /**
+     * The label to be displayed in the button when the request is being processed
+     */
+    loadingState: {
+        label: string;
+    };
+    /**
+     * The next steps to be displayed in the confirmation dialog
+     */
+    nextSteps: {
+        title: string;
+        items: {
+            text: string;
+            isCompleted?: boolean;
+        }[];
+    };
+    /**
+     * The label to be displayed in the close button of the confirmation dialog
+     */
+    closeLabel: string;
+}
+
+export declare const UpsellRequestResponseDialog: ForwardRefExoticComponent<UpsellRequestResponseDialogProps & RefAttributes<HTMLDivElement>>;
+
+declare interface UpsellRequestResponseDialogProps {
+    open: boolean;
+    onClose?: () => void;
+    success: boolean;
+    errorMessage: {
+        title: string;
+        description: string;
+    };
+    successMessage: {
+        title: string;
+        description: string;
+        buttonLabel: string;
+        buttonOnClick: () => void;
+    };
+    nextSteps: NextStepsProps;
+    closeLabel: string;
 }
 
 export declare const useEmojiConfetti: () => {
