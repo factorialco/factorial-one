@@ -911,11 +911,13 @@ describe("Collections", () => {
         id: 1,
         name: "John Doe",
         email: "john@example.com",
+        [GROUP_ID_SYMBOL]: undefined,
       },
       {
         id: 2,
         name: "Jane Smith",
         email: "jane@example.com",
+        [GROUP_ID_SYMBOL]: undefined,
       },
     ]
 

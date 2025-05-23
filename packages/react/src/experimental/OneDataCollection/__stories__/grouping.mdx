@@ -1,9 +1,7 @@
 import { Canvas, Meta, Controls, Unstyled, Story } from "@storybook/blocks"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
-import * as DataCollectionStories from "./index.stories"
-import * as ActionDataCollectionStories from "./actions.stories"
-import * as CellTypesDataCollectionStories from "./cell-types.stories"
+import * as GroupingStories from "./grouping.stories"
 
 <Meta title="Data collection/Grouping" />
 
@@ -121,3 +119,29 @@ field of the record and the value is an object with the following properties:
   and it returns the item count of the group or a promise. In the case of a
   promise the datacollection will render a skeleton until the promise is
   resolved. you can use this to fetch the item count from an api, array, etc.
+
+## Examples
+
+### Basic example
+
+<Canvas of={GroupingStories.WithGrouping} />
+
+### With optional grouping
+
+<Canvas of={GroupingStories.WithOptionalGrouping} />
+
+### Collapsible grouping
+
+<Canvas of={GroupingStories.CollapsibleGrouping} />
+
+### Collapsible grouping with default open groups
+
+<Canvas of={GroupingStories.CollapsibleGroupingWithDefaultOpenGroups} />
+
+### With grouping and pagination
+
+<Canvas of={GroupingStories.WithPaginationAndGrouping} />
+
+### Selectable grouping
+
+<Canvas of={GroupingStories.SelectableGrouping} />
