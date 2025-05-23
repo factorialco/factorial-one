@@ -12725,6 +12725,7 @@ function $e({
   return /* @__PURE__ */ l(
     "div",
     {
+      "data-testid": "skeleton",
       className: E(
         "animate-pulse rounded-xs bg-f1-background-secondary",
         e
