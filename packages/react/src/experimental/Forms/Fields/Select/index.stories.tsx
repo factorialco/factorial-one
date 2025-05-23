@@ -2,10 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { Select, SelectProps } from "./index"
 
-import { Plus } from "lucide-react"
+import { IconType } from "@/components/Utilities/Icon"
+import { Appearance, Circle, Desktop, Plus } from "@/icons/app"
 import { useState } from "react"
-import { IconType } from "../../../../components/Utilities/Icon"
-import { Appearance, Circle, Desktop } from "../../../../icons/app"
 
 // Wraps the Select component with a hook to show the selected value
 const SelectWithHooks = (props: SelectProps<string>) => {

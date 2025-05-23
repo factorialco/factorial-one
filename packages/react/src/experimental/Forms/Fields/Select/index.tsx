@@ -1,7 +1,6 @@
-import { Button } from "@/components/Actions/Button"
-import { Icon, IconType } from "@/components/Utilities/Icon"
+import { Icon } from "@/components/Utilities/Icon"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
-import { ButtonVariant } from "@/ui/button"
+import { ChevronDown } from "@/icons/app"
 import {
   SelectContent,
   SelectItem as SelectItemPrimitive,
@@ -19,21 +18,13 @@ import {
   useRef,
   useState,
 } from "react"
-import { ChevronDown } from "../../../../icons/app"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar } from "../../../Information/Avatars/Avatar"
-import { F1SearchBox } from "../F1SearchBox"
+import { Action, SelectBottomActions } from "./SelectBottomActions"
+import { SelectTopActions } from "./SelectTopActions"
 import type { SelectItemObject, SelectItemProps } from "./types"
 
 export * from "./types"
-
-type Action = {
-  label: string
-  onClick: () => void
-  icon?: IconType
-  variant?: ButtonVariant
-  disabled?: boolean
-}
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any -- Allow to pass anything as item */
 export type SelectProps<T, R = any> = {
@@ -209,50 +200,6 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
       [filteredOptions]
     )
 
-    const selectContentTop = useMemo(() => {
-      return (
-        showSearchBox && (
-          <div className="px-2 pt-2">
-            <F1SearchBox
-              placeholder={searchBoxPlaceholder}
-              onChange={onSearchChangeLocal}
-              clearable
-              value={searchValue}
-              key="search-input"
-              ref={searchInputRef}
-            />
-          </div>
-        )
-      )
-    }, [
-      showSearchBox,
-      searchBoxPlaceholder,
-      onSearchChangeLocal,
-      searchValue,
-      searchInputRef,
-    ])
-
-    const selectContentBottom = useMemo(() => {
-      return (
-        actions && (
-          <>
-            <div className="flex w-full flex-row gap-2 border-0 border-t border-solid border-f1-border-secondary p-2">
-              {actions.map((action) => (
-                <Button
-                  key={action.label}
-                  variant={action.variant}
-                  onClick={action.onClick}
-                  icon={action.icon}
-                  label={action.label}
-                  disabled={action.disabled}
-                />
-              ))}
-            </div>
-          </>
-        )
-      )
-    }, [actions])
-
     return (
       <SelectPrimitive
         onValueChange={onValueChange}
@@ -292,8 +239,16 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
             items={items}
             className={selectContentClassName}
             emptyMessage={searchEmptyMessage}
-            bottom={selectContentBottom}
-            top={selectContentTop}
+            bottom={<SelectBottomActions actions={actions} />}
+            top={
+              <SelectTopActions
+                searchInputRef={searchInputRef}
+                searchValue={searchValue}
+                onSearchChange={onSearchChangeLocal}
+                searchBoxPlaceholder={searchBoxPlaceholder}
+                showSearchBox={showSearchBox}
+              />
+            }
           ></SelectContent>
         )}
       </SelectPrimitive>
