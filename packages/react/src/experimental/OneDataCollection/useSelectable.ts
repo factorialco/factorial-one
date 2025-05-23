@@ -165,6 +165,7 @@ export function useSelectable<
             const groupItemsStatus = Array.from(itemsState.values()).filter(
               (item) => item.item[GROUP_ID_SYMBOL] === group.key
             )
+
             const knownItemsCount = isPaginated
               ? (await group.itemCount) || groupItemsStatus.length
               : group.records.length
@@ -194,9 +195,10 @@ export function useSelectable<
               {
                 checked: isGroupAllItemsSelected || isGroupPartiallySelected,
                 indeterminate: isGroupPartiallySelected,
-                selectedCount: isGroupAllItemsSelected
-                  ? knownItemsCount
-                  : groupSelectedItemCount,
+                selectedCount:
+                  isGroupAllItemsSelected && !isGroupPartiallySelected
+                    ? knownItemsCount
+                    : knownItemsCount - groupUnselectedItemCount,
                 unselectedCount: groupUnselectedItemCount,
               },
             ] as const
@@ -327,7 +329,7 @@ export function useSelectable<
       handleSelectItemChange(data.records, isAllSelected, true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- handleItemStateChange is a stable function
-  }, [data, isAllSelected, groupAllSelectedStatus, isGrouped])
+  }, [data, isAllSelected, isGrouped])
 
   // Control the allSelectedCheck state
   // If all items are selected, we need to set the allSelectedCheck state to true
