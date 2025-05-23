@@ -23,8 +23,10 @@
     "dev:coder": "pnpm build --watch -- --buildSync",
     "start": "pnpm run dev",
     "build": "tsc --project ./tsconfig-build.json && run-p build-icons && BUILD_TYPES=true vite build -- --tailwind",
+    "build:native": "tsgo --project ./tsconfig-build.json && run-p build-icons:native && BUILD_TYPES=true vite build -- --tailwind",
     "build:tsup": "tsup && pnpm run build:tailwind && run-p build-icons",
     "build-icons": "tsc --project ./tsconfig-build-icons.json",
+    "build-icons:native": "tsgo --project ./tsconfig-build-icons.json",
     "build:tailwind": "NODE_ENV=production tailwindcss -i src/styles.css -o ./dist/styles.css --postcss --minify",
     "build:watch": "pnpm build --watch",
     "lint": "eslint -c eslint.config.mjs src/**/*.{ts,tsx} --report-unused-disable-directives --max-warnings 0",
@@ -39,6 +41,7 @@
     "prettier:format": "prettier --write \"src/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "prettier:check:ci": "prettier --check \"src/**/*.{ts,tsx,js,md,mdx,css,yaml}\"",
     "tsc": "tsc --noEmit",
+    "tsc:native": "tsgo --noEmit",
     "vitest": "vitest run",
     "vitest:watch": "vitest dev",
     "vitest:ci": "pnpm run vitest --reporter=dot"

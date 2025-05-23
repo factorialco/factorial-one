@@ -43,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Build core package
-        run: pnpm --filter @factorialco/factorial-one-core build
+        run: pnpm --filter @factorialco/factorial-one-core build:native
       - name: Check linting with eslint
         run: pnpm --filter @factorialco/factorial-one-react run lint
   eslint-react-native:
