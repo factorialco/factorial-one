@@ -271,7 +271,7 @@ export const CardCollection = <
           {Array.from({ length: 8 }).map((_, i) => (
             <Card key={i}>
               <CardHeader>
-                <CardTitle>
+                <CardTitle aria-label="Loading card">
                   <Skeleton className="h-4 w-3/4" />
                 </CardTitle>
               </CardHeader>
