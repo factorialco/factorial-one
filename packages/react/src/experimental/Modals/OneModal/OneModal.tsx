@@ -77,7 +77,7 @@ export const OneModal: React.FC<OneModalProps> = ({
   }
 
   let contentClassName =
-    "max-h-[620px] max-w-[680px] overflow-y-auto overflow-x-hidden"
+    "flex flex-col max-h-[620px] max-w-[680px] overflow-hidden"
 
   const isSidePosition = position === "left" || position === "right"
 
