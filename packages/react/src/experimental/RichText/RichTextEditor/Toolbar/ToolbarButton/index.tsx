@@ -16,7 +16,6 @@ interface ToolbarButtonProps {
     label?: string
     shortcut?: ComponentProps<typeof Shortcut>["keys"]
   }
-  mode?: "light" | "dark"
   showLabel?: boolean
 }
 
@@ -29,7 +28,6 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
       disabled,
       icon,
       tooltip,
-      mode = "light",
       showLabel = false,
       ...props
     },
@@ -74,7 +72,7 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
       </Button>
     )
 
-    return tooltip && mode === "light" ? (
+    return tooltip ? (
       <Tooltip
         description={tooltip?.description || ""}
         label={tooltip?.label}

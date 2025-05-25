@@ -1,5 +1,4 @@
 import { IconType } from "@/factorial-one"
-import { cn } from "@/lib/utils"
 import * as Popover from "@radix-ui/react-popover"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
@@ -16,7 +15,6 @@ interface ToolbarDropdownItem {
 interface ToolbarDropdownProps {
   items: ToolbarDropdownItem[]
   disabled?: boolean
-  mode?: "light" | "dark"
   position?: "top" | "bottom"
   activator: {
     label: string
@@ -28,7 +26,6 @@ const ToolbarDropdown = ({
   items,
   disabled = false,
   activator,
-  mode = "light",
   position = "top",
 }: ToolbarDropdownProps) => {
   const [open, setOpen] = useState(false)
@@ -50,7 +47,6 @@ const ToolbarDropdown = ({
           label={activator.label}
           icon={activator.icon}
           disabled={disabled}
-          mode={mode}
           onClick={handleButtonClick}
         />
       </Popover.Trigger>
@@ -70,10 +66,7 @@ const ToolbarDropdown = ({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95, y: 5 }}
                 transition={{ duration: 0.15 }}
-                className={cn(
-                  "flex w-40 flex-col gap-0.5 overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background p-0.5 drop-shadow-sm",
-                  mode === "dark" && "dark"
-                )}
+                className="flex w-40 flex-col gap-0.5 overflow-hidden rounded-md border border-solid border-f1-border bg-f1-background p-0.5 drop-shadow-md"
               >
                 {items.map((item, index) => (
                   <ToolbarButton
@@ -83,7 +76,6 @@ const ToolbarDropdown = ({
                     label={item.label}
                     disabled={disabled || !!item.disabled}
                     icon={item.icon}
-                    mode={mode}
                     showLabel
                   />
                 ))}

@@ -204,3 +204,81 @@ this is a hack to make the checkbox look like the one in the Checkbox component
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.ProseMirror .hljs-comment,
+.rich-text-display-container .hljs-comment,
+.ProseMirror .hljs-quote,
+.rich-text-display-container .hljs-quote {
+  color: #6a737d;
+}
+
+.ProseMirror .hljs-variable,
+.rich-text-display-container .hljs-variable,
+.ProseMirror .hljs-template-variable,
+.rich-text-display-container .hljs-template-variable,
+.ProseMirror .hljs-attribute,
+.rich-text-display-container .hljs-attribute,
+.ProseMirror .hljs-tag,
+.rich-text-display-container .hljs-tag,
+.ProseMirror .hljs-regexp,
+.rich-text-display-container .hljs-regexp,
+.ProseMirror .hljs-link,
+.rich-text-display-container .hljs-link,
+.ProseMirror .hljs-name,
+.rich-text-display-container .hljs-name,
+.ProseMirror .hljs-selector-id,
+.rich-text-display-container .hljs-selector-id,
+.ProseMirror .hljs-selector-class,
+.rich-text-display-container .hljs-selector-class {
+  color: #d73a49;
+}
+
+.ProseMirror .hljs-number,
+.rich-text-display-container .hljs-number,
+.ProseMirror .hljs-meta,
+.rich-text-display-container .hljs-meta,
+.ProseMirror .hljs-built_in,
+.rich-text-display-container .hljs-built_in,
+.ProseMirror .hljs-builtin-name,
+.rich-text-display-container .hljs-builtin-name,
+.ProseMirror .hljs-literal,
+.rich-text-display-container .hljs-literal,
+.ProseMirror .hljs-type,
+.rich-text-display-container .hljs-type,
+.ProseMirror .hljs-params,
+.rich-text-display-container .hljs-params {
+  color: #005cc5;
+}
+
+.ProseMirror .hljs-string,
+.rich-text-display-container .hljs-string,
+.ProseMirror .hljs-symbol,
+.rich-text-display-container .hljs-symbol,
+.ProseMirror .hljs-bullet,
+.rich-text-display-container .hljs-bullet {
+  color: #22863a;
+}
+
+.ProseMirror .hljs-title,
+.rich-text-display-container .hljs-title,
+.ProseMirror .hljs-section,
+.rich-text-display-container .hljs-section {
+  color: #795548;
+}
+
+.ProseMirror .hljs-keyword,
+.rich-text-display-container .hljs-keyword,
+.ProseMirror .hljs-selector-tag,
+.rich-text-display-container .hljs-selector-tag {
+  color: #6f42c1;
+}
+
+.ProseMirror .hljs-emphasis,
+.rich-text-display-container .hljs-emphasis {
+  font-style: italic;
+}
+
+.ProseMirror .hljs-strong,
+.rich-text-display-container .hljs-strong {
+  font-weight: 700;
+}

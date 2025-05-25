@@ -127,7 +127,7 @@ const AIEnhanceMenu = ({
     <div className="relative">
       <div
         ref={menuRef}
-        className="flex max-h-60 w-80 flex-col overflow-hidden rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-sm"
+        className="flex max-h-60 w-80 flex-col overflow-hidden rounded-lg border border-solid border-f1-border bg-f1-background drop-shadow-md"
       >
         <div className="flex w-full flex-row items-center p-2">
           <Input
@@ -162,7 +162,7 @@ const AIEnhanceMenu = ({
           selectedOption.subOptions.length > 0 && (
             <motion.div
               ref={subMenuRef}
-              className="absolute bottom-0 left-full z-50 max-h-60 w-60 overflow-y-auto rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm"
+              className="absolute bottom-0 left-full z-50 max-h-60 w-60 overflow-y-auto rounded-lg border border-solid border-f1-border bg-f1-background p-1 drop-shadow-md"
               style={{ marginLeft: "8px" }}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}

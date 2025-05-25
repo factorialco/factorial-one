@@ -20,15 +20,9 @@ interface LinkPopupProps {
   editor: Editor
   disabled: boolean
   labels: toolbarLabels
-  mode?: "light" | "dark"
 }
 
-const LinkPopup = ({
-  editor,
-  disabled,
-  labels,
-  mode = "light",
-}: LinkPopupProps) => {
+const LinkPopup = ({ editor, disabled, labels }: LinkPopupProps) => {
   const i18n = useI18n()
   const [openLinkPopover, setOpenLinkPopover] = useState(false)
   const [url, setUrl] = useState(editor.getAttributes("link").href || "")
@@ -95,7 +89,6 @@ const LinkPopup = ({
           icon={LinkIcon}
           disabled={disabled}
           onClick={handleLinkButtonClick}
-          mode={mode}
         />
       </Popover.Trigger>
 
@@ -117,7 +110,7 @@ const LinkPopup = ({
                 transition={{ duration: 0.2 }}
                 aria-label="Link popup"
               >
-                <div className="dark z-50 flex w-max flex-row gap-1 rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
+                <div className="z-50 flex w-max flex-row gap-1 rounded-lg border border-solid border-f1-border bg-f1-background p-1 drop-shadow-md">
                   <Button
                     variant="ghost"
                     size="md"

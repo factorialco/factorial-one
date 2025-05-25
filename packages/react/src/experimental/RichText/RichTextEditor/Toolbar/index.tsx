@@ -35,7 +35,6 @@ import { ToolbarDropdown } from "./ToolbarDropdown"
 
 interface ToolbarDividerProps {
   hidden?: boolean
-  mode?: "light" | "dark"
 }
 
 const ToolbarDivider = ({ hidden = false }: ToolbarDividerProps) => (
@@ -62,7 +61,6 @@ interface ToolbarProps {
   onClose?: () => void
   animationComplete?: boolean
   labels: toolbarLabels
-  mode?: "light" | "dark"
 }
 
 interface ButtonConfig {
@@ -83,7 +81,6 @@ const Toolbar = ({
   onClose,
   animationComplete = true,
   labels,
-  mode = "light",
 }: ToolbarProps) => {
   // Format buttons configuration
   const formatButtons: ButtonConfig[] = [
@@ -222,7 +219,6 @@ const Toolbar = ({
           disabled={disableButtons}
           onClick={() => config.onClick(editor)}
           tooltip={config.tooltip}
-          mode={mode}
         />
       ))}
     </div>
@@ -234,7 +230,6 @@ const Toolbar = ({
   const moreOptionsGroup = (
     <div className="flex flex-row items-center gap-0.5">
       <ToolbarDropdown
-        mode={mode}
         items={[
           {
             label: labels.left,
@@ -271,12 +266,11 @@ const Toolbar = ({
           icon: getTextAlignIcon(editor),
         }}
       />
-      <ToolbarDivider hidden={!isFullscreen} mode={mode} />
+      <ToolbarDivider hidden={!isFullscreen} />
 
       {renderButtons(listButtons)}
 
       <ToolbarDropdown
-        mode={mode}
         items={[
           {
             icon: Code,
@@ -312,7 +306,6 @@ const Toolbar = ({
       editor={editor}
       disabled={disableButtons}
       labels={labels}
-      mode={mode}
     />,
   ]
 

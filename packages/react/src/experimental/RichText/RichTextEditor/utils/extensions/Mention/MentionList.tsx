@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react"
-import { MentionedUser } from "../utils/types"
+import { MentionedUser } from "../../types"
 
 interface DefaultMentionItemProps {
   item: MentionedUser

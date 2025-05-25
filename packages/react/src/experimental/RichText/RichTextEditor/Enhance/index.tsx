@@ -69,7 +69,7 @@ const EnhanceActivator = ({
           }}
           disabled={disableButtons || isLoadingEnhance}
           className={cn(
-            "bg-gradient-to-r from-[#f9f0dd80] to-[#d4ccfd80] text-[#6143a7] dark:from-[#6143a7] dark:to-[#7846ef] dark:text-f1-foreground [&>button>svg]:text-[#6143a7] dark:[&>button>svg]:text-f1-foreground",
+            "bg-gradient-to-r from-[#f9f0dd80] to-[#d4ccfd80] text-[#6143a7] [&>button>svg]:text-[#6143a7]",
             hideLabel && "[&>button]:aspect-square [&>button]:px-0"
           )}
         >

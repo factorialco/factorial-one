@@ -12,6 +12,7 @@ type MentionedUser = {
 type resultType = {
   value: string | null
   mentionIds?: number[]
+  json?: JSONContent | null
 }
 
 type enhanceTextParams = {
@@ -129,6 +130,8 @@ type toolbarLabels = {
   linkLabel: string
   linkPaste: string
   close: string
+  slashCommand: string
+  noResults: string
 }
 
 type heightType =

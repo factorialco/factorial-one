@@ -2,8 +2,8 @@ import * as Popover from "@radix-ui/react-popover"
 import Mention from "@tiptap/extension-mention"
 import { Editor, ReactRenderer } from "@tiptap/react"
 import { createRoot, Root } from "react-dom/client"
-import { MentionList } from "../MentionList"
-import { MentionedUser } from "./types"
+import { MentionedUser } from "../../types"
+import { MentionList } from "./MentionList"
 
 const CustomMention = Mention.extend({
   addAttributes() {

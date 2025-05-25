@@ -145,16 +145,18 @@ const handleEditorUpdate = ({
   })
 
   if (editor.isEmpty) {
-    onChange({ value: null })
+    onChange({ value: null, json: null })
   } else {
     const html = editor.getHTML()
+    const json = editor.getJSON()
     if (mentions.length > 0) {
       onChange({
         value: html,
+        json: json,
         mentionIds: mentions,
       })
     } else {
-      onChange({ value: html })
+      onChange({ value: html, json: json })
     }
   }
 }

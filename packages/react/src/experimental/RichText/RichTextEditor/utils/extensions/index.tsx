@@ -1,4 +1,5 @@
 import CharacterCount from "@tiptap/extension-character-count"
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight"
 import Color from "@tiptap/extension-color"
 import Highlight from "@tiptap/extension-highlight"
 import Link from "@tiptap/extension-link"
@@ -9,11 +10,13 @@ import TextStyle from "@tiptap/extension-text-style"
 import Typography from "@tiptap/extension-typography"
 import Underline from "@tiptap/extension-underline"
 import StarterKit from "@tiptap/starter-kit"
-import { configureMention } from "../mention"
+import { all, createLowlight } from "lowlight"
 import { MentionedUser, mentionsConfig } from "../types"
 import { Accessibility } from "./Accessibility"
 import { CustomTask } from "./CustomTask"
+import { configureMention } from "./Mention"
 import { PersistSelection } from "./PersistSelection"
+import { SlashCommand } from "./SlashCommand"
 
 interface ExtensionsConfigurationProps {
   mentionsConfig?: mentionsConfig
@@ -43,6 +46,9 @@ const ExtensionsConfiguration = ({
           class: "f1-ordered-list",
         },
       },
+    }),
+    CodeBlockLowlight.configure({
+      lowlight: createLowlight(all),
     }),
     Underline,
     TextStyle,
@@ -80,6 +86,7 @@ const ExtensionsConfiguration = ({
       : []),
     PersistSelection,
     Accessibility.configure({ label: placeholder || "Rich text editor" }),
+    SlashCommand,
   ]
 }
 
