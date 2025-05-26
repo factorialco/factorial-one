@@ -90,20 +90,15 @@ const getIconOnlyColor = (
   variant: ButtonVariant,
   isPressed: boolean,
 ): IconColorName => {
-  if (isPressed && variant === "critical") {
-    return "text-f1-icon-inverse";
-  }
-
   switch (variant) {
+    case "critical":
+      return isPressed ? "text-f1-icon-inverse" : "text-f1-icon-critical-bold";
     case "default":
       return "text-f1-icon-inverse";
     case "outline":
     case "neutral":
     case "ghost":
     case "promote":
-      return "text-f1-icon-bold";
-    case "critical":
-      return "text-f1-icon-critical-bold";
     default:
       return "text-f1-icon-bold";
   }
