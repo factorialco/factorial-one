@@ -1,34 +1,22 @@
-function extractValue<T>(
-  args: T | Record<string, any> | undefined
-): T | undefined {
-  if (args === null || args === undefined) {
-    return undefined
-  }
+import {
+  AmountValue,
+  DateValue,
+  NumberValue,
+  TextValue,
+} from "@/experimental/OneDataCollection/visualizations/property"
 
-  if (typeof args !== "object") {
-    return args as T
-  }
+export type ValueKey = "text" | "number" | "date" | "amount"
 
-  const obj = args as Record<string, any>
+export type ValueObject = TextValue | NumberValue | DateValue | AmountValue
 
-  for (const key of ["text", "number", "date", "amount"]) {
-    if (key in obj) {
-      return obj[key]
-    }
-  }
-
-  return args as T
-}
-
-function hasPlaceholder(args: unknown): boolean {
-  if (args === null || args === undefined || typeof args !== "object") {
-    return false
-  }
-
+/**
+ * Checks if a value object has a placeholder property
+ */
+export function hasPlaceholder(args: unknown): args is { placeholder: string } {
   return (
-    "placeholder" in (args as Record<string, unknown>) &&
-    !!(args as Record<string, unknown>).placeholder
+    typeof args === "object" &&
+    args !== null &&
+    "placeholder" in args &&
+    typeof args.placeholder === "string"
   )
 }
-
-export { extractValue, hasPlaceholder }
