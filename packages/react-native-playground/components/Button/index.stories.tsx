@@ -162,6 +162,15 @@ export const ButtonShowcase = () => {
           accessibilityHint="Add new item"
         />
         <Button
+          variant="outline"
+          label="Add"
+          icon={AppIcons.Bell}
+          hideLabel
+          round
+          showBadge
+          accessibilityHint="Add new item with notification"
+        />
+        <Button
           variant="promote"
           label="Add"
           icon={Add}
@@ -322,6 +331,35 @@ export const ButtonShowcase = () => {
           variant="neutral"
           hideLabel
           accessibilityHint="Express love reaction"
+        />
+      </View>
+
+      {/* Notification Badge */}
+      <Text className="text-lg font-bold mb-4 text-f1-foreground">
+        With Notification Badge
+      </Text>
+      <View className="flex-row flex-wrap gap-2 mb-6">
+        <Button
+          variant="outline"
+          label="Messages"
+          showBadge
+          accessibilityHint="Messages button with notification"
+        />
+        <Button
+          variant="outline"
+          label="Archive"
+          icon={Archive}
+          showBadge
+          accessibilityHint="Archive with notifications"
+        />
+        <Button
+          variant="outline"
+          label="Notifications"
+          icon={Add}
+          hideLabel
+          round
+          showBadge
+          accessibilityHint="Icon-only button with notification badge"
         />
       </View>
 

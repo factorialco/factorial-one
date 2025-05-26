@@ -1,5 +1,61 @@
 # Changelog
 
+## [1.67.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.4...factorial-one-react-v1.67.0) (2025-05-26)
+
+
+### Features
+
+* Add OneEmptyState component ([#1875](https://github.com/factorialco/factorial-one/issues/1875)) ([c77bb03](https://github.com/factorialco/factorial-one/commit/c77bb038d916d39ecb217eca0bc578dd4228d9f0))
+
+## [1.66.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.3...factorial-one-react-v1.66.4) (2025-05-26)
+
+
+### Bug Fixes
+
+* do not allow user to click page header navigation button when it's disabled ([#1894](https://github.com/factorialco/factorial-one/issues/1894)) ([3e32ffe](https://github.com/factorialco/factorial-one/commit/3e32ffe138732ecac141a767feefae3e1f40439e))
+
+## [1.66.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.2...factorial-one-react-v1.66.3) (2025-05-26)
+
+
+### Bug Fixes
+
+* add missing OneModal footer component ([#1879](https://github.com/factorialco/factorial-one/issues/1879)) ([110761c](https://github.com/factorialco/factorial-one/commit/110761c358487dbfc3b751d82c13168be0018d2b))
+
+## [1.66.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.1...factorial-one-react-v1.66.2) (2025-05-26)
+
+
+### Bug Fixes
+
+* add support to hide reactions button in CommunityPost component via prop ([#1890](https://github.com/factorialco/factorial-one/issues/1890)) ([a3ede51](https://github.com/factorialco/factorial-one/commit/a3ede514ecaec6a3dc9dee32fc185878667f97bc))
+
+## [1.66.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.0...factorial-one-react-v1.66.1) (2025-05-26)
+
+
+### Bug Fixes
+
+* add missing exports ([#1882](https://github.com/factorialco/factorial-one/issues/1882)) ([349af34](https://github.com/factorialco/factorial-one/commit/349af349e3670d91c0bfb2ae3ad603840af24b1a))
+
+## [1.66.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.65.1...factorial-one-react-v1.66.0) (2025-05-23)
+
+
+### Features
+
+* **Button:** new pressed styles ([#1864](https://github.com/factorialco/factorial-one/issues/1864)) ([2df9128](https://github.com/factorialco/factorial-one/commit/2df9128c180358416a9263c55af0a3ad6d036801))
+
+## [1.65.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.65.0...factorial-one-react-v1.65.1) (2025-05-23)
+
+
+### Bug Fixes
+
+* **sidebar:** update internal state when favorites prop changes ([#1876](https://github.com/factorialco/factorial-one/issues/1876)) ([f4a55a2](https://github.com/factorialco/factorial-one/commit/f4a55a2b17df9386567f23576f36440a1dfceb7a))
+
+## [1.65.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.2...factorial-one-react-v1.65.0) (2025-05-23)
+
+
+### Features
+
+* add actions to Select ([#1874](https://github.com/factorialco/factorial-one/issues/1874)) ([cfe0b7a](https://github.com/factorialco/factorial-one/commit/cfe0b7a408940989700248293ac775c353c3297d))
+
 ## [1.64.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.1...factorial-one-react-v1.64.2) (2025-05-22)
 
 
