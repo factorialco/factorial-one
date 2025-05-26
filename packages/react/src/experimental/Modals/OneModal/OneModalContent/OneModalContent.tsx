@@ -31,7 +31,7 @@ export const OneModalContent = ({
       )}
       <ScrollArea
         className={cn(
-          "[*[data-state=visible]_div]:bg-f1-background flex flex-col",
+          "[*[data-state=visible]_div]:bg-f1-background flex flex-1 flex-col",
           !isSmallScreen && modalPosition === "center" && "max-h-[512px]"
         )}
       >
