@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { ExampleComponent, getMockVisualizations } from "./mockData"
+import { ExampleComponent, getMockVisualizations } from "../mockData"
 
 const meta = {
   title: "Data Collection/Visualizations/List",

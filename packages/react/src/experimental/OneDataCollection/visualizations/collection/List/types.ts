@@ -1,3 +1,4 @@
+import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
 import { FiltersDefinition } from "@/experimental/OneDataCollection/Filters/types"
 import {
   SortingKey,
@@ -13,6 +14,13 @@ export type WithOptionalSorting<
   sorting?: SortingKey<Sortings>
 }
 
+export type ItemDefinition = {
+  title: string
+  description?: string
+  avatar?: AvatarVariant
+  metadata?: string
+}
+
 export type ListPropertyDefinition<
   R,
   Sortings extends SortingsDefinition,
@@ -23,5 +31,6 @@ export type ListVisualizationOptions<
   _Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
 > = {
+  itemDefinition: (record: R) => ItemDefinition
   fields: ReadonlyArray<ListPropertyDefinition<R, Sortings>>
 }
