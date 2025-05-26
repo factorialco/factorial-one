@@ -11,7 +11,7 @@ interface ParseObject {
 }
 
 export interface EmojiImageProps {
-  size?: string;
+  size?: { width: number; height: number; text: string };
   className?: string;
   emoji: string;
 }
@@ -22,9 +22,14 @@ export function EmojiImage({ emoji, size, className }: EmojiImageProps) {
   const [error, setError] = useState(false);
 
   return emojiEntity && !error ? (
-    <SvgUri onError={() => setError(true)} uri={emojiEntity.url} />
+    <SvgUri
+      onError={() => setError(true)}
+      width={size?.width}
+      height={size?.height}
+      uri={emojiEntity.url}
+    />
   ) : (
-    <Text className={cn(size, className)} key={emoji}>
+    <Text className={cn(size?.text, className)} key={emoji}>
       {emoji}
     </Text>
   );
