@@ -11,7 +11,7 @@ export type ActionProps = {
    * The click handler of the action
    */
   onClick: () => void
-  
+
   /**
    * The variant of the action
    * @default "default"
@@ -26,8 +26,8 @@ export type ActionProps = {
   icon?: IconType
 }
 
-export type EmptyStateAlertProps = Omit<AlertAvatarProps, 'size' | 'type'> & {
-  type: Exclude<AlertAvatarProps['type'], 'positive'>
+export type EmptyStateAlertProps = Omit<AlertAvatarProps, "size" | "type"> & {
+  type: Exclude<AlertAvatarProps["type"], "positive">
 }
 
 export type EmptyStateProps = {

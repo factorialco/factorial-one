@@ -1,8 +1,7 @@
-import { ArrowCycle } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
-import { EmptyState } from "../OneEmptyState"
 import { Plus } from "lucide-react"
+import { EmptyState } from "../OneEmptyState"
 
 const meta = {
   component: EmptyState,
@@ -16,8 +15,7 @@ type Story = StoryObj<typeof EmptyState>
 export const Basic: Story = {
   args: {
     title: "No items added yet",
-    description:
-      "Start by adding your first item.",
+    description: "Start by adding your first item.",
     icon: "📄",
     actions: [
       {
@@ -37,11 +35,23 @@ export const WithAlert: Story = {
     )
     return (
       <div className="flex flex-col items-center gap-4">
-        <EmptyState {...args} icon={{ type: "warning" }} title="We couldn't load the data" />
+        <EmptyState
+          {...args}
+          icon={{ type: "warning" }}
+          title="We couldn't load the data"
+        />
         <Divider />
-        <EmptyState {...args} icon={{ type: "info" }} title="No items added yet" />
+        <EmptyState
+          {...args}
+          icon={{ type: "info" }}
+          title="No items added yet"
+        />
         <Divider />
-        <EmptyState {...args} icon={{ type: "critical" }} title="Unauthorized" />
+        <EmptyState
+          {...args}
+          icon={{ type: "critical" }}
+          title="Unauthorized"
+        />
       </div>
     )
   },

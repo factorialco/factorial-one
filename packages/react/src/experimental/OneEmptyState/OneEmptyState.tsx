@@ -1,7 +1,7 @@
 import { Button } from "@/components/Actions/Button"
-import * as Types from "./types"
 import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
 import { AlertAvatar } from "../Information/Avatars/AlertAvatar"
+import * as Types from "./types"
 
 export function EmptyState({
   title,
@@ -11,13 +11,12 @@ export function EmptyState({
 }: Types.EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-5 p-8">
-      {icon && (
-        typeof icon === 'string' ? (
+      {icon &&
+        (typeof icon === "string" ? (
           <EmojiAvatar emoji={icon} size="lg" />
         ) : (
           <AlertAvatar {...icon} size="lg" />
-        )
-      )}
+        ))}
       <div className="flex flex-col items-center justify-center gap-0.5">
         <p className="text-center text-lg font-medium text-f1-foreground">
           {title}
