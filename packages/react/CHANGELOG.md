@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.66.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.1...factorial-one-react-v1.66.2) (2025-05-26)
+
+
+### Bug Fixes
+
+* add support to hide reactions button in CommunityPost component via prop ([#1890](https://github.com/factorialco/factorial-one/issues/1890)) ([a3ede51](https://github.com/factorialco/factorial-one/commit/a3ede514ecaec6a3dc9dee32fc185878667f97bc))
+
 ## [1.66.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.0...factorial-one-react-v1.66.1) (2025-05-26)
 
 
