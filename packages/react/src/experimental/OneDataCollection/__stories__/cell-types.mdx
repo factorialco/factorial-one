@@ -52,13 +52,21 @@ render: (item) => 'my text'
 render: (item) => ({
     type: 'text',
     value: 'my text'
-})
-// or
+})`,
+  }}
+/>
+
+#### With placeholder
+
+<Canvas
+  of={CellTypesDataCollectionStories.TextWithPlaceholder}
+  source={{
+    code: `
 render: (item) => ({
     type: 'text'
     value: {
-      text: 'my text'
-      placeholder: 'Placeholder'
+      text: undefined
+      placeholder: 'Some placeholder'
     }
 })`,
   }}
@@ -86,6 +94,22 @@ render: (item) => ({
   }}
 />
 
+#### With placeholder
+
+<Canvas
+  of={CellTypesDataCollectionStories.NumberWithPlaceholder}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'number'
+    value: {
+      number: undefined
+      placeholder: 'Some placeholder'
+    }
+})`,
+  }}
+/>
+
 ### date
 
 Renders a date
@@ -108,6 +132,22 @@ render: (item) => ({
   }}
 />
 
+#### With placeholder
+
+<Canvas
+  of={CellTypesDataCollectionStories.DateWithPlaceholder}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'date'
+    value: {
+      date: undefined
+      placeholder: 'Some placeholder'
+    }
+})`,
+  }}
+/>
+
 ### amount
 
 Renders a monetary number (right align on table visualizacion)
@@ -127,6 +167,22 @@ render: (item) => ({
     value: 1234
 })
 `,
+  }}
+/>
+
+#### With placeholder
+
+<Canvas
+  of={CellTypesDataCollectionStories.AmountWithPlaceholder}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'text'
+    value: {
+      amount: undefined
+      placeholder: 'Some placeholder'
+    }
+})`,
   }}
 />
 

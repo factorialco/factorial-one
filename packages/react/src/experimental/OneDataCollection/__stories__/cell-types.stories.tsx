@@ -103,8 +103,22 @@ export const TextType: Story = {
         type: "text",
         value: {
           text: item.firstName + " " + item.lastName,
-          // TODO: another variant
-          // placeholder: 'Placeholder'
+        },
+      }),
+    },
+  },
+}
+
+export const TextWithPlaceholder: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Name",
+      render: () => ({
+        type: "text",
+        value: {
+          text: undefined,
+          placeholder: "Some placeholder",
         },
       }),
     },
@@ -124,6 +138,22 @@ export const NumberType: Story = {
   },
 }
 
+export const NumberWithPlaceholder: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Name",
+      render: () => ({
+        type: "number",
+        value: {
+          number: undefined,
+          placeholder: "Some placeholder",
+        },
+      }),
+    },
+  },
+}
+
 export const DateType: Story = {
   args: {
     item: mockItem,
@@ -137,6 +167,19 @@ export const DateType: Story = {
   },
 }
 
+export const DateWithPlaceholder: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Date",
+      render: () => ({
+        type: "date",
+        value: { date: undefined, placeholder: "Some placeholder" },
+      }),
+    },
+  },
+}
+
 export const AmountType: Story = {
   args: {
     item: mockItem,
@@ -145,6 +188,19 @@ export const AmountType: Story = {
       render: (item) => ({
         type: "amount",
         value: item.amount,
+      }),
+    },
+  },
+}
+
+export const AmountWithPlaceholder: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Amount",
+      render: () => ({
+        type: "amount",
+        value: { amount: undefined, placeholder: "Some placeholder" },
       }),
     },
   },
