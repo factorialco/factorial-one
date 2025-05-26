@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.6.0...factorial-one-react-native-v0.7.0) (2025-05-26)
+
+
+### Features
+
+* improve icon button colors ([#1884](https://github.com/factorialco/factorial-one/issues/1884)) ([e778a22](https://github.com/factorialco/factorial-one/commit/e778a227cc5e44d0d3680f7388b008707b1bc73d))
+
 ## [0.6.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.5.0...factorial-one-react-native-v0.6.0) (2025-05-22)
 
 
