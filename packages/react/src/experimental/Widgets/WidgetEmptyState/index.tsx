@@ -1,13 +1,11 @@
-import { Button, ButtonProps } from "../../../components/Actions/Button"
+import { EmptyState } from "../../OneEmptyState/OneEmptyState"
 import { IconType } from "../../../components/Utilities/Icon"
-import { AlertAvatar } from "../../Information/Avatars/AlertAvatar"
-import { EmojiAvatar } from "../../Information/Avatars/EmojiAvatar"
 
 type Action = {
   label: string
   onClick: () => void
   icon?: IconType
-  variant?: ButtonProps["variant"]
+  variant?: "default" | "outline"
 }
 
 export type WidgetEmptyStateProps = {
@@ -30,31 +28,11 @@ export function WidgetEmptyState({
   }
 
   return (
-    <div className="flex min-h-56 flex-grow flex-col items-center justify-center p-8">
-      {emoji ? (
-        <EmojiAvatar emoji={emoji} size="lg" />
-      ) : (
-        <AlertAvatar type="warning" size="lg" />
-      )}
-      <div className="mt-3 text-center">
-        <p className="line-clamp-2 font-medium">{title}</p>
-        <p className="mt-0.5 line-clamp-2 text-f1-foreground-secondary">
-          {description}
-        </p>
-      </div>
-      {!!actions && (
-        <div className="mt-5 flex flex-row gap-3">
-          {actions.map((action) => (
-            <Button
-              key={action.label}
-              label={action.label}
-              icon={action.icon}
-              onClick={action.onClick}
-              variant={action.variant}
-            />
-          ))}
-        </div>
-      )}
-    </div>
+    <EmptyState
+      title={title}
+      description={description}
+      icon={emoji ?? { type: "warning" }}
+      actions={actions}
+    />
   )
 }
