@@ -35,7 +35,12 @@ Renders a text This type's render function can be used as a shortcut returning
 just a string.
 
 ```
-type value = string | undefined
+type value = string | number | undefined
+// or
+type value = {
+    text: string | number | undefined
+    placeholder?: string
+}
 ```
 
 <Canvas
@@ -45,8 +50,16 @@ type value = string | undefined
 render: (item) => 'my text'
 // or
 render: (item) => ({
-    type: 'text'
+    type: 'text',
     value: 'my text'
+})
+// or
+render: (item) => ({
+    type: 'text'
+    value: {
+      text: 'my text'
+      placeholder: 'Placeholder'
+    }
 })`,
   }}
 />

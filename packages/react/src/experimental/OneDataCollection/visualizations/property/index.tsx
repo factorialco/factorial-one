@@ -38,9 +38,30 @@ export type PropertyRendererMetadata<T> = {
  * @returns The rendered property value
  */
 export const propertyRenderers = {
-  text: (text: string | number | undefined) => (
-    <span className="text-f1-foreground">{text}</span>
-  ),
+  text: (
+    args:
+      | { text: string | number | undefined; placeholder?: string }
+      | string
+      | number
+      | undefined
+  ) => {
+    const textContent =
+      typeof args === "object" && args !== null ? args.text : args
+
+    const isPlaceholder =
+      typeof args === "object" && args !== null && args.placeholder
+
+    return (
+      <span
+        className={cn(
+          "text-f1-foreground",
+          isPlaceholder && "text-f1-foreground-secondary"
+        )}
+      >
+        {textContent}
+      </span>
+    )
+  },
   number: (
     number: number | undefined,
     meta: PropertyRendererMetadata<never>

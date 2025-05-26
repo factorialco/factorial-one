@@ -99,7 +99,14 @@ export const TextType: Story = {
     item: mockItem,
     property: {
       label: "Name",
-      render: (item) => item.firstName + " " + item.lastName,
+      render: (item) => ({
+        type: "text",
+        value: {
+          text: item.firstName + " " + item.lastName,
+          // TODO: another variant
+          // placeholder: 'Placeholder'
+        },
+      }),
     },
   },
 }
