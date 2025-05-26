@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.66.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.0...factorial-one-react-v1.66.1) (2025-05-26)
+
+
+### Bug Fixes
+
+* add missing exports ([#1882](https://github.com/factorialco/factorial-one/issues/1882)) ([349af34](https://github.com/factorialco/factorial-one/commit/349af349e3670d91c0bfb2ae3ad603840af24b1a))
+
 ## [1.66.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.65.1...factorial-one-react-v1.66.0) (2025-05-23)
 
 
