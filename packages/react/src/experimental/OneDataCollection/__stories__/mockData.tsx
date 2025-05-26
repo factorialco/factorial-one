@@ -25,7 +25,7 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "../navigationFilters/types"
-import { Visualization, VisualizationType } from "../visualizations"
+import { Visualization, VisualizationType } from "../visualizations/collection"
 
 export const DEPARTMENTS_MOCK = [
   "Engineering",
@@ -198,7 +198,8 @@ export const getMockVisualizations = (options?: {
       FiltersType,
       typeof sortings,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockUsers)[number]>
     >
   >
 > => ({
@@ -305,6 +306,16 @@ export const getMockVisualizations = (options?: {
   list: {
     type: "list",
     options: {
+      itemDefinition: (item) => ({
+        title: item.name,
+        description: item.email,
+        metadata: item.role,
+        avatar: {
+          type: "person",
+          firstName: item.name.split(" ")[0],
+          lastName: item.name.split(" ")[1],
+        },
+      }),
       fields: [
         {
           label: "Email",
@@ -522,7 +533,8 @@ export const ExampleComponent = ({
       FiltersType,
       typeof sortings,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockUsers)[number]>
     >
   >
   selectable?: (item: (typeof mockUsers)[number]) => string | number | undefined
@@ -607,9 +619,9 @@ export const ExampleComponent = ({
         }
         visualizations={
           visualizations ?? [
-            mockVisualizations.list,
             mockVisualizations.table,
             mockVisualizations.card,
+            mockVisualizations.list,
           ]
         }
       />
