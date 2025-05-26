@@ -59,6 +59,15 @@ export function resolveValue<T>(
   const placeholder = hasAPlaceholder ? args.placeholder : undefined
 
   if (value !== undefined) {
+    // If we're expecting a Date and it looks like date data but lost its prototype
+    if (
+      valueKey === "date" &&
+      value !== null &&
+      typeof value === "object" &&
+      "getTime" in value
+    ) {
+      return new Date((value as Date).getTime()) as unknown as T
+    }
     return value as T
   }
 
@@ -67,4 +76,78 @@ export function resolveValue<T>(
   }
 
   return undefined
+}
+
+/**
+ * Formats a date value from various input types to a string representation.
+ *
+ * This function handles multiple date input scenarios:
+ * 1. Direct Date objects or date-like objects with date methods
+ * 2. Objects containing a 'date' property
+ * 3. String values (returned as-is)
+ * 4. Any other non-null values (converted to string)
+ *
+ * It uses the browser's toLocaleDateString() for proper date formatting when
+ * possible, and falls back to string conversions when necessary.
+ *
+ * @param value - The value to format, which can be a Date object, an object
+ *                containing a date property, or any other value
+ * @returns A formatted string representation of the date, or an empty string
+ *          if no valid date value could be extracted
+ *
+ * @example
+ * // Format a direct Date object
+ * formatDateValue(new Date(2023, 0, 15)) // "1/15/2023" (locale-dependent)
+ *
+ * // Format an object with a date property
+ * formatDateValue({ date: new Date(2023, 0, 15) }) // "1/15/2023"
+ *
+ * // Handle a string value
+ * formatDateValue({ date: "2023-01-15" }) // "2023-01-15"
+ *
+ * // Format with a placeholder
+ * formatDateValue({ date: undefined, placeholder: "No date" }) // "No date"
+ */
+export function formatDateValue(value: unknown): string {
+  // Case 1: Direct Date object
+  if (isDateLike(value)) {
+    try {
+      return (value as Date).toLocaleDateString()
+    } catch {
+      return String(value)
+    }
+  }
+
+  // Case 2: Object with date property
+  const resolvedValue = resolveValue<unknown>(value, "date")
+
+  if (isDateLike(resolvedValue)) {
+    try {
+      return (resolvedValue as Date).toLocaleDateString()
+    } catch {
+      return String(resolvedValue)
+    }
+  } else if (typeof resolvedValue === "string") {
+    return resolvedValue
+  } else if (resolvedValue != null) {
+    return String(resolvedValue)
+  }
+
+  return ""
+}
+
+/**
+ * Determines whether a given value is date-like. A value is considered date-like if it is an instance of `Date`
+ * or if it is an object containing specific date-related properties such as `toLocaleDateString` or `getTime`.
+ *
+ * @param {unknown} value - The value to check if it is date-like.
+ * @return {boolean} Returns `true` if the value is date-like, otherwise `false`.
+ */
+function isDateLike(value: unknown): boolean {
+  return Boolean(
+    value instanceof Date ||
+      (value &&
+        typeof value === "object" &&
+        ("toLocaleDateString" in value || "getTime" in value))
+  )
 }

@@ -17,7 +17,11 @@ import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 import { PropertyDefinition } from "../../property-render"
 import { VisualizationType } from "../../visualizations"
-import { isShowingPlaceholder, resolveValue } from "./property-utils.ts"
+import {
+  formatDateValue,
+  isShowingPlaceholder,
+  resolveValue,
+} from "./property-utils.ts"
 
 export interface WithPlaceholder {
   placeholder?: string
@@ -146,9 +150,9 @@ export const propertyRenderers = {
       </div>
     )
   },
-
   date: (args: DateCellValue) => {
-    const value = resolveValue<Date>(args, "date")
+    const formattedDate = formatDateValue(args)
+
     const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "date")
 
     return (
@@ -158,11 +162,10 @@ export const propertyRenderers = {
           shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
         )}
       >
-        {value instanceof Date ? value.toLocaleDateString() : value}
+        {formattedDate}
       </div>
     )
   },
-
   amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => {
     const value = resolveValue<number>(args, "amount")
     const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "amount")
