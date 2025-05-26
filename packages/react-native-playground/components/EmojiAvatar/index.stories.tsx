@@ -13,7 +13,7 @@ const meta = {
     },
   },
   args: {
-    emoji: "🍑",
+    emoji: "🏝️",
     size: "md",
     className: "",
   },
@@ -44,7 +44,7 @@ const EmojiAvatarDisplay = ({ emoji, size, className }: EmojiAvatarProps) => (
 
 export const Basic: Story = {
   args: {
-    emoji: "🍑",
+    emoji: "🏝️",
     size: "md",
   },
 };
@@ -56,9 +56,9 @@ export const SizeVariants: Story = {
         Size Variants
       </Text>
       <View className="flex-row flex-wrap justify-center p-4 bg-gray-100 rounded-lg">
-        <EmojiAvatarDisplay emoji="🍑" size="sm" />
-        <EmojiAvatarDisplay emoji="🍑" size="md" />
-        <EmojiAvatarDisplay emoji="🍑" size="lg" />
+        <EmojiAvatarDisplay emoji="🏝️" size="sm" />
+        <EmojiAvatarDisplay emoji="🏝️" size="md" />
+        <EmojiAvatarDisplay emoji="🏝️" size="lg" />
       </View>
     </ScrollView>
   ),

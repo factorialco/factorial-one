@@ -1,5 +1,14 @@
 import { Text } from "react-native";
 import { cn } from "./utils";
+import { parse } from "twemoji-parser";
+import { SvgUri } from "react-native-svg";
+import { useState } from "react";
+
+interface ParseObject {
+  url: string;
+  indices: [number, number];
+  text: string;
+}
 
 export interface EmojiImageProps {
   size?: string;
@@ -8,13 +17,24 @@ export interface EmojiImageProps {
 }
 
 export function EmojiImage({ emoji, size, className }: EmojiImageProps) {
-  return (
+  const emojiEntity = parseEmoji(emoji);
+
+  const [error, setError] = useState(false);
+
+  return emojiEntity && !error ? (
+    <SvgUri onError={() => setError(true)} uri={emojiEntity.url} />
+  ) : (
     <Text className={cn(size, className)} key={emoji}>
       {emoji}
     </Text>
   );
 }
 
-export function getEmojiLabel(emoji: string): string {
-  return `${emoji} emoji`;
-}
+const parseEmoji = (emoji: string): ParseObject | null => {
+  const [entity] = parse(emoji, {
+    buildUrl: (codePoints: string) =>
+      `https://cdn.jsdelivr.net/gh/twitter/twemoji@latest/assets/svg/${codePoints}.svg`,
+  });
+
+  return entity || null;
+};
