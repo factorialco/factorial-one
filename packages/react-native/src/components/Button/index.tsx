@@ -3,6 +3,7 @@ import React, { forwardRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { cn } from "../../lib/utils";
 import { Icon, type IconType } from "../Icon";
+import { type IconColorName } from "../../lib/colors";
 
 export const variants = [
   "default",
@@ -67,6 +68,38 @@ const pressedVariants = cva({
   },
 });
 
+const getIconColor = (
+  variant: ButtonVariant,
+  isPressed: boolean,
+): IconColorName => {
+  switch (variant) {
+    case "default":
+      return "text-f1-icon-inverse";
+    case "critical":
+      return isPressed ? "text-f1-icon-inverse" : "text-f1-icon-critical-bold";
+    default:
+      return "text-f1-icon";
+  }
+};
+
+const getIconOnlyColor = (
+  variant: ButtonVariant,
+  isPressed: boolean,
+): IconColorName => {
+  switch (variant) {
+    case "critical":
+      return isPressed ? "text-f1-icon-inverse" : "text-f1-icon-critical-bold";
+    case "default":
+      return "text-f1-icon-inverse";
+    case "outline":
+    case "neutral":
+    case "ghost":
+    case "promote":
+    default:
+      return "text-f1-icon-bold";
+  }
+};
+
 const getTextColorClass = (variant: ButtonVariant, isPressed: boolean) => {
   if (isPressed && variant === "critical") {
     return "text-f1-foreground-inverse";
@@ -92,6 +125,7 @@ export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   hideLabel?: boolean;
   className?: string;
   accessibilityHint?: string;
+  showBadge?: boolean;
 }
 
 export const Button = forwardRef<View, ButtonProps>(function Button(
@@ -108,6 +142,7 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
     round = false,
     className,
     accessibilityHint,
+    showBadge = false,
   },
   ref,
 ) {
@@ -134,59 +169,70 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
   const shouldShowPressed = isPressed && !isDisabled;
 
   return (
-    <Pressable
-      ref={ref}
-      disabled={isDisabled}
-      onPressIn={() => setIsPressed(true)}
-      onPressOut={() => setIsPressed(false)}
-      onPress={handlePress}
-      className={cn(
-        buttonVariants({
-          variant,
-          size,
+    <View className="relative">
+      <Pressable
+        ref={ref}
+        disabled={isDisabled}
+        onPressIn={() => setIsPressed(true)}
+        onPressOut={() => setIsPressed(false)}
+        onPress={handlePress}
+        className={cn(
+          buttonVariants({
+            variant,
+            size,
+            disabled: isDisabled,
+            round: hideLabel && round,
+          }),
+          shouldShowPressed && pressedVariants({ variant }),
+          className,
+        )}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole="button"
+        accessibilityState={{
           disabled: isDisabled,
-          round: hideLabel && round,
-        }),
-        shouldShowPressed && pressedVariants({ variant }),
-        className,
-      )}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
-      accessibilityState={{
-        disabled: isDisabled,
-        busy: loading || isLoading,
-      }}
-      accessibilityHint={accessibilityHint}
-    >
-      {icon && (
-        <Icon
-          icon={icon}
-          size={size === "sm" ? "sm" : "md"}
-          variant={variant}
-          isPressed={shouldShowPressed}
-          className={hideLabel && round ? undefined : "-ml-0.5"}
+          busy: loading || isLoading,
+        }}
+        accessibilityHint={accessibilityHint}
+      >
+        {icon && (
+          <Icon
+            icon={icon}
+            size={size === "sm" ? "sm" : "md"}
+            color={
+              hideLabel && round
+                ? getIconOnlyColor(variant, shouldShowPressed)
+                : getIconColor(variant, shouldShowPressed)
+            }
+            className={hideLabel && round ? undefined : "-ml-0.5"}
+          />
+        )}
+        {emoji && (
+          <Text
+            className={cn(
+              "text-base font-medium",
+              getTextColorClass(variant, shouldShowPressed),
+            )}
+          >
+            {emoji}
+          </Text>
+        )}
+        {!hideLabel && (
+          <Text
+            className={cn(
+              "text-base font-medium",
+              getTextColorClass(variant, shouldShowPressed),
+            )}
+          >
+            {label}
+          </Text>
+        )}
+      </Pressable>
+      {showBadge && variant === "outline" && (
+        <View
+          accessibilityLabel="Notification Badge"
+          className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-f1-icon-accent"
         />
       )}
-      {emoji && (
-        <Text
-          className={cn(
-            "text-base font-medium",
-            getTextColorClass(variant, shouldShowPressed),
-          )}
-        >
-          {emoji}
-        </Text>
-      )}
-      {!hideLabel && (
-        <Text
-          className={cn(
-            "text-base font-medium",
-            getTextColorClass(variant, shouldShowPressed),
-          )}
-        >
-          {label}
-        </Text>
-      )}
-    </Pressable>
+    </View>
   );
 });
