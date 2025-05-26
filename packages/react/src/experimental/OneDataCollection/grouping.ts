@@ -24,7 +24,18 @@ export type GroupingDefinition<R extends RecordType> = {
       ) => number | undefined | Promise<number | undefined>
     }
   }
-}
+} & (
+  | {
+      /** Whether the grouping is non collapsible */
+      collapsible: true
+      /** The initial open groups */
+      defaultOpenGroups?: boolean | string[]
+    }
+  | {
+      collapsible?: false
+      defaultOpenGroups?: never
+    }
+)
 
 /**
  * The selected the grouping state

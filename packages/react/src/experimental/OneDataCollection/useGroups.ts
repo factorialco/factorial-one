@@ -1,17 +1,29 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { RecordType } from "./types"
 import { GroupRecord } from "./useData"
 
-export const useGroups = <R extends RecordType>(groups: GroupRecord<R>[]) => {
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(
-    groups.reduce(
+export const useGroups = <R extends RecordType>(
+  groups: GroupRecord<R>[],
+  defaultOpenGroups: boolean | GroupRecord<R>["key"][] = []
+) => {
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({})
+
+  useEffect(() => {
+    const defaultValue = groups.reduce(
       (acc, group) => {
-        acc[group.key] = false
+        acc[group.key] =
+          typeof defaultOpenGroups === "boolean"
+            ? defaultOpenGroups
+            : defaultOpenGroups.includes(group.key)
         return acc
       },
       {} as Record<string, boolean>
     )
-  )
+    if (Object.values(defaultOpenGroups).length > 0) {
+      setOpenGroups(defaultValue)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groups])
 
   const setGroupOpen = (key: string, open: boolean) => {
     setOpenGroups((prev) => ({ ...prev, [key]: open }))

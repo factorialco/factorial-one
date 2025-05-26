@@ -4,6 +4,7 @@ import { DoDonts } from "@/lib/storybook-utils/do-donts"
 import * as DataCollectionStories from "./index.stories"
 import * as ActionDataCollectionStories from "./actions.stories"
 import * as CellTypesDataCollectionStories from "./cell-types.stories"
+import * as GroupingStories from "./grouping.stories"
 
 <Meta title="Data collection/Grouping" />
 
@@ -32,6 +33,8 @@ const { source, currentGrouping, setCurrentGrouping } = useDataCollection({
   ...
   grouping={{
     mandatory: true, // If true, the grouping is mandatory and the data will be grouped by the grouping field, if false, the grouping is optional and the use can choose not grouping the data
+    collapsible: true, // If true, the grouping is collapsible and the user can collapse the grouping, if false, the grouping is non collapsible and the user cannot collapse the grouping
+    initialOpenGroups: true, // If true, the grouping is open by default, if false, the grouping is closed by default, if an array, the grouping will be open only for the groups in the array
     groupBy: {
         // This is the field to group the data by
         department: {
@@ -63,6 +66,8 @@ The grouping is configured in the `grouping` property of the `useDataCollection`
 ```ts
 export type GroupingDefinition<R extends RecordType> = {
   mandatory?: boolean
+  collapsible?: boolean
+  defaultOpenGroups?: boolean | string[]
   groupBy: {
     [K in keyof R]?: {
       name: string
@@ -86,6 +91,19 @@ If it is mandatory, the data must be grouped by one of the grouping fields. If
 it is not mandatory, the user can choose not grouping the data and still
 choosing group by one of the available fields.
 
+### Collapsible
+
+The `collapsible` property is used to define if the grouping is collapsible or
+not. If it is collapsible, the user can collapse the grouping . If it is not
+collapsible, the grouping is always expanded.
+
+### Default open groups
+
+The `defaultOpenGroups` property is used to define the default open groups. If
+it is a boolean, it will be applied to all groups. If it is an array, it will be
+applied to the groups in the array. This property is only used if the grouping
+is collapsible.
+
 ### GroupBy
 
 The `groupBy` property is used to define the grouping fields. Each key is a
@@ -104,3 +122,29 @@ field of the record and the value is an object with the following properties:
   and it returns the item count of the group or a promise. In the case of a
   promise the datacollection will render a skeleton until the promise is
   resolved. you can use this to fetch the item count from an api, array, etc.
+
+## Examples
+
+### Basic example
+
+<Canvas of={GroupingStories.WithGrouping} />
+
+### With optional grouping
+
+<Canvas of={GroupingStories.WithOptionalGrouping} />
+
+### Collapsible grouping
+
+<Canvas of={GroupingStories.CollapsibleGrouping} />
+
+### Collapsible grouping with default open groups
+
+<Canvas of={GroupingStories.CollapsibleGroupingWithDefaultOpenGroups} />
+
+### With grouping and pagination
+
+<Canvas of={GroupingStories.WithPaginationAndGrouping} />
+
+### Selectable grouping
+
+<Canvas of={GroupingStories.SelectableGrouping} />

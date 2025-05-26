@@ -1,3 +1,17 @@
+/**
+ * A component that renders the selected visualization for a collection.
+ * Handles switching between different visualization types (table, card, or custom view)
+ * and passes appropriate props to the specific visualization component.
+ *
+ * @template Record - The type of records in the collection
+ * @template Filters - The filters type extending FiltersDefinition
+ * @template ItemActions - The item actions type extending Item ActionsDefinition
+ *
+ * @param visualization - The configuration for the current visualization
+ * @param source - The data source to visualize
+ *
+ * @returns The rendered visualization component (TableCollection, CardCollection, or custom component)
+ */
 import { CollectionProps, OnSelectItemsCallback } from "../../types"
 
 import { FiltersDefinition } from "../../Filters/types"

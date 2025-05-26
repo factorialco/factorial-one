@@ -269,18 +269,19 @@ export const CardCollection = <
    */
   const {
     selectedItems,
+    groupAllSelectedStatus,
     handleSelectItemChange,
-    // TODO Add all selection logic
-    // isAllSelected,
-    // isPartiallySelected,
-    // handleSelectAll,
-  } = useSelectable(data.records, paginationInfo, source, onSelectItems)
+    handleSelectGroupChange,
+  } = useSelectable(data, paginationInfo, source, onSelectItems)
 
   /**
    * Groups
    */
+  const collapsible = source.grouping?.collapsible
+  const defaultOpenGroups = source.grouping?.defaultOpenGroups
   const { openGroups, setGroupOpen } = useGroups(
-    data?.type === "grouped" ? data.groups : []
+    data?.type === "grouped" ? data.groups : [],
+    defaultOpenGroups
   )
 
   return (
@@ -290,7 +291,7 @@ export const CardCollection = <
           {Array.from({ length: 8 }).map((_, i) => (
             <Card key={i}>
               <CardHeader>
-                <CardTitle>
+                <CardTitle aria-label="Loading card">
                   <Skeleton className="h-4 w-3/4" />
                 </CardTitle>
               </CardHeader>
@@ -314,8 +315,20 @@ export const CardCollection = <
                   <GroupHeader
                     label={group.label}
                     itemCount={group.itemCount}
-                    open={openGroups[group.key]}
                     onOpenChange={(open) => setGroupOpen(group.key, open)}
+                    open={openGroups[group.key]}
+                    selectable={!!source.selectable}
+                    showOpenChange={collapsible}
+                    select={
+                      groupAllSelectedStatus[group.key]?.checked
+                        ? true
+                        : groupAllSelectedStatus[group.key]?.indeterminate
+                          ? "indeterminate"
+                          : false
+                    }
+                    onSelectChange={(checked) =>
+                      handleSelectGroupChange(group, checked)
+                    }
                   />
                   <AnimatePresence>
                     {openGroups[group.key] && (

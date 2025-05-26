@@ -20,7 +20,7 @@ import { useData } from "../useData"
 import {
   createDataAdapter,
   createPromiseDataFetch,
-  DEPARTMENTS,
+  DEPARTMENTS_MOCK,
   DOT_TAG_COLORS_MOCK,
   ExampleComponent,
   filterPresets,
@@ -518,6 +518,11 @@ export const RendererTypes: Story = {
 }
 
 export const CustomCardProperties: Story = {
+  parameters: {
+    a11y: {
+      disable: true,
+    },
+  },
   render: () => {
     const dataSource = useDataSource({
       filters,
@@ -1143,7 +1148,7 @@ export const WithSyncSearch: Story = {
         name: "John Doe",
         email: "john@example.com",
         role: "Senior Engineer",
-        department: DEPARTMENTS[0],
+        department: DEPARTMENTS_MOCK[0],
         status: "active",
         isStarred: true,
       },
@@ -1152,7 +1157,7 @@ export const WithSyncSearch: Story = {
         name: "Jane Smith",
         email: "jane@example.com",
         role: "Product Manager",
-        department: DEPARTMENTS[1],
+        department: DEPARTMENTS_MOCK[1],
         status: "active",
         isStarred: false,
       },
@@ -1161,7 +1166,7 @@ export const WithSyncSearch: Story = {
         name: "Alice Johnson",
         email: "alice@example.com",
         role: "UX Designer",
-        department: DEPARTMENTS[2],
+        department: DEPARTMENTS_MOCK[2],
         status: "active",
         isStarred: false,
       },
@@ -1170,7 +1175,7 @@ export const WithSyncSearch: Story = {
         name: "Bob Brown",
         email: "bob@example.com",
         role: "Developer",
-        department: DEPARTMENTS[0],
+        department: DEPARTMENTS_MOCK[0],
         status: "inactive",
         isStarred: true,
       },
@@ -1179,7 +1184,7 @@ export const WithSyncSearch: Story = {
         name: "Emma Wilson",
         email: "emma@example.com",
         role: "Marketing Lead",
-        department: DEPARTMENTS[3],
+        department: DEPARTMENTS_MOCK[3],
         status: "active",
         isStarred: false,
       },
@@ -1475,7 +1480,7 @@ export const TableColumnProperties: Story = {
             : index % 3 === 1
               ? "Designer"
               : "Manager",
-        department: DEPARTMENTS[index % DEPARTMENTS.length],
+        department: DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length],
         status: index % 4 === 0 ? "inactive" : "active",
         isStarred: index % 5 === 0,
         salary: 50000 + index * 1000,

@@ -1,5 +1,47 @@
 # Changelog
 
+## [1.65.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.65.0...factorial-one-react-v1.65.1) (2025-05-23)
+
+
+### Bug Fixes
+
+* **sidebar:** update internal state when favorites prop changes ([#1876](https://github.com/factorialco/factorial-one/issues/1876)) ([f4a55a2](https://github.com/factorialco/factorial-one/commit/f4a55a2b17df9386567f23576f36440a1dfceb7a))
+
+## [1.65.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.2...factorial-one-react-v1.65.0) (2025-05-23)
+
+
+### Features
+
+* add actions to Select ([#1874](https://github.com/factorialco/factorial-one/issues/1874)) ([cfe0b7a](https://github.com/factorialco/factorial-one/commit/cfe0b7a408940989700248293ac775c353c3297d))
+
+## [1.64.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.1...factorial-one-react-v1.64.2) (2025-05-22)
+
+
+### Bug Fixes
+
+* remove remaingin avatarnameselector ([#1870](https://github.com/factorialco/factorial-one/issues/1870)) ([aae223c](https://github.com/factorialco/factorial-one/commit/aae223c5b69cb93ab6bef4bf1bea533c44fbed9b))
+
+## [1.64.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.64.0...factorial-one-react-v1.64.1) (2025-05-22)
+
+
+### Bug Fixes
+
+* set correct padding for ActivityItemList components ([#1867](https://github.com/factorialco/factorial-one/issues/1867)) ([6c5a41f](https://github.com/factorialco/factorial-one/commit/6c5a41fd96f8c8d9f31bc7424fb2e9dd83fe77d1))
+
+## [1.64.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.63.0...factorial-one-react-v1.64.0) (2025-05-22)
+
+
+### Features
+
+* oneEllipsis component ([#1834](https://github.com/factorialco/factorial-one/issues/1834)) ([62cf170](https://github.com/factorialco/factorial-one/commit/62cf1701fd717d18444fe69daecbf8ccbd7a9211))
+
+## [1.63.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.62.1...factorial-one-react-v1.63.0) (2025-05-22)
+
+
+### Features
+
+* add arrowcycle icon ([7f1f680](https://github.com/factorialco/factorial-one/commit/7f1f680e5ad6a749ca1357832a41192daa0b48b7))
+
 ## [1.62.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.62.0...factorial-one-react-v1.62.1) (2025-05-22)
 
 

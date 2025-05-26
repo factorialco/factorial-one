@@ -4,11 +4,11 @@ import { fn } from "@storybook/test"
 import { ComponentProps, useCallback, useState } from "react"
 import { famousEmployees } from "../entity-select-name.factory"
 import { teamsWithEmployees } from "../groups-avatar-name.factory"
-import { AvatarNameListItem } from "./index"
+import { EntitySelectListItem } from "./index"
 
 const meta: Meta = {
-  component: AvatarNameListItem,
-  title: "AvatarNameSelector/AvatarNameListItem",
+  component: EntitySelectListItem,
+  title: "EntitySelect/ListItem",
   parameters: {
     layout: "centered",
   },
@@ -31,8 +31,8 @@ const meta: Meta = {
     expanded: false,
     search: "",
     singleSelector: false,
-  } satisfies ComponentProps<typeof AvatarNameListItem>,
-} satisfies Meta<typeof AvatarNameListItem>
+  } satisfies ComponentProps<typeof EntitySelectListItem>,
+} satisfies Meta<typeof EntitySelectListItem>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -83,7 +83,7 @@ export const DefaultInForm = {
     onExpand: fn(),
     expanded: false,
   },
-  render: (props: ComponentProps<typeof AvatarNameListItem>) => {
+  render: (props: ComponentProps<typeof EntitySelectListItem>) => {
     const [selected, setSelected] = useState(false)
 
     const onSelect = useCallback(() => {
@@ -92,7 +92,7 @@ export const DefaultInForm = {
 
     return (
       <form>
-        <AvatarNameListItem
+        <EntitySelectListItem
           {...props}
           onSelect={onSelect}
           onRemove={onSelect}
