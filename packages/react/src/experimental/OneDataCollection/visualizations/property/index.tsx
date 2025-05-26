@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 import { PropertyDefinition } from "../../property-render"
 import { VisualizationType } from "../../visualizations"
+import { extractValue, hasPlaceholder } from "./property-utils.ts"
 
 /**
  * The renderer function to use for a property.
@@ -45,11 +46,8 @@ export const propertyRenderers = {
       | number
       | undefined
   ) => {
-    const textContent =
-      typeof args === "object" && args !== null ? args.text : args
-
-    const isPlaceholder =
-      typeof args === "object" && args !== null && args.placeholder
+    const value = extractValue<string | number>(args)
+    const isPlaceholder = hasPlaceholder(args)
 
     return (
       <span
@@ -58,39 +56,71 @@ export const propertyRenderers = {
           isPlaceholder && "text-f1-foreground-secondary"
         )}
       >
-        {textContent}
+        {value}
       </span>
     )
   },
   number: (
-    number: number | undefined,
+    args:
+      | { number: number | undefined; placeholder?: string }
+      | number
+      | undefined,
     meta: PropertyRendererMetadata<never>
-  ) => (
-    <div
-      className={cn(
-        "text-f1-foreground",
-        meta.visualization === "table" && "text-right"
-      )}
-    >
-      {number}
-    </div>
-  ),
-  date: (date: Date | undefined) => (
-    <div className="text-f1-foreground">{date?.toLocaleDateString()}</div>
-  ),
+  ) => {
+    const value = extractValue<number>(args)
+    const isPlaceholder = hasPlaceholder(args)
+
+    return (
+      <div
+        className={cn(
+          "text-f1-foreground",
+          meta.visualization === "table" && "text-right",
+          isPlaceholder && "text-f1-foreground-secondary"
+        )}
+      >
+        {value}
+      </div>
+    )
+  },
+  date: (
+    args: { date: Date | undefined; placeholder?: string } | Date | undefined
+  ) => {
+    const value = extractValue<Date>(args)
+    const isPlaceholder = hasPlaceholder(args)
+
+    return (
+      <div
+        className={cn(
+          "text-f1-foreground",
+          isPlaceholder && "text-f1-foreground-secondary"
+        )}
+      >
+        {value?.toLocaleDateString()}
+      </div>
+    )
+  },
   amount: (
-    amount: number | undefined,
+    args:
+      | { amount: number | undefined; placeholder?: string }
+      | number
+      | undefined,
     meta: PropertyRendererMetadata<never>
-  ) => (
-    <div
-      className={cn(
-        "text-f1-foreground",
-        meta.visualization === "table" && "text-right"
-      )}
-    >
-      {amount}
-    </div>
-  ),
+  ) => {
+    const value = extractValue<number>(args)
+    const isPlaceholder = hasPlaceholder(args)
+
+    return (
+      <div
+        className={cn(
+          "text-f1-foreground",
+          meta.visualization === "table" && "text-right",
+          isPlaceholder && "text-f1-foreground-secondary"
+        )}
+      >
+        {value}
+      </div>
+    )
+  },
   avatarList: (args: { avatarList: AvatarVariant[]; max?: number }) => (
     <AvatarList avatars={args.avatarList} size="xsmall" max={args.max} />
   ),
