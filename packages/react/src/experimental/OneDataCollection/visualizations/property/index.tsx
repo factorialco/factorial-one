@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 import { PropertyDefinition } from "../../property-render"
 import { VisualizationType } from "../../visualizations"
-import { hasPlaceholder } from "./property-utils.ts"
+import { isShowingPlaceholder, resolveValue } from "./property-utils.ts"
 
 export interface WithPlaceholder {
   placeholder?: string
@@ -115,17 +115,14 @@ export type PropertyRendererMetadata<T> = {
  */
 export const propertyRenderers = {
   text: (args: TextCellValue) => {
-    const isPlaceholder = hasPlaceholder(args)
-    const value =
-      typeof args === "object" && args !== null && "text" in args
-        ? args.text
-        : args
+    const value = resolveValue<string | number>(args, "text")
+    const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "text")
 
     return (
       <span
         className={cn(
           "text-f1-foreground",
-          isPlaceholder && "text-f1-foreground-secondary"
+          shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
         )}
       >
         {value}
@@ -134,18 +131,15 @@ export const propertyRenderers = {
   },
 
   number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => {
-    const isPlaceholder = hasPlaceholder(args)
-    const value =
-      typeof args === "object" && args !== null && "number" in args
-        ? args.number
-        : args
+    const value = resolveValue<number>(args, "number")
+    const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "number")
 
     return (
       <div
         className={cn(
           "text-f1-foreground",
           meta.visualization === "table" && "text-right",
-          isPlaceholder && "text-f1-foreground-secondary"
+          shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
         )}
       >
         {value}
@@ -154,37 +148,31 @@ export const propertyRenderers = {
   },
 
   date: (args: DateCellValue) => {
-    const isPlaceholder = hasPlaceholder(args)
-    const value =
-      typeof args === "object" && args !== null && "date" in args
-        ? args.date
-        : args
+    const value = resolveValue<Date>(args, "date")
+    const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "date")
 
     return (
       <div
         className={cn(
           "text-f1-foreground",
-          isPlaceholder && "text-f1-foreground-secondary"
+          shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
         )}
       >
-        {value?.toLocaleDateString()}
+        {value instanceof Date ? value.toLocaleDateString() : value}
       </div>
     )
   },
 
   amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => {
-    const isPlaceholder = hasPlaceholder(args)
-    const value =
-      typeof args === "object" && args !== null && "amount" in args
-        ? args.amount
-        : args
+    const value = resolveValue<number>(args, "amount")
+    const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "amount")
 
     return (
       <div
         className={cn(
           "text-f1-foreground",
           meta.visualization === "table" && "text-right",
-          isPlaceholder && "text-f1-foreground-secondary"
+          shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
         )}
       >
         {value}
