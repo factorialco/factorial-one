@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.66.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.2...factorial-one-react-v1.66.3) (2025-05-26)
+
+
+### Bug Fixes
+
+* add missing OneModal footer component ([#1879](https://github.com/factorialco/factorial-one/issues/1879)) ([110761c](https://github.com/factorialco/factorial-one/commit/110761c358487dbfc3b751d82c13168be0018d2b))
+
 ## [1.66.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.1...factorial-one-react-v1.66.2) (2025-05-26)
 
 
