@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.67.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.4...factorial-one-react-v1.67.0) (2025-05-26)
+
+
+### Features
+
+* Add OneEmptyState component ([#1875](https://github.com/factorialco/factorial-one/issues/1875)) ([c77bb03](https://github.com/factorialco/factorial-one/commit/c77bb038d916d39ecb217eca0bc578dd4228d9f0))
+
 ## [1.66.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.3...factorial-one-react-v1.66.4) (2025-05-26)
 
 
