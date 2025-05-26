@@ -3,49 +3,25 @@
 exports[`Button Snapshot - different sizes 1`] = `
 <View
   className="flex aspect-square items-center justify-center border border-solid border-f1-border-secondary bg-f1-background dark:bg-f1-background-inverse-secondary w-6 h-6 rounded-sm"
->
-  <Text
-    className="text-xs"
-  >
-    👋
-  </Text>
-</View>
+/>
 `;
 
 exports[`Button Snapshot - different sizes 2`] = `
 <View
   className="flex aspect-square items-center justify-center border border-solid border-f1-border-secondary bg-f1-background dark:bg-f1-background-inverse-secondary w-9 h-9 rounded-md"
->
-  <Text
-    className="text-sm"
-  >
-    👋
-  </Text>
-</View>
+/>
 `;
 
 exports[`Button Snapshot - different sizes 3`] = `
 <View
   className="flex aspect-square items-center justify-center border border-solid border-f1-border-secondary bg-f1-background dark:bg-f1-background-inverse-secondary w-10 h-10 rounded-lg"
->
-  <Text
-    className="text-md"
-  >
-    👋
-  </Text>
-</View>
+/>
 `;
 
 exports[`Button Snapshot - with emoji 1`] = `
 <View
   className="flex aspect-square items-center justify-center border border-solid border-f1-border-secondary bg-f1-background dark:bg-f1-background-inverse-secondary w-9 h-9 rounded-md"
->
-  <Text
-    className="text-sm"
-  >
-    👋
-  </Text>
-</View>
+/>
 `;
 
 exports[`Button Snapshot - with text emoji 1`] = `
