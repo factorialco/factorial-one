@@ -1,5 +1,5 @@
-import { EmptyState } from "../../OneEmptyState/OneEmptyState"
 import { IconType } from "../../../components/Utilities/Icon"
+import { EmptyState } from "../../OneEmptyState/OneEmptyState"
 
 type Action = {
   label: string
