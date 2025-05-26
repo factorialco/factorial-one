@@ -1,14 +1,3 @@
-import {
-  AmountValue,
-  DateValue,
-  NumberValue,
-  TextValue,
-} from "@/experimental/OneDataCollection/visualizations/property"
-
-export type ValueKey = "text" | "number" | "date" | "amount"
-
-export type ValueObject = TextValue | NumberValue | DateValue | AmountValue
-
 /**
  * Checks if a value object has a placeholder property
  */
