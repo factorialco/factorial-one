@@ -63,30 +63,3 @@ export const SizeVariants: Story = {
     </ScrollView>
   ),
 };
-
-export const Styling: Story = {
-  render: () => (
-    <ScrollView>
-      <Text className="text-lg font-bold mb-4 text-f1-foreground">
-        Custom Styling
-      </Text>
-      <View className="flex-row flex-wrap justify-center p-4 bg-gray-100 rounded-lg">
-        <EmojiAvatarDisplay
-          emoji="🍑"
-          size="md"
-          className="border-f1-border-critical"
-        />
-        <EmojiAvatarDisplay
-          emoji="🍑"
-          size="md"
-          className="border-f1-border-info"
-        />
-        <EmojiAvatarDisplay
-          emoji="🍑"
-          size="md"
-          className="border-f1-border-warning"
-        />
-      </View>
-    </ScrollView>
-  ),
-};
