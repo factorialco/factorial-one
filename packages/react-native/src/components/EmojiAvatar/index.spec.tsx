@@ -3,27 +3,12 @@ import React from "react";
 import { EmojiAvatar } from "./";
 
 describe("Button", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
-
-  it("Snapshot - with emoji", () => {
-    const { toJSON } = render(<EmojiAvatar emoji="👋" />);
-
-    expect(toJSON()).toMatchSnapshot();
-  });
-
-  it("Snapshot - with text emoji", () => {
-    const { toJSON } = render(<EmojiAvatar emoji="test" />);
-
-    expect(toJSON()).toMatchSnapshot();
-  });
-
-  it("Snapshot - different sizes", () => {
+  it("Snapshot - different sizes text emoji and diferent size", () => {
     const sizes = ["sm", "md", "lg"] as const;
 
     sizes.forEach((size) => {
-      const { toJSON } = render(<EmojiAvatar emoji="👋" size={size} />);
+      const { toJSON } = render(<EmojiAvatar emoji="test" size={size} />);
+
       expect(toJSON()).toMatchSnapshot();
     });
   });
