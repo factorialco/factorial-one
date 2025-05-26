@@ -3,6 +3,7 @@ import React, { forwardRef, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { cn } from "../../lib/utils";
 import { Icon, type IconType } from "../Icon";
+import { type IconColorName } from "../../lib/colors";
 
 export const variants = [
   "default",
@@ -66,6 +67,47 @@ const pressedVariants = cva({
     variant: "default",
   },
 });
+
+const getIconColor = (
+  variant: ButtonVariant,
+  isPressed: boolean,
+): IconColorName => {
+  if (isPressed && variant === "critical") {
+    return "text-f1-icon-inverse";
+  }
+
+  switch (variant) {
+    case "default":
+      return "text-f1-icon-inverse";
+    case "critical":
+      return "text-f1-icon-critical-bold";
+    default:
+      return "text-f1-icon";
+  }
+};
+
+const getIconOnlyColor = (
+  variant: ButtonVariant,
+  isPressed: boolean,
+): IconColorName => {
+  if (isPressed && variant === "critical") {
+    return "text-f1-icon-inverse";
+  }
+
+  switch (variant) {
+    case "default":
+      return "text-f1-icon-inverse";
+    case "outline":
+    case "neutral":
+    case "ghost":
+    case "promote":
+      return "text-f1-icon-bold";
+    case "critical":
+      return "text-f1-icon-critical-bold";
+    default:
+      return "text-f1-icon-bold";
+  }
+};
 
 const getTextColorClass = (variant: ButtonVariant, isPressed: boolean) => {
   if (isPressed && variant === "critical") {
@@ -162,8 +204,11 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
         <Icon
           icon={icon}
           size={size === "sm" ? "sm" : "md"}
-          variant={variant}
-          isPressed={shouldShowPressed}
+          color={
+            hideLabel && round
+              ? getIconOnlyColor(variant, shouldShowPressed)
+              : getIconColor(variant, shouldShowPressed)
+          }
           className={hideLabel && round ? undefined : "-ml-0.5"}
         />
       )}
