@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.66.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.3...factorial-one-react-v1.66.4) (2025-05-26)
+
+
+### Bug Fixes
+
+* do not allow user to click page header navigation button when it's disabled ([#1894](https://github.com/factorialco/factorial-one/issues/1894)) ([3e32ffe](https://github.com/factorialco/factorial-one/commit/3e32ffe138732ecac141a767feefae3e1f40439e))
+
 ## [1.66.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.2...factorial-one-react-v1.66.3) (2025-05-26)
 
 
