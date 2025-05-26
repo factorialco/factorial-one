@@ -17,7 +17,82 @@ import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 import { PropertyDefinition } from "../../property-render"
 import { VisualizationType } from "../../visualizations"
-import { extractValue, hasPlaceholder } from "./property-utils.ts"
+import { hasPlaceholder } from "./property-utils.ts"
+
+export interface WithPlaceholder {
+  placeholder?: string
+}
+
+export interface TextValue extends WithPlaceholder {
+  text: string | number | undefined
+}
+
+export interface NumberValue extends WithPlaceholder {
+  number: number | undefined
+}
+
+export interface DateValue extends WithPlaceholder {
+  date: Date | undefined
+}
+
+export interface AmountValue extends WithPlaceholder {
+  amount: number | undefined
+}
+
+export type TextCellValue = string | number | undefined | TextValue
+export type NumberCellValue = number | undefined | NumberValue
+export type DateCellValue = Date | undefined | DateValue
+export type AmountCellValue = number | undefined | AmountValue
+
+export interface AvatarListValue {
+  avatarList: AvatarVariant[]
+  max?: number
+}
+export type AvatarListCellValue = AvatarListValue
+
+export interface StatusValue {
+  status: StatusVariant
+  label: string
+}
+export type StatusCellValue = StatusValue
+
+export interface PersonValue {
+  firstName: string
+  lastName: string
+  src?: string
+}
+export type PersonCellValue = PersonValue
+
+export interface CompanyValue {
+  name: string
+  src?: string
+}
+export type CompanyCellValue = CompanyValue
+
+export interface TeamValue {
+  name: string
+  src?: string
+}
+export type TeamCellValue = TeamValue
+
+export interface TagValue {
+  label: string
+  icon?: IconType
+}
+export type TagCellValue = TagValue
+
+export interface DotTagValue {
+  label: string
+  color: NewColor
+}
+export type DotTagCellValue = DotTagValue
+
+export interface TagListValue {
+  tags: Array<Omit<TagVariant, "type">>
+  max?: number
+  type: TagType
+}
+export type TagListCellValue = TagListValue
 
 /**
  * The renderer function to use for a property.
@@ -39,15 +114,12 @@ export type PropertyRendererMetadata<T> = {
  * @returns The rendered property value
  */
 export const propertyRenderers = {
-  text: (
-    args:
-      | { text: string | number | undefined; placeholder?: string }
-      | string
-      | number
-      | undefined
-  ) => {
-    const value = extractValue<string | number>(args)
+  text: (args: TextCellValue) => {
     const isPlaceholder = hasPlaceholder(args)
+    const value =
+      typeof args === "object" && args !== null && "text" in args
+        ? args.text
+        : args
 
     return (
       <span
@@ -60,15 +132,13 @@ export const propertyRenderers = {
       </span>
     )
   },
-  number: (
-    args:
-      | { number: number | undefined; placeholder?: string }
-      | number
-      | undefined,
-    meta: PropertyRendererMetadata<never>
-  ) => {
-    const value = extractValue<number>(args)
+
+  number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => {
     const isPlaceholder = hasPlaceholder(args)
+    const value =
+      typeof args === "object" && args !== null && "number" in args
+        ? args.number
+        : args
 
     return (
       <div
@@ -82,11 +152,13 @@ export const propertyRenderers = {
       </div>
     )
   },
-  date: (
-    args: { date: Date | undefined; placeholder?: string } | Date | undefined
-  ) => {
-    const value = extractValue<Date>(args)
+
+  date: (args: DateCellValue) => {
     const isPlaceholder = hasPlaceholder(args)
+    const value =
+      typeof args === "object" && args !== null && "date" in args
+        ? args.date
+        : args
 
     return (
       <div
@@ -99,15 +171,13 @@ export const propertyRenderers = {
       </div>
     )
   },
-  amount: (
-    args:
-      | { amount: number | undefined; placeholder?: string }
-      | number
-      | undefined,
-    meta: PropertyRendererMetadata<never>
-  ) => {
-    const value = extractValue<number>(args)
+
+  amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => {
     const isPlaceholder = hasPlaceholder(args)
+    const value =
+      typeof args === "object" && args !== null && "amount" in args
+        ? args.amount
+        : args
 
     return (
       <div
@@ -121,13 +191,13 @@ export const propertyRenderers = {
       </div>
     )
   },
-  avatarList: (args: { avatarList: AvatarVariant[]; max?: number }) => (
+  avatarList: (args: AvatarListCellValue) => (
     <AvatarList avatars={args.avatarList} size="xsmall" max={args.max} />
   ),
-  status: (args: { status: StatusVariant; label: string }) => (
+  status: (args: StatusCellValue) => (
     <StatusTag variant={args.status} text={args.label} />
   ),
-  person: (args: { firstName: string; lastName: string; src?: string }) => (
+  person: (args: PersonCellValue) => (
     <div className="flex items-center gap-2">
       <Avatar
         avatar={{
@@ -143,7 +213,7 @@ export const propertyRenderers = {
       </span>
     </div>
   ),
-  company: (args: { name: string; src?: string }) => (
+  company: (args: CompanyCellValue) => (
     <div className="flex items-center gap-2">
       <Avatar
         avatar={{
@@ -156,7 +226,7 @@ export const propertyRenderers = {
       <span className="text-f1-foreground">{args.name}</span>
     </div>
   ),
-  team: (args: { name: string; src?: string }) => (
+  team: (args: TeamCellValue) => (
     <div className="flex items-center gap-2">
       <Avatar
         avatar={{
@@ -169,17 +239,11 @@ export const propertyRenderers = {
       <span className="text-f1-foreground">{args.name}</span>
     </div>
   ),
-  tag: (args: { label: string; icon?: IconType }) => (
-    <RawTag text={args.label} icon={args.icon} />
-  ),
-  dotTag: (args: { label: string; color: NewColor }) => (
+  tag: (args: TagCellValue) => <RawTag text={args.label} icon={args.icon} />,
+  dotTag: (args: DotTagCellValue) => (
     <DotTag text={args.label} color={args.color} />
   ),
-  tagList: (args: {
-    tags: Array<Omit<TagVariant, "type">>
-    max?: number
-    type: TagType
-  }) => (
+  tagList: (args: TagListCellValue) => (
     <TagList type={args.type} tags={args.tags as TagVariant[]} max={args.max} />
   ),
 } as const satisfies Record<string, PropertyRenderer<never>>
