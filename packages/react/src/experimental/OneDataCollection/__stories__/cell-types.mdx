@@ -47,11 +47,35 @@ type value = {
   of={CellTypesDataCollectionStories.TextType}
   source={{
     code: `
-render: (item) => 'my text'
-// or
+    render: (item) => 'John Doe'
+    `,
+  }}
+/>
+
+#### TextInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.TextInputAsObject}
+  source={{
+    code: `
 render: (item) => ({
     type: 'text',
-    value: 'my text'
+    value: 'John Doe'
+})`,
+  }}
+/>
+
+#### TextValueInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.TextValueInputAsObject}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'text',
+    value: {
+      text: 'John Doe'
+    }
 })`,
   }}
 />
@@ -80,15 +104,38 @@ Renders a number (right align on table visualizacion)
 
 ```
 type value = number | undefined
+// or
+type value = {
+    number: number | undefined
+    placeholder?: string
+}
 ```
 
+#### NumberInputAsObject
+
 <Canvas
-  of={CellTypesDataCollectionStories.NumberType}
+  of={CellTypesDataCollectionStories.NumberInputAsObject}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'number',
+    value: 1234
+})
+`,
+  }}
+/>
+
+#### NumberValueInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.NumberValueInputAsObject}
   source={{
     code: `
 render: (item) => ({
     type: 'number'
-    value: 1234
+    value: {
+      number: 1234
+    }
 })
 `,
   }}
@@ -103,7 +150,7 @@ render: (item) => ({
 render: (item) => ({
     type: 'number'
     value: {
-      number: undefined
+      number: undefined,
       placeholder: 'Some placeholder'
     }
 })`,
@@ -118,15 +165,38 @@ Renders a date
 
 ```
 type value = Date | undefined
+// or
+type value = {
+    date: Date | undefined
+    placeholder?: string
+}
 ```
 
+#### DateInputAsObject
+
 <Canvas
-  of={CellTypesDataCollectionStories.DateType}
+  of={CellTypesDataCollectionStories.DateInputAsObject}
   source={{
     code: `
 render: (item) => ({
     type: 'date'
     value: new Date()
+})
+`,
+  }}
+/>
+
+#### DateValueInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.DateValueInputAsObject}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'date'
+    value: {
+      date: new Date()
+    }
 })
 `,
   }}
@@ -156,15 +226,36 @@ Renders a monetary number (right align on table visualizacion)
 
 ```
 type value = number | undefined
+// or
+type value = {
+    amount: Date | undefined
+    placeholder?: string
+}
 ```
 
+#### AmountInputAsObject
+
 <Canvas
-  of={CellTypesDataCollectionStories.AmountType}
+  of={CellTypesDataCollectionStories.AmountInputAsObject}
   source={{
     code: `
 render: (item) => ({
     type: 'amount'
     value: 1234
+})
+`,
+  }}
+/>
+
+#### AmountValueInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.AmountValueInputAsObject}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'amount'
+    value: { amount: 1234 },
 })
 `,
   }}

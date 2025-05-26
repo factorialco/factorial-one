@@ -93,8 +93,30 @@ const mockItem = {
   ],
 }
 
-// Basic story showing all action types
 export const TextType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Name",
+      render: (item) => item.firstName + " " + item.lastName,
+    },
+  },
+}
+
+export const TextInputAsObject: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Name",
+      render: (item) => ({
+        type: "text",
+        value: item.firstName + " " + item.lastName,
+      }),
+    },
+  },
+}
+
+export const TextValueInputAsObject: Story = {
   args: {
     item: mockItem,
     property: {
@@ -125,7 +147,7 @@ export const TextWithPlaceholder: Story = {
   },
 }
 
-export const NumberType: Story = {
+export const NumberInputAsObject: Story = {
   args: {
     item: mockItem,
     property: {
@@ -133,6 +155,19 @@ export const NumberType: Story = {
       render: (item) => ({
         type: "number",
         value: Number(item.id),
+      }),
+    },
+  },
+}
+
+export const NumberValueInputAsObject: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Employee ID",
+      render: (item) => ({
+        type: "number",
+        value: { number: Number(item.id) },
       }),
     },
   },
@@ -154,7 +189,7 @@ export const NumberWithPlaceholder: Story = {
   },
 }
 
-export const DateType: Story = {
+export const DateInputAsObject: Story = {
   args: {
     item: mockItem,
     property: {
@@ -162,6 +197,19 @@ export const DateType: Story = {
       render: (item) => ({
         type: "date",
         value: item.date,
+      }),
+    },
+  },
+}
+
+export const DateValueInputAsObject: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Date",
+      render: (item) => ({
+        type: "date",
+        value: { date: item.date },
       }),
     },
   },
@@ -180,7 +228,7 @@ export const DateWithPlaceholder: Story = {
   },
 }
 
-export const AmountType: Story = {
+export const AmountInputAsObject: Story = {
   args: {
     item: mockItem,
     property: {
@@ -188,6 +236,19 @@ export const AmountType: Story = {
       render: (item) => ({
         type: "amount",
         value: item.amount,
+      }),
+    },
+  },
+}
+
+export const AmountValueInputAsObject: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Amount",
+      render: (item) => ({
+        type: "amount",
+        value: { amount: item.amount },
       }),
     },
   },
