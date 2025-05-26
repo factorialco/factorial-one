@@ -98,6 +98,7 @@ function PageNavigationLink({
         disabled={disabled}
         onClick={(e) => {
           e.preventDefault()
+          if (disabled) return
           ref.current?.click()
         }}
       />
