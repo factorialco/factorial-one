@@ -64760,7 +64760,7 @@ const wSe = {
   );
   return /* @__PURE__ */ k(Te, { children: [
     m ? /* @__PURE__ */ l(F_, { children: Array.from({ length: 8 }).map(($, D) => /* @__PURE__ */ k(Dd, { children: [
-      /* @__PURE__ */ l(Ed, { children: /* @__PURE__ */ l(Td, { children: /* @__PURE__ */ l($e, { className: "h-4 w-3/4" }) }) }),
+      /* @__PURE__ */ l(Ed, { children: /* @__PURE__ */ l(Td, { "aria-label": "Loading card", children: /* @__PURE__ */ l($e, { className: "h-4 w-3/4" }) }) }),
       /* @__PURE__ */ l(Wd, { className: "space-y-2", children: e.map((N) => /* @__PURE__ */ k("div", { className: "space-y-1", children: [
         /* @__PURE__ */ l($e, { className: "h-3 w-1/4" }),
         /* @__PURE__ */ l($e, { className: "h-3 w-1/2" })
