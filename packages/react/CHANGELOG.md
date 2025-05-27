@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.68.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.67.0...factorial-one-react-v1.68.0) (2025-05-27)
+
+
+### Features
+
+* **dataCollection:** Data collection cells placeholder ([#1886](https://github.com/factorialco/factorial-one/issues/1886)) ([00e1199](https://github.com/factorialco/factorial-one/commit/00e119991ae555549c7ae41a4ed617e965e450f9))
+
 ## [1.67.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.66.4...factorial-one-react-v1.67.0) (2025-05-26)
 
 
