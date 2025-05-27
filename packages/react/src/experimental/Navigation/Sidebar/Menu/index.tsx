@@ -556,6 +556,7 @@ function MenuContent({
 
   // Initialize once when component mounts
   useEffect(() => {
+    console.log("sortableItems", sortableItems.length, isInitialized)
     if (sortableItems.length > 0 && !isInitialized) {
       setSortableItems([...sortableItems])
       setIsInitialized(true)
