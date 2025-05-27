@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { EnhancementOption, FILE_TYPES, resultType, RichTextEditor } from "."
+import { RichTextEditor } from "."
+import {
+  EnhancementOption,
+  FILE_TYPES,
+  resultType,
+} from "../CoreRichTextEditor"
 
 const meta = {
   component: RichTextEditor,
