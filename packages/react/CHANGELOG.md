@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.69.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.1...factorial-one-react-v1.69.2) (2025-05-27)
+
+
+### Bug Fixes
+
+* add actions to upselling widget ([#1906](https://github.com/factorialco/factorial-one/issues/1906)) ([f1b7064](https://github.com/factorialco/factorial-one/commit/f1b706416e0ed216e9f5e0d4b373d6728f86255b))
+
 ## [1.69.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.0...factorial-one-react-v1.69.1) (2025-05-27)
 
 
