@@ -1,6 +1,5 @@
 import { Button } from "@/components/Actions/Button"
 import { toolbarLabels } from "@/experimental/exports"
-import { Picker } from "@/experimental/Information/Reactions/Picker"
 import { IconType } from "@/factorial-one"
 import {
   AlignTextCenter,
@@ -309,18 +308,8 @@ const Toolbar = ({
     />,
   ]
 
-  const emojiGroup = (
-    <Picker
-      variant="ghost"
-      onSelect={(emoji) => {
-        editor.chain().focus().insertContent(emoji).run()
-      }}
-    />
-  )
-
   const groups = compact([
     linkGroup,
-    emojiGroup,
     formattingGroup,
     textSizeGroup,
     moreOptionsGroup,

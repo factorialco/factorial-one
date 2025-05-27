@@ -9,6 +9,7 @@ import {
   Minus,
   OlList,
   Quote,
+  Table,
 } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 
@@ -16,7 +17,7 @@ interface CommandItem {
   title: string
   icon: IconType
   command: (editor: Editor) => void
-  markdownShortcut: string
+  markdownShortcut?: string
 }
 
 const availableCommands: CommandItem[] = [
@@ -150,6 +151,20 @@ const availableCommands: CommandItem[] = [
     },
     icon: Minus,
     markdownShortcut: "---",
+  },
+
+  // Tables
+  {
+    title: "Table",
+    command: (editor) => {
+      editor
+        .chain()
+        .focus()
+        .insertTable({ rows: 2, cols: 2, withHeaderRow: false })
+        .run()
+    },
+    icon: Table,
+    markdownShortcut: "|",
   },
 ]
 

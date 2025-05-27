@@ -173,7 +173,7 @@ export const Default: Story = {
     onChange: (result: resultType) => {
       console.log(result)
     },
-    placeholder: "Write something here...",
+    placeholder: "Write '/' for commands...",
     mentionsConfig: { users: users },
     enhanceConfig: {
       onEnhanceText: (params: {

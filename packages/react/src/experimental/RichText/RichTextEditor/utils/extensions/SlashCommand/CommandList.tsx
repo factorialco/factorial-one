@@ -109,7 +109,7 @@ const CommandList = forwardRef<CommandListHandle, CommandListProps>(
     return (
       <div
         ref={containerRef}
-        className="max-h-64 w-80 overflow-y-auto rounded-lg border border-solid border-f1-border bg-f1-background p-2 drop-shadow-md"
+        className="w-80 rounded-lg border border-solid border-f1-border bg-f1-background p-2 drop-shadow-md"
       >
         {items.map((item, index) => (
           <div
@@ -129,9 +129,11 @@ const CommandList = forwardRef<CommandListHandle, CommandListProps>(
               <p className="text-md flex-grow font-medium text-f1-foreground">
                 {item.title}
               </p>
-              <p className="text-xs text-f1-foreground-secondary">
-                {item.markdownShortcut}
-              </p>
+              {item.markdownShortcut && (
+                <p className="text-xs text-f1-foreground-secondary">
+                  {item.markdownShortcut}
+                </p>
+              )}
             </div>
           </div>
         ))}

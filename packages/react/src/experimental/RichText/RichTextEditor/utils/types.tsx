@@ -130,8 +130,6 @@ type toolbarLabels = {
   linkLabel: string
   linkPaste: string
   close: string
-  slashCommand: string
-  noResults: string
 }
 
 type heightType =

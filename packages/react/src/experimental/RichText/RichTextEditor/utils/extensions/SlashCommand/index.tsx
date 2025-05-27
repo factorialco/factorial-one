@@ -22,8 +22,41 @@ const SlashCommand = Extension.create({
           range: { from: number; to: number }
           props: CommandItem
         }) => {
+          // Get the current selection and document state
+          const { state } = editor
+          const { from, to } = state.selection
+
+          // Find the actual slash position by looking backwards from current position
+          const doc = state.doc
+          const $from = doc.resolve(from)
+          const textBefore = $from.parent.textBetween(
+            Math.max(0, $from.parentOffset - 50), // Look back up to 50 chars
+            $from.parentOffset,
+            undefined,
+            "\ufffc"
+          )
+
+          // Find the last slash position
+          const slashIndex = textBefore.lastIndexOf("/")
+
+          if (slashIndex !== -1) {
+            // Calculate the actual range to delete (from slash to current position)
+            const startPos = from - ($from.parentOffset - slashIndex)
+            const endPos = to
+
+            // Delete the entire query range first
+            editor
+              .chain()
+              .focus()
+              .deleteRange({ from: startPos, to: endPos })
+              .run()
+          } else {
+            // Fallback to the provided range if we can't find the slash
+            editor.chain().focus().deleteRange(range).run()
+          }
+
+          // Then execute the command
           props.command(editor)
-          editor.chain().focus().deleteRange(range).run()
         },
       },
     }
@@ -92,7 +125,7 @@ const SlashCommand = Extension.create({
                 <Popover.Content
                   side="top"
                   align="start"
-                  sideOffset={30}
+                  sideOffset={20}
                   collisionPadding={10}
                   style={{ zIndex: 9999 }}
                   onOpenAutoFocus={(event) => {

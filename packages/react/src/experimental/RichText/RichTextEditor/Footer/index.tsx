@@ -1,4 +1,5 @@
 import { Button } from "@/components/Actions/exports"
+import { Picker } from "@/experimental/Information/Reactions/Picker"
 import { Paperclip, TextSize } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { motion } from "framer-motion"
@@ -129,6 +130,12 @@ const Footer = ({
             hideLabel
             round
             icon={TextSize}
+          />
+          <Picker
+            variant="outline"
+            onSelect={(emoji) => {
+              editor.chain().focus().insertContent(emoji).run()
+            }}
           />
           {canUseFiles && (
             <Button

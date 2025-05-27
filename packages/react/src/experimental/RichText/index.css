@@ -282,3 +282,80 @@ this is a hack to make the checkbox look like the one in the Checkbox component
 .rich-text-display-container .hljs-strong {
   font-weight: 700;
 }
+
+.tiptap p.is-empty::before {
+  @apply pointer-events-none float-left h-0 text-f1-foreground-tertiary;
+  content: attr(data-placeholder);
+}
+
+/* Table-specific styling */
+.ProseMirror table,
+.rich-text-display-container table {
+  @apply border-collapse;
+  margin: 0;
+  overflow: hidden;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.ProseMirror table td,
+.ProseMirror table th,
+.rich-text-display-container table td,
+.rich-text-display-container table th {
+  border: 1px solid #d1d5db;
+  box-sizing: border-box;
+  min-width: 1em;
+  padding: 6px 8px;
+  position: relative;
+  vertical-align: top;
+}
+
+.ProseMirror table td > *,
+.ProseMirror table th > *,
+.rich-text-display-container table td > *,
+.rich-text-display-container table th > * {
+  margin-bottom: 0;
+}
+
+.ProseMirror table th,
+.rich-text-display-container table th {
+  background-color: #f9fafb;
+  font-weight: bold;
+  text-align: left;
+}
+
+.ProseMirror table .selectedCell:after,
+.rich-text-display-container table .selectedCell:after {
+  background: #f3f4f6;
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.ProseMirror table .column-resize-handle,
+.rich-text-display-container table .column-resize-handle {
+  background-color: #8b5cf6;
+  bottom: -2px;
+  pointer-events: none;
+  position: absolute;
+  right: -2px;
+  top: 0;
+  width: 4px;
+}
+
+.ProseMirror .tableWrapper,
+.rich-text-display-container .tableWrapper {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+.ProseMirror.resize-cursor,
+.rich-text-display-container.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
