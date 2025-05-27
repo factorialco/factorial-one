@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.69.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.0...factorial-one-react-v1.69.1) (2025-05-27)
+
+
+### Bug Fixes
+
+* useEffect loop ([#1903](https://github.com/factorialco/factorial-one/issues/1903)) ([5aab6e1](https://github.com/factorialco/factorial-one/commit/5aab6e11b64d8c61b80c699b49bb1071a7d3b873))
+
 ## [1.69.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.68.0...factorial-one-react-v1.69.0) (2025-05-27)
 
 
