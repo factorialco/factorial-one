@@ -1,31 +1,56 @@
-import { Button } from "@/factorial-one"
+import {
+  Button,
+  ErrorMessageProps,
+  LoadingStateProps,
+  NextStepsProps,
+  SuccessMessageProps,
+  UpsellingButton,
+} from "@/factorial-one"
 import CrossIcon from "@/icons/app/Cross"
 import { Card, CardContent, CardFooter } from "@/ui/Card"
 import { Label } from "@/ui/label"
 import { useEffect, useState } from "react"
 
+type BaseAction = {
+  label: string
+  onClick: () => Promise<void>
+}
+
+type UpsellAction = BaseAction & {
+  type: "upsell"
+  errorMessage: ErrorMessageProps
+  successMessage: SuccessMessageProps
+  loadingState: LoadingStateProps
+  nextSteps: NextStepsProps
+  closeLabel: string
+}
+
+type RegularAction = BaseAction & {
+  type: "regular"
+}
+
+type Action = UpsellAction | RegularAction
+
 type ProductWidgetProps = {
   mediaUrl: string
   title: string
   description: string
-  buttonText: string
-  onClick: () => void
   onClose: () => void
   dismissible: boolean
   width?: string
   trackVisibility?: (visible: boolean) => void
+  actions?: Action[]
 }
 
 export function ProductWidget({
   mediaUrl,
   title,
   description,
-  buttonText,
-  onClick,
   onClose,
   dismissible,
   width,
   trackVisibility,
+  actions,
 }: ProductWidgetProps) {
   const [isDismissed, setIsDismissed] = useState(false)
 
@@ -88,14 +113,31 @@ export function ProductWidget({
               </div>
             </div>
           </CardContent>
-          <CardFooter className="p-3">
-            <Button
-              variant="neutral"
-              size="sm"
-              label={buttonText}
-              onClick={onClick}
-            />
-          </CardFooter>
+          {actions && (
+            <CardFooter className="p-3">
+              {actions.map((action) =>
+                action.type === "upsell" ? (
+                  <UpsellingButton
+                    key={action.label}
+                    label={action.label}
+                    onRequest={action.onClick}
+                    errorMessage={action.errorMessage}
+                    successMessage={action.successMessage}
+                    loadingState={action.loadingState}
+                    nextSteps={action.nextSteps}
+                    closeLabel={action.closeLabel}
+                    showConfirmation
+                  />
+                ) : (
+                  <Button
+                    key={action.label}
+                    label={action.label}
+                    onClick={action.onClick}
+                  />
+                )
+              )}
+            </CardFooter>
+          )}
         </Card>
       ) : null}
     </>
