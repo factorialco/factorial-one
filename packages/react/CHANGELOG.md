@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.69.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.2...factorial-one-react-v1.69.3) (2025-05-27)
+
+
+### Bug Fixes
+
+* **weekdays:** remove key collisions ([#1889](https://github.com/factorialco/factorial-one/issues/1889)) ([2d8dc41](https://github.com/factorialco/factorial-one/commit/2d8dc4151e0f634eba056b656e55953205e6c13a))
+
 ## [1.69.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.1...factorial-one-react-v1.69.2) (2025-05-27)
 
 
