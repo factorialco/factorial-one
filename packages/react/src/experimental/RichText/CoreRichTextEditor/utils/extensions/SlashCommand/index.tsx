@@ -222,7 +222,13 @@ const SlashCommand = Extension.create({
                 }
                 return true
               }
-              return (component?.ref as any)?.onKeyDown(props) || false
+              const ref = component?.ref
+              return ref &&
+                typeof ref === "object" &&
+                "onKeyDown" in ref &&
+                typeof ref.onKeyDown === "function"
+                ? ref.onKeyDown(props) || false
+                : false
             },
             onExit() {
               if (popoverRoot && container) {
