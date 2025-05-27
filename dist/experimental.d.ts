@@ -457,6 +457,28 @@ declare type BaseTag<T extends {
     type: string;
 }> = T & WithTooltipDescription;
 
+/**
+ * BlankTextEditor - A minimal text editor without borders or headers
+ *
+ * This component is a simplified version of the CoreRichTextEditor
+ * that renders in "blank" mode, providing a clean, borderless interface
+ * suitable for inline editing or minimal design requirements.
+ */
+export declare const BlankTextEditor: ForwardRefExoticComponent<BlankTextEditorProps & RefAttributes<RichTextEditorHandle>>;
+
+export declare interface BlankTextEditorProps {
+    mentionsConfig?: mentionsConfig;
+    enhanceConfig?: enhanceConfig;
+    onChange: (result: resultType) => void;
+    placeholder: string;
+    initialEditorState?: {
+        content?: string;
+    };
+    toolbarLabels: toolbarLabels;
+    errorConfig?: errorConfig;
+    title: string;
+}
+
 declare type BreadcrumbBaseItemType = NavigationItem & {
     id: string;
     loading?: boolean;
@@ -945,6 +967,26 @@ declare type CopyActionType = {
     type: "copy";
     text?: string;
 };
+
+export declare interface CoreRichTextEditorProps {
+    mentionsConfig?: mentionsConfig;
+    enhanceConfig?: enhanceConfig;
+    filesConfig?: filesConfig;
+    secondaryAction?: secondaryActionType;
+    primaryAction?: primaryActionType;
+    onChange: (result: resultType) => void;
+    maxCharacters?: number;
+    placeholder: string;
+    initialEditorState?: {
+        content?: string;
+        files?: File[];
+    };
+    toolbarLabels: toolbarLabels;
+    title: string;
+    errorConfig?: errorConfig;
+    height?: heightType;
+    mode?: "blank" | "normal";
+}
 
 export declare function Counter({ size, type, value, maxValue }: CounterProps): JSX_2.Element;
 
@@ -2859,13 +2901,24 @@ export declare const RichTextEditor: ForwardRefExoticComponent<RichTextEditorPro
     Skeleton: ({ rows }: RichTextEditorSkeletonProps) => JSX_2.Element;
 };
 
-export declare type RichTextEditorHandle = {
+/**
+ * RichTextEditor - A full-featured text editor with complete UI
+ *
+ * This component is a full-featured version of the CoreRichTextEditor
+ * that renders in "normal" mode, providing a complete interface with
+ * borders, headers, toolbars, and all standard editing features.
+ */
+export declare const RichTextEditorComponent: ForwardRefExoticComponent<RichTextEditorProps & RefAttributes<RichTextEditorHandle>>;
+
+declare type RichTextEditorHandle = {
     clear: () => void;
     clearFiles: () => void;
     focus: () => void;
     setError: (error: string | null) => void;
     setContent: (content: string) => void;
 };
+export { RichTextEditorHandle as CoreRichTextEditorHandle }
+export { RichTextEditorHandle }
 
 export declare interface RichTextEditorProps {
     mentionsConfig?: mentionsConfig;
