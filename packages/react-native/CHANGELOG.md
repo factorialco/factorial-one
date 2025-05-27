@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.7.0...factorial-one-react-native-v0.8.0) (2025-05-27)
+
+
+### Features
+
+* add emojiAvatar component ([#1887](https://github.com/factorialco/factorial-one/issues/1887)) ([217d136](https://github.com/factorialco/factorial-one/commit/217d136e2fb693f72f21c506616128ad29ee6cf5))
+
 ## [0.7.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.6.0...factorial-one-react-native-v0.7.0) (2025-05-26)
 
 
