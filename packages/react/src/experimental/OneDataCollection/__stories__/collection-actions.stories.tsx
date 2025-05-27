@@ -13,7 +13,7 @@ const meta = {
   parameters: {
     layout: "padded",
   },
-  tags: ["no-sidebar"],
+  tags: ["no-sidebar", "internal"],
 } satisfies Meta
 
 export default meta
@@ -113,7 +113,7 @@ const buildSecondaryActions = (): SecondaryActionsItemDefinition[] => {
   ]
 }
 
-export function BaseStory<
+function BaseStory<
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   ItemActions extends ItemActionsDefinition<(typeof mockUsers)[number]>,

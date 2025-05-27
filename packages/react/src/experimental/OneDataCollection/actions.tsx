@@ -29,9 +29,9 @@ type Enumerate<
 export type SecondaryActionsDefinition =
   | {
       expanded: Enumerate<typeof MAX_EXPANDED_ACTIONS>
-      actions: () => Array<SecondaryActionsItemDefinition>
+      actions: () => Array<SecondaryActionsItemDefinition> | undefined
     }
-  | (() => Array<SecondaryActionsItemDefinition>)
+  | (() => Array<SecondaryActionsItemDefinition> | undefined)
 
 /**
  * Get the secondaryActionsItems from the secondaryActionsDefinition or the actions property
@@ -44,9 +44,9 @@ export const getSecondaryActions = (
   }
 
   if (typeof secondaryActions === "function") {
-    return secondaryActions()
+    return secondaryActions() || []
   }
-  return "actions" in secondaryActions ? secondaryActions.actions() : []
+  return "actions" in secondaryActions ? secondaryActions.actions() || [] : []
 }
 
 /**
