@@ -8,24 +8,22 @@ type ProductWidgetProps = {
   mediaUrl: string
   title: string
   description: string
-  buttonText: string
-  onClick: () => void
   onClose: () => void
   dismissible: boolean
   width?: string
   trackVisibility?: (visible: boolean) => void
+  actions: React.ReactNode
 }
 
 export function ProductWidget({
   mediaUrl,
   title,
   description,
-  buttonText,
-  onClick,
   onClose,
   dismissible,
   width,
   trackVisibility,
+  actions,
 }: ProductWidgetProps) {
   const [isDismissed, setIsDismissed] = useState(false)
 
@@ -88,14 +86,11 @@ export function ProductWidget({
               </div>
             </div>
           </CardContent>
-          <CardFooter className="p-3">
-            <Button
-              variant="neutral"
-              size="sm"
-              label={buttonText}
-              onClick={onClick}
-            />
-          </CardFooter>
+          {actions && (
+            <CardFooter className="p-3">
+              <div className="flex gap-3">{actions}</div>
+            </CardFooter>
+          )}
         </Card>
       ) : null}
     </>
