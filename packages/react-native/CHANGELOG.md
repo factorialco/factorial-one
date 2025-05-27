@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.8.0...factorial-one-react-native-v0.8.1) (2025-05-27)
+
+
+### Bug Fixes
+
+* sort css classnem ([#1900](https://github.com/factorialco/factorial-one/issues/1900)) ([a9e2b59](https://github.com/factorialco/factorial-one/commit/a9e2b59554a83d164e1e32b88890886c6f5fa43b))
+
 ## [0.8.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.7.0...factorial-one-react-native-v0.8.0) (2025-05-27)
 
 
