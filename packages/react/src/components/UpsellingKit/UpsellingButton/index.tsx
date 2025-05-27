@@ -1,8 +1,17 @@
-import { UpsellRequestResponseDialog } from "@/components/UpsellingKit/UpsellRequestResponseDialog"
+import {
+  ErrorMessageProps,
+  NextStepsProps,
+  SuccessMessageProps,
+  UpsellRequestResponseDialog,
+} from "@/components/UpsellingKit/UpsellRequestResponseDialog"
 import { ButtonProps } from "@/factorial-one"
 import { useState } from "react"
 import { Button } from "../../../components/Actions/Button"
 import UpsellIcon from "../../../icons/app/Upsell"
+
+export interface LoadingStateProps {
+  label: string
+}
 
 export interface UpsellingButtonProps
   extends Omit<ButtonProps, "variant" | "icon"> {
@@ -25,35 +34,19 @@ export interface UpsellingButtonProps
   /**
    * The error message to be displayed in the confirmation dialog
    */
-  errorMessage: {
-    title: string
-    description: string
-  }
+  errorMessage: ErrorMessageProps
   /**
    * The success message to be displayed in the confirmation dialog
    */
-  successMessage: {
-    title: string
-    description: string
-    buttonLabel: string
-    buttonOnClick: () => void
-  }
+  successMessage: SuccessMessageProps
   /**
    * The label to be displayed in the button when the request is being processed
    */
-  loadingState: {
-    label: string
-  }
+  loadingState: LoadingStateProps
   /**
    * The next steps to be displayed in the confirmation dialog
    */
-  nextSteps: {
-    title: string
-    items: {
-      text: string
-      isCompleted?: boolean
-    }[]
-  }
+  nextSteps: NextStepsProps
   /**
    * The label to be displayed in the close button of the confirmation dialog
    */
