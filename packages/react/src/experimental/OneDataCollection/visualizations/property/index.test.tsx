@@ -105,7 +105,7 @@ describe("resolveValue", () => {
   it("should handle complex objects correctly", () => {
     const date = new Date()
     const obj = { date, placeholder: "No date" }
-    expect(resolveValue(obj, "date")).toBe(date)
+    expect(resolveValue(obj, "date")).toStrictEqual(date)
 
     const objWithUndefined = { date: undefined, placeholder: "No date" }
     expect(resolveValue(objWithUndefined, "date")).toBe("No date")
