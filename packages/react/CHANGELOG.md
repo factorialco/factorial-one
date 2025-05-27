@@ -1,5 +1,26 @@
 # Changelog
 
+## [1.69.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.2...factorial-one-react-v1.69.3) (2025-05-27)
+
+
+### Bug Fixes
+
+* **weekdays:** remove key collisions ([#1889](https://github.com/factorialco/factorial-one/issues/1889)) ([2d8dc41](https://github.com/factorialco/factorial-one/commit/2d8dc4151e0f634eba056b656e55953205e6c13a))
+
+## [1.69.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.1...factorial-one-react-v1.69.2) (2025-05-27)
+
+
+### Bug Fixes
+
+* add actions to upselling widget ([#1906](https://github.com/factorialco/factorial-one/issues/1906)) ([f1b7064](https://github.com/factorialco/factorial-one/commit/f1b706416e0ed216e9f5e0d4b373d6728f86255b))
+
+## [1.69.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.0...factorial-one-react-v1.69.1) (2025-05-27)
+
+
+### Bug Fixes
+
+* useEffect loop ([#1903](https://github.com/factorialco/factorial-one/issues/1903)) ([5aab6e1](https://github.com/factorialco/factorial-one/commit/5aab6e11b64d8c61b80c699b49bb1071a7d3b873))
+
 ## [1.69.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.68.0...factorial-one-react-v1.69.0) (2025-05-27)
 
 
