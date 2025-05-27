@@ -15,9 +15,9 @@ const sizes = {
 };
 
 const emojiSize = {
-  sm: { height: 16, width: 16, text: "text-xs" },
-  md: { height: 20, width: 20, text: "text-sm" },
-  lg: { height: 24, width: 24, text: "text-md" },
+  sm: { icon: "w-4 h-4", text: "text-xs" },
+  md: { icon: "w-5 h-5", text: "text-sm" },
+  lg: { icon: "w-6 h-6", text: "text-md" },
 } as const;
 
 export const EmojiAvatar = ({ emoji, size = "md", className }: Props) => {

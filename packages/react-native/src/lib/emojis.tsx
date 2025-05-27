@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { cn } from "./utils";
 import { parse } from "twemoji-parser";
 import { SvgUri } from "react-native-svg";
@@ -11,7 +11,7 @@ interface ParseObject {
 }
 
 export interface EmojiImageProps {
-  size?: { width: number; height: number; text: string };
+  size?: { icon: string; text: string };
   className?: string;
   emoji: string;
 }
@@ -22,12 +22,14 @@ export function EmojiImage({ emoji, size, className }: EmojiImageProps) {
   const [error, setError] = useState(false);
 
   return emojiEntity && !error ? (
-    <SvgUri
-      onError={() => setError(true)}
-      width={size?.width}
-      height={size?.height}
-      uri={emojiEntity.url}
-    />
+    <View className={size?.icon}>
+      <SvgUri
+        onError={() => setError(true)}
+        width="100%"
+        height="100%"
+        uri={emojiEntity.url}
+      />
+    </View>
   ) : (
     <Text className={cn(size?.text, className)} key={emoji}>
       {emoji}
