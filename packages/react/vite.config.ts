@@ -46,9 +46,11 @@ if (buildSync) {
 
   const [remote, remoteFolder] = buildSyncValue.split(":")
 
-  const target = [remote, remoteFolder || defaultCoderWorkspaceFolder]
-    .filter(Boolean)
-    .join(":")
+  const target = buildSyncValue.includes(":")
+    ? [remote, remoteFolder || defaultCoderWorkspaceFolder]
+        .filter(Boolean)
+        .join(":")
+    : buildSyncValue
 
   extraPlugins.push(
     buildSyncPlugin({
