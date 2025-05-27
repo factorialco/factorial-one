@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.69.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.68.0...factorial-one-react-v1.69.0) (2025-05-27)
+
+
+### Features
+
+* Use `OneEmptyState` in widgets empty state ([#1895](https://github.com/factorialco/factorial-one/issues/1895)) ([99d91d3](https://github.com/factorialco/factorial-one/commit/99d91d3ece208c02538f38975522c9fff99f3ab7))
+
 ## [1.68.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.67.0...factorial-one-react-v1.68.0) (2025-05-27)
 
 
