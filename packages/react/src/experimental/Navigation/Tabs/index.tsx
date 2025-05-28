@@ -1,6 +1,6 @@
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 import { Dispatch, useEffect, useState } from "react"
-import { Icon, IconType } from "../../../components/Utilities/Icon"
+import { Icon } from "../../../components/Utilities/Icon"
 import { Upsell } from "../../../icons/app"
 import { Link, useNavigation } from "../../../lib/linkHandler"
 import { withSkeleton } from "../../../lib/skeleton"
@@ -8,7 +8,7 @@ import { withSkeleton } from "../../../lib/skeleton"
 export type TabItem = {
   label: string
   index?: boolean
-  icon?: IconType
+  showUpsellIcon?: boolean
 } & DataAttributes &
   ({ href: string } | { id: string })
 
@@ -60,7 +60,7 @@ export const BaseTabs: React.FC<TabsProps> = ({
           {visibleTabs[0].label}
         </li>
       ) : (
-        visibleTabs.map(({ label, icon, ...props }, index) => {
+        visibleTabs.map(({ label, showUpsellIcon, ...props }, index) => {
           const active =
             activeTab && "href" in activeTab && "href" in props
               ? activeTab.href === props.href
@@ -80,9 +80,9 @@ export const BaseTabs: React.FC<TabsProps> = ({
               asChild
             >
               <Link role="link" {...props}>
-                {icon && icon === Upsell && (
+                {showUpsellIcon && (
                   <Icon
-                    icon={icon}
+                    icon={Upsell}
                     size="md"
                     className="mr-1 text-[hsl(var(--promote-50))]"
                   />

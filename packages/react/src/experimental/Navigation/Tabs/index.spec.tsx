@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { ComponentProps, forwardRef, PropsWithChildren } from "react"
 import { describe, expect, it, vi } from "vitest"
-import { Home, Upsell } from "../../../icons/app"
 import { BaseTabs, TabsSkeleton } from "./index"
 
 // Mock the linkHandler module
@@ -28,13 +27,13 @@ describe("Tabs", () => {
   ]
 
   const secondaryTabsWithUpsellIcons = [
-    { label: "Tab 1", href: "/active", icon: Upsell },
-    { label: "Tab 2", href: "/other", icon: Upsell },
+    { label: "Tab 1", href: "/active", showUpsellIcon: true },
+    { label: "Tab 2", href: "/other", showUpsellIcon: true },
   ]
 
-  const secondaryTabsWithNonUpsellIcons = [
-    { label: "Tab 1", href: "/active", icon: Home },
-    { label: "Tab 2", href: "/other", icon: Home },
+  const secondaryTabsWithoutUpsellIcons = [
+    { label: "Tab 1", href: "/active" },
+    { label: "Tab 2", href: "/other" },
   ]
 
   it("renders multiple tabs correctly", () => {
@@ -68,30 +67,30 @@ describe("Tabs", () => {
     expect(nav).toHaveAttribute("aria-label", "primary-navigation")
   })
 
-  it("renders Upsell icons in secondary tabs", () => {
+  it("renders Upsell icons in secondary tabs when showUpsellIcon is true", () => {
     render(<BaseTabs tabs={secondaryTabsWithUpsellIcons} secondary />)
 
     const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(2)
   })
 
-  it("renders Upsell icons for primary tabs", () => {
+  it("renders Upsell icons for primary tabs when showUpsellIcon is true", () => {
     render(<BaseTabs tabs={secondaryTabsWithUpsellIcons} secondary={false} />)
 
     const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(2)
   })
 
-  it("does not render non-Upsell icons in secondary tabs", () => {
-    render(<BaseTabs tabs={secondaryTabsWithNonUpsellIcons} secondary />)
+  it("does not render icons in secondary tabs when showUpsellIcon is false", () => {
+    render(<BaseTabs tabs={secondaryTabsWithoutUpsellIcons} secondary />)
 
     const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(0)
   })
 
-  it("does not render non-Upsell icons in primary tabs", () => {
+  it("does not render icons in primary tabs when showUpsellIcon is false", () => {
     render(
-      <BaseTabs tabs={secondaryTabsWithNonUpsellIcons} secondary={false} />
+      <BaseTabs tabs={secondaryTabsWithoutUpsellIcons} secondary={false} />
     )
 
     const icons = document.querySelectorAll("svg")

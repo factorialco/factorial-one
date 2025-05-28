@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { expect, within } from "@storybook/test"
-import { BookOpen, Home, List, Messages, Upsell } from "../../../icons/app"
 import { TabItem, Tabs } from "./index"
 
 const tabItems: TabItem[] = [
@@ -19,17 +18,17 @@ const secondaryTabItems = [
 
 const primaryTabItemsWithUpsellIcons: TabItem[] = [
   { label: "Overview", href: "/", index: true },
-  { label: "Courses", href: "/courses", icon: Upsell },
+  { label: "Courses", href: "/courses", showUpsellIcon: true },
   { label: "Categories", href: "/categories" },
-  { label: "Catalog", href: "/catalog", icon: Upsell },
+  { label: "Catalog", href: "/catalog", showUpsellIcon: true },
   { label: "Requests", href: "/requests", "data-test": "foo" },
 ]
 
 const secondaryTabItemsWithIcons: TabItem[] = [
-  { label: "Overview", href: "/", index: true, icon: Home },
-  { label: "Courses", href: "/courses", icon: Upsell },
-  { label: "Categories", href: "/categories", icon: List },
-  { label: "Catalog", href: "/catalog", icon: BookOpen },
+  { label: "Overview", href: "/", index: true },
+  { label: "Courses", href: "/courses", showUpsellIcon: true },
+  { label: "Categories", href: "/categories" },
+  { label: "Catalog", href: "/catalog" },
   { label: "Requests", href: "/requests", "data-test": "foo" },
 ]
 
@@ -133,12 +132,12 @@ const tabItemsWithIds: TabItem[] = [
   { label: "Requests", id: "requests", "data-test": "foo" },
 ]
 
-const tabItemsWithIdsAndIcons: TabItem[] = [
-  { label: "Overview", id: "overview", icon: Home, index: true },
-  { label: "Courses", id: "courses", icon: BookOpen },
-  { label: "Categories", id: "categories", icon: List },
-  { label: "Catalog", id: "catalog", icon: Upsell },
-  { label: "Requests", id: "requests", icon: Messages, "data-test": "foo" },
+const tabItemsWithIdsAndUpsell: TabItem[] = [
+  { label: "Overview", id: "overview", index: true },
+  { label: "Courses", id: "courses" },
+  { label: "Categories", id: "categories" },
+  { label: "Catalog", id: "catalog", showUpsellIcon: true },
+  { label: "Requests", id: "requests", "data-test": "foo" },
 ]
 
 export const WithIds: Story = {
@@ -148,9 +147,9 @@ export const WithIds: Story = {
   },
 }
 
-export const WithIdsAndIcons: Story = {
+export const WithIdsAndUpsell: Story = {
   args: {
-    tabs: tabItemsWithIdsAndIcons,
+    tabs: tabItemsWithIdsAndUpsell,
     activeTabId: "overview",
     secondary: true,
   },
