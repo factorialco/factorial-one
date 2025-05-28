@@ -66,7 +66,7 @@ describe("Tabs", () => {
   it("renders icons only for secondary tabs", () => {
     render(<BaseTabs tabs={secondaryTabsWithIcons} secondary />)
 
-    const icons = screen.getAllByRole("img", { hidden: true })
+    const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(2)
   })
 
