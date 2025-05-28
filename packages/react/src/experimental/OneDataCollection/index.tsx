@@ -359,7 +359,7 @@ export const OneDataCollection = <
     >
       <div className={cn("border-f1-border-primary mb-3 flex gap-4 px-6")}>
         <div className="flex flex-1 flex-shrink gap-4">
-          {!isLoading && totalItems && totalItemSummary(totalItems)}
+          {!isLoading && !!totalItems && totalItemSummary(totalItems)}
         </div>
         <div className="flex flex-1 flex-shrink justify-end">
           {navigationFilters &&
