@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.71.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.2...factorial-one-react-v1.71.0) (2025-05-28)
+
+
+### Features
+
+* allow string id on Entity Selector ([#1920](https://github.com/factorialco/factorial-one/issues/1920)) ([8fa5f5a](https://github.com/factorialco/factorial-one/commit/8fa5f5a8bd93a10c0baceb5e774bd52ff1cdf4e3))
+
 ## [1.70.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.1...factorial-one-react-v1.70.2) (2025-05-28)
 
 
