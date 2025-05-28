@@ -60,7 +60,7 @@ export const BaseTabs: React.FC<TabsProps> = ({
           {visibleTabs[0].label}
         </li>
       ) : (
-        visibleTabs.map(({ label, showUpsellIcon, ...props }, index) => {
+        visibleTabs.map(({ label, ...props }, index) => {
           const active =
             activeTab && "href" in activeTab && "href" in props
               ? activeTab.href === props.href
@@ -80,7 +80,7 @@ export const BaseTabs: React.FC<TabsProps> = ({
               asChild
             >
               <Link role="link" {...props}>
-                {showUpsellIcon && (
+                {props.showUpsellIcon && (
                   <Icon
                     icon={Upsell}
                     size="md"
