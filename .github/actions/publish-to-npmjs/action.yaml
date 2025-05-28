@@ -23,7 +23,8 @@ runs:
       shell: bash
       run: |
         pnpm --filter @factorialco/factorial-one-core build
-        pnpm --filter ${{ inputs.workspace }} build
+        pnpm --filter ${{ inputs.workspace }} build:native --if-present
+        pnpm --filter ${{ inputs.workspace }} build --if-present
 
     - name: Publish to registry
       shell: bash
