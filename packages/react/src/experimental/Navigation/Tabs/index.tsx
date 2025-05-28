@@ -1,11 +1,13 @@
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 import { Dispatch, useEffect, useState } from "react"
+import { Icon, IconType } from "../../../components/Utilities/Icon"
 import { Link, useNavigation } from "../../../lib/linkHandler"
 import { withSkeleton } from "../../../lib/skeleton"
 
 export type TabItem = {
   label: string
   index?: boolean
+  icon?: IconType
 } & DataAttributes &
   ({ href: string } | { id: string })
 
@@ -54,10 +56,13 @@ export const BaseTabs: React.FC<TabsProps> = ({
     >
       {visibleTabs.length === 1 ? (
         <li className="flex h-8 items-center justify-center whitespace-nowrap text-lg font-medium text-f1-foreground">
+          {secondary && visibleTabs[0].icon && (
+            <Icon icon={visibleTabs[0].icon} size="sm" className="mr-2" />
+          )}
           {visibleTabs[0].label}
         </li>
       ) : (
-        visibleTabs.map(({ label, ...props }, index) => {
+        visibleTabs.map(({ label, icon, ...props }, index) => {
           const active =
             activeTab && "href" in activeTab && "href" in props
               ? activeTab.href === props.href
@@ -77,6 +82,9 @@ export const BaseTabs: React.FC<TabsProps> = ({
               asChild
             >
               <Link role="link" {...props}>
+                {secondary && icon && (
+                  <Icon icon={icon} size="sm" className="mr-2" />
+                )}
                 {label}
               </Link>
             </TabNavigationLink>

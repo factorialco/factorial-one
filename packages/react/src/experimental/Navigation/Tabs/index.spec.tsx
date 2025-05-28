@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import { ComponentProps, forwardRef, PropsWithChildren } from "react"
 import { describe, expect, it, vi } from "vitest"
+import { Home } from "../../../icons/app"
 import { BaseTabs, TabsSkeleton } from "./index"
 
 // Mock the linkHandler module
@@ -26,6 +27,11 @@ describe("Tabs", () => {
     { label: "Tab 3", href: "/another" },
   ]
 
+  const secondaryTabsWithIcons = [
+    { label: "Tab 1", href: "/active", icon: Home },
+    { label: "Tab 2", href: "/other", icon: Home },
+  ]
+
   it("renders multiple tabs correctly", () => {
     render(<BaseTabs tabs={defaultTabs} />)
 
@@ -43,6 +49,20 @@ describe("Tabs", () => {
     expect(tab).toHaveClass("text-lg", "font-medium")
   })
 
+  it("renders a single secondary tab with icon", () => {
+    const singleTabWithIcon = [
+      { label: "Single Tab", href: "/single", icon: Home },
+    ]
+    render(<BaseTabs tabs={singleTabWithIcon} secondary />)
+
+    const tab = screen.getByText("Single Tab")
+    expect(tab.tagName).toBe("LI")
+    expect(tab).toHaveClass("text-lg", "font-medium")
+
+    const icon = tab.querySelector("svg")
+    expect(icon).toBeInTheDocument()
+  })
+
   it("applies active state to the correct tab", () => {
     render(<BaseTabs tabs={defaultTabs} />)
 
@@ -55,6 +75,20 @@ describe("Tabs", () => {
 
     const nav = screen.getByRole("navigation")
     expect(nav).toHaveAttribute("aria-label", "primary-navigation")
+  })
+
+  it("renders icons only for secondary tabs", () => {
+    render(<BaseTabs tabs={secondaryTabsWithIcons} secondary />)
+
+    const icons = screen.getAllByRole("img", { hidden: true })
+    expect(icons).toHaveLength(2)
+  })
+
+  it("does not render icons for primary tabs", () => {
+    render(<BaseTabs tabs={secondaryTabsWithIcons} secondary={false} />)
+
+    const icons = screen.queryAllByRole("img", { hidden: true })
+    expect(icons).toHaveLength(0)
   })
 
   describe("TabsSkeleton", () => {

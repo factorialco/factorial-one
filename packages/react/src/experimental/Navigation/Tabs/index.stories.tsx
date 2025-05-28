@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { expect, within } from "@storybook/test"
+import { BookOpen, Folders, Home, List, Messages } from "../../../icons/app"
 import { TabItem, Tabs } from "./index"
 
 const tabItems: TabItem[] = [
@@ -14,6 +15,14 @@ const secondaryTabItems = [
   { label: "All", href: "/courses", index: true },
   { label: "Courses", href: "/courses/new" },
   { label: "Activity", href: "/courses/activity" },
+]
+
+const secondaryTabItemsWithIcons: TabItem[] = [
+  { label: "Overview", href: "/", index: true, icon: Home },
+  { label: "Courses", href: "/courses", icon: BookOpen },
+  { label: "Categories", href: "/categories", icon: List },
+  { label: "Catalog", href: "/catalog", icon: Folders },
+  { label: "Requests", href: "/requests", "data-test": "foo" },
 ]
 
 const meta: Meta<typeof Tabs> = {
@@ -68,6 +77,13 @@ export const Secondary: Story = {
   },
 }
 
+export const SecondaryWithIcons: Story = {
+  args: {
+    tabs: secondaryTabItemsWithIcons,
+    secondary: true,
+  },
+}
+
 export const Skeleton: Story = {
   args: {
     tabs: [],
@@ -102,9 +118,25 @@ const tabItemsWithIds: TabItem[] = [
   { label: "Requests", id: "requests", "data-test": "foo" },
 ]
 
+const tabItemsWithIdsAndIcons: TabItem[] = [
+  { label: "Overview", id: "overview", icon: Home, index: true },
+  { label: "Courses", id: "courses", icon: BookOpen },
+  { label: "Categories", id: "categories", icon: List },
+  { label: "Catalog", id: "catalog", icon: Folders },
+  { label: "Requests", id: "requests", icon: Messages, "data-test": "foo" },
+]
+
 export const WithIds: Story = {
   args: {
     tabs: tabItemsWithIds,
     activeTabId: "overview",
+  },
+}
+
+export const WithIdsAndIcons: Story = {
+  args: {
+    tabs: tabItemsWithIdsAndIcons,
+    activeTabId: "overview",
+    secondary: true,
   },
 }
