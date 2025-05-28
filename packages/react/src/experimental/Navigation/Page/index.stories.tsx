@@ -268,6 +268,7 @@ export const WithAiAgent: Story = {
     aiAgent: {
       enabled: true,
       runtimeUrl: "/api/copilotkit",
+      agentName: "Factorial AI",
     },
   },
 }
