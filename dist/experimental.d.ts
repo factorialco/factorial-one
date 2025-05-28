@@ -63,7 +63,7 @@ declare type Action_2 = {
     label: string;
     onClick: () => void;
     icon?: IconType;
-    variant?: ButtonProps["variant"];
+    variant?: "default" | "outline";
 };
 
 declare type ActionType = CopyActionType | NavigateActionType;
@@ -163,6 +163,12 @@ declare const alertVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
+declare type AmountCellValue = number | undefined | AmountValue;
+
+declare interface AmountValue extends WithPlaceholder {
+    amount: number | undefined;
+}
+
 export declare function ApplicationFrame({ children, sidebar, banner, }: ApplicationFrameProps): JSX_2.Element;
 
 declare interface ApplicationFrameProps {
@@ -200,11 +206,18 @@ export declare const AvatarList: {
     displayName: string;
 };
 
+declare type AvatarListCellValue = AvatarListValue;
+
 declare type AvatarListMetadata = BaseMetadata & {
     type: "avatarList";
     avatars: AvatarVariant[];
     max?: number;
 };
+
+declare interface AvatarListValue {
+    avatarList: AvatarVariant[];
+    max?: number;
+}
 
 declare type AvatarType = AvatarVariant["type"];
 
@@ -382,7 +395,7 @@ declare const baseColors: {
     };
 };
 
-export declare const BaseCommunityPost: ({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noVideoPreload, }: CommunityPostProps) => JSX_2.Element;
+export declare const BaseCommunityPost: ({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noReactionsButton, noVideoPreload, }: CommunityPostProps) => JSX_2.Element;
 
 /**
  * Base data adapter configuration for non-paginated collections
@@ -840,7 +853,7 @@ declare const columnWidths: {
     readonly fit: 1;
 };
 
-export declare const CommunityPost: (({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noVideoPreload, }: CommunityPostProps) => JSX_2.Element) & {
+export declare const CommunityPost: (({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noReactionsButton, noVideoPreload, }: CommunityPostProps) => JSX_2.Element) & {
     Skeleton: ({ withEvent, withImage, }: CommunityPostSkeletonProps) => JSX_2.Element;
 };
 
@@ -873,6 +886,7 @@ export declare type CommunityPostProps = {
     };
     noVideoPreload?: boolean;
     onClick: (id: string) => void;
+    noReactionsButton?: boolean;
     dropdownItems?: DropdownItem[];
 };
 
@@ -895,6 +909,8 @@ export declare const CompanyAvatar: {
 };
 
 declare type CompanyAvatarProps = ComponentProps<typeof CompanyAvatar>;
+
+declare type CompanyCellValue = CompanyValue;
 
 declare const CompanyItem: ForwardRefExoticComponent<CompanyItemProps & RefAttributes<HTMLLIElement>>;
 
@@ -930,6 +946,11 @@ export declare type CompanySelectorProps = {
 export declare const CompanyTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
 
 declare type CompanyTagProps = ComponentProps<typeof CompanyTag>;
+
+declare interface CompanyValue {
+    name: string;
+    src?: string;
+}
 
 declare type Content = (ComponentProps<typeof DataList.Item> & {
     type: "item";
@@ -1050,7 +1071,12 @@ export declare type DataSource<Record extends RecordType, Filters extends Filter
  * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  * @template ItemActions - The available actions that can be performed on records
+ * @template NavigationFilters - The available navigation filters for the collection
+ * @template Sortings - The available sortings for the collection
+ * @template ItemActions - The available actions that can be performed on records
+ * @template PrimaryActions - The available primary actions that can be performed on the collection
  * @template SecondaryActions - The available actions that can be performed on the collection
+ * @template OtherActions - The available actions that can be performed on the collection
  */
 export declare type DataSourceDefinition<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>> = {
     /** Available filter configurations */
@@ -1093,6 +1119,8 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
 };
 
 export declare const DateAvatar: ({ date }: Props_5) => JSX_2.Element;
+
+declare type DateCellValue = Date | undefined | DateValue_2;
 
 declare type DateFilterDefinition = BaseFilterDefinition<"date"> & {
     options?: DateFilterOptions_2;
@@ -1152,6 +1180,10 @@ declare type DateValue = {
     valueString: string;
     granularity: GranularityDefinitionKey;
 };
+
+declare interface DateValue_2 extends WithPlaceholder {
+    date: Date | undefined;
+}
 
 export declare function DaytimePage({ children, header, period, embedded, }: DaytimePageProps): JSX_2.Element;
 
@@ -1226,6 +1258,8 @@ onClose?: () => void;
 
 export declare const DotTag: ForwardRefExoticComponent<DotTagProps & RefAttributes<HTMLDivElement>>;
 
+declare type DotTagCellValue = DotTagValue;
+
 export declare const dotTagColors: NewColor[];
 
 export declare type DotTagProps = {
@@ -1235,6 +1269,11 @@ export declare type DotTagProps = {
 } | {
     customColor: string;
 });
+
+declare interface DotTagValue {
+    label: string;
+    color: NewColor;
+}
 
 export declare const Dropdown: (props: DropdownProps) => JSX_2.Element;
 
@@ -1391,6 +1430,8 @@ export declare type EntitySelectSubEntity = {
     subSearchKeys?: string[];
 };
 
+declare type Enumerate<N extends number, Acc extends number[] = []> = Acc["length"] extends N ? [...Acc, N][number] : Enumerate<N, [...Acc, Acc["length"]]>;
+
 export declare type errorConfig = {
     onClose?: () => void;
     closeErrorButtonLabel?: string;
@@ -1475,9 +1516,7 @@ export declare type FileType = (typeof FILE_TYPES)[keyof typeof FILE_TYPES];
  * @param actions - The actions to filter
  * @returns An array of filtered actions
  */
-export declare const filterActions: (actions: SecondaryActionsDefinition) => (DropdownItem & {
-    enabled?: boolean;
-})[];
+export declare const filterActions: (actions: SecondaryActionsDefinition) => SecondaryActionsItemDefinition[];
 
 /**
  * Union of all available filter types.
@@ -1644,6 +1683,11 @@ declare interface FrameContextType {
 export declare const getGranularityDefinition: (granularityKey: GranularityDefinitionKey) => GranularityDefinition;
 
 export declare const getGranularitySimpleDefinition: (granularityKey: GranularityDefinitionKey) => GranularityDefinitionSimple;
+
+/**
+ * Get the secondaryActionsItems from the secondaryActionsDefinition or the actions property
+ */
+export declare const getSecondaryActions: (secondaryActions: SecondaryActionsDefinition | undefined) => SecondaryActionsItemDefinition[];
 
 export declare interface GranularityDefinition {
     calendarMode?: CalendarMode;
@@ -1858,6 +1902,8 @@ declare type LinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
     exactMatch?: boolean;
     disabled?: boolean;
 };
+
+export declare const MAX_EXPANDED_ACTIONS = 2;
 
 export declare type MentionedUser = {
     id: number;
@@ -2074,6 +2120,8 @@ declare type NavigationProps = {
 
 export declare type NewColor = Extract<keyof typeof baseColors, "viridian" | "malibu" | "yellow" | "purple" | "lilac" | "barbie" | "smoke" | "army" | "flubber" | "indigo" | "camel">;
 
+declare type NumberCellValue = number | undefined | NumberValue;
+
 export declare const NumberInput: ForwardRefExoticComponent<Omit<NumberInputProps, "ref"> & RefAttributes<HTMLInputElement>>;
 
 declare type NumberInputProps = Omit<InputProps, "value" | "type" | "onChange"> & {
@@ -2085,6 +2133,10 @@ declare type NumberInputProps = Omit<InputProps, "value" | "type" | "onChange"> 
     maxDecimals?: number;
     onChange?: (value: number | null) => void;
 };
+
+declare interface NumberValue extends WithPlaceholder {
+    number: number | undefined;
+}
 
 export declare function OmniButton({ label, options, hasNewUpdate }: OmniButtonProps): JSX_2.Element;
 
@@ -2226,6 +2278,7 @@ declare const OneModal_2: default_2.FC<OneModalProps>;
 declare type OneModalComponent = typeof OneModal_2 & {
     Header: typeof OneModalHeader;
     Content: typeof OneModalContent;
+    Footer: typeof OneModalFooter;
 };
 
 declare const OneModalContent: ({ tabs, activeTabId, setActiveTabId, children, }: OneModalContentProps) => JSX_2.Element;
@@ -2233,6 +2286,12 @@ declare const OneModalContent: ({ tabs, activeTabId, setActiveTabId, children, }
 declare type OneModalContentProps = {
     children: React.ReactNode;
 } & Partial<Pick<TabsProps, "tabs" | "activeTabId" | "setActiveTabId">>;
+
+declare const OneModalFooter: ({ children }: OneModalFooterProps) => JSX_2.Element;
+
+declare type OneModalFooterProps = {
+    children: React.ReactNode;
+};
 
 declare const OneModalHeader: ({ title, otherActions, }: OneModalHeaderProps) => JSX_2.Element;
 
@@ -2435,11 +2494,19 @@ export declare const PersonAvatar: {
 
 declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
 
+declare type PersonCellValue = PersonValue;
+
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
 export declare const PersonTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
 
 declare type PersonTagProps = ComponentProps<typeof PersonTag>;
+
+declare interface PersonValue {
+    firstName: string;
+    lastName: string;
+    src?: string;
+}
 
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: PieChartProps;
@@ -2610,44 +2677,18 @@ declare type PropertyRendererMetadata<T> = {
  * @returns The rendered property value
  */
 declare const propertyRenderers: {
-    readonly text: (text: string | number | undefined) => JSX_2.Element;
-    readonly number: (number: number | undefined, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
-    readonly date: (date: Date | undefined) => JSX_2.Element;
-    readonly amount: (amount: number | undefined, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
-    readonly avatarList: (args: {
-        avatarList: AvatarVariant[];
-        max?: number;
-    }) => JSX_2.Element;
-    readonly status: (args: {
-        status: StatusVariant;
-        label: string;
-    }) => JSX_2.Element;
-    readonly person: (args: {
-        firstName: string;
-        lastName: string;
-        src?: string;
-    }) => JSX_2.Element;
-    readonly company: (args: {
-        name: string;
-        src?: string;
-    }) => JSX_2.Element;
-    readonly team: (args: {
-        name: string;
-        src?: string;
-    }) => JSX_2.Element;
-    readonly tag: (args: {
-        label: string;
-        icon?: IconType;
-    }) => JSX_2.Element;
-    readonly dotTag: (args: {
-        label: string;
-        color: NewColor;
-    }) => JSX_2.Element;
-    readonly tagList: (args: {
-        tags: Array<Omit<TagVariant, "type">>;
-        max?: number;
-        type: TagType;
-    }) => JSX_2.Element;
+    readonly text: (args: TextCellValue) => JSX_2.Element;
+    readonly number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
+    readonly date: (args: DateCellValue) => JSX_2.Element;
+    readonly amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => JSX_2.Element;
+    readonly avatarList: (args: AvatarListCellValue) => JSX_2.Element;
+    readonly status: (args: StatusCellValue) => JSX_2.Element;
+    readonly person: (args: PersonCellValue) => JSX_2.Element;
+    readonly company: (args: CompanyCellValue) => JSX_2.Element;
+    readonly team: (args: TeamCellValue) => JSX_2.Element;
+    readonly tag: (args: TagCellValue) => JSX_2.Element;
+    readonly dotTag: (args: DotTagCellValue) => JSX_2.Element;
+    readonly tagList: (args: TagListCellValue) => JSX_2.Element;
 };
 
 declare type Props = {
@@ -3036,13 +3077,19 @@ declare interface SecondaryAction extends PrimaryActionButton {
     variant?: "outline" | "critical";
 }
 
+export declare type SecondaryActionsDefinition = {
+    expanded: Enumerate<typeof MAX_EXPANDED_ACTIONS>;
+    actions: () => Array<SecondaryActionsItemDefinition> | undefined;
+} | (() => Array<SecondaryActionsItemDefinition> | undefined);
+
 /**
  * Defines the structure and configuration of secondary actions that can be performed on a collection.
  * @returns An array of actions
  */
-export declare type SecondaryActionsDefinition = () => Array<DropdownItem & {
+export declare type SecondaryActionsItemDefinition = DropdownItem & {
     enabled?: boolean;
-}> | undefined;
+    hideLabelWhenExpanded?: boolean;
+};
 
 export declare type secondaryActionType = (actionType | toggleActionType) & {
     type?: "button" | "switch";
@@ -3270,6 +3317,8 @@ className?: ClassValue;
 
 declare type Status = "positive" | "neutral" | "negative";
 
+declare type StatusCellValue = StatusValue;
+
 declare type StatusMetadata = BaseMetadata & {
     type: "status";
     status: StatusVariant;
@@ -3286,6 +3335,11 @@ export declare interface StatusTagProps {
      * E.g., when showing a tooltip for sighted user, provide the tootip text to this prop because tooltips aren't accessible
      */
     additionalAccesibleText?: string;
+}
+
+declare interface StatusValue {
+    status: StatusVariant;
+    label: string;
 }
 
 export declare type StatusVariant = Variant;
@@ -3430,6 +3484,8 @@ declare type Tag = {
     description?: string;
 };
 
+declare type TagCellValue = TagValue;
+
 declare type TagDataType<T extends string> = Omit<Extract<TagVariant, {
     type: T;
 }>, "type" | "description">;
@@ -3438,6 +3494,14 @@ export declare const TagList: {
     <T extends TagType>({ type, tags, max, remainingCount: initialRemainingCount, layout, }: Props_15<T>): JSX_2.Element;
     displayName: string;
 };
+
+declare type TagListCellValue = TagListValue;
+
+declare interface TagListValue {
+    tags: Array<Omit<TagVariant, "type">>;
+    max?: number;
+    type: TagType;
+}
 
 declare type TagMetadata = BaseMetadata & {
     type: "tag";
@@ -3456,6 +3520,11 @@ declare type TagTypeMapping = {
     status: TagDataType<"status">;
     balance: TagDataType<"balance">;
 };
+
+declare interface TagValue {
+    label: string;
+    icon?: IconType;
+}
 
 declare type TagVariant = BaseTag<{
     type: "dot";
@@ -3507,6 +3576,8 @@ export declare const TeamAvatar: {
 
 declare type TeamAvatarProps = ComponentProps<typeof TeamAvatar>;
 
+declare type TeamCellValue = TeamValue;
+
 declare const TeamItem: ForwardRefExoticComponent<TeamItemProps & RefAttributes<HTMLLIElement>>;
 
 declare type TeamItemProps = {
@@ -3524,6 +3595,11 @@ export declare const TeamTag: ForwardRefExoticComponent<Props_14 & RefAttributes
 
 declare type TeamTagProps = ComponentProps<typeof TeamTag>;
 
+declare interface TeamValue {
+    name: string;
+    src?: string;
+}
+
 export declare const Textarea: React.FC<TextareaProps>;
 
 declare const Textarea_2: React_2.ForwardRefExoticComponent<TextareaProps_2 & React_2.RefAttributes<HTMLTextAreaElement>>;
@@ -3531,6 +3607,12 @@ declare const Textarea_2: React_2.ForwardRefExoticComponent<TextareaProps_2 & Re
 export declare type TextareaProps = Pick<ComponentProps<typeof Textarea_2>, "disabled" | "onChange" | "value" | "placeholder" | "rows" | "cols">;
 
 declare type TextareaProps_2 = React_2.TextareaHTMLAttributes<HTMLTextAreaElement>;
+
+declare type TextCellValue = string | number | undefined | TextValue;
+
+declare interface TextValue extends WithPlaceholder {
+    text: string | number | undefined;
+}
 
 declare const THEMES: {
     readonly light: "";
@@ -3854,6 +3936,10 @@ declare type WithOptionalSorting<R extends RecordType, Sortings extends Sortings
      */
     width?: number;
 };
+
+declare interface WithPlaceholder {
+    placeholder?: string;
+}
 
 declare interface WithTooltipDescription {
     /**

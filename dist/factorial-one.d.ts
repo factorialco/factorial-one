@@ -23,6 +23,17 @@ import { RefObject } from 'react';
 import { SVGProps } from 'react';
 import { VariantProps } from 'cva';
 
+declare type Action = {
+    label: string;
+    onClick: () => void;
+    icon?: IconType;
+    variant?: ButtonVariant;
+    size?: "md" | "lg";
+    loading?: boolean;
+};
+
+declare type Action_2 = UpsellAction | RegularAction;
+
 export declare const AreaChart: ForwardRefExoticComponent<Omit<LineChartPropsBase<LineChartConfig> & {
 lineType?: "step" | "linear" | "natural" | "monotoneX";
 marginTop?: number;
@@ -53,6 +64,11 @@ values: {
 };
 }) => void) | undefined;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+declare type BaseAction = {
+    label: string;
+    onClick: () => Promise<void>;
+};
 
 export declare const buildTranslations: (translations: TranslationsType) => TranslationsType;
 
@@ -256,6 +272,11 @@ declare const emojiVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
+export declare interface ErrorMessageProps {
+    title: string;
+    description: string;
+}
+
 export declare const FactorialOneProvider: React.FC<{
     children: React.ReactNode;
     link?: LinkContextValue;
@@ -350,7 +371,11 @@ declare const linkVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-declare interface NextStepsProps {
+export declare interface LoadingStateProps {
+    label: string;
+}
+
+export declare interface NextStepsProps {
     title: string;
     items: StepItemProps[];
 }
@@ -363,6 +388,19 @@ export declare const PrivacyModeProvider: React_2.FC<{
 }>;
 
 declare const privateProps: readonly ["append", "appendButton", "className"];
+
+export declare const ProductBlankslate: ForwardRefExoticComponent<ProductBlankslateProps & RefAttributes<HTMLDivElement>>;
+
+declare type ProductBlankslateProps = {
+    title: string;
+    subtitle?: string;
+    image: string;
+    benefits: string[];
+    actions?: React.ReactNode;
+    withShadow?: boolean;
+    icon?: IconType;
+    moduleName?: string;
+};
 
 export declare function ProductCard({ title, description, onClick, onClose, isVisible, icon, dismissable, trackVisibility, }: ProductCardProps): false | JSX_2.Element;
 
@@ -377,18 +415,52 @@ export declare type ProductCardProps = {
     trackVisibility?: (open: boolean) => void;
 };
 
-export declare function ProductWidget({ mediaUrl, title, description, buttonText, onClick, onClose, dismissible, width, trackVisibility, }: ProductWidgetProps): JSX_2.Element;
+export declare function ProductModal({ isOpen, onClose, title, image, benefits, errorMessage, successMessage, loadingState, nextSteps, closeLabel, primaryAction, modalTitle, modalIcon, secondaryAction, }: ProductModalProps): JSX_2.Element;
+
+declare type ProductModalProps = {
+    isOpen: boolean;
+    onClose: () => void;
+    modalTitle: string;
+    modalIcon: IconType;
+    title: string;
+    image: string;
+    benefits: string[];
+    errorMessage: {
+        title: string;
+        description: string;
+    };
+    successMessage: {
+        title: string;
+        description: string;
+        buttonLabel: string;
+        buttonOnClick: () => void;
+    };
+    loadingState: {
+        label: string;
+    };
+    nextSteps: {
+        title: string;
+        items: {
+            text: string;
+            isCompleted?: boolean;
+        }[];
+    };
+    closeLabel: string;
+    primaryAction?: Action;
+    secondaryAction?: Action;
+};
+
+export declare function ProductWidget({ mediaUrl, title, description, onClose, dismissible, width, trackVisibility, actions, }: ProductWidgetProps): JSX_2.Element;
 
 declare type ProductWidgetProps = {
     mediaUrl: string;
     title: string;
     description: string;
-    buttonText: string;
-    onClick: () => void;
     onClose: () => void;
     dismissible: boolean;
     width?: string;
     trackVisibility?: (visible: boolean) => void;
+    actions?: Action_2[];
 };
 
 export declare const ProgressBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
@@ -397,6 +469,10 @@ max?: number;
 label?: string;
 color?: string;
 } & RefAttributes<HTMLDivElement>, "ref"> & RefAttributes<HTMLElement | SVGElement>>;
+
+declare type RegularAction = BaseAction & {
+    type: "regular";
+};
 
 declare const sizes: readonly ["sm", "md", "lg"];
 
@@ -408,9 +484,16 @@ export declare interface StandardLayoutProps extends VariantProps<typeof layoutV
     children?: default_2.ReactNode;
 }
 
-declare interface StepItemProps {
+export declare interface StepItemProps {
     text: string;
     isCompleted?: boolean;
+}
+
+export declare interface SuccessMessageProps {
+    title: string;
+    description: string;
+    buttonLabel: string;
+    buttonOnClick: () => void;
 }
 
 declare type TranslationShape<T> = {
@@ -426,6 +509,15 @@ export declare interface TwoColumnLayoutProps {
     sideContent: ReactNode;
     mainColumnPosition?: "left" | "right";
 }
+
+declare type UpsellAction = BaseAction & {
+    type: "upsell";
+    errorMessage: ErrorMessageProps;
+    successMessage: SuccessMessageProps;
+    loadingState: LoadingStateProps;
+    nextSteps: NextStepsProps;
+    closeLabel: string;
+};
 
 export declare function UpsellingButton({ label, showIcon, onRequest, showConfirmation, loading: externalLoading, errorMessage, successMessage, loadingState, nextSteps, closeLabel, ...props }: UpsellingButtonProps): JSX_2.Element;
 
@@ -449,35 +541,19 @@ export declare interface UpsellingButtonProps extends Omit<ButtonProps, "variant
     /**
      * The error message to be displayed in the confirmation dialog
      */
-    errorMessage: {
-        title: string;
-        description: string;
-    };
+    errorMessage: ErrorMessageProps;
     /**
      * The success message to be displayed in the confirmation dialog
      */
-    successMessage: {
-        title: string;
-        description: string;
-        buttonLabel: string;
-        buttonOnClick: () => void;
-    };
+    successMessage: SuccessMessageProps;
     /**
      * The label to be displayed in the button when the request is being processed
      */
-    loadingState: {
-        label: string;
-    };
+    loadingState: LoadingStateProps;
     /**
      * The next steps to be displayed in the confirmation dialog
      */
-    nextSteps: {
-        title: string;
-        items: {
-            text: string;
-            isCompleted?: boolean;
-        }[];
-    };
+    nextSteps: NextStepsProps;
     /**
      * The label to be displayed in the close button of the confirmation dialog
      */
@@ -490,16 +566,8 @@ declare interface UpsellRequestResponseDialogProps {
     open: boolean;
     onClose?: () => void;
     success: boolean;
-    errorMessage: {
-        title: string;
-        description: string;
-    };
-    successMessage: {
-        title: string;
-        description: string;
-        buttonLabel: string;
-        buttonOnClick: () => void;
-    };
+    errorMessage: ErrorMessageProps;
+    successMessage: SuccessMessageProps;
     nextSteps: NextStepsProps;
     closeLabel: string;
 }
