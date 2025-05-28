@@ -20,6 +20,7 @@ interface BlankTextEditorProps {
   toolbarLabels: toolbarLabels
   errorConfig?: errorConfig
   title: string
+  readMode?: boolean
 }
 
 /**

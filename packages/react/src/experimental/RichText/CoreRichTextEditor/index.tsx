@@ -60,6 +60,7 @@ interface RichTextEditorProps {
   errorConfig?: errorConfig
   height?: heightType
   mode?: "blank" | "normal"
+  readMode?: boolean
 }
 
 type RichTextEditorHandle = {
@@ -89,6 +90,7 @@ const CoreRichTextEditor = forwardRef<
     errorConfig,
     height = "auto",
     mode = "normal",
+    readMode = false,
   },
   ref
 ) {
@@ -172,6 +174,7 @@ const CoreRichTextEditor = forwardRef<
         placeholder,
         maxCharacters,
       }),
+      editable: !readMode,
       content: editorState.json || editorState.html,
       onUpdate: ({ editor }) => {
         handleEditorUpdate({ editor, onChange, setEditorState })

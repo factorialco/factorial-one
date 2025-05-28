@@ -61,14 +61,51 @@ const defaultToolbarLabels = {
 
 export const Default: Story = {
   render: (args) => {
-    const [content, setContent] = useState("")
+    const [content, setContent] = useState(
+      `
+  {
+    "type": "doc",
+    "content": [
+        {
+            "type": "heading",
+            "attrs": {
+                "textAlign": null,
+                "level": 1
+            },
+            "content": [
+                {
+                    "type": "text",
+                    "text": "🤗 Your team"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "attrs": {
+                "textAlign": null
+            },
+            "content": [
+                {
+                    "type": "text",
+                    "text": "You're going to work in Talent Recruitment, with @Ray García as your **manager**! You should already have met them during the hiring process, and they will welcome you on your first day! Besides them, the amazing @Emmanuel Umana is going to be your **onboarding mentor**. You'll be in the same team, and they will be your contact point for any question that you have during those first weeks! weeks!"
+                }
+            ]
+        }
+    ]
+}
+      `
+    )
 
     return (
       <div className="w-full">
         <BlankTextEditor
           {...args}
+          initialEditorState={{
+            content: JSON.parse(content),
+          }}
           onChange={(result) => {
-            setContent(result.value || "")
+            console.log("result", result)
+            setContent(JSON.stringify(result.json) || "")
           }}
         />
         <div className="mt-4 rounded bg-f1-background-hover p-4">
@@ -84,6 +121,7 @@ export const Default: Story = {
     placeholder: "Start typing...",
     title: "Blank Text Editor",
     toolbarLabels: defaultToolbarLabels,
+    readMode: false,
     mentionsConfig: {
       users: [
         { id: 1, label: "John Doe" },
