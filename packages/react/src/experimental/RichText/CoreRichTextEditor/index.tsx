@@ -322,6 +322,7 @@ const CoreRichTextEditor = forwardRef<
               <LoadingEnhance
                 isFullscreen={isFullscreen}
                 label={enhanceConfig?.enhanceLabels.loadingEnhanceLabel}
+                mode={mode}
               />
             </motion.div>
           )}
@@ -377,25 +378,24 @@ const CoreRichTextEditor = forwardRef<
           />
         )}
 
-        {mode === "normal" && (
-          <Footer
-            editor={editor}
-            maxCharacters={maxCharacters}
-            secondaryAction={secondaryAction}
-            primaryAction={primaryAction}
-            fileInputRef={fileInputRef}
-            canUseFiles={filesConfig ? true : false}
-            isLoadingEnhance={isLoadingEnhance}
-            disableButtons={disableAllButtons}
-            enhanceConfig={enhanceConfig}
-            isFullscreen={isFullscreen}
-            onEnhanceWithAI={handleEnhanceWithAI}
-            setLastIntent={setLastIntent}
-            toolbarLabels={toolbarLabels}
-            setIsToolbarOpen={setIsToolbarOpen}
-            isToolbarOpen={isToolbarOpen}
-          />
-        )}
+        <Footer
+          editor={editor}
+          maxCharacters={maxCharacters}
+          secondaryAction={secondaryAction}
+          primaryAction={primaryAction}
+          fileInputRef={fileInputRef}
+          canUseFiles={filesConfig ? true : false}
+          isLoadingEnhance={isLoadingEnhance}
+          disableButtons={disableAllButtons}
+          enhanceConfig={enhanceConfig}
+          isFullscreen={isFullscreen}
+          onEnhanceWithAI={handleEnhanceWithAI}
+          setLastIntent={setLastIntent}
+          toolbarLabels={toolbarLabels}
+          setIsToolbarOpen={setIsToolbarOpen}
+          isToolbarOpen={isToolbarOpen}
+          mode={mode}
+        />
 
         <EditorBubbleMenu
           editorId={editorId}
@@ -404,6 +404,10 @@ const CoreRichTextEditor = forwardRef<
           toolbarLabels={toolbarLabels}
           isToolbarOpen={isToolbarOpen}
           isFullscreen={isFullscreen}
+          onEnhanceWithAI={handleEnhanceWithAI}
+          isLoadingEnhance={isLoadingEnhance}
+          enhanceConfig={enhanceConfig}
+          setLastIntent={setLastIntent}
         />
       </div>
     </div>

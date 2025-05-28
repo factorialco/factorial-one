@@ -1,6 +1,7 @@
 import { Button } from "@/components/Actions/exports"
 import { Picker } from "@/experimental/Information/Reactions/Picker"
 import { Paperclip, TextSize } from "@/icons/app"
+import { cn } from "@/lib/utils"
 import { Editor } from "@tiptap/react"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
@@ -38,6 +39,7 @@ interface FooterProps {
   toolbarLabels: toolbarLabels
   setIsToolbarOpen: (isToolbarOpen: boolean) => void
   isToolbarOpen: boolean
+  mode: "blank" | "normal"
 }
 
 const Footer = ({
@@ -56,6 +58,7 @@ const Footer = ({
   disableButtons,
   setIsToolbarOpen,
   isToolbarOpen,
+  mode,
 }: FooterProps) => {
   const [toolbarAnimationComplete, setToolbarAnimationComplete] =
     useState(false)
@@ -78,7 +81,13 @@ const Footer = ({
   const useLittleMode = containerWidth < 500
 
   return (
-    <div ref={containerRef} className="flex max-w-full items-center gap-2 py-3">
+    <div
+      ref={containerRef}
+      className={cn(
+        "flex max-w-full items-center gap-2 py-3",
+        mode === "blank" && "hidden"
+      )}
+    >
       <div className="relative flex flex-grow items-center gap-2">
         <motion.div
           initial={{ width: 0 }}

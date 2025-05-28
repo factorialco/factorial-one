@@ -1,5 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { toolbarLabels } from "@/experimental/exports"
+import { enhanceConfig, toolbarLabels } from "@/experimental/exports"
 import { IconType } from "@/factorial-one"
 import {
   AlignTextCenter,
@@ -27,6 +27,7 @@ import { cn } from "@/lib/utils"
 import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
 import React from "react"
+import { EnhanceActivator } from "../Enhance"
 import { getTextAlignIcon, getTextAlignLabel } from "../utils/helpers"
 import { LinkPopup } from "./LinkPopup"
 import { ToolbarButton } from "./ToolbarButton"
@@ -60,6 +61,18 @@ interface ToolbarProps {
   onClose?: () => void
   animationComplete?: boolean
   labels: toolbarLabels
+  onEnhanceWithAI?: (
+    selectedIntent?: string,
+    customIntent?: string
+  ) => Promise<void>
+  isLoadingEnhance?: boolean
+  enhanceConfig?: enhanceConfig
+  setLastIntent?: (
+    lastIntent: {
+      selectedIntent?: string
+      customIntent?: string
+    } | null
+  ) => void
 }
 
 interface ButtonConfig {
@@ -80,6 +93,10 @@ const Toolbar = ({
   onClose,
   animationComplete = true,
   labels,
+  onEnhanceWithAI,
+  isLoadingEnhance = false,
+  enhanceConfig,
+  setLastIntent,
 }: ToolbarProps) => {
   // Format buttons configuration
   const formatButtons: ButtonConfig[] = [
@@ -299,16 +316,30 @@ const Toolbar = ({
     </div>
   )
 
-  const linkGroup = [
+  const linkGroup = (
     <LinkPopup
       key="link-popup"
       editor={editor}
       disabled={disableButtons}
       labels={labels}
-    />,
-  ]
+    />
+  )
+
+  const enhanceGroup = enhanceConfig && onEnhanceWithAI && setLastIntent && (
+    <EnhanceActivator
+      key="enhance-activator"
+      editor={editor}
+      onEnhanceWithAI={onEnhanceWithAI}
+      isLoadingEnhance={isLoadingEnhance}
+      enhanceConfig={enhanceConfig}
+      disableButtons={disableButtons}
+      setLastIntent={setLastIntent}
+      position="top"
+    />
+  )
 
   const groups = compact([
+    enhanceGroup,
     linkGroup,
     formattingGroup,
     textSizeGroup,

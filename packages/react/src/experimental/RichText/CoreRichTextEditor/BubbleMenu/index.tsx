@@ -1,6 +1,6 @@
 import { BubbleMenu, Editor } from "@tiptap/react"
 import { Toolbar } from "../Toolbar"
-import { toolbarLabels } from "../utils/types"
+import { enhanceConfig, toolbarLabels } from "../utils/types"
 import { TableBubbleMenu } from "./TableBubbleMenu"
 
 interface EditorBubbleMenuProps {
@@ -10,6 +10,18 @@ interface EditorBubbleMenuProps {
   toolbarLabels: toolbarLabels
   isToolbarOpen: boolean
   isFullscreen: boolean
+  onEnhanceWithAI: (
+    selectedIntent?: string,
+    customIntent?: string
+  ) => Promise<void>
+  isLoadingEnhance: boolean
+  enhanceConfig?: enhanceConfig
+  setLastIntent?: (
+    lastIntent: {
+      selectedIntent?: string
+      customIntent?: string
+    } | null
+  ) => void
 }
 
 const EditorBubbleMenu = ({
@@ -19,6 +31,10 @@ const EditorBubbleMenu = ({
   toolbarLabels,
   isToolbarOpen,
   isFullscreen,
+  onEnhanceWithAI,
+  isLoadingEnhance,
+  enhanceConfig,
+  setLastIntent,
 }: EditorBubbleMenuProps) => {
   return (
     <>
@@ -44,6 +60,10 @@ const EditorBubbleMenu = ({
               labels={toolbarLabels}
               editor={editor}
               disableButtons={disableButtons}
+              onEnhanceWithAI={onEnhanceWithAI}
+              isLoadingEnhance={isLoadingEnhance}
+              enhanceConfig={enhanceConfig}
+              setLastIntent={setLastIntent}
             />
           </div>
         )}
