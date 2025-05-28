@@ -2354,7 +2354,7 @@ declare interface Option_2 {
 
 declare type Options = Items_2 | ((search?: string) => Promise<Items_2> | Items_2);
 
-export declare function Page({ children, header, embedded }: PageProps): JSX_2.Element;
+export declare function Page({ children, header, embedded, aiAgent, }: PageProps): JSX_2.Element;
 
 export declare namespace Page {
     var displayName: string;
@@ -2378,6 +2378,10 @@ declare interface PageProps {
     children?: React.ReactNode;
     header?: React.ReactNode;
     embedded?: boolean;
+    aiAgent?: {
+        enabled: boolean;
+        runtimeUrl: string;
+    };
 }
 
 /**
