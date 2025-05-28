@@ -16,7 +16,7 @@ export const CopilotButton = (_: ButtonProps) => {
         className={cn(open ? "open" : "", "cursor-pointer")}
         aria-label={open ? "Close Chat" : "Open Chat"}
       >
-        <CopilotLogo />
+        <CopilotLogo className="h-8 w-8" />
       </button>
     </div>
   )
