@@ -477,6 +477,7 @@ export declare interface BlankTextEditorProps {
     toolbarLabels: toolbarLabels;
     errorConfig?: errorConfig;
     title: string;
+    readMode?: boolean;
 }
 
 declare type BreadcrumbBaseItemType = NavigationItem & {
@@ -986,6 +987,7 @@ export declare interface CoreRichTextEditorProps {
     errorConfig?: errorConfig;
     height?: heightType;
     mode?: "blank" | "normal";
+    readMode?: boolean;
 }
 
 export declare function Counter({ size, type, value, maxValue }: CounterProps): JSX_2.Element;
