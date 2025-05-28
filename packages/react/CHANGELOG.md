@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.70.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.0...factorial-one-react-v1.70.1) (2025-05-28)
+
+
+### Bug Fixes
+
+* add experimental tag to OneModal component ([#1914](https://github.com/factorialco/factorial-one/issues/1914)) ([035efd4](https://github.com/factorialco/factorial-one/commit/035efd4b4aed278dd76dd03ffa418bcfaf6d65e7))
+
 ## [1.70.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.3...factorial-one-react-v1.70.0) (2025-05-28)
 
 
