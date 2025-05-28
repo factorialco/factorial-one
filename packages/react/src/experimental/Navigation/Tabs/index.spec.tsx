@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import { ComponentProps, forwardRef, PropsWithChildren } from "react"
 import { describe, expect, it, vi } from "vitest"
-import { Home } from "../../../icons/app"
+import { Home, Upsell } from "../../../icons/app"
 import { BaseTabs, TabsSkeleton } from "./index"
 
 // Mock the linkHandler module
@@ -27,7 +27,12 @@ describe("Tabs", () => {
     { label: "Tab 3", href: "/another" },
   ]
 
-  const secondaryTabsWithIcons = [
+  const secondaryTabsWithUpsellIcons = [
+    { label: "Tab 1", href: "/active", icon: Upsell },
+    { label: "Tab 2", href: "/other", icon: Upsell },
+  ]
+
+  const secondaryTabsWithNonUpsellIcons = [
     { label: "Tab 1", href: "/active", icon: Home },
     { label: "Tab 2", href: "/other", icon: Home },
   ]
@@ -63,17 +68,26 @@ describe("Tabs", () => {
     expect(nav).toHaveAttribute("aria-label", "primary-navigation")
   })
 
-  it("renders icons only for secondary tabs", () => {
-    render(<BaseTabs tabs={secondaryTabsWithIcons} secondary />)
+  it("renders Upsell icons only for secondary tabs", () => {
+    render(<BaseTabs tabs={secondaryTabsWithUpsellIcons} secondary />)
 
     const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(2)
   })
 
-  it("does not render icons for primary tabs", () => {
-    render(<BaseTabs tabs={secondaryTabsWithIcons} secondary={false} />)
+  it("does not render non-Upsell icons in secondary tabs", () => {
+    render(<BaseTabs tabs={secondaryTabsWithNonUpsellIcons} secondary />)
 
-    const icons = screen.queryAllByRole("img", { hidden: true })
+    const icons = document.querySelectorAll("svg")
+    expect(icons).toHaveLength(0)
+  })
+
+  it("does not render any icons for primary tabs", () => {
+    render(
+      <BaseTabs tabs={secondaryTabsWithNonUpsellIcons} secondary={false} />
+    )
+
+    const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(0)
   })
 
