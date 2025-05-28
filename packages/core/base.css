@@ -88,6 +88,8 @@
     --scrollbar-thumb-hover: rgba(0, 0, 0, 0.6);
   }
 
+  /* Expressed in these two ways to support both web and mobile */
+  .dark:root,
   :root .dark {
     --neutral-0: theme("colors.grey.100");
     --neutral-2: theme("colors.grey.0");
