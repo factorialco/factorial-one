@@ -2381,6 +2381,7 @@ declare interface PageProps {
     aiAgent?: {
         enabled: boolean;
         runtimeUrl: string;
+        agentName: string;
     };
 }
 
