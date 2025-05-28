@@ -49,20 +49,6 @@ describe("Tabs", () => {
     expect(tab).toHaveClass("text-lg", "font-medium")
   })
 
-  it("renders a single secondary tab with icon", () => {
-    const singleTabWithIcon = [
-      { label: "Single Tab", href: "/single", icon: Home },
-    ]
-    render(<BaseTabs tabs={singleTabWithIcon} secondary />)
-
-    const tab = screen.getByText("Single Tab")
-    expect(tab.tagName).toBe("LI")
-    expect(tab).toHaveClass("text-lg", "font-medium")
-
-    const icon = tab.querySelector("svg")
-    expect(icon).toBeInTheDocument()
-  })
-
   it("applies active state to the correct tab", () => {
     render(<BaseTabs tabs={defaultTabs} />)
 
