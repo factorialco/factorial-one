@@ -244,3 +244,30 @@ export const Embedded: Story = {
     ),
   },
 }
+
+export const WithAiAgent: Story = {
+  args: {
+    header: (
+      <>
+        <PageHeader
+          module={defaultModule}
+          actions={HeaderStories.WithActions.args?.actions}
+        />
+        <Tabs {...(TabsStories.Primary.args as TabsProps)} />
+      </>
+    ),
+    children: (
+      <StandardLayout>
+        {Array(25)
+          .fill(0)
+          .map((_, index) => (
+            <Placeholder key={index} className="min-h-24" />
+          ))}
+      </StandardLayout>
+    ),
+    aiAgent: {
+      enabled: true,
+      runtimeUrl: "/api/copilotkit",
+    },
+  },
+}
