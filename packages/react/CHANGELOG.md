@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.70.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.1...factorial-one-react-v1.70.2) (2025-05-28)
+
+
+### Bug Fixes
+
+* remove flashing 0 when having no elements after filtering ([#1918](https://github.com/factorialco/factorial-one/issues/1918)) ([951d8e2](https://github.com/factorialco/factorial-one/commit/951d8e26c43f16e03658a45ecb251a74b36e8674))
+
 ## [1.70.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.0...factorial-one-react-v1.70.1) (2025-05-28)
 
 
