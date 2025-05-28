@@ -13,6 +13,23 @@ import {
 export const EntitySelect = (
   props: EntitySelectProps & { children?: React.ReactNode }
 ) => {
+  const [open, setOpen] = useState(
+    (props.alwaysOpen || props.defaultOpen) ?? false
+  )
+
+  const onOpenChange = (open: boolean) => {
+    setOpen(open)
+    props.onOpenChange?.(open)
+  }
+
+  useEffect(() => {
+    // We want to run this when the component is rendered the first time or when the defaultOpen prop changes
+    if (props.defaultOpen && open) {
+      props.onOpenChange?.(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only want to run this when this prop changes
+  }, [props.defaultOpen])
+
   const [filteredEntities, setFilteredEntities] = useState<
     EntitySelectEntity[]
   >(props.entities)
@@ -31,6 +48,9 @@ export const EntitySelect = (
   function onPrivateSelect(entity: EntitySelectEntity) {
     if (props.singleSelector) {
       props.onSelect(entity)
+
+      setOpen(false)
+
       return
     }
 
@@ -368,16 +388,6 @@ export const EntitySelect = (
     setFilteredEntities,
   ])
 
-  const onOpenChange = (open: boolean) => {
-    props.onOpenChange?.(open)
-  }
-
-  useEffect(() => {
-    if (props.defaultOpen) {
-      props.onOpenChange?.(true)
-    }
-  }, [props])
-
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState(0)
 
@@ -434,7 +444,7 @@ export const EntitySelect = (
   }
 
   return (
-    <Popover {...props} onOpenChange={onOpenChange}>
+    <Popover {...props} onOpenChange={onOpenChange} open={open}>
       <PopoverTrigger className="w-full" disabled={props.disabled}>
         {props.children ? (
           props.children
