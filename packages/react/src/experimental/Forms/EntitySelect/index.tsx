@@ -5,6 +5,7 @@ import { cn } from "../../../lib/utils"
 import { Content } from "./Content"
 import { Trigger } from "./Trigger"
 import {
+  EntityId,
   EntitySelectEntity,
   EntitySelectProps,
   EntitySelectSubEntity,
@@ -45,7 +46,7 @@ export const EntitySelect = (
       (filteredEntity.subItems ?? []).map((s) => s.subId)
     )
 
-    const parentIdsToUpdate = new Set<number>([filteredEntity.id])
+    const parentIdsToUpdate = new Set<EntityId>([filteredEntity.id])
     filteredEntities.forEach((possibleParent) => {
       if (possibleParent.id !== filteredEntity.id) {
         const hasIntersection = (possibleParent.subItems ?? []).some((sub) =>
@@ -111,7 +112,7 @@ export const EntitySelect = (
     } else {
       const prevSelected = props.selectedEntities ?? []
       const selectedIds = new Set(prevSelected.map((sel) => sel.id))
-      const selectedSubItemsMap = new Map<number, EntitySelectSubEntity[]>(
+      const selectedSubItemsMap = new Map<EntityId, EntitySelectSubEntity[]>(
         prevSelected.map((sel) => [sel.id, sel.subItems ?? []])
       )
 
@@ -247,7 +248,7 @@ export const EntitySelect = (
     let newSelected: EntitySelectEntity[] = []
 
     if (groupView) {
-      const visibleSubIds = new Set<number>(
+      const visibleSubIds = new Set<EntityId>(
         filteredEntities.flatMap((ent) =>
           (ent.subItems ?? []).map((sub) => sub.subId)
         )
@@ -266,7 +267,9 @@ export const EntitySelect = (
         }
       }
     } else {
-      const visibleIds = new Set<number>(filteredEntities.map((ent) => ent.id))
+      const visibleIds = new Set<EntityId>(
+        filteredEntities.map((ent) => ent.id)
+      )
       newSelected = (prevSelected ?? []).filter((el) => !visibleIds.has(el.id))
     }
 
