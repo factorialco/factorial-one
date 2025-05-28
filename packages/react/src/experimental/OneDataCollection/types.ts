@@ -15,7 +15,12 @@ import { SortingsDefinition, SortingsState } from "./sortings"
  * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  * @template ItemActions - The available actions that can be performed on records
+ * @template NavigationFilters - The available navigation filters for the collection
+ * @template Sortings - The available sortings for the collection
+ * @template ItemActions - The available actions that can be performed on records
+ * @template PrimaryActions - The available primary actions that can be performed on the collection
  * @template SecondaryActions - The available actions that can be performed on the collection
+ * @template OtherActions - The available actions that can be performed on the collection
  */
 export type DataSourceDefinition<
   Record extends RecordType,

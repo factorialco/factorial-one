@@ -9,6 +9,7 @@ import { Spinner } from "../../icons/app"
 
 import { Skeleton } from "@/ui/skeleton"
 import { OneActionBar } from "../OneActionBar"
+import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
 import * as Filters from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
@@ -243,10 +244,35 @@ export const OneDataCollection = <
     [primaryActions]
   )
 
-  const secondaryActionsItems = useMemo(
-    () => (secondaryActions && secondaryActions()) || [],
+  const allSecondaryActions = useMemo(
+    () => getSecondaryActions(secondaryActions),
     [secondaryActions]
   )
+
+  const expandedSecondaryActions = useMemo(
+    () =>
+      Math.min(
+        (secondaryActions &&
+          "expanded" in secondaryActions &&
+          secondaryActions.expanded) ||
+          0,
+        MAX_EXPANDED_ACTIONS
+      ),
+    [secondaryActions]
+  )
+
+  const secondaryActionsItems = useMemo(
+    () => allSecondaryActions.slice(0, expandedSecondaryActions) || [],
+    [allSecondaryActions, expandedSecondaryActions]
+  )
+
+  const otherActionsItems = useMemo(
+    () => allSecondaryActions.slice(expandedSecondaryActions),
+    [allSecondaryActions, expandedSecondaryActions]
+  )
+
+  const hasCollectionsActions =
+    !!primaryActionItem || allSecondaryActions?.length > 0
 
   const [clearSelectedItemsFunc, setClearSelectedItemsFunc] = useState<
     (() => void) | undefined
@@ -398,7 +424,7 @@ export const OneDataCollection = <
                   onVisualizationChange={setCurrentVisualization}
                 />
               )}
-              {(primaryActionItem || secondaryActionsItems) && (
+              {hasCollectionsActions && (
                 <>
                   {elementsRightActions && (
                     <div className="mx-1 h-4 w-px bg-f1-background-secondary-hover" />
@@ -406,6 +432,7 @@ export const OneDataCollection = <
                   <CollectionActions
                     primaryActions={primaryActionItem}
                     secondaryActions={secondaryActionsItems}
+                    otherActions={otherActionsItems}
                   />
                 </>
               )}
