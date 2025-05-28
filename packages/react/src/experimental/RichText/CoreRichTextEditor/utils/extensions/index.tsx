@@ -101,6 +101,7 @@ const ExtensionsConfiguration = ({
     }),
     Placeholder.configure({
       includeChildren: true,
+      placeholder: placeholder,
     }),
     CharacterCount.configure({ limit: maxCharacters }),
     ...(mentionsConfig
