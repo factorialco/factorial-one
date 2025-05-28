@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.70.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.3...factorial-one-react-v1.70.0) (2025-05-28)
+
+
+### Features
+
+* datacollection visible secondary actions ([#1893](https://github.com/factorialco/factorial-one/issues/1893)) ([88efe58](https://github.com/factorialco/factorial-one/commit/88efe5876ea4dc45eac4b7e4fac5d4a774b5f2a0))
+
 ## [1.69.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.2...factorial-one-react-v1.69.3) (2025-05-27)
 
 
