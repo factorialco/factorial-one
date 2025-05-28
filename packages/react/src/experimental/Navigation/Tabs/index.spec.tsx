@@ -68,8 +68,15 @@ describe("Tabs", () => {
     expect(nav).toHaveAttribute("aria-label", "primary-navigation")
   })
 
-  it("renders Upsell icons only for secondary tabs", () => {
+  it("renders Upsell icons in secondary tabs", () => {
     render(<BaseTabs tabs={secondaryTabsWithUpsellIcons} secondary />)
+
+    const icons = document.querySelectorAll("svg")
+    expect(icons).toHaveLength(2)
+  })
+
+  it("renders Upsell icons for primary tabs", () => {
+    render(<BaseTabs tabs={secondaryTabsWithUpsellIcons} secondary={false} />)
 
     const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(2)
@@ -82,7 +89,7 @@ describe("Tabs", () => {
     expect(icons).toHaveLength(0)
   })
 
-  it("does not render any icons for primary tabs", () => {
+  it("does not render non-Upsell icons in primary tabs", () => {
     render(
       <BaseTabs tabs={secondaryTabsWithNonUpsellIcons} secondary={false} />
     )

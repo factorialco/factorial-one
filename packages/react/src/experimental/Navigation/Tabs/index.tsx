@@ -80,11 +80,11 @@ export const BaseTabs: React.FC<TabsProps> = ({
               asChild
             >
               <Link role="link" {...props}>
-                {secondary && icon && icon === Upsell && (
+                {icon && icon === Upsell && (
                   <Icon
                     icon={icon}
                     size="md"
-                    className="text-[hsl(var(--promote-50))]"
+                    className="mr-1 text-[hsl(var(--promote-50))]"
                   />
                 )}
                 {label}
