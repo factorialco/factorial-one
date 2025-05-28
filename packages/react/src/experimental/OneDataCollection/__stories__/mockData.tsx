@@ -190,17 +190,15 @@ export const mockUsers: {
 
 export const getMockVisualizations = (options?: {
   frozenColumns?: 0 | 1 | 2
-}): Partial<
-  Record<
-    VisualizationType,
-    Visualization<
-      (typeof mockUsers)[number],
-      FiltersType,
-      typeof sortings,
-      ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition,
-      GroupingDefinition<(typeof mockUsers)[number]>
-    >
+}): Record<
+  Exclude<VisualizationType, "custom">,
+  Visualization<
+    (typeof mockUsers)[number],
+    FiltersType,
+    typeof sortings,
+    ItemActionsDefinition<(typeof mockUsers)[number]>,
+    NavigationFiltersDefinition,
+    GroupingDefinition<(typeof mockUsers)[number]>
   >
 > => ({
   table: {
@@ -327,7 +325,13 @@ export const getMockVisualizations = (options?: {
         },
         {
           label: "Department",
-          render: (item) => item.department,
+          render: (item) => ({
+            type: "dotTag",
+            value: {
+              color: "yellow",
+              label: item.department,
+            },
+          }),
         },
       ],
     },
@@ -475,8 +479,8 @@ export const createObservableDataFetch = (delay = 0) => {
           data: filterUsers(
             mockUsers,
             filters,
-            navigationFilters,
-            sortingsState
+            sortingsState,
+            navigationFilters
           ),
         })
         observer.complete()
@@ -499,8 +503,8 @@ export const createPromiseDataFetch = (delay = 500) => {
           filterUsers(
             mockUsers,
             filters,
-            navigationFilters,
             sortingsState,
+            navigationFilters,
             search
           )
         )

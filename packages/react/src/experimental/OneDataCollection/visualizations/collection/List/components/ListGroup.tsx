@@ -1,6 +1,7 @@
+import { Button } from "@/components/Actions/Button"
 import { Link } from "@/components/Actions/Link"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
-import { Avatar } from "@/experimental/Information/Avatars/Avatar"
+import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { FiltersDefinition } from "../../../../Filters/types"
 import { ItemActionsDefinition } from "../../../../item-actions"
@@ -10,6 +11,7 @@ import { renderProperty } from "../../../../property-render"
 import { SortingsDefinition } from "../../../../sortings"
 import { DataSource, GroupingDefinition, RecordType } from "../../../../types"
 import { ItemDefinition, ListPropertyDefinition } from "../types"
+import { ItemTeaser } from "./ItemTeaser"
 
 type ListGroupProps<
   R extends RecordType,
@@ -66,6 +68,8 @@ export const ListGroup = <
     return renderProperty(item, property, "table")
   }
 
+  const { actions } = useI18n()
+
   return items.map((item, index) => {
     const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
     const itemOnClick = source.itemOnClick
@@ -73,8 +77,20 @@ export const ListGroup = <
       : undefined
     const id = source.selectable ? source.selectable(item) : undefined
     const itemDef = itemDefinition(item)
+
+    const itemActions = source.itemActions ? source.itemActions(item) || [] : []
+
+    const expandedItemActions = itemActions.slice(0, 1)
+    const dropdownItemActions = itemActions.slice(1)
+
     return (
-      <div key={`row-${index}`} selected={!!id && selectedItems.has(id)}>
+      <div
+        key={`row-${index}`}
+        className={cn(
+          "relative flex w-full flex-row gap-2 p-2 pl-4",
+          "group hover:bg-f1-background-hover"
+        )}
+      >
         {source.selectable && id !== undefined && (
           <div className="flex items-center justify-end">
             <Checkbox
@@ -87,26 +103,38 @@ export const ListGroup = <
             />
           </div>
         )}
-        <Link href={itemHref} className={cn()}>
-          {itemDef.avatar && <Avatar avatar={itemDef.avatar} size="small" />}
-          <h3>{itemDef.title}</h3>
-          <aside className="flex flex-col gap-1">
-            {itemDef.description && <p>{itemDef.description}</p>}
-            {itemDef.metadata && (
-              <>
-                {" * "}
-                <p>{itemDef.metadata}</p>
-              </>
-            )}
-          </aside>
-        </Link>
-        {(fields || []).map((field, fieldIndex) => (
-          <div key={String(field.label)} onClick={itemOnClick}>
-            <div className={cn()}>{renderCell(item, field)}</div>
-          </div>
-        ))}
+        {itemHref && (
+          <Link href={itemHref} className="absolute inset-0 block" tabIndex={0}>
+            <span className="sr-only">{actions.view}</span>
+          </Link>
+        )}
+        <ItemTeaser
+          className="min-w-40 flex-1"
+          title={itemDef.title}
+          avatar={itemDef.avatar}
+          description={itemDef.description}
+          metadata={itemDef.metadata}
+        />
+        <div className="flex flex-1 flex-row items-center justify-end gap-2">
+          {(fields || []).map((field) => (
+            <div key={String(field.label)} onClick={itemOnClick}>
+              <div className={cn()}>{renderCell(item, field)}</div>
+            </div>
+          ))}
+        </div>
         {source.itemActions && (
-          <ActionsDropdown item={item} actions={source.itemActions} />
+          <aside className="via-bg-[#f00] absolute bottom-0 right-0 top-0 hidden items-center justify-end gap-1 bg-gradient-to-l from-[#f00] from-0% via-90% to-transparent to-100% p-2 pl-10 group-hover:flex">
+            {expandedItemActions.map((action) => (
+              <Button
+                key={action.label}
+                label={action.label}
+                variant="outline"
+                onClick={action.onClick}
+              />
+            ))}
+
+            <ActionsDropdown item={item} actions={source.itemActions} />
+          </aside>
         )}
       </div>
     )

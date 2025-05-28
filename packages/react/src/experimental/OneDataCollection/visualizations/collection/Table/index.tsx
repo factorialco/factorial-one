@@ -64,20 +64,20 @@ export type TableVisualizationOptions<
 }
 
 export type TableCollectionProps<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
-  ItemActions extends ItemActionsDefinition<Record>,
+  ItemActions extends ItemActionsDefinition<R>,
   NavigationFilters extends NavigationFiltersDefinition,
-  Grouping extends GroupingDefinition<Record>,
+  Grouping extends GroupingDefinition<R>,
 > = CollectionProps<
-  Record,
+  R,
   Filters,
   Sortings,
   ItemActions,
   NavigationFilters,
   Grouping,
-  TableVisualizationOptions<Record, Filters, Sortings>
+  TableVisualizationOptions<R, Filters, Sortings>
 >
 
 export const TableCollection = <
@@ -316,13 +316,8 @@ export const TableCollection = <
                   </TableRow>
 
                   <AnimatePresence key={`group-animate-${groupIndex}`}>
-<<<<<<< HEAD
                     {MotionRow &&
                       (!collapsible || openGroups[group.key]) &&
-=======
-                    {openGroups[group.key] &&
-                      MotionRow &&
->>>>>>> 26a361e7 (fix: key in table)
                       group.records.map((item, index) => {
                         return (
                           <MotionRow
