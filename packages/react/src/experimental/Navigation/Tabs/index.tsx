@@ -56,13 +56,6 @@ export const BaseTabs: React.FC<TabsProps> = ({
     >
       {visibleTabs.length === 1 ? (
         <li className="flex h-8 items-center justify-center whitespace-nowrap text-lg font-medium text-f1-foreground">
-          {secondary && visibleTabs[0].icon && (
-            <Icon
-              icon={visibleTabs[0].icon}
-              size="sm"
-              className="promote mr-2"
-            />
-          )}
           {visibleTabs[0].label}
         </li>
       ) : (
@@ -87,7 +80,7 @@ export const BaseTabs: React.FC<TabsProps> = ({
             >
               <Link role="link" {...props}>
                 {secondary && icon && (
-                  <Icon icon={icon} size="sm" className="mr-2" />
+                  <Icon icon={icon} size="md" className="text-promote mr-1" />
                 )}
                 {label}
               </Link>
