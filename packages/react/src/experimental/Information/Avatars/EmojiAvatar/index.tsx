@@ -19,6 +19,13 @@ const imageSizes = {
 } as const
 
 export const EmojiAvatar = ({ emoji, size = "md" }: Props) => {
+  // Check if emoji is a single emoji character using regex
+  // \uFE0F is the variation selector that makes emojis display as colored graphics instead of black & white text
+  const emojiRegex = /^\p{Emoji}\uFE0F?$/u
+  if (!emojiRegex.test(emoji)) {
+    emoji = "🤔" // Fallback to thinking face emoji if invalid
+  }
+
   return (
     <div
       className={cn(

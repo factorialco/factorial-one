@@ -48,6 +48,22 @@ export const defaultTranslations = {
       retry: "Retry",
     },
     itemsCount: "items",
+    emptyStates: {
+      noData: {
+        title: "No data",
+        description: "No data available",
+      },
+      noResults: {
+        title: "No results",
+        description: "No results found try another search or clear the filters",
+        clearFilters: "Clear filters",
+      },
+      error: {
+        title: "Error",
+        description: "An error occurred while loading the data",
+        retry: "Retry",
+      },
+    },
   },
   shortcut: "Shortcut",
   date: {

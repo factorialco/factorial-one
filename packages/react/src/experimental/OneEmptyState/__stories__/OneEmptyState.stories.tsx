@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { Plus } from "lucide-react"
-import { EmptyState } from "../OneEmptyState"
+import { OneEmptyState } from "../OneEmptyState"
 
 const meta = {
-  component: EmptyState,
+  component: OneEmptyState,
   title: "EmptyState",
   tags: ["autodocs", "experimental"],
-} satisfies Meta<typeof EmptyState>
+} satisfies Meta<typeof OneEmptyState>
 
 export default meta
-type Story = StoryObj<typeof EmptyState>
+type Story = StoryObj<typeof OneEmptyState>
 
 export const Basic: Story = {
   args: {
     title: "No items added yet",
     description: "Start by adding your first item.",
-    icon: "📄",
+    emoji: "📄",
     actions: [
       {
         label: "New item",
@@ -29,29 +29,17 @@ export const Basic: Story = {
 }
 
 export const WithAlert: Story = {
-  render: (args) => {
+  render: () => {
     const Divider = () => (
       <div className="h-px w-80 self-center bg-f1-background-secondary" />
     )
     return (
       <div className="flex flex-col items-center gap-4">
-        <EmptyState
-          {...args}
-          icon={{ type: "warning" }}
-          title="We couldn't load the data"
-        />
+        <OneEmptyState variant="warning" title="We couldn't load the data" />
         <Divider />
-        <EmptyState
-          {...args}
-          icon={{ type: "info" }}
-          title="No items added yet"
-        />
+        <OneEmptyState variant="info" title="No items added yet" />
         <Divider />
-        <EmptyState
-          {...args}
-          icon={{ type: "critical" }}
-          title="Unauthorized"
-        />
+        <OneEmptyState variant="critical" title="Unauthorized" />
       </div>
     )
   },

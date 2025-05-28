@@ -9,6 +9,7 @@ import {
   NavigationFiltersState,
 } from "./navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "./sortings"
+import { DataError } from "./useData"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
@@ -288,9 +289,16 @@ export type CollectionProps<
   /** The data source configuration and state */
   source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
   /** Function to handle item selection */
-  onSelectItems?: OnSelectItemsCallback<Record, Filters>
-  /** Function to handle total items change */
-  onTotalItemsChange?: (totalItems: number | undefined) => void
+  onSelectItems: OnSelectItemsCallback<Record, Filters>
+  /** Function to handle data load */
+  onLoadData: (data: {
+    totalItems: number | undefined
+    filters: FiltersState<Filters>
+    search: string | undefined
+    isInitialLoading: boolean
+    data: Record[]
+  }) => void
+  onLoadError: (error: DataError) => void
 } & VisualizationOptions
 
 /**

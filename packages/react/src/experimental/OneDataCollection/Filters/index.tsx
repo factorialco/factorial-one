@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { PresetsDefinition } from "../types"
 import { FiltersChipsList as FiltersChipsListComponent } from "./Components/FiltersChipsList"
 import { FiltersControls as FiltersControlsComponent } from "./Components/FiltersControls"
@@ -112,6 +112,10 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
   const [isFiltersOpen, setIsFiltersOpen] = useState(false)
 
   const [localFiltersValue, setLocalFiltersValue] = useState(filters)
+
+  useEffect(() => {
+    setLocalFiltersValue(filters)
+  }, [filters])
 
   const removeFilterValue = (key: keyof Definition) => {
     const newFilters = { ...localFiltersValue }

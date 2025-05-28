@@ -7,6 +7,7 @@ import { useDebounceValue } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
 
+import { OneEmptyState } from "@/experimental/OneEmptyState"
 import { Skeleton } from "@/ui/skeleton"
 import { OneActionBar } from "../OneActionBar"
 import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
@@ -30,6 +31,8 @@ import type {
   OnSelectItemsCallback,
   RecordType,
 } from "./types"
+import { DataError } from "./useData"
+import { CustomEmptyStates, useEmptyState } from "./useEmptyState"
 import type { Visualization } from "./visualizations"
 import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 
@@ -204,6 +207,7 @@ export const OneDataCollection = <
   visualizations,
   onSelectItems,
   onBulkAction,
+  emptyStates,
 }: {
   source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
   visualizations: ReadonlyArray<
@@ -211,6 +215,7 @@ export const OneDataCollection = <
   >
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
   onBulkAction?: OnBulkActionCallback<Record, Filters>
+  emptyStates?: CustomEmptyStates
 }): JSX.Element => {
   const {
     // Filters
@@ -354,6 +359,50 @@ export const OneDataCollection = <
 
   const [totalItems, setTotalItems] = useState<undefined | number>(undefined)
 
+  const { emptyState, setEmptyStateType } = useEmptyState(emptyStates, {
+    retry: () => {
+      setEmptyStateType(false)
+      setCurrentFilters({ ...currentFilters })
+    },
+    clearFilters: () => {
+      setEmptyStateType(false)
+      setCurrentFilters({})
+    },
+  })
+
+  const onLoadData = ({
+    totalItems,
+    filters,
+    isInitialLoading,
+  }: {
+    totalItems: number | undefined
+    filters: FiltersState<Filters>
+    isInitialLoading: boolean
+  }) => {
+    if (isInitialLoading) return
+
+    setTotalItems(totalItems)
+    setEmptyStateType(
+      totalItems === 0
+        ? Object.keys(filters).length > 0
+          ? "no-results"
+          : "no-data"
+        : false
+    )
+  }
+
+  const onLoadError = (error: DataError) => {
+    setEmptyStateType(
+      "error",
+      error.cause instanceof Error ? error.cause.message : error.message
+    )
+  }
+
+  useEffect(() => {
+    console.log("currentFilters", currentFilters)
+    setEmptyStateType(false)
+  }, [currentFilters, currentSearch, currentNavigationFilters])
+
   return (
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
@@ -440,20 +489,37 @@ export const OneDataCollection = <
           </div>
           <Filters.ChipsList />
         </Filters.Root>
-        <VisualizationRenderer
-          visualization={visualizations[currentVisualization]}
-          source={source}
-          onSelectItems={onSelectItemsLocal}
-          onTotalItemsChange={setTotalItems}
-        />
-        {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
-          <OneActionBar
-            isOpen={showActionBar}
-            selectedNumber={selectedItemsCount}
-            primaryActions={bulkActions.primary}
-            secondaryActions={bulkActions?.secondary}
-            onUnselect={() => clearSelectedItemsFunc?.()}
-          />
+
+        {emptyState ? (
+          <div className="flex flex-col items-center justify-center">
+            <OneEmptyState
+              variant={emptyState.variant}
+              emoji={emptyState.emoji}
+              title={emptyState.title}
+              description={emptyState.description}
+              actions={emptyState.actions}
+            />
+          </div>
+        ) : (
+          <>
+            <VisualizationRenderer
+              visualization={visualizations[currentVisualization]}
+              source={source}
+              onSelectItems={onSelectItemsLocal}
+              onLoadData={onLoadData}
+              onLoadError={onLoadError}
+            />
+            {bulkActions?.primary &&
+              (bulkActions?.primary || []).length > 0 && (
+                <OneActionBar
+                  isOpen={showActionBar}
+                  selectedNumber={selectedItemsCount}
+                  primaryActions={bulkActions.primary}
+                  secondaryActions={bulkActions?.secondary}
+                  onUnselect={() => clearSelectedItemsFunc?.()}
+                />
+              )}
+          </>
         )}
       </div>
     </div>
