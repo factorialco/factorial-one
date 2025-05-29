@@ -6591,7 +6591,7 @@ const eN = ({
   }
   function m(P, $) {
     if (e.singleSelector)
-      e.onSelect({ ...P, subItems: [{ ...$ }] });
+      e.onSelect({ ...P, subItems: [{ ...$ }] }), n(!1);
     else {
       const N = e.selectedEntities ?? [], D = new Set(N.map((W) => W.id)), j = new Map(
         N.map((W) => [W.id, W.subItems ?? []])
