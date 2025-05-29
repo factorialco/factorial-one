@@ -1,5 +1,5 @@
+import { useIsDev } from "@/lib/providers/user-platafform"
 import { FC, useMemo } from "react"
-import { useIsDev } from "../providers/user-platafform"
 
 type RestrictComponentProps = {
   identifier: string
@@ -8,7 +8,7 @@ type RestrictComponentProps = {
   children: React.ReactNode
 }
 
-export const RestrictComponent: FC<RestrictComponentProps> = ({
+export const OneRestrictComponent: FC<RestrictComponentProps> = ({
   identifier,
   allowedRoutes,
   disallowedRoutes,
@@ -19,11 +19,11 @@ export const RestrictComponent: FC<RestrictComponentProps> = ({
   const pathname = window.location.pathname
 
   const isAllowed = useMemo(() => {
-    if (allowedRoutes && allowedRoutes.length > 0) {
+    if (allowedRoutes?.length) {
       return allowedRoutes.includes(pathname)
     }
 
-    if (disallowedRoutes && disallowedRoutes.length > 0) {
+    if (disallowedRoutes?.length) {
       return !disallowedRoutes.includes(pathname)
     }
 
@@ -44,8 +44,10 @@ export const RestrictComponent: FC<RestrictComponentProps> = ({
     return message
   }, [identifier, allowedRoutes, disallowedRoutes])
 
-  if (!isAllowed && isDev) {
-    console.error(errorMessage)
+  if (!isAllowed) {
+    if (isDev) {
+      console.error(errorMessage)
+    }
     return null
   }
 

@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it } from "vitest"
-import { RestrictComponent } from "."
+import { OneRestrictComponent } from "."
 
 // Mock window.location
 const mockLocation = (pathname: string) => {
@@ -20,9 +20,9 @@ describe("RestrictComponent", () => {
 
   it("renders children when no restrictions are provided", () => {
     render(
-      <RestrictComponent identifier="test-component">
+      <OneRestrictComponent identifier="test-component">
         <TestContent />
-      </RestrictComponent>
+      </OneRestrictComponent>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
@@ -32,12 +32,12 @@ describe("RestrictComponent", () => {
     mockLocation("/allowed-path")
 
     render(
-      <RestrictComponent
+      <OneRestrictComponent
         identifier="test-component"
         allowedRoutes={["/allowed-path"]}
       >
         <TestContent />
-      </RestrictComponent>
+      </OneRestrictComponent>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
@@ -47,12 +47,12 @@ describe("RestrictComponent", () => {
     mockLocation("/not-allowed-path")
 
     render(
-      <RestrictComponent
+      <OneRestrictComponent
         identifier="test-component"
         allowedRoutes={["/allowed-path"]}
       >
         <TestContent />
-      </RestrictComponent>
+      </OneRestrictComponent>
     )
 
     expect(screen.queryByText("Test Content")).not.toBeInTheDocument()
@@ -62,12 +62,12 @@ describe("RestrictComponent", () => {
     mockLocation("/allowed-path")
 
     render(
-      <RestrictComponent
+      <OneRestrictComponent
         identifier="test-component"
         disallowedRoutes={["/disallowed-path"]}
       >
         <TestContent />
-      </RestrictComponent>
+      </OneRestrictComponent>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
@@ -77,12 +77,12 @@ describe("RestrictComponent", () => {
     mockLocation("/disallowed-path")
 
     render(
-      <RestrictComponent
+      <OneRestrictComponent
         identifier="test-component"
         disallowedRoutes={["/disallowed-path"]}
       >
         <TestContent />
-      </RestrictComponent>
+      </OneRestrictComponent>
     )
 
     expect(screen.queryByText("Test Content")).not.toBeInTheDocument()
@@ -92,13 +92,13 @@ describe("RestrictComponent", () => {
     mockLocation("/test-path")
 
     render(
-      <RestrictComponent
+      <OneRestrictComponent
         identifier="test-component"
         allowedRoutes={["/test-path"]}
         disallowedRoutes={["/test-path"]}
       >
         <TestContent />
-      </RestrictComponent>
+      </OneRestrictComponent>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
@@ -108,13 +108,13 @@ describe("RestrictComponent", () => {
     mockLocation("/any-path")
 
     render(
-      <RestrictComponent
+      <OneRestrictComponent
         identifier="test-component"
         allowedRoutes={[]}
         disallowedRoutes={[]}
       >
         <TestContent />
-      </RestrictComponent>
+      </OneRestrictComponent>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
