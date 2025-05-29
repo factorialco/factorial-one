@@ -27,8 +27,8 @@ describe("Tabs", () => {
   ]
 
   const secondaryTabsWithUpsellIcons = [
-    { label: "Tab 1", href: "/active", showUpsellIcon: true },
-    { label: "Tab 2", href: "/other", showUpsellIcon: true },
+    { label: "Tab 1", href: "/active", variant: "upsell" as const },
+    { label: "Tab 2", href: "/other", variant: "upsell" as const },
   ]
 
   const secondaryTabsWithoutUpsellIcons = [
@@ -67,28 +67,28 @@ describe("Tabs", () => {
     expect(nav).toHaveAttribute("aria-label", "primary-navigation")
   })
 
-  it("renders Upsell icons in secondary tabs when showUpsellIcon is true", () => {
+  it("renders Upsell icons in secondary tabs when variant is 'upsell'", () => {
     render(<BaseTabs tabs={secondaryTabsWithUpsellIcons} secondary />)
 
     const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(2)
   })
 
-  it("renders Upsell icons for primary tabs when showUpsellIcon is true", () => {
+  it("renders Upsell icons for primary tabs when variant is 'upsell'", () => {
     render(<BaseTabs tabs={secondaryTabsWithUpsellIcons} secondary={false} />)
 
     const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(2)
   })
 
-  it("does not render icons in secondary tabs when showUpsellIcon is false", () => {
+  it("does not render icons in secondary tabs when variant is 'default' or undefined", () => {
     render(<BaseTabs tabs={secondaryTabsWithoutUpsellIcons} secondary />)
 
     const icons = document.querySelectorAll("svg")
     expect(icons).toHaveLength(0)
   })
 
-  it("does not render icons in primary tabs when showUpsellIcon is false", () => {
+  it("does not render icons in primary tabs when variant is 'default' or undefined", () => {
     render(
       <BaseTabs tabs={secondaryTabsWithoutUpsellIcons} secondary={false} />
     )
