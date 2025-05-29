@@ -16,11 +16,11 @@ const secondaryTabItems = [
   { label: "Activity", href: "/courses/activity" },
 ]
 
-const primaryTabItemsWithUpsellIcons: TabItem[] = [
+const primaryTabItemsWithVariants: TabItem[] = [
   { label: "Overview", href: "/", index: true },
-  { label: "Courses", href: "/courses", showUpsellIcon: true },
+  { label: "Courses", href: "/courses", variant: "upsell" },
   { label: "Categories", href: "/categories" },
-  { label: "Catalog", href: "/catalog", showUpsellIcon: true },
+  { label: "Catalog", href: "/catalog", variant: "upsell" },
   { label: "Requests", href: "/requests", "data-test": "foo" },
 ]
 
@@ -54,9 +54,9 @@ export const Primary: Story = {
   },
 }
 
-export const PrimaryUpsell: Story = {
+export const PrimaryWithVariants: Story = {
   args: {
-    tabs: primaryTabItemsWithUpsellIcons,
+    tabs: primaryTabItemsWithVariants,
     secondary: false,
   },
 }
@@ -117,11 +117,11 @@ const tabItemsWithIds: TabItem[] = [
   { label: "Requests", id: "requests", "data-test": "foo" },
 ]
 
-const tabItemsWithIdsAndUpsell: TabItem[] = [
+const tabItemsWithIdsAndVariants: TabItem[] = [
   { label: "Overview", id: "overview", index: true },
   { label: "Courses", id: "courses" },
   { label: "Categories", id: "categories" },
-  { label: "Catalog", id: "catalog", showUpsellIcon: true },
+  { label: "Catalog", id: "catalog", variant: "upsell" },
   { label: "Requests", id: "requests", "data-test": "foo" },
 ]
 
@@ -132,9 +132,9 @@ export const WithIds: Story = {
   },
 }
 
-export const WithIdsAndUpsell: Story = {
+export const WithIdsAndVariants: Story = {
   args: {
-    tabs: tabItemsWithIdsAndUpsell,
+    tabs: tabItemsWithIdsAndVariants,
     activeTabId: "overview",
     secondary: true,
   },

@@ -8,7 +8,7 @@ import { withSkeleton } from "../../../lib/skeleton"
 export type TabItem = {
   label: string
   index?: boolean
-  showUpsellIcon?: boolean
+  variant?: "default" | "upsell"
 } & DataAttributes &
   ({ href: string } | { id: string })
 
@@ -80,7 +80,7 @@ export const BaseTabs: React.FC<TabsProps> = ({
               asChild
             >
               <Link role="link" {...props}>
-                {props.showUpsellIcon && (
+                {props.variant === "upsell" && (
                   <Icon
                     icon={Upsell}
                     size="md"
