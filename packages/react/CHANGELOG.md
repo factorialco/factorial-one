@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.74.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.73.2...factorial-one-react-v1.74.0) (2025-05-29)
+
+
+### Features
+
+* close on select on single selection when grouping ([#1934](https://github.com/factorialco/factorial-one/issues/1934)) ([df460b3](https://github.com/factorialco/factorial-one/commit/df460b3621e1a40e6f74a14d825e40bd4c09366c))
+
 ## [1.73.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.73.1...factorial-one-react-v1.73.2) (2025-05-29)
 
 
