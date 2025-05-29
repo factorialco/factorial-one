@@ -358,12 +358,7 @@ export const OneDataCollection = <
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
     >
-      {((isLoading &&
-        totalItems !== undefined &&
-        totalItemSummary(totalItems)) ||
-        (!isLoading &&
-          totalItems !== undefined &&
-          totalItemSummary(totalItems)) ||
+      {((totalItems !== undefined && totalItemSummary(totalItems)) ||
         navigationFilters) && (
         <div className="border-f1-border-primary flex gap-4 px-6">
           <div className="flex flex-1 flex-shrink gap-4 text-lg font-semibold">
