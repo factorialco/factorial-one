@@ -24,11 +24,11 @@ import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
   BulkActionDefinition,
-  CollectionProps,
   CollectionSearchOptions,
   DataSource,
   DataSourceDefinition,
   OnBulkActionCallback,
+  OnLoadDataCallback,
   OnSelectItemsCallback,
   RecordType,
 } from "./types"
@@ -371,31 +371,28 @@ export const OneDataCollection = <
     },
   })
 
+  const getEmptyStateType = (
+    totalItems: number | undefined,
+    filters: FiltersState<Filters>,
+    search: string | undefined
+  ) => {
+    return totalItems === 0
+      ? Object.keys(filters).length > 0 || search
+        ? "no-results"
+        : "no-data"
+      : false
+  }
+
   const onLoadData = ({
     totalItems,
     filters,
     isInitialLoading,
     search,
-  }: Parameters<
-    CollectionProps<
-      Record,
-      Filters,
-      Sortings,
-      ItemActions,
-      NavigationFilters,
-      never
-    >["onLoadData"]
-  >[0]) => {
+  }: Parameters<OnLoadDataCallback<Record, Filters>>[0]) => {
     if (isInitialLoading) return
 
     setTotalItems(totalItems)
-    setEmptyStateType(
-      totalItems === 0
-        ? Object.keys(filters).length > 0 || search
-          ? "no-results"
-          : "no-data"
-        : false
-    )
+    setEmptyStateType(getEmptyStateType(totalItems, filters, search))
   }
 
   const onLoadError = (error: DataError) => {

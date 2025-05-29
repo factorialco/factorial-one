@@ -98,6 +98,9 @@ describe("TableCollection", () => {
           >
             columns={testColumns}
             source={createTestSource()}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -126,6 +129,9 @@ describe("TableCollection", () => {
           >
             columns={testColumns}
             source={createTestSource()}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -169,6 +175,9 @@ describe("TableCollection", () => {
           >
             columns={columnsWithCustomRender}
             source={createTestSource()}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -194,6 +203,9 @@ describe("TableCollection", () => {
           >
             columns={testColumns}
             source={createTestSource([])}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -223,6 +235,9 @@ describe("TableCollection", () => {
           >
             columns={testColumns}
             source={createTestSource([], error)}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -313,6 +328,9 @@ describe("TableCollection", () => {
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -337,6 +355,9 @@ describe("TableCollection", () => {
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -368,6 +389,9 @@ describe("TableCollection", () => {
           >
             columns={testColumns}
             source={createPaginatedTestSource()}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -401,6 +425,9 @@ describe("TableCollection", () => {
           >
             columns={testColumns}
             source={createPaginatedTestSource(5, 10)}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -423,6 +450,9 @@ describe("TableCollection", () => {
           >
             columns={testColumns}
             source={createPaginatedTestSource(0, 10)}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -472,6 +502,9 @@ describe("TableCollection", () => {
           >
             columns={columnsWithSorting}
             source={sortableSource}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -524,6 +557,9 @@ describe("TableCollection", () => {
               },
             ]}
             source={modifiedSource}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -596,6 +632,9 @@ describe("TableCollection", () => {
               },
             ]}
             source={modifiedSource}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -671,6 +710,9 @@ describe("TableCollection", () => {
               },
             ]}
             source={modifiedSource}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )
@@ -730,6 +772,9 @@ describe("TableCollection", () => {
           >
             columns={columnsWithSorting}
             source={createTestSource()} // No sortings defined
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
           />
         </TestWrapper>
       )

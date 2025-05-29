@@ -24,7 +24,7 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "../navigationFilters/types"
-import { Visualization, VisualizationType } from "./visualizations"
+import { Visualization, VisualizationType } from "../visualizations"
 
 export const DEPARTMENTS_MOCK = [
   "Engineering",
@@ -51,28 +51,11 @@ export const filters = {
 export const YEARS_OF_EXPERIENCIE_MOCK = [
   8, 12, 4, 15, 7, 3, 11, 6, 13, 2, 9, 14, 5, 10, 1, 8, 13, 4, 11, 6,
 ]
-export const START_DATE_MOCK = [
-  new Date(2020, 3, 15),
-  new Date(2020, 8, 22),
-  new Date(2020, 11, 5),
-  new Date(2020, 2, 18),
-  new Date(2020, 6, 9),
-  new Date(2020, 4, 27),
-  new Date(2020, 1, 12),
-  new Date(2020, 9, 3),
-  new Date(2020, 7, 19),
-  new Date(2020, 5, 8),
-  new Date(2020, 10, 25),
-  new Date(2020, 0, 14),
-  new Date(2020, 3, 7),
-  new Date(2020, 8, 16),
-  new Date(2020, 11, 28),
-  new Date(2020, 2, 11),
-  new Date(2020, 6, 23),
-  new Date(2020, 4, 4),
-  new Date(2020, 1, 20),
-  new Date(2020, 9, 13),
-]
+export const START_DATE_MOCK = Array.from(
+  { length: 20 },
+  (_, i) => new Date(2025, 6, 30 + i)
+)
+
 export const PROJECTS_MOCK = [
   "Project A",
   "Project B",

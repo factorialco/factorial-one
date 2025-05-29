@@ -1,13 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react"
-import { FiltersDefinition } from "../Filters/types"
 import { OneDataCollection, useDataSource } from "../index"
-import { ItemActionsDefinition } from "../item-actions"
-import { NavigationFiltersDefinition } from "../navigationFilters/types"
-import { SortingsDefinition } from "../sortings"
-import { DataSource } from "../types"
-import { CustomEmptyStates } from "../useEmptyState"
 import {
   createPromiseDataFetch,
+  filters,
   getMockVisualizations,
   mockUsers,
 } from "./mockData"
@@ -23,52 +18,60 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-function BaseStory<
-  Filters extends FiltersDefinition,
-  Sortings extends SortingsDefinition,
-  ItemActions extends ItemActionsDefinition<(typeof mockUsers)[number]>,
-  NavigationFilters extends NavigationFiltersDefinition,
->({
-  dataSource,
-  emptyStates,
-}: {
-  dataSource: DataSource<
-    (typeof mockUsers)[number],
-    Filters,
-    Sortings,
-    ItemActions,
-    NavigationFilters
-  >
-  emptyStates?: CustomEmptyStates
-}) {
-  const mockVisualizations = getMockVisualizations()
-  return (
-    <div className="space-y-8">
-      <OneDataCollection
-        source={dataSource}
-        visualizations={[mockVisualizations.table, mockVisualizations.card]}
-        emptyStates={emptyStates}
-      />
-    </div>
-  )
-}
-
 // Basic story showing all action types
 export const NoDataExample: Story = {
   render: () => {
-    const dataSource = useDataSource<
-      (typeof mockUsers)[number],
-      FiltersDefinition,
-      SortingsDefinition,
-      ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition
-    >({
+    const dataSource = useDataSource({
+      filters,
       dataAdapter: {
-        fetchData: () => Promise.resolve([]),
+        fetchData: () =>
+          new Promise<(typeof mockUsers)[number][]>((resolve) => {
+            resolve([])
+          }),
       },
     })
 
-    return <BaseStory dataSource={dataSource} />
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [
+                {
+                  label: "Name",
+                  width: 140,
+                  render: (item) => ({
+                    type: "person",
+                    value: {
+                      firstName: item.name.split(" ")[0],
+                      lastName: item.name.split(" ")[1],
+                    },
+                  }),
+                  sorting: "name",
+                },
+                {
+                  label: "Email",
+                  render: (item) => item.email,
+                  sorting: "email",
+                },
+                {
+                  label: "Role",
+                  render: (item) => item.role,
+                  sorting: "role",
+                },
+                {
+                  label: "Department",
+                  render: (item) => item.department,
+                  sorting: "department",
+                },
+              ],
+            },
+          },
+        ]}
+      />
+    )
   },
 }
 
@@ -101,38 +104,38 @@ export const NoResultsExample: Story = {
       },
     })
 
-    return <BaseStory dataSource={dataSource} />
+    const mockVisualizations = getMockVisualizations()
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[mockVisualizations.table, mockVisualizations.card]}
+      />
+    )
   },
 }
 
 export const ErrorExample: Story = {
   render: () => {
-    const dataSource = useDataSource<
-      (typeof mockUsers)[number],
-      FiltersDefinition,
-      SortingsDefinition,
-      ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition
-    >({
-      dataAdapter: { fetchData: () => Promise.reject(new Error("Error")) },
-      filters: {
-        search: { type: "search", label: "Search" },
-        department: {
-          type: "in",
-          label: "Department",
-          options: {
-            options: [
-              { value: "Engineering", label: "Engineering" },
-              { value: "Product", label: "Product" },
-              { value: "Design", label: "Design" },
-              { value: "Marketing", label: "Marketing" },
-            ],
-          },
-        },
+    const dataSource = useDataSource({
+      dataAdapter: {
+        fetchData: () => Promise.reject(new Error("Error loading the users")),
       },
+      filters,
       currentFilters: { search: "Joey Tribbiani" },
     })
-    return <BaseStory dataSource={dataSource} />
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: [],
+            },
+          },
+        ]}
+      />
+    )
   },
 }
 
@@ -170,14 +173,13 @@ export const CustomMessagesAndActions: Story = {
         actions: [
           {
             label: "Go to main page",
-            variant: "outline",
+            variant: "outline" as const,
             onClick: () => {
               console.log("clicked")
             },
           },
           {
             label: "Clear filters",
-            variant: "default",
             onClick: () => {
               console.log("clicked")
             },
@@ -189,6 +191,13 @@ export const CustomMessagesAndActions: Story = {
       },
     }
 
-    return <BaseStory dataSource={dataSource} emptyStates={emptyStates} />
+    const mockVisualizations = getMockVisualizations()
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[mockVisualizations.table, mockVisualizations.card]}
+        emptyStates={emptyStates}
+      />
+    )
   },
 }

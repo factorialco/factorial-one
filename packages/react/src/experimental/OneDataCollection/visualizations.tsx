@@ -10,8 +10,9 @@ import { ItemActionsDefinition } from "./item-actions"
 import { NavigationFiltersDefinition } from "./navigationFilters/types"
 import { SortingsDefinition } from "./sortings"
 import type {
-  CollectionProps,
   DataSource,
+  OnLoadDataCallback,
+  OnLoadErrorCallback,
   OnSelectItemsCallback,
   RecordType,
 } from "./types"
@@ -56,15 +57,8 @@ export type Visualization<
       icon: IconType
       /** Custom component to render the visualization */
       component: (props: {
-        onLoadData: CollectionProps<
-          Record,
-          Filters,
-          Sortings,
-          ItemActions,
-          NavigationFilters,
-          never
-        >["onLoadData"]
-        onLoadError: (error: Error) => void
+        onLoadData: OnLoadDataCallback<Record, Filters>
+        onLoadError: OnLoadErrorCallback
         source: DataSource<
           Record,
           Filters,
@@ -235,15 +229,8 @@ export const VisualizationRenderer = <
   >
   source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
   onSelectItems: OnSelectItemsCallback<Record, Filters>
-  onLoadData: CollectionProps<
-    Record,
-    Filters,
-    Sortings,
-    ItemActions,
-    NavigationFilters,
-    never
-  >["onLoadData"]
-  onLoadError: (error: Error) => void
+  onLoadData: OnLoadDataCallback<Record, Filters>
+  onLoadError: OnLoadErrorCallback
   clearSelectedItems?: () => void
 }): JSX.Element => {
   switch (visualization.type) {

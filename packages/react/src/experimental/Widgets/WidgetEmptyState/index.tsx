@@ -31,7 +31,7 @@ export function WidgetEmptyState({
     <OneEmptyState
       title={title}
       description={description}
-      icon={emoji ?? { type: "warning" }}
+      {...(emoji ? { emoji } : { variant: "warning" as const })}
       actions={actions}
     />
   )

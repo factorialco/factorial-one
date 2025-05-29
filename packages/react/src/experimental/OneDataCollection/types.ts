@@ -271,6 +271,18 @@ export type OnBulkActionCallback<
   ]
 ) => void
 
+export type OnLoadDataCallback<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+> = (data: {
+  totalItems: number | undefined
+  filters: FiltersState<Filters>
+  search: string | undefined
+  isInitialLoading: boolean
+  data: Record[]
+}) => void
+
+export type OnLoadErrorCallback = (error: DataError) => void
 /**
  * Props for the Collection component.
  * @template Record - The type of records in the collection
@@ -291,14 +303,8 @@ export type CollectionProps<
   /** Function to handle item selection */
   onSelectItems: OnSelectItemsCallback<Record, Filters>
   /** Function to handle data load */
-  onLoadData: (data: {
-    totalItems: number | undefined
-    filters: FiltersState<Filters>
-    search: string | undefined
-    isInitialLoading: boolean
-    data: Record[]
-  }) => void
-  onLoadError: (error: DataError) => void
+  onLoadData: OnLoadDataCallback<Record, Filters>
+  onLoadError: OnLoadErrorCallback
 } & VisualizationOptions
 
 /**

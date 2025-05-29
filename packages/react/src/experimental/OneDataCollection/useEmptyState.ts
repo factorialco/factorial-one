@@ -71,24 +71,28 @@ export const useEmptyState = (
       return
     }
 
-    setEmptyState({
-      title: customEmptyStates[type]?.title ?? emptyStatesDefaults[type].title,
-      description:
-        customEmptyStates[type]?.description ??
-        (type === "error" && errorMessage
-          ? errorMessage
-          : emptyStatesDefaults[type].description),
+    const custom = customEmptyStates[type] ?? {}
+    const def = emptyStatesDefaults[type]
 
-      actions:
-        customEmptyStates[type]?.actions ?? emptyStatesDefaults[type].actions,
-      ...(type === "error" && {
+    const base: EmptyState = {
+      title: custom.title ?? def.title,
+      description:
+        custom.description ??
+        (type === "error" && errorMessage ? errorMessage : def.description),
+      actions: custom.actions ?? def.actions,
+    }
+
+    if (type === "error") {
+      setEmptyState({
+        ...base,
         variant: "critical",
-      }),
-      ...(type !== "error" && {
-        emoji:
-          customEmptyStates[type]?.emoji ?? emptyStatesDefaults[type].emoji,
-      }),
-    })
+      })
+    } else {
+      setEmptyState({
+        ...base,
+        emoji: custom.emoji ?? def.emoji,
+      })
+    }
   }
 
   return { emptyState, setEmptyStateType }
