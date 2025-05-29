@@ -56,7 +56,10 @@ export const useEmptyState = (
   }
 
   const [emptyState, setEmptyState] = useState<
-    (EmptyState & { variant?: OneEmptyStateProps["variant"] }) | undefined
+    | (EmptyState & {
+        variant?: Exclude<OneEmptyStateProps["variant"], "positive">
+      })
+    | undefined
   >(undefined)
 
   const setEmptyStateType = (
@@ -67,8 +70,6 @@ export const useEmptyState = (
       setEmptyState(undefined)
       return
     }
-
-    console.log(type, customEmptyStates[type])
 
     setEmptyState({
       title: customEmptyStates[type]?.title ?? emptyStatesDefaults[type].title,

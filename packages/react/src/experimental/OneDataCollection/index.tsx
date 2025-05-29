@@ -24,6 +24,7 @@ import { Search } from "./search"
 import { SortingsDefinition, SortingsState } from "./sortings"
 import type {
   BulkActionDefinition,
+  CollectionProps,
   CollectionSearchOptions,
   DataSource,
   DataSourceDefinition,
@@ -374,17 +375,23 @@ export const OneDataCollection = <
     totalItems,
     filters,
     isInitialLoading,
-  }: {
-    totalItems: number | undefined
-    filters: FiltersState<Filters>
-    isInitialLoading: boolean
-  }) => {
+    search,
+  }: Parameters<
+    CollectionProps<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      never
+    >["onLoadData"]
+  >[0]) => {
     if (isInitialLoading) return
 
     setTotalItems(totalItems)
     setEmptyStateType(
       totalItems === 0
-        ? Object.keys(filters).length > 0
+        ? Object.keys(filters).length > 0 || search
           ? "no-results"
           : "no-data"
         : false
@@ -399,8 +406,8 @@ export const OneDataCollection = <
   }
 
   useEffect(() => {
-    console.log("currentFilters", currentFilters)
     setEmptyStateType(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- This is intentional we should remove the empty state when the filters, search, navigation filters change
   }, [currentFilters, currentSearch, currentNavigationFilters])
 
   return (
@@ -493,7 +500,6 @@ export const OneDataCollection = <
         {emptyState ? (
           <div className="flex flex-col items-center justify-center">
             <OneEmptyState
-              variant={emptyState.variant}
               emoji={emptyState.emoji}
               title={emptyState.title}
               description={emptyState.description}

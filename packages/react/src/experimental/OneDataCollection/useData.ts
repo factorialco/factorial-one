@@ -256,7 +256,8 @@ export function useData<
       // Clear the cleanup reference when an error occurs
       cleanup.current = undefined
     },
-    [setError, setIsInitialLoading, setIsLoading, onError]
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we don't want to re-run this effect when the onError changes
+    [setError, setIsInitialLoading, setIsLoading]
   )
 
   type ResultType = PaginatedResponse<Record> | SimpleResult<Record>

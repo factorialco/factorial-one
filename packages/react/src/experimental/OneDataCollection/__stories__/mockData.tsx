@@ -412,7 +412,6 @@ export const filterUsers = <
 
   if (navigationFilters) {
     filteredUsers = filteredUsers.filter((user) => {
-      console.log(navigationFilters.date)
       return (
         !navigationFilters.date ||
         (navigationFilters.date.value.from <= user.joinedAt &&

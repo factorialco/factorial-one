@@ -5,6 +5,7 @@ import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
 import { SortingsDefinition } from "../sortings"
 import { DataSource } from "../types"
+import { CustomEmptyStates } from "../useEmptyState"
 import {
   createPromiseDataFetch,
   getMockVisualizations,
@@ -29,6 +30,7 @@ function BaseStory<
   NavigationFilters extends NavigationFiltersDefinition,
 >({
   dataSource,
+  emptyStates,
 }: {
   dataSource: DataSource<
     (typeof mockUsers)[number],
@@ -37,6 +39,7 @@ function BaseStory<
     ItemActions,
     NavigationFilters
   >
+  emptyStates?: CustomEmptyStates
 }) {
   const mockVisualizations = getMockVisualizations()
   return (
@@ -44,6 +47,7 @@ function BaseStory<
       <OneDataCollection
         source={dataSource}
         visualizations={[mockVisualizations.table, mockVisualizations.card]}
+        emptyStates={emptyStates}
       />
     </div>
   )
@@ -103,15 +107,16 @@ export const NoResultsExample: Story = {
 
 export const ErrorExample: Story = {
   render: () => {
-    const dataSource = useDataSource({
-      dataAdapter: {
-        fetchData: () => Promise.reject(new Error("Error")),
-      },
+    const dataSource = useDataSource<
+      (typeof mockUsers)[number],
+      FiltersDefinition,
+      SortingsDefinition,
+      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      NavigationFiltersDefinition
+    >({
+      dataAdapter: { fetchData: () => Promise.reject(new Error("Error")) },
       filters: {
-        search: {
-          type: "search",
-          label: "Search",
-        },
+        search: { type: "search", label: "Search" },
         department: {
           type: "in",
           label: "Department",
@@ -125,11 +130,65 @@ export const ErrorExample: Story = {
           },
         },
       },
-      currentFilters: {
-        search: "Joey Tribbiani",
+      currentFilters: { search: "Joey Tribbiani" },
+    })
+    return <BaseStory dataSource={dataSource} />
+  },
+}
+
+export const CustomMessagesAndActions: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      dataAdapter: { fetchData: createPromiseDataFetch() },
+      filters: {
+        search: { type: "search", label: "Search" },
+        department: {
+          type: "in",
+          label: "Department",
+          options: {
+            options: [
+              { value: "Engineering", label: "Engineering" },
+              { value: "Product", label: "Product" },
+              { value: "Design", label: "Design" },
+              { value: "Marketing", label: "Marketing" },
+            ],
+          },
+        },
       },
+      currentFilters: { search: "Joey Tribbiani" },
     })
 
-    return <BaseStory dataSource={dataSource} />
+    const emptyStates = {
+      "no-data": {
+        description: "This is a no data custom message",
+        emoji: "🤷",
+      },
+      "no-results": {
+        title: "THIS IS A CUSTOM NO RESULTS TITLE",
+        description: "This is a no results custom message",
+        emoji: "😢",
+        actions: [
+          {
+            label: "Go to main page",
+            variant: "outline",
+            onClick: () => {
+              console.log("clicked")
+            },
+          },
+          {
+            label: "Clear filters",
+            variant: "default",
+            onClick: () => {
+              console.log("clicked")
+            },
+          },
+        ],
+      },
+      error: {
+        description: "This is a error custom message",
+      },
+    }
+
+    return <BaseStory dataSource={dataSource} emptyStates={emptyStates} />
   },
 }
