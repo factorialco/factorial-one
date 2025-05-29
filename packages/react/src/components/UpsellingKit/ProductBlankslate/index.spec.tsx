@@ -339,7 +339,7 @@ describe("ProductBlankslate", () => {
       render(<ProductBlankslate {...defaultProps} />)
 
       const backgroundElement = document.querySelector(
-        '[style*="filter: blur(4px)"]'
+        '[style*="filter: blur(6px)"]'
       )
       expect(backgroundElement).toBeInTheDocument()
     })
