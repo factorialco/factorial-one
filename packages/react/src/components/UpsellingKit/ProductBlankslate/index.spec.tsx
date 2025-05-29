@@ -7,19 +7,35 @@ import ChartLine from "@/icons/app/ChartLine"
 import Target from "@/icons/app/Target"
 import { Trainings } from "@/icons/modules"
 
+interface MockModuleAvatarProps {
+  icon: { name?: string }
+  size: string
+}
+
+interface MockButtonProps {
+  label: string
+  onClick: () => void
+  variant: string
+}
+
+interface MockUpsellingButtonProps {
+  label: string
+  onRequest: () => void
+}
+
 vi.mock("@/experimental/Information/ModuleAvatar", () => ({
-  ModuleAvatar: ({ icon, size }: { icon: any; size: string }) => (
+  ModuleAvatar: ({ icon, size }: MockModuleAvatarProps) => (
     <div data-testid="module-avatar" data-icon={icon.name} data-size={size} />
   ),
 }))
 
 vi.mock("@/factorial-one", () => ({
-  Button: ({ label, onClick, variant }: any) => (
+  Button: ({ label, onClick, variant }: MockButtonProps) => (
     <button onClick={onClick} data-variant={variant}>
       {label}
     </button>
   ),
-  UpsellingButton: ({ label, onRequest }: any) => (
+  UpsellingButton: ({ label, onRequest }: MockUpsellingButtonProps) => (
     <button onClick={onRequest} data-testid="upselling-button">
       {label}
     </button>
@@ -96,7 +112,7 @@ describe("ProductBlankslate", () => {
     })
 
     it("renders with default isVisible value (true)", () => {
-      const { isVisible, ...propsWithoutVisible } = defaultProps
+      const { isVisible: _isVisible, ...propsWithoutVisible } = defaultProps
       render(<ProductBlankslate {...propsWithoutVisible} />)
 
       expect(screen.getByText("Test Title")).toBeInTheDocument()
