@@ -4,7 +4,7 @@ import { BaseAvatar } from "../BaseAvatar"
 
 type BaseAvatarProps = ComponentProps<typeof BaseAvatar>
 
-type Props = {
+export type PersonAvatarProps = {
   firstName: string
   lastName: string
   src?: string
@@ -20,7 +20,7 @@ export const PersonAvatar = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledby,
   badge,
-}: Props) => {
+}: PersonAvatarProps) => {
   return (
     <BaseAvatar
       type="rounded"

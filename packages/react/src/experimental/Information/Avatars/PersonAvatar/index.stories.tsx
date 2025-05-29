@@ -1,10 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { Check } from "../../../../icons/app"
 import { sizes } from "../../../../ui/avatar"
-import { PersonAvatar } from "./index"
+import { PersonAvatar, PersonAvatarProps } from "./index"
 
-const meta: Meta<typeof PersonAvatar> = {
-  component: PersonAvatar,
+const PersonAvatarExample = (
+  props: PersonAvatarProps & { hasBadge: boolean }
+) => {
+  return <PersonAvatar {...props} />
+}
+
+const meta: Meta<typeof PersonAvatarExample> = {
+  component: PersonAvatarExample,
   title: "Avatars/PersonAvatar",
   tags: ["autodocs", "experimental"],
   argTypes: {
@@ -31,16 +37,16 @@ const meta: Meta<typeof PersonAvatar> = {
     (Story, context) => {
       const { hasBadge, ...args } = context.args
       const badgeProps = hasBadge
-        ? { type: "positive", icon: Check }
+        ? { type: "positive" as const, icon: Check }
         : undefined
       return <Story args={{ ...args, badge: badgeProps }} />
     },
   ],
-} satisfies Meta<typeof PersonAvatar>
+} satisfies Meta<typeof PersonAvatarExample>
 
 export default meta
 
-type Story = StoryObj<typeof PersonAvatar>
+type Story = StoryObj<typeof PersonAvatarExample>
 
 export const Default: Story = {}
 
