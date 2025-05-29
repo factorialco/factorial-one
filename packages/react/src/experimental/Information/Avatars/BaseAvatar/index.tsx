@@ -10,6 +10,8 @@ import { getAvatarColor, getInitials, getMask } from "./utils"
 const getBadgeSize = (size: ShadAvatarProps["size"]) => {
   if (size === "xlarge") return "lg"
   if (size === "large") return "md"
+  if (size === "xsmall") return "xs"
+  if (size === "small") return "sm"
   return "sm"
 }
 

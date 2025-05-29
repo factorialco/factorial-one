@@ -11,13 +11,29 @@ const meta: Meta<typeof PersonAvatar> = {
     size: {
       control: "select",
       options: sizes,
+      description: "Select the size of the avatar",
+    },
+    hasBadge: {
+      control: "boolean",
+      description: "Toggle badge visibility",
+    },
+    badge: {
+      table: { disable: true },
     },
   },
   args: {
     firstName: "Dani",
     lastName: "Moreno",
     size: "medium",
+    hasBadge: false,
   },
+  decorators: [
+    (Story, context) => {
+      const { hasBadge, ...args } = context.args;
+      const badgeProps = hasBadge ? { type: "positive", icon: Check } : undefined;
+      return <Story args={{ ...args, badge: badgeProps }} />;
+    },
+  ],
 } satisfies Meta<typeof PersonAvatar>
 
 export default meta
@@ -38,5 +54,7 @@ export const WithBadge: Story = {
       type: "positive",
       icon: Check,
     },
+    size: "medium",
   },
+  
 }
