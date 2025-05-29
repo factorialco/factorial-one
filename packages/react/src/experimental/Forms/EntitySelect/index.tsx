@@ -129,6 +129,8 @@ export const EntitySelect = (
   ) {
     if (props.singleSelector) {
       props.onSelect({ ...parentEntity, subItems: [{ ...entity }] })
+
+      setOpen(false)
     } else {
       const prevSelected = props.selectedEntities ?? []
       const selectedIds = new Set(prevSelected.map((sel) => sel.id))
