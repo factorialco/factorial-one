@@ -68,7 +68,7 @@ export const ProductBlankslate = ({
       />
 
       {/* Content overlay */}
-      <div className="relative z-10 flex max-w-xl flex-col items-center gap-6 text-center">
+      <div className="relative z-10 flex max-w-xl flex-col items-center gap-6 p-6 text-center">
         <div className="flex flex-col items-center gap-3">
           <ModuleAvatar icon={icon} size="lg" />
           <div className="flex flex-col gap-1">
