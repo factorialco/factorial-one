@@ -3,7 +3,7 @@ import { fn } from "@storybook/test"
 import { useState } from "react"
 import avatar from "../../../../storybook-assets/avatar.jpeg"
 import { EntitySelect } from "./index"
-import { EntitySelectEntity } from "./types"
+import { EntityId, EntitySelectEntity } from "./types"
 
 // --------------------------------------
 // EXAMPLE GRAPHQL COMMENT BLOCK
@@ -207,7 +207,7 @@ export const Default: Story = {
     const [loading, setLoading] = useState<boolean>(true)
     const [fetchEmployees, setFetchEmployees] = useState<FetchEmployee[]>([])
     const [selectedGroup, setSelectedGroup] = useState<string>("all")
-    const [expandedElements, setExpandedElements] = useState<number[]>([])
+    const [expandedElements, setExpandedElements] = useState<EntityId[]>([])
     const [selectedEmployees, setSelectedEmployees] = useState<
       EntitySelectEntity[]
     >([])
@@ -227,7 +227,7 @@ export const Default: Story = {
       setSelectedEmployees(Array.isArray(el) ? el : el ? [el] : [])
     }
 
-    const onItemExpandedChange = (id: number, expanded: boolean) => {
+    const onItemExpandedChange = (id: EntityId, expanded: boolean) => {
       if (expanded) {
         setExpandedElements([id].concat(expandedElements))
       } else {

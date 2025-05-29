@@ -26,6 +26,16 @@ describe("Tabs", () => {
     { label: "Tab 3", href: "/another" },
   ]
 
+  const secondaryTabsWithUpsellIcons = [
+    { label: "Tab 1", href: "/active", variant: "upsell" as const },
+    { label: "Tab 2", href: "/other", variant: "upsell" as const },
+  ]
+
+  const secondaryTabsWithoutUpsellIcons = [
+    { label: "Tab 1", href: "/active" },
+    { label: "Tab 2", href: "/other" },
+  ]
+
   it("renders multiple tabs correctly", () => {
     render(<BaseTabs tabs={defaultTabs} />)
 
@@ -55,6 +65,36 @@ describe("Tabs", () => {
 
     const nav = screen.getByRole("navigation")
     expect(nav).toHaveAttribute("aria-label", "primary-navigation")
+  })
+
+  it("renders Upsell icons in secondary tabs when variant is 'upsell'", () => {
+    render(<BaseTabs tabs={secondaryTabsWithUpsellIcons} secondary />)
+
+    const icons = document.querySelectorAll("svg")
+    expect(icons).toHaveLength(2)
+  })
+
+  it("renders Upsell icons for primary tabs when variant is 'upsell'", () => {
+    render(<BaseTabs tabs={secondaryTabsWithUpsellIcons} secondary={false} />)
+
+    const icons = document.querySelectorAll("svg")
+    expect(icons).toHaveLength(2)
+  })
+
+  it("does not render icons in secondary tabs when variant is 'default' or undefined", () => {
+    render(<BaseTabs tabs={secondaryTabsWithoutUpsellIcons} secondary />)
+
+    const icons = document.querySelectorAll("svg")
+    expect(icons).toHaveLength(0)
+  })
+
+  it("does not render icons in primary tabs when variant is 'default' or undefined", () => {
+    render(
+      <BaseTabs tabs={secondaryTabsWithoutUpsellIcons} secondary={false} />
+    )
+
+    const icons = document.querySelectorAll("svg")
+    expect(icons).toHaveLength(0)
   })
 
   describe("TabsSkeleton", () => {

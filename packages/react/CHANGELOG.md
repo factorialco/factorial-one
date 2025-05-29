@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.73.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.73.1...factorial-one-react-v1.73.2) (2025-05-29)
+
+
+### Bug Fixes
+
+* person avatar stories ([#1937](https://github.com/factorialco/factorial-one/issues/1937)) ([3e83eb3](https://github.com/factorialco/factorial-one/commit/3e83eb3887cd3d612f688f524c1a6dbf151140d2))
+
+## [1.73.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.73.0...factorial-one-react-v1.73.1) (2025-05-29)
+
+
+### Bug Fixes
+
+* apply dark mode to our components ([#1916](https://github.com/factorialco/factorial-one/issues/1916)) ([488ea14](https://github.com/factorialco/factorial-one/commit/488ea146128980a77323e24babbdd8a04b174c3f))
+
+## [1.73.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.72.0...factorial-one-react-v1.73.0) (2025-05-29)
+
+
+### Features
+
+* manage open status in Entity Selector ([#1924](https://github.com/factorialco/factorial-one/issues/1924)) ([33c6bca](https://github.com/factorialco/factorial-one/commit/33c6bca78490da9a8ef5ef9b1dfec953491b2481))
+
+## [1.72.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.71.0...factorial-one-react-v1.72.0) (2025-05-29)
+
+
+### Features
+
+* adapt upsell feature to variant logic ([#1927](https://github.com/factorialco/factorial-one/issues/1927)) ([fca3564](https://github.com/factorialco/factorial-one/commit/fca35641d5a5697a4147bf8eea808741dd106e36))
+
+## [1.71.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.2...factorial-one-react-v1.71.0) (2025-05-28)
+
+
+### Features
+
+* allow string id on Entity Selector ([#1920](https://github.com/factorialco/factorial-one/issues/1920)) ([8fa5f5a](https://github.com/factorialco/factorial-one/commit/8fa5f5a8bd93a10c0baceb5e774bd52ff1cdf4e3))
+
 ## [1.70.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.1...factorial-one-react-v1.70.2) (2025-05-28)
 
 

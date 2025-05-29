@@ -7,6 +7,7 @@ import { VirtualList } from "../../../../Navigation/VirtualList"
 import { Select } from "../../../Fields/Select"
 import { EntitySelectListItem } from "../../ListItem"
 import {
+  EntityId,
   EntitySelectEntity,
   EntitySelectNamedGroup,
   EntitySelectSubEntity,
@@ -332,7 +333,7 @@ export const MainContent = ({
     if (!entities.length) {
       return [false, false]
     }
-    const selectedMap = new Map<number, EntitySelectEntity>(
+    const selectedMap = new Map<EntityId, EntitySelectEntity>(
       (selectedEntities ?? []).map((se) => [se.id, se])
     )
 

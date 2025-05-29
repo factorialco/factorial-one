@@ -2,6 +2,7 @@ import { useMemo } from "react"
 import { VirtualList } from "../../../../Navigation/VirtualList"
 import { ListTag } from "../../ListTag"
 import {
+  EntityId,
   EntitySelectEntity,
   EntitySelectSubEntity,
   FlattenedItem,
@@ -44,7 +45,7 @@ export const SecondaryContent = ({
           }))
         )
 
-    const seenIds = new Set<number>()
+    const seenIds = new Set<EntityId>()
     return rawFlattened.filter((item) => {
       const key = item.subItem.subId
       if (seenIds.has(key)) {
