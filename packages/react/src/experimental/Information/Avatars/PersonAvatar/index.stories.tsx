@@ -29,9 +29,11 @@ const meta: Meta<typeof PersonAvatar> = {
   },
   decorators: [
     (Story, context) => {
-      const { hasBadge, ...args } = context.args;
-      const badgeProps = hasBadge ? { type: "positive", icon: Check } : undefined;
-      return <Story args={{ ...args, badge: badgeProps }} />;
+      const { hasBadge, ...args } = context.args
+      const badgeProps = hasBadge
+        ? { type: "positive", icon: Check }
+        : undefined
+      return <Story args={{ ...args, badge: badgeProps }} />
     },
   ],
 } satisfies Meta<typeof PersonAvatar>
@@ -56,5 +58,4 @@ export const WithBadge: Story = {
     },
     size: "medium",
   },
-  
 }
