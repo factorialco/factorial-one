@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.73.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.72.0...factorial-one-react-v1.73.0) (2025-05-29)
+
+
+### Features
+
+* manage open status in Entity Selector ([#1924](https://github.com/factorialco/factorial-one/issues/1924)) ([33c6bca](https://github.com/factorialco/factorial-one/commit/33c6bca78490da9a8ef5ef9b1dfec953491b2481))
+
 ## [1.72.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.71.0...factorial-one-react-v1.72.0) (2025-05-29)
 
 
