@@ -472,6 +472,7 @@ color?: string;
 
 declare type RegularAction = BaseAction & {
     type: "regular";
+    variant: ButtonVariant;
 };
 
 declare const sizes: readonly ["sm", "md", "lg"];
@@ -517,6 +518,7 @@ declare type UpsellAction = BaseAction & {
     loadingState: LoadingStateProps;
     nextSteps: NextStepsProps;
     closeLabel: string;
+    showConfirmation: boolean;
 };
 
 export declare function UpsellingButton({ label, showIcon, onRequest, showConfirmation, loading: externalLoading, errorMessage, successMessage, loadingState, nextSteps, closeLabel, ...props }: UpsellingButtonProps): JSX_2.Element;

@@ -145,7 +145,7 @@ declare interface AlertProps extends VariantProps<typeof alertVariants> {
     variant: AlertVariant;
 }
 
-export declare const AlertTag: ForwardRefExoticComponent<Props_10<string> & RefAttributes<HTMLDivElement>>;
+export declare const AlertTag: ForwardRefExoticComponent<Props_9<string> & RefAttributes<HTMLDivElement>>;
 
 declare type AlertTagProps = ComponentProps<typeof AlertTag>;
 
@@ -202,7 +202,7 @@ declare const Avatar_2: React_2.ForwardRefExoticComponent<Omit<AvatarPrimitive.A
 } & React_2.RefAttributes<HTMLSpanElement>>;
 
 export declare const AvatarList: {
-    ({ avatars, size, type, noTooltip, remainingCount: initialRemainingCount, max, layout, }: Props_4): JSX_2.Element;
+    ({ avatars, size, type, noTooltip, remainingCount: initialRemainingCount, max, layout, }: Props_3): JSX_2.Element;
     displayName: string;
 };
 
@@ -223,7 +223,7 @@ declare type AvatarType = AvatarVariant["type"];
 
 export declare type AvatarVariant = ({
     type: "person";
-} & Omit<PersonAvatarProps, "size">) | ({
+} & Omit<PersonAvatarProps_2, "size">) | ({
     type: "team";
 } & Omit<TeamAvatarProps, "size">) | ({
     type: "company";
@@ -238,7 +238,7 @@ export declare interface BadgeProps extends VariantProps<typeof badgeVariants> {
 
 declare const badgeVariants: (props?: ({
     type?: "critical" | "neutral" | "positive" | "warning" | "highlight" | undefined;
-    size?: "lg" | "md" | "sm" | undefined;
+    size?: "lg" | "md" | "sm" | "xs" | undefined;
 } & ({
     class?: ClassValue;
     className?: never;
@@ -247,7 +247,7 @@ declare const badgeVariants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-export declare const BalanceTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
+export declare const BalanceTag: ForwardRefExoticComponent<Props_10 & RefAttributes<HTMLDivElement>>;
 
 declare type BalanceTagProps = ComponentProps<typeof BalanceTag>;
 
@@ -743,9 +743,9 @@ declare type ChartItem<K extends ChartConfig> = {
     };
 };
 
-export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_17 & RefAttributes<HTMLDivElement>>;
+export declare const ChartWidgetEmptyState: ForwardRefExoticComponent<Props_16 & RefAttributes<HTMLDivElement>>;
 
-export declare type ChatWidgetEmptyStateProps = Props_17;
+export declare type ChatWidgetEmptyStateProps = Props_16;
 
 /**
  * Filter chips list
@@ -904,7 +904,7 @@ declare interface Company {
 }
 
 export declare const CompanyAvatar: {
-    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props_3): JSX_2.Element;
+    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props_2): JSX_2.Element;
     displayName: string;
 };
 
@@ -943,7 +943,7 @@ export declare type CompanySelectorProps = {
     }[];
 };
 
-export declare const CompanyTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
+export declare const CompanyTag: ForwardRefExoticComponent<Props_11 & RefAttributes<HTMLDivElement>>;
 
 declare type CompanyTagProps = ComponentProps<typeof CompanyTag>;
 
@@ -1118,7 +1118,7 @@ export declare type DataSourceDefinition<Record extends RecordType, Filters exte
     currentGrouping?: GroupingState<Record, Grouping>;
 };
 
-export declare const DateAvatar: ({ date }: Props_5) => JSX_2.Element;
+export declare const DateAvatar: ({ date }: Props_4) => JSX_2.Element;
 
 declare type DateCellValue = Date | undefined | DateValue_2;
 
@@ -1321,7 +1321,7 @@ export declare type editorStateType = {
 };
 
 export declare const EmojiAvatar: {
-    ({ emoji, size }: Props_6): JSX_2.Element;
+    ({ emoji, size }: Props_5): JSX_2.Element;
     displayName: string;
 };
 
@@ -1367,6 +1367,8 @@ export declare type enhanceTextParams = {
     context?: string;
 };
 
+export declare type EntityId = number | string;
+
 export declare const EntitySelect: (props: EntitySelectProps & {
     children?: React.ReactNode;
 }) => JSX_2.Element;
@@ -1379,7 +1381,7 @@ declare interface EntitySelectCommonProps extends Omit<PopoverProps, "children" 
     triggerSelected: string;
     notFoundTitle: string;
     notFoundSubtitle: string;
-    onItemExpandedChange: (id: number, expanded: boolean) => void;
+    onItemExpandedChange: (id: EntityId, expanded: boolean) => void;
     onGroupChange: (value: string | null) => void;
     disabled?: boolean;
     zIndex?: number;
@@ -1397,7 +1399,7 @@ declare interface EntitySelectCommonProps extends Omit<PopoverProps, "children" 
 }
 
 export declare type EntitySelectEntity = {
-    id: number;
+    id: EntityId;
     name: string;
     avatar?: string;
     expanded?: boolean;
@@ -1424,7 +1426,7 @@ export declare interface EntitySelectSingleProps extends EntitySelectCommonProps
 }
 
 export declare type EntitySelectSubEntity = {
-    subId: number;
+    subId: EntityId;
     subName: string;
     subAvatar?: string;
     subSearchKeys?: string[];
@@ -1795,11 +1797,12 @@ declare type HighlightBannerProps = {
 declare type HTMLString = string;
 
 export declare const IconAvatar: {
-    ({ icon, size, className }: Props_7): JSX_2.Element;
+    ({ icon, size, className }: Props_6): JSX_2.Element;
     displayName: string;
 };
 
 declare const iconSizes: {
+    readonly xs: "xs";
     readonly sm: "xs";
     readonly md: "sm";
     readonly lg: "md";
@@ -2488,17 +2491,25 @@ export declare type PaginationInfo = {
 };
 
 export declare const PersonAvatar: {
-    ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props): JSX_2.Element;
+    ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: PersonAvatarProps): JSX_2.Element;
     displayName: string;
 };
 
-declare type PersonAvatarProps = ComponentProps<typeof PersonAvatar>;
+export declare type PersonAvatarProps = {
+    firstName: string;
+    lastName: string;
+    src?: string;
+    size?: BaseAvatarProps["size"];
+    badge?: BadgeProps;
+} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
+
+declare type PersonAvatarProps_2 = ComponentProps<typeof PersonAvatar>;
 
 declare type PersonCellValue = PersonValue;
 
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
-export declare const PersonTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
+export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
 
 declare type PersonTagProps = ComponentProps<typeof PersonTag>;
 
@@ -2692,42 +2703,36 @@ declare const propertyRenderers: {
 };
 
 declare type Props = {
-    firstName: string;
-    lastName: string;
+    name: string;
     src?: string;
-    size?: BaseAvatarProps["size"];
+    size?: BaseAvatarProps_2["size"];
     badge?: BadgeProps;
-} & Pick<BaseAvatarProps, "aria-label" | "aria-labelledby">;
+} & Pick<BaseAvatarProps_2, "aria-label" | "aria-labelledby">;
 
-declare type Props_10<Text extends string = string> = {
-    text: Text extends "" ? never : Text;
-    level: Level;
-};
-
-declare interface Props_11 {
+declare interface Props_10 {
     text: string;
     status: Status;
 }
 
-declare type Props_12 = {
+declare type Props_11 = {
     companyName: string;
     companyImageUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_13 = {
+declare type Props_12 = {
     name: string;
     avatarUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_14 = {
+declare type Props_13 = {
     teamName: string;
     teamImageUrl: string;
     onClick?: () => void;
 };
 
-declare type Props_15<T extends TagType> = {
+declare type Props_14<T extends TagType> = {
     /**
      * The type of tags to display. Only one type can be used at a time.
      */
@@ -2754,7 +2759,7 @@ declare type Props_15<T extends TagType> = {
     layout?: "fill" | "compact";
 };
 
-declare type Props_16 = {
+declare type Props_15 = {
     firstName: string;
     lastName: string;
     src?: string;
@@ -2762,7 +2767,7 @@ declare type Props_16 = {
     onPulseClick: () => void;
 } & Pick<BaseAvatarProps_4, "aria-label" | "aria-labelledby">;
 
-declare interface Props_17 {
+declare interface Props_16 {
     title: string;
     content: string;
     buttonLabel?: string;
@@ -2771,7 +2776,7 @@ declare interface Props_17 {
     type: Type;
 }
 
-declare type Props_18 = {
+declare type Props_17 = {
     label: string;
     icon: IconType;
     iconClassName?: string;
@@ -2779,7 +2784,7 @@ declare type Props_18 = {
     onClick?: () => void;
 };
 
-declare type Props_19<Id extends string | number = string | number> = {
+declare type Props_18<Id extends string | number = string | number> = {
     id: Id;
     icon?: IconType;
     title: string;
@@ -2787,21 +2792,21 @@ declare type Props_19<Id extends string | number = string | number> = {
     onClick?: (id: Id) => void;
 };
 
-declare type Props_2 = {
-    name: string;
-    src?: string;
-    size?: BaseAvatarProps_2["size"];
-    badge?: BadgeProps;
-} & Pick<BaseAvatarProps_2, "aria-label" | "aria-labelledby">;
-
-declare type Props_20<Id extends string | number = string | number> = {
+declare type Props_19<Id extends string | number = string | number> = {
     items: Omit<WidgetInboxListItemProps<Id>, "onClick">[];
     minSize?: number;
     onClickItem?: (id: Id) => void;
     showAllItems?: boolean;
 };
 
-declare type Props_21<Id extends string | number = string | number> = {
+declare type Props_2 = {
+    name: string;
+    src?: string;
+    size?: BaseAvatarProps_3["size"];
+    badge?: BadgeProps;
+} & Pick<BaseAvatarProps_3, "aria-label" | "aria-labelledby">;
+
+declare type Props_20<Id extends string | number = string | number> = {
     items: Omit<WidgetSimpleListItemProps<Id>, "onClick">[];
     minSize?: number;
     gap?: number;
@@ -2810,13 +2815,6 @@ declare type Props_21<Id extends string | number = string | number> = {
 };
 
 declare type Props_3 = {
-    name: string;
-    src?: string;
-    size?: BaseAvatarProps_3["size"];
-    badge?: BadgeProps;
-} & Pick<BaseAvatarProps_3, "aria-label" | "aria-labelledby">;
-
-declare type Props_4 = {
     avatars: AvatarVariant[];
     size?: (typeof sizes)[number];
     type?: AvatarType;
@@ -2843,24 +2841,24 @@ declare type Props_4 = {
     layout?: "fill" | "compact";
 };
 
-declare type Props_5 = {
+declare type Props_4 = {
     date: Date;
 };
 
-declare type Props_6 = {
+declare type Props_5 = {
     emoji: string;
     size?: "sm" | "md" | "lg";
 };
 
-declare type Props_7 = {
+declare type Props_6 = {
     icon: IconType;
     size?: "sm" | "md" | "lg";
     className?: string;
 };
 
-declare type Props_8 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
+declare type Props_7 = {} & Pick<BaseHeaderProps, "avatar" | "title" | "description" | "primaryAction" | "secondaryActions" | "otherActions" | "metadata" | "status">;
 
-declare type Props_9 = {
+declare type Props_8 = {
     /** Main heading text */
     title: string;
     /** Description text below the title */
@@ -2879,10 +2877,15 @@ declare type Props_9 = {
     separator?: "top" | "bottom";
 };
 
+declare type Props_9<Text extends string = string> = {
+    text: Text extends "" ? never : Text;
+    level: Level;
+};
+
 declare type Pulse = "superNegative" | "negative" | "neutral" | "positive" | "superPositive";
 
 declare const PulseAvatar: {
-    ({ firstName, lastName, src, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, pulse, onPulseClick, }: Props_16): JSX_2.Element;
+    ({ firstName, lastName, src, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, pulse, onPulseClick, }: Props_15): JSX_2.Element;
     displayName: string;
 };
 
@@ -2941,7 +2944,7 @@ declare type RendererDefinition = {
     };
 }[keyof typeof propertyRenderers];
 
-export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_8) => JSX_2.Element;
+export declare const ResourceHeader: ({ avatar, title, description, primaryAction, secondaryActions, otherActions, status, metadata, }: Props_7) => JSX_2.Element;
 
 export declare type resultType = {
     value: string | null;
@@ -3095,7 +3098,7 @@ export declare type secondaryActionType = (actionType | toggleActionType) & {
     type?: "button" | "switch";
 };
 
-export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_9) => JSX_2.Element;
+export declare const SectionHeader: ({ title, description, action, supportButton, separator, }: Props_8) => JSX_2.Element;
 
 declare type SectionProps = {
     title: string;
@@ -3403,6 +3406,7 @@ declare interface SwitchProps extends DataAttributes {
 export declare type TabItem = {
     label: string;
     index?: boolean;
+    variant?: "default" | "upsell";
 } & DataAttributes & ({
     href: string;
 } | {
@@ -3491,7 +3495,7 @@ declare type TagDataType<T extends string> = Omit<Extract<TagVariant, {
 }>, "type" | "description">;
 
 export declare const TagList: {
-    <T extends TagType>({ type, tags, max, remainingCount: initialRemainingCount, layout, }: Props_15<T>): JSX_2.Element;
+    <T extends TagType>({ type, tags, max, remainingCount: initialRemainingCount, layout, }: Props_14<T>): JSX_2.Element;
     displayName: string;
 };
 
@@ -3570,7 +3574,7 @@ export declare interface TasksListProps {
 }
 
 export declare const TeamAvatar: {
-    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props_2): JSX_2.Element;
+    ({ name, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: Props): JSX_2.Element;
     displayName: string;
 };
 
@@ -3591,7 +3595,7 @@ declare type TeamMetadata = BaseMetadata & {
     src?: string;
 };
 
-export declare const TeamTag: ForwardRefExoticComponent<Props_14 & RefAttributes<HTMLDivElement>>;
+export declare const TeamTag: ForwardRefExoticComponent<Props_13 & RefAttributes<HTMLDivElement>>;
 
 declare type TeamTagProps = ComponentProps<typeof TeamTag>;
 
@@ -3845,15 +3849,15 @@ export declare type WidgetEmptyStateProps = {
     actions?: Action_2[];
 };
 
-export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_18): JSX_2.Element;
+export declare function WidgetHighlightButton({ label, count, icon, iconClassName, onClick, }: Props_17): JSX_2.Element;
 
-export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_20): JSX_2.Element;
+export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_19): JSX_2.Element;
 
-export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_19): JSX_2.Element;
+export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_18): JSX_2.Element;
 
-export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_19<Id>;
+export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_18<Id>;
 
-export declare type WidgetInboxListProps = Props_20;
+export declare type WidgetInboxListProps = Props_19;
 
 export declare interface WidgetProps {
     header?: {
@@ -3891,7 +3895,7 @@ children?: ReactNode | undefined;
 title?: string;
 } & RefAttributes<HTMLDivElement>>;
 
-export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_21): JSX_2.Element;
+export declare function WidgetSimpleList({ items, gap, minSize, onClickItem, showAllItems, }: Props_20): JSX_2.Element;
 
 export declare function WidgetSimpleListItem({ id, title, alert, rawTag, count, icon, rightIcon, iconClassName, rightIconClassName, onClick, }: WidgetSimpleListItemProps): JSX_2.Element;
 
@@ -3908,7 +3912,7 @@ export declare type WidgetSimpleListItemProps<Id extends string | number = strin
     onClick?: (id: Id) => void;
 };
 
-export declare type WidgetSimpleListProps = Props_21;
+export declare type WidgetSimpleListProps = Props_20;
 
 export declare type WidgetSkeletonProps = {
     header?: {
