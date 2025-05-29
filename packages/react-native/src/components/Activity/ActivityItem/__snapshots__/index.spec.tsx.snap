@@ -49,7 +49,7 @@ exports[`ActivityItem Snapshot 1`] = `
       className="mt-1.5 flex flex-row"
     >
       <Text
-        className="text-lg text-f1-foreground-secondary"
+        className="text-md text-f1-foreground-secondary"
       >
         Time off · Today
       </Text>
