@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.73.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.73.1...factorial-one-react-v1.73.2) (2025-05-29)
+
+
+### Bug Fixes
+
+* person avatar stories ([#1937](https://github.com/factorialco/factorial-one/issues/1937)) ([3e83eb3](https://github.com/factorialco/factorial-one/commit/3e83eb3887cd3d612f688f524c1a6dbf151140d2))
+
 ## [1.73.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.73.0...factorial-one-react-v1.73.1) (2025-05-29)
 
 
