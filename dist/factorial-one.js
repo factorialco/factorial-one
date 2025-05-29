@@ -270,7 +270,7 @@ const Ra = m(
           }
         }
       ),
-      /* @__PURE__ */ o("div", { className: "relative z-10 flex max-w-xl flex-col items-center gap-6 text-center", children: [
+      /* @__PURE__ */ o("div", { className: "relative z-10 flex max-w-xl flex-col items-center gap-6 p-6 text-center", children: [
         /* @__PURE__ */ o("div", { className: "flex flex-col items-center gap-3", children: [
           /* @__PURE__ */ e(R, { icon: l, size: "lg" }),
           /* @__PURE__ */ o("div", { className: "flex flex-col gap-1", children: [
