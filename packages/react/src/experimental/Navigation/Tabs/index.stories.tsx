@@ -24,14 +24,6 @@ const primaryTabItemsWithUpsellIcons: TabItem[] = [
   { label: "Requests", href: "/requests", "data-test": "foo" },
 ]
 
-const secondaryTabItemsWithIcons: TabItem[] = [
-  { label: "Overview", href: "/", index: true },
-  { label: "Courses", href: "/courses", showUpsellIcon: true },
-  { label: "Categories", href: "/categories" },
-  { label: "Catalog", href: "/catalog" },
-  { label: "Requests", href: "/requests", "data-test": "foo" },
-]
-
 const meta: Meta<typeof Tabs> = {
   title: "Navigation/Tabs",
   component: Tabs,
@@ -87,13 +79,6 @@ export const Piled: Story = {
 export const Secondary: Story = {
   args: {
     tabs: tabItems,
-    secondary: true,
-  },
-}
-
-export const SecondaryUpsell: Story = {
-  args: {
-    tabs: secondaryTabItemsWithIcons,
     secondary: true,
   },
 }
