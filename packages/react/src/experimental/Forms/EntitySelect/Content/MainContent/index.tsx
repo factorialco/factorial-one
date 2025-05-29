@@ -457,6 +457,7 @@ export const MainContent = ({
       <Footer
         onSelectAll={onSelectAll}
         onClear={onClear}
+        singleSelector={singleSelector}
         totalFilteredEntities={totalFilteredEntities}
         allVisibleSelected={allVisibleSelected}
         anyVisibleSelected={anyVisibleSelected}

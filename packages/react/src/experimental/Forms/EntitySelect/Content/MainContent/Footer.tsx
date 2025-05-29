@@ -30,6 +30,7 @@ const ListButtons = ({ primaryAction, secondaryActions }: ListButtonsProps) => {
         onClick={primaryAction.onClick}
         label={primaryAction.label}
         icon={primaryAction.icon}
+        size="sm"
       />
     )
   }
@@ -57,6 +58,7 @@ const ListButtons = ({ primaryAction, secondaryActions }: ListButtonsProps) => {
       disabled={primaryAction.disabled}
       onClick={handleClick}
       variant="outline"
+      size="sm"
     />
   )
 }
@@ -73,7 +75,8 @@ export const Footer = ({
   onSelectAll,
   onClear,
 }: Props) => {
-  const anySelectOrClearAction = selectAllLabel || clearLabel
+  const anySelectOrClearAction =
+    !singleSelector && (selectAllLabel || clearLabel)
   const anyAction = actions && actions.length > 0
   const showFooter =
     !loading && ((!singleSelector && anySelectOrClearAction) || anyAction)
@@ -141,7 +144,7 @@ export const Footer = ({
 
   return (
     <footer className="rounded-bl-xl border-0 border-r-[1px] border-t-[1px] border-solid border-f1-border-secondary bg-f1-background/30 backdrop-blur-2xl">
-      <div className="flex flex-1 justify-between p-1">
+      <div className="flex flex-1 justify-between p-2">
         {leftButtons}
         {rightButtons}
       </div>

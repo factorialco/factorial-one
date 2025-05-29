@@ -68,7 +68,10 @@ export const Content = ({
     <div
       className="relative overflow-hidden"
       style={{
-        height: singleSelector ? "435px" : "473px",
+        height:
+          singleSelector && (!actions || actions.length === 0)
+            ? "435px"
+            : "473px",
         width: defaultWidth,
       }}
     >
