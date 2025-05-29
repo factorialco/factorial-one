@@ -10,6 +10,10 @@ const meta: Meta<typeof UpsellingPopover> = {
       control: "object",
       description: "Custom actions component to display",
     },
+    label: {
+      control: "text",
+      description: "Label of the button that opens the popover",
+    },
     icon: {
       control: "object",
       description: "Custom icon to display",
@@ -91,6 +95,7 @@ export const Default: Story = {
     return (
       <UpsellingPopover
         {...args}
+        label="Add reaction"
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         variant="promote"
@@ -166,6 +171,7 @@ export const WithUpsellingButton: Story = {
     return (
       <UpsellingPopover
         {...args}
+        label="Add reaction"
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         variant="promote"

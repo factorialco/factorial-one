@@ -8,6 +8,7 @@ import { Action } from "../ProductWidget"
 type UpsellingPopoverProps = {
   isOpen: boolean
   setIsOpen: (isOpen: boolean) => void
+  label: string
   variant: ButtonProps["variant"]
   size?: ButtonProps["size"]
   side?: PopoverContentProps["side"]
@@ -26,6 +27,7 @@ type UpsellingPopoverProps = {
 export function UpsellingPopover({
   isOpen,
   setIsOpen,
+  label,
   variant = "promote",
   size = "md",
   showIcon = true,
@@ -52,7 +54,7 @@ export function UpsellingPopover({
       <PopoverTrigger asChild>
         <Button
           variant={variant}
-          label="Add reaction"
+          label={label}
           size={size}
           icon={showIcon ? icon : undefined}
           onClick={() => setIsOpen(isOpen)}
