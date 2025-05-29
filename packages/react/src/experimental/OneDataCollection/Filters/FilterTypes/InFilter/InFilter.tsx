@@ -182,7 +182,7 @@ export function InFilter<T extends string>({
             <div
               key={String(option.value)}
               className={cn(
-                "flex w-full flex-1 cursor-pointer appearance-none items-center justify-between rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
+                "flex w-full flex-1 cursor-pointer appearance-none items-center justify-between gap-1 rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
                 focusRing()
               )}
               onClick={() => {
@@ -193,7 +193,7 @@ export function InFilter<T extends string>({
                 )
               }}
             >
-              <span className="line-clamp-1 w-fit text-left">
+              <span className="max-w-[246px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left">
                 {option.label}
               </span>
               <Checkbox
