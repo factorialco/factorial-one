@@ -1,11 +1,14 @@
 import { TabNavigation, TabNavigationLink } from "@/ui/tab-navigation"
 import { Dispatch, useEffect, useState } from "react"
+import { Icon } from "../../../components/Utilities/Icon"
+import { Upsell } from "../../../icons/app"
 import { Link, useNavigation } from "../../../lib/linkHandler"
 import { withSkeleton } from "../../../lib/skeleton"
 
 export type TabItem = {
   label: string
   index?: boolean
+  showUpsellIcon?: boolean
 } & DataAttributes &
   ({ href: string } | { id: string })
 
@@ -77,6 +80,13 @@ export const BaseTabs: React.FC<TabsProps> = ({
               asChild
             >
               <Link role="link" {...props}>
+                {props.showUpsellIcon && (
+                  <Icon
+                    icon={Upsell}
+                    size="md"
+                    className="mr-1 text-[hsl(var(--promote-50))]"
+                  />
+                )}
                 {label}
               </Link>
             </TabNavigationLink>

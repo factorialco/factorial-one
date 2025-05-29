@@ -16,6 +16,14 @@ const secondaryTabItems = [
   { label: "Activity", href: "/courses/activity" },
 ]
 
+const primaryTabItemsWithUpsellIcons: TabItem[] = [
+  { label: "Overview", href: "/", index: true },
+  { label: "Courses", href: "/courses", showUpsellIcon: true },
+  { label: "Categories", href: "/categories" },
+  { label: "Catalog", href: "/catalog", showUpsellIcon: true },
+  { label: "Requests", href: "/requests", "data-test": "foo" },
+]
+
 const meta: Meta<typeof Tabs> = {
   title: "Navigation/Tabs",
   component: Tabs,
@@ -43,6 +51,13 @@ export const Primary: Story = {
 
     const link = canvas.getByRole("link", { name: /Requests/i })
     await expect(link.dataset.test).toBe("foo")
+  },
+}
+
+export const PrimaryUpsell: Story = {
+  args: {
+    tabs: primaryTabItemsWithUpsellIcons,
+    secondary: false,
   },
 }
 
@@ -102,9 +117,25 @@ const tabItemsWithIds: TabItem[] = [
   { label: "Requests", id: "requests", "data-test": "foo" },
 ]
 
+const tabItemsWithIdsAndUpsell: TabItem[] = [
+  { label: "Overview", id: "overview", index: true },
+  { label: "Courses", id: "courses" },
+  { label: "Categories", id: "categories" },
+  { label: "Catalog", id: "catalog", showUpsellIcon: true },
+  { label: "Requests", id: "requests", "data-test": "foo" },
+]
+
 export const WithIds: Story = {
   args: {
     tabs: tabItemsWithIds,
     activeTabId: "overview",
+  },
+}
+
+export const WithIdsAndUpsell: Story = {
+  args: {
+    tabs: tabItemsWithIdsAndUpsell,
+    activeTabId: "overview",
+    secondary: true,
   },
 }
