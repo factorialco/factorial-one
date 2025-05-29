@@ -63,8 +63,7 @@ export const ProductBlankslate = ({
         style={{
           backgroundImage: `url(${backgroundImage})`,
           backgroundPosition: "center",
-          backgroundSize: "cover",
-          filter: "blur(4px)",
+          filter: "blur(6px)",
         }}
       />
 

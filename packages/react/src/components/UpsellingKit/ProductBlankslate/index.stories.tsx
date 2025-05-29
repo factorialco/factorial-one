@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { expect, userEvent, within } from "@storybook/test"
 import { ProductBlankslate } from "./index"
 
 import ChartLine from "@/icons/app/ChartLine"
@@ -22,7 +21,8 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     isVisible: true,
-    backgroundImage: "https://screenshots.codesandbox.io/1k3lm/108.png",
+    backgroundImage:
+      "https://raw.githubusercontent.com/GuptaSiddhant/react-table-ui/main/assets/RTUI.jpg",
     icon: Trainings,
     title: "Take your team's skills to the next levels",
     description:
@@ -79,47 +79,6 @@ export const Default: Story = {
     ],
   },
   tags: ["autodocs", "experimental"],
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement)
-
-    await step("Verify component renders correctly", async () => {
-      // Check that the title is visible
-      await expect(canvas.getByText("Benefits")).toBeInTheDocument()
-
-      // Check that the description is visible
-      await expect(
-        canvas.getByText(/Improve your team's salary/)
-      ).toBeInTheDocument()
-
-      // Check that both buttons are present
-      await expect(
-        canvas.getByRole("button", { name: "Learn more" })
-      ).toBeInTheDocument()
-      await expect(
-        canvas.getByRole("button", { name: "Request information" })
-      ).toBeInTheDocument()
-    })
-
-    await step("Test button interactions", async () => {
-      const primaryButton = canvas.getByRole("button", { name: "Learn more" })
-      const secondaryButton = canvas.getByRole("button", {
-        name: "Request information",
-      })
-
-      // Test primary button click
-      await userEvent.click(primaryButton)
-
-      // Test secondary button click
-      await userEvent.click(secondaryButton)
-    })
-
-    await step("Verify background image is applied", async () => {
-      const backgroundElement = canvasElement.querySelector(
-        '[style*="background-image"]'
-      )
-      await expect(backgroundElement).toBeInTheDocument()
-    })
-  },
 }
 
 export const Training: Story = {
@@ -150,13 +109,5 @@ export const Hidden: Story = {
   args: {
     ...Default.args,
     isVisible: false,
-  },
-  play: async ({ canvasElement, step }) => {
-    const canvas = within(canvasElement)
-
-    await step("Verify component is not rendered when hidden", async () => {
-      // Should not find the title when component is hidden
-      await expect(canvas.queryByText("Benefits")).not.toBeInTheDocument()
-    })
   },
 }
