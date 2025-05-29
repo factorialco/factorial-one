@@ -35,6 +35,36 @@ export const Default: Story = {
     ],
   },
   tags: ["autodocs", "experimental"],
+  argTypes: {
+    mediaUrl: {
+      control: "text",
+      description: "URL of the media to display",
+    },
+    title: {
+      control: "text",
+      description: "Title of the product",
+    },
+    description: {
+      control: "text",
+      description: "Description of the product",
+    },
+    dismissible: {
+      control: "boolean",
+      description: "Whether the product is dismissible",
+    },
+    width: {
+      control: "text",
+      description: "Width of the product",
+    },
+    trackVisibility: {
+      control: "object",
+      description: "Function to track visibility",
+    },
+    actions: {
+      control: "object",
+      description: "Actions of the product",
+    },
+  },
 }
 export const WithUpsellingButton: Story = {
   args: {

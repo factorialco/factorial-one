@@ -29,6 +29,64 @@ const meta = {
       </ApplicationFrame>
     ),
   ],
+  argTypes: {
+    isOpen: {
+      control: "boolean",
+      description: "Whether the modal is open",
+    },
+    onClose: {
+      control: "object",
+      description: "Function to close the modal",
+    },
+    modalTitle: {
+      control: "text",
+      description: "Title of the modal",
+    },
+    modalIcon: {
+      control: "object",
+      description: "Icon of the modal",
+    },
+    title: {
+      control: "text",
+      description: "Title of the product",
+    },
+    image: {
+      control: "text",
+      description: "Image of the product",
+    },
+    benefits: {
+      control: "object",
+      description: "Benefits of the product",
+    },
+    primaryAction: {
+      control: "object",
+      description: "Primary action of the modal",
+    },
+    secondaryAction: {
+      control: "object",
+      description: "Secondary action of the modal",
+    },
+    errorMessage: {
+      control: "object",
+      description: "Error message of the modal",
+    },
+    successMessage: {
+      control: "object",
+      description: "Success message of the modal",
+    },
+    loadingState: {
+      control: "object",
+      description: "Loading state of the button",
+    },
+    nextSteps: {
+      control: "object",
+      description: "Next steps of the modal",
+    },
+    closeLabel: {
+      control: "text",
+      description: "Label of the close modal",
+    },
+  },
 } satisfies Meta<typeof ProductModal>
 
 export default meta

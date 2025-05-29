@@ -68,9 +68,11 @@ const meta = {
     },
     disabled: {
       control: "boolean",
+      description: "Whether the button is disabled",
     },
     loading: {
       control: "boolean",
+      description: "Whether the button is loading",
     },
     hideLabel: {
       control: "boolean",
