@@ -9,13 +9,13 @@ import { getAvatarColor, getInitials, getMask } from "./utils"
 
 const getBadgeSize = (size: ShadAvatarProps["size"]) => {
   const sizeMap = {
-   xlarge: : "lg",
-   large: : "md",
-   small: "sm",
-   xsmall: "xs"
-}
+    xlarge: "lg",
+    large: "md",
+    small: "sm",
+    xsmall: "xs"
+  };
 
-return sizeMap[size] || sizeMap.small
+  return sizeMap[size] || sizeMap.small;
 }
 
 type ShadAvatarProps = ComponentProps<typeof AvatarComponent>
