@@ -1,5 +1,61 @@
 # Changelog
 
+## [1.73.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.72.0...factorial-one-react-v1.73.0) (2025-05-29)
+
+
+### Features
+
+* manage open status in Entity Selector ([#1924](https://github.com/factorialco/factorial-one/issues/1924)) ([33c6bca](https://github.com/factorialco/factorial-one/commit/33c6bca78490da9a8ef5ef9b1dfec953491b2481))
+
+## [1.72.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.71.0...factorial-one-react-v1.72.0) (2025-05-29)
+
+
+### Features
+
+* adapt upsell feature to variant logic ([#1927](https://github.com/factorialco/factorial-one/issues/1927)) ([fca3564](https://github.com/factorialco/factorial-one/commit/fca35641d5a5697a4147bf8eea808741dd106e36))
+
+## [1.71.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.2...factorial-one-react-v1.71.0) (2025-05-28)
+
+
+### Features
+
+* allow string id on Entity Selector ([#1920](https://github.com/factorialco/factorial-one/issues/1920)) ([8fa5f5a](https://github.com/factorialco/factorial-one/commit/8fa5f5a8bd93a10c0baceb5e774bd52ff1cdf4e3))
+
+## [1.70.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.1...factorial-one-react-v1.70.2) (2025-05-28)
+
+
+### Bug Fixes
+
+* remove flashing 0 when having no elements after filtering ([#1918](https://github.com/factorialco/factorial-one/issues/1918)) ([951d8e2](https://github.com/factorialco/factorial-one/commit/951d8e26c43f16e03658a45ecb251a74b36e8674))
+
+## [1.70.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.0...factorial-one-react-v1.70.1) (2025-05-28)
+
+
+### Bug Fixes
+
+* add experimental tag to OneModal component ([#1914](https://github.com/factorialco/factorial-one/issues/1914)) ([035efd4](https://github.com/factorialco/factorial-one/commit/035efd4b4aed278dd76dd03ffa418bcfaf6d65e7))
+
+## [1.70.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.3...factorial-one-react-v1.70.0) (2025-05-28)
+
+
+### Features
+
+* datacollection visible secondary actions ([#1893](https://github.com/factorialco/factorial-one/issues/1893)) ([88efe58](https://github.com/factorialco/factorial-one/commit/88efe5876ea4dc45eac4b7e4fac5d4a774b5f2a0))
+
+## [1.69.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.2...factorial-one-react-v1.69.3) (2025-05-27)
+
+
+### Bug Fixes
+
+* **weekdays:** remove key collisions ([#1889](https://github.com/factorialco/factorial-one/issues/1889)) ([2d8dc41](https://github.com/factorialco/factorial-one/commit/2d8dc4151e0f634eba056b656e55953205e6c13a))
+
+## [1.69.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.1...factorial-one-react-v1.69.2) (2025-05-27)
+
+
+### Bug Fixes
+
+* add actions to upselling widget ([#1906](https://github.com/factorialco/factorial-one/issues/1906)) ([f1b7064](https://github.com/factorialco/factorial-one/commit/f1b706416e0ed216e9f5e0d4b373d6728f86255b))
+
 ## [1.69.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.69.0...factorial-one-react-v1.69.1) (2025-05-27)
 
 

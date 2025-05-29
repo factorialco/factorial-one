@@ -1,11 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { Ai, Download, Pencil } from "../../../icons/app"
-import { SecondaryActionsDefinition } from "../actions"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 
 const meta = {
   title: "Data Collection/Item Actions",
+  tags: ["no-sidebar", "internal"],
   parameters: {
     layout: "padded",
     docs: {
@@ -85,24 +85,6 @@ const mockUsers = [
   },
 ]
 
-// Example of a comprehensive actions definition with various types of actions
-const buildActions = (): SecondaryActionsDefinition => {
-  return () => [
-    {
-      label: "Export",
-      icon: Download,
-      onClick: () => console.log(`Downloading users`),
-      description: "Download users",
-    },
-    {
-      label: "Import",
-      icon: Download,
-      onClick: () => console.log(`Importing users`),
-      description: "Import users",
-    },
-  ]
-}
-
 const createUserActions = (): ItemActionsDefinition<
   (typeof mockUsers)[number]
 > => {
@@ -152,12 +134,6 @@ export const BasicActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
-      primaryActions: () => ({
-        label: "Create user",
-        icon: Ai,
-        onClick: () => console.log(`Creating a user`),
-      }),
-      secondaryActions: buildActions(),
       itemActions: createUserActions(),
     })
 
@@ -212,7 +188,7 @@ export const CardActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
-      secondaryActions: buildActions(),
+      //secondaryActions: buildActions(),
       itemActions: createUserActions(),
     })
 

@@ -23,7 +23,7 @@ const meta: Meta<typeof OneModal> = {
       story: { inline: false, height: "720px" },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
       <ApplicationFrame
