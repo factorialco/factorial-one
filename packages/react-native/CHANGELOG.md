@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.8.1...factorial-one-react-native-v0.8.2) (2025-05-29)
+
+
+### Bug Fixes
+
+* text size in activity item ([#1936](https://github.com/factorialco/factorial-one/issues/1936)) ([937955f](https://github.com/factorialco/factorial-one/commit/937955f0107f16274f5adb0f8a0f6bfe89f97d9d))
+
 ## [0.8.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.8.0...factorial-one-react-native-v0.8.1) (2025-05-27)
 
 
