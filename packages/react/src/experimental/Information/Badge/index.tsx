@@ -12,6 +12,7 @@ const badgeVariants = cva({
       warning: "bg-f1-background-warning-bold text-f1-foreground-inverse",
     },
     size: {
+      xs: "h-2.5 w-2.5",
       sm: "h-3 w-3",
       md: "h-5 w-5",
       lg: "h-6 w-6",
@@ -24,6 +25,7 @@ const badgeVariants = cva({
 })
 
 const iconSizes = {
+  xs: "xs",
   sm: "xs",
   md: "sm",
   lg: "md",
