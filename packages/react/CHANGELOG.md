@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.74.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.74.0...factorial-one-react-v1.74.1) (2025-05-29)
+
+
+### Bug Fixes
+
+* update internal favorites value when prop changes ([#1941](https://github.com/factorialco/factorial-one/issues/1941)) ([bad23d7](https://github.com/factorialco/factorial-one/commit/bad23d75c3386943b95be9de9033f4b4b46a193f))
+
 ## [1.74.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.73.2...factorial-one-react-v1.74.0) (2025-05-29)
 
 
