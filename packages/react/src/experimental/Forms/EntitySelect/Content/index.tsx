@@ -1,3 +1,4 @@
+import { Action } from "../../Fields/Select/SelectBottomActions"
 import {
   EntitySelectEntity,
   EntitySelectNamedGroup,
@@ -20,6 +21,7 @@ export const Content = ({
   singleSelector = false,
   loading = false,
   hiddenAvatar = false,
+  actions,
   ...props
 }: {
   groupView: boolean
@@ -54,6 +56,7 @@ export const Content = ({
   loading?: boolean
   disabled?: boolean
   hiddenAvatar?: boolean
+  actions?: Action[]
 }) => {
   const blockSecondaryContent =
     (width ?? totalDefaultWidth) < breakpointToShowEmployeeList
@@ -99,6 +102,7 @@ export const Content = ({
           loading={loading}
           disabled={props.disabled}
           hiddenAvatar={hiddenAvatar}
+          actions={actions}
         />
       </div>
     </div>
