@@ -2,7 +2,7 @@ import { Button } from "@/components/Actions/Button"
 import { IconType } from "@/components/Utilities/Icon"
 import { ButtonVariant } from "@/ui/button"
 import { useState } from "react"
-import { ProductBlankslate } from "../ProductBlankslate"
+import { ProductBlankslateModal } from "../ProductBlankslateModal"
 import { UpsellRequestResponseDialog } from "../UpsellRequestResponseDialog"
 import { CustomModal } from "./components/CustomModal"
 
@@ -100,7 +100,7 @@ export function ProductModal({
         icon={modalIcon}
       >
         <div className="pb-4 pl-4">
-          <ProductBlankslate
+          <ProductBlankslateModal
             title={title}
             image={image}
             benefits={benefits}

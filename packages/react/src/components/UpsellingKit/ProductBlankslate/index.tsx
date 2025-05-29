@@ -1,86 +1,110 @@
-// packages/react/src/experimental/ProductBlankslate/index.tsx
-import { Icon, IconType } from "@/components/Utilities/Icon"
 import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
-import { CheckCircle } from "@/icons/app"
-import { cn } from "@/lib/utils"
-import { forwardRef } from "react"
+import {
+  Button,
+  ErrorMessageProps,
+  IconType,
+  LoadingStateProps,
+  NextStepsProps,
+  SuccessMessageProps,
+  UpsellingButton,
+} from "@/factorial-one"
+import { ButtonVariant } from "@/ui/button"
 
-type ProductBlankslateProps = {
+type BaseAction = {
+  label: string
+  onClick: () => Promise<void>
+}
+
+type UpsellAction = BaseAction & {
+  type: "upsell"
+  errorMessage: ErrorMessageProps
+  successMessage: SuccessMessageProps
+  loadingState: LoadingStateProps
+  nextSteps: NextStepsProps
+  closeLabel: string
+  showConfirmation: boolean
+}
+
+type RegularAction = BaseAction & {
+  type: "regular"
+  variant: ButtonVariant
+}
+
+type Action = UpsellAction | RegularAction
+
+export type ProductBlankslateProps = {
+  backgroundImage: string
+  icon: IconType
   title: string
-  subtitle?: string
-  image: string
-  benefits: string[]
-  actions?: React.ReactNode
-  withShadow?: boolean
-  icon?: IconType
-  moduleName?: string
+  description: string
+  isVisible?: boolean
+  actions: Action[]
 }
 
-const Benefits = ({ benefits }: { benefits: string[] }) => (
-  <div className="flex flex-col gap-2">
-    {benefits.map((text, idx) => (
-      <BenefitItem key={idx} text={text} />
-    ))}
-  </div>
-)
+export const ProductBlankslate = ({
+  backgroundImage,
+  icon,
+  title,
+  description,
+  isVisible = true,
+  actions,
+}: ProductBlankslateProps) => {
+  if (!isVisible) {
+    return null
+  }
 
-interface BenefitItemProps {
-  text: string
-}
-
-const BenefitItem = ({ text }: BenefitItemProps) => (
-  <div className="flex flex-row items-start gap-2">
-    <Icon icon={CheckCircle} size="md" className="text-f1-icon-positive" />
-    <span>{text}</span>
-  </div>
-)
-
-export const ProductBlankslate = forwardRef<
-  HTMLDivElement,
-  ProductBlankslateProps
->(
-  (
-    { title, image, benefits, actions, withShadow = true, icon, moduleName },
-    ref
-  ) => {
-    return (
+  return (
+    <div
+      className="relative flex w-full items-center justify-center overflow-hidden"
+      style={{ height: "100cqh" }}
+    >
       <div
-        ref={ref}
-        className={cn(
-          "bg-white flex flex-row rounded-xl border border-f1-border-secondary",
-          withShadow && "shadow-md"
-        )}
-      >
-        {/* Imagen 16:9 */}
-        <div className="aspect-auto flex-shrink-0 overflow-hidden rounded-xl py-1 pl-1">
-          <img
-            src={image}
-            alt=""
-            className="h-full w-full rounded-lg object-cover"
-          />
+        className="absolute inset-0 h-full w-full"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundPosition: "center",
+          backgroundSize: "cover",
+          filter: "blur(4px)",
+        }}
+      />
+
+      {/* Content overlay */}
+      <div className="relative z-10 flex max-w-xl flex-col items-center gap-6 text-center">
+        <div className="flex flex-col items-center gap-3">
+          <ModuleAvatar icon={icon} size="lg" />
+          <div className="flex flex-col gap-1">
+            <h1 className="text-xl font-semibold">{title}</h1>
+            <p className="text-lg font-normal">{description}</p>
+          </div>
         </div>
 
-        {/* Contenido */}
-        <div className="flex flex-col justify-center gap-8 px-8 py-5">
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-2">
-              <div className="flex flex-row items-center gap-2">
-                {icon && <ModuleAvatar icon={icon} />}
-                {moduleName && (
-                  <p className="text-base font-medium text-f1-foreground">
-                    {moduleName}
-                  </p>
-                )}
-              </div>
-              <h2 className="font-bold text-xl text-f1-foreground">{title}</h2>
-            </div>
-            <Benefits benefits={benefits} />
-          </div>
-          {actions && <div className="flex gap-3">{actions}</div>}
+        <div className="flex flex-row gap-3">
+          {actions.map((action) =>
+            action.type !== "upsell" ? (
+              <Button
+                key={action.label}
+                label={action.label}
+                onClick={action.onClick}
+                variant={action.variant}
+              />
+            ) : (
+              <UpsellingButton
+                key={action.label}
+                label={action.label}
+                onRequest={action.onClick}
+                errorMessage={action.errorMessage}
+                successMessage={action.successMessage}
+                loadingState={action.loadingState}
+                nextSteps={action.nextSteps}
+                closeLabel={action.closeLabel}
+                showConfirmation={action.showConfirmation}
+              />
+            )
+          )}
         </div>
       </div>
-    )
-  }
-)
+    </div>
+  )
+}
 
 ProductBlankslate.displayName = "ProductBlankslate"
