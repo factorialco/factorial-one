@@ -47,7 +47,7 @@ export const ActivityItem = ({
           {description}
         </Text>
         <View className="mt-1.5 flex flex-row">
-          <Text className="text-lg text-f1-foreground-secondary">{`${category} · ${date}`}</Text>
+          <Text className="text-md text-f1-foreground-secondary">{`${category} · ${date}`}</Text>
         </View>
       </View>
       <View className="ml-1">
