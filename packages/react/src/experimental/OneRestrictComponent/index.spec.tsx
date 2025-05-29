@@ -1,3 +1,4 @@
+import { UserPlatformProvider } from "@/lib/providers/user-platafform"
 import { render, screen } from "@testing-library/react"
 import { beforeEach, describe, expect, it } from "vitest"
 import { OneRestrictComponent } from "."
@@ -20,9 +21,11 @@ describe("RestrictComponent", () => {
 
   it("renders children when no restrictions are provided", () => {
     render(
-      <OneRestrictComponent identifier="test-component">
-        <TestContent />
-      </OneRestrictComponent>
+      <UserPlatformProvider isDev>
+        <OneRestrictComponent identifier="test-component">
+          <TestContent />
+        </OneRestrictComponent>
+      </UserPlatformProvider>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
@@ -32,12 +35,14 @@ describe("RestrictComponent", () => {
     mockLocation("/allowed-path")
 
     render(
-      <OneRestrictComponent
-        identifier="test-component"
-        allowedRoutes={["/allowed-path"]}
-      >
-        <TestContent />
-      </OneRestrictComponent>
+      <UserPlatformProvider isDev>
+        <OneRestrictComponent
+          identifier="test-component"
+          allowedRoutes={["/allowed-path"]}
+        >
+          <TestContent />
+        </OneRestrictComponent>
+      </UserPlatformProvider>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
@@ -47,12 +52,14 @@ describe("RestrictComponent", () => {
     mockLocation("/not-allowed-path")
 
     render(
-      <OneRestrictComponent
-        identifier="test-component"
-        allowedRoutes={["/allowed-path"]}
-      >
-        <TestContent />
-      </OneRestrictComponent>
+      <UserPlatformProvider isDev>
+        <OneRestrictComponent
+          identifier="test-component"
+          allowedRoutes={["/allowed-path"]}
+        >
+          <TestContent />
+        </OneRestrictComponent>
+      </UserPlatformProvider>
     )
 
     expect(screen.queryByText("Test Content")).not.toBeInTheDocument()
@@ -62,12 +69,14 @@ describe("RestrictComponent", () => {
     mockLocation("/allowed-path")
 
     render(
-      <OneRestrictComponent
-        identifier="test-component"
-        disallowedRoutes={["/disallowed-path"]}
-      >
-        <TestContent />
-      </OneRestrictComponent>
+      <UserPlatformProvider isDev>
+        <OneRestrictComponent
+          identifier="test-component"
+          disallowedRoutes={["/disallowed-path"]}
+        >
+          <TestContent />
+        </OneRestrictComponent>
+      </UserPlatformProvider>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
@@ -77,12 +86,14 @@ describe("RestrictComponent", () => {
     mockLocation("/disallowed-path")
 
     render(
-      <OneRestrictComponent
-        identifier="test-component"
-        disallowedRoutes={["/disallowed-path"]}
-      >
-        <TestContent />
-      </OneRestrictComponent>
+      <UserPlatformProvider isDev>
+        <OneRestrictComponent
+          identifier="test-component"
+          disallowedRoutes={["/disallowed-path"]}
+        >
+          <TestContent />
+        </OneRestrictComponent>
+      </UserPlatformProvider>
     )
 
     expect(screen.queryByText("Test Content")).not.toBeInTheDocument()
@@ -92,13 +103,15 @@ describe("RestrictComponent", () => {
     mockLocation("/test-path")
 
     render(
-      <OneRestrictComponent
-        identifier="test-component"
-        allowedRoutes={["/test-path"]}
-        disallowedRoutes={["/test-path"]}
-      >
-        <TestContent />
-      </OneRestrictComponent>
+      <UserPlatformProvider isDev>
+        <OneRestrictComponent
+          identifier="test-component"
+          allowedRoutes={["/test-path"]}
+          disallowedRoutes={["/test-path"]}
+        >
+          <TestContent />
+        </OneRestrictComponent>
+      </UserPlatformProvider>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
@@ -108,13 +121,15 @@ describe("RestrictComponent", () => {
     mockLocation("/any-path")
 
     render(
-      <OneRestrictComponent
-        identifier="test-component"
-        allowedRoutes={[]}
-        disallowedRoutes={[]}
-      >
-        <TestContent />
-      </OneRestrictComponent>
+      <UserPlatformProvider isDev>
+        <OneRestrictComponent
+          identifier="test-component"
+          allowedRoutes={[]}
+          disallowedRoutes={[]}
+        >
+          <TestContent />
+        </OneRestrictComponent>
+      </UserPlatformProvider>
     )
 
     expect(screen.getByText("Test Content")).toBeInTheDocument()
