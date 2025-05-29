@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.72.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.71.0...factorial-one-react-v1.72.0) (2025-05-29)
+
+
+### Features
+
+* adapt upsell feature to variant logic ([#1927](https://github.com/factorialco/factorial-one/issues/1927)) ([fca3564](https://github.com/factorialco/factorial-one/commit/fca35641d5a5697a4147bf8eea808741dd106e36))
+
 ## [1.71.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.70.2...factorial-one-react-v1.71.0) (2025-05-28)
 
 
