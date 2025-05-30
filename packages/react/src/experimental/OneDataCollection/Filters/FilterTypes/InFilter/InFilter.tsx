@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/Actions/Button"
+import { OneEllipsis } from "@/components/OneEllipsis"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { Spinner } from "@/experimental/Information/Spinner"
 import { Search } from "@/icons/app"
@@ -193,8 +194,8 @@ export function InFilter<T extends string>({
                 )
               }}
             >
-              <span className="max-w-[246px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-left">
-                {option.label}
+              <span className="max-w-[250px] flex-1 whitespace-nowrap">
+                <OneEllipsis>{option.label}</OneEllipsis>
               </span>
               <Checkbox
                 id={optionId}
