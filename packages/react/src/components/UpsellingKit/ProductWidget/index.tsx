@@ -32,10 +32,10 @@ type RegularAction = BaseAction & {
   variant: ButtonVariant
 }
 
-type Action = UpsellAction | RegularAction
+export type Action = UpsellAction | RegularAction
 
 type ProductWidgetProps = {
-  mediaUrl: string
+  mediaUrl?: string
   title: string
   description: string
   onClose: () => void
@@ -91,22 +91,23 @@ export function ProductWidget({
             )}
             <div>
               <div>
-                {isVideo ? (
-                  <video
-                    src={mediaUrl}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="h-full w-full rounded-md"
-                  />
-                ) : (
-                  <img
-                    src={mediaUrl}
-                    alt={title}
-                    className="h-full w-full rounded-md"
-                  />
-                )}
+                {mediaUrl &&
+                  (isVideo ? (
+                    <video
+                      src={mediaUrl}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="h-full w-full rounded-md"
+                    />
+                  ) : (
+                    <img
+                      src={mediaUrl}
+                      alt={title}
+                      className="h-full w-full rounded-md"
+                    />
+                  ))}
               </div>
               <div className="flex flex-col gap-[2px] p-3">
                 <Label className="text-lg font-medium">{title}</Label>
