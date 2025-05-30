@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.77.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.1...factorial-one-react-v1.77.2) (2025-05-30)
+
+
+### Bug Fixes
+
+* datacollection item actions alignment ([#1952](https://github.com/factorialco/factorial-one/issues/1952)) ([c6c4cc4](https://github.com/factorialco/factorial-one/commit/c6c4cc42bb5c7a8f16ff4393977ee78ef718826c))
+
 ## [1.77.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.0...factorial-one-react-v1.77.1) (2025-05-30)
 
 
