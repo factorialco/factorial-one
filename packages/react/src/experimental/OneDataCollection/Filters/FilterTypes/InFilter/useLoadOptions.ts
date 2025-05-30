@@ -1,7 +1,15 @@
 import { useCallback, useEffect, useState } from "react"
-import { InFilterOptionItem } from "./types"
+import { InFilterDefinition } from "."
+import { FilterTypeSchema } from "../types"
+import { InFilterOptionItem, InFilterOptions } from "./types"
 
 const optionsCache = new Map<string, InFilterOptionItem<unknown>[]>()
+
+export function getCacheKey<T>(
+  schema: FilterTypeSchema<InFilterOptions<T>>
+): string {
+  return JSON.stringify(schema)
+}
 
 export async function loadOptions<T>(
   cacheKey: string,
@@ -9,9 +17,9 @@ export async function loadOptions<T>(
     | InFilterOptionItem<T>[]
     | Promise<InFilterOptionItem<T>[]>
     | (() => Promise<InFilterOptionItem<T>[]> | InFilterOptionItem<T>[]),
-  cacheResults: boolean = false
+  cache: boolean = false
 ): Promise<InFilterOptionItem<T>[]> {
-  if (cacheResults && optionsCache.has(cacheKey)) {
+  if (cache && optionsCache.has(cacheKey)) {
     return optionsCache.get(cacheKey) as InFilterOptionItem<T>[]
   }
 
@@ -25,13 +33,9 @@ export async function loadOptions<T>(
   return options
 }
 
-export function useLoadOptions<T>(
-  cacheKey: string,
-  optionsDef:
-    | InFilterOptionItem<T>[]
-    | Promise<InFilterOptionItem<T>[]>
-    | (() => Promise<InFilterOptionItem<T>[]> | InFilterOptionItem<T>[])
-) {
+export function useLoadOptions<T>(schema: InFilterDefinition<T>) {
+  const cacheKey = getCacheKey(schema)
+
   // Only use state for async options
   const [options, setOptions] = useState<InFilterOptionItem<T>[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -45,7 +49,11 @@ export function useLoadOptions<T>(
       try {
         setIsLoading(true)
         setError(null)
-        const result = await loadOptions(cacheKey, optionsDef)
+        const result = await loadOptions(
+          cacheKey,
+          schema.options.options,
+          schema.options.cache
+        )
         setOptions(result)
       } catch (err) {
         setError(
@@ -55,7 +63,7 @@ export function useLoadOptions<T>(
         setIsLoading(false)
       }
     },
-    [optionsDef, cacheKey]
+    [schema, cacheKey]
   )
 
   useEffect(() => {
