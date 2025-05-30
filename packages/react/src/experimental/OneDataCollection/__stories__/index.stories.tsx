@@ -28,6 +28,7 @@ import {
   filterUsers,
   generateMockUsers,
   getMockVisualizations,
+  MockUser,
   mockUsers,
   PERFORMANCE_SCORE_MOCK,
   PROJECTS_MOCK,
@@ -939,12 +940,12 @@ export const WithSynchronousData: Story = {
     })
 
     const source = useDataSource<
-      (typeof mockUsers)[number],
+      MockUser,
       typeof filters,
       typeof sortings,
-      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      ItemActionsDefinition<MockUser>,
       NavigationFiltersDefinition,
-      GroupingDefinition<(typeof mockUsers)[number]>
+      GroupingDefinition<MockUser>
     >({
       filters,
       sortings,

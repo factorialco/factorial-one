@@ -39,7 +39,7 @@ type RowProps<
   item: R
   selectedItems: Map<number | string, R>
   handleSelectItemChange: (item: R, checked: boolean) => void
-  fields: ListPropertyDefinition<R, Sortings>[]
+  fields: ReadonlyArray<ListPropertyDefinition<R, Sortings>>
   itemDefinition: (record: R) => ItemDefinition
 }
 
@@ -94,7 +94,10 @@ export const Row = <
 
   // the rest of the actions go to the dropdown
   const dropdownItemActions = actionsToDropdownItems(
-    itemActions.filter((action) => !primaryItemActions.includes(action))
+    itemActions.filter(
+      (action) =>
+        action.type === "separator" || !primaryItemActions.includes(action)
+    )
   )
 
   const [dropDownOpen, setDropDownOpen] = useState(false)

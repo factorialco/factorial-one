@@ -124,8 +124,7 @@ export const filterPresets: PresetsDefinition<typeof filters> = [
   },
 ]
 
-// Mock data
-export const mockUsers: {
+export type MockUser = {
   index: number
   id: string
   name: string
@@ -134,71 +133,131 @@ export const mockUsers: {
   department: (typeof DEPARTMENTS_MOCK)[number]
   status: string
   isStarred: boolean
-  href?: string
   salary: number | undefined
   joinedAt: Date
-}[] = [
-  {
-    index: 0,
-    id: "user-1",
-    name: "John Doe",
-    email: "john@example.com",
-    role: "Senior Engineer",
-    department: DEPARTMENTS_MOCK[0],
-    status: "active",
-    isStarred: true,
-    salary: 100000,
-    joinedAt: START_DATE_MOCK[0],
-  },
-  {
-    index: 1,
-    id: "user-2",
-    name: "Jane Smith",
-    email: "jane@example.com",
-    role: "Product Manager",
-    department: DEPARTMENTS_MOCK[1],
-    status: "active",
-    isStarred: false,
-    salary: 80000,
-    joinedAt: START_DATE_MOCK[1],
-  },
-  {
-    index: 2,
-    id: "user-3",
-    name: "Bob Johnson",
-    email: "bob@example.com",
-    role: "Designer",
-    department: DEPARTMENTS_MOCK[2],
-    status: "inactive",
-    isStarred: false,
-    salary: 90000,
-    joinedAt: START_DATE_MOCK[2],
-  },
-  {
-    index: 3,
-    id: "user-4",
-    name: "Alice Williams",
-    email: "alice@example.com",
-    role: "Marketing Lead",
-    department: DEPARTMENTS_MOCK[3],
-    status: "active",
-    isStarred: true,
-    salary: undefined,
-    joinedAt: START_DATE_MOCK[3],
-  },
+}
+
+export const FIRST_NAMES_MOCK = [
+  "Dani",
+  "Desirée",
+  "Eliseo",
+  "Arnau",
+  "Carlos",
+  "Lilian",
+  "Andrea",
+  "Mario",
+  "Nik",
+  "René",
+  "Sergio",
+  "Saúl",
 ]
+
+export const SURNAMES_MOCK = [
+  "Smith",
+  "Johnson",
+  "Williams",
+  "Brown",
+  "Jones",
+  "Garcia",
+  "Miller",
+  "Davis",
+  "Rodriguez",
+  "Martinez",
+  "Hernandez",
+  "Lopez",
+  "Gonzalez",
+  "Wilson",
+  "Anderson",
+  "Thomas",
+  "Taylor",
+  "Moore",
+  "Jackson",
+  "Martin",
+  "Lee",
+  "Perez",
+  "Thompson",
+  "White",
+  "Harris",
+  "Sanchez",
+  "Clark",
+  "Ramirez",
+  "Lewis",
+  "Robinson",
+]
+
+export const ROLES_MOCK = [
+  "Senior Engineer",
+  "Product Manager",
+  "Designer",
+  "Marketing Lead",
+  "Software Engineer",
+]
+
+export const STATUS_MOCK = ["active", "inactive", "active", "active", "active"]
+
+export const SALARY_MOCK = [
+  100000,
+  80000,
+  90000,
+  undefined,
+  120000,
+  95000,
+  85000,
+  110000,
+  undefined,
+  75000,
+  130000,
+  92000,
+  88000,
+  undefined,
+  115000,
+  105000,
+  82000,
+  98000,
+  undefined,
+  125000,
+  78000,
+  108000,
+  94000,
+  undefined,
+  135000,
+]
+
+export const generateMockUsers = (count: number): MockUser[] => {
+  return Array.from({ length: count }).map((_, index) => {
+    const department = DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length]
+    const name = `${FIRST_NAMES_MOCK[index % FIRST_NAMES_MOCK.length]} ${SURNAMES_MOCK[index % SURNAMES_MOCK.length]}`
+    const email = `${name.toLowerCase().replace(/\s+/g, ".")}@example.com`
+    return {
+      index,
+      id: `user-${index + 1}`,
+      name,
+      email,
+      role: ROLES_MOCK[index % ROLES_MOCK.length],
+      department,
+      status: STATUS_MOCK[index % STATUS_MOCK.length],
+      isStarred: index % 3 === 0,
+      href: `/users/user-${index + 1}`,
+      salary: SALARY_MOCK[index % SALARY_MOCK.length],
+      joinedAt: START_DATE_MOCK[index % START_DATE_MOCK.length],
+    }
+  })
+}
+
+// Mock data
+export const mockUsers = generateMockUsers(10)
 
 export const getMockVisualizations = (options?: {
   frozenColumns?: 0 | 1 | 2
 }): Record<
   Exclude<VisualizationType, "custom">,
   Visualization<
-    (typeof mockUsers)[number],
+    MockUser,
     FiltersType,
     typeof sortings,
-    ItemActionsDefinition<(typeof mockUsers)[number]>,
+    ItemActionsDefinition<MockUser>,
     NavigationFiltersDefinition,
-    GroupingDefinition<(typeof mockUsers)[number]>
+    GroupingDefinition<MockUser>
   >
 > => ({
   table: {
@@ -318,10 +377,12 @@ export const getMockVisualizations = (options?: {
         {
           label: "Email",
           render: (item) => item.email,
+          sorting: "email",
         },
         {
           label: "Role",
           render: (item) => item.role,
+          sorting: "role",
         },
         {
           label: "Department",
@@ -357,17 +418,8 @@ export const sortings = {
 } as const
 
 // Helper function to filter users based on filters
-export const filterUsers = <
-  T extends RecordType & {
-    index: number
-    name: string
-    email: string
-    department: string
-    salary: number | undefined
-    joinedAt: Date
-  },
->(
-  users: T[],
+export const filterUsers = (
+  users: MockUser[],
   filterValues: FiltersState<typeof filters>,
   sortingState: SortingsStateMultiple,
   navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
@@ -388,8 +440,8 @@ export const filterUsers = <
   if (sortingState) {
     sortingState.reverse().forEach(({ field, order }) => {
       filteredUsers = filteredUsers.sort((a, b) => {
-        const aValue = a[field]
-        const bValue = b[field]
+        const aValue = a[field as keyof MockUser]
+        const bValue = b[field as keyof MockUser]
 
         // Handle string comparisons
         if (typeof aValue === "string" && typeof bValue === "string") {
@@ -497,7 +549,7 @@ export const createPromiseDataFetch = (delay = 500) => {
     search,
     navigationFilters,
   }: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>) =>
-    new Promise<(typeof mockUsers)[number][]>((resolve) => {
+    new Promise<MockUser[]>((resolve) => {
       setTimeout(() => {
         resolve(
           filterUsers(
@@ -533,32 +585,27 @@ export const ExampleComponent = ({
   frozenColumns?: 0 | 1 | 2
   visualizations?: ReadonlyArray<
     Visualization<
-      (typeof mockUsers)[number],
+      MockUser,
       FiltersType,
       typeof sortings,
-      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      ItemActionsDefinition<MockUser>,
       NavigationFiltersDefinition,
-      GroupingDefinition<(typeof mockUsers)[number]>
+      GroupingDefinition<MockUser>
     >
   >
-  selectable?: (item: (typeof mockUsers)[number]) => string | number | undefined
+  selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
-    selectedItems: Parameters<
-      OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
-    >[1]
+    selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
   ) => {
     primary: BulkActionDefinition[]
     secondary?: BulkActionDefinition[]
   }
-  onSelectItems?: OnSelectItemsCallback<(typeof mockUsers)[number], FiltersType>
-  onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
+  onSelectItems?: OnSelectItemsCallback<MockUser, FiltersType>
+  onBulkAction?: OnBulkActionCallback<MockUser, FiltersType>
   navigationFilters?: NavigationFiltersDefinition
   totalItemSummary?: (totalItems: number) => string
-  grouping?: GroupingDefinition<(typeof mockUsers)[number]> | undefined
-  currentGrouping?: GroupingState<
-    (typeof mockUsers)[number],
-    GroupingDefinition<(typeof mockUsers)[number]>
-  >
+  grouping?: GroupingDefinition<MockUser> | undefined
+  currentGrouping?: GroupingState<MockUser, GroupingDefinition<MockUser>>
 }) => {
   const mockVisualizations = getMockVisualizations({
     frozenColumns,
@@ -632,27 +679,6 @@ export const ExampleComponent = ({
       />
     </div>
   )
-}
-
-// Fix the generateMockUsers function to use the correct department types
-export const generateMockUsers = (count: number) => {
-  return Array.from({ length: count }).map((_, index) => {
-    const department = DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length]
-    return {
-      index,
-      id: `user-${index + 1}`,
-      name: `User ${index + 1}`,
-      email: `user${index + 1}@example.com`,
-      role:
-        index % 3 === 0 ? "Engineer" : index % 3 === 1 ? "Designer" : "Manager",
-      department,
-      status: index % 5 === 0 ? "inactive" : "active",
-      isStarred: index % 3 === 0,
-      href: `/users/user-${index + 1}`,
-      salary: department === "Marketing" ? 50000 + index * 1000 : undefined,
-      joinedAt: START_DATE_MOCK[index % START_DATE_MOCK.length],
-    }
-  })
 }
 
 interface DataAdapterOptions<TRecord> {

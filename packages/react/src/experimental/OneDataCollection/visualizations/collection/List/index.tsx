@@ -3,19 +3,20 @@ import { OnePagination } from "@/experimental/OnePagination"
 
 import { GroupHeader } from "@/experimental/OneDataCollection/components/GroupHeader/GroupHeader"
 import { useGroups } from "@/experimental/OneDataCollection/useGroups"
+
 import { useI18n } from "@/lib/providers/i18n"
+import { cn } from "@/lib/utils"
+import { Checkbox } from "@/ui/checkbox"
+import { Skeleton } from "@/ui/skeleton"
 import { useEffect } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
-import {
-  SortingKey,
-  SortingsDefinition,
-  SortingsState,
-} from "../../../sortings"
+import { SortingsDefinition } from "../../../sortings"
 import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
 import { ListGroup } from "./components/ListGroup"
+import { SortingSelector } from "./components/SortingSelector"
 import { ListVisualizationOptions } from "./types"
 
 /**
@@ -100,50 +101,14 @@ export const ListCollection = <
     defaultOpenGroups
   )
 
-  /**
-   * Determine the sort state of a column
-   */
-  const getColumnSortState = (
-    columnSorting: SortingKey<Sortings> | undefined,
-    sourceSortings: SortingsDefinition | undefined,
-    currentSortings: SortingsState<Sortings>
-  ): "asc" | "desc" | "none" | undefined => {
-    if (!columnSorting || !sourceSortings) {
-      return undefined
-    }
-
-    if (currentSortings === null) {
-      return "none"
-    }
-
-    return currentSortings.field === columnSorting
-      ? currentSortings.order
-      : "none"
-  }
-
-  /**
-   * Handle column sort click
-   */
-  const handleSortClick = (columnSorting: SortingKey<Sortings>) => {
-    setCurrentSortings(() => {
-      if (!currentSortings || currentSortings.field !== columnSorting) {
-        return {
-          field: columnSorting,
-          order: "asc",
-        }
-      } else if (currentSortings.order === "asc") {
-        return {
-          field: columnSorting,
-          order: "desc",
-        }
-      } else {
-        return null
-      }
-    })
-  }
-
   if (isInitialLoading) {
-    return "TODO LOADING skeleton"
+    return (
+      <div className="flex flex-col gap-4">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <Skeleton key={index} className="h-10 w-full" />
+        ))}
+      </div>
+    )
   }
 
   // Enforce that sorting is only used when sortings are defined
@@ -159,82 +124,101 @@ export const ListCollection = <
 
   return (
     <>
-      {isInitialLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          {data.type === "grouped" &&
-            data.groups.map((group) => {
-              const itemCount = group.itemCount
-              return (
-                <>
-                  <GroupHeader
-                    key={`group-header-${group.key}`}
-                    className="px-4"
-                    selectable={!!source.selectable}
-                    select={
-                      groupAllSelectedStatus[group.key]?.checked
-                        ? true
-                        : groupAllSelectedStatus[group.key]?.indeterminate
-                          ? "indeterminate"
-                          : false
-                    }
-                    onSelectChange={(checked) =>
-                      handleSelectGroupChange(group, checked)
-                    }
-                    showOpenChange={collapsible}
-                    label={group.label}
-                    itemCount={itemCount}
-                    open={openGroups[group.key]}
-                    onOpenChange={(open) => setGroupOpen(group.key, open)}
-                  />
-                  {openGroups[group.key] && (
-                    <ListGroup
-                      key={`list-group-${group.key}`}
-                      source={source}
-                      items={group.records}
-                      selectedItems={selectedItems}
-                      handleSelectItemChange={handleSelectItemChange}
-                      fields={fields}
-                      itemDefinition={itemDefinition}
-                    />
-                  )}
-                </>
-              )
-            })}
+      <div className="flex flex-row items-center gap-2 px-4 py-2">
+        {source.selectable && (
+          <Checkbox
+            checked={allSelectedStatus.checked}
+            indeterminate={allSelectedStatus.indeterminate}
+            onCheckedChange={handleSelectAll}
+            disabled={isLoading}
+            title="[TODO] Select all"
+          />
+        )}
 
-          {data?.type === "flat" && (
-            <ListGroup
-              source={source}
-              items={data.records}
-              selectedItems={selectedItems}
-              handleSelectItemChange={handleSelectItemChange}
-              fields={fields}
-              itemDefinition={itemDefinition}
-            />
-          )}
-        </>
-      )}
-
-      {paginationInfo && (
-        <div className="flex w-full items-center justify-between px-6">
-          <span className="shrink-0 text-f1-foreground-secondary">
-            {paginationInfo.total > 0 &&
-              `${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
-                paginationInfo.currentPage * paginationInfo.perPage,
-                paginationInfo.total
-              )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
-          </span>
-          <div className="flex items-center">
-            <OnePagination
-              totalPages={paginationInfo.pagesCount}
-              currentPage={paginationInfo.currentPage}
-              onPageChange={setPage}
-              disabled={paginationInfo.pagesCount <= 1}
-            />
-          </div>
+        <div className="flex flex-row gap-2 px-4 py-2">
+          <SortingSelector
+            source={source}
+            onChange={setCurrentSortings}
+            currentSortings={currentSortings}
+          />
         </div>
-      )}
+      </div>
+      <div
+        className={cn(isLoading && "select-none opacity-50 transition-opacity")}
+        aria-live={isLoading ? "polite" : undefined}
+        aria-busy={isLoading ? "true" : undefined}
+      >
+        {data.type === "grouped" &&
+          data.groups.map((group) => {
+            const itemCount = group.itemCount
+            return (
+              <>
+                <GroupHeader
+                  key={`group-header-${group.key}`}
+                  className="px-4"
+                  selectable={!!source.selectable}
+                  select={
+                    groupAllSelectedStatus[group.key]?.checked
+                      ? true
+                      : groupAllSelectedStatus[group.key]?.indeterminate
+                        ? "indeterminate"
+                        : false
+                  }
+                  onSelectChange={(checked) =>
+                    handleSelectGroupChange(group, checked)
+                  }
+                  showOpenChange={collapsible}
+                  label={group.label}
+                  itemCount={itemCount}
+                  open={openGroups[group.key]}
+                  onOpenChange={(open) => setGroupOpen(group.key, open)}
+                />
+                {openGroups[group.key] && (
+                  <ListGroup
+                    key={`list-group-${group.key}`}
+                    source={source}
+                    items={group.records}
+                    selectedItems={selectedItems}
+                    handleSelectItemChange={handleSelectItemChange}
+                    fields={fields}
+                    itemDefinition={itemDefinition}
+                  />
+                )}
+              </>
+            )
+          })}
+
+        {data?.type === "flat" && (
+          <ListGroup
+            source={source}
+            items={data.records}
+            selectedItems={selectedItems}
+            handleSelectItemChange={handleSelectItemChange}
+            fields={fields}
+            itemDefinition={itemDefinition}
+          />
+        )}
+
+        {paginationInfo && (
+          <div className="flex w-full items-center justify-between px-6">
+            <span className="shrink-0 text-f1-foreground-secondary">
+              {paginationInfo.total > 0 &&
+                `${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
+                  paginationInfo.currentPage * paginationInfo.perPage,
+                  paginationInfo.total
+                )} ${t.collections.visualizations.pagination.of} ${paginationInfo.total}`}
+            </span>
+            <div className="flex items-center">
+              <OnePagination
+                totalPages={paginationInfo.pagesCount}
+                currentPage={paginationInfo.currentPage}
+                onPageChange={setPage}
+                disabled={paginationInfo.pagesCount <= 1}
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </>
   )
 }
