@@ -39,6 +39,7 @@ export const ActionsDropdown = <
       })}
       open={open}
       onOpenChange={setOpen}
+      align="end"
     >
       <button
         title="Actions"
