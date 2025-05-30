@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.77.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.76.1...factorial-one-react-v1.77.0) (2025-05-30)
+
+
+### Features
+
+* icon cell type datacollection ([#1942](https://github.com/factorialco/factorial-one/issues/1942)) ([ce2b4b1](https://github.com/factorialco/factorial-one/commit/ce2b4b1884ce176142941f9c57734e548aef68d0))
+
 ## [1.76.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.76.0...factorial-one-react-v1.76.1) (2025-05-30)
 
 
