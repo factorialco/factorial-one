@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/Actions/Button"
+import { OneEllipsis } from "@/components/OneEllipsis"
 import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
 import { Spinner } from "@/experimental/Information/Spinner"
 import { Search } from "@/icons/app"
@@ -182,7 +183,7 @@ export function InFilter<T extends string>({
             <div
               key={String(option.value)}
               className={cn(
-                "flex w-full flex-1 cursor-pointer appearance-none items-center justify-between rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
+                "flex w-full flex-1 cursor-pointer appearance-none items-center justify-between gap-1 rounded p-2 font-medium transition-colors hover:bg-f1-background-secondary",
                 focusRing()
               )}
               onClick={() => {
@@ -193,8 +194,8 @@ export function InFilter<T extends string>({
                 )
               }}
             >
-              <span className="line-clamp-1 w-fit text-left">
-                {option.label}
+              <span className="max-w-[250px] flex-1 whitespace-nowrap">
+                <OneEllipsis>{option.label}</OneEllipsis>
               </span>
               <Checkbox
                 id={optionId}
