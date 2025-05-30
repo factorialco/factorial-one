@@ -1,4 +1,5 @@
 export * from "./ProductBlankslate"
+export * from "./ProductBlankslateModal"
 export * from "./ProductCard"
 export * from "./ProductModal"
 export * from "./ProductWidget"
