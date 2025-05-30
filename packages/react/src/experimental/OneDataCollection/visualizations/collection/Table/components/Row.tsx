@@ -1,8 +1,11 @@
-import { ActionsDropdown } from "@/experimental/OneDataCollection/ItemActions/Dropdown"
+import { ItemActionsDropdown } from "@/experimental/OneDataCollection/ItemActions/ItemActionsDropdown"
 import { forwardRef } from "react"
 
 import { FiltersDefinition } from "@/experimental/OneDataCollection/Filters/types"
-import { ItemActionsDefinition } from "@/experimental/OneDataCollection/item-actions"
+import {
+  filterItemActions,
+  ItemActionsDefinition,
+} from "@/experimental/OneDataCollection/item-actions"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { renderProperty } from "@/experimental/OneDataCollection/property-render"
 import { SortingsDefinition } from "@/experimental/OneDataCollection/sortings"
@@ -15,6 +18,7 @@ import { TableCell, TableRow } from "@/experimental/OneTable"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { TableColumnDefinition } from ".."
+import { actionsToDropdownItems } from "../../utils"
 
 export type RowProps<
   R extends RecordType,
@@ -73,6 +77,8 @@ const RowComponentInner = <
 
   const key = `table-row-${groupIndex}-${index}`
 
+  const itemActions = filterItemActions(source.itemActions, item)
+
   return (
     <TableRow ref={ref} key={key}>
       {source.selectable && (
@@ -129,7 +135,7 @@ const RowComponentInner = <
           href={itemHref}
           onClick={itemOnClick}
         >
-          <ActionsDropdown item={item} actions={source.itemActions} />
+          <ItemActionsDropdown items={actionsToDropdownItems(itemActions)} />
         </TableCell>
       )}
     </TableRow>

@@ -57,6 +57,27 @@ const CardGrid = ({ children }: { children: React.ReactNode }) => {
  * Group Cards: Renders
  */
 
+export type CardCollectionProps<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+  Sortings extends SortingsDefinition,
+  ItemActions extends ItemActionsDefinition<Record>,
+  NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<Record>,
+> = CollectionProps<
+  Record,
+  Filters,
+  Sortings,
+  ItemActions,
+  NavigationFilters,
+  Grouping,
+  CardVisualizationOptions<Record, Filters, Sortings>
+>
+
+/**
+ * Group Cards: Renders the cards for a group
+ */
+
 type GroupCardsProps<
   Record extends RecordType,
   Filters extends FiltersDefinition,
@@ -203,14 +224,13 @@ export const CardCollection = <
   source,
   onSelectItems,
   onTotalItemsChange,
-}: CollectionProps<
+}: CardCollectionProps<
   Record,
   Filters,
   Sortings,
   ItemActions,
   NavigationFilters,
-  Grouping,
-  CardVisualizationOptions<Record, Filters, Sortings>
+  Grouping
 >) => {
   const t = useI18n()
 
@@ -337,6 +357,8 @@ export const CardCollection = <
               handleSelectItemChange={handleSelectItemChange}
               title={title}
               cardProperties={cardProperties}
+              description={description}
+              avatar={avatar}
             />
           )}
         </>

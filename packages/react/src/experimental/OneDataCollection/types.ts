@@ -129,12 +129,6 @@ export type SortingsStateMultiple = {
   order: "asc" | "desc"
 }[]
 
-// export type SortingsStateMultiple<
-//   Record extends RecordType,
-//   Definition extends SortingsDefinition,
-//   Grouping extends GroupingDefinition<Record>,
-// > = NonNullable<SortingsState<Definition> | GroupingState<Record, Grouping>>[]
-
 /**
  * Base options for data fetching
  * @template Filters - The available filter configurations
@@ -356,6 +350,10 @@ export type DataSource<
   setCurrentNavigationFilters: React.Dispatch<
     React.SetStateAction<NavigationFiltersState<NavigationFilters>>
   >
+  /** Current state of applied grouping */
+  currentGrouping?: Grouping["mandatory"] extends true
+    ? Exclude<GroupingState<Record, Grouping>, undefined>
+    : GroupingState<Record, Grouping>
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<Record, Grouping>>
