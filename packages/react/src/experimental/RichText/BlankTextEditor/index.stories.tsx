@@ -1,14 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { RichTextEditor } from "."
-import {
-  EnhancementOption,
-  FILE_TYPES,
-  resultType,
-} from "../CoreRichTextEditor"
+import { BlankTextEditor } from "."
+import { EnhancementOption, resultType } from "../CoreRichTextEditor"
 
 const meta = {
-  component: RichTextEditor,
-  title: "Rich text/RichTextEditor",
+  component: BlankTextEditor,
+  title: "Rich text/BlankTextEditor",
   tags: ["experimental"],
   argTypes: {
     title: {
@@ -42,25 +38,7 @@ const meta = {
       description:
         "Configures AI enhancement functionality including onEnhanceText function, enhancement options, and UI labels",
     },
-    filesConfig: {
-      control: "object",
-      description:
-        "Configures file attachment capabilities including callbacks, multiple file support, and file type filtering",
-    },
-    primaryAction: {
-      control: "object",
-      description:
-        "Configures the primary action button and optional dropdown actions",
-    },
-    secondaryAction: {
-      control: "object",
-      description:
-        "Configures the secondary action button (usually cancel or discard)",
-    },
-    maxCharacters: {
-      control: "number",
-      description: "Limits the number of characters that can be entered",
-    },
+
     toolbarLabels: {
       control: "object",
       description:
@@ -71,25 +49,8 @@ const meta = {
       control: "object",
       description: "Configures error message display and recovery options",
     },
-    height: {
-      control: "select",
-      options: [
-        "xxs",
-        "xs",
-        "sm",
-        "md",
-        "lg",
-        "xl",
-        "2xl",
-        "3xl",
-        "full",
-        "auto",
-      ],
-      description: "Controls the initial height of the editor",
-      defaultValue: "auto",
-    },
   },
-} satisfies Meta<typeof RichTextEditor>
+} satisfies Meta<typeof BlankTextEditor>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -207,35 +168,7 @@ export const Default: Story = {
         loadingEnhanceLabel: "Loading the magic...",
       },
     },
-    filesConfig: {
-      onFiles: (files) => console.log(files),
-      multipleFiles: true,
-      acceptedFileType: [FILE_TYPES.IMAGE, FILE_TYPES.VIDEO, FILE_TYPES.PDF],
-    },
-    primaryAction: {
-      action: {
-        label: "Add",
-        onClick: () => alert("Add"),
-        variant: "default",
-      },
-      subActions: [
-        {
-          label: "Add tomorrow",
-          onClick: () => alert("Add tomorrow"),
-        },
-        {
-          label: "Add next week",
-          onClick: () => alert("Add next week"),
-        },
-      ],
-    },
-    secondaryAction: {
-      type: "switch",
-      label: "Cancel",
-      onClick: () => {},
-      variant: "outline",
-      checked: true,
-    },
+
     toolbarLabels: {
       bold: "Bold",
       italic: "Italic",
@@ -267,7 +200,6 @@ export const Default: Story = {
       close: "Close",
     },
 
-    maxCharacters: 10000,
     initialEditorState: {
       content:
         "<p>There was a time when I wandered in the dark — lost in the chaos of tangled syntax, broken builds, and tabs that betrayed me. My code was clumsy, my patience thin. But then, like a lighthouse in a storm, <strong>you appeared</strong>. Sleek, fast, and strangely comforting, my text editor. You didn't just open files — you opened <em>possibilities</em>",
@@ -276,75 +208,12 @@ export const Default: Story = {
       onClose: () => alert("Close"),
       closeErrorButtonLabel: "Continue editing",
     },
-    height: "auto",
   },
-}
-
-type SkeletonStory = StoryObj<typeof RichTextEditor.Skeleton>
-
-export const Skeleton: SkeletonStory = {
-  tags: ["experimental"],
-  render: () => <RichTextEditor.Skeleton />,
 }
 
 export const WithoutEnhance: Story = {
   args: {
     ...Default.args,
     enhanceConfig: undefined,
-    height: "auto",
-  },
-}
-
-export const WithoutFiles: Story = {
-  args: {
-    ...Default.args,
-    filesConfig: undefined,
-  },
-}
-
-export const JustOnePrimaryAction: Story = {
-  args: {
-    ...Default.args,
-    primaryAction: {
-      action: {
-        label: "Add",
-        onClick: () => alert("Add"),
-        variant: "default",
-      },
-    },
-    secondaryAction: undefined,
-  },
-}
-
-export const JustSecondaryAction: Story = {
-  args: {
-    ...Default.args,
-    primaryAction: undefined,
-    secondaryAction: {
-      label: "Cancel",
-      onClick: () => alert("Cancel"),
-      variant: "outline",
-    },
-  },
-}
-
-export const WithoutActions: Story = {
-  args: {
-    ...Default.args,
-    primaryAction: undefined,
-    secondaryAction: undefined,
-  },
-}
-
-export const Blank: Story = {
-  args: {
-    ...Default.args,
-    enhanceConfig: undefined,
-    filesConfig: undefined,
-    primaryAction: undefined,
-    secondaryAction: undefined,
-    initialEditorState: undefined,
-    mentionsConfig: undefined,
-    maxCharacters: undefined,
   },
 }
