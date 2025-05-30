@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.75.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.74.1...factorial-one-react-v1.75.0) (2025-05-30)
+
+
+### Features
+
+* add optional action button to Entity Select ([#1947](https://github.com/factorialco/factorial-one/issues/1947)) ([1ffe40a](https://github.com/factorialco/factorial-one/commit/1ffe40a5d16a2c893ed7c43b0ae9959be36807d4))
+
+
+### Bug Fixes
+
+* ellipsis on entity selector ([#1956](https://github.com/factorialco/factorial-one/issues/1956)) ([8c57d66](https://github.com/factorialco/factorial-one/commit/8c57d666af477a069c80b0b016720118173fa6f2))
+
 ## [1.74.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.74.0...factorial-one-react-v1.74.1) (2025-05-29)
 
 
