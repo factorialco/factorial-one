@@ -411,28 +411,37 @@ export const OneDataCollection = <
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
     >
-      <div className={cn("border-f1-border-primary mb-3 flex gap-4 px-6")}>
-        <div className="flex flex-1 flex-shrink gap-4">
-          {isLoading && <Skeleton className="h-5 w-24" />}
-          {!isLoading && !!totalItems && totalItemSummary(totalItems)}
+      {((totalItems !== undefined && totalItemSummary(totalItems)) ||
+        navigationFilters) && (
+        <div className="border-f1-border-primary flex gap-4 px-6">
+          <div className="flex flex-1 flex-shrink gap-4 text-lg font-semibold">
+            {isLoading &&
+              totalItems !== undefined &&
+              totalItemSummary(totalItems) && <Skeleton className="h-5 w-24" />}
+            {!isLoading && totalItems !== undefined && (
+              <div className="flex h-5 items-center">
+                {totalItemSummary(totalItems)}
+              </div>
+            )}
+          </div>
+          <div className="flex flex-1 flex-shrink justify-end">
+            {navigationFilters &&
+              Object.entries(navigationFilters).map(([key, filter]) => {
+                const filterDef = navigationFilterTypes[filter.type]
+                return filterDef.render({
+                  filter: filter,
+                  value: currentNavigationFilters[key]!,
+                  onChange: (value) => {
+                    setCurrentNavigationFilters({
+                      ...currentNavigationFilters,
+                      [key]: value,
+                    })
+                  },
+                })
+              })}
+          </div>
         </div>
-        <div className="flex flex-1 flex-shrink justify-end">
-          {navigationFilters &&
-            Object.entries(navigationFilters).map(([key, filter]) => {
-              const filterDef = navigationFilterTypes[filter.type]
-              return filterDef.render({
-                filter: filter,
-                value: currentNavigationFilters[key]!,
-                onChange: (value) => {
-                  setCurrentNavigationFilters({
-                    ...currentNavigationFilters,
-                    [key]: value,
-                  })
-                },
-              })
-            })}
-        </div>
-      </div>
+      )}
       <div className={cn("flex flex-col gap-4 px-6")}>
         <Filters.Root
           schema={filters}
