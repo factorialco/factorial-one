@@ -1,4 +1,4 @@
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
 import {
   Avatar,
@@ -97,6 +97,12 @@ export interface TagListValue {
   type: TagType
 }
 export type TagListCellValue = TagListValue
+
+export interface IconValue {
+  icon: IconType
+  label: string
+}
+export type IconCellValue = IconValue
 
 /**
  * The renderer function to use for a property.
@@ -236,6 +242,12 @@ export const propertyRenderers = {
   ),
   tagList: (args: TagListCellValue) => (
     <TagList type={args.type} tags={args.tags as TagVariant[]} max={args.max} />
+  ),
+  icon: (args: IconCellValue) => (
+    <div className="flex items-center gap-2">
+      <Icon icon={args.icon} />
+      <span className="text-f1-foreground">{args.label}</span>
+    </div>
   ),
 } as const satisfies Record<string, PropertyRenderer<never>>
 
