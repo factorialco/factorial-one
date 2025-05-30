@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.76.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.75.0...factorial-one-react-v1.76.0) (2025-05-30)
+
+
+### Features
+
+* adding upsell popover and generating story descriptions  ([#1950](https://github.com/factorialco/factorial-one/issues/1950)) ([8babbd5](https://github.com/factorialco/factorial-one/commit/8babbd5382d645aee855baeffb884c521daec6de))
+
 ## [1.75.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.74.1...factorial-one-react-v1.75.0) (2025-05-30)
 
 
