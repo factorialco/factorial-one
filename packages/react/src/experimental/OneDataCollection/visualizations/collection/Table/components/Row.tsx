@@ -1,4 +1,4 @@
-import { ActionsDropdown } from "@/experimental/OneDataCollection/ItemActions/Dropdown"
+import { ItemActionsDropdown } from "@/experimental/OneDataCollection/ItemActions/ItemActionsDropdown"
 import { forwardRef } from "react"
 
 import { FiltersDefinition } from "@/experimental/OneDataCollection/Filters/types"
@@ -135,7 +135,7 @@ const RowComponentInner = <
           href={itemHref}
           onClick={itemOnClick}
         >
-          <ActionsDropdown items={actionsToDropdownItems(itemActions)} />
+          <ItemActionsDropdown items={actionsToDropdownItems(itemActions)} />
         </TableCell>
       )}
     </TableRow>
