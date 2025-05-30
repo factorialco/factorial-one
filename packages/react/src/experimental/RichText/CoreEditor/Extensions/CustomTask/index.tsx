@@ -87,4 +87,11 @@ const CustomTask = TaskItem.extend({
   },
 })
 
+export const CustomTaskExtension = CustomTask.configure({
+  nested: true,
+  HTMLAttributes: {
+    class: "f1-task-item",
+  },
+})
+
 export { CustomTask }

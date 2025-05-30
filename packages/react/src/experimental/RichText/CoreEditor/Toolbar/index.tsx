@@ -1,7 +1,5 @@
 import { Button } from "@/components/Actions/Button"
-import { toolbarLabels } from "@/experimental/exports"
 import { Picker } from "@/experimental/Information/Reactions/Picker"
-import { IconType } from "@/factorial-one"
 import {
   AlignTextCenter,
   AlignTextJustify,
@@ -25,27 +23,14 @@ import {
   Underline,
 } from "@/icons/app"
 import { cn } from "@/lib/utils"
-import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
 import React from "react"
-import { getTextAlignIcon, getTextAlignLabel } from "../utils/helpers"
 import { LinkPopup } from "./LinkPopup"
 import { ToolbarButton } from "./ToolbarButton"
+import { ToolbarDivider } from "./ToolbarDivider"
 import { ToolbarDropdown } from "./ToolbarDropdown"
-
-interface ToolbarDividerProps {
-  hidden?: boolean
-  mode?: "light" | "dark"
-}
-
-const ToolbarDivider = ({ hidden = false }: ToolbarDividerProps) => (
-  <div
-    className={cn(
-      "mx-1 h-4 w-[1px] flex-shrink-0 bg-f1-foreground-disabled",
-      hidden && "hidden"
-    )}
-  />
-)
+import { ButtonConfig, ToolbarProps } from "./types"
+import { getTextAlignIcon, getTextAlignLabel } from "./utils"
 
 const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
   arr.map((item, index) => (
@@ -55,28 +40,7 @@ const intersperse = (arr: React.ReactNode[], sep: React.ReactNode) =>
     </React.Fragment>
   ))
 
-interface ToolbarProps {
-  editor: Editor
-  isFullscreen?: boolean
-  disableButtons: boolean
-  onClose?: () => void
-  animationComplete?: boolean
-  labels: toolbarLabels
-  mode?: "light" | "dark"
-}
-
-interface ButtonConfig {
-  key: string
-  icon: IconType
-  active: (editor: Editor) => boolean
-  onClick: (editor: Editor) => void
-  tooltip: {
-    label: string
-    shortcut: string[]
-  }
-}
-
-const Toolbar = ({
+export const Toolbar = ({
   editor,
   isFullscreen = false,
   disableButtons,
@@ -365,4 +329,9 @@ const Toolbar = ({
   )
 }
 
-export { Toolbar, ToolbarButton, ToolbarDivider }
+// Export all toolbar components
+export { LinkPopup } from "./LinkPopup"
+export { ToolbarButton } from "./ToolbarButton"
+export { ToolbarDivider } from "./ToolbarDivider"
+export { ToolbarDropdown } from "./ToolbarDropdown"
+export type { ButtonConfig, ToolbarLabels, ToolbarProps } from "./types"

@@ -1,10 +1,11 @@
 import { Button } from "@/components/Actions/exports"
+import { Toolbar } from "@/experimental/RichText/CoreEditor/Toolbar"
+import { ToolbarDivider } from "@/experimental/RichText/CoreEditor/Toolbar/ToolbarDivider"
 import { Paperclip, TextSize } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { EnhanceActivator } from "../Enhance"
-import { Toolbar, ToolbarDivider } from "../Toolbar"
 import {
   enhanceConfig,
   primaryActionType,

@@ -15,4 +15,7 @@ const Accessibility = Extension.create({
   },
 })
 
+export const createAccessibilityExtension = (label: string) =>
+  Accessibility.configure({ label: label || "Rich text" })
+
 export { Accessibility }

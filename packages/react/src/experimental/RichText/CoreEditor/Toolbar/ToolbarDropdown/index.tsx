@@ -24,7 +24,7 @@ interface ToolbarDropdownProps {
   }
 }
 
-const ToolbarDropdown = ({
+export const ToolbarDropdown = ({
   items,
   disabled = false,
   activator,
@@ -96,5 +96,4 @@ const ToolbarDropdown = ({
   )
 }
 
-export { ToolbarDropdown }
 export type { ToolbarDropdownItem, ToolbarDropdownProps }

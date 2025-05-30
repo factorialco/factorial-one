@@ -1,75 +1,10 @@
-import * as Popover from "@radix-ui/react-popover"
-import Mention from "@tiptap/extension-mention"
 import { Editor, ReactRenderer } from "@tiptap/react"
 import { createRoot, Root } from "react-dom/client"
-import { MentionList } from "../MentionList"
-import { MentionedUser } from "./types"
+import { MentionList } from "./MentionList"
+import { MentionPopover } from "./MentionPopover"
+import { MentionedUser, MentionListRef, MentionNodeAttrs } from "./types"
 
-const CustomMention = Mention.extend({
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      id: { default: null },
-      label: { default: null },
-      href: { default: "#" },
-    }
-  },
-})
-
-function configureMention(
-  mentionSuggestions: MentionedUser[],
-  setMentionSuggestions: (suggestions: MentionedUser[]) => void,
-  onMentionQueryStringChanged?: (
-    query: string
-  ) => Promise<MentionedUser[]> | undefined,
-  users?: MentionedUser[]
-) {
-  if (!users?.length) {
-    return []
-  }
-
-  return [
-    CustomMention.configure({
-      HTMLAttributes: {
-        class: "mention",
-      },
-      renderHTML({ options, node }) {
-        return [
-          "a",
-          {
-            onclick:
-              "if(this.closest('.ProseMirror')?.getAttribute('contenteditable') === 'true') { event.preventDefault(); }",
-            href: node.attrs.href || "#",
-            class: options.HTMLAttributes.class,
-            "data-id": node.attrs.id,
-            rel: "noopener noreferrer",
-            target: "_blank",
-          },
-          `${node.attrs.label}`,
-        ]
-      },
-      suggestion: Suggestion(
-        mentionSuggestions,
-        setMentionSuggestions,
-        onMentionQueryStringChanged,
-        users
-      ),
-    }),
-  ]
-}
-
-interface MentionNodeAttrs {
-  id: string
-  label: string
-  image_url?: string
-  href?: string
-}
-
-interface MentionListRef {
-  onKeyDown: (props: { event: KeyboardEvent }) => boolean
-}
-
-function Suggestion(
+export function createSuggestionConfig(
   mentionSuggestions: MentionedUser[],
   setMentionSuggestions: (suggestions: MentionedUser[]) => void,
   onMentionQueryStringChanged?: (
@@ -93,13 +28,11 @@ function Suggestion(
         const normalizedQuery = query.toLowerCase().trim()
         let filtered: MentionedUser[]
         if (!normalizedQuery) {
-          filtered = users.slice(0, 5)
-        } else {
           filtered = users
-            .filter((user) =>
-              user.label.toLowerCase().includes(normalizedQuery)
-            )
-            .slice(0, 5)
+        } else {
+          filtered = users.filter((user) =>
+            user.label.toLowerCase().includes(normalizedQuery)
+          )
         }
         setMentionSuggestions(filtered)
         return filtered
@@ -129,65 +62,6 @@ function Suggestion(
           return range.getBoundingClientRect()
         }
         return document.body.getBoundingClientRect()
-      }
-
-      const PopoverComponent = ({
-        content,
-        anchorRect,
-        editor,
-      }: {
-        content: HTMLElement
-        anchorRect: DOMRect
-        editor: Editor
-      }) => {
-        const anchorStyle: React.CSSProperties = {
-          position: "absolute",
-          top: anchorRect.bottom + window.scrollY,
-          left: anchorRect.left + window.scrollX,
-          width: 0,
-          height: 0,
-        }
-
-        return (
-          <Popover.Root
-            open
-            modal={false}
-            onOpenChange={(open) => {
-              if (open) {
-                editor?.commands.focus()
-              }
-            }}
-          >
-            <div style={anchorStyle} />
-            <Popover.Anchor asChild>
-              <div style={anchorStyle} />
-            </Popover.Anchor>
-            <Popover.Content
-              side="top"
-              align="start"
-              sideOffset={25}
-              collisionPadding={10}
-              style={{ zIndex: 9999 }}
-              onMouseDownCapture={() => {
-                editor?.commands.focus()
-              }}
-              onOpenAutoFocus={(event) => {
-                event.preventDefault()
-              }}
-              onCloseAutoFocus={(event) => {
-                event.preventDefault()
-              }}
-            >
-              <div
-                ref={(el) => {
-                  if (el && content.parentNode !== el) {
-                    el.appendChild(content)
-                  }
-                }}
-              />
-            </Popover.Content>
-          </Popover.Root>
-        )
       }
 
       return {
@@ -224,7 +98,7 @@ function Suggestion(
 
           popoverRoot = createRoot(container)
           popoverRoot.render(
-            <PopoverComponent
+            <MentionPopover
               content={component.element as HTMLElement}
               anchorRect={anchorRect}
               editor={props.editor}
@@ -248,7 +122,7 @@ function Suggestion(
           }
           const anchorRect = safeGetRect()
           popoverRoot.render(
-            <PopoverComponent
+            <MentionPopover
               content={component.element as HTMLElement}
               anchorRect={anchorRect}
               editor={props.editor}
@@ -283,5 +157,3 @@ function Suggestion(
     },
   }
 }
-
-export { configureMention }

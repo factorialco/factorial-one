@@ -1,5 +1,3 @@
-import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
-import { cn } from "@/lib/utils"
 import React, {
   forwardRef,
   useCallback,
@@ -7,50 +5,21 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react"
-import { MentionedUser } from "../utils/types"
-
-interface DefaultMentionItemProps {
-  item: MentionedUser
-  selected: boolean
-}
-
-const DefaultMentionItem = ({ item, selected }: DefaultMentionItemProps) => {
-  return (
-    <div
-      className={cn(
-        "flex items-center gap-2 rounded-md border border-solid p-1.5 hover:bg-f1-background-hover",
-        selected ? "border-f1-border-selected-bold" : "border-f1-border-inverse"
-      )}
-    >
-      <PersonAvatar
-        firstName={item.label}
-        lastName=""
-        src={item.image_url ?? undefined}
-        size="small"
-      />
-      <p className="text-neutral-100 text-md truncate text-ellipsis font-medium">
-        {item.label}
-      </p>
-    </div>
-  )
-}
-
-type MentionListHandle = {
-  onKeyDown: ({ event }: { event: KeyboardEvent }) => boolean
-}
+import { MentionItem } from "../MentionItem"
+import {
+  MentionedUser,
+  MentionItemComponentProps,
+  MentionListRef,
+} from "../types"
 
 export interface MentionListProps {
   items: MentionedUser[]
   command: (item: MentionedUser) => void
-  component?: React.FC<{
-    item: MentionedUser
-    index: number
-    selected: boolean
-  }>
+  component?: React.FC<MentionItemComponentProps>
 }
 
-const MentionList = forwardRef<MentionListHandle, MentionListProps>(
-  ({ items, command, component: Component = DefaultMentionItem }, ref) => {
+const MentionList = forwardRef<MentionListRef, MentionListProps>(
+  ({ items, command, component: Component = MentionItem }, ref) => {
     const [selectedIndex, setSelectedIndex] = useState(0)
 
     const selectItem = useCallback(

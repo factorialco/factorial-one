@@ -1,17 +1,17 @@
 import { BubbleMenu, Editor } from "@tiptap/react"
 import { Toolbar } from "../Toolbar"
-import { toolbarLabels } from "../utils/types"
+import { ToolbarLabels } from "../Toolbar/types"
 
 interface EditorBubbleMenuProps {
   editor: Editor
   disableButtons: boolean
-  toolbarLabels: toolbarLabels
+  toolbarLabels: ToolbarLabels
   isToolbarOpen: boolean
   isFullscreen: boolean
   editorId: string
 }
 
-const EditorBubbleMenu = ({
+export const EditorBubbleMenu = ({
   editorId,
   editor,
   disableButtons,
@@ -46,5 +46,3 @@ const EditorBubbleMenu = ({
     </BubbleMenu>
   )
 }
-
-export { EditorBubbleMenu }

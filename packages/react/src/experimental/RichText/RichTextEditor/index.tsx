@@ -1,3 +1,4 @@
+import { EditorBubbleMenu } from "@/experimental/RichText/CoreEditor/Extensions"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
@@ -13,7 +14,6 @@ import {
 } from "react"
 import ReactDOM from "react-dom"
 import "../index.css"
-import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
 import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { Error } from "./Error"

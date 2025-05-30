@@ -1,4 +1,4 @@
-import { Badge, toolbarLabels } from "@/experimental/exports"
+import { Badge } from "@/experimental/exports"
 import { Icon } from "@/factorial-one"
 import {
   Alert,
@@ -15,15 +15,16 @@ import { Editor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
 import { ToolbarButton } from "../ToolbarButton"
+import { ToolbarLabels } from "../types"
 
 interface LinkPopupProps {
   editor: Editor
   disabled: boolean
-  labels: toolbarLabels
+  labels: ToolbarLabels
   mode?: "light" | "dark"
 }
 
-const LinkPopup = ({
+export const LinkPopup = ({
   editor,
   disabled,
   labels,
@@ -214,5 +215,3 @@ const LinkPopup = ({
     </Popover.Root>
   )
 }
-
-export { LinkPopup }

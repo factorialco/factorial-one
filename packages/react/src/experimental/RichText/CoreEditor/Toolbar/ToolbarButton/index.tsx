@@ -20,7 +20,7 @@ interface ToolbarButtonProps {
   showLabel?: boolean
 }
 
-const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
+export const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
   (
     {
       onClick = () => {},
@@ -89,5 +89,3 @@ const ToolbarButton = forwardRef<HTMLButtonElement, ToolbarButtonProps>(
 )
 
 ToolbarButton.displayName = "ToolbarButton"
-
-export { ToolbarButton }

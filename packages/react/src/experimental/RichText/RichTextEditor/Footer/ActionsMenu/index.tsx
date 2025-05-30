@@ -4,7 +4,7 @@ import {
   OneDropdownButtonItem,
 } from "@/components/Actions/OneDropdownButton"
 import { Switch } from "@/experimental/Forms/Fields/Switch"
-import { ToolbarDivider } from "../../Toolbar"
+import { ToolbarDivider } from "@/experimental/RichText/CoreEditor/Toolbar/ToolbarDivider"
 import { primaryActionType, secondaryActionType } from "../../utils/types"
 
 interface ActionsMenuProps {
