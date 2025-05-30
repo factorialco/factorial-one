@@ -7,7 +7,7 @@ import { defaultTranslations } from "../../../../../lib/providers/i18n/i18n-prov
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
-import type { DataSource } from "../../../types"
+import type { DataSource, GroupingDefinition } from "../../../types"
 import { useData } from "../../../useData"
 import { CardCollection } from "./index"
 
@@ -51,7 +51,8 @@ const createTestSource = (
   FiltersDefinition,
   SortingsDefinition,
   ItemActionsDefinition<Person>,
-  NavigationFiltersDefinition
+  NavigationFiltersDefinition,
+  GroupingDefinition<Person>
 > => ({
   currentFilters: {},
   setCurrentFilters: vi.fn(),
@@ -71,6 +72,8 @@ const createTestSource = (
   currentNavigationFilters: {},
   setCurrentNavigationFilters: vi.fn(),
   navigationFilters: undefined,
+  currentGrouping: undefined,
+  setCurrentGrouping: vi.fn(),
 })
 
 describe("CardCollection", () => {
@@ -83,7 +86,8 @@ describe("CardCollection", () => {
             FiltersDefinition,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition
+            NavigationFiltersDefinition,
+            GroupingDefinition<Person>
           >
             title={(item) => item.name}
             cardProperties={[
@@ -108,7 +112,8 @@ describe("CardCollection", () => {
             FiltersDefinition,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition
+            NavigationFiltersDefinition,
+            GroupingDefinition<Person>
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
@@ -140,7 +145,8 @@ describe("CardCollection", () => {
             FiltersDefinition,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition
+            NavigationFiltersDefinition,
+            GroupingDefinition<Person>
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
@@ -168,7 +174,8 @@ describe("CardCollection", () => {
             FiltersDefinition,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition
+            NavigationFiltersDefinition,
+            GroupingDefinition<Person>
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
@@ -221,7 +228,8 @@ describe("CardCollection", () => {
             FiltersDefinition,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition
+            NavigationFiltersDefinition,
+            GroupingDefinition<Person>
           >
             title={(item) => item.name}
             cardProperties={propertiesWithCustomRender}
@@ -247,7 +255,8 @@ describe("CardCollection", () => {
             FiltersDefinition,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition
+            NavigationFiltersDefinition,
+            GroupingDefinition<Person>
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
@@ -273,7 +282,8 @@ describe("CardCollection", () => {
             FiltersDefinition,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition
+            NavigationFiltersDefinition,
+            GroupingDefinition<Person>
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
@@ -320,6 +330,8 @@ describe("CardCollection", () => {
         currentNavigationFilters: {},
         setCurrentNavigationFilters: vi.fn(),
         navigationFilters: undefined,
+        currentGrouping: undefined,
+        setCurrentGrouping: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           perPage: 10,
@@ -340,7 +352,8 @@ describe("CardCollection", () => {
             FiltersDefinition,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition
+            NavigationFiltersDefinition,
+            GroupingDefinition<Person>
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
@@ -380,6 +393,8 @@ describe("CardCollection", () => {
         currentNavigationFilters: {},
         setCurrentNavigationFilters: vi.fn(),
         navigationFilters: undefined,
+        currentGrouping: undefined,
+        setCurrentGrouping: vi.fn(),
         dataAdapter: {
           paginationType: "pages" as const,
           fetchData: async () => ({
@@ -399,7 +414,8 @@ describe("CardCollection", () => {
             FiltersDefinition,
             SortingsDefinition,
             ItemActionsDefinition<Person>,
-            NavigationFiltersDefinition
+            NavigationFiltersDefinition,
+            GroupingDefinition<Person>
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}

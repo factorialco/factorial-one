@@ -4,20 +4,21 @@ import {
   DataAdapter,
   FilterDefinition,
   FiltersState,
-  NewColor,
+  GroupingDefinition,
+  GroupingState,
   OnBulkActionCallback,
   OneDataCollection,
   OnSelectItemsCallback,
   PaginatedResponse,
   PresetsDefinition,
   RecordType,
-  SortingsDefinition,
-  SortingsState,
+  SortingsStateMultiple,
   useDataSource,
-} from "@/experimental/exports"
+} from "@/experimental/OneDataCollection/exports"
 import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
 
+import { NewColor } from "@/experimental/Information/Tags/DotTag"
 import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
@@ -217,7 +218,7 @@ export const filterUsers = <
 >(
   users: T[],
   filterValues: FiltersState<typeof filters>,
-  sortingState: SortingsState<typeof sortings>,
+  sortingState: SortingsStateMultiple,
   navigationFilters?: NavigationFiltersState<NavigationFiltersDefinition>,
   search?: string
 ) => {
@@ -234,7 +235,7 @@ export const filterUsers = <
   }
 
   if (sortingState) {
-    ;[sortingState].forEach(({ field, order }) => {
+    sortingState.reverse().forEach(({ field, order }) => {
       filteredUsers = filteredUsers.sort((a, b) => {
         const aValue = a[field]
         const bValue = b[field]
@@ -296,7 +297,6 @@ export const filterUsers = <
 
   if (navigationFilters) {
     filteredUsers = filteredUsers.filter((user) => {
-      console.log(navigationFilters.date)
       return (
         !navigationFilters.date ||
         (navigationFilters.date.value.from <= user.joinedAt &&
@@ -313,11 +313,7 @@ export const createObservableDataFetch = (delay = 0) => {
     filters,
     sortings: sortingsState,
     navigationFilters,
-  }: BaseFetchOptions<
-    FiltersType,
-    typeof sortings,
-    NavigationFiltersDefinition
-  >) =>
+  }: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>) =>
     new Observable<PromiseState<(typeof mockUsers)[number][]>>((observer) => {
       observer.next({
         loading: true,
@@ -349,11 +345,7 @@ export const createPromiseDataFetch = (delay = 500) => {
     sortings: sortingsState,
     search,
     navigationFilters,
-  }: BaseFetchOptions<
-    FiltersType,
-    typeof sortings,
-    NavigationFiltersDefinition
-  >) =>
+  }: BaseFetchOptions<FiltersType, NavigationFiltersDefinition>) =>
     new Promise<(typeof mockUsers)[number][]>((resolve) => {
       setTimeout(() => {
         resolve(
@@ -379,6 +371,8 @@ export const ExampleComponent = ({
   frozenColumns = 0,
   selectable,
   bulkActions,
+  currentGrouping,
+  grouping,
   navigationFilters,
   totalItemSummary,
 }: {
@@ -398,12 +392,19 @@ export const ExampleComponent = ({
   onBulkAction?: OnBulkActionCallback<(typeof mockUsers)[number], FiltersType>
   navigationFilters?: NavigationFiltersDefinition
   totalItemSummary?: (totalItems: number) => string
+  grouping?: GroupingDefinition<(typeof mockUsers)[number]> | undefined
+  currentGrouping?: GroupingState<
+    (typeof mockUsers)[number],
+    GroupingDefinition<(typeof mockUsers)[number]>
+  >
 }) => {
   const dataSource = useDataSource({
     filters,
     navigationFilters,
     presets: usePresets ? filterPresets : undefined,
     sortings,
+    grouping,
+    currentGrouping: currentGrouping,
     itemActions: (item) => [
       {
         label: "Edit",
@@ -598,7 +599,6 @@ export function createDataAdapter<
     salary?: number
   },
   TFilters extends Record<string, FilterDefinition>,
-  TSortings extends SortingsDefinition,
   TNavigationFilters extends NavigationFiltersDefinition,
 >({
   data,
@@ -609,13 +609,12 @@ export function createDataAdapter<
 }: DataAdapterOptions<TRecord>): DataAdapter<
   TRecord,
   TFilters,
-  TSortings,
   TNavigationFilters
 > {
   const filterData = (
     records: TRecord[],
     filters: FiltersState<TFilters>,
-    sortingsState: SortingsState<TSortings>,
+    sortingsState: SortingsStateMultiple,
     pagination?: { currentPage?: number; perPage?: number }
   ): TRecord[] | PaginatedResponse<TRecord> => {
     let filteredRecords = [...records]
@@ -647,7 +646,7 @@ export function createDataAdapter<
 
     // Apply sorting if available
     if (sortingsState) {
-      ;[sortingsState].reverse().forEach(({ field, order }) => {
+      sortingsState.reverse().forEach(({ field, order }) => {
         const sortField = field as keyof TRecord
         const sortDirection = order
 
@@ -713,12 +712,7 @@ export function createDataAdapter<
   }
 
   if (paginationType === "pages") {
-    const adapter: DataAdapter<
-      TRecord,
-      TFilters,
-      TSortings,
-      TNavigationFilters
-    > = {
+    const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
       paginationType: "pages",
       perPage,
       fetchData: ({ filters, sortings, pagination }) => {
@@ -783,52 +777,51 @@ export function createDataAdapter<
     return adapter
   }
 
-  const adapter: DataAdapter<TRecord, TFilters, TSortings, TNavigationFilters> =
-    {
-      fetchData: ({ filters, sortings }) => {
-        if (useObservable) {
-          return new Observable<PromiseState<TRecord[]>>((observer) => {
-            observer.next({
-              loading: true,
-              error: null,
-              data: null,
-            })
-
-            setTimeout(() => {
-              try {
-                const fetch = () =>
-                  filterData(data, filters, sortings) as TRecord[]
-
-                observer.next({
-                  loading: false,
-                  error: null,
-                  data: fetch(),
-                })
-                observer.complete()
-              } catch (error) {
-                observer.next({
-                  loading: false,
-                  error:
-                    error instanceof Error ? error : new Error(String(error)),
-                  data: null,
-                })
-                observer.complete()
-              }
-            }, delay)
+  const adapter: DataAdapter<TRecord, TFilters, TNavigationFilters> = {
+    fetchData: ({ filters, sortings }) => {
+      if (useObservable) {
+        return new Observable<PromiseState<TRecord[]>>((observer) => {
+          observer.next({
+            loading: true,
+            error: null,
+            data: null,
           })
-        }
 
-        return new Promise<TRecord[]>((resolve, reject) => {
           setTimeout(() => {
             try {
-              resolve(filterData(data, filters, sortings) as TRecord[])
+              const fetch = () =>
+                filterData(data, filters, sortings) as TRecord[]
+
+              observer.next({
+                loading: false,
+                error: null,
+                data: fetch(),
+              })
+              observer.complete()
             } catch (error) {
-              reject(error)
+              observer.next({
+                loading: false,
+                error:
+                  error instanceof Error ? error : new Error(String(error)),
+                data: null,
+              })
+              observer.complete()
             }
           }, delay)
         })
-      },
-    }
+      }
+
+      return new Promise<TRecord[]>((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            resolve(filterData(data, filters, sortings) as TRecord[])
+          } catch (error) {
+            reject(error)
+          }
+        }, delay)
+      })
+    },
+  }
 
   return adapter
 }

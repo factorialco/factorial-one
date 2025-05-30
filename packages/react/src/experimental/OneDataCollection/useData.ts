@@ -1,3 +1,4 @@
+import { groupBy } from "lodash"
 import {
   useCallback,
   useDeferredValue,
@@ -21,9 +22,11 @@ import { SortingsDefinition } from "./sortings"
 import {
   BaseFetchOptions,
   DataSource,
+  GroupingDefinition,
   PaginatedResponse,
   PromiseOrObservable,
   RecordType,
+  SortingsStateMultiple,
 } from "./types"
 
 /**
@@ -57,10 +60,18 @@ interface PaginationInfo {
 }
 
 /**
+ * Symbol used to identify the groupId in the data
+ */
+export const GROUP_ID_SYMBOL = Symbol("groupId")
+export type WithGroupId<RecordType> = RecordType & {
+  [GROUP_ID_SYMBOL]: unknown | undefined
+}
+
+/**
  * Hook return type for useData
  */
 interface UseDataReturn<Record> {
-  data: Array<Record>
+  data: Data<Record>
   isInitialLoading: boolean
   isLoading: boolean
   error: DataError | null
@@ -71,12 +82,31 @@ interface UseDataReturn<Record> {
 
 type DataType<T> = PromiseState<T>
 
+export type GroupRecord<RecordType> = {
+  key: string
+  label: string | Promise<string>
+  itemCount: number | undefined | Promise<number | undefined>
+  records: RecordType[]
+}
+
+export type Data<RecordType> = {
+  records: WithGroupId<RecordType>[]
+} & (
+  | {
+      type: "grouped"
+      groups: GroupRecord<WithGroupId<RecordType>>[]
+    }
+  | {
+      type: "flat"
+    }
+)
+
 /**
  * Custom hook for handling data fetching state
  */
 function useDataFetchState<Record>() {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [data, setData] = useState<Array<Record>>([])
+  const [data, setData] = useState<Record[]>([])
   const [error, setError] = useState<DataError | null>(null)
 
   return {
@@ -151,13 +181,13 @@ function usePaginationState() {
  * }
  * ```
  *
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The filters type extending FiltersDefinition
  *
  * @param source - The data source object containing dataAdapter and filter state
  * @param options - Optional configuration including filter overrides
  *
- * @returns {UseDataReturn<Record>} An object containing:
+ * @returns {UseDataReturn<R>} An object containing:
  * - data: The current collection records
  * - isInitialLoading: Whether this is the first data load
  * - isLoading: Whether any data fetch is in progress
@@ -166,20 +196,22 @@ function usePaginationState() {
  * - setPage: Function to navigate to a specific page
  */
 export function useData<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
+  Grouping extends GroupingDefinition<R>,
 >(
   source: DataSource<
-    Record,
+    R,
     Filters,
     Sortings,
-    ItemActionsDefinition<Record>,
-    NavigationFilters
+    ItemActionsDefinition<R>,
+    NavigationFilters,
+    Grouping
   >,
   { filters }: UseDataOptions<Filters> = {}
-): UseDataReturn<Record> {
+): UseDataReturn<R> {
   const {
     dataAdapter,
     currentFilters,
@@ -189,17 +221,19 @@ export function useData<
     isLoading,
     setIsLoading,
     currentNavigationFilters,
+    currentGrouping,
+    grouping,
   } = source
   const cleanup = useRef<(() => void) | undefined>()
 
   const {
     isInitialLoading,
     setIsInitialLoading,
-    data,
-    setData,
+    data: rawData,
+    setData: setRawData,
     error,
     setError,
-  } = useDataFetchState<Record>()
+  } = useDataFetchState<R>()
 
   const { paginationInfo, setPaginationInfo } = usePaginationState()
 
@@ -219,9 +253,10 @@ export function useData<
       : deferredSearch
 
   const handleFetchSuccess = useCallback(
-    (result: PaginatedResponse<Record> | SimpleResult<Record>) => {
+    (result: PaginatedResponse<R> | SimpleResult<R>) => {
+      let records: R[] = []
       if ("records" in result) {
-        setData(result.records)
+        records = result.records
         setPaginationInfo({
           total: result.total,
           currentPage: result.currentPage,
@@ -230,15 +265,61 @@ export function useData<
         })
         setTotalItems(result.total)
       } else {
-        setData(result)
+        records = result
         setTotalItems?.(result.length)
       }
+
+      setRawData(records)
+
       setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
     },
-    [setData, setError, setPaginationInfo, setIsInitialLoading, setIsLoading]
+    [setRawData, setError, setPaginationInfo, setIsInitialLoading, setIsLoading]
   )
+
+  const data = useMemo(() => {
+    // Add the groupId to the data if grouping is enabled
+    const data: WithGroupId<R>[] = rawData.map((record) => ({
+      ...record,
+      [GROUP_ID_SYMBOL]:
+        (currentGrouping?.field && record[currentGrouping.field as keyof R]) ||
+        undefined,
+    }))
+
+    /**
+     * Grouped data
+     */
+    if (
+      currentGrouping &&
+      currentGrouping.field &&
+      grouping &&
+      grouping.groupBy[currentGrouping.field as keyof R]
+    ) {
+      const groupedData = groupBy(data, GROUP_ID_SYMBOL)
+
+      return {
+        type: "grouped" as const,
+        records: data,
+        groups: Object.entries(groupedData).map(([key, value]) => ({
+          key,
+          label: grouping.groupBy[currentGrouping.field as keyof R]!.label(
+            key as R[keyof R],
+            mergedFilters
+          ),
+          itemCount: grouping.groupBy[
+            currentGrouping.field as keyof R
+          ]?.itemCount?.(key as R[keyof R], mergedFilters),
+          records: value,
+        })),
+      }
+    }
+
+    /**
+     * Flat data
+     */
+    return { type: "flat" as const, records: data }
+  }, [rawData, currentGrouping, grouping, mergedFilters])
 
   const handleFetchError = useCallback(
     (error: unknown) => {
@@ -254,7 +335,7 @@ export function useData<
     [setError, setIsInitialLoading, setIsLoading]
   )
 
-  type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
+  type ResultType = PaginatedResponse<R> | SimpleResult<R>
 
   const fetchDataAndUpdate = useCallback(
     async (
@@ -269,14 +350,29 @@ export function useData<
           cleanup.current = undefined
         }
 
-        const baseFetchOptions: BaseFetchOptions<
-          Filters,
-          Sortings,
-          NavigationFilters
-        > = {
+        const sortings: SortingsStateMultiple = [
+          ...(currentSortings
+            ? [
+                {
+                  field: currentSortings.field as string,
+                  order: currentSortings.order,
+                },
+              ]
+            : []),
+          ...(currentGrouping
+            ? [
+                {
+                  field: currentGrouping.field as string,
+                  order: currentGrouping.order,
+                },
+              ]
+            : []),
+        ]
+
+        const baseFetchOptions: BaseFetchOptions<Filters, NavigationFilters> = {
           filters,
           search: searchValue,
-          sortings: currentSortings,
+          sortings,
           navigationFilters,
         }
 
@@ -328,6 +424,7 @@ export function useData<
       handleFetchError,
       dataAdapter,
       currentSortings,
+      currentGrouping,
       searchValue,
       handleFetchSuccess,
       setIsLoading,
