@@ -577,6 +577,7 @@ export const ExampleComponent = ({
         icon: Pencil,
         onClick: () => console.log(`Editing ${item.name}`),
         description: "Modify user information",
+        type: "primary",
       },
       {
         label: "View Profile",

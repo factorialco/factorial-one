@@ -7,7 +7,6 @@ import { useI18n } from "@/lib/providers/i18n"
 import { useEffect } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
-import { renderProperty } from "../../../property-render"
 import {
   SortingKey,
   SortingsDefinition,
@@ -17,7 +16,7 @@ import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
 import { ListGroup } from "./components/ListGroup"
-import { ListPropertyDefinition, ListVisualizationOptions } from "./types"
+import { ListVisualizationOptions } from "./types"
 
 /**
  * Group List: Renders the list for a group
@@ -158,63 +157,63 @@ export const ListCollection = <
     })
   }
 
-  const renderCell = (
-    item: Record,
-    property: ListPropertyDefinition<Record, Sortings>
-  ) => {
-    return renderProperty(item, property, "table")
-  }
-
   return (
     <>
-      <p>IsLoading: {isLoading.toString()}</p>
-      {data.type === "grouped" &&
-        data.groups.map((group, index) => {
-          const itemCount = group.itemCount
-          return (
-            <>
-              <GroupHeader
-                className="px-4"
-                selectable={!!source.selectable}
-                select={
-                  groupAllSelectedStatus[group.key]?.checked
-                    ? true
-                    : groupAllSelectedStatus[group.key]?.indeterminate
-                      ? "indeterminate"
-                      : false
-                }
-                onSelectChange={(checked) =>
-                  handleSelectGroupChange(group, checked)
-                }
-                showOpenChange={collapsible}
-                label={group.label}
-                itemCount={itemCount}
-                open={openGroups[group.key]}
-                onOpenChange={(open) => setGroupOpen(group.key, open)}
-              />
-              {openGroups[group.key] && (
-                <ListGroup
-                  source={source}
-                  items={group.records}
-                  selectedItems={selectedItems}
-                  handleSelectItemChange={handleSelectItemChange}
-                  fields={fields}
-                  itemDefinition={itemDefinition}
-                />
-              )}
-            </>
-          )
-        })}
+      {isInitialLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          {data.type === "grouped" &&
+            data.groups.map((group) => {
+              const itemCount = group.itemCount
+              return (
+                <>
+                  <GroupHeader
+                    key={`group-header-${group.key}`}
+                    className="px-4"
+                    selectable={!!source.selectable}
+                    select={
+                      groupAllSelectedStatus[group.key]?.checked
+                        ? true
+                        : groupAllSelectedStatus[group.key]?.indeterminate
+                          ? "indeterminate"
+                          : false
+                    }
+                    onSelectChange={(checked) =>
+                      handleSelectGroupChange(group, checked)
+                    }
+                    showOpenChange={collapsible}
+                    label={group.label}
+                    itemCount={itemCount}
+                    open={openGroups[group.key]}
+                    onOpenChange={(open) => setGroupOpen(group.key, open)}
+                  />
+                  {openGroups[group.key] && (
+                    <ListGroup
+                      key={`list-group-${group.key}`}
+                      source={source}
+                      items={group.records}
+                      selectedItems={selectedItems}
+                      handleSelectItemChange={handleSelectItemChange}
+                      fields={fields}
+                      itemDefinition={itemDefinition}
+                    />
+                  )}
+                </>
+              )
+            })}
 
-      {data?.type === "flat" && (
-        <ListGroup
-          source={source}
-          items={data.records}
-          selectedItems={selectedItems}
-          handleSelectItemChange={handleSelectItemChange}
-          fields={fields}
-          itemDefinition={itemDefinition}
-        />
+          {data?.type === "flat" && (
+            <ListGroup
+              source={source}
+              items={data.records}
+              selectedItems={selectedItems}
+              handleSelectItemChange={handleSelectItemChange}
+              fields={fields}
+              itemDefinition={itemDefinition}
+            />
+          )}
+        </>
       )}
 
       {paginationInfo && (

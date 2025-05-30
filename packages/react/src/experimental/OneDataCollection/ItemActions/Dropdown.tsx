@@ -2,32 +2,28 @@ import { cn, focusRing } from "@/lib/utils"
 import { useState } from "react"
 import { Icon } from "../../../components/Utilities/Icon"
 import { Ellipsis } from "../../../icons/app"
-import { Dropdown } from "../../Navigation/Dropdown"
-import { ItemActionsDefinition, filterItemActions } from "../item-actions"
-import { RecordType } from "../types"
+import { Dropdown, DropdownItem } from "../../Navigation/Dropdown"
 
-export const ActionsDropdown = <
-  Record extends RecordType,
-  ItemActions extends ItemActionsDefinition<Record>,
->({
-  item,
-  actions,
-}: {
-  item: Record
-  actions: ItemActions
-}) => {
+export type ActionsDropdownProps = {
+  items: DropdownItem[]
+  onOpenChange?: (open: boolean) => void
+  align?: "start" | "end"
+}
+
+export const ActionsDropdown = ({
+  items,
+  onOpenChange,
+  align = "start",
+}: ActionsDropdownProps) => {
   const [open, setOpen] = useState(false)
 
-  if (!actions || actions.length === 0) return null
-
-  const items = filterItemActions(actions, item)
-
-  if (items.length === 0) {
+  if (!items || items.length === 0) {
     return null
   }
 
   return (
     <Dropdown
+      align={align}
       items={items.map((item) => {
         if (item.type === "separator") {
           return item
@@ -38,7 +34,10 @@ export const ActionsDropdown = <
         }
       })}
       open={open}
-      onOpenChange={setOpen}
+      onOpenChange={(open) => {
+        setOpen(open)
+        onOpenChange?.(open)
+      }}
     >
       <button
         title="Actions"
