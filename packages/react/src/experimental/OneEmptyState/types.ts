@@ -1,3 +1,9 @@
+import { LoadingStateProps } from "@/components/UpsellingKit/UpsellingButton"
+import {
+  ErrorMessageProps,
+  NextStepsProps,
+  SuccessMessageProps,
+} from "@/components/UpsellingKit/UpsellRequestResponseDialog"
 import { IconType } from "@/components/Utilities/Icon"
 import { AlertAvatarProps } from "@/experimental/Information/Avatars/AlertAvatar"
 
@@ -24,7 +30,43 @@ export type ActionProps = {
    * @optional
    */
   icon?: IconType
-}
+} & (
+  | {
+      /**
+       * The type of the action
+       */
+      type: "upsell"
+      /**
+       * The error message of the action
+       */
+      errorMessage: ErrorMessageProps
+      /**
+       * The success message of the action
+       */
+      successMessage: SuccessMessageProps
+
+      /**
+       * The loading state of the action
+       */
+      loadingState: LoadingStateProps
+
+      /**
+       * The next steps of the action
+       */
+      nextSteps: NextStepsProps
+
+      /**
+       * The next steps of the action
+       */
+      closeLabel: string
+    }
+  | {
+      /**
+       * The type of the action
+       */
+      type?: "default"
+    }
+)
 
 export type OneEmptyStateProps = {
   /**
@@ -45,26 +87,22 @@ export type OneEmptyStateProps = {
    * @optional
    */
   actions?: ActionProps[]
-} & (
-  | {
-      /**
-       * The variant of the empty state
-       * @optional
-       */
-      variant?: "default"
 
-      /**
-       * An icon will be displayed in the empty state.
-       * emoji string
-       */
-      emoji?: string
-    }
-  | {
-      /**
-       * The variant of the empty state
-       * @optional
-       */
-      variant: Exclude<AlertAvatarProps["type"], "positive">
-      emoji?: never
-    }
-)
+  /**
+   * The variant of the empty state
+   * @optional
+   */
+  variant?: "default" | "upsell" | Exclude<AlertAvatarProps["type"], "positive">
+
+  /**
+   * An icon will be displayed in the empty state
+   * @optional
+   */
+  icon?: IconType
+
+  /**
+   * An emoji will be displayed in the empty state
+   * @optional
+   */
+  emoji?: string
+}

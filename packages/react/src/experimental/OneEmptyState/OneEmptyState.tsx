@@ -1,6 +1,8 @@
 import { Button } from "@/components/Actions/Button"
+import { UpsellingButton } from "@/components/UpsellingKit/UpsellingButton"
 import { EmojiAvatar } from "@/experimental/Information/Avatars/EmojiAvatar"
 import { AlertAvatar } from "../Information/Avatars/AlertAvatar"
+import { ModuleAvatar } from "../Information/ModuleAvatar"
 import * as Types from "./types"
 
 export function OneEmptyState({
@@ -8,12 +10,16 @@ export function OneEmptyState({
   description,
   variant = "default",
   emoji,
+  icon,
   actions,
 }: Types.OneEmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-5 p-8">
+      {variant === "upsell" && icon && <ModuleAvatar icon={icon} />}
       {variant === "default" && <EmojiAvatar emoji={emoji!} size="lg" />}
-      {variant !== "default" && <AlertAvatar type={variant} size="lg" />}
+      {variant !== "default" && variant !== "upsell" && (
+        <AlertAvatar type={variant} size="lg" />
+      )}
       <div className="flex flex-col items-center justify-center gap-0.5">
         <p className="text-center text-lg font-medium text-f1-foreground">
           {title}
@@ -26,9 +32,32 @@ export function OneEmptyState({
       </div>
       {actions && (
         <div className="flex w-full flex-col items-center justify-center gap-2 sm:w-fit sm:flex-row sm:gap-3 [&>div]:w-full">
-          {actions.map((action) => (
-            <Button key={action.label} {...action} />
-          ))}
+          {actions.map((action) => {
+            if (action.type === "upsell") {
+              return (
+                <UpsellingButton
+                  key={action.label}
+                  label={action.label}
+                  onRequest={() => Promise.resolve(action.onClick())}
+                  errorMessage={action.errorMessage}
+                  successMessage={action.successMessage}
+                  loadingState={action.loadingState}
+                  nextSteps={action.nextSteps}
+                  closeLabel={action.closeLabel}
+                />
+              )
+            } else {
+              return (
+                <Button
+                  key={action.label}
+                  label={action.label}
+                  variant={action.variant}
+                  onClick={action.onClick}
+                  icon={action.icon}
+                />
+              )
+            }
+          })}
         </div>
       )}
     </div>
