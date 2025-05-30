@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.77.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.0...factorial-one-react-v1.77.1) (2025-05-30)
+
+
+### Bug Fixes
+
+* spacing issues datacollection ([#1949](https://github.com/factorialco/factorial-one/issues/1949)) ([61f3229](https://github.com/factorialco/factorial-one/commit/61f32293867b76f3388673c969e8a97bf59890f8))
+
 ## [1.77.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.76.1...factorial-one-react-v1.77.0) (2025-05-30)
 
 
