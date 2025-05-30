@@ -16,6 +16,7 @@ import { LineChartConfig } from '../../ui/chart';
 import { LineChartPropsBase } from './utils/types';
 import { LinkProps as LinkProps_3 } from './Link';
 import { PieChartProps } from './PieChart';
+import { PopoverContentProps } from '@radix-ui/react-popover';
 import * as React_2 from 'react';
 import { ReactNode } from 'react';
 import { RefAttributes } from 'react';
@@ -568,6 +569,27 @@ export declare interface UpsellingButtonProps extends Omit<ButtonProps, "variant
      */
     closeLabel: string;
 }
+
+export declare function UpsellingPopover({ isOpen, setIsOpen, label, variant, size, showIcon, side, align, icon, mediaUrl, title, description, width, trackVisibility, actions, onClick, }: UpsellingPopoverProps): JSX_2.Element;
+
+declare type UpsellingPopoverProps = {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+    label: string;
+    variant: ButtonProps["variant"];
+    size?: ButtonProps["size"];
+    side?: PopoverContentProps["side"];
+    align?: PopoverContentProps["align"];
+    icon?: IconType;
+    showIcon?: boolean;
+    mediaUrl: string;
+    title: string;
+    description: string;
+    width?: string;
+    trackVisibility?: (visible: boolean) => void;
+    actions?: Action[];
+    onClick?: () => void;
+};
 
 export declare const UpsellRequestResponseDialog: ForwardRefExoticComponent<UpsellRequestResponseDialogProps & RefAttributes<HTMLDivElement>>;
 
