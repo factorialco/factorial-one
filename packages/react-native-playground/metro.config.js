@@ -8,7 +8,10 @@ const config = getDefaultConfig(__dirname);
 config.resolver.disableHierarchicalLookup = true;
 
 // First apply NativeWind
-const nativeWindConfig = withNativeWind(config, { input: "./global.css" });
+const nativeWindConfig = withNativeWind(config, {
+  input: "./global.css",
+  inlineRem: 16,
+});
 
 // Then wrap with Storybook
 module.exports = withStorybook(nativeWindConfig, {

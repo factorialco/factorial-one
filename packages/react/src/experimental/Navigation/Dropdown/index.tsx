@@ -104,7 +104,9 @@ export const MobileDropdown = ({ items, children }: DropdownProps) => {
                 <span
                   className={cn(
                     "font-medium",
-                    item.critical && "text-f1-foreground-critical"
+                    item.critical
+                      ? "text-f1-foreground-critical"
+                      : "text-f1-foreground"
                   )}
                 >
                   {item.label}
