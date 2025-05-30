@@ -90,6 +90,9 @@ describe("CardCollection", () => {
               { label: "Email", render: (item) => item.email },
               { label: "Role", render: (item) => item.role },
             ]}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
             source={createTestSource()}
           />
         </TestWrapper>
@@ -112,6 +115,9 @@ describe("CardCollection", () => {
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
             source={createTestSource()}
           />
         </TestWrapper>
@@ -144,6 +150,9 @@ describe("CardCollection", () => {
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
             source={createTestSource()}
           />
         </TestWrapper>
@@ -172,6 +181,9 @@ describe("CardCollection", () => {
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
             source={createTestSource()}
           />
         </TestWrapper>
@@ -225,6 +237,9 @@ describe("CardCollection", () => {
           >
             title={(item) => item.name}
             cardProperties={propertiesWithCustomRender}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
             source={createTestSource()}
           />
         </TestWrapper>
@@ -251,6 +266,9 @@ describe("CardCollection", () => {
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
             source={createTestSource([])}
           />
         </TestWrapper>
@@ -277,6 +295,9 @@ describe("CardCollection", () => {
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
             source={createTestSource([], error)}
           />
         </TestWrapper>
@@ -344,6 +365,9 @@ describe("CardCollection", () => {
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
             source={source}
           />
         </TestWrapper>
@@ -403,6 +427,9 @@ describe("CardCollection", () => {
           >
             title={(item) => item.name}
             cardProperties={testCardProperties}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
             source={source}
           />
         </TestWrapper>

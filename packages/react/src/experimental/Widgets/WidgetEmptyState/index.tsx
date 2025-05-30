@@ -1,5 +1,5 @@
 import { IconType } from "../../../components/Utilities/Icon"
-import { EmptyState } from "../../OneEmptyState/OneEmptyState"
+import { OneEmptyState } from "../../OneEmptyState/OneEmptyState"
 
 type Action = {
   label: string
@@ -28,10 +28,10 @@ export function WidgetEmptyState({
   }
 
   return (
-    <EmptyState
+    <OneEmptyState
       title={title}
       description={description}
-      icon={emoji ?? { type: "warning" }}
+      {...(emoji ? { emoji } : { variant: "warning" as const })}
       actions={actions}
     />
   )
