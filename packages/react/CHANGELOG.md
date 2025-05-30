@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.77.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.2...factorial-one-react-v1.77.3) (2025-05-30)
+
+
+### Bug Fixes
+
+* onepagination adapt large numbers ([#1953](https://github.com/factorialco/factorial-one/issues/1953)) ([901486b](https://github.com/factorialco/factorial-one/commit/901486b0255fe8d7f894310cb1f415032196d4cc))
+
 ## [1.77.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.1...factorial-one-react-v1.77.2) (2025-05-30)
 
 
