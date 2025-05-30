@@ -352,8 +352,8 @@ export type DataSource<
   >
   /** Current state of applied grouping */
   currentGrouping?: Grouping["mandatory"] extends true
-    ? GroupingState<Record, Grouping>
-    : null
+    ? Exclude<GroupingState<Record, Grouping>, undefined>
+    : GroupingState<Record, Grouping>
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<Record, Grouping>>
