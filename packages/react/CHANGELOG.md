@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.76.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.76.0...factorial-one-react-v1.76.1) (2025-05-30)
+
+
+### Bug Fixes
+
+* **DataCollection:** conditionally display the total item summary skeleton + style fixes ([#1932](https://github.com/factorialco/factorial-one/issues/1932)) ([268cfc6](https://github.com/factorialco/factorial-one/commit/268cfc6c5d7f6f60978be7ac5d8a5e6a1c5f04d0))
+
 ## [1.76.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.75.0...factorial-one-react-v1.76.0) (2025-05-30)
 
 
