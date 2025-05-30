@@ -28,7 +28,9 @@ jobs:
       - name: Install Playwright
         run: pnpx playwright install --with-deps
       - name: Build Storybook
-        run: pnpm --filter @factorialco/factorial-one-react run build-storybook --quiet
+        run: |
+          pnpm --filter @factorialco/factorial-one-core build
+          pnpm --filter @factorialco/factorial-one-react run build-storybook --quiet
       - name: Serve Storybook and run tests
         run: |
           pnpx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
