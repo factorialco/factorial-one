@@ -20,7 +20,7 @@ export const ListTag = ({
     <div className="pr-2 pt-1.5">
       <BaseTag
         className={cn(
-          "max-w-54 w-fit gap-1 text-ellipsis border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]",
+          "max-w-54 w-fit gap-1 text-ellipsis break-all border-[1px] border-solid border-f1-border-secondary py-[1px] pl-[1px]",
           "rounded-full",
           hiddenAvatar ? "pl-2" : "pl-1"
         )}
