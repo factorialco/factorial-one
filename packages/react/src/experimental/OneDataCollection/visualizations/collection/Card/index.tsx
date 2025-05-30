@@ -47,7 +47,8 @@ export const CardCollection = <
   avatar,
   source,
   onSelectItems,
-  onTotalItemsChange,
+  onLoadData,
+  onLoadError,
 }: CollectionProps<
   Record,
   Filters,
@@ -78,14 +79,28 @@ export const CardCollection = <
     Filters,
     Sortings,
     NavigationFilters
-  >({
-    ...source,
-    dataAdapter: overridenDataAdapter,
-  })
+  >(
+    {
+      ...source,
+      dataAdapter: overridenDataAdapter,
+    },
+    {
+      onError: (error) => {
+        onLoadError(error)
+      },
+    }
+  )
 
   useEffect(() => {
-    onTotalItemsChange?.(paginationInfo?.total || data.length)
-  }, [paginationInfo?.total, onTotalItemsChange, data])
+    onLoadData({
+      totalItems: paginationInfo?.total || data.length,
+      filters: source.currentFilters,
+      search: source.currentSearch,
+      isInitialLoading,
+      data,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
+  }, [paginationInfo?.total, data])
 
   /**
    * Item selection
