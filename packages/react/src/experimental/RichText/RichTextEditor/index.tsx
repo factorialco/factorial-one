@@ -1,7 +1,13 @@
+import {
+  EditorBubbleMenu,
+  MentionedUser,
+  MentionsConfig,
+  ToolbarLabels,
+} from "@/experimental/RichText/CoreEditor"
 import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
-import { EditorContent, useEditor } from "@tiptap/react"
+import { Editor, EditorContent, useEditor } from "@tiptap/react"
 import { AnimatePresence, motion } from "framer-motion"
 import {
   forwardRef,
@@ -13,7 +19,6 @@ import {
 } from "react"
 import ReactDOM from "react-dom"
 import "../index.css"
-import { EditorBubbleMenu } from "./BubbleMenu"
 import { AcceptChanges } from "./Enhance/AcceptChanges"
 import { LoadingEnhance } from "./Enhance/LoadingEnhance"
 import { Error } from "./Error"
@@ -36,16 +41,13 @@ import {
   filesConfig,
   heightType,
   lastIntentType,
-  MentionedUser,
-  mentionsConfig,
   primaryActionType,
   resultType,
   secondaryActionType,
-  toolbarLabels,
 } from "./utils/types"
 
 interface RichTextEditorProps {
-  mentionsConfig?: mentionsConfig
+  mentionsConfig?: MentionsConfig
   enhanceConfig?: enhanceConfig
   filesConfig?: filesConfig
   secondaryAction?: secondaryActionType
@@ -57,7 +59,7 @@ interface RichTextEditorProps {
     content?: string
     files?: File[]
   }
-  toolbarLabels: toolbarLabels
+  toolbarLabels: ToolbarLabels
   title: string
   errorConfig?: errorConfig
   height?: heightType
@@ -173,7 +175,7 @@ const RichTextEditorComponent = forwardRef<
         maxCharacters,
       }),
       content: editorState.json || editorState.html,
-      onUpdate: ({ editor }) => {
+      onUpdate: ({ editor }: { editor: Editor }) => {
         handleEditorUpdate({ editor, onChange, setEditorState })
       },
     },

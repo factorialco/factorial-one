@@ -1,15 +1,18 @@
 import { Button } from "@/components/Actions/exports"
+import {
+  Toolbar,
+  ToolbarDivider,
+  ToolbarLabels,
+} from "@/experimental/RichText/CoreEditor"
 import { Paperclip, TextSize } from "@/icons/app"
 import { Editor } from "@tiptap/react"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 import { EnhanceActivator } from "../Enhance"
-import { Toolbar, ToolbarDivider } from "../Toolbar"
 import {
   enhanceConfig,
   primaryActionType,
   secondaryActionType,
-  toolbarLabels,
 } from "../utils/types"
 import { ActionsMenu } from "./ActionsMenu"
 
@@ -34,7 +37,7 @@ interface FooterProps {
       customIntent?: string
     } | null
   ) => void
-  toolbarLabels: toolbarLabels
+  toolbarLabels: ToolbarLabels
   setIsToolbarOpen: (isToolbarOpen: boolean) => void
   isToolbarOpen: boolean
 }
