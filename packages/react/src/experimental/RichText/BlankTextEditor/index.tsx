@@ -68,14 +68,16 @@ const BlankTextEditorComponent = forwardRef<
   if (!editor) return null
 
   return (
-    <div ref={containerRef} className="relative w-full bg-f1-background">
+    <div
+      ref={containerRef}
+      className="relative flex h-full w-full flex-row"
+      id={editorId}
+    >
       <div
-        className="relative w-full overflow-hidden"
+        className="relative w-full flex-grow overflow-hidden"
         onClick={() => editor?.commands.focus()}
       >
-        <div className="w-full p-3">
-          <EditorContent editor={editor} />
-        </div>
+        <EditorContent editor={editor} />
       </div>
 
       <EditorBubbleMenu

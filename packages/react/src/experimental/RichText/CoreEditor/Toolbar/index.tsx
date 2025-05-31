@@ -48,6 +48,7 @@ export const Toolbar = ({
   animationComplete = true,
   labels,
   mode = "light",
+  showEmojiPicker = true,
 }: ToolbarProps) => {
   // Format buttons configuration
   const formatButtons: ButtonConfig[] = [
@@ -291,7 +292,7 @@ export const Toolbar = ({
 
   const groups = compact([
     linkGroup,
-    emojiGroup,
+    showEmojiPicker && emojiGroup,
     formattingGroup,
     textSizeGroup,
     moreOptionsGroup,

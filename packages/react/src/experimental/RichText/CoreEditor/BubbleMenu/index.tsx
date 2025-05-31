@@ -40,6 +40,7 @@ export const EditorBubbleMenu = ({
             editor={editor}
             disableButtons={disableButtons}
             mode="dark"
+            showEmojiPicker={false}
           />
         </div>
       )}

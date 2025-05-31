@@ -76,4 +76,5 @@ export interface ToolbarProps {
   animationComplete?: boolean
   labels: ToolbarLabels
   mode?: "light" | "dark"
+  showEmojiPicker?: boolean
 }
