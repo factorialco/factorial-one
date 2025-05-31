@@ -1,9 +1,9 @@
 import { Button } from "@/components/Actions/Button"
 import { enhanceLabelsType, lastIntentType } from "@/experimental/exports"
+import { ToolbarDivider } from "@/experimental/RichText/CoreEditor"
 import { Check, Cross, Reset } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { Editor } from "@tiptap/react"
-import { ToolbarDivider } from "../../Toolbar"
 
 interface AcceptChangesProps {
   labels?: enhanceLabelsType

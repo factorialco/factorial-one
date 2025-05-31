@@ -3,6 +3,8 @@ import {
   CustomTaskExtension,
   HighlightExtension,
   LinkExtension,
+  MentionedUser,
+  MentionsConfig,
   PersistSelection,
   StarterKitExtension,
   TaskListExtension,
@@ -14,11 +16,10 @@ import {
   createCharacterCountExtension,
   createMentionExtensions,
   createPlaceholderExtension,
-} from "@/experimental/RichText/CoreEditor/Extensions"
-import { MentionedUser, mentionsConfig } from "../types"
+} from "@/experimental/RichText/CoreEditor"
 
 interface ExtensionsConfigurationProps {
-  mentionsConfig?: mentionsConfig
+  mentionsConfig?: MentionsConfig
   mentionSuggestions: MentionedUser[]
   setMentionSuggestions: (suggestions: MentionedUser[]) => void
   placeholder: string

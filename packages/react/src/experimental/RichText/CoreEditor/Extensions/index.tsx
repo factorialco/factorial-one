@@ -1,23 +1,23 @@
 // Static extensions (no configuration needed)
-export { ColorExtension } from "./Color"
-export { HighlightExtension } from "./Highlight"
-export { TextStyleExtension } from "./TextStyle"
-export { TypographyExtension } from "./Typography"
-export { UnderlineExtension } from "./Underline"
+export * from "./Color"
+export * from "./Highlight"
+export * from "./TextStyle"
+export * from "./Typography"
+export * from "./Underline"
 
 // Pre-configured extensions
-export { CustomTaskExtension } from "./CustomTask"
-export { LinkExtension } from "./Link"
-export { StarterKitExtension } from "./StarterKit"
-export { TaskListExtension } from "./TaskList"
-export { TextAlignExtension } from "./TextAlign"
+export * from "./CustomTask"
+export * from "./Link"
+export * from "./StarterKit"
+export * from "./TaskList"
+export * from "./TextAlign"
 
 // Dynamic extensions (require configuration)
-export { createAccessibilityExtension } from "./Accessibility"
-export { createCharacterCountExtension } from "./CharacterCount"
-export { createMentionExtensions } from "./Mention"
-export { createPlaceholderExtension } from "./Placeholder"
+export * from "./Accessibility"
+export * from "./CharacterCount"
+export * from "./Mention"
+export * from "./Placeholder"
 
 // Custom extensions
-export { CustomTask } from "./CustomTask"
-export { PersistSelection } from "./PersistSelection"
+export * from "./CustomTask"
+export * from "./PersistSelection"

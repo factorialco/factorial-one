@@ -1,9 +1,6 @@
 import Mention from "@tiptap/extension-mention"
-import {
-  MentionedUser,
-  mentionsConfig,
-} from "../../../RichTextEditor/utils/types"
 import { createSuggestionConfig } from "./suggestion"
+import { MentionedUser, MentionsConfig } from "./types"
 
 const CustomMention = Mention.extend({
   addAttributes() {
@@ -19,7 +16,7 @@ const CustomMention = Mention.extend({
 export const createMentionExtensions = (
   mentionSuggestions: MentionedUser[],
   setMentionSuggestions: (suggestions: MentionedUser[]) => void,
-  mentionsConfig?: mentionsConfig
+  mentionsConfig?: MentionsConfig
 ) => {
   if (!mentionsConfig?.users?.length) {
     return []
@@ -59,4 +56,4 @@ export const createMentionExtensions = (
 export { MentionItem } from "./MentionItem"
 export { MentionList } from "./MentionList"
 export { MentionPopover } from "./MentionPopover"
-export type { MentionedUser, MentionNodeAttrs } from "./types"
+export * from "./types"

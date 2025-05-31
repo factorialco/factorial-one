@@ -1,6 +1,6 @@
 import { PersonAvatar } from "@/experimental/Information/Avatars/PersonAvatar"
 import { cn } from "@/lib/utils"
-import { MentionedUser } from "../../../../RichTextEditor/utils/types"
+import { MentionedUser } from "../types"
 
 interface MentionItemProps {
   item: MentionedUser
