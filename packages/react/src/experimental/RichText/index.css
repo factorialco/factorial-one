@@ -204,3 +204,11 @@ this is a hack to make the checkbox look like the one in the Checkbox component
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.tiptap p.is-empty::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

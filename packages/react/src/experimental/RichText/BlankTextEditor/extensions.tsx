@@ -1,0 +1,31 @@
+import {
+  ColorExtension,
+  CustomTaskExtension,
+  HighlightExtension,
+  LinkExtension,
+  PersistSelection,
+  StarterKitExtension,
+  TaskListExtension,
+  TextAlignExtension,
+  TextStyleExtension,
+  TypographyExtension,
+  UnderlineExtension,
+  createAccessibilityExtension,
+  createPlaceholderExtension,
+} from "@/experimental/RichText/CoreEditor"
+
+export const createBlankTextEditorExtensions = (placeholder: string) => [
+  StarterKitExtension,
+  UnderlineExtension,
+  TextStyleExtension,
+  ColorExtension,
+  TypographyExtension,
+  TaskListExtension,
+  CustomTaskExtension,
+  HighlightExtension,
+  TextAlignExtension,
+  LinkExtension,
+  PersistSelection,
+  createPlaceholderExtension(placeholder),
+  createAccessibilityExtension(placeholder),
+]
