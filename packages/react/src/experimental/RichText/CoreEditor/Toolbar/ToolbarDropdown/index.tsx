@@ -70,7 +70,7 @@ export const ToolbarDropdown = ({
                 exit={{ opacity: 0, scale: 0.95, y: 5 }}
                 transition={{ duration: 0.15 }}
                 className={cn(
-                  "flex w-40 flex-col gap-0.5 overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background p-0.5 drop-shadow-sm",
+                  "flex w-40 flex-col gap-0.5 overflow-hidden rounded-md border border-solid border-f1-border bg-f1-background p-0.5 drop-shadow-sm",
                   darkMode && "dark"
                 )}
               >

@@ -23,7 +23,7 @@ export const EditorBubbleMenu = ({
     <BubbleMenu
       tippyOptions={{
         duration: 100,
-        placement: "top-start",
+        placement: "top",
         hideOnClick: false,
         appendTo: () =>
           isFullscreen
@@ -34,7 +34,7 @@ export const EditorBubbleMenu = ({
       editor={editor}
     >
       {!isToolbarOpen && (
-        <div className="dark z-50 flex w-max flex-row items-center rounded-lg border border-solid border-f1-border-secondary bg-f1-background p-1 drop-shadow-sm">
+        <div className="dark z-50 flex w-max flex-row items-center rounded-lg border border-solid border-f1-border bg-f1-background p-1 drop-shadow-sm">
           <Toolbar
             labels={toolbarLabels}
             editor={editor}
