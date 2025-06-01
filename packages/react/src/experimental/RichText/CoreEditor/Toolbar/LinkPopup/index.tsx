@@ -21,15 +21,9 @@ interface LinkPopupProps {
   editor: Editor
   disabled: boolean
   labels: ToolbarLabels
-  mode?: "light" | "dark"
 }
 
-export const LinkPopup = ({
-  editor,
-  disabled,
-  labels,
-  mode = "light",
-}: LinkPopupProps) => {
+export const LinkPopup = ({ editor, disabled, labels }: LinkPopupProps) => {
   const i18n = useI18n()
   const [openLinkPopover, setOpenLinkPopover] = useState(false)
   const [url, setUrl] = useState(editor.getAttributes("link").href || "")
@@ -96,7 +90,6 @@ export const LinkPopup = ({
           icon={LinkIcon}
           disabled={disabled}
           onClick={handleLinkButtonClick}
-          mode={mode}
         />
       </Popover.Trigger>
 

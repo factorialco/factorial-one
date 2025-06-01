@@ -2,7 +2,6 @@ import { cn } from "@/lib/utils"
 
 interface ToolbarDividerProps {
   hidden?: boolean
-  mode?: "light" | "dark"
 }
 
 export const ToolbarDivider = ({ hidden = false }: ToolbarDividerProps) => (

@@ -47,7 +47,7 @@ export const Toolbar = ({
   onClose,
   animationComplete = true,
   labels,
-  mode = "light",
+  darkMode = false,
   showEmojiPicker = true,
 }: ToolbarProps) => {
   // Format buttons configuration
@@ -187,7 +187,6 @@ export const Toolbar = ({
           disabled={disableButtons}
           onClick={() => config.onClick(editor)}
           tooltip={config.tooltip}
-          mode={mode}
         />
       ))}
     </div>
@@ -199,7 +198,7 @@ export const Toolbar = ({
   const moreOptionsGroup = (
     <div className="flex flex-row items-center gap-0.5">
       <ToolbarDropdown
-        mode={mode}
+        darkMode={darkMode}
         items={[
           {
             label: labels.left,
@@ -236,12 +235,12 @@ export const Toolbar = ({
           icon: getTextAlignIcon(editor),
         }}
       />
-      <ToolbarDivider hidden={!isFullscreen} mode={mode} />
+      <ToolbarDivider hidden={!isFullscreen} />
 
       {renderButtons(listButtons)}
 
       <ToolbarDropdown
-        mode={mode}
+        darkMode={darkMode}
         items={[
           {
             icon: Code,
@@ -277,7 +276,6 @@ export const Toolbar = ({
       editor={editor}
       disabled={disableButtons}
       labels={labels}
-      mode={mode}
     />,
   ]
 

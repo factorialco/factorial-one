@@ -64,7 +64,6 @@ export interface ToolbarButtonProps {
     label?: string
     shortcut?: ComponentProps<typeof Shortcut>["keys"]
   }
-  mode?: "light" | "dark"
   showLabel?: boolean
 }
 
@@ -75,6 +74,6 @@ export interface ToolbarProps {
   onClose?: () => void
   animationComplete?: boolean
   labels: ToolbarLabels
-  mode?: "light" | "dark"
+  darkMode?: boolean
   showEmojiPicker?: boolean
 }

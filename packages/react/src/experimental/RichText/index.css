@@ -189,6 +189,14 @@
   @apply list-none;
 }
 
+/*
+Placeholder component
+*/
+.tiptap p.is-empty::before {
+  @apply pointer-events-none float-left h-0 text-f1-foreground-tertiary;
+  content: attr(data-placeholder);
+}
+
 /* 
 TODO:
 this is a hack to make the checkbox look like the one in the Checkbox component
@@ -203,12 +211,4 @@ this is a hack to make the checkbox look like the one in the Checkbox component
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-}
-
-.tiptap p.is-empty::before {
-  color: #adb5bd;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
 }

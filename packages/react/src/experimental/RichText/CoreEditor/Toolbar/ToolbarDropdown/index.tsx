@@ -16,7 +16,7 @@ interface ToolbarDropdownItem {
 interface ToolbarDropdownProps {
   items: ToolbarDropdownItem[]
   disabled?: boolean
-  mode?: "light" | "dark"
+  darkMode?: boolean
   position?: "top" | "bottom"
   activator: {
     label: string
@@ -28,7 +28,7 @@ export const ToolbarDropdown = ({
   items,
   disabled = false,
   activator,
-  mode = "light",
+  darkMode = false,
   position = "top",
 }: ToolbarDropdownProps) => {
   const [open, setOpen] = useState(false)
@@ -50,7 +50,6 @@ export const ToolbarDropdown = ({
           label={activator.label}
           icon={activator.icon}
           disabled={disabled}
-          mode={mode}
           onClick={handleButtonClick}
         />
       </Popover.Trigger>
@@ -72,7 +71,7 @@ export const ToolbarDropdown = ({
                 transition={{ duration: 0.15 }}
                 className={cn(
                   "flex w-40 flex-col gap-0.5 overflow-hidden rounded-md border border-solid border-f1-border-secondary bg-f1-background p-0.5 drop-shadow-sm",
-                  mode === "dark" && "dark"
+                  darkMode && "dark"
                 )}
               >
                 {items.map((item, index) => (
@@ -83,7 +82,6 @@ export const ToolbarDropdown = ({
                     label={item.label}
                     disabled={disabled || !!item.disabled}
                     icon={item.icon}
-                    mode={mode}
                     showLabel
                   />
                 ))}
