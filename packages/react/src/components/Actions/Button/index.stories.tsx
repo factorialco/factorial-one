@@ -58,6 +58,10 @@ const meta = {
       control: "boolean",
       description: "Hide label and show only icon",
     },
+    pressed: {
+      control: "boolean",
+      description: "Force the button to be pressed",
+    },
   },
 } satisfies Meta<typeof Button>
 

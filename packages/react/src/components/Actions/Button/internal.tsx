@@ -7,7 +7,7 @@ import { Icon, IconType } from "../../Utilities/Icon"
 
 export type ButtonInternalProps = Pick<
   ComponentProps<typeof ShadcnButton>,
-  "variant" | "size" | "disabled" | "type" | "round" | "className"
+  "variant" | "size" | "disabled" | "type" | "round" | "className" | "pressed"
 > &
   DataAttributes & {
     onClick?: (
@@ -31,7 +31,7 @@ const iconVariants = cva({
       outline: "text-f1-icon",
       neutral: "text-f1-icon",
       critical:
-        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse group-active:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold/80 dark:group-active:text-f1-icon-bold/80",
+        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse group-active:text-f1-icon-inverse group-data-[pressed=true]:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold/80 dark:group-active:text-f1-icon-bold/80 dark:group-data-[pressed=true]:text-f1-icon-bold/80",
       ghost: "text-f1-icon",
       promote: "text-f1-icon-promote",
     },
@@ -49,7 +49,7 @@ export const iconOnlyVariants = cva({
       outline: "text-f1-icon-bold",
       neutral: "text-f1-icon-bold",
       critical:
-        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse group-active:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold dark:group-active:text-f1-icon-bold",
+        "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse group-active:text-f1-icon-inverse group-data-[pressed=true]:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold dark:group-active:text-f1-icon-bold dark:group-data-[pressed=true]:text-f1-icon-bold",
       ghost: "text-f1-icon-bold",
       promote: "text-f1-icon-bold",
     },
