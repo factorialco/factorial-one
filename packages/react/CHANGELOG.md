@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.79.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.78.0...factorial-one-react-v1.79.0) (2025-06-02)
+
+
+### Features
+
+* adding upsell option to empty state ([#1966](https://github.com/factorialco/factorial-one/issues/1966)) ([358bbf4](https://github.com/factorialco/factorial-one/commit/358bbf4e1d08b092047e8681e0d0e24e536cc4d3))
+
 ## [1.78.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.4...factorial-one-react-v1.78.0) (2025-06-02)
 
 
