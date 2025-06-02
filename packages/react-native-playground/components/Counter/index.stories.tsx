@@ -1,35 +1,36 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { ComponentProps } from "react";
+import type { StoryFn } from "@storybook/react";
 import { Counter } from "@factorialco/factorial-one-react-native";
+import { ScrollView, View, Text } from "react-native";
 
 const meta = {
-  title: "Counter",
+  title: "Components/Counter",
   component: Counter,
   parameters: {
     layout: "centered",
-    design: {
-      type: "figma",
-      url: "https://www.figma.com/design/pZzg1KTe9lpKTSGPUZa8OJ/Web-Components?node-id=252-8537&t=SrGKlGDdzYxFSTb8-4",
-    },
   },
-  tags: ["autodocs", "experimental"],
-  args: {
-    value: 42,
-    size: "md",
-    type: "default",
-    maxValue: undefined,
-  } satisfies ComponentProps<typeof Counter>,
-} satisfies Meta<typeof Counter>;
+  decorators: [
+    (Story: StoryFn) => (
+      <View className="flex-1">
+        <Story />
+      </View>
+    ),
+  ],
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
-
-export const MaxValue: Story = {
-  args: {
-    value: 123,
-    maxValue: 99,
-    type: "bold",
-  },
+export const CounterShowcase = () => {
+  return (
+    <ScrollView className="p-4">
+      {/* Basic Variants */}
+      <Text className="text-lg font-bold mb-4 text-f1-foreground">
+        Default Variants
+      </Text>
+      <View className="flex-row flex-wrap gap-2 mb-6">
+        <Counter value={42} />
+        <Counter value={142} type="bold" maxValue={99} />
+        <Counter value={42} type="selected" />
+      </View>
+    </ScrollView>
+  );
 };

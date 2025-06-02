@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "cva";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { cn } from "../../lib/utils";
 
 const counterVariants = cva({
@@ -7,7 +7,7 @@ const counterVariants = cva({
   variants: {
     size: {
       md: "min-w-5 p-0.5",
-      sm: "min-w-4 px-0.5",
+      sm: "w-4 px-0.5",
     },
     type: {
       default: "bg-f1-background-secondary outline outline-1 outline-f1-border",
