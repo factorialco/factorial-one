@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.78.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.4...factorial-one-react-v1.78.0) (2025-06-02)
+
+
+### Features
+
+* **Button:** Add `pressed` prop ([#1973](https://github.com/factorialco/factorial-one/issues/1973)) ([bb73d93](https://github.com/factorialco/factorial-one/commit/bb73d931ebd1ebfcd922e278f4fdd89a6052063f))
+
 ## [1.77.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.3...factorial-one-react-v1.77.4) (2025-06-02)
 
 
