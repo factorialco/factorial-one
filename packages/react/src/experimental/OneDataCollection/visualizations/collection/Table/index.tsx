@@ -334,7 +334,8 @@ export const TableCollection = <
           })}
         </TableBody>
       </OneTable>
-      {paginationInfo && (
+      {/*TODO: Move this logic to a shared component since it's on Card visualization as well*/}
+      {paginationInfo && paginationInfo.type === "pages" && (
         <div className="flex w-full items-center justify-between px-6">
           <span className="shrink-0 text-f1-foreground-secondary">
             {paginationInfo.total > 0 &&
