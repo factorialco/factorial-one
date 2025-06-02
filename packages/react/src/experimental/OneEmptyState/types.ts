@@ -1,3 +1,9 @@
+import { LoadingStateProps } from "@/components/UpsellingKit/UpsellingButton"
+import {
+  ErrorMessageProps,
+  NextStepsProps,
+  SuccessMessageProps,
+} from "@/components/UpsellingKit/UpsellRequestResponseDialog"
 import { IconType } from "@/components/Utilities/Icon"
 import { AlertAvatarProps } from "@/experimental/Information/Avatars/AlertAvatar"
 
@@ -24,13 +30,45 @@ export type ActionProps = {
    * @optional
    */
   icon?: IconType
-}
+} & (
+  | {
+      /**
+       * The type of the action
+       */
+      type: "upsell"
+      /**
+       * The error message of the action
+       */
+      errorMessage: ErrorMessageProps
+      /**
+       * The success message of the action
+       */
+      successMessage: SuccessMessageProps
 
-export type EmptyStateAlertProps = Omit<AlertAvatarProps, "size" | "type"> & {
-  type: Exclude<AlertAvatarProps["type"], "positive">
-}
+      /**
+       * The loading state of the action
+       */
+      loadingState: LoadingStateProps
 
-export type EmptyStateProps = {
+      /**
+       * The next steps of the action
+       */
+      nextSteps: NextStepsProps
+
+      /**
+       * The next steps of the action
+       */
+      closeLabel: string
+    }
+  | {
+      /**
+       * The type of the action
+       */
+      type?: "default"
+    }
+)
+
+export type OneEmptyStateProps = {
   /**
    * The title of the empty state
    */
@@ -43,17 +81,32 @@ export type EmptyStateProps = {
   description?: string
 
   /**
-   * If defined, an icon will be displayed in the empty state.
-   * Can be either an emoji string or an alert configuration.
-   * @optional
-   */
-  icon?: string | EmptyStateAlertProps
-
-  /**
    * An array of action objects to display as buttons in the empty state.
    * Each action represents a user-interactable option, such as "Retry" or "Go Back",
    * and can include a label, click handler, optional icon, and button variant.
    * @optional
    */
   actions?: ActionProps[]
-}
+} & (
+  | {
+      /**
+       * The variant of the empty state
+       * @optional
+       */
+      variant?: "default"
+
+      /**
+       * An icon will be displayed in the empty state.
+       * emoji string
+       */
+      emoji?: string
+    }
+  | {
+      /**
+       * The variant of the empty state
+       * @optional
+       */
+      variant: Exclude<AlertAvatarProps["type"], "positive">
+      emoji?: never
+    }
+)

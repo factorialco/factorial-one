@@ -1,4 +1,5 @@
 import { PopoverProps } from "@radix-ui/react-popover"
+import { Action } from "../Fields/Select/SelectBottomActions"
 
 export type EntitySelectSubEntity = {
   subId: EntityId
@@ -46,6 +47,7 @@ interface EntitySelectCommonProps
   width?: number
   hiddenAvatar?: boolean
   applySearchToGroup?: boolean
+  actions?: Action[]
 }
 
 export type FlattenedItem = {

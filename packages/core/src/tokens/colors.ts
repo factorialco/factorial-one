@@ -221,6 +221,7 @@ export const f1Colors = {
     info: "hsl(var(--info-50))",
     warning: "hsl(var(--warning-50))",
     positive: "hsl(var(--positive-50))",
+    promote: "hsl(var(--promote-50))",
     selected: {
       DEFAULT: "hsl(var(--selected-50))",
       hover: "hsl(var(--selected-60))",

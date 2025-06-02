@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.8.2...factorial-one-react-native-v0.9.0) (2025-05-30)
+
+
+### Features
+
+* disable activity item press effect ([#1955](https://github.com/factorialco/factorial-one/issues/1955)) ([499d38c](https://github.com/factorialco/factorial-one/commit/499d38cc4392f88f578335c3d1453bd2a8b44e60))
+
 ## [0.8.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.8.1...factorial-one-react-native-v0.8.2) (2025-05-29)
 
 

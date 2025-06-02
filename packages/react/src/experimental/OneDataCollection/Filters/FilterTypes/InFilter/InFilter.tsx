@@ -156,12 +156,12 @@ export function InFilter<T extends string>({
 
   return (
     <div
-      className="flex min-h-full w-full flex-col gap-1"
+      className="flex min-h-full w-full flex-col"
       role="group"
       aria-label={schema.label}
     >
       {showSearch && (
-        <div className="sticky left-0 right-0 top-0 p-2 backdrop-blur-[8px]">
+        <div className="sticky left-0 right-0 top-0 rounded-tr-xl p-2 backdrop-blur-[8px]">
           <Input
             type="search"
             placeholder="Search..."
@@ -174,7 +174,7 @@ export function InFilter<T extends string>({
           />
         </div>
       )}
-      <div className="flex-1 overflow-y-auto px-3">
+      <div className="flex-1 overflow-y-auto px-2">
         {filteredOptions.map((option) => {
           const isSelected = value.includes(option.value)
           const optionId = `option-${String(option.value)}`

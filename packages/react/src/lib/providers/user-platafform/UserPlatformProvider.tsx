@@ -3,7 +3,12 @@ import { detectPlatform } from "./user-platform"
 
 export type Platform = "mac" | "windows" | "linux" | "mobile" | "unknown"
 
-const PlatformContext = createContext<Platform | null>(null)
+type Context = {
+  platform: Platform
+  isDev: boolean
+}
+
+const PlatformContext = createContext<Context | null>(null)
 
 type UserPlatformProviderProps = {
   children: React.ReactNode
@@ -11,11 +16,13 @@ type UserPlatformProviderProps = {
    * Force set the platform. Won't trigger platform auto-detection if set.
    */
   platform?: Platform
+  isDev?: boolean
 }
 
 export const UserPlatformProvider = ({
   children,
   platform,
+  isDev = false,
 }: UserPlatformProviderProps) => {
   const [userPlatform, setUserPlatform] = useState<Platform>(
     platform ?? "unknown"
@@ -28,10 +35,20 @@ export const UserPlatformProvider = ({
   }, [platform])
 
   return (
-    <PlatformContext.Provider value={userPlatform}>
+    <PlatformContext.Provider value={{ platform: userPlatform, isDev }}>
       {children}
     </PlatformContext.Provider>
   )
+}
+
+export const useIsDev = () => {
+  const context = useContext(PlatformContext)
+
+  if (context === null) {
+    throw new Error("useIsDev must be used within an UserPlatformProvider")
+  }
+
+  return context.isDev
 }
 
 export function useUserPlatform(): Platform {
@@ -43,5 +60,5 @@ export function useUserPlatform(): Platform {
     )
   }
 
-  return context
+  return context.platform
 }

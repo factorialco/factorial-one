@@ -29,7 +29,7 @@ export const ActivityItem = ({
   return (
     <Pressable
       className={`flex w-full flex-row gap-2 rounded-lg p-2 pr-3 ${isPressed ? "bg-f1-background-hover" : ""}`}
-      onPressIn={() => setIsPressed(true)}
+      onPressIn={() => setIsPressed(false)} // Disabled by default - no use case for now
       onPressOut={() => setIsPressed(false)}
       onPress={() => onPress(id)}
       accessibilityLabel="activity-item"
