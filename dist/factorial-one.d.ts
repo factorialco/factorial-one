@@ -23,7 +23,9 @@ import { RefObject } from 'react';
 import { SVGProps } from 'react';
 import { VariantProps } from 'cva';
 
-declare type Action = {
+export declare type Action = UpsellAction | RegularAction;
+
+declare type Action_2 = {
     label: string;
     onClick: () => void;
     icon?: IconType;
@@ -31,8 +33,6 @@ declare type Action = {
     size?: "md" | "lg";
     loading?: boolean;
 };
-
-declare type Action_2 = UpsellAction | RegularAction;
 
 export declare const AreaChart: ForwardRefExoticComponent<Omit<LineChartPropsBase<LineChartConfig> & {
 lineType?: "step" | "linear" | "natural" | "monotoneX";
@@ -179,6 +179,22 @@ declare const defaultTranslations: {
             readonly retry: "Retry";
         };
         readonly itemsCount: "items";
+        readonly emptyStates: {
+            readonly noData: {
+                readonly title: "No data";
+                readonly description: "No data available";
+            };
+            readonly noResults: {
+                readonly title: "No results";
+                readonly description: "No results found try another search or clear the filters";
+                readonly clearFilters: "Clear filters";
+            };
+            readonly error: {
+                readonly title: "Error";
+                readonly description: "An error occurred while loading the data";
+                readonly retry: "Retry";
+            };
+        };
     };
     readonly shortcut: "Shortcut";
     readonly date: {
@@ -286,6 +302,7 @@ export declare const FactorialOneProvider: React.FC<{
     layout?: Omit<ComponentProps<typeof LayoutProvider>, "children">;
     i18n: Omit<I18nProviderProps, "children">;
     l10n: Omit<L10nProviderProps, "children">;
+    isDev?: boolean;
 }>;
 
 export declare function getEmojiLabel(emoji: string): string;
@@ -447,21 +464,21 @@ declare type ProductModalProps = {
         }[];
     };
     closeLabel: string;
-    primaryAction?: Action;
-    secondaryAction?: Action;
+    primaryAction?: Action_2;
+    secondaryAction?: Action_2;
 };
 
 export declare function ProductWidget({ mediaUrl, title, description, onClose, dismissible, width, trackVisibility, actions, }: ProductWidgetProps): JSX_2.Element;
 
 declare type ProductWidgetProps = {
-    mediaUrl: string;
+    mediaUrl?: string;
     title: string;
     description: string;
     onClose: () => void;
     dismissible: boolean;
     width?: string;
     trackVisibility?: (visible: boolean) => void;
-    actions?: Action_2[];
+    actions?: Action[];
 };
 
 export declare const ProgressBarChart: ForwardRefExoticComponent<Omit<ChartPropsBase<ChartConfig_2> & {
