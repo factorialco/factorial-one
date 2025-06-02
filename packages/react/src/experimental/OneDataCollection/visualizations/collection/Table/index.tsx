@@ -230,7 +230,7 @@ export const TableCollection = <
   return (
     <>
       <OneTable loading={isLoading}>
-        <TableHeader>
+        <TableHeader sticky={true}>
           <TableRow>
             {source.selectable && (
               <TableHead

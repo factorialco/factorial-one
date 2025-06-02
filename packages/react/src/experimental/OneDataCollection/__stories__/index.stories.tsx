@@ -217,6 +217,10 @@ export const BasicTableView: Story = {
   },
 }
 
+export const FullheightAndFixedHeader: Story = {
+  render: () => <ExampleComponent frozenColumns={2} fullHeight />,
+}
+
 // Examples with multiple visualizations
 export const TableFrozenCols: Story = {
   render: () => <ExampleComponent frozenColumns={2} />,

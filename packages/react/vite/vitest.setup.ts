@@ -19,6 +19,17 @@ vi.stubGlobal("matchMedia", (query) => ({
   dispatchEvent: vi.fn(),
 }))
 
+// Mock ResizeObserver
+vi.stubGlobal("ResizeObserver", {
+  observe: vi.fn(),
+  disconnect: vi.fn(),
+})
+
+// Mock getComputedStyle for the OneEllipsis component
+vi.stubGlobal("getComputedStyle", () => ({
+  lineHeight: "20px",
+}))
+
 // Add pointer event polyfills for testing environment
 if (typeof window !== "undefined") {
   window.HTMLElement.prototype.hasPointerCapture = () => false
