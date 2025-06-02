@@ -4,6 +4,7 @@ import { AreaChartWidgetProps } from './AreaChartWidget';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { AvatarProps } from '@radix-ui/react-avatar';
 import { BarChartProps } from '../../../components/Charts/BarChart';
+import { baseColors } from '@factorialco/factorial-one-core';
 import { ButtonHTMLAttributes } from 'react';
 import { ClassValue } from 'cva';
 import { color as color_2 } from '../../../../ui/avatar';
@@ -64,6 +65,28 @@ declare type Action_2 = {
     onClick: () => void;
     icon?: IconType;
     variant?: "default" | "outline";
+};
+
+declare type ActionProps = {
+    /**
+     * The label of the action
+     */
+    label: string;
+    /**
+     * The click handler of the action
+     */
+    onClick: () => void;
+    /**
+     * The variant of the action
+     * @default "default"
+     * @optional
+     */
+    variant?: "default" | "outline";
+    /**
+     * The icon of the action
+     * @optional
+     */
+    icon?: IconType;
 };
 
 declare type ActionType = CopyActionType | NavigateActionType;
@@ -279,121 +302,6 @@ declare type BaseAvatarProps_3 = ComponentProps<typeof BaseAvatar>;
 declare type BaseAvatarProps_4 = ComponentProps<typeof BaseAvatar>;
 
 export declare const BaseCelebration: ({ link, firstName, lastName, src, onClick, canReact, lastEmojiReaction, onReactionSelect, type, typeLabel, date, }: CelebrationProps) => JSX_2.Element;
-
-declare const baseColors: {
-    white: {
-        3: string;
-        5: string;
-        10: string;
-        20: string;
-        30: string;
-        40: string;
-        50: string;
-        60: string;
-        70: string;
-        80: string;
-        90: string;
-        100: string;
-    };
-    current: string;
-    transparent: string;
-    grey: {
-        0: string;
-        5: string;
-        10: string;
-        20: string;
-        30: string;
-        40: string;
-        50: string;
-        60: string;
-        70: string;
-        80: string;
-        90: string;
-        100: string;
-        solid: {
-            40: string;
-            50: string;
-        };
-    };
-    lilac: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    barbie: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    smoke: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    army: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    flubber: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    indigo: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    camel: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    radical: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    viridian: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    orange: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    red: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    grass: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    malibu: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    yellow: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    purple: {
-        50: string;
-        60: string;
-        70: string;
-    };
-    special: {
-        highlight: string;
-    };
-};
 
 export declare const BaseCommunityPost: ({ id, author, group, createdAt, title, description, onClick, mediaUrl, event, counters, reactions, inLabel, comment, dropdownItems, noReactionsButton, noVideoPreload, }: CommunityPostProps) => JSX_2.Element;
 
@@ -828,9 +736,10 @@ export declare type CollectionProps<Record extends RecordType, Filters extends F
     /** The data source configuration and state */
     source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters, Grouping>;
     /** Function to handle item selection */
-    onSelectItems?: OnSelectItemsCallback<Record, Filters>;
-    /** Function to handle total items change */
-    onTotalItemsChange?: (totalItems: number | undefined) => void;
+    onSelectItems: OnSelectItemsCallback<Record, Filters>;
+    /** Function to handle data load */
+    onLoadData: OnLoadDataCallback<Record, Filters>;
+    onLoadError: OnLoadErrorCallback;
 } & VisualizationOptions;
 
 export declare type CollectionSearchOptions = {
@@ -1007,6 +916,8 @@ export declare type CurrentFilters<F extends FilterOptions<string>> = F extends 
     [Key in K]?: FilterValue<F["fields"][Key]>;
 } : Record<string, never>;
 
+declare type CustomEmptyStates = Partial<Record<EmptyStateType, Partial<EmptyState>>>;
+
 export declare const Dashboard: ForwardRefExoticComponent<DashboardProps & RefAttributes<HTMLDivElement>> & {
     Skeleton: () => JSX_2.Element;
 };
@@ -1026,6 +937,14 @@ declare type DashboardProps_2 = {
  * @template Filters - The available filter configurations
  */
 export declare type DataAdapter<Record extends RecordType, Filters extends FiltersDefinition, NavigationFilters extends NavigationFiltersDefinition> = BaseDataAdapter<Record, Filters, NavigationFilters> | PaginatedDataAdapter<Record, Filters, NavigationFilters>;
+
+/**
+ * Represents an error that occurred during data fetching
+ */
+declare interface DataError {
+    message: string;
+    cause?: unknown;
+}
 
 declare const DataList: ForwardRefExoticComponent<DataListProps & RefAttributes<HTMLUListElement>> & {
     Item: ForwardRefExoticComponent<ItemProps & RefAttributes<HTMLLIElement>>;
@@ -1332,6 +1251,17 @@ declare type EmployeeItemProps = {
     action?: ActionType;
 };
 
+declare type EmptyState = {
+    emoji?: string;
+    title: string;
+    description?: string;
+    actions?: ActionProps[];
+};
+
+declare const emptyStatesTypes: string[];
+
+declare type EmptyStateType = (typeof emptyStatesTypes)[number];
+
 export declare type enhanceConfig = {
     onEnhanceText: (params: enhanceTextParams) => Promise<enhancedTextResponse>;
     enhancementOptions?: EnhancementOption[];
@@ -1396,6 +1326,7 @@ declare interface EntitySelectCommonProps extends Omit<PopoverProps, "children" 
     width?: number;
     hiddenAvatar?: boolean;
     applySearchToGroup?: boolean;
+    actions?: Action[];
 }
 
 export declare type EntitySelectEntity = {
@@ -1801,6 +1732,8 @@ export declare const IconAvatar: {
     displayName: string;
 };
 
+declare type IconCellValue = IconValue;
+
 declare const iconSizes: {
     readonly xs: "xs";
     readonly sm: "xs";
@@ -1815,6 +1748,11 @@ declare type IconType = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefA
 declare type IconType_2 = ForwardRefExoticComponent<SVGProps<SVGSVGElement> & RefAttributes<SVGSVGElement> & {
     animate?: "normal" | "animate";
 }>;
+
+declare interface IconValue {
+    icon: IconType;
+    label: string;
+}
 
 declare const Indicator: ForwardRefExoticComponent<IndicatorProps & RefAttributes<HTMLDivElement>>;
 
@@ -2259,11 +2197,12 @@ declare interface OneCardProps {
  * - Visualization selector (if multiple visualizations are available)
  * - The selected visualization of the data
  */
-export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>>({ source, visualizations, onSelectItems, onBulkAction, }: {
+export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition, Grouping extends GroupingDefinition<Record>>({ source, visualizations, onSelectItems, onBulkAction, emptyStates, }: {
     source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters, Grouping>;
     visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters, Grouping>>;
     onSelectItems?: OnSelectItemsCallback<Record, Filters>;
     onBulkAction?: OnBulkActionCallback<Record, Filters>;
+    emptyStates?: CustomEmptyStates;
     onTotalItemsChange?: (totalItems: number) => void;
 }) => JSX.Element;
 
@@ -2387,6 +2326,16 @@ export declare type OnePersonListItemProps = {
     onClick: () => void;
     withPointerCursor?: boolean;
 };
+
+export declare type OnLoadDataCallback<Record extends RecordType, Filters extends FiltersDefinition> = (data: {
+    totalItems: number | undefined;
+    filters: FiltersState<Filters>;
+    search: string | undefined;
+    isInitialLoading: boolean;
+    data: Record[];
+}) => void;
+
+export declare type OnLoadErrorCallback = (error: DataError) => void;
 
 export declare type OnSelectItemsCallback<R extends RecordType, Filters extends FiltersDefinition> = (selectedItems: {
     allSelected: boolean | "indeterminate";
@@ -2700,6 +2649,7 @@ declare const propertyRenderers: {
     readonly tag: (args: TagCellValue) => JSX_2.Element;
     readonly dotTag: (args: DotTagCellValue) => JSX_2.Element;
     readonly tagList: (args: TagListCellValue) => JSX_2.Element;
+    readonly icon: (args: IconCellValue) => JSX_2.Element;
 };
 
 declare type Props = {
@@ -3236,6 +3186,9 @@ export declare type SortingsState<Definition extends SortingsDefinition> = {
     order: SortOrder;
 } | null;
 
+/**
+ * Type helper to create a multiple sortings state (the main sorting and the grouping sorting)
+ */
 export declare type SortingsStateMultiple = {
     field: string;
     order: "asc" | "desc";
@@ -3800,7 +3753,8 @@ declare type Visualization<Record extends RecordType, Filters extends FiltersDef
     icon: IconType;
     /** Custom component to render the visualization */
     component: (props: {
-        onTotalItemsChange?: (totalItems: number) => void;
+        onLoadData: OnLoadDataCallback<Record, Filters>;
+        onLoadError: OnLoadErrorCallback;
         source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters, Grouping>;
     }) => JSX.Element;
 };

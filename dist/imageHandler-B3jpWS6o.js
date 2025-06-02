@@ -8722,7 +8722,7 @@ const $me = () => {
       neutral: "text-f1-icon",
       critical: "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse group-active:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold/80 dark:group-active:text-f1-icon-bold/80",
       ghost: "text-f1-icon",
-      promote: "text-f1-icon"
+      promote: "text-f1-icon-promote"
     }
   },
   defaultVariants: {
@@ -39589,14 +39589,15 @@ const pme = async () => {
   }
 }, b8 = jt(null), oge = ({
   children: e,
-  platform: t
+  platform: t,
+  isDev: r = !1
 }) => {
-  const [r, n] = mt(
+  const [n, i] = mt(
     t ?? "unknown"
   );
   return _t(() => {
-    t === void 0 && pme().then(n);
-  }, [t]), /* @__PURE__ */ k(b8.Provider, { value: r, children: e });
+    t === void 0 && pme().then(i);
+  }, [t]), /* @__PURE__ */ k(b8.Provider, { value: { platform: n, isDev: r }, children: e });
 };
 function age() {
   const e = He(b8);
@@ -39604,7 +39605,7 @@ function age() {
     throw new Error(
       "useUserPlatform must be used within an UserPlatformProvider"
     );
-  return e;
+  return e.platform;
 }
 const x8 = jt(void 0), sge = ({ children: e, ...t }) => /* @__PURE__ */ k(x8.Provider, { value: t, children: e }), vme = () => ({
   ...He(x8)
@@ -39718,13 +39719,13 @@ export {
   Tde as b4,
   mz as b5,
   VV as b6,
-  Jo as b7,
-  Mme as b8,
-  bD as b9,
-  Q3 as bA,
-  e8 as bB,
-  gfe as bC,
-  Xx as bD,
+  gfe as b7,
+  Xx as b8,
+  Kx as b9,
+  kve as bA,
+  J3 as bB,
+  Q3 as bC,
+  e8 as bD,
   mD as bE,
   az as bF,
   tz as bG,
@@ -39747,32 +39748,32 @@ export {
   Jle as bX,
   $i as bY,
   mh as bZ,
-  Rme as ba,
-  yD as bb,
-  Q$ as bc,
-  Dme as bd,
-  age as be,
-  f3 as bf,
-  d3 as bg,
-  h3 as bh,
-  Q1 as bi,
-  mde as bj,
-  yde as bk,
-  bde as bl,
-  wde as bm,
-  Sde as bn,
-  Ade as bo,
-  _de as bp,
-  xde as bq,
-  ude as br,
-  yfe as bs,
-  dP as bt,
-  Kx as bu,
-  Zme as bv,
-  Dve as bw,
-  Z3 as bx,
-  kve as by,
-  J3 as bz,
+  yD as ba,
+  Mme as bb,
+  bD as bc,
+  Rme as bd,
+  Q$ as be,
+  Dme as bf,
+  age as bg,
+  f3 as bh,
+  d3 as bi,
+  h3 as bj,
+  Q1 as bk,
+  mde as bl,
+  yde as bm,
+  bde as bn,
+  wde as bo,
+  Sde as bp,
+  Ade as bq,
+  _de as br,
+  xde as bs,
+  ude as bt,
+  yfe as bu,
+  dP as bv,
+  Jo as bw,
+  Zme as bx,
+  Dve as by,
+  Z3 as bz,
   Vh as c,
   Fme as d,
   qme as e,
