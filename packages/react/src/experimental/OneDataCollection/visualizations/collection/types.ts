@@ -8,10 +8,12 @@ import type {
   GroupingDefinition,
   OnLoadDataCallback,
   OnLoadErrorCallback,
+  OnSelectItemsCallback,
   RecordType,
 } from "../../types"
 import type { CardVisualizationOptions } from "../../visualizations/collection/Card"
 import type { TableVisualizationOptions } from "../../visualizations/collection/Table"
+import { ListVisualizationOptions } from "./List/types"
 
 /**
  * Represents a visualization configuration for displaying collection data.
@@ -42,14 +44,21 @@ export type Visualization<
       options: TableVisualizationOptions<Record, Filters, Sortings>
     }
   | {
-      /** Custom visualization type */
-      type: "custom"
+      /** List-based visualization type */
+      type: "list"
+      /** Configuration options for list visualization */
+      options: ListVisualizationOptions<Record, Filters, Sortings>
+    }
+  | {
       /** Human-readable label for the visualization */
       label: string
       /** Icon to represent the visualization in UI */
       icon: IconType
+      /** Custom visualization type */
+      type: "custom"
       /** Custom component to render the visualization */
       component: (props: {
+        onSelectItems: OnSelectItemsCallback<Record, Filters>
         onLoadData: OnLoadDataCallback<Record, Filters>
         onLoadError: OnLoadErrorCallback
         source: DataSource<

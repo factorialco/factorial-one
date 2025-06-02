@@ -2,8 +2,6 @@ import { Icon } from "@/components/Utilities/Icon"
 
 import { focusRing } from "@/lib/utils"
 
-import { IconType } from "@/components/Utilities/Icon"
-import { Kanban, Table } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { FiltersDefinition } from "../../Filters/types"
@@ -11,7 +9,10 @@ import { GroupingDefinition } from "../../grouping"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { RecordType, SortingsDefinition } from "../../types"
-import { Visualization } from "../../visualizations/collection"
+import {
+  collectionVisualizations,
+  Visualization,
+} from "../../visualizations/collection"
 
 /**
  * A component that renders a selector for switching between different visualization types.
@@ -58,21 +59,36 @@ export const VisualizationSelector = <
     onVisualizationChange(index)
   }
 
+  const getVisualizationMeta = (
+    visualization: Visualization<
+      Record,
+      Filters,
+      Sortings,
+      ItemActions,
+      NavigationFilters,
+      Grouping
+    >
+  ) => {
+    if (visualization.type === "custom") {
+      return {
+        icon: visualization.icon,
+        label: visualization.label,
+      }
+    }
+
+    const visualizationType = collectionVisualizations[visualization.type]
+
+    return {
+      icon: visualizationType.icon,
+      label: i18n.collections.visualizations[visualization.type],
+    }
+  }
   return (
     <div className="grid grid-cols-2">
       {visualizations.map((visualization, index) => {
-        const isSelected = currentVisualization === index
-        const IconVisualization: IconType =
-          visualization.type === "custom"
-            ? visualization.icon
-            : visualization.type === "table"
-              ? Table
-              : Kanban
+        const { icon, label } = getVisualizationMeta(visualization)
 
-        const label =
-          visualization.type === "custom"
-            ? visualization.label
-            : i18n.collections.visualizations[visualization.type]
+        const isSelected = currentVisualization === index
 
         return (
           <button
@@ -84,7 +100,7 @@ export const VisualizationSelector = <
             key={visualization.type}
             onClick={() => handleVisualizationChange(index)}
           >
-            <Icon icon={IconVisualization} />
+            <Icon icon={icon} />
             {label}
           </button>
         )
