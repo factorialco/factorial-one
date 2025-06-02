@@ -40,10 +40,9 @@ test("Button renders with icon", () => {
 
 test("Button renders as icon-only when hideLabel is true", () => {
   render(<Button label="Add Item" icon={Add} hideLabel round />)
-  const button = screen.getByRole("button")
+  const button = screen.getByTitle("Add Item")
   const svg = button.querySelector("svg")
   expect(svg).toBeInTheDocument()
-  expect(screen.queryByText("Add Item")).not.toBeInTheDocument()
   expect(button).toHaveAttribute("title", "Add Item")
 })
 

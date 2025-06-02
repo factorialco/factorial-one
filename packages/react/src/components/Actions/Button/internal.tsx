@@ -1,6 +1,7 @@
 import { Button as ShadcnButton } from "@/ui/button"
 
 import { EmojiImage } from "@/lib/emojis.tsx"
+import { cn } from "@/lib/utils"
 import { cva } from "cva"
 import { ComponentProps, forwardRef, useState } from "react"
 import { Icon, IconType } from "../../Utilities/Icon"
@@ -126,7 +127,7 @@ const ButtonInternal = forwardRef<HTMLButtonElement, ButtonInternalProps>(
         {emoji && (
           <EmojiImage emoji={emoji} size={size === "sm" ? "sm" : "md"} />
         )}
-        {!hideLabel && label}
+        <span className={cn(hideLabel && "sr-only")}>{label}</span>
         {append}
       </ShadcnButton>
     )
