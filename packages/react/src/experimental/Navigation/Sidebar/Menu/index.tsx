@@ -114,6 +114,7 @@ const FavoriteItem = ({
   index,
   total,
   onMove,
+  onReorderFinish,
 }: {
   item: FavoriteMenuItem
   dragConstraints?: RefObject<HTMLElement>
@@ -121,6 +122,7 @@ const FavoriteItem = ({
   index: number
   total: number
   onMove?: (from: number, to: number) => void
+  onReorderFinish: () => void
 }) => {
   const t = useI18n()
 
@@ -173,6 +175,7 @@ const FavoriteItem = ({
   const handleDragEnd = () => {
     setIsDragging(false)
     setDraggedItemId(null)
+    onReorderFinish()
     setTimeout(() => {
       wasDragging.current = false
     }, 0)
@@ -527,13 +530,9 @@ function MenuContent({
     }
   }, [favorites, currentFavorites])
 
-  const handleFavoritesReorder = useCallback(
-    (newOrder: FavoriteMenuItem[]) => {
-      setCurrentFavorites(newOrder)
-      onFavoritesChange?.(newOrder)
-    },
-    [onFavoritesChange]
-  )
+  const handleFavoritesReorder = (newOrder: FavoriteMenuItem[]) => {
+    setCurrentFavorites(newOrder)
+  }
 
   const handleRemoveFavorite = useCallback(
     (item: FavoriteMenuItem) => {
@@ -630,6 +629,9 @@ function MenuContent({
                     index={idx}
                     total={currentFavorites.length}
                     onMove={handleMoveFavorite}
+                    onReorderFinish={() => {
+                      onFavoritesChange?.(currentFavorites)
+                    }}
                   />
                 ))}
               </Reorder.Group>
