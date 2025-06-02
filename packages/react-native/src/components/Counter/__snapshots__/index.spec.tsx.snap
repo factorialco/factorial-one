@@ -2,7 +2,7 @@
 
 exports[`Counter Snapshot 1`] = `
 <Text
-  className="text-f1-foreground inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all min-w-5 p-0.5 bg-f1-background-secondary outline outline-1 outline-f1-border"
+  className="text-center text-f1-foreground inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all min-w-5 h-5 p-0.5 bg-f1-background-secondary outline outline-1 outline-f1-border"
 >
   42
 </Text>

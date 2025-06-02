@@ -6,8 +6,8 @@ const counterVariants = cva({
   base: "inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all",
   variants: {
     size: {
-      md: "min-w-5 p-0.5",
-      sm: "min-w-4 px-0.5",
+      md: "min-w-5 h-5 p-0.5",
+      sm: "min-w-4 h-4 px-0.5",
     },
     type: {
       default: "bg-f1-background-secondary outline outline-1 outline-f1-border",
@@ -30,7 +30,12 @@ export function Counter({ size, type, value, maxValue }: CounterProps) {
   const displayValue = maxValue && value > maxValue ? `+${maxValue}` : value;
 
   return (
-    <Text className={cn("text-f1-foreground", counterVariants({ size, type }))}>
+    <Text
+      className={cn(
+        "text-center text-f1-foreground",
+        counterVariants({ size, type }),
+      )}
+    >
       {displayValue}
     </Text>
   );

@@ -22,14 +22,35 @@ export default meta;
 export const CounterShowcase = () => {
   return (
     <ScrollView className="p-4">
-      {/* Basic Variants */}
       <Text className="text-lg font-bold mb-4 text-f1-foreground">
-        Default Variants
+        Variants by types
       </Text>
       <View className="flex-row flex-wrap gap-2 mb-6">
-        <Counter value={42} />
-        <Counter value={142} type="bold" maxValue={99} />
-        <Counter value={42} type="selected" />
+        <View className="items-center justify-center">
+          <Counter value={42} />
+          <Text className="text-xs mt-2 text-center">default</Text>
+        </View>
+        <View className="items-center justify-center">
+          <Counter value={142} type="bold" maxValue={99} />
+          <Text className="text-xs mt-2 text-center">bold</Text>
+        </View>
+        <View className="items-center justify-center">
+          <Counter value={42} type="selected" />
+          <Text className="text-xs mt-2 text-center">selected</Text>
+        </View>
+      </View>
+      <Text className="text-lg font-bold mb-4 text-f1-foreground">
+        Variants by size
+      </Text>
+      <View className="flex-row flex-wrap gap-2 mb-6">
+        <View className="items-center justify-center">
+          <Counter value={42} size="md" />
+          <Text className="text-xs mt-2 text-center">md</Text>
+        </View>
+        <View className="items-center justify-center">
+          <Counter value={42} size="sm" />
+          <Text className="text-xs mt-2 text-center">sm</Text>
+        </View>
       </View>
     </ScrollView>
   );
