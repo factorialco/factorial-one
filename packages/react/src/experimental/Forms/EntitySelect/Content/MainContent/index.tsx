@@ -186,6 +186,7 @@ export const MainContent = ({
       selectedGroup,
       singleSelector,
       hiddenAvatar,
+      actionCreate,
     ]
   )
 
