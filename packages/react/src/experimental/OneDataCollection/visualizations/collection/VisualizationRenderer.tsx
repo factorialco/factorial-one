@@ -13,7 +13,11 @@
  * @returns The rendered visualization component (TableCollection, CardCollection, or custom component)
  */
 
-import { OnSelectItemsCallback } from "../../types"
+import {
+  OnLoadDataCallback,
+  OnLoadErrorCallback,
+  OnSelectItemsCallback,
+} from "../../types"
 
 import { FiltersDefinition } from "../../Filters/types"
 import { GroupingDefinition } from "../../grouping"
@@ -50,7 +54,8 @@ export const VisualizationRenderer = <
   visualization,
   source,
   onSelectItems,
-  onTotalItemsChange,
+  onLoadData,
+  onLoadError,
 }: {
   visualization: Visualization<
     Record,
@@ -68,8 +73,9 @@ export const VisualizationRenderer = <
     NavigationFilters,
     Grouping
   >
-  onSelectItems?: OnSelectItemsCallback<Record, Filters>
-  onTotalItemsChange?: (totalItems: number | undefined) => void
+  onSelectItems: OnSelectItemsCallback<Record, Filters>
+  onLoadData: OnLoadDataCallback<Record, Filters>
+  onLoadError: OnLoadErrorCallback
   clearSelectedItems?: () => void
 }): JSX.Element => {
   switch (visualization.type) {
@@ -86,7 +92,8 @@ export const VisualizationRenderer = <
           source={source}
           {...visualization.options}
           onSelectItems={onSelectItems}
-          onTotalItemsChange={onTotalItemsChange}
+          onLoadData={onLoadData}
+          onLoadError={onLoadError}
         />
       )
     case "card":
@@ -102,10 +109,15 @@ export const VisualizationRenderer = <
           source={source}
           {...visualization.options}
           onSelectItems={onSelectItems}
-          onTotalItemsChange={onTotalItemsChange}
+          onLoadData={onLoadData}
+          onLoadError={onLoadError}
         />
       )
     case "custom":
-      return visualization.component({ source, onTotalItemsChange })
+      return visualization.component({
+        source,
+        onLoadData,
+        onLoadError,
+      })
   }
 }
