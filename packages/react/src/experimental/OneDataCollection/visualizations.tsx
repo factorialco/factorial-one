@@ -259,7 +259,6 @@ export const VisualizationRenderer = <
   onSelectItems: OnSelectItemsCallback<Record, Filters>
   onLoadData: OnLoadDataCallback<Record, Filters>
   onLoadError: OnLoadErrorCallback
-  onTotalItemsChange?: (totalItems: number | undefined) => void
   clearSelectedItems?: () => void
 }): JSX.Element => {
   switch (visualization.type) {

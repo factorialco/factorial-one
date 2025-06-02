@@ -5,8 +5,8 @@ import {
   FilterDefinition,
   FiltersState,
   GroupingDefinition,
-  ItemActionsDefinition,
   GroupingState,
+  ItemActionsDefinition,
   OnBulkActionCallback,
   OneDataCollection,
   OnSelectItemsCallback,
@@ -180,7 +180,7 @@ export const getMockVisualizations = (options?: {
     FiltersType,
     typeof sortings,
     ItemActionsDefinition<(typeof mockUsers)[number]>,
-    NavigationFiltersDefinition
+    NavigationFiltersDefinition,
     GroupingDefinition<(typeof mockUsers)[number]>
   >
 > => ({
@@ -486,7 +486,8 @@ export const ExampleComponent = ({
       FiltersType,
       typeof sortings,
       ItemActionsDefinition<(typeof mockUsers)[number]>,
-      NavigationFiltersDefinition
+      NavigationFiltersDefinition,
+      GroupingDefinition<(typeof mockUsers)[number]>
     >
   >
   selectable?: (item: (typeof mockUsers)[number]) => string | number | undefined
