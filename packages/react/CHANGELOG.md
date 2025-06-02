@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.78.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.4...factorial-one-react-v1.78.0) (2025-06-02)
+
+
+### Features
+
+* **Button:** Add `pressed` prop ([#1973](https://github.com/factorialco/factorial-one/issues/1973)) ([bb73d93](https://github.com/factorialco/factorial-one/commit/bb73d931ebd1ebfcd922e278f4fdd89a6052063f))
+
+## [1.77.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.3...factorial-one-react-v1.77.4) (2025-06-02)
+
+
+### Bug Fixes
+
+* export missing popover ([#1971](https://github.com/factorialco/factorial-one/issues/1971)) ([e8638cb](https://github.com/factorialco/factorial-one/commit/e8638cb8dac420cbf80b456009d373285a4b759a))
+
 ## [1.77.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.77.2...factorial-one-react-v1.77.3) (2025-05-30)
 
 
