@@ -609,42 +609,6 @@ export const WithSelectableAndBulkActions: Story = {
   ),
 }
 
-// Examples with filters and loading states
-export const WithPreselectedFilters: Story = {
-  render: () => {
-    const dataSource = useDataSource({
-      filters,
-      sortings,
-      presets: filterPresets,
-      currentFilters: {
-        department: ["Engineering"],
-      },
-      dataAdapter: {
-        fetchData: createPromiseDataFetch(),
-      },
-    })
-
-    return (
-      <OneDataCollection
-        source={dataSource}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-            },
-          },
-        ]}
-      />
-    )
-  },
-}
-
 const JsonVisualization = ({
   source,
 }: {
