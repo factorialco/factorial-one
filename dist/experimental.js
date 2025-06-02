@@ -65111,7 +65111,7 @@ function c7e({ children: e, loading: t = !1 }) {
     zg.Provider,
     {
       value: { isScrolled: n, setIsScrolled: i, isScrolledRight: a, setIsScrolledRight: r },
-      children: /* @__PURE__ */ w("div", { ref: o, className: "relative w-full overflow-auto", children: [
+      children: /* @__PURE__ */ w("div", { ref: o, className: "relative h-full w-full overflow-auto", children: [
         /* @__PURE__ */ l(
           Ig,
           {
@@ -65789,7 +65789,10 @@ const f0 = At(c7e, u7e), f7e = ({
         /* @__PURE__ */ w(
           "div",
           {
-            className: E("flex flex-col gap-4 px-6", r && "max-h-full"),
+            className: E(
+              "flex min-h-0 flex-1 flex-col gap-4 px-6",
+              r && "max-h-full"
+            ),
             children: [
               /* @__PURE__ */ w(
                 l_,
