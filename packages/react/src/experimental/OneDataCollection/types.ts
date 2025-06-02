@@ -129,17 +129,6 @@ export type PaginatedResponse<Record> = {
   records: Record[]
 } & PaginationInfo
 
-export type SortingsStateMultiple = {
-  field: string
-  order: "asc" | "desc"
-}[]
-
-// export type SortingsStateMultiple<
-//   Record extends RecordType,
-//   Definition extends SortingsDefinition,
-//   Grouping extends GroupingDefinition<Record>,
-// > = NonNullable<SortingsState<Definition> | GroupingState<Record, Grouping>>[]
-
 /**
  * Base options for data fetching
  * @template Filters - The available filter configurations

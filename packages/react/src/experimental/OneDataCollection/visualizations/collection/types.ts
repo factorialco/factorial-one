@@ -3,7 +3,13 @@ import type { FiltersDefinition } from "../../Filters/types"
 import { ItemActionsDefinition } from "../../item-actions"
 import { NavigationFiltersDefinition } from "../../navigationFilters/types"
 import { SortingsDefinition } from "../../sortings"
-import type { DataSource, GroupingDefinition, RecordType } from "../../types"
+import type {
+  DataSource,
+  GroupingDefinition,
+  OnLoadDataCallback,
+  OnLoadErrorCallback,
+  RecordType,
+} from "../../types"
 import type { CardVisualizationOptions } from "../../visualizations/collection/Card"
 import type { TableVisualizationOptions } from "../../visualizations/collection/Table"
 
@@ -44,7 +50,8 @@ export type Visualization<
       icon: IconType
       /** Custom component to render the visualization */
       component: (props: {
-        onTotalItemsChange?: (totalItems: number) => void
+        onLoadData: OnLoadDataCallback<Record, Filters>
+        onLoadError: OnLoadErrorCallback
         source: DataSource<
           Record,
           Filters,
