@@ -63,6 +63,7 @@ export const FactorialOne = (Story, { parameters }) => {
           src: src?.startsWith("data:") ? src : `${src}?w=${width}&h=${height}`,
         }),
       }}
+      isDev={parameters.isDev ?? false}
     >
       <Story />
     </FactorialOneProvider>

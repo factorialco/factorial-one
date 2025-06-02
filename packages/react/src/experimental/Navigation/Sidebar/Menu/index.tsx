@@ -518,10 +518,14 @@ function MenuContent({
     useState<FavoriteMenuItem[]>(favorites)
   const hasFavorites = favorites.length > 0
 
-  // TODO: Fix this (it causes a re-render loop of the component)
-  // useEffect(() => {
-  //   setCurrentFavorites(favorites)
-  // }, [favorites])
+  useEffect(() => {
+    const hasChanged =
+      JSON.stringify(favorites) !== JSON.stringify(currentFavorites)
+
+    if (hasChanged) {
+      setCurrentFavorites(favorites)
+    }
+  }, [favorites, currentFavorites])
 
   const handleFavoritesReorder = useCallback(
     (newOrder: FavoriteMenuItem[]) => {

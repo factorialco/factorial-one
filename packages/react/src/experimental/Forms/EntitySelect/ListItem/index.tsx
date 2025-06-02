@@ -126,7 +126,7 @@ export const ListItemSingleContent = ({
         )}
 
         <div className="flex flex-1 flex-col">
-          <div className="flex flex-1 flex-row items-center gap-2">
+          <div className="flex flex-1 flex-row items-center gap-2 break-all">
             <HighlightText
               text={entity.name}
               search={search}
@@ -280,7 +280,7 @@ const EntitySelectListItem = ({
               className="rounded-xs bg-f1-foreground-secondary text-f1-foreground-inverse"
             />
           )}
-          <div className="flex flex-grow flex-row items-center gap-2">
+          <div className="flex flex-grow flex-row items-center gap-2 break-all">
             <HighlightText
               semiBold
               text={entity.name}

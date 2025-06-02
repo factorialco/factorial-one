@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.12.1...factorial-one-core-v1.12.2) (2025-05-30)
+
+
+### Bug Fixes
+
+* change upsell icon color ([#1943](https://github.com/factorialco/factorial-one/issues/1943)) ([0d5a1b1](https://github.com/factorialco/factorial-one/commit/0d5a1b17b894281a9118b68a658361c9c71f11cf))
+
 ## [1.12.1](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.12.0...factorial-one-core-v1.12.1) (2025-05-29)
 
 

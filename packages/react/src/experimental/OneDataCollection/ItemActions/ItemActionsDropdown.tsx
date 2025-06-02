@@ -13,7 +13,7 @@ export type ItemActionsDropdownProps = {
 export const ItemActionsDropdown = ({
   items,
   onOpenChange,
-  align = "start",
+  align = "end",
 }: ItemActionsDropdownProps) => {
   const [open, setOpen] = useState(false)
 

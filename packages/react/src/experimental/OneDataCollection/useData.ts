@@ -47,6 +47,7 @@ type SimpleResult<T> = T[]
  */
 interface UseDataOptions<Filters extends FiltersDefinition> {
   filters?: Partial<FiltersState<Filters>>
+  onError?: (error: DataError) => void
 }
 
 /**
@@ -210,7 +211,7 @@ export function useData<
     NavigationFilters,
     Grouping
   >,
-  { filters }: UseDataOptions<Filters> = {}
+  { filters, onError }: UseDataOptions<Filters> = {}
 ): UseDataReturn<R> {
   const {
     dataAdapter,
@@ -327,11 +328,16 @@ export function useData<
         message: "Error fetching data",
         cause: error,
       })
+      onError?.({
+        message: "Error fetching data",
+        cause: error,
+      })
       setIsInitialLoading(false)
       setIsLoading(false)
       // Clear the cleanup reference when an error occurs
       cleanup.current = undefined
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we don't want to re-run this effect when the onError changes
     [setError, setIsInitialLoading, setIsLoading]
   )
 

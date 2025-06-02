@@ -51,7 +51,8 @@ export const ListCollection = <
   itemDefinition,
   source,
   onSelectItems,
-  onTotalItemsChange,
+  onLoadData,
+  onLoadError,
 }: ListCollectionProps<
   Record,
   Filters,
@@ -68,11 +69,22 @@ export const ListCollection = <
     Sortings,
     NavigationFilters,
     Grouping
-  >(source)
+  >(source, {
+    onError: (error) => {
+      onLoadError(error)
+    },
+  })
 
   useEffect(() => {
-    onTotalItemsChange?.(paginationInfo?.total || data.records?.length || 0)
-  }, [paginationInfo?.total, onTotalItemsChange, data])
+    onLoadData({
+      totalItems: paginationInfo?.total || data.records.length,
+      filters: source.currentFilters,
+      search: source.currentSearch,
+      isInitialLoading,
+      data: data.records,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
+  }, [paginationInfo?.total, data.records])
 
   const { currentSortings, setCurrentSortings, isLoading } = source
 
