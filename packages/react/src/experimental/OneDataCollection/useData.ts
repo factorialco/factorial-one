@@ -55,6 +55,7 @@ interface PaginationInfo {
   currentPage: number
   perPage: number
   pagesCount: number
+  type: "pages" | "infinite-scroll" // This should match the possible values of dataAdapter.paginationType
 }
 
 /**
@@ -64,9 +65,11 @@ interface UseDataReturn<Record> {
   data: Array<Record>
   isInitialLoading: boolean
   isLoading: boolean
+  isLoadingMore: boolean // New
   error: DataError | null
   paginationInfo: PaginationInfo | null
-  setPage: (page: number) => void
+  setPage: (page: number) => void // Keep unchanged
+  loadMore: () => void // New
   totalItems: number | undefined
 }
 
@@ -220,25 +223,43 @@ export function useData<
       : deferredSearch
 
   const handleFetchSuccess = useCallback(
-    (result: PaginatedResponse<Record> | SimpleResult<Record>) => {
+    (
+      result: PaginatedResponse<Record> | SimpleResult<Record>,
+      appendMode: boolean
+    ) => {
       if ("records" in result) {
-        setData(result.records)
+        if (appendMode) {
+          // Append records for infinite scroll
+          setData((prevData) => [...prevData, ...result.records])
+        } else {
+          // Replace data for normal pagination or initial load
+          setData(result.records)
+        }
+
+        // Use a default value of "pages" when paginationType is undefined
+        const paginationType = dataAdapter.paginationType || "pages"
+
+        // Update pagination info
         setPaginationInfo({
           total: result.total,
           currentPage: result.currentPage,
           perPage: result.perPage,
           pagesCount: result.pagesCount,
+          type: paginationType, // Use the type with default
         })
         setTotalItems(result.total)
       } else {
+        // For non-paginated results, always replace
         setData(result)
         setTotalItems?.(result.length)
       }
+
       setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
+      setIsLoadingMore(false)
     },
-    [setData, setError, setPaginationInfo, setIsInitialLoading, setIsLoading]
+    [dataAdapter] // Add to dependencies
   )
 
   const handleFetchError = useCallback(
@@ -262,11 +283,14 @@ export function useData<
 
   type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
 
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
+
   const fetchDataAndUpdate = useCallback(
     async (
       filters: FiltersState<Filters>,
       currentPage = 1,
-      navigationFilters: NavigationFiltersState<NavigationFilters>
+      navigationFilters: NavigationFiltersState<NavigationFilters>,
+      appendMode = false // New parameter
     ) => {
       try {
         // Clean up any existing subscription before creating a new one
@@ -288,13 +312,24 @@ export function useData<
 
         const fetcher = (): PromiseOrObservable<ResultType> => {
           setTotalItems(undefined)
+
+          // TODO: Default perPage value from somewhere
+          const defaultPerPage = 20
+
+          // Safely access perPage, defaulting to 20 if not available
+          const perPageValue =
+            "perPage" in dataAdapter && dataAdapter.perPage !== undefined
+              ? dataAdapter.perPage
+              : defaultPerPage
+
           return dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 ...baseFetchOptions,
-                pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
+                pagination: { currentPage, perPage: perPageValue },
               })
             : dataAdapter.fetchData({
                 ...baseFetchOptions,
+                pagination: { currentPage: 1, perPage: perPageValue },
               })
         }
 
@@ -302,7 +337,7 @@ export function useData<
 
         // Handle synchronous data
         if (!("then" in result || "subscribe" in result)) {
-          handleFetchSuccess(result)
+          handleFetchSuccess(result, appendMode)
           return
         }
 
@@ -316,7 +351,7 @@ export function useData<
             } else if (state.error) {
               handleFetchError(state.error)
             } else if (state.data) {
-              handleFetchSuccess(state.data)
+              handleFetchSuccess(state.data, false)
             }
           },
           error: handleFetchError,
@@ -359,6 +394,28 @@ export function useData<
     ]
   )
 
+  const loadMore = useCallback(() => {
+    if (!paginationInfo || isLoading) return
+
+    const nextPage = paginationInfo.currentPage + 1
+    if (nextPage <= paginationInfo.pagesCount) {
+      setIsLoading(true)
+      setIsLoadingMore(true) // New state
+      fetchDataAndUpdate(
+        mergedFilters,
+        nextPage,
+        currentNavigationFilters,
+        true
+      ) // true = append mode
+    }
+  }, [
+    fetchDataAndUpdate,
+    isLoading,
+    mergedFilters,
+    paginationInfo,
+    currentNavigationFilters,
+  ])
+
   useEffect(() => {
     setIsLoading(true)
     // Always fetch page 1 when filters change
@@ -378,9 +435,11 @@ export function useData<
     data,
     isInitialLoading,
     isLoading,
+    isLoadingMore, // New state
     error,
     paginationInfo,
-    setPage,
+    setPage, // Keep this unchanged
+    loadMore, // Add new function
     totalItems,
   }
 }
