@@ -92,6 +92,7 @@ export type PresetDefinition<Filters extends FiltersDefinition> = {
     filters: FiltersState<Filters>
   ) => Promise<number | undefined> | number | undefined
 }
+
 export type PresetsDefinition<Filters extends FiltersDefinition> =
   PresetDefinition<Filters>[]
 

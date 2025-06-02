@@ -5,17 +5,17 @@ import { OverflowList } from "@/ui/OverflowList"
 import { PresetsDefinition } from "../../types"
 import { FiltersDefinition, FiltersState } from "../types"
 
-interface FilterPresetsProps {
-  filters: FiltersState<FiltersDefinition>
-  onPresetsChange: (filter: FiltersState<FiltersDefinition>) => void
-  presets: PresetsDefinition<FiltersDefinition>
+interface FilterPresetsProps<Filters extends FiltersDefinition> {
+  filters: FiltersState<Filters>
+  onPresetsChange: (filter: FiltersState<Filters>) => void
+  presets: PresetsDefinition<Filters>
 }
 
-export const FiltersPresets = ({
+export const FiltersPresets = <Filters extends FiltersDefinition>({
   presets,
   filters,
   onPresetsChange,
-}: FilterPresetsProps) => {
+}: FilterPresetsProps<Filters>) => {
   const renderListPresetItem = (
     preset: NonNullable<typeof presets>[number],
     index: number,

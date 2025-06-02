@@ -134,6 +134,7 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
     <FiltersContext.Provider
       value={{
         ...props,
+        presets: props.presets as PresetsDefinition<FiltersDefinition>,
         filters: localFiltersValue,
         schema: schema,
         removeFilterValue,
