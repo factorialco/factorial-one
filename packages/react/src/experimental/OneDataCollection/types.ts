@@ -185,7 +185,7 @@ export type PaginatedDataAdapter<
   NavigationFilters extends NavigationFiltersDefinition,
 > = {
   /** Indicates this adapter uses page-based pagination */
-  paginationType: "pages"
+  paginationType: "pages" | "infinite-scroll"
   /** Default number of records per page */
   perPage?: number
   /**
