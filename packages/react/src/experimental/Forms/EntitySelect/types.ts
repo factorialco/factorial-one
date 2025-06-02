@@ -47,6 +47,7 @@ interface EntitySelectCommonProps
   width?: number
   hiddenAvatar?: boolean
   applySearchToGroup?: boolean
+  actionCreate?: Action
   actions?: Action[]
 }
 

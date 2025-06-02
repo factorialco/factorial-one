@@ -496,6 +496,7 @@ export const EntitySelect = (
           disabled={props.disabled}
           hiddenAvatar={props.hiddenAvatar}
           actions={props.actions}
+          actionCreate={props.actionCreate}
         />
       </PopoverContent>
     </Popover>

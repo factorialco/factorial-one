@@ -1,5 +1,5 @@
-import { baseColors } from "@factorialco/factorial-one-core"
 import { forwardRef } from "react"
+import { baseColors } from "../../../../../../core/src/tokens/colors"
 import { useTextFormatEnforcer } from "../../../../lib/text"
 import { BaseTag } from "../BaseTag"
 

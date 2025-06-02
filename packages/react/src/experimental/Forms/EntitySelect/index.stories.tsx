@@ -658,3 +658,60 @@ export const HiddenAvatar = {
     )
   },
 }
+
+export const WithCreate = {
+  args: {
+    ...defaultArgs,
+    actionCreate: {
+      label: "Create new user",
+      icon: "plus",
+      onClick: fn(),
+    },
+  },
+  render: (props: ComponentProps<typeof EntitySelect>) => {
+    const [expandedElements, setExpandedElements] = useState<EntityId[]>([])
+    const [selected, setSelected] = useState<EntitySelectEntity[]>([
+      {
+        ...famousEmployees[0],
+      },
+      { ...famousEmployees[1] },
+    ])
+    const [selectedGroup, setSelectedGroup] = useState<string>(
+      props.selectedGroup ?? "all"
+    )
+
+    const onItemExpandedChange = (id: EntityId, expanded: boolean) => {
+      if (expanded) {
+        setExpandedElements([id].concat(expandedElements))
+      } else {
+        setExpandedElements(expandedElements.filter((el) => el !== id))
+      }
+    }
+
+    return (
+      <form onSubmit={fn}>
+        <EntitySelect
+          {...props}
+          singleSelector={false}
+          onItemExpandedChange={onItemExpandedChange}
+          entities={
+            GROUP_DATA[selectedGroup as keyof typeof GROUP_DATA].map((el) => ({
+              ...el,
+              expanded: expandedElements.includes(el.id),
+              subItems: el.subItems?.map((el2) => ({ ...el2 })),
+            })) || []
+          }
+          selectedGroup={selectedGroup}
+          onGroupChange={(value) => {
+            setSelected([])
+            setSelectedGroup(value ?? "all")
+          }}
+          selectedEntities={selected}
+          onSelect={(selection: EntitySelectEntity[]) => {
+            setSelected(selection)
+          }}
+        />
+      </form>
+    )
+  },
+}

@@ -5,6 +5,7 @@ import { Spinner } from "../../../../exports"
 import { VirtualList } from "../../../../Navigation/VirtualList"
 import { Select } from "../../../Fields/Select"
 import { Action } from "../../../Fields/Select/SelectBottomActions"
+import { CreateItem } from "../../CreateItem"
 import { EntitySelectListItem } from "../../ListItem"
 import {
   EntityId,
@@ -39,6 +40,7 @@ export const MainContent = ({
   notFoundSubtitle,
   className,
   actions,
+  actionCreate,
   singleSelector = false,
   loading = false,
   disabled = false,
@@ -76,6 +78,7 @@ export const MainContent = ({
   disabled?: boolean
   hiddenAvatar?: boolean
   actions?: Action[]
+  actionCreate?: Action
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null)
 
@@ -91,32 +94,45 @@ export const MainContent = ({
   )
 
   const goToFirst = useCallback(() => {
-    ref.current?.scrollTo({
-      top: 0,
-    })
+    setTimeout(() => {
+      ref.current?.scrollTo({ top: 0 })
+    }, 1)
     setTimeout(() => {
       const focusableSelectors = '[data-avatarname-navigator-element="true"]'
       const allFocusable = Array.from(
         document.querySelectorAll(focusableSelectors)
       ) as HTMLElement[]
       allFocusable[0]?.focus()
-    }, 100)
+    }, 200)
   }, [])
 
   const goToLast = useCallback(() => {
-    ref.current?.scrollTo({ top: ref.current?.scrollHeight })
+    setTimeout(() => {
+      ref.current?.scrollTo({ top: ref.current?.scrollHeight })
+    }, 1)
     setTimeout(() => {
       const focusableSelectors = '[data-avatarname-navigator-element="true"]'
       const allFocusable = Array.from(
         document.querySelectorAll(focusableSelectors)
       ) as HTMLElement[]
       allFocusable[allFocusable.length - 1]?.focus()
-    }, 100)
+    }, 200)
   }, [])
 
   const itemRenderer = useCallback(
     (vi: VirtualItem) => {
-      const entity = entities[vi.index]
+      if (vi.index === 0 && actionCreate && !search.trim()) {
+        return (
+          <CreateItem
+            label={actionCreate.label}
+            onCreate={actionCreate.onClick}
+            goToFirst={goToFirst}
+            goToLast={goToLast}
+          />
+        )
+      }
+      const index = actionCreate && !search.trim() ? vi.index - 1 : vi.index
+      const entity = entities[index]
       const selectedEntity = (selectedEntities ?? []).find(
         (el) => el.id === entity.id
       )
@@ -435,7 +451,9 @@ export const MainContent = ({
             {!groupView ? (
               <VirtualList
                 height={384}
-                itemCount={entities.length}
+                itemCount={
+                  entities.length + (actionCreate && !search.trim() ? 1 : 0)
+                }
                 itemSize={36}
                 renderer={itemRenderer}
                 ref={ref}
