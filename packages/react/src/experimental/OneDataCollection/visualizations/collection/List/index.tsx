@@ -115,7 +115,7 @@ export const ListCollection = <
 
   if (isInitialLoading) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex min-h-0 flex-1 flex-col gap-4">
         {Array.from({ length: 10 }).map((_, index) => (
           <Skeleton key={index} className="h-10 w-full" />
         ))}
@@ -136,7 +136,7 @@ export const ListCollection = <
 
   return (
     <>
-      <div className="flex flex-row items-center gap-2 px-4 py-2">
+      <div className="flex min-h-0 flex-1 flex-row items-center gap-2 px-4 py-2">
         {source.selectable && (
           <Checkbox
             checked={allSelectedStatus.checked}
@@ -156,60 +156,65 @@ export const ListCollection = <
         </div>
       </div>
       <div
-        className={cn(isLoading && "select-none opacity-50 transition-opacity")}
+        className={cn(
+          "overflow-auto",
+          isLoading && "o select-none opacity-50 transition-opacity"
+        )}
         aria-live={isLoading ? "polite" : undefined}
         aria-busy={isLoading ? "true" : undefined}
       >
-        {data.type === "grouped" &&
-          data.groups.map((group) => {
-            const itemCount = group.itemCount
-            return (
-              <>
-                <GroupHeader
-                  key={`group-header-${group.key}`}
-                  className="px-4"
-                  selectable={!!source.selectable}
-                  select={
-                    groupAllSelectedStatus[group.key]?.checked
-                      ? true
-                      : groupAllSelectedStatus[group.key]?.indeterminate
-                        ? "indeterminate"
-                        : false
-                  }
-                  onSelectChange={(checked) =>
-                    handleSelectGroupChange(group, checked)
-                  }
-                  showOpenChange={collapsible}
-                  label={group.label}
-                  itemCount={itemCount}
-                  open={openGroups[group.key]}
-                  onOpenChange={(open) => setGroupOpen(group.key, open)}
-                />
-                {openGroups[group.key] && (
-                  <ListGroup
-                    key={`list-group-${group.key}`}
-                    source={source}
-                    items={group.records}
-                    selectedItems={selectedItems}
-                    handleSelectItemChange={handleSelectItemChange}
-                    fields={fields}
-                    itemDefinition={itemDefinition}
+        <div className="min-h-0 flex-1">
+          {data.type === "grouped" &&
+            data.groups.map((group) => {
+              const itemCount = group.itemCount
+              return (
+                <>
+                  <GroupHeader
+                    key={`group-header-${group.key}`}
+                    className="px-4"
+                    selectable={!!source.selectable}
+                    select={
+                      groupAllSelectedStatus[group.key]?.checked
+                        ? true
+                        : groupAllSelectedStatus[group.key]?.indeterminate
+                          ? "indeterminate"
+                          : false
+                    }
+                    onSelectChange={(checked) =>
+                      handleSelectGroupChange(group, checked)
+                    }
+                    showOpenChange={collapsible}
+                    label={group.label}
+                    itemCount={itemCount}
+                    open={openGroups[group.key]}
+                    onOpenChange={(open) => setGroupOpen(group.key, open)}
                   />
-                )}
-              </>
-            )
-          })}
+                  {openGroups[group.key] && (
+                    <ListGroup
+                      key={`list-group-${group.key}`}
+                      source={source}
+                      items={group.records}
+                      selectedItems={selectedItems}
+                      handleSelectItemChange={handleSelectItemChange}
+                      fields={fields}
+                      itemDefinition={itemDefinition}
+                    />
+                  )}
+                </>
+              )
+            })}
 
-        {data?.type === "flat" && (
-          <ListGroup
-            source={source}
-            items={data.records}
-            selectedItems={selectedItems}
-            handleSelectItemChange={handleSelectItemChange}
-            fields={fields}
-            itemDefinition={itemDefinition}
-          />
-        )}
+          {data?.type === "flat" && (
+            <ListGroup
+              source={source}
+              items={data.records}
+              selectedItems={selectedItems}
+              handleSelectItemChange={handleSelectItemChange}
+              fields={fields}
+              itemDefinition={itemDefinition}
+            />
+          )}
+        </div>
 
         {paginationInfo && (
           <div className="flex w-full items-center justify-between px-6">

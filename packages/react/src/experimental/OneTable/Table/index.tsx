@@ -16,6 +16,7 @@ import { TableRow } from "../TableRow"
 export interface TableProps {
   children: React.ReactNode
   loading?: boolean
+  fixedHeader?: boolean
 }
 
 function TableBase({ children, loading = false }: TableProps) {
