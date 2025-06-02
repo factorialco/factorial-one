@@ -1,5 +1,5 @@
 import { useI18n } from "@/lib/providers/i18n"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { DropdownInternal } from "../../../experimental/Navigation/Dropdown/internal"
 import { ChevronDown } from "../../../icons/app"
 import { IconType } from "../../Utilities/Icon"
@@ -30,6 +30,7 @@ const OneDropdownButton = ({
   ...props
 }: OneDropdownButtonProps) => {
   const t = useI18n()
+  const [isOpen, setIsOpen] = useState(false)
 
   const localValue = useMemo(() => value || items[0].value, [value, items])
 
@@ -50,6 +51,7 @@ const OneDropdownButton = ({
           ...item,
           onClick: () => {
             onClick(item.value, item)
+            setIsOpen(false)
           },
         })),
     [items, localValue, onClick]
@@ -65,7 +67,12 @@ const OneDropdownButton = ({
           data-testid="button-main"
           {...props}
           appendButton={
-            <DropdownInternal items={dropdownItems} align="end">
+            <DropdownInternal
+              items={dropdownItems}
+              align="end"
+              open={isOpen}
+              onOpenChange={setIsOpen}
+            >
               <ButtonInternal
                 variant={props.variant}
                 size={props.size}
@@ -73,6 +80,7 @@ const OneDropdownButton = ({
                 icon={ChevronDown}
                 hideLabel
                 data-testid="button-menu"
+                pressed={isOpen}
               />
             </DropdownInternal>
           }
