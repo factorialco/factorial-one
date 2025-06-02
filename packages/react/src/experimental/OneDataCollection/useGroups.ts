@@ -22,8 +22,8 @@ export const useGroups = <R extends RecordType>(
     if (Object.values(defaultOpenGroups).length > 0) {
       setOpenGroups(defaultValue)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [groups])
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only run on deep changes
+  }, [JSON.stringify(groups), JSON.stringify(defaultOpenGroups)])
 
   const setGroupOpen = (key: string, open: boolean) => {
     setOpenGroups((prev) => ({ ...prev, [key]: open }))
