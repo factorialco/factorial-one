@@ -1,4 +1,3 @@
-import { Trainings } from "@/icons/modules"
 import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { Plus } from "lucide-react"
@@ -51,8 +50,7 @@ export const WithUpsell: Story = {
     title: "Take your team’s skills to the next level",
     description:
       "Activate Trainings to create engaging sessions and track real progress!",
-    icon: Trainings,
-    variant: "upsell",
+    emoji: "⚡️",
     actions: [
       {
         label: "Learn more",

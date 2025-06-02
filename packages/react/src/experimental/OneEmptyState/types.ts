@@ -87,22 +87,26 @@ export type OneEmptyStateProps = {
    * @optional
    */
   actions?: ActionProps[]
+} & (
+  | {
+      /**
+       * The variant of the empty state
+       * @optional
+       */
+      variant?: "default"
 
-  /**
-   * The variant of the empty state
-   * @optional
-   */
-  variant?: "default" | "upsell" | Exclude<AlertAvatarProps["type"], "positive">
-
-  /**
-   * An icon will be displayed in the empty state
-   * @optional
-   */
-  icon?: IconType
-
-  /**
-   * An emoji will be displayed in the empty state
-   * @optional
-   */
-  emoji?: string
-}
+      /**
+       * An icon will be displayed in the empty state.
+       * emoji string
+       */
+      emoji?: string
+    }
+  | {
+      /**
+       * The variant of the empty state
+       * @optional
+       */
+      variant: Exclude<AlertAvatarProps["type"], "positive">
+      emoji?: never
+    }
+)
