@@ -288,13 +288,24 @@ export function useData<
 
         const fetcher = (): PromiseOrObservable<ResultType> => {
           setTotalItems(undefined)
+
+          // TODO: Default perPage value from somewhere
+          const defaultPerPage = 20
+
+          // Safely access perPage, defaulting to 20 if not available
+          const perPageValue =
+            "perPage" in dataAdapter && dataAdapter.perPage !== undefined
+              ? dataAdapter.perPage
+              : defaultPerPage
+
           return dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 ...baseFetchOptions,
-                pagination: { currentPage, perPage: dataAdapter.perPage || 20 },
+                pagination: { currentPage, perPage: perPageValue },
               })
             : dataAdapter.fetchData({
                 ...baseFetchOptions,
+                pagination: { currentPage: 1, perPage: perPageValue },
               })
         }
 
