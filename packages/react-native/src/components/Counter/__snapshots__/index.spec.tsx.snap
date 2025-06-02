@@ -7,3 +7,51 @@ exports[`Counter Snapshot 1`] = `
   42
 </Text>
 `;
+
+exports[`Counter Snapshot vairan bold types 1`] = `
+<Text
+  className="text-center inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all min-w-5 h-5 p-0.5 bg-f1-background-accent-bold text-f1-foreground-inverse"
+>
+  42
+</Text>
+`;
+
+exports[`Counter Snapshot vairan defauly types 1`] = `
+<Text
+  className="text-center text-f1-foreground inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all min-w-5 h-5 p-0.5 bg-f1-background-secondary outline outline-1 outline-f1-border"
+>
+  42
+</Text>
+`;
+
+exports[`Counter Snapshot vairan defauly types 2`] = `
+<Text
+  className="text-center text-f1-foreground inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all min-w-5 h-5 p-0.5 bg-f1-background-secondary outline outline-1 outline-f1-border"
+>
+  42
+</Text>
+`;
+
+exports[`Counter Snapshot vairan md size 1`] = `
+<Text
+  className="text-center text-f1-foreground inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all min-w-5 h-5 p-0.5 bg-f1-background-secondary outline outline-1 outline-f1-border"
+>
+  42
+</Text>
+`;
+
+exports[`Counter Snapshot vairan selected types 1`] = `
+<Text
+  className="text-center inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all min-w-5 h-5 p-0.5 bg-f1-background-selected-bold text-f1-foreground-inverse"
+>
+  42
+</Text>
+`;
+
+exports[`Counter Snapshot vairan sm size 1`] = `
+<Text
+  className="text-center text-f1-foreground inline-flex items-center justify-center whitespace-nowrap rounded-xs text-sm font-medium tabular-nums transition-all min-w-4 h-4 px-0.5 bg-f1-background-secondary outline outline-1 outline-f1-border"
+>
+  42
+</Text>
+`;
