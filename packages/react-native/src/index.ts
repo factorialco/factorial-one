@@ -6,6 +6,7 @@ export * from "./components/ExampleComponent";
 export * from "./components/Icon";
 export * from "./components/IconAvatar";
 export * from "./components/Information/ModuleAvatar";
+export * from "./components/Counter";
 
 // Export icons
 export * from "./icons";
