@@ -1,5 +1,8 @@
 import {
   ColorExtension,
+  createAccessibilityExtension,
+  createPlaceholderExtension,
+  createSlashCommandExtension,
   CustomTaskExtension,
   HighlightExtension,
   LinkExtension,
@@ -8,13 +11,17 @@ import {
   TaskListExtension,
   TextAlignExtension,
   TextStyleExtension,
+  ToolbarLabels,
   TypographyExtension,
   UnderlineExtension,
-  createAccessibilityExtension,
-  createPlaceholderExtension,
 } from "@/experimental/RichText/CoreEditor"
+import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
 
-export const createBlankTextEditorExtensions = (placeholder: string) => [
+export const createBasicTextEditorExtensions = (
+  placeholder: string,
+  toolbarLabels: ToolbarLabels,
+  groupLabels?: SlashCommandGroupLabels
+) => [
   StarterKitExtension,
   UnderlineExtension,
   TextStyleExtension,
@@ -28,4 +35,5 @@ export const createBlankTextEditorExtensions = (placeholder: string) => [
   PersistSelection,
   createPlaceholderExtension(placeholder),
   createAccessibilityExtension(placeholder),
+  createSlashCommandExtension(toolbarLabels, groupLabels),
 ]
