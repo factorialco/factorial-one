@@ -1,0 +1,30 @@
+import { AlertTag } from "@factorialco/factorial-one-react-native";
+import type { Meta, StoryFn } from "@storybook/react";
+import { ScrollView, View, Text } from "react-native";
+
+const meta: Meta = {
+  title: "Components/Tags",
+  parameters: {
+    layout: "centered",
+  },
+  decorators: [
+    (Story: StoryFn) => (
+      <View className="flex-1">
+        <Story />
+      </View>
+    ),
+  ],
+};
+
+export default meta;
+
+export const TagsShowcase = () => (
+  <ScrollView className="p-4">
+    <Text className="text-lg font-bold mb-4 text-f1-foreground">AlertTag</Text>
+    <View className="flex-row flex-wrap gap-2 mb-6">
+      <AlertTag text="Critical" level="critical" />
+      <AlertTag text="Warinig" level="warning" />
+      <AlertTag text="Info" level="info" />
+    </View>
+  </ScrollView>
+);
