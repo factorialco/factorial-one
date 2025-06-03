@@ -20,6 +20,7 @@ import { PromiseState } from "@/lib/promise-to-observable"
 import { Observable } from "zen-observable-ts"
 
 import { NewColor } from "@/experimental/Information/Tags/DotTag"
+import { cn } from "@/lib/utils"
 import { Ai, Delete, Pencil, Star } from "../../../icons/app"
 import {
   NavigationFiltersDefinition,
@@ -562,10 +563,13 @@ export const ExampleComponent = ({
   navigationFilters,
   totalItemSummary,
   visualizations,
+  fullHeight,
+  dataAdapter,
 }: {
   useObservable?: boolean
   usePresets?: boolean
   frozenColumns?: 0 | 1 | 2
+  fullHeight?: boolean
   visualizations?: ReadonlyArray<
     Visualization<
       MockUser,
@@ -576,6 +580,7 @@ export const ExampleComponent = ({
       GroupingDefinition<MockUser>
     >
   >
+  dataAdapter?: DataAdapter<MockUser, FiltersType, NavigationFiltersDefinition>
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
@@ -634,7 +639,7 @@ export const ExampleComponent = ({
     selectable,
     bulkActions,
     totalItemSummary,
-    dataAdapter: {
+    dataAdapter: dataAdapter ?? {
       fetchData: useObservable
         ? createObservableDataFetch()
         : createPromiseDataFetch(),
@@ -642,8 +647,9 @@ export const ExampleComponent = ({
   })
 
   return (
-    <div className="space-y-4">
+    <div className={cn("space-y-4", fullHeight && "absolute inset-0 top-10")}>
       <OneDataCollection
+        fullHeight={fullHeight}
         source={dataSource}
         onSelectItems={(selectedItems) =>
           console.log("Selected items", "->", selectedItems)
