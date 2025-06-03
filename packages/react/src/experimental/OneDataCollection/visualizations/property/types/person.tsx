@@ -1,12 +1,13 @@
 import { Avatar } from "@/experimental/Information/Avatars/Avatar"
+import { WithAvatarBadge } from "./types"
 
-export interface PersonValue {
+interface PersonValue {
   firstName: string
   lastName: string
   src?: string
 }
 
-export type PersonCellValue = PersonValue
+export type PersonCellValue = WithAvatarBadge<PersonValue>
 
 export const PersonCell = (args: PersonCellValue) => (
   <div className="flex items-center gap-2">
