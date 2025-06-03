@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react-native";
+import { render, screen, userEvent } from "@testing-library/react-native";
 import React from "react";
 import { OnePreset } from ".";
 
@@ -22,6 +22,19 @@ describe("OnePreset", () => {
 
     const number = screen.getByText("label");
 
+    expect(number).toBeDefined();
+  });
+
+  it("renders correctly with onClick event", async () => {
+    const testFn = jest.fn();
+    const user = userEvent.setup();
+
+    render(<OnePreset {...defaultProps} onClick={testFn} />);
+
+    const number = screen.getByText("label");
+    await user.press(number);
+
+    expect(testFn).toHaveBeenCalledTimes(1);
     expect(number).toBeDefined();
   });
 });
