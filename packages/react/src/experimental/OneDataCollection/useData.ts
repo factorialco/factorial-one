@@ -47,16 +47,26 @@ interface UseDataOptions<Filters extends FiltersDefinition> {
   onError?: (error: DataError) => void
 }
 
-/**
- * Pagination state and controls
- */
-interface PaginationInfo {
+type PageBasedPaginationInfo = {
+  type: "pages"
   total: number
   currentPage: number
   perPage: number
   pagesCount: number
-  type: "pages" | "infinite-scroll" // TODO: This should match the possible values of dataAdapter.paginationType
 }
+
+type InfiniteScrollPaginationInfo = {
+  type: "infinite-scroll"
+  total: number
+  perPage: number
+  cursor: number
+  hasMore: boolean
+}
+
+/**
+ * Pagination state and controls
+ */
+type PaginationInfo = PageBasedPaginationInfo | InfiniteScrollPaginationInfo
 
 /**
  * Hook return type for useData
@@ -65,11 +75,16 @@ interface UseDataReturn<Record> {
   data: Array<Record>
   isInitialLoading: boolean
   isLoading: boolean
-  isLoadingMore: boolean // New
+  isLoadingMore: boolean
   error: DataError | null
   paginationInfo: PaginationInfo | null
-  setPage: (page: number) => void // Keep unchanged
-  loadMore: () => void // New
+
+  // For page-based pagination:
+  setPage: (page: number) => void
+
+  // For infinite-scroll pagination:
+  loadMore: () => void
+
   totalItems: number | undefined
 }
 
@@ -208,6 +223,9 @@ export function useData<
   const { paginationInfo, setPaginationInfo } = usePaginationState()
 
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
+
+  const isLoadingMoreRef = useRef(false)
 
   const mergedFilters = useMemo(
     () => ({ ...currentFilters, ...filters }),
@@ -239,14 +257,41 @@ export function useData<
         // Use a default value of "pages" when paginationType is undefined
         const paginationType = dataAdapter.paginationType || "pages"
 
-        // Update pagination info
-        setPaginationInfo({
-          total: result.total,
-          currentPage: result.currentPage,
-          perPage: result.perPage,
-          pagesCount: result.pagesCount,
-          type: paginationType, // Use the type with default
-        })
+        // Update pagination info based on the pagination type
+        if (paginationType === "pages") {
+          // For page-based pagination
+          setPaginationInfo({
+            type: "pages",
+            total: result.total,
+            // Safely access currentPage with a default value of 1
+            currentPage: "currentPage" in result ? result.currentPage : 1,
+            perPage: result.perPage,
+            // Safely access pagesCount with a fallback calculation
+            pagesCount:
+              "pagesCount" in result
+                ? result.pagesCount
+                : Math.ceil(result.total / result.perPage),
+          })
+        } else if (paginationType === "infinite-scroll") {
+          // For infinite scroll pagination
+          setPaginationInfo({
+            type: "infinite-scroll",
+            total: result.total,
+            perPage: result.perPage,
+            // Set initial cursor to 0 if not provided
+            cursor:
+              "cursor" in result
+                ? result.cursor
+                : appendMode
+                  ? result.perPage // For appending, use perPage
+                  : 0, // For initial load, start at 0
+            hasMore:
+              "hasMore" in result
+                ? result.hasMore
+                : data.length + result.records.length < result.total,
+          })
+        }
+
         setTotalItems(result.total)
       } else {
         // For non-paginated results, always replace
@@ -254,12 +299,24 @@ export function useData<
         setTotalItems?.(result.length)
       }
 
+      // At the end:
       setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
       setIsLoadingMore(false)
+      isLoadingMoreRef.current = false
     },
-    [dataAdapter] // Add to dependencies
+    [
+      dataAdapter,
+      setPaginationInfo,
+      setData,
+      setError,
+      setIsInitialLoading,
+      setIsLoading,
+      setIsLoadingMore,
+      setTotalItems,
+      isLoadingMoreRef,
+    ]
   )
 
   const handleFetchError = useCallback(
@@ -283,15 +340,16 @@ export function useData<
 
   type ResultType = PaginatedResponse<Record> | SimpleResult<Record>
 
-  const [isLoadingMore, setIsLoadingMore] = useState(false)
-
   const fetchDataAndUpdate = useCallback(
     async (
       filters: FiltersState<Filters>,
       currentPage = 1,
       navigationFilters: NavigationFiltersState<NavigationFilters>,
-      appendMode = false // New parameter
+      appendMode = false
     ) => {
+      console.log(
+        `fetchDataAndUpdate called with appendMode=${appendMode}, page=${currentPage}`
+      )
       try {
         // Clean up any existing subscription before creating a new one
         if (cleanup.current) {
@@ -322,6 +380,7 @@ export function useData<
               ? dataAdapter.perPage
               : defaultPerPage
 
+          // In useData.ts, in the fetchDataAndUpdate function
           return dataAdapter.paginationType === "pages"
             ? dataAdapter.fetchData({
                 ...baseFetchOptions,
@@ -329,7 +388,8 @@ export function useData<
               })
             : dataAdapter.fetchData({
                 ...baseFetchOptions,
-                pagination: { currentPage: 1, perPage: perPageValue },
+                // Use the currentPage parameter as the cursor for infinite scroll
+                pagination: { cursor: currentPage, perPage: perPageValue },
               })
         }
 
@@ -352,7 +412,7 @@ export function useData<
             } else if (state.error) {
               handleFetchError(state.error)
             } else if (state.data) {
-              handleFetchSuccess(state.data, false)
+              handleFetchSuccess(state.data, appendMode)
             }
           },
           error: handleFetchError,
@@ -378,8 +438,11 @@ export function useData<
 
   const setPage = useCallback(
     (page: number) => {
-      // Return early if trying to set the same page
-      if (paginationInfo?.currentPage === page) {
+      // Return early if not page-based pagination or trying to set the same page
+      if (
+        !isPageBasedPagination(paginationInfo) ||
+        paginationInfo.currentPage === page
+      ) {
         return
       }
 
@@ -398,16 +461,32 @@ export function useData<
   const loadMore = useCallback(() => {
     if (!paginationInfo || isLoading) return
 
-    const nextPage = paginationInfo.currentPage + 1
-    if (nextPage <= paginationInfo.pagesCount) {
+    // Only allow loadMore for infinite-scroll pagination type
+    if (paginationInfo.type !== "infinite-scroll") {
+      console.warn(
+        "loadMore is only applicable for infinite-scroll pagination type"
+      )
+      return
+    }
+
+    // Check if there's more data to load
+    if (paginationInfo.hasMore) {
+      console.log("[debug] Current cursor:", paginationInfo.cursor)
+
+      // Use perPage to calculate next cursor
+      const nextCursor = paginationInfo.cursor
+      console.log("[debug] Next cursor will be:", nextCursor)
+
+      isLoadingMoreRef.current = true
+      setIsLoadingMore(true)
       setIsLoading(true)
-      setIsLoadingMore(true) // New state
+
       fetchDataAndUpdate(
         mergedFilters,
-        nextPage,
+        nextCursor,
         currentNavigationFilters,
-        true
-      ) // true = append mode
+        true // Always append for infinite scroll
+      )
     }
   }, [
     fetchDataAndUpdate,
@@ -418,9 +497,22 @@ export function useData<
   ])
 
   useEffect(() => {
-    setIsLoading(true)
-    // Always fetch page 1 when filters change
-    fetchDataAndUpdate(mergedFilters, 1, currentNavigationFilters)
+    console.log(
+      "[debug] useEffect triggered, isLoadingMore:",
+      isLoadingMoreRef.current
+    )
+
+    if (!isLoadingMoreRef.current) {
+      setIsLoading(true)
+      // Explicitly pass 0 as the initial position for infinite scroll
+      const initialPosition =
+        dataAdapter.paginationType === "infinite-scroll" ? 0 : 1
+      fetchDataAndUpdate(
+        mergedFilters,
+        initialPosition,
+        currentNavigationFilters
+      )
+    }
 
     return () => {
       cleanup.current?.()
@@ -443,4 +535,12 @@ export function useData<
     loadMore, // Add new function
     totalItems,
   }
+}
+
+// TODO: move them to utils file???
+// Type guard functions to check pagination types
+function isPageBasedPagination(
+  pagination: PaginationInfo | null
+): pagination is PageBasedPaginationInfo {
+  return pagination !== null && pagination.type === "pages"
 }
