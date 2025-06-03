@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { ModuleAvatar } from "./index"
-import { ModuleId, modules } from "./modules"
+import { ModuleAvatar } from "../index"
+import { ModuleId, modules } from "../modules"
 
 const meta: Meta<typeof ModuleAvatar> = {
   component: ModuleAvatar,
@@ -13,7 +13,11 @@ const meta: Meta<typeof ModuleAvatar> = {
     },
     module: {
       control: "select",
-      options: Object.keys(modules),
+      options: Object.keys(modules).sort((a, b) => a.localeCompare(b)),
+    },
+    icon: {
+      description:
+        "DEPRECATED: This component should only render module related icons, not arbitrary icons. Use the `module` prop instead.",
     },
   },
 }
@@ -33,7 +37,9 @@ export const AllModules: Story = {
   render: () => (
     <div className="flex flex-wrap gap-3">
       {Object.keys(modules).map((module) => (
-        <ModuleAvatar key={module} module={module as ModuleId} size="lg" />
+        <div key={module} title={module}>
+          <ModuleAvatar module={module as ModuleId} size="lg" />
+        </div>
       ))}
     </div>
   ),
