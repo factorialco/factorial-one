@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.82.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.81.0...factorial-one-react-v1.82.0) (2025-06-03)
+
+
+### Features
+
+* Core text editor ([#1968](https://github.com/factorialco/factorial-one/issues/1968)) ([5291366](https://github.com/factorialco/factorial-one/commit/5291366758cbf17c98267b3dbe289b35e8052063))
+
 ## [1.81.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.80.0...factorial-one-react-v1.81.0) (2025-06-03)
 
 
