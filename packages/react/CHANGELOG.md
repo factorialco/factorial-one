@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.84.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.83.0...factorial-one-react-v1.84.0) (2025-06-03)
+
+
+### Features
+
+* update Tiptap dependencies and introduce BasicTextEditor component ([#1997](https://github.com/factorialco/factorial-one/issues/1997)) ([3af16fd](https://github.com/factorialco/factorial-one/commit/3af16fde6b6c7984b55d8e3b8268e6881a701807))
+
 ## [1.83.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.82.3...factorial-one-react-v1.83.0) (2025-06-03)
 
 
