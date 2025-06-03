@@ -1,12 +1,9 @@
-import { IconType } from "@/components/Utilities/Icon"
 import { ModuleAvatar, ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { cn } from "@/lib/utils"
 
 type Props<Id extends string | number = string | number> = {
   id: Id
   module?: ModuleId
-  // @deprecated This property will be removed soon. Use the `module` prop instead.
-  icon?: IconType
   title: string
   subtitle: string
   onClick?: (id: Id) => void
@@ -39,7 +36,7 @@ export function WidgetInboxListItem({
   title,
   subtitle,
   onClick,
-  ...props
+  module,
 }: Props) {
   const className = cn(
     "flex flex-row gap-2 rounded-md border border-solid border-transparent p-2 text-f1-foreground",
@@ -54,12 +51,7 @@ export function WidgetInboxListItem({
 
   return (
     <Wrapper onClick={handleOnClick} className={className}>
-      <ModuleAvatar
-        {...("icon" in props
-          ? { icon: props.icon as IconType }
-          : { module: props.module ?? "inbox" })}
-        size="md"
-      />
+      <ModuleAvatar module={module ?? "inbox"} size="md" />
       <div className="flex-1">
         <p className="line-clamp-1 font-medium">{title}</p>
         <p className="line-clamp-1 text-f1-foreground-secondary">{subtitle}</p>
