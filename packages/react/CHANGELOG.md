@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.80.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.79.0...factorial-one-react-v1.80.0) (2025-06-03)
+
+
+### Features
+
+* **DataCollection:** Show label in Filters button when no presets ([#1975](https://github.com/factorialco/factorial-one/issues/1975)) ([534043b](https://github.com/factorialco/factorial-one/commit/534043b0858255274e3252739e728efef30e23a0))
+
 ## [1.79.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.78.0...factorial-one-react-v1.79.0) (2025-06-02)
 
 
