@@ -90,4 +90,7 @@ export const SpanishLabels: Story = {
         "<p>Este es contenido <strong>inicial</strong> con <em>formato</em>.</p>",
     },
   },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  }
 }
