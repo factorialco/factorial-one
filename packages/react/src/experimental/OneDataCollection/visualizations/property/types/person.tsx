@@ -4,8 +4,9 @@ import { BadgeProps, ModuleId } from "@/experimental/exports"
 =======
 >>>>>>> d001c54d (refactor: deprecated icon)
 import { Avatar } from "@/experimental/Information/Avatars/Avatar"
+import { WithAvatarBadge } from "./types"
 
-export interface PersonValue {
+interface PersonValue {
   firstName: string
   lastName: string
   src?: strisng
@@ -24,7 +25,7 @@ export interface PersonValue {
       }
 }
 
-export type PersonCellValue = PersonValue
+export type PersonCellValue = WithAvatarBadge<PersonValue>
 
 export const PersonCell = (args: PersonCellValue) => (
   <div className="flex items-center gap-2">

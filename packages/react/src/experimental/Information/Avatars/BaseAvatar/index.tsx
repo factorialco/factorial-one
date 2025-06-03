@@ -5,7 +5,8 @@ import {
 } from "@/ui/avatar"
 import { ComponentProps, forwardRef } from "react"
 import { Badge, BadgeProps } from "../../Badge"
-import { ModuleId } from "../../ModuleAvatar"
+import { ModuleAvatar } from "../../ModuleAvatar"
+import { AvatarBadge } from "../types"
 import { getAvatarColor, getInitials, getMask } from "./utils"
 
 const getBadgeSize = (
@@ -24,16 +25,6 @@ const getBadgeSize = (
 }
 
 type ShadAvatarProps = ComponentProps<typeof AvatarComponent>
-
-type AvatarBadge =
-  | {
-      type: "module"
-      module: ModuleId
-    }
-  | {
-      type: Exclude<BadgeProps["type"], undefined>
-      icon?: BadgeProps["icon"]
-    }
 
 type Props = {
   type: ShadAvatarProps["type"]
@@ -66,6 +57,8 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
 
     const hasAria = Boolean(ariaLabel || ariaLabelledby)
 
+    const badgeSize = getBadgeSize(size)
+
     return (
       <div className="relative inline-flex">
         <div
@@ -96,11 +89,12 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
         </div>
         {badge && (
           <div className="absolute -bottom-0.5 -right-0.5">
-            <Badge
-              type={badge.type}
-              icon={badge.icon}
-              size={getBadgeSize(size)}
-            />
+            {badge.type === "module" && (
+              <ModuleAvatar module={badge.module} size={badgeSize} />
+            )}
+            {badge.type !== "module" && (
+              <Badge type={badge.type} icon={badge.icon} size={badgeSize} />
+            )}
           </div>
         )}
       </div>
