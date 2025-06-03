@@ -1017,6 +1017,7 @@ export const WithInfiniteScrollPagination: Story = {
         data: paginatedMockUsers,
         delay: 500,
         paginationType: "infinite-scroll",
+        perPage: 10,
       }),
     })
 
