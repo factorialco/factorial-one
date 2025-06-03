@@ -564,6 +564,7 @@ export const ExampleComponent = ({
   totalItemSummary,
   visualizations,
   fullHeight,
+  dataAdapter,
 }: {
   useObservable?: boolean
   usePresets?: boolean
@@ -579,6 +580,7 @@ export const ExampleComponent = ({
       GroupingDefinition<MockUser>
     >
   >
+  dataAdapter?: DataAdapter<MockUser, FiltersType, NavigationFiltersDefinition>
   selectable?: (item: MockUser) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<MockUser, FiltersType>>[1]
@@ -637,7 +639,7 @@ export const ExampleComponent = ({
     selectable,
     bulkActions,
     totalItemSummary,
-    dataAdapter: {
+    dataAdapter: dataAdapter ?? {
       fetchData: useObservable
         ? createObservableDataFetch()
         : createPromiseDataFetch(),

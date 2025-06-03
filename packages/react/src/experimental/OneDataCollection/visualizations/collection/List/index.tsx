@@ -135,8 +135,8 @@ export const ListCollection = <
   }
 
   return (
-    <>
-      <div className="flex min-h-0 flex-1 flex-row items-center gap-2 px-4 py-2">
+    <div className="flex max-h-full min-h-0 flex-1 flex-col px-4 py-2">
+      <div className="flex flex-row items-center gap-2">
         {source.selectable && (
           <Checkbox
             checked={allSelectedStatus.checked}
@@ -157,13 +157,13 @@ export const ListCollection = <
       </div>
       <div
         className={cn(
-          "overflow-auto",
+          "flex min-h-0 flex-1 flex-col gap-2",
           isLoading && "o select-none opacity-50 transition-opacity"
         )}
         aria-live={isLoading ? "polite" : undefined}
         aria-busy={isLoading ? "true" : undefined}
       >
-        <div className="min-h-0 flex-1">
+        <div className="min-h-0 flex-1 overflow-auto">
           {data.type === "grouped" &&
             data.groups.map((group) => {
               const itemCount = group.itemCount
@@ -236,6 +236,6 @@ export const ListCollection = <
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }
