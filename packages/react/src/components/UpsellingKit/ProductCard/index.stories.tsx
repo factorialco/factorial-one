@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { ProductCard } from "./index"
 
-import Megaphone from "@/icons/app/Megaphone"
 import { ComponentProps } from "react"
 
 const meta: Meta<typeof ProductCard> = {
@@ -29,7 +28,7 @@ export const Default: Story = {
     onClose: () => {
       alert("onClose")
     },
-    icon: Megaphone,
+    module: "kudos",
     dismissable: false,
   },
   tags: ["autodocs", "experimental"],

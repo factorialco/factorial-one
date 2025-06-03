@@ -1,5 +1,6 @@
-import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
-import { Button, IconType } from "@/factorial-one"
+import { Button } from "@/components/Actions/Button"
+import { IconType } from "@/components/Utilities/Icon"
+import { ModuleAvatar, ModuleId } from "@/experimental/Information/ModuleAvatar"
 import CrossIcon from "@/icons/app/Cross"
 import { useEffect, useState } from "react"
 
@@ -9,10 +10,17 @@ export type ProductCardProps = {
   onClick: () => void
   onClose?: () => void
   isVisible: boolean
-  icon: IconType
   dismissable?: boolean
   trackVisibility?: (open: boolean) => void
-}
+} & (
+  | {
+      module: ModuleId
+    }
+  | {
+      // @deprecated This property will be removed soon. Use the `module` prop instead.
+      icon: IconType
+    }
+)
 
 export function ProductCard({
   title,
@@ -20,9 +28,9 @@ export function ProductCard({
   onClick,
   onClose,
   isVisible,
-  icon,
   dismissable = false,
   trackVisibility,
+  ...props
 }: ProductCardProps) {
   const [open, setOpen] = useState(isVisible)
 
@@ -48,7 +56,13 @@ export function ProductCard({
             className="flex h-auto w-auto cursor-pointer flex-row gap-2 rounded-md border-f1-border p-3 text-f1-foreground shadow-md hover:bg-f1-background-secondary"
             onClick={onClick}
           >
-            <ModuleAvatar icon={icon} size="lg" />
+            <ModuleAvatar
+              // TODO remove icon when the prop will be deprecated
+              {...("icon" in props
+                ? { icon: props.icon }
+                : { module: props.module })}
+              size="lg"
+            />
             <div className="flex flex-1 flex-col">
               <div>
                 <h3 className="text-lg font-medium">{title}</h3>

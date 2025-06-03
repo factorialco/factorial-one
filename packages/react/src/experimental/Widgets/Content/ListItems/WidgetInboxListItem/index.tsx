@@ -1,10 +1,11 @@
-import { IconType } from "../../../../../components/Utilities/Icon"
-import { Bell as BellIcon } from "../../../../../icons/app"
-import { cn } from "../../../../../lib/utils"
-import { ModuleAvatar } from "../../../../Information/ModuleAvatar"
+import { IconType } from "@/components/Utilities/Icon"
+import { ModuleAvatar, ModuleId } from "@/experimental/Information/ModuleAvatar"
+import { cn } from "@/lib/utils"
 
 type Props<Id extends string | number = string | number> = {
   id: Id
+  module?: ModuleId
+  // @deprecated This property will be removed soon. Use the `module` prop instead.
   icon?: IconType
   title: string
   subtitle: string
@@ -37,8 +38,8 @@ export function WidgetInboxListItem({
   id,
   title,
   subtitle,
-  icon = BellIcon,
   onClick,
+  ...props
 }: Props) {
   const className = cn(
     "flex flex-row gap-2 rounded-md border border-solid border-transparent p-2 text-f1-foreground",
@@ -53,7 +54,12 @@ export function WidgetInboxListItem({
 
   return (
     <Wrapper onClick={handleOnClick} className={className}>
-      <ModuleAvatar icon={icon} size="md" />
+      <ModuleAvatar
+        {...("icon" in props
+          ? { icon: props.icon as IconType }
+          : { module: props.module ?? "inbox" })}
+        size="md"
+      />
       <div className="flex-1">
         <p className="line-clamp-1 font-medium">{title}</p>
         <p className="line-clamp-1 text-f1-foreground-secondary">{subtitle}</p>

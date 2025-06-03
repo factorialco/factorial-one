@@ -1,4 +1,4 @@
-import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
+import { ModuleAvatar, ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { BreadcrumbSelect } from "@/experimental/Navigation/Header"
 import { BreadcrumbSkeleton } from "@/experimental/Navigation/Header/Breadcrumbs/internal/BreadcrumbSkeleton"
 import { BreadcrumbItemType } from "@/experimental/Navigation/Header/Breadcrumbs/types"
@@ -52,6 +52,10 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
           ? "page"
           : "link"
 
+    const module: ModuleId | undefined =
+      "module" in item ? item.module : undefined
+    const icon = "icon" in item ? item.icon : undefined
+
     const content = (
       <motion.div
         layoutId={`breadcrumb-${item.id}`}
@@ -62,8 +66,12 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
         )}
         transition={{ duration: 0.15 }}
       >
-        {!isLoading && "icon" in item && (isOnly || isFirst) && item.icon && (
-          <ModuleAvatar icon={item.icon} size={isOnly ? "lg" : "sm"} />
+        {!isLoading && (module || icon) && (isOnly || isFirst) && (
+          <ModuleAvatar
+            // TODO remove icon when the prop will be deprecated
+            {...(icon ? { icon } : { module: module as ModuleId })}
+            size={isOnly ? "lg" : "sm"}
+          />
         )}
         <span className="truncate">
           {!isLoading && "label" in item ? item.label : ""}
