@@ -17,6 +17,12 @@ describe("OnePreset", () => {
     expect(toJSON()).toMatchSnapshot();
   });
 
+  it("renders correctly with selected props", () => {
+    const { toJSON } = render(<OnePreset {...defaultProps} selected={true} />);
+
+    expect(toJSON()).toMatchSnapshot();
+  });
+
   it("renders correctly with required props", () => {
     render(<OnePreset {...defaultProps} />);
 

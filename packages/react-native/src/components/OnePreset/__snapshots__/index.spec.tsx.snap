@@ -102,3 +102,48 @@ exports[`OnePreset Snapshot with number 1`] = `
   </View>
 </View>
 `;
+
+exports[`OnePreset renders correctly with selected props 1`] = `
+<View
+  className="flex items-start"
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    className="flex grow-0 flex-row items-center gap-2 rounded border px-2.5 py-1.5 font-medium border-f1-border-selected bg-f1-background-selected-secondary text-f1-foreground-selected"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <Text
+      className="whitespace-nowrap text-f1-foreground"
+    >
+      label
+    </Text>
+  </View>
+</View>
+`;
