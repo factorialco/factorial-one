@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 import { cn } from "../../lib/utils";
 
 const counterContainerVariants = cva({
-  base: "flex items-center justify-center rounded-xs  grow-0 px-0.5",
+  base: "flex items-center justify-center rounded-xs grow-0 px-0.5",
   variants: {
     size: {
       md: "min-w-5 h-5",

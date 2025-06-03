@@ -37,7 +37,7 @@ exports[`OnePreset Snapshot 1`] = `
     onStartShouldSetResponder={[Function]}
   >
     <Text
-      className="whitespace-nowrap"
+      className="whitespace-nowrap text-f1-foreground"
     >
       label
     </Text>
@@ -82,7 +82,7 @@ exports[`OnePreset Snapshot with number 1`] = `
     onStartShouldSetResponder={[Function]}
   >
     <Text
-      className="whitespace-nowrap"
+      className="whitespace-nowrap text-f1-foreground"
     >
       label
     </Text>
