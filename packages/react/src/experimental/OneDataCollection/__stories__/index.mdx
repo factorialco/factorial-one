@@ -278,7 +278,16 @@ When the total number of items exceeds the page limit, the system generates
 multiple navigable pages. However, when all the items fit on a single page, the
 pagination interface remains visible but adopts a disabled state.
 
+#### Pages
+
 <Canvas
-  of={DataCollectionStories.WithPagination}
+  of={DataCollectionStories.WithPagesPagination}
   meta={DataCollectionStories}
+/>
+
+#### Infinite scroll
+
+<Canvas
+of={DataCollectionStories.WithInfiniteScrollPagination}
+meta={DataCollectionStories}
 />
