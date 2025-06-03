@@ -53,6 +53,11 @@ const squirclePath =
  * @returns
  */
 export function ModuleAvatar({ size = "md", ...props }: ModuleAvatarProps) {
+  if ("icon" in props) {
+    console.warn(
+      "ModuleAvatar:The `icon` prop is deprecated. Use the `module` prop instead."
+    )
+  }
   const IconComponent = "icon" in props ? props.icon : modules[props.module]
 
   const code = Math.random().toString(36).substring(2, 15)

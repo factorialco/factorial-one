@@ -11,7 +11,6 @@ import {
 } from "@/ui/breadcrumb"
 import { motion } from "framer-motion"
 import { forwardRef, PropsWithChildren, ReactNode } from "react"
-import { IconType } from "recharts/types/component/DefaultLegendContent"
 import { BreadcrumbSeparator } from "./BreadcrumbSeparator"
 
 interface BreadcrumbItemProps {
@@ -53,6 +52,10 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
           ? "page"
           : "link"
 
+    const module: ModuleId | undefined =
+      "module" in item ? item.module : undefined
+    const icon = "icon" in item ? item.icon : undefined
+
     const content = (
       <motion.div
         layoutId={`breadcrumb-${item.id}`}
@@ -63,17 +66,13 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
         )}
         transition={{ duration: 0.15 }}
       >
-        {!isLoading &&
-          (("module" in item && item.module) ||
-            ("icon" in item && item.icon)) &&
-          (isOnly || isFirst) && (
-            <ModuleAvatar
-              {...("module" in item
-                ? { module: item.module as ModuleId }
-                : { icon: item.icon as IconType })}
-              size={isOnly ? "lg" : "sm"}
-            />
-          )}
+        {!isLoading && (module || icon) && (isOnly || isFirst) && (
+          <ModuleAvatar
+            // TODO remove icon when the prop will be deprecated
+            {...(icon ? { icon } : { module: module as ModuleId })}
+            size={isOnly ? "lg" : "sm"}
+          />
+        )}
         <span className="truncate">
           {!isLoading && "label" in item ? item.label : ""}
         </span>
