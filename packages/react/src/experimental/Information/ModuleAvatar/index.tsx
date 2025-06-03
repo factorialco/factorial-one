@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "cva"
-import { IconType } from "../../../components/Utilities/Icon"
+import { ModuleId, modules } from "./modules"
 
 const moduleAvatarVariants = cva({
   base: "relative flex shrink-0 items-center justify-center",
@@ -31,14 +31,14 @@ const iconSizeVariants = cva({
 
 export interface ModuleAvatarProps
   extends VariantProps<typeof moduleAvatarVariants> {
-  icon: IconType
+  module: ModuleId
 }
 
 const squirclePath =
   "M50,0 C43,0 36,0 30,1 23,2 17,5 12,9 5,16 1,25 0,36 0,43 0,57 0,64 1,75 5,84 12,91 17,95 23,98 30,99 36,100 43,100 50,100 57,100 64,100 70,99 77,98 83,95 88,91 95,84 99,75 100,64 100,57 100,43 100,36 99,25 95,16 88,9 83,5 77,2 70,1 64,0 57,0 50,0"
 
-export function ModuleAvatar({ size = "md", icon }: ModuleAvatarProps) {
-  const IconComponent = icon
+export function ModuleAvatar({ size = "md", module }: ModuleAvatarProps) {
+  const IconComponent = modules[module]
 
   const code = Math.random().toString(36).substring(2, 15)
 
