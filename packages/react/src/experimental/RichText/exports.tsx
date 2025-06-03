@@ -1,4 +1,4 @@
-export * from "./BlankTextEditor"
+export * from "./BasicTextEditor"
 export * from "./CoreEditor/types"
 export * from "./FileItem"
 export * from "./RichTextDisplay"
