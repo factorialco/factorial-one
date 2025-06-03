@@ -111,6 +111,16 @@ export const Disabled: Story = {
   },
 }
 
+export const OutlinePromote: Story = {
+  args: {
+    variant: "outlinePromote",
+    label: "Request Information",
+  },
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+}
+
 export const Sizes: Story = {
   render: (args) => (
     <div className="flex items-center gap-4">

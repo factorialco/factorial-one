@@ -35,6 +35,7 @@ const iconVariants = cva({
         "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse group-active:text-f1-icon-inverse group-data-[pressed=true]:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold/80 dark:group-active:text-f1-icon-bold/80 dark:group-data-[pressed=true]:text-f1-icon-bold/80",
       ghost: "text-f1-icon",
       promote: "text-f1-icon-promote",
+      outlinePromote: "text-f1-icon-promote",
     },
   },
   defaultVariants: {
@@ -52,7 +53,8 @@ export const iconOnlyVariants = cva({
       critical:
         "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse group-active:text-f1-icon-inverse group-data-[pressed=true]:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold dark:group-active:text-f1-icon-bold dark:group-data-[pressed=true]:text-f1-icon-bold",
       ghost: "text-f1-icon-bold",
-      promote: "text-f1-icon-bold",
+      promote: "text-f1-icon-promote",
+      outlinePromote: "text-f1-icon-promote",
     },
   },
   defaultVariants: {
