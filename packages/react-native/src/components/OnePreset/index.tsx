@@ -26,7 +26,7 @@ export const OnePreset = ({
             "border-f1-border-selected bg-f1-background-selected-secondary text-f1-foreground-selected active:border-f1-border-selected",
         )}
       >
-        <Text className="whitespace-nowrap">{label}</Text>
+        <Text className="whitespace-nowrap text-f1-foreground">{label}</Text>
         {number !== undefined && number !== null && (
           <Counter value={number} type={selected ? "selected" : "default"} />
         )}
