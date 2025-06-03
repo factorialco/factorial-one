@@ -1,11 +1,14 @@
+<<<<<<< HEAD
 import { IconType } from "@/components/Utilities/Icon"
 import { BadgeProps, ModuleId } from "@/experimental/exports"
+=======
+>>>>>>> d001c54d (refactor: deprecated icon)
 import { Avatar } from "@/experimental/Information/Avatars/Avatar"
 
 export interface PersonValue {
   firstName: string
   lastName: string
-  src?: string
+  src?: strisng
   badge?:
     | {
         type: "badge"

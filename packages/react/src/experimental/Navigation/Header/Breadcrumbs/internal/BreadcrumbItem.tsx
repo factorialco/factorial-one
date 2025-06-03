@@ -53,6 +53,10 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
           ? "page"
           : "link"
 
+    const module: ModuleId | undefined =
+      "module" in item ? item.module : undefined
+    const icon = "icon" in item ? item.icon : undefined
+
     const content = (
       <motion.div
         layoutId={`breadcrumb-${item.id}`}
