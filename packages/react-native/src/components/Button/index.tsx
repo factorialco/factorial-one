@@ -19,7 +19,7 @@ export const sizes = ["sm", "md", "lg"] as const;
 export type ButtonSize = (typeof sizes)[number];
 
 const buttonVariants = cva({
-  base: "flex-row items-center justify-center rounded border-none",
+  base: "flex-row items-center justify-center rounded border-none grow-0",
   variants: {
     variant: {
       default: "bg-f1-background-accent-bold",
@@ -169,7 +169,7 @@ export const Button = forwardRef<View, ButtonProps>(function Button(
   const shouldShowPressed = isPressed && !isDisabled;
 
   return (
-    <View className="relative">
+    <View className="flex items-start">
       <Pressable
         ref={ref}
         disabled={isDisabled}
