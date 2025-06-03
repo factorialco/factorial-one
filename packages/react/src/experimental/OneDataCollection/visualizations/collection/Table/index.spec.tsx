@@ -268,10 +268,14 @@ describe("TableCollection", () => {
   })
 
   describe("pagination", () => {
-    const createPaginatedTestSource = (
+    // TODO: bring this from the source type
+    type PaginationType = "pages" | "infinite-scroll"
+
+    const createPaginatedTestSource = ({
       totalItems = 50,
-      itemsPerPage = 10
-    ): DataSource<
+      itemsPerPage = 10,
+      paginationType = "pages" as PaginationType,
+    }): DataSource<
       Person,
       TestFilters,
       SortingsDefinition,
@@ -291,7 +295,7 @@ describe("TableCollection", () => {
       navigationFilters: undefined,
       currentNavigationFilters: {},
       dataAdapter: {
-        paginationType: "pages",
+        paginationType,
         perPage: itemsPerPage,
         fetchData: async ({ pagination }) => {
           const { currentPage = 1 } = pagination || {}
@@ -316,7 +320,7 @@ describe("TableCollection", () => {
       },
     })
 
-    it("renders pagination controls when pagination is enabled", async () => {
+    it("renders pagination controls when pages pagination is enabled", async () => {
       render(
         <TestWrapper>
           <TableCollection<
@@ -327,7 +331,9 @@ describe("TableCollection", () => {
             TestNavigationFilters
           >
             columns={testColumns}
-            source={createPaginatedTestSource()}
+            source={createPaginatedTestSource({
+              paginationType: "pages",
+            })}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}
@@ -343,6 +349,35 @@ describe("TableCollection", () => {
       })
     })
 
+    it("should not render pagination controls when infinite scroll pagination is enabled", async () => {
+      render(
+        <TestWrapper>
+          <TableCollection<
+            Person,
+            TestFilters,
+            SortingsDefinition,
+            ItemActionsDefinition<Person>,
+            TestNavigationFilters
+          >
+            columns={testColumns}
+            source={createPaginatedTestSource({
+              paginationType: "infinite-scroll",
+            })}
+            onSelectItems={vi.fn()}
+            onLoadData={vi.fn()}
+            onLoadError={vi.fn()}
+          />
+        </TestWrapper>
+      )
+
+      await waitFor(() => {
+        // OnePagination renders navigation buttons and page numbers
+        const buttons = screen.queryByRole("link")
+        expect(buttons).not.toBeInTheDocument()
+        expect(screen.queryByText("1")).not.toBeInTheDocument()
+      })
+    })
+
     it("shows loading state when switching pages", async () => {
       render(
         <TestWrapper>
@@ -354,7 +389,7 @@ describe("TableCollection", () => {
             TestNavigationFilters
           >
             columns={testColumns}
-            source={createPaginatedTestSource()}
+            source={createPaginatedTestSource({})}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}
@@ -388,7 +423,7 @@ describe("TableCollection", () => {
             TestNavigationFilters
           >
             columns={testColumns}
-            source={createPaginatedTestSource()}
+            source={createPaginatedTestSource({})}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}
@@ -424,7 +459,10 @@ describe("TableCollection", () => {
             TestNavigationFilters
           >
             columns={testColumns}
-            source={createPaginatedTestSource(5, 10)}
+            source={createPaginatedTestSource({
+              totalItems: 5,
+              itemsPerPage: 10,
+            })}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}
@@ -449,7 +487,10 @@ describe("TableCollection", () => {
             TestNavigationFilters
           >
             columns={testColumns}
-            source={createPaginatedTestSource(0, 10)}
+            source={createPaginatedTestSource({
+              totalItems: 0,
+              itemsPerPage: 10,
+            })}
             onSelectItems={vi.fn()}
             onLoadData={vi.fn()}
             onLoadError={vi.fn()}

@@ -55,7 +55,7 @@ interface PaginationInfo {
   currentPage: number
   perPage: number
   pagesCount: number
-  type: "pages" | "infinite-scroll" // This should match the possible values of dataAdapter.paginationType
+  type: "pages" | "infinite-scroll" // TODO: This should match the possible values of dataAdapter.paginationType
 }
 
 /**
@@ -341,6 +341,7 @@ export function useData<
           return
         }
 
+        // TODO: check this
         const observable: Observable<DataType<ResultType>> =
           "subscribe" in result ? result : promiseToObservable(result)
 

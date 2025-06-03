@@ -598,7 +598,7 @@ interface DataAdapterOptions<TRecord> {
   data: TRecord[]
   delay?: number
   useObservable?: boolean
-  paginationType?: "pages"
+  paginationType?: "pages" | "infinite-scroll" // TODO: check the source type
   perPage?: number
 }
 
