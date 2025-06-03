@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.81.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.80.0...factorial-one-react-v1.81.0) (2025-06-03)
+
+
+### Features
+
+* datacollection presets item count ([#1969](https://github.com/factorialco/factorial-one/issues/1969)) ([d82e1b7](https://github.com/factorialco/factorial-one/commit/d82e1b79e5f441527604232734a2475b0a6f10e4))
+
 ## [1.80.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.79.0...factorial-one-react-v1.80.0) (2025-06-03)
 
 
