@@ -2,36 +2,39 @@ import {
   EditorBubbleMenu,
   ToolbarLabels,
 } from "@/experimental/RichText/CoreEditor"
+import { SlashCommandGroupLabels } from "@/experimental/RichText/CoreEditor/Extensions/SlashCommand"
 import { Editor, EditorContent, JSONContent, useEditor } from "@tiptap/react"
 import { forwardRef, useId, useImperativeHandle, useRef, useState } from "react"
 import "../index.css"
-import { createBlankTextEditorExtensions } from "./extensions"
+import { createBasicTextEditorExtensions } from "./extensions"
 
-interface BlankTextEditorProps {
+interface BasicTextEditorProps {
   onChange: (value: { json: JSONContent | null; html: string | null }) => void
   placeholder: string
   initialEditorState?: {
     content: JSONContent | string
   }
   toolbarLabels: ToolbarLabels
+  slashCommandGroupLabels?: SlashCommandGroupLabels
   readonly?: boolean
 }
 
-type BlankTextEditorHandle = {
+type BasicTextEditorHandle = {
   clear: () => void
   focus: () => void
   setContent: (content: string) => void
 }
 
-const BlankTextEditorComponent = forwardRef<
-  BlankTextEditorHandle,
-  BlankTextEditorProps
->(function BlankTextEditor(
+const BasicTextEditorComponent = forwardRef<
+  BasicTextEditorHandle,
+  BasicTextEditorProps
+>(function BasicTextEditor(
   {
     onChange,
     placeholder,
     initialEditorState,
     toolbarLabels,
+    slashCommandGroupLabels,
     readonly = false,
   },
   ref
@@ -43,7 +46,11 @@ const BlankTextEditorComponent = forwardRef<
   const [initialContent] = useState(() => initialEditorState?.content || "")
 
   const editor = useEditor({
-    extensions: createBlankTextEditorExtensions(placeholder),
+    extensions: createBasicTextEditorExtensions(
+      placeholder,
+      toolbarLabels,
+      slashCommandGroupLabels
+    ),
     content: initialContent,
     onUpdate: ({ editor }: { editor: Editor }) => {
       if (editor.isEmpty) {
@@ -92,5 +99,5 @@ const BlankTextEditorComponent = forwardRef<
   )
 })
 
-export { BlankTextEditorComponent as BlankTextEditor }
-export type { BlankTextEditorHandle, BlankTextEditorProps }
+export { BasicTextEditorComponent as BasicTextEditor }
+export type { BasicTextEditorHandle, BasicTextEditorProps }

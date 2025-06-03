@@ -21,3 +21,4 @@ export * from "./Placeholder"
 // Custom extensions
 export * from "./CustomTask"
 export * from "./PersistSelection"
+export * from "./SlashCommand"
