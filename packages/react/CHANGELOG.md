@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.82.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.82.1...factorial-one-react-v1.82.2) (2025-06-03)
+
+
+### Bug Fixes
+
+* add CoreEditor types export to RichText module ([#1989](https://github.com/factorialco/factorial-one/issues/1989)) ([9383219](https://github.com/factorialco/factorial-one/commit/93832193df3a79f3cb8f0637d94e19e0574e916e))
+
 ## [1.82.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.82.0...factorial-one-react-v1.82.1) (2025-06-03)
 
 
