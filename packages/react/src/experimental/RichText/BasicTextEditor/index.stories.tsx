@@ -92,5 +92,5 @@ export const SpanishLabels: Story = {
   },
   parameters: {
     chromatic: { disableSnapshot: true },
-  }
+  },
 }
