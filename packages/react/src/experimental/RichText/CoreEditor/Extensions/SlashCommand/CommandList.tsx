@@ -121,54 +121,56 @@ const CommandList = forwardRef<CommandListHandle, CommandListProps>(
     return (
       <div
         ref={containerRef}
-        className="scrollbar-macos max-h-72 w-80 overflow-y-auto rounded-lg border border-solid border-f1-border bg-f1-background p-1 drop-shadow-md"
+        className="scrollbar-macos max-h-[528px] w-72 overflow-y-auto rounded-lg border border-solid border-f1-border-secondary bg-f1-background drop-shadow-md"
       >
         {commandsToRender.map((group, groupIndex) => (
           <div key={groupIndex}>
-            {/* Group title (only show if we have multiple groups and the group has a title) */}
-            {groups && group.title && (
-              <div className="px-2 py-1.5">
-                <p className="text-sm font-medium tracking-wide text-f1-foreground-secondary">
-                  {group.title}
-                </p>
-              </div>
-            )}
+            <div className="p-1">
+              {/* Group title (only show if we have multiple groups and the group has a title) */}
+              {groups && group.title && (
+                <div className="p-2">
+                  <p className="text-sm font-medium tracking-wide text-f1-foreground-secondary">
+                    {group.title}
+                  </p>
+                </div>
+              )}
 
-            {/* Group commands */}
-            {group.commands.map((item, commandIndex) => {
-              const globalIndex = getGlobalIndex(groupIndex, commandIndex)
-              const isSelected = globalIndex === selectedIndex
+              {/* Group commands */}
+              {group.commands.map((item, commandIndex) => {
+                const globalIndex = getGlobalIndex(groupIndex, commandIndex)
+                const isSelected = globalIndex === selectedIndex
 
-              return (
-                <div
-                  key={`${groupIndex}-${commandIndex}`}
-                  ref={isSelected ? selectedItemRef : null}
-                  className={cn(
-                    "flex w-full cursor-pointer items-center gap-2 rounded-md border border-solid px-2 py-1 text-left text-sm hover:bg-f1-background-hover",
-                    isSelected
-                      ? "border-f1-border-selected-bold bg-f1-background-selected"
-                      : "border-f1-border-inverse"
-                  )}
-                  onClick={() => {
-                    setSelectedIndex(globalIndex)
-                    selectItem(globalIndex)
-                  }}
-                  onMouseEnter={() => setSelectedIndex(globalIndex)}
-                >
-                  <div className="flex w-full flex-row items-center gap-3">
-                    <Icon icon={item.icon} className="text-f1-foreground" />
-                    <p className="text-md flex-grow font-medium text-f1-foreground">
+                return (
+                  <div
+                    key={`${groupIndex}-${commandIndex}`}
+                    ref={isSelected ? selectedItemRef : null}
+                    className={cn(
+                      "flex w-full cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-left text-sm hover:bg-f1-background-hover",
+                      isSelected && "bg-f1-background-secondary"
+                    )}
+                    onClick={() => {
+                      setSelectedIndex(globalIndex)
+                      selectItem(globalIndex)
+                    }}
+                    onMouseEnter={() => setSelectedIndex(globalIndex)}
+                  >
+                    <Icon
+                      icon={item.icon}
+                      className="text-f1-foreground-secondary"
+                    />
+                    <p className="flex-grow text-sm font-medium text-f1-foreground">
                       {item.title}
                     </p>
-                    {item.markdownShortcut && (
-                      <p className="text-xs text-f1-foreground-secondary">
-                        {item.markdownShortcut}
-                      </p>
-                    )}
                   </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
+            {/* Divider between groups (only show if not the last group and we have multiple groups) */}
+            {groups && groupIndex < commandsToRender.length - 1 && (
+              <div className="py-1">
+                <div className="h-[1px] w-full bg-f1-border-secondary" />
+              </div>
+            )}
           </div>
         ))}
       </div>

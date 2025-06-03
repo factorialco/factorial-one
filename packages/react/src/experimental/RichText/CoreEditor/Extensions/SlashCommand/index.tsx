@@ -144,7 +144,7 @@ const createSlashCommandExtension = (
                     <div style={anchorStyle} />
                   </Popover.Anchor>
                   <Popover.Content
-                    side="top"
+                    side="bottom"
                     align="start"
                     sideOffset={20}
                     collisionPadding={10}

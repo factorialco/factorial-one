@@ -17,7 +17,6 @@ interface CommandItem {
   title: string
   icon: IconType
   command: (editor: Editor) => void
-  markdownShortcut?: string
 }
 
 interface CommandGroup {
@@ -62,7 +61,6 @@ const getGroupedCommands = (
             .run()
         },
         icon: Heading1,
-        markdownShortcut: "#",
       },
       {
         title: labels.heading2,
@@ -76,7 +74,6 @@ const getGroupedCommands = (
             .run()
         },
         icon: Heading2,
-        markdownShortcut: "##",
       },
       {
         title: labels.heading3,
@@ -90,7 +87,6 @@ const getGroupedCommands = (
             .run()
         },
         icon: Heading3,
-        markdownShortcut: "###",
       },
     ],
   },
@@ -109,7 +105,6 @@ const getGroupedCommands = (
             .run()
         },
         icon: List,
-        markdownShortcut: "-",
       },
       {
         title: labels.orderedList,
@@ -123,7 +118,6 @@ const getGroupedCommands = (
             .run()
         },
         icon: OlList,
-        markdownShortcut: "1.",
       },
       {
         title: labels.taskList,
@@ -137,7 +131,6 @@ const getGroupedCommands = (
             .run()
         },
         icon: CheckDouble,
-        markdownShortcut: "[ ]",
       },
     ],
   },
@@ -156,7 +149,6 @@ const getGroupedCommands = (
             .run()
         },
         icon: Code,
-        markdownShortcut: "```",
       },
       {
         title: labels.quote,
@@ -170,7 +162,6 @@ const getGroupedCommands = (
             .run()
         },
         icon: Quote,
-        markdownShortcut: ">",
       },
       {
         title: labels.divider,
@@ -184,7 +175,6 @@ const getGroupedCommands = (
             .run()
         },
         icon: Minus,
-        markdownShortcut: "---",
       },
     ],
   },
