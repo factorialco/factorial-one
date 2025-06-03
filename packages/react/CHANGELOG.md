@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.82.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.82.2...factorial-one-react-v1.82.3) (2025-06-03)
+
+
+### Bug Fixes
+
+* promote factorial-one-core to dependencies ([#1992](https://github.com/factorialco/factorial-one/issues/1992)) ([0c0c243](https://github.com/factorialco/factorial-one/commit/0c0c2435283279a87778543d962f01dfccc5dea7))
+
 ## [1.82.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.82.1...factorial-one-react-v1.82.2) (2025-06-03)
 
 
