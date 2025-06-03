@@ -720,8 +720,27 @@ export function createDataAdapter<
         perPage: pageSize,
         pagesCount: Math.ceil(filteredRecords.length / pageSize),
       }
-    }
+    } else if (pagination && paginationType === "infinite-scroll") {
+      const { currentPage = 1 } = pagination
+      const pageSize = pagination.perPage || perPage
+      const startIndex = (currentPage - 1) * pageSize
+      const paginatedRecords = filteredRecords.slice(
+        startIndex,
+        startIndex + pageSize
+      )
 
+      return {
+        type: "infinite-scroll",
+        records: paginatedRecords,
+        total: filteredRecords.length,
+        cursor:
+          paginatedRecords.length > 0
+            ? Number(paginatedRecords[paginatedRecords.length - 1].index)
+            : 0, // Start from index 0
+        perPage: pageSize,
+        hasMore: startIndex + paginatedRecords.length < filteredRecords.length,
+      }
+    }
     return filteredRecords
   }
 
@@ -773,6 +792,40 @@ export function createDataAdapter<
             }
           )
         }
+
+        return new Promise<PaginatedResponse<TRecord>>((resolve, reject) => {
+          setTimeout(() => {
+            try {
+              resolve(
+                filterData(
+                  data,
+                  filters,
+                  sortings,
+                  pagination
+                ) as PaginatedResponse<TRecord>
+              )
+            } catch (error) {
+              reject(error)
+            }
+          }, delay)
+        })
+      },
+    }
+
+    return adapter
+  } else if (paginationType === "infinite-scroll") {
+    const adapter: DataAdapter<
+      TRecord,
+      TFilters,
+      TSortings,
+      TNavigationFilters
+    > = {
+      paginationType: "infinite-scroll",
+      perPage,
+      fetchData: ({ filters, sortings, pagination }) => {
+        // if (useObservable) {
+        // TODO
+        // }
 
         return new Promise<PaginatedResponse<TRecord>>((resolve, reject) => {
           setTimeout(() => {
