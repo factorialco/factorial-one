@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.82.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.82.0...factorial-one-react-v1.82.1) (2025-06-03)
+
+
+### Bug Fixes
+
+* send favorites change event on item drop ([#1981](https://github.com/factorialco/factorial-one/issues/1981)) ([282ae1b](https://github.com/factorialco/factorial-one/commit/282ae1b1b25936fcd39dbdf611fce576b07ead79))
+
 ## [1.82.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.81.0...factorial-one-react-v1.82.0) (2025-06-03)
 
 
