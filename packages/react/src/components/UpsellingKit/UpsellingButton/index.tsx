@@ -13,8 +13,8 @@ export interface LoadingStateProps {
   label: string
 }
 
-export interface UpsellingButtonProps
-  extends Omit<ButtonProps, "variant" | "icon"> {
+export interface UpsellingButtonProps extends Omit<ButtonProps, "icon"> {
+  variant?: "promote" | "outlinePromote"
   /**
    * The text to be displayed in the button
    */
@@ -66,6 +66,7 @@ export function UpsellingButton({
   loadingState,
   nextSteps,
   closeLabel,
+  variant = "promote",
   ...props
 }: UpsellingButtonProps) {
   const [responseStatus, setResponseStatus] = useState<ResponseStatus>(null)
@@ -93,7 +94,7 @@ export function UpsellingButton({
   return (
     <>
       <Button
-        variant="promote"
+        variant={variant}
         label={buttonLabel}
         icon={showIcon ? UpsellIcon : undefined}
         onClick={handleClick}
