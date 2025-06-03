@@ -5,6 +5,7 @@ import {
 } from "@/ui/avatar"
 import { ComponentProps, forwardRef } from "react"
 import { Badge, BadgeProps } from "../../Badge"
+import { ModuleId } from "../../ModuleAvatar"
 import { getAvatarColor, getInitials, getMask } from "./utils"
 
 const getBadgeSize = (
@@ -24,13 +25,23 @@ const getBadgeSize = (
 
 type ShadAvatarProps = ComponentProps<typeof AvatarComponent>
 
+type AvatarBadge =
+  | {
+      type: "module"
+      module: ModuleId
+    }
+  | {
+      type: Exclude<BadgeProps["type"], undefined>
+      icon?: BadgeProps["icon"]
+    }
+
 type Props = {
   type: ShadAvatarProps["type"]
   name: string | string[]
   src?: string
   size?: ShadAvatarProps["size"]
   color?: ShadAvatarProps["color"] | "random"
-  badge?: BadgeProps
+  badge?: AvatarBadge
 } & Pick<ShadAvatarProps, "aria-label" | "aria-labelledby">
 
 export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
