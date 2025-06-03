@@ -1,4 +1,4 @@
-import { ModuleAvatar } from "@/experimental/Information/ModuleAvatar"
+import { ModuleAvatar, ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { BreadcrumbSelect } from "@/experimental/Navigation/Header"
 import { BreadcrumbSkeleton } from "@/experimental/Navigation/Header/Breadcrumbs/internal/BreadcrumbSkeleton"
 import { BreadcrumbItemType } from "@/experimental/Navigation/Header/Breadcrumbs/types"
@@ -11,6 +11,7 @@ import {
 } from "@/ui/breadcrumb"
 import { motion } from "framer-motion"
 import { forwardRef, PropsWithChildren, ReactNode } from "react"
+import { IconType } from "recharts/types/component/DefaultLegendContent"
 import { BreadcrumbSeparator } from "./BreadcrumbSeparator"
 
 interface BreadcrumbItemProps {
@@ -62,9 +63,17 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
         )}
         transition={{ duration: 0.15 }}
       >
-        {!isLoading && "icon" in item && (isOnly || isFirst) && item.icon && (
-          <ModuleAvatar icon={item.icon} size={isOnly ? "lg" : "sm"} />
-        )}
+        {!isLoading &&
+          (("module" in item && item.module) ||
+            ("icon" in item && item.icon)) &&
+          (isOnly || isFirst) && (
+            <ModuleAvatar
+              {...("module" in item
+                ? { module: item.module as ModuleId }
+                : { icon: item.icon as IconType })}
+              size={isOnly ? "lg" : "sm"}
+            />
+          )}
         <span className="truncate">
           {!isLoading && "label" in item ? item.label : ""}
         </span>
