@@ -19,5 +19,5 @@ export interface PrimaryDropdownAction<T> extends PrimaryAction {
 }
 
 export interface SecondaryAction extends PrimaryActionButton {
-  variant?: "outline" | "critical"
+  variant?: "outline" | "critical" | "outlinePromote" | "promote"
 }
