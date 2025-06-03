@@ -96,9 +96,10 @@ export type PresetsDefinition<Filters extends FiltersDefinition> = Array<{
 export type BaseResponse<Record> = Record[]
 
 /**
- * Information about the current pagination state
+ * Pagination state and controls
  */
-export type PaginationInfo = {
+type PageBasedPaginationInfo = {
+  type: "pages"
   /** Total number of records available */
   total: number
   /** Current page number (1-indexed) */
@@ -108,6 +109,30 @@ export type PaginationInfo = {
   /** Total number of pages available */
   pagesCount: number
 }
+
+type InfiniteScrollPaginationInfo = {
+  type: "infinite-scroll"
+  /** Total number of records available */
+  total: number
+  /** Number of records per page */
+  perPage: number
+  /**
+   * Represents the current position or state in a sequence, collection, or dataset.
+   * Typically used to track the index or position for iteration or navigation purposes.
+   * A numerical value that can be incremented or decremented to traverse through the elements.
+   */
+  cursor: number
+  /**
+   * A boolean flag indicating whether there are more items or data available for processing, fetching, or pagination.
+   * Typically used in scenarios where data is loaded in chunks or pages to determine if additional requests are needed.
+   */
+  hasMore: boolean
+}
+
+/**
+ * Information about the current pagination state
+ */
+type PaginationInfo = PageBasedPaginationInfo | InfiniteScrollPaginationInfo
 
 /**
  * Response type for paginated collection data

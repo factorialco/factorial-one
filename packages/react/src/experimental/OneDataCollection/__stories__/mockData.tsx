@@ -713,6 +713,7 @@ export function createDataAdapter<
       )
 
       return {
+        type: "pages",
         records: paginatedRecords,
         total: filteredRecords.length,
         currentPage,
