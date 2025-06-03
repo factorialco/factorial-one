@@ -35,6 +35,11 @@ interface TableCellProps {
    * @default undefined
    */
   sticky?: { left?: number; right?: never } | { left?: never; right?: number }
+
+  /**
+   * The number of columns the cell should span
+   */
+  colSpan?: number
 }
 
 export function TableCell({
@@ -44,6 +49,7 @@ export function TableCell({
   width = "auto",
   firstCell = false,
   sticky,
+  colSpan,
 }: TableCellProps) {
   const { isScrolled, isScrolledRight } = useTable()
   const { actions } = useI18n()
@@ -58,6 +64,7 @@ export function TableCell({
 
   return (
     <TableCellRoot
+      colSpan={colSpan}
       className={cn(
         firstCell && "peer font-medium",
         isSticky &&

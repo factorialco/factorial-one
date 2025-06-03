@@ -5,6 +5,7 @@ import {
   filters,
   getMockVisualizations,
   mockUsers,
+  sortings,
 } from "./mockData"
 
 const meta = {
@@ -102,6 +103,7 @@ export const NoResultsExample: Story = {
       currentFilters: {
         search: "Joey Tribbiani",
       },
+      sortings,
     })
 
     const mockVisualizations = getMockVisualizations()
@@ -159,6 +161,7 @@ export const CustomMessagesAndActions: Story = {
         },
       },
       currentFilters: { search: "Joey Tribbiani" },
+      sortings,
     })
 
     const emptyStates = {
