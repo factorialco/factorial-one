@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.83.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.82.3...factorial-one-react-v1.83.0) (2025-06-03)
+
+
+### Features
+
+* outline promote button variant ([#1995](https://github.com/factorialco/factorial-one/issues/1995)) ([5bab332](https://github.com/factorialco/factorial-one/commit/5bab3320aca77b387ffa6c338f3a156528b71f12))
+
 ## [1.82.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.82.2...factorial-one-react-v1.82.3) (2025-06-03)
 
 
