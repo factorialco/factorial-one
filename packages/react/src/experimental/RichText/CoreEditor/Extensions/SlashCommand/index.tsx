@@ -146,7 +146,7 @@ const createSlashCommandExtension = (
                   <Popover.Content
                     side="bottom"
                     align="start"
-                    sideOffset={20}
+                    sideOffset={15}
                     collisionPadding={10}
                     style={{ zIndex: 9999 }}
                     onOpenAutoFocus={(event) => {
