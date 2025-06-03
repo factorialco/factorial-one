@@ -114,6 +114,7 @@ const FavoriteItem = ({
   index,
   total,
   onMove,
+  onReorderFinish,
 }: {
   item: FavoriteMenuItem
   dragConstraints?: RefObject<HTMLElement>
@@ -121,6 +122,7 @@ const FavoriteItem = ({
   index: number
   total: number
   onMove?: (from: number, to: number) => void
+  onReorderFinish: () => void
 }) => {
   const t = useI18n()
 
@@ -173,6 +175,7 @@ const FavoriteItem = ({
   const handleDragEnd = () => {
     setIsDragging(false)
     setDraggedItemId(null)
+    onReorderFinish()
     setTimeout(() => {
       wasDragging.current = false
     }, 0)
@@ -514,46 +517,43 @@ function MenuContent({
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
   const favoritesRef = useRef<HTMLDivElement>(null)
-  const [currentFavorites, setCurrentFavorites] =
+  const [internalFavorites, setInternalFavorites] =
     useState<FavoriteMenuItem[]>(favorites)
   const hasFavorites = favorites.length > 0
 
   useEffect(() => {
     const hasChanged =
-      JSON.stringify(favorites) !== JSON.stringify(currentFavorites)
+      JSON.stringify(favorites) !== JSON.stringify(internalFavorites)
 
     if (hasChanged) {
-      setCurrentFavorites(favorites)
+      setInternalFavorites(favorites)
     }
-  }, [favorites, currentFavorites])
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we don't want to re-run on internalFavorites change because it resets the value to favorites from props
+  }, [favorites])
 
-  const handleFavoritesReorder = useCallback(
-    (newOrder: FavoriteMenuItem[]) => {
-      setCurrentFavorites(newOrder)
-      onFavoritesChange?.(newOrder)
-    },
-    [onFavoritesChange]
-  )
+  const handleFavoritesReorder = (newOrder: FavoriteMenuItem[]) => {
+    setInternalFavorites(newOrder)
+  }
 
   const handleRemoveFavorite = useCallback(
     (item: FavoriteMenuItem) => {
-      const updated = currentFavorites.filter((fav) => fav.href !== item.href)
-      setCurrentFavorites(updated)
+      const updated = internalFavorites.filter((fav) => fav.href !== item.href)
+      setInternalFavorites(updated)
       onFavoritesChange?.(updated)
     },
-    [currentFavorites, onFavoritesChange]
+    [internalFavorites, onFavoritesChange]
   )
 
   const handleMoveFavorite = useCallback(
     (from: number, to: number) => {
-      if (to < 0 || to >= currentFavorites.length) return
-      const updated = [...currentFavorites]
+      if (to < 0 || to >= internalFavorites.length) return
+      const updated = [...internalFavorites]
       const [moved] = updated.splice(from, 1)
       updated.splice(to, 0, moved)
-      setCurrentFavorites(updated)
+      setInternalFavorites(updated)
       onFavoritesChange?.(updated)
     },
-    [currentFavorites, onFavoritesChange]
+    [internalFavorites, onFavoritesChange]
   )
 
   const [isInitialized, setIsInitialized] = useState(false)
@@ -617,19 +617,22 @@ function MenuContent({
             <div ref={favoritesRef}>
               <Reorder.Group
                 axis="y"
-                values={currentFavorites}
+                values={internalFavorites}
                 onReorder={handleFavoritesReorder}
                 className="flex flex-col gap-0.5"
               >
-                {currentFavorites.map((item, idx) => (
+                {internalFavorites.map((item, idx) => (
                   <FavoriteItem
                     key={`${item.href}-${item.label}`}
                     item={item}
                     dragConstraints={favoritesRef}
                     onRemove={handleRemoveFavorite}
                     index={idx}
-                    total={currentFavorites.length}
+                    total={internalFavorites.length}
                     onMove={handleMoveFavorite}
+                    onReorderFinish={() => {
+                      onFavoritesChange?.(internalFavorites)
+                    }}
                   />
                 ))}
               </Reorder.Group>
