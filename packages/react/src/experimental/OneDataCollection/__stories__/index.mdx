@@ -280,6 +280,12 @@ pagination interface remains visible but adopts a disabled state.
 
 #### Pages
 
+This is the default pagination method. It divides data into discrete pages
+(e.g., 20 items per page) and provides navigation controls to jump between them.
+It’s ideal for datasets where clear segmentation and predictable performance are
+needed. The pagination bar remains visible even when all items fit in a single
+page (but appears disabled).
+
 <Canvas
   of={DataCollectionStories.WithPagesPagination}
   meta={DataCollectionStories}
@@ -287,7 +293,27 @@ pagination interface remains visible but adopts a disabled state.
 
 #### Infinite scroll
 
+Infinite scroll loads additional data automatically as the user scrolls down.
+This creates a continuous, fluid browsing experience without explicit page
+navigation. It’s especially useful for large datasets and scenarios where the
+user is expected to consume data in a linear, exploratory manner. A skeleton
+loader or spinner appears near the bottom to indicate loading progress.
+
+> Important: Infinite scroll requires the table (or main visualization wrapper)
+> to be rendered inside a container with a fixed height and overflow: auto. This
+> is essential to detect scroll events or trigger the intersection observer used
+> for loading more data.
+
+```tsx
+<div style={{ height: '900px', overflow: 'auto' }}>
+  <OneDataCollection
+    source={dataSource}
+    visualizations={[{ type: 'table', options: { columns: [...] } }]}
+  />
+</div>
+```
+
 <Canvas
-of={DataCollectionStories.WithInfiniteScrollPagination}
-meta={DataCollectionStories}
+  of={DataCollectionStories.WithInfiniteScrollPagination}
+  meta={DataCollectionStories}
 />
