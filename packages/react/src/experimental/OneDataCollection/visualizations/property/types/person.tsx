@@ -1,5 +1,3 @@
-import { IconType } from "@/components/Utilities/Icon"
-import { BadgeProps, ModuleId } from "@/experimental/exports"
 /**
  * Person cell type for displaying person information with avatars.
  * Shows full name alongside a person avatar with optional badge.
@@ -11,19 +9,6 @@ interface PersonValue {
   firstName: string
   lastName: string
   src?: string
-  badge?:
-    | {
-        type: "badge"
-        variant: BadgeProps["type"]
-      }
-    | {
-        type: "icon"
-        icon: IconType
-      }
-    | {
-        type: "module"
-        module: ModuleId
-      }
 }
 
 export type PersonCellValue = WithAvatarBadge<PersonValue>

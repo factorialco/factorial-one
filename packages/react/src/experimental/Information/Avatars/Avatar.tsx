@@ -28,7 +28,6 @@ export const Avatar = ({
           lastName={avatar.lastName}
           badge={avatar.badge}
           src={avatar.src}
-          badge={avatar.badge}
           size={size}
           aria-label={avatar["aria-label"]}
           aria-labelledby={avatar["aria-labelledby"]}
@@ -41,7 +40,6 @@ export const Avatar = ({
           src={avatar.src}
           badge={avatar.badge}
           size={size}
-          badge={avatar.badge}
           aria-label={avatar["aria-label"]}
           aria-labelledby={avatar["aria-labelledby"]}
         />
@@ -53,7 +51,6 @@ export const Avatar = ({
           src={avatar.src}
           badge={avatar.badge}
           size={size}
-          badge={avatar.badge}
           aria-label={avatar["aria-label"]}
           aria-labelledby={avatar["aria-labelledby"]}
         />

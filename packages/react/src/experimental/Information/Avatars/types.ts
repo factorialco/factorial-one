@@ -8,5 +8,5 @@ export type AvatarBadge =
     }
   | {
       type: Exclude<BadgeProps["type"], undefined>
-      icon?: BadgeProps["icon"]
+      icon: BadgeProps["icon"]
     }

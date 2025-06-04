@@ -1,3 +1,4 @@
+import { IconType } from "@/components/Utilities/Icon"
 import { ModuleAvatar, ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { BreadcrumbSelect } from "@/experimental/Navigation/Header"
 import { BreadcrumbSkeleton } from "@/experimental/Navigation/Header/Breadcrumbs/internal/BreadcrumbSkeleton"
@@ -11,7 +12,6 @@ import {
 } from "@/ui/breadcrumb"
 import { motion } from "motion/react"
 import { forwardRef, PropsWithChildren, ReactNode } from "react"
-import { IconType } from "recharts/types/component/DefaultLegendContent"
 import { BreadcrumbSeparator } from "./BreadcrumbSeparator"
 
 interface BreadcrumbItemProps {
@@ -72,9 +72,10 @@ const BreadcrumbContent = forwardRef<HTMLDivElement, BreadcrumbItemProps>(
             ("icon" in item && item.icon)) &&
           (isOnly || isFirst) && (
             <ModuleAvatar
-              {...("module" in item
-                ? { module: item.module as ModuleId }
-                : { icon: item.icon as IconType })}
+              // TODO remove icon when the prop will be deprecated
+              {...(icon
+                ? { icon: icon as unknown as IconType }
+                : { module: module as ModuleId })}
               size={isOnly ? "lg" : "sm"}
             />
           )}
