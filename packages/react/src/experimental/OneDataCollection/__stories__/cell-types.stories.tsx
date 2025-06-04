@@ -317,6 +317,27 @@ export const PersonType: Story = {
   },
 }
 
+export const PersonTypeWithBadge: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Person",
+      render: (item) => ({
+        type: "person",
+        value: {
+          firstName: item.firstName,
+          lastName: item.lastName,
+          src: item.avatar,
+          badge: {
+            type: "module",
+            module: "benefits",
+          },
+        },
+      }),
+    },
+  },
+}
+
 export const CompanyType: Story = {
   args: {
     item: mockItem,

@@ -1,3 +1,7 @@
+/**
+ * Team cell type for displaying team information with avatars.
+ * Shows team name alongside a team avatar with optional badge.
+ */
 import { Avatar } from "@/experimental/Information/Avatars/Avatar"
 import { WithAvatarBadge } from "./types"
 

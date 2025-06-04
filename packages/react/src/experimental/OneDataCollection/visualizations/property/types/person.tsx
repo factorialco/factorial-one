@@ -1,15 +1,16 @@
-<<<<<<< HEAD
 import { IconType } from "@/components/Utilities/Icon"
 import { BadgeProps, ModuleId } from "@/experimental/exports"
-=======
->>>>>>> d001c54d (refactor: deprecated icon)
+/**
+ * Person cell type for displaying person information with avatars.
+ * Shows full name alongside a person avatar with optional badge.
+ */
 import { Avatar } from "@/experimental/Information/Avatars/Avatar"
 import { WithAvatarBadge } from "./types"
 
 interface PersonValue {
   firstName: string
   lastName: string
-  src?: strisng
+  src?: string
   badge?:
     | {
         type: "badge"
@@ -35,6 +36,7 @@ export const PersonCell = (args: PersonCellValue) => (
         firstName: args.firstName,
         lastName: args.lastName,
         src: args.src,
+        badge: args.badge,
       }}
       size="xsmall"
     />

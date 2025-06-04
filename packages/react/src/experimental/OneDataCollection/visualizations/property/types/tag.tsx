@@ -1,3 +1,7 @@
+/**
+ * Tag cell type for displaying single tags with optional icons.
+ * Used for labeling or categorizing items in data collections.
+ */
 import { IconType } from "@/components/Utilities/Icon"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
 

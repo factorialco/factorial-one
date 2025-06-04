@@ -1,3 +1,7 @@
+/**
+ * Amount cell type for displaying monetary values in data collections.
+ * Similar to number cell but specifically designed for currency amounts.
+ */
 import { cn } from "@/lib/utils"
 import { isShowingPlaceholder, resolveValue } from "../property-utils"
 import { PropertyRendererMetadata } from "../types"

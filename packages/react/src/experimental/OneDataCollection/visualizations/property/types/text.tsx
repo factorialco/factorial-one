@@ -1,3 +1,7 @@
+/**
+ * Text cell type for displaying text or number values in data collections.
+ * Supports both direct values and objects with placeholder states.
+ */
 import { cn } from "@/lib/utils"
 import { isShowingPlaceholder, resolveValue } from "../property-utils"
 import { WithPlaceholder } from "./types"
