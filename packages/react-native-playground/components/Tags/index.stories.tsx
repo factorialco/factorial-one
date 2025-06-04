@@ -1,4 +1,8 @@
-import { AlertTag } from "@factorialco/factorial-one-react-native";
+import {
+  AlertTag,
+  AppIcons,
+  RawTag,
+} from "@factorialco/factorial-one-react-native";
 import type { Meta, StoryFn } from "@storybook/react";
 import { ScrollView, View, Text } from "react-native";
 
@@ -25,6 +29,13 @@ export const TagsShowcase = () => (
       <AlertTag text="Critical" level="critical" />
       <AlertTag text="Warinig" level="warning" />
       <AlertTag text="Info" level="info" />
+    </View>
+    <Text className="text-lg font-bold mb-4 text-f1-foreground">RawTag</Text>
+    <View className="flex-row flex-wrap gap-2 mb-6">
+      <RawTag text="Label" />
+      <RawTag text="Label" icon={AppIcons.Ai} />
+      <RawTag text="Label" noBorder={true} />
+      <RawTag text="Label" noBorder={true} icon={AppIcons.Ai} />
     </View>
   </ScrollView>
 );
