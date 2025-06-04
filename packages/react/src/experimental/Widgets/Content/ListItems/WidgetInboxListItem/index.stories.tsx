@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { ClockIn as ClockInIcon } from "../../../../../icons/modules"
 import { WidgetInboxListItem, WidgetInboxListItemProps } from "./index"
 
 const meta: Meta<WidgetInboxListItemProps> = {
@@ -24,7 +23,19 @@ type Story = StoryObj<WidgetInboxListItemProps>
 export const Default: Story = {
   args: {
     id: "1",
-    icon: ClockInIcon,
+    module: "clockin",
+    title: "Title",
+    subtitle: "Module · 4 Nov 2024",
+    onClick: () => {},
+  },
+}
+
+export const DefaultModule: Story = {
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+  args: {
+    id: "1",
     title: "Title",
     subtitle: "Module · 4 Nov 2024",
     onClick: () => {},
