@@ -955,7 +955,6 @@ export const WithPagination: Story = {
     )
   },
 }
-
 export const WithSynchronousData: Story = {
   render: () => {
     const source = useDataSource<

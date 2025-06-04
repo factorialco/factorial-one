@@ -1,5 +1,6 @@
 export * from "./a11y"
 export * from "./emojis"
+export { experimental } from "./experimental"
 export { PrivacyModeProvider, usePrivacyMode } from "./privacyMode"
 export { buildTranslations } from "./providers/i18n"
 export type { TranslationsType } from "./providers/i18n"

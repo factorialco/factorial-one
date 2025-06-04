@@ -48,3 +48,12 @@ export const usePrivacyMode = () => {
 
   return context
 }
+
+/**
+ * @experimental This is an experimental function
+ */
+export function experimentalFunction() {
+  return "experimentalFunction"
+}
+
+console.log(experimentalFunction())

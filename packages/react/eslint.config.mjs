@@ -6,6 +6,7 @@ import reactRefresh from "eslint-plugin-react-refresh"
 import globals from "globals"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import experimentalJSDoc from "./src/eslint/experimental-jsdoc.js"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -22,6 +23,7 @@ const reactSettings = {
     version: "detect",
   },
 }
+
 export default [
   // Main project configuration
   {
@@ -60,6 +62,7 @@ export default [
     ignores: ["apps/react-native-example/**"],
     plugins: {
       "react-refresh": reactRefresh,
+      "experimental-jsdoc": experimentalJSDoc,
     },
 
     languageOptions: {
@@ -76,7 +79,7 @@ export default [
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "react/display-name": ["error", {}],
-
+      "experimental-jsdoc/experimental-import": "warn",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {

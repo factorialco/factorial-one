@@ -24,7 +24,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
 // Mock data with various states to demonstrate conditional actions
 const mockUsers = [
   {
