@@ -65,15 +65,15 @@ export const Chip = ({ label, variant, onClick, onClose, icon }: ChipProps) => {
                 e.stopPropagation();
                 onClose();
               }}
-              className={cn(
-                "-m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full [&_svg]:text-f1-icon-secondary [&_svg]:transition-colors [&_svg]:hover:text-f1-icon [&_svg]:focus:text-f1-icon",
-                variant === "selected" &&
-                  "[&_svg]:text-f1-icon-selected [&_svg]:hover:text-f1-icon-selected-hover [&_svg]:focus:text-f1-icon-selected-hover",
-              )}
+              className="-m-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full [&_svg]:text-f1-icon-secondary"
               tabIndex={0}
               aria-label="Close"
             >
-              <Icon icon={CrossedCircle} size="sm" />
+              <Icon
+                icon={CrossedCircle}
+                className={chipTextVariants({ variant })}
+                size="sm"
+              />
             </Pressable>
           )}
         </View>
