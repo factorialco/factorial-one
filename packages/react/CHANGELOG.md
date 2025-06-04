@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.85.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.0...factorial-one-react-v1.85.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* adding variant to widget button ([#1999](https://github.com/factorialco/factorial-one/issues/1999)) ([13ee275](https://github.com/factorialco/factorial-one/commit/13ee275f5430c29113a932bd3f2cb8e7ec76988b))
+
 ## [1.85.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.84.1...factorial-one-react-v1.85.0) (2025-06-04)
 
 
