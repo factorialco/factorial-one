@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.12.2...factorial-one-core-v1.13.0) (2025-06-04)
+
+
+### Features
+
+* **icons:** add handle icon ([#1996](https://github.com/factorialco/factorial-one/issues/1996)) ([df8b634](https://github.com/factorialco/factorial-one/commit/df8b6340e4c7d5b603bb2fd74b8ceca2d69c3511))
+
 ## [1.12.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.12.1...factorial-one-core-v1.12.2) (2025-05-30)
 
 

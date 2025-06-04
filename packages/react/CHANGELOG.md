@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.85.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.84.1...factorial-one-react-v1.85.0) (2025-06-04)
+
+
+### Features
+
+* **icons:** add handle icon ([#1996](https://github.com/factorialco/factorial-one/issues/1996)) ([df8b634](https://github.com/factorialco/factorial-one/commit/df8b6340e4c7d5b603bb2fd74b8ceca2d69c3511))
+
 ## [1.84.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.84.0...factorial-one-react-v1.84.1) (2025-06-04)
 
 
