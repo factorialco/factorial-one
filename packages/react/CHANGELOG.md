@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.85.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.2...factorial-one-react-v1.85.3) (2025-06-04)
+
+
+### Bug Fixes
+
+* handle on close on modal ([#2011](https://github.com/factorialco/factorial-one/issues/2011)) ([5ad45d2](https://github.com/factorialco/factorial-one/commit/5ad45d292a5dee6a959e86df6163a8f61899bfd9))
+
 ## [1.85.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.1...factorial-one-react-v1.85.2) (2025-06-04)
 
 
