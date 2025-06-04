@@ -329,8 +329,8 @@ export const PersonTypeWithBadge: Story = {
           lastName: item.lastName,
           src: item.avatar,
           badge: {
-            type: "module",
-            module: "benefits",
+            type: "warning",
+            icon: Placeholder,
           },
         },
       }),

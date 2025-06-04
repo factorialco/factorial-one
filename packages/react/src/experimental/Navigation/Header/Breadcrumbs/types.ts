@@ -1,8 +1,8 @@
+import { IconType } from "@/components/Utilities/Icon"
 import { SelectItemObject } from "@/experimental/Forms/Fields/Select"
 import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import { DropdownItemObject } from "@/experimental/Navigation/Dropdown"
 import { NavigationItem } from "@/experimental/Navigation/utils"
-import { IconType } from "recharts/types/component/DefaultLegendContent"
 import { BreadcrumbSelectProps } from "./internal/BreadcrumbSelect"
 
 type BreadcrumbBaseItemType = NavigationItem & {

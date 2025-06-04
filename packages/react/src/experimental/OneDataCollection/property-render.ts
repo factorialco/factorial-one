@@ -1,9 +1,7 @@
 import { ReactNode } from "react"
 import { VisualizationType } from "./visualizations"
-import {
-  PropertyRendererMetadata,
-  propertyRenderers,
-} from "./visualizations/property"
+import { propertyRenderers } from "./visualizations/property"
+import { PropertyRendererMetadata } from "./visualizations/property/types"
 
 /**
  * The definition of a renderer.

@@ -344,6 +344,15 @@ type value = {
     firstName: string
     lastName: string
     src?: string // the avatar image
+    badge?: AvatarBadge
+}
+
+type AvatarBadge = {
+    type: 'module'
+    module: ModuleId
+} | {
+    type: 'badge'
+    icon: IconType
 }
 ```
 
@@ -363,6 +372,52 @@ render: (item) => ({
   }}
 />
 
+**With badge**
+
+<Canvas
+  of={CellTypesDataCollectionStories.PersonTypeWithBadge}
+  meta={CellTypesDataCollectionStories}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'person'
+    value: {
+        firstName: 'John',
+        lastName: 'Doe',
+        src: '/pth/to/the/avatar.png'
+        badge: {
+            type: 'warning',
+            icon: Placeholder
+        }
+    }
+})
+`,
+  }}
+/>
+
+**With module badge**
+
+<Canvas
+  of={CellTypesDataCollectionStories.PersonTypeWithModuleBadge}
+  meta={CellTypesDataCollectionStories}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'person'
+    value: {
+        firstName: 'John',
+        lastName: 'Doe',
+        src: '/pth/to/the/avatar.png'
+        badge: {
+            type: 'module',
+            module: 'inbox'
+        }
+    }
+})
+`,
+  }}
+/>
+
 ### company
 
 Renders a company avatar
@@ -373,7 +428,9 @@ Renders a company avatar
 type value = {
     name: string
     src?: string // the avatar image
+    badge?: AvatarBadge
 }
+// Check PersonType for the AvatarBadge type
 ```
 
 <Canvas
@@ -401,7 +458,9 @@ Renders a team avatar
 type value = {
     name: string
     src?: string // the avatar image
+    badge?: AvatarBadge
 }
+// Check PersonType for the AvatarBadge type
 ```
 
 Example:
