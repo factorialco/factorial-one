@@ -1,12 +1,17 @@
+/**
+ * Person cell type for displaying person information with avatars.
+ * Shows full name alongside a person avatar with optional badge.
+ */
 import { Avatar } from "@/experimental/Information/Avatars/Avatar"
+import { WithAvatarBadge } from "./types"
 
-export interface PersonValue {
+interface PersonValue {
   firstName: string
   lastName: string
   src?: string
 }
 
-export type PersonCellValue = PersonValue
+export type PersonCellValue = WithAvatarBadge<PersonValue>
 
 export const PersonCell = (args: PersonCellValue) => (
   <div className="flex items-center gap-2">
@@ -16,6 +21,7 @@ export const PersonCell = (args: PersonCellValue) => (
         firstName: args.firstName,
         lastName: args.lastName,
         src: args.src,
+        badge: args.badge,
       }}
       size="xsmall"
     />
