@@ -278,13 +278,12 @@ export function useData<
             type: "infinite-scroll",
             total: result.total,
             perPage: result.perPage,
-            // Set initial cursor to 0 if not provided
             cursor:
-              "cursor" in result
+              "cursor" in result && result.cursor !== undefined
                 ? result.cursor
                 : appendMode
-                  ? result.perPage // For appending, use perPage
-                  : 0, // For initial load, start at 0
+                  ? result.perPage
+                  : 0,
             hasMore:
               "hasMore" in result
                 ? result.hasMore
@@ -458,34 +457,34 @@ export function useData<
     ]
   )
 
+  function isInfiniteScrollPagination(
+    pagination: PaginationInfo | null
+  ): pagination is InfiniteScrollPaginationInfo {
+    return pagination !== null && pagination.type === "infinite-scroll"
+  }
+
   const loadMore = useCallback(() => {
     if (!paginationInfo || isLoading) return
 
-    // Only allow loadMore for infinite-scroll pagination type
-    if (paginationInfo.type !== "infinite-scroll") {
+    if (!isInfiniteScrollPagination(paginationInfo)) {
       console.warn(
         "loadMore is only applicable for infinite-scroll pagination type"
       )
       return
     }
 
-    // Check if there's more data to load
     if (paginationInfo.hasMore) {
-      console.log("[debug] Current cursor:", paginationInfo.cursor)
+      const currentCursor = paginationInfo.cursor ?? 0
 
-      // Use perPage to calculate next cursor
-      const nextCursor = paginationInfo.cursor
-      console.log("[debug] Next cursor will be:", nextCursor)
-
-      isLoadingMoreRef.current = true
       setIsLoadingMore(true)
       setIsLoading(true)
+      isLoadingMoreRef.current = true
 
       fetchDataAndUpdate(
         mergedFilters,
-        nextCursor,
+        currentCursor,
         currentNavigationFilters,
-        true // Always append for infinite scroll
+        true
       )
     }
   }, [
@@ -494,6 +493,8 @@ export function useData<
     mergedFilters,
     paginationInfo,
     currentNavigationFilters,
+    setIsLoading,
+    setIsLoadingMore,
   ])
 
   useEffect(() => {
