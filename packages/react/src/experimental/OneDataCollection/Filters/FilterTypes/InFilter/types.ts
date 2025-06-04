@@ -17,6 +17,7 @@ export type InFilterOptionItem<T = unknown> = {
  * @template T - Type of the underlying value
  */
 export type InFilterOptions<T> = {
+  cache?: boolean
   options:
     | Array<InFilterOptionItem<T>>
     | (() =>
