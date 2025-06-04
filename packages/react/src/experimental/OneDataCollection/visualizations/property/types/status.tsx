@@ -1,3 +1,7 @@
+/**
+ * Status cell type for displaying status indicators with labels.
+ * Used for showing the current state or condition of items in data collections.
+ */
 import {
   StatusTag,
   StatusVariant,

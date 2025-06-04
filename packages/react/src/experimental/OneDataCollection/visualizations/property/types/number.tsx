@@ -1,3 +1,7 @@
+/**
+ * Number cell type for displaying numeric values in data collections.
+ * Supports both direct number values and objects with placeholder states.
+ */
 import { cn } from "@/lib/utils"
 import { isShowingPlaceholder, resolveValue } from "../property-utils"
 import { PropertyRendererMetadata } from "../types"

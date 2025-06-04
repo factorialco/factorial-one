@@ -1,3 +1,7 @@
+/**
+ * Date cell type for displaying formatted dates in data collections.
+ * Supports both direct date values and objects with placeholder states.
+ */
 import { formatDateValue } from "../property-utils"
 
 import { cn } from "@/lib/utils"
