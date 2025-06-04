@@ -1,11 +1,9 @@
-import { IconType } from "../../../../../components/Utilities/Icon"
-import { Bell as BellIcon } from "../../../../../icons/app"
-import { cn } from "../../../../../lib/utils"
-import { ModuleAvatar } from "../../../../Information/ModuleAvatar"
+import { ModuleAvatar, ModuleId } from "@/experimental/Information/ModuleAvatar"
+import { cn } from "@/lib/utils"
 
 type Props<Id extends string | number = string | number> = {
   id: Id
-  icon?: IconType
+  module?: ModuleId
   title: string
   subtitle: string
   onClick?: (id: Id) => void
@@ -37,8 +35,8 @@ export function WidgetInboxListItem({
   id,
   title,
   subtitle,
-  icon = BellIcon,
   onClick,
+  module,
 }: Props) {
   const className = cn(
     "flex flex-row gap-2 rounded-md border border-solid border-transparent p-2 text-f1-foreground",
@@ -53,7 +51,7 @@ export function WidgetInboxListItem({
 
   return (
     <Wrapper onClick={handleOnClick} className={className}>
-      <ModuleAvatar icon={icon} size="md" />
+      <ModuleAvatar module={module ?? "inbox"} size="md" />
       <div className="flex-1">
         <p className="line-clamp-1 font-medium">{title}</p>
         <p className="line-clamp-1 text-f1-foreground-secondary">{subtitle}</p>
