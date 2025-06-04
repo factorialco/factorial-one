@@ -1,3 +1,4 @@
+import { experimentalComponent } from "@/lib/experimental"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react"
 import { useDebounceValue } from "usehooks-ts"
@@ -11,496 +12,502 @@ import {
   EntitySelectSubEntity,
 } from "./types"
 
-export const EntitySelect = (
-  props: EntitySelectProps & { children?: React.ReactNode }
-) => {
-  const [open, setOpen] = useState(
-    (props.alwaysOpen || props.defaultOpen) ?? false
-  )
-
-  const onOpenChange = (open: boolean) => {
-    setOpen(open)
-    props.onOpenChange?.(open)
-  }
-
-  useEffect(() => {
-    // We want to run this when the component is rendered the first time or when the defaultOpen prop changes
-    if (props.defaultOpen && open) {
-      props.onOpenChange?.(true)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only want to run this when this prop changes
-  }, [props.defaultOpen])
-
-  const [filteredEntities, setFilteredEntities] = useState<
-    EntitySelectEntity[]
-  >(props.entities)
-
-  const [search, setSearch] = useState("")
-  const [debouncedSearch, setDebouncedSearch] = useDebounceValue("", 300)
-
-  const groupView = useMemo(
-    () =>
-      props.entities.some(
-        (entity) => entity.subItems && entity.subItems.length > 0
-      ),
-    [props.entities]
-  )
-
-  function onPrivateSelect(entity: EntitySelectEntity) {
-    if (props.singleSelector) {
-      props.onSelect(entity)
-
-      setOpen(false)
-
-      return
-    }
-
-    const prevSelected = props.selectedEntities ?? []
-
-    const filteredEntity = filteredEntities.find((fe) => fe.id === entity.id)
-    if (!filteredEntity) {
-      return
-    }
-
-    const visibleSubIds = new Set(
-      (filteredEntity.subItems ?? []).map((s) => s.subId)
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
+export const EntitySelect = experimentalComponent(
+  "EntitySelect",
+  (props: EntitySelectProps & { children?: React.ReactNode }) => {
+    const [open, setOpen] = useState(
+      (props.alwaysOpen || props.defaultOpen) ?? false
     )
 
-    const parentIdsToUpdate = new Set<EntityId>([filteredEntity.id])
-    filteredEntities.forEach((possibleParent) => {
-      if (possibleParent.id !== filteredEntity.id) {
-        const hasIntersection = (possibleParent.subItems ?? []).some((sub) =>
-          visibleSubIds.has(sub.subId)
-        )
-        if (hasIntersection) {
-          parentIdsToUpdate.add(possibleParent.id)
-        }
-      }
-    })
-
-    const newSelectedEntities = [...prevSelected]
-
-    function upsertSelectedEntity(updated: EntitySelectEntity) {
-      const idx = newSelectedEntities.findIndex((x) => x.id === updated.id)
-      if (idx >= 0) {
-        newSelectedEntities[idx] = updated
-      } else {
-        newSelectedEntities.push(updated)
-      }
+    const onOpenChange = (open: boolean) => {
+      setOpen(open)
+      props.onOpenChange?.(open)
     }
 
-    parentIdsToUpdate.forEach((parentId) => {
-      const filteredParent = filteredEntities.find((p) => p.id === parentId)
-      if (!filteredParent) return
-
-      const newVisibleSubItems =
-        filteredParent.subItems?.filter((sub) =>
-          visibleSubIds.has(sub.subId)
-        ) ?? []
-
-      const oldIndex = newSelectedEntities.findIndex((x) => x.id === parentId)
-      if (oldIndex >= 0) {
-        const oldSubItems = newSelectedEntities[oldIndex].subItems ?? []
-        const setOldSubIds = new Set(oldSubItems.map((s) => s.subId))
-
-        const mergedSubItems = [
-          ...oldSubItems,
-          ...newVisibleSubItems.filter((s) => !setOldSubIds.has(s.subId)),
-        ]
-
-        upsertSelectedEntity({
-          ...filteredParent,
-          subItems: mergedSubItems,
-        })
-      } else {
-        upsertSelectedEntity({
-          ...filteredParent,
-          subItems: newVisibleSubItems,
-        })
+    useEffect(() => {
+      // We want to run this when the component is rendered the first time or when the defaultOpen prop changes
+      if (props.defaultOpen && open) {
+        props.onOpenChange?.(true)
       }
-    })
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- we only want to run this when this prop changes
+    }, [props.defaultOpen])
 
-    props.onSelect(newSelectedEntities)
-  }
+    const [filteredEntities, setFilteredEntities] = useState<
+      EntitySelectEntity[]
+    >(props.entities)
 
-  function onSubItemSelect(
-    parentEntity: EntitySelectEntity,
-    entity: EntitySelectSubEntity
-  ) {
-    if (props.singleSelector) {
-      props.onSelect({ ...parentEntity, subItems: [{ ...entity }] })
+    const [search, setSearch] = useState("")
+    const [debouncedSearch, setDebouncedSearch] = useDebounceValue("", 300)
 
-      setOpen(false)
-    } else {
+    const groupView = useMemo(
+      () =>
+        props.entities.some(
+          (entity) => entity.subItems && entity.subItems.length > 0
+        ),
+      [props.entities]
+    )
+
+    function onPrivateSelect(entity: EntitySelectEntity) {
+      if (props.singleSelector) {
+        props.onSelect(entity)
+
+        setOpen(false)
+
+        return
+      }
+
       const prevSelected = props.selectedEntities ?? []
-      const selectedIds = new Set(prevSelected.map((sel) => sel.id))
-      const selectedSubItemsMap = new Map<EntityId, EntitySelectSubEntity[]>(
-        prevSelected.map((sel) => [sel.id, sel.subItems ?? []])
+
+      const filteredEntity = filteredEntities.find((fe) => fe.id === entity.id)
+      if (!filteredEntity) {
+        return
+      }
+
+      const visibleSubIds = new Set(
+        (filteredEntity.subItems ?? []).map((s) => s.subId)
       )
 
-      selectedIds.add(parentEntity.id)
-
-      props.entities.forEach((possibleParent) => {
-        const parentHasNewSubItem = possibleParent.subItems?.some(
-          (sub) => sub.subId === entity.subId
-        )
-        if (parentHasNewSubItem) {
-          selectedIds.add(possibleParent.id)
+      const parentIdsToUpdate = new Set<EntityId>([filteredEntity.id])
+      filteredEntities.forEach((possibleParent) => {
+        if (possibleParent.id !== filteredEntity.id) {
+          const hasIntersection = (possibleParent.subItems ?? []).some((sub) =>
+            visibleSubIds.has(sub.subId)
+          )
+          if (hasIntersection) {
+            parentIdsToUpdate.add(possibleParent.id)
+          }
         }
       })
 
-      const newSelectedEntities: EntitySelectEntity[] = []
+      const newSelectedEntities = [...prevSelected]
 
-      props.entities.forEach((parent) => {
-        if (selectedIds.has(parent.id)) {
-          const oldSubItems = selectedSubItemsMap.get(parent.id) ?? []
+      function upsertSelectedEntity(updated: EntitySelectEntity) {
+        const idx = newSelectedEntities.findIndex((x) => x.id === updated.id)
+        if (idx >= 0) {
+          newSelectedEntities[idx] = updated
+        } else {
+          newSelectedEntities.push(updated)
+        }
+      }
 
-          let mergedSubItems = [...oldSubItems]
-          const parentContainsNewSub = parent.subItems?.some(
-            (p) => p.subId === entity.subId
-          )
-          if (parentContainsNewSub) {
-            const alreadyHasIt = mergedSubItems.some(
-              (x) => x.subId === entity.subId
-            )
-            if (!alreadyHasIt) {
-              mergedSubItems.push(entity)
-            }
-          }
+      parentIdsToUpdate.forEach((parentId) => {
+        const filteredParent = filteredEntities.find((p) => p.id === parentId)
+        if (!filteredParent) return
 
-          const realSubIds = new Set(
-            (parent.subItems ?? []).map((sub) => sub.subId)
-          )
-          mergedSubItems = mergedSubItems.filter((sub) =>
-            realSubIds.has(sub.subId)
-          )
+        const newVisibleSubItems =
+          filteredParent.subItems?.filter((sub) =>
+            visibleSubIds.has(sub.subId)
+          ) ?? []
 
-          newSelectedEntities.push({
-            ...parent,
+        const oldIndex = newSelectedEntities.findIndex((x) => x.id === parentId)
+        if (oldIndex >= 0) {
+          const oldSubItems = newSelectedEntities[oldIndex].subItems ?? []
+          const setOldSubIds = new Set(oldSubItems.map((s) => s.subId))
+
+          const mergedSubItems = [
+            ...oldSubItems,
+            ...newVisibleSubItems.filter((s) => !setOldSubIds.has(s.subId)),
+          ]
+
+          upsertSelectedEntity({
+            ...filteredParent,
             subItems: mergedSubItems,
+          })
+        } else {
+          upsertSelectedEntity({
+            ...filteredParent,
+            subItems: newVisibleSubItems,
           })
         }
       })
 
       props.onSelect(newSelectedEntities)
     }
-  }
 
-  function onRemove(entityToRemove: EntitySelectEntity) {
-    if (props.singleSelector) {
-      props.onSelect(null)
-      return
+    function onSubItemSelect(
+      parentEntity: EntitySelectEntity,
+      entity: EntitySelectSubEntity
+    ) {
+      if (props.singleSelector) {
+        props.onSelect({ ...parentEntity, subItems: [{ ...entity }] })
+
+        setOpen(false)
+      } else {
+        const prevSelected = props.selectedEntities ?? []
+        const selectedIds = new Set(prevSelected.map((sel) => sel.id))
+        const selectedSubItemsMap = new Map<EntityId, EntitySelectSubEntity[]>(
+          prevSelected.map((sel) => [sel.id, sel.subItems ?? []])
+        )
+
+        selectedIds.add(parentEntity.id)
+
+        props.entities.forEach((possibleParent) => {
+          const parentHasNewSubItem = possibleParent.subItems?.some(
+            (sub) => sub.subId === entity.subId
+          )
+          if (parentHasNewSubItem) {
+            selectedIds.add(possibleParent.id)
+          }
+        })
+
+        const newSelectedEntities: EntitySelectEntity[] = []
+
+        props.entities.forEach((parent) => {
+          if (selectedIds.has(parent.id)) {
+            const oldSubItems = selectedSubItemsMap.get(parent.id) ?? []
+
+            let mergedSubItems = [...oldSubItems]
+            const parentContainsNewSub = parent.subItems?.some(
+              (p) => p.subId === entity.subId
+            )
+            if (parentContainsNewSub) {
+              const alreadyHasIt = mergedSubItems.some(
+                (x) => x.subId === entity.subId
+              )
+              if (!alreadyHasIt) {
+                mergedSubItems.push(entity)
+              }
+            }
+
+            const realSubIds = new Set(
+              (parent.subItems ?? []).map((sub) => sub.subId)
+            )
+            mergedSubItems = mergedSubItems.filter((sub) =>
+              realSubIds.has(sub.subId)
+            )
+
+            newSelectedEntities.push({
+              ...parent,
+              subItems: mergedSubItems,
+            })
+          }
+        })
+
+        props.onSelect(newSelectedEntities)
+      }
     }
 
-    let newSelectedEntities: EntitySelectEntity[] = []
-    const prevSelected = props.selectedEntities ?? []
-
-    if (groupView) {
-      const parentElement = filteredEntities.find(
-        (fe) => fe.id === entityToRemove.id
-      )
-
-      if (!parentElement) {
-        // This should never happen as a element not visible cannot be selected
+    function onRemove(entityToRemove: EntitySelectEntity) {
+      if (props.singleSelector) {
+        props.onSelect(null)
         return
       }
 
-      const subIdsRemoved = new Set(
-        (parentElement.subItems ?? []).map((sub) => sub.subId)
-      )
+      let newSelectedEntities: EntitySelectEntity[] = []
+      const prevSelected = props.selectedEntities ?? []
 
-      for (const selectedParent of prevSelected) {
-        const selectedParentSubItems = (selectedParent.subItems ?? []).filter(
-          (sub) => !subIdsRemoved.has(sub.subId)
+      if (groupView) {
+        const parentElement = filteredEntities.find(
+          (fe) => fe.id === entityToRemove.id
         )
 
-        if (selectedParentSubItems.length > 0) {
-          newSelectedEntities.push({
-            ...selectedParent,
-            subItems: selectedParentSubItems,
-          })
+        if (!parentElement) {
+          // This should never happen as a element not visible cannot be selected
+          return
         }
-      }
-    } else {
-      newSelectedEntities = (prevSelected ?? []).filter((selectedEntity) => {
-        return selectedEntity.id !== entityToRemove.id
-      })
-    }
 
-    props.onSelect(newSelectedEntities)
-  }
+        const subIdsRemoved = new Set(
+          (parentElement.subItems ?? []).map((sub) => sub.subId)
+        )
 
-  function onSubItemRemove(
-    _parentEntity: EntitySelectEntity,
-    subEntity: EntitySelectSubEntity
-  ) {
-    if (props.singleSelector) {
-      props.onSelect(null)
-      return
-    }
+        for (const selectedParent of prevSelected) {
+          const selectedParentSubItems = (selectedParent.subItems ?? []).filter(
+            (sub) => !subIdsRemoved.has(sub.subId)
+          )
 
-    const prevSelected = props.selectedEntities ?? []
-    const subIdToRemove = subEntity.subId
-
-    const newSelectedEntities: EntitySelectEntity[] = []
-
-    for (const parent of prevSelected) {
-      const filteredSubItems =
-        parent.subItems?.filter((s) => s.subId !== subIdToRemove) ?? []
-
-      if (filteredSubItems.length > 0) {
-        newSelectedEntities.push({
-          ...parent,
-          subItems: filteredSubItems,
+          if (selectedParentSubItems.length > 0) {
+            newSelectedEntities.push({
+              ...selectedParent,
+              subItems: selectedParentSubItems,
+            })
+          }
+        }
+      } else {
+        newSelectedEntities = (prevSelected ?? []).filter((selectedEntity) => {
+          return selectedEntity.id !== entityToRemove.id
         })
       }
+
+      props.onSelect(newSelectedEntities)
     }
 
-    props.onSelect(newSelectedEntities)
-  }
+    function onSubItemRemove(
+      _parentEntity: EntitySelectEntity,
+      subEntity: EntitySelectSubEntity
+    ) {
+      if (props.singleSelector) {
+        props.onSelect(null)
+        return
+      }
 
-  function onClear() {
-    if (props.singleSelector) {
-      props.onSelect(null)
-      return
-    }
+      const prevSelected = props.selectedEntities ?? []
+      const subIdToRemove = subEntity.subId
 
-    const prevSelected = props.selectedEntities ?? []
+      const newSelectedEntities: EntitySelectEntity[] = []
 
-    let newSelected: EntitySelectEntity[] = []
-
-    if (groupView) {
-      const visibleSubIds = new Set<EntityId>(
-        filteredEntities.flatMap((ent) =>
-          (ent.subItems ?? []).map((sub) => sub.subId)
-        )
-      )
-
-      for (const selectedEntity of prevSelected) {
-        const filteredSubItems = (selectedEntity.subItems ?? []).filter(
-          (sub) => !visibleSubIds.has(sub.subId)
-        )
+      for (const parent of prevSelected) {
+        const filteredSubItems =
+          parent.subItems?.filter((s) => s.subId !== subIdToRemove) ?? []
 
         if (filteredSubItems.length > 0) {
-          newSelected.push({
-            ...selectedEntity,
+          newSelectedEntities.push({
+            ...parent,
             subItems: filteredSubItems,
           })
         }
       }
-    } else {
-      const visibleIds = new Set<EntityId>(
-        filteredEntities.map((ent) => ent.id)
-      )
-      newSelected = (prevSelected ?? []).filter((el) => !visibleIds.has(el.id))
+
+      props.onSelect(newSelectedEntities)
     }
 
-    props.onSelect(newSelected)
-  }
-
-  function onSelectAll() {
-    const newSelected = [...(props.selectedEntities ?? [])]
-
-    filteredEntities.forEach((entity) => {
-      const existingEntity = newSelected.find((sel) => sel.id === entity.id)
-
-      if (!existingEntity) {
-        newSelected.push({
-          ...entity,
-          subItems: entity.subItems || [],
-        })
-      } else {
-        const mergedSubItems = Array.from(
-          new Set([
-            ...(existingEntity.subItems ?? []),
-            ...(entity.subItems ?? []),
-          ])
-        )
-        existingEntity.subItems = mergedSubItems
+    function onClear() {
+      if (props.singleSelector) {
+        props.onSelect(null)
+        return
       }
-    })
 
-    if (!props.singleSelector) props.onSelect(newSelected)
-  }
+      const prevSelected = props.selectedEntities ?? []
 
-  const onSearch = (search: string) => {
-    setSearch(search)
-    setDebouncedSearch(search)
-  }
+      let newSelected: EntitySelectEntity[] = []
 
-  const onToggleExpand = (entity: EntitySelectEntity, expanded: boolean) => {
-    props.onItemExpandedChange(entity.id, expanded)
-    setFilteredEntities(
-      filteredEntities.map((e) =>
-        e.id === entity.id ? { ...e, expanded: !entity.expanded } : e
-      )
-    )
-  }
+      if (groupView) {
+        const visibleSubIds = new Set<EntityId>(
+          filteredEntities.flatMap((ent) =>
+            (ent.subItems ?? []).map((sub) => sub.subId)
+          )
+        )
 
-  useEffect(() => {
-    if (!debouncedSearch) {
-      setFilteredEntities(props.entities)
-      return
+        for (const selectedEntity of prevSelected) {
+          const filteredSubItems = (selectedEntity.subItems ?? []).filter(
+            (sub) => !visibleSubIds.has(sub.subId)
+          )
+
+          if (filteredSubItems.length > 0) {
+            newSelected.push({
+              ...selectedEntity,
+              subItems: filteredSubItems,
+            })
+          }
+        }
+      } else {
+        const visibleIds = new Set<EntityId>(
+          filteredEntities.map((ent) => ent.id)
+        )
+        newSelected = (prevSelected ?? []).filter(
+          (el) => !visibleIds.has(el.id)
+        )
+      }
+
+      props.onSelect(newSelected)
     }
 
-    if (groupView && !props.applySearchToGroup) {
-      const nextEntities = props.entities.map((entity) => {
-        const entityScore = getBestScoreForEntity(entity, debouncedSearch)
+    function onSelectAll() {
+      const newSelected = [...(props.selectedEntities ?? [])]
 
-        const filteredSubItems = entity.subItems
-          ?.map((el) => ({
-            ...el,
-            score: getMatchScore(
-              debouncedSearch,
-              el.subSearchKeys ?? [el.subName]
-            ),
-          }))
-          .filter((subEntity) => subEntity.score < Infinity)
-          .sort((a, b) => a.score - b.score)
+      filteredEntities.forEach((entity) => {
+        const existingEntity = newSelected.find((sel) => sel.id === entity.id)
 
-        return {
-          ...entity,
-          score: entityScore,
-          expanded: entity.expanded ?? (filteredSubItems?.length ?? 0) > 0,
-          subItems: filteredSubItems,
+        if (!existingEntity) {
+          newSelected.push({
+            ...entity,
+            subItems: entity.subItems || [],
+          })
+        } else {
+          const mergedSubItems = Array.from(
+            new Set([
+              ...(existingEntity.subItems ?? []),
+              ...(entity.subItems ?? []),
+            ])
+          )
+          existingEntity.subItems = mergedSubItems
         }
       })
 
-      const filteredNextEntities = nextEntities
-        .filter((entity) => entity.score < Infinity)
-        .sort((a, b) => a.score - b.score)
-
-      setFilteredEntities(filteredNextEntities)
-    } else {
-      const nextEntities = props.entities
-        .map((entity) => {
-          const entityScore = getMatchScore(
-            debouncedSearch,
-            entity.searchKeys ?? [entity.name]
-          )
-          return { ...entity, score: entityScore }
-        })
-        .filter((entity) => entity.score < Infinity)
-        .sort((a, b) => a.score - b.score)
-
-      setFilteredEntities(nextEntities)
+      if (!props.singleSelector) props.onSelect(newSelected)
     }
-  }, [
-    debouncedSearch,
-    props.entities,
-    props.applySearchToGroup,
-    groupView,
-    setFilteredEntities,
-  ])
 
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [containerWidth, setContainerWidth] = useState(0)
+    const onSearch = (search: string) => {
+      setSearch(search)
+      setDebouncedSearch(search)
+    }
 
-  useLayoutEffect(() => {
-    const updateWidth = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth)
+    const onToggleExpand = (entity: EntitySelectEntity, expanded: boolean) => {
+      props.onItemExpandedChange(entity.id, expanded)
+      setFilteredEntities(
+        filteredEntities.map((e) =>
+          e.id === entity.id ? { ...e, expanded: !entity.expanded } : e
+        )
+      )
+    }
+
+    useEffect(() => {
+      if (!debouncedSearch) {
+        setFilteredEntities(props.entities)
+        return
       }
-    }
-    updateWidth()
-    window.addEventListener("resize", updateWidth)
-    return () => window.removeEventListener("resize", updateWidth)
-  }, [])
 
-  if (props.alwaysOpen) {
-    return (
-      <div
-        ref={containerRef}
-        className={cn(
-          "scrollbar-macos relative overflow-auto rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0",
-          !props.width ? "w-full" : "w-fit"
-        )}
-      >
-        <Content
-          groupView={groupView}
-          entities={filteredEntities}
-          groups={props.groups}
-          onGroupChange={props.onGroupChange}
-          selectedGroup={props.selectedGroup}
-          onSelect={onPrivateSelect}
-          onRemove={onRemove}
-          onSubItemRemove={onSubItemRemove}
-          onSubItemSelect={onSubItemSelect}
-          onClear={onClear}
-          onSelectAll={onSelectAll}
-          selectedEntities={props.selectedEntities ?? []}
-          search={search}
-          onSearch={onSearch}
-          onToggleExpand={onToggleExpand}
-          searchPlaceholder={props.searchPlaceholder}
-          selectAllLabel={props.selectAllLabel}
-          clearLabel={props.clearLabel}
-          selectedLabel={props.selectedLabel}
-          singleSelector={props.singleSelector}
-          loading={props.loading}
-          notFoundTitle={props.notFoundTitle}
-          notFoundSubtitle={props.notFoundSubtitle}
-          width={props.width ?? containerWidth - 2}
-          disabled={props.disabled}
-          hiddenAvatar={props.hiddenAvatar}
-        />
-      </div>
-    )
-  }
+      if (groupView && !props.applySearchToGroup) {
+        const nextEntities = props.entities.map((entity) => {
+          const entityScore = getBestScoreForEntity(entity, debouncedSearch)
 
-  return (
-    <Popover {...props} onOpenChange={onOpenChange} open={open}>
-      <PopoverTrigger className="w-full" disabled={props.disabled}>
-        {props.children ? (
-          props.children
-        ) : (
-          <Trigger
-            placeholder={props.triggerPlaceholder}
-            selected={props.triggerSelected}
+          const filteredSubItems = entity.subItems
+            ?.map((el) => ({
+              ...el,
+              score: getMatchScore(
+                debouncedSearch,
+                el.subSearchKeys ?? [el.subName]
+              ),
+            }))
+            .filter((subEntity) => subEntity.score < Infinity)
+            .sort((a, b) => a.score - b.score)
+
+          return {
+            ...entity,
+            score: entityScore,
+            expanded: entity.expanded ?? (filteredSubItems?.length ?? 0) > 0,
+            subItems: filteredSubItems,
+          }
+        })
+
+        const filteredNextEntities = nextEntities
+          .filter((entity) => entity.score < Infinity)
+          .sort((a, b) => a.score - b.score)
+
+        setFilteredEntities(filteredNextEntities)
+      } else {
+        const nextEntities = props.entities
+          .map((entity) => {
+            const entityScore = getMatchScore(
+              debouncedSearch,
+              entity.searchKeys ?? [entity.name]
+            )
+            return { ...entity, score: entityScore }
+          })
+          .filter((entity) => entity.score < Infinity)
+          .sort((a, b) => a.score - b.score)
+
+        setFilteredEntities(nextEntities)
+      }
+    }, [
+      debouncedSearch,
+      props.entities,
+      props.applySearchToGroup,
+      groupView,
+      setFilteredEntities,
+    ])
+
+    const containerRef = useRef<HTMLDivElement>(null)
+    const [containerWidth, setContainerWidth] = useState(0)
+
+    useLayoutEffect(() => {
+      const updateWidth = () => {
+        if (containerRef.current) {
+          setContainerWidth(containerRef.current.offsetWidth)
+        }
+      }
+      updateWidth()
+      window.addEventListener("resize", updateWidth)
+      return () => window.removeEventListener("resize", updateWidth)
+    }, [])
+
+    if (props.alwaysOpen) {
+      return (
+        <div
+          ref={containerRef}
+          className={cn(
+            "scrollbar-macos relative overflow-auto rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0",
+            !props.width ? "w-full" : "w-fit"
+          )}
+        >
+          <Content
+            groupView={groupView}
+            entities={filteredEntities}
+            groups={props.groups}
+            onGroupChange={props.onGroupChange}
+            selectedGroup={props.selectedGroup}
+            onSelect={onPrivateSelect}
+            onRemove={onRemove}
+            onSubItemRemove={onSubItemRemove}
+            onSubItemSelect={onSubItemSelect}
+            onClear={onClear}
+            onSelectAll={onSelectAll}
             selectedEntities={props.selectedEntities ?? []}
+            search={search}
+            onSearch={onSearch}
+            onToggleExpand={onToggleExpand}
+            searchPlaceholder={props.searchPlaceholder}
+            selectAllLabel={props.selectAllLabel}
+            clearLabel={props.clearLabel}
+            selectedLabel={props.selectedLabel}
+            singleSelector={props.singleSelector}
+            loading={props.loading}
+            notFoundTitle={props.notFoundTitle}
+            notFoundSubtitle={props.notFoundSubtitle}
+            width={props.width ?? containerWidth - 2}
             disabled={props.disabled}
             hiddenAvatar={props.hiddenAvatar}
           />
-        )}
-      </PopoverTrigger>
-      <PopoverContent
-        className={cn(
-          "scrollbar-macos relative w-full overflow-auto rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0"
-        )}
-      >
-        <Content
-          groupView={groupView}
-          entities={filteredEntities}
-          groups={props.groups}
-          onGroupChange={props.onGroupChange}
-          selectedGroup={props.selectedGroup}
-          onSelect={onPrivateSelect}
-          onRemove={onRemove}
-          onSubItemRemove={onSubItemRemove}
-          onSubItemSelect={onSubItemSelect}
-          onClear={onClear}
-          onSelectAll={onSelectAll}
-          selectedEntities={props.selectedEntities ?? []}
-          search={search}
-          onSearch={onSearch}
-          onToggleExpand={onToggleExpand}
-          searchPlaceholder={props.searchPlaceholder}
-          selectAllLabel={props.selectAllLabel}
-          clearLabel={props.clearLabel}
-          selectedLabel={props.selectedLabel}
-          singleSelector={props.singleSelector}
-          loading={props.loading}
-          notFoundTitle={props.notFoundTitle}
-          notFoundSubtitle={props.notFoundSubtitle}
-          width={props.width}
-          disabled={props.disabled}
-          hiddenAvatar={props.hiddenAvatar}
-          actions={props.actions}
-        />
-      </PopoverContent>
-    </Popover>
-  )
-}
+        </div>
+      )
+    }
+
+    return (
+      <Popover {...props} onOpenChange={onOpenChange} open={open}>
+        <PopoverTrigger className="w-full" disabled={props.disabled}>
+          {props.children ? (
+            props.children
+          ) : (
+            <Trigger
+              placeholder={props.triggerPlaceholder}
+              selected={props.triggerSelected}
+              selectedEntities={props.selectedEntities ?? []}
+              disabled={props.disabled}
+              hiddenAvatar={props.hiddenAvatar}
+            />
+          )}
+        </PopoverTrigger>
+        <PopoverContent
+          className={cn(
+            "scrollbar-macos relative w-full overflow-auto rounded-xl border-[1px] border-solid border-f1-border-secondary bg-transparent p-0"
+          )}
+        >
+          <Content
+            groupView={groupView}
+            entities={filteredEntities}
+            groups={props.groups}
+            onGroupChange={props.onGroupChange}
+            selectedGroup={props.selectedGroup}
+            onSelect={onPrivateSelect}
+            onRemove={onRemove}
+            onSubItemRemove={onSubItemRemove}
+            onSubItemSelect={onSubItemSelect}
+            onClear={onClear}
+            onSelectAll={onSelectAll}
+            selectedEntities={props.selectedEntities ?? []}
+            search={search}
+            onSearch={onSearch}
+            onToggleExpand={onToggleExpand}
+            searchPlaceholder={props.searchPlaceholder}
+            selectAllLabel={props.selectAllLabel}
+            clearLabel={props.clearLabel}
+            selectedLabel={props.selectedLabel}
+            singleSelector={props.singleSelector}
+            loading={props.loading}
+            notFoundTitle={props.notFoundTitle}
+            notFoundSubtitle={props.notFoundSubtitle}
+            width={props.width}
+            disabled={props.disabled}
+            hiddenAvatar={props.hiddenAvatar}
+            actions={props.actions}
+          />
+        </PopoverContent>
+      </Popover>
+    )
+  }
+)
 
 function getMatchScore(text = "", searchKeys: string[]): number {
   const lowerText = text.trim().toLowerCase()
