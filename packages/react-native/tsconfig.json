@@ -11,7 +11,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@factorialco/factorial-one-core": ["../core/src"]
+      "@factorialco/factorial-one-core": ["../core/src"],
+      "@/*": ["./src/*"]
     },
     "types": ["nativewind/types", "jest"]
   },
