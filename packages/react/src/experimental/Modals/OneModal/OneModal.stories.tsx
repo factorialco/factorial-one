@@ -1,3 +1,4 @@
+import { ButtonInternal } from "@/components/Actions/Button/internal"
 import {
   OnePersonListItem,
   OnePersonListItemProps,
@@ -5,6 +6,8 @@ import {
 import { Default as OnePersonListItemDefault } from "@/experimental/Lists/OnePersonListItem/index.stories"
 import { ApplicationFrame } from "@/experimental/Navigation/ApplicationFrame"
 import ApplicationFrameStoryMeta from "@/experimental/Navigation/ApplicationFrame/index.stories"
+import CheckDoubleIcon from "@/icons/app/CheckDouble"
+import CrossIcon from "@/icons/app/Cross"
 import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
 import type { Meta, StoryObj } from "@storybook/react"
@@ -20,7 +23,7 @@ const meta: Meta<typeof OneModal> = {
       story: { inline: false, height: "720px" },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "experimental"],
   decorators: [
     (Story) => (
       <ApplicationFrame
@@ -143,12 +146,28 @@ export const WithRightPosition: Story = {
 export const WithFewItems: Story = {
   args: {
     ...Default.args,
+    position: "right",
     children: (
       <>
         <OneModal.Header title="Team Status" otherActions={OTHER_ACTIONS} />
         <OneModal.Content tabs={TABS}>
           <ExamplePersonList numberOfItems={3} />
         </OneModal.Content>
+        <OneModal.Footer>
+          <div className="flex flex-1 flex-row gap-3">
+            <ButtonInternal
+              label="Approve"
+              icon={CheckDoubleIcon}
+              onClick={() => {}}
+            />
+            <ButtonInternal
+              label="Reject"
+              icon={CrossIcon}
+              variant="critical"
+              onClick={() => {}}
+            />
+          </div>
+        </OneModal.Footer>
       </>
     ),
   },

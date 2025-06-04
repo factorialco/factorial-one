@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.12.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.12.1...factorial-one-core-v1.12.2) (2025-05-30)
+
+
+### Bug Fixes
+
+* change upsell icon color ([#1943](https://github.com/factorialco/factorial-one/issues/1943)) ([0d5a1b1](https://github.com/factorialco/factorial-one/commit/0d5a1b17b894281a9118b68a658361c9c71f11cf))
+
+## [1.12.1](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.12.0...factorial-one-core-v1.12.1) (2025-05-29)
+
+
+### Bug Fixes
+
+* apply dark mode to our components ([#1916](https://github.com/factorialco/factorial-one/issues/1916)) ([488ea14](https://github.com/factorialco/factorial-one/commit/488ea146128980a77323e24babbdd8a04b174c3f))
+
+## [1.12.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.11.0...factorial-one-core-v1.12.0) (2025-05-23)
+
+
+### Features
+
+* add actions to Select ([#1874](https://github.com/factorialco/factorial-one/issues/1874)) ([cfe0b7a](https://github.com/factorialco/factorial-one/commit/cfe0b7a408940989700248293ac775c353c3297d))
+
+## [1.11.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.10.0...factorial-one-core-v1.11.0) (2025-05-22)
+
+
+### Features
+
+* add arrowcycle icon ([7f1f680](https://github.com/factorialco/factorial-one/commit/7f1f680e5ad6a749ca1357832a41192daa0b48b7))
+
+## [1.10.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.9.0...factorial-one-core-v1.10.0) (2025-05-21)
+
+
+### Features
+
+* videorecorder and microphone icons ([420c16f](https://github.com/factorialco/factorial-one/commit/420c16f1d27417e1d271c68bd1a59c571945903c))
+
 ## [1.9.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.8.0...factorial-one-core-v1.9.0) (2025-05-19)
 
 

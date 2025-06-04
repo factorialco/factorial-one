@@ -27,7 +27,20 @@ export const ActionsDropdown = <
   }
 
   return (
-    <Dropdown items={items} open={open} onOpenChange={setOpen}>
+    <Dropdown
+      items={items.map((item) => {
+        if (item.type === "separator") {
+          return item
+        }
+        return {
+          ...item,
+          type: "item",
+        }
+      })}
+      open={open}
+      onOpenChange={setOpen}
+      align="end"
+    >
       <button
         title="Actions"
         className={cn(

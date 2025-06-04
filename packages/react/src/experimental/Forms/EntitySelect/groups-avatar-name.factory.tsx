@@ -4,24 +4,24 @@ import { EntitySelectEntity } from "./types"
 
 export const teamsWithEmployees: EntitySelectEntity[] = [
   {
-    id: 51,
+    id: "engineering_51",
     name: "Engineering",
     avatar: avatar,
     subItems: getEmployeesFromRange(0, 12),
   },
   {
-    id: 52,
+    id: "design_52",
     name: "Design",
     avatar: avatar,
     subItems: getEmployeesFromRange(10, 22),
   },
   {
-    id: 53,
+    id: "marketing_53",
     name: "Marketing",
     avatar: avatar,
   },
   {
-    id: 54,
+    id: "sales_54",
     name: "Sales",
     avatar: avatar,
     subItems: getEmployeesFromRange(20, 30),

@@ -9,13 +9,19 @@ import {
   NavigationFiltersState,
 } from "./navigationFilters/types"
 import { SortingsDefinition, SortingsState } from "./sortings"
+import { DataError } from "./useData"
 
 /**
  * Defines the structure and configuration of a data source for a collection.
  * @template Record - The type of records in the collection
  * @template Filters - The available filter configurations for the collection
  * @template ItemActions - The available actions that can be performed on records
+ * @template NavigationFilters - The available navigation filters for the collection
+ * @template Sortings - The available sortings for the collection
+ * @template ItemActions - The available actions that can be performed on records
+ * @template PrimaryActions - The available primary actions that can be performed on the collection
  * @template SecondaryActions - The available actions that can be performed on the collection
+ * @template OtherActions - The available actions that can be performed on the collection
  */
 export type DataSourceDefinition<
   Record extends RecordType,
@@ -76,12 +82,19 @@ export type CollectionSearchOptions = {
  * Defines preset filter configurations that can be applied to a collection.
  * @template Filters - The available filter configurations
  */
-export type PresetsDefinition<Filters extends FiltersDefinition> = Array<{
+export type PresetDefinition<Filters extends FiltersDefinition> = {
   /** Display name for the preset */
   label: string
   /** Filter configuration to apply when this preset is selected */
   filter: FiltersState<Filters>
-}>
+  /** Function to count the number of items that match the filter */
+  itemsCount?: (
+    filters: FiltersState<Filters>
+  ) => Promise<number | undefined> | number | undefined
+}
+
+export type PresetsDefinition<Filters extends FiltersDefinition> =
+  PresetDefinition<Filters>[]
 
 /**
  * Base response type for collection data
@@ -265,6 +278,18 @@ export type OnBulkActionCallback<
   ]
 ) => void
 
+export type OnLoadDataCallback<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+> = (data: {
+  totalItems: number | undefined
+  filters: FiltersState<Filters>
+  search: string | undefined
+  isInitialLoading: boolean
+  data: Record[]
+}) => void
+
+export type OnLoadErrorCallback = (error: DataError) => void
 /**
  * Props for the Collection component.
  * @template Record - The type of records in the collection
@@ -283,9 +308,10 @@ export type CollectionProps<
   /** The data source configuration and state */
   source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
   /** Function to handle item selection */
-  onSelectItems?: OnSelectItemsCallback<Record, Filters>
-  /** Function to handle total items change */
-  onTotalItemsChange?: (totalItems: number | undefined) => void
+  onSelectItems: OnSelectItemsCallback<Record, Filters>
+  /** Function to handle data load */
+  onLoadData: OnLoadDataCallback<Record, Filters>
+  onLoadError: OnLoadErrorCallback
 } & VisualizationOptions
 
 /**

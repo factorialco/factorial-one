@@ -1,4 +1,4 @@
-import { IconType } from "@/components/Utilities/Icon"
+import { Icon, IconType } from "@/components/Utilities/Icon"
 import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
 import {
   Avatar,
@@ -17,6 +17,86 @@ import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
 import { PropertyDefinition } from "../../property-render"
 import { VisualizationType } from "../../visualizations"
+import {
+  formatDateValue,
+  isShowingPlaceholder,
+  resolveValue,
+} from "./property-utils.ts"
+import { PersonCell } from "./types/person.tsx"
+
+export interface WithPlaceholder {
+  placeholder?: string
+}
+
+export interface TextValue extends WithPlaceholder {
+  text: string | number | undefined
+}
+
+export interface NumberValue extends WithPlaceholder {
+  number: number | undefined
+}
+
+export interface DateValue extends WithPlaceholder {
+  date: Date | undefined
+}
+
+export interface AmountValue extends WithPlaceholder {
+  amount: number | undefined
+}
+
+export type TextCellValue = string | number | undefined | TextValue
+export type NumberCellValue = number | undefined | NumberValue
+export type DateCellValue = Date | undefined | DateValue
+export type AmountCellValue = number | undefined | AmountValue
+
+export interface AvatarListValue {
+  avatarList: AvatarVariant[]
+  max?: number
+}
+export type AvatarListCellValue = AvatarListValue
+
+export interface StatusValue {
+  status: StatusVariant
+  label: string
+}
+export type StatusCellValue = StatusValue
+
+export interface CompanyValue {
+  name: string
+  src?: string
+}
+export type CompanyCellValue = CompanyValue
+
+export interface TeamValue {
+  name: string
+  src?: string
+}
+export type TeamCellValue = TeamValue
+
+export interface TagValue {
+  label: string
+  icon?: IconType
+}
+export type TagCellValue = TagValue
+
+export interface DotTagValue {
+  label: string
+  color: NewColor
+}
+export type DotTagCellValue = DotTagValue
+
+export interface TagListValue {
+  tags: Array<Omit<TagVariant, "type">>
+  max?: number
+  type: TagType
+}
+export type TagListCellValue = TagListValue
+
+export interface IconValue {
+  icon: IconType
+  label: string
+}
+export type IconCellValue = IconValue
 
 /**
  * The renderer function to use for a property.
@@ -38,61 +118,78 @@ export type PropertyRendererMetadata<T> = {
  * @returns The rendered property value
  */
 export const propertyRenderers = {
-  text: (text: string | number | undefined) => (
-    <span className="text-f1-foreground">{text}</span>
-  ),
-  number: (
-    number: number | undefined,
-    meta: PropertyRendererMetadata<never>
-  ) => (
-    <div
-      className={cn(
-        "text-f1-foreground",
-        meta.visualization === "table" && "text-right"
-      )}
-    >
-      {number}
-    </div>
-  ),
-  date: (date: Date | undefined) => (
-    <div className="text-f1-foreground">{date?.toLocaleDateString()}</div>
-  ),
-  amount: (
-    amount: number | undefined,
-    meta: PropertyRendererMetadata<never>
-  ) => (
-    <div
-      className={cn(
-        "text-f1-foreground",
-        meta.visualization === "table" && "text-right"
-      )}
-    >
-      {amount}
-    </div>
-  ),
-  avatarList: (args: { avatarList: AvatarVariant[]; max?: number }) => (
+  text: (args: TextCellValue) => {
+    const value = resolveValue<string | number>(args, "text")
+    const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "text")
+
+    return (
+      <span
+        className={cn(
+          "text-f1-foreground",
+          shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
+        )}
+      >
+        {value}
+      </span>
+    )
+  },
+
+  number: (args: NumberCellValue, meta: PropertyRendererMetadata<never>) => {
+    const value = resolveValue<number>(args, "number")
+    const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "number")
+
+    return (
+      <div
+        className={cn(
+          "text-f1-foreground",
+          meta.visualization === "table" && "text-right",
+          shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
+        )}
+      >
+        {value}
+      </div>
+    )
+  },
+  date: (args: DateCellValue) => {
+    const formattedDate = formatDateValue(args)
+
+    const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "date")
+
+    return (
+      <div
+        className={cn(
+          "text-f1-foreground",
+          shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
+        )}
+      >
+        {formattedDate}
+      </div>
+    )
+  },
+  amount: (args: AmountCellValue, meta: PropertyRendererMetadata<never>) => {
+    const value = resolveValue<number>(args, "amount")
+    const shouldShowPlaceholderStyling = isShowingPlaceholder(args, "amount")
+
+    return (
+      <div
+        className={cn(
+          "text-f1-foreground",
+          meta.visualization === "table" && "text-right",
+          shouldShowPlaceholderStyling && "text-f1-foreground-secondary"
+        )}
+      >
+        {value}
+      </div>
+    )
+  },
+  avatarList: (args: AvatarListCellValue) => (
     <AvatarList avatars={args.avatarList} size="xsmall" max={args.max} />
   ),
-  status: (args: { status: StatusVariant; label: string }) => (
+  status: (args: StatusCellValue) => (
     <StatusTag variant={args.status} text={args.label} />
   ),
-  person: (args: { firstName: string; lastName: string; src?: string }) => (
-    <div className="flex items-center gap-2">
-      <Avatar
-        avatar={{
-          type: "person",
-          firstName: args.firstName,
-          lastName: args.lastName,
-          src: args.src,
-        }}
-        size="xsmall"
-      />
-      <span className="text-f1-foreground">
-        {args.firstName} {args.lastName}
-      </span>
-    </div>
-  ),
-  company: (args: { name: string; src?: string }) => (
+  person: PersonCell,
+  company: (args: CompanyCellValue) => (
     <div className="flex items-center gap-2">
       <Avatar
         avatar={{
@@ -105,7 +202,7 @@ export const propertyRenderers = {
       <span className="text-f1-foreground">{args.name}</span>
     </div>
   ),
-  team: (args: { name: string; src?: string }) => (
+  team: (args: TeamCellValue) => (
     <div className="flex items-center gap-2">
       <Avatar
         avatar={{
@@ -118,18 +215,18 @@ export const propertyRenderers = {
       <span className="text-f1-foreground">{args.name}</span>
     </div>
   ),
-  tag: (args: { label: string; icon?: IconType }) => (
-    <RawTag text={args.label} icon={args.icon} />
-  ),
-  dotTag: (args: { label: string; color: NewColor }) => (
+  tag: (args: TagCellValue) => <RawTag text={args.label} icon={args.icon} />,
+  dotTag: (args: DotTagCellValue) => (
     <DotTag text={args.label} color={args.color} />
   ),
-  tagList: (args: {
-    tags: Array<Omit<TagVariant, "type">>
-    max?: number
-    type: TagType
-  }) => (
+  tagList: (args: TagListCellValue) => (
     <TagList type={args.type} tags={args.tags as TagVariant[]} max={args.max} />
+  ),
+  icon: (args: IconCellValue) => (
+    <div className="flex items-center gap-2">
+      <Icon icon={args.icon} />
+      <span className="text-f1-foreground">{args.label}</span>
+    </div>
   ),
 } as const satisfies Record<string, PropertyRenderer<never>>
 

@@ -1,13 +1,13 @@
-import { Checkbox } from "@/experimental/Forms/Fields/Checkbox"
+import { AvatarVariant } from "@/experimental/Information/Avatars/Avatar"
+import { OneCard } from "@/experimental/OneCard"
 import { NavigationFiltersDefinition } from "@/experimental/OneDataCollection/navigationFilters/types"
 import { useSelectable } from "@/experimental/OneDataCollection/useSelectable"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/ui/Card"
 import { Skeleton } from "@/ui/skeleton"
 import { useEffect, useMemo } from "react"
 import { useI18n } from "../../../../../lib/providers/i18n"
 import { OnePagination } from "../../../../OnePagination"
 import type { FiltersDefinition } from "../../../Filters/types"
-import { ActionsDropdown } from "../../../ItemActions/Dropdown"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { PropertyDefinition, renderProperty } from "../../../property-render"
 import { SortingsDefinition } from "../../../sortings"
@@ -23,6 +23,8 @@ export type CardVisualizationOptions<
 > = {
   cardProperties: ReadonlyArray<CardPropertyDefinition<T>>
   title: (record: T) => string
+  description?: (record: T) => string
+  avatar?: (record: T) => AvatarVariant
 }
 
 // Find the next number that is divisible by 2, 3, and 4
@@ -41,9 +43,12 @@ export const CardCollection = <
 >({
   cardProperties,
   title,
+  description,
+  avatar,
   source,
   onSelectItems,
-  onTotalItemsChange,
+  onLoadData,
+  onLoadError,
 }: CollectionProps<
   Record,
   Filters,
@@ -74,14 +79,28 @@ export const CardCollection = <
     Filters,
     Sortings,
     NavigationFilters
-  >({
-    ...source,
-    dataAdapter: overridenDataAdapter,
-  })
+  >(
+    {
+      ...source,
+      dataAdapter: overridenDataAdapter,
+    },
+    {
+      onError: (error) => {
+        onLoadError(error)
+      },
+    }
+  )
 
   useEffect(() => {
-    onTotalItemsChange?.(paginationInfo?.total || data.length)
-  }, [paginationInfo?.total, onTotalItemsChange, data])
+    onLoadData({
+      totalItems: paginationInfo?.total || data.length,
+      filters: source.currentFilters,
+      search: source.currentSearch,
+      isInitialLoading,
+      data,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
+  }, [paginationInfo?.total, data])
 
   /**
    * Item selection
@@ -126,24 +145,54 @@ export const CardCollection = <
             ))
           : data.map((item, index) => {
               const id = source.selectable ? source.selectable(item) : undefined
+              const itemHref = source.itemUrl ? source.itemUrl(item) : undefined
+              const itemOnClick = source.itemOnClick
+                ? source.itemOnClick(item)
+                : undefined
+
+              const itemActions = (
+                source.itemActions ? source.itemActions(item) || [] : []
+              ).filter((action) => action.type !== "separator")
+
+              const otherActions = (
+                itemActions.filter(
+                  (action) => action.type === "other" || !action.type
+                ) || []
+              ).map((action) => ({
+                ...action,
+                // Reconverts the type to DropdownItemObject
+                type: "item" as const,
+              }))
+
+              const primaryAction =
+                itemActions.find((action) => action.type === "primary") ||
+                undefined
+              const secondaryActions =
+                itemActions.filter((action) => action.type === "secondary") ||
+                []
+
+              const selectable = !!source.selectable && id !== undefined
+
               return (
-                <Card key={index}>
-                  <CardHeader>
-                    {source.selectable && id !== undefined && (
-                      <Checkbox
-                        checked={selectedItems.has(id)}
-                        onCheckedChange={(checked) =>
-                          handleSelectItemChange(item, checked)
-                        }
-                        title={`Select ${source.selectable(item)}`}
-                        hideLabel
-                      />
-                    )}
-                    <CardTitle>{title(item)}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
+                <OneCard
+                  key={index}
+                  title={title(item)}
+                  selectable={selectable}
+                  description={description ? description(item) : undefined}
+                  avatar={avatar ? avatar(item) : undefined}
+                  selected={selectable && selectedItems.has(id)}
+                  onSelect={(selected) =>
+                    handleSelectItemChange(item, selected)
+                  }
+                  secondaryActions={secondaryActions}
+                  primaryAction={primaryAction}
+                  otherActions={otherActions}
+                  onClick={itemOnClick}
+                  link={itemHref}
+                >
+                  <div className="flex flex-col gap-2">
                     {cardProperties.map((property) => (
-                      <div key={String(property.label)} className="space-y-1">
+                      <div key={String(property.label)}>
                         <div className="text-muted-foreground text-sm font-medium">
                           {property.label}
                         </div>
@@ -152,16 +201,8 @@ export const CardCollection = <
                         </div>
                       </div>
                     ))}
-                  </CardContent>
-                  {source.itemActions && (
-                    <CardFooter className="justify-end">
-                      <ActionsDropdown
-                        item={item}
-                        actions={source.itemActions}
-                      />
-                    </CardFooter>
-                  )}
-                </Card>
+                  </div>
+                </OneCard>
               )
             })}
       </div>

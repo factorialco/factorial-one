@@ -3,14 +3,14 @@ import { fn } from "@storybook/test"
 import { useState } from "react"
 import avatar from "../../../../storybook-assets/avatar.jpeg"
 import { EntitySelect } from "./index"
-import { EntitySelectEntity } from "./types"
+import { EntityId, EntitySelectEntity } from "./types"
 
 // --------------------------------------
 // EXAMPLE GRAPHQL COMMENT BLOCK
 // --------------------------------------
 /**
  * Example of graphql request:
- *   query AvatarNameSelector($active: Boolean, $companyId: Int!, $ids: [Int!], $legalEntityIds: [Int!], $search: String) {
+ *   query EntitySelect($active: Boolean, $companyId: Int!, $ids: [Int!], $legalEntityIds: [Int!], $search: String) {
  *     employees {
  *       employeeNames(
  *         companyId: $companyId
@@ -19,14 +19,14 @@ import { EntitySelectEntity } from "./types"
  *         onlyActive: $active
  *         search: $search
  *       ) {
- *         ...AvatarNameForSelect
+ *         ...EntitySelectForSelect
  *         __typename
  *       }
  *       __typename
  *     }
  *   }
  *
- *   fragment AvatarNameForSelect on EmployeesEmployeeName {
+ *   fragment EntitySelectForSelect on EmployeesEmployeeName {
  *     id
  *     avatar {
  *       id
@@ -117,7 +117,7 @@ export interface EmployeeSelectorProps {
 // STORYBOOK METADATA
 // --------------------------------------
 const meta: Meta<EmployeeSelectorProps> = {
-  title: "AvatarNameSelector/EmployeeSelector",
+  title: "EntitySelect/EmployeeSelector",
   // No direct 'component' reference is strictly required if you're just
   // rendering an example inside your own "render" function, but you can
   // optionally assign it if you like:
@@ -149,14 +149,14 @@ query EmployeeSelector($active: Boolean, $companyId: Int!, $ids: [Int!], $legalE
       onlyActive: $active
       search: $search
     ) {
-      ...AvatarNameForSelect
+      ...EntitySelectForSelect
       __typename
     }
     __typename
   }
 }
 
-fragment AvatarNameForSelect on EmployeesEmployeeName {
+fragment EntitySelectForSelect on EmployeesEmployeeName {
   id
   avatar {
     id
@@ -207,7 +207,7 @@ export const Default: Story = {
     const [loading, setLoading] = useState<boolean>(true)
     const [fetchEmployees, setFetchEmployees] = useState<FetchEmployee[]>([])
     const [selectedGroup, setSelectedGroup] = useState<string>("all")
-    const [expandedElements, setExpandedElements] = useState<number[]>([])
+    const [expandedElements, setExpandedElements] = useState<EntityId[]>([])
     const [selectedEmployees, setSelectedEmployees] = useState<
       EntitySelectEntity[]
     >([])
@@ -227,7 +227,7 @@ export const Default: Story = {
       setSelectedEmployees(Array.isArray(el) ? el : el ? [el] : [])
     }
 
-    const onItemExpandedChange = (id: number, expanded: boolean) => {
+    const onItemExpandedChange = (id: EntityId, expanded: boolean) => {
       if (expanded) {
         setExpandedElements([id].concat(expandedElements))
       } else {

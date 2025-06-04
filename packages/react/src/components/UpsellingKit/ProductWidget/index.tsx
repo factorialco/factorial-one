@@ -1,31 +1,59 @@
-import { Button } from "@/factorial-one"
+import {
+  Button,
+  ErrorMessageProps,
+  LoadingStateProps,
+  NextStepsProps,
+  SuccessMessageProps,
+  UpsellingButton,
+} from "@/factorial-one"
 import CrossIcon from "@/icons/app/Cross"
-import { Card, CardContent, CardFooter } from "@/ui/card"
+import { ButtonVariant } from "@/ui/button"
+import { Card, CardContent, CardFooter } from "@/ui/Card"
 import { Label } from "@/ui/label"
 import { useEffect, useState } from "react"
 
+type BaseAction = {
+  label: string
+  onClick: () => Promise<void>
+}
+
+type UpsellAction = BaseAction & {
+  type: "upsell"
+  errorMessage: ErrorMessageProps
+  successMessage: SuccessMessageProps
+  loadingState: LoadingStateProps
+  nextSteps: NextStepsProps
+  closeLabel: string
+  showConfirmation: boolean
+}
+
+type RegularAction = BaseAction & {
+  type: "regular"
+  variant: ButtonVariant
+}
+
+export type Action = UpsellAction | RegularAction
+
 type ProductWidgetProps = {
-  imageUrl: string
+  mediaUrl?: string
   title: string
   description: string
-  buttonText: string
-  onClick: () => void
   onClose: () => void
   dismissible: boolean
   width?: string
   trackVisibility?: (visible: boolean) => void
+  actions?: Action[]
 }
 
 export function ProductWidget({
-  imageUrl,
+  mediaUrl,
   title,
   description,
-  buttonText,
-  onClick,
   onClose,
   dismissible,
   width,
   trackVisibility,
+  actions,
 }: ProductWidgetProps) {
   const [isDismissed, setIsDismissed] = useState(false)
 
@@ -41,6 +69,8 @@ export function ProductWidget({
       trackVisibility(!isDismissed)
     }
   }, [trackVisibility, isDismissed])
+
+  const isVideo = mediaUrl?.includes(".mp4")
 
   return (
     <>
@@ -61,13 +91,23 @@ export function ProductWidget({
             )}
             <div>
               <div>
-                {imageUrl && (
-                  <img
-                    src={imageUrl}
-                    alt={title}
-                    className="h-full w-full rounded-md"
-                  />
-                )}
+                {mediaUrl &&
+                  (isVideo ? (
+                    <video
+                      src={mediaUrl}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="h-full w-full rounded-md"
+                    />
+                  ) : (
+                    <img
+                      src={mediaUrl}
+                      alt={title}
+                      className="h-full w-full rounded-md"
+                    />
+                  ))}
               </div>
               <div className="flex flex-col gap-[2px] p-3">
                 <Label className="text-lg font-medium">{title}</Label>
@@ -77,14 +117,32 @@ export function ProductWidget({
               </div>
             </div>
           </CardContent>
-          <CardFooter className="p-3">
-            <Button
-              variant="neutral"
-              size="sm"
-              label={buttonText}
-              onClick={onClick}
-            />
-          </CardFooter>
+          {actions && (
+            <CardFooter className="p-3">
+              {actions.map((action) =>
+                action.type === "upsell" ? (
+                  <UpsellingButton
+                    key={action.label}
+                    label={action.label}
+                    onRequest={action.onClick}
+                    errorMessage={action.errorMessage}
+                    successMessage={action.successMessage}
+                    loadingState={action.loadingState}
+                    nextSteps={action.nextSteps}
+                    closeLabel={action.closeLabel}
+                    showConfirmation={action.showConfirmation}
+                  />
+                ) : (
+                  <Button
+                    key={action.label}
+                    label={action.label}
+                    onClick={action.onClick}
+                    variant={action.variant}
+                  />
+                )
+              )}
+            </CardFooter>
+          )}
         </Card>
       ) : null}
     </>

@@ -2,7 +2,7 @@ import { Canvas, Meta, Controls, Unstyled } from "@storybook/blocks"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 import * as DataCollectionStories from "./index.stories"
-import * as ActionDataCollectionStories from "./actions.stories"
+import * as ActionDataCollectionStories from "./collection-actions.stories"
 
 <Meta title="Data collection" />
 
@@ -108,22 +108,10 @@ When a filter is applied, the system generates "chips" that:
   with a single click
 - Remain active until the user explicitly removes them.
 
-##### Presets
+#### Presets
 
-The presets are predefined configurations that allow users to quickly access
-frequently used filtered data views. This simplifies navigation, as there is no
-need to manually adjust the filters every time you want to change the table
-view.
-
-To ensure an optimal user experience, it is recommended to carefully select the
-presets, prioritizing those that display the most relevant and frequently
-consulted information. It is essential to avoid overloading the table with too
-many preconfigured filters.
-
-<Canvas
-  of={DataCollectionStories.WithPreselectedFilters}
-  meta={DataCollectionStories}
-/>
+For detailed information about presets, refer to the
+[Presets documentation](?path=/docs/components-data-collection-presets--documentation).
 
 #### Search
 

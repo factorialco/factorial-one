@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react-native",
-  "version": "0.5.0",
+  "version": "0.9.0",
   "type": "module",
   "description": "React Native components for Factorial One Design System",
   "main": "src/index.ts",
@@ -47,6 +47,7 @@
     "react-native": "^0.76.6",
     "react-native-svg": "^15.8.0",
     "tailwindcss": "3.3.5",
+    "twemoji-parser": "^14.0.0",
     "typescript": "^5.7.2"
   },
   "dependencies": {
@@ -57,12 +58,11 @@
   },
   "devDependencies": {
     "@svgr/cli": "^8.1.0",
-    "@testing-library/jest-native": "^5.4.3",
     "@testing-library/react-native": "^12.9.0",
     "@types/jest": "^29.5.14",
     "@types/react": "^18.2.0",
     "@types/react-native": "^0.73.0",
-    "@types/react-test-renderer": "^19.1.0",
+    "@types/twemoji-parser": "^13.1.4",
     "globals": "^16.0.0",
     "jest": "^29.7.0",
     "nativewind": "^4.1.23",
@@ -72,7 +72,6 @@
     "react": "^18.2.0",
     "react-native": "^0.76.6",
     "react-native-svg": "^15.8.0",
-    "react-test-renderer": "^18.3.1",
     "tailwindcss": "3.3.5",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.7.2"

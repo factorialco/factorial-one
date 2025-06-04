@@ -1,17 +1,19 @@
-import { Button } from "@/ui/button"
 import { VirtualItem } from "@tanstack/react-virtual"
 import React, { useCallback, useMemo } from "react"
 import { cn } from "../../../../../lib/utils"
 import { Spinner } from "../../../../exports"
 import { VirtualList } from "../../../../Navigation/VirtualList"
 import { Select } from "../../../Fields/Select"
-import { AvatarNameListItem } from "../../ListItem"
+import { Action } from "../../../Fields/Select/SelectBottomActions"
+import { EntitySelectListItem } from "../../ListItem"
 import {
+  EntityId,
   EntitySelectEntity,
   EntitySelectNamedGroup,
   EntitySelectSubEntity,
   FlattenedItem,
 } from "../../types"
+import { Footer } from "./Footer"
 import { Searcher } from "./Searcher"
 
 export const MainContent = ({
@@ -36,6 +38,7 @@ export const MainContent = ({
   notFoundTitle,
   notFoundSubtitle,
   className,
+  actions,
   singleSelector = false,
   loading = false,
   disabled = false,
@@ -72,6 +75,7 @@ export const MainContent = ({
   loading?: boolean
   disabled?: boolean
   hiddenAvatar?: boolean
+  actions?: Action[]
 }) => {
   const ref = React.useRef<HTMLDivElement | null>(null)
 
@@ -85,9 +89,6 @@ export const MainContent = ({
         : entities.length,
     [entities, groupView]
   )
-
-  const showFooter =
-    !loading && !singleSelector && (selectAllLabel || clearLabel)
 
   const goToFirst = useCallback(() => {
     ref.current?.scrollTo({
@@ -131,7 +132,7 @@ export const MainContent = ({
         ? !selected && selectedSubItems.length > 0
         : selected
       return (
-        <AvatarNameListItem
+        <EntitySelectListItem
           expanded={entity.expanded ?? false}
           onExpand={() => onToggleExpand(entity, true)}
           search={search}
@@ -244,7 +245,7 @@ export const MainContent = ({
         const partialSelected = !selected && selectedSubItems.length > 0
 
         return (
-          <AvatarNameListItem
+          <EntitySelectListItem
             groupView
             expanded={recoveredEntity.expanded ?? false}
             onExpand={(expanded) => onToggleExpand(recoveredEntity, expanded)}
@@ -284,7 +285,7 @@ export const MainContent = ({
       }
 
       return (
-        <AvatarNameListItem
+        <EntitySelectListItem
           expanded={false}
           onExpand={() => null}
           search={search}
@@ -332,7 +333,7 @@ export const MainContent = ({
     if (!entities.length) {
       return [false, false]
     }
-    const selectedMap = new Map<number, EntitySelectEntity>(
+    const selectedMap = new Map<EntityId, EntitySelectEntity>(
       (selectedEntities ?? []).map((se) => [se.id, se])
     )
 
@@ -453,36 +454,18 @@ export const MainContent = ({
           </div>
         )}
       </section>
-      {showFooter && (
-        <footer className="rounded-bl-xl border-0 border-r-[1px] border-t-[1px] border-solid border-f1-border-secondary bg-f1-background/30 backdrop-blur-2xl">
-          <div className="flex flex-1 justify-between p-2">
-            {selectAllLabel && (
-              <Button
-                disabled={disabled || allVisibleSelected}
-                variant="outline"
-                size="sm"
-                onClick={onSelectAll}
-                title={selectAllLabel + ` (${totalFilteredEntities})`}
-                type="button"
-              >
-                {selectAllLabel}
-              </Button>
-            )}
-            {clearLabel && (
-              <Button
-                variant="ghost"
-                size="sm"
-                disabled={disabled || !anyVisibleSelected}
-                onClick={onClear}
-                title={clearLabel + ` (${totalFilteredEntities})`}
-                type="button"
-              >
-                {clearLabel}
-              </Button>
-            )}
-          </div>
-        </footer>
-      )}
+      <Footer
+        onSelectAll={onSelectAll}
+        onClear={onClear}
+        singleSelector={singleSelector}
+        totalFilteredEntities={totalFilteredEntities}
+        allVisibleSelected={allVisibleSelected}
+        anyVisibleSelected={anyVisibleSelected}
+        selectAllLabel={selectAllLabel}
+        clearLabel={clearLabel}
+        disabled={disabled}
+        actions={actions}
+      />
     </div>
   )
 }

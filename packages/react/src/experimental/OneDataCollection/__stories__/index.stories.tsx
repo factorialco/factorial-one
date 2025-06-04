@@ -19,7 +19,7 @@ import { useData } from "../useData"
 import {
   createDataAdapter,
   createPromiseDataFetch,
-  DEPARTMENTS,
+  DEPARTMENTS_MOCK,
   DOT_TAG_COLORS_MOCK,
   ExampleComponent,
   filterPresets,
@@ -255,6 +255,7 @@ export const WithLinkedItems: Story = {
           icon: Pencil,
           onClick: () => console.log(`Editing ${item.name}`),
           description: "Modify user information",
+          type: "primary",
         },
         {
           label: "View Profile",
@@ -269,6 +270,7 @@ export const WithLinkedItems: Story = {
           description: item.isStarred
             ? "Remove from favorites"
             : "Add to favorites",
+          type: "secondary",
         },
         {
           label: "Delete",
@@ -350,6 +352,7 @@ export const BasicCardView: Story = {
       dataAdapter: {
         fetchData: createPromiseDataFetch(),
       },
+      itemUrl: (item) => `/users/${item.id}`,
       itemActions: (item) => [
         {
           label: "Edit",
@@ -383,8 +386,13 @@ export const BasicCardView: Story = {
           {
             type: "card",
             options: {
+              description: (item) => item.email,
+              avatar: (item) => ({
+                type: "person",
+                firstName: item.name.split(" ")[0],
+                lastName: item.name.split(" ")[1],
+              }),
               cardProperties: [
-                { label: "Email", render: (item) => item.email },
                 { label: "Role", render: (item) => item.role },
                 { label: "Department", render: (item) => item.department },
               ],
@@ -599,42 +607,6 @@ export const WithSelectableAndBulkActions: Story = {
       }}
     />
   ),
-}
-
-// Examples with filters and loading states
-export const WithPreselectedFilters: Story = {
-  render: () => {
-    const dataSource = useDataSource({
-      filters,
-      sortings,
-      presets: filterPresets,
-      currentFilters: {
-        department: ["Engineering"],
-      },
-      dataAdapter: {
-        fetchData: createPromiseDataFetch(),
-      },
-    })
-
-    return (
-      <OneDataCollection
-        source={dataSource}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                { label: "Name", render: (item) => item.name },
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-            },
-          },
-        ]}
-      />
-    )
-  },
 }
 
 const JsonVisualization = ({
@@ -1168,7 +1140,7 @@ export const WithSyncSearch: Story = {
         name: "John Doe",
         email: "john@example.com",
         role: "Senior Engineer",
-        department: DEPARTMENTS[0],
+        department: DEPARTMENTS_MOCK[0],
         status: "active",
         isStarred: true,
       },
@@ -1177,7 +1149,7 @@ export const WithSyncSearch: Story = {
         name: "Jane Smith",
         email: "jane@example.com",
         role: "Product Manager",
-        department: DEPARTMENTS[1],
+        department: DEPARTMENTS_MOCK[1],
         status: "active",
         isStarred: false,
       },
@@ -1186,7 +1158,7 @@ export const WithSyncSearch: Story = {
         name: "Alice Johnson",
         email: "alice@example.com",
         role: "UX Designer",
-        department: DEPARTMENTS[2],
+        department: DEPARTMENTS_MOCK[2],
         status: "active",
         isStarred: false,
       },
@@ -1195,7 +1167,7 @@ export const WithSyncSearch: Story = {
         name: "Bob Brown",
         email: "bob@example.com",
         role: "Developer",
-        department: DEPARTMENTS[0],
+        department: DEPARTMENTS_MOCK[0],
         status: "inactive",
         isStarred: true,
       },
@@ -1204,7 +1176,7 @@ export const WithSyncSearch: Story = {
         name: "Emma Wilson",
         email: "emma@example.com",
         role: "Marketing Lead",
-        department: DEPARTMENTS[3],
+        department: DEPARTMENTS_MOCK[3],
         status: "active",
         isStarred: false,
       },
@@ -1498,7 +1470,7 @@ export const TableColumnProperties: Story = {
             : index % 3 === 1
               ? "Designer"
               : "Manager",
-        department: DEPARTMENTS[index % DEPARTMENTS.length],
+        department: DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length],
         status: index % 4 === 0 ? "inactive" : "active",
         isStarred: index % 5 === 0,
         salary: 50000 + index * 1000,

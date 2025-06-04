@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { expect, within } from "@storybook/test"
-import { Add, Archive, Delete, Save } from "../../../icons/app"
+import { Add, Archive, Delete, Save, Upsell } from "../../../icons/app"
 import { Button } from "./index"
 
 const meta = {
@@ -33,6 +33,7 @@ const meta = {
         "ghost",
         "outline",
         "promote",
+        "outlinePromote",
       ],
       description: "Visual style variant of the button",
     },
@@ -57,6 +58,10 @@ const meta = {
     hideLabel: {
       control: "boolean",
       description: "Hide label and show only icon",
+    },
+    pressed: {
+      control: "boolean",
+      description: "Force the button to be pressed",
     },
   },
 } satisfies Meta<typeof Button>
@@ -90,6 +95,7 @@ export const Variants: Story = {
         <Button {...args} variant="ghost" label="Ghost" />
         <Button {...args} variant="outline" label="Outline" />
         <Button {...args} variant="promote" label="Promote" />
+        <Button {...args} variant="outlinePromote" label="Outline Promote" />
       </div>
       <h3 className="mt-4">With icon</h3>
       <div className="flex gap-2">
@@ -99,6 +105,12 @@ export const Variants: Story = {
         <Button {...args} variant="ghost" label="Ghost" icon={Save} />
         <Button {...args} variant="outline" label="Outline" icon={Add} />
         <Button {...args} variant="promote" label="Promote" icon={Add} />
+        <Button
+          {...args}
+          variant="outlinePromote"
+          label="Outline Promote"
+          icon={Upsell}
+        />
       </div>
       <h3 className="mt-4">Only icon</h3>
       <div className="flex gap-2">
@@ -147,6 +159,14 @@ export const Variants: Story = {
           variant="promote"
           label="Promote"
           icon={Add}
+          hideLabel
+          round
+        />
+        <Button
+          {...args}
+          variant="outlinePromote"
+          label="Outline Promote"
+          icon={Upsell}
           hideLabel
           round
         />

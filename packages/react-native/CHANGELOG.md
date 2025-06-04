@@ -1,5 +1,47 @@
 # Changelog
 
+## [0.9.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.8.2...factorial-one-react-native-v0.9.0) (2025-05-30)
+
+
+### Features
+
+* disable activity item press effect ([#1955](https://github.com/factorialco/factorial-one/issues/1955)) ([499d38c](https://github.com/factorialco/factorial-one/commit/499d38cc4392f88f578335c3d1453bd2a8b44e60))
+
+## [0.8.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.8.1...factorial-one-react-native-v0.8.2) (2025-05-29)
+
+
+### Bug Fixes
+
+* text size in activity item ([#1936](https://github.com/factorialco/factorial-one/issues/1936)) ([937955f](https://github.com/factorialco/factorial-one/commit/937955f0107f16274f5adb0f8a0f6bfe89f97d9d))
+
+## [0.8.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.8.0...factorial-one-react-native-v0.8.1) (2025-05-27)
+
+
+### Bug Fixes
+
+* sort css classnem ([#1900](https://github.com/factorialco/factorial-one/issues/1900)) ([a9e2b59](https://github.com/factorialco/factorial-one/commit/a9e2b59554a83d164e1e32b88890886c6f5fa43b))
+
+## [0.8.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.7.0...factorial-one-react-native-v0.8.0) (2025-05-27)
+
+
+### Features
+
+* add emojiAvatar component ([#1887](https://github.com/factorialco/factorial-one/issues/1887)) ([217d136](https://github.com/factorialco/factorial-one/commit/217d136e2fb693f72f21c506616128ad29ee6cf5))
+
+## [0.7.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.6.0...factorial-one-react-native-v0.7.0) (2025-05-26)
+
+
+### Features
+
+* improve icon button colors ([#1884](https://github.com/factorialco/factorial-one/issues/1884)) ([e778a22](https://github.com/factorialco/factorial-one/commit/e778a227cc5e44d0d3680f7388b008707b1bc73d))
+
+## [0.6.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.5.0...factorial-one-react-native-v0.6.0) (2025-05-22)
+
+
+### Features
+
+* new f1 react native buttons ([#1854](https://github.com/factorialco/factorial-one/issues/1854)) ([3f1ad8e](https://github.com/factorialco/factorial-one/commit/3f1ad8ea127ce1629a86a7706d99cc9cba019886))
+
 ## [0.5.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.4.0...factorial-one-react-native-v0.5.0) (2025-05-21)
 
 

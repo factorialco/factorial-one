@@ -1,17 +1,22 @@
 import { Meta, StoryObj } from "@storybook/react"
 import { Ai, Download, Pencil } from "../../../icons/app"
-import { SecondaryActionsDefinition } from "../actions"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 
 const meta = {
   title: "Data Collection/Item Actions",
+  tags: ["no-sidebar", "internal"],
   parameters: {
     layout: "padded",
     docs: {
       description: {
-        component:
+        component: [
           "Data collection actions are a way to add actions to a data collection. There actions are displayed in the top right button or top right actions menu (three dots). The actions are data collection specific and are not related to the items in the collection. (check Item Actions for item specific actions)",
+          "The actions are defined in the `itemActions` prop of the `OneDataCollection` component.",
+          "You can define the type action: 'primary', 'secondary', 'other', but the visualizacion will depend on the view. For example, in a table, there are no distinction between types, but in a card view, the primary action and the secondary ones will be displayed in the card footer and the other actions will be displayed in the card actions menu.",
+        ]
+          .map((p) => <p key={p}>{p}</p>)
+          .join(""),
       },
     },
   },
@@ -80,24 +85,6 @@ const mockUsers = [
   },
 ]
 
-// Example of a comprehensive actions definition with various types of actions
-const buildActions = (): SecondaryActionsDefinition => {
-  return () => [
-    {
-      label: "Export",
-      icon: Download,
-      onClick: () => console.log(`Downloading users`),
-      description: "Download users",
-    },
-    {
-      label: "Import",
-      icon: Download,
-      onClick: () => console.log(`Importing users`),
-      description: "Import users",
-    },
-  ]
-}
-
 const createUserActions = (): ItemActionsDefinition<
   (typeof mockUsers)[number]
 > => {
@@ -147,12 +134,6 @@ export const BasicActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
-      primaryActions: () => ({
-        label: "Create user",
-        icon: Ai,
-        onClick: () => console.log(`Creating a user`),
-      }),
-      secondaryActions: buildActions(),
       itemActions: createUserActions(),
     })
 
@@ -207,7 +188,7 @@ export const CardActionsExample: Story = {
       dataAdapter: {
         fetchData: () => Promise.resolve(mockUsers),
       },
-      secondaryActions: buildActions(),
+      //secondaryActions: buildActions(),
       itemActions: createUserActions(),
     })
 

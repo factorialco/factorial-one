@@ -3,27 +3,35 @@ import { Button } from "../../../components/Actions/Button"
 import { Dropdown } from "../../Navigation/Dropdown"
 import {
   PrimaryActionsDefinition,
-  SecondaryActionsDefinition,
+  SecondaryActionsItemDefinition,
 } from "../actions"
 type CollectionActionProps = {
   primaryActions?: ReturnType<PrimaryActionsDefinition>
-  secondaryActions?: ReturnType<SecondaryActionsDefinition>
+  secondaryActions?: SecondaryActionsItemDefinition[]
+  otherActions?: SecondaryActionsItemDefinition[]
 }
 
 export const CollectionActions = ({
   primaryActions,
   secondaryActions,
+  otherActions,
 }: CollectionActionProps) => {
-  const buttonActions = (primaryActions && [primaryActions]) || []
-  const dropdownActions = secondaryActions || []
+  const primaryActionsButton = (primaryActions && [primaryActions]) || []
+  const secondaryActionsButtons = (secondaryActions || []).filter(
+    (action) => action.type !== "separator"
+  )
+  const dropdownActions = otherActions || []
 
-  if (buttonActions.length === 0 && dropdownActions.length === 0) return null
-
-  const align = buttonActions.length > 0 ? "start" : "end"
+  if (
+    primaryActionsButton.length === 0 &&
+    secondaryActionsButtons.length === 0 &&
+    dropdownActions.length === 0
+  )
+    return null
 
   return (
     <div className="flex flex-row-reverse items-center gap-2">
-      {buttonActions.map((action) => (
+      {primaryActionsButton.map((action) => (
         <Button
           size="md"
           key={action.label}
@@ -34,8 +42,20 @@ export const CollectionActions = ({
         />
       ))}
 
+      {secondaryActionsButtons?.map((action) => (
+        <Button
+          size="md"
+          key={action.label}
+          onClick={action.onClick}
+          icon={action.icon}
+          variant="outline"
+          hideLabel={action.hideLabelWhenExpanded}
+          label={action.label}
+        />
+      ))}
+
       {dropdownActions.length > 0 && (
-        <Dropdown items={dropdownActions} align={align}>
+        <Dropdown items={dropdownActions} align="end">
           <Button variant="outline" icon={Ellipsis} label="Actions" hideLabel />
         </Dropdown>
       )}

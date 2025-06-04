@@ -54,6 +54,8 @@ export type CommunityPostProps = {
 
   onClick: (id: string) => void
 
+  noReactionsButton?: boolean
+
   dropdownItems?: DropdownItem[]
 }
 
@@ -72,6 +74,7 @@ export const BaseCommunityPost = ({
   inLabel,
   comment,
   dropdownItems,
+  noReactionsButton = false,
   noVideoPreload = false,
 }: CommunityPostProps) => {
   const countersDisplay = [counters.views, counters.comments]
@@ -230,14 +233,16 @@ export const BaseCommunityPost = ({
         )}
         <p className="text-f1-foreground-secondary">{countersDisplay}</p>
         <div className="flex flex-row gap-2.5">
-          <Button
-            label={comment.label}
-            onClick={comment.onClick}
-            variant="outline"
-            icon={CommentIcon}
-            round
-            hideLabel
-          />
+          {!noReactionsButton && (
+            <Button
+              label={comment.label}
+              onClick={comment.onClick}
+              variant="outline"
+              icon={CommentIcon}
+              round
+              hideLabel
+            />
+          )}
           <Reactions
             items={reactions?.items ?? []}
             onInteraction={reactions?.onInteraction}

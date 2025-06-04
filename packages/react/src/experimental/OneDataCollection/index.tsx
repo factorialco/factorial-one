@@ -7,8 +7,10 @@ import { useDebounceValue } from "usehooks-ts"
 import { Icon } from "../../components/Utilities/Icon"
 import { Spinner } from "../../icons/app"
 
+import { OneEmptyState } from "@/experimental/OneEmptyState"
 import { Skeleton } from "@/ui/skeleton"
 import { OneActionBar } from "../OneActionBar"
+import { getSecondaryActions, MAX_EXPANDED_ACTIONS } from "./actions"
 import { CollectionActions } from "./CollectionActions/CollectionActions"
 import * as Filters from "./Filters"
 import type { FiltersDefinition, FiltersState } from "./Filters/types"
@@ -26,9 +28,12 @@ import type {
   DataSource,
   DataSourceDefinition,
   OnBulkActionCallback,
+  OnLoadDataCallback,
   OnSelectItemsCallback,
   RecordType,
 } from "./types"
+import { DataError } from "./useData"
+import { CustomEmptyStates, useEmptyState } from "./useEmptyState"
 import type { Visualization } from "./visualizations"
 import { VisualizationRenderer, VisualizationSelector } from "./visualizations"
 
@@ -203,6 +208,7 @@ export const OneDataCollection = <
   visualizations,
   onSelectItems,
   onBulkAction,
+  emptyStates,
 }: {
   source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>
   visualizations: ReadonlyArray<
@@ -210,6 +216,7 @@ export const OneDataCollection = <
   >
   onSelectItems?: OnSelectItemsCallback<Record, Filters>
   onBulkAction?: OnBulkActionCallback<Record, Filters>
+  emptyStates?: CustomEmptyStates
 }): JSX.Element => {
   const {
     // Filters
@@ -243,10 +250,35 @@ export const OneDataCollection = <
     [primaryActions]
   )
 
-  const secondaryActionsItems = useMemo(
-    () => (secondaryActions && secondaryActions()) || [],
+  const allSecondaryActions = useMemo(
+    () => getSecondaryActions(secondaryActions),
     [secondaryActions]
   )
+
+  const expandedSecondaryActions = useMemo(
+    () =>
+      Math.min(
+        (secondaryActions &&
+          "expanded" in secondaryActions &&
+          secondaryActions.expanded) ||
+          0,
+        MAX_EXPANDED_ACTIONS
+      ),
+    [secondaryActions]
+  )
+
+  const secondaryActionsItems = useMemo(
+    () => allSecondaryActions.slice(0, expandedSecondaryActions) || [],
+    [allSecondaryActions, expandedSecondaryActions]
+  )
+
+  const otherActionsItems = useMemo(
+    () => allSecondaryActions.slice(expandedSecondaryActions),
+    [allSecondaryActions, expandedSecondaryActions]
+  )
+
+  const hasCollectionsActions =
+    !!primaryActionItem || allSecondaryActions?.length > 0
 
   const [clearSelectedItemsFunc, setClearSelectedItemsFunc] = useState<
     (() => void) | undefined
@@ -328,32 +360,88 @@ export const OneDataCollection = <
 
   const [totalItems, setTotalItems] = useState<undefined | number>(undefined)
 
+  const { emptyState, setEmptyStateType } = useEmptyState(emptyStates, {
+    retry: () => {
+      setEmptyStateType(false)
+      setCurrentFilters({ ...currentFilters })
+    },
+    clearFilters: () => {
+      setEmptyStateType(false)
+      setCurrentFilters({})
+    },
+  })
+
+  const getEmptyStateType = (
+    totalItems: number | undefined,
+    filters: FiltersState<Filters>,
+    search: string | undefined
+  ) => {
+    return totalItems === 0
+      ? Object.keys(filters).length > 0 || search
+        ? "no-results"
+        : "no-data"
+      : false
+  }
+
+  const onLoadData = ({
+    totalItems,
+    filters,
+    isInitialLoading,
+    search,
+  }: Parameters<OnLoadDataCallback<Record, Filters>>[0]) => {
+    if (isInitialLoading) return
+
+    setTotalItems(totalItems)
+    setEmptyStateType(getEmptyStateType(totalItems, filters, search))
+  }
+
+  const onLoadError = (error: DataError) => {
+    setEmptyStateType(
+      "error",
+      error.cause instanceof Error ? error.cause.message : error.message
+    )
+  }
+
+  useEffect(() => {
+    setEmptyStateType(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- This is intentional we should remove the empty state when the filters, search, navigation filters change
+  }, [currentFilters, currentSearch, currentNavigationFilters])
+
   return (
     <div
       className={cn("flex flex-col gap-4", layout === "standard" && "-mx-6")}
     >
-      <div className={cn("border-f1-border-primary mb-3 flex gap-4 px-6")}>
-        <div className="flex flex-1 flex-shrink gap-4">
-          {isLoading && <Skeleton className="h-5 w-24" />}
-          {!isLoading && totalItems && totalItemSummary(totalItems)}
+      {((totalItems !== undefined && totalItemSummary(totalItems)) ||
+        navigationFilters) && (
+        <div className="border-f1-border-primary flex gap-4 px-6">
+          <div className="flex flex-1 flex-shrink gap-4 text-lg font-semibold">
+            {isLoading &&
+              totalItems !== undefined &&
+              totalItemSummary(totalItems) && <Skeleton className="h-5 w-24" />}
+            {!isLoading && totalItems !== undefined && (
+              <div className="flex h-5 items-center">
+                {totalItemSummary(totalItems)}
+              </div>
+            )}
+          </div>
+          <div className="flex flex-1 flex-shrink justify-end">
+            {navigationFilters &&
+              Object.entries(navigationFilters).map(([key, filter]) => {
+                const filterDef = navigationFilterTypes[filter.type]
+                return filterDef.render({
+                  filter: filter,
+                  value: currentNavigationFilters[key]!,
+                  onChange: (value) => {
+                    setCurrentNavigationFilters({
+                      ...currentNavigationFilters,
+                      [key]: value,
+                    })
+                  },
+                })
+              })}
+          </div>
         </div>
-        <div className="flex flex-1 flex-shrink justify-end">
-          {navigationFilters &&
-            Object.entries(navigationFilters).map(([key, filter]) => {
-              const filterDef = navigationFilterTypes[filter.type]
-              return filterDef.render({
-                filter: filter,
-                value: currentNavigationFilters[key]!,
-                onChange: (value) => {
-                  setCurrentNavigationFilters({
-                    ...currentNavigationFilters,
-                    [key]: value,
-                  })
-                },
-              })
-            })}
-        </div>
-      </div>
+      )}
       <div className={cn("flex flex-col gap-4 px-6")}>
         <Filters.Root
           schema={filters}
@@ -398,7 +486,7 @@ export const OneDataCollection = <
                   onVisualizationChange={setCurrentVisualization}
                 />
               )}
-              {(primaryActionItem || secondaryActionsItems) && (
+              {hasCollectionsActions && (
                 <>
                   {elementsRightActions && (
                     <div className="mx-1 h-4 w-px bg-f1-background-secondary-hover" />
@@ -406,6 +494,7 @@ export const OneDataCollection = <
                   <CollectionActions
                     primaryActions={primaryActionItem}
                     secondaryActions={secondaryActionsItems}
+                    otherActions={otherActionsItems}
                   />
                 </>
               )}
@@ -413,20 +502,36 @@ export const OneDataCollection = <
           </div>
           <Filters.ChipsList />
         </Filters.Root>
-        <VisualizationRenderer
-          visualization={visualizations[currentVisualization]}
-          source={source}
-          onSelectItems={onSelectItemsLocal}
-          onTotalItemsChange={setTotalItems}
-        />
-        {bulkActions?.primary && (bulkActions?.primary || []).length > 0 && (
-          <OneActionBar
-            isOpen={showActionBar}
-            selectedNumber={selectedItemsCount}
-            primaryActions={bulkActions.primary}
-            secondaryActions={bulkActions?.secondary}
-            onUnselect={() => clearSelectedItemsFunc?.()}
-          />
+
+        {emptyState ? (
+          <div className="flex flex-col items-center justify-center">
+            <OneEmptyState
+              emoji={emptyState.emoji}
+              title={emptyState.title}
+              description={emptyState.description}
+              actions={emptyState.actions}
+            />
+          </div>
+        ) : (
+          <>
+            <VisualizationRenderer
+              visualization={visualizations[currentVisualization]}
+              source={source}
+              onSelectItems={onSelectItemsLocal}
+              onLoadData={onLoadData}
+              onLoadError={onLoadError}
+            />
+            {bulkActions?.primary &&
+              (bulkActions?.primary || []).length > 0 && (
+                <OneActionBar
+                  isOpen={showActionBar}
+                  selectedNumber={selectedItemsCount}
+                  primaryActions={bulkActions.primary}
+                  secondaryActions={bulkActions?.secondary}
+                  onUnselect={() => clearSelectedItemsFunc?.()}
+                />
+              )}
+          </>
         )}
       </div>
     </div>

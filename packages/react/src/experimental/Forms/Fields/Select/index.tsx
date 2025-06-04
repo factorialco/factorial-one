@@ -1,4 +1,6 @@
+import { Icon } from "@/components/Utilities/Icon"
 import { RawTag } from "@/experimental/Information/Tags/RawTag"
+import { ChevronDown } from "@/icons/app"
 import {
   SelectContent,
   SelectItem as SelectItemPrimitive,
@@ -8,12 +10,18 @@ import {
   SelectValue as SelectValuePrimitive,
   VirtualItem,
 } from "@/ui/Select"
-import { forwardRef, useEffect, useMemo, useRef, useState } from "react"
-import { Icon } from "../../../../components/Utilities/Icon"
-import { ChevronDown } from "../../../../icons/app"
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
 import { cn, focusRing } from "../../../../lib/utils"
 import { Avatar } from "../../../Information/Avatars/Avatar"
-import { F1SearchBox } from "../F1SearchBox"
+import { Action, SelectBottomActions } from "./SelectBottomActions"
+import { SelectTopActions } from "./SelectTopActions"
 import type { SelectItemObject, SelectItemProps } from "./types"
 
 export * from "./types"
@@ -37,6 +45,7 @@ export type SelectProps<T, R = any> = {
   searchEmptyMessage?: string
   className?: string
   selectContentClassName?: string
+  actions?: Action[]
 }
 
 const SelectItem = ({ item }: { item: SelectItemObject<string> }) => {
@@ -104,6 +113,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
       searchEmptyMessage,
       className,
       selectContentClassName,
+      actions,
       ...props
     },
     ref
@@ -143,10 +153,13 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
       }
     }, [open])
 
-    const onSearchChangeLocal = (value: string) => {
-      setSearchValue(value)
-      onSearchChange?.(value)
-    }
+    const onSearchChangeLocal = useCallback(
+      (value: string) => {
+        setSearchValue(value)
+        onSearchChange?.(value)
+      },
+      [setSearchValue, onSearchChange]
+    )
 
     const onValueChange = (value: string) => {
       // Resets the search value when the option is selected
@@ -226,19 +239,15 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps<string>>(
             items={items}
             className={selectContentClassName}
             emptyMessage={searchEmptyMessage}
+            bottom={<SelectBottomActions actions={actions} />}
             top={
-              showSearchBox && (
-                <div className="p-2">
-                  <F1SearchBox
-                    placeholder={searchBoxPlaceholder}
-                    onChange={onSearchChangeLocal}
-                    clearable
-                    value={searchValue}
-                    key="search-input"
-                    ref={searchInputRef}
-                  />
-                </div>
-              )
+              <SelectTopActions
+                searchInputRef={searchInputRef}
+                searchValue={searchValue}
+                onSearchChange={onSearchChangeLocal}
+                searchBoxPlaceholder={searchBoxPlaceholder}
+                showSearchBox={showSearchBox}
+              />
             }
           ></SelectContent>
         )}

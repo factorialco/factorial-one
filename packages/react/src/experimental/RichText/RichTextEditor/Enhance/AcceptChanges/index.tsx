@@ -1,9 +1,9 @@
 import { Button } from "@/components/Actions/Button"
 import { enhanceLabelsType, lastIntentType } from "@/experimental/exports"
+import { ToolbarDivider } from "@/experimental/RichText/CoreEditor"
 import { Check, Cross, Reset } from "@/icons/app"
 import { useI18n } from "@/lib/providers/i18n"
 import { Editor } from "@tiptap/react"
-import { ToolbarDivider } from "../../Toolbar"
 
 interface AcceptChangesProps {
   labels?: enhanceLabelsType
@@ -25,7 +25,7 @@ const AcceptChanges = ({
   const i18n = useI18n()
 
   return (
-    <div className="dark flex items-center gap-1 rounded-md border border-solid border-f1-border-secondary bg-f1-background p-0.5 drop-shadow-sm">
+    <div className="dark flex items-center gap-1 rounded-md border border-solid border-f1-border bg-f1-background p-0.5 drop-shadow-sm">
       <Button
         label={labels?.rejectChangesButtonLabel || i18n.actions.cancel}
         onClick={(e) => {

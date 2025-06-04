@@ -5,7 +5,14 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn, focusRing } from "@/lib/utils"
 import { Collapsible, CollapsibleContent } from "@/ui/collapsible"
 import { LayoutGroup, motion, Reorder, useDragControls } from "framer-motion"
-import React, { useEffect, useRef, useState } from "react"
+import {
+  ReactNode,
+  RefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import {
   ChevronDown,
   Delete,
@@ -107,13 +114,15 @@ const FavoriteItem = ({
   index,
   total,
   onMove,
+  onReorderFinish,
 }: {
   item: FavoriteMenuItem
-  dragConstraints?: React.RefObject<HTMLElement>
+  dragConstraints?: RefObject<HTMLElement>
   onRemove?: (item: FavoriteMenuItem) => void
   index: number
   total: number
   onMove?: (from: number, to: number) => void
+  onReorderFinish: () => void
 }) => {
   const t = useI18n()
 
@@ -122,7 +131,7 @@ const FavoriteItem = ({
   const { isActive } = useNavigation()
   const active = isActive(item.href, { exact: item.exactMatch })
   const wasDragging = useRef(false)
-  const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const isFirst = index === 0
   const isLast = index === total - 1
   const isOnly = total === 1
@@ -166,6 +175,7 @@ const FavoriteItem = ({
   const handleDragEnd = () => {
     setIsDragging(false)
     setDraggedItemId(null)
+    onReorderFinish()
     setTimeout(() => {
       wasDragging.current = false
     }, 0)
@@ -246,9 +256,9 @@ interface BaseCategoryProps {
   isOpen?: boolean
   isRoot?: boolean
   onCollapse?: (isOpen: boolean) => void
-  children?: React.ReactNode
+  children?: ReactNode
   isDragging?: boolean
-  wasDragging?: React.RefObject<boolean>
+  wasDragging?: RefObject<boolean>
 }
 
 const BaseCategory = ({
@@ -260,7 +270,7 @@ const BaseCategory = ({
   isDragging,
   wasDragging,
 }: BaseCategoryProps) => {
-  const [isOpen, setIsOpen] = React.useState(initialIsOpen)
+  const [isOpen, setIsOpen] = useState(initialIsOpen)
   const shouldReduceMotion = useReducedMotion()
 
   const handleClick = () => {
@@ -328,7 +338,7 @@ const BaseCategory = ({
 interface CategoryItemProps {
   category: MenuCategory
   isSortable?: boolean
-  dragConstraints?: React.RefObject<HTMLDivElement>
+  dragConstraints?: RefObject<HTMLDivElement>
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onDragEnd?: (categories: MenuCategory[]) => void
   currentOrder?: MenuCategory[]
@@ -442,16 +452,16 @@ export function Menu({
   const nonSortableItems = tree.filter(
     (category) => category.isSortable === false
   )
-  const [sortableItems, setSortableItems] = React.useState(
+  const [sortableItems, setSortableItems] = useState(
     tree.filter((category) => category.isSortable !== false)
   )
   const [forceUpdateKey, setForceUpdateKey] = useState(0)
 
-  const handleSort = React.useCallback((newOrder: MenuCategory[]) => {
+  const handleSort = useCallback((newOrder: MenuCategory[]) => {
     setSortableItems(newOrder)
   }, [])
 
-  const handleDragEnd = React.useCallback(
+  const handleDragEnd = useCallback(
     (newOrder: MenuCategory[]) => {
       onSort?.(newOrder)
     },
@@ -485,14 +495,14 @@ function MenuContent({
   containerRef,
   onCollapse,
   onDragEnd,
-  favorites,
+  favorites = [],
   onFavoritesChange,
   forceUpdate,
 }: {
   nonSortableItems: MenuCategory[]
   sortableItems: MenuCategory[]
   setSortableItems: (items: MenuCategory[]) => void
-  containerRef: React.RefObject<HTMLDivElement>
+  containerRef: RefObject<HTMLDivElement>
   onCollapse?: (category: MenuCategory, isOpen: boolean) => void
   onDragEnd?: (categories: MenuCategory[]) => void
   favorites?: FavoriteMenuItem[]
@@ -507,41 +517,46 @@ function MenuContent({
     nonSortableItems.filter((category) => !category.isRoot).length > 0
   const hasSortableItems = sortableItems.length > 0
   const favoritesRef = useRef<HTMLDivElement>(null)
-  const [currentFavorites, setCurrentFavorites] = React.useState<
-    FavoriteMenuItem[]
-  >(favorites || [])
-  const hasFavorites = (favorites || []).length > 0
+  const [internalFavorites, setInternalFavorites] =
+    useState<FavoriteMenuItem[]>(favorites)
+  const hasFavorites = favorites.length > 0
 
-  const handleFavoritesReorder = React.useCallback(
-    (newOrder: FavoriteMenuItem[]) => {
-      setCurrentFavorites(newOrder)
-      onFavoritesChange?.(newOrder)
-    },
-    [onFavoritesChange]
-  )
+  useEffect(() => {
+    const hasChanged =
+      JSON.stringify(favorites) !== JSON.stringify(internalFavorites)
 
-  const handleRemoveFavorite = React.useCallback(
+    if (hasChanged) {
+      setInternalFavorites(favorites)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we don't want to re-run on internalFavorites change because it resets the value to favorites from props
+  }, [favorites])
+
+  const handleFavoritesReorder = (newOrder: FavoriteMenuItem[]) => {
+    setInternalFavorites(newOrder)
+  }
+
+  const handleRemoveFavorite = useCallback(
     (item: FavoriteMenuItem) => {
-      const updated = currentFavorites.filter((fav) => fav.href !== item.href)
-      setCurrentFavorites(updated)
+      const updated = internalFavorites.filter((fav) => fav.href !== item.href)
+      setInternalFavorites(updated)
       onFavoritesChange?.(updated)
     },
-    [currentFavorites, onFavoritesChange]
+    [internalFavorites, onFavoritesChange]
   )
 
-  const handleMoveFavorite = React.useCallback(
+  const handleMoveFavorite = useCallback(
     (from: number, to: number) => {
-      if (to < 0 || to >= currentFavorites.length) return
-      const updated = [...currentFavorites]
+      if (to < 0 || to >= internalFavorites.length) return
+      const updated = [...internalFavorites]
       const [moved] = updated.splice(from, 1)
       updated.splice(to, 0, moved)
-      setCurrentFavorites(updated)
+      setInternalFavorites(updated)
       onFavoritesChange?.(updated)
     },
-    [currentFavorites, onFavoritesChange]
+    [internalFavorites, onFavoritesChange]
   )
 
-  const [isInitialized, setIsInitialized] = React.useState(false)
+  const [isInitialized, setIsInitialized] = useState(false)
   const resizeTimeoutRef = useRef<number | null>(null)
 
   // Initialize once when component mounts
@@ -602,19 +617,22 @@ function MenuContent({
             <div ref={favoritesRef}>
               <Reorder.Group
                 axis="y"
-                values={currentFavorites}
+                values={internalFavorites}
                 onReorder={handleFavoritesReorder}
                 className="flex flex-col gap-0.5"
               >
-                {currentFavorites.map((item, idx) => (
+                {internalFavorites.map((item, idx) => (
                   <FavoriteItem
-                    key={item.href}
+                    key={`${item.href}-${item.label}`}
                     item={item}
                     dragConstraints={favoritesRef}
                     onRemove={handleRemoveFavorite}
                     index={idx}
-                    total={currentFavorites.length}
+                    total={internalFavorites.length}
                     onMove={handleMoveFavorite}
+                    onReorderFinish={() => {
+                      onFavoritesChange?.(internalFavorites)
+                    }}
                   />
                 ))}
               </Reorder.Group>

@@ -2,7 +2,7 @@ import { Canvas, Meta, Controls, Unstyled, Story } from "@storybook/blocks"
 import { DoDonts } from "@/lib/storybook-utils/do-donts"
 
 import * as DataCollectionStories from "./index.stories"
-import * as ActionDataCollectionStories from "./actions.stories"
+import * as ActionDataCollectionStories from "./collection-actions.stories"
 import * as CellTypesDataCollectionStories from "./cell-types.stories"
 
 <Meta title="Data collection/Cell Types" />
@@ -35,18 +35,63 @@ Renders a text This type's render function can be used as a shortcut returning
 just a string.
 
 ```
-type value = string | undefined
+type value = string | number | undefined
+// or
+type value = {
+    text: string | number | undefined
+    placeholder?: string
+}
 ```
 
 <Canvas
   of={CellTypesDataCollectionStories.TextType}
   source={{
     code: `
-render: (item) => 'my text'
-// or
+    render: (item) => 'John Doe'
+    `,
+  }}
+/>
+
+#### TextInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.TextInputAsObject}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'text',
+    value: 'John Doe'
+})`,
+  }}
+/>
+
+#### TextValueInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.TextValueInputAsObject}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'text',
+    value: {
+      text: 'John Doe'
+    }
+})`,
+  }}
+/>
+
+#### With placeholder
+
+<Canvas
+  of={CellTypesDataCollectionStories.TextWithPlaceholder}
+  source={{
+    code: `
 render: (item) => ({
     type: 'text'
-    value: 'my text'
+    value: {
+      text: undefined
+      placeholder: 'Some placeholder'
+    }
 })`,
   }}
 />
@@ -59,17 +104,56 @@ Renders a number (right align on table visualizacion)
 
 ```
 type value = number | undefined
+// or
+type value = {
+    number: number | undefined
+    placeholder?: string
+}
 ```
 
+#### NumberInputAsObject
+
 <Canvas
-  of={CellTypesDataCollectionStories.NumberType}
+  of={CellTypesDataCollectionStories.NumberInputAsObject}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'number',
+    value: 1234
+})
+`,
+  }}
+/>
+
+#### NumberValueInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.NumberValueInputAsObject}
   source={{
     code: `
 render: (item) => ({
     type: 'number'
-    value: 1234
+    value: {
+      number: 1234
+    }
 })
 `,
+  }}
+/>
+
+#### With placeholder
+
+<Canvas
+  of={CellTypesDataCollectionStories.NumberWithPlaceholder}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'number'
+    value: {
+      number: undefined,
+      placeholder: 'Some placeholder'
+    }
+})`,
   }}
 />
 
@@ -81,10 +165,17 @@ Renders a date
 
 ```
 type value = Date | undefined
+// or
+type value = {
+    date: Date | undefined
+    placeholder?: string
+}
 ```
 
+#### DateInputAsObject
+
 <Canvas
-  of={CellTypesDataCollectionStories.DateType}
+  of={CellTypesDataCollectionStories.DateInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -92,6 +183,38 @@ render: (item) => ({
     value: new Date()
 })
 `,
+  }}
+/>
+
+#### DateValueInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.DateValueInputAsObject}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'date'
+    value: {
+      date: new Date()
+    }
+})
+`,
+  }}
+/>
+
+#### With placeholder
+
+<Canvas
+  of={CellTypesDataCollectionStories.DateWithPlaceholder}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'date'
+    value: {
+      date: undefined
+      placeholder: 'Some placeholder'
+    }
+})`,
   }}
 />
 
@@ -103,10 +226,17 @@ Renders a monetary number (right align on table visualizacion)
 
 ```
 type value = number | undefined
+// or
+type value = {
+    amount: Date | undefined
+    placeholder?: string
+}
 ```
 
+#### AmountInputAsObject
+
 <Canvas
-  of={CellTypesDataCollectionStories.AmountType}
+  of={CellTypesDataCollectionStories.AmountInputAsObject}
   source={{
     code: `
 render: (item) => ({
@@ -114,6 +244,36 @@ render: (item) => ({
     value: 1234
 })
 `,
+  }}
+/>
+
+#### AmountValueInputAsObject
+
+<Canvas
+  of={CellTypesDataCollectionStories.AmountValueInputAsObject}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'amount'
+    value: { amount: 1234 },
+})
+`,
+  }}
+/>
+
+#### With placeholder
+
+<Canvas
+  of={CellTypesDataCollectionStories.AmountWithPlaceholder}
+  source={{
+    code: `
+render: (item) => ({
+    type: 'text'
+    value: {
+      amount: undefined
+      placeholder: 'Some placeholder'
+    }
+})`,
   }}
 />
 
@@ -342,6 +502,32 @@ render: (item) => ({
             color: skill.color
         })),
         max: 3
+    }
+})
+`,
+  }}
+/>
+
+### icon
+
+Renders an icon with a label
+
+#### Value type
+
+```
+type value = { icon: IconType, label: string }
+```
+
+<Canvas
+  of={CellTypesDataCollectionStories.IconType}
+  source={{
+    code: `
+// Example with dot tags
+render: (item) => ({
+    type: 'icon',
+    value: {
+        icon: Placeholder,
+        label: 'Icon'
     }
 })
 `,

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { PresetsDefinition } from "../types"
 import { FiltersChipsList as FiltersChipsListComponent } from "./Components/FiltersChipsList"
 import { FiltersControls as FiltersControlsComponent } from "./Components/FiltersControls"
@@ -113,6 +113,11 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
 
   const [localFiltersValue, setLocalFiltersValue] = useState(filters)
 
+  useEffect(() => {
+    setLocalFiltersValue(filters)
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We deep compare the filters object
+  }, [JSON.stringify(filters)])
+
   const removeFilterValue = (key: keyof Definition) => {
     const newFilters = { ...localFiltersValue }
     delete newFilters[key]
@@ -129,6 +134,7 @@ const FiltersRoot = <Definition extends FiltersDefinition>({
     <FiltersContext.Provider
       value={{
         ...props,
+        presets: props.presets as PresetsDefinition<FiltersDefinition>,
         filters: localFiltersValue,
         schema: schema,
         removeFilterValue,
@@ -148,8 +154,14 @@ FiltersRoot.displayName = "Filters.Root"
  * Filter controls
  */
 const FiltersControls = () => {
-  const { schema, filters, isFiltersOpen, setIsFiltersOpen, setFiltersValue } =
-    useContext(FiltersContext)
+  const {
+    schema,
+    filters,
+    isFiltersOpen,
+    setIsFiltersOpen,
+    setFiltersValue,
+    presets,
+  } = useContext(FiltersContext)
 
   return (
     schema && (
@@ -159,6 +171,7 @@ const FiltersControls = () => {
         onChange={setFiltersValue}
         onOpenChange={setIsFiltersOpen}
         isOpen={isFiltersOpen}
+        hideLabel={!!presets}
       />
     )
   )

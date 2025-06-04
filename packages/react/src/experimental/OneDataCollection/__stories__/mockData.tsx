@@ -4,6 +4,7 @@ import {
   DataAdapter,
   FilterDefinition,
   FiltersState,
+  ItemActionsDefinition,
   NewColor,
   OnBulkActionCallback,
   OneDataCollection,
@@ -23,8 +24,9 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "../navigationFilters/types"
+import { Visualization, VisualizationType } from "../visualizations"
 
-export const DEPARTMENTS = [
+export const DEPARTMENTS_MOCK = [
   "Engineering",
   "Product",
   "Design",
@@ -41,7 +43,7 @@ export const filters = {
     type: "in",
     label: "Department",
     options: {
-      options: DEPARTMENTS.map((value) => ({ value, label: value })),
+      options: DEPARTMENTS_MOCK.map((value) => ({ value, label: value })),
     },
   },
 } as const
@@ -49,28 +51,11 @@ export const filters = {
 export const YEARS_OF_EXPERIENCIE_MOCK = [
   8, 12, 4, 15, 7, 3, 11, 6, 13, 2, 9, 14, 5, 10, 1, 8, 13, 4, 11, 6,
 ]
-export const START_DATE_MOCK = [
-  new Date(2020, 3, 15),
-  new Date(2020, 8, 22),
-  new Date(2020, 11, 5),
-  new Date(2020, 2, 18),
-  new Date(2020, 6, 9),
-  new Date(2020, 4, 27),
-  new Date(2020, 1, 12),
-  new Date(2020, 9, 3),
-  new Date(2020, 7, 19),
-  new Date(2020, 5, 8),
-  new Date(2020, 10, 25),
-  new Date(2020, 0, 14),
-  new Date(2020, 3, 7),
-  new Date(2020, 8, 16),
-  new Date(2020, 11, 28),
-  new Date(2020, 2, 11),
-  new Date(2020, 6, 23),
-  new Date(2020, 4, 4),
-  new Date(2020, 1, 20),
-  new Date(2020, 9, 13),
-]
+export const START_DATE_MOCK = Array.from(
+  { length: 20 },
+  (_, i) => new Date(2025, 6, 30 + i)
+)
+
 export const PROJECTS_MOCK = [
   "Project A",
   "Project B",
@@ -128,7 +113,7 @@ export const mockUsers: {
   name: string
   email: string
   role: string
-  department: (typeof DEPARTMENTS)[number]
+  department: (typeof DEPARTMENTS_MOCK)[number]
   status: string
   isStarred: boolean
   href?: string
@@ -141,11 +126,11 @@ export const mockUsers: {
     name: "John Doe",
     email: "john@example.com",
     role: "Senior Engineer",
-    department: DEPARTMENTS[0],
+    department: DEPARTMENTS_MOCK[0],
     status: "active",
     isStarred: true,
     salary: 100000,
-    joinedAt: new Date(),
+    joinedAt: START_DATE_MOCK[0],
   },
   {
     index: 1,
@@ -153,11 +138,11 @@ export const mockUsers: {
     name: "Jane Smith",
     email: "jane@example.com",
     role: "Product Manager",
-    department: DEPARTMENTS[1],
+    department: DEPARTMENTS_MOCK[1],
     status: "active",
     isStarred: false,
     salary: 80000,
-    joinedAt: new Date(),
+    joinedAt: START_DATE_MOCK[1],
   },
   {
     index: 2,
@@ -165,11 +150,11 @@ export const mockUsers: {
     name: "Bob Johnson",
     email: "bob@example.com",
     role: "Designer",
-    department: DEPARTMENTS[2],
+    department: DEPARTMENTS_MOCK[2],
     status: "inactive",
     isStarred: false,
     salary: 90000,
-    joinedAt: new Date(new Date().setDate(new Date().getDate() + 1)),
+    joinedAt: START_DATE_MOCK[2],
   },
   {
     index: 3,
@@ -177,13 +162,127 @@ export const mockUsers: {
     name: "Alice Williams",
     email: "alice@example.com",
     role: "Marketing Lead",
-    department: DEPARTMENTS[3],
+    department: DEPARTMENTS_MOCK[3],
     status: "active",
     isStarred: true,
     salary: undefined,
-    joinedAt: new Date(new Date().setDate(new Date().getDate() + 2)),
+    joinedAt: START_DATE_MOCK[3],
   },
 ]
+
+export const getMockVisualizations = (options?: {
+  frozenColumns?: 0 | 1 | 2
+}): Record<
+  Exclude<VisualizationType, "custom">,
+  Visualization<
+    (typeof mockUsers)[number],
+    FiltersType,
+    typeof sortings,
+    ItemActionsDefinition<(typeof mockUsers)[number]>,
+    NavigationFiltersDefinition
+  >
+> => ({
+  table: {
+    type: "table",
+    options: {
+      frozenColumns: options?.frozenColumns,
+      columns: [
+        {
+          label: "Name",
+          width: 140,
+          render: (item) => ({
+            type: "person",
+            value: {
+              firstName: item.name.split(" ")[0],
+              lastName: item.name.split(" ")[1],
+            },
+          }),
+          sorting: "name",
+        },
+        {
+          label: "Email",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Department",
+          render: (item) => item.department,
+          sorting: "department",
+        },
+        {
+          label: "Email 2",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role 2",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Department 2",
+          render: (item) => item.department,
+          sorting: "department",
+        },
+        {
+          label: "Email 3",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role 3",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Department 3",
+          render: (item) => item.department,
+          sorting: "department",
+        },
+        {
+          label: "Email 4",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role 4",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Department 4",
+          render: (item) => item.department,
+          sorting: "department",
+        },
+      ],
+    },
+  },
+  card: {
+    type: "card",
+    options: {
+      title: (item) => item.name,
+      cardProperties: [
+        {
+          label: "Email",
+          render: (item) => item.email,
+        },
+        {
+          label: "Role",
+          render: (item) => item.role,
+        },
+        {
+          label: "Department",
+          render: (item) => item.department,
+        },
+      ],
+    },
+  },
+})
 
 // Example of using the object-based approach (recommended)
 export const sortings = {
@@ -296,7 +395,6 @@ export const filterUsers = <
 
   if (navigationFilters) {
     filteredUsers = filteredUsers.filter((user) => {
-      console.log(navigationFilters.date)
       return (
         !navigationFilters.date ||
         (navigationFilters.date.value.from <= user.joinedAt &&
@@ -381,10 +479,20 @@ export const ExampleComponent = ({
   bulkActions,
   navigationFilters,
   totalItemSummary,
+  visualizations,
 }: {
   useObservable?: boolean
   usePresets?: boolean
   frozenColumns?: 0 | 1 | 2
+  visualizations?: ReadonlyArray<
+    Visualization<
+      (typeof mockUsers)[number],
+      FiltersType,
+      typeof sortings,
+      ItemActionsDefinition<(typeof mockUsers)[number]>,
+      NavigationFiltersDefinition
+    >
+  >
   selectable?: (item: (typeof mockUsers)[number]) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<
@@ -399,6 +507,9 @@ export const ExampleComponent = ({
   navigationFilters?: NavigationFiltersDefinition
   totalItemSummary?: (totalItems: number) => string
 }) => {
+  const mockVisualizations = getMockVisualizations({
+    frozenColumns,
+  })
   const dataSource = useDataSource({
     filters,
     navigationFilters,
@@ -454,108 +565,9 @@ export const ExampleComponent = ({
         onBulkAction={(action, selectedItems) =>
           console.log(`Bulk action: ${action}`, "->", selectedItems)
         }
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              frozenColumns,
-              columns: [
-                {
-                  label: "Name",
-                  width: 140,
-                  render: (item) => ({
-                    type: "person",
-                    value: {
-                      firstName: item.name.split(" ")[0],
-                      lastName: item.name.split(" ")[1],
-                    },
-                  }),
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 2",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 2",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 2",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 3",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 3",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 3",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-                {
-                  label: "Email 4",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role 4",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department 4",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
-            },
-          },
-          {
-            type: "card",
-            options: {
-              title: (item) => item.name,
-              cardProperties: [
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                },
-              ],
-            },
-          },
-        ]}
+        visualizations={
+          visualizations ?? [mockVisualizations.table, mockVisualizations.card]
+        }
       />
     </div>
   )
@@ -564,7 +576,7 @@ export const ExampleComponent = ({
 // Fix the generateMockUsers function to use the correct department types
 export const generateMockUsers = (count: number) => {
   return Array.from({ length: count }).map((_, index) => {
-    const department = DEPARTMENTS[index % DEPARTMENTS.length]
+    const department = DEPARTMENTS_MOCK[index % DEPARTMENTS_MOCK.length]
     return {
       index,
       id: `user-${index + 1}`,
@@ -577,9 +589,7 @@ export const generateMockUsers = (count: number) => {
       isStarred: index % 3 === 0,
       href: `/users/user-${index + 1}`,
       salary: department === "Marketing" ? 50000 + index * 1000 : undefined,
-      joinedAt: new Date(
-        new Date().setDate(new Date().getDate() + Math.floor(Math.random() * 4))
-      ),
+      joinedAt: START_DATE_MOCK[index % START_DATE_MOCK.length],
     }
   })
 }
@@ -596,7 +606,7 @@ export function createDataAdapter<
   TRecord extends RecordType & {
     name: string
     email: string
-    department: (typeof DEPARTMENTS)[number]
+    department: (typeof DEPARTMENTS_MOCK)[number]
     salary?: number
   },
   TFilters extends Record<string, FilterDefinition>,

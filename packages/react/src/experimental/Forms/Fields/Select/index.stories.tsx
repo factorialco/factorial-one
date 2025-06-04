@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react"
 import { fn } from "@storybook/test"
 import { Select, SelectProps } from "./index"
 
+import { IconType } from "@/components/Utilities/Icon"
+import { Appearance, Circle, Desktop, Plus } from "@/icons/app"
 import { useState } from "react"
-import { IconType } from "../../../../components/Utilities/Icon"
-import { Appearance, Circle, Desktop } from "../../../../icons/app"
 
 // Wraps the Select component with a hook to show the selected value
 const SelectWithHooks = (props: SelectProps<string>) => {
@@ -96,7 +96,7 @@ const meta: Meta = {
       description:
         "<p>Array of options to show in the select. Each option can its an object of type `SelectItemObject` or `'separator'`" +
         " to render a separator line</p>" +
-        "```" +
+        "```typescript\n" +
         "type SelectItemObject<T> = {\n" +
         "  value: T\n" +
         "  label: string\n" +
@@ -109,6 +109,17 @@ const meta: Meta = {
     onChange: {
       description:
         "Function to handle the change event. Returns the value of the selected option, and the item object if it exists",
+    },
+    actions: {
+      description:
+        "<p>List of action buttons that will be displayed at the bottom of the select dropdown. Each action should have a label, onClick handler, optional icon, and variant.</p>" +
+        "```typescript\n" +
+        "type Action = {\n" +
+        "  label: string\n" +
+        "  onClick: () => void\n" +
+        "  icon?: IconType\n" +
+        "  variant?: 'ghost' | 'critical'\n" +
+        "}```",
     },
   },
   args: {
@@ -141,6 +152,22 @@ export const WithSearchBox: Story = {
     showSearchBox: true,
     searchEmptyMessage: "No results found",
     searchBoxPlaceholder: "Search for a theme",
+  },
+}
+
+export const WithActions: Story = {
+  args: {
+    showSearchBox: true,
+    searchEmptyMessage: "No results found",
+    searchBoxPlaceholder: "Search for a theme",
+    actions: [
+      {
+        label: "Create new option",
+        onClick: fn(),
+        icon: Plus,
+        variant: "ghost",
+      },
+    ],
   },
 }
 
