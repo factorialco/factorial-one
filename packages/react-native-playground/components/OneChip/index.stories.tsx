@@ -1,11 +1,11 @@
-import { Chip } from "@factorialco/factorial-one-react-native";
+import { OneChip } from "@factorialco/factorial-one-react-native";
 import type { Meta, StoryFn, StoryObj } from "@storybook/react";
 import { useState } from "react";
 import { AppIcons } from "@factorialco/factorial-one-react-native";
 import { View } from "react-native";
 
 const meta = {
-  component: Chip,
+  component: OneChip,
   title: "Components/Chip",
   parameters: {
     layout: "centered",
@@ -37,7 +37,7 @@ const meta = {
         "If defined, the close icon will be displayed and the chip will be clickable",
     },
   },
-} satisfies Meta<typeof Chip>;
+} satisfies Meta<typeof OneChip>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -68,7 +68,7 @@ export const WithClose: Story = {
     return (
       <View className="flex flex-row flex-wrap gap-2">
         {chips.map((chip) => (
-          <Chip
+          <OneChip
             key={chip.id}
             label={chip.label}
             variant="default"
@@ -106,7 +106,7 @@ export const SelectedWithClose: Story = {
     return (
       <View className="flex flex-row flex-wrap gap-2">
         {chips.map((chip) => (
-          <Chip
+          <OneChip
             key={chip.id}
             label={chip.label}
             variant="selected"

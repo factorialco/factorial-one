@@ -1,8 +1,8 @@
 import { cva, type VariantProps } from "cva";
-import { CrossedCircle } from "../../icons/app";
 import { cn } from "../../lib/utils";
 import { Icon, IconType } from "../Icon";
 import { View, Text, Pressable } from "react-native";
+import { CrossedCircle } from "../../icons/app";
 
 export const chipContainerVariants = cva({
   base: "flex items-center gap-1 rounded-full border border-solid border-f1-border px-2 py-0.5 grow-0",
@@ -37,7 +37,13 @@ interface ChipProps extends VariantProps<typeof chipContainerVariants> {
   onClose?: () => void;
 }
 
-export const Chip = ({ label, variant, onClick, onClose, icon }: ChipProps) => {
+export const OneChip = ({
+  label,
+  variant,
+  onClick,
+  onClose,
+  icon,
+}: ChipProps) => {
   return (
     <View className="flex items-start">
       <Pressable
@@ -45,10 +51,10 @@ export const Chip = ({ label, variant, onClick, onClose, icon }: ChipProps) => {
           chipContainerVariants({ variant }),
           onClose && "pr-1.5",
           icon && "pl-1.5",
-          onClick && "cursor-pointer",
         )}
         onPress={onClick}
         tabIndex={onClick ? 0 : undefined}
+        aria-label="Action"
       >
         <View className="flex flex-row items-center gap-0.5">
           {icon && (
