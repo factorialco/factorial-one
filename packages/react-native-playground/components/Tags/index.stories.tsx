@@ -27,7 +27,7 @@ export const TagsShowcase = () => (
     <Text className="text-lg font-bold mb-4 text-f1-foreground">AlertTag</Text>
     <View className="flex-row flex-wrap gap-2 mb-6">
       <AlertTag text="Critical" level="critical" />
-      <AlertTag text="Warinig" level="warning" />
+      <AlertTag text="Warning" level="warning" />
       <AlertTag text="Info" level="info" />
     </View>
     <Text className="text-lg font-bold mb-4 text-f1-foreground">RawTag</Text>
