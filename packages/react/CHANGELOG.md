@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.84.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.84.0...factorial-one-react-v1.84.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* datacollection standard layout spacing ([#1980](https://github.com/factorialco/factorial-one/issues/1980)) ([8cde481](https://github.com/factorialco/factorial-one/commit/8cde481b07ed4d05ea80d799e09ffdf8875e464d))
+
 ## [1.84.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.83.0...factorial-one-react-v1.84.0) (2025-06-03)
 
 
