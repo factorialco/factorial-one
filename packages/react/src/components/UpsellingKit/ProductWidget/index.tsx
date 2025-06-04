@@ -19,6 +19,7 @@ type BaseAction = {
 
 type UpsellAction = BaseAction & {
   type: "upsell"
+  variant: "promote" | "outlinePromote"
   errorMessage: ErrorMessageProps
   successMessage: SuccessMessageProps
   loadingState: LoadingStateProps
@@ -131,6 +132,7 @@ export function ProductWidget({
                     nextSteps={action.nextSteps}
                     closeLabel={action.closeLabel}
                     showConfirmation={action.showConfirmation}
+                    variant={action.variant}
                   />
                 ) : (
                   <Button

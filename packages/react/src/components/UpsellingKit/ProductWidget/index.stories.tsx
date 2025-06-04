@@ -84,6 +84,7 @@ export const WithUpsellingButton: Story = {
     actions: [
       {
         type: "upsell",
+        variant: "promote",
         label: "Request Information",
         errorMessage: {
           title: "Request failed",
