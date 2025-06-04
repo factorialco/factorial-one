@@ -1022,55 +1022,57 @@ export const WithInfiniteScrollPagination: Story = {
     })
 
     return (
-      <OneDataCollection
-        source={source}
-        onSelectItems={(selectedItems) => {
-          console.log("Selected items", "->", selectedItems)
-        }}
-        onBulkAction={(action, selectedItems) => {
-          console.log(`Bulk action: ${action}`, "->", selectedItems)
-        }}
-        visualizations={[
-          {
-            type: "table",
-            options: {
-              columns: [
-                {
-                  label: "Name",
-                  render: (item) => item.name,
-                  sorting: "name",
-                },
-                {
-                  label: "Email",
-                  render: (item) => item.email,
-                  sorting: "email",
-                },
-                {
-                  label: "Role",
-                  render: (item) => item.role,
-                  sorting: "role",
-                },
-                {
-                  label: "Department",
-                  render: (item) => item.department,
-                  sorting: "department",
-                },
-              ],
+      <div className="space-y-4" style={{ height: "500px", overflow: "auto" }}>
+        <OneDataCollection
+          source={source}
+          onSelectItems={(selectedItems) => {
+            console.log("Selected items", "->", selectedItems)
+          }}
+          onBulkAction={(action, selectedItems) => {
+            console.log(`Bulk action: ${action}`, "->", selectedItems)
+          }}
+          visualizations={[
+            {
+              type: "table",
+              options: {
+                columns: [
+                  {
+                    label: "Name",
+                    render: (item) => item.name,
+                    sorting: "name",
+                  },
+                  {
+                    label: "Email",
+                    render: (item) => item.email,
+                    sorting: "email",
+                  },
+                  {
+                    label: "Role",
+                    render: (item) => item.role,
+                    sorting: "role",
+                  },
+                  {
+                    label: "Department",
+                    render: (item) => item.department,
+                    sorting: "department",
+                  },
+                ],
+              },
             },
-          },
-          {
-            type: "card",
-            options: {
-              cardProperties: [
-                { label: "Email", render: (item) => item.email },
-                { label: "Role", render: (item) => item.role },
-                { label: "Department", render: (item) => item.department },
-              ],
-              title: (item) => item.name,
+            {
+              type: "card",
+              options: {
+                cardProperties: [
+                  { label: "Email", render: (item) => item.email },
+                  { label: "Role", render: (item) => item.role },
+                  { label: "Department", render: (item) => item.department },
+                ],
+                title: (item) => item.name,
+              },
             },
-          },
-        ]}
-      />
+          ]}
+        />
+      </div>
     )
   },
 }
