@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.85.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.1...factorial-one-react-v1.85.2) (2025-06-04)
+
+
+### Bug Fixes
+
+* remove default sidebar activity button shortcut ([#2008](https://github.com/factorialco/factorial-one/issues/2008)) ([0d751af](https://github.com/factorialco/factorial-one/commit/0d751af870d8568d0464556163b3fa6420795457))
+
 ## [1.85.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.0...factorial-one-react-v1.85.1) (2025-06-04)
 
 
