@@ -22,6 +22,7 @@ import {
   isShowingPlaceholder,
   resolveValue,
 } from "./property-utils.ts"
+import { PersonCell } from "./types/person.tsx"
 
 export interface WithPlaceholder {
   placeholder?: string
@@ -59,13 +60,6 @@ export interface StatusValue {
   label: string
 }
 export type StatusCellValue = StatusValue
-
-export interface PersonValue {
-  firstName: string
-  lastName: string
-  src?: string
-}
-export type PersonCellValue = PersonValue
 
 export interface CompanyValue {
   name: string
@@ -194,22 +188,7 @@ export const propertyRenderers = {
   status: (args: StatusCellValue) => (
     <StatusTag variant={args.status} text={args.label} />
   ),
-  person: (args: PersonCellValue) => (
-    <div className="flex items-center gap-2">
-      <Avatar
-        avatar={{
-          type: "person",
-          firstName: args.firstName,
-          lastName: args.lastName,
-          src: args.src,
-        }}
-        size="xsmall"
-      />
-      <span className="text-f1-foreground">
-        {args.firstName} {args.lastName}
-      </span>
-    </div>
-  ),
+  person: PersonCell,
   company: (args: CompanyCellValue) => (
     <div className="flex items-center gap-2">
       <Avatar

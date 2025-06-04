@@ -26,3 +26,12 @@ if (typeof window !== "undefined") {
   window.HTMLElement.prototype.releasePointerCapture = () => {}
   window.HTMLElement.prototype.scrollIntoView = () => {}
 }
+
+// Mock ResizeObserver
+vi.stubGlobal(
+  "ResizeObserver",
+  class MockedResizeObserver {
+    observe = vi.fn()
+    disconnect = vi.fn()
+  }
+)
