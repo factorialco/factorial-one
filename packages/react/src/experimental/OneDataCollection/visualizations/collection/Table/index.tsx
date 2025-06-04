@@ -11,7 +11,8 @@ import {
 } from "@/experimental/OneTable"
 import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
-import { ComponentProps, useEffect, useMemo } from "react"
+import { Skeleton } from "@/ui/skeleton.tsx"
+import { ComponentProps, useEffect, useMemo, useRef } from "react"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { ActionsDropdown } from "../../../ItemActions/Dropdown"
@@ -79,13 +80,16 @@ export const TableCollection = <
   TableVisualizationOptions<Record, Filters, Sortings>
 >) => {
   const t = useI18n()
+  const tableContainerRef = useRef<HTMLDivElement>(null) // Reference for the scrollable table container
 
-  const { data, paginationInfo, setPage, isInitialLoading } = useData<
-    Record,
-    Filters,
-    Sortings,
-    NavigationFilters
-  >(source, {
+  const {
+    data,
+    paginationInfo,
+    setPage,
+    loadMore,
+    isInitialLoading,
+    isLoadingMore,
+  } = useData<Record, Filters, Sortings, NavigationFilters>(source, {
     onError: (error) => {
       onLoadError(error)
     },
@@ -103,6 +107,36 @@ export const TableCollection = <
   }, [paginationInfo?.total, data])
 
   const { currentSortings, setCurrentSortings, isLoading } = source
+
+  useEffect(() => {
+    const isNearBottom = () => {
+      const container = tableContainerRef.current
+      if (!container) return false
+
+      const { scrollTop, scrollHeight, clientHeight } = container
+      // Load more when scrolled to the last 20% of the container
+      return scrollTop + clientHeight >= scrollHeight * 0.8
+    }
+
+    const handleScroll = () => {
+      // Only trigger for infinite-scroll pagination type
+      if (
+        paginationInfo?.type === "infinite-scroll" &&
+        paginationInfo.hasMore &&
+        !isLoading &&
+        isNearBottom()
+      ) {
+        loadMore()
+      }
+    }
+
+    // Get the scrollable container
+    const scrollContainer = tableContainerRef.current
+    if (scrollContainer) {
+      scrollContainer.addEventListener("scroll", handleScroll)
+      return () => scrollContainer.removeEventListener("scroll", handleScroll)
+    }
+  }, [paginationInfo, isLoading, loadMore])
 
   const frozenColumnsLeft = useMemo(() => frozenColumns, [frozenColumns])
 
@@ -188,8 +222,17 @@ export const TableCollection = <
 
   const checkColumnWidth = source.selectable ? 52 : 0
 
+  const skeletonColumns =
+    columns.length + (source.itemActions ? 1 : 0) + (source.selectable ? 1 : 0)
+
   return (
-    <>
+    <div
+      ref={tableContainerRef}
+      style={{
+        height: "500px",
+        overflow: "auto",
+      }}
+    >
       <OneTable loading={isLoading}>
         <TableHeader>
           <TableRow>
@@ -332,6 +375,17 @@ export const TableCollection = <
               </TableRow>
             )
           })}
+          {paginationInfo?.type === "infinite-scroll" &&
+            isLoadingMore &&
+            Array.from({ length: 5 }).map((_, rowIndex) => (
+              <TableRow key={`skeleton-row-${rowIndex}`}>
+                {Array.from({ length: skeletonColumns }).map((_, colIndex) => (
+                  <TableCell key={`skeleton-cell-${rowIndex}-${colIndex}`}>
+                    <Skeleton className="h-4 w-full" />
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
         </TableBody>
       </OneTable>
       {/*TODO: Move this logic to a shared component since it's on Card visualization as well*/}
@@ -354,6 +408,6 @@ export const TableCollection = <
           </div>
         </div>
       )}
-    </>
+    </div>
   )
 }
