@@ -1,3 +1,7 @@
+/**
+ * Company cell type for displaying company information with avatars.
+ * Shows company name alongside a company avatar with optional badge.
+ */
 import { Avatar } from "@/experimental/Information/Avatars/Avatar"
 import { WithAvatarBadge } from "./types"
 

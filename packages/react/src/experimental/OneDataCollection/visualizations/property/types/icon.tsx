@@ -1,3 +1,7 @@
+/**
+ * Icon cell type for displaying icons with associated labels in data collections.
+ * Used for visual representation of status or type indicators.
+ */
 import { Icon, IconType } from "@/components/Utilities/Icon"
 
 interface IconValue {
