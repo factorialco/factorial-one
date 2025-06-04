@@ -6,7 +6,6 @@ import React, {
 } from "react";
 import { SvgProps, Svg } from "react-native-svg";
 import { cn } from "../../lib/utils";
-import { IconColorName } from "../../lib/colors";
 import { cssInterop } from "nativewind";
 
 const iconVariants = cva({
@@ -29,7 +28,6 @@ export interface IconProps extends SvgProps, VariantProps<typeof iconVariants> {
   icon: IconType;
   testID?: string;
   className?: string;
-  color?: IconColorName;
   variant?:
     | "default"
     | "critical"
@@ -67,26 +65,8 @@ export function applyIconInterop(icon: IconType) {
   return icon;
 }
 
-const getIconColorClass = (
-  variant?: IconProps["variant"],
-  isPressed?: boolean,
-) => {
-  if (isPressed && variant === "critical") {
-    return "text-f1-icon-inverse";
-  }
-
-  switch (variant) {
-    case "default":
-      return "text-f1-icon-inverse";
-    case "critical":
-      return "text-f1-icon-critical-bold";
-    default:
-      return "text-f1-icon";
-  }
-};
-
 export const Icon = forwardRef<Svg, IconProps>(function Icon(
-  { size, icon, className, testID, color, variant, isPressed, ...props },
+  { size, icon, className, testID, ...props },
   ref,
 ) {
   if (!icon) return null;
@@ -94,13 +74,11 @@ export const Icon = forwardRef<Svg, IconProps>(function Icon(
   // Apply NativeWind interop to the icon if not already applied
   const Component = applyIconInterop(icon);
 
-  const colorClass = color || getIconColorClass(variant, isPressed);
-
   return (
     <Component
       ref={ref}
       {...props}
-      className={cn(iconVariants({ size }), className, colorClass)}
+      className={cn(iconVariants({ size }), className)}
       testID={testID}
     />
   );
