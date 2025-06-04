@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.85.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.3...factorial-one-react-v1.85.4) (2025-06-04)
+
+
+### Bug Fixes
+
+* export missing empty state ([#2013](https://github.com/factorialco/factorial-one/issues/2013)) ([858293e](https://github.com/factorialco/factorial-one/commit/858293e640eced92d9934cd7b87e20cdb06895ff))
+
 ## [1.85.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.2...factorial-one-react-v1.85.3) (2025-06-04)
 
 
