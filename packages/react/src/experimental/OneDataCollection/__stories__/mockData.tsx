@@ -4,6 +4,7 @@ import {
   DataAdapter,
   FilterDefinition,
   FiltersState,
+  InfiniteScrollPaginatedResponse,
   ItemActionsDefinition,
   NewColor,
   OnBulkActionCallback,
@@ -628,7 +629,7 @@ export function createDataAdapter<
     records: TRecord[],
     filters: FiltersState<TFilters>,
     sortingsState: SortingsState<TSortings>,
-    pagination?: { currentPage?: number; perPage?: number }
+    pagination?: { currentPage?: number; perPage?: number; cursor?: number }
   ): TRecord[] | PaginatedResponse<TRecord> => {
     let filteredRecords = [...records]
 
@@ -721,24 +722,21 @@ export function createDataAdapter<
         pagesCount: Math.ceil(filteredRecords.length / pageSize),
       }
     } else if (pagination && paginationType === "infinite-scroll") {
-      const { currentPage = 1 } = pagination
       const pageSize = pagination.perPage || perPage
-      const startIndex = (currentPage - 1) * pageSize
-      const paginatedRecords = filteredRecords.slice(
-        startIndex,
-        startIndex + pageSize
-      )
+
+      const cursor = "cursor" in pagination ? pagination.cursor : 0
+
+      const nextCursor = cursor ? cursor + pageSize : pageSize
+
+      const paginatedRecords = filteredRecords.slice(cursor, nextCursor)
 
       return {
-        type: "infinite-scroll",
+        type: "infinite-scroll" as const, // Use const assertion to help TypeScript
         records: paginatedRecords,
         total: filteredRecords.length,
-        cursor:
-          paginatedRecords.length > 0
-            ? Number(paginatedRecords[paginatedRecords.length - 1].index)
-            : 0, // Start from index 0
+        cursor: nextCursor,
         perPage: pageSize,
-        hasMore: startIndex + paginatedRecords.length < filteredRecords.length,
+        hasMore: nextCursor < filteredRecords.length,
       }
     }
     return filteredRecords
@@ -823,21 +821,55 @@ export function createDataAdapter<
       paginationType: "infinite-scroll",
       perPage,
       fetchData: ({ filters, sortings, pagination }) => {
-        // if (useObservable) {
-        // TODO
-        // }
+        if (useObservable) {
+          return new Observable<PromiseState<PaginatedResponse<TRecord>>>(
+            (observer) => {
+              observer.next({
+                loading: true,
+                error: null,
+                data: null,
+              })
+
+              setTimeout(() => {
+                const fetch = () =>
+                  filterData(
+                    data,
+                    filters,
+                    sortings,
+                    pagination
+                  ) as InfiniteScrollPaginatedResponse<TRecord>
+
+                try {
+                  observer.next({
+                    loading: false,
+                    error: null,
+                    data: fetch(),
+                  })
+                  observer.complete()
+                } catch (error) {
+                  observer.next({
+                    loading: false,
+                    error:
+                      error instanceof Error ? error : new Error(String(error)),
+                    data: null,
+                  })
+                  observer.complete()
+                }
+              }, delay)
+            }
+          )
+        }
 
         return new Promise<PaginatedResponse<TRecord>>((resolve, reject) => {
           setTimeout(() => {
             try {
-              resolve(
-                filterData(
-                  data,
-                  filters,
-                  sortings,
-                  pagination
-                ) as PaginatedResponse<TRecord>
-              )
+              const result = filterData(
+                data,
+                filters,
+                sortings,
+                pagination
+              ) as InfiniteScrollPaginatedResponse<TRecord>
+              resolve(result)
             } catch (error) {
               reject(error)
             }
