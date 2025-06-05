@@ -1,5 +1,3 @@
-"use client";
-
 import { cva } from "cva";
 import * as React from "react";
 import { cn } from "../lib/utils";
@@ -32,14 +30,14 @@ const textSizes = {
 };
 
 const avatarVariants = cva({
-  base: "flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold ring-1 ring-inset ring-f1-border-secondary",
+  base: "flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold",
   variants: {
     size: {
-      xsmall: "w-5 h-5 rounded-xs text-sm",
-      small: "w-6 h-6 rounded-sm text-sm",
+      xsmall: "w-5 h-5 rounded-xs",
+      small: "w-6 h-6 rounded-sm",
       medium: "w-8 h-8 rounded",
-      large: "w-14 h-14 rounded-xl text-2xl",
-      xlarge: "w-18 h-18 rounded-[20px] text-3xl",
+      large: "w-14 h-14 rounded-xl",
+      xlarge: "w-18 h-18 rounded-[20px]",
     } satisfies Record<(typeof sizes)[number], string>,
     type: {
       base: "",
@@ -88,11 +86,14 @@ const AvatarImage = ({
   src?: string;
   alt: string;
 }) => (
-  <View
-    className={cn("aspect-square h-full w-full object-cover", className)}
-    {...props}
-  >
-    <Image src={src} aria-label={alt} />
+  <View className={cn("aspect-square h-full w-full", className)} {...props}>
+    <Image
+      style={{ width: "100%", height: "100%" }}
+      source={{
+        uri: src,
+      }}
+      aria-label={alt}
+    />
   </View>
 );
 

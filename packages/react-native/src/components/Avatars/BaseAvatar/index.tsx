@@ -70,10 +70,13 @@ export const BaseAvatar = ({
               : ""
           }
         >
-          {src && <AvatarImage src={src} alt={initials} />}
-          <AvatarFallback size={size} data-a11y-color-contrast-ignore>
-            {initials}
-          </AvatarFallback>
+          {src ? (
+            <AvatarImage src={src} alt={initials} />
+          ) : (
+            <AvatarFallback size={size} data-a11y-color-contrast-ignore>
+              {initials}
+            </AvatarFallback>
+          )}
         </AvatarComponent>
       </View>
       {badge && (

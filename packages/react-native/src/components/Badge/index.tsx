@@ -1,6 +1,5 @@
 import { cva, type VariantProps } from "cva";
 import { Icon, IconType } from "../Icon";
-import { View } from "react-native";
 
 const badgeVariants = cva({
   base: "flex shrink-0 items-center justify-center rounded-full",
@@ -39,8 +38,10 @@ export interface BadgeProps extends VariantProps<typeof badgeVariants> {
 
 export const Badge = ({ type, size = "md", icon }: BadgeProps) => {
   return (
-    <View className={badgeVariants({ type, size })}>
-      <Icon icon={icon} size={iconSizes[size]} />
-    </View>
+    <Icon
+      className={badgeVariants({ type, size })}
+      icon={icon}
+      size={iconSizes[size]}
+    />
   );
 };

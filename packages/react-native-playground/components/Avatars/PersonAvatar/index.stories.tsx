@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View, Text } from "react-native";
+import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   PersonAvatar,
@@ -38,7 +38,7 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <View className="flex-1 p-4">
+      <View className="flex-1 items-center justify-center">
         <Story />
       </View>
     ),
