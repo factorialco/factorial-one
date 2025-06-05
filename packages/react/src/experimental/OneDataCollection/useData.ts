@@ -297,6 +297,8 @@ export function useData<
       setIsLoadingMore,
       setTotalItems,
       isLoadingMoreRef,
+      data.length,
+      dataAdapter.paginationType,
     ]
   )
 
