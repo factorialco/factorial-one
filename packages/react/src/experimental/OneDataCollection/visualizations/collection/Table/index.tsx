@@ -95,6 +95,8 @@ export const TableCollection = <
     },
   })
 
+  const { currentSortings, setCurrentSortings, isLoading } = source
+
   useEffect(() => {
     if (paginationInfo?.type !== "infinite-scroll" || !paginationInfo.hasMore) {
       return
@@ -121,7 +123,7 @@ export const TableCollection = <
     return () => {
       observer.disconnect()
     }
-  }, [paginationInfo, isLoadingMore, loadMore])
+  }, [paginationInfo, isLoadingMore, loadMore, isLoading])
 
   useEffect(() => {
     onLoadData({
@@ -133,8 +135,6 @@ export const TableCollection = <
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
   }, [paginationInfo?.total, data])
-
-  const { currentSortings, setCurrentSortings, isLoading } = source
 
   const frozenColumnsLeft = useMemo(() => frozenColumns, [frozenColumns])
 
