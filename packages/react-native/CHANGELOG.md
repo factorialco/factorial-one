@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.10.0...factorial-one-react-native-v0.11.0) (2025-06-05)
+
+
+### Features
+
+* create new  Chip & RawTag component for mobile ([#2005](https://github.com/factorialco/factorial-one/issues/2005)) ([3c60e51](https://github.com/factorialco/factorial-one/commit/3c60e5181cbc46db31488dd5755abab45071f008))
+
 ## [0.10.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.9.0...factorial-one-react-native-v0.10.0) (2025-06-04)
 
 
