@@ -11,6 +11,7 @@ import {
   OneDataCollection,
   OnSelectItemsCallback,
   PaginatedResponse,
+  PaginationType,
   PresetsDefinition,
   RecordType,
   SortingsDefinition,
@@ -599,7 +600,7 @@ interface DataAdapterOptions<TRecord> {
   data: TRecord[]
   delay?: number
   useObservable?: boolean
-  paginationType?: "pages" | "infinite-scroll" // TODO: check the source type
+  paginationType?: PaginationType
   perPage?: number
 }
 
