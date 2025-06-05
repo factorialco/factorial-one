@@ -64418,7 +64418,7 @@ const Ib = Tt(w8e, k8e), x8e = (e, t) => (e(t) || []).filter(
     onError: (W) => {
       r(W);
     }
-  });
+  }), { currentSortings: p, setCurrentSortings: g, isLoading: v } = t;
   pe(() => {
     if ((c == null ? void 0 : c.type) !== "infinite-scroll" || !c.hasMore)
       return;
@@ -64438,7 +64438,7 @@ const Ib = Tt(w8e, k8e), x8e = (e, t) => (e(t) || []).filter(
     return A.observe(W), () => {
       A.disconnect();
     };
-  }, [c, h, f]), pe(() => {
+  }, [c, h, f, v]), pe(() => {
     a({
       totalItems: (c == null ? void 0 : c.total) || d.length,
       filters: t.currentFilters,
@@ -64447,7 +64447,7 @@ const Ib = Tt(w8e, k8e), x8e = (e, t) => (e(t) || []).filter(
       data: d
     });
   }, [c == null ? void 0 : c.total, d]);
-  const { currentSortings: p, setCurrentSortings: g, isLoading: v } = t, y = Le(() => n, [n]), {
+  const y = Le(() => n, [n]), {
     selectedItems: w,
     isAllSelected: x,
     isPartiallySelected: b,
