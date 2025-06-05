@@ -2289,6 +2289,9 @@ declare interface OneCardProps {
     onClick?: () => void;
 }
 
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
 export declare const OneDataCollection: <Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, ItemActions extends ItemActionsDefinition<Record>, NavigationFilters extends NavigationFiltersDefinition>({ source, visualizations, onSelectItems, onBulkAction, emptyStates, }: {
     source: DataSource<Record, Filters, Sortings, ItemActions, NavigationFilters>;
     visualizations: ReadonlyArray<Visualization<Record, Filters, Sortings, ItemActions, NavigationFilters>>;
