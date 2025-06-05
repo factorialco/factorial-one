@@ -63,7 +63,8 @@ export function useLoadOptions<T>(schema: InFilterDefinition<T>) {
         setIsLoading(false)
       }
     },
-    [schema, cacheKey]
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking the schema values
+    [JSON.stringify(schema), cacheKey]
   )
 
   useEffect(() => {
