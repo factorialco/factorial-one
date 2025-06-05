@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.14.0...factorial-one-core-v1.15.0) (2025-06-05)
+
+
+### Features
+
+* add files icon ([#2018](https://github.com/factorialco/factorial-one/issues/2018)) ([e2bacf7](https://github.com/factorialco/factorial-one/commit/e2bacf73e96d5806dd5c823f3fa21ba904925905))
+
 ## [1.14.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.13.0...factorial-one-core-v1.14.0) (2025-06-05)
 
 
