@@ -297,6 +297,7 @@ export declare const FactorialOneProvider: React.FC<{
     i18n: Omit<I18nProviderProps, "children">;
     l10n: Omit<L10nProviderProps, "children">;
     isDev?: boolean;
+    showExperimentalWarnings?: boolean;
 }>;
 
 export declare function getEmojiLabel(emoji: string): string;
