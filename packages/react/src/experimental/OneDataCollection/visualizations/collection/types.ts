@@ -6,6 +6,8 @@ import { SortingsDefinition } from "../../sortings"
 import type {
   DataSource,
   GroupingDefinition,
+  OnLoadDataCallback,
+  OnLoadErrorCallback,
   OnSelectItemsCallback,
   RecordType,
 } from "../../types"
@@ -56,8 +58,9 @@ export type Visualization<
       type: "custom"
       /** Custom component to render the visualization */
       component: (props: {
-        onTotalItemsChange?: (totalItems: number) => void
-        onSelectItems?: OnSelectItemsCallback<Record, Filters>
+        onSelectItems: OnSelectItemsCallback<Record, Filters>
+        onLoadData: OnLoadDataCallback<Record, Filters>
+        onLoadError: OnLoadErrorCallback
         source: DataSource<
           Record,
           Filters,

@@ -1,5 +1,6 @@
 import { NewColor } from "@/experimental/Information/Tags/DotTag"
 import { Meta, StoryObj } from "@storybook/react"
+import { Placeholder } from "../../../icons/app"
 import { PropertyDefinition, renderProperty } from "../property-render"
 
 function Cell({
@@ -395,6 +396,22 @@ export const TagArrayType: Story = {
             color: skill.color,
           })),
           max: 3,
+        },
+      }),
+    },
+  },
+}
+
+export const IconType: Story = {
+  args: {
+    item: mockItem,
+    property: {
+      label: "Icon",
+      render: () => ({
+        type: "icon",
+        value: {
+          icon: Placeholder,
+          label: "Icon",
         },
       }),
     },

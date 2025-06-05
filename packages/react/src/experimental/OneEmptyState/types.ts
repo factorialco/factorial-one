@@ -26,11 +26,7 @@ export type ActionProps = {
   icon?: IconType
 }
 
-export type EmptyStateAlertProps = Omit<AlertAvatarProps, "size" | "type"> & {
-  type: Exclude<AlertAvatarProps["type"], "positive">
-}
-
-export type EmptyStateProps = {
+export type OneEmptyStateProps = {
   /**
    * The title of the empty state
    */
@@ -43,17 +39,32 @@ export type EmptyStateProps = {
   description?: string
 
   /**
-   * If defined, an icon will be displayed in the empty state.
-   * Can be either an emoji string or an alert configuration.
-   * @optional
-   */
-  icon?: string | EmptyStateAlertProps
-
-  /**
    * An array of action objects to display as buttons in the empty state.
    * Each action represents a user-interactable option, such as "Retry" or "Go Back",
    * and can include a label, click handler, optional icon, and button variant.
    * @optional
    */
   actions?: ActionProps[]
-}
+} & (
+  | {
+      /**
+       * The variant of the empty state
+       * @optional
+       */
+      variant?: "default"
+
+      /**
+       * An icon will be displayed in the empty state.
+       * emoji string
+       */
+      emoji?: string
+    }
+  | {
+      /**
+       * The variant of the empty state
+       * @optional
+       */
+      variant: Exclude<AlertAvatarProps["type"], "positive">
+      emoji?: never
+    }
+)

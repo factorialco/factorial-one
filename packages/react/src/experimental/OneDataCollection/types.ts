@@ -9,7 +9,12 @@ import {
   NavigationFiltersDefinition,
   NavigationFiltersState,
 } from "./navigationFilters/types"
-import { SortingsDefinition, SortingsState } from "./sortings"
+import {
+  SortingsDefinition,
+  SortingsState,
+  SortingsStateMultiple,
+} from "./sortings"
+import { DataError } from "./useData"
 export * from "./grouping"
 export * from "./sortings"
 
@@ -293,6 +298,18 @@ export type OnBulkActionCallback<
   ]
 ) => void
 
+export type OnLoadDataCallback<
+  Record extends RecordType,
+  Filters extends FiltersDefinition,
+> = (data: {
+  totalItems: number | undefined
+  filters: FiltersState<Filters>
+  search: string | undefined
+  isInitialLoading: boolean
+  data: Record[]
+}) => void
+
+export type OnLoadErrorCallback = (error: DataError) => void
 /**
  * Props for the Collection component.
  * @template Record - The type of records in the collection
@@ -319,9 +336,10 @@ export type CollectionProps<
     Grouping
   >
   /** Function to handle item selection */
-  onSelectItems?: OnSelectItemsCallback<Record, Filters>
-  /** Function to handle total items change */
-  onTotalItemsChange?: (totalItems: number | undefined) => void
+  onSelectItems: OnSelectItemsCallback<Record, Filters>
+  /** Function to handle data load */
+  onLoadData: OnLoadDataCallback<Record, Filters>
+  onLoadError: OnLoadErrorCallback
 } & VisualizationOptions
 
 /**
@@ -367,8 +385,8 @@ export type DataSource<
   >
   /** Current state of applied grouping */
   currentGrouping?: Grouping["mandatory"] extends true
-    ? GroupingState<Record, Grouping>
-    : null
+    ? Exclude<GroupingState<Record, Grouping>, undefined>
+    : GroupingState<Record, Grouping>
   /** Function to update the current grouping state */
   setCurrentGrouping: React.Dispatch<
     React.SetStateAction<GroupingState<Record, Grouping>>

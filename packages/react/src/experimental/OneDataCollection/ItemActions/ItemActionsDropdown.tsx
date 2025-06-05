@@ -4,17 +4,17 @@ import { Icon } from "../../../components/Utilities/Icon"
 import { Ellipsis } from "../../../icons/app"
 import { Dropdown, DropdownItem } from "../../Navigation/Dropdown"
 
-export type ActionsDropdownProps = {
+export type ItemActionsDropdownProps = {
   items: DropdownItem[]
   onOpenChange?: (open: boolean) => void
   align?: "start" | "end"
 }
 
-export const ActionsDropdown = ({
+export const ItemActionsDropdown = ({
   items,
   onOpenChange,
-  align = "start",
-}: ActionsDropdownProps) => {
+  align = "end",
+}: ItemActionsDropdownProps) => {
   const [open, setOpen] = useState(false)
 
   if (!items || items.length === 0) {

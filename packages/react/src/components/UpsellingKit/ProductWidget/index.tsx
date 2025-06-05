@@ -7,6 +7,7 @@ import {
   UpsellingButton,
 } from "@/factorial-one"
 import CrossIcon from "@/icons/app/Cross"
+import { ButtonVariant } from "@/ui/button"
 import { Card, CardContent, CardFooter } from "@/ui/Card"
 import { Label } from "@/ui/label"
 import { useEffect, useState } from "react"
@@ -23,16 +24,18 @@ type UpsellAction = BaseAction & {
   loadingState: LoadingStateProps
   nextSteps: NextStepsProps
   closeLabel: string
+  showConfirmation: boolean
 }
 
 type RegularAction = BaseAction & {
   type: "regular"
+  variant: ButtonVariant
 }
 
-type Action = UpsellAction | RegularAction
+export type Action = UpsellAction | RegularAction
 
 type ProductWidgetProps = {
-  mediaUrl: string
+  mediaUrl?: string
   title: string
   description: string
   onClose: () => void
@@ -88,22 +91,23 @@ export function ProductWidget({
             )}
             <div>
               <div>
-                {isVideo ? (
-                  <video
-                    src={mediaUrl}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="h-full w-full rounded-md"
-                  />
-                ) : (
-                  <img
-                    src={mediaUrl}
-                    alt={title}
-                    className="h-full w-full rounded-md"
-                  />
-                )}
+                {mediaUrl &&
+                  (isVideo ? (
+                    <video
+                      src={mediaUrl}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="h-full w-full rounded-md"
+                    />
+                  ) : (
+                    <img
+                      src={mediaUrl}
+                      alt={title}
+                      className="h-full w-full rounded-md"
+                    />
+                  ))}
               </div>
               <div className="flex flex-col gap-[2px] p-3">
                 <Label className="text-lg font-medium">{title}</Label>
@@ -126,13 +130,14 @@ export function ProductWidget({
                     loadingState={action.loadingState}
                     nextSteps={action.nextSteps}
                     closeLabel={action.closeLabel}
-                    showConfirmation
+                    showConfirmation={action.showConfirmation}
                   />
                 ) : (
                   <Button
                     key={action.label}
                     label={action.label}
                     onClick={action.onClick}
+                    variant={action.variant}
                   />
                 )
               )}

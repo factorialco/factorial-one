@@ -11,7 +11,7 @@ import {
   filterItemActions,
   ItemActionsDefinition,
 } from "../../../../item-actions"
-import { ActionsDropdown } from "../../../../ItemActions/Dropdown"
+import { ItemActionsDropdown } from "../../../../ItemActions/ItemActionsDropdown"
 import { NavigationFiltersDefinition } from "../../../../navigationFilters/types"
 import { renderProperty } from "../../../../property-render"
 import { SortingsDefinition } from "../../../../sortings"
@@ -178,7 +178,7 @@ export const Row = <
             />
           ))}
 
-          <ActionsDropdown
+          <ItemActionsDropdown
             align="end"
             items={dropdownItemActions}
             onOpenChange={handleDropDownOpenChange}

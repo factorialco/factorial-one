@@ -33,7 +33,7 @@ const iconVariants = cva({
       critical:
         "text-f1-icon-critical-bold group-hover:text-f1-icon-inverse group-active:text-f1-icon-inverse dark:group-hover:text-f1-icon-bold/80 dark:group-active:text-f1-icon-bold/80",
       ghost: "text-f1-icon",
-      promote: "text-f1-icon",
+      promote: "text-f1-icon-promote",
     },
   },
   defaultVariants: {

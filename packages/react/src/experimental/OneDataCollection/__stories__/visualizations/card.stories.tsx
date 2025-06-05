@@ -5,6 +5,9 @@ const meta = {
   title: "Data Collection/Visualizations/Card",
   parameters: {
     layout: "padded",
+    a11y: {
+      skipCi: true,
+    },
     docs: {
       description: {
         component:

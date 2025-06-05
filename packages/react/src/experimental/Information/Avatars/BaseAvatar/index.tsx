@@ -7,10 +7,19 @@ import { ComponentProps, forwardRef } from "react"
 import { Badge, BadgeProps } from "../../Badge"
 import { getAvatarColor, getInitials, getMask } from "./utils"
 
-const getBadgeSize = (size: ShadAvatarProps["size"]) => {
-  if (size === "xlarge") return "lg"
-  if (size === "large") return "md"
-  return "sm"
+const getBadgeSize = (
+  size: ShadAvatarProps["size"]
+): BadgeProps["size"] | undefined => {
+  const sizeMap: Partial<
+    Record<Exclude<ShadAvatarProps["size"], undefined>, BadgeProps["size"]>
+  > = {
+    xlarge: "lg",
+    large: "md",
+    small: "sm",
+    xsmall: "xs",
+  } as const
+
+  return size && sizeMap[size] ? sizeMap[size] : sizeMap.small
 }
 
 type ShadAvatarProps = ComponentProps<typeof AvatarComponent>

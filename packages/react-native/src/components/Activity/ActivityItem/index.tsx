@@ -29,7 +29,7 @@ export const ActivityItem = ({
   return (
     <Pressable
       className={`flex w-full flex-row gap-2 rounded-lg p-2 pr-3 ${isPressed ? "bg-f1-background-hover" : ""}`}
-      onPressIn={() => setIsPressed(true)}
+      onPressIn={() => setIsPressed(false)} // Disabled by default - no use case for now
       onPressOut={() => setIsPressed(false)}
       onPress={() => onPress(id)}
       accessibilityLabel="activity-item"
@@ -47,7 +47,7 @@ export const ActivityItem = ({
           {description}
         </Text>
         <View className="mt-1.5 flex flex-row">
-          <Text className="text-lg text-f1-foreground-secondary">{`${category} · ${date}`}</Text>
+          <Text className="text-md text-f1-foreground-secondary">{`${category} · ${date}`}</Text>
         </View>
       </View>
       <View className="ml-1">

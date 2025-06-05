@@ -1,4 +1,9 @@
-import { CollectionProps, OnSelectItemsCallback } from "../../types"
+import {
+  CollectionProps,
+  OnLoadDataCallback,
+  OnLoadErrorCallback,
+  OnSelectItemsCallback,
+} from "../../types"
 
 import { FiltersDefinition } from "../../Filters/types"
 import { GroupingDefinition } from "../../grouping"
@@ -37,7 +42,8 @@ export const VisualizationRenderer = <
   visualization,
   source,
   onSelectItems,
-  onTotalItemsChange,
+  onLoadData,
+  onLoadError,
 }: {
   visualization: Visualization<
     Record,
@@ -55,14 +61,16 @@ export const VisualizationRenderer = <
     NavigationFilters,
     Grouping
   >
-  onSelectItems?: OnSelectItemsCallback<Record, Filters>
-  onTotalItemsChange?: (totalItems: number | undefined) => void
+  onSelectItems: OnSelectItemsCallback<Record, Filters>
+  onLoadData: OnLoadDataCallback<Record, Filters>
+  onLoadError: OnLoadErrorCallback
   clearSelectedItems?: () => void
 }): JSX.Element => {
   if (visualization.type === "custom") {
     return visualization.component({
       source,
-      onTotalItemsChange,
+      onLoadData,
+      onLoadError,
       onSelectItems,
     })
   }
@@ -89,6 +97,7 @@ export const VisualizationRenderer = <
     source,
     ...visualization.options,
     onSelectItems,
-    onTotalItemsChange,
+    onLoadData,
+    onLoadError,
   })
 }

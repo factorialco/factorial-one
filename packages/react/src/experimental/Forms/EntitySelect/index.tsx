@@ -5,6 +5,7 @@ import { cn } from "../../../lib/utils"
 import { Content } from "./Content"
 import { Trigger } from "./Trigger"
 import {
+  EntityId,
   EntitySelectEntity,
   EntitySelectProps,
   EntitySelectSubEntity,
@@ -13,6 +14,23 @@ import {
 export const EntitySelect = (
   props: EntitySelectProps & { children?: React.ReactNode }
 ) => {
+  const [open, setOpen] = useState(
+    (props.alwaysOpen || props.defaultOpen) ?? false
+  )
+
+  const onOpenChange = (open: boolean) => {
+    setOpen(open)
+    props.onOpenChange?.(open)
+  }
+
+  useEffect(() => {
+    // We want to run this when the component is rendered the first time or when the defaultOpen prop changes
+    if (props.defaultOpen && open) {
+      props.onOpenChange?.(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we only want to run this when this prop changes
+  }, [props.defaultOpen])
+
   const [filteredEntities, setFilteredEntities] = useState<
     EntitySelectEntity[]
   >(props.entities)
@@ -31,6 +49,9 @@ export const EntitySelect = (
   function onPrivateSelect(entity: EntitySelectEntity) {
     if (props.singleSelector) {
       props.onSelect(entity)
+
+      setOpen(false)
+
       return
     }
 
@@ -45,7 +66,7 @@ export const EntitySelect = (
       (filteredEntity.subItems ?? []).map((s) => s.subId)
     )
 
-    const parentIdsToUpdate = new Set<number>([filteredEntity.id])
+    const parentIdsToUpdate = new Set<EntityId>([filteredEntity.id])
     filteredEntities.forEach((possibleParent) => {
       if (possibleParent.id !== filteredEntity.id) {
         const hasIntersection = (possibleParent.subItems ?? []).some((sub) =>
@@ -108,10 +129,12 @@ export const EntitySelect = (
   ) {
     if (props.singleSelector) {
       props.onSelect({ ...parentEntity, subItems: [{ ...entity }] })
+
+      setOpen(false)
     } else {
       const prevSelected = props.selectedEntities ?? []
       const selectedIds = new Set(prevSelected.map((sel) => sel.id))
-      const selectedSubItemsMap = new Map<number, EntitySelectSubEntity[]>(
+      const selectedSubItemsMap = new Map<EntityId, EntitySelectSubEntity[]>(
         prevSelected.map((sel) => [sel.id, sel.subItems ?? []])
       )
 
@@ -247,7 +270,7 @@ export const EntitySelect = (
     let newSelected: EntitySelectEntity[] = []
 
     if (groupView) {
-      const visibleSubIds = new Set<number>(
+      const visibleSubIds = new Set<EntityId>(
         filteredEntities.flatMap((ent) =>
           (ent.subItems ?? []).map((sub) => sub.subId)
         )
@@ -266,7 +289,9 @@ export const EntitySelect = (
         }
       }
     } else {
-      const visibleIds = new Set<number>(filteredEntities.map((ent) => ent.id))
+      const visibleIds = new Set<EntityId>(
+        filteredEntities.map((ent) => ent.id)
+      )
       newSelected = (prevSelected ?? []).filter((el) => !visibleIds.has(el.id))
     }
 
@@ -368,16 +393,6 @@ export const EntitySelect = (
     setFilteredEntities,
   ])
 
-  const onOpenChange = (open: boolean) => {
-    props.onOpenChange?.(open)
-  }
-
-  useEffect(() => {
-    if (props.defaultOpen) {
-      props.onOpenChange?.(true)
-    }
-  }, [props])
-
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState(0)
 
@@ -434,7 +449,7 @@ export const EntitySelect = (
   }
 
   return (
-    <Popover {...props} onOpenChange={onOpenChange}>
+    <Popover {...props} onOpenChange={onOpenChange} open={open}>
       <PopoverTrigger className="w-full" disabled={props.disabled}>
         {props.children ? (
           props.children
@@ -480,6 +495,7 @@ export const EntitySelect = (
           width={props.width}
           disabled={props.disabled}
           hiddenAvatar={props.hiddenAvatar}
+          actions={props.actions}
         />
       </PopoverContent>
     </Popover>
