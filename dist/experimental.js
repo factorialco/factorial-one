@@ -63743,8 +63743,7 @@ function K6(e, { filters: t, onError: n } = {}) {
       $,
       C,
       N,
-      p.length,
-      i.paginationType
+      p.length
     ]
   ), A = He(
     (L) => {
@@ -63865,7 +63864,8 @@ function K6(e, { filters: t, onError: n } = {}) {
     z,
     D,
     c,
-    u
+    u,
+    i.paginationType
   ]), {
     data: p,
     isInitialLoading: m,
