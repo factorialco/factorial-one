@@ -136,6 +136,7 @@ export function ProductModal({
         <UpsellRequestResponseDialog
           open={true}
           onClose={() => {
+            handleClose()
             setResponseStatus(null)
           }}
           success={responseStatus === "success"}

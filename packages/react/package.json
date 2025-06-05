@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react",
-  "version": "1.79.0",
+  "version": "1.85.4",
   "main": "dist/factorial-one.js",
   "typings": "dist/factorial-one.d.ts",
   "private": false,
@@ -95,7 +95,6 @@
     "@eslint/compat": "^1.2.9",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.27.0",
-    "@factorialco/factorial-one-core": "workspace:*",
     "@microsoft/api-extractor": "7.52.2",
     "@playwright/test": "^1.52.0",
     "@storybook/addon-a11y": "^8.6.14",
@@ -166,9 +165,11 @@
     "@rollup/rollup-linux-x64-gnu": "^4.34"
   },
   "dependencies": {
+    "@factorialco/factorial-one-core": "workspace:*",
     "@radix-ui/react-hover-card": "^1.1.6",
     "@radix-ui/react-switch": "^1.2.2",
     "@tanstack/react-virtual": "^3.13.2",
+    "@tiptap/core": "^2.12.0",
     "@tiptap/extension-bubble-menu": "^2.11.5",
     "@tiptap/extension-character-count": "^2.11.5",
     "@tiptap/extension-color": "^2.11.5",
@@ -184,6 +185,7 @@
     "@tiptap/extension-underline": "^2.11.5",
     "@tiptap/react": "^2.11.5",
     "@tiptap/starter-kit": "^2.11.5",
+    "@tiptap/suggestion": "^2.12.0",
     "cva": "1.0.0-beta.3",
     "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.6.0",

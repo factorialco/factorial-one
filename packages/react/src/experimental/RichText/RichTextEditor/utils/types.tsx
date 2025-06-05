@@ -2,13 +2,6 @@ import { IconType } from "@/factorial-one"
 import { JSONContent } from "@tiptap/react"
 import { FileType } from "./constants"
 
-type MentionedUser = {
-  id: number
-  label: string
-  image_url?: string
-  href?: string
-}
-
 type resultType = {
   value: string | null
   mentionIds?: number[]
@@ -54,13 +47,6 @@ type enhanceConfig = {
   enhanceLabels: enhanceLabelsType
 }
 
-type mentionsConfig = {
-  onMentionQueryStringChanged?: (
-    queryString: string
-  ) => Promise<MentionedUser[]> | undefined
-  users: MentionedUser[]
-}
-
 type filesConfig = {
   onFiles: (files: File[]) => void
   multipleFiles: boolean
@@ -100,37 +86,6 @@ type primaryActionType = {
   subActions?: subActionType[]
 }
 
-type toolbarLabels = {
-  bold: string
-  italic: string
-  underline: string
-  strike: string
-  highlight: string
-  heading1: string
-  heading2: string
-  heading3: string
-  left: string
-  center: string
-  right: string
-  justify: string
-  bulletList: string
-  orderedList: string
-  taskList: string
-  codeBlock: string
-  horizontalRule: string
-  quote: string
-  moreOptions: string
-  code: string
-  divider: string
-  bullet: string
-  ordered: string
-  task: string
-  linkPlaceholder: string
-  linkLabel: string
-  linkPaste: string
-  close: string
-}
-
 type heightType =
   | "xxs"
   | "xs"
@@ -165,11 +120,8 @@ export type {
   filesConfig,
   heightType,
   lastIntentType,
-  MentionedUser,
-  mentionsConfig,
   primaryActionType,
   resultType,
   secondaryActionType,
   subActionType,
-  toolbarLabels,
 }

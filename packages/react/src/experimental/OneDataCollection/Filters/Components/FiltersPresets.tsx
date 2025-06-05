@@ -2,28 +2,27 @@ import { Counter } from "@/experimental/Information/Counter"
 import { Preset } from "@/experimental/OnePreset"
 import { cn, focusRing } from "@/lib/utils"
 import { OverflowList } from "@/ui/OverflowList"
+import { PresetsDefinition } from "../../types"
 import { FiltersDefinition, FiltersState } from "../types"
 
-interface FilterPresetsProps {
-  filters: FiltersState<FiltersDefinition>
-  onPresetsChange: (filter: FiltersState<FiltersDefinition>) => void
-  presets: Array<{
-    label: string
-    filter: FiltersState<FiltersDefinition>
-  }>
+interface FilterPresetsProps<Filters extends FiltersDefinition> {
+  filters: FiltersState<Filters>
+  onPresetsChange: (filter: FiltersState<Filters>) => void
+  presets: PresetsDefinition<Filters>
 }
 
-export const FiltersPresets = ({
+export const FiltersPresets = <Filters extends FiltersDefinition>({
   presets,
   filters,
   onPresetsChange,
-}: FilterPresetsProps) => {
+}: FilterPresetsProps<Filters>) => {
   const renderListPresetItem = (
     preset: NonNullable<typeof presets>[number],
     index: number,
     isVisible = true
   ) => {
     const isSelected = JSON.stringify(preset.filter) === JSON.stringify(filters)
+
     return (
       <Preset
         key={index}
@@ -31,6 +30,7 @@ export const FiltersPresets = ({
         selected={isSelected}
         onClick={() => onPresetsChange?.(preset.filter)}
         data-visible={isVisible}
+        number={preset.itemsCount?.(filters) ?? undefined}
       />
     )
   }
