@@ -21,6 +21,8 @@ import { SortingsDefinition } from "./sortings"
 import {
   BaseFetchOptions,
   DataSource,
+  InfiniteScrollPaginatedResponse,
+  PageBasedPaginatedResponse,
   PaginatedResponse,
   PromiseOrObservable,
   RecordType,
@@ -47,27 +49,6 @@ interface UseDataOptions<Filters extends FiltersDefinition> {
   onError?: (error: DataError) => void
 }
 
-type PageBasedPaginationInfo = {
-  type: "pages"
-  total: number
-  currentPage: number
-  perPage: number
-  pagesCount: number
-}
-
-type InfiniteScrollPaginationInfo = {
-  type: "infinite-scroll"
-  total: number
-  perPage: number
-  cursor: number
-  hasMore: boolean
-}
-
-/**
- * Pagination state and controls
- */
-type PaginationInfo = PageBasedPaginationInfo | InfiniteScrollPaginationInfo
-
 /**
  * Hook return type for useData
  */
@@ -77,7 +58,7 @@ interface UseDataReturn<Record> {
   isLoading: boolean
   isLoadingMore: boolean
   error: DataError | null
-  paginationInfo: PaginationInfo | null
+  paginationInfo: PaginatedResponse<Record> | null
 
   // For page-based pagination:
   setPage: (page: number) => void
@@ -111,10 +92,9 @@ function useDataFetchState<Record>() {
 /**
  * Custom hook for handling pagination state
  */
-function usePaginationState() {
-  const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
-    null
-  )
+function usePaginationState<Record>() {
+  const [paginationInfo, setPaginationInfo] =
+    useState<PaginatedResponse<Record> | null>(null)
   return { paginationInfo, setPaginationInfo }
 }
 
@@ -220,7 +200,7 @@ export function useData<
     setError,
   } = useDataFetchState<Record>()
 
-  const { paginationInfo, setPaginationInfo } = usePaginationState()
+  const { paginationInfo, setPaginationInfo } = usePaginationState<Record>()
 
   const [totalItems, setTotalItems] = useState<number | undefined>(undefined)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
@@ -261,6 +241,7 @@ export function useData<
         if (paginationType === "pages") {
           // For page-based pagination
           setPaginationInfo({
+            records: result.records,
             type: "pages",
             total: result.total,
             // Safely access currentPage with a default value of 1
@@ -275,6 +256,7 @@ export function useData<
         } else if (paginationType === "infinite-scroll") {
           // For infinite scroll pagination
           setPaginationInfo({
+            records: result.records,
             type: "infinite-scroll",
             total: result.total,
             perPage: result.perPage,
@@ -454,9 +436,9 @@ export function useData<
     ]
   )
 
-  function isInfiniteScrollPagination(
-    pagination: PaginationInfo | null
-  ): pagination is InfiniteScrollPaginationInfo {
+  function isInfiniteScrollPagination<Record>(
+    pagination: PaginatedResponse<Record> | null
+  ): pagination is InfiniteScrollPaginatedResponse<Record> {
     return pagination !== null && pagination.type === "infinite-scroll"
   }
 
@@ -521,19 +503,19 @@ export function useData<
     data,
     isInitialLoading,
     isLoading,
-    isLoadingMore, // New state
+    isLoadingMore,
     error,
     paginationInfo,
-    setPage, // Keep this unchanged
-    loadMore, // Add new function
+    setPage,
+    loadMore,
     totalItems,
   }
 }
 
 // TODO: move them to utils file???
 // Type guard functions to check pagination types
-function isPageBasedPagination(
-  pagination: PaginationInfo | null
-): pagination is PageBasedPaginationInfo {
+function isPageBasedPagination<TRecord>(
+  pagination: PaginatedResponse<TRecord> | null
+): pagination is PageBasedPaginatedResponse<TRecord> {
   return pagination !== null && pagination.type === "pages"
 }

@@ -140,6 +140,16 @@ describe("useData", () => {
         perPage: 10,
         pagesCount: 1,
         type: "pages",
+        records: [
+          {
+            id: 1,
+            name: "Test 1",
+          },
+          {
+            id: 2,
+            name: "Test 2",
+          },
+        ],
       })
     })
   })
