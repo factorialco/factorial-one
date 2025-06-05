@@ -16,7 +16,12 @@ import {
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
-import type { DataSource } from "../../../types"
+import type {
+  BaseFetchOptions,
+  DataSource,
+  PaginatedFetchOptions,
+  PaginatedResponse,
+} from "../../../types"
 import { useData } from "../../../useData"
 import { TableCollection } from "./index"
 
@@ -83,6 +88,18 @@ const createTestSource = (
 const TestWrapper = ({ children }: { children: ReactNode }) => (
   <I18nProvider translations={defaultTranslations}>{children}</I18nProvider>
 )
+
+class MockIntersectionObserver implements IntersectionObserver {
+  root: Document | Element | null = null
+  rootMargin: string = ``
+  thresholds: readonly number[] = []
+
+  disconnect = vi.fn()
+  observe = vi.fn()
+  takeRecords = vi.fn()
+  unobserve = vi.fn()
+}
+window.IntersectionObserver = MockIntersectionObserver
 
 describe("TableCollection", () => {
   describe("rendering", () => {
@@ -297,8 +314,15 @@ describe("TableCollection", () => {
       dataAdapter: {
         paginationType,
         perPage: itemsPerPage,
-        fetchData: async ({ pagination }) => {
-          const { currentPage = 1 } = pagination || {}
+        fetchData: (async (
+          options: PaginatedFetchOptions<
+            TestFilters,
+            SortingsDefinition,
+            TestNavigationFilters
+          >
+        ) => {
+          // Handle both BaseFetchOptions and PaginatedFetchOptions
+          const currentPage = options.pagination?.currentPage ?? 1
           const pagesCount = Math.ceil(totalItems / itemsPerPage)
           const startIndex = (currentPage - 1) * itemsPerPage
           const endIndex = startIndex + itemsPerPage
@@ -316,7 +340,13 @@ describe("TableCollection", () => {
             perPage: itemsPerPage,
             pagesCount,
           }
-        },
+        }) as (
+          options: BaseFetchOptions<
+            TestFilters,
+            SortingsDefinition,
+            TestNavigationFilters
+          >
+        ) => Promise<PaginatedResponse<Person>>,
       },
     })
 
@@ -350,6 +380,9 @@ describe("TableCollection", () => {
     })
 
     it("should not render pagination controls when infinite scroll pagination is enabled", async () => {
+      expect(new IntersectionObserver((entries) => entries)).toBeInstanceOf(
+        IntersectionObserver
+      )
       render(
         <TestWrapper>
           <TableCollection<
