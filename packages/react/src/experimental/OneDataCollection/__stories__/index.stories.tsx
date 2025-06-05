@@ -16,6 +16,7 @@ import { GroupingDefinition } from "../grouping"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 import { NavigationFiltersDefinition } from "../navigationFilters/types"
+import { SimpleResponse } from "../types"
 import { useData } from "../useData"
 import {
   createDataAdapter,
@@ -1915,4 +1916,58 @@ export const TotalItemsSummary: Story = {
       totalItemSummary={(totalItems) => `Total items: ${totalItems}`}
     />
   ),
+}
+
+export const TableAsyncCols: Story = {
+  render: () => {
+    const dataSource = useDataSource({
+      dataAdapter: {
+        fetchData: () =>
+          new Promise<SimpleResponse<MockUser>>((resolve) => {
+            setTimeout(() => {
+              resolve({
+                records: mockUsers,
+                properties: [
+                  {
+                    name: "name",
+                    label: "Name",
+                  },
+                  {
+                    name: "email",
+                    label: "Email",
+                  },
+                ],
+              })
+            }, 1000)
+          }),
+      },
+    })
+
+    return (
+      <OneDataCollection
+        source={dataSource}
+        visualizations={[
+          {
+            type: "table",
+            options: {
+              columns: (properties: Array<{ name: string; label: string }>) => {
+                console.log("properties", properties)
+                return [
+                  {
+                    label: "Fixed col",
+                    render: (item) => item.name,
+                  },
+                  ...(properties || []).map((col) => ({
+                    label: col.label,
+                    render: (item) => item[col.name],
+                    sorting: col.name,
+                  })),
+                ]
+              },
+            },
+          },
+        ]}
+      />
+    )
+  },
 }

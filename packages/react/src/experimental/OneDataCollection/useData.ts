@@ -26,6 +26,7 @@ import {
   PaginatedResponse,
   PromiseOrObservable,
   RecordType,
+  SimpleResponse,
   SortingsStateMultiple,
 } from "./types"
 
@@ -36,11 +37,6 @@ export interface DataError {
   message: string
   cause?: unknown
 }
-
-/**
- * Response structure for non-paginated data
- */
-type SimpleResult<T> = T[]
 
 /**
  * Hook options for useData
@@ -70,14 +66,15 @@ export type WithGroupId<RecordType> = RecordType & {
 /**
  * Hook return type for useData
  */
-interface UseDataReturn<Record> {
-  data: Data<Record>
+interface UseDataReturn<R> {
+  data: Data<R>
   isInitialLoading: boolean
   isLoading: boolean
   error: DataError | null
   paginationInfo: PaginationInfo | null
   setPage: (page: number) => void
   totalItems: number | undefined
+  properties: Record<string, unknown> | undefined
 }
 
 type DataType<T> = PromiseState<T>
@@ -104,10 +101,11 @@ export type Data<RecordType> = {
 /**
  * Custom hook for handling data fetching state
  */
-function useDataFetchState<Record>() {
+function useDataFetchState<R>() {
   const [isInitialLoading, setIsInitialLoading] = useState(true)
-  const [data, setData] = useState<Record[]>([])
+  const [data, setData] = useState<R[]>([])
   const [error, setError] = useState<DataError | null>(null)
+  const [properties, setProperties] = useState<unknown | undefined>(undefined)
 
   return {
     isInitialLoading,
@@ -116,6 +114,8 @@ function useDataFetchState<Record>() {
     setData,
     error,
     setError,
+    properties,
+    setProperties,
   }
 }
 
@@ -233,6 +233,8 @@ export function useData<
     setData: setRawData,
     error,
     setError,
+    properties,
+    setProperties,
   } = useDataFetchState<R>()
 
   const { paginationInfo, setPaginationInfo } = usePaginationState()
@@ -253,10 +255,12 @@ export function useData<
       : deferredSearch
 
   const handleFetchSuccess = useCallback(
-    (result: PaginatedResponse<R> | SimpleResult<R>) => {
-      let records: R[] = []
-      if ("records" in result) {
-        records = result.records
+    (result: PaginatedResponse<R> | SimpleResponse<R>) => {
+      const records: R[] = "records" in result ? result.records : result
+      const responseProperties =
+        "properties" in result ? result.properties : undefined
+
+      if ("total" in result) {
         setPaginationInfo({
           total: result.total,
           currentPage: result.currentPage,
@@ -265,17 +269,24 @@ export function useData<
         })
         setTotalItems(result.total)
       } else {
-        records = result
-        setTotalItems?.(result.length)
+        setTotalItems?.(records.length)
       }
 
       setRawData(records)
+      setProperties(responseProperties)
 
       setError(null)
       setIsInitialLoading(false)
       setIsLoading(false)
     },
-    [setRawData, setError, setPaginationInfo, setIsInitialLoading, setIsLoading]
+    [
+      setRawData,
+      setError,
+      setPaginationInfo,
+      setIsInitialLoading,
+      setIsLoading,
+      setProperties,
+    ]
   )
 
   const data = useMemo(() => {
@@ -335,7 +346,7 @@ export function useData<
     [setError, setIsInitialLoading, setIsLoading]
   )
 
-  type ResultType = PaginatedResponse<R> | SimpleResult<R>
+  type ResultType = PaginatedResponse<R> | SimpleResponse<R>
 
   const fetchDataAndUpdate = useCallback(
     async (
@@ -473,5 +484,6 @@ export function useData<
     paginationInfo,
     setPage,
     totalItems,
+    properties,
   }
 }
