@@ -287,6 +287,7 @@ export function useData<
       setIsLoadingMore(false)
       isLoadingMoreRef.current = false
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we don't want to re-run this callback when data.length changes
     [
       dataAdapter,
       setPaginationInfo,
