@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.85.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.3...factorial-one-react-v1.85.4) (2025-06-04)
+
+
+### Bug Fixes
+
+* export missing empty state ([#2013](https://github.com/factorialco/factorial-one/issues/2013)) ([858293e](https://github.com/factorialco/factorial-one/commit/858293e640eced92d9934cd7b87e20cdb06895ff))
+
+## [1.85.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.2...factorial-one-react-v1.85.3) (2025-06-04)
+
+
+### Bug Fixes
+
+* handle on close on modal ([#2011](https://github.com/factorialco/factorial-one/issues/2011)) ([5ad45d2](https://github.com/factorialco/factorial-one/commit/5ad45d292a5dee6a959e86df6163a8f61899bfd9))
+
 ## [1.85.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.1...factorial-one-react-v1.85.2) (2025-06-04)
 
 

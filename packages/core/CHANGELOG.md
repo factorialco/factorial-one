@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.14.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.13.0...factorial-one-core-v1.14.0) (2025-06-05)
+
+
+### Features
+
+* create new  Chip & RawTag component for mobile ([#2005](https://github.com/factorialco/factorial-one/issues/2005)) ([3c60e51](https://github.com/factorialco/factorial-one/commit/3c60e5181cbc46db31488dd5755abab45071f008))
+
 ## [1.13.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.12.2...factorial-one-core-v1.13.0) (2025-06-04)
 
 
