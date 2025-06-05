@@ -7,7 +7,7 @@ export * from "./components/Avatars/exports";
 export * from "./components/Information/ModuleAvatar";
 export * from "./components/Counter";
 export * from "./components/OnePreset";
-export * from "./components/Tags/export";
+export * from "./components/Tags/exports";
 
 // Export icons
 export * from "./icons";

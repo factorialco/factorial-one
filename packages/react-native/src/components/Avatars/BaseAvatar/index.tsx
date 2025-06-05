@@ -2,7 +2,7 @@ import {
   Avatar as AvatarComponent,
   AvatarFallback,
   AvatarImage,
-} from "@/ui/avatar";
+} from "../../../ui/avatar";
 import { ComponentProps, forwardRef } from "react";
 import { Badge, BadgeProps } from "../../Badge";
 import { getAvatarColor, getInitials } from "./utils";

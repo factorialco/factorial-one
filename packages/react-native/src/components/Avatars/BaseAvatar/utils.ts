@@ -3,7 +3,7 @@ import {
   Avatar as AvatarComponent,
   type as avatarType,
   sizes,
-} from "@/ui/avatar";
+} from "../../../ui/avatar";
 import { type ComponentProps } from "react";
 
 type ShadAvatarProps = ComponentProps<typeof AvatarComponent>;
