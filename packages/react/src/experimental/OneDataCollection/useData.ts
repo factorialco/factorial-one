@@ -346,9 +346,6 @@ export function useData<
       navigationFilters: NavigationFiltersState<NavigationFilters>,
       appendMode = false
     ) => {
-      console.log(
-        `fetchDataAndUpdate called with appendMode=${appendMode}, page=${currentPage}`
-      )
       try {
         // Clean up any existing subscription before creating a new one
         if (cleanup.current) {
@@ -498,11 +495,6 @@ export function useData<
   ])
 
   useEffect(() => {
-    console.log(
-      "[debug] useEffect triggered, isLoadingMore:",
-      isLoadingMoreRef.current
-    )
-
     if (!isLoadingMoreRef.current) {
       setIsLoading(true)
       // Explicitly pass 0 as the initial position for infinite scroll
