@@ -1,4 +1,6 @@
 import { ButtonInternal } from "@/components/Actions/Button/internal"
+import { ResourceHeader } from "@/experimental/Information/Headers/ResourceHeader"
+import { Default as ResourceHeaderDefault } from "@/experimental/Information/Headers/ResourceHeader/index.stories"
 import {
   OnePersonListItem,
   OnePersonListItemProps,
@@ -160,6 +162,33 @@ export const WithModule: Story = {
         />
         <OneModal.Content tabs={TABS}>
           <ExamplePersonList />
+        </OneModal.Content>
+      </>
+    ),
+  },
+}
+
+export const WithResourceHeader: Story = {
+  args: {
+    ...Default.args,
+    position: "right",
+    children: (
+      <>
+        <OneModal.Header
+          module={{
+            id: "timeoff",
+            label: "Time Off",
+            href: "/timeoff",
+          }}
+        />
+        <OneModal.Content withPadding>
+          <ResourceHeader
+            {...(ResourceHeaderDefault.args as ComponentProps<
+              typeof ResourceHeader
+            >)}
+            primaryAction={undefined}
+            secondaryActions={undefined}
+          />
         </OneModal.Content>
       </>
     ),
