@@ -188,6 +188,7 @@ export const WithResourceHeader: Story = {
             >)}
             primaryAction={undefined}
             secondaryActions={undefined}
+            otherActions={undefined}
           />
         </OneModal.Content>
       </>
