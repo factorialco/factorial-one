@@ -1,4 +1,8 @@
-import { AlertTag } from "@factorialco/factorial-one-react-native";
+import {
+  AlertTag,
+  DotTag,
+  dotTagColors,
+} from "@factorialco/factorial-one-react-native";
 import type { Meta, StoryFn } from "@storybook/react";
 import { ScrollView, View, Text } from "react-native";
 
@@ -25,6 +29,14 @@ export const TagsShowcase = () => (
       <AlertTag text="Critical" level="critical" />
       <AlertTag text="Warinig" level="warning" />
       <AlertTag text="Info" level="info" />
+    </View>
+    <Text className="text-lg font-bold mb-4 text-f1-foreground">DotTag</Text>
+    <View className="flex-row flex-wrap gap-2 mb-6">
+      {dotTagColors.map((color) => (
+        <DotTag key={color} text="Label" color={color} />
+      ))}
+      <DotTag text="Label" color="viridian" />
+      <DotTag text="Label" color="viridian" />
     </View>
   </ScrollView>
 );
