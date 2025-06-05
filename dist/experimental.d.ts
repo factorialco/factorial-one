@@ -15,6 +15,7 @@ import { DateFilterOptions } from './DateFilter/DateFilter';
 import { default as default_2 } from 'react';
 import { Dispatch } from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import { Editor } from '@tiptap/react';
 import { FC } from 'react';
 import { FieldPath } from 'react-hook-form';
 import { FieldValues } from 'react-hook-form';
@@ -29,6 +30,7 @@ import { JSX as JSX_2 } from 'react';
 import { LineChartProps } from '../../../components/Charts/LineChart';
 import { Observable } from 'zen-observable-ts';
 import { Path } from 'react-hook-form';
+import { PersonCellValue } from './types/person.tsx';
 import { PieChartProps } from '../../../components/Charts/PieChart';
 import { PopoverProps } from '@radix-ui/react-popover';
 import { PropsWithChildren } from 'react';
@@ -435,6 +437,28 @@ declare type BaseTag<T extends {
     type: string;
 }> = T & WithTooltipDescription;
 
+export declare const BasicTextEditor: ForwardRefExoticComponent<BasicTextEditorProps & RefAttributes<BasicTextEditorHandle>>;
+
+export declare type BasicTextEditorHandle = {
+    clear: () => void;
+    focus: () => void;
+    setContent: (content: string) => void;
+};
+
+export declare interface BasicTextEditorProps {
+    onChange: (value: {
+        json: JSONContent | null;
+        html: string | null;
+    }) => void;
+    placeholder: string;
+    initialEditorState?: {
+        content: JSONContent | string;
+    };
+    toolbarLabels: ToolbarLabels;
+    slashCommandGroupLabels?: SlashCommandGroupLabels;
+    readonly?: boolean;
+}
+
 declare type BreadcrumbBaseItemType = NavigationItem & {
     id: string;
     loading?: boolean;
@@ -447,9 +471,11 @@ declare type BreadcrumbLoadingItemType = Pick<BreadcrumbBaseItemType, "id"> & {
     loading: true;
 };
 
-declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & {
+declare type BreadcrumbNavItemType = BreadcrumbBaseItemType & ({
+    module?: ModuleId;
+} | {
     icon?: IconType;
-};
+});
 
 /**
  * Responsive breadcrumb navigation component that automatically collapses items when space is limited.
@@ -523,6 +549,17 @@ export declare type BulkActionDefinition = {
 
 declare const Button: React_2.ForwardRefExoticComponent<ButtonProps_2 & React_2.RefAttributes<HTMLButtonElement>>;
 
+export declare interface ButtonConfig {
+    key: string;
+    icon: IconType_2;
+    active: (editor: Editor) => boolean;
+    onClick: (editor: Editor) => void;
+    tooltip: {
+        label: string;
+        shortcut: string[];
+    };
+}
+
 declare type ButtonInternalProps = Pick<ComponentProps<typeof Button>, "variant" | "size" | "disabled" | "type" | "round" | "className" | "pressed"> & DataAttributes & {
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
     label: string;
@@ -553,7 +590,7 @@ declare type ButtonVariant = (typeof variants_2)[number];
 declare const buttonVariants: (props?: ({
     disabled?: boolean | undefined;
     pressed?: boolean | undefined;
-    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | undefined;
+    variant?: "default" | "outline" | "critical" | "neutral" | "ghost" | "promote" | "outlinePromote" | undefined;
     size?: "lg" | "md" | "sm" | undefined;
 } & ({
     class?: ClassValue;
@@ -1811,6 +1848,7 @@ declare type InFilterOptionItem<T = unknown> = {
  * @template T - Type of the underlying value
  */
 declare type InFilterOptions_2<T> = {
+    cache?: boolean;
     options: Array<InFilterOptionItem<T>> | (() => Array<InFilterOptionItem<T>> | Promise<Array<InFilterOptionItem<T>>>);
 };
 
@@ -1899,7 +1937,26 @@ export declare type MentionedUser = {
     href?: string;
 };
 
-export declare type mentionsConfig = {
+export declare interface MentionItemComponentProps {
+    item: MentionedUser;
+    index: number;
+    selected: boolean;
+}
+
+export declare interface MentionListRef {
+    onKeyDown: (props: {
+        event: KeyboardEvent;
+    }) => boolean;
+}
+
+export declare interface MentionNodeAttrs {
+    id: string;
+    label: string;
+    image_url?: string;
+    href?: string;
+}
+
+export declare type MentionsConfig = {
     onMentionQueryStringChanged?: (queryString: string) => Promise<MentionedUser[]> | undefined;
     users: MentionedUser[];
 };
@@ -2011,11 +2068,22 @@ export declare const MobileDropdown: ({ items, children }: DropdownProps) => JSX
 
 declare type ModalPosition = "center" | "left" | "right";
 
-export declare function ModuleAvatar({ size, icon }: ModuleAvatarProps): JSX_2.Element;
+/**
+ * Module avatar
+ * @description A component that displays a module avatar
+ * @experimental
+ * @returns
+ */
+export declare function ModuleAvatar({ size, ...props }: ModuleAvatarProps): JSX_2.Element;
 
-export declare interface ModuleAvatarProps extends VariantProps<typeof moduleAvatarVariants> {
+export declare type ModuleAvatarProps = VariantProps<typeof moduleAvatarVariants> & ({
+    module: ModuleId;
+} | {
+    /**
+     * @deprecated This component should only render module related icons, not arbitrary icons. The `icon` property will be removed soon. Use the `module` prop instead.
+     */
     icon: IconType;
-}
+});
 
 declare const moduleAvatarVariants: (props?: ({
     size?: "lg" | "md" | "sm" | undefined;
@@ -2026,6 +2094,46 @@ declare const moduleAvatarVariants: (props?: ({
     class?: never;
     className?: ClassValue;
 })) | undefined) => string;
+
+export declare type ModuleId = keyof typeof modules;
+
+export declare const modules: {
+    readonly benefits: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly calendar: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly cards: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly clockin: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly discover: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly documents: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly engagement: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly finance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly goals: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly home: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly hub: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly inbox: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly kudos: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly mydocuments: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly organization: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly overviews: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly payroll: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly performance: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly profile: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly projects: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly recruitment: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly reports: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly sales: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly settings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly shifts: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly social: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly software: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly spaces: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly spending: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly tasks: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly timeoff: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly timetracking: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly trainings: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly treasury: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+    readonly workflows: ForwardRefExoticComponent<Omit<SVGProps<SVGSVGElement>, "ref"> & RefAttributes<SVGSVGElement>>;
+};
 
 declare type NavigateActionType = {
     type: "navigate";
@@ -2262,6 +2370,45 @@ declare type OneDropdownButtonItem<T = string> = {
     icon?: IconType;
     critical?: boolean;
 };
+
+export declare function OneEmptyState({ title, description, variant, emoji, actions, }: Types.OneEmptyStateProps): JSX_2.Element;
+
+declare type OneEmptyStateProps = {
+    /**
+     * The title of the empty state
+     */
+    title: string;
+    /**
+     * If defined, a description will be displayed in the empty state
+     * @optional
+     */
+    description?: string;
+    /**
+     * An array of action objects to display as buttons in the empty state.
+     * Each action represents a user-interactable option, such as "Retry" or "Go Back",
+     * and can include a label, click handler, optional icon, and button variant.
+     * @optional
+     */
+    actions?: ActionProps[];
+} & ({
+    /**
+     * The variant of the empty state
+     * @optional
+     */
+    variant?: "default";
+    /**
+     * An icon will be displayed in the empty state.
+     * emoji string
+     */
+    emoji?: string;
+} | {
+    /**
+     * The variant of the empty state
+     * @optional
+     */
+    variant: Exclude<AlertAvatarProps["type"], "positive">;
+    emoji?: never;
+});
 
 export declare const OneModal: OneModalComponent;
 
@@ -2512,19 +2659,11 @@ export declare type PersonAvatarProps = {
 
 declare type PersonAvatarProps_2 = ComponentProps<typeof PersonAvatar>;
 
-declare type PersonCellValue = PersonValue;
-
 declare const PersonItem: ForwardRefExoticComponent<EmployeeItemProps & RefAttributes<HTMLLIElement>>;
 
 export declare const PersonTag: ForwardRefExoticComponent<Props_12 & RefAttributes<HTMLDivElement>>;
 
 declare type PersonTagProps = ComponentProps<typeof PersonTag>;
-
-declare interface PersonValue {
-    firstName: string;
-    lastName: string;
-    src?: string;
-}
 
 export declare const PieChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: PieChartProps;
@@ -2543,6 +2682,19 @@ declare type PostEventProps = {
 };
 
 /**
+ * Defines preset filter configurations that can be applied to a collection.
+ * @template Filters - The available filter configurations
+ */
+export declare type PresetDefinition<Filters extends FiltersDefinition> = {
+    /** Display name for the preset */
+    label: string;
+    /** Filter configuration to apply when this preset is selected */
+    filter: FiltersState<Filters>;
+    /** Function to count the number of items that match the filter */
+    itemsCount?: (filters: FiltersState<Filters>) => Promise<number | undefined> | number | undefined;
+};
+
+/**
  * Filter presets
  */
 export declare const Presets: {
@@ -2550,16 +2702,7 @@ export declare const Presets: {
     displayName: string;
 };
 
-/**
- * Defines preset filter configurations that can be applied to a collection.
- * @template Filters - The available filter configurations
- */
-export declare type PresetsDefinition<Filters extends FiltersDefinition> = Array<{
-    /** Display name for the preset */
-    label: string;
-    /** Filter configuration to apply when this preset is selected */
-    filter: FiltersState<Filters>;
-}>;
+export declare type PresetsDefinition<Filters extends FiltersDefinition> = PresetDefinition<Filters>[];
 
 export declare type PrevNextDateNavigation = {
     prev: DateRange | false;
@@ -2794,7 +2937,7 @@ declare type Props_17 = {
 
 declare type Props_18<Id extends string | number = string | number> = {
     id: Id;
-    icon?: IconType;
+    module?: ModuleId;
     title: string;
     subtitle: string;
     onClick?: (id: Id) => void;
@@ -2981,7 +3124,7 @@ export declare type RichTextEditorHandle = {
 };
 
 export declare interface RichTextEditorProps {
-    mentionsConfig?: mentionsConfig;
+    mentionsConfig?: MentionsConfig;
     enhanceConfig?: enhanceConfig;
     filesConfig?: filesConfig;
     secondaryAction?: secondaryActionType;
@@ -2993,7 +3136,7 @@ export declare interface RichTextEditorProps {
         content?: string;
         files?: File[];
     };
-    toolbarLabels: toolbarLabels;
+    toolbarLabels: ToolbarLabels;
     title: string;
     errorConfig?: errorConfig;
     height?: heightType;
@@ -3085,7 +3228,7 @@ declare interface SearchBarProps extends ButtonHTMLAttributes<HTMLButtonElement>
 declare type SearchFilterDefinition = BaseFilterDefinition<"search">;
 
 declare interface SecondaryAction extends PrimaryActionButton {
-    variant?: "outline" | "critical";
+    variant?: "outline" | "critical" | "outlinePromote" | "promote";
 }
 
 export declare type SecondaryActionsDefinition = {
@@ -3229,6 +3372,13 @@ declare const skeletonVariants: (props?: ({
     class?: never;
     className?: ClassValue;
 })) | undefined) => string;
+
+declare interface SlashCommandGroupLabels {
+    textStyles: string;
+    lists: string;
+    blocks: string;
+    [key: string]: string;
+}
 
 /**
  * Type helper to extract keys from a SortingsDefinition
@@ -3668,7 +3818,28 @@ export declare const ToggleGroupItem: React_2.ForwardRefExoticComponent<Omit<Tog
     className?: ClassValue;
 })) | undefined) => string> & React_2.RefAttributes<HTMLButtonElement>>;
 
-export declare type toolbarLabels = {
+export declare interface ToolbarButtonProps {
+    onClick?: () => void;
+    active?: boolean;
+    label: string;
+    disabled: boolean;
+    icon: IconType_2;
+    tooltip?: {
+        description?: string;
+        label?: string;
+        shortcut?: ComponentProps<typeof Shortcut>["keys"];
+    };
+    showLabel?: boolean;
+}
+
+export declare interface ToolbarDropdownItem {
+    label: string;
+    icon: IconType_2;
+    onClick: () => void;
+    isActive: boolean;
+}
+
+export declare interface ToolbarLabels {
     bold: string;
     italic: string;
     underline: string;
@@ -3697,7 +3868,19 @@ export declare type toolbarLabels = {
     linkLabel: string;
     linkPaste: string;
     close: string;
-};
+    [key: string]: string;
+}
+
+export declare interface ToolbarProps {
+    editor: Editor;
+    isFullscreen?: boolean;
+    disableButtons: boolean;
+    onClose?: () => void;
+    animationComplete?: boolean;
+    labels: ToolbarLabels;
+    darkMode?: boolean;
+    showEmojiPicker?: boolean;
+}
 
 declare interface TwoColumnsItemType {
     title: string;
@@ -3714,6 +3897,13 @@ declare interface TwoColumnsListType {
 declare type Type = "bar-chart" | "line-chart";
 
 declare const type: readonly ["base", "rounded"];
+
+declare namespace Types {
+    export {
+        ActionProps,
+        OneEmptyStateProps
+    }
+}
 
 declare type URL_2 = string;
 
@@ -3782,7 +3972,7 @@ declare const variants: (props?: ({
     className?: ClassValue;
 })) | undefined) => string;
 
-declare const variants_2: readonly ["default", "outline", "critical", "neutral", "ghost", "promote"];
+declare const variants_2: readonly ["default", "outline", "critical", "neutral", "ghost", "promote", "outlinePromote"];
 
 export declare const VerticalBarChartWidget: ForwardRefExoticComponent<Omit<WidgetProps_2 & {
 chart: VerticalBarChartProps;
@@ -3870,7 +4060,7 @@ export declare function WidgetHighlightButton({ label, count, icon, iconClassNam
 
 export declare function WidgetInboxList({ items, minSize, onClickItem, showAllItems, }: Props_19): JSX_2.Element;
 
-export declare function WidgetInboxListItem({ id, title, subtitle, icon, onClick, }: Props_18): JSX_2.Element;
+export declare function WidgetInboxListItem({ id, title, subtitle, onClick, module, }: Props_18): JSX_2.Element;
 
 export declare type WidgetInboxListItemProps<Id extends string | number = string | number> = Props_18<Id>;
 
