@@ -10,6 +10,7 @@ import CheckDoubleIcon from "@/icons/app/CheckDouble"
 import CrossIcon from "@/icons/app/Cross"
 import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
+import ModuleBenefitsIcon from "@/icons/modules/Benefits"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps, FC } from "react"
 import { OneModal } from "."
@@ -140,6 +141,29 @@ export const WithRightPosition: Story = {
   args: {
     ...Default.args,
     position: "right",
+  },
+}
+
+export const WithModule: Story = {
+  args: {
+    ...Default.args,
+    position: "right",
+    children: (
+      <>
+        <OneModal.Header
+          title="Team Status"
+          module={{
+            name: "Benefits",
+            href: "/benefits",
+            icon: ModuleBenefitsIcon,
+          }}
+          otherActions={OTHER_ACTIONS}
+        />
+        <OneModal.Content tabs={TABS}>
+          <ExamplePersonList />
+        </OneModal.Content>
+      </>
+    ),
   },
 }
 
