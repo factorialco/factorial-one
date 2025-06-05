@@ -1363,6 +1363,9 @@ export declare type enhanceTextParams = {
 
 export declare type EntityId = number | string;
 
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
 export declare const EntitySelect: (props: EntitySelectProps & {
     children?: React.ReactNode;
 }) => JSX_2.Element;
@@ -2928,6 +2931,9 @@ declare const PulseAvatar: {
     displayName: string;
 };
 
+/**
+ * @experimental This is an experimental component use it at your own risk
+ */
 export declare const RadarChart: <K extends ChartConfig>(props: RadarChartProps<K> & RefAttributes<HTMLDivElement>) => React.ReactNode;
 
 export declare const _RadarChart: <K extends ChartConfig>({ data, dataConfig, scaleMin, scaleMax, aspect }: RadarChartProps<K>, ref: ForwardedRef<HTMLDivElement>) => JSX_2.Element;

@@ -40892,7 +40892,7 @@ const pO = MV(
     type: "info"
   },
   ti
-), n0e = (e, t) => t, pge = {
+), n0e = (e, t) => (console.log("import.meta.env.DEV", !1), console.log("import.meta.env.MODE", "production"), t), pge = {
   locale: "en"
 }, Yk = jt(pge);
 function i0e({
