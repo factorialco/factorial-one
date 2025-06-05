@@ -2310,6 +2310,45 @@ declare type OneDropdownButtonItem<T = string> = {
     critical?: boolean;
 };
 
+export declare function OneEmptyState({ title, description, variant, emoji, actions, }: Types.OneEmptyStateProps): JSX_2.Element;
+
+declare type OneEmptyStateProps = {
+    /**
+     * The title of the empty state
+     */
+    title: string;
+    /**
+     * If defined, a description will be displayed in the empty state
+     * @optional
+     */
+    description?: string;
+    /**
+     * An array of action objects to display as buttons in the empty state.
+     * Each action represents a user-interactable option, such as "Retry" or "Go Back",
+     * and can include a label, click handler, optional icon, and button variant.
+     * @optional
+     */
+    actions?: ActionProps[];
+} & ({
+    /**
+     * The variant of the empty state
+     * @optional
+     */
+    variant?: "default";
+    /**
+     * An icon will be displayed in the empty state.
+     * emoji string
+     */
+    emoji?: string;
+} | {
+    /**
+     * The variant of the empty state
+     * @optional
+     */
+    variant: Exclude<AlertAvatarProps["type"], "positive">;
+    emoji?: never;
+});
+
 export declare const OneModal: OneModalComponent;
 
 declare const OneModal_2: default_2.FC<OneModalProps>;
@@ -3791,6 +3830,13 @@ declare interface TwoColumnsListType {
 declare type Type = "bar-chart" | "line-chart";
 
 declare const type: readonly ["base", "rounded"];
+
+declare namespace Types {
+    export {
+        ActionProps,
+        OneEmptyStateProps
+    }
+}
 
 declare type URL_2 = string;
 
