@@ -59,7 +59,12 @@ export type TableVisualizationOptions<
   _Filters extends FiltersDefinition,
   Sortings extends SortingsDefinition,
 > = {
-  columns: ReadonlyArray<TableColumnDefinition<R, Sortings>>
+  columns:
+    | ReadonlyArray<TableColumnDefinition<R, Sortings>>
+    | ((
+        properties: unknown
+      ) => ReadonlyArray<TableColumnDefinition<R, Sortings>>)
+
   frozenColumns?: 0 | 1 | 2
 }
 
@@ -111,17 +116,18 @@ export const TableCollection = <
     )
   )
 
-  const { data, paginationInfo, setPage, isInitialLoading } = useData<
-    R,
-    Filters,
-    Sortings,
-    NavigationFilters,
-    Grouping
-  >(source, {
-    onError: (error) => {
-      onLoadError(error)
-    },
-  })
+
+  const { data, paginationInfo, setPage, isInitialLoading, properties } =
+    useData<R, Filters, Sortings, NavigationFilters, Grouping>(source)
+
+  const localColumns: ReadonlyArray<TableColumnDefinition<R, Sortings>> =
+    useMemo(() => {
+      if (typeof columns === "function") {
+        return columns(properties)
+      }
+      return columns
+    }, [columns, properties])
+
 
   useEffect(() => {
     onLoadData({
@@ -209,14 +215,14 @@ export const TableCollection = <
   if (isInitialLoading) {
     return (
       <OneTable.Skeleton
-        columns={columns.length + (source.itemActions ? 1 : 0)}
+        columns={localColumns.length + (source.itemActions ? 1 : 0)}
       />
     )
   }
 
   // Enforce that sorting is only used when sortings are defined
   if (!source.sortings) {
-    columns.forEach((column) => {
+    localColumns.forEach((column) => {
       if (column.sorting) {
         console.warn(
           "Sorting is defined on a column but no sortings are provided in the data source"
@@ -250,7 +256,7 @@ export const TableCollection = <
                 </div>
               </TableHead>
             )}
-            {columns.map(({ sorting, label, ...column }, index) => (
+            {localColumns.map(({ sorting, label, ...column }, index) => (
               <TableHead
                 key={`table-head-${index}`}
                 sortState={getColumnSortState(
@@ -263,7 +269,7 @@ export const TableCollection = <
                 sticky={
                   index < frozenColumnsLeft
                     ? {
-                        left: columns
+                        left: localColumns
                           .slice(0, Math.max(0, index))
                           .reduce(
                             (acc, column) => acc + (column.width ?? 0),
@@ -348,7 +354,7 @@ export const TableCollection = <
                               handleSelectItemChange(item, checked)
                             }
                             selectedItems={selectedItems}
-                            columns={columns}
+                            columns={localColumns}
                             frozenColumnsLeft={frozenColumnsLeft}
                             checkColumnWidth={checkColumnWidth}
                           />
@@ -371,7 +377,7 @@ export const TableCollection = <
                     handleSelectItemChange(item, checked)
                   }
                   selectedItems={selectedItems}
-                  columns={columns}
+                  columns={localColumns}
                   frozenColumnsLeft={frozenColumnsLeft}
                   checkColumnWidth={checkColumnWidth}
                 />

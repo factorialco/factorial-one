@@ -102,9 +102,20 @@ export type PresetsDefinition<Filters extends FiltersDefinition> = Array<{
 
 /**
  * Base response type for collection data
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  */
-export type BaseResponse<Record> = Record[]
+export type BaseResponse<R extends RecordType, P = unknown> = {
+  records: R[]
+  properties?: P
+}
+
+/**
+ * Simple result type for non-paginated data
+ * @template R - The type of records in the collection
+ */
+export type SimpleResponse<R extends RecordType, P = unknown> =
+  | R[]
+  | BaseResponse<R, P>
 
 /**
  * Information about the current pagination state
@@ -122,12 +133,21 @@ export type PaginationInfo = {
 
 /**
  * Response type for paginated collection data
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  */
-export type PaginatedResponse<Record> = {
-  /** The records for the current page */
-  records: Record[]
-} & PaginationInfo
+export type PaginatedResponse<R extends RecordType, P = unknown> = BaseResponse<
+  R,
+  P
+> &
+  PaginationInfo
+
+/**
+ * Sortings
+ */
+export type SortingsStateMultiple = {
+  field: string
+  order: "asc" | "desc"
+}[]
 
 /**
  * Base options for data fetching
@@ -158,11 +178,11 @@ export type PaginatedFetchOptions<
 
 /**
  * Base data adapter configuration for non-paginated collections
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The available filter configurations
  */
 export type BaseDataAdapter<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
 > = {
@@ -176,18 +196,18 @@ export type BaseDataAdapter<
   fetchData: (
     options: BaseFetchOptions<Filters, NavigationFilters>
   ) =>
-    | BaseResponse<Record>
-    | Promise<BaseResponse<Record>>
-    | Observable<PromiseState<BaseResponse<Record>>>
+    | SimpleResponse<R>
+    | Promise<SimpleResponse<R>>
+    | Observable<PromiseState<SimpleResponse<R>>>
 }
 
 /**
  * Paginated data adapter configuration
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The available filter configurations
  */
 export type PaginatedDataAdapter<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
 > = {
@@ -203,23 +223,23 @@ export type PaginatedDataAdapter<
   fetchData: (
     options: PaginatedFetchOptions<Filters, NavigationFilters>
   ) =>
-    | PaginatedResponse<Record>
-    | Promise<PaginatedResponse<Record>>
-    | Observable<PromiseState<PaginatedResponse<Record>>>
+    | PaginatedResponse<R>
+    | Promise<PaginatedResponse<R>>
+    | Observable<PromiseState<PaginatedResponse<R>>>
 }
 
 /**
  * Combined type for all possible data adapter configurations
- * @template Record - The type of records in the collection
+ * @template R - The type of records in the collection
  * @template Filters - The available filter configurations
  */
 export type DataAdapter<
-  Record extends RecordType,
+  R extends RecordType,
   Filters extends FiltersDefinition,
   NavigationFilters extends NavigationFiltersDefinition,
 > =
-  | BaseDataAdapter<Record, Filters, NavigationFilters>
-  | PaginatedDataAdapter<Record, Filters, NavigationFilters>
+  | BaseDataAdapter<R, Filters, NavigationFilters>
+  | PaginatedDataAdapter<R, Filters, NavigationFilters>
 
 /**
  * Represents a collection of selected items.
