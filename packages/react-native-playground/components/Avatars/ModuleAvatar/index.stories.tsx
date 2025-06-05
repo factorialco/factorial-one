@@ -9,7 +9,7 @@ import {
 } from "@factorialco/factorial-one-react-native";
 
 const meta = {
-  title: "Components/ModuleAvatar",
+  title: "Components/Avatars/ModuleAvatar",
   component: ModuleAvatar,
   argTypes: {
     size: {

@@ -1,41 +1,24 @@
 import React from "react";
 import { View } from "react-native";
 import type { Meta, StoryObj } from "@storybook/react";
-import {
-  PersonAvatar,
-  PersonAvatarProps,
-} from "@factorialco/factorial-one-react-native";
+import { TeamAvatar } from "@factorialco/factorial-one-react-native";
 import { Check } from "@factorialco/factorial-one-react-native/src/icons/app";
 
 export const sizes = ["xsmall", "small", "medium", "large", "xlarge"] as const;
 
-const PersonAvatarExample = (
-  props: PersonAvatarProps & { hasBadge: boolean },
-) => {
-  return <PersonAvatar {...props} />;
-};
-const meta = {
-  title: "Components/Avatars/PersonAvatar",
-  component: PersonAvatarExample,
+const meta: Meta<typeof TeamAvatar> = {
+  component: TeamAvatar,
+  title: "Components/Avatars/TeamAvatar",
+  tags: ["autodocs", "experimental"],
   argTypes: {
     size: {
       control: "select",
       options: sizes,
-      description: "Select the size of the avatar",
-    },
-    hasBadge: {
-      control: "boolean",
-      description: "Toggle badge visibility",
-    },
-    badge: {
-      table: { disable: true },
     },
   },
   args: {
-    firstName: "Dani",
-    lastName: "Moreno",
+    name: "Design",
     size: "medium",
-    hasBadge: false,
   },
   decorators: [
     (Story) => (
@@ -44,16 +27,17 @@ const meta = {
       </View>
     ),
   ],
-} satisfies Meta<typeof PersonAvatarExample>;
+};
 
 export default meta;
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof TeamAvatar>;
+
 export const Default: Story = {};
 
 export const WithImage: Story = {
   args: {
-    src: "https://github.com/dani-moreno.png",
+    src: "https://avatars.githubusercontent.com/u/21041797?s=48&v=4",
   },
 };
 
@@ -63,6 +47,5 @@ export const WithBadge: Story = {
       type: "positive",
       icon: Check,
     },
-    size: "medium",
   },
 };
