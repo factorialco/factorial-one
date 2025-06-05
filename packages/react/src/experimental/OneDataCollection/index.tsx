@@ -442,7 +442,7 @@ export const OneDataCollection = <
           </div>
         </div>
       )}
-      <div className={cn("flex flex-col gap-4 px-6")}>
+      <div className="flex flex-col gap-4 px-6">
         <Filters.Root
           schema={filters}
           filters={currentFilters}
@@ -502,7 +502,9 @@ export const OneDataCollection = <
           </div>
           <Filters.ChipsList />
         </Filters.Root>
+      </div>
 
+      <div>
         {emptyState ? (
           <div className="flex flex-col items-center justify-center">
             <OneEmptyState

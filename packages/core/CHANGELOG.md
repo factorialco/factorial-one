@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.14.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.13.0...factorial-one-core-v1.14.0) (2025-06-05)
+
+
+### Features
+
+* create new  Chip & RawTag component for mobile ([#2005](https://github.com/factorialco/factorial-one/issues/2005)) ([3c60e51](https://github.com/factorialco/factorial-one/commit/3c60e5181cbc46db31488dd5755abab45071f008))
+
+## [1.13.0](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.12.2...factorial-one-core-v1.13.0) (2025-06-04)
+
+
+### Features
+
+* **icons:** add handle icon ([#1996](https://github.com/factorialco/factorial-one/issues/1996)) ([df8b634](https://github.com/factorialco/factorial-one/commit/df8b6340e4c7d5b603bb2fd74b8ceca2d69c3511))
+
 ## [1.12.2](https://github.com/factorialco/factorial-one/compare/factorial-one-core-v1.12.1...factorial-one-core-v1.12.2) (2025-05-30)
 
 

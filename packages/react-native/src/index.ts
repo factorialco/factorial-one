@@ -6,6 +6,10 @@ export * from "./components/ExampleComponent";
 export * from "./components/Icon";
 export * from "./components/IconAvatar";
 export * from "./components/Information/ModuleAvatar";
+export * from "./components/Counter";
+export * from "./components/OnePreset";
+export * from "./components/OneChip";
+export * from "./components/Tags/export";
 
 // Export icons
 export * from "./icons";
