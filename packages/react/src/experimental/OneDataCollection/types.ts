@@ -96,6 +96,13 @@ export type PresetsDefinition<Filters extends FiltersDefinition> = Array<{
 export type BaseResponse<Record> = Record[]
 
 /**
+ * Defines the available pagination types used throughout the application.
+ * - "pages": Represents traditional page-based navigation with numbered pages.
+ * - "infinite-scroll": Represents continuous loading of content as the user scrolls.
+ */
+export type PaginationType = "pages" | "infinite-scroll"
+
+/**
  * Represents a base structure for paginated API responses, providing
  * details about the records on the current page and pagination metadata.
  *
@@ -131,7 +138,7 @@ export type BasePaginatedResponse<TRecord> = {
  */
 export type PageBasedPaginatedResponse<TRecord> =
   BasePaginatedResponse<TRecord> & {
-    type: "pages"
+    type: Extract<PaginationType, "pages">
     /** Current page number (1-indexed) */
     currentPage: number
     /** Total number of pages available */
@@ -151,7 +158,7 @@ export type PageBasedPaginatedResponse<TRecord> =
  */
 export type InfiniteScrollPaginatedResponse<TRecord> =
   BasePaginatedResponse<TRecord> & {
-    type: "infinite-scroll"
+    type: Extract<PaginationType, "infinite-scroll">
     /**
      * Represents the current position or state in a sequence, collection, or dataset.
      * Typically used to track the index or position for iteration or navigation purposes.
@@ -240,7 +247,7 @@ export type PaginatedDataAdapter<
   NavigationFilters extends NavigationFiltersDefinition,
 > = {
   /** Indicates this adapter uses page-based pagination */
-  paginationType: "pages" | "infinite-scroll"
+  paginationType: PaginationType
   /** Default number of records per page */
   perPage?: number
   /**

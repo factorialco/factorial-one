@@ -21,6 +21,7 @@ import type {
   DataSource,
   PaginatedFetchOptions,
   PaginatedResponse,
+  PaginationType,
 } from "../../../types"
 import { useData } from "../../../useData"
 import { TableCollection } from "./index"
@@ -285,13 +286,14 @@ describe("TableCollection", () => {
   })
 
   describe("pagination", () => {
-    // TODO: bring this from the source type
-    type PaginationType = "pages" | "infinite-scroll"
-
     const createPaginatedTestSource = ({
       totalItems = 50,
       itemsPerPage = 10,
-      paginationType = "pages" as PaginationType,
+      paginationType = "pages",
+    }: {
+      totalItems?: number
+      itemsPerPage?: number
+      paginationType?: PaginationType
     }): DataSource<
       Person,
       TestFilters,
