@@ -4,10 +4,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import {
   PersonAvatar,
   PersonAvatarProps,
-  sizes,
 } from "@factorialco/factorial-one-react-native";
 import { Check } from "@factorialco/factorial-one-react-native/src/icons/app";
 
+export const sizes = ["xsmall", "small", "medium", "large", "xlarge"] as const;
 const PersonAvatarExample = (
   props: PersonAvatarProps & { hasBadge: boolean },
 ) => {

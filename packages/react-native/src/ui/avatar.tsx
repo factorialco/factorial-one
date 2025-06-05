@@ -23,15 +23,23 @@ export const color = [
   "camel",
 ] as const;
 
+const textSizes = {
+  xsmall: "text-sm",
+  small: "text-sm",
+  medium: "text-md",
+  large: "text-2xl",
+  xlarge: "text-3xl",
+};
+
 const avatarVariants = cva({
-  base: "relative flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold ring-1 ring-inset ring-f1-border-secondary",
+  base: "flex shrink-0 items-center justify-center overflow-hidden text-center font-semibold ring-1 ring-inset ring-f1-border-secondary",
   variants: {
     size: {
-      xsmall: "size-5 rounded-xs text-sm",
-      small: "size-6 rounded-sm text-sm",
-      medium: "size-8 rounded",
-      large: "size-14 rounded-xl text-2xl",
-      xlarge: "size-18 rounded-[20px] text-3xl",
+      xsmall: "w-5 h-5 rounded-xs text-sm",
+      small: "w-6 h-6 rounded-sm text-sm",
+      medium: "w-8 h-8 rounded",
+      large: "w-14 h-14 rounded-xl text-2xl",
+      xlarge: "w-18 h-18 rounded-[20px] text-3xl",
     } satisfies Record<(typeof sizes)[number], string>,
     type: {
       base: "",
@@ -66,7 +74,6 @@ type AvatarProps = React.ComponentPropsWithoutRef<typeof View> & {
 
 const Avatar = ({ size, type, color, className, ...props }: AvatarProps) => (
   <View
-    data-a11y-color-contrast-ignore
     className={cn(avatarVariants({ size, type, color, className }))}
     {...props}
   />
@@ -85,19 +92,19 @@ const AvatarImage = ({
     className={cn("aspect-square h-full w-full object-cover", className)}
     {...props}
   >
-    {src && <Image src={src} aria-label={alt} />}
+    <Image src={src} aria-label={alt} />
   </View>
 );
 
 const AvatarFallback = ({
   className,
+  size = "medium",
   ...props
-}: React.ComponentPropsWithoutRef<typeof View>) => (
+}: React.ComponentPropsWithoutRef<typeof View> & {
+  size?: (typeof sizes)[number];
+}) => (
   <Text
-    className={cn(
-      "flex h-full w-full items-center justify-center text-f1-foreground-inverse/90",
-      className,
-    )}
+    className={cn("text-f1-foreground-inverse/90", textSizes[size], className)}
     {...props}
   />
 );
