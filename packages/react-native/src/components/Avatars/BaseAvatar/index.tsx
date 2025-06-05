@@ -35,19 +35,16 @@ type Props = {
 } & Pick<ShadAvatarProps, "aria-label" | "aria-labelledby">;
 
 export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
-  (
-    {
-      src,
-      name,
-      size,
-      type = "base",
-      color = "random",
-      "aria-label": ariaLabel,
-      "aria-labelledby": ariaLabelledby,
-      badge,
-    },
-    ref,
-  ) => {
+  ({
+    src,
+    name,
+    size,
+    type = "base",
+    color = "random",
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledby,
+    badge,
+  }) => {
     const initials = getInitials(name, size);
     const avatarColor =
       color === "random"
@@ -63,7 +60,6 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
             size={size}
             type={type}
             color={avatarColor}
-            ref={ref}
             role="img"
             aria-hidden={!hasAria}
             aria-label={ariaLabel}
@@ -82,13 +78,13 @@ export const BaseAvatar = forwardRef<HTMLDivElement, Props>(
           </AvatarComponent>
         </View>
         {badge && (
-          <div className="absolute -bottom-0.5 -right-0.5">
+          <View className="absolute -bottom-0.5 -right-0.5">
             <Badge
               type={badge.type}
               icon={badge.icon}
               size={getBadgeSize(size)}
             />
-          </div>
+          </View>
         )}
       </View>
     );

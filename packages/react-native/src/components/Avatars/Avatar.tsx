@@ -1,4 +1,4 @@
-import { sizes } from "@/ui/avatar";
+import { sizes } from "../../ui/avatar";
 import { ComponentProps, ReactNode } from "react";
 import { CompanyAvatar } from "./CompanyAvatar";
 import { PersonAvatar } from "./PersonAvatar";

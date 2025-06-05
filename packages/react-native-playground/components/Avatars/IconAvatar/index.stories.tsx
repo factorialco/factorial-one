@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { IconAvatar, AppIcons } from "@factorialco/factorial-one-react-native";
 
 const meta = {
-  title: "Components/IconAvatar",
+  title: "Components/Avatars/IconAvatar",
   component: IconAvatar,
   argTypes: {
     size: {

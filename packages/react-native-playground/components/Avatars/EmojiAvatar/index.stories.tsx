@@ -4,7 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { EmojiAvatar } from "@factorialco/factorial-one-react-native";
 
 const meta = {
-  title: "Components/EmojiAvatar",
+  title: "Components/Avatars/EmojiAvatar",
   component: EmojiAvatar,
   argTypes: {
     size: {
