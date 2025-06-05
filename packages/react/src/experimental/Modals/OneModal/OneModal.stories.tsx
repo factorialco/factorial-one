@@ -10,7 +10,6 @@ import CheckDoubleIcon from "@/icons/app/CheckDouble"
 import CrossIcon from "@/icons/app/Cross"
 import DeleteIcon from "@/icons/app/Delete"
 import PencilIcon from "@/icons/app/Pencil"
-import ModuleBenefitsIcon from "@/icons/modules/Benefits"
 import type { Meta, StoryObj } from "@storybook/react"
 import { ComponentProps, FC } from "react"
 import { OneModal } from "."
@@ -153,9 +152,9 @@ export const WithModule: Story = {
         <OneModal.Header
           title="Team Status"
           module={{
-            name: "Benefits",
+            id: "benefits",
+            label: "Benefits",
             href: "/benefits",
-            icon: ModuleBenefitsIcon,
           }}
           otherActions={OTHER_ACTIONS}
         />

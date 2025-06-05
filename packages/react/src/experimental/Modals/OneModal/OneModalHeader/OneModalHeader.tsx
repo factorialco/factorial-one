@@ -1,15 +1,14 @@
 import { ButtonInternal } from "@/components/Actions/Button/internal"
+import { ModuleId } from "@/experimental/Information/ModuleAvatar"
 import {
   DropdownInternal,
   DropdownInternalProps,
 } from "@/experimental/Navigation/Dropdown/internal"
-import { PageHeader } from "@/experimental/Navigation/Header"
 import { BreadcrumbItem } from "@/experimental/Navigation/Header/Breadcrumbs/internal/BreadcrumbItem"
 import CrossIcon from "@/icons/app/Cross"
 import { cn } from "@/lib/utils"
 import { DialogTitle } from "@/ui/dialog"
 import { DrawerTitle } from "@/ui/drawer"
-import { ComponentProps } from "react"
 import { useOneModal } from "../OneModalProvider"
 
 export type OneModalHeaderProps = {
@@ -18,7 +17,11 @@ export type OneModalHeaderProps = {
    * Module configuration for the header. Only works when modal position is set to "right".
    * Displays module icon and name in the header.
    */
-  module?: ComponentProps<typeof PageHeader>["module"]
+  module?: {
+    id: ModuleId
+    label: string
+    href: string
+  }
   otherActions?: DropdownInternalProps["items"]
 }
 
@@ -70,10 +73,10 @@ export const OneModalHeader = ({
     return (
       <BreadcrumbItem
         item={{
-          id: module.href,
-          label: module.name,
+          id: module.id,
+          label: module.label,
           href: module.href,
-          icon: module.icon,
+          module: module.id,
         }}
         isLast={false}
         isFirst={true}
