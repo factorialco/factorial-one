@@ -15,8 +15,7 @@
     "dist",
     "styles.css",
     "tailwind.config.ts",
-    "postcss.config.js",
-    "eslint"
+    "postcss.config.js"
   ],
   "scripts": {
     "dev": "storybook dev -p 6006",
