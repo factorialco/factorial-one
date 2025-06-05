@@ -298,7 +298,6 @@ export function useData<
       setTotalItems,
       isLoadingMoreRef,
       data.length,
-      dataAdapter.paginationType,
     ]
   )
 
@@ -499,6 +498,7 @@ export function useData<
     mergedFilters,
     setIsLoading,
     currentNavigationFilters,
+    dataAdapter.paginationType,
   ])
 
   return {
