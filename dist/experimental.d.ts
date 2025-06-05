@@ -405,6 +405,25 @@ declare type BaseMetadata = {
 };
 
 /**
+ * Represents a base structure for paginated API responses, providing
+ * details about the records on the current page and pagination metadata.
+ *
+ * @template TRecord The type of each record in the paginated response.
+ *
+ * @property {TRecord[]} records The list of records for the current page.
+ * @property {number} total The total number of records available.
+ * @property {number} perPage The number of records displayed per page.
+ */
+export declare type BasePaginatedResponse<TRecord> = {
+    /** The records for the current page */
+    records: TRecord[];
+    /** Total number of records available */
+    total: number;
+    /** Number of records per page */
+    perPage: number;
+};
+
+/**
  * Base response type for collection data
  * @template Record - The type of records in the collection
  */
@@ -1795,6 +1814,32 @@ declare type InFilterOptions_2<T> = {
     options: Array<InFilterOptionItem<T>> | (() => Array<InFilterOptionItem<T>> | Promise<Array<InFilterOptionItem<T>>>);
 };
 
+/**
+ * Represents a paginated response structure tailored for infinite scroll implementations.
+ *
+ * @template TRecord The type of the individual record contained in the paginated response.
+ *
+ * @extends BasePaginatedResponse
+ *
+ * @property {"infinite-scroll"} type Identifies the pagination type as "infinite-scroll".
+ * @property {number} cursor The current position or index used to fetch the next set of records.
+ * @property {boolean} hasMore Indicates whether there are additional records available for loading.
+ */
+export declare type InfiniteScrollPaginatedResponse<TRecord> = BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "infinite-scroll">;
+    /**
+     * Represents the current position or state in a sequence, collection, or dataset.
+     * Typically used to track the index or position for iteration or navigation purposes.
+     * A numerical value that can be incremented or decremented to traverse through the elements.
+     */
+    cursor: number;
+    /**
+     * A boolean flag indicating whether there are more items or data available for processing, fetching, or pagination.
+     * Typically used in scenarios where data is loaded in chunks or pages to determine if additional requests are needed.
+     */
+    hasMore: boolean;
+};
+
 export declare const Input: React.FC<InputProps>;
 
 declare const Input_2: React_2.ForwardRefExoticComponent<React_2.InputHTMLAttributes<HTMLInputElement> & {
@@ -2382,6 +2427,29 @@ export declare type PageAction = {
     }>;
 });
 
+/**
+ * Represents a paginated response with page-based navigation.
+ *
+ * Combines the base pagination response with additional properties specific to
+ * page-based pagination, allowing clients to navigate the dataset using page numbers.
+ *
+ * This type is useful for APIs returning data in discrete pages, where both the
+ * current page index and the total number of pages are provided.
+ *
+ * @template TRecord - The type of the individual records in the dataset.
+ *
+ * @property {"pages"} type - Indicates the pagination type is page-based.
+ * @property {number} currentPage - The index of the current page being viewed.
+ * @property {number} pagesCount - The total number of pages available.
+ */
+export declare type PageBasedPaginatedResponse<TRecord> = BasePaginatedResponse<TRecord> & {
+    type: Extract<PaginationType, "pages">;
+    /** Current page number (1-indexed) */
+    currentPage: number;
+    /** Total number of pages available */
+    pagesCount: number;
+};
+
 export declare function PageHeader({ module, statusTag, breadcrumbs, actions, embedded, navigation, productUpdates, favorites, }: HeaderProps): JSX_2.Element;
 
 declare interface PageProps {
@@ -2397,7 +2465,7 @@ declare interface PageProps {
  */
 export declare type PaginatedDataAdapter<Record extends RecordType, Filters extends FiltersDefinition, Sortings extends SortingsDefinition, NavigationFilters extends NavigationFiltersDefinition> = {
     /** Indicates this adapter uses page-based pagination */
-    paginationType: "pages" | "infinite-scroll";
+    paginationType: PaginationType;
     /** Default number of records per page */
     perPage?: number;
     /**
@@ -2408,15 +2476,11 @@ export declare type PaginatedDataAdapter<Record extends RecordType, Filters exte
     fetchData: (options: PaginatedFetchOptions<Filters, Sortings, NavigationFilters>) => PaginatedResponse<Record> | Promise<PaginatedResponse<Record>> | Observable<PromiseState<PaginatedResponse<Record>>>;
 };
 
-/**
- * Options for paginated data fetching
- * @template Filters - The available filter configurations
- */
 export declare type PaginatedFetchOptions<Filters extends FiltersDefinition, Sortings extends SortingsDefinition, NavigationFilters extends NavigationFiltersDefinition> = BaseFetchOptions<Filters, Sortings, NavigationFilters> & {
-    /** Pagination configuration */
     pagination: {
-        currentPage: number;
-        perPage: number;
+        currentPage?: number;
+        cursor?: number;
+        perPage?: number;
     };
 };
 
@@ -2424,24 +2488,14 @@ export declare type PaginatedFetchOptions<Filters extends FiltersDefinition, Sor
  * Response type for paginated collection data
  * @template Record - The type of records in the collection
  */
-export declare type PaginatedResponse<Record> = {
-    /** The records for the current page */
-    records: Record[];
-} & PaginationInfo;
+export declare type PaginatedResponse<TRecord> = PageBasedPaginatedResponse<TRecord> | InfiniteScrollPaginatedResponse<TRecord>;
 
 /**
- * Information about the current pagination state
+ * Defines the available pagination types used throughout the application.
+ * - "pages": Represents traditional page-based navigation with numbered pages.
+ * - "infinite-scroll": Represents continuous loading of content as the user scrolls.
  */
-export declare type PaginationInfo = {
-    /** Total number of records available */
-    total: number;
-    /** Current page number (1-indexed) */
-    currentPage: number;
-    /** Number of records per page */
-    perPage: number;
-    /** Total number of pages available */
-    pagesCount: number;
-};
+export declare type PaginationType = "pages" | "infinite-scroll";
 
 export declare const PersonAvatar: {
     ({ firstName, lastName, src, size, "aria-label": ariaLabel, "aria-labelledby": ariaLabelledby, badge, }: PersonAvatarProps): JSX_2.Element;
