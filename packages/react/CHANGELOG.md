@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.86.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.5...factorial-one-react-v1.86.0) (2025-06-05)
+
+
+### Features
+
+* add files icon ([#2018](https://github.com/factorialco/factorial-one/issues/2018)) ([e2bacf7](https://github.com/factorialco/factorial-one/commit/e2bacf73e96d5806dd5c823f3fa21ba904925905))
+
 ## [1.85.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.4...factorial-one-react-v1.85.5) (2025-06-05)
 
 
