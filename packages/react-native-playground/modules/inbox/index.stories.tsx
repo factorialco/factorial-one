@@ -5,24 +5,23 @@ import {
 } from "@factorialco/factorial-one-react-native";
 
 function generateSampleSections(count: number): InboxSection[] {
-  return Array.from({ length: count }, (_, i) => ({
-    id: (i + 1).toString(),
-    title: `Section ${i + 1}`,
-    data: [
-      {
-        id: String.fromCharCode(97 + (i % 26)),
-        title: `Item 1 in Section ${i + 1}`,
-        description: `Description ${i + 1}`,
-        date: `2021-01-${(i + 1).toString().padStart(2, "0")}`,
-      },
-      {
-        id: String.fromCharCode(97 + ((i + 1) % 26)),
-        title: `Item 2 in Section ${i + 1}`,
-        description: `Description ${i + 1}b`,
-        date: `2021-01-${(i + 2).toString().padStart(2, "0")}`,
-      },
-    ],
-  }));
+  return Array.from({ length: count }, (_, i) => {
+    const itemsCount = Math.floor(Math.random() * 5) + 1; // 1 to 5 items
+    const data = Array.from({ length: itemsCount }, (__, j) => ({
+      id: String.fromCharCode(97 + ((i + j) % 26)),
+      title: `Item ${j + 1} in Section ${i + 1}`,
+      description: `Description ${i + 1}${j > 0 ? String.fromCharCode(97 + j) : ""}`,
+      date: `2021-01-${(i + j + 1).toString().padStart(2, "0")}`,
+      firstName: j % 2 === 0 ? "John" : "Jane",
+      lastName: "Doe",
+      src: "https://i.pravatar.cc/150",
+    }));
+    return {
+      id: (i + 1).toString(),
+      title: `Section ${i + 1}`,
+      data,
+    };
+  });
 }
 
 const sampleSections: InboxSection[] = generateSampleSections(22);

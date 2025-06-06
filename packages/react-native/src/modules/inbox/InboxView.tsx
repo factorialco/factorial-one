@@ -11,6 +11,9 @@ type SampleListItem = {
   id: string;
   title: string;
   description: string;
+  firstName: string;
+  lastName: string;
+  src?: string;
   date: string;
 };
 
@@ -33,6 +36,9 @@ const renderSampleItem = (item: SampleListItem) => (
       title={item.title}
       description={item.description}
       date={item.date}
+      firstName={item.firstName}
+      lastName={item.lastName}
+      src={item.src}
     />
   </View>
 );
