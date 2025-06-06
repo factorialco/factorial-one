@@ -140,8 +140,6 @@ export const Footer = ({
     }
   }
 
-  console.log(leftButtons, rightButtons)
-
   return (
     <footer className="rounded-bl-xl border-0 border-r-[1px] border-t-[1px] border-solid border-f1-border-secondary bg-f1-background/30 backdrop-blur-2xl">
       <div className="flex flex-1 justify-between p-2">
