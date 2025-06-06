@@ -44,7 +44,7 @@ const InboxListBase = <T extends { id: string }>({
       }}
       ListEmptyComponent={
         <EmptyState
-          emoji={emptyState.emoji} //🌿
+          emoji={emptyState.emoji}
           title={emptyState.title}
           description={emptyState.description}
           onMount={emptyState.onMount}
