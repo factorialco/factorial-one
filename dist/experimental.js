@@ -63974,7 +63974,7 @@ const R8e = (e) => Math.ceil(e / 12) * 12, I8e = ({
         w
       );
     }) }),
-    f && /* @__PURE__ */ k("div", { className: "flex w-full items-center justify-between px-6", children: [
+    f && /* @__PURE__ */ k("div", { className: "flex w-full items-center justify-between px-6 pt-4", children: [
       /* @__PURE__ */ l("span", { className: "shrink-0 text-f1-foreground-secondary", children: `${(f.currentPage - 1) * f.perPage + 1}-${Math.min(
         f.currentPage * f.perPage,
         f.total
