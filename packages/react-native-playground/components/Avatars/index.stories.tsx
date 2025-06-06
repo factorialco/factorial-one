@@ -1,5 +1,6 @@
 import {
   AppIcons,
+  CompanyAvatar,
   DateAvatar,
   FileAvatar,
   IconAvatar,
@@ -97,8 +98,8 @@ export const AvatarsShowCase = () => {
         ModuleAvatar
       </Text>
       <View className="flex-row flex-wrap gap-2 mb-6">
-        {moduleEntries.map(([_name, icon]) => (
-          <ModuleAvatar icon={icon} />
+        {moduleEntries.map(([name, icon]) => (
+          <ModuleAvatar key={name} icon={icon} />
         ))}
       </View>
       <Text className="text-lg font-bold mb-4 text-f1-foreground">
@@ -121,6 +122,16 @@ export const AvatarsShowCase = () => {
         <IconAvatar icon={AppIcons.Folder} size="md" />
         <IconAvatar icon={AppIcons.FaceSuperPositive} size="md" />
         <IconAvatar icon={AppIcons.Heading2} size="md" />
+      </View>
+      <Text className="text-lg font-bold mb-4 text-f1-foreground">
+        CompanyAvatar
+      </Text>
+      <View className="flex-row flex-wrap gap-2 mb-6">
+        <CompanyAvatar name="Factorial One" />
+        <CompanyAvatar
+          src="https://avatars.githubusercontent.com/u/21041797?s=48&v=4"
+          name="Factorial One"
+        />
       </View>
     </ScrollView>
   );
