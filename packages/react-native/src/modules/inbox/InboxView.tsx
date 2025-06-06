@@ -7,10 +7,6 @@ import { PageHeader } from "../../components/Navigation/PageHeader";
 import { EmptyStateT } from "./EmptyState";
 
 // Sample data type for the list items
-// It seems 'data' inside an item might not be what SectionList expects for items.
-// SectionList expects an array of items within each section's 'data' array.
-// If 'SampleListItem' represents an item, it typically wouldn't have its own 'data' array of strings.
-// Let's assume for now 'title' is the main displayable string for an item.
 type SampleListItem = {
   id: string;
   title: string;
