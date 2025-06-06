@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.88.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.87.0...factorial-one-react-v1.88.0) (2025-06-06)
+
+
+### Features
+
+* add support to show up module icon in OneModal.Header ([#2020](https://github.com/factorialco/factorial-one/issues/2020)) ([5652907](https://github.com/factorialco/factorial-one/commit/5652907dc329aacc12525ed2a1b4e29d2b41f83d))
+
 ## [1.87.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.86.1...factorial-one-react-v1.87.0) (2025-06-06)
 
 
