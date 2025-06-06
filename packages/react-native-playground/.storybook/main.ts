@@ -3,6 +3,7 @@ import { StorybookConfig } from "@storybook/react-native";
 const main: StorybookConfig = {
   stories: [
     "../components/**/*.stories.?(ts|tsx)",
+    "../modules/**/*.stories.?(ts|tsx)",
     "./stories/**/*.stories.?(ts|tsx|js|jsx)",
   ],
   addons: [
