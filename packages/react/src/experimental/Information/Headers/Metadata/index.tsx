@@ -81,7 +81,7 @@ function MetadataItem({ item }: { item: MetadataItem }) {
   const isList =
     (item.value.type === "data-list" && item.value.data.length > 1) ||
     (item.value.type === "tag-list" && item.value.tags.length > 1)
-  const isAction = item.actions?.length
+  const isAction = Boolean(item.actions?.length)
   const hasHover = isAction || isList
 
   const getValueToCopy = (
