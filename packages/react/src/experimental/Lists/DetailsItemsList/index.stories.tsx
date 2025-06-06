@@ -69,3 +69,10 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
+
+export const TableView: Story = {
+  args: {
+    title: undefined,
+    tableView: true,
+  },
+}

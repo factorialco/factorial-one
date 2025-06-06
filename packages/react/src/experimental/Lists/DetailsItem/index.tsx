@@ -23,6 +23,7 @@ type Content =
 export interface DetailsItemType {
   title: string
   content: Content | Content[]
+  isHorizontal?: boolean
   spacingAtTheBottom?: boolean
 }
 
@@ -41,15 +42,22 @@ const ItemContent: FC<{ content: Content }> = ({ content }) => (
 )
 
 export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
-  function DetailsItem({ title, content, spacingAtTheBottom }, ref) {
+  function DetailsItem(
+    { title, content, isHorizontal = false, spacingAtTheBottom },
+    ref
+  ) {
     const contentArray = Array.isArray(content) ? content : [content]
 
     return (
       <div
         ref={ref}
-        className={cn("flex flex-col gap-0.5", spacingAtTheBottom && "pb-3")}
+        className={cn(
+          "flex flex-col gap-0.5",
+          spacingAtTheBottom && !isHorizontal && "pb-3",
+          isHorizontal && "[&_li>div]:p-0 [&_ul]:flex-1"
+        )}
       >
-        <DataList label={title}>
+        <DataList label={title} isHorizontal={isHorizontal}>
           {contentArray.map((c, i) => (
             <ItemContent key={i} content={c} />
           ))}
