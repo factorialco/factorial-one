@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.88.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.88.0...factorial-one-react-v1.88.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* better grouping in ActivityItemList ([#2036](https://github.com/factorialco/factorial-one/issues/2036)) ([ea1e031](https://github.com/factorialco/factorial-one/commit/ea1e0314e4b159ead0e9c6d4f85d727515019571))
+
 ## [1.88.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.87.0...factorial-one-react-v1.88.0) (2025-06-06)
 
 
