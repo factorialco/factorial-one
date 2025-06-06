@@ -7,6 +7,7 @@ export * from "./components/Avatars/exports";
 export * from "./components/Counter";
 export * from "./components/OnePreset";
 export * from "./components/Tags/exports";
+export * from "./components/OneChip";
 
 // Export icons
 export * from "./icons";
