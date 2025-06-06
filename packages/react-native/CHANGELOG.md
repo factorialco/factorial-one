@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.11.0...factorial-one-react-native-v0.12.0) (2025-06-06)
+
+
+### Features
+
+* create new component avatar for mobile ([#2026](https://github.com/factorialco/factorial-one/issues/2026)) ([b6da3c6](https://github.com/factorialco/factorial-one/commit/b6da3c60fa98d4d4be048b684cfd6ae81e427948))
+
 ## [0.11.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.10.0...factorial-one-react-native-v0.11.0) (2025-06-05)
 
 
