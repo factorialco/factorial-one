@@ -33,7 +33,6 @@ const NotificationsAction = ({ label, onPress, showBadge }: ActionT) => {
 };
 
 export const PageHeader = memo(({ title, actions }: Props) => {
-  console.log("actions", title, actions);
   return (
     <View className="flex-row items-center justify-between p-4">
       <Text className="text-3xl font-semibold text-f1-foreground">{title}</Text>
