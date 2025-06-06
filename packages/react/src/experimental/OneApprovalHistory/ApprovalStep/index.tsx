@@ -1,5 +1,5 @@
 import { AvatarList } from "@/experimental/Information/Avatars/AvatarList"
-import { PersonAvatarProps } from "@/experimental/Information/Avatars/PersonAvatar"
+import { BadgeProps } from "@/experimental/Information/Badge"
 import { StatusTag } from "@/experimental/Information/Tags/StatusTag"
 import {
   Check as CheckIcon,
@@ -20,7 +20,7 @@ type Approver = {
 
 export type ApprovalStepProps = {
   title: string
-  approvalsRequired: number
+  approvalsRequired?: number
   status: Status
   approvers: Approver[]
 }
@@ -32,35 +32,46 @@ const statusTagVariants: Record<Status, "neutral" | "positive" | "critical"> = {
   rejected: "critical",
 }
 
-const getAvatarBadge = (status: Status): PersonAvatarProps["badge"] => {
-  switch (status) {
-    case "approved": {
-      return {
-        icon: CheckIcon,
-        type: "positive",
-        size: "sm",
-      }
-    }
-    case "rejected": {
-      return {
-        icon: CrossIcon,
-        type: "critical",
-        size: "sm",
-      }
-    }
-    default: {
-      return {
-        icon: QuestionIcon,
-        type: "neutral",
-        size: "sm",
-      }
-    }
-  }
+const badgeMap: Record<"approved" | "rejected", BadgeProps> = {
+  approved: {
+    icon: CheckIcon,
+    type: "positive",
+    size: "sm",
+  },
+  rejected: {
+    icon: CrossIcon,
+    type: "critical",
+    size: "sm",
+  },
+}
+
+const defaultBadge: BadgeProps = {
+  icon: QuestionIcon,
+  type: "neutral",
+  size: "sm",
+}
+
+const badgePriority: Record<NonNullable<BadgeProps["type"]>, number> = {
+  positive: 4,
+  highlight: 3,
+  critical: 2,
+  warning: 1,
+  neutral: 0,
+}
+
+const getAvatarBadge = (status: Status): BadgeProps => {
+  return status in badgeMap
+    ? badgeMap[status as keyof typeof badgeMap]
+    : defaultBadge
+}
+
+function getAvatarPriority(badgeType?: BadgeProps["type"]): number {
+  return badgePriority[badgeType ?? "neutral"] ?? 0
 }
 
 const ApprovalStep: FC<ApprovalStepProps> = ({
   title,
-  approvalsRequired,
+  approvalsRequired = 1,
   status,
   approvers,
 }) => {
@@ -76,27 +87,23 @@ const ApprovalStep: FC<ApprovalStepProps> = ({
 
   const displayStatus = translations.approvals.statuses[status]
 
-  const avatars = useMemo(
-    () =>
-      approvers
-        .map((approver) => ({
+  const avatars = useMemo(() => {
+    return approvers
+      .map((approver) => {
+        const badge = getAvatarBadge(approver.status)
+        return {
           firstName: approver.firstName,
           lastName: approver.lastName,
           src: approver.avatar,
-          badge: getAvatarBadge(approver.status),
+          badge,
           type: "person" as const,
-        }))
-        .sort((a, b) => {
-          if (a.badge?.type === "positive" || a.badge?.type === "highlight")
-            return -1
-          if (b.badge?.type === "positive" || b.badge?.type === "highlight")
-            return 1
-          if (a.badge?.type === "critical") return -1
-          if (b.badge?.type === "critical") return 1
-          return 0
-        }),
-    [approvers]
-  )
+        }
+      })
+      .sort(
+        (a, b) =>
+          getAvatarPriority(b.badge?.type) - getAvatarPriority(a.badge?.type)
+      )
+  }, [approvers])
 
   return (
     <div className="flex flex-col gap-3 pb-5 pl-4 pr-3 pt-3">
