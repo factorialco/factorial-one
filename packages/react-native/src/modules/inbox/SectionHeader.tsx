@@ -1,12 +1,20 @@
 import { capitalize } from "lodash";
 import { Text, View } from "react-native";
+import { Counter } from "../../components/Counter";
 
-export const SectionHeader = ({ title }: { title: string }) => {
+export const SectionHeader = ({
+  title,
+  count,
+}: {
+  title: string;
+  count: number;
+}) => {
   return (
-    <View className="px-4 pb-2 pt-3">
-      <Text className="font-regular text-sm text-f1-foreground">
+    <View className="flex-row items-center justify-start gap-2 px-4 pb-2 pt-3">
+      <Text className="text-base font-semibold text-f1-foreground">
         {capitalize(title)}
       </Text>
+      <Counter value={count} />
     </View>
   );
 };

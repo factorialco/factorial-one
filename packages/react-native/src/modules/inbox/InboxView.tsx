@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { InboxList } from "./List";
 import { memo } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { InboxCard } from "./Card";
 import { PageHeader } from "../../components/Navigation/PageHeader";
 import { EmptyStateT } from "./EmptyState";
@@ -40,26 +40,27 @@ const renderSampleItem = (item: SampleListItem) => (
 export const InboxView = memo(
   ({ title, sections, emptyState, safeBottom = 0 }: Props) => {
     return (
-      <SafeAreaView edges={["top"]} className="bg-background flex-1">
-        <PageHeader
-          title={title}
-          actions={[
-            {
-              type: "notifications",
-              label: "Notifications",
-              onPress: () => {},
-              showBadge: true,
-            },
-          ]}
-        />
-        <InboxList
-          sections={sections}
-          safeBottom={safeBottom}
-          isEmptyState={sections.length === 0}
-          renderItem={renderSampleItem}
-          emptyState={emptyState}
-        />
-      </SafeAreaView>
+      <SafeAreaProvider>
+        <SafeAreaView edges={["top"]} className="flex-1 bg-f1-background">
+          <PageHeader
+            title={title}
+            actions={[
+              {
+                type: "notifications",
+                label: "Notifications",
+                onPress: () => {},
+                showBadge: true,
+              },
+            ]}
+          />
+          <InboxList
+            sections={sections}
+            safeBottom={safeBottom}
+            renderItem={renderSampleItem}
+            emptyState={emptyState}
+          />
+        </SafeAreaView>
+      </SafeAreaProvider>
     );
   },
 );

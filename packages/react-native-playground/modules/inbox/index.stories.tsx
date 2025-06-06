@@ -4,38 +4,28 @@ import {
   type InboxSection,
 } from "@factorialco/factorial-one-react-native";
 
-const sampleSections: InboxSection[] = [
-  {
-    id: "1",
-    title: "Section 1",
+function generateSampleSections(count: number): InboxSection[] {
+  return Array.from({ length: count }, (_, i) => ({
+    id: (i + 1).toString(),
+    title: `Section ${i + 1}`,
     data: [
       {
-        id: "a",
-        title: "Item 1 in Section 1",
-        description: "Description 1",
-        date: "2021-01-01",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "Section 2",
-    data: [
-      {
-        id: "b",
-        title: "Item 1 in Section 2",
-        description: "Description 2",
-        date: "2021-01-02",
+        id: String.fromCharCode(97 + (i % 26)),
+        title: `Item 1 in Section ${i + 1}`,
+        description: `Description ${i + 1}`,
+        date: `2021-01-${(i + 1).toString().padStart(2, "0")}`,
       },
       {
-        id: "c",
-        title: "Item 2 in Section 2",
-        description: "Description 3",
-        date: "2021-01-03",
+        id: String.fromCharCode(97 + ((i + 1) % 26)),
+        title: `Item 2 in Section ${i + 1}`,
+        description: `Description ${i + 1}b`,
+        date: `2021-01-${(i + 2).toString().padStart(2, "0")}`,
       },
     ],
-  },
-];
+  }));
+}
+
+const sampleSections: InboxSection[] = generateSampleSections(22);
 
 const emptyStateData = {
   title: "All caught up!",

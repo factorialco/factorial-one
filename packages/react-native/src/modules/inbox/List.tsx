@@ -8,7 +8,6 @@ import { Separator } from "./Separator";
 interface InboxListProps<T extends { id: string }> {
   sections: SectionListData<T>[];
   safeBottom: number;
-  isEmptyState: boolean;
   renderItem: (item: T) => ReactElement | null;
   emptyState: EmptyStateT;
 }
@@ -17,19 +16,32 @@ interface InboxListProps<T extends { id: string }> {
 const InboxListBase = <T extends { id: string }>({
   sections,
   safeBottom,
-  isEmptyState,
   renderItem,
   emptyState,
 }: InboxListProps<T>): ReactElement | null => {
+  const isEmpty = sections.length === 0;
+  if (isEmpty) {
+    return (
+      <View className="flex-1 p-4">
+        <EmptyState
+          emoji={emptyState.emoji}
+          title={emptyState.title}
+          description={emptyState.description}
+          onMount={emptyState.onMount}
+        />
+      </View>
+    );
+  }
+
   return (
-    <SectionList<T> // Ensure SectionList also uses the generic T
+    <SectionList<T>
+      className="flex-1"
       sections={sections}
       contentContainerStyle={{
         paddingBottom: safeBottom,
-        flex: isEmptyState ? undefined : 1,
       }}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => renderItem(item)} // renderItem here correctly uses T from InboxListBase
+      renderItem={({ item }) => renderItem(item)}
       renderSectionHeader={({
         section: { title },
         section: currentSection,
@@ -38,18 +50,10 @@ const InboxListBase = <T extends { id: string }>({
         return (
           <View>
             {!isFirstSection && <Separator />}
-            <SectionHeader title={title} />
+            <SectionHeader title={title} count={currentSection.data.length} />
           </View>
         );
       }}
-      ListEmptyComponent={
-        <EmptyState
-          emoji={emptyState.emoji}
-          title={emptyState.title}
-          description={emptyState.description}
-          onMount={emptyState.onMount}
-        />
-      }
       stickySectionHeadersEnabled={false}
     />
   );
