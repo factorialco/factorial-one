@@ -2,7 +2,7 @@ import { render } from "@testing-library/react-native";
 import React from "react";
 import { EmojiAvatar } from "./";
 
-describe("Button", () => {
+describe("EmojiAvatar", () => {
   it("Snapshot - different sizes text emoji and diferent size", () => {
     const sizes = ["sm", "md", "lg"] as const;
 

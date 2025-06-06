@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import { Icon, IconType } from "../Icon";
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/utils";
+import { Icon, IconType } from "../../Icon";
 
 type Props = {
   icon: IconType;

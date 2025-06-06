@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import { EmojiImage } from "../../lib/emojis";
-import { cn } from "../../lib/utils";
+import { EmojiImage } from "../../../lib/emojis";
+import { cn } from "../../../lib/utils";
 
 type Props = {
   emoji: string;

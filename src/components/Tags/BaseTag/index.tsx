@@ -32,7 +32,7 @@ export const BaseTag = ({
   <View className="flex items-start">
     <Pressable
       className={cn(
-        "flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-2 text-base font-medium text-f1-foreground",
+        "flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-2",
         onClick && "cursor-pointer hover:bg-f1-background-hover",
         !text && "aspect-square w-6 items-center justify-center p-1",
         !left ? "pl-2" : "pl-1",
@@ -42,10 +42,19 @@ export const BaseTag = ({
     >
       {left}
       {!!text && (
-        <Text className={cn("line-clamp-1", classNameText)}>{text}</Text>
+        <Text
+          className={cn(
+            "line-clamp-1 text-base font-medium text-f1-foreground",
+            classNameText,
+          )}
+        >
+          {text}
+        </Text>
       )}
       {additionalAccesibleText && (
-        <Text className="sr-only">{additionalAccesibleText}</Text>
+        <Text className="sr-only text-base font-medium text-f1-foreground">
+          {additionalAccesibleText}
+        </Text>
       )}
       {right}
     </Pressable>

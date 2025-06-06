@@ -1,7 +1,7 @@
 import { View, Text, Pressable } from "react-native";
 import { useState } from "react";
 import { IconType } from "../../Icon";
-import { IconAvatar } from "../../IconAvatar";
+import { IconAvatar } from "../../Avatars/exports";
 
 export type ActivityItemProps = {
   id: string;
