@@ -1,6 +1,6 @@
 import { memo, ReactElement } from "react";
 import { SectionList, SectionListData, View } from "react-native";
-import { EmptyState } from "./EmptyState";
+import { EmptyState, EmptyStateT } from "./EmptyState";
 import { SectionHeader } from "./SectionHeader";
 import { Separator } from "./Separator";
 
@@ -10,11 +10,7 @@ interface InboxListProps<T extends { id: string }> {
   safeBottom: number;
   isEmptyState: boolean;
   renderItem: (item: T) => ReactElement | null;
-  emptyState: {
-    title: string;
-    description: string;
-    onMount?: () => void;
-  };
+  emptyState: EmptyStateT;
 }
 
 // Define the base component with the generic type T
@@ -48,7 +44,7 @@ const InboxListBase = <T extends { id: string }>({
       }}
       ListEmptyComponent={
         <EmptyState
-          emoji="🌿"
+          emoji={emptyState.emoji} //🌿
           title={emptyState.title}
           description={emptyState.description}
           onMount={emptyState.onMount}

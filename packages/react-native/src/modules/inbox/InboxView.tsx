@@ -4,6 +4,7 @@ import { memo } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { InboxCard } from "./Card";
 import { PageHeader } from "../../components/Navigation/PageHeader";
+import { EmptyStateT } from "./EmptyState";
 
 // Sample data type for the list items
 // It seems 'data' inside an item might not be what SectionList expects for items.
@@ -23,14 +24,11 @@ export type InboxSection = {
   data: SampleListItem[];
 };
 
-const emptyStateData = {
-  title: "All caught up!",
-  description: "You have no new notifications.",
-};
-
 type Props = {
   title: string;
   sections: InboxSection[];
+  emptyState: EmptyStateT;
+  safeBottom?: number;
 };
 
 const renderSampleItem = (item: SampleListItem) => (
@@ -43,31 +41,33 @@ const renderSampleItem = (item: SampleListItem) => (
   </View>
 );
 
-export const InboxView = memo(({ title, sections }: Props) => {
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView edges={["top"]} className="bg-background flex-1">
-        <PageHeader
-          title={title}
-          actions={[
-            {
-              type: "notifications",
-              label: "Notifications",
-              onPress: () => {},
-              showBadge: true,
-            },
-          ]}
-        />
-        <InboxList
-          sections={sections}
-          safeBottom={0} // You might want to adjust this based on your layout
-          isEmptyState={sections.length === 0}
-          renderItem={renderSampleItem}
-          emptyState={emptyStateData}
-        />
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
-});
+export const InboxView = memo(
+  ({ title, sections, emptyState, safeBottom = 0 }: Props) => {
+    return (
+      <SafeAreaProvider>
+        <SafeAreaView edges={["top"]} className="bg-background flex-1">
+          <PageHeader
+            title={title}
+            actions={[
+              {
+                type: "notifications",
+                label: "Notifications",
+                onPress: () => {},
+                showBadge: true,
+              },
+            ]}
+          />
+          <InboxList
+            sections={sections}
+            safeBottom={safeBottom}
+            isEmptyState={sections.length === 0}
+            renderItem={renderSampleItem}
+            emptyState={emptyState}
+          />
+        </SafeAreaView>
+      </SafeAreaProvider>
+    );
+  },
+);
 
 InboxView.displayName = "InboxView";

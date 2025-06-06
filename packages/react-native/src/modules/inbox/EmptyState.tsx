@@ -2,17 +2,19 @@ import { Text, View } from "react-native";
 import { EmojiAvatar } from "../..";
 import { useEffect } from "react";
 
+export type EmptyStateT = {
+  title: string;
+  description: string;
+  onMount?: () => void;
+  emoji: string;
+};
+
 export const EmptyState = ({
   emoji,
   title,
   description,
   onMount,
-}: {
-  emoji: string;
-  title?: string;
-  description?: string;
-  onMount?: () => void;
-}) => {
+}: EmptyStateT) => {
   useEffect(() => {
     onMount?.();
   }, [onMount]);

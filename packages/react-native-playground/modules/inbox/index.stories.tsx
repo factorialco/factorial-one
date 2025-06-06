@@ -37,6 +37,12 @@ const sampleSections: InboxSection[] = [
   },
 ];
 
+const emptyStateData = {
+  title: "All caught up!",
+  description: "You have no new notifications.",
+  emoji: "🌿",
+};
+
 const meta: Meta<typeof InboxView> = {
   title: "Modules/Inbox/InboxView",
   component: InboxView,
@@ -46,6 +52,7 @@ const meta: Meta<typeof InboxView> = {
   args: {
     title: "Inbox",
     sections: sampleSections,
+    emptyState: emptyStateData,
   },
 };
 
@@ -59,5 +66,6 @@ export const Empty: Story = {
   args: {
     title: "Inbox (Empty)",
     sections: [],
+    emptyState: emptyStateData,
   },
 };
