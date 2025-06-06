@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.13.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.12.0...factorial-one-react-native-v0.13.0) (2025-06-06)
+
+
+### Features
+
+* new inbox module components and new page header component ([#2031](https://github.com/factorialco/factorial-one/issues/2031)) ([3474fc0](https://github.com/factorialco/factorial-one/commit/3474fc056ac11ea2414a3ee017763c14f44e1123))
+
 ## [0.12.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-native-v0.11.0...factorial-one-react-native-v0.12.0) (2025-06-06)
 
 
