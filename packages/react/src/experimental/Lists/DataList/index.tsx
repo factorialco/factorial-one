@@ -25,7 +25,7 @@ const _DataList = forwardRef<HTMLUListElement, DataListProps>(
       <div
         className={cn(
           isHorizontal
-            ? "flex flex-1 flex-col px-3 py-2 xs:flex-row"
+            ? "flex flex-1 flex-col px-3 py-1.5 xs:flex-row"
             : "min-w-32 max-w-72"
         )}
       >
