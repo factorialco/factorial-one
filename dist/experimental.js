@@ -20945,7 +20945,7 @@ const uL = ({
     "div",
     {
       className: E(
-        n ? "flex flex-1 flex-col px-3 py-2 xs:flex-row" : "min-w-32 max-w-72"
+        n ? "flex flex-1 flex-col px-3 py-1.5 xs:flex-row" : "min-w-32 max-w-72"
       ),
       children: [
         t && /* @__PURE__ */ l(
