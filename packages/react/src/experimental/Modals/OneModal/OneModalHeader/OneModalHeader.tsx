@@ -12,7 +12,7 @@ import { DrawerTitle } from "@/ui/drawer"
 import { useOneModal } from "../OneModalProvider"
 
 export type OneModalHeaderProps = {
-  title: string
+  title?: string
   /**
    * Module configuration for the header. Only works when modal position is set to "right".
    * Displays module icon and name in the header.
@@ -86,7 +86,7 @@ export const OneModalHeader = ({
 
   if (modalPosition === "right" && !shownBottomSheet) {
     return (
-      <div className="flex flex-col gap-3 bg-f1-background p-4">
+      <div className="flex flex-col gap-3 bg-f1-background p-5 pb-3">
         <div className="flex flex-row justify-between">
           {module ? <Module /> : <Actions />}
           <div className="flex flex-row gap-2">
@@ -105,18 +105,22 @@ export const OneModalHeader = ({
             />
           </div>
         </div>
-        <DialogTitle className={cn(dialogClassName, "text-2xl")}>
-          {title}
-        </DialogTitle>
+        {!!title && (
+          <DialogTitle className={cn(dialogClassName, "text-2xl")}>
+            {title}
+          </DialogTitle>
+        )}
       </div>
     )
   }
 
   return (
-    <div className="flex flex-col gap-3 bg-f1-background p-4">
+    <div className="flex flex-col gap-3 bg-f1-background p-5 pb-3">
       <div className="flex flex-row items-center justify-between">
         {!shownBottomSheet ? (
-          <DialogTitle className={dialogClassName}>{title}</DialogTitle>
+          !!title && (
+            <DialogTitle className={dialogClassName}>{title}</DialogTitle>
+          )
         ) : (
           <>
             {module ? (
@@ -138,7 +142,9 @@ export const OneModalHeader = ({
           />
         </div>
       </div>
-      {module && <DrawerTitle className={dialogClassName}>{title}</DrawerTitle>}
+      {module && !!title && (
+        <DrawerTitle className={dialogClassName}>{title}</DrawerTitle>
+      )}
     </div>
   )
 }
