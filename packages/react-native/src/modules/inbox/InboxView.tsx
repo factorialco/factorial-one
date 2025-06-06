@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { InboxList } from "./List";
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { InboxCard } from "./Card";
 import { PageHeader } from "../../components/Navigation/PageHeader";
@@ -30,21 +30,24 @@ type Props = {
   safeBottom?: number;
 };
 
-const renderSampleItem = (item: SampleListItem) => (
-  <View className="px-4 py-2">
-    <InboxCard
-      title={item.title}
-      description={item.description}
-      date={item.date}
-      firstName={item.firstName}
-      lastName={item.lastName}
-      src={item.src}
-    />
-  </View>
-);
-
 export const InboxView = memo(
   ({ title, sections, emptyState, safeBottom = 0 }: Props) => {
+    const renderSampleItem = useCallback(
+      (item: SampleListItem) => (
+        <View className="px-4 py-2">
+          <InboxCard
+            title={item.title}
+            description={item.description}
+            date={item.date}
+            firstName={item.firstName}
+            lastName={item.lastName}
+            src={item.src}
+          />
+        </View>
+      ),
+      [],
+    );
+
     return (
       <SafeAreaProvider>
         <SafeAreaView edges={["top"]} className="flex-1 bg-f1-background">
