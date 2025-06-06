@@ -4,9 +4,8 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "*"
-      ]
+      "@factorialco/factorial-one-core": ["../core/src"],
+      "~/*": ["*"]
     }
   },
   "include": [

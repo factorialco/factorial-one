@@ -1,5 +1,40 @@
 # Changelog
 
+## [1.88.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.87.0...factorial-one-react-v1.88.0) (2025-06-06)
+
+
+### Features
+
+* add support to show up module icon in OneModal.Header ([#2020](https://github.com/factorialco/factorial-one/issues/2020)) ([5652907](https://github.com/factorialco/factorial-one/commit/5652907dc329aacc12525ed2a1b4e29d2b41f83d))
+
+## [1.87.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.86.1...factorial-one-react-v1.87.0) (2025-06-06)
+
+
+### Features
+
+* create OneApprovalHistory component ([#2004](https://github.com/factorialco/factorial-one/issues/2004)) ([1482254](https://github.com/factorialco/factorial-one/commit/1482254508f50a5f682b16984ff1a77dfef64ba8))
+
+## [1.86.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.86.0...factorial-one-react-v1.86.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* remove console + fix small round border ([#2028](https://github.com/factorialco/factorial-one/issues/2028)) ([b34a8d0](https://github.com/factorialco/factorial-one/commit/b34a8d06d53fe9f8494ba7ba5ed71627ffc7c5b7))
+
+## [1.86.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.5...factorial-one-react-v1.86.0) (2025-06-05)
+
+
+### Features
+
+* add files icon ([#2018](https://github.com/factorialco/factorial-one/issues/2018)) ([e2bacf7](https://github.com/factorialco/factorial-one/commit/e2bacf73e96d5806dd5c823f3fa21ba904925905))
+
+## [1.85.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.4...factorial-one-react-v1.85.5) (2025-06-05)
+
+
+### Bug Fixes
+
+* **datacollection:** no cache infilters render loop ([#2019](https://github.com/factorialco/factorial-one/issues/2019)) ([546ab14](https://github.com/factorialco/factorial-one/commit/546ab14a9d0826f351bc17b0d7b58aa32e8a5c80))
+
 ## [1.85.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.3...factorial-one-react-v1.85.4) (2025-06-04)
 
 
