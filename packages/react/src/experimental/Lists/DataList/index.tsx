@@ -1,5 +1,6 @@
 import { forwardRef, ReactElement } from "react"
 
+import { cn } from "@/lib/utils"
 import { IconType } from "../../../components/Utilities/Icon"
 import { CompanyAvatar } from "../../Information/Avatars/CompanyAvatar"
 import { PersonAvatar } from "../../Information/Avatars/PersonAvatar"
@@ -9,6 +10,7 @@ import { InternalActionType, ItemContainer } from "./ItemContainer"
 export type DataListProps = {
   children: ReactElement<Items>[] | ReactElement<Items>
   label?: string
+  isHorizontal?: boolean
 }
 
 type Items =
@@ -18,11 +20,24 @@ type Items =
   | typeof TeamItem
 
 const _DataList = forwardRef<HTMLUListElement, DataListProps>(
-  ({ children, label }, ref) => {
+  ({ children, label, isHorizontal = false }, ref) => {
     return (
-      <div className="min-w-32 max-w-72">
+      <div
+        className={cn(
+          isHorizontal
+            ? "flex flex-1 flex-col px-3 py-2 xs:flex-row"
+            : "min-w-32 max-w-72"
+        )}
+      >
         {label && (
-          <p className="mb-0.5 px-1.5 text-f1-foreground-secondary">{label}</p>
+          <p
+            className={cn(
+              "px-1.5 text-f1-foreground-secondary",
+              isHorizontal ? "mt-1.5 w-44 xs:px-0" : "mb-0.5"
+            )}
+          >
+            {label}
+          </p>
         )}
         <ul className="flex flex-col gap-0.5" ref={ref}>
           {children}
