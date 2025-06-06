@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.86.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.86.0...factorial-one-react-v1.86.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* remove console + fix small round border ([#2028](https://github.com/factorialco/factorial-one/issues/2028)) ([b34a8d0](https://github.com/factorialco/factorial-one/commit/b34a8d06d53fe9f8494ba7ba5ed71627ffc7c5b7))
+
 ## [1.86.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.5...factorial-one-react-v1.86.0) (2025-06-05)
 
 
