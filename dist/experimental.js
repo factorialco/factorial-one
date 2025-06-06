@@ -20945,7 +20945,7 @@ const uL = ({
     "div",
     {
       className: E(
-        n ? "flex flex-1 flex-col px-3 py-1.5 xs:flex-row" : "min-w-32 max-w-72"
+        n ? "flex flex-1 flex-col py-1.5 pl-3 pr-1.5 xs:flex-row" : "min-w-32 max-w-72"
       ),
       children: [
         t && /* @__PURE__ */ l(
@@ -21058,7 +21058,7 @@ const Qu = (e, t) => e && e.type === "copy" ? { type: "copy", text: e.text ?? t 
       {
         className: E(
           "flex flex-col",
-          n ? "rounded-md border border-solid border-f1-border-secondary" : "gap-3"
+          n ? "max-w-[580px] rounded-md border border-solid border-f1-border-secondary" : "gap-3"
         ),
         children: i == null ? void 0 : i.map((r, o) => /* @__PURE__ */ k(R.Fragment, { children: [
           /* @__PURE__ */ l(
