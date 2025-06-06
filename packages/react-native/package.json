@@ -42,6 +42,7 @@
   "author": "Factorial",
   "license": "MIT",
   "peerDependencies": {
+    "date-fns": "^3.6.0",
     "nativewind": "^4.1.23",
     "react": "^18.2.0",
     "react-native": "^0.76.6",
