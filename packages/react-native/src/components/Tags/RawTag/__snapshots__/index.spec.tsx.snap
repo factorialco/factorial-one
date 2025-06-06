@@ -23,7 +23,7 @@ exports[`RawTag Snapshot 1`] = `
       }
     }
     accessible={true}
-    className="flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-2 pl-2 border-[1px] border-solid border-f1-border-secondary"
+    className="flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-2 pl-2 border border-solid border-f1-border-secondary"
     collapsable={false}
     focusable={true}
     onBlur={[Function]}
@@ -113,7 +113,7 @@ exports[`RawTag Snapshot with icon 1`] = `
       }
     }
     accessible={true}
-    className="flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-2 pl-1 border-[1px] border-solid border-f1-border-secondary"
+    className="flex flex-row items-center justify-start gap-0.5 rounded-full py-0.5 pr-2 pl-1 border border-solid border-f1-border-secondary"
     collapsable={false}
     focusable={true}
     onBlur={[Function]}
