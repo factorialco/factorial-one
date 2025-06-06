@@ -68,13 +68,15 @@ export const categorizeItemsByDate = <
   items.forEach((item) => {
     const date = item[dateField];
 
+    const diffDays = Math.abs(differenceInDays(date, new Date()));
+
     if (isToday(date)) {
       groups.today.push(item);
     } else if (isYesterday(date)) {
       groups.yesterday.push(item);
-    } else if (differenceInDays(date, new Date()) <= 7) {
+    } else if (diffDays <= 7) {
       groups.lastWeek.push(item);
-    } else if (differenceInDays(date, new Date()) <= 30) {
+    } else if (diffDays <= 30) {
       groups.lastMonth.push(item);
     } else {
       groups[date.getFullYear()].push(item);
