@@ -23,7 +23,7 @@ export const DetailsItemsList = forwardRef<
         className={cn(
           "flex flex-col",
           tableView
-            ? "rounded-md border border-solid border-f1-border-secondary"
+            ? "max-w-[580px] rounded-md border border-solid border-f1-border-secondary"
             : "gap-3"
         )}
       >
