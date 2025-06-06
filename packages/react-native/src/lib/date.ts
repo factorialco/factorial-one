@@ -1,8 +1,7 @@
 import {
   format,
   formatDistanceToNowStrict,
-  isThisMonth,
-  isThisWeek,
+  differenceInDays,
   isToday,
   isYesterday,
   startOfDay,
@@ -50,7 +49,7 @@ export function getDisplayDateBasedOnDuration(
   return format(date, "PPPp");
 }
 
-type DateGroup = "today" | "yesterday" | "lastWeek" | "lastMonth" | "other";
+type DateGroup = "today" | "yesterday" | "lastWeek" | "lastMonth" | number;
 
 export const categorizeItemsByDate = <
   T extends Record<D, Date>,
@@ -64,7 +63,6 @@ export const categorizeItemsByDate = <
     yesterday: [],
     lastWeek: [],
     lastMonth: [],
-    other: [],
   };
 
   items.forEach((item) => {
@@ -74,12 +72,12 @@ export const categorizeItemsByDate = <
       groups.today.push(item);
     } else if (isYesterday(date)) {
       groups.yesterday.push(item);
-    } else if (isThisWeek(date)) {
+    } else if (differenceInDays(date, new Date()) <= 7) {
       groups.lastWeek.push(item);
-    } else if (isThisMonth(date)) {
+    } else if (differenceInDays(date, new Date()) <= 30) {
       groups.lastMonth.push(item);
     } else {
-      groups.other.push(item);
+      groups[date.getFullYear()].push(item);
     }
   });
 

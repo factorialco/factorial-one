@@ -4,6 +4,7 @@ import {
   PalmTree as PalmTreeIcon,
 } from "@/icons/app"
 import type { Meta, StoryObj } from "@storybook/react"
+import { subDays } from "date-fns"
 import { ActivityItemList } from "./index"
 
 const meta: Meta<typeof ActivityItemList> = {
@@ -19,7 +20,7 @@ const meta: Meta<typeof ActivityItemList> = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs", "experimental", "no-sidebar"],
+  tags: ["autodocs", "experimental"],
 }
 
 export default meta
@@ -40,14 +41,15 @@ const ITEMS = new Array(10).fill(null).map((_, index) => ({
     return icons[index % icons.length]
   })(),
   createdAt: (() => {
-    const today = new Date(2025, 4, 20)
+    const today = new Date()
 
     const groups = [
-      new Date(today.getTime() - 1 * 60 * 60 * 1000), // today
-      new Date(today.getTime() - 24 * 60 * 60 * 1000), // yesterday
-      new Date(today.getTime() - 5 * 24 * 60 * 60 * 1000), // last week
-      new Date(today.getTime() - 20 * 24 * 60 * 60 * 1000), // last month
-      new Date(today.getTime() - 60 * 24 * 60 * 60 * 1000), // other
+      today, // today
+      subDays(today, 1), // yesterday
+      subDays(today, 5), // last week
+      subDays(today, 20), // last month
+      subDays(today, 50), // last year
+      subDays(today, 2 * 365), // previous years
     ]
 
     return groups[index % groups.length]
