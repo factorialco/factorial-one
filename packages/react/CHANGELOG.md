@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.87.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.86.1...factorial-one-react-v1.87.0) (2025-06-06)
+
+
+### Features
+
+* create OneApprovalHistory component ([#2004](https://github.com/factorialco/factorial-one/issues/2004)) ([1482254](https://github.com/factorialco/factorial-one/commit/1482254508f50a5f682b16984ff1a77dfef64ba8))
+
 ## [1.86.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.86.0...factorial-one-react-v1.86.1) (2025-06-06)
 
 
