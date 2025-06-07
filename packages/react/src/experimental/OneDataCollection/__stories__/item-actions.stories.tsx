@@ -1,5 +1,5 @@
+import { Ai, Download, Pencil, Upload } from "@/icons/app"
 import { Meta, StoryObj } from "@storybook/react"
-import { Ai, Download, Pencil } from "../../../icons/app"
 import { OneDataCollection, useDataSource } from "../index"
 import { ItemActionsDefinition } from "../item-actions"
 
@@ -113,7 +113,7 @@ const createUserActions = (): ItemActionsDefinition<
       { type: "separator" },
       {
         label: "Export",
-        icon: Download,
+        icon: Upload,
         onClick: () => console.log(`Downloading users`),
         description: "Download users",
       },
