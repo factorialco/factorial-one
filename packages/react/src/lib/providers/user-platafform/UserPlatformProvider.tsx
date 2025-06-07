@@ -6,23 +6,20 @@ export type Platform = "mac" | "windows" | "linux" | "mobile" | "unknown"
 type Context = {
   platform: Platform
   isDev: boolean
+  showExperimentalWarnings: boolean
 }
 
 const PlatformContext = createContext<Context | null>(null)
 
 type UserPlatformProviderProps = {
   children: React.ReactNode
-  /**
-   * Force set the platform. Won't trigger platform auto-detection if set.
-   */
-  platform?: Platform
-  isDev?: boolean
-}
+} & Partial<Context>
 
 export const UserPlatformProvider = ({
   children,
   platform,
   isDev = false,
+  showExperimentalWarnings = false,
 }: UserPlatformProviderProps) => {
   const [userPlatform, setUserPlatform] = useState<Platform>(
     platform ?? "unknown"
@@ -35,7 +32,13 @@ export const UserPlatformProvider = ({
   }, [platform])
 
   return (
-    <PlatformContext.Provider value={{ platform: userPlatform, isDev }}>
+    <PlatformContext.Provider
+      value={{
+        platform: userPlatform,
+        isDev,
+        showExperimentalWarnings,
+      }}
+    >
       {children}
     </PlatformContext.Provider>
   )
@@ -61,4 +64,15 @@ export function useUserPlatform(): Platform {
   }
 
   return context.platform
+}
+export function useShowExperimentalWarnings(): boolean {
+  const context = useContext(PlatformContext)
+
+  if (context === null) {
+    throw new Error(
+      "useShowExperimentalWarnings must be used within an UserPlatformProvider"
+    )
+  }
+
+  return context.showExperimentalWarnings
 }
