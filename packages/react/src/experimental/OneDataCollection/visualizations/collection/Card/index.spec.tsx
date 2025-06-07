@@ -345,6 +345,7 @@ describe("CardCollection", () => {
           paginationType: "pages" as const,
           perPage: 10,
           fetchData: async () => ({
+            type: "pages" as const,
             records: largeDataSet.slice(0, 12),
             pagesCount: Math.ceil(largeDataSet.length / 12),
             currentPage: 1,
@@ -407,6 +408,7 @@ describe("CardCollection", () => {
         dataAdapter: {
           paginationType: "pages" as const,
           fetchData: async () => ({
+            type: "pages" as const,
             records: largeDataSet.slice(0, 24),
             pagesCount: Math.ceil(largeDataSet.length / 24),
             currentPage: 1,
