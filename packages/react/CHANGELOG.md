@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.90.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.0...factorial-one-react-v1.90.1) (2025-06-09)
+
+
+### Bug Fixes
+
+* no longer rendering 0 for empty actions on metadataitem ([#2029](https://github.com/factorialco/factorial-one/issues/2029)) ([9429aa1](https://github.com/factorialco/factorial-one/commit/9429aa1fa7676dbeb46b144f80a6b4e2d89153e7))
+
 ## [1.90.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.89.0...factorial-one-react-v1.90.0) (2025-06-09)
 
 
