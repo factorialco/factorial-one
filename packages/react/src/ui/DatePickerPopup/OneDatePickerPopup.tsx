@@ -174,6 +174,7 @@ export function OneDatePickerPopup({
       {
         label: i18n.date.none,
         value: "none",
+        description: "",
         dateValue: undefined,
       },
       ...res,
@@ -244,7 +245,7 @@ export function OneDatePickerPopup({
                     options={compareToOptions.map((option) => ({
                       label: option.label,
                       value: option.value,
-                      description: option.description,
+                      description: option.description ?? "",
                     }))}
                     onChange={handleCompareToChange}
                     value={selectedCompareTo}
