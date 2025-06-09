@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.90.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.89.0...factorial-one-react-v1.90.0) (2025-06-09)
+
+
+### Features
+
+* add dot tag item to details item list component ([#2042](https://github.com/factorialco/factorial-one/issues/2042)) ([a89ab32](https://github.com/factorialco/factorial-one/commit/a89ab329703e9151b8d52a084f6f06c7f1e6ea7e))
+
 ## [1.89.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.88.1...factorial-one-react-v1.89.0) (2025-06-09)
 
 
