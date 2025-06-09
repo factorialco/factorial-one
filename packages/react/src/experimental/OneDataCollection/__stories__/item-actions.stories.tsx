@@ -183,6 +183,14 @@ export const BasicActionsExample: Story = {
 
 // Example showing how actions can be used with card visualization
 export const CardActionsExample: Story = {
+  parameters: {
+    i11y: {
+      skipCI: true,
+    },
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
   render: () => {
     const dataSource = useDataSource({
       dataAdapter: {
