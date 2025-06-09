@@ -1,5 +1,6 @@
 import { forwardRef, ReactElement } from "react"
 
+import { DotTag, DotTagProps } from "@/experimental/Information/Tags/DotTag"
 import { cn } from "@/lib/utils"
 import { IconType } from "../../../components/Utilities/Icon"
 import { CompanyAvatar } from "../../Information/Avatars/CompanyAvatar"
@@ -25,7 +26,7 @@ const _DataList = forwardRef<HTMLUListElement, DataListProps>(
       <div
         className={cn(
           isHorizontal
-            ? "flex flex-1 flex-col py-1.5 pl-3 pr-1.5 xs:flex-row"
+            ? "flex min-h-12 flex-1 flex-col py-1.5 pl-3 pr-1.5 xs:flex-row"
             : "min-w-32 max-w-72"
         )}
       >
@@ -39,7 +40,7 @@ const _DataList = forwardRef<HTMLUListElement, DataListProps>(
             {label}
           </p>
         )}
-        <ul className="flex flex-col gap-0.5" ref={ref}>
+        <ul className="flex flex-col justify-center gap-0.5" ref={ref}>
           {children}
         </ul>
       </div>
@@ -156,6 +157,20 @@ const TeamItem = forwardRef<HTMLLIElement, TeamItemProps>(
 
 TeamItem.displayName = "TeamItem"
 
+type DotTagItemProps = DotTagProps
+
+const DotTagItem = forwardRef<HTMLDivElement, DotTagItemProps>(
+  ({ ...props }, ref) => {
+    return (
+      <div ref={ref} className="flex items-start pt-1">
+        <DotTag {...props} />
+      </div>
+    )
+  }
+)
+
+DotTagItem.displayName = "DotTagItem"
+
 /**
  * convert simplified action type received from user to internal action format
  * @param action ActionType
@@ -177,4 +192,5 @@ export const DataList = Object.assign(_DataList, {
   CompanyItem,
   PersonItem,
   TeamItem,
+  DotTagItem,
 })
