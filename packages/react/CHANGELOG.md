@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.89.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.88.1...factorial-one-react-v1.89.0) (2025-06-09)
+
+
+### Features
+
+* add table view to DetailsItemsList component ([#2039](https://github.com/factorialco/factorial-one/issues/2039)) ([7da6a23](https://github.com/factorialco/factorial-one/commit/7da6a23f5ea6b4ef61f8690af8f839dd89b242c1))
+
 ## [1.88.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.88.0...factorial-one-react-v1.88.1) (2025-06-06)
 
 
