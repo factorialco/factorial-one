@@ -61,6 +61,14 @@ const meta: Meta = {
           },
         ],
       },
+      {
+        title: "Type",
+        content: {
+          type: "dot-tag",
+          text: "Holidays",
+          customColor: "#07A2AD",
+        },
+      },
     ],
   },
 } satisfies Meta<typeof DetailsItemsList>

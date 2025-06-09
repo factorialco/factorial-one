@@ -19,6 +19,9 @@ type Content =
   | (ComponentProps<typeof Weekdays> & {
       type: "weekdays"
     })
+  | (ComponentProps<typeof DataList.DotTagItem> & {
+      type: "dot-tag"
+    })
 
 export interface DetailsItemType {
   title: string
@@ -38,6 +41,7 @@ const ItemContent: FC<{ content: Content }> = ({ content }) => (
     {content.type === "item" && <DataList.Item {...content} />}
     {content.type === "team" && <DataList.TeamItem {...content} />}
     {content.type === "company" && <DataList.CompanyItem {...content} />}
+    {content.type === "dot-tag" && <DataList.DotTagItem {...content} />}
   </>
 )
 
@@ -54,7 +58,7 @@ export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
         className={cn(
           "flex flex-col gap-0.5",
           spacingAtTheBottom && !isHorizontal && "pb-3",
-          isHorizontal && "[&_li>div]:p-0 [&_ul]:flex-1"
+          isHorizontal && "xs:[&_ul>li]:p-0 [&_ul]:flex-1"
         )}
       >
         <DataList label={title} isHorizontal={isHorizontal}>
