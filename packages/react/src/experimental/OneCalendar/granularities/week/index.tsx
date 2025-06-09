@@ -24,8 +24,16 @@ export function toWeekGranularityDateRange<
   return toGranularityDateRange(date, startOfISOWeek, endOfISOWeek)
 }
 
+const add = (date: DateRangeComplete, delta: number): DateRangeComplete => {
+  return {
+    from: startOfISOWeek(addDays(date.from, delta * 7)),
+    to: endOfISOWeek(addDays(date.to, delta * 7)),
+  }
+}
+
 export const weekGranularity: GranularityDefinition = {
   calendarView: "week",
+  add,
   getPrevNext: (value: DateRange, options) => {
     const dateRange = toWeekGranularityDateRange(value)
     if (!dateRange) {
@@ -34,14 +42,8 @@ export const weekGranularity: GranularityDefinition = {
 
     const { from, to } = dateRange
 
-    const [prevFrom, prevTo] = [
-      startOfISOWeek(addDays(from, -7)),
-      endOfISOWeek(addDays(to, -7)),
-    ]
-    const [nextFrom, nextTo] = [
-      startOfISOWeek(addDays(from, 7)),
-      endOfISOWeek(addDays(to, 7)),
-    ]
+    const { from: prevFrom, to: prevTo } = add({ from, to }, -1)
+    const { from: nextFrom, to: nextTo } = add({ from, to }, 1)
 
     const minWithGranularity = options.min && startOfISOWeek(options.min)
     const maxWithGranularity = options.max && endOfISOWeek(options.max)
