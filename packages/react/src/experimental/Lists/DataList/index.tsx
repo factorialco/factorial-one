@@ -159,12 +159,12 @@ TeamItem.displayName = "TeamItem"
 
 type DotTagItemProps = DotTagProps
 
-const DotTagItem = forwardRef<HTMLDivElement, DotTagItemProps>(
+const DotTagItem = forwardRef<HTMLLIElement, DotTagItemProps>(
   ({ ...props }, ref) => {
     return (
-      <div ref={ref} className="flex items-start pt-1">
+      <li ref={ref} className="flex items-start pt-1">
         <DotTag {...props} />
-      </div>
+      </li>
     )
   }
 )

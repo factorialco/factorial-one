@@ -58,7 +58,7 @@ export const DetailsItem = forwardRef<HTMLDivElement, DetailsItemType>(
         className={cn(
           "flex flex-col gap-0.5",
           spacingAtTheBottom && !isHorizontal && "pb-3",
-          isHorizontal && "[&_li>div]:p-0 [&_ul>div]:p-0 [&_ul]:flex-1"
+          isHorizontal && "xs:[&_ul>li]:p-0 [&_ul]:flex-1"
         )}
       >
         <DataList label={title} isHorizontal={isHorizontal}>
