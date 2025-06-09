@@ -40957,11 +40957,9 @@ function a0e() {
 }
 function mge() {
   const e = Ge(Ew);
-  if (e === null)
-    throw new Error(
-      "useShowExperimentalWarnings must be used within an UserPlatformProvider"
-    );
-  return e.showExperimentalWarnings;
+  return e === null ? (console.warn(
+    "useShowExperimentalWarnings must be used within an UserPlatformProvider. Returning false."
+  ), !1) : e.showExperimentalWarnings;
 }
 const $o = {}, s0e = (e, t) => {
   const r = () => {
