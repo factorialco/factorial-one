@@ -4,13 +4,29 @@ import {
   OneCalendar,
   granularityDefinitions,
 } from "@/experimental/OneCalendar"
-import { DateRange } from "@/experimental/OneCalendar/types"
+import { DateRange, DateRangeComplete } from "@/experimental/OneCalendar/types"
 import { ChevronLeft } from "@/icons/app"
+import { useI18n } from "@/lib/providers/i18n"
 import { Popover, PopoverContent, PopoverTrigger } from "@/ui/popover"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { Select } from "../../experimental/Forms/Fields/Select"
+import { getCompareToValue } from "./compareTo"
 import { GranularitySelector } from "./components/GranularitySelector"
 import { PresetList } from "./components/PresetList"
 import { DatePickerValue, DatePreset } from "./types"
+
+export type CompareToDef = {
+  label: string
+  value:
+    | { delta: number; units: GranularityDefinitionKey }
+    | ((value: DateRangeComplete) => DateRangeComplete | DateRangeComplete[])
+}
+
+export type DatePickerCompareTo = Record<
+  GranularityDefinitionKey,
+  CompareToDef[]
+>
+
 export interface OneDatePickerPopupProps {
   onSelect?: (value: DatePickerValue | undefined) => void
   value?: DatePickerValue
@@ -24,6 +40,10 @@ export interface OneDatePickerPopupProps {
   children: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  compareTo?: DatePickerCompareTo
+  onCompareToChange?: (
+    compareTo: DateRangeComplete | DateRangeComplete[] | undefined
+  ) => void
 }
 
 const PRESET_CUSTOM = "__custom__"
@@ -34,9 +54,12 @@ export function OneDatePickerPopup({
   presets = [],
   granularities = ["day"],
   children,
+  compareTo,
+  onCompareToChange,
   value,
   ...props
 }: OneDatePickerPopupProps) {
+  const i18n = useI18n()
   const [localValue, setLocalValue] = useState<DatePickerValue | undefined>(
     value || defaultValue
   )
@@ -108,6 +131,65 @@ export function OneDatePickerPopup({
     [granularityDefinition]
   )
 
+  // Compare to
+  const [selectedCompareTo, setSelectedCompareTo] = useState<
+    string | undefined
+  >(undefined)
+  const compareToOptions = useMemo(() => {
+    const granularityCompareTo = (compareTo ?? {})[localGranularity] || []
+
+    if (!localValue?.value) {
+      return []
+    }
+
+    const currentValue = localValue.value
+
+    const res = granularityCompareTo.map((compare, index) => {
+      const value =
+        typeof compare.value === "function"
+          ? compare.value(granularityDefinition.toRange(currentValue))
+          : getCompareToValue(
+              granularityDefinition.toRange(currentValue),
+              compare.value.delta,
+              compare.value.units
+            )
+
+      const description = Array.isArray(value)
+        ? value.map((v) => granularityDefinition.toString(v)).join(", ")
+        : granularityDefinition.toString(value)
+
+      return {
+        label: compare.label,
+        value: index.toString(),
+        description,
+        dateValue: value,
+      }
+    })
+
+    if (res.length === 0) {
+      return []
+    }
+
+    return [
+      {
+        label: i18n.date.none,
+        value: "none",
+        dateValue: undefined,
+      },
+      ...res,
+    ]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [compareTo, localValue, granularityDefinition, localGranularity])
+
+  useEffect(() => {
+    setSelectedCompareTo("none")
+  }, [localValue])
+
+  const handleCompareToChange = (value: string) => {
+    setSelectedCompareTo(value)
+    onCompareToChange?.(compareToOptions[+value].dateValue)
+  }
+
   return (
     <Popover open={props.open} onOpenChange={props.onOpenChange}>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -152,6 +234,23 @@ export function OneDatePickerPopup({
                 minDate={props.minDate}
                 maxDate={props.maxDate}
               />
+              {compareToOptions.length > 0 && (
+                <div className="mt-4 flex flex-col gap-2">
+                  <div className="text-gray-500 text-sm">
+                    {i18n.date.compareTo}
+                  </div>
+                  <Select
+                    placeholder={i18n.date.compareTo}
+                    options={compareToOptions.map((option) => ({
+                      label: option.label,
+                      value: option.value,
+                      description: option.description,
+                    }))}
+                    onChange={handleCompareToChange}
+                    value={selectedCompareTo}
+                  />
+                </div>
+              )}
             </div>
           </div>
         )}

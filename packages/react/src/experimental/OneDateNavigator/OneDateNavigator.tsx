@@ -20,6 +20,8 @@ export function OneDateNavigator({
   granularities = ["day"],
   hideNavigation = false,
   hideGoToCurrent = false,
+  compareTo,
+  onCompareToChange,
   ...props
 }: OneDatePickerProps) {
   const [value, setValue] = useState<DatePickerValue | undefined>(defaultValue)
@@ -52,6 +54,8 @@ export function OneDateNavigator({
       maxDate={props.maxDate}
       open={isOpen}
       onOpenChange={setIsOpen}
+      compareTo={compareTo}
+      onCompareToChange={onCompareToChange}
     >
       <DatePickerTrigger
         value={value}
