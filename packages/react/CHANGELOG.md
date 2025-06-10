@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.90.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.1...factorial-one-react-v1.90.2) (2025-06-10)
+
+
+### Bug Fixes
+
+* datacollection pagination is mixing some top padding ([#2030](https://github.com/factorialco/factorial-one/issues/2030)) ([453a095](https://github.com/factorialco/factorial-one/commit/453a0951910082b747eeb54e755f65b0d551e25f))
+
 ## [1.90.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.0...factorial-one-react-v1.90.1) (2025-06-09)
 
 
