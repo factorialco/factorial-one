@@ -9,6 +9,7 @@ import {
   OnSelectItemsCallback,
   PaginationInfo,
   RecordType,
+  SelectedItemsState,
 } from "./types"
 import { Data, GROUP_ID_SYMBOL, GroupRecord, WithGroupId } from "./useData"
 
@@ -49,7 +50,8 @@ export function useSelectable<
     NavigationFilters,
     Grouping
   >,
-  onSelectItems?: OnSelectItemsCallback<R, Filters>
+  onSelectItems?: OnSelectItemsCallback<R, Filters>,
+  defaultSelectedItems?: SelectedItemsState
 ): UseSelectable<R> {
   const isGrouped = data.type === "grouped"
   const isPaginated = paginationInfo !== null
@@ -65,6 +67,34 @@ export function useSelectable<
   const [itemsState, setItemsState] = useState<Map<number | string, ItemState>>(
     new Map()
   )
+
+  /**
+   * Set the default selected items and groups
+   */
+  useEffect(() => {
+    if (defaultSelectedItems) {
+      if (isGrouped) {
+        ;(defaultSelectedItems.groups || []).forEach((defaultGroup) => {
+          console.log("defaultGroup", defaultGroup, data.groups)
+          const group = data.groups.find(
+            (group) => group.key === defaultGroup.groupId
+          )
+          if (group) {
+            console.log("group", group.key, defaultGroup.checked)
+            handleSelectGroupChange(group, defaultGroup.checked)
+          }
+        })
+      }
+
+      ;(defaultSelectedItems.items || []).forEach((item) => {
+        const record = data.records.find((record) => record.id === item.id)
+        if (record) {
+          handleSelectItemChange(record, item.checked)
+        }
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- we are checking deeply the defaultSelectedItems
+  }, [JSON.stringify(defaultSelectedItems), data.records])
 
   /**
    * Get the list of selected and unselected items from the itemsState for performance reasons

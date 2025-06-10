@@ -13,6 +13,7 @@ import {
   PaginatedResponse,
   PresetsDefinition,
   RecordType,
+  SelectedItemsState,
   SortingsStateMultiple,
   useDataSource,
 } from "@/experimental/OneDataCollection/exports"
@@ -470,6 +471,7 @@ export const ExampleComponent = ({
   usePresets = false,
   frozenColumns = 0,
   selectable,
+  defaultSelectedItems,
   bulkActions,
   currentGrouping,
   grouping,
@@ -490,6 +492,7 @@ export const ExampleComponent = ({
       GroupingDefinition<(typeof mockUsers)[number]>
     >
   >
+  defaultSelectedItems?: SelectedItemsState
   selectable?: (item: (typeof mockUsers)[number]) => string | number | undefined
   bulkActions?: (
     selectedItems: Parameters<
@@ -550,6 +553,7 @@ export const ExampleComponent = ({
       },
     ],
     selectable,
+    defaultSelectedItems,
     bulkActions,
     totalItemSummary,
     dataAdapter: {

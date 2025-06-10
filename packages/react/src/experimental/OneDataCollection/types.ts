@@ -67,6 +67,8 @@ export type DataSourceDefinition<
   dataAdapter: DataAdapter<Record, Filters, NavigationFilters>
   /** Selectable items value under the checkbox column (undefined if not selectable) */
   selectable?: (item: Record) => string | number | undefined
+  /** Default selected items */
+  defaultSelectedItems?: SelectedItemsState
   /** Bulk actions that can be performed on the collection */
   bulkActions?: (
     selectedItems: Parameters<OnBulkActionCallback<Record, Filters>>[1]
@@ -260,6 +262,15 @@ export type BulkActionDefinition = {
  * @template RecordType - The type containing the properties to extract
  */
 export type ExtractPropertyKeys<RecordType> = keyof RecordType
+
+/**
+ * Represents the selected items by id
+ */
+export type SelectedItemsState = {
+  allSelected?: boolean | "indeterminate"
+  items?: ReadonlyArray<{ id: string; checked: boolean }>
+  groups?: ReadonlyArray<{ groupId: string; checked: boolean }>
+}
 
 export type OnSelectItemsCallback<
   R extends RecordType,

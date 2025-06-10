@@ -69,6 +69,45 @@ The callback receives the an object with the following properties:
   their status.
 - `filters`: The current filters state
 
+### defaultSelectedItems
+
+The `defaultSelectedItems` prop is an object that contains the default selected
+items.
+
+````tsx
+const { source, currentSelectable, setCurrentSelectable } = useDataCollection({
+  ...
+  selectable: (item) => item.id,
+  defaultSelectedItems: {
+    allSelected: false,
+    items: [
+      { id: "1", checked: true },
+      { id: "2", checked: false },
+    ],
+    groups: [
+      { groupId: "group1", checked: true },
+      { groupId: "group2", checked: false },
+    ],
+  },
+  ...
+})
+
+```
+#### Examples
+
+**Default selected items**
+<Canvas
+  of={DataCollectionStories.WithSelectableAndDefaultSelectedItems}
+  meta={DataCollectionStories}
+/>
+
+**Default selected items and groups**
+<Canvas
+  of={DataCollectionStories.WithSelectableAndDefaultSelectedGroups}
+  meta={DataCollectionStories}
+/>
+
+
 #### Why this complex structure?
 
 You can think why not just return an array of selected items?
@@ -151,7 +190,7 @@ const { source, currentSelectable, setCurrentSelectable } = useDataCollection({
   source={source}
   onBulkAction={handleBulkActions}
 />
-```
+````
 
 You can react to the action selected by the user using the `OneDataCollection`
 component `onBulkAction` prop.

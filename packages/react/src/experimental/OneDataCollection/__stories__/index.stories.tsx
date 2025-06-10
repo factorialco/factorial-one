@@ -615,6 +615,54 @@ export const WithSelectableAndBulkActions: Story = {
   ),
 }
 
+export const WithSelectableAndDefaultSelectedItems: Story = {
+  render: () => (
+    <ExampleComponent
+      selectable={(item) => item.id}
+      defaultSelectedItems={{
+        allSelected: false,
+        items: [
+          { id: mockUsers[0].id, checked: true },
+          { id: mockUsers[1].id, checked: false },
+          { id: mockUsers[2].id, checked: true },
+        ],
+      }}
+    />
+  ),
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+}
+export const WithSelectableAndDefaultSelectedGroups: Story = {
+  render: () => (
+    <ExampleComponent
+      selectable={(item) => item.id}
+      grouping={{
+        collapsible: true,
+        mandatory: true,
+        defaultOpenGroups: ["group1", "group2"],
+        groupBy: {
+          department: {
+            name: "department",
+            label: (department) => department,
+          },
+        },
+      }}
+      defaultSelectedItems={{
+        allSelected: false,
+        items: [
+          { id: mockUsers[0].id, checked: true },
+          { id: mockUsers[2].id, checked: true },
+        ],
+        groups: [{ groupId: "Product", checked: true }],
+      }}
+    />
+  ),
+  parameters: {
+    chromatic: { disableSnapshot: true },
+  },
+}
+
 const JsonVisualization = ({
   source,
 }: {
