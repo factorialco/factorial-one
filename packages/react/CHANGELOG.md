@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.90.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.3...factorial-one-react-v1.90.4) (2025-06-10)
+
+
+### Bug Fixes
+
+* remove line clamp ([#2047](https://github.com/factorialco/factorial-one/issues/2047)) ([27633cc](https://github.com/factorialco/factorial-one/commit/27633cc19c63be89f653d77464b38f5a6f7ea2c0))
+
 ## [1.90.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.2...factorial-one-react-v1.90.3) (2025-06-10)
 
 
