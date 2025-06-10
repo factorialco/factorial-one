@@ -99,7 +99,15 @@ export function TableHead({
             {info && (
               <div className="flex h-6 w-6 items-center justify-center text-f1-foreground-secondary">
                 <Tooltip label={info}>
-                  <Icon icon={infoIcon} size="sm" />
+                  <div
+                    className={cn(
+                      "flex h-5 w-5 items-center justify-center rounded-xs",
+                      focusRing()
+                    )}
+                    tabIndex={0}
+                  >
+                    <Icon icon={infoIcon} size="sm" />
+                  </div>
                 </Tooltip>
               </div>
             )}
