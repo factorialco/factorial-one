@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.90.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.2...factorial-one-react-v1.90.3) (2025-06-10)
+
+
+### Bug Fixes
+
+* swap import/export icons ([#2027](https://github.com/factorialco/factorial-one/issues/2027)) ([99f295d](https://github.com/factorialco/factorial-one/commit/99f295da24adca6ef55f751f58176d20c6f5bd5e))
+
 ## [1.90.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.1...factorial-one-react-v1.90.2) (2025-06-10)
 
 
