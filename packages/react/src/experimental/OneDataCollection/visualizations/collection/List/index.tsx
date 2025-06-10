@@ -184,7 +184,7 @@ export const ListCollection = <
               <div className="flex flex-col gap-0 pt-2 first:pt-0">
                 <GroupHeader
                   key={`group-header-${group.key}`}
-                  className="px-4 py-3"
+                  className="cursor-pointer select-none rounded-md px-6 py-3 transition-colors hover:bg-f1-background-hover"
                   selectable={!!source.selectable}
                   select={
                     groupAllSelectedStatus[group.key]?.checked
@@ -202,17 +202,27 @@ export const ListCollection = <
                   open={openGroups[group.key]}
                   onOpenChange={(open) => setGroupOpen(group.key, open)}
                 />
-                {openGroups[group.key] && (
-                  <ListGroup
-                    key={`list-group-${group.key}`}
-                    source={source}
-                    items={group.records}
-                    selectedItems={selectedItems}
-                    handleSelectItemChange={handleSelectItemChange}
-                    fields={fields}
-                    itemDefinition={itemDefinition}
-                  />
-                )}
+                <AnimatePresence>
+                  {openGroups[group.key] && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.15, ease: "easeInOut" }}
+                      className="mt-0.5"
+                    >
+                      <ListGroup
+                        key={`list-group-${group.key}`}
+                        source={source}
+                        items={group.records}
+                        selectedItems={selectedItems}
+                        handleSelectItemChange={handleSelectItemChange}
+                        fields={fields}
+                        itemDefinition={itemDefinition}
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             )
           })}

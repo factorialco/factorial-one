@@ -126,7 +126,7 @@ export const Row = <
     <div
       className={cn(
         "relative flex w-full flex-col justify-between gap-4 p-3 transition-colors md:flex-row md:p-2 md:pl-3 md:pr-4",
-        "group after:absolute after:inset-y-0 after:-right-px after:z-10 after:hidden after:h-full after:w-10 after:bg-gradient-to-r after:from-transparent after:via-f1-background after:via-75% after:to-f1-background after:content-[''] hover:bg-f1-background-hover md:after:block",
+        "group after:absolute after:inset-y-0 after:-right-px after:z-10 after:hidden after:h-full after:w-10 after:bg-gradient-to-r after:from-transparent after:via-f1-background after:via-75% after:to-f1-background after:transition-all after:content-[''] hover:bg-f1-background-hover hover:after:via-[#F5F6F8] hover:after:to-[#F5F6F8] dark:hover:after:via-[#192231] dark:hover:after:to-[#192231] md:after:block",
         dropDownOpen && "bg-f1-background-hover"
       )}
     >
@@ -166,7 +166,7 @@ export const Row = <
       {source.itemActions && (
         <aside
           className={cn(
-            "absolute bottom-0 right-0 top-0 z-20 hidden items-center justify-end gap-2 py-2 pl-20 pr-3 opacity-0 transition-all group-hover:opacity-100 md:flex",
+            "absolute -right-px bottom-0 top-0 z-20 hidden items-center justify-end gap-2 py-2 pl-20 pr-3 opacity-0 transition-all group-hover:opacity-100 md:flex",
             "bg-gradient-to-l from-[#F5F6F8] from-0% dark:from-[#192231]",
             "via-[#F5F6F8] via-60% dark:via-[#192231]",
             "to-transparent to-100%",
