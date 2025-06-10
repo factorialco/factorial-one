@@ -34,6 +34,7 @@ export const modules = {
   my_trainings: ModuleIcons.Trainings,
   "new-trainings": ModuleIcons.Trainings,
   notifications: ModuleIcons.Inbox,
+  inbox: ModuleIcons.Inbox,
   overviews: ModuleIcons.Overviews,
   payroll_bundle: ModuleIcons.Payroll,
   performance_v2: ModuleIcons.Performance,
