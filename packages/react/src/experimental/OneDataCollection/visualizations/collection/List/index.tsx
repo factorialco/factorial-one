@@ -117,9 +117,25 @@ export const ListCollection = <
 
   if (isInitialLoading) {
     return (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col overflow-hidden rounded-xl border border-solid border-f1-border-secondary [&>div:last-child]:border-b-transparent [&>div]:border [&>div]:border-solid [&>div]:border-transparent [&>div]:border-b-f1-border-secondary">
         {Array.from({ length: 10 }).map((_, index) => (
-          <Skeleton key={index} className="h-10 w-full" />
+          <div
+            key={index}
+            className="flex flex-col items-start gap-3 p-3 md:h-18 md:flex-row md:items-center md:justify-between md:gap-2"
+          >
+            <div className="flex flex-col gap-2">
+              <Skeleton className="h-4 w-28" />
+              <div className="flex flex-col gap-2 md:flex-row">
+                <Skeleton className="h-3 w-10" />
+                <Skeleton className="h-3 w-10" />
+              </div>
+            </div>
+            <div className="flex flex-col gap-2 md:flex-row">
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-4 w-16" />
+              <Skeleton className="h-4 w-16" />
+            </div>
+          </div>
         ))}
       </div>
     )
