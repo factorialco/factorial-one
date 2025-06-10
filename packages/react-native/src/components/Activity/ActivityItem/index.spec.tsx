@@ -7,7 +7,7 @@ import {
 } from "../../Activity/ActivityItem";
 
 // Mock the IconAvatar component
-jest.mock("../../IconAvatar", () => ({
+jest.mock("../../Avatars/IconAvatar", () => ({
   IconAvatar: () => null,
 }));
 

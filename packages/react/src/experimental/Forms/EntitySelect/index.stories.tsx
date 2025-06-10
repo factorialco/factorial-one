@@ -1,5 +1,6 @@
 import type { Meta } from "@storybook/react"
 
+import { Plus } from "@/icons/app"
 import { expect, fn, userEvent, within } from "@storybook/test"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { ComponentProps, useState } from "react"
@@ -651,6 +652,49 @@ export const HiddenAvatar = {
           }}
           selectedEntities={selected}
           onSelect={(selection: EntitySelectEntity[]) => {
+            setSelected(selection)
+          }}
+        />
+      </form>
+    )
+  },
+}
+
+export const WithActions = {
+  args: {
+    ...defaultArgs,
+    actions: [
+      { label: "New employee", onClick: fn(), variant: "ghost", icon: Plus },
+    ],
+  },
+  render: (props: ComponentProps<typeof EntitySelect>) => {
+    const [expandedElements, setExpandedElements] = useState<EntityId[]>([])
+    const [selected, setSelected] = useState<EntitySelectEntity | null>(null)
+    const onItemExpandedChange = (id: EntityId, expanded: boolean) => {
+      if (expanded) {
+        setExpandedElements([id].concat(expandedElements))
+      } else {
+        setExpandedElements(expandedElements.filter((el) => el !== id))
+      }
+    }
+
+    return (
+      <form onSubmit={fn}>
+        <EntitySelect
+          {...props}
+          groups={[{ label: "All", value: "all", groupType: "team" }]}
+          singleSelector
+          onItemExpandedChange={onItemExpandedChange}
+          entities={
+            GROUP_DATA["all"].map((el) => ({
+              ...el,
+              expanded: expandedElements.includes(el.id),
+              subItems: el.subItems?.map((el2) => ({ ...el2 })),
+            })) || []
+          }
+          selectedGroup={"all"}
+          selectedEntities={selected ? [selected] : []}
+          onSelect={(selection: EntitySelectEntity | null) => {
             setSelected(selection)
           }}
         />

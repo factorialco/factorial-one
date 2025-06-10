@@ -1,5 +1,82 @@
 # Changelog
 
+## [1.90.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.2...factorial-one-react-v1.90.3) (2025-06-10)
+
+
+### Bug Fixes
+
+* swap import/export icons ([#2027](https://github.com/factorialco/factorial-one/issues/2027)) ([99f295d](https://github.com/factorialco/factorial-one/commit/99f295da24adca6ef55f751f58176d20c6f5bd5e))
+
+## [1.90.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.1...factorial-one-react-v1.90.2) (2025-06-10)
+
+
+### Bug Fixes
+
+* datacollection pagination is mixing some top padding ([#2030](https://github.com/factorialco/factorial-one/issues/2030)) ([453a095](https://github.com/factorialco/factorial-one/commit/453a0951910082b747eeb54e755f65b0d551e25f))
+
+## [1.90.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.0...factorial-one-react-v1.90.1) (2025-06-09)
+
+
+### Bug Fixes
+
+* no longer rendering 0 for empty actions on metadataitem ([#2029](https://github.com/factorialco/factorial-one/issues/2029)) ([9429aa1](https://github.com/factorialco/factorial-one/commit/9429aa1fa7676dbeb46b144f80a6b4e2d89153e7))
+
+## [1.90.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.89.0...factorial-one-react-v1.90.0) (2025-06-09)
+
+
+### Features
+
+* add dot tag item to details item list component ([#2042](https://github.com/factorialco/factorial-one/issues/2042)) ([a89ab32](https://github.com/factorialco/factorial-one/commit/a89ab329703e9151b8d52a084f6f06c7f1e6ea7e))
+
+## [1.89.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.88.1...factorial-one-react-v1.89.0) (2025-06-09)
+
+
+### Features
+
+* add table view to DetailsItemsList component ([#2039](https://github.com/factorialco/factorial-one/issues/2039)) ([7da6a23](https://github.com/factorialco/factorial-one/commit/7da6a23f5ea6b4ef61f8690af8f839dd89b242c1))
+
+## [1.88.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.88.0...factorial-one-react-v1.88.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* better grouping in ActivityItemList ([#2036](https://github.com/factorialco/factorial-one/issues/2036)) ([ea1e031](https://github.com/factorialco/factorial-one/commit/ea1e0314e4b159ead0e9c6d4f85d727515019571))
+
+## [1.88.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.87.0...factorial-one-react-v1.88.0) (2025-06-06)
+
+
+### Features
+
+* add support to show up module icon in OneModal.Header ([#2020](https://github.com/factorialco/factorial-one/issues/2020)) ([5652907](https://github.com/factorialco/factorial-one/commit/5652907dc329aacc12525ed2a1b4e29d2b41f83d))
+
+## [1.87.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.86.1...factorial-one-react-v1.87.0) (2025-06-06)
+
+
+### Features
+
+* create OneApprovalHistory component ([#2004](https://github.com/factorialco/factorial-one/issues/2004)) ([1482254](https://github.com/factorialco/factorial-one/commit/1482254508f50a5f682b16984ff1a77dfef64ba8))
+
+## [1.86.1](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.86.0...factorial-one-react-v1.86.1) (2025-06-06)
+
+
+### Bug Fixes
+
+* remove console + fix small round border ([#2028](https://github.com/factorialco/factorial-one/issues/2028)) ([b34a8d0](https://github.com/factorialco/factorial-one/commit/b34a8d06d53fe9f8494ba7ba5ed71627ffc7c5b7))
+
+## [1.86.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.5...factorial-one-react-v1.86.0) (2025-06-05)
+
+
+### Features
+
+* add files icon ([#2018](https://github.com/factorialco/factorial-one/issues/2018)) ([e2bacf7](https://github.com/factorialco/factorial-one/commit/e2bacf73e96d5806dd5c823f3fa21ba904925905))
+
+## [1.85.5](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.4...factorial-one-react-v1.85.5) (2025-06-05)
+
+
+### Bug Fixes
+
+* **datacollection:** no cache infilters render loop ([#2019](https://github.com/factorialco/factorial-one/issues/2019)) ([546ab14](https://github.com/factorialco/factorial-one/commit/546ab14a9d0826f351bc17b0d7b58aa32e8a5c80))
+
 ## [1.85.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.85.3...factorial-one-react-v1.85.4) (2025-06-04)
 
 

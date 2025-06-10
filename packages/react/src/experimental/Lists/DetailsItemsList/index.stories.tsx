@@ -61,6 +61,14 @@ const meta: Meta = {
           },
         ],
       },
+      {
+        title: "Type",
+        content: {
+          type: "dot-tag",
+          text: "Holidays",
+          customColor: "#07A2AD",
+        },
+      },
     ],
   },
 } satisfies Meta<typeof DetailsItemsList>
@@ -69,3 +77,10 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {}
+
+export const TableView: Story = {
+  args: {
+    title: undefined,
+    tableView: true,
+  },
+}

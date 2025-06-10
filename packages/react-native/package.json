@@ -1,6 +1,6 @@
 {
   "name": "@factorialco/factorial-one-react-native",
-  "version": "0.11.0",
+  "version": "0.13.1",
   "type": "module",
   "description": "React Native components for Factorial One Design System",
   "main": "src/index.ts",
@@ -42,11 +42,12 @@
   "author": "Factorial",
   "license": "MIT",
   "peerDependencies": {
+    "date-fns": "^3.6.0",
     "nativewind": "^4.1.23",
     "react": "^18.2.0",
     "react-native": "^0.76.6",
     "react-native-svg": "^15.8.0",
-    "tailwindcss": "3.3.5",
+    "tailwindcss": "^3.4.3",
     "twemoji-parser": "^14.0.0",
     "typescript": "^5.7.2"
   },
@@ -54,12 +55,15 @@
     "@factorialco/factorial-one-core": "1.9.0",
     "clsx": "^2.1.1",
     "cva": "1.0.0-beta.3",
+    "lodash": "^4.17.21",
+    "react-native-safe-area-context": "4.12.0",
     "tailwind-merge": "^2.6.0"
   },
   "devDependencies": {
     "@svgr/cli": "^8.1.0",
     "@testing-library/react-native": "^12.9.0",
     "@types/jest": "^29.5.14",
+    "@types/lodash": "^4.17.16",
     "@types/react": "^18.2.0",
     "@types/react-native": "^0.73.0",
     "@types/twemoji-parser": "^13.1.4",
@@ -72,7 +76,7 @@
     "react": "^18.2.0",
     "react-native": "^0.76.6",
     "react-native-svg": "^15.8.0",
-    "tailwindcss": "3.3.5",
+    "tailwindcss": "^3.4.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.7.2"
   }

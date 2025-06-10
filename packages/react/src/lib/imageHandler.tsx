@@ -22,7 +22,6 @@ export const ImageProvider: React.FC<
 
 export const useImageContext = () => {
   const context = useContext(ImageContext)
-
   return {
     ...context,
   }
