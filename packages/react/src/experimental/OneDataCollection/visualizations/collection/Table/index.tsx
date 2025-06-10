@@ -363,7 +363,7 @@ export const TableCollection = <
         </TableBody>
       </OneTable>
       {paginationInfo && (
-        <div className="flex w-full items-center justify-between px-6">
+        <div className="flex w-full items-center justify-between px-6 pt-4">
           <span className="shrink-0 text-f1-foreground-secondary">
             {paginationInfo.total > 0 &&
               `${(paginationInfo.currentPage - 1) * paginationInfo.perPage + 1}-${Math.min(
