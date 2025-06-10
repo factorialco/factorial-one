@@ -149,14 +149,14 @@ export const BasicTableView: Story = {
       }),
       secondaryActions: () => [
         {
-          label: "Import",
+          label: "Export",
           icon: Upload,
-          onClick: () => console.log(`Import`),
+          onClick: () => console.log(`Export`),
         },
         {
-          label: "Export",
+          label: "Import",
           icon: Download,
-          onClick: () => console.log(`Export`),
+          onClick: () => console.log(`Import`),
         },
       ],
     })
@@ -369,12 +369,12 @@ export const BasicCardView: Story = {
       secondaryActions: () => [
         {
           label: "Import",
-          icon: Upload,
+          icon: Download,
           onClick: () => console.log(`Import`),
         },
         {
           label: "Export",
-          icon: Download,
+          icon: Upload,
           onClick: () => console.log(`Export`),
         },
       ],
