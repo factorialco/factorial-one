@@ -70,9 +70,9 @@ export const WithUpsellingButton: Story = {
   args: {
     mediaUrl:
       "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
-    title: "More benefits to René & your team",
+    title: "Give René some well-deserved benefits!",
     description:
-      "Enjoy greater savings through flexible benefits like meals, transport, and health insurance.",
+      "Help people improve their take-home pay by €200 a year with flexible benefits, at no extra cost to you.",
     onClick: () => {
       alert("clicked")
     },
