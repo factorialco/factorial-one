@@ -348,8 +348,7 @@ export const getMockVisualizations = (options?: {
     options: {
       itemDefinition: (item) => ({
         title: item.name,
-        description: item.email,
-        metadata: item.role,
+        description: [item.email, item.role],
         avatar: {
           type: "person",
           firstName: item.name.split(" ")[0],
@@ -364,6 +363,16 @@ export const getMockVisualizations = (options?: {
         },
         {
           label: "Role",
+          render: (item) => item.role,
+          sorting: "role",
+        },
+        {
+          label: "Email 2",
+          render: (item) => item.email,
+          sorting: "email",
+        },
+        {
+          label: "Role 2",
           render: (item) => item.role,
           sorting: "role",
         },

@@ -8,7 +8,9 @@ import { useI18n } from "@/lib/providers/i18n"
 import { cn } from "@/lib/utils"
 import { Checkbox } from "@/ui/checkbox"
 import { Skeleton } from "@/ui/skeleton"
+import { AnimatePresence, motion } from "framer-motion"
 import { useEffect } from "react"
+import { Spinner } from "../../../../Information/Spinner"
 import type { FiltersDefinition } from "../../../Filters/types"
 import { ItemActionsDefinition } from "../../../item-actions"
 import { SortingsDefinition } from "../../../sortings"
@@ -156,18 +158,33 @@ export const ListCollection = <
         </div>
       </div>
       <div
-        className={cn(isLoading && "select-none opacity-50 transition-opacity")}
+        className={cn(
+          "relative",
+          isLoading && "select-none opacity-50 transition-opacity"
+        )}
         aria-live={isLoading ? "polite" : undefined}
         aria-busy={isLoading ? "true" : undefined}
       >
+        <AnimatePresence>
+          {isLoading && (
+            <motion.div
+              className="absolute inset-0 flex cursor-progress items-center justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <Spinner />
+            </motion.div>
+          )}
+        </AnimatePresence>
         {data.type === "grouped" &&
           data.groups.map((group) => {
             const itemCount = group.itemCount
             return (
-              <>
+              <div className="flex flex-col gap-0 pt-2 first:pt-0">
                 <GroupHeader
                   key={`group-header-${group.key}`}
-                  className="px-4"
+                  className="px-4 py-3"
                   selectable={!!source.selectable}
                   select={
                     groupAllSelectedStatus[group.key]?.checked
@@ -196,7 +213,7 @@ export const ListCollection = <
                     itemDefinition={itemDefinition}
                   />
                 )}
-              </>
+              </div>
             )
           })}
 

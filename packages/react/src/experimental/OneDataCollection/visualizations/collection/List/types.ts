@@ -16,9 +16,8 @@ export type WithOptionalSorting<
 
 export type ItemDefinition = {
   title: string
-  description?: string
+  description?: string[]
   avatar?: AvatarVariant
-  metadata?: string
 }
 
 export type ListPropertyDefinition<
