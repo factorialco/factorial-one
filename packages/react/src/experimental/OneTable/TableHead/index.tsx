@@ -1,6 +1,6 @@
 import { TableHead as TableHeadRoot } from "@/ui/table"
 import { AnimatePresence, motion } from "framer-motion"
-import { Icon } from "../../../components/Utilities/Icon"
+import { Icon, IconType } from "../../../components/Utilities/Icon"
 import { ArrowDown, InfoCircleLine } from "../../../icons/app"
 import { cn, focusRing } from "../../../lib/utils"
 import { Tooltip } from "../../Overlays/Tooltip"
@@ -43,6 +43,12 @@ interface TableHeadProps {
   info?: string
 
   /**
+   * Icon to display when info is provided.
+   * @default InfoCircleLine
+   */
+  infoIcon?: IconType
+
+  /**
    * When true, the header cell will not be visible.
    * @default false
    */
@@ -61,6 +67,7 @@ export function TableHead({
   sortState = "none",
   onSortClick,
   info,
+  infoIcon = InfoCircleLine,
   sticky,
   hidden = false,
   align = "left",
@@ -91,7 +98,9 @@ export function TableHead({
           <div className="flex items-center">
             {info && (
               <div className="flex h-6 w-6 items-center justify-center text-f1-foreground-secondary">
-                <Icon icon={InfoCircleLine} size="sm" />
+                <Tooltip label={info}>
+                  <Icon icon={infoIcon} size="sm" />
+                </Tooltip>
               </div>
             )}
             {onSortClick && (
@@ -197,7 +206,7 @@ export function TableHead({
           />
         )}
       </AnimatePresence>
-      {!hidden && (info ? <Tooltip label={info}>{content}</Tooltip> : content)}
+      {!hidden && content}
     </TableHeadRoot>
   )
 }
