@@ -11,7 +11,7 @@ export type ItemTeaserProps = {
 
 export const ItemTeaser = ({ title, avatar, description }: ItemTeaserProps) => {
   return (
-    <article className="flex min-w-40 flex-col items-start gap-3 md:flex-row md:items-center md:gap-2">
+    <article className="flex w-[calc(100%-72px)] min-w-40 flex-col items-start gap-3 md:w-full md:flex-row md:items-center md:gap-2">
       {avatar && <Avatar avatar={avatar} size="medium" />}
       <div className="flex flex-col gap-0.5 md:gap-1">
         <header>

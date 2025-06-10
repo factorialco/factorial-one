@@ -165,13 +165,11 @@ export const ListCollection = <
           />
         )}
 
-        <div className="flex flex-row gap-2 px-4 py-2">
-          <SortingSelector
-            source={source}
-            onChange={setCurrentSortings}
-            currentSortings={currentSortings}
-          />
-        </div>
+        <SortingSelector
+          source={source}
+          onChange={setCurrentSortings}
+          currentSortings={currentSortings}
+        />
       </div>
       <div
         className={cn(
@@ -224,7 +222,7 @@ export const ListCollection = <
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.15, ease: "easeInOut" }}
+                      transition={{ duration: 0.1, ease: "easeInOut" }}
                       className="mt-0.5"
                     >
                       <ListGroup
