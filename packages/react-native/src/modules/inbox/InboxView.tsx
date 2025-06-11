@@ -4,7 +4,9 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { InboxCard } from "./Card";
 import { ActionT, PageHeader } from "../../components/Navigation/PageHeader";
 import { EmptyStateT } from "./EmptyState";
-
+import { FilterOption, Filters } from "./Filters";
+import { View } from "react-native";
+export type { FilterOption };
 // Sample data type for the list items
 type SampleListItem = {
   id: string;
@@ -15,6 +17,7 @@ type SampleListItem = {
   src?: string;
   date: string;
   onPress?: (id: string) => void;
+  category: string;
 };
 
 export type InboxSection = {
@@ -31,6 +34,9 @@ type Props = {
   onPress?: (id: string) => void;
   onNotificationPress?: () => void;
   showNotificationBadge?: boolean;
+  filters?: FilterOption[];
+  onFilterChange?: (index: number) => void;
+  category?: string;
 };
 
 export const InboxView = memo(
@@ -42,19 +48,24 @@ export const InboxView = memo(
     onPress = () => {},
     onNotificationPress = () => {},
     showNotificationBadge = false,
+    filters = [],
+    onFilterChange,
+    category,
   }: Props) => {
     const renderSampleItem = useCallback(
       (item: SampleListItem) => (
-        <InboxCard
-          id={item.id}
-          title={item.title}
-          description={item.description}
-          date={item.date}
-          firstName={item.firstName}
-          lastName={item.lastName}
-          src={item.src}
-          onPress={onPress}
-        />
+        <View className="px-3">
+          <InboxCard
+            id={item.id}
+            title={item.title}
+            description={item.description}
+            date={item.date}
+            firstName={item.firstName}
+            lastName={item.lastName}
+            src={item.src}
+            onPress={onPress}
+          />
+        </View>
       ),
       [onPress],
     );
@@ -68,12 +79,26 @@ export const InboxView = memo(
       },
     ];
 
+    // Filtering logic: flatten all items, filter by category, regroup by section
+    let filteredSections = sections;
+    if (category) {
+      filteredSections = sections
+        .map((section) => ({
+          ...section,
+          data: section.data.filter((item) => item.category === category),
+        }))
+        .filter((section) => section.data.length > 0);
+    }
+
     return (
       <SafeAreaProvider>
         <SafeAreaView edges={["top"]} className="flex-1 bg-f1-background">
           <PageHeader title={title} actions={actions} />
+          {filters && filters.length > 0 && (
+            <Filters filters={filters} onFilterChange={onFilterChange} />
+          )}
           <InboxList
-            sections={sections}
+            sections={filteredSections}
             safeBottom={safeBottom}
             renderItem={renderSampleItem}
             emptyState={emptyState}

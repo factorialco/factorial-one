@@ -22,7 +22,7 @@ const InboxListBase = <T extends { id: string }>({
   const isEmpty = sections.length === 0;
   if (isEmpty) {
     return (
-      <View className="flex-1 p-4">
+      <View className="flex-1 p-5">
         <EmptyState
           emoji={emptyState.emoji}
           title={emptyState.title}

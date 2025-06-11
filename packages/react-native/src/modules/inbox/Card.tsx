@@ -33,7 +33,7 @@ export const InboxCard = ({
   return (
     <Pressable
       className={cn(
-        "flex-row gap-3 rounded-lg bg-f1-background px-4 py-2",
+        "flex-row gap-3 rounded-lg bg-f1-background px-2 py-3",
         isPressed && "bg-f1-background-hover",
       )}
       onPress={() => {
@@ -50,11 +50,11 @@ export const InboxCard = ({
           size="medium"
         />
       </View>
-      <View className="justify-between gap-1">
-        <Text className="text-base font-medium text-f1-foreground">
+      <View className="flex-1 justify-between gap-1">
+        <Text className="line-clamp-2 text-base font-medium text-f1-foreground">
           {title}
         </Text>
-        <Text className="font-regular text-base text-f1-foreground">
+        <Text className="font-regular line-clamp-2 text-base text-f1-foreground-secondary">
           {description}
         </Text>
         <View className="flex-row gap-2">
