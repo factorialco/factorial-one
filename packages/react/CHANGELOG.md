@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.91.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.4...factorial-one-react-v1.91.0) (2025-06-11)
+
+
+### Features
+
+* add on click to dropdown footer sidebar ([#2052](https://github.com/factorialco/factorial-one/issues/2052)) ([205ea79](https://github.com/factorialco/factorial-one/commit/205ea799ecfc6a44a7daf614e7b1b15cf8e56e17))
+
 ## [1.90.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.3...factorial-one-react-v1.90.4) (2025-06-10)
 
 
