@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.92.3](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.2...factorial-one-react-v1.92.3) (2025-06-11)
+
+
+### Bug Fixes
+
+* whitespace prewrap added to add wrapping and avoid issues when pre code block is added ([#2053](https://github.com/factorialco/factorial-one/issues/2053)) ([3099da6](https://github.com/factorialco/factorial-one/commit/3099da62c880efacb5a564ce847454a4bdb2732f))
+
 ## [1.92.2](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.92.1...factorial-one-react-v1.92.2) (2025-06-11)
 
 
