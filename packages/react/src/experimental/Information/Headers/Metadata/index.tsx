@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import { memo, useState } from "react"
 import { Button, CopyButton } from "../../../../components/Actions/Button"
 import { Icon, IconType } from "../../../../components/Utilities/Icon"

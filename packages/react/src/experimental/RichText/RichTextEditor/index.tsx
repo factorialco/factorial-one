@@ -8,7 +8,7 @@ import { withSkeleton } from "@/lib/skeleton"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/ui/skeleton"
 import { Editor, EditorContent, useEditor } from "@tiptap/react"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion } from "motion/react"
 import {
   forwardRef,
   useEffect,

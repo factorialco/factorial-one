@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { useState } from "react"
 import { Icon } from "../../components/Utilities/Icon"
 import { Counter } from "../../experimental/Information/Counter"
