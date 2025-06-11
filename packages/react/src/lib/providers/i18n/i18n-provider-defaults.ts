@@ -46,6 +46,16 @@ export const defaultTranslations = {
     cancel: "Cancel",
   },
   collections: {
+    sorting: {
+      noSorting: "No sorting",
+      toggleDirection: "Toggle sorting direction",
+      sortBy: "Sort by",
+    },
+    grouping: {
+      noGrouping: "No grouping",
+      groupBy: "Group by",
+      toggleDirection: "Toggle direction",
+    },
     actions: {
       actions: "Actions",
     },

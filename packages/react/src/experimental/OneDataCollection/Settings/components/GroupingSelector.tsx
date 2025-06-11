@@ -1,6 +1,7 @@
 import { Button } from "@/components/Actions/Button"
 import { Select } from "@/experimental/Forms/Fields/Select"
 import { ArrowDown, ArrowUp } from "@/icons/app"
+import { useI18n } from "@/lib/providers/i18n"
 import { GroupingDefinition, GroupingState } from "../../grouping"
 import { RecordType } from "../../types"
 
@@ -23,11 +24,12 @@ export const GroupingSelector = <
   currentGrouping,
   onGroupingChange,
 }: GroupingSelectorProps<R, Grouping>) => {
+  const i18n = useI18n()
   const groupingOptions = [
     ...(!grouping.mandatory
       ? [
           {
-            label: "No grouping",
+            label: i18n.collections.grouping.noGrouping,
             value: EmptyGroupingValue,
           },
         ]
@@ -49,7 +51,7 @@ export const GroupingSelector = <
 
   return (
     <div>
-      <label>Group by...</label>
+      <label>{i18n.collections.grouping.groupBy}</label>
       <div className="flex items-center gap-2">
         <div className="shrink grow">
           <Select
@@ -71,7 +73,7 @@ export const GroupingSelector = <
           <div>
             <Button
               hideLabel
-              label="Toggle sort direction"
+              label={i18n.collections.grouping.toggleDirection}
               variant="outline"
               icon={currentGrouping?.order === "asc" ? ArrowUp : ArrowDown}
               onClick={() =>

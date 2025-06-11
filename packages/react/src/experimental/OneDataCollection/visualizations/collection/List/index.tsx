@@ -18,7 +18,6 @@ import { CollectionProps, GroupingDefinition, RecordType } from "../../../types"
 import { useData } from "../../../useData"
 import { useSelectable } from "../../../useSelectable"
 import { ListGroup } from "./components/ListGroup"
-import { SortingSelector } from "./components/SortingSelector"
 import { ListVisualizationOptions } from "./types"
 
 /**
@@ -88,7 +87,7 @@ export const ListCollection = <
     // eslint-disable-next-line react-hooks/exhaustive-deps --  we don't want to re-run this effect when the filters change, just when the data changes
   }, [paginationInfo?.total, data.records])
 
-  const { currentSortings, setCurrentSortings, isLoading } = source
+  const { isLoading } = source
 
   /**
    * Item selection
@@ -164,12 +163,6 @@ export const ListCollection = <
             title="[TODO] Select all"
           />
         )}
-
-        <SortingSelector
-          source={source}
-          onChange={setCurrentSortings}
-          currentSortings={currentSortings}
-        />
       </div>
       <div
         className={cn(
