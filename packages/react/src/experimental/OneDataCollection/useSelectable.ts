@@ -50,8 +50,8 @@ export function useSelectable<
     NavigationFilters,
     Grouping
   >,
-  onSelectItems?: OnSelectItemsCallback<R, Filters>,
-  defaultSelectedItems?: SelectedItemsState
+  onSelectItems: OnSelectItemsCallback<R, Filters> | undefined,
+  defaultSelectedItems: SelectedItemsState | undefined
 ): UseSelectable<R> {
   const isGrouped = data.type === "grouped"
   const isPaginated = paginationInfo !== null

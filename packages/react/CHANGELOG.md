@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.92.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.91.0...factorial-one-react-v1.92.0) (2025-06-11)
+
+
+### Features
+
+* disable drag and drop in sidebar on touch screens ([#2048](https://github.com/factorialco/factorial-one/issues/2048)) ([6ddf3e3](https://github.com/factorialco/factorial-one/commit/6ddf3e329e2c9fa131841df3d80c76ec7e7b909d))
+
+## [1.91.0](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.4...factorial-one-react-v1.91.0) (2025-06-11)
+
+
+### Features
+
+* add on click to dropdown footer sidebar ([#2052](https://github.com/factorialco/factorial-one/issues/2052)) ([205ea79](https://github.com/factorialco/factorial-one/commit/205ea799ecfc6a44a7daf614e7b1b15cf8e56e17))
+
 ## [1.90.4](https://github.com/factorialco/factorial-one/compare/factorial-one-react-v1.90.3...factorial-one-react-v1.90.4) (2025-06-10)
 
 
