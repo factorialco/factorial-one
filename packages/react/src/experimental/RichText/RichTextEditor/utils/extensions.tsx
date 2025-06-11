@@ -24,6 +24,7 @@ interface ExtensionsConfigurationProps {
   setMentionSuggestions: (suggestions: MentionedUser[]) => void
   placeholder: string
   maxCharacters?: number
+  allowTaskList?: boolean
 }
 
 const ExtensionsConfiguration = ({
@@ -32,6 +33,7 @@ const ExtensionsConfiguration = ({
   setMentionSuggestions,
   placeholder,
   maxCharacters,
+  allowTaskList = true,
 }: ExtensionsConfigurationProps) => {
   return [
     StarterKitExtension,
@@ -40,11 +42,10 @@ const ExtensionsConfiguration = ({
     ColorExtension,
     TypographyExtension,
     HighlightExtension,
-    TaskListExtension,
-    CustomTaskExtension,
     TextAlignExtension,
     LinkExtension,
     PersistSelection,
+    ...(allowTaskList ? [TaskListExtension, CustomTaskExtension] : []),
     createPlaceholderExtension(placeholder),
     createCharacterCountExtension(maxCharacters),
     ...createMentionExtensions(

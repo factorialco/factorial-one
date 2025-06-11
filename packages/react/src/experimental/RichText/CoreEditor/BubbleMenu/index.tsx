@@ -9,6 +9,7 @@ interface EditorBubbleMenuProps {
   isToolbarOpen: boolean
   isFullscreen: boolean
   editorId: string
+  allowTaskList?: boolean
 }
 
 export const EditorBubbleMenu = ({
@@ -18,6 +19,7 @@ export const EditorBubbleMenu = ({
   toolbarLabels,
   isToolbarOpen,
   isFullscreen,
+  allowTaskList = true,
 }: EditorBubbleMenuProps) => {
   return (
     <BubbleMenu
@@ -41,6 +43,7 @@ export const EditorBubbleMenu = ({
             disableButtons={disableButtons}
             darkMode
             showEmojiPicker={false}
+            allowTaskList={allowTaskList}
           />
         </div>
       )}

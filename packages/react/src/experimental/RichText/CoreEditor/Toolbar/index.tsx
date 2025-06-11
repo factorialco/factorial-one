@@ -23,6 +23,7 @@ import {
   Underline,
 } from "@/icons/app"
 import { cn } from "@/lib/utils"
+import { Editor } from "@tiptap/react"
 import { compact } from "lodash"
 import React from "react"
 import { LinkPopup } from "./LinkPopup"
@@ -49,6 +50,7 @@ export const Toolbar = ({
   labels,
   darkMode = false,
   showEmojiPicker = true,
+  allowTaskList = true,
 }: ToolbarProps) => {
   // Format buttons configuration
   const formatButtons: ButtonConfig[] = [
@@ -153,16 +155,21 @@ export const Toolbar = ({
         shortcut: ["cmd", "alt", "7"],
       },
     },
-    {
-      key: "taskList",
-      icon: CheckDouble,
-      active: (editor) => editor.isActive("taskList"),
-      onClick: (editor) => editor.chain().focus().toggleTaskList().run(),
-      tooltip: {
-        label: `[ ] ${labels.taskList}`,
-        shortcut: ["cmd", "alt", "t"],
-      },
-    },
+    ...(allowTaskList
+      ? [
+          {
+            key: "taskList",
+            icon: CheckDouble,
+            active: (editor: Editor) => editor.isActive("taskList"),
+            onClick: (editor: Editor) =>
+              editor.chain().focus().toggleTaskList().run(),
+            tooltip: {
+              label: `[ ] ${labels.taskList}`,
+              shortcut: ["cmd", "alt", "t"],
+            },
+          },
+        ]
+      : []),
     {
       key: "highlight",
       icon: Pencil,
